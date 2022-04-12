@@ -1,0 +1,25 @@
+# Add files here to ignore them from prettier formatting
+
+### IDE ###
+.vscode
+.DS_Store
+.stencil
+
+### History ###
+# Ignore all local history of files
+.history
+
+### NPM/YARN ###
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npmrc
+.pnp
+
+### BUILD ###
+build
+coverage
+dist
+docs
+www

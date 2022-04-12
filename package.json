@@ -1,0 +1,20 @@
+{
+  "name": "smore",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "nx serve",
+    "build": "nx build",
+    "test": "nx test"
+  },
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "nx": "13.10.1",
+    "@nrwl/cli": "13.10.1",
+    "@nrwl/workspace": "13.10.1",
+    "@types/node": "17.0.23",
+    "typescript": "~4.6.3",
+    "prettier": "^2.6.2"
+  }
+}
