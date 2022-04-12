@@ -26,8 +26,13 @@
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "27.5.1",
     "nx": "13.10.1",
+    "nx-stylelint": "^13.3.0",
     "prettier": "^2.6.2",
     "puppeteer": "~13.5.2",
+    "stylelint": "^14.5.3",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-sass-guidelines": "^9.0.1",
+    "stylelint-config-standard": "^25.0.0",
     "ts-jest": "27.1.4",
     "typescript": "~4.6.3"
   },
