@@ -11,6 +11,7 @@
   "devDependencies": {
     "@nrwl/cli": "13.10.1",
     "@nrwl/cypress": "^13.10.1",
+    "@nrwl/eslint-plugin-nx": "^13.10.1",
     "@nrwl/jest": "13.10.1",
     "@nrwl/workspace": "13.10.1",
     "@nxext/stencil": "^13.2.3",
@@ -19,6 +20,10 @@
     "@types/jest": "27.4.1",
     "@types/node": "17.0.23",
     "@types/puppeteer": "~5.4.5",
+    "@typescript-eslint/eslint-plugin": "^5.19.0",
+    "eslint": "^8.13.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "jest": "27.5.1",
     "nx": "13.10.1",
     "prettier": "^2.6.2",
