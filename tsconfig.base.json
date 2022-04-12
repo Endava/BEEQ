@@ -18,7 +18,10 @@
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "paths": {}
+    "paths": {
+      "@smore/components": ["dist/components"],
+      "@smore/components/loader": ["dist/components/loader"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
