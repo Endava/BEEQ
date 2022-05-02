@@ -1,8 +1,20 @@
 {
   "recommendations": [
-    "nrwl.angular-console",
+    "bierner.lit-html",
+    "bradlc.vscode-tailwindcss",
+    "dbaeumer.vscode-eslint",
+    "donjayamanne.githistory",
+    "eamodio.gitlens",
+    "ecmel.vscode-html-css",
     "esbenp.prettier-vscode",
-    "firsttris.vscode-jest-runner",
-    "stylelint.vscode-stylelint"
+    "fdom.stencil-snippets",
+    "mrmlnc.vscode-scss",
+    "ms-vsliveshare.vsliveshare",
+    "nrwl.angular-console",
+    "parthr2031.colorful-comments",
+    "phoenisx.cssvar",
+    "sonarsource.sonarlint-vscode",
+    "stylelint.vscode-stylelint",
+    "Zignd.html-css-class-completion"
   ]
 }
