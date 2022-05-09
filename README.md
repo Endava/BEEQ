@@ -1,94 +1,74 @@
+# **Bee-Q**, a design system initiative by Endava.
 
+This repository holds the source code of the web component present on the Bee-Q Design System.
 
-# Bee-Q
+## ⚠️ Before Starting ⚠️
 
-This project was generated using [Nx](https://nx.dev).
+### Structure 🧩
 
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+The project as beend structured as an [NX monorepo](https://nx.dev) :
 
-🔎 **Smart, Fast and Extensible Build System**
+```
+├── 📁 apps
+├── 📁 libs
+  ├── 📁 components
+  ├── ...
+├── 📁 tools
+├── package.json
+├── package-lock.json
+```
 
-## Adding capabilities to your workspace
+where:
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+- **[libs/components](./libs/components/):** core library (source for all the elements/components implemented)
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
+### Dependencies 📡
 
-Below are our core plugins:
+A recent version (>=16) of [`NodeJS`](https://nodejs.org/en/download/)
 
-- [React](https://reactjs.org)
-  - `npm install --save-dev @nrwl/react`
-- Web (no framework frontends)
-  - `npm install --save-dev @nrwl/web`
-- [Angular](https://angular.io)
-  - `npm install --save-dev @nrwl/angular`
-- [Nest](https://nestjs.com)
-  - `npm install --save-dev @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `npm install --save-dev @nrwl/express`
-- [Node](https://nodejs.org)
-  - `npm install --save-dev @nrwl/node`
+> Note that you will need to use npm 6 or higher.
 
-There are also many [community plugins](https://nx.dev/community) you could add.
+## Running the project 🏃‍
 
-## Generate an application
+To develop/extend components on the Bee-Q Design System, clone this repo to a new directory:
 
-Run `nx g @nrwl/react:app my-app` to generate an application.
+```bash
+git clone ssh://git@bitbucket.endava.com:7999/dsedv001/bee-q.git Bee-Q-Design-System
+git checkout develop
+cd Bee-Q-Design-System
+```
 
-> You can use any of the plugins above to generate applications as well.
+### Installation ⚙️
 
-When using Nx, you can create multiple applications and libraries in the same workspace.
+Simply run:
 
-## Generate a library
+```bash
+npm ci
+# Make sure to build first the project before starting it
+nx build:components
+nx serve components
+```
 
-Run `nx g @nrwl/react:lib my-lib` to generate a library.
+Start coding 😃!
 
-> You can also use any of the plugins above to generate libraries as well.
+### Build 📦
 
-Libraries are shareable across libraries and applications. They can be imported from `@bee-q/mylib`.
+For a Production build, just run:
 
-## Development server
+```bash
+nx build:components
+```
 
-Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+## Contributing 💻
 
-## Code scaffolding
+💥  If you are in the mood and want to help 🙂, please read carefully our Contributing Guidelines and Development Standards.
 
-Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
+## Documentation 📖
 
-## Build
+### StencilJs
 
-Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Need help? Check out the Stenciljs docs here (https://stenciljs.com/).
 
-## Running unit tests
+### Tailwind CSS
 
-Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
-
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Running end-to-end tests
-
-Run `nx e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand your workspace
-
-Run `nx graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev) to learn more.
-
-
-
-## ☁ Nx Cloud
-
-### Distributed Computation Caching & Distributed Task Execution
-
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
+We use Tailwind CSS for the components style, please take a look at their documentation here: (https://tailwindcss.com/docs/)
