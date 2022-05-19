@@ -45,7 +45,7 @@ Simply run:
 ```bash
 npm ci
 # Make sure to build first the project before starting it
-nx build:components
+nx build components
 nx serve components
 ```
 
@@ -56,7 +56,7 @@ Start coding 😃!
 For a Production build, just run:
 
 ```bash
-nx build:components
+nx build components
 ```
 
 ## Contributing 💻
