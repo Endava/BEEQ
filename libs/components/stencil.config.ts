@@ -8,8 +8,14 @@ import tailwindConf from './tailwind.config.js';
 export const config: Config = {
   namespace: 'components',
   taskQueue: 'async',
+  globalStyle: './src/global/styles/default.scss',
   plugins: [
-    sass(),
+    sass({
+      outputStyle: 'compressed',
+      sourceMap: true,
+      sourceMapEmbed: true,
+      sourceMapContents: true,
+    }),
     tailwind({
       stripComments: true,
       tailwindCssPath: `${__dirname}/src/global/styles/tailwind.pcss`,
