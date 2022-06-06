@@ -3,6 +3,17 @@
 module.exports = {
   content: ['./src/**/*.{jsx,js,tsx,ts}'],
   theme: {
+    borderRadius: {
+      none: 'var(--bq-radius-none)',
+      xs: 'var(--bq-radius-xs)',
+      s: 'var(--bq-radius-s)',
+      m: 'var(--bq-radius-m)',
+      l: 'var(--bq-radius-l)',
+      xl: 'var(--bq-radius-xl)',
+      base: 'var(--bq-radius-m)',
+      card: 'var(--bq-radius-l)',
+      full: 'var(--bq-radius-xl)',
+    },
     colors: {
       black: 'var(--bq-black)',
       white: 'var(--bq-white)',
