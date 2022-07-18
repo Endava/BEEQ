@@ -1,6 +1,6 @@
 {
-  "root": "libs/components",
-  "sourceRoot": "libs/components/src",
+  "root": "libs/bee-q",
+  "sourceRoot": "libs/bee-q/src",
   "projectType": "library",
   "generators": {
     "@nxext/stencil:component": {
@@ -14,9 +14,9 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "projectType": "library",
-        "tsConfig": "libs/components/tsconfig.lib.json",
-        "configPath": "libs/components/stencil.config.ts",
-        "outputPath": "dist/components"
+        "tsConfig": "libs/bee-q/tsconfig.lib.json",
+        "configPath": "libs/bee-q/stencil.config.ts",
+        "outputPath": "dist/bee-q"
       }
     },
     "build": {
@@ -24,9 +24,9 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "projectType": "library",
-        "tsConfig": "libs/components/tsconfig.lib.json",
-        "configPath": "libs/components/stencil.config.ts",
-        "outputPath": "dist/components"
+        "tsConfig": "libs/bee-q/tsconfig.lib.json",
+        "configPath": "libs/bee-q/stencil.config.ts",
+        "outputPath": "dist/bee-q"
       },
       "configurations": {
         "production": {
@@ -40,9 +40,9 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "projectType": "library",
-        "tsConfig": "libs/components/tsconfig.lib.json",
-        "configPath": "libs/components/stencil.config.ts",
-        "outputPath": "dist/components"
+        "tsConfig": "libs/bee-q/tsconfig.lib.json",
+        "configPath": "libs/bee-q/stencil.config.ts",
+        "outputPath": "dist/bee-q"
       }
     },
     "e2e": {
@@ -50,23 +50,23 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "projectType": "library",
-        "tsConfig": "libs/components/tsconfig.lib.json",
-        "configPath": "libs/components/stencil.config.ts",
-        "outputPath": "dist/components"
+        "tsConfig": "libs/bee-q/tsconfig.lib.json",
+        "configPath": "libs/bee-q/stencil.config.ts",
+        "outputPath": "dist/bee-q"
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/components/**/*.{ts,tsx}"]
+        "lintFilePatterns": ["libs/bee-q/**/*.{ts,tsx}"]
       }
     },
     "stylelint": {
       "executor": "nx-stylelint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/components/**/*.css", "libs/components/**/*.scss"]
+        "lintFilePatterns": ["libs/bee-q/**/*.css", "libs/bee-q/**/*.scss"]
       }
     }
   }

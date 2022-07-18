@@ -6,7 +6,7 @@ import { sass } from '@stencil/sass';
 import tailwindConf from './tailwind.config.js';
 
 export const config: Config = {
-  namespace: 'components',
+  namespace: 'bee-q',
   taskQueue: 'async',
   globalStyle: './src/global/styles/default.scss',
   plugins: [

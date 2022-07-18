@@ -11,7 +11,7 @@ The project as beend structured as an [NX monorepo](https://nx.dev) :
 ```
 ├── 📁 apps
 ├── 📁 libs
-  ├── 📁 components
+  ├── 📁 bee-q
   ├── ...
 ├── 📁 tools
 ├── package.json
@@ -20,7 +20,7 @@ The project as beend structured as an [NX monorepo](https://nx.dev) :
 
 where:
 
-- **[libs/components](./libs/components/):** core library (source for all the elements/components implemented)
+- **[libs/bee-q](./libs/bee-q/):** core library (source for all the elements/components implemented)
 
 ### Dependencies 📡
 
@@ -45,8 +45,8 @@ Simply run:
 ```bash
 npm ci
 # Make sure to build first the project before starting it
-nx build components
-nx serve components
+npm run build
+npm start
 ```
 
 Start coding 😃!
@@ -56,12 +56,12 @@ Start coding 😃!
 For a Production build, just run:
 
 ```bash
-nx build components
+npm run build
 ```
 
 ## Contributing 💻
 
-💥  If you are in the mood and want to help 🙂, please read carefully our Contributing Guidelines and Development Standards.
+💥  If you are in the mood and want to help 🙂, please read carefully our [Contributing Guidelines](./CONTRIBUTING.md) and Development Standards.
 
 ## Documentation 📖
 

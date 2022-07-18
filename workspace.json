@@ -1,6 +1,6 @@
 {
   "version": 2,
   "projects": {
-    "components": "libs/components"
+    "@bee-q/chore": "libs/bee-q"
   }
 }
