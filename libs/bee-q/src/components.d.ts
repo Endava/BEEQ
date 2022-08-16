@@ -6,56 +6,64 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
-    interface MyComponent {
+    interface BqAvatar {
         /**
-          * The first name
+          * The image source to load on the avatar (this can be also a base64 encoded image)
          */
-        "first": string;
+        "image": string;
         /**
-          * The last name
+          * A text to use for describing the avatar on assistive devices
          */
-        "last": string;
+        "label": string;
         /**
-          * The middle name
+          * The shape of the avatar
          */
-        "middle": string;
+        "shape": TAvatarShape;
+        /**
+          * The size of the avatar
+         */
+        "size": TAvatarSize;
     }
 }
 declare global {
-    interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
+    interface HTMLBqAvatarElement extends Components.BqAvatar, HTMLStencilElement {
     }
-    var HTMLMyComponentElement: {
-        prototype: HTMLMyComponentElement;
-        new (): HTMLMyComponentElement;
+    var HTMLBqAvatarElement: {
+        prototype: HTMLBqAvatarElement;
+        new (): HTMLBqAvatarElement;
     };
     interface HTMLElementTagNameMap {
-        "my-component": HTMLMyComponentElement;
+        "bq-avatar": HTMLBqAvatarElement;
     }
 }
 declare namespace LocalJSX {
-    interface MyComponent {
+    interface BqAvatar {
         /**
-          * The first name
+          * The image source to load on the avatar (this can be also a base64 encoded image)
          */
-        "first"?: string;
+        "image"?: string;
         /**
-          * The last name
+          * A text to use for describing the avatar on assistive devices
          */
-        "last"?: string;
+        "label"?: string;
         /**
-          * The middle name
+          * The shape of the avatar
          */
-        "middle"?: string;
+        "shape"?: TAvatarShape;
+        /**
+          * The size of the avatar
+         */
+        "size"?: TAvatarSize;
     }
     interface IntrinsicElements {
-        "my-component": MyComponent;
+        "bq-avatar": BqAvatar;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "bq-avatar": LocalJSX.BqAvatar & JSXBase.HTMLAttributes<HTMLBqAvatarElement>;
         }
     }
 }

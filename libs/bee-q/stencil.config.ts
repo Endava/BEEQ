@@ -8,6 +8,7 @@ import tailwindConf from './tailwind.config.js';
 export const config: Config = {
   namespace: 'bee-q',
   taskQueue: 'async',
+  sourceMap: true,
   globalStyle: './src/global/styles/default.scss',
   plugins: [
     sass({

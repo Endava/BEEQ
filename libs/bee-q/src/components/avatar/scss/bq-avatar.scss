@@ -1,0 +1,35 @@
+/* -------------------------------------------------------------------------- */
+/*                                Avatar styles                               */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-avatar.variables.scss';
+
+:host {
+  @apply inline-block;
+}
+
+.bq-avatar {
+  @apply relative overflow-hidden;
+}
+
+.size {
+  &--xsmall {
+    @apply h-[var(--bq-avatar--size-xsmall)] w-[var(--bq-avatar--size-xsmall)];
+  }
+
+  &--small {
+    @apply h-[var(--bq-avatar--size-small)] w-[var(--bq-avatar--size-small)];
+  }
+
+  &--medium {
+    @apply h-[var(--bq-avatar--size-medium)] w-[var(--bq-avatar--size-medium)];
+  }
+
+  &--large {
+    @apply h-[var(--bq-avatar--size-large)] w-[var(--bq-avatar--size-large)];
+  }
+}
+
+.bq-avatar__image {
+  @apply absolute top-0 left-0 w-full h-full object-cover;
+}
