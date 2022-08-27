@@ -12,6 +12,10 @@ export namespace Components {
          */
         "image": string;
         /**
+          * The text to display on avatar
+         */
+        "initials": string;
+        /**
           * A text to use for describing the avatar on assistive devices
          */
         "label": string;
@@ -42,6 +46,10 @@ declare namespace LocalJSX {
           * The image source to load on the avatar (this can be also a base64 encoded image)
          */
         "image"?: string;
+        /**
+          * The text to display on avatar
+         */
+        "initials"?: string;
         /**
           * A text to use for describing the avatar on assistive devices
          */

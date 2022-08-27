@@ -33,6 +33,9 @@ export class BqAvatar {
   /** A text to use for describing the avatar on assistive devices */
   @Prop({ reflect: true }) label: string;
 
+  /** The text to display on avatar */
+  @Prop() initials: string;
+
   /** The shape of the avatar */
   @Prop({ reflect: true }) shape: TAvatarShape = 'circle';
 
@@ -107,12 +110,19 @@ export class BqAvatar {
           'bq-avatar bg-ui-secondary': true,
           [`size--${this.size}`]: true,
           'rounded-full': this.shape === 'circle',
-          'rounded-m': this.shape === 'square',
+          'rounded-xs': this.shape === 'square' && this.size === 'xsmall',
+          'rounded-s': this.shape === 'square' && this.size === 'small',
+          'rounded-m': this.shape === 'square' && (this.size === 'medium' || this.size === 'large'),
         }}
         aria-label={this.label}
         role="img"
         part="base"
       >
+        {this.initials && (
+          <span class="bq-avatar__initials" part="initials">
+            {this.initials}
+          </span>
+        )}
         {this.image && !this.hasError && (
           <img class="bq-avatar__image" alt="" part="image" src={this.image} onError={this.onImageError} />
         )}
