@@ -2,7 +2,7 @@
 /*                                Avatar styles                               */
 /* -------------------------------------------------------------------------- */
 
-@import './bq-avatar.variables.scss';
+@import './bq-avatar.variables';
 
 :host {
   @apply inline-block;
@@ -31,9 +31,9 @@
 }
 
 .bq-avatar__image {
-  @apply absolute top-0 left-0 w-full h-full object-cover;
+  @apply absolute top-0 left-0 h-full w-full object-cover;
 }
 
 .bq-avatar__initials {
-  @apply absolute top-0 left-0 w-full h-full inline-flex justify-center items-center font-bold font-inter;
+  @apply absolute top-0 left-0 inline-flex h-full w-full items-center justify-center font-inter font-bold;
 }

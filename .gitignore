@@ -5,6 +5,12 @@
 /tmp
 /out-tsc
 
+# downloaded icons and svg files
+/libs/bee-q/src/components/icon/svg/**
+!/libs/bee-q/src/components/icon/svg/.gitkeep
+tools/scripts/icon-library/phosphor-icons-master
+master.zip
+
 # dependencies
 node_modules
 

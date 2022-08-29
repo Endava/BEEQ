@@ -28,6 +28,24 @@ export namespace Components {
          */
         "size": TAvatarSize;
     }
+    interface BqIcon {
+        /**
+          * Set the stroke color of the SVG. The value should be a valid value of the palette color
+         */
+        "color": string;
+        /**
+          * Icon name to load. Please check all available icons [here](https://phosphoricons.com/)
+         */
+        "name": string;
+        /**
+          * Set the size of the SVG
+         */
+        "size": string | number;
+        /**
+          * It set the icon weight/style
+         */
+        "weight": TIconWeight;
+    }
 }
 declare global {
     interface HTMLBqAvatarElement extends Components.BqAvatar, HTMLStencilElement {
@@ -36,8 +54,15 @@ declare global {
         prototype: HTMLBqAvatarElement;
         new (): HTMLBqAvatarElement;
     };
+    interface HTMLBqIconElement extends Components.BqIcon, HTMLStencilElement {
+    }
+    var HTMLBqIconElement: {
+        prototype: HTMLBqIconElement;
+        new (): HTMLBqIconElement;
+    };
     interface HTMLElementTagNameMap {
         "bq-avatar": HTMLBqAvatarElement;
+        "bq-icon": HTMLBqIconElement;
     }
 }
 declare namespace LocalJSX {
@@ -63,8 +88,27 @@ declare namespace LocalJSX {
          */
         "size"?: TAvatarSize;
     }
+    interface BqIcon {
+        /**
+          * Set the stroke color of the SVG. The value should be a valid value of the palette color
+         */
+        "color"?: string;
+        /**
+          * Icon name to load. Please check all available icons [here](https://phosphoricons.com/)
+         */
+        "name"?: string;
+        /**
+          * Set the size of the SVG
+         */
+        "size"?: string | number;
+        /**
+          * It set the icon weight/style
+         */
+        "weight"?: TIconWeight;
+    }
     interface IntrinsicElements {
         "bq-avatar": BqAvatar;
+        "bq-icon": BqIcon;
     }
 }
 export { LocalJSX as JSX };
@@ -72,6 +116,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "bq-avatar": LocalJSX.BqAvatar & JSXBase.HTMLAttributes<HTMLBqAvatarElement>;
+            "bq-icon": LocalJSX.BqIcon & JSXBase.HTMLAttributes<HTMLBqIconElement>;
         }
     }
 }

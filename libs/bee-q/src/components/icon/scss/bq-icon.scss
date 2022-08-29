@@ -1,0 +1,17 @@
+/* -------------------------------------------------------------------------- */
+/*                                 Icon styles                                */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-icon.variables';
+
+:host {
+  @apply inline-block;
+}
+
+.bq-icon {
+  @apply h-[var(--bq-icon--size)] w-[var(--bq-icon--size)] text-[color:var(--bq-icon--color)];
+}
+
+.bq-icon__svg {
+  @apply fill-current;
+}

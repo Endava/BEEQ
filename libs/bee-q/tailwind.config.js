@@ -15,6 +15,7 @@ module.exports = {
       full: 'var(--bq-radius--xl)',
     },
     colors: {
+      current: 'currentColor',
       // Base Colours
       background: {
         light: 'var(--bq-background--light)',

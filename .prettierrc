@@ -1,6 +1,8 @@
 {
   "endOfLine": "auto",
   "printWidth": 120,
+  "semi": true,
   "singleQuote": true,
-  "trailingComma": "all"
+  "trailingComma": "all",
+  "tailwindConfig": "./libs/bee-q/tailwind.config.js"
 }

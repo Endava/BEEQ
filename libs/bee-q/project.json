@@ -1,5 +1,4 @@
 {
-  "root": "libs/bee-q",
   "sourceRoot": "libs/bee-q/src",
   "projectType": "library",
   "generators": {
@@ -28,6 +27,7 @@
         "configPath": "libs/bee-q/stencil.config.ts",
         "outputPath": "dist/bee-q"
       },
+      "dependsOn": ["^build", "stylelint", "lint", "extract-icons"],
       "configurations": {
         "production": {
           "dev": false,
@@ -43,7 +43,8 @@
         "tsConfig": "libs/bee-q/tsconfig.lib.json",
         "configPath": "libs/bee-q/stencil.config.ts",
         "outputPath": "dist/bee-q"
-      }
+      },
+      "dependsOn": ["extract-icons"]
     },
     "e2e": {
       "executor": "@nxext/stencil:e2e",
@@ -67,6 +68,13 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["libs/bee-q/**/*.css", "libs/bee-q/**/*.scss"]
+      }
+    },
+    "extract-icons": {
+      "executor": "nx:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "node tools/scripts/icon-library/extract-icons.js"
       }
     }
   }
