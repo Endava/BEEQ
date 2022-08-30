@@ -16,7 +16,8 @@
         "tsConfig": "libs/bee-q/tsconfig.lib.json",
         "configPath": "libs/bee-q/stencil.config.ts",
         "outputPath": "dist/bee-q"
-      }
+      },
+      "dependsOn": ["stylelint", "lint"]
     },
     "build": {
       "executor": "@nxext/stencil:build",
@@ -27,7 +28,7 @@
         "configPath": "libs/bee-q/stencil.config.ts",
         "outputPath": "dist/bee-q"
       },
-      "dependsOn": ["^build", "stylelint", "lint", "extract-icons"],
+      "dependsOn": ["^build", "extract-icons"],
       "configurations": {
         "production": {
           "dev": false,

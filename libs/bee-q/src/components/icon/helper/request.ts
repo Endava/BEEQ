@@ -2,6 +2,8 @@
 /*                             Icon request helper                            */
 /* -------------------------------------------------------------------------- */
 
+import { isString } from 'libs/bee-q/src/shared/utils';
+
 const requests = new Map<string, Promise<unknown>>();
 
 const fetchSvg = async (url: string, sanitize: boolean): Promise<unknown> => {
@@ -76,7 +78,7 @@ export const isValid = (elm: HTMLElement): boolean => {
 
     for (const element of Array.from(elm.attributes)) {
       const val = element.value;
-      if (isStr(val) && val.toLowerCase().indexOf('on') === 0) {
+      if (isString(val) && val.toLowerCase().indexOf('on') === 0) {
         return false;
       }
     }
@@ -87,5 +89,3 @@ export const isValid = (elm: HTMLElement): boolean => {
   }
   return true;
 };
-
-export const isStr = (val: unknown): val is string => typeof val === 'string';
