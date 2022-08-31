@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
-    "@bee-q/chore": "libs/bee-q"
+    "bee-q": "libs/bee-q",
+    "bee-q-react": "libs/bee-q-react"
   }
 }

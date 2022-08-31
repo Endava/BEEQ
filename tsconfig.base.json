@@ -19,8 +19,9 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "paths": {
-      "@bee-q/components": ["dist/components"],
-      "@bee-q/components/loader": ["dist/components/loader"]
+      "@bee-q/chore": ["dist/bee-q"],
+      "@bee-q/chore/dist/loader": ["dist/bee-q/dist/loader"],
+      "@bee-q/react": ["libs/bee-q-react/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -1,37 +1,57 @@
 {
-  "name": "bee-q",
+  "name": "root",
+  "private": true,
   "description": "Bee-Q Design System",
-  "version": "0.0.0",
   "license": "MIT",
   "repository": {
     "type": "Git",
     "url": "https://bitbucket.endava.com/projects/DSEDV001/repos/bee-q"
   },
   "scripts": {
-    "start": "nx run-many --target=serve --projects=@bee-q/chore",
-    "build": "nx run-many --target=build --projects=@bee-q/chore",
-    "test": "nx run-many --target=test --projects=@bee-q/chore",
+    "start": "nx run-many --target=serve --projects=bee-q",
+    "build": "run-s clean:build build:libs",
+    "build:libs": "nx run-many --target=build --projects=bee-q,bee-q-react",
+    "build:bee-q": "nx run-many --target=build --projects=bee-q",
+    "build:bee-q-react": "nx run-many --target=build --projects=bee-q-react",
+    "test": "nx run-many --target=test --projects=bee-q",
     "clean": "run-s clean:build clean:modules",
-    "clean:build": "rimraf **/{dist,docs}",
+    "clean:build": "rimraf ./dist/**",
     "clean:modules": "rimraf node_modules"
   },
-  "private": true,
+  "dependencies": {
+    "core-js": "^3.6.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "regenerator-runtime": "0.13.7",
+    "tslib": "^2.4.0"
+  },
   "devDependencies": {
     "@nrwl/cli": "14.5.10",
     "@nrwl/cypress": "14.5.10",
     "@nrwl/eslint-plugin-nx": "14.5.10",
+    "@nrwl/jest": "14.5.10",
+    "@nrwl/react": "14.5.10",
+    "@nrwl/web": "14.5.10",
     "@nrwl/workspace": "14.5.10",
     "@nxext/stencil": "^14.0.6",
     "@stencil/core": "^2.17.4",
+    "@stencil/react-output-target": "^0.3.1",
     "@stencil/sass": "1.5.2",
+    "@testing-library/react": "13.3.0",
     "@types/jest": "^27.5.1",
     "@types/node": "^18.7.14",
     "@types/puppeteer": "^5.4.6",
+    "@types/react": "18.0.17",
+    "@types/react-dom": "18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.36.0",
     "adm-zip": "^0.5.9",
     "eslint": "^8.23.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-jsx-a11y": "6.6.1",
     "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "7.30.1",
+    "eslint-plugin-react-hooks": "4.6.0",
     "fs-extra": "^10.1.0",
     "jest": "27.5.1",
     "npm-run-all": "^4.1.5",
@@ -40,6 +60,7 @@
     "prettier": "^2.7.1",
     "prettier-plugin-tailwindcss": "^0.1.13",
     "puppeteer": "^17.0.0",
+    "react-test-renderer": "18.2.0",
     "rimraf": "^3.0.2",
     "stencil-tailwind-plugin": "^1.5.0",
     "stylelint": "^14.11.0",
@@ -49,9 +70,7 @@
     "superagent": "^8.0.0",
     "tailwindcss": "^3.1.8",
     "ts-jest": "27.1.4",
+    "ts-node": "10.9.1",
     "typescript": "4.8.2"
-  },
-  "dependencies": {
-    "tslib": "^2.4.0"
   }
 }

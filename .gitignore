@@ -5,9 +5,11 @@
 /tmp
 /out-tsc
 
-# downloaded icons and svg files
+# source files to ignore
 /libs/bee-q/src/components/icon/svg/**
 !/libs/bee-q/src/components/icon/svg/.gitkeep
+libs/bee-q-react/src/react-component-lib
+libs/bee-q-react/src/components.ts
 tools/scripts/icon-library/phosphor-icons-master
 master.zip
 

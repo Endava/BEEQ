@@ -28,5 +28,12 @@
         "projects": "dependencies"
       }
     ]
+  },
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "babel": true
+      }
+    }
   }
 }

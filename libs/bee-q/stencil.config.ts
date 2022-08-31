@@ -2,6 +2,7 @@ import tailwindcss from 'tailwindcss';
 import tailwind, { tailwindHMR } from 'stencil-tailwind-plugin';
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
+import { reactOutputTarget as react } from '@stencil/react-output-target';
 
 import tailwindConf from './tailwind.config.js';
 
@@ -28,19 +29,17 @@ export const config: Config = {
     tailwindHMR(),
   ],
   outputTargets: [
-    {
-      type: 'dist',
-      esmLoaderPath: '../loader',
-    },
-    {
-      type: 'dist-custom-elements',
-    },
-    {
-      type: 'docs-readme',
-    },
+    { type: 'dist' },
+    { type: 'dist-custom-elements' },
+    { type: 'docs-readme' },
     {
       type: 'www',
       serviceWorker: null, // disable service workers
     },
+    react({
+      componentCorePackage: '@bee-q/chore',
+      proxiesFile: `${__dirname}/../../libs/bee-q-react/src/components.ts`,
+      includeDefineCustomElements: true,
+    }),
   ],
 };
