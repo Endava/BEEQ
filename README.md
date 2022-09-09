@@ -1,4 +1,6 @@
-# **Bee-Q**, a design system initiative by Endava.
+![Bee-Q](https://user-images.githubusercontent.com/328492/189278210-da3353de-6ea2-4c97-9be3-b02ac6dd5997.jpg)
+
+# **Bee-Q**, *a web component library initiative*
 
 This repository holds the source code of the web component present on the Bee-Q Design System.
 
