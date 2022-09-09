@@ -6,12 +6,13 @@ This repository holds the source code of the web component present on the Bee-Q 
 
 ### Structure 🧩
 
-The project as beend structured as an [NX monorepo](https://nx.dev) :
+The project as been structured as an [NX monorepo](https://nx.dev) :
 
 ```
 ├── 📁 apps
 ├── 📁 libs
   ├── 📁 bee-q
+  ├── 📁 bee-q-react
   ├── ...
 ├── 📁 tools
 ├── package.json
@@ -21,6 +22,7 @@ The project as beend structured as an [NX monorepo](https://nx.dev) :
 where:
 
 - **[libs/bee-q](./libs/bee-q/):** core library (source for all the elements/components implemented)
+- **[libs/bee-q-react](./libs/bee-q-react):** react specific wrapper for Bee-Q core library
 
 ### Dependencies 📡
 
@@ -33,7 +35,7 @@ A recent version (>=16) of [`NodeJS`](https://nodejs.org/en/download/)
 To develop/extend components on the Bee-Q Design System, clone this repo to a new directory:
 
 ```bash
-git clone ssh://git@bitbucket.endava.com:7999/dsedv001/bee-q.git Bee-Q-Design-System
+git clone git@github.com:dgonzalezr/bee-q.git Bee-Q-Design-System
 git checkout develop
 cd Bee-Q-Design-System
 ```
