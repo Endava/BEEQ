@@ -1,0 +1,9 @@
+# Any change related to the NPM dependencies
+# will require approval from @dgonzalezr.
+
+package.json @dgonzalezr
+package-lock.json @dgonzalezr
+
+# Any change inside the `/libs` directory
+# will require approval from @dgonzalezr.
+/libs @dgonzalezr
