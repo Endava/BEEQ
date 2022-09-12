@@ -6,6 +6,13 @@ type TAvatarSize = typeof AVATAR_SIZE[number];
 const AVATAR_SHAPE = ['circle', 'square'] as const;
 type TAvatarShape = typeof AVATAR_SHAPE[number];
 
+/**
+ * An avatar represents an object made of different pieces of information, in a way that is understandable at a glance.
+ *
+ * @part base - The component's internal wrapper.
+ * @part img - The `<image>` tag element that load the image source.
+ * @part text - The `<span>` tag element that renderd the `Initials` text string.
+ */
 @Component({
   tag: 'bq-avatar',
   styleUrl: './scss/bq-avatar.scss',
@@ -119,12 +126,12 @@ export class BqAvatar {
         part="base"
       >
         {this.initials && (
-          <span class="bq-avatar__initials" part="initials">
+          <span class="bq-avatar__initials" part="text">
             {this.initials}
           </span>
         )}
         {this.image && !this.hasError && (
-          <img class="bq-avatar__image" alt="" part="image" src={this.image} onError={this.onImageError} />
+          <img class="bq-avatar__image" alt="" part="img" src={this.image} onError={this.onImageError} />
         )}
       </div>
     );

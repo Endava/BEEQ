@@ -19,6 +19,39 @@
       },
       "dependsOn": ["stylelint", "lint"]
     },
+    "start": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": ["nx run bee-q:start-stencil", "nx run bee-q:start-storybook"],
+        "parallel": true
+      }
+    },
+    "start-stencil": {
+      "executor": "@nxext/stencil:serve",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "projectType": "library",
+        "tsConfig": "libs/bee-q/tsconfig.lib.json",
+        "configPath": "libs/bee-q/stencil.config.ts",
+        "outputPath": "dist/bee-q"
+      },
+      "dependsOn": ["extract-icons"]
+    },
+    "start-storybook": {
+      "executor": "@nrwl/storybook:storybook",
+      "options": {
+        "uiFramework": "@storybook/web-components",
+        "port": 9001,
+        "config": {
+          "configFolder": "libs/bee-q/.storybook"
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
     "build": {
       "executor": "@nxext/stencil:build",
       "outputs": ["{options.outputPath}"],
@@ -36,16 +69,21 @@
         }
       }
     },
-    "serve": {
-      "executor": "@nxext/stencil:serve",
+    "build-storybook": {
+      "executor": "@nrwl/storybook:build",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "projectType": "library",
-        "tsConfig": "libs/bee-q/tsconfig.lib.json",
-        "configPath": "libs/bee-q/stencil.config.ts",
-        "outputPath": "dist/bee-q"
+        "uiFramework": "@storybook/web-components",
+        "outputPath": "dist/storybook/bee-q",
+        "config": {
+          "configFolder": "libs/bee-q/.storybook"
+        }
       },
-      "dependsOn": ["extract-icons"]
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
     },
     "e2e": {
       "executor": "@nxext/stencil:e2e",
@@ -73,7 +111,6 @@
     },
     "extract-icons": {
       "executor": "nx:run-commands",
-      "outputs": [],
       "options": {
         "command": "node tools/scripts/icon-library/extract-icons.js"
       }

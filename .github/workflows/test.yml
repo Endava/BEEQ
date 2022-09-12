@@ -9,7 +9,7 @@ on:
 
 jobs:
   lint:
-    name: Run lint and all unit/e2e tests
+    name: Run lint, unit/e2e tests and build the project
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -23,4 +23,6 @@ jobs:
 
       - name: Run test
         run: npm test
-        
+
+      - name: Build
+        run: npm run build

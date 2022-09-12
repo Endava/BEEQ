@@ -3,6 +3,7 @@ import tailwind, { tailwindHMR } from 'stencil-tailwind-plugin';
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
 import { reactOutputTarget as react } from '@stencil/react-output-target';
+import { generateCustomElementsJson } from './src/tools/generate-custom-elements-json';
 
 import tailwindConf from './tailwind.config.js';
 
@@ -29,17 +30,27 @@ export const config: Config = {
     tailwindHMR(),
   ],
   outputTargets: [
-    { type: 'dist' },
-    { type: 'dist-custom-elements' },
-    { type: 'docs-readme' },
-    {
-      type: 'www',
-      serviceWorker: null, // disable service workers
-    },
     react({
       componentCorePackage: '@bee-q/chore',
       proxiesFile: `${__dirname}/../../libs/bee-q-react/src/components.ts`,
       includeDefineCustomElements: true,
     }),
+    { type: 'dist' },
+    { type: 'dist-custom-elements' },
+    { type: 'docs-readme' },
+    {
+      type: 'docs-custom',
+      generator: generateCustomElementsJson,
+    },
+    {
+      type: 'www',
+      copy: [{ src: 'global/assets', dest: 'assets' }],
+      serviceWorker: null, // disable service workers
+    },
   ],
+  watchIgnoredRegex: /(custom-elements\.)((d\.ts)|(json))$/g,
+  devServer: {
+    port: 8001,
+    openBrowser: false,
+  },
 };

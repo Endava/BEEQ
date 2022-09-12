@@ -18,11 +18,11 @@
 
 ## Shadow Parts
 
-| Part         | Description |
-| ------------ | ----------- |
-| `"base"`     |             |
-| `"image"`    |             |
-| `"initials"` |             |
+| Part     | Description                                                       |
+| -------- | ----------------------------------------------------------------- |
+| `"base"` | The component's internal wrapper.                                 |
+| `"img"`  | The `<image>` tag element that load the image source.             |
+| `"text"` | The `<span>` tag element that renderd the `Initials` text string. |
 
 
 ----------------------------------------------

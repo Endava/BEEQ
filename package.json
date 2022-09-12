@@ -8,11 +8,12 @@
     "url": "https://bitbucket.endava.com/projects/DSEDV001/repos/bee-q"
   },
   "scripts": {
-    "start": "nx run-many --target=serve --projects=bee-q",
-    "build": "run-s clean:build build:libs",
-    "build:libs": "nx run-many --target=build --projects=bee-q,bee-q-react",
+    "start": "nx run-many --target=start --projects=bee-q",
+    "build": "run-s build:bee-q-react build:storybook",
+    "build:libs": "nx run-many --target=build --projects=bee-q-react",
     "build:bee-q": "nx run-many --target=build --projects=bee-q",
     "build:bee-q-react": "nx run-many --target=build --projects=bee-q-react",
+    "build:storybook": "nx run-many --target=build-storybook --projects=bee-q",
     "test": "nx run-many --target=test --projects=bee-q",
     "clean": "run-s clean:build clean:modules",
     "clean:build": "rimraf ./dist/**",
@@ -32,12 +33,22 @@
     "@nrwl/eslint-plugin-nx": "14.7.3",
     "@nrwl/jest": "14.7.3",
     "@nrwl/react": "14.7.3",
+    "@nrwl/storybook": "^14.7.3",
     "@nrwl/web": "14.7.3",
     "@nrwl/workspace": "14.7.3",
     "@nxext/stencil": "^14.0.6",
+    "@pbutlewski/storybook-html": "^5.0.2",
     "@stencil/core": "^2.17.4",
     "@stencil/react-output-target": "^0.3.1",
     "@stencil/sass": "1.5.2",
+    "@storybook/addon-a11y": "^6.5.10",
+    "@storybook/addon-actions": "^6.5.10",
+    "@storybook/addon-docs": "^6.5.10",
+    "@storybook/addon-essentials": "^6.5.10",
+    "@storybook/addon-links": "^6.5.10",
+    "@storybook/builder-webpack5": "^6.5.10",
+    "@storybook/manager-webpack5": "^6.5.10",
+    "@storybook/web-components": "^6.5.10",
     "@testing-library/react": "13.4.0",
     "@types/jest": "~27.5.1",
     "@types/node": "^18.7.16",
@@ -56,6 +67,7 @@
     "eslint-plugin-react-hooks": "4.6.0",
     "fs-extra": "^10.1.0",
     "jest": "~27.5.1",
+    "lit-html": "^2.3.1",
     "npm-run-all": "^4.1.5",
     "nx": "14.7.3",
     "nx-stylelint": "^13.5.3",
@@ -74,5 +86,11 @@
     "ts-jest": "~27.1.4",
     "ts-node": "10.9.1",
     "typescript": "4.8.3"
+  },
+  "overrides": {
+    "@mdx-js/react": {
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0"
+    }
   }
 }

@@ -6,6 +6,7 @@
 /out-tsc
 
 # source files to ignore
+libs/bee-q/custom-elements.json
 /libs/bee-q/src/components/icon/svg/**
 !/libs/bee-q/src/components/icon/svg/.gitkeep
 libs/bee-q-react/src/react-component-lib
@@ -46,3 +47,4 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+

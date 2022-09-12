@@ -1,0 +1,45 @@
+<link rel="stylesheet" href="bee-q/bee-q.css" />
+<script type="module" src="bee-q/bee-q.esm.js"></script>
+
+<script type="text/javascript">
+  document.addEventListener('touchstart', function () {}, false);
+</script>
+
+<style>
+  body {
+    font-family: var(--bq-font-family--inter);
+    font-size: var(--bq-font-size--m);
+    min-height: 100vh;
+  }
+
+  #root,
+  #root-inner {
+    overflow-x: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .bq-root {
+    box-sizing: border-box;
+    min-height: 100%;
+    padding: 8px;
+  }
+
+  .bq-root.centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media (min-width: 360px) and (max-width: 599px) {
+    .bq-root {
+      padding: 16px;
+    }
+  }
+
+  @media (min-width: 600px) {
+    .bq-root {
+      padding: 24px;
+    }
+  }
+</style>
