@@ -51,6 +51,7 @@
     "@storybook/web-components": "^6.5.10",
     "@testing-library/react": "13.4.0",
     "@types/jest": "~27.5.1",
+    "@types/mdx": "^2.0.2",
     "@types/node": "^18.7.16",
     "@types/puppeteer": "^5.4.6",
     "@types/react": "18.0.18",

@@ -1,0 +1,17 @@
+/* -------------------------------------------------------------------------- */
+/*                          Button custom properties                          */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  --bq-button--small-height: 32px;
+  --bq-button--small-paddingX: 8px;
+  --bq-button--small-paddingY: 4px;
+
+  --bq-button--medium-height: 48px;
+  --bq-button--medium-paddingX: 16px;
+  --bq-button--medium-paddingY: 12px;
+
+  --bq-button--large-height: 56px;
+  --bq-button--large-paddingX: 24px;
+  --bq-button--large-paddingY: 16px;
+}

@@ -16,6 +16,7 @@ module.exports = {
     },
     colors: {
       current: 'currentColor',
+      transparent: 'transparent',
       // Base Colours
       background: {
         light: 'var(--bq-background--light)',
@@ -32,6 +33,7 @@ module.exports = {
         'secondary-active': 'var(--bq-ui--secondary-active)',
         'secondary-processing': 'var(--bq-ui--secondary-processing)',
         'secondary-disabled': 'var(--bq-ui--secondary-disabled)',
+        inverse: 'var(--bq-ui--inverse)',
       },
       text: {
         primary: 'var(--bq-text--primary)',
@@ -46,6 +48,8 @@ module.exports = {
         neutral: 'var(--bq-system--neutral)',
         info: 'var(--bq-system--info)',
         danger: 'var(--bq-system--danger)',
+        'danger-hover': 'var(--bq-system--danger-hover)',
+        'danger-active': 'var(--bq-system--danger-active)',
         alert: 'var(--bq-system--alert)',
         guide: 'var(--bq-system--guide)',
       },

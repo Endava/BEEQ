@@ -34,7 +34,7 @@ export class BqIcon {
   // ========================
 
   /** Set the stroke color of the SVG. The value should be a valid value of the palette color */
-  @Prop({ mutable: true, reflect: true }) color = 'text--primary';
+  @Prop({ mutable: true, reflect: true }) color: string;
 
   /** Icon name to load. Please check all available icons [here](https://phosphoricons.com/) */
   @Prop({ reflect: true }) name: string;
@@ -106,7 +106,7 @@ export class BqIcon {
 
     return (
       <Host style={styles}>
-        <div class="bq-icon" innerHTML={this._svgContent} part="base" role="img" />
+        <div class="bq-icon" innerHTML={this._svgContent} part="base" role="img" title={`${this.name} icon`} />
       </Host>
     );
   }

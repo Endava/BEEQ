@@ -1,0 +1,155 @@
+/* -------------------------------------------------------------------------- */
+/*                                Button styles                               */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-button.variables';
+
+@layer components {
+  .button-disabled {
+    @apply disabled:border-ui-secondary-disabled disabled:bg-ui-secondary-disabled disabled:text-text-secondary;
+    @apply disabled:hover:border-ui-secondary-disabled disabled:hover:bg-ui-secondary-disabled disabled:hover:text-text-secondary;
+  }
+
+  .button--text-link__disabled {
+    @apply disabled:border-transparent disabled:bg-transparent disabled:text-text-secondary;
+    @apply disabled:hover:border-transparent disabled:hover:bg-transparent disabled:hover:text-text-secondary;
+  }
+
+  /* SVG spinner icon animation */
+  @keyframes rotate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes loading--spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(1turn);
+    }
+  }
+}
+
+:host {
+  @apply relative inline-block w-auto cursor-pointer;
+}
+
+.bq-button {
+  @apply box-border flex cursor-[inherit] items-center justify-center rounded-m border-2 border-solid border-transparent font-inter text-m font-medium leading-m;
+  @apply transition-[background-color,border-color,box-shadow] duration-200;
+  @apply focus:outline-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-system-alert;
+  @apply active:outline-none disabled:cursor-not-allowed;
+}
+
+// Appearance
+
+.bq-button--primary {
+  @apply bg-ui-primary text-text-inverse hover:bg-ui-primary-hover active:bg-ui-primary-active;
+
+  &.ghost {
+    @apply border-ui-primary bg-transparent text-ui-primary hover:text-text-inverse;
+    @apply hover:border-ui-primary-hover hover:bg-ui-primary-hover;
+    @apply active:border-ui-primary-active active:bg-ui-primary-active;
+  }
+
+  &.danger {
+    @apply border-system-danger bg-system-danger;
+    @apply hover:border-system-danger-hover hover:bg-system-danger-hover;
+    @apply active:border-system-danger-active active:bg-system-danger-active;
+
+    &.disabled {
+      @apply button-disabled;
+    }
+  }
+
+  &.disabled {
+    @apply disabled:border-ui-primary-disabled disabled:bg-ui-primary-disabled disabled:text-text-accent;
+    @apply disabled:hover:border-ui-primary-disabled disabled:hover:bg-ui-primary-disabled disabled:hover:text-text-accent;
+  }
+}
+
+.bq-button--secondary {
+  @apply bg-ui-secondary text-text-primary hover:bg-ui-secondary-hover active:bg-ui-secondary-active;
+
+  &.ghost {
+    @apply border-ui-inverse bg-transparent text-text-primary;
+    @apply hover:border-ui-secondary-hover hover:bg-ui-secondary-hover;
+    @apply active:border-ui-secondary-active active:bg-ui-secondary-active;
+  }
+
+  &.disabled {
+    @apply button-disabled;
+  }
+}
+
+.bq-button--link {
+  @apply bg-transparent text-text-accent no-underline hover:bg-ui-secondary-hover active:bg-ui-secondary-active;
+
+  &.disabled {
+    @apply button--text-link__disabled;
+  }
+}
+
+.bq-button--text {
+  @apply bg-transparent text-text-primary hover:bg-ui-secondary-hover active:bg-ui-secondary-active;
+
+  &.disabled {
+    @apply button--text-link__disabled;
+  }
+}
+
+// Size
+
+.small {
+  @apply h-[var(--bq-button--small-height)] px-[var(--bq-button--small-paddingX)] py-[var(--bq-button--small-paddingY)];
+}
+
+.medium {
+  @apply h-[var(--bq-button--medium-height)] px-[var(--bq-button--medium-paddingX)] py-[var(--bq-button--medium-paddingY)];
+}
+
+.large {
+  @apply h-[var(--bq-button--large-height)] px-[var(--bq-button--large-paddingX)] py-[var(--bq-button--large-paddingY)];
+}
+
+// Label
+
+.bq-button__label ::slotted(bq-icon) {
+  @apply flex;
+}
+
+// Prefix and Suffix slots
+
+.bq-button__prefix,
+.bq-button__suffix {
+  @apply pointer-events-none flex shrink-0 grow-0 basis-auto items-center;
+}
+
+.bq-button.has-prefix .bq-button__label {
+  @apply pl-1;
+}
+
+.bq-button.has-suffix .bq-button__label {
+  @apply pr-1;
+}
+
+// Loading
+
+.bq-button.loading {
+  @apply relative cursor-wait;
+}
+
+.bq-button.loading .bq-button__prefix,
+.bq-button.loading .bq-button__label,
+.bq-button.loading .bq-button__suffix {
+  @apply invisible;
+}
+
+// Spinner icon
+
+.bq-button__loader {
+  @apply absolute animate-[loading--spin_1s_infinite_linear];
+}
