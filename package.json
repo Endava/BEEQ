@@ -40,7 +40,7 @@
     "@pbutlewski/storybook-html": "^5.0.2",
     "@stencil/core": "^2.17.4",
     "@stencil/react-output-target": "^0.3.1",
-    "@stencil/sass": "1.5.2",
+    "@stencil/sass": "2.0.0",
     "@storybook/addon-a11y": "^6.5.10",
     "@storybook/addon-actions": "^6.5.10",
     "@storybook/addon-docs": "^6.5.10",

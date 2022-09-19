@@ -14,6 +14,11 @@ export const config: Config = {
   globalStyle: './src/global/styles/default.scss',
   plugins: [
     sass({
+      includePaths: ['node_modules', `src/global/styles`],
+      injectGlobalPaths: [
+        `${__dirname}/src/global/styles/variables/index.scss`,
+        `${__dirname}/src/global/styles/mixins/index.scss`,
+      ],
       outputStyle: 'compressed',
       sourceMap: true,
       sourceMapEmbed: true,
