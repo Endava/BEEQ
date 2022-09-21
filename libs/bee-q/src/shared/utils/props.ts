@@ -8,13 +8,13 @@
  * @param {Element} element - The component reference
  * @returns {void}
  */
-export const validatePropValue = (
-  ACCEPTED_VAlUES: Readonly<unknown[]>,
-  fallbackValue: unknown,
-  propertyValue: unknown,
+export const validatePropValue = <T>(
+  ACCEPTED_VAlUES: Readonly<T[]>,
+  fallbackValue: T,
+  propertyValue: T,
   propertyName: string,
   element: Element,
-) => {
+): void => {
   // Early return if the property value is one of the accetped values
   if (ACCEPTED_VAlUES.includes(propertyValue)) return;
   // Size value fallback
