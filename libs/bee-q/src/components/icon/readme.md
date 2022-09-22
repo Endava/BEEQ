@@ -1,7 +1,5 @@
 # bq-icon
 
-
-
 <!-- Auto Generated Below -->
 
 

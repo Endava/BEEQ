@@ -1,0 +1,73 @@
+/* -------------------------------------------------------------------------- */
+/*                                Checkbox styles                               */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-checkbox.variables';
+
+:host {
+  @apply inline-block;
+}
+
+.bq-checkbox {
+  @apply inline-flex cursor-pointer select-none items-center rounded-s p-2 pr-4 transition-colors duration-300;
+
+  // Default hover state
+  &:not(.is-checked),
+  &:not(.is-indeterminate) {
+    &:not(.is-disabled):hover .bq-checkbox__checkbox {
+      @apply border-ui-primary;
+    }
+  }
+
+  // Display background on hover (if enabled)
+  &.has-background:not(.is-disabled):hover {
+    @apply bg-ui-secondary-hover;
+  }
+
+  // Checked/Inderterminate hover state
+  &.is-checked,
+  &.is-indeterminate {
+    &:not(.is-disabled):hover .bq-checkbox__checkbox {
+      background-color: lighten(var(--bq-ui--primary), 20%);
+      border-color: lighten(var(--bq-ui--primary), 20%);
+    }
+  }
+
+  // Disabled state
+  &.is-disabled {
+    @apply cursor-not-allowed opacity-40;
+  }
+}
+
+.bq-checkbox__input {
+  @apply focus:outline-none focus-visible:outline-none;
+
+  ~ .bq-checkbox__checkbox {
+    @apply transition-[color,background-color,border-color,box-shadow] duration-300;
+  }
+
+  &:focus-visible {
+    ~ .bq-checkbox__checkbox {
+      @apply ring-4 ring-system-alert;
+    }
+  }
+
+  &:checked,
+  &:indeterminate {
+    ~ .bq-checkbox__checkbox {
+      @apply border-ui-primary bg-ui-primary text-text-inverse;
+    }
+  }
+
+  &:checked:disabled,
+  &:indeterminate:disabled {
+    ~ .bq-checkbox__checkbox {
+      @apply border-text-primary bg-text-primary;
+    }
+  }
+}
+
+.bq-checkbox__checkbox {
+  @apply relative box-border flex h-full w-full items-center justify-center;
+  @apply rounded-[var(--bq-checkbox--border-radius)] border-[length:var(--bq-checkbox--border-width)] border-solid border-text-primary;
+}

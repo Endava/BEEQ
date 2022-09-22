@@ -1,9 +1,7 @@
 import { h, Component, Prop, Host, getAssetPath, State, Watch } from '@stencil/core';
 import { getColorCSSVariable } from '../../shared/utils';
+import { TIconWeight } from './bq-icon.types';
 import { getSvgContent, iconContent } from './helper/request';
-
-const ICON_WEIGHT = ['thin', 'light', 'regular', 'bold', 'fill', 'duotone'] as const;
-type TIconWeight = typeof ICON_WEIGHT[number];
 
 /**
  * Icons are simplified images that graphically explain the meaning of an object on the screen.

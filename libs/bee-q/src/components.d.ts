@@ -5,7 +5,9 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 import { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
+import { TIconWeight } from "./components/icon/bq-icon.types";
 export namespace Components {
     interface BqAvatar {
         /**
@@ -67,6 +69,52 @@ export namespace Components {
          */
         "variant": TButtonVariant;
     }
+    interface BqCheckbox {
+        /**
+          * If true checkbox displays background on hover
+         */
+        "backgroundOnHover"?: boolean;
+        /**
+          * If true checkbox is checked
+         */
+        "checked"?: boolean;
+        /**
+          * If true checkbox is disabled
+         */
+        "disabled"?: boolean;
+        /**
+          * The form ID that the checkbox is associated with
+         */
+        "formId"?: string;
+        /**
+          * A state that is neither checked nor unchecked
+         */
+        "indeterminate": false;
+        /**
+          * Name of the HTML input form control. Submitted with the form as part of a name/value pair.
+         */
+        "name": string;
+        /**
+          * If `true`, it will indicate that the user must specify a value for the checkbox before the owning form can be submitted
+         */
+        "required"?: boolean;
+        /**
+          * Remove focus from the native `<input>` HTML element used under the hood. Use this method instead of the global `element.blur()`.
+         */
+        "vBlur": () => Promise<void>;
+        /**
+          * Simulate a click event on the native `<input>` HTML element used under the hood. Use this method instead of the global `element.click()`.
+         */
+        "vClick": () => Promise<void>;
+        /**
+          * Sets focus on the native `<input>` HTML element used under the hood. Use this method instead of the global `element.focus()`.
+         */
+        "vFocus": () => Promise<void>;
+        /**
+          * A string representing the value of the checkbox. Primarily used to differentiate a list of related checkboxes that have the same name.
+         */
+        "value": string;
+    }
     interface BqIcon {
         /**
           * Set the stroke color of the SVG. The value should be a valid value of the palette color
@@ -90,6 +138,10 @@ export interface BqButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqButtonElement;
 }
+export interface BqCheckboxCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqCheckboxElement;
+}
 declare global {
     interface HTMLBqAvatarElement extends Components.BqAvatar, HTMLStencilElement {
     }
@@ -103,6 +155,12 @@ declare global {
         prototype: HTMLBqButtonElement;
         new (): HTMLBqButtonElement;
     };
+    interface HTMLBqCheckboxElement extends Components.BqCheckbox, HTMLStencilElement {
+    }
+    var HTMLBqCheckboxElement: {
+        prototype: HTMLBqCheckboxElement;
+        new (): HTMLBqCheckboxElement;
+    };
     interface HTMLBqIconElement extends Components.BqIcon, HTMLStencilElement {
     }
     var HTMLBqIconElement: {
@@ -112,6 +170,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "bq-avatar": HTMLBqAvatarElement;
         "bq-button": HTMLBqButtonElement;
+        "bq-checkbox": HTMLBqCheckboxElement;
         "bq-icon": HTMLBqIconElement;
     }
 }
@@ -188,6 +247,52 @@ declare namespace LocalJSX {
          */
         "variant"?: TButtonVariant;
     }
+    interface BqCheckbox {
+        /**
+          * If true checkbox displays background on hover
+         */
+        "backgroundOnHover"?: boolean;
+        /**
+          * If true checkbox is checked
+         */
+        "checked"?: boolean;
+        /**
+          * If true checkbox is disabled
+         */
+        "disabled"?: boolean;
+        /**
+          * The form ID that the checkbox is associated with
+         */
+        "formId"?: string;
+        /**
+          * A state that is neither checked nor unchecked
+         */
+        "indeterminate"?: false;
+        /**
+          * Name of the HTML input form control. Submitted with the form as part of a name/value pair.
+         */
+        "name": string;
+        /**
+          * Handler to be called when the checkbox loses focus
+         */
+        "onBqBlur"?: (event: BqCheckboxCustomEvent<HTMLBqCheckboxElement>) => void;
+        /**
+          * Handler to be called when the chebkbox state changes
+         */
+        "onBqChange"?: (event: BqCheckboxCustomEvent<{ checked: boolean }>) => void;
+        /**
+          * Handler to be called when the checkbox gets focus
+         */
+        "onBqFocus"?: (event: BqCheckboxCustomEvent<HTMLBqCheckboxElement>) => void;
+        /**
+          * If `true`, it will indicate that the user must specify a value for the checkbox before the owning form can be submitted
+         */
+        "required"?: boolean;
+        /**
+          * A string representing the value of the checkbox. Primarily used to differentiate a list of related checkboxes that have the same name.
+         */
+        "value": string;
+    }
     interface BqIcon {
         /**
           * Set the stroke color of the SVG. The value should be a valid value of the palette color
@@ -209,6 +314,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "bq-avatar": BqAvatar;
         "bq-button": BqButton;
+        "bq-checkbox": BqCheckbox;
         "bq-icon": BqIcon;
     }
 }
@@ -218,6 +324,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "bq-avatar": LocalJSX.BqAvatar & JSXBase.HTMLAttributes<HTMLBqAvatarElement>;
             "bq-button": LocalJSX.BqButton & JSXBase.HTMLAttributes<HTMLBqButtonElement>;
+            "bq-checkbox": LocalJSX.BqCheckbox & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
             "bq-icon": LocalJSX.BqIcon & JSXBase.HTMLAttributes<HTMLBqIconElement>;
         }
     }

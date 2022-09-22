@@ -1,10 +1,5 @@
 import { h, Component, Prop, Watch, State } from '@stencil/core';
-
-const AVATAR_SIZE = ['xsmall', 'small', 'medium', 'large'] as const;
-type TAvatarSize = typeof AVATAR_SIZE[number];
-
-const AVATAR_SHAPE = ['circle', 'square'] as const;
-type TAvatarShape = typeof AVATAR_SHAPE[number];
+import { TAvatarShape, TAvatarSize, AVATAR_SHAPE, AVATAR_SIZE } from './bq-avatar.types';
 
 /**
  * An avatar represents an object made of different pieces of information, in a way that is understandable at a glance.

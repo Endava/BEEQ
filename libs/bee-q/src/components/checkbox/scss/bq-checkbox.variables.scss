@@ -1,0 +1,9 @@
+/* -------------------------------------------------------------------------- */
+/*                          Checkbox custom properties                          */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  --bq-checkbox--size: 24px;
+  --bq-checkbox--border-radius: theme('borderRadius.xs');
+  --bq-checkbox--border-width: 2px;
+}

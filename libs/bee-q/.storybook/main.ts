@@ -1,4 +1,5 @@
 import type { Configuration } from 'webpack';
+import CopyPlugin from 'copy-webpack-plugin';
 import type { StorybookConfig, Options } from '@storybook/core-common';
 import { config as rootMain } from '../../../.storybook/main';
 
@@ -19,14 +20,6 @@ export default {
   addons: [...(rootMain.addons || []), '@pbutlewski/storybook-html'],
   staticDirs: [
     {
-      from: '../../../dist/bee-q/dist/bee-q/svg/',
-      to: '/svg',
-    },
-    {
-      from: '../../../dist/bee-q/dist/bee-q',
-      to: '/bee-q',
-    },
-    {
       from: '../../../dist/bee-q/www/assets',
       to: '/assets',
     },
@@ -37,7 +30,15 @@ export default {
       config = await rootMain.webpackFinal(config, options);
     }
 
-    // add your own webpack tweaks if needed
+    config.plugins?.push(
+      new CopyPlugin({
+        patterns: [
+          { from: './dist/bee-q/dist/bee-q', to: './bee-q', globOptions: { ignore: ['**/svg/**'] } },
+          { from: './dist/bee-q/dist/bee-q/svg', to: './svg' },
+        ],
+      }),
+    );
+
     return config;
   },
 } as StorybookConfig;

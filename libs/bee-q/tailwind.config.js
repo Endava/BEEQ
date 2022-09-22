@@ -5,6 +5,7 @@ module.exports = {
   theme: {
     borderRadius: {
       none: 'var(--bq-radius--none)',
+      xs2: 'var(--bq-radius--xs2)',
       xs: 'var(--bq-radius--xs)',
       s: 'var(--bq-radius--s)',
       m: 'var(--bq-radius--m)',
