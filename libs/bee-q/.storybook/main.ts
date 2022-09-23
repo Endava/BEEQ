@@ -17,7 +17,7 @@ export default {
   },
   framework: '@storybook/web-components',
   stories: [...rootMain.stories, '../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
-  addons: [...(rootMain.addons || []), '@pbutlewski/storybook-html'],
+  addons: [...(rootMain.addons || []), '@dgonzalezr/storybook-addon-html'],
   staticDirs: [
     {
       from: '../../../dist/bee-q/www/assets',

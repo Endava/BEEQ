@@ -35,7 +35,7 @@
         "configPath": "libs/bee-q/stencil.config.ts",
         "outputPath": "dist/bee-q"
       },
-      "dependsOn": ["extract-icons"]
+      "dependsOn": ["create-icons-set"]
     },
     "start-storybook": {
       "executor": "@nrwl/storybook:storybook",
@@ -61,7 +61,7 @@
         "configPath": "libs/bee-q/stencil.config.ts",
         "outputPath": "dist/bee-q"
       },
-      "dependsOn": ["^build", "extract-icons"],
+      "dependsOn": ["^build", "create-icons-set"],
       "configurations": {
         "production": {
           "dev": false,
@@ -114,6 +114,13 @@
       "options": {
         "command": "node tools/scripts/icon-library/extract-icons.js"
       }
+    },
+    "create-icons-set": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/scripts/icon-library/create-icons-set.js"
+      },
+      "dependsOn": ["extract-icons"]
     }
   }
 }

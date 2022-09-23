@@ -32,16 +32,16 @@ export class BqIcon {
   // ========================
 
   /** Set the stroke color of the SVG. The value should be a valid value of the palette color */
-  @Prop({ mutable: true, reflect: true }) color: string;
+  @Prop({ mutable: true, reflect: true }) color?: string;
 
   /** Icon name to load. Please check all available icons [here](https://phosphoricons.com/) */
-  @Prop({ reflect: true }) name: string;
+  @Prop({ reflect: true }) name!: string;
 
   /** Set the size of the SVG */
-  @Prop({ reflect: true }) size: string | number = 24;
+  @Prop({ reflect: true }) size?: string | number = 24;
 
   /** It set the icon weight/style */
-  @Prop({ reflect: true }) weight: TIconWeight = 'regular';
+  @Prop({ reflect: true }) weight?: TIconWeight = 'regular';
 
   // Prop lifecycle events
   // =======================

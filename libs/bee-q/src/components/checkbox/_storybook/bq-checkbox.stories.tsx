@@ -54,7 +54,7 @@ const Template = (args) => html`
     @bqChange=${args.bqChange}
   >
     ${args.label}
-  </bq-button>
+  </bq-checkbox>
 `;
 
 export const Default = (args) => Template(args);

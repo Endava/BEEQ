@@ -19,9 +19,8 @@ export const parameters = {
   controls: { expanded: true, hideNoControlsWarning: true },
   layout: 'fullscreen',
   html: {
+    removeComments: true,
     highlighter: {
-      removeEmptyComments: true,
-      showLineNumbers: true,
       wrapLines: true,
     },
     prettier: {

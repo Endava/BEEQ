@@ -119,7 +119,7 @@ export namespace Components {
         /**
           * Set the stroke color of the SVG. The value should be a valid value of the palette color
          */
-        "color": string;
+        "color"?: string;
         /**
           * Icon name to load. Please check all available icons [here](https://phosphoricons.com/)
          */
@@ -127,11 +127,11 @@ export namespace Components {
         /**
           * Set the size of the SVG
          */
-        "size": string | number;
+        "size"?: string | number;
         /**
           * It set the icon weight/style
          */
-        "weight": TIconWeight;
+        "weight"?: TIconWeight;
     }
 }
 export interface BqButtonCustomEvent<T> extends CustomEvent<T> {
@@ -301,7 +301,7 @@ declare namespace LocalJSX {
         /**
           * Icon name to load. Please check all available icons [here](https://phosphoricons.com/)
          */
-        "name"?: string;
+        "name": string;
         /**
           * Set the size of the SVG
          */

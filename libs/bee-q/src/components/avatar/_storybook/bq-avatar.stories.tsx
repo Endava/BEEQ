@@ -24,7 +24,13 @@ export default {
 };
 
 export const Image = (args) => html`
-  <bq-avatar image=${args.image} label=${args.label} initials=${args.initials} shape=${args.shape} size=${args.size} />
+  <bq-avatar
+    image=${args.image}
+    label=${args.label}
+    initials=${args.initials}
+    shape=${args.shape}
+    size=${args.size}
+  ></bq-avatar>
 `;
 Image.args = {
   image:
