@@ -1,5 +1,5 @@
 import { h, Component, Prop, Watch, Event, EventEmitter, Element, Method } from '@stencil/core';
-import { isDefined } from 'libs/bee-q/src/shared/utils';
+import { isNil } from 'libs/bee-q/src/shared/utils';
 
 /**
  * @part base - The component's internal wrapper of the checkbox component.
@@ -183,7 +183,7 @@ export class BqCheckbox {
           <input
             type="checkbox"
             class="bq-checkbox__input pointer-events-none absolute m-0 p-0 opacity-0"
-            name={isDefined(this.name) ? this.name : undefined}
+            name={!isNil(this.name) ? this.name : undefined}
             checked={this.checked}
             disabled={this.disabled}
             indeterminate={this.indeterminate}

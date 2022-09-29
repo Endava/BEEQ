@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
-import { hasSlotContent, validatePropValue } from '../../shared/utils';
+import { hasSlotContent, isDefined, validatePropValue } from '../../shared/utils';
 import {
   BUTTON_APPEARANCE,
   BUTTON_SIZE,
@@ -158,8 +158,7 @@ export class BqButton {
   // ===================================
 
   render() {
-    // TODO: to use the isDefined() utility when available
-    const isLink = !!this.href;
+    const isLink = isDefined(this.href);
     const TagElem = isLink ? 'a' : 'button';
 
     return (
