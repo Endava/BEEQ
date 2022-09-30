@@ -1,4 +1,4 @@
-import { isDefined } from './';
+import { isDefined } from '..';
 
 describe(isDefined.name, () => {
   it('returns false if value is empty string', () => {

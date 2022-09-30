@@ -1,4 +1,4 @@
-import { isEmpty } from '.';
+import { isEmpty } from '..';
 
 describe(isEmpty.name, () => {
   it('should return true for empty array', () => {

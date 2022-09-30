@@ -1,4 +1,4 @@
-import { getColorCSSVariable } from './';
+import { getColorCSSVariable } from '..';
 
 describe('cssVariables - getColorCSSVariable()', () => {
   it('should return the correct CSS Custom Property string', () => {

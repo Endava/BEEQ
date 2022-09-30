@@ -1,4 +1,4 @@
-import { validatePropValue } from './props';
+import { validatePropValue } from '..';
 
 describe('props - validatePropValue', () => {
   const originalConsole = { ...global.console };

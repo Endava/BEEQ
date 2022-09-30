@@ -1,4 +1,4 @@
-import { isString } from './';
+import { isString } from '..';
 
 describe('isString', () => {
   it('returns true if value is a String', () => {
