@@ -1,3 +1,4 @@
+import path from 'path';
 import tailwindcss from 'tailwindcss';
 import tailwind, { tailwindHMR } from 'stencil-tailwind-plugin';
 import { Config } from '@stencil/core';
@@ -14,10 +15,13 @@ export const config: Config = {
   globalStyle: './src/global/styles/default.scss',
   plugins: [
     sass({
-      includePaths: ['node_modules', `src/global/styles`],
+      includePaths: [
+        path.resolve(__dirname, '../../node_modules').replace(/\\/g, '/'),
+        path.resolve(__dirname, 'src/global/styles').replace(/\\/g, '/'),
+      ],
       injectGlobalPaths: [
-        `${__dirname}/src/global/styles/variables/index.scss`,
-        `${__dirname}/src/global/styles/mixins/index.scss`,
+        path.resolve(__dirname, 'src/global/styles/variables/index.scss').replace(/\\/g, '/'),
+        path.resolve(__dirname, 'src/global/styles/mixins/index.scss').replace(/\\/g, '/'),
       ],
       outputStyle: 'compressed',
       sourceMap: true,
@@ -26,7 +30,7 @@ export const config: Config = {
     }),
     tailwind({
       stripComments: true,
-      tailwindCssPath: `${__dirname}/src/global/styles/tailwind.pcss`,
+      tailwindCssPath: path.resolve(__dirname, 'src/global/styles/tailwind.pcss').replace(/\\/g, '/'),
       tailwindConf: tailwindConf,
       postcss: {
         plugins: [tailwindcss()],
@@ -37,7 +41,7 @@ export const config: Config = {
   outputTargets: [
     react({
       componentCorePackage: '@bee-q/chore',
-      proxiesFile: `${__dirname}/../../libs/bee-q-react/src/components.ts`,
+      proxiesFile: path.resolve(__dirname, '../../libs/bee-q-react/src/components.ts').replace(/\\/g, '/'),
       includeDefineCustomElements: true,
     }),
     { type: 'dist' },
