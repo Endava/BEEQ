@@ -1,0 +1,41 @@
+@import './bq-status-variables';
+
+:host {
+  @apply inline-block;
+}
+
+.bq-status {
+  @apply leading-m;
+
+  ::slotted(*) {
+    @apply m-0 p-0;
+  }
+}
+
+.bq-status__circle {
+  @apply h-[var(--bq-status-circle--size)] w-[var(--bq-status-circle--size)];
+
+  &.success {
+    @apply bg-system-success;
+  }
+
+  &.danger {
+    @apply bg-system-danger;
+  }
+
+  &.neutral {
+    @apply bg-system-neutral;
+  }
+
+  &.guide {
+    @apply bg-system-guide;
+  }
+
+  &.alert {
+    @apply bg-system-alert;
+  }
+
+  &.info {
+    @apply bg-system-info;
+  }
+}

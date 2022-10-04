@@ -8,6 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 import { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 import { TIconWeight } from "./components/icon/bq-icon.types";
+import { TStatusType } from "./components/status/bq-status.types";
 export namespace Components {
     interface BqAvatar {
         /**
@@ -133,6 +134,12 @@ export namespace Components {
          */
         "weight"?: TIconWeight;
     }
+    interface BqStatus {
+        /**
+          * Used to decide the color of the status circle
+         */
+        "type": TStatusType;
+    }
 }
 export interface BqButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -167,11 +174,18 @@ declare global {
         prototype: HTMLBqIconElement;
         new (): HTMLBqIconElement;
     };
+    interface HTMLBqStatusElement extends Components.BqStatus, HTMLStencilElement {
+    }
+    var HTMLBqStatusElement: {
+        prototype: HTMLBqStatusElement;
+        new (): HTMLBqStatusElement;
+    };
     interface HTMLElementTagNameMap {
         "bq-avatar": HTMLBqAvatarElement;
         "bq-button": HTMLBqButtonElement;
         "bq-checkbox": HTMLBqCheckboxElement;
         "bq-icon": HTMLBqIconElement;
+        "bq-status": HTMLBqStatusElement;
     }
 }
 declare namespace LocalJSX {
@@ -311,11 +325,18 @@ declare namespace LocalJSX {
          */
         "weight"?: TIconWeight;
     }
+    interface BqStatus {
+        /**
+          * Used to decide the color of the status circle
+         */
+        "type"?: TStatusType;
+    }
     interface IntrinsicElements {
         "bq-avatar": BqAvatar;
         "bq-button": BqButton;
         "bq-checkbox": BqCheckbox;
         "bq-icon": BqIcon;
+        "bq-status": BqStatus;
     }
 }
 export { LocalJSX as JSX };
@@ -326,6 +347,7 @@ declare module "@stencil/core" {
             "bq-button": LocalJSX.BqButton & JSXBase.HTMLAttributes<HTMLBqButtonElement>;
             "bq-checkbox": LocalJSX.BqCheckbox & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
             "bq-icon": LocalJSX.BqIcon & JSXBase.HTMLAttributes<HTMLBqIconElement>;
+            "bq-status": LocalJSX.BqStatus & JSXBase.HTMLAttributes<HTMLBqStatusElement>;
         }
     }
 }
