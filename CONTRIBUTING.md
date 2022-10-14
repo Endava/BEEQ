@@ -20,7 +20,7 @@ As a contributor, here are the guidelines we would like you to follow:
 
 ## <a name="code-of-conduct"></a> Code of Conduct
 
-We have adopted the Contributor Covenant as our [Code of Conduct](https://www.contributor-covenant.org/), and we expect project participants to adhere to it. Please [read the full text](https://github.com/facebook/react/blob/main/CODE_OF_CONDUCT.md) so that you can understand what actions will and will not be tolerated.
+We have adopted the Contributor Covenant as our [Code of Conduct](https://www.contributor-covenant.org/), and we expect project participants to adhere to it. Please [read the full text](./CODE_OF_CONDUCT.md) so that you can understand what actions will and will not be tolerated.
 
 ## <a name="how-can-i-contribute"></a> How can I contribute?
 
