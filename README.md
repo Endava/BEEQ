@@ -1,8 +1,20 @@
-![Bee-Q](https://user-images.githubusercontent.com/328492/189278210-da3353de-6ea2-4c97-9be3-b02ac6dd5997.jpg)
+<p align="center">
+  <img
+    width="500"
+    src="https://user-images.githubusercontent.com/328492/189278210-da3353de-6ea2-4c97-9be3-b02ac6dd5997.jpg"
+    alt="Bee-Q Design System logo"
+  />
+</p>
 
-# **Bee-Q**, *a web component library initiative*
+<h1 align="center">Bee-Q, a web component library initiative</h1>
 
-This repository holds the source code of the web component present on the Bee-Q Design System.
+<p align="center">This repository holds the source code of the web component present on the Bee-Q Design System.</p>
+
+<p align="center">
+  <a aria-label="license" href="./LICENSE">
+    <img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="">
+  </a>
+</p>
 
 ## ⚠️ Before Starting ⚠️
 
@@ -30,7 +42,7 @@ where:
 
 A recent version (>=16) of [`NodeJS`](https://nodejs.org/en/download/)
 
-> Note that you will need to use npm 6 or higher.
+> Note that you will need to use npm 7 or higher.
 
 ## Running the project 🏃‍
 

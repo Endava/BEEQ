@@ -6,9 +6,7 @@ As a contributor, here are the guidelines we would like you to follow:
 
   - [Code of Conduct](#code-of-conduct)
   - [How can I contribute?](#how-can-i-contribute)
-    - [Request support 🙋🏼‍♂️](#request-support)
-    - [Report an Error or Bug 🐞](#report-an-error-or-bug)
-    - [Request a Feature ✨](#request-a-feature)
+    - [Report an Error or Bug](#report-an-error-or-bug)
   - [Project setup](#project-setup)
   - [Styleguides](#styleguides)
     - [Code formatting](#code-formatting)
@@ -18,31 +16,35 @@ As a contributor, here are the guidelines we would like you to follow:
     - [Branches](#branches)
     - [Pull request](#pull-request)
 
-## <a name="code-of-conduct"></a> Code of Conduct
+## <a name="code-of-conduct"></a> Code of Conduct ✍️
 
 We have adopted the Contributor Covenant as our [Code of Conduct](https://www.contributor-covenant.org/), and we expect project participants to adhere to it. Please [read the full text](./CODE_OF_CONDUCT.md) so that you can understand what actions will and will not be tolerated.
 
 ## <a name="how-can-i-contribute"></a> How can I contribute?
 
-To be filled...
+So you wanna contribute some code! That's great! This project uses Git Pull Requests to manage contributions. 
 
-### <a name="request-support"></a> Request support 🙋🏼‍♂️
+First of all, please be aware that when you submit code changes, your submissions are understood to be under the same [Apache 2.0](https://choosealicense.com/licenses/apache-2.0/) that covers the project. Feel free to contact the maintainers at [opensource@endava.com](opensource@endava.com) if that's a concern.
 
-To be filled...
+### <a name="report-an-error-or-bug"></a> Report an Error or Bug
 
-### <a name="report-an-error-or-bug"></a> Report an Error or Bug 🐞
+We use GitHub issues to track public bugs. Report a bug by [opening a new issue](issues/new/choose). When you are opening an issue, please be sure to report as much information as you can to allow us to replicate the problem and faster find the solution.
 
-To be filled...
+**Great Bug Reports** tend to have:
 
-### <a name="request-a-feature"></a> Request a Feature ✨
+- A quick summary and/or background
+- Steps to reproduce
+  - Be specific!
+  - Give sample code if you can
+- What you expected would happen
+- What actually happens
+- Notes (possibly including why you think this might be happening, or stuff you tried that didn't work)
 
-To be filled...
+## <a name="project-setup"></a> Project setup 🛠
 
-## <a name="project-setup"></a> Project setup
+For running the project in your local development environment please [follow the README instructions](README.md).
 
-So you wanna contribute some code! That's great! This project uses Git Pull Requests to manage contributions. For running the project in your local development environment please [follow the README instructions](README.md).
-
-## <a name="styleguides"></a> Styleguides
+## <a name="styleguides"></a> Styleguides 🎨
 
 ### <a name="code-formatting"></a> Code formatting
 
@@ -99,16 +101,16 @@ feat/button-add-disable-property
 
 ### <a name="pull-request"></a> Pull request
 
-❗️ Before merging your Pull Request (PR), please make sure that the PR's name respects the [commit message format](#git-commit-messages) and always use Squash and merge❗️
+❗️When creating a Pull Request (PR), please make sure that the PR's name respects the [commit message format](#git-commit-messages) and always use Squash and merge.
 
 **PR that introduces BREAKING CHANGES should include the `!` character in the type and an explanation of the changes in the PR's body or footer**. For example:
 
 ```
-refactor(radio option)!: remove deprecated disabled property
+refactor(checkbox)!: rename `isChecked` property with `checked`
 
-BREAKING CHANGE: the deprecated `disabled` property has been removed.
+BREAKING CHANGE: the `isChecked` property has been renamed to `checked`.
 
-The `disabled` property is no longer supported in the radio-option element and the `isDisabled` property should be used instead.
+The `isChecked` property (`is-checked` attribute) is no longer supported in the checkbox component and has been renamed to `checked` property/attribute.
 ```
 
 Breaking Change section should start with the phrase "BREAKING CHANGE: " followed by a summary of the breaking change, a blank line, and a detailed description of the breaking change that also includes migration instructions.
