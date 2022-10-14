@@ -136,7 +136,7 @@ export namespace Components {
     }
     interface BqStatus {
         /**
-          * Used to decide the color of the status circle
+          * It defines the type of status to display
          */
         "type": TStatusType;
     }
@@ -327,7 +327,7 @@ declare namespace LocalJSX {
     }
     interface BqStatus {
         /**
-          * Used to decide the color of the status circle
+          * It defines the type of status to display
          */
         "type"?: TStatusType;
     }

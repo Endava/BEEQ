@@ -18,7 +18,7 @@ export class BqStatus {
 
   // Reference to host HTML element
   // ===================================
-  @Element() el!: HTMLBqButtonElement;
+  @Element() el!: HTMLBqStatusElement;
 
   // State() variables
   // Inlined decorator, alphabetical order
@@ -34,7 +34,7 @@ export class BqStatus {
   // =======================
   @Watch('type')
   checkPropValues() {
-    validatePropValue(STATUS_TYPE, 'neutral', this.type, 'type', this.el);
+    validatePropValue(STATUS_TYPE, 'neutral', this.type, this.el, 'type');
   }
   // Events section
   // Requires JSDocs for public API documentation

@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property | Attribute | Description                                   | Type                                                                 | Default     |
-| -------- | --------- | --------------------------------------------- | -------------------------------------------------------------------- | ----------- |
-| `type`   | `type`    | Used to decide the color of the status circle | `"alert" \| "danger" \| "guide" \| "info" \| "neutral" \| "success"` | `'neutral'` |
+| Property | Attribute | Description                              | Type                                                                 | Default     |
+| -------- | --------- | ---------------------------------------- | -------------------------------------------------------------------- | ----------- |
+| `type`   | `type`    | It defines the type of status to display | `"alert" \| "danger" \| "guide" \| "info" \| "neutral" \| "success"` | `'neutral'` |
 
 
 ## Shadow Parts
