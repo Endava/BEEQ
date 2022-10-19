@@ -14,11 +14,11 @@
 
 ## Shadow Parts
 
-| Part       | Description                                              |
-| ---------- | -------------------------------------------------------- |
-| `"base"`   | The component's internal wrapper of the status component |
-| `"circle"` | The colored circle that marks the status type            |
-| `"label"`  | The `<span>` element that holds the text content         |
+| Part       | Description                                                             |
+| ---------- | ----------------------------------------------------------------------- |
+| `"base"`   | The component's internal wrapper of the status component                |
+| `"circle"` | The colored circle that marks the status type                           |
+| `"text"`   | The `<div>` container that holds the text label of the status component |
 
 
 ----------------------------------------------

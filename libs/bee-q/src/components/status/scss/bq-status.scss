@@ -4,14 +4,6 @@
   @apply inline-block;
 }
 
-.bq-status {
-  @apply leading-m;
-
-  ::slotted(*) {
-    @apply m-0 p-0;
-  }
-}
-
 .bq-status__circle {
   @apply h-[var(--bq-status-circle--size)] w-[var(--bq-status-circle--size)];
 
@@ -38,4 +30,8 @@
   &.info {
     @apply bg-system-info;
   }
+}
+
+.bq-status__text ::slotted(*) {
+  @apply m-0 p-0 font-inter text-s font-medium leading-s text-text-primary;
 }

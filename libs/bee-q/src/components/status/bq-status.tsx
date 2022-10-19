@@ -5,7 +5,7 @@ import { STATUS_TYPE, TStatusType } from './bq-status.types';
 /**
  * @part base - The component's internal wrapper of the status component
  * @part circle - The colored circle that marks the status type
- * @part label - The `<span>` element that holds the text content
+ * @part text - The `<div>` container that holds the text label of the status component
  */
 @Component({
   tag: 'bq-status',
@@ -67,13 +67,14 @@ export class BqStatus {
   // ===================================
   render() {
     return (
-      <div
-        class="bq-status inline-flex items-center gap-2 font-inter text-s font-medium text-text-primary"
-        part="base"
-        role="status"
-      >
-        <div class={`bq-status__circle rounded-full ${this.type}`} part="circle" />
-        <slot />
+      <div class="bq-status inline-flex items-center gap-2" part="base" role="status">
+        <span class={`bq-status__circle rounded-full ${this.type}`} part="circle" role="img" />
+        <div
+          class="bq-status__text m-0 max-h-[20px] p-0 font-inter text-s font-medium leading-s text-text-primary"
+          part="text"
+        >
+          <slot />
+        </div>
       </div>
     );
   }
