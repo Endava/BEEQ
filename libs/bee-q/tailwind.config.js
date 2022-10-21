@@ -15,6 +15,12 @@ module.exports = {
       card: 'var(--bq-radius--l)',
       full: 'var(--bq-radius--xl)',
     },
+    boxShadow: {
+      xs: 'var(--bq-box-shadow--xs)',
+      s: 'var(--bq-box-shadow--s)',
+      m: 'var(--bq-box-shadow--m)',
+      l: 'var(--bq-box-shadow--l)',
+    },
     colors: {
       current: 'currentColor',
       transparent: 'transparent',
