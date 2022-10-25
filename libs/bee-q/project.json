@@ -96,6 +96,13 @@
       }
     },
     "lint": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": ["nx run bee-q:eslint", "nx run bee-q:stylelint"],
+        "parallel": true
+      }
+    },
+    "eslint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
@@ -121,6 +128,12 @@
         "command": "node tools/scripts/icon-library/create-icons-set.js"
       },
       "dependsOn": ["extract-icons"]
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
     }
   }
 }

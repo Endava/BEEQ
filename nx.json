@@ -15,9 +15,18 @@
   },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "nx/tasks-runners/default",
+      "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "build-storybook", "lint", "test", "e2e", "stylelint"]
+        "cacheableOperations": [
+          "build",
+          "build-storybook",
+          "lint",
+          "test",
+          "e2e",
+          "stylelint",
+          "create-icons-set",
+          "extract-icons"
+        ]
       }
     }
   },
@@ -27,7 +36,24 @@
         "target": "build",
         "projects": "dependencies"
       }
+    ],
+    "version": [
+      {
+        "target": "version",
+        "projects": "dependencies"
+      }
     ]
+  },
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"]
+    },
+    "github": {
+      "dependsOn": ["build"]
+    },
+    "version": {
+      "dependsOn": ["build"]
+    }
   },
   "generators": {
     "@nrwl/react": {

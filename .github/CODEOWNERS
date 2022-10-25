@@ -1,3 +1,7 @@
+# Any change related to the .github workflows
+# will require approval from @dgonzalezr.
+.github/ @dgonzalezr
+
 # Any change related to the NPM dependencies
 # will require approval from @dgonzalezr.
 

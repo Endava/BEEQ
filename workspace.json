@@ -2,6 +2,31 @@
   "version": 2,
   "projects": {
     "bee-q": "libs/bee-q",
-    "bee-q-react": "libs/bee-q-react"
+    "bee-q-react": "libs/bee-q-react",
+    "workspace": {
+      "root": ".",
+      "targets": {
+        "version": {
+          "executor": "@jscutlery/semver:version",
+          "options": {
+            "preset": "conventional",
+            "changelogHeader": "# CHANGELOG\n\nAll notable changes to this project will be documented in this file.\n\nThe format is based on [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)\nand this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)\n\n",
+            "commitMessageFormat": "chore(release): ${version} [skip ci]",
+            "push": true,
+            "skipCommitTypes": ["docs", "ci"],
+            "skipProjectChangelog": true,
+            "syncVersions": true,
+            "postTargets": ["github", "bee-q:publish", "bee-q-react:publish"]
+          }
+        },
+        "github": {
+          "executor": "@jscutlery/semver:github",
+          "options": {
+            "tag": "${tag}",
+            "notes": "${notes}"
+          }
+        }
+      }
+    }
   }
 }

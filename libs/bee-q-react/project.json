@@ -25,19 +25,17 @@
         ]
       }
     },
-    "lint": {
+    "eslint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["libs/bee-q-react/**/*.{ts,tsx,js,jsx}"]
       }
     },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/bee-q-react"],
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
       "options": {
-        "jestConfig": "libs/bee-q-react/jest.config.ts",
-        "passWithNoTests": true
+        "access": "public"
       }
     }
   }

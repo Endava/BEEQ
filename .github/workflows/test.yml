@@ -8,23 +8,25 @@ on:
   workflow_dispatch:
 
 jobs:
-  lint:
-    name: Run lint, unit/e2e tests and build the project
-    runs-on: ubuntu-latest
-    steps:
-      - name: 🛎 Checkout
-        uses: actions/checkout@v3
+  main:
+    name: 🌩 Nx Cloud - Main Job
+    uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.8
+    with:
+      number-of-agents: 1
+      init-commands: |
+        npx nx-cloud start-ci-run --stop-agents-after="build" --agent-count=1
+      parallel-commands: |
+        npx nx-cloud record -- npx nx lint bee-q
+      parallel-commands-on-agents: |
+        npx nx affected --target=test --parallel=1 --exclude=workspace --ci --code-coverage
+        npx nx affected --target=build --parallel=1 --exclude=workspace
+    secrets:
+      NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 
-      - name: 🛠 Setup Node
-        uses: actions/setup-node@v2
-        with: 
-          node-version: '16.x'
-
-      - name: 📦 Install dependencies
-        run: npm ci
-
-      - name: 📝 Run test
-        run: npm test
-
-      - name: ⏳ Build
-        run: npm run build
+  agents:
+    name: 👮‍♂️ Nx Cloud - Agents
+    uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.8
+    with:
+      number-of-agents: 1
+    secrets:
+      NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
