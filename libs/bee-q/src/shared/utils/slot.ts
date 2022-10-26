@@ -3,6 +3,35 @@
 = https://github.com/shoelace-style/shoelace/blob/next/src/utilities/slot.ts             =
 =========================================================================================*/
 
+function isElementNode(node: Node): node is HTMLElement {
+  return node.nodeType === Node.ELEMENT_NODE;
+}
+
+function isTextNode(node: Node): node is Text {
+  return node.nodeType === Node.TEXT_NODE;
+}
+
+function getText(node: Node, currentLevel = 1, maxLevel = Infinity): string {
+  let text = '';
+  if (currentLevel <= maxLevel) {
+    if (isTextNode(node)) {
+      text += node.textContent;
+    } else if (isElementNode(node) && node.hasChildNodes()) {
+      const nextLevel = currentLevel + 1;
+      node.childNodes.forEach((node) => {
+        text += getText(node, nextLevel, maxLevel);
+      });
+    }
+  }
+
+  return text;
+}
+
+export interface IOptions {
+  recurse: boolean;
+  maxLevel?: number;
+}
+
 /**
  * Iterates over all of its assigned element and text nodes of a given a slot and returns the concatenated HTML as a string.
  *
@@ -14,11 +43,11 @@ export function getInnerHTML(slot: HTMLSlotElement): string {
   let html = '';
 
   [...nodes].forEach((node) => {
-    if (node.nodeType === Node.ELEMENT_NODE) {
-      html += (node as HTMLElement).outerHTML;
+    if (isElementNode(node)) {
+      html += node.outerHTML;
     }
 
-    if (node.nodeType === Node.TEXT_NODE) {
+    if (isTextNode(node)) {
       html += node.textContent;
     }
   });
@@ -32,14 +61,22 @@ export function getInnerHTML(slot: HTMLSlotElement): string {
  * @param {HTMLSlotElement} slot - Slot HTML element
  * @return {string} The concatenated text as a string
  */
-export function getTextContent(slot: HTMLSlotElement): string {
+export function getTextContent(slot: HTMLSlotElement): string;
+/**
+ * Iterates over all of its assigned text nodes of a given slot and returns the concatenated text as a string.
+ *
+ * @param {HTMLSlotElement} slot - Slot HTML element
+ * @param {IOptions} options - Options to retrieve text
+ * @return {string} The concatenated text as a string
+ */
+export function getTextContent(slot: HTMLSlotElement, options: IOptions): string;
+export function getTextContent(slot: HTMLSlotElement, options?: IOptions): string {
   const nodes = slot.assignedNodes({ flatten: true });
+  const { recurse = false, maxLevel } = options ?? {};
   let text = '';
 
   [...nodes].forEach((node) => {
-    if (node.nodeType === Node.TEXT_NODE) {
-      text += node.textContent;
-    }
+    text += getText(node, 1, recurse ? maxLevel : 1);
   });
 
   return text.trim();

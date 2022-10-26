@@ -6,6 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
+import { TBadgeSize } from "./components/badge/bq-badge.types";
 import { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 import { TIconWeight } from "./components/icon/bq-icon.types";
 import { TStatusType } from "./components/status/bq-status.types";
@@ -31,6 +32,20 @@ export namespace Components {
           * The size of the avatar
          */
         "size": TAvatarSize;
+    }
+    interface BqBadge {
+        /**
+          * Badge background color. The value should be a valid value of the palette color
+         */
+        "backgroundColor"?: string;
+        /**
+          * The size of the badge
+         */
+        "size"?: TBadgeSize;
+        /**
+          * Badge number color. The value should be a valid value of the palette color
+         */
+        "textColor"?: string;
     }
     interface BqButton {
         /**
@@ -156,6 +171,12 @@ declare global {
         prototype: HTMLBqAvatarElement;
         new (): HTMLBqAvatarElement;
     };
+    interface HTMLBqBadgeElement extends Components.BqBadge, HTMLStencilElement {
+    }
+    var HTMLBqBadgeElement: {
+        prototype: HTMLBqBadgeElement;
+        new (): HTMLBqBadgeElement;
+    };
     interface HTMLBqButtonElement extends Components.BqButton, HTMLStencilElement {
     }
     var HTMLBqButtonElement: {
@@ -182,6 +203,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "bq-avatar": HTMLBqAvatarElement;
+        "bq-badge": HTMLBqBadgeElement;
         "bq-button": HTMLBqButtonElement;
         "bq-checkbox": HTMLBqCheckboxElement;
         "bq-icon": HTMLBqIconElement;
@@ -210,6 +232,20 @@ declare namespace LocalJSX {
           * The size of the avatar
          */
         "size"?: TAvatarSize;
+    }
+    interface BqBadge {
+        /**
+          * Badge background color. The value should be a valid value of the palette color
+         */
+        "backgroundColor"?: string;
+        /**
+          * The size of the badge
+         */
+        "size"?: TBadgeSize;
+        /**
+          * Badge number color. The value should be a valid value of the palette color
+         */
+        "textColor"?: string;
     }
     interface BqButton {
         /**
@@ -333,6 +369,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "bq-avatar": BqAvatar;
+        "bq-badge": BqBadge;
         "bq-button": BqButton;
         "bq-checkbox": BqCheckbox;
         "bq-icon": BqIcon;
@@ -344,6 +381,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "bq-avatar": LocalJSX.BqAvatar & JSXBase.HTMLAttributes<HTMLBqAvatarElement>;
+            "bq-badge": LocalJSX.BqBadge & JSXBase.HTMLAttributes<HTMLBqBadgeElement>;
             "bq-button": LocalJSX.BqButton & JSXBase.HTMLAttributes<HTMLBqButtonElement>;
             "bq-checkbox": LocalJSX.BqCheckbox & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
             "bq-icon": LocalJSX.BqIcon & JSXBase.HTMLAttributes<HTMLBqIconElement>;

@@ -1,0 +1,27 @@
+/* -------------------------------------------------------------------------- */
+/*                                Badge styles                               */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-badge.variables';
+
+:host {
+  @apply inline-block;
+}
+
+.bq-badge {
+  @apply flex items-center justify-center rounded-xl bg-[color:var(--bq-badge--background-color)] text-[color:var(--bq-badge--text-color)];
+}
+
+.size {
+  &--small {
+    @apply h-[var(--bq-badge--size-small)] w-[var(--bq-badge--size-small)];
+  }
+
+  &--medium {
+    @apply h-[var(--bq-badge--size-medium)] w-[var(--bq-badge--size-medium)];
+  }
+}
+
+.digit {
+  @apply min-h-[var(--bq-badge--size-large)] min-w-[var(--bq-badge--size-large)];
+}

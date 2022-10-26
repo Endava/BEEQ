@@ -1,0 +1,11 @@
+/* -------------------------------------------------------------------------- */
+/*                          Badge custom properties                          */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  --bq-badge--size-small: 8px;
+  --bq-badge--size-medium: 12px;
+  --bq-badge--size-large: 16px;
+  --bq-badge--background-color: theme('colors.data.red');
+  --bq-badge--text-color: theme('colors.text.inverse');
+}
