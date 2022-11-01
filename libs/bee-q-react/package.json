@@ -1,7 +1,7 @@
 {
   "name": "@bee-q/react",
   "version": "0.0.1-beta.0",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "description": "React specific wrapper for Bee-Q Design System components",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -9,6 +9,14 @@
   "files": [
     "dist/"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.2",
+    "react-dom": ">=17.0.2"
+  },
   "browserslist": [
     "> 1%",
     "last 3 Chrome major versions",

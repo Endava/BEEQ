@@ -2,10 +2,11 @@
   "name": "root",
   "private": true,
   "description": "Bee-Q Design System",
-  "license": "MIT",
+  "license": "Apache-2.0",
+  "version": "0.0.1-beta.0",
   "repository": {
     "type": "Git",
-    "url": "https://bitbucket.endava.com/projects/DSEDV001/repos/bee-q"
+    "url": "https://github.com/dgonzalezr/bee-q"
   },
   "scripts": {
     "start": "nx run-many --target=start --projects=bee-q",
@@ -105,6 +106,5 @@
       "react": "^18.2.0",
       "react-dom": "^18.2.0"
     }
-  },
-  "version": "0.0.1-beta.0"
+  }
 }
