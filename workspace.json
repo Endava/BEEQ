@@ -12,19 +12,29 @@
             "preset": "conventional",
             "changelogHeader": "# CHANGELOG\n\nAll notable changes to this project will be documented in this file.\n\nThe format is based on [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)\nand this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)\n\n",
             "commitMessageFormat": "chore(release): ${version} [skip ci]",
-            "push": true,
             "skipCommitTypes": ["docs", "ci"],
             "skipProjectChangelog": true,
-            "syncVersions": true,
-            "postTargets": ["workspace:github", "bee-q:publish", "bee-q-react:publish"]
+            "syncVersions": true
           }
         },
-        "github": {
+        "release": {
           "executor": "@jscutlery/semver:github",
           "options": {
-            "tag": "${tag}",
+            "changelogHeader": "${tag}",
+            "generateNotes": true,
             "notes": "${notes}",
-            "generateNotes": true
+            "tag": "${tag}"
+          }
+        },
+        "prerelease": {
+          "executor": "@jscutlery/semver:github",
+          "options": {
+            "changelogHeader": "${tag}",
+            "draft": true,
+            "generateNotes": true,
+            "notes": "${notes}",
+            "prerelease": true,
+            "tag": "${tag}"
           }
         }
       }

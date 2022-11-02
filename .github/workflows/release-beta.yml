@@ -31,21 +31,29 @@ jobs:
       - name: 📦 Install dependencies
         run: npm ci
 
+      - name: ⏳ Build
+        run: npm run build
+
       - name: 👀 Check NPM credentials
         run: npm whoami
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: 🚀 Version and Publish
-        run: npx nx affected --base=develop --target=version --parallel=1 --ci
+        run: |
+          nx run workspace:version --releaseAs=prerelease --preid=beta --postTargets=workspace:prerelease --push --baseBranch=develop
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: 🏷 Tag last-release
+      - name: 📥 Get NPM version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@main
+
+      - name: 🏷 Create Github Tag
         shell: bash
         run: |
-          git tag -f last-release
+          git tag -f ${{ steps.package-version.outputs.current-version }}
       
       - name: 💪 Push changes
         uses: ad-m/github-push-action@master
