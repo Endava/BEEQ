@@ -88,10 +88,10 @@ export class BqButton {
   @Watch('size')
   @Watch('variant')
   checkPropValues() {
-    validatePropValue(BUTTON_APPEARANCE, BUTTON_APPEARANCE[0], this.appearance, this.el, 'appearance');
-    validatePropValue(BUTTON_TYPE, BUTTON_TYPE[0], this.type, this.el, 'type');
-    validatePropValue(BUTTON_SIZE, BUTTON_SIZE[1], this.size, this.el, 'size');
-    validatePropValue(BUTTON_VARIANT, BUTTON_VARIANT[0], this.variant, this.el, 'variant');
+    validatePropValue(BUTTON_APPEARANCE, 'primary', this.appearance, this.el, 'appearance');
+    validatePropValue(BUTTON_TYPE, 'button', this.type, this.el, 'type');
+    validatePropValue(BUTTON_SIZE, 'medium', this.size, this.el, 'size');
+    validatePropValue(BUTTON_VARIANT, 'standard', this.variant, this.el, 'variant');
   }
 
   // Events section

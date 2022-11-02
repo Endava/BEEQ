@@ -1,0 +1,57 @@
+/* -------------------------------------------------------------------------- */
+/*                                Button styles                               */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-divider.variables';
+
+.bq-divider {
+  @apply flex items-center;
+
+  &::before,
+  &::after {
+    @apply m-0 flex-grow border border-solid border-[color:var(--bq-divider--stroke-color)] content-empty;
+  }
+
+  &::before {
+    @apply mr-[var(--bq-divider--title-marginX)];
+  }
+
+  &::after {
+    @apply ml-[var(--bq-divider--title-marginX)];
+  }
+
+  &-title--start::before,
+  &-title--end::after {
+    @apply flex-grow-0 basis-5;
+  }
+}
+
+.bq-divider--vertical {
+  @apply h-full flex-col;
+
+  &::before {
+    @apply m-0 mb-[var(--bq-divider--title-marginX)];
+  }
+
+  &::after {
+    @apply m-0 mt-[var(--bq-divider--title-marginX)];
+  }
+}
+
+.bq-divider--dashed {
+  &::before,
+  &::after {
+    @apply border-dashed;
+  }
+}
+
+.bq-divider--no-title {
+  &::before,
+  &::after {
+    @apply m-0;
+  }
+
+  &::after {
+    @apply content-none;
+  }
+}

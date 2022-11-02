@@ -109,7 +109,11 @@ module.exports = {
       h: 'var(--bq-font-line-height--h)',
       g: 'var(--bq-font-line-height--g)',
     },
-    extend: {},
+    extend: {
+      content: {
+        empty: "''",
+      },
+    },
   },
   plugins: [],
   corePlugins: {

@@ -8,6 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 import { TBadgeSize } from "./components/badge/bq-badge.types";
 import { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
+import { TDividerOrientation, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 import { TIconWeight } from "./components/icon/bq-icon.types";
 import { TStatusType } from "./components/status/bq-status.types";
 export namespace Components {
@@ -131,6 +132,24 @@ export namespace Components {
          */
         "value": string;
     }
+    interface BqDivider {
+        /**
+          * If true, the divider has a dashed pattern
+         */
+        "dashed": boolean;
+        /**
+          * The default orientation of the divider
+         */
+        "orientation": TDividerOrientation;
+        /**
+          * Set the stroke color of the divider. The value should be a valid value of the palette color
+         */
+        "strokeColor"?: string;
+        /**
+          * Set the alignment of the title on the main axis of the divider (horizontal / vertical)
+         */
+        "titleAlignment"?: TDividerTitleAlignment;
+    }
     interface BqIcon {
         /**
           * Set the stroke color of the SVG. The value should be a valid value of the palette color
@@ -189,6 +208,12 @@ declare global {
         prototype: HTMLBqCheckboxElement;
         new (): HTMLBqCheckboxElement;
     };
+    interface HTMLBqDividerElement extends Components.BqDivider, HTMLStencilElement {
+    }
+    var HTMLBqDividerElement: {
+        prototype: HTMLBqDividerElement;
+        new (): HTMLBqDividerElement;
+    };
     interface HTMLBqIconElement extends Components.BqIcon, HTMLStencilElement {
     }
     var HTMLBqIconElement: {
@@ -206,6 +231,7 @@ declare global {
         "bq-badge": HTMLBqBadgeElement;
         "bq-button": HTMLBqButtonElement;
         "bq-checkbox": HTMLBqCheckboxElement;
+        "bq-divider": HTMLBqDividerElement;
         "bq-icon": HTMLBqIconElement;
         "bq-status": HTMLBqStatusElement;
     }
@@ -343,6 +369,24 @@ declare namespace LocalJSX {
          */
         "value": string;
     }
+    interface BqDivider {
+        /**
+          * If true, the divider has a dashed pattern
+         */
+        "dashed"?: boolean;
+        /**
+          * The default orientation of the divider
+         */
+        "orientation"?: TDividerOrientation;
+        /**
+          * Set the stroke color of the divider. The value should be a valid value of the palette color
+         */
+        "strokeColor"?: string;
+        /**
+          * Set the alignment of the title on the main axis of the divider (horizontal / vertical)
+         */
+        "titleAlignment"?: TDividerTitleAlignment;
+    }
     interface BqIcon {
         /**
           * Set the stroke color of the SVG. The value should be a valid value of the palette color
@@ -372,6 +416,7 @@ declare namespace LocalJSX {
         "bq-badge": BqBadge;
         "bq-button": BqButton;
         "bq-checkbox": BqCheckbox;
+        "bq-divider": BqDivider;
         "bq-icon": BqIcon;
         "bq-status": BqStatus;
     }
@@ -384,6 +429,7 @@ declare module "@stencil/core" {
             "bq-badge": LocalJSX.BqBadge & JSXBase.HTMLAttributes<HTMLBqBadgeElement>;
             "bq-button": LocalJSX.BqButton & JSXBase.HTMLAttributes<HTMLBqButtonElement>;
             "bq-checkbox": LocalJSX.BqCheckbox & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
+            "bq-divider": LocalJSX.BqDivider & JSXBase.HTMLAttributes<HTMLBqDividerElement>;
             "bq-icon": LocalJSX.BqIcon & JSXBase.HTMLAttributes<HTMLBqIconElement>;
             "bq-status": LocalJSX.BqStatus & JSXBase.HTMLAttributes<HTMLBqStatusElement>;
         }
