@@ -42,7 +42,7 @@ jobs:
 
       - name: 🚀 Version and Publish
         run: |
-          npx nx run workspace:version --releaseAs=prerelease --preid=beta --postTargets=workspace:prerelease
+          npx nx run workspace:version --releaseAs=prerelease --preid=beta --postTargets=workspace:prerelease --baseBranch=develop
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
