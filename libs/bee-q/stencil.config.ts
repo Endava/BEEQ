@@ -40,7 +40,7 @@ export const config: Config = {
   ],
   outputTargets: [
     react({
-      componentCorePackage: '@bee-q/chore',
+      componentCorePackage: '@bee-q/core',
       proxiesFile: path.resolve(__dirname, '../../libs/bee-q-react/src/components.ts').replace(/\\/g, '/'),
       includeDefineCustomElements: true,
     }),
