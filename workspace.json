@@ -14,14 +14,15 @@
             "commitMessageFormat": "chore(release): ${version} [skip ci]",
             "skipCommitTypes": ["docs", "ci"],
             "skipProjectChangelog": true,
-            "syncVersions": true
+            "syncVersions": true,
+            "push": true
           }
         },
         "release": {
           "executor": "@jscutlery/semver:github",
           "options": {
-            "changelogHeader": "${tag}",
             "generateNotes": true,
+            "changelogHeader": "${tag}",
             "notes": "${notes}",
             "tag": "${tag}"
           }
@@ -29,11 +30,10 @@
         "prerelease": {
           "executor": "@jscutlery/semver:github",
           "options": {
-            "changelogHeader": "${tag}",
-            "draft": true,
-            "generateNotes": true,
-            "notes": "${notes}",
             "prerelease": true,
+            "generateNotes": true,
+            "changelogHeader": "${tag}",
+            "notes": "${notes}",
             "tag": "${tag}"
           }
         }

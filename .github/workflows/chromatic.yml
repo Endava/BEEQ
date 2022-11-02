@@ -26,7 +26,9 @@ jobs:
         run: npm ci
 
       - name: ⏳ Build
-        run: npm run build
+        run: |
+          npx nx run-many --target=build --parallel=1 --exclude=workspace --output-style=stream-without-prefixes
+          npm run build:storybook
 
       - name: 📚 Publish to Chromatic
         uses: chromaui/action@v1

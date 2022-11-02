@@ -44,12 +44,15 @@ export const config: Config = {
       proxiesFile: path.resolve(__dirname, '../../libs/bee-q-react/src/components.ts').replace(/\\/g, '/'),
       includeDefineCustomElements: true,
     }),
-    { type: 'dist' },
     { type: 'dist-custom-elements' },
     { type: 'docs-readme' },
     {
       type: 'docs-custom',
       generator: generateCustomElementsJson,
+    },
+    {
+      type: 'dist',
+      copy: [{ src: '../README.md' }],
     },
     {
       type: 'www',
