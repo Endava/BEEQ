@@ -1,4 +1,5 @@
 {
+  "name": "bee-q-react",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/bee-q-react/src",
   "projectType": "library",
@@ -9,7 +10,7 @@
       "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/bee-q-react/dist",
+        "outputPath": "dist/bee-q-react",
         "tsConfig": "libs/bee-q-react/tsconfig.json",
         "project": "libs/bee-q-react/package.json",
         "entryFile": "libs/bee-q-react/src/index.ts",

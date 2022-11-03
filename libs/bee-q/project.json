@@ -1,12 +1,14 @@
 {
+  "name": "bee-q",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/bee-q/src",
   "projectType": "library",
+  "tags": [],
   "generators": {
     "@nxext/stencil:component": {
       "style": "scss"
     }
   },
-  "tags": [],
   "targets": {
     "test": {
       "executor": "@nxext/stencil:test",
@@ -53,15 +55,22 @@
       }
     },
     "build": {
+      "dependsOn": ["^build", "create-icons-set"],
       "executor": "@nxext/stencil:build",
       "outputs": ["{options.outputPath}"],
       "options": {
         "projectType": "library",
         "tsConfig": "libs/bee-q/tsconfig.lib.json",
         "configPath": "libs/bee-q/stencil.config.ts",
-        "outputPath": "dist/bee-q"
+        "outputPath": "dist/bee-q",
+        "assets": [
+          {
+            "glob": "libs/bee-q/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
       },
-      "dependsOn": ["^build", "create-icons-set"],
       "configurations": {
         "production": {
           "dev": false,

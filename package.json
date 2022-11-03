@@ -11,8 +11,8 @@
   "scripts": {
     "start": "nx run-many --target=start --projects=bee-q",
     "build": "run-s build:libs build:storybook",
-    "build:libs": "nx affected --target=build --parallel=1 --exclude=workspace --output-style=stream-without-prefixes",
-    "build:storybook": "nx build-storybook bee-q --output-style=stream-without-prefixes",
+    "build:libs": "nx run-many --target=build --exclude=workspace --output-style=stream-without-prefixes",
+    "build:storybook": "nx run bee-q:build-storybook --output-style=stream-without-prefixes",
     "test": "nx affected --target=test --parallel=1 --exclude=workspace",
     "clean": "run-s clean:build clean:modules",
     "clean:build": "rimraf ./dist/**",
