@@ -6,6 +6,13 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+### [0.0.1-beta.2](https://github.com/dgonzalezr/bee-q/compare/v0.0.1-beta.1...v0.0.1-beta.2) (2022-11-03)
+
+
+### Bug Fixes
+
+* **bee-q-react:** broken published npm package ([09b2870](https://github.com/dgonzalezr/bee-q/commit/09b2870ba4be94d4c87f358cb815b1fecbde04f8))
+
 ### [0.0.1-beta.1](https://github.com/dgonzalezr/bee-q/compare/v0.0.1-beta.0...v0.0.1-beta.1) (2022-11-02)
 
 
