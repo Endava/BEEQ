@@ -6,6 +6,13 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+### [0.0.1-beta.3](https://github.com/dgonzalezr/bee-q/compare/v0.0.1-beta.2...v0.0.1-beta.3) (2022-11-04)
+
+
+### Features
+
+* enable experimental import and SSR hydrate ([#23](https://github.com/dgonzalezr/bee-q/issues/23)) ([a03f9e4](https://github.com/dgonzalezr/bee-q/commit/a03f9e425e05ef5f094db67b705518a8d18fbeae))
+
 ### [0.0.1-beta.2](https://github.com/dgonzalezr/bee-q/compare/v0.0.1-beta.1...v0.0.1-beta.2) (2022-11-03)
 
 
