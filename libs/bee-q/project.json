@@ -62,14 +62,7 @@
         "projectType": "library",
         "tsConfig": "libs/bee-q/tsconfig.lib.json",
         "configPath": "libs/bee-q/stencil.config.ts",
-        "outputPath": "dist/bee-q",
-        "assets": [
-          {
-            "glob": "libs/bee-q/README.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
+        "outputPath": "dist/bee-q"
       },
       "configurations": {
         "production": {

@@ -39,12 +39,8 @@ export const config: Config = {
     tailwindHMR(),
   ],
   outputTargets: [
-    react({
-      componentCorePackage: '@bee-q/core',
-      proxiesFile: path.resolve(__dirname, '../../libs/bee-q-react/src/components.ts').replace(/\\/g, '/'),
-      includeDefineCustomElements: true,
-    }),
     { type: 'dist-custom-elements' },
+    { type: 'dist-hydrate-script', dir: 'dist/hydrate' },
     { type: 'docs-readme' },
     {
       type: 'docs-custom',
@@ -59,7 +55,15 @@ export const config: Config = {
       copy: [{ src: 'global/assets', dest: 'assets' }],
       serviceWorker: null, // disable service workers
     },
+    react({
+      componentCorePackage: '@bee-q/core',
+      proxiesFile: path.resolve(__dirname, '../../libs/bee-q-react/src/components.ts').replace(/\\/g, '/'),
+      includeDefineCustomElements: true,
+    }),
   ],
+  extras: {
+    experimentalImportInjection: true,
+  },
   watchIgnoredRegex: /(custom-elements\.)((d\.ts)|(json))$/g,
   devServer: {
     port: 8001,

@@ -199,7 +199,10 @@ export class BqCheckbox {
             part="input"
             tabindex="0"
           />
-          <span class="bq-checkbox__checkbox" part="checkbox">
+          <span
+            class="bq-checkbox__checkbox relative box-border flex h-full w-full items-center justify-center"
+            part="checkbox"
+          >
             {/* 
               We could move these SVGs to separated functional components, but it seems there's a weird issue with
               Stencil and pure SVG components: https://stencil-worldwide.slack.com/archives/C79EANFL7/p1663779385026389

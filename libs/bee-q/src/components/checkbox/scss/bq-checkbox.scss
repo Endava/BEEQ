@@ -9,7 +9,7 @@
 }
 
 .bq-checkbox {
-  @apply inline-flex cursor-pointer select-none items-center rounded-s p-2 pr-4 transition-colors duration-300;
+  @apply inline-flex cursor-pointer select-none rounded-s p-2 pr-4 transition-colors duration-300;
 
   // Default hover state
   &:not(.is-checked),
@@ -55,7 +55,7 @@
   &:checked,
   &:indeterminate {
     ~ .bq-checkbox__checkbox {
-      @apply border-ui-primary bg-ui-primary text-text-inverse;
+      @apply border-ui-primary bg-ui-primary;
     }
   }
 
@@ -68,6 +68,5 @@
 }
 
 .bq-checkbox__checkbox {
-  @apply relative box-border flex h-full w-full items-center justify-center;
   @apply rounded-[var(--bq-checkbox--border-radius)] border-[length:var(--bq-checkbox--border-width)] border-solid border-text-primary;
 }
