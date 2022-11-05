@@ -47,6 +47,10 @@ export const config: Config = {
       generator: generateCustomElementsJson,
     },
     {
+      type: 'docs-vscode',
+      file: 'custom-elements.json',
+    },
+    {
       type: 'dist',
       copy: [{ src: '../README.md' }],
     },
