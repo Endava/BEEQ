@@ -208,7 +208,11 @@ export class BqCheckbox {
               Stencil and pure SVG components: https://stencil-worldwide.slack.com/archives/C79EANFL7/p1663779385026389
              */}
             {this.checked && (
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-full text-text-inverse" viewBox="0 0 256 256">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="absolute h-full w-full text-text-inverse"
+                viewBox="0 0 256 256"
+              >
                 <path fill="none" d="M0 0h256v256H0z" />
                 <path
                   fill="none"
@@ -223,7 +227,7 @@ export class BqCheckbox {
             {!this.checked && this.indeterminate && (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-full w-full text-text-inverse"
+                class="absolute h-full w-full text-text-inverse"
                 viewBox="0 0 256 256"
                 fill="currentColor"
               >
