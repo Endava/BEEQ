@@ -5,6 +5,10 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+Buttons are designed for users to take action on a page or a screen.
+
 ## Properties
 
 | Property     | Attribute    | Description                                                                                                                                                                             | Type                                           | Default      |

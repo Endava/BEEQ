@@ -3,6 +3,10 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+Icons are simplified images that graphically explain the meaning of an object on the screen.
+
 ## Properties
 
 | Property            | Attribute | Description                                                                             | Type                                                              | Default     |
