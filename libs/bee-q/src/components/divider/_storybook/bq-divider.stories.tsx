@@ -1,6 +1,6 @@
 import { html } from 'lit-html';
 
-import { DIVIDER_TITLE_ALIGNMENT, DIVIDER_ORIENTATION } from '../bq-divider.types';
+import { DIVIDER_TITLE_ALIGNMENT, DIVIDER_ORIENTATION, DIVIDER_STROKE_LINECAP } from '../bq-divider.types';
 import mdx from './bq-divider.mdx';
 
 export default {
@@ -15,16 +15,26 @@ export default {
   argTypes: {
     orientation: { control: 'select', options: [...DIVIDER_ORIENTATION] },
     dashed: { control: 'boolean' },
-    strokeColor: { control: 'text' },
+    'stroke-color': { control: 'text' },
     'title-alignment': { control: 'select', options: [...DIVIDER_TITLE_ALIGNMENT] },
+    'stroke-dash-width': { control: 'number' },
+    'stroke-dash-gap': { control: 'number' },
+    'stroke-thickness': { control: 'number' },
+    'stroke-basis': { control: 'number' },
+    'stroke-linecap': { control: 'select', options: [...DIVIDER_STROKE_LINECAP] },
     // This control is not part of the component
     'title-text': { control: 'text', table: { disable: true } },
   },
   args: {
     orientation: 'horizontal',
     dashed: false,
-    strokeColor: 'ui--secondary',
+    'stroke-color': 'ui--secondary',
     'title-alignment': 'middle',
+    'stroke-dash-width': 12,
+    'stroke-dash-gap': 7,
+    'stroke-thickness': 2,
+    'stroke-basis': 20,
+    'stroke-linecap': 'butt',
   },
 };
 
@@ -39,10 +49,15 @@ const Template = (args) => html`
     <bq-divider
       orientation=${args.orientation}
       ?dashed=${args.dashed}
-      strokeColor=${args.strokeColor}
+      stroke-color=${args['stroke-color']}
+      stroke-dash-width=${args['stroke-dash-width']}
+      stroke-dash-gap=${args['stroke-dash-gap']}
+      stroke-thickness=${args['stroke-thickness']}
+      stroke-basis=${args['stroke-basis']}
+      stroke-linecap=${args['stroke-linecap']}
       title-alignment=${args['title-alignment']}
     >
-      ${args['title-text'] ? html`<p style="margin: 0;">${args['title-text']}</p>` : null}
+      ${args['title-text'] ? html`<p style="margin: 0; white-space: nowrap;">${args['title-text']}</p>` : null}
     </bq-divider>
   </div>
 `;

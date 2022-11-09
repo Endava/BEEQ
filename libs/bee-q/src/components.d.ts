@@ -8,7 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 import { TBadgeSize } from "./components/badge/bq-badge.types";
 import { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
-import { TDividerOrientation, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
+import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 import { TIconWeight } from "./components/icon/bq-icon.types";
 import { TStatusType } from "./components/status/bq-status.types";
 export namespace Components {
@@ -142,9 +142,29 @@ export namespace Components {
          */
         "orientation": TDividerOrientation;
         /**
+          * Set the min width of the divider's stroke when text is not centered. Value expressed in px
+         */
+        "strokeBasis"?: number;
+        /**
           * Set the stroke color of the divider. The value should be a valid value of the palette color
          */
         "strokeColor"?: string;
+        /**
+          * Set the gap of the divider's stroke. This is applicable when the stroke is dashed
+         */
+        "strokeDashGap"?: number;
+        /**
+          * Set the width of each dash of the divider's stroke. This is applicable when the stroke is dashed
+         */
+        "strokeDashWidth"?: number;
+        /**
+          * Set the lineap of the divider's stroke. This is applicable when the stroke is dashed
+         */
+        "strokeLinecap"?: TDividerStrokeLinecap;
+        /**
+          * Set the thickness of the divider's stroke. Value expressed in px
+         */
+        "strokeThickness"?: number;
         /**
           * Set the alignment of the title on the main axis of the divider (horizontal / vertical)
          */
@@ -379,9 +399,29 @@ declare namespace LocalJSX {
          */
         "orientation"?: TDividerOrientation;
         /**
+          * Set the min width of the divider's stroke when text is not centered. Value expressed in px
+         */
+        "strokeBasis"?: number;
+        /**
           * Set the stroke color of the divider. The value should be a valid value of the palette color
          */
         "strokeColor"?: string;
+        /**
+          * Set the gap of the divider's stroke. This is applicable when the stroke is dashed
+         */
+        "strokeDashGap"?: number;
+        /**
+          * Set the width of each dash of the divider's stroke. This is applicable when the stroke is dashed
+         */
+        "strokeDashWidth"?: number;
+        /**
+          * Set the lineap of the divider's stroke. This is applicable when the stroke is dashed
+         */
+        "strokeLinecap"?: TDividerStrokeLinecap;
+        /**
+          * Set the thickness of the divider's stroke. Value expressed in px
+         */
+        "strokeThickness"?: number;
         /**
           * Set the alignment of the title on the main axis of the divider (horizontal / vertical)
          */
