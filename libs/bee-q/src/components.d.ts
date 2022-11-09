@@ -10,6 +10,7 @@ import { TBadgeSize } from "./components/badge/bq-badge.types";
 import { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 import { TIconWeight } from "./components/icon/bq-icon.types";
+import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 import { TStatusType } from "./components/status/bq-status.types";
 export namespace Components {
     interface BqAvatar {
@@ -188,6 +189,70 @@ export namespace Components {
          */
         "weight"?: TIconWeight;
     }
+    interface BqRadio {
+        /**
+          * If true radio displays background on hover
+         */
+        "backgroundOnHover"?: boolean;
+        /**
+          * If true radio input is checked
+         */
+        "checked"?: boolean;
+        /**
+          * If true radio input is disabled
+         */
+        "disabled"?: boolean;
+        /**
+          * The form ID that the radio input is associated with
+         */
+        "formId"?: string;
+        /**
+          * Name of the HTML input form control. Submitted with the form as part of a name/value pair.
+         */
+        "name": string;
+        /**
+          * If `true`, it will indicate that the user must specify a value for the radio before the owning form can be submitted
+         */
+        "required"?: boolean;
+        /**
+          * Remove focus from the native `<input>` HTML element used under the hood. Use this method instead of the global `element.blur()`.
+         */
+        "vBlur": () => Promise<void>;
+        /**
+          * Simulate a click event on the native `<input>` HTML element used under the hood. Use this method instead of the global `element.click()`.
+         */
+        "vClick": () => Promise<void>;
+        /**
+          * Sets focus on the native `<input>` HTML element used under the hood. Use this method instead of the global `element.focus()`.
+         */
+        "vFocus": () => Promise<void>;
+        /**
+          * A string representing the value of the radio.
+         */
+        "value": string;
+    }
+    interface BqRadioGroup {
+        /**
+          * If true radio inputs are disabled
+         */
+        "disabled"?: boolean;
+        /**
+          * If true displays fieldset
+         */
+        "fieldset"?: boolean;
+        /**
+          * Name of the HTML input form control. Submitted with the form as part of a name/value pair.
+         */
+        "name": string;
+        /**
+          * The display orientation of the radio inputs
+         */
+        "orientation": TRadioGroupOrientation;
+        /**
+          * A string representing the value of the radio.
+         */
+        "value"?: string;
+    }
     interface BqStatus {
         /**
           * It defines the type of status to display
@@ -202,6 +267,14 @@ export interface BqButtonCustomEvent<T> extends CustomEvent<T> {
 export interface BqCheckboxCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqCheckboxElement;
+}
+export interface BqRadioCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqRadioElement;
+}
+export interface BqRadioGroupCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqRadioGroupElement;
 }
 declare global {
     interface HTMLBqAvatarElement extends Components.BqAvatar, HTMLStencilElement {
@@ -240,6 +313,18 @@ declare global {
         prototype: HTMLBqIconElement;
         new (): HTMLBqIconElement;
     };
+    interface HTMLBqRadioElement extends Components.BqRadio, HTMLStencilElement {
+    }
+    var HTMLBqRadioElement: {
+        prototype: HTMLBqRadioElement;
+        new (): HTMLBqRadioElement;
+    };
+    interface HTMLBqRadioGroupElement extends Components.BqRadioGroup, HTMLStencilElement {
+    }
+    var HTMLBqRadioGroupElement: {
+        prototype: HTMLBqRadioGroupElement;
+        new (): HTMLBqRadioGroupElement;
+    };
     interface HTMLBqStatusElement extends Components.BqStatus, HTMLStencilElement {
     }
     var HTMLBqStatusElement: {
@@ -253,6 +338,8 @@ declare global {
         "bq-checkbox": HTMLBqCheckboxElement;
         "bq-divider": HTMLBqDividerElement;
         "bq-icon": HTMLBqIconElement;
+        "bq-radio": HTMLBqRadioElement;
+        "bq-radio-group": HTMLBqRadioGroupElement;
         "bq-status": HTMLBqStatusElement;
     }
 }
@@ -445,6 +532,78 @@ declare namespace LocalJSX {
          */
         "weight"?: TIconWeight;
     }
+    interface BqRadio {
+        /**
+          * If true radio displays background on hover
+         */
+        "backgroundOnHover"?: boolean;
+        /**
+          * If true radio input is checked
+         */
+        "checked"?: boolean;
+        /**
+          * If true radio input is disabled
+         */
+        "disabled"?: boolean;
+        /**
+          * The form ID that the radio input is associated with
+         */
+        "formId"?: string;
+        /**
+          * Name of the HTML input form control. Submitted with the form as part of a name/value pair.
+         */
+        "name": string;
+        /**
+          * Handler to be called when the radio loses focus
+         */
+        "onBqBlur"?: (event: BqRadioCustomEvent<HTMLBqRadioElement>) => void;
+        /**
+          * Handler to be called when the radio state changes
+         */
+        "onBqClick"?: (event: BqRadioCustomEvent<HTMLBqRadioElement>) => void;
+        /**
+          * Handler to be called when the radio gets focus
+         */
+        "onBqFocus"?: (event: BqRadioCustomEvent<HTMLBqRadioElement>) => void;
+        /**
+          * Handler to be called when the radio key is pressed
+         */
+        "onBqKeyDown"?: (event: BqRadioCustomEvent<KeyboardEvent>) => void;
+        /**
+          * If `true`, it will indicate that the user must specify a value for the radio before the owning form can be submitted
+         */
+        "required"?: boolean;
+        /**
+          * A string representing the value of the radio.
+         */
+        "value": string;
+    }
+    interface BqRadioGroup {
+        /**
+          * If true radio inputs are disabled
+         */
+        "disabled"?: boolean;
+        /**
+          * If true displays fieldset
+         */
+        "fieldset"?: boolean;
+        /**
+          * Name of the HTML input form control. Submitted with the form as part of a name/value pair.
+         */
+        "name": string;
+        /**
+          * Handler to be called when the radio state changes
+         */
+        "onBqChange"?: (event: BqRadioGroupCustomEvent<{ value: string; target: HTMLBqRadioElement }>) => void;
+        /**
+          * The display orientation of the radio inputs
+         */
+        "orientation"?: TRadioGroupOrientation;
+        /**
+          * A string representing the value of the radio.
+         */
+        "value"?: string;
+    }
     interface BqStatus {
         /**
           * It defines the type of status to display
@@ -458,6 +617,8 @@ declare namespace LocalJSX {
         "bq-checkbox": BqCheckbox;
         "bq-divider": BqDivider;
         "bq-icon": BqIcon;
+        "bq-radio": BqRadio;
+        "bq-radio-group": BqRadioGroup;
         "bq-status": BqStatus;
     }
 }
@@ -471,6 +632,8 @@ declare module "@stencil/core" {
             "bq-checkbox": LocalJSX.BqCheckbox & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
             "bq-divider": LocalJSX.BqDivider & JSXBase.HTMLAttributes<HTMLBqDividerElement>;
             "bq-icon": LocalJSX.BqIcon & JSXBase.HTMLAttributes<HTMLBqIconElement>;
+            "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
+            "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
             "bq-status": LocalJSX.BqStatus & JSXBase.HTMLAttributes<HTMLBqStatusElement>;
         }
     }
