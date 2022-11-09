@@ -6,10 +6,6 @@
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org"
-  },
   "peerDependencies": {
     "react": ">=17.0.2",
     "react-dom": ">=17.0.2"
@@ -22,5 +18,13 @@
     "last 2 Edge major versions",
     "last 3 ChromeAndroid major versions",
     "last 3 iOS major versions"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dgonzalezr/bee-q"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  }
 }

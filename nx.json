@@ -54,6 +54,22 @@
       "application": {
         "babel": true
       }
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "none",
+      "unitTestRunner": "none",
+      "e2eTestRunner": "none",
+      "prefix": "app",
+      "skipTests": true,
+      "standaloneConfig": true
+    },
+    "@nrwl/angular:library": {
+      "linter": "none",
+      "unitTestRunner": "none"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
     }
   }
 }

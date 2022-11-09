@@ -2,6 +2,7 @@
   "version": 2,
   "projects": {
     "bee-q": "libs/bee-q",
+    "bee-q-angular": "libs/bee-q-angular",
     "bee-q-react": "libs/bee-q-react",
     "workspace": {
       "root": ".",

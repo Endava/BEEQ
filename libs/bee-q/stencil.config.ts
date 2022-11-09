@@ -4,7 +4,8 @@ import tailwind, { tailwindHMR } from 'stencil-tailwind-plugin';
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
 import { reactOutputTarget as react } from '@stencil/react-output-target';
-import { generateCustomElementsJson } from './src/tools/generate-custom-elements-json';
+import { angularOutputTarget as angular } from '@stencil/angular-output-target';
+import { angularValueAccessorBindings, generateCustomElementsJson } from './src/tools';
 
 import tailwindConf from './tailwind.config.js';
 
@@ -39,12 +40,19 @@ export const config: Config = {
     tailwindHMR(),
   ],
   outputTargets: [
-    { type: 'dist-custom-elements' },
-    { type: 'dist-hydrate-script', dir: 'dist/hydrate' },
     { type: 'docs-readme' },
+    {
+      type: 'dist-hydrate-script',
+      dir: 'dist/hydrate',
+    },
     {
       type: 'docs-custom',
       generator: generateCustomElementsJson,
+    },
+    {
+      type: 'dist-custom-elements',
+      autoDefineCustomElements: true,
+      includeGlobalScripts: false,
     },
     {
       type: 'docs-vscode',
@@ -59,6 +67,16 @@ export const config: Config = {
       copy: [{ src: 'global/assets', dest: 'assets' }],
       serviceWorker: null, // disable service workers
     },
+    angular({
+      componentCorePackage: '@bee-q/core',
+      directivesProxyFile: path
+        .resolve(__dirname, '../../libs/bee-q-angular/src/directives/components.ts')
+        .replace(/\\/g, '/'),
+      directivesArrayFile: path
+        .resolve(__dirname, '../../libs/bee-q-angular/src/directives/index.ts')
+        .replace(/\\/g, '/'),
+      valueAccessorConfigs: angularValueAccessorBindings,
+    }),
     react({
       componentCorePackage: '@bee-q/core',
       proxiesFile: path.resolve(__dirname, '../../libs/bee-q-react/src/components.ts').replace(/\\/g, '/'),

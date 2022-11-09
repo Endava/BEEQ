@@ -26,13 +26,6 @@
         ]
       }
     },
-    "eslint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/bee-q-react/**/*.{ts,tsx,js,jsx}"]
-      }
-    },
     "publish": {
       "executor": "ngx-deploy-npm:deploy",
       "options": {
