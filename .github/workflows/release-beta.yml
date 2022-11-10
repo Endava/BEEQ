@@ -37,13 +37,10 @@ jobs:
       - name: 📦 Install dependencies
         run: npm ci
 
-      - name: ⏳ Build
-        run: |
-          npx nx run-many --target=build --parallel=1 --exclude=workspace --output-style=stream-without-prefixes
-
       - name: 🚀 Github Release and NPM Publish
         run: |
-          npx nx run workspace:version --releaseAs=prerelease --preid=beta --postTargets=workspace:prerelease,bee-q:publish-beta,bee-q-angular:publish-beta,bee-q-react:publish-beta --baseBranch=develop
+          npx nx run workspace:version --releaseAs=prerelease --preid=beta --postTargets=workspace:prerelease --baseBranch=develop
+          npx nx run-many --target=publish-beta --exclude=workspace --output-style=stream-without-prefixes --parallel=1
         env:
           GITHUB_TOKEN: ${{ secrets.BEE_Q_GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -11,7 +11,7 @@
 <p align="center">This repository holds the source code of the web component present on the Bee-Q Design System.</p>
 
 <p align="center">
-  <a aria-label="license" href="./LICENSE">****
+  <a aria-label="license" href="./LICENSE">
     <img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="">
   </a>
 </p>
