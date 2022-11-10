@@ -15,6 +15,7 @@ import { TSliderType } from "./components/slider/bq-slider.types";
 import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 import { TStatusType } from "./components/status/bq-status.types";
 import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
+import { TTabSize } from "./components/tab/bq-tab.types";
 import { FloatingUIPlacement } from "./services/interfaces";
 export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 export { TBadgeSize } from "./components/badge/bq-badge.types";
@@ -26,6 +27,7 @@ export { TSliderType } from "./components/slider/bq-slider.types";
 export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 export { TStatusType } from "./components/status/bq-status.types";
 export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
+export { TTabSize } from "./components/tab/bq-tab.types";
 export { FloatingUIPlacement } from "./services/interfaces";
 export namespace Components {
     /**
@@ -408,6 +410,20 @@ export namespace Components {
          */
         "value"?: string;
     }
+    interface BqTab {
+        /**
+          * If true tab is active
+         */
+        "active"?: boolean;
+        /**
+          * If true tab is disabled
+         */
+        "disabled"?: boolean;
+        /**
+          * The size of the tab
+         */
+        "size": TTabSize;
+    }
     interface BqTooltip {
         /**
           * Set the action when the tooltip should be displayed, on hover (default) or click
@@ -557,6 +573,12 @@ declare global {
         prototype: HTMLBqSwitchElement;
         new (): HTMLBqSwitchElement;
     };
+    interface HTMLBqTabElement extends Components.BqTab, HTMLStencilElement {
+    }
+    var HTMLBqTabElement: {
+        prototype: HTMLBqTabElement;
+        new (): HTMLBqTabElement;
+    };
     interface HTMLBqTooltipElement extends Components.BqTooltip, HTMLStencilElement {
     }
     var HTMLBqTooltipElement: {
@@ -576,6 +598,7 @@ declare global {
         "bq-spinner": HTMLBqSpinnerElement;
         "bq-status": HTMLBqStatusElement;
         "bq-switch": HTMLBqSwitchElement;
+        "bq-tab": HTMLBqTabElement;
         "bq-tooltip": HTMLBqTooltipElement;
     }
 }
@@ -996,6 +1019,20 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface BqTab {
+        /**
+          * If true tab is active
+         */
+        "active"?: boolean;
+        /**
+          * If true tab is disabled
+         */
+        "disabled"?: boolean;
+        /**
+          * The size of the tab
+         */
+        "size"?: TTabSize;
+    }
     interface BqTooltip {
         /**
           * Set the action when the tooltip should be displayed, on hover (default) or click
@@ -1032,6 +1069,7 @@ declare namespace LocalJSX {
         "bq-spinner": BqSpinner;
         "bq-status": BqStatus;
         "bq-switch": BqSwitch;
+        "bq-tab": BqTab;
         "bq-tooltip": BqTooltip;
     }
 }
@@ -1067,6 +1105,7 @@ declare module "@stencil/core" {
              * They should provide immediate results, giving users the freedom to control their preferences as needed.
              */
             "bq-switch": LocalJSX.BqSwitch & JSXBase.HTMLAttributes<HTMLBqSwitchElement>;
+            "bq-tab": LocalJSX.BqTab & JSXBase.HTMLAttributes<HTMLBqTabElement>;
             "bq-tooltip": LocalJSX.BqTooltip & JSXBase.HTMLAttributes<HTMLBqTooltipElement>;
         }
     }

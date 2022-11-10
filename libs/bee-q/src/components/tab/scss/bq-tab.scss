@@ -1,0 +1,33 @@
+/* -------------------------------------------------------------------------- */
+/*                                Tab styles                               */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-tab-variables';
+
+:host {
+  @apply inline-block;
+}
+
+.bq-tab {
+  @apply focus:outline-none focus-visible:outline-none;
+
+  &:focus {
+    @apply ring-4 ring-system-alert;
+
+    .bq-tab__underline {
+      display: none;
+    }
+  }
+
+  &--small {
+    @apply gap-1 p-1;
+  }
+
+  &--medium {
+    @apply gap-2 p-2;
+  }
+}
+
+.bq-tab__underline {
+  @apply absolute bottom-0 h-[2px] w-full;
+}
