@@ -87,12 +87,15 @@ export class BqTab {
       >
         <slot name="icon" />
         <span
-          class={{ 'font-inter text-s leading-m text-text-primary': true, 'text-ui-primary': this.active }}
+          class={{
+            'font-inter text-s leading-m text-text-primary': true,
+            'text-ui-primary': this.active && !this.disabled,
+          }}
           part="text"
         >
           <slot />
         </span>
-        <div class={{ 'bq-tab__underline': true, 'bg-ui-primary': this.active }} part="underline" />
+        <div class={{ 'bq-tab__underline': true, 'bg-ui-primary': this.active && !this.disabled }} part="underline" />
       </div>
     );
   }
