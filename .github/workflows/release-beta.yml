@@ -10,6 +10,7 @@ jobs:
       - name: 🛎 Checkout
         uses: actions/checkout@v3
         with:
+          persist-credentials: false
           fetch-depth: 0
 
       - name: Setup Git
@@ -40,26 +41,9 @@ jobs:
         run: |
           npx nx run-many --target=build --parallel=1 --exclude=workspace --output-style=stream-without-prefixes
 
-      - name: 🚀 Version and Publish
+      - name: 🚀 Github Release and NPM Publish
         run: |
-          npx nx run workspace:version --releaseAs=prerelease --preid=beta --postTargets=workspace:prerelease --baseBranch=develop
+          npx nx run workspace:version --releaseAs=prerelease --preid=beta --postTargets=workspace:prerelease,bee-q:publish-beta,bee-q-angular:publish-beta,bee-q-react:publish-beta --baseBranch=develop
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.BEE_Q_GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: 📥 Get NPM version
-        id: package-version
-        uses: martinbeentjes/npm-get-version-action@main
-
-      - name: 🏷 Create Github Tag
-        shell: bash
-        run: |
-          git tag -f ${{ steps.package-version.outputs.current-version }}
-      
-      - name: 💪 Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
-          force: true
-          tags: true

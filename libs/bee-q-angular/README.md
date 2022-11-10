@@ -26,7 +26,7 @@ npm install @bee-q/core@latest @bee-q/angular@latest --save
 
 ### Call `defineCustomElements`
 
-The Bee-Q core package includes the main function that is used to load the components in the collection and makes Angular aware of the custom tags of Golazo web components. That function is called defineCustomElements()and it needs to be called once during the bootstrapping of your application. One convenient place to do this is in the `main.ts` as such:
+The Bee-Q core package includes the main function that is used to load the components in the collection and makes Angular aware of the custom tags of the web components. That function is called defineCustomElements()and it needs to be called once during the bootstrapping of your application. One convenient place to do this is in the `main.ts` as such:
 
 ```ts
 import { defineCustomElements } from '@uefa/design-system/dist/loader';
@@ -36,7 +36,7 @@ import { defineCustomElements } from '@uefa/design-system/dist/loader';
 defineCustomElements(window);
 ```
 
-If you need to support older versions of Microsoft Edge and Internet Explorer, you can add the polyfills as follow:
+If you need to support older versions of Microsoft Edge and Internet Explorer, you can apply the polyfills as follow:
 
 ```ts
 import { applyPolyfills, defineCustomElements } from '@uefa/design-system/dist/loader';
@@ -97,7 +97,7 @@ Bee-Q styles cand be also imported in your application main style file:
 
 ### Add Bee-Q Angular module to your application module
 
-You will be able to add Golazo web components into your app by adding the Golazo module:
+You will be able to add Bee-Q web components into your app by adding the `BeeQModule` exported by `@bee-q/angular`:
 
 ```ts
 import { NgModule } from '@angular/core';
@@ -126,6 +126,7 @@ import { BeeQModule, BooleanValueAccessor } from '@bee-q/angular';
 
 import { AppComponent } from './app.component';
 
+/** 💡 More Value Accessors will be exported later and should be included as well */
 const VALUE_ACCESSORS = [BooleanValueAccessor];
 
 @NgModule({
