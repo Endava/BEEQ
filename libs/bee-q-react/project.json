@@ -30,7 +30,6 @@
       "executor": "ngx-deploy-npm:deploy",
       "options": {
         "access": "public",
-        "noBuild": true,
         "tag": "latest"
       }
     },
@@ -38,7 +37,6 @@
       "executor": "ngx-deploy-npm:deploy",
       "options": {
         "access": "public",
-        "noBuild": true,
         "tag": "beta"
       }
     }

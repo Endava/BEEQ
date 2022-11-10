@@ -10,7 +10,7 @@ jobs:
       - name: 🛎 Checkout
         uses: actions/checkout@v3
         with:
-          persist-credentials: false
+          token: ${{ secrets.BEE_Q_GITHUB_TOKEN }}
           fetch-depth: 0
 
       - name: Setup Git

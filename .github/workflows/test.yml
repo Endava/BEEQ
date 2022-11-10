@@ -19,7 +19,6 @@ jobs:
         npx nx-cloud record -- npx nx lint bee-q
       parallel-commands-on-agents: |
         npx nx affected --target=test --parallel=1 --exclude=workspace --ci --code-coverage
-        npx nx affected --target=build --parallel=1 --exclude=workspace
     secrets:
       NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 
