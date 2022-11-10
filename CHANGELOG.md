@@ -6,6 +6,20 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+### [0.0.1-beta.4](https://github.com/dgonzalezr/bee-q/compare/v0.0.1-beta.3...v0.0.1-beta.4) (2022-11-10)
+
+
+### Features
+
+* **bee-q angular:** add `@bee-q/angular` output target ([#29](https://github.com/dgonzalezr/bee-q/issues/29)) ([f6fea4a](https://github.com/dgonzalezr/bee-q/commit/f6fea4ad72aa7567081ca328884d79e7b32460e1))
+* **divider:** use `svg` for the stroke and add multiple customizations ([#28](https://github.com/dgonzalezr/bee-q/issues/28)) ([99f11db](https://github.com/dgonzalezr/bee-q/commit/99f11db48b13a3a7a5e5651a880fa331b267caad))
+* **radio:** add a new `bq-radio` component  ([#25](https://github.com/dgonzalezr/bee-q/issues/25)) ([6ad7ec2](https://github.com/dgonzalezr/bee-q/commit/6ad7ec23f652af97828d156fe9701924e295f205))
+
+
+### Bug Fixes
+
+* **checkbox:** fix checkbox vertical move upon click ([#24](https://github.com/dgonzalezr/bee-q/issues/24)) ([2dcd448](https://github.com/dgonzalezr/bee-q/commit/2dcd4489ebddfcc20fa6dc695f27d818a7d6e8f0))
+
 ### [0.0.1-beta.3](https://github.com/dgonzalezr/bee-q/compare/v0.0.1-beta.2...v0.0.1-beta.3) (2022-11-04)
 
 
