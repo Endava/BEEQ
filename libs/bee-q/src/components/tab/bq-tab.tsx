@@ -1,4 +1,4 @@
-import { h, Component, Prop, Watch, Element } from '@stencil/core';
+import { h, Component, Prop, Watch, Element, Event, EventEmitter, Method } from '@stencil/core';
 import { validatePropValue } from '../../shared/utils';
 import { TAB_SIZE, TTabSize } from './bq-tab.types';
 
@@ -11,10 +11,12 @@ export class BqTab {
   // Own Properties
   // ====================
 
-  @Element() el!: HTMLBqTabElement;
+  private buttonElement: HTMLButtonElement;
 
   // Reference to host HTML element
   // ===================================
+
+  @Element() el!: HTMLBqTabElement;
 
   // State() variables
   // Inlined decorator, alphabetical order
@@ -24,13 +26,19 @@ export class BqTab {
   // ========================
 
   /** If true tab is active */
-  @Prop({ reflect: true }) active? = false;
+  @Prop({ reflect: true, mutable: true }) active = false;
 
   /** If true tab is disabled */
-  @Prop({ reflect: true }) disabled? = false;
+  @Prop({ reflect: true }) disabled = false;
 
   /** The size of the tab */
   @Prop({ reflect: true }) size: TTabSize = 'small';
+
+  /** The id of the tab */
+  @Prop({ reflect: true }) tabId!: string;
+
+  /** The tab panel id that the tab controls */
+  @Prop({ reflect: true }) controls!: string;
 
   // Prop lifecycle events
   // =======================
@@ -43,6 +51,18 @@ export class BqTab {
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
+
+  /** Handler to be called when the tab state changes */
+  @Event() bqClick: EventEmitter<HTMLBqTabElement>;
+
+  /** Handler to be called when the tab gets focus */
+  @Event() bqFocus: EventEmitter<HTMLBqTabElement>;
+
+  /** Handler to be called when the tab loses focus */
+  @Event() bqBlur: EventEmitter<HTMLBqTabElement>;
+
+  /** Handler to be called when the tab key is pressed */
+  @Event() bqKeyDown: EventEmitter<KeyboardEvent>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -61,11 +81,54 @@ export class BqTab {
   // Public Methods must be async.
   // Requires JSDocs for public API documentation.
   // ===============================================
+  /**
+   * Simulate a click event on the native `<button>` HTML element used under the hood.
+   * Use this method instead of the global `element.click()`.
+   */
+  @Method()
+  async vClick() {
+    this.buttonElement?.click();
+  }
+
+  /**
+   * Sets focus on the native `<button>` HTML element used under the hood.
+   * Use this method instead of the global `element.focus()`.
+   */
+  @Method()
+  async vFocus() {
+    this.buttonElement?.focus();
+  }
+
+  /**
+   * Remove focus from the native `<button>` HTML element used under the hood.
+   * Use this method instead of the global `element.blur()`.
+   */
+  @Method()
+  async vBlur() {
+    this.buttonElement?.blur();
+  }
 
   // Local methods
   // Internal business logic.
   // These methods cannot be called from the host element.
   // =======================================================
+
+  private handleClick = () => {
+    this.active = true;
+    this.bqClick.emit(this.el);
+  };
+
+  private handleOnFocus = () => {
+    this.bqFocus.emit(this.el);
+  };
+
+  private handleOnBlur = () => {
+    this.bqBlur.emit(this.el);
+  };
+
+  private handleOnKeyDown = (event: KeyboardEvent) => {
+    this.bqKeyDown.emit(event);
+  };
 
   // render() function
   // Always the last one in the class.
@@ -73,22 +136,33 @@ export class BqTab {
 
   render() {
     return (
-      <div
+      <button
+        ref={(el) => (this.buttonElement = el)}
         class={{
           'relative flex cursor-pointer items-center justify-center rounded-s': true,
           'pointer-events-none cursor-not-allowed opacity-40': this.disabled,
+          'border-0 bg-transparent': true,
           'bq-tab': true,
           [`bq-tab--${this.size}`]: true,
         }}
+        id={this.tabId}
+        onBlur={this.handleOnBlur}
+        onClick={this.handleClick}
+        onFocus={this.handleOnFocus}
+        onKeyDown={this.handleOnKeyDown}
         role="tab"
-        part="base"
+        aria-controls={this.controls}
         aria-disabled={this.disabled ? 'true' : 'false'}
+        aria-selected={this.active ? 'true' : 'false'}
         tabindex={this.disabled ? '-1' : '0'}
+        part="base"
       >
-        <slot name="icon" />
+        <div part="icon">
+          <slot name="icon" />
+        </div>
         <span
           class={{
-            'font-inter text-s leading-m text-text-primary': true,
+            'font-inter text-s leading-large text-text-primary': true,
             'text-ui-primary': this.active && !this.disabled,
           }}
           part="text"
@@ -96,7 +170,7 @@ export class BqTab {
           <slot />
         </span>
         <div class={{ 'bq-tab__underline': true, 'bg-ui-primary': this.active && !this.disabled }} part="underline" />
-      </div>
+      </button>
     );
   }
 }
