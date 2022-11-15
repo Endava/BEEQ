@@ -99,6 +99,14 @@ For a Production build, just run:
 npm run build
 ```
 
+### Generate component
+
+Bee-q comes with a component generator that saves you time when creating the skeleton for a new component. In order to use the generator, you just need to run the following command and follow the instructions in your prompt CLI:
+
+```bash
+npm run g
+```
+
 ## Contributing 💻
 
 💥 If you are in the mood and want to help 🙂, please read carefully our [Contributing Guidelines](./CONTRIBUTING.md) and Development Standards.

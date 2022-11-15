@@ -1,0 +1,24 @@
+import { html } from 'lit-html';
+import mdx from './bq-{{kebabCase name}}.mdx';
+
+export default {
+  title: 'Components/{{sentenceCase name}}',
+  component: 'bq-{{kebabCase name}}',
+  parameters: {
+    docs: {
+      page: mdx,
+    },
+  },
+  argTypes: {
+    text: { control: 'text', table: { disable: true } },
+  },
+  args: {
+    text: 'text',
+  },
+};
+
+const Template = (args) => {
+  return html`<bq-{{kebabCase name}}>${args.text}</bq-{{kebabCase name}}>`;
+};
+
+export const Default = (args) => Template(args);
