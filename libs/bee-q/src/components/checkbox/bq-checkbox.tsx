@@ -200,7 +200,7 @@ export class BqCheckbox {
             tabindex="0"
           />
           <span
-            class="bq-checkbox__checkbox relative box-border flex h-full w-full items-center justify-center"
+            class="bq-checkbox__checkbox relative box-border flex h-full w-[var(--bq-checkbox--size)] items-center justify-center"
             part="checkbox"
           >
             {/* 
