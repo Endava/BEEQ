@@ -38,7 +38,7 @@
 }
 
 .bq-button {
-  @apply box-border flex cursor-[inherit] items-center justify-center rounded-m border-2 border-solid border-transparent font-inter text-m font-medium leading-m;
+  @apply box-border flex cursor-[inherit] items-center justify-center rounded-m border-2 border-solid border-transparent font-inter text-m font-medium leading-large;
   @apply transition-[background-color,border-color,box-shadow] duration-200;
   @apply focus:outline-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-system-alert;
   @apply active:outline-none disabled:cursor-not-allowed;

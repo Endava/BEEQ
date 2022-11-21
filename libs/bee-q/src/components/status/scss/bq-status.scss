@@ -33,5 +33,5 @@
 }
 
 .bq-status__text ::slotted(*) {
-  @apply m-0 p-0 font-inter text-s font-medium leading-s text-text-primary;
+  @apply m-0 p-0 font-inter text-s font-medium leading-regular text-text-primary;
 }

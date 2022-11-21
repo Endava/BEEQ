@@ -69,7 +69,7 @@ export const ExploreIcons = (args) => {
       .icon-span {
         font-family: var(--bq-font-family--inter);
         font-size: var(--bq-font-size--xs);
-        line-height: var(--bq-font-line-height--xs);
+        line-height: var(--bq-font-line-height--regular);
         color: var(--bq-text--primary);
       }
     </style>
