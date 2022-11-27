@@ -36,6 +36,12 @@ export default function (
       },
       {
         type: 'add',
+        path: '../../../libs/bee-q/src/components/{{kebabCase name}}/__test__/bq-{{kebabCase name}}.e2e.ts',
+        templateFile: './e2e.hbs',
+        skipIfExists: true,
+      },
+      {
+        type: 'add',
         path: '../../../libs/bee-q/src/components/{{kebabCase name}}/scss/bq-{{kebabCase name}}.scss',
         templateFile: './scss.hbs',
         skipIfExists: true,
