@@ -1,4 +1,4 @@
-name: 'Run all Tests'
+name: Test, Build and Chromatic deployment
 
 on:
   push:
@@ -9,23 +9,42 @@ on:
 
 jobs:
   main:
-    name: 🌩 Nx Cloud - Main Job
-    uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.8
-    with:
-      number-of-agents: 1
-      init-commands: |
-        npx nx-cloud start-ci-run --stop-agents-after="build" --agent-count=1
-      parallel-commands: |
-        npx nx-cloud record -- npx nx lint bee-q
-      parallel-commands-on-agents: |
-        npx nx affected --target=test --parallel=1 --exclude=workspace --ci --code-coverage
-    secrets:
+    runs-on: ubuntu-latest
+    env:
       NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+    steps:
+      - name: 🛠 Setup Volta
+        uses: volta-cli/action@v3
 
-  agents:
-    name: 👮‍♂️ Nx Cloud - Agents
-    uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.8
-    with:
-      number-of-agents: 1
-    secrets:
-      NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+      - name: 🛎 Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: node -v && npm -v
+
+      - name: 🕵️‍♀️ Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v3
+
+      - name: 📦 Install dependencies
+        run: |
+          npm ci
+
+      - name: 🧪 Run Test
+        run: |
+          npx nx affected --target=test --parallel=1 --ci --code-coverage --exclude=workspace --output-style=stream-without-prefixes
+
+      - name: ⏳ Build
+        run: npm run build
+
+      - name: 📚 Publish to Chromatic
+        uses: chromaui/action@v1
+        env:
+          CI: true
+        with:
+          workingDir: /
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          storybookBuildDir: dist/storybook/bee-q
+          autoAcceptChanges: true
+          exitOnceUploaded: true
+          onlyChanged: true
+          zip: true

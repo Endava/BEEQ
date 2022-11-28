@@ -52,9 +52,22 @@ where:
 
 ### Dependencies 📡
 
-A recent version (>=16) of [`NodeJS`](https://nodejs.org/en/download/)
+We recommend the use of [Volta](https://volta.sh/) to manage Node and NPM versions. The [installation process](https://docs.volta.sh/guide/getting-started) is pretty straight forward, and as referenced in their official site:
 
-> _Note that you will need to use npm 7 or higher._
+> With Volta, you can select a Node engine once and then stop worrying about it. You can switch between projects and stop having to manually switch between Nodes.
+
+Once you have Volta installed, whenever you change to the Bee-Q folder locally, it will switch to the right Node version pinned on the `package.json`:
+
+```json
+"volta": {
+  "node": "16.18.1"
+}
+```
+![CleanShot 2022-11-28 at 14 00 03](https://user-images.githubusercontent.com/328492/204272857-ef3b0b43-82d2-4631-92ef-b496c3bc197e.gif)
+
+Volta is not mandatory, you can still use any Node/NPM setup that fits you most, just keep in mind that you'll need:
+- [`NodeJS`](https://nodejs.org/en/download/) v16.x or higher
+- [NPM](https://nodejs.org/en/knowledge/getting-started/npm/what-is-npm/) v8 or higher
 
 ## Usage
 
