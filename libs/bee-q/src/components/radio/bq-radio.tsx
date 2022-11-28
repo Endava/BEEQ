@@ -131,6 +131,19 @@ export class BqRadio {
     this.bqKeyDown.emit(event);
   };
 
+  private get tabindex(): string {
+    // NOTE: this.checked is undefined when is not part of bq-radio-group
+    return `${-1 + +(this.checked ?? 1)}`;
+  }
+
+  /**
+   * This method prevents label to steal the focus and trigger input blur
+   * details https://stackoverflow.com/a/73364174
+   */
+  private onLabelMouseDown = (event: MouseEvent) => {
+    event.preventDefault();
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -145,6 +158,7 @@ export class BqRadio {
           'has-background': this.backgroundOnHover,
         }}
         part="base"
+        onMouseDown={this.onLabelMouseDown}
       >
         <div class="bq-radio__control">
           <input
@@ -162,9 +176,8 @@ export class BqRadio {
             onKeyDown={this.handleOnKeyDown}
             aria-checked={this.checked ? 'true' : 'false'}
             aria-disabled={this.disabled ? 'true' : 'false'}
+            tabindex={this.tabindex}
             part="input"
-            // NOTE: this.checked is set to false / true if the radio is part of radio-group, we want radio to be focusable by default otherwise
-            tabindex={`${-1 + +(this.checked ?? 1)}`}
           />
           <div class={{ 'bq-radio__circle': true }} part="radio">
             <div class="bq-radio__checked" />

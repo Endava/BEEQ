@@ -1,5 +1,5 @@
 import { h, Component, Listen, Element, Event, Prop, EventEmitter, Watch } from '@stencil/core';
-import { isNil, validatePropValue } from '../../shared/utils';
+import { debounce, isHTMLElement, isNil, TDebounce, validatePropValue } from '../../shared/utils';
 import { RADIO_GROUP_ORIENTATION, TRadioGroupOrientation } from './bq-radio-group.types';
 /**
  * @part base - The component's internal wrapper of the radio components.
@@ -14,6 +14,10 @@ import { RADIO_GROUP_ORIENTATION, TRadioGroupOrientation } from './bq-radio-grou
 export class BqRadioGroup {
   // Own Properties
   // ====================
+
+  private focusedBqRadio: HTMLBqRadioElement | null = null;
+
+  private debouncedBqChange: TDebounce<{ value: string; target: HTMLBqRadioElement }>;
 
   // Reference to host HTML element
   // ===================================
@@ -42,12 +46,30 @@ export class BqRadioGroup {
   /** The display orientation of the radio inputs */
   @Prop({ reflect: true, mutable: true }) orientation: TRadioGroupOrientation = 'vertical';
 
+  /** A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change */
+  @Prop({ reflect: true, mutable: true }) debounceTime = 0;
+
   // Prop lifecycle events
   // =======================
 
   @Watch('orientation')
   checkPropValues() {
     validatePropValue(RADIO_GROUP_ORIENTATION, 'vertical', this.orientation, this.el, 'orientation');
+  }
+
+  @Watch('debounceTime')
+  checkDebounceChange() {
+    if (this.debounceTime < 0) {
+      this.debounceTime = Math.max(0, this.debounceTime);
+    }
+
+    if (this.debouncedBqChange) {
+      this.debouncedBqChange.cancel();
+    }
+
+    this.debouncedBqChange = debounce((event: Parameters<typeof this.debouncedBqChange>[0]) => {
+      this.bqChange.emit(event);
+    }, this.debounceTime);
   }
 
   // Events section
@@ -63,27 +85,46 @@ export class BqRadioGroup {
 
   componentWillLoad() {
     this.checkPropValues();
+    this.checkDebounceChange();
   }
 
-  componentDidRender() {
+  componentDidLoad() {
     this.bqRadioElements.forEach((bqRadioElement) => {
       bqRadioElement.name = this.name;
       bqRadioElement.checked = !isNil(this.value) ? bqRadioElement.value === this.value : false;
-      bqRadioElement.disabled = this.disabled;
+      bqRadioElement.disabled = bqRadioElement.disabled || this.disabled;
     });
   }
 
   // Listeners
   // ==============
 
-  @Listen('bqClick') onBqClick(event: UIEvent) {
-    const target = event.target as HTMLBqRadioElement;
-    this.bqRadioElements.forEach((bqRadioElement) => (bqRadioElement.checked = bqRadioElement === target));
-    this.checkRadioInput(target);
+  @Listen('mousedown', { target: 'body', passive: true })
+  onMouseDown(event: MouseEvent) {
+    if (!isNil(this.focusedBqRadio) && isHTMLElement(event.target, 'bq-radio') && this.el.contains(event.target)) {
+      this.focusedBqRadio = event.target;
+    }
   }
 
-  @Listen('bqKeyDown') onBqKeyDown(event: CustomEvent<KeyboardEvent>) {
-    const target = event.target as HTMLBqRadioElement;
+  @Listen('bqClick')
+  onBqClick(event: CustomEvent<HTMLBqRadioElement>) {
+    if (isNil(this.focusedBqRadio)) {
+      this.focusedBqRadio = event.detail;
+    }
+
+    if (event.detail.value === this.value) return;
+
+    const target = event.detail;
+    this.bqRadioElements.forEach((bqRadioElement) => (bqRadioElement.checked = bqRadioElement === target));
+    this.checkRadioInput(event.detail);
+  }
+
+  @Listen('bqKeyDown')
+  onBqKeyDown(event: CustomEvent<KeyboardEvent>) {
+    const { target } = event;
+
+    if (!isHTMLElement(target, 'bq-radio')) return;
+
     switch (event.detail.key) {
       case 'ArrowDown':
       case 'ArrowRight': {
@@ -98,6 +139,22 @@ export class BqRadioGroup {
       }
 
       default:
+    }
+  }
+
+  @Listen('bqFocus', { capture: true })
+  onBqFocus(event: CustomEvent<HTMLBqRadioElement>) {
+    if (event.detail !== this.focusedBqRadio) return;
+
+    event.stopPropagation();
+  }
+
+  @Listen('bqBlur', { capture: true })
+  onBqBlur(event: CustomEvent<HTMLBqRadioElement>) {
+    if (!isNil(this.focusedBqRadio) && event.detail !== this.focusedBqRadio) {
+      event.stopPropagation();
+    } else {
+      this.focusedBqRadio = null;
     }
   }
 
@@ -120,23 +177,34 @@ export class BqRadioGroup {
   private focusRadioInputSibbling(currentTarget: HTMLBqRadioElement, next: boolean): void {
     this.bqRadioElements.forEach((bqRadioElement, index, elements) => {
       if (bqRadioElement === currentTarget) {
-        const nextIndex = (elements.length + (next ? index + 1 : index - 1)) % elements.length;
+        const target = this.getNextRadioElement(elements, index, next);
 
-        currentTarget.vBlur();
         currentTarget.checked = false;
 
-        const target = elements[nextIndex];
         target.vFocus();
         this.checkRadioInput(target);
       }
     });
   }
 
+  private getNextRadioElement(elements: HTMLBqRadioElement[], index: number, forward = true): HTMLBqRadioElement {
+    let element = null;
+    let elementIndex = index;
+
+    do {
+      elementIndex = (elements.length + (elementIndex + (forward ? 1 : -1))) % elements.length;
+      element = elements[elementIndex];
+    } while (element.disabled);
+
+    return element;
+  }
+
   private checkRadioInput(target: HTMLBqRadioElement): void {
     const { value } = target;
     target.checked = true;
     this.value = value;
-    this.bqChange.emit({ value, target });
+    this.focusedBqRadio = target;
+    this.debouncedBqChange({ value, target });
   }
 
   // render() function

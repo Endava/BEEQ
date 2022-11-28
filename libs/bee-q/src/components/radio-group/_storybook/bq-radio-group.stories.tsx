@@ -16,6 +16,7 @@ export default {
     fieldset: { control: 'boolean' },
     value: { control: 'text' },
     name: { control: 'text' },
+    'debounce-time': { control: 'number' },
     // Event handlers
     bqChange: { action: 'bqChange' },
     bqFocus: { action: 'bqFocus' },
@@ -25,10 +26,11 @@ export default {
   },
   args: {
     orientation: 'vertical',
-    value: 'option2',
+    value: 'option1',
     disabled: false,
     name: 'bee-q-radio',
     fieldset: false,
+    'debounce-time': 0,
   },
 };
 
@@ -40,6 +42,7 @@ const Template = (args) => {
       .disabled=${args.disabled}
       .orientation=${args.orientation}
       .fieldset=${args.fieldset}
+      debounce-time=${args['debounce-time']}
       @bqChange=${args.bqChange}
       @bqFocus=${args.bqFocus}
       @bqBlur=${args.bqBlur}
@@ -54,7 +57,43 @@ const Template = (args) => {
 
 export const Default = (args) => Template(args);
 
-export const Disabled = (args) => Template(args);
+export const Disabled = (args) => {
+  return html`
+    <div style="display: flex; gap: 16px">
+      <bq-radio-group
+        .name=${args.name}
+        .value=${args.value}
+        .disabled=${args.disabled}
+        .orientation=${args.orientation}
+        .fieldset=${args.fieldset}
+        debounce-time=${args['debounce-time']}
+        @bqChange=${args.bqChange}
+        @bqFocus=${args.bqFocus}
+        @bqBlur=${args.bqBlur}
+      >
+        <span slot="label">${args.label}</span>
+        <bq-radio value="option1"> option 1 </bq-radio>
+        <bq-radio value="option2"> option 2 </bq-radio>
+        <bq-radio value="option3"> option 3 </bq-radio>
+      </bq-radio-group>
+      <bq-radio-group
+        .name=${args.name + '1'}
+        .value=${args.value}
+        .orientation=${args.orientation}
+        .fieldset=${args.fieldset}
+        debounce-time=${args['debounce-time']}
+        @bqChange=${args.bqChange}
+        @bqFocus=${args.bqFocus}
+        @bqBlur=${args.bqBlur}
+      >
+        <span slot="label">${args.label}</span>
+        <bq-radio value="option1"> option 1 </bq-radio>
+        <bq-radio value="option2" disabled> option 2 </bq-radio>
+        <bq-radio value="option3"> option 3 </bq-radio>
+      </bq-radio-group>
+    </div>
+  `;
+};
 Disabled.args = {
   disabled: true,
 };

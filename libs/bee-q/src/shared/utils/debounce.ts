@@ -3,6 +3,9 @@ import { isNil } from './isNil';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TFunction = (...args: any[]) => unknown;
 
+type TDebounceFnReturn<T> = T extends unknown[] ? (...params: T) => void : (param: T) => void;
+export type TDebounce<T> = TDebounceFnReturn<T> & { cancel: () => void } extends infer U ? U : never;
+
 /**
  * Creates a debounced function that delays invoking func until after wait milliseconds have elapsed
  * since the last time the debounced function was invoked.

@@ -233,6 +233,10 @@ export namespace Components {
     }
     interface BqRadioGroup {
         /**
+          * A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change
+         */
+        "debounceTime": number;
+        /**
           * If true radio inputs are disabled
          */
         "disabled"?: boolean;
@@ -579,6 +583,10 @@ declare namespace LocalJSX {
         "value": string;
     }
     interface BqRadioGroup {
+        /**
+          * A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change
+         */
+        "debounceTime"?: number;
         /**
           * If true radio inputs are disabled
          */

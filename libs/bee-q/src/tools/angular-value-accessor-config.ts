@@ -7,4 +7,10 @@ export const angularValueAccessorBindings: ValueAccessorConfig[] = [
     targetAttr: 'checked',
     type: 'boolean',
   },
+  {
+    elementSelectors: ['bq-radio-group'],
+    event: 'bqChange',
+    targetAttr: 'value',
+    type: 'text',
+  },
 ];
