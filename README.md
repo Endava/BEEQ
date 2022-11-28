@@ -99,6 +99,24 @@ For a Production build, just run:
 npm run build
 ```
 
+### Test 🧪
+
+Bee-Q uses [Jest](https://jestjs.io/) for unit tests and Jest and [Puppeteer](https://pptr.dev/) for end-to-end tests.
+
+You can run all the tests once, by executing:
+
+```bash
+npm run test
+```
+
+🚨 If you get an error similar to the one below, **try to checkout locally the `main` branch and run the tests again**.
+
+```bash
+fatal: Not a valid object name main
+fatal: No such ref: 'main'
+nx affected
+```
+
 ### Generate component
 
 Bee-q comes with a component generator that saves you time when creating the skeleton for a new component. In order to use the generator, you just need to run the following command and follow the instructions in your prompt CLI:
@@ -110,6 +128,8 @@ npm run g
 ## Contributing 💻
 
 💥 If you are in the mood and want to help 🙂, please read carefully our [Contributing Guidelines](./CONTRIBUTING.md) and Development Standards.
+
+❗️ When working on a bug fix, new feature, etc., please notice that we follow a [GitFlow workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow). Make sure to [follow the instructions from the Contributing Branching Strategy guidelines](./CONTRIBUTING.md#branching-strategy) about how to create your branch when starting to work on a bug/hot fixing, new feature, etc.
 
 ## Documentation 📖
 
