@@ -2,9 +2,9 @@ name: Test, Build and Chromatic deployment
 
 on:
   push:
-    branches: [ develop ]
+    branches: [develop]
   pull_request:
-    branches: [ develop ]
+    branches: [develop]
   workflow_dispatch:
 
 jobs:
@@ -32,6 +32,7 @@ jobs:
       - name: 🧪 Run Test
         run: |
           npx nx affected --target=test --parallel=1 --ci --code-coverage --exclude=workspace --output-style=stream-without-prefixes
+          npx nx affected --target=e2e --parallel=1 --ci --code-coverage --exclude=workspace --output-style=stream-without-prefixes
 
       - name: ⏳ Build
         run: npm run build
