@@ -1,0 +1,14 @@
+/* -------------------------------------------------------------------------- */
+/*                          Slider custom properties                          */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  --bq-slider--size: 4px;
+  --bq-slider--border-radius: theme('borderRadius.xs');
+  --bq-slider--z-index-input: 2;
+  --bq-slider--z-index-progress: 1;
+  --bq-slider--thumb-size: 13px;
+  --bq-slider--progress-color: theme('colors.ui.primary');
+  --bq-slider--trackarea-color: theme('colors.ui.secondary');
+  --bq-slider--disabled-color: theme('colors.data.grey');
+}

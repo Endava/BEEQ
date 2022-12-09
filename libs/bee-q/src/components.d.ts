@@ -11,6 +11,7 @@ import { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./c
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 import { TIconWeight } from "./components/icon/bq-icon.types";
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
+import { TSliderType } from "./components/slider/bq-slider.types";
 import { TStatusType } from "./components/status/bq-status.types";
 export namespace Components {
     interface BqAvatar {
@@ -257,6 +258,44 @@ export namespace Components {
          */
         "value"?: string;
     }
+    interface BqSlider {
+        /**
+          * A number representing the delay value applied to bqChange event handler
+         */
+        "debounceTime": number;
+        /**
+          * If `true` slider is disabled
+         */
+        "disabled"?: boolean;
+        /**
+          * A number representing the minimum value between the min and max range selected.
+         */
+        "gap": number;
+        /**
+          * A number representing the max value of the slider.
+         */
+        "max": number;
+        /**
+          * A number representing the min value of the slider.
+         */
+        "min": number;
+        /**
+          * A number representing the step of the slider.
+         */
+        "step": number;
+        /**
+          * It defines the type of slider to display
+         */
+        "type": TSliderType;
+        /**
+          * A number representing the value of the slider.
+         */
+        "value": number | Array<number> | string;
+        /**
+          * If `true` it will display the min and max values
+         */
+        "valueIndicator"?: boolean;
+    }
     interface BqStatus {
         /**
           * It defines the type of status to display
@@ -279,6 +318,10 @@ export interface BqRadioCustomEvent<T> extends CustomEvent<T> {
 export interface BqRadioGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqRadioGroupElement;
+}
+export interface BqSliderCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqSliderElement;
 }
 declare global {
     interface HTMLBqAvatarElement extends Components.BqAvatar, HTMLStencilElement {
@@ -329,6 +372,12 @@ declare global {
         prototype: HTMLBqRadioGroupElement;
         new (): HTMLBqRadioGroupElement;
     };
+    interface HTMLBqSliderElement extends Components.BqSlider, HTMLStencilElement {
+    }
+    var HTMLBqSliderElement: {
+        prototype: HTMLBqSliderElement;
+        new (): HTMLBqSliderElement;
+    };
     interface HTMLBqStatusElement extends Components.BqStatus, HTMLStencilElement {
     }
     var HTMLBqStatusElement: {
@@ -344,6 +393,7 @@ declare global {
         "bq-icon": HTMLBqIconElement;
         "bq-radio": HTMLBqRadioElement;
         "bq-radio-group": HTMLBqRadioGroupElement;
+        "bq-slider": HTMLBqSliderElement;
         "bq-status": HTMLBqStatusElement;
     }
 }
@@ -612,6 +662,56 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface BqSlider {
+        /**
+          * A number representing the delay value applied to bqChange event handler
+         */
+        "debounceTime"?: number;
+        /**
+          * If `true` slider is disabled
+         */
+        "disabled"?: boolean;
+        /**
+          * A number representing the minimum value between the min and max range selected.
+         */
+        "gap"?: number;
+        /**
+          * A number representing the max value of the slider.
+         */
+        "max"?: number;
+        /**
+          * A number representing the min value of the slider.
+         */
+        "min"?: number;
+        /**
+          * Handler to be called when the slider loses focus
+         */
+        "onBqBlur"?: (event: BqSliderCustomEvent<HTMLBqSliderElement>) => void;
+        /**
+          * Handler to be called when change the value on range inputs
+         */
+        "onBqChange"?: (event: BqSliderCustomEvent<{ value: number | Array<number> | string; el: HTMLBqSliderElement }>) => void;
+        /**
+          * Handler to be called when the slider gets focused
+         */
+        "onBqFocus"?: (event: BqSliderCustomEvent<HTMLBqSliderElement>) => void;
+        /**
+          * A number representing the step of the slider.
+         */
+        "step"?: number;
+        /**
+          * It defines the type of slider to display
+         */
+        "type"?: TSliderType;
+        /**
+          * A number representing the value of the slider.
+         */
+        "value"?: number | Array<number> | string;
+        /**
+          * If `true` it will display the min and max values
+         */
+        "valueIndicator"?: boolean;
+    }
     interface BqStatus {
         /**
           * It defines the type of status to display
@@ -627,6 +727,7 @@ declare namespace LocalJSX {
         "bq-icon": BqIcon;
         "bq-radio": BqRadio;
         "bq-radio-group": BqRadioGroup;
+        "bq-slider": BqSlider;
         "bq-status": BqStatus;
     }
 }
@@ -642,6 +743,7 @@ declare module "@stencil/core" {
             "bq-icon": LocalJSX.BqIcon & JSXBase.HTMLAttributes<HTMLBqIconElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
+            "bq-slider": LocalJSX.BqSlider & JSXBase.HTMLAttributes<HTMLBqSliderElement>;
             "bq-status": LocalJSX.BqStatus & JSXBase.HTMLAttributes<HTMLBqStatusElement>;
         }
     }
