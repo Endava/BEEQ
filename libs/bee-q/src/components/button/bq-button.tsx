@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
-import { hasSlotContent, isDefined, validatePropValue } from '../../shared/utils';
+import { hasSlotContent, isDefined, isNil, validatePropValue } from '../../shared/utils';
 import {
   BUTTON_APPEARANCE,
   BUTTON_SIZE,
@@ -143,6 +143,19 @@ export class BqButton {
       ev.preventDefault();
       ev.stopPropagation();
       return;
+    }
+
+    if (this.type === 'submit' || this.type === 'reset') {
+      const wrapperForm = this.el.closest('form');
+      if (!isNil(wrapperForm)) {
+        const btn = document.createElement('button');
+        btn.type = this.type;
+        btn.hidden = true;
+        wrapperForm.append(btn);
+
+        btn.click();
+        btn.remove();
+      }
     }
 
     this.bqClick.emit(this.el);

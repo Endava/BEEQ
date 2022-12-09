@@ -184,4 +184,45 @@ describe('bq-button', () => {
     expect(element.getAttribute('size')).toBe('medium');
     expect(element.getAttribute('variant')).toBe('standard');
   });
+
+  it('should behave as submit button', async () => {
+    const page = await newE2EPage();
+    await page.setContent(`
+      <form id="formId">
+        <input type="text" name="test" value="test-value" />
+        <bq-button type="submit" form-id="formId">Button</bq-button>
+      </form>
+    `);
+
+    const form = await page.find('form');
+    const spy = await form.spyOnEvent('submit');
+
+    await (await page.find('bq-button')).click();
+
+    expect(spy).toHaveReceivedEvent();
+  });
+
+  it('should behave as reset button', async () => {
+    const page = await newE2EPage();
+
+    function getInputValue() {
+      return page.$eval('input', (input) => input.value);
+    }
+
+    await page.setContent(`
+      <form id="formId">
+        <input type="text" name="test" value="test" />
+        <bq-button type="reset" form-id="formId">Button</bq-button>
+      </form>
+    `);
+
+    await page.type('input', 'value ');
+
+    const inputValue = await getInputValue();
+
+    await (await page.find('bq-button')).click();
+
+    expect(inputValue).toBe('value test');
+    expect(await getInputValue()).toBe('test');
+  });
 });
