@@ -80,7 +80,7 @@ export const ExploreIcons = (args) => {
         (icon) => html`
           <div class="icon-wrapper" role="button" tabindex="0">
             <div class="icon-container">
-              <bq-icon color=${args.color} name=${icon} size=${args.size} weight=${args.weight}></bq-icon>
+              <bq-icon color=${args.color} .name=${icon} size=${args.size} weight=${args.weight}></bq-icon>
             </div>
             <span class="icon-span">${icon}</span>
           </div>
@@ -91,4 +91,7 @@ export const ExploreIcons = (args) => {
 };
 ExploreIcons.args = {
   icons: ICONS_SET,
+};
+ExploreIcons.parameters = {
+  chromatic: { disableSnapshot: true },
 };

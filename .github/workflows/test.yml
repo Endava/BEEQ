@@ -7,11 +7,13 @@ on:
     branches: [develop]
   workflow_dispatch:
 
+env:
+  NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+
 jobs:
-  main:
+  agents:
+    name: 🚔 Nx Cloud Agents
     runs-on: ubuntu-latest
-    env:
-      NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
     steps:
       - name: 🛠 Setup Volta
         uses: volta-cli/action@v3
@@ -20,22 +22,113 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - run: node -v && npm -v
-
-      - name: 🕵️‍♀️ Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v3
-
       - name: 📦 Install dependencies
         run: |
           npm ci
 
-      - name: 🧪 Run Test
+      - name: 👮🏼‍♀️ Start Nx Cloud Agent
+        run: npx nx-cloud start-agent
+
+  develop:
+    name: 🧑‍💻 Develop branch
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+    env:
+      NX_BRANCH: develop
+    steps:
+      - name: 🛠 Setup Volta
+        uses: volta-cli/action@v3
+
+      - name: 🛎 Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 🕵️‍♀️ Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v3
+
+      - name: 💫 Cache dependencies
+        id: cache-node-modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
+
+      - name: 📦 Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: |
-          npx nx affected --target=test --parallel=1 --ci --code-coverage --exclude=workspace --output-style=stream-without-prefixes
-          npx nx affected --target=e2e --parallel=1 --ci --code-coverage --exclude=workspace --output-style=stream-without-prefixes
+          npm ci --ignore-scripts
+
+      - name: 👮🏼‍♀️ Start NX Cloud Agent
+        run: npx nx-cloud start-ci-run
+
+      - name: 🧪 Run Tests (only affected)
+        run: |
+          npx nx affected --target=test --ci --code-coverage --exclude=workspace --output-style=stream-without-prefixes
+          npx nx affected --target=e2e --ci --code-coverage --exclude=workspace --output-style=stream-without-prefixes
 
       - name: ⏳ Build
         run: npm run build
+
+      - name: 📴 Stop NX Cloud Agent
+        run: npx nx-cloud stop-all-agents
+
+      - name: 📚 Publish to Chromatic
+        uses: chromaui/action@v1
+        env:
+          CI: true
+        with:
+          workingDir: /
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          storybookBuildDir: dist/storybook/bee-q
+          autoAcceptChanges: true
+          exitOnceUploaded: true
+          onlyChanged: true
+          zip: true
+
+  pr:
+    name: 🧑‍💻 Pull request
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: 🛠 Setup Volta
+        uses: volta-cli/action@v3
+
+      - name: 🛎 Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 🕵️‍♀️ Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v3
+
+      - name: 💫 Cache dependencies
+        id: cache-node-modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
+
+      - name: 📦 Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: |
+          npm ci --ignore-scripts
+
+      - name: 👮🏼‍♀️ Start NX Cloud Agent
+        run: npx nx-cloud start-ci-run
+
+      - name: ⏳ Build (only affected)
+        run: |
+          npx nx affected --target=build --parallel=1 --exclude=workspace --output-style=stream-without-prefixes
+          npx nx run bee-q:build-storybook --output-style=stream-without-prefixes
+
+      - name: 🧪 Run Tests (only affected)
+        run: |
+          npx nx affected --target=test --ci --code-coverage --exclude=workspace --output-style=stream-without-prefixes
+          npx nx affected --target=e2e --ci --code-coverage --exclude=workspace --output-style=stream-without-prefixes
+
+      - name: 📴 Stop NX Cloud Agent
+        run: npx nx-cloud stop-all-agents
 
       - name: 📚 Publish to Chromatic
         uses: chromaui/action@v1

@@ -2,14 +2,7 @@ import type { Configuration } from 'webpack';
 import type { StorybookConfig } from '@storybook/core-common';
 
 export const config: StorybookConfig = {
-  addons: [
-    '@storybook/addon-essentials',
-    {
-      name: '@storybook/addon-docs',
-      options: { transcludeMarkdown: true },
-    },
-    '@storybook/addon-a11y',
-  ],
+  addons: ['@storybook/addon-essentials', '@storybook/addon-a11y'],
   core: {
     builder: {
       name: 'webpack5',
