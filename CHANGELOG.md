@@ -6,6 +6,28 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+### [0.0.1-beta.5](https://github.com/dgonzalezr/bee-q/compare/v0.0.1-beta.4...v0.0.1-beta.5) (2022-12-15)
+
+
+### Features
+
+* **slider:** add a new `bq-slider` component ([#32](https://github.com/dgonzalezr/bee-q/issues/32)) ([da5f424](https://github.com/dgonzalezr/bee-q/commit/da5f424f6b8df8f2f897259ed5a29887f0a4679f))
+* **tooltip:** add `<bq-tooltip>` component ([#39](https://github.com/dgonzalezr/bee-q/issues/39)) ([b2d67af](https://github.com/dgonzalezr/bee-q/commit/b2d67af72ee00ebdcca6f333d4a5e9965a6b0ff8))
+* **utils:** add `debounce` utility method ([#37](https://github.com/dgonzalezr/bee-q/issues/37)) ([2341934](https://github.com/dgonzalezr/bee-q/commit/234193406f233ad09a66380ccb3f8994ff3693bc))
+* **status:** add e2e tests ([#42](https://github.com/dgonzalezr/bee-q/issues/42)) ([d4cf329](https://github.com/dgonzalezr/bee-q/commit/d4cf329e7df7eb587f0cdb784ff6d68f62f88878))
+* **tokens:** update typography tokens ([#18](https://github.com/dgonzalezr/bee-q/issues/18)) ([07be5f7](https://github.com/dgonzalezr/bee-q/commit/07be5f73c5380cf99feab2504a77d2d188b209df))
+* **chore:** add e2e test  to component generator ([#41](https://github.com/dgonzalezr/bee-q/issues/41)) ([c8b3df2](https://github.com/dgonzalezr/bee-q/commit/c8b3df2b93c45cd15523aa1655e44a387b6e6b20))
+* **chore:** pin Node version with Volta ([#44](https://github.com/dgonzalezr/bee-q/issues/44)) ([3b44c77](https://github.com/dgonzalezr/bee-q/commit/3b44c7792b71a1e3b45e93b7452ae11755bad23e))
+
+
+### Bug Fixes
+
+* **button:** enable submit and reset form capabilities ([#47](https://github.com/dgonzalezr/bee-q/issues/47)) ([ded317f](https://github.com/dgonzalezr/bee-q/commit/ded317f478bbb5d59f81fa8f7961b0a3056795a9))
+* **checkbox:** check container being resize on small resolutions ([#34](https://github.com/dgonzalezr/bee-q/issues/34)) ([59e5e6e](https://github.com/dgonzalezr/bee-q/commit/59e5e6eeee0be629bacd6e7a3ea51388ce2f5c9a))
+* **checkbox:** fix checkbox vertical move upon click ([#24](https://github.com/dgonzalezr/bee-q/issues/24)) ([2dcd448](https://github.com/dgonzalezr/bee-q/commit/2dcd4489ebddfcc20fa6dc695f27d818a7d6e8f0))
+* **e2e:** remove comment to fix prettier ([#45](https://github.com/dgonzalezr/bee-q/issues/45)) ([455a8cd](https://github.com/dgonzalezr/bee-q/commit/455a8cd42cc5a82a0a9444ceb0b75f85b9cfdc1d))
+* **radio:** keyboard navigation select disable elements ([#31](https://github.com/dgonzalezr/bee-q/issues/31)) ([89f93cc](https://github.com/dgonzalezr/bee-q/commit/89f93cc15ce59bdab29d56f894cdc579e9fd3b9b))
+
 ### [0.0.1-beta.4](https://github.com/dgonzalezr/bee-q/compare/v0.0.1-beta.3...v0.0.1-beta.4) (2022-11-10)
 
 
