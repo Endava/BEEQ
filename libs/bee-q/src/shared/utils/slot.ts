@@ -33,7 +33,7 @@ export interface IOptions {
 }
 
 /**
- * Iterates over all of its assigned element and text nodes of a given a slot and returns the concatenated HTML as a string.
+ * Iterates over all of its assigned element and text nodes of a given slot and returns the concatenated HTML as a string.
  *
  * @param {HTMLSlotElement} slot - Slot HTML element
  * @return {string} The concatenated HTML as a string

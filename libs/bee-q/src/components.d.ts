@@ -13,6 +13,7 @@ import { TIconWeight } from "./components/icon/bq-icon.types";
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 import { TSliderType } from "./components/slider/bq-slider.types";
 import { TStatusType } from "./components/status/bq-status.types";
+import { FloatingUIPlacement } from "./services/interfaces";
 export namespace Components {
     interface BqAvatar {
         /**
@@ -302,6 +303,37 @@ export namespace Components {
          */
         "type": TStatusType;
     }
+    interface BqTooltip {
+        /**
+          * Set the action when the tooltip should be displayed, on hover (default) or click
+         */
+        "displayOn": 'click' | 'hover';
+        /**
+          * Distance between trigger element and tooltip
+         */
+        "distance"?: number;
+        /**
+          * Hides the tooltip
+         */
+        "hide": () => Promise<void>;
+        /**
+          * If true, the arrow on the tooltip content won't be shown
+         */
+        "hideArrow"?: boolean;
+        "placement"?: FloatingUIPlacement;
+        /**
+          * Whether the tooltip should have the same width as the trigger element (applicable only for content shorter than the trigger element)
+         */
+        "sameWidth"?: boolean;
+        /**
+          * Shows the tooltip
+         */
+        "show": () => Promise<void>;
+        /**
+          * Indicates whether or not the tooltip is visible
+         */
+        "visible"?: boolean;
+    }
 }
 export interface BqButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -384,6 +416,12 @@ declare global {
         prototype: HTMLBqStatusElement;
         new (): HTMLBqStatusElement;
     };
+    interface HTMLBqTooltipElement extends Components.BqTooltip, HTMLStencilElement {
+    }
+    var HTMLBqTooltipElement: {
+        prototype: HTMLBqTooltipElement;
+        new (): HTMLBqTooltipElement;
+    };
     interface HTMLElementTagNameMap {
         "bq-avatar": HTMLBqAvatarElement;
         "bq-badge": HTMLBqBadgeElement;
@@ -395,6 +433,7 @@ declare global {
         "bq-radio-group": HTMLBqRadioGroupElement;
         "bq-slider": HTMLBqSliderElement;
         "bq-status": HTMLBqStatusElement;
+        "bq-tooltip": HTMLBqTooltipElement;
     }
 }
 declare namespace LocalJSX {
@@ -718,6 +757,29 @@ declare namespace LocalJSX {
          */
         "type"?: TStatusType;
     }
+    interface BqTooltip {
+        /**
+          * Set the action when the tooltip should be displayed, on hover (default) or click
+         */
+        "displayOn"?: 'click' | 'hover';
+        /**
+          * Distance between trigger element and tooltip
+         */
+        "distance"?: number;
+        /**
+          * If true, the arrow on the tooltip content won't be shown
+         */
+        "hideArrow"?: boolean;
+        "placement"?: FloatingUIPlacement;
+        /**
+          * Whether the tooltip should have the same width as the trigger element (applicable only for content shorter than the trigger element)
+         */
+        "sameWidth"?: boolean;
+        /**
+          * Indicates whether or not the tooltip is visible
+         */
+        "visible"?: boolean;
+    }
     interface IntrinsicElements {
         "bq-avatar": BqAvatar;
         "bq-badge": BqBadge;
@@ -729,6 +791,7 @@ declare namespace LocalJSX {
         "bq-radio-group": BqRadioGroup;
         "bq-slider": BqSlider;
         "bq-status": BqStatus;
+        "bq-tooltip": BqTooltip;
     }
 }
 export { LocalJSX as JSX };
@@ -745,6 +808,7 @@ declare module "@stencil/core" {
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
             "bq-slider": LocalJSX.BqSlider & JSXBase.HTMLAttributes<HTMLBqSliderElement>;
             "bq-status": LocalJSX.BqStatus & JSXBase.HTMLAttributes<HTMLBqStatusElement>;
+            "bq-tooltip": LocalJSX.BqTooltip & JSXBase.HTMLAttributes<HTMLBqTooltipElement>;
         }
     }
 }
