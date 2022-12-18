@@ -37,7 +37,9 @@ export const config: Config = {
         plugins: [tailwindcss()],
       },
     }),
-    tailwindHMR(),
+    tailwindHMR({
+      tailwindConf: tailwindConf,
+    }),
   ],
   outputTargets: [
     { type: 'docs-readme' },

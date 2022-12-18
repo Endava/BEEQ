@@ -96,8 +96,7 @@
         "tsConfig": "libs/bee-q/tsconfig.lib.json",
         "configPath": "libs/bee-q/stencil.config.ts",
         "outputPath": "dist/bee-q"
-      },
-      "dependsOn": ["create-icons-set"]
+      }
     },
     "lint": {
       "executor": "nx:run-commands",

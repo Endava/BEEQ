@@ -62,13 +62,16 @@ jobs:
       - name: 👮🏼‍♀️ Start NX Cloud Agent
         run: npx nx-cloud start-ci-run
 
-      - name: 🧪 Run Tests (only affected)
+      - name: 🩺 Run Linters and Unit Tests
         run: |
           npx nx affected --target=test --ci --code-coverage --exclude=workspace --output-style=stream-without-prefixes
-          npx nx affected --target=e2e --ci --code-coverage --exclude=workspace --output-style=stream-without-prefixes
 
       - name: ⏳ Build
         run: npm run build
+
+      - name: 🧪 Run E2E Tests (only affected)
+        run: |
+          npx nx affected --target=e2e --ci --code-coverage --exclude=workspace --output-style=stream-without-prefixes
 
       - name: 📴 Stop NX Cloud Agent
         run: npx nx-cloud stop-all-agents
@@ -117,15 +120,18 @@ jobs:
       - name: 👮🏼‍♀️ Start NX Cloud Agent
         run: npx nx-cloud start-ci-run
 
-      - name: 🧪 Run Tests (only affected)
+      - name: 🩺 Run Linters and Unit Tests
         run: |
           npx nx affected --target=test --ci --code-coverage --exclude=workspace --output-style=stream-without-prefixes
-          npx nx affected --target=e2e --ci --code-coverage --exclude=workspace --output-style=stream-without-prefixes
 
       - name: ⏳ Build (only affected)
         run: |
           npx nx affected --target=build --parallel=1 --exclude=workspace --output-style=stream-without-prefixes
           npx nx run bee-q:build-storybook --output-style=stream-without-prefixes
+
+      - name: 🧪 Run E2E Tests (only affected)
+        run: |
+          npx nx affected --target=e2e --ci --code-coverage --exclude=workspace --output-style=stream-without-prefixes
 
       - name: 📴 Stop NX Cloud Agent
         run: npx nx-cloud stop-all-agents
