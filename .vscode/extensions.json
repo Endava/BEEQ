@@ -1,5 +1,6 @@
 {
   "recommendations": [
+    "aaron-bond.better-comments",
     "bierner.lit-html",
     "bradlc.vscode-tailwindcss",
     "dbaeumer.vscode-eslint",
@@ -11,10 +12,12 @@
     "mrmlnc.vscode-scss",
     "ms-vsliveshare.vsliveshare",
     "nrwl.angular-console",
-    "parthr2031.colorful-comments",
+    "oouo-diogo-perdigao.docthis",
     "phoenisx.cssvar",
+    "runem.lit-plugin",
     "sonarsource.sonarlint-vscode",
+    "stackbreak.comment-divider",
     "stylelint.vscode-stylelint",
-    "Zignd.html-css-class-completion"
+    "zignd.html-css-class-completion"
   ]
 }
