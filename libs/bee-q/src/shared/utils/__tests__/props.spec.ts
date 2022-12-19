@@ -22,7 +22,7 @@ describe('props - validatePropValue', () => {
   });
 
   it('should not warn if property is in array', () => {
-    validatePropValue(ACCEPTED_VALUES, 'small', 'small', el, 'size');
+    validatePropValue(ACCEPTED_VALUES, 'small', el, 'size');
 
     expect(console.log).not.toHaveBeenCalled();
     expect(console.warn).not.toHaveBeenCalled();
@@ -31,7 +31,10 @@ describe('props - validatePropValue', () => {
   });
 
   it('should warn that property is not correct', () => {
-    validatePropValue(ACCEPTED_VALUES, 'small', 'test', el, 'size');
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    el.size = 'test';
+    validatePropValue(ACCEPTED_VALUES, 'small', el, 'size');
 
     expect(console.log).not.toHaveBeenCalled();
     expect(console.warn).toHaveBeenCalledTimes(1);

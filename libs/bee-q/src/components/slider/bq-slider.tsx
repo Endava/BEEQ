@@ -61,7 +61,7 @@ export class BqSlider {
   // =======================
   @Watch('type')
   handleTypePropChange() {
-    validatePropValue(SLIDER_TYPE, 'single', this.type, this.el, 'type');
+    validatePropValue(SLIDER_TYPE, 'single', this.el, 'type');
   }
 
   // Events section

@@ -54,7 +54,7 @@ export class BqRadioGroup {
 
   @Watch('orientation')
   checkPropValues() {
-    validatePropValue(RADIO_GROUP_ORIENTATION, 'vertical', this.orientation, this.el, 'orientation');
+    validatePropValue(RADIO_GROUP_ORIENTATION, 'vertical', this.el, 'orientation');
   }
 
   @Watch('debounceTime')

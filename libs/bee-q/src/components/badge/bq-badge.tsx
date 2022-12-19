@@ -50,7 +50,7 @@ export class BqBadge {
 
   @Watch('size')
   handleSizePropChange() {
-    validatePropValue(BADGE_SIZE, 'small', this.size, this.el, 'size');
+    validatePropValue(BADGE_SIZE, 'small', this.el, 'size');
   }
 
   // Events section

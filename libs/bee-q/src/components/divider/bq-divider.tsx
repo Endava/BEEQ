@@ -85,9 +85,9 @@ export class BqDivider {
   @Watch('titleAlignment')
   @Watch('strokeLinecap')
   checkPropValues() {
-    validatePropValue(DIVIDER_ORIENTATION, 'horizontal', this.orientation, this.el, 'orientation');
-    validatePropValue(DIVIDER_TITLE_ALIGNMENT, 'middle', this.titleAlignment, this.el, 'titleAlignment');
-    validatePropValue(DIVIDER_STROKE_LINECAP, 'butt', this.strokeLinecap, this.el, 'strokeLinecap');
+    validatePropValue(DIVIDER_ORIENTATION, 'horizontal', this.el, 'orientation');
+    validatePropValue(DIVIDER_TITLE_ALIGNMENT, 'middle', this.el, 'titleAlignment');
+    validatePropValue(DIVIDER_STROKE_LINECAP, 'butt', this.el, 'strokeLinecap');
   }
 
   // Events section

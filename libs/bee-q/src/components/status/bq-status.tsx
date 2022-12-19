@@ -34,7 +34,7 @@ export class BqStatus {
   // =======================
   @Watch('type')
   checkPropValues() {
-    validatePropValue(STATUS_TYPE, 'neutral', this.type, this.el, 'type');
+    validatePropValue(STATUS_TYPE, 'neutral', this.el, 'type');
   }
   // Events section
   // Requires JSDocs for public API documentation
