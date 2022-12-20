@@ -1,4 +1,5 @@
-import { h, Component, Prop, Watch, State } from '@stencil/core';
+import { h, Component, Prop, Watch, State, Element } from '@stencil/core';
+import { validatePropValue } from '../../shared/utils';
 import { TAvatarShape, TAvatarSize, AVATAR_SHAPE, AVATAR_SIZE } from './bq-avatar.types';
 
 /**
@@ -19,6 +20,8 @@ export class BqAvatar {
 
   // Reference to host HTML element
   // ===================================
+
+  @Element() el!: HTMLBqAvatarElement;
 
   // State() variables
   // Inlined decorator, alphabetical order
@@ -54,19 +57,10 @@ export class BqAvatar {
   }
 
   @Watch('shape')
-  handleShapePropChange() {
-    if (AVATAR_SHAPE.includes(this.shape)) return;
-    // Shape value fallback
-    this.shape = 'circle';
-    console.warn(`[Bq-Avatar] Please notice that "shape" should be one of ${AVATAR_SHAPE.join('|')}`);
-  }
-
   @Watch('size')
-  handleSizePropChange() {
-    if (AVATAR_SIZE.includes(this.size)) return;
-    // Size value fallback
-    this.size = 'medium';
-    console.warn(`[Bq-Avatar] Please notice that "size" should be one of ${AVATAR_SIZE.join('|')}`);
+  checkPropValues() {
+    validatePropValue(AVATAR_SHAPE, 'circle', this.el, 'shape');
+    validatePropValue(AVATAR_SIZE, 'medium', this.el, 'size');
   }
 
   // Events section
@@ -78,8 +72,7 @@ export class BqAvatar {
   // =====================================
 
   componentWillLoad() {
-    this.handleShapePropChange();
-    this.handleSizePropChange();
+    this.checkPropValues();
   }
 
   // Listeners
