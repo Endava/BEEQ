@@ -4,7 +4,7 @@ import { computedStyle } from '../../../shared/test-utils';
 describe('bq-icon', () => {
   it('should render', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-icon/>');
+    await page.setContent('<bq-icon></bq-icon>');
 
     const element = await page.find('bq-icon');
 
@@ -13,7 +13,7 @@ describe('bq-icon', () => {
 
   it('should have shadow root', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-icon/>');
+    await page.setContent('<bq-icon></bq-icon>');
 
     const element = await page.find('bq-icon');
 
@@ -22,7 +22,7 @@ describe('bq-icon', () => {
 
   it('should display icon', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-icon name="activity"/>');
+    await page.setContent('<bq-icon name="activity"></bq-icon>');
 
     const element = await page.find('bq-icon >>> [part="svg"]');
 
@@ -31,7 +31,7 @@ describe('bq-icon', () => {
 
   it('should respect design style', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-icon name="activity"/>');
+    await page.setContent('<bq-icon name="activity"></bq-icon>');
 
     const style = await computedStyle(page, 'bq-icon >>> [part="base"]');
 
@@ -40,7 +40,7 @@ describe('bq-icon', () => {
 
   it('should change size', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-icon size="30"/>');
+    await page.setContent('<bq-icon size="30"></bq-icon>');
 
     const style = await computedStyle(page, 'bq-icon >>> [part="base"]');
 
