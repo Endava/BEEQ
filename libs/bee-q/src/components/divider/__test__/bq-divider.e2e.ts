@@ -4,7 +4,7 @@ import { computedStyle } from '../../../shared/test-utils';
 describe('bq-divider', () => {
   it('should render', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-divider/>');
+    await page.setContent('<bq-divider></bq-divider>');
 
     const element = await page.find('bq-divider');
 
@@ -13,7 +13,7 @@ describe('bq-divider', () => {
 
   it('should have shadow root', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-divider/>');
+    await page.setContent('<bq-divider></bq-divider>');
 
     const element = await page.find('bq-divider');
 
@@ -72,7 +72,7 @@ describe('bq-divider', () => {
 
   it('should respect design style', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-divider/>');
+    await page.setContent('<bq-divider></bq-divider>');
 
     const style = await computedStyle(page, 'bq-divider >>> [part="base"]');
 
