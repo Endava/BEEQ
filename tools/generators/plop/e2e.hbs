@@ -3,7 +3,7 @@ import { newE2EPage } from '@stencil/core/testing';
 describe('bq-{{kebabCase name}}', () => {
   it('should render', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-{{kebabCase name}}/>');
+    await page.setContent('<bq-{{kebabCase name}}></<bq-{{kebabCase name}}>');
 
     const element = await page.find('bq-{{kebabCase name}}');
 
@@ -12,7 +12,7 @@ describe('bq-{{kebabCase name}}', () => {
 
   it('should have shadow root', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-{{kebabCase name}}/>');
+    await page.setContent('<bq-{{kebabCase name}}></<bq-{{kebabCase name}}>');
 
     const element = await page.find('bq-{{kebabCase name}}');
 
@@ -21,7 +21,7 @@ describe('bq-{{kebabCase name}}', () => {
 
   it('should display text', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-{{kebabCase name}}/>');
+    await page.setContent('<bq-{{kebabCase name}}></<bq-{{kebabCase name}}>');
 
     const element = await page.find('bq-{{kebabCase name}} >>> p');
 
