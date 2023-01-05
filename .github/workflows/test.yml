@@ -134,10 +134,8 @@ jobs:
         run: |
           npx nx affected --target=test --ci --code-coverage --exclude=workspace --output-style=stream-without-prefixes
 
-      - name: ⏳ Build (only affected)
-        run: |
-          npx nx affected --target=build --parallel=1 --exclude=workspace --output-style=stream-without-prefixes
-          npx nx run bee-q:build-storybook --output-style=stream-without-prefixes
+      - name: ⏳ Build
+        run: npm run build
 
       - name: 🧪 Run E2E Tests (only affected)
         run: |
