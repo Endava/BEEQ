@@ -24,8 +24,8 @@
           "test",
           "e2e",
           "stylelint",
-          "create-icons-set",
-          "extract-icons"
+          "extract-icons",
+          "create-icons-set"
         ]
       }
     }

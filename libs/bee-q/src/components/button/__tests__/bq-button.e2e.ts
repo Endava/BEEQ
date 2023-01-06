@@ -4,7 +4,7 @@ import { computedStyle } from '../../../shared/test-utils';
 describe('bq-button', () => {
   it('should render', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-button>Button<bq-button>');
+    await page.setContent('<bq-button>Button</bq-button>');
 
     const element = await page.find('bq-button');
 
@@ -13,7 +13,7 @@ describe('bq-button', () => {
 
   it('should have shadow root', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-button>Button<bq-button>');
+    await page.setContent('<bq-button>Button</bq-button>');
 
     const element = await page.find('bq-button');
 
@@ -22,7 +22,7 @@ describe('bq-button', () => {
 
   it('should render <a> tag', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-button href="https://www.example.com">Button<bq-button>');
+    await page.setContent('<bq-button href="https://www.example.com">Button</bq-button>');
 
     const element = await page.find('bq-button >>> [part="button"]');
 
@@ -31,7 +31,7 @@ describe('bq-button', () => {
 
   it('should trigger bqClick', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-button>Button<bq-button>');
+    await page.setContent('<bq-button>Button</bq-button>');
 
     const bqFocus = await page.spyOnEvent('bqFocus');
     const bqClick = await page.spyOnEvent('bqClick');
@@ -48,7 +48,7 @@ describe('bq-button', () => {
 
   it('should be keyboard accessible', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-button>Button<bq-button><bq-button>Button<bq-button>');
+    await page.setContent('<bq-button>Button<bq-button><bq-button>Button</bq-button>');
 
     const bqFocus = await page.spyOnEvent('bqFocus');
     const bqClick = await page.spyOnEvent('bqClick');
@@ -67,7 +67,7 @@ describe('bq-button', () => {
 
   it('should handle `disabled` property', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-button disabled>Button<bq-button>');
+    await page.setContent('<bq-button disabled>Button</bq-button>');
 
     const bqFocus = await page.spyOnEvent('bqFocus');
     const bqClick = await page.spyOnEvent('bqClick');
@@ -86,7 +86,7 @@ describe('bq-button', () => {
 
   it('should render prefix element', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-button><span slot="prefix">Prefix text</span>Button<bq-button>');
+    await page.setContent('<bq-button><span slot="prefix">Prefix text</span>Button</bq-button>');
 
     const prefixText = await page.$eval('bq-button', (element) => {
       const slotElement = element.shadowRoot.querySelector('slot[name="prefix"]');
@@ -100,7 +100,7 @@ describe('bq-button', () => {
 
   it('should render suffix element', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-button><span slot="suffix">Suffix text</span>Button<bq-button>');
+    await page.setContent('<bq-button><span slot="suffix">Suffix text</span>Button</bq-button>');
 
     const suffixText = await page.$eval('bq-button', (element) => {
       const slotElement = element.shadowRoot.querySelector('slot[name="suffix"]');
@@ -114,7 +114,7 @@ describe('bq-button', () => {
 
   it('should render loading indicator', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-button loading>Button<bq-button>');
+    await page.setContent('<bq-button loading>Button</bq-button>');
 
     const spinnerIcon = await page.find('bq-button >>> bq-icon[name="spinner-gap"]');
 
@@ -123,13 +123,11 @@ describe('bq-button', () => {
 
   it('should respect design style', async () => {
     const page = await newE2EPage();
-    await page.setContent(
-      `
-      <bq-button size="small">Button<bq-button>
-      <bq-button size="medium">Button<bq-button>
-      <bq-button size="large">Button<bq-button>
-      `,
-    );
+    await page.setContent(`
+      <bq-button size="small">Button</bq-button>
+      <bq-button size="medium">Button</bq-button>
+      <bq-button size="large">Button</bq-button>
+    `);
 
     const smallStyle = await computedStyle(page, 'bq-button[size="small"] >>> [part="button"]');
     const mediumStyle = await computedStyle(page, 'bq-button[size="medium"] >>> [part="button"]');
@@ -146,7 +144,7 @@ describe('bq-button', () => {
   it('should handle invalid properties', async () => {
     const page = await newE2EPage();
     await page.setContent(
-      '<bq-button size="small" appearance="secondary" type="submit" variant="ghost">Button<bq-button>',
+      '<bq-button size="small" appearance="secondary" type="submit" variant="ghost">Button</bq-button>',
     );
 
     const console: jest.Mock<void, string[]> = jest.fn();

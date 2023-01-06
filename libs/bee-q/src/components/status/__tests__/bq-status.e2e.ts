@@ -4,7 +4,7 @@ import { computedStyle } from '../../../shared/test-utils';
 describe('bq-status', () => {
   it('should render', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-status>Neutral status<bq-status>');
+    await page.setContent('<bq-status>Neutral status</bq-status>');
 
     const element = await page.find('bq-status');
 
@@ -13,7 +13,7 @@ describe('bq-status', () => {
 
   it('should have shadow root', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-status>Neutral status<bq-status>');
+    await page.setContent('<bq-status>Neutral status</bq-status>');
 
     const element = await page.find('bq-status');
 
@@ -22,7 +22,7 @@ describe('bq-status', () => {
 
   it('should display status text', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-status>Neutral status<bq-status>');
+    await page.setContent('<bq-status>Neutral status</bq-status>');
 
     const element = await page.find('bq-status');
 
@@ -31,7 +31,7 @@ describe('bq-status', () => {
 
   it('should handle status type', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-status>Neutral status<bq-status>');
+    await page.setContent('<bq-status>Neutral status</bq-status>');
 
     const element = await page.find('bq-status');
 
@@ -45,7 +45,7 @@ describe('bq-status', () => {
 
   it('should handle invalid status type', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-status status="danger">Neutral status<bq-status>');
+    await page.setContent('<bq-status status="danger">Neutral status</bq-status>');
 
     const console: jest.Mock<void, string[]> = jest.fn();
 
@@ -68,7 +68,7 @@ describe('bq-status', () => {
 
   it('should respect design height', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-status status="danger">Neutral status<bq-status>');
+    await page.setContent('<bq-status status="danger">Neutral status</bq-status>');
 
     const style = await computedStyle(page, 'bq-status');
 
@@ -77,7 +77,7 @@ describe('bq-status', () => {
 
   it('should have status as circle', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-status status="danger">Neutral status<bq-status>');
+    await page.setContent('<bq-status status="danger">Neutral status</bq-status>');
 
     const style = await computedStyle(page, 'bq-status >>> [part="circle"]');
 
@@ -86,7 +86,7 @@ describe('bq-status', () => {
 
   it('should respect design space between status and text', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-status status="danger">Neutral status<bq-status>');
+    await page.setContent('<bq-status status="danger">Neutral status</bq-status>');
 
     const style = await computedStyle(page, 'bq-status >>> [part="base"]');
 

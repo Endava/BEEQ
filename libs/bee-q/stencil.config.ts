@@ -14,6 +14,9 @@ export const config: Config = {
   taskQueue: 'async',
   sourceMap: true,
   globalStyle: './src/global/styles/default.scss',
+  testing: {
+    browserArgs: ['--single-process'],
+  },
   plugins: [
     sass({
       includePaths: [

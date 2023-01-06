@@ -36,7 +36,10 @@ describe('bq-checkbox', () => {
 
   it('should be keyboard accessible', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-checkbox>Checkbox<bq-checkbox><bq-checkbox>Checkbox 1<bq-checkbox>');
+    await page.setContent(`
+      <bq-checkbox>Checkbox</bq-checkbox>
+      <bq-checkbox>Checkbox 1</bq-checkbox>
+    `);
 
     const bqFocus = await page.spyOnEvent('bqFocus');
     const bqChange = await page.spyOnEvent('bqChange');

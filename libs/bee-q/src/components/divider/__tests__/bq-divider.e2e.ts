@@ -37,7 +37,7 @@ describe('bq-divider', () => {
   it('should handle invalid properties', async () => {
     const page = await newE2EPage();
     await page.setContent(
-      '<bq-divider orientation="vertical" titleAlignment="start" strokeLinecap="square">Divider<bq-divider>',
+      '<bq-divider orientation="vertical" titleAlignment="start" strokeLinecap="square">Divider</bq-divider>',
     );
 
     const console: jest.Mock<void, string[]> = jest.fn();
