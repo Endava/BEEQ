@@ -20,7 +20,9 @@ export const parameters = {
   layout: 'fullscreen',
   html: {
     removeComments: true,
+    removeEmptyComments: true,
     highlighter: {
+      showLineNumbers: true,
       wrapLines: true,
     },
     prettier: {

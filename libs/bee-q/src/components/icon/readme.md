@@ -17,6 +17,13 @@ Icons are simplified images that graphically explain the meaning of an object on
 | `weight`            | `weight`  | It set the icon weight/style                                                            | `"bold" \| "duotone" \| "fill" \| "light" \| "regular" \| "thin"` | `'regular'` |
 
 
+## Events
+
+| Event       | Description                                           | Type               |
+| ----------- | ----------------------------------------------------- | ------------------ |
+| `svgLoaded` | Callback handler to be called when the SVG has loaded | `CustomEvent<any>` |
+
+
 ## Shadow Parts
 
 | Part     | Description                                                       |

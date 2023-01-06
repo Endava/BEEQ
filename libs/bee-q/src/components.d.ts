@@ -15,6 +15,9 @@ import { TSliderType } from "./components/slider/bq-slider.types";
 import { TStatusType } from "./components/status/bq-status.types";
 import { FloatingUIPlacement } from "./services/interfaces";
 export namespace Components {
+    /**
+     * An avatar represents an object made of different pieces of information, in a way that is understandable at a glance.
+     */
     interface BqAvatar {
         /**
           * The image source to load on the avatar (this can be also a base64 encoded image)
@@ -51,6 +54,9 @@ export namespace Components {
          */
         "textColor"?: string;
     }
+    /**
+     * Buttons are designed for users to take action on a page or a screen.
+     */
     interface BqButton {
         /**
           * The appearance style to apply to the button
@@ -173,6 +179,9 @@ export namespace Components {
          */
         "titleAlignment"?: TDividerTitleAlignment;
     }
+    /**
+     * Icons are simplified images that graphically explain the meaning of an object on the screen.
+     */
     interface BqIcon {
         /**
           * Set the stroke color of the SVG. The value should be a valid value of the palette color
@@ -343,6 +352,10 @@ export interface BqCheckboxCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqCheckboxElement;
 }
+export interface BqIconCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqIconElement;
+}
 export interface BqRadioCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqRadioElement;
@@ -356,6 +369,9 @@ export interface BqSliderCustomEvent<T> extends CustomEvent<T> {
     target: HTMLBqSliderElement;
 }
 declare global {
+    /**
+     * An avatar represents an object made of different pieces of information, in a way that is understandable at a glance.
+     */
     interface HTMLBqAvatarElement extends Components.BqAvatar, HTMLStencilElement {
     }
     var HTMLBqAvatarElement: {
@@ -368,6 +384,9 @@ declare global {
         prototype: HTMLBqBadgeElement;
         new (): HTMLBqBadgeElement;
     };
+    /**
+     * Buttons are designed for users to take action on a page or a screen.
+     */
     interface HTMLBqButtonElement extends Components.BqButton, HTMLStencilElement {
     }
     var HTMLBqButtonElement: {
@@ -386,6 +405,9 @@ declare global {
         prototype: HTMLBqDividerElement;
         new (): HTMLBqDividerElement;
     };
+    /**
+     * Icons are simplified images that graphically explain the meaning of an object on the screen.
+     */
     interface HTMLBqIconElement extends Components.BqIcon, HTMLStencilElement {
     }
     var HTMLBqIconElement: {
@@ -437,6 +459,9 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    /**
+     * An avatar represents an object made of different pieces of information, in a way that is understandable at a glance.
+     */
     interface BqAvatar {
         /**
           * The image source to load on the avatar (this can be also a base64 encoded image)
@@ -473,6 +498,9 @@ declare namespace LocalJSX {
          */
         "textColor"?: string;
     }
+    /**
+     * Buttons are designed for users to take action on a page or a screen.
+     */
     interface BqButton {
         /**
           * The appearance style to apply to the button
@@ -607,6 +635,9 @@ declare namespace LocalJSX {
          */
         "titleAlignment"?: TDividerTitleAlignment;
     }
+    /**
+     * Icons are simplified images that graphically explain the meaning of an object on the screen.
+     */
     interface BqIcon {
         /**
           * Set the stroke color of the SVG. The value should be a valid value of the palette color
@@ -616,6 +647,10 @@ declare namespace LocalJSX {
           * Icon name to load. Please check all available icons [here](https://phosphoricons.com/)
          */
         "name": string;
+        /**
+          * Callback handler to be called when the SVG has loaded
+         */
+        "onSvgLoaded"?: (event: BqIconCustomEvent<any>) => void;
         /**
           * Set the size of the SVG
          */
@@ -798,11 +833,20 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            /**
+             * An avatar represents an object made of different pieces of information, in a way that is understandable at a glance.
+             */
             "bq-avatar": LocalJSX.BqAvatar & JSXBase.HTMLAttributes<HTMLBqAvatarElement>;
             "bq-badge": LocalJSX.BqBadge & JSXBase.HTMLAttributes<HTMLBqBadgeElement>;
+            /**
+             * Buttons are designed for users to take action on a page or a screen.
+             */
             "bq-button": LocalJSX.BqButton & JSXBase.HTMLAttributes<HTMLBqButtonElement>;
             "bq-checkbox": LocalJSX.BqCheckbox & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
             "bq-divider": LocalJSX.BqDivider & JSXBase.HTMLAttributes<HTMLBqDividerElement>;
+            /**
+             * Icons are simplified images that graphically explain the meaning of an object on the screen.
+             */
             "bq-icon": LocalJSX.BqIcon & JSXBase.HTMLAttributes<HTMLBqIconElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;

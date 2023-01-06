@@ -29,12 +29,11 @@ jobs:
       - name: 👮🏼‍♀️ Start Nx Cloud Agent
         run: npx nx-cloud start-agent
 
-  develop:
-    name: 🧑‍💻 Develop branch
+  main:
+    name: 🧑‍💻 Main job
     runs-on: ubuntu-latest
-    if: github.event_name != 'pull_request'
     env:
-      NX_BRANCH: develop
+      NX_BRANCH: ${{ github.head_ref || github.ref_name }}
     steps:
       - name: 🛠 Setup Volta
         uses: volta-cli/action@v3
@@ -87,6 +86,7 @@ jobs:
           zip: true
 
       - name: 🔐 Configure AWS Credentials
+        if: github.ref_name == 'develop'
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -94,59 +94,5 @@ jobs:
           aws-region: ${{secrets.AWS_S3_BUCKET_REGION}}
 
       - name: 🚀 Deploy to AWS S3
+        if: github.ref_name == 'develop'
         run: aws s3 sync dist/storybook/bee-q/ s3://${{secrets.AWS_S3_BUCKET}}/ --delete --output table
-
-  pr:
-    name: 🧑‍💻 Pull request
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-    steps:
-      - name: 🛠 Setup Volta
-        uses: volta-cli/action@v3
-
-      - name: 🛎 Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: 🕵️‍♀️ Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v3
-
-      - name: 💫 Cache dependencies
-        id: cache-node-modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
-
-      - name: 📦 Install dependencies
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: npm ci --ignore-scripts
-
-      - name: 👮🏼‍♀️ Start NX Cloud Agent
-        run: npx nx-cloud start-ci-run
-
-      - name: 🩺 Run Linters and Unit Tests
-        run: npx nx affected --target=test --ci --code-coverage --exclude=workspace --output-style=stream-without-prefixes
-
-      - name: ⏳ Build
-        run: npm run build
-
-      - name: 🧪 Run E2E Tests (only affected)
-        run: npx nx affected --target=e2e --ci --code-coverage --exclude=workspace --output-style=stream-without-prefixes
-
-      - name: 📴 Stop NX Cloud Agent
-        run: npx nx-cloud stop-all-agents
-
-      - name: 📚 Publish to Chromatic
-        uses: chromaui/action@v1
-        env:
-          CI: true
-        with:
-          workingDir: /
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          storybookBuildDir: dist/storybook/bee-q
-          autoAcceptChanges: true
-          exitOnceUploaded: true
-          onlyChanged: true
-          zip: true
