@@ -36,7 +36,7 @@ The project as been structured as an [NX monorepo](https://nx.dev) :
 ├── 📁 apps
 ├── 📁 libs
   ├── 📁 bee-q
-  ├── 📁 bee-angular
+  ├── 📁 bee-q-angular
   ├── 📁 bee-q-react
   ├── ...
 ├── 📁 tools
