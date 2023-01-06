@@ -121,12 +121,14 @@
     },
     "extract-icons": {
       "executor": "nx:run-commands",
+      "outputs": ["libs/bee-q/src/components/icon/svg"],
       "options": {
         "command": "node tools/scripts/icon-library/extract-icons.js"
       }
     },
     "create-icons-set": {
       "executor": "nx:run-commands",
+      "outputs": ["libs/bee-q/src/components/icon/helper"],
       "options": {
         "command": "node tools/scripts/icon-library/create-icons-set.js"
       },

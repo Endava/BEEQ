@@ -9,7 +9,7 @@
     "url": "https://github.com/dgonzalezr/bee-q"
   },
   "scripts": {
-    "start": "nx run-many --target=start --projects=bee-q",
+    "start": "nx run-many --target=start --projects=bee-q --skip-nx-cache",
     "build": "run-s build:libs build:storybook",
     "build:libs": "nx run-many --target=build --exclude=workspace --output-style=stream-without-prefixes",
     "build:storybook": "nx run bee-q:build-storybook --output-style=stream-without-prefixes",
