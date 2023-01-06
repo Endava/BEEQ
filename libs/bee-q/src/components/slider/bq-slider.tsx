@@ -64,6 +64,11 @@ export class BqSlider {
     validatePropValue(SLIDER_TYPE, 'single', this.el, 'type');
   }
 
+  @Watch('value')
+  handleValuePropChange() {
+    this.handleRangeInputChange();
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
@@ -122,7 +127,7 @@ export class BqSlider {
   private setPropValue = (value?: { min?: number; max?: number }): void => {
     if (!value) return;
 
-    if (value.hasOwnProperty('min')) {
+    if (value.hasOwnProperty('min') && value.min) {
       if (this.isSingleSlider) {
         this.value = value.min;
         this.minRangeValue = value.min;
@@ -130,12 +135,20 @@ export class BqSlider {
         return;
       }
 
+      if (this.gap && value.hasOwnProperty('max')) {
+        value.min = Math.min(value.min, value.max - this.gap);
+      }
+
       this.value[0] = value.min;
       this.minRangeValue = value.min;
       this.setElementValue(String(value.min), this.minRangeInputElement);
     }
 
-    if (value.hasOwnProperty('max')) {
+    if (value.hasOwnProperty('max') && value.max) {
+      if (this.gap && value.hasOwnProperty('min')) {
+        value.max = Math.max(value.max, value.min + this.gap);
+      }
+
       this.value[1] = value.max;
       this.maxRangeValue = value.max;
       this.setElementValue(String(value.max), this.maxRangeInputElement);
@@ -221,6 +234,10 @@ export class BqSlider {
       this.value = defaultValue;
     }
 
+    if (typeof this.value === 'number' && !this.isSingleSlider && !Array.isArray(this.value)) {
+      this.value = [this.value, this.value];
+    }
+
     this.setPropValue(this.isSingleSlider ? { min: Number(this.value) } : { min: this.value[0], max: this.value[1] });
   };
 
@@ -287,8 +304,8 @@ export class BqSlider {
             type="range"
             min={this.min}
             max={this.max}
-            value={String(this.getMinRangeValue())}
             step={this.step}
+            value={String(this.getMinRangeValue())}
             disabled={this.disabled}
             ref={(input: HTMLInputElement) => (this.minRangeInputElement = input)}
             onInput={this.handleMinRangeInput}
@@ -303,8 +320,8 @@ export class BqSlider {
               type="range"
               min={this.min}
               max={this.max}
-              value={String(this.getMaxRangeValue())}
               step={this.step}
+              value={String(this.getMaxRangeValue())}
               disabled={this.disabled}
               ref={(input: HTMLInputElement) => (this.maxRangeInputElement = input)}
               onInput={this.handleMaxRangeInput}
