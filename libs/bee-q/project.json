@@ -1,12 +1,14 @@
 {
+  "name": "bee-q",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/bee-q/src",
   "projectType": "library",
+  "tags": [],
   "generators": {
     "@nxext/stencil:component": {
       "style": "scss"
     }
   },
-  "tags": [],
   "targets": {
     "test": {
       "executor": "@nxext/stencil:test",
@@ -20,7 +22,7 @@
       "dependsOn": ["stylelint", "lint"]
     },
     "start": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": ["nx run bee-q:start-stencil", "nx run bee-q:start-storybook"],
         "parallel": true
@@ -53,6 +55,7 @@
       }
     },
     "build": {
+      "dependsOn": ["^build", "create-icons-set"],
       "executor": "@nxext/stencil:build",
       "outputs": ["{options.outputPath}"],
       "options": {
@@ -61,7 +64,6 @@
         "configPath": "libs/bee-q/stencil.config.ts",
         "outputPath": "dist/bee-q"
       },
-      "dependsOn": ["^build", "create-icons-set"],
       "configurations": {
         "production": {
           "dev": false,
@@ -77,7 +79,8 @@
         "outputPath": "dist/storybook/bee-q",
         "config": {
           "configFolder": "libs/bee-q/.storybook"
-        }
+        },
+        "webpackStatsJson": true
       },
       "configurations": {
         "ci": {
@@ -96,6 +99,13 @@
       }
     },
     "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["nx run bee-q:eslint", "nx run bee-q:stylelint"],
+        "parallel": true
+      }
+    },
+    "eslint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
@@ -111,16 +121,34 @@
     },
     "extract-icons": {
       "executor": "nx:run-commands",
+      "outputs": ["libs/bee-q/src/components/icon/svg"],
       "options": {
         "command": "node tools/scripts/icon-library/extract-icons.js"
       }
     },
     "create-icons-set": {
       "executor": "nx:run-commands",
+      "outputs": ["libs/bee-q/src/components/icon/helper"],
       "options": {
         "command": "node tools/scripts/icon-library/create-icons-set.js"
       },
       "dependsOn": ["extract-icons"]
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public",
+        "buildTarget": "production",
+        "tag": "latest"
+      }
+    },
+    "publish-beta": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public",
+        "buildTarget": "production",
+        "tag": "beta"
+      }
     }
   }
 }

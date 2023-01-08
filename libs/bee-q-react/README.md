@@ -16,10 +16,10 @@ npm install @bee-q/react
 npm install @bee-q/react@latest --save
 ```
 
-if `@bee-q/chore` package is installed you should update both
+if `@bee-q/core` package is installed you should update both
 
 ```
-npm install @bee-q/chore@latest @bee-q/react@latest --save
+npm install @bee-q/core@latest @bee-q/react@latest --save
 ```
 
 ## Usage

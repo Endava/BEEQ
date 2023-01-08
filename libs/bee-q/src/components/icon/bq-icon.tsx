@@ -1,4 +1,4 @@
-import { h, Component, Prop, Host, getAssetPath, State, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, getAssetPath, h, Host, Prop, State, Watch } from '@stencil/core';
 import { getColorCSSVariable } from '../../shared/utils';
 import { TIconWeight } from './bq-icon.types';
 import { getSvgContent, iconContent } from './helper/request';
@@ -32,7 +32,7 @@ export class BqIcon {
   // ========================
 
   /** Set the stroke color of the SVG. The value should be a valid value of the palette color */
-  @Prop({ mutable: true, reflect: true }) color?: string;
+  @Prop({ reflect: true }) color?: string;
 
   /** Icon name to load. Please check all available icons [here](https://phosphoricons.com/) */
   @Prop({ reflect: true }) name!: string;
@@ -57,6 +57,9 @@ export class BqIcon {
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
+
+  /** Callback handler to be called when the SVG has loaded */
+  @Event() svgLoaded: EventEmitter;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -89,6 +92,7 @@ export class BqIcon {
 
     getSvgContent(url, true).then(() => {
       this._svgContent = iconContent.get(url);
+      this.svgLoaded.emit(this._svgContent);
     });
   };
 

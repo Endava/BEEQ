@@ -1,0 +1,8 @@
+/* -------------------------------------------------------------------------- */
+/*                          Divider custom properties                          */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  --bq-divider--color: theme('colors.ui.secondary');
+  --bq-divider--title-marginX: theme('spacing.4');
+}

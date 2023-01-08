@@ -4,7 +4,8 @@ import tailwind, { tailwindHMR } from 'stencil-tailwind-plugin';
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
 import { reactOutputTarget as react } from '@stencil/react-output-target';
-import { generateCustomElementsJson } from './src/tools/generate-custom-elements-json';
+import { angularOutputTarget as angular } from '@stencil/angular-output-target';
+import { angularValueAccessorBindings, generateCustomElementsJson } from './src/tools';
 
 import tailwindConf from './tailwind.config.js';
 
@@ -13,6 +14,9 @@ export const config: Config = {
   taskQueue: 'async',
   sourceMap: true,
   globalStyle: './src/global/styles/default.scss',
+  testing: {
+    browserArgs: ['--single-process'],
+  },
   plugins: [
     sass({
       includePaths: [
@@ -36,27 +40,57 @@ export const config: Config = {
         plugins: [tailwindcss()],
       },
     }),
-    tailwindHMR(),
+    tailwindHMR({
+      tailwindConf: tailwindConf,
+    }),
   ],
   outputTargets: [
-    react({
-      componentCorePackage: '@bee-q/chore',
-      proxiesFile: path.resolve(__dirname, '../../libs/bee-q-react/src/components.ts').replace(/\\/g, '/'),
-      includeDefineCustomElements: true,
-    }),
-    { type: 'dist' },
-    { type: 'dist-custom-elements' },
     { type: 'docs-readme' },
+    {
+      type: 'dist-hydrate-script',
+      dir: 'dist/hydrate',
+    },
     {
       type: 'docs-custom',
       generator: generateCustomElementsJson,
+    },
+    {
+      type: 'dist-custom-elements',
+      autoDefineCustomElements: true,
+      includeGlobalScripts: false,
+    },
+    {
+      type: 'docs-vscode',
+      file: 'custom-elements.json',
+    },
+    {
+      type: 'dist',
+      copy: [{ src: '../README.md' }],
     },
     {
       type: 'www',
       copy: [{ src: 'global/assets', dest: 'assets' }],
       serviceWorker: null, // disable service workers
     },
+    angular({
+      componentCorePackage: '@bee-q/core',
+      directivesProxyFile: path
+        .resolve(__dirname, '../../libs/bee-q-angular/src/directives/components.ts')
+        .replace(/\\/g, '/'),
+      directivesArrayFile: path
+        .resolve(__dirname, '../../libs/bee-q-angular/src/directives/index.ts')
+        .replace(/\\/g, '/'),
+      valueAccessorConfigs: angularValueAccessorBindings,
+    }),
+    react({
+      componentCorePackage: '@bee-q/core',
+      proxiesFile: path.resolve(__dirname, '../../libs/bee-q-react/src/components.ts').replace(/\\/g, '/'),
+      includeDefineCustomElements: true,
+    }),
   ],
+  extras: {
+    experimentalImportInjection: true,
+  },
   watchIgnoredRegex: /(custom-elements\.)((d\.ts)|(json))$/g,
   devServer: {
     port: 8001,

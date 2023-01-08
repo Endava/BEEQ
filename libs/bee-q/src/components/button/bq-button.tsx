@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
-import { hasSlotContent, isDefined, validatePropValue } from '../../shared/utils';
+import { hasSlotContent, isDefined, isNil, validatePropValue } from '../../shared/utils';
 import {
   BUTTON_APPEARANCE,
   BUTTON_SIZE,
@@ -88,10 +88,10 @@ export class BqButton {
   @Watch('size')
   @Watch('variant')
   checkPropValues() {
-    validatePropValue(BUTTON_APPEARANCE, BUTTON_APPEARANCE[0], this.appearance, this.el, 'appearance');
-    validatePropValue(BUTTON_TYPE, BUTTON_TYPE[0], this.type, this.el, 'type');
-    validatePropValue(BUTTON_SIZE, BUTTON_SIZE[1], this.size, this.el, 'size');
-    validatePropValue(BUTTON_VARIANT, BUTTON_VARIANT[0], this.variant, this.el, 'variant');
+    validatePropValue(BUTTON_APPEARANCE, 'primary', this.el, 'appearance');
+    validatePropValue(BUTTON_TYPE, 'button', this.el, 'type');
+    validatePropValue(BUTTON_SIZE, 'medium', this.el, 'size');
+    validatePropValue(BUTTON_VARIANT, 'standard', this.el, 'variant');
   }
 
   // Events section
@@ -143,6 +143,19 @@ export class BqButton {
       ev.preventDefault();
       ev.stopPropagation();
       return;
+    }
+
+    if (this.type === 'submit' || this.type === 'reset') {
+      const wrapperForm = this.el.closest('form');
+      if (!isNil(wrapperForm)) {
+        const btn = document.createElement('button');
+        btn.type = this.type;
+        btn.hidden = true;
+        wrapperForm.append(btn);
+
+        btn.click();
+        btn.remove();
+      }
     }
 
     this.bqClick.emit(this.el);

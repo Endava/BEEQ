@@ -1,0 +1,38 @@
+/* -------------------------------------------------------------------------- */
+/*                                Button styles                               */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-divider.variables';
+
+.bq-divider {
+  @apply flex items-center gap-[var(--bq-divider--title-marginX)];
+
+  .bq-stroke {
+    @apply h-[var(--bq-divider--stroke-thickness)] w-full flex-grow stroke-[color:var(--bq-divider--stroke-color)];
+  }
+
+  .bq-divider--stroke--end {
+    @apply rotate-180;
+  }
+
+  &--title--start .bq-divider--stroke--start,
+  &--title--end .bq-divider--stroke--end {
+    @apply flex-grow-0 basis-[var(--bq-divider--stroke-basis)];
+  }
+}
+
+.bq-divider--vertical {
+  @apply h-full flex-col items-center gap-[var(--bq-divider--title-marginX)];
+
+  .bq-stroke {
+    @apply h-full w-[var(--bq-divider--stroke-thickness)];
+  }
+}
+
+.bq-divider--no-title {
+  @apply gap-0;
+
+  .bq-divider--stroke--end {
+    display: none;
+  }
+}

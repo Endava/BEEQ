@@ -87,9 +87,10 @@ module.exports = {
       l: 'var(--bq-font-size--l)',
       xl: 'var(--bq-font-size--xl)',
       xxl: 'var(--bq-font-size--xxl)',
-      xxxl: 'var(--bq-font-size--xxxl)',
-      h: 'var(--bq-font-size--h)',
-      g: 'var(--bq-font-size--g)',
+      xxl2: 'var(--bq-font-size--xxl2)',
+      xxl3: 'var(--bq-font-size--xxl3)',
+      xxl4: 'var(--bq-font-size--xxl4)',
+      xxl5: 'var(--bq-font-size--xxl5)',
     },
     fontWeight: {
       light: 'var(--bq-font-weight--light)',
@@ -99,17 +100,14 @@ module.exports = {
       extrabold: 'var(--bq-font-weight--extrabold)',
     },
     lineHeight: {
-      xs: 'var(--bq-font-line-height--xs)',
-      s: 'var(--bq-font-line-height--s)',
-      m: 'var(--bq-font-line-height--m)',
-      l: 'var(--bq-font-line-height--l)',
-      xl: 'var(--bq-font-line-height--xl)',
-      xxl: 'var(--bq-font-line-height--xxl)',
-      xxxl: 'var(--bq-font-line-height--xxxl)',
-      h: 'var(--bq-font-line-height--h)',
-      g: 'var(--bq-font-line-height--g)',
+      regular: 'var(--bq-font-line-height--regular)',
+      large: 'var(--bq-font-line-height--large)',
     },
-    extend: {},
+    extend: {
+      content: {
+        empty: "''",
+      },
+    },
   },
   plugins: [],
   corePlugins: {

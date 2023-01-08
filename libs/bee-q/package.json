@@ -1,7 +1,7 @@
 {
-  "name": "@bee-q/chore",
-  "version": "0.0.1",
-  "license": "MIT",
+  "name": "@bee-q/core",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
   "description": "Bee-Q, a Design System components rulled by Endavan developers :)",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.js",
@@ -22,5 +22,13 @@
     "last 2 Edge major versions",
     "last 3 ChromeAndroid major versions",
     "last 3 iOS major versions"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dgonzalezr/bee-q"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  }
 }

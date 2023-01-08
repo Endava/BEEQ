@@ -199,13 +199,20 @@ export class BqCheckbox {
             part="input"
             tabindex="0"
           />
-          <span class="bq-checkbox__checkbox" part="checkbox">
+          <span
+            class="bq-checkbox__checkbox relative box-border flex h-full w-[var(--bq-checkbox--size)] items-center justify-center"
+            part="checkbox"
+          >
             {/* 
               We could move these SVGs to separated functional components, but it seems there's a weird issue with
               Stencil and pure SVG components: https://stencil-worldwide.slack.com/archives/C79EANFL7/p1663779385026389
              */}
             {this.checked && (
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-full text-text-inverse" viewBox="0 0 256 256">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="absolute h-full w-full text-text-inverse"
+                viewBox="0 0 256 256"
+              >
                 <path fill="none" d="M0 0h256v256H0z" />
                 <path
                   fill="none"
@@ -220,7 +227,7 @@ export class BqCheckbox {
             {!this.checked && this.indeterminate && (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-full w-full text-text-inverse"
+                class="absolute h-full w-full text-text-inverse"
                 viewBox="0 0 256 256"
                 fill="currentColor"
               >
@@ -237,7 +244,7 @@ export class BqCheckbox {
             )}
           </span>
         </div>
-        <span class="bq-checkbox__label ml-1 font-inter font-medium leading-m text-text-primary" part="label">
+        <span class="bq-checkbox__label ml-1 font-inter font-medium leading-large text-text-primary" part="label">
           <slot />
         </span>
       </label>

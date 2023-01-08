@@ -1,5 +1,6 @@
 import type { Configuration } from 'webpack';
 import CopyPlugin from 'copy-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
 import type { StorybookConfig, Options } from '@storybook/core-common';
 import { config as rootMain } from '../../../.storybook/main';
 
@@ -8,6 +9,7 @@ export default {
     builder: {
       name: 'webpack5',
       options: {
+        fsCache: true,
         lazyCompilation: true,
       },
     },
@@ -17,7 +19,7 @@ export default {
   },
   framework: '@storybook/web-components',
   stories: [...rootMain.stories, '../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
-  addons: [...(rootMain.addons || []), '@dgonzalezr/storybook-addon-html'],
+  addons: [...(rootMain.addons || []), '@whitespace/storybook-addon-html'],
   staticDirs: [
     {
       from: '../../../dist/bee-q/www/assets',
@@ -28,6 +30,11 @@ export default {
     // apply any global webpack configs that might have been specified in .storybook/main.ts
     if (rootMain.webpackFinal) {
       config = await rootMain.webpackFinal(config, options);
+    }
+
+    if (config.optimization) {
+      config.optimization.minimize = true;
+      config.optimization.minimizer = [new TerserPlugin()];
     }
 
     config.plugins?.push(

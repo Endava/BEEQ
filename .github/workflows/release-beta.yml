@@ -1,0 +1,45 @@
+name: 'Release `Beta` version'
+
+on:
+  - workflow_dispatch
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛎 Checkout
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.BEE_Q_GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Git
+        run: |
+          git config user.name "GitHub Bot"
+          git config user.email "gituser@example.com"
+
+      - name: 🛠 Setup Volta
+        uses: volta-cli/action@v3
+        with:
+          # This doesn't just set the registry url, but also sets
+          # the right configuration in .npmrc that reads NPM token
+          # from NPM_AUTH_TOKEN environment variable.
+          # It actually creates a .npmrc in a temporary folder
+          # and sets the NPM_CONFIG_USERCONFIG environment variable.
+          registry-url: https://registry.npmjs.org
+
+      - name: 👀 Check NPM credentials
+        run: npm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🚀 Github Release and NPM Publish
+        run: |
+          npx nx run workspace:version --releaseAs=prerelease --preid=beta --postTargets=workspace:prerelease --baseBranch=develop
+          npx nx run-many --target=publish-beta --exclude=workspace --output-style=stream-without-prefixes --parallel=1
+        env:
+          GITHUB_TOKEN: ${{ secrets.BEE_Q_GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

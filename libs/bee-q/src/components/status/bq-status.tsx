@@ -34,7 +34,7 @@ export class BqStatus {
   // =======================
   @Watch('type')
   checkPropValues() {
-    validatePropValue(STATUS_TYPE, 'neutral', this.type, this.el, 'type');
+    validatePropValue(STATUS_TYPE, 'neutral', this.el, 'type');
   }
   // Events section
   // Requires JSDocs for public API documentation
@@ -70,7 +70,7 @@ export class BqStatus {
       <div class="bq-status inline-flex items-center gap-2" part="base" role="status">
         <span class={`bq-status__circle rounded-full ${this.type}`} part="circle" role="img" />
         <div
-          class="bq-status__text m-0 max-h-[20px] p-0 font-inter text-s font-medium leading-s text-text-primary"
+          class="bq-status__text m-0 max-h-[20px] p-0 font-inter text-s font-medium leading-large text-text-primary"
           part="text"
         >
           <slot />

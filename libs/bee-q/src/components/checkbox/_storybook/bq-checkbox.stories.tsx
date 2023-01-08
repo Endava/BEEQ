@@ -57,20 +57,30 @@ const Template = (args) => html`
   </bq-checkbox>
 `;
 
-export const Default = (args) => Template(args);
+export const Default = Template.bind({});
 
-export const BackgroundOnHover = (args) => Template(args);
+export const LongLabel = Template.bind({});
+LongLabel.args = {
+  label: 'By clicking here, I state that I have read and understood the terms and conditions.',
+};
+LongLabel.parameters = {
+  viewport: {
+    defaultViewport: 'mobile1',
+  },
+};
+
+export const BackgroundOnHover = Template.bind({});
 BackgroundOnHover.args = {
   'background-on-hover': true,
 };
 BackgroundOnHover.storyName = 'Background on hover';
 
-export const Checked = (args) => Template(args);
+export const Checked = Template.bind({});
 Checked.args = {
   checked: true,
 };
 
-export const Disabled = (args) => Template(args);
+export const Disabled = Template.bind({});
 Disabled.args = {
   disabled: true,
 };

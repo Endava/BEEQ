@@ -19,8 +19,9 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "paths": {
-      "@bee-q/chore": ["dist/bee-q"],
-      "@bee-q/chore/*": ["dist/bee-q/*"],
+      "@bee-q/angular": ["libs/bee-q-angular/src/index.ts"],
+      "@bee-q/core": ["dist/bee-q"],
+      "@bee-q/core/*": ["dist/bee-q/*"],
       "@bee-q/react": ["dist/bee-q-react/dist"]
     }
   },

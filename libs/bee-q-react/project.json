@@ -1,4 +1,5 @@
 {
+  "name": "bee-q-react",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/bee-q-react/src",
   "projectType": "library",
@@ -9,7 +10,7 @@
       "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/bee-q-react/dist",
+        "outputPath": "dist/bee-q-react",
         "tsConfig": "libs/bee-q-react/tsconfig.json",
         "project": "libs/bee-q-react/package.json",
         "entryFile": "libs/bee-q-react/src/index.ts",
@@ -25,19 +26,18 @@
         ]
       }
     },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
       "options": {
-        "lintFilePatterns": ["libs/bee-q-react/**/*.{ts,tsx,js,jsx}"]
+        "access": "public",
+        "tag": "latest"
       }
     },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/bee-q-react"],
+    "publish-beta": {
+      "executor": "ngx-deploy-npm:deploy",
       "options": {
-        "jestConfig": "libs/bee-q-react/jest.config.ts",
-        "passWithNoTests": true
+        "access": "public",
+        "tag": "beta"
       }
     }
   }

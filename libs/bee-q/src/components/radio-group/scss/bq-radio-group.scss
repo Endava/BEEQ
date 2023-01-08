@@ -1,0 +1,23 @@
+/* -------------------------------------------------------------------------- */
+/*                                Radio group styles                               */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  @apply inline-block;
+}
+
+.bq-radio-group {
+  @apply m-0;
+
+  &:not(.has-fieldset) {
+    @apply m-0 border-0 p-0;
+  }
+
+  &--horizontal {
+    @apply flex;
+  }
+
+  &--vertical {
+    @apply flex flex-col;
+  }
+}

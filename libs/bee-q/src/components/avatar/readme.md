@@ -5,6 +5,10 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+An avatar represents an object made of different pieces of information, in a way that is understandable at a glance.
+
 ## Properties
 
 | Property   | Attribute  | Description                                                                      | Type                                         | Default     |

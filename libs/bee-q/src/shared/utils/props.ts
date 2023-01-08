@@ -6,7 +6,6 @@ export type TValidProperty<E, T> = TExtractProp<{ [K in keyof E]: E[K] extends T
  *
  * @param {readonly} ACCEPTED_VALUES - The list of the accepted values to check against.
  * @param {unknow} fallbackValue - The default value to assign
- * @param {unknown} propertyValue - The property value to check
  * @param {Element} element - The component reference
  * @param {string} propertyName - The property name (will be used in the console notification)
  * @returns {void}
@@ -14,13 +13,13 @@ export type TValidProperty<E, T> = TExtractProp<{ [K in keyof E]: E[K] extends T
 export const validatePropValue = <T extends E[keyof E], E extends Element>(
   ACCEPTED_VALUES: Readonly<T[]>,
   fallbackValue: T,
-  propertyValue: T,
   element: E,
   propertyName: TValidProperty<E, T>,
 ): void => {
+  const propertyValue = element[propertyName as string];
   // Early return if the property value is one of the accetped values
   if (ACCEPTED_VALUES.includes(propertyValue)) return;
-  // Size value fallback
+  // Override property with fallback value
   element[propertyName as string] = fallbackValue;
   // Notify developer in the browser console
   console.warn(

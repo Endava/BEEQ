@@ -3,6 +3,10 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+Icons are simplified images that graphically explain the meaning of an object on the screen.
+
 ## Properties
 
 | Property            | Attribute | Description                                                                             | Type                                                              | Default     |
@@ -11,6 +15,13 @@
 | `name` _(required)_ | `name`    | Icon name to load. Please check all available icons [here](https://phosphoricons.com/)  | `string`                                                          | `undefined` |
 | `size`              | `size`    | Set the size of the SVG                                                                 | `number \| string`                                                | `24`        |
 | `weight`            | `weight`  | It set the icon weight/style                                                            | `"bold" \| "duotone" \| "fill" \| "light" \| "regular" \| "thin"` | `'regular'` |
+
+
+## Events
+
+| Event       | Description                                           | Type               |
+| ----------- | ----------------------------------------------------- | ------------------ |
+| `svgLoaded` | Callback handler to be called when the SVG has loaded | `CustomEvent<any>` |
 
 
 ## Shadow Parts

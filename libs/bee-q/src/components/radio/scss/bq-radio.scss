@@ -1,0 +1,80 @@
+/* -------------------------------------------------------------------------- */
+/*                                Radio styles                               */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-radio.variables';
+
+:host {
+  @apply inline-block;
+}
+
+.bq-radio {
+  @apply inline-flex cursor-pointer items-center justify-center gap-2;
+  @apply rounded-s p-2 pr-4;
+
+  &.is-disabled {
+    @apply cursor-not-allowed opacity-40;
+
+    .bq-radio__circle {
+      @apply border-text-primary;
+    }
+
+    &.is-checked .bq-radio__checked {
+      @apply bg-text-primary;
+    }
+  }
+
+  &.has-background:not(.is-disabled):hover {
+    @apply bg-ui-secondary-hover;
+  }
+
+  &.is-checked:not(.is-disabled) {
+    .bq-radio__circle {
+      @apply border-ui-primary;
+    }
+
+    .bq-radio__checked {
+      @apply bg-ui-primary;
+    }
+  }
+
+  &:not(.is-disabled):hover .bq-radio__circle {
+    @apply border-ui-primary;
+  }
+
+  &.is-checked:not(.is-disabled):hover {
+    .bq-radio__checked {
+      background-color: lighten(var(--bq-ui--primary), 20%);
+    }
+
+    .bq-radio__circle {
+      border-color: lighten(var(--bq-ui--primary), 20%);
+    }
+  }
+}
+
+.bq-radio__input {
+  @apply pointer-events-none absolute m-0 p-0 opacity-0 focus:outline-none focus-visible:outline-none;
+
+  &:focus-visible {
+    ~ .bq-radio__circle {
+      @apply ring-4 ring-system-alert;
+    }
+  }
+}
+
+.bq-radio__circle {
+  @apply relative box-border flex h-full w-full items-center justify-center rounded-full border-[length:var(--bq-radio--border-width)] border-solid border-text-primary p-[3px];
+}
+
+.bq-radio__checked {
+  @apply h-full w-full rounded-full;
+}
+
+.bq-radio__label {
+  @apply font-inter text-m font-medium leading-large text-text-primary;
+}
+
+.bq-radio__control {
+  @apply box-border flex h-[var(--bq-radio--size)] w-[var(--bq-radio--size)] items-center justify-center rounded-full p-[2px];
+}
