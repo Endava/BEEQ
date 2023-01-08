@@ -10,13 +10,26 @@
         "version": {
           "executor": "@jscutlery/semver:version",
           "options": {
-            "preset": "conventional",
+            "preset": {
+              "name": "conventionalcommits",
+              "types": [
+                { "type": "feat", "section": "Features" },
+                { "type": "fix", "section": "Bug Fixes" },
+                { "type": "test", "section": "Test" },
+                { "type": "docs", "section": "Documentation" },
+                { "type": "style", "section": "Style" },
+                { "type": "chore", "hidden": true },
+                { "type": "refactor", "hidden": true },
+                { "type": "perf", "hidden": true },
+                { "type": "release", "hidden": true }
+              ]
+            },
             "changelogHeader": "# CHANGELOG\n\nAll notable changes to this project will be documented in this file.\n\nThe format is based on [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)\nand this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)\n\n",
-            "commitMessageFormat": "chore(release): ${version} [skip ci]",
-            "skipCommitTypes": ["docs", "ci"],
+            "commitMessageFormat": "release: ${version} [skip ci]",
+            "skipCommitTypes": ["ci", "release"],
             "skipProjectChangelog": true,
             "syncVersions": true,
-            "push": true
+            "push": false
           }
         },
         "release": {
