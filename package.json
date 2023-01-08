@@ -3,7 +3,7 @@
   "private": true,
   "description": "Bee-Q Design System",
   "license": "Apache-2.0",
-  "version": "0.0.1-beta.5",
+  "version": "0.1.0",
   "repository": {
     "type": "Git",
     "url": "https://github.com/dgonzalezr/bee-q"

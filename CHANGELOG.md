@@ -6,6 +6,45 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+## [0.1.0](https://github.com/dgonzalezr/bee-q/compare/v0.0.1-beta.5...v0.1.0) (2023-01-08)
+
+This release includes all feature and bug fixes from all prior Bee-Q pre-releases, as well as the following
+unreleased changes:
+
+### Features
+
+* **utils:** remove unnecessary "propertyValue" parameter from validatePropValue ([#53](https://github.com/dgonzalezr/bee-q/issues/53)) ([e9b13c8](https://github.com/dgonzalezr/bee-q/commit/e9b13c8f46c756e4350fc24e7db67f77f3d04a33))
+
+
+### Bug Fixes
+
+(https://github.com/dgonzalezr/bee-q/commit/2dcd4489ebddfcc20fa6dc695f27d818a7d6e8f0))
+* **e2e:** missing HTML closing tag ([#68](https://github.com/dgonzalezr/bee-q/issues/68)) ([282bd23](https://github.com/dgonzalezr/bee-q/commit/282bd23de9811fe3b20775bcdf0fb1ee28943b5e))
+* **e2e:** remove comment to fix prettier ([#45](https://github.com/dgonzalezr/bee-q/issues/45)) ([455a8cd](https://github.com/dgonzalezr/bee-q/commit/455a8cd42cc5a82a0a9444ceb0b75f85b9cfdc1d))
+* **icon:** wait for SVG image to load on e2e tests ([#69](https://github.com/dgonzalezr/bee-q/issues/69)) ([8800437](https://github.com/dgonzalezr/bee-q/commit/8800437167f9a941a652fb1fb06ec1d52b2e9e80))
+
+
+### Documentation
+
+* **contribution:** add `Branching strategy` and `Test` ([#43](https://github.com/dgonzalezr/bee-q/issues/43)) ([fd12f9f](https://github.com/dgonzalezr/bee-q/commit/fd12f9f7c77cac1100ca79c53e456a8f128a8d1b))
+* **code of conduct:** update to v2.0 of the contributor covenant  ([#55](https://github.com/dgonzalezr/bee-q/issues/55)) ([89aa591](https://github.com/dgonzalezr/bee-q/commit/89aa59120334817a4dd685eeba336328f0f3e8f2))
+* **icon:** add a link to `Phosphor icons` on Storybook and show fewer SVGs ([#64](https://github.com/dgonzalezr/bee-q/issues/64)) ([403f8b3](https://github.com/dgonzalezr/bee-q/commit/403f8b3aef17db339feb78a8a2c18e414f6b0bf1))
+* **readme:** fix typo on project structure section ([207403a](https://github.com/dgonzalezr/bee-q/commit/207403aa784692c496d2a9807e74b9a76ff52d06))
+* update project and libs README files ([71fad5c](https://github.com/dgonzalezr/bee-q/commit/71fad5c0f046f261a60ebc0ad0ead3c0d65784c5))
+
+
+### Test
+
+* **avatar:** add e2e tests ([#58](https://github.com/dgonzalezr/bee-q/issues/58)) ([bc4cb39](https://github.com/dgonzalezr/bee-q/commit/bc4cb39805d96e6b414ba0778ce9cf960c769592))
+* **button:** add e2e tests ([#46](https://github.com/dgonzalezr/bee-q/issues/46)) ([5b50743](https://github.com/dgonzalezr/bee-q/commit/5b507438dec317bf01bb7200a79be24ce3c4e624))
+* **checkbox:** add e2e tests ([#57](https://github.com/dgonzalezr/bee-q/issues/57)) ([9b6e03b](https://github.com/dgonzalezr/bee-q/commit/9b6e03bf3b7b22ecff9a14b1e6b80038633ae63f))
+* **divider:** add e2e tests ([#51](https://github.com/dgonzalezr/bee-q/issues/51)) ([4f15a44](https://github.com/dgonzalezr/bee-q/commit/4f15a44a97c875db58d7a1b271aaea45c1a2bced))
+* **divider:** replace self closing tags ([#61](https://github.com/dgonzalezr/bee-q/issues/61)) ([885cd81](https://github.com/dgonzalezr/bee-q/commit/885cd819c43cc1f12a356633cb09719aceb098de))
+* **icon:** add e2e tests ([#50](https://github.com/dgonzalezr/bee-q/issues/50)) ([1bba1f5](https://github.com/dgonzalezr/bee-q/commit/1bba1f5218383d124071839d3506a979a79ea905))
+* **icon:** replace self closing tags ([#60](https://github.com/dgonzalezr/bee-q/issues/60)) ([939ee23](https://github.com/dgonzalezr/bee-q/commit/939ee235e6a594bc9b0e639bfd612ea704e50511))
+* **radio:** add e2e tests ([#71](https://github.com/dgonzalezr/bee-q/issues/71)) ([134d684](https://github.com/dgonzalezr/bee-q/commit/134d684007adb9bee0008f4f9d84eec62ad97e95))
+* **slider:** add e2e tests ([#65](https://github.com/dgonzalezr/bee-q/issues/65)) ([63ac887](https://github.com/dgonzalezr/bee-q/commit/63ac887a3530d64a88df924adae167370a2013f1))
+
 ### [0.0.1-beta.5](https://github.com/dgonzalezr/bee-q/compare/v0.0.1-beta.4...v0.0.1-beta.5) (2022-12-15)
 
 

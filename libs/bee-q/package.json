@@ -1,6 +1,6 @@
 {
   "name": "@bee-q/core",
-  "version": "0.0.1-beta.5",
+  "version": "0.1.0",
   "license": "Apache-2.0",
   "description": "Bee-Q, a Design System components rulled by Endavan developers :)",
   "main": "./dist/index.cjs.js",
