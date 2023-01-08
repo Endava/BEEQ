@@ -23,7 +23,7 @@ request
     // Path folders to work with while extracting and moving the SVG files
     const extractToFolder = join(__dirname);
     const assetsFolderName = 'assets';
-    const sourceSvgFolder = join(__dirname, '/phosphor-icons-master/');
+    const sourceSvgFolder = join(__dirname, '/web-master/');
     const destSvgFolder = join(__dirname, '../../../libs/bee-q/src/components/icon/svg/');
 
     try {
