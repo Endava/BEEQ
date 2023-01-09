@@ -1,5 +1,5 @@
 import { h, Component, Element, Prop, Listen, EventEmitter, Event, Watch } from '@stencil/core';
-import { debounce, isNil, TDebounce } from '../../shared/utils';
+import { debounce, getNextElement, isHTMLElement, isNil, TDebounce } from '../../shared/utils';
 
 @Component({
   tag: 'bq-tab-group',
@@ -83,6 +83,25 @@ export class BqTabGroup {
     this.debouncedBqChange({ value: target.tabId, target });
   }
 
+  @Listen('bqKeyDown')
+  onBqKeyDown(event: CustomEvent<KeyboardEvent>) {
+    const { target } = event;
+
+    if (!isHTMLElement(target, 'bq-tab')) return;
+
+    switch (event.detail.key) {
+      case 'ArrowRight': {
+        this.focusTabSibbling(target, 'forward');
+        break;
+      }
+      case 'ArrowLeft': {
+        this.focusTabSibbling(target, 'backward');
+        break;
+      }
+      default:
+    }
+  }
+
   // Public methods API
   // These methods are exposed on the host element.
   // Always use two lines.
@@ -94,6 +113,23 @@ export class BqTabGroup {
   // Internal business logic.
   // These methods cannot be called from the host element.
   // =======================================================
+
+  private focusTabSibbling(currentTarget: HTMLBqTabElement, direction: 'forward' | 'backward'): void {
+    let target: HTMLBqTabElement | null = null;
+
+    this.bqTabElements.forEach((bqTabElement, index, elements) => {
+      bqTabElement.active = false;
+
+      if (bqTabElement === currentTarget) {
+        target = getNextElement(elements, index, direction);
+      }
+    });
+
+    if (target) {
+      target.vFocus();
+      target.active = true;
+    }
+  }
 
   private get bqTabElements(): HTMLBqTabElement[] {
     return Array.from(this.el.querySelectorAll('bq-tab'));

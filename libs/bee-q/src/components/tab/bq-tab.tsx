@@ -45,7 +45,7 @@ export class BqTab {
 
   @Watch('size')
   checkPropValues() {
-    validatePropValue(TAB_SIZE, 'small', this.size, this.el, 'size');
+    validatePropValue(TAB_SIZE, 'small', this.el, 'size');
   }
 
   // Events section
@@ -139,11 +139,9 @@ export class BqTab {
       <button
         ref={(el) => (this.buttonElement = el)}
         class={{
-          'relative flex cursor-pointer items-center justify-center rounded-s': true,
-          'pointer-events-none cursor-not-allowed opacity-40': this.disabled,
-          'border-0 bg-transparent': true,
           'bq-tab': true,
           [`bq-tab--${this.size}`]: true,
+          'pointer-events-none cursor-not-allowed opacity-40': this.disabled,
         }}
         id={this.tabId}
         onBlur={this.handleOnBlur}

@@ -9,9 +9,9 @@
 }
 
 .bq-tab {
-  @apply focus:outline-none focus-visible:outline-none;
+  @apply relative flex cursor-pointer items-center justify-center rounded-s border-0 bg-transparent focus:outline-none focus-visible:outline-none;
 
-  &:focus {
+  &:focus-visible {
     @apply ring-4 ring-system-alert;
 
     .bq-tab__underline {
