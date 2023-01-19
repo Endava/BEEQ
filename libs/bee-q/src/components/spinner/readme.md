@@ -20,12 +20,12 @@ Spinners are designed for users to display data loading.
 
 ## Shadow Parts
 
-| Part            | Description                                                      |
-| --------------- | ---------------------------------------------------------------- |
-| `"base"`        | The HTML spinner used under the hood.                            |
-| `"custom-icon"` | The `<span>` tag element that acts as custom icon container.     |
-| `"icon"`        | The `<svg>` tag element that acts as loader element.             |
-| `"text"`        | The `<span>` tag element that renderd text inside the component. |
+| Part            | Description                                                                |
+| --------------- | -------------------------------------------------------------------------- |
+| `"base"`        | The div wrapper container used under the hood.                             |
+| `"custom-icon"` | The `<span>` tag element that holds the custom icon element passed.        |
+| `"icon"`        | The `<svg>` icon element used to spin/animate.                             |
+| `"text"`        | The `<span>` tag element that renders the label text inside the component. |
 
 
 ----------------------------------------------
