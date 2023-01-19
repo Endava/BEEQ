@@ -12,6 +12,7 @@ import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } fr
 import { TIconWeight } from "./components/icon/bq-icon.types";
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 import { TSliderType } from "./components/slider/bq-slider.types";
+import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 import { TStatusType } from "./components/status/bq-status.types";
 import { FloatingUIPlacement } from "./services/interfaces";
 export namespace Components {
@@ -306,6 +307,23 @@ export namespace Components {
          */
         "valueIndicator"?: boolean;
     }
+    /**
+     * Spinners are designed for users to display data loading.
+     */
+    interface BqSpinner {
+        /**
+          * If `false`, the animation on the icon element will be stopped
+         */
+        "animation"?: boolean;
+        /**
+          * It defines the size of the icon element displayed
+         */
+        "size": TSpinnerSize;
+        /**
+          * It defines the position of the label text
+         */
+        "textPosition": TSpinnerTextPosition;
+    }
     interface BqStatus {
         /**
           * It defines the type of status to display
@@ -432,6 +450,15 @@ declare global {
         prototype: HTMLBqSliderElement;
         new (): HTMLBqSliderElement;
     };
+    /**
+     * Spinners are designed for users to display data loading.
+     */
+    interface HTMLBqSpinnerElement extends Components.BqSpinner, HTMLStencilElement {
+    }
+    var HTMLBqSpinnerElement: {
+        prototype: HTMLBqSpinnerElement;
+        new (): HTMLBqSpinnerElement;
+    };
     interface HTMLBqStatusElement extends Components.BqStatus, HTMLStencilElement {
     }
     var HTMLBqStatusElement: {
@@ -454,6 +481,7 @@ declare global {
         "bq-radio": HTMLBqRadioElement;
         "bq-radio-group": HTMLBqRadioGroupElement;
         "bq-slider": HTMLBqSliderElement;
+        "bq-spinner": HTMLBqSpinnerElement;
         "bq-status": HTMLBqStatusElement;
         "bq-tooltip": HTMLBqTooltipElement;
     }
@@ -786,6 +814,23 @@ declare namespace LocalJSX {
          */
         "valueIndicator"?: boolean;
     }
+    /**
+     * Spinners are designed for users to display data loading.
+     */
+    interface BqSpinner {
+        /**
+          * If `false`, the animation on the icon element will be stopped
+         */
+        "animation"?: boolean;
+        /**
+          * It defines the size of the icon element displayed
+         */
+        "size"?: TSpinnerSize;
+        /**
+          * It defines the position of the label text
+         */
+        "textPosition"?: TSpinnerTextPosition;
+    }
     interface BqStatus {
         /**
           * It defines the type of status to display
@@ -825,6 +870,7 @@ declare namespace LocalJSX {
         "bq-radio": BqRadio;
         "bq-radio-group": BqRadioGroup;
         "bq-slider": BqSlider;
+        "bq-spinner": BqSpinner;
         "bq-status": BqStatus;
         "bq-tooltip": BqTooltip;
     }
@@ -851,6 +897,10 @@ declare module "@stencil/core" {
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
             "bq-slider": LocalJSX.BqSlider & JSXBase.HTMLAttributes<HTMLBqSliderElement>;
+            /**
+             * Spinners are designed for users to display data loading.
+             */
+            "bq-spinner": LocalJSX.BqSpinner & JSXBase.HTMLAttributes<HTMLBqSpinnerElement>;
             "bq-status": LocalJSX.BqStatus & JSXBase.HTMLAttributes<HTMLBqStatusElement>;
             "bq-tooltip": LocalJSX.BqTooltip & JSXBase.HTMLAttributes<HTMLBqTooltipElement>;
         }

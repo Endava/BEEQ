@@ -1,0 +1,14 @@
+/* -------------------------------------------------------------------------- */
+/*                          Spinner custom properties           */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  --bq-spinner--color: theme('colors.ui.primary');
+  --bq-spinner--size-large: 56px;
+  --bq-spinner--size-medium: 48px;
+  --bq-spinner--size-small: 32px;
+  --bq-spinner--large-text-fontSize: theme('fontSize.m');
+  --bq-spinner--medium-text-fontSize: theme('fontSize.s');
+  --bq-spinner--small-text-fontSize: theme('fontSize.xs');
+  --bq-spinner--text-lineHeight: theme('lineHeight.large');
+}

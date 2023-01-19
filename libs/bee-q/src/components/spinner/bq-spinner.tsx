@@ -1,0 +1,208 @@
+import { h, Component, Prop, Element, Watch, State } from '@stencil/core';
+import { validatePropValue, hasSlotContent, isNil, getTextContent, getCSSVariableValue } from '../../shared/utils';
+import { SPINNER_TEXT_POSITION, SPINNER_SIZE, TSpinnerTextPosition, TSpinnerSize } from './bq-spinner.types';
+
+/**
+ * Spinners are designed for users to display data loading.
+ *
+ * @part base - The div wrapper container used under the hood.
+ * @part icon - The `<svg>` icon element used to spin/animate.
+ * @part custom-icon - The `<span>` tag element that holds the custom icon element passed.
+ * @part text - The `<span>` tag element that renders the label text inside the component.
+ */
+@Component({
+  tag: 'bq-spinner',
+  styleUrl: './scss/bq-spinner.scss',
+  shadow: true,
+})
+export class BqSpinner {
+  // Own Properties
+  // ====================
+
+  private iconSlotElem: HTMLElement;
+  private slotElem: HTMLElement;
+  private observer: MutationObserver = new MutationObserver((mutations) => {
+    const [mutation] = mutations;
+    this.slotContentLength = mutation.target.textContent.length;
+  });
+
+  // Reference to host HTML element
+  // ===================================
+
+  @Element() el!: HTMLBqSpinnerElement;
+
+  // State() variables
+  // Inlined decorator, alphabetical order
+  // =======================================
+
+  @State() private hasIconSlot = false;
+  @State() private hasSlot = false;
+  @State() private slotContentLength = 0;
+
+  // Public Property API
+  // ========================
+
+  /** If `false`, the animation on the icon element will be stopped */
+  @Prop({ reflect: true }) animation? = true;
+
+  /** It defines the position of the label text */
+  @Prop({ reflect: true }) textPosition: TSpinnerTextPosition = 'none';
+
+  /** It defines the size of the icon element displayed */
+  @Prop({ reflect: true }) size: TSpinnerSize = 'medium';
+
+  // Prop lifecycle events
+  // =======================
+
+  @Watch('textPosition')
+  handleTextPositionProp() {
+    validatePropValue(SPINNER_TEXT_POSITION, 'none', this.el, 'textPosition');
+  }
+
+  @Watch('size')
+  handleSizeProp() {
+    validatePropValue(SPINNER_SIZE, 'medium', this.el, 'size');
+    this.setIconSize();
+  }
+
+  @Watch('hasIconSlot')
+  handleHasIconSlot() {
+    this.setIconSize();
+  }
+
+  // Events section
+  // Requires JSDocs for public API documentation
+  // ==============================================
+
+  // Component lifecycle events
+  // Ordered by their natural call order
+  // =====================================
+
+  componentWillLoad() {
+    this.checkPropValues();
+  }
+
+  componentDidLoad() {
+    this.setIconSize();
+  }
+
+  disconnectedcallback() {
+    this.observer?.disconnect();
+  }
+
+  // Listeners
+  // ==============
+
+  // Public methods API
+  // These methods are exposed on the host element.
+  // Always use two lines.
+  // Public Methods must be async.
+  // Requires JSDocs for public API documentation.
+  // ===============================================
+
+  // Local methods
+  // Internal business logic.
+  // These methods cannot be called from the host element.
+  // =======================================================
+
+  private handleSlotChange = () => {
+    this.hasSlot = hasSlotContent(this.slotElem);
+    if (!this.hasSlot) return;
+
+    const slot = this.slotElem?.querySelector('slot') ?? null;
+    if (isNil(slot)) return;
+
+    this.slotContentLength = getTextContent(slot, { recurse: true }).length;
+    const nodes = slot.assignedNodes({ flatten: true });
+    nodes.forEach((node) => {
+      this.observer.observe(node, {
+        characterData: true,
+        childList: true,
+        subtree: true,
+      });
+    });
+  };
+
+  private handleIconSlotChange = (): void => {
+    this.hasIconSlot = hasSlotContent(this.iconSlotElem, 'icon');
+  };
+
+  private checkPropValues = (): void => {
+    validatePropValue(SPINNER_TEXT_POSITION, 'none', this.el, 'textPosition');
+    validatePropValue(SPINNER_SIZE, 'medium', this.el, 'size');
+  };
+
+  private get isTextDisplayed(): boolean {
+    return this.textPosition !== 'none';
+  }
+
+  private setIconSize(): void {
+    if (!this.hasIconSlot) return;
+
+    const iconElements = this.iconSlotElem
+      .querySelector<HTMLSlotElement>(`slot[name="icon"]`)
+      ?.assignedElements({ flatten: true })
+      .filter((element) => element.nodeName === 'BQ-ICON');
+
+    iconElements.forEach((element: HTMLBqIconElement) => {
+      element.size = parseInt(getCSSVariableValue(`bq-spinner--size-${this.size}`, this.el)).toString();
+    });
+  }
+
+  // render() function
+  // Always the last one in the class.
+  // ===================================
+
+  render() {
+    return (
+      <div
+        class={{
+          [`bq-spinner ${this.size} text-${this.textPosition}`]: true,
+          'is-animated': this.animation,
+          'has-text': !!this.slotContentLength,
+        }}
+        part="base"
+      >
+        {!this.hasIconSlot && (
+          <div
+            class="bq-spinner--loader relative text-[var(--bq-spinner--color)]"
+            aria-label="Loading..."
+            role="status"
+          >
+            <svg class="h-full w-full" fill="currentColor" viewBox="0 0 48 48">
+              <path
+                fill="currentColor"
+                d="M10.27 7.637c-.937-1.117-.798-2.796.415-3.605a24 24 0 0 1 37.09 23.249c-.2 1.444-1.65 2.301-3.064 1.944-1.414-.356-2.25-1.793-2.096-3.242A18.72 18.72 0 0 0 14.102 8.11c-1.237.77-2.895.643-3.832-.474Z"
+              />
+              <path
+                fill="currentColor"
+                d="M48 24c0 13.255-10.745 24-24 24S0 37.255 0 24 10.745 0 24 0s24 10.745 24 24ZM5.28 24c0 10.339 8.381 18.72 18.72 18.72 10.339 0 18.72-8.381 18.72-18.72 0-10.339-8.381-18.72-18.72-18.72C13.661 5.28 5.28 13.661 5.28 24Z"
+                opacity=".1"
+              />
+            </svg>
+          </div>
+        )}
+        <span
+          class={{
+            'bq-spinner--icon': true,
+            flex: this.hasIconSlot,
+            hidden: !this.hasIconSlot,
+          }}
+          ref={(spanElem) => (this.iconSlotElem = spanElem)}
+          part="custom-icon"
+        >
+          <slot name="icon" onSlotchange={this.handleIconSlotChange} />
+        </span>
+        {this.isTextDisplayed && (
+          <span
+            class="bq-spinner--text flex items-center font-inter font-medium text-text-primary"
+            part="text"
+            ref={(spanElem) => (this.slotElem = spanElem)}
+          >
+            <slot onSlotchange={this.handleSlotChange} />
+          </span>
+        )}
+      </div>
+    );
+  }
+}
