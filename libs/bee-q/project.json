@@ -57,7 +57,7 @@
     "build": {
       "dependsOn": ["^build", "create-icons-set"],
       "executor": "@nxext/stencil:build",
-      "outputs": ["{options.outputPath}"],
+      "outputs": ["{options.outputPath}", "libs/bee-q"],
       "options": {
         "projectType": "library",
         "tsConfig": "libs/bee-q/tsconfig.lib.json",
