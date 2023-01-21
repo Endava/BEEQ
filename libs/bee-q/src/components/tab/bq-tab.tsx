@@ -26,7 +26,7 @@ export class BqTab {
   // ========================
 
   /** If true tab is active */
-  @Prop({ reflect: true, mutable: true }) active = false;
+  @Prop({ reflect: true, mutable: true }) active?: boolean;
 
   /** If true tab is disabled */
   @Prop({ reflect: true }) disabled = false;
@@ -130,6 +130,11 @@ export class BqTab {
     this.bqKeyDown.emit(event);
   };
 
+  private get tabindex(): string {
+    // NOTE: this.active is undefined when is not part of bq-tab-group
+    return `${-1 + +(this.active ?? 1)}`;
+  }
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -152,7 +157,7 @@ export class BqTab {
         aria-controls={this.controls}
         aria-disabled={this.disabled ? 'true' : 'false'}
         aria-selected={this.active ? 'true' : 'false'}
-        tabindex={this.disabled ? '-1' : '0'}
+        tabindex={this.tabindex}
         part="base"
       >
         <div part="icon">

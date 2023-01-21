@@ -414,7 +414,7 @@ export namespace Components {
         /**
           * If true tab is active
          */
-        "active": boolean;
+        "active"?: boolean;
         /**
           * The tab panel id that the tab controls
          */
