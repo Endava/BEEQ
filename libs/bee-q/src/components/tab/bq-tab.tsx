@@ -140,6 +140,7 @@ export class BqTab {
   // ===================================
 
   render() {
+    const isActive = this.active && !this.disabled;
     return (
       <button
         ref={(el) => (this.buttonElement = el)}
@@ -166,13 +167,13 @@ export class BqTab {
         <span
           class={{
             'font-inter text-s leading-large text-text-primary': true,
-            'text-ui-primary': this.active && !this.disabled,
+            'text-ui-primary': isActive,
           }}
           part="text"
         >
           <slot />
         </span>
-        <div class={{ 'bq-tab__underline': true, 'bg-ui-primary': this.active && !this.disabled }} part="underline" />
+        <div class={{ 'bq-tab__underline': true, 'bg-ui-primary': isActive }} part="underline" />
       </button>
     );
   }
