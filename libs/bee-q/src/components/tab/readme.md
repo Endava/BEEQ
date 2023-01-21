@@ -9,7 +9,7 @@
 
 | Property                | Attribute  | Description                            | Type                  | Default     |
 | ----------------------- | ---------- | -------------------------------------- | --------------------- | ----------- |
-| `active`                | `active`   | If true tab is active                  | `boolean`             | `false`     |
+| `active`                | `active`   | If true tab is active                  | `boolean`             | `undefined` |
 | `controls` _(required)_ | `controls` | The tab panel id that the tab controls | `string`              | `undefined` |
 | `disabled`              | `disabled` | If true tab is disabled                | `boolean`             | `false`     |
 | `size`                  | `size`     | The size of the tab                    | `"medium" \| "small"` | `'small'`   |

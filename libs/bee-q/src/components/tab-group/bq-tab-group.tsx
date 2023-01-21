@@ -10,6 +10,8 @@ export class BqTabGroup {
   // Own Properties
   // ====================
 
+  private focusedBqTab: HTMLBqTabElement | null = null;
+
   private debouncedBqChange: TDebounce<{ value: string; target: HTMLBqTabElement }>;
 
   // Reference to host HTML element
@@ -76,11 +78,19 @@ export class BqTabGroup {
   // Listeners
   // ==============
 
+  @Listen('mousedown', { target: 'body', passive: true })
+  onMouseDown(event: MouseEvent) {
+    if (!isNil(this.focusedBqTab) && isHTMLElement(event.target, 'bq-tab') && this.el.contains(event.target)) {
+      this.focusedBqTab = event.target;
+    }
+  }
+
   @Listen('bqClick')
   onBqClick(event: CustomEvent<HTMLBqTabElement>) {
     const { detail: target } = event;
     this.bqTabElements.forEach((bqTabElement) => (bqTabElement.active = bqTabElement === target));
     this.debouncedBqChange({ value: target.tabId, target });
+    this.selectTab(target);
   }
 
   @Listen('bqKeyDown')
@@ -99,6 +109,22 @@ export class BqTabGroup {
         break;
       }
       default:
+    }
+  }
+
+  @Listen('bqFocus', { capture: true })
+  onBqFocus(event: CustomEvent<HTMLBqTabElement>) {
+    if (event.detail !== this.focusedBqTab) return;
+
+    event.stopPropagation();
+  }
+
+  @Listen('bqBlur', { capture: true })
+  onBqBlur(event: CustomEvent<HTMLBqTabElement>) {
+    if (!isNil(this.focusedBqTab) && event.detail !== this.focusedBqTab) {
+      event.stopPropagation();
+    } else {
+      this.focusedBqTab = null;
     }
   }
 
@@ -127,12 +153,20 @@ export class BqTabGroup {
 
     if (target) {
       target.vFocus();
-      target.active = true;
+      this.selectTab(target);
     }
   }
 
   private get bqTabElements(): HTMLBqTabElement[] {
     return Array.from(this.el.querySelectorAll('bq-tab'));
+  }
+
+  private selectTab(target: HTMLBqTabElement): void {
+    const { tabId } = target;
+    target.active = true;
+    this.value = tabId;
+    this.focusedBqTab = target;
+    this.debouncedBqChange({ value: tabId, target });
   }
 
   // render() function
