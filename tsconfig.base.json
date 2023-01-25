@@ -22,6 +22,7 @@
       "@bee-q/angular": ["libs/bee-q-angular/src/index.ts"],
       "@bee-q/core": ["dist/bee-q"],
       "@bee-q/core/*": ["dist/bee-q/*"],
+      "@bee-q/icons": ["libs/bee-q-icons/src/index.ts"],
       "@bee-q/react": ["dist/bee-q-react/dist"]
     }
   },

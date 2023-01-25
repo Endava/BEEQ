@@ -14,7 +14,7 @@ libs/bee-q/src/components/icon/svg/**
 libs/bee-q-angular/**/directives
 libs/bee-q-react/src/react-component-lib
 libs/bee-q-react/src/components.ts
-tools/scripts/icon-library/phosphor-icons-master
+libs/bee-q-icons/temp/**
 
 # dependencies
 node_modules
@@ -50,6 +50,4 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-
-
 package.e2e.json
