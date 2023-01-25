@@ -17,16 +17,7 @@
     "default": {
       "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "build-storybook",
-          "lint",
-          "test",
-          "e2e",
-          "stylelint",
-          "extract-icons",
-          "create-icons-set"
-        ]
+        "cacheableOperations": ["build", "build-storybook", "lint", "test", "e2e", "stylelint", "generate-icons"]
       }
     }
   },

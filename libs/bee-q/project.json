@@ -55,7 +55,7 @@
       }
     },
     "build": {
-      "dependsOn": ["^build", "create-icons-set"],
+      "dependsOn": ["^build"],
       "executor": "@nxext/stencil:build",
       "outputs": ["{options.outputPath}", "libs/bee-q"],
       "options": {
@@ -119,20 +119,20 @@
         "lintFilePatterns": ["libs/bee-q/**/*.css", "libs/bee-q/**/*.scss"]
       }
     },
-    "extract-icons": {
-      "executor": "nx:run-commands",
-      "outputs": ["libs/bee-q/src/components/icon/svg"],
+    "generate-icons": {
+      "executor": "@bee-q/icons:generate",
+      "outputs": ["{options.downloadPath}", "{options.extractToPath}", "{options.outputDir}"],
       "options": {
-        "command": "node tools/scripts/icon-library/extract-icons.js"
+        "assetsFolder": "assets",
+        "downloadPath": "libs/bee-q-icons/temp",
+        "extractToPath": "libs/bee-q/src/components/icon/svg",
+        "fileName": "master.zip",
+        "helperFile": "icons-set.ts",
+        "outputDir": "libs/bee-q/src/components/icon/helper",
+        "sourceDir": "libs/bee-q/src/components/icon/svg/regular",
+        "svgFolder": "web-master",
+        "sourceUrl": "https://github.com/phosphor-icons/phosphor-icons/archive/refs/heads"
       }
-    },
-    "create-icons-set": {
-      "executor": "nx:run-commands",
-      "outputs": ["libs/bee-q/src/components/icon/helper"],
-      "options": {
-        "command": "node tools/scripts/icon-library/create-icons-set.js"
-      },
-      "dependsOn": ["extract-icons"]
     },
     "publish": {
       "executor": "ngx-deploy-npm:deploy",
