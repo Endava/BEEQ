@@ -129,16 +129,15 @@ describe('bq-button', () => {
       <bq-button size="large">Button</bq-button>
     `);
 
-    const smallStyle = await computedStyle(page, 'bq-button[size="small"] >>> [part="button"]');
-    const mediumStyle = await computedStyle(page, 'bq-button[size="medium"] >>> [part="button"]');
-    const largeStyle = await computedStyle(page, 'bq-button[size="large"] >>> [part="button"]');
+    const styleProps = ['height', 'padding'] as const;
 
-    expect(smallStyle.height).toBe('32px');
-    expect(smallStyle.padding).toBe('4px 8px');
-    expect(mediumStyle.height).toBe('48px');
-    expect(mediumStyle.padding).toBe('12px 16px');
-    expect(largeStyle.height).toBe('56px');
-    expect(largeStyle.padding).toBe('16px 24px');
+    const smallStyle = await computedStyle(page, 'bq-button[size="small"] >>> [part="button"]', styleProps);
+    const mediumStyle = await computedStyle(page, 'bq-button[size="medium"] >>> [part="button"]', styleProps);
+    const largeStyle = await computedStyle(page, 'bq-button[size="large"] >>> [part="button"]', styleProps);
+
+    expect(smallStyle).toEqual({ height: '32px', padding: '4px 8px' });
+    expect(mediumStyle).toEqual({ height: '48px', padding: '12px 16px' });
+    expect(largeStyle).toEqual({ height: '56px', padding: '16px 24px' });
   });
 
   it('should handle invalid properties', async () => {

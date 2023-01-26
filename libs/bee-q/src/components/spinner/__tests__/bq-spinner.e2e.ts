@@ -137,39 +137,36 @@ describe('bq-spinner', () => {
       return `${(150 * parseInt(fontSize)) / 100}px`;
     };
 
-    const smallStyle = await computedStyle(page, 'bq-spinner[size="small"] >>> .bq-spinner--loader');
-    const mediumStyle = await computedStyle(page, 'bq-spinner[size="medium"] >>> .bq-spinner--loader');
-    const largeStyle = await computedStyle(page, 'bq-spinner[size="large"] >>> .bq-spinner--loader');
-    const smallTextStyle = await computedStyle(page, 'bq-spinner[size="small"] >>> .bq-spinner--text');
-    const mediumTextStyle = await computedStyle(page, 'bq-spinner[size="medium"] >>> .bq-spinner--text');
-    const largeTextStyle = await computedStyle(page, 'bq-spinner[size="large"] >>> .bq-spinner--text');
+    const sizeStyleProps = ['width', 'height'] as const;
 
-    expect({ width: smallStyle.width, height: smallStyle.height }).toMatchObject({ width: '32px', height: '32px' });
-    expect({ width: mediumStyle.width, height: mediumStyle.height }).toMatchObject({ width: '48px', height: '48px' });
-    expect({ width: largeStyle.width, height: largeStyle.height }).toMatchObject({ width: '56px', height: '56px' });
-    expect({
-      fontSize: smallTextStyle.fontSize,
-      fontWeight: smallTextStyle.fontWeight,
-      lineHeight: smallTextStyle.lineHeight,
-    }).toMatchObject({
+    const smallStyle = await computedStyle(page, 'bq-spinner[size="small"] >>> .bq-spinner--loader', sizeStyleProps);
+    const mediumStyle = await computedStyle(page, 'bq-spinner[size="medium"] >>> .bq-spinner--loader', sizeStyleProps);
+    const largeStyle = await computedStyle(page, 'bq-spinner[size="large"] >>> .bq-spinner--loader', sizeStyleProps);
+
+    const textStyleProps = ['fontSize', 'fontWeight', 'lineHeight'] as const;
+
+    const smallTextStyle = await computedStyle(page, 'bq-spinner[size="small"] >>> .bq-spinner--text', textStyleProps);
+    const mediumTextStyle = await computedStyle(
+      page,
+      'bq-spinner[size="medium"] >>> .bq-spinner--text',
+      textStyleProps,
+    );
+    const largeTextStyle = await computedStyle(page, 'bq-spinner[size="large"] >>> .bq-spinner--text', textStyleProps);
+
+    expect(smallStyle).toEqual({ width: '32px', height: '32px' });
+    expect(mediumStyle).toEqual({ width: '48px', height: '48px' });
+    expect(largeStyle).toEqual({ width: '56px', height: '56px' });
+    expect(smallTextStyle).toEqual({
       fontSize: '12px',
       fontWeight: '500',
       lineHeight: getLineHeightValue(smallTextStyle.fontSize),
     });
-    expect({
-      fontSize: mediumTextStyle.fontSize,
-      fontWeight: mediumTextStyle.fontWeight,
-      lineHeight: mediumTextStyle.lineHeight,
-    }).toMatchObject({
+    expect(mediumTextStyle).toEqual({
       fontSize: '14px',
       fontWeight: '500',
       lineHeight: getLineHeightValue(mediumTextStyle.fontSize),
     });
-    expect({
-      fontSize: largeTextStyle.fontSize,
-      fontWeight: largeTextStyle.fontWeight,
-      lineHeight: largeTextStyle.lineHeight,
-    }).toMatchObject({
+    expect(largeTextStyle).toEqual({
       fontSize: '16px',
       fontWeight: '500',
       lineHeight: getLineHeightValue(largeTextStyle.fontSize),

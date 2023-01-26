@@ -65,17 +65,17 @@ describe('bq-icon', () => {
     const page = await newE2EPage();
     await page.setContent('<bq-icon name="activity"></bq-icon>');
 
-    const style = await computedStyle(page, 'bq-icon >>> [part="base"]');
+    const style = await computedStyle(page, 'bq-icon >>> [part="base"]', ['height']);
 
-    expect(style.height).toBe('24px');
+    expect(style).toEqual({ height: '24px' });
   });
 
   it('should change size', async () => {
     const page = await newE2EPage();
     await page.setContent('<bq-icon size="30"></bq-icon>');
 
-    const style = await computedStyle(page, 'bq-icon >>> [part="base"]');
+    const style = await computedStyle(page, 'bq-icon >>> [part="base"]', ['height']);
 
-    expect(style.height).toBe('30px');
+    expect(style).toEqual({ height: '30px' });
   });
 });

@@ -88,8 +88,8 @@ describe('bq-status', () => {
     const page = await newE2EPage();
     await page.setContent('<bq-status status="danger">Neutral status</bq-status>');
 
-    const style = await computedStyle(page, 'bq-status >>> [part="base"]');
+    const style = await computedStyle(page, 'bq-status >>> [part="base"]', ['gap']);
 
-    expect(style.gap).toEqual('8px');
+    expect(style).toEqual({ gap: '8px' });
   });
 });

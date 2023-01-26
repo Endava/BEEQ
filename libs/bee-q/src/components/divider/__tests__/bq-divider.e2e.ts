@@ -74,8 +74,8 @@ describe('bq-divider', () => {
     const page = await newE2EPage();
     await page.setContent('<bq-divider></bq-divider>');
 
-    const style = await computedStyle(page, 'bq-divider >>> [part="base"]');
+    const style = await computedStyle(page, 'bq-divider >>> [part="base"]', ['height']);
 
-    expect(style.height).toBe('2px');
+    expect(style).toEqual({ height: '2px' });
   });
 });
