@@ -30,3 +30,11 @@ const Template = (args) => {
 };
 
 export const Default = (args) => Template(args);
+
+export const Icon = (args) => {
+  return html`
+    <bq-tab .size=${args.size} ?active=${args.active} ?disabled=${args.disabled}
+      ><bq-icon name="activity" slot="icon"></bq-icon>${args.text}</bq-tab
+    >
+  `;
+};
