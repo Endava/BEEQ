@@ -36,8 +36,7 @@
         "tsConfig": "libs/bee-q/tsconfig.lib.json",
         "configPath": "libs/bee-q/stencil.config.ts",
         "outputPath": "dist/bee-q"
-      },
-      "dependsOn": ["create-icons-set"]
+      }
     },
     "start-storybook": {
       "executor": "@nrwl/storybook:storybook",
@@ -62,7 +61,8 @@
         "projectType": "library",
         "tsConfig": "libs/bee-q/tsconfig.lib.json",
         "configPath": "libs/bee-q/stencil.config.ts",
-        "outputPath": "dist/bee-q"
+        "outputPath": "dist/bee-q",
+        "ci": true
       },
       "configurations": {
         "production": {
@@ -80,7 +80,8 @@
         "config": {
           "configFolder": "libs/bee-q/.storybook"
         },
-        "webpackStatsJson": true
+        "webpackStatsJson": true,
+        "ci": true
       },
       "configurations": {
         "ci": {
@@ -95,7 +96,8 @@
         "projectType": "library",
         "tsConfig": "libs/bee-q/tsconfig.lib.json",
         "configPath": "libs/bee-q/stencil.config.ts",
-        "outputPath": "dist/bee-q"
+        "outputPath": "dist/bee-q",
+        "noBuild": true
       }
     },
     "lint": {
