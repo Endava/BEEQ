@@ -94,11 +94,13 @@ describe('bq-checkbox', () => {
     const page = await newE2EPage();
     await page.setContent('<bq-checkbox>Label</bq-checkbox>');
 
-    const baseStyle = await computedStyle(page, 'bq-checkbox >>> [part="base"]');
-    const checkboxStyle = await computedStyle(page, 'bq-checkbox >>> [part="checkbox"]');
+    const baseStyle = await computedStyle(page, 'bq-checkbox >>> [part="base"]', ['height']);
+    const checkboxStyle = await computedStyle(page, 'bq-checkbox >>> [part="checkbox"]', [
+      'borderWidth',
+      'borderRadius',
+    ]);
 
-    expect(baseStyle.height).toBe('24px');
-    expect(checkboxStyle.borderWidth).toBe('2px');
-    expect(checkboxStyle.borderRadius).toBe('4px');
+    expect(baseStyle).toEqual({ height: '24px' });
+    expect(checkboxStyle).toEqual({ borderWidth: '2px', borderRadius: '4px' });
   });
 });

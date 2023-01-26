@@ -146,16 +146,12 @@ describe('bq-slider', () => {
     const page = await newE2EPage();
     await page.setContent('<bq-slider value-indicator></bq-slider>');
 
-    const input = await computedStyle(page, 'bq-slider >>> .bq-slider__input');
-    const label = await computedStyle(page, 'bq-slider >>> .bq-slider__label');
-    const progress = await computedStyle(page, 'bq-slider >>> .progress');
+    const input = await computedStyle(page, 'bq-slider >>> .bq-slider__input', ['borderRadius', 'height']);
+    const label = await computedStyle(page, 'bq-slider >>> .bq-slider__label', ['fontSize', 'fontWeight', 'height']);
+    const progress = await computedStyle(page, 'bq-slider >>> .progress', ['borderRadius', 'height']);
 
-    expect(input.borderRadius).toBe('4px');
-    expect(input.height).toBe('4px');
-    expect(label.fontSize).toBe('14px');
-    expect(label.fontWeight).toBe('500');
-    expect(label.height).toBe('21px');
-    expect(progress.borderRadius).toBe('4px');
-    expect(progress.height).toBe('4px');
+    expect(input).toEqual({ borderRadius: '4px', height: '4px' });
+    expect(label).toEqual({ fontSize: '14px', fontWeight: '500', height: '21px' });
+    expect(progress).toEqual({ borderRadius: '4px', height: '4px' });
   });
 });

@@ -52,30 +52,34 @@ describe('bq-avatar', () => {
       `,
     );
 
-    const circleStyle = await computedStyle(page, 'bq-avatar[shape="circle"] >>> [part="base"]');
-    const xmallSquareStyle = await computedStyle(page, 'bq-avatar[shape="square"][size="xsmall"] >>> [part="base"]');
-    const smallSquareStyle = await computedStyle(page, 'bq-avatar[shape="square"][size="small"] >>> [part="base"]');
-    const mediumSquareStyle = await computedStyle(page, 'bq-avatar[shape="square"][size="medium"] >>> [part="base"]');
-    const largeSquareStyle = await computedStyle(page, 'bq-avatar[shape="square"][size="large"] >>> [part="base"]');
+    const styleProps = ['width', 'borderRadius', 'height'] as const;
 
-    expect(circleStyle.borderRadius).toBe('9999px');
-    expect(circleStyle.height).toBe('24px');
-    expect(circleStyle.width).toBe('24px');
+    const circleStyle = await computedStyle(page, 'bq-avatar[shape="circle"] >>> [part="base"]', styleProps);
+    const xmallSquareStyle = await computedStyle(
+      page,
+      'bq-avatar[shape="square"][size="xsmall"] >>> [part="base"]',
+      styleProps,
+    );
+    const smallSquareStyle = await computedStyle(
+      page,
+      'bq-avatar[shape="square"][size="small"] >>> [part="base"]',
+      styleProps,
+    );
+    const mediumSquareStyle = await computedStyle(
+      page,
+      'bq-avatar[shape="square"][size="medium"] >>> [part="base"]',
+      styleProps,
+    );
+    const largeSquareStyle = await computedStyle(
+      page,
+      'bq-avatar[shape="square"][size="large"] >>> [part="base"]',
+      styleProps,
+    );
 
-    expect(xmallSquareStyle.borderRadius).toBe('4px');
-    expect(xmallSquareStyle.height).toBe('24px');
-    expect(xmallSquareStyle.width).toBe('24px');
-
-    expect(smallSquareStyle.borderRadius).toBe('8px');
-    expect(smallSquareStyle.height).toBe('32px');
-    expect(smallSquareStyle.width).toBe('32px');
-
-    expect(mediumSquareStyle.borderRadius).toBe('12px');
-    expect(mediumSquareStyle.height).toBe('48px');
-    expect(mediumSquareStyle.width).toBe('48px');
-
-    expect(largeSquareStyle.borderRadius).toBe('12px');
-    expect(largeSquareStyle.height).toBe('64px');
-    expect(largeSquareStyle.width).toBe('64px');
+    expect(circleStyle).toEqual({ borderRadius: '9999px', height: '24px', width: '24px' });
+    expect(xmallSquareStyle).toEqual({ borderRadius: '4px', height: '24px', width: '24px' });
+    expect(smallSquareStyle).toEqual({ borderRadius: '8px', height: '32px', width: '32px' });
+    expect(mediumSquareStyle).toEqual({ borderRadius: '12px', height: '48px', width: '48px' });
+    expect(largeSquareStyle).toEqual({ borderRadius: '12px', height: '64px', width: '64px' });
   });
 });

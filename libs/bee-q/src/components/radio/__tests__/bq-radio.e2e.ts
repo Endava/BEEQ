@@ -105,10 +105,8 @@ describe('bq-radio', () => {
     const page = await newE2EPage();
     await page.setContent(`<bq-radio name="option" value="1">option 1</bq-radio>`);
 
-    const style = await computedStyle(page, 'bq-radio >>> [part="base"]');
+    const style = await computedStyle(page, 'bq-radio >>> [part="base"]', ['height', 'gap', 'borderRadius']);
 
-    expect(style.height).toBe('24px');
-    expect(style.gap).toBe('8px');
-    expect(style.borderRadius).toBe('8px');
+    expect(style).toEqual({ height: '24px', gap: '8px', borderRadius: '8px' });
   });
 });
