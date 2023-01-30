@@ -3,38 +3,6 @@
   "sourceRoot": "libs/bee-q-icons/src",
   "projectType": "library",
   "targets": {
-    "build": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/bee-q-icons",
-        "main": "libs/bee-q-icons/src/index.ts",
-        "tsConfig": "libs/bee-q-icons/tsconfig.lib.json",
-        "assets": [
-          "libs/bee-q-icons/*.md",
-          {
-            "input": "./libs/bee-q-icons/src",
-            "glob": "**/!(*.ts)",
-            "output": "./src"
-          },
-          {
-            "input": "./libs/bee-q-icons/src",
-            "glob": "**/*.d.ts",
-            "output": "./src"
-          },
-          {
-            "input": "./libs/bee-q-icons",
-            "glob": "generators.json",
-            "output": "."
-          },
-          {
-            "input": "./libs/bee-q-icons",
-            "glob": "executors.json",
-            "output": "."
-          }
-        ]
-      }
-    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],

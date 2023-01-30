@@ -1,3 +1,5 @@
+import './css/styles.css';
+
 import { html } from 'lit-html';
 import { classMap } from 'lit-html/directives/class-map.js';
 import { addParameters, setCustomElements } from '@storybook/web-components';

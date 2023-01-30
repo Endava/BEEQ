@@ -15,6 +15,16 @@ import { TSliderType } from "./components/slider/bq-slider.types";
 import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 import { TStatusType } from "./components/status/bq-status.types";
 import { FloatingUIPlacement } from "./services/interfaces";
+export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
+export { TBadgeSize } from "./components/badge/bq-badge.types";
+export { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
+export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
+export { TIconWeight } from "./components/icon/bq-icon.types";
+export { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
+export { TSliderType } from "./components/slider/bq-slider.types";
+export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
+export { TStatusType } from "./components/status/bq-status.types";
+export { FloatingUIPlacement } from "./services/interfaces";
 export namespace Components {
     /**
      * An avatar represents an object made of different pieces of information, in a way that is understandable at a glance.

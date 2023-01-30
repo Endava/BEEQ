@@ -10,7 +10,6 @@ export default {
       name: 'webpack5',
       options: {
         fsCache: true,
-        lazyCompilation: true,
       },
     },
   },

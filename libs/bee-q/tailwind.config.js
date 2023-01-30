@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 module.exports = {
-  content: ['./src/**/*.{jsx,js,tsx,ts}'],
+  content: ['./src/**/*.{jsx,js,tsx,ts}', '**/_storybook/*.tsx'],
   theme: {
     borderRadius: {
       none: 'var(--bq-radius--none)',
