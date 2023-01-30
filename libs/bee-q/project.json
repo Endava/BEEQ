@@ -10,47 +10,11 @@
     }
   },
   "targets": {
-    "test": {
-      "executor": "@nxext/stencil:test",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "projectType": "library",
-        "tsConfig": "libs/bee-q/tsconfig.lib.json",
-        "configPath": "libs/bee-q/stencil.config.ts",
-        "outputPath": "dist/bee-q"
-      },
-      "dependsOn": ["stylelint", "lint"]
-    },
     "start": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["nx run bee-q:start-stencil", "nx run bee-q:start-storybook"],
+        "commands": ["nx run bee-q:stencil-start", "nx run bee-q:storybook-css-start", "nx run bee-q:storybook-start"],
         "parallel": true
-      }
-    },
-    "start-stencil": {
-      "executor": "@nxext/stencil:serve",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "projectType": "library",
-        "tsConfig": "libs/bee-q/tsconfig.lib.json",
-        "configPath": "libs/bee-q/stencil.config.ts",
-        "outputPath": "dist/bee-q"
-      }
-    },
-    "start-storybook": {
-      "executor": "@nrwl/storybook:storybook",
-      "options": {
-        "uiFramework": "@storybook/web-components",
-        "port": 9001,
-        "config": {
-          "configFolder": "libs/bee-q/.storybook"
-        }
-      },
-      "configurations": {
-        "ci": {
-          "quiet": true
-        }
       }
     },
     "build": {
@@ -71,9 +35,36 @@
         }
       }
     },
-    "build-storybook": {
+    "stencil-start": {
+      "executor": "@nxext/stencil:serve",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "projectType": "library",
+        "tsConfig": "libs/bee-q/tsconfig.lib.json",
+        "configPath": "libs/bee-q/stencil.config.ts",
+        "outputPath": "dist/bee-q"
+      }
+    },
+    "storybook-start": {
+      "executor": "@nrwl/storybook:storybook",
+      "options": {
+        "config": {
+          "configFolder": "libs/bee-q/.storybook"
+        },
+        "host": "127.0.0.1",
+        "port": 9001,
+        "uiFramework": "@storybook/web-components"
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "storybook-build": {
       "executor": "@nrwl/storybook:build",
       "outputs": ["{options.outputPath}"],
+      "dependsOn": ["storybook-css-build"],
       "options": {
         "uiFramework": "@storybook/web-components",
         "outputPath": "dist/storybook/bee-q",
@@ -88,6 +79,46 @@
           "quiet": true
         }
       }
+    },
+    "storybook-css-start": {
+      "executor": "nx:run-commands",
+      "outputs": ["libs/bee-q/.storybook/css"],
+      "options": {
+        "command": "npx tailwindcss -i libs/bee-q/src/global/styles/tailwind.pcss -o libs/bee-q/.storybook/css/styles.css -c libs/bee-q/tailwind.config.js --watch"
+      }
+    },
+    "storybook-css-build": {
+      "executor": "nx:run-commands",
+      "outputs": ["libs/bee-q/.storybook/css"],
+      "options": {
+        "command": "npx tailwindcss -i libs/bee-q/src/global/styles/tailwind.pcss -o libs/bee-q/.storybook/css/styles.css -c libs/bee-q/tailwind.config.js --minify"
+      }
+    },
+    "generate-icons": {
+      "executor": "@bee-q/icons:generate",
+      "outputs": ["{options.downloadPath}", "{options.extractToPath}", "{options.outputDir}"],
+      "options": {
+        "assetsFolder": "assets",
+        "downloadPath": "libs/bee-q-icons/temp",
+        "extractToPath": "libs/bee-q/src/components/icon/svg",
+        "fileName": "master.zip",
+        "helperFile": "icons-set.ts",
+        "outputDir": "libs/bee-q/src/components/icon/helper",
+        "sourceDir": "libs/bee-q/src/components/icon/svg/regular",
+        "svgFolder": "web-master",
+        "sourceUrl": "https://github.com/phosphor-icons/phosphor-icons/archive/refs/heads"
+      }
+    },
+    "test": {
+      "executor": "@nxext/stencil:test",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "projectType": "library",
+        "tsConfig": "libs/bee-q/tsconfig.lib.json",
+        "configPath": "libs/bee-q/stencil.config.ts",
+        "outputPath": "dist/bee-q"
+      },
+      "dependsOn": ["stylelint", "lint"]
     },
     "e2e": {
       "executor": "@nxext/stencil:e2e",
@@ -119,21 +150,6 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["libs/bee-q/**/*.css", "libs/bee-q/**/*.scss"]
-      }
-    },
-    "generate-icons": {
-      "executor": "@bee-q/icons:generate",
-      "outputs": ["{options.downloadPath}", "{options.extractToPath}", "{options.outputDir}"],
-      "options": {
-        "assetsFolder": "assets",
-        "downloadPath": "libs/bee-q-icons/temp",
-        "extractToPath": "libs/bee-q/src/components/icon/svg",
-        "fileName": "master.zip",
-        "helperFile": "icons-set.ts",
-        "outputDir": "libs/bee-q/src/components/icon/helper",
-        "sourceDir": "libs/bee-q/src/components/icon/svg/regular",
-        "svgFolder": "web-master",
-        "sourceUrl": "https://github.com/phosphor-icons/phosphor-icons/archive/refs/heads"
       }
     },
     "publish": {

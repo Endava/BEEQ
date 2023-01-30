@@ -8,13 +8,14 @@
 # source files to ignore
 .angular
 master.zip
+libs/bee-q/.storybook/css/**
 libs/bee-q/custom-elements.json
 libs/bee-q/src/components/icon/svg/**
-!/libs/bee-q/src/components/icon/svg/.gitkeep
 libs/bee-q-angular/**/directives
 libs/bee-q-react/src/react-component-lib
 libs/bee-q-react/src/components.ts
 libs/bee-q-icons/temp/**
+!.gitkeep
 
 # dependencies
 node_modules

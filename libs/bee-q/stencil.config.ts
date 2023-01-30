@@ -1,31 +1,28 @@
-import path from 'path';
-import tailwindcss from 'tailwindcss';
+import { resolve } from 'path';
 import tailwind, { tailwindHMR } from 'stencil-tailwind-plugin';
-import { Config } from '@stencil/core';
-import { sass } from '@stencil/sass';
-import { reactOutputTarget as react } from '@stencil/react-output-target';
-import { angularOutputTarget as angular } from '@stencil/angular-output-target';
-import { angularValueAccessorBindings, generateCustomElementsJson } from './src/tools';
+import tailwindcss from 'tailwindcss';
 
+import { angularOutputTarget as angular } from '@stencil/angular-output-target';
+import { Config } from '@stencil/core';
+import { reactOutputTarget as react } from '@stencil/react-output-target';
+import { sass } from '@stencil/sass';
+
+import { angularValueAccessorBindings, generateCustomElementsJson } from './src/tools';
 import tailwindConf from './tailwind.config.js';
 
 export const config: Config = {
   namespace: 'bee-q',
   taskQueue: 'async',
-  sourceMap: true,
   globalStyle: './src/global/styles/default.scss',
-  testing: {
-    browserArgs: ['--single-process'],
-  },
   plugins: [
     sass({
       includePaths: [
-        path.resolve(__dirname, '../../node_modules').replace(/\\/g, '/'),
-        path.resolve(__dirname, 'src/global/styles').replace(/\\/g, '/'),
+        resolve(__dirname, '../../node_modules').replace(/\\/g, '/'),
+        resolve(__dirname, 'src/global/styles').replace(/\\/g, '/'),
       ],
       injectGlobalPaths: [
-        path.resolve(__dirname, 'src/global/styles/variables/index.scss').replace(/\\/g, '/'),
-        path.resolve(__dirname, 'src/global/styles/mixins/index.scss').replace(/\\/g, '/'),
+        resolve(__dirname, 'src/global/styles/variables/index.scss').replace(/\\/g, '/'),
+        resolve(__dirname, 'src/global/styles/mixins/index.scss').replace(/\\/g, '/'),
       ],
       outputStyle: 'compressed',
       sourceMap: true,
@@ -34,7 +31,7 @@ export const config: Config = {
     }),
     tailwind({
       stripComments: true,
-      tailwindCssPath: path.resolve(__dirname, 'src/global/styles/tailwind.pcss').replace(/\\/g, '/'),
+      tailwindCssPath: resolve(__dirname, 'src/global/styles/tailwind.pcss').replace(/\\/g, '/'),
       tailwindConf: tailwindConf,
       postcss: {
         plugins: [tailwindcss()],
@@ -56,8 +53,7 @@ export const config: Config = {
     },
     {
       type: 'dist-custom-elements',
-      autoDefineCustomElements: true,
-      includeGlobalScripts: false,
+      customElementsExportBehavior: 'auto-define-custom-elements',
     },
     {
       type: 'docs-vscode',
@@ -74,17 +70,16 @@ export const config: Config = {
     },
     angular({
       componentCorePackage: '@bee-q/core',
-      directivesProxyFile: path
-        .resolve(__dirname, '../../libs/bee-q-angular/src/directives/components.ts')
-        .replace(/\\/g, '/'),
-      directivesArrayFile: path
-        .resolve(__dirname, '../../libs/bee-q-angular/src/directives/index.ts')
-        .replace(/\\/g, '/'),
+      directivesProxyFile: resolve(__dirname, '../../libs/bee-q-angular/src/directives/components.ts').replace(
+        /\\/g,
+        '/',
+      ),
+      directivesArrayFile: resolve(__dirname, '../../libs/bee-q-angular/src/directives/index.ts').replace(/\\/g, '/'),
       valueAccessorConfigs: angularValueAccessorBindings,
     }),
     react({
       componentCorePackage: '@bee-q/core',
-      proxiesFile: path.resolve(__dirname, '../../libs/bee-q-react/src/components.ts').replace(/\\/g, '/'),
+      proxiesFile: resolve(__dirname, '../../libs/bee-q-react/src/components.ts').replace(/\\/g, '/'),
       includeDefineCustomElements: true,
     }),
   ],
@@ -93,7 +88,7 @@ export const config: Config = {
   },
   watchIgnoredRegex: /(custom-elements\.)((d\.ts)|(json))$/g,
   devServer: {
-    port: 8001,
     openBrowser: false,
+    port: 8001,
   },
 };
