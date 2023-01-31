@@ -84,14 +84,14 @@
       "executor": "nx:run-commands",
       "outputs": ["libs/bee-q/.storybook/css"],
       "options": {
-        "command": "npx tailwindcss -i libs/bee-q/src/global/styles/tailwind.pcss -o libs/bee-q/.storybook/css/styles.css -c libs/bee-q/tailwind.config.js --watch"
+        "command": "npx tailwindcss -i libs/bee-q/src/global/styles/tailwind.pcss -o libs/bee-q/.storybook/css/styles.css -c tailwind.config.js --watch"
       }
     },
     "storybook-css-build": {
       "executor": "nx:run-commands",
       "outputs": ["libs/bee-q/.storybook/css"],
       "options": {
-        "command": "npx tailwindcss -i libs/bee-q/src/global/styles/tailwind.pcss -o libs/bee-q/.storybook/css/styles.css -c libs/bee-q/tailwind.config.js --minify"
+        "command": "npx tailwindcss -i libs/bee-q/src/global/styles/tailwind.pcss -o libs/bee-q/.storybook/css/styles.css -c tailwind.config.js --minify"
       }
     },
     "generate-icons": {
