@@ -8,7 +8,7 @@ import { reactOutputTarget as react } from '@stencil/react-output-target';
 import { sass } from '@stencil/sass';
 
 import { angularValueAccessorBindings, generateCustomElementsJson } from './src/tools';
-import tailwindConf from './tailwind.config.js';
+import tailwindConf from '../../tailwind.config.js';
 
 export const config: Config = {
   namespace: 'bee-q',

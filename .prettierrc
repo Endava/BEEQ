@@ -4,5 +4,5 @@
   "semi": true,
   "singleQuote": true,
   "trailingComma": "all",
-  "tailwindConfig": "./libs/bee-q/tailwind.config.js"
+  "tailwindConfig": "tailwind.config.js"
 }
