@@ -1,5 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { computedStyle } from '../../../shared/test-utils';
+import { computedStyle, setProperties } from '../../../shared/test-utils';
 
 describe('bq-divider', () => {
   it('should render', async () => {
@@ -43,13 +43,20 @@ describe('bq-divider', () => {
     const console: jest.Mock<void, string[]> = jest.fn();
     page.on('console', (message) => console(message.type(), message.text()));
 
-    const element = await page.find('bq-divider');
-
-    element.setProperty('orientation', 'invalid');
-    element.setProperty('titleAlignment', 'invalid');
-    element.setProperty('strokeLinecap', 'invalid');
-
-    await page.waitForChanges();
+    expect(
+      await setProperties(page, 'bq-divider', {
+        // @ts-expect-error we're testing that component is handling invalid properties
+        orientation: 'invalid',
+        // @ts-expect-error we're testing that component is handling invalid properties
+        titleAlignment: 'invalid',
+        // @ts-expect-error we're testing that component is handling invalid properties
+        strokeLinecap: 'invalid',
+      }),
+    ).toEqual({
+      orientation: 'horizontal',
+      titleAlignment: 'middle',
+      strokeLinecap: 'butt',
+    });
 
     expect(console).toHaveBeenCalledTimes(3);
     expect(console).toHaveBeenCalledWith(
@@ -64,10 +71,6 @@ describe('bq-divider', () => {
       'warning',
       '[BQ-DIVIDER] Please notice that "strokeLinecap" should be one of square|round|butt',
     );
-
-    expect(element.getAttribute('orientation')).toBe('horizontal');
-    expect(element.getAttribute('titleAlignment')).toBe('start');
-    expect(element.getAttribute('strokeLinecap')).toBe('square');
   });
 
   it('should respect design style', async () => {

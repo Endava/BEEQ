@@ -1,13 +1,7 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { computedStyle } from '../../../shared/test-utils';
+import { computedStyle, setProperties } from '../../../shared/test-utils';
 
-const waitForSvgLoad = async (
-  elem: HTMLBqIconElement,
-  props?: Partial<Record<keyof HTMLBqIconElement, HTMLBqIconElement[keyof HTMLBqIconElement]>>,
-) => {
-  if (props) {
-    Object.keys(props).forEach((attr) => (elem[attr] = props[attr]));
-  }
+const waitForSvgLoad = async (elem: HTMLBqIconElement) => {
   const partSVG = elem.shadowRoot.querySelector('[part="svg"]');
   if (!partSVG) {
     return new Promise((resolve) => elem.addEventListener('svgLoaded', resolve));
@@ -51,7 +45,8 @@ describe('bq-icon', () => {
     const page = await newE2EPage();
     await page.setContent('<bq-icon name="activity"></bq-icon>');
 
-    await page.$eval('bq-icon', waitForSvgLoad, { name: 'check' });
+    await setProperties(page, 'bq-icon', { name: 'check' });
+    await page.$eval('bq-icon', waitForSvgLoad);
     await page.waitForChanges();
 
     const element = await page.find('bq-icon >>> [part="svg"]');

@@ -1,5 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { computedStyle } from '../../../shared/test-utils';
+import { computedStyle, setProperties } from '../../../shared/test-utils';
 
 describe('bq-button', () => {
   it('should render', async () => {
@@ -149,15 +149,23 @@ describe('bq-button', () => {
     const console: jest.Mock<void, string[]> = jest.fn();
     page.on('console', (message) => console(message.type(), message.text()));
 
-    const element = await page.find('bq-button');
-
-    element.setProperty('type', 'invalid');
-    element.setProperty('size', 'invalid');
-    element.setProperty('variant', 'invalid');
-    element.setProperty('appearance', 'invalid');
-
-    await page.waitForChanges();
-
+    expect(
+      await setProperties(page, 'bq-button', {
+        // @ts-expect-error we're testing that component is handling invalid properties
+        type: 'invalid',
+        // @ts-expect-error we're testing that component is handling invalid properties
+        size: 'invalid',
+        // @ts-expect-error we're testing that component is handling invalid properties
+        variant: 'invalid',
+        // @ts-expect-error we're testing that component is handling invalid properties
+        appearance: 'invalid',
+      }),
+    ).toEqual({
+      type: 'button',
+      size: 'medium',
+      variant: 'standard',
+      appearance: 'primary',
+    });
     expect(console).toHaveBeenCalledTimes(4);
     expect(console).toHaveBeenCalledWith(
       'warning',
@@ -175,11 +183,6 @@ describe('bq-button', () => {
       'warning',
       '[BQ-BUTTON] Please notice that "variant" should be one of standard|ghost|danger',
     );
-
-    expect(element.getAttribute('appearance')).toBe('primary');
-    expect(element.getAttribute('type')).toBe('button');
-    expect(element.getAttribute('size')).toBe('medium');
-    expect(element.getAttribute('variant')).toBe('standard');
   });
 
   it('should behave as submit button', async () => {

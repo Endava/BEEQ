@@ -1,5 +1,5 @@
 import { E2EElement, newE2EPage } from '@stencil/core/testing';
-import { computedStyle } from '../../../shared/test-utils';
+import { computedStyle, setProperties } from '../../../shared/test-utils';
 
 describe('bq-spinner', () => {
   const checkSpinnerHasClass = (element: E2EElement, className: string) => {
@@ -42,13 +42,11 @@ describe('bq-spinner', () => {
 
     expect(checkSpinnerHasClass(element, 'large')).toBe(true);
 
-    element.setProperty('size', 'medium');
-    await page.waitForChanges();
+    await setProperties(page, 'bq-spinner', { size: 'medium' });
 
     expect(checkSpinnerHasClass(element, 'medium')).toBe(true);
 
-    element.setProperty('size', 'small');
-    await page.waitForChanges();
+    await setProperties(page, 'bq-spinner', { size: 'small' });
 
     expect(checkSpinnerHasClass(element, 'small')).toBe(true);
   });
@@ -61,23 +59,19 @@ describe('bq-spinner', () => {
 
     expect(checkSpinnerHasClass(element, 'text-above')).toBe(true);
 
-    element.setProperty('textPosition', 'bellow');
-    await page.waitForChanges();
+    await setProperties(page, 'bq-spinner', { textPosition: 'bellow' });
 
     expect(checkSpinnerHasClass(element, 'text-bellow')).toBe(true);
 
-    element.setProperty('textPosition', 'left');
-    await page.waitForChanges();
+    await setProperties(page, 'bq-spinner', { textPosition: 'left' });
 
     expect(checkSpinnerHasClass(element, 'text-left')).toBe(true);
 
-    element.setProperty('textPosition', 'right');
-    await page.waitForChanges();
+    await setProperties(page, 'bq-spinner', { textPosition: 'right' });
 
     expect(checkSpinnerHasClass(element, 'text-right')).toBe(true);
 
-    element.setProperty('textPosition', 'none');
-    await page.waitForChanges();
+    await setProperties(page, 'bq-spinner', { textPosition: 'none' });
     const spinnerText = await page.find('bq-spinner >>> .bq-spinner--text');
 
     expect(checkSpinnerHasClass(element, 'text-none')).toBe(true);
@@ -107,12 +101,11 @@ describe('bq-spinner', () => {
     const console: jest.Mock<void, string[]> = jest.fn();
     page.on('console', (message) => console(message.type(), message.text()));
 
-    const element = await page.find('bq-spinner');
-
-    element.setProperty('size', 'invalid');
-    element.setProperty('textPosition', 'invalid');
-
-    await page.waitForChanges();
+    // @ts-expect-error we're testing that component is handling invalid properties
+    expect(await setProperties(page, 'bq-spinner', { size: 'invalid', textPosition: 'invalid' })).toEqual({
+      size: 'medium',
+      textPosition: 'none',
+    });
 
     expect(console).toHaveBeenCalledTimes(2);
     expect(console).toHaveBeenCalledWith(

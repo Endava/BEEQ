@@ -1,5 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { computedStyle } from '../../../shared/test-utils';
+import { computedStyle, setProperties } from '../../../shared/test-utils';
 
 describe('bq-status', () => {
   it('should render', async () => {
@@ -33,13 +33,7 @@ describe('bq-status', () => {
     const page = await newE2EPage();
     await page.setContent('<bq-status>Neutral status</bq-status>');
 
-    const element = await page.find('bq-status');
-
-    element.setProperty('type', 'danger');
-
-    await page.waitForChanges();
-
-    expect(element.getAttribute('type')).toBe('danger');
+    expect(await setProperties(page, 'bq-status', { type: 'danger' })).toEqual({ type: 'danger' });
     expect(await page.find('bq-status >>> [part="circle"]')).toHaveClass('danger');
   });
 
@@ -50,14 +44,8 @@ describe('bq-status', () => {
     const console: jest.Mock<void, string[]> = jest.fn();
 
     page.on('console', (message) => console(message.type(), message.text()));
-
-    const element = await page.find('bq-status');
-
-    element.setProperty('type', 'invalid-status');
-
-    await page.waitForChanges();
-
-    expect(element.getAttribute('type')).toBe('neutral');
+    // @ts-expect-error we're testing that component is handling invalid properties
+    expect(await setProperties(page, 'bq-status', { type: 'invalid-status' })).toEqual({ type: 'neutral' });
     expect(await page.find('bq-status >>> [part="circle"]')).toHaveClass('neutral');
     expect(console).toHaveBeenCalledTimes(1);
     expect(console).toHaveBeenCalledWith(
