@@ -2,7 +2,7 @@ import { ValueAccessorConfig } from '@stencil/angular-output-target';
 
 export const angularValueAccessorBindings: ValueAccessorConfig[] = [
   {
-    elementSelectors: ['bq-checkbox'],
+    elementSelectors: ['bq-checkbox', 'bq-switch'],
     event: 'bqChange',
     targetAttr: 'checked',
     type: 'boolean',
