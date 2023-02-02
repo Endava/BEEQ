@@ -1,0 +1,10 @@
+/* -------------------------------------------------------------------------- */
+/*                          Switch custom properties           */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  --switch--height: var(--bq-switch--size, 24px);
+  --switch--justify-content: var(--bq--switch--justify-content, 'start');
+  --switch--width: var(--bq-switch--width, 44px);
+  --switch--dot-size: calc(var(--switch--height) - (theme(spacing.1) * 2));
+}

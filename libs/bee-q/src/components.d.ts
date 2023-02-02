@@ -14,6 +14,7 @@ import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.
 import { TSliderType } from "./components/slider/bq-slider.types";
 import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 import { TStatusType } from "./components/status/bq-status.types";
+import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
 import { FloatingUIPlacement } from "./services/interfaces";
 export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 export { TBadgeSize } from "./components/badge/bq-badge.types";
@@ -24,6 +25,7 @@ export { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.
 export { TSliderType } from "./components/slider/bq-slider.types";
 export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 export { TStatusType } from "./components/status/bq-status.types";
+export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
 export { FloatingUIPlacement } from "./services/interfaces";
 export namespace Components {
     /**
@@ -340,6 +342,64 @@ export namespace Components {
          */
         "type": TStatusType;
     }
+    /**
+     * Toggle switches are digital on/off switches.
+     * They should provide immediate results, giving users the freedom to control their preferences as needed.
+     */
+    interface BqSwitch {
+        /**
+          * If true, a background will be displayed on hover
+         */
+        "backgroundOnHover"?: boolean;
+        /**
+          * It indicates whether if the switch is `ON` by default (when the page loads)
+         */
+        "checked"?: boolean;
+        /**
+          * If true, the switch control will be disabled and no interaction will be allowed
+         */
+        "disabled"?: boolean;
+        /**
+          * If true, the component will take the full width space available on the parent container
+         */
+        "fullWidth"?: boolean;
+        /**
+          * It indicates how to to display the on/off marks inside the control, with icons or none (default)
+         */
+        "innerLabel"?: TSwitchInnerLabel;
+        /**
+          * It defines how to distribute the space between and around the control and the label text (https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content)
+         */
+        "justifyContent"?: TSwitchJustifyContent;
+        /**
+          * Name of the form control. Submitted with the form as part of a name/value pair
+         */
+        "name": string;
+        /**
+          * If `true`, it will indicate that the user must switch `ON` the element before the owning form can be submitted
+         */
+        "required"?: boolean;
+        /**
+          * If true, the order of the control and the label text will be changed
+         */
+        "reverseOrder"?: boolean;
+        /**
+          * Remove focus from the native `<input>` HTML element used under the hood. Use this method instead of the global `element.blur()`.
+         */
+        "vBlur": () => Promise<void>;
+        /**
+          * Simulate a click event on the native `<input>` HTML element used under the hood. Use this method instead of the global `element.click()`.
+         */
+        "vClick": () => Promise<void>;
+        /**
+          * Sets focus on the native `<input>` HTML element used under the hood. Use this method instead of the global `element.focus()`.
+         */
+        "vFocus": () => Promise<void>;
+        /**
+          * The input control's value, submitted as a name/value pair with form data.
+         */
+        "value"?: string;
+    }
     interface BqTooltip {
         /**
           * Set the action when the tooltip should be displayed, on hover (default) or click
@@ -395,6 +455,10 @@ export interface BqRadioGroupCustomEvent<T> extends CustomEvent<T> {
 export interface BqSliderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqSliderElement;
+}
+export interface BqSwitchCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqSwitchElement;
 }
 declare global {
     /**
@@ -475,6 +539,16 @@ declare global {
         prototype: HTMLBqStatusElement;
         new (): HTMLBqStatusElement;
     };
+    /**
+     * Toggle switches are digital on/off switches.
+     * They should provide immediate results, giving users the freedom to control their preferences as needed.
+     */
+    interface HTMLBqSwitchElement extends Components.BqSwitch, HTMLStencilElement {
+    }
+    var HTMLBqSwitchElement: {
+        prototype: HTMLBqSwitchElement;
+        new (): HTMLBqSwitchElement;
+    };
     interface HTMLBqTooltipElement extends Components.BqTooltip, HTMLStencilElement {
     }
     var HTMLBqTooltipElement: {
@@ -493,6 +567,7 @@ declare global {
         "bq-slider": HTMLBqSliderElement;
         "bq-spinner": HTMLBqSpinnerElement;
         "bq-status": HTMLBqStatusElement;
+        "bq-switch": HTMLBqSwitchElement;
         "bq-tooltip": HTMLBqTooltipElement;
     }
 }
@@ -847,6 +922,64 @@ declare namespace LocalJSX {
          */
         "type"?: TStatusType;
     }
+    /**
+     * Toggle switches are digital on/off switches.
+     * They should provide immediate results, giving users the freedom to control their preferences as needed.
+     */
+    interface BqSwitch {
+        /**
+          * If true, a background will be displayed on hover
+         */
+        "backgroundOnHover"?: boolean;
+        /**
+          * It indicates whether if the switch is `ON` by default (when the page loads)
+         */
+        "checked"?: boolean;
+        /**
+          * If true, the switch control will be disabled and no interaction will be allowed
+         */
+        "disabled"?: boolean;
+        /**
+          * If true, the component will take the full width space available on the parent container
+         */
+        "fullWidth"?: boolean;
+        /**
+          * It indicates how to to display the on/off marks inside the control, with icons or none (default)
+         */
+        "innerLabel"?: TSwitchInnerLabel;
+        /**
+          * It defines how to distribute the space between and around the control and the label text (https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content)
+         */
+        "justifyContent"?: TSwitchJustifyContent;
+        /**
+          * Name of the form control. Submitted with the form as part of a name/value pair
+         */
+        "name": string;
+        /**
+          * Handler to be called when the switch loses focus
+         */
+        "onBqBlur"?: (event: BqSwitchCustomEvent<HTMLBqSwitchElement>) => void;
+        /**
+          * Handler to be called when the switch state changes
+         */
+        "onBqChange"?: (event: BqSwitchCustomEvent<{ checked: boolean }>) => void;
+        /**
+          * Handler to be called when the switch gets focus
+         */
+        "onBqFocus"?: (event: BqSwitchCustomEvent<HTMLBqSwitchElement>) => void;
+        /**
+          * If `true`, it will indicate that the user must switch `ON` the element before the owning form can be submitted
+         */
+        "required"?: boolean;
+        /**
+          * If true, the order of the control and the label text will be changed
+         */
+        "reverseOrder"?: boolean;
+        /**
+          * The input control's value, submitted as a name/value pair with form data.
+         */
+        "value"?: string;
+    }
     interface BqTooltip {
         /**
           * Set the action when the tooltip should be displayed, on hover (default) or click
@@ -882,6 +1015,7 @@ declare namespace LocalJSX {
         "bq-slider": BqSlider;
         "bq-spinner": BqSpinner;
         "bq-status": BqStatus;
+        "bq-switch": BqSwitch;
         "bq-tooltip": BqTooltip;
     }
 }
@@ -912,6 +1046,11 @@ declare module "@stencil/core" {
              */
             "bq-spinner": LocalJSX.BqSpinner & JSXBase.HTMLAttributes<HTMLBqSpinnerElement>;
             "bq-status": LocalJSX.BqStatus & JSXBase.HTMLAttributes<HTMLBqStatusElement>;
+            /**
+             * Toggle switches are digital on/off switches.
+             * They should provide immediate results, giving users the freedom to control their preferences as needed.
+             */
+            "bq-switch": LocalJSX.BqSwitch & JSXBase.HTMLAttributes<HTMLBqSwitchElement>;
             "bq-tooltip": LocalJSX.BqTooltip & JSXBase.HTMLAttributes<HTMLBqTooltipElement>;
         }
     }
