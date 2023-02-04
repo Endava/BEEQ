@@ -18,7 +18,7 @@ const waitForSvgLoad = async (
 describe('bq-tab', () => {
   it('should render', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-tab id="1"><p>Tab text</p></<bq-tab>');
+    await page.setContent('<bq-tab id="1"><p>Tab text</p></bq-tab>');
 
     const element = await page.find('bq-tab');
 
@@ -27,7 +27,7 @@ describe('bq-tab', () => {
 
   it('should have shadow root', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-tab id="1"><p>Tab text</p></<bq-tab>');
+    await page.setContent('<bq-tab id="1"><p>Tab text</p></bq-tab>');
 
     const element = await page.find('bq-tab');
 
@@ -36,7 +36,7 @@ describe('bq-tab', () => {
 
   it('should display text', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-tab id="1"><p>Tab text</p></<bq-tab>');
+    await page.setContent('<bq-tab id="1"><p>Tab text</p></bq-tab>');
 
     const slotText = await page.$eval('bq-tab', (element) => {
       const slotElement = element.shadowRoot.querySelector('[part="text"] > slot');
@@ -50,7 +50,7 @@ describe('bq-tab', () => {
 
   it('should display icon', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-tab id="1"><bq-icon name="check" slot="icon"></bq-icon><p>Tab text</p></<bq-tab>');
+    await page.setContent('<bq-tab id="1"><bq-icon name="check" slot="icon"></bq-icon><p>Tab text</p></bq-tab>');
 
     await page.$eval('bq-icon', waitForSvgLoad);
 
@@ -71,8 +71,8 @@ describe('bq-tab', () => {
   it('should be keyboard accessible', async () => {
     const page = await newE2EPage();
     await page.setContent(`
-      <bq-tab id="1"><p>Tab text</p></<bq-tab>
-      <bq-tab id="2"><p>Tab text</p></<bq-tab>
+      <bq-tab id="1"><p>Tab text</p></bq-tab>
+      <bq-tab id="2"><p>Tab text</p></bq-tab>
     `);
 
     const bqFocus = await page.spyOnEvent('bqFocus');
@@ -92,7 +92,7 @@ describe('bq-tab', () => {
 
   it('should handle `disabled` property', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-tab id="1" disabled><p>Tab text</p></<bq-tab>');
+    await page.setContent('<bq-tab id="1" disabled><p>Tab text</p></bq-tab>');
 
     const bqFocus = await page.spyOnEvent('bqFocus');
     const bqClick = await page.spyOnEvent('bqClick');
@@ -112,8 +112,8 @@ describe('bq-tab', () => {
   it('should respect design style', async () => {
     const page = await newE2EPage();
     await page.setContent(`
-      <bq-tab id="1" size="small"><p>Tab text</p></<bq-tab>
-      <bq-tab id="2" size="medium"><p>Tab text</p></<bq-tab>
+      <bq-tab id="1" size="small"><p>Tab text</p></bq-tab>
+      <bq-tab id="2" size="medium"><p>Tab text</p></bq-tab>
     `);
 
     const smallStyle = await computedStyle(page, 'bq-tab[size="small"] >>> [part="base"]', ['gap', 'padding']);
