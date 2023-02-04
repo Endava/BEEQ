@@ -4,7 +4,7 @@ import { computedStyle } from '../../../shared/test-utils';
 describe('bq-radio', () => {
   it('should render', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-radio></<bq-radio>');
+    await page.setContent('<bq-radio></bq-radio>');
 
     const element = await page.find('bq-radio');
 
@@ -13,7 +13,7 @@ describe('bq-radio', () => {
 
   it('should have shadow root', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-radio></<bq-radio>');
+    await page.setContent('<bq-radio></bq-radio>');
 
     const element = await page.find('bq-radio');
 
@@ -22,7 +22,7 @@ describe('bq-radio', () => {
 
   it('should display label', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-radio><p>Label</p></<bq-radio>');
+    await page.setContent('<bq-radio><p>Label</p></bq-radio>');
 
     const labelText = await page.$eval('bq-radio', (element) => {
       const slotElement = element.shadowRoot.querySelector('slot');
@@ -36,7 +36,7 @@ describe('bq-radio', () => {
 
   it('should check', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-radio value="value" name="option">Label</<bq-radio>');
+    await page.setContent('<bq-radio value="value" name="option">Label</bq-radio>');
 
     const bqFocus = await page.spyOnEvent('bqFocus');
     const bqClick = await page.spyOnEvent('bqClick');
