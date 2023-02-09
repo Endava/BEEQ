@@ -2,6 +2,12 @@ import { h, Component, Prop, Watch, Element, Event, EventEmitter, Method } from 
 import { validatePropValue } from '../../shared/utils';
 import { TAB_SIZE, TTabSize } from './bq-tab.types';
 
+/**
+ * @part base - The HTML button used under the hood.
+ * @part icon - The HTML `<div>` element that holds the icon element.
+ * @part text - The HTML `<span>` element that holds the text content.
+ * @part underline - The HTML `<div>` element that display active state.
+ */
 @Component({
   tag: 'bq-tab',
   styleUrl: './scss/bq-tab.scss',
