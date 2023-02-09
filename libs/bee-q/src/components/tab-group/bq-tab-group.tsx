@@ -1,6 +1,10 @@
 import { h, Component, Element, Prop, Listen, EventEmitter, Event, Watch } from '@stencil/core';
 import { debounce, getNextElement, isHTMLElement, isNil, TDebounce } from '../../shared/utils';
 
+/**
+ * @part base - The HTML div used to hold <bq-tab> elements.
+ * @part divider - The HTML `<div>` element that display the divider.
+ */
 @Component({
   tag: 'bq-tab-group',
   styleUrl: './scss/bq-tab-group.scss',
@@ -177,7 +181,7 @@ export class BqTabGroup {
     return (
       <div class="relative flex gap-2" role="tablist" part="base">
         <slot />
-        <div class="absolute bottom-0 h-[1px] w-full bg-text-secondary opacity-40" />
+        <div class="absolute bottom-0 h-[1px] w-full bg-text-secondary opacity-40" part="divider" />
       </div>
     );
   }
