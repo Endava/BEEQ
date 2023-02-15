@@ -12,7 +12,7 @@
   @apply relative flex cursor-pointer items-center justify-center rounded-s border-0 bg-transparent focus:outline-none focus-visible:outline-none;
 
   &:focus-visible {
-    @apply ring-4 ring-system-alert;
+    @apply rounded-s ring-4 ring-system-alert;
 
     .bq-tab__underline {
       display: none;
@@ -20,11 +20,15 @@
   }
 
   &--small {
-    @apply gap-1 p-1;
+    @apply py-1 px-4;
   }
 
   &--medium {
-    @apply gap-2 p-2;
+    @apply py-2 px-5;
+  }
+
+  &--large {
+    @apply py-3 px-6;
   }
 }
 

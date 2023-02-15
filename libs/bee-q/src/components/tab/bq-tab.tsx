@@ -172,7 +172,7 @@ export class BqTab {
         </div>
         <span
           class={{
-            'font-inter text-s leading-large text-text-primary': true,
+            'font-inter text-s font-medium leading-large text-text-primary hover:text-text-accent': true,
             'text-ui-primary': isActive,
           }}
           part="text"
