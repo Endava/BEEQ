@@ -1,5 +1,5 @@
 import { h, Component, Prop, Watch, Element, Event, EventEmitter, Method } from '@stencil/core';
-import { validatePropValue } from '../../shared/utils';
+import { validatePropValue, hasSlotContent } from '../../shared/utils';
 import { TAB_SIZE, TTabSize } from './bq-tab.types';
 
 /**
@@ -18,6 +18,10 @@ export class BqTab {
   // ====================
 
   private buttonElement: HTMLButtonElement;
+
+  private iconSpanElement: HTMLSpanElement;
+
+  private hasIcon = false;
 
   // Reference to host HTML element
   // ===================================
@@ -141,6 +145,10 @@ export class BqTab {
     return `${-1 + +(this.active ?? 1)}`;
   }
 
+  private handleIconSlotChange = (): void => {
+    this.hasIcon = hasSlotContent(this.iconSpanElement);
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -154,6 +162,8 @@ export class BqTab {
           'bq-tab': true,
           [`bq-tab--${this.size}`]: true,
           'pointer-events-none cursor-not-allowed opacity-40': this.disabled,
+          'gap-1': this.hasIcon && this.size === 'small',
+          'gap-2': this.hasIcon && this.size !== 'small',
         }}
         id={this.tabId}
         onBlur={this.handleOnBlur}
@@ -167,8 +177,8 @@ export class BqTab {
         tabindex={this.tabindex}
         part="base"
       >
-        <div part="icon">
-          <slot name="icon" />
+        <div part="icon" ref={(element) => (this.iconSpanElement = element)}>
+          <slot name="icon" onSlotchange={this.handleIconSlotChange} />
         </div>
         <span
           class={{
