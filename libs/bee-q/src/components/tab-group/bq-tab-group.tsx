@@ -1,5 +1,6 @@
 import { h, Component, Element, Prop, Listen, EventEmitter, Event, Watch } from '@stencil/core';
-import { debounce, getNextElement, isHTMLElement, isNil, TDebounce } from '../../shared/utils';
+import { debounce, getNextElement, isHTMLElement, isNil, TDebounce, validatePropValue } from '../../shared/utils';
+import { TAB_SIZE, TTabSize } from '../tab/bq-tab.types';
 
 /**
  * @part base - The HTML div used to hold <bq-tab> elements.
@@ -33,8 +34,8 @@ export class BqTabGroup {
   /** A string representing the id of the selected tab. */
   @Prop({ reflect: true, mutable: true }) value: string;
 
-  /** If true tabs are disabled */
-  @Prop({ reflect: true }) disabled = false;
+  /** The size of the tab */
+  @Prop({ reflect: true }) size: TTabSize = 'small';
 
   /** A number representing the delay value applied to bqChange event handler */
   @Prop({ reflect: true, mutable: true }) debounceTime = 0;
@@ -57,6 +58,15 @@ export class BqTabGroup {
     }, this.debounceTime);
   }
 
+  @Watch('size')
+  checkPropValues() {
+    validatePropValue(TAB_SIZE, 'small', this.el, 'size');
+
+    this.bqTabElements.forEach((bqTabElement) => {
+      bqTabElement.size = this.size;
+    });
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
@@ -70,12 +80,13 @@ export class BqTabGroup {
 
   componentWillLoad() {
     this.checkDebounceChange();
+    this.checkPropValues();
   }
 
   componentDidLoad() {
     this.bqTabElements.forEach((bqTabElement) => {
       bqTabElement.active = !isNil(this.value) ? bqTabElement.tabId === this.value : false;
-      bqTabElement.disabled = bqTabElement.disabled || this.disabled;
+      bqTabElement.size = this.size;
     });
   }
 

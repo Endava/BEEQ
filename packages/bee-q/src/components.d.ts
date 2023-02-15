@@ -450,9 +450,9 @@ export namespace Components {
          */
         "debounceTime": number;
         /**
-          * If true tabs are disabled
+          * The size of the tab
          */
-        "disabled": boolean;
+        "size": TTabSize;
         /**
           * A string representing the id of the selected tab.
          */
@@ -1112,13 +1112,13 @@ declare namespace LocalJSX {
          */
         "debounceTime"?: number;
         /**
-          * If true tabs are disabled
-         */
-        "disabled"?: boolean;
-        /**
           * Handler to be called when the tab value changes
          */
         "onBqChange"?: (event: BqTabGroupCustomEvent<{ target: HTMLBqTabElement; value: string }>) => void;
+        /**
+          * The size of the tab
+         */
+        "size"?: TTabSize;
         /**
           * A string representing the id of the selected tab.
          */

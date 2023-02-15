@@ -1,5 +1,4 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { sleep } from '../../../shared/test-utils';
 
 describe('bq-tab-group', () => {
   it('should render', async () => {
@@ -30,26 +29,18 @@ describe('bq-tab-group', () => {
     expect(element.shadowRoot).not.toBeNull();
   });
 
-  it('should disable all tabs', async () => {
+  it('should change size of all tabs', async () => {
     const page = await newE2EPage();
     await page.setContent(`
-    <bq-tab-group value="1" disabled>
+    <bq-tab-group value="1" size="medium">
       <bq-tab tab-id="1">Tab 1</bq-tab>
       <bq-tab tab-id="2">Tab 2</bq-tab>
     </bq-tab-group>
     `);
 
-    const bqFocus = await page.spyOnEvent('bqFocus');
-    const bqChange = await page.spyOnEvent('bqChange');
-    const bqBlur = await page.spyOnEvent('bqBlur');
-
     const element = await page.find('bq-tab');
-    await element.click();
 
-    expect(bqFocus).toHaveReceivedEventTimes(0);
-    expect(bqChange).toHaveReceivedEventTimes(0);
-    expect(bqBlur).toHaveReceivedEventTimes(0);
-    expect(await element.getProperty('disabled')).toBe(true);
+    expect(await element.getProperty('size')).toBe('medium');
   });
 
   it('should emit bqChange on tab click', async () => {

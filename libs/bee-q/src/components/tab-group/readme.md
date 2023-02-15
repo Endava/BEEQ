@@ -7,11 +7,11 @@
 
 ## Properties
 
-| Property       | Attribute       | Description                                                             | Type      | Default     |
-| -------------- | --------------- | ----------------------------------------------------------------------- | --------- | ----------- |
-| `debounceTime` | `debounce-time` | A number representing the delay value applied to bqChange event handler | `number`  | `0`         |
-| `disabled`     | `disabled`      | If true tabs are disabled                                               | `boolean` | `false`     |
-| `value`        | `value`         | A string representing the id of the selected tab.                       | `string`  | `undefined` |
+| Property       | Attribute       | Description                                                             | Type                             | Default     |
+| -------------- | --------------- | ----------------------------------------------------------------------- | -------------------------------- | ----------- |
+| `debounceTime` | `debounce-time` | A number representing the delay value applied to bqChange event handler | `number`                         | `0`         |
+| `size`         | `size`          | The size of the tab                                                     | `"large" \| "medium" \| "small"` | `'small'`   |
+| `value`        | `value`         | A string representing the id of the selected tab.                       | `string`                         | `undefined` |
 
 
 ## Events
