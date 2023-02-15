@@ -114,12 +114,15 @@ describe('bq-tab', () => {
     await page.setContent(`
       <bq-tab id="1" size="small"><p>Tab text</p></bq-tab>
       <bq-tab id="2" size="medium"><p>Tab text</p></bq-tab>
+      <bq-tab id="3" size="large"><p>Tab text</p></bq-tab>
     `);
 
-    const smallStyle = await computedStyle(page, 'bq-tab[size="small"] >>> [part="base"]', ['gap', 'padding']);
-    const mediumStyle = await computedStyle(page, 'bq-tab[size="medium"] >>> [part="base"]', ['gap', 'padding']);
+    const smallStyle = await computedStyle(page, 'bq-tab[size="small"] >>> [part="base"]', ['padding']);
+    const mediumStyle = await computedStyle(page, 'bq-tab[size="medium"] >>> [part="base"]', ['padding']);
+    const largeStyle = await computedStyle(page, 'bq-tab[size="large"] >>> [part="base"]', ['padding']);
 
-    expect(smallStyle).toEqual({ gap: '4px', padding: '4px' });
-    expect(mediumStyle).toEqual({ gap: '8px', padding: '8px' });
+    expect(smallStyle).toEqual({ padding: '4px 16px' });
+    expect(mediumStyle).toEqual({ padding: '8px 20px' });
+    expect(largeStyle).toEqual({ padding: '12px 24px' });
   });
 });
