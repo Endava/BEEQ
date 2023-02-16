@@ -1,0 +1,47 @@
+{
+  "name": "bee-q-angular",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/bee-q-angular/src",
+  "prefix": "bee-q",
+  "implicitDependencies": ["bee-q"],
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "outputs": ["dist/bee-q-angular"],
+      "options": {
+        "project": "packages/bee-q-angular/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "packages/bee-q-angular/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "packages/bee-q-angular/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["packages/bee-q-angular/**/*.ts", "packages/bee-q-angular/**/*.html"]
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public",
+        "tag": "latest"
+      }
+    },
+    "publish-beta": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public",
+        "tag": "beta"
+      }
+    }
+  }
+}

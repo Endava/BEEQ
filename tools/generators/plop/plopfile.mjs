@@ -30,19 +30,19 @@ export default function (
     actions: [
       {
         type: 'add',
-        path: '../../../libs/bee-q/src/components/{{kebabCase name}}/bq-{{kebabCase name}}.tsx',
+        path: '../../../packages/bee-q/src/components/{{kebabCase name}}/bq-{{kebabCase name}}.tsx',
         templateFile: './component.hbs',
         skipIfExists: true,
       },
       {
         type: 'add',
-        path: '../../../libs/bee-q/src/components/{{kebabCase name}}/__tests__/bq-{{kebabCase name}}.e2e.ts',
+        path: '../../../packages/bee-q/src/components/{{kebabCase name}}/__tests__/bq-{{kebabCase name}}.e2e.ts',
         templateFile: './e2e.hbs',
         skipIfExists: true,
       },
       {
         type: 'add',
-        path: '../../../libs/bee-q/src/components/{{kebabCase name}}/scss/bq-{{kebabCase name}}.scss',
+        path: '../../../packages/bee-q/src/components/{{kebabCase name}}/scss/bq-{{kebabCase name}}.scss',
         templateFile: './scss.hbs',
         skipIfExists: true,
         skip: ({ styling }) => {
@@ -53,7 +53,7 @@ export default function (
       },
       {
         type: 'add',
-        path: '../../../libs/bee-q/src/components/{{kebabCase name}}/scss/bq-{{kebabCase name}}-variables.scss',
+        path: '../../../packages/bee-q/src/components/{{kebabCase name}}/scss/bq-{{kebabCase name}}-variables.scss',
         templateFile: './scss-variables.hbs',
         skipIfExists: true,
         skip: ({ stylingVariables }) => {
@@ -64,7 +64,7 @@ export default function (
       },
       {
         type: 'add',
-        path: '../../../libs/bee-q/src/components/{{kebabCase name}}/_storybook/bq-{{kebabCase name}}.mdx',
+        path: '../../../packages/bee-q/src/components/{{kebabCase name}}/_storybook/bq-{{kebabCase name}}.mdx',
         templateFile: './storybook-docs.hbs',
         skipIfExists: true,
         skip: ({ storybook }) => {
@@ -75,7 +75,7 @@ export default function (
       },
       {
         type: 'add',
-        path: '../../../libs/bee-q/src/components/{{kebabCase name}}/_storybook/bq-{{kebabCase name}}.stories.tsx',
+        path: '../../../packages/bee-q/src/components/{{kebabCase name}}/_storybook/bq-{{kebabCase name}}.stories.tsx',
         templateFile: './storybook.hbs',
         skipIfExists: true,
         skip: ({ storybook }) => {

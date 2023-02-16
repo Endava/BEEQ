@@ -1,4 +1,7 @@
 {
+  "extends": "nx/presets/npm.json",
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "npmScope": "bee-q",
   "affected": {
     "defaultBase": "main"
   },
@@ -13,6 +16,19 @@
     ".eslintrc.json": "*",
     ".stylelintrc.json": "*"
   },
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"]
+    }
+  },
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
+  },
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/nx-cloud",
@@ -23,30 +39,11 @@
           "generate-icons",
           "lint",
           "storybook-build",
-          "storybook-css-build",
+          "storybook-build-css",
           "stylelint",
           "test"
         ]
       }
-    }
-  },
-  "targetDependencies": {
-    "build": [
-      {
-        "target": "build",
-        "projects": "dependencies"
-      }
-    ],
-    "version": [
-      {
-        "target": "version",
-        "projects": "dependencies"
-      }
-    ]
-  },
-  "targetDefaults": {
-    "build": {
-      "dependsOn": ["^build"]
     }
   },
   "generators": {

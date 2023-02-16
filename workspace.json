@@ -1,10 +1,10 @@
 {
   "version": 2,
   "projects": {
-    "bee-q": "libs/bee-q",
-    "bee-q-angular": "libs/bee-q-angular",
-    "bee-q-react": "libs/bee-q-react",
-    "bee-q-icons": "libs/bee-q-icons",
+    "bee-q": "packages/bee-q",
+    "bee-q-angular": "packages/bee-q-angular",
+    "bee-q-icons": "packages/bee-q-icons",
+    "bee-q-react": "packages/bee-q-react",
     "workspace": {
       "root": ".",
       "targets": {
