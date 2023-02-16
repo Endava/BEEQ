@@ -1,0 +1,7 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "resolveJsonModule": true
+  },
+  "include": ["preview.ts", "**/*.stories.js", "**/*.stories.ts", "**/*.stories.jsx", "**/*.stories.tsx"]
+}

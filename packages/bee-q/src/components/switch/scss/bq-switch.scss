@@ -1,0 +1,63 @@
+/* -------------------------------------------------------------------------- */
+/*                                Switch styles                */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-switch-variables';
+
+:host {
+  @apply inline-block;
+}
+
+:host(.full-width) {
+  @apply w-full;
+}
+
+.bq-switch {
+  @apply flex cursor-pointer select-none items-center rounded-s p-2 transition-colors duration-300;
+  justify-content: var(--bq-switch--justify-content);
+
+  // Display background on hover (if enabled)
+  &.has-background:not(.is-disabled):hover {
+    @apply bg-ui-secondary-hover;
+  }
+
+  &.is-disabled {
+    @apply cursor-not-allowed;
+  }
+}
+
+.bq-switch--input:checked:disabled {
+  ~ .bq-switch--control {
+    @apply bg-ui-primary-disabled;
+  }
+}
+
+.bq-switch--input:not(:checked):disabled {
+  ~ .bq-switch--control {
+    @apply bg-ui-secondary-disabled;
+  }
+}
+
+.bq-switch--input:not(:disabled):focus-visible {
+  ~ .bq-switch--control {
+    @apply ring-4 ring-system-alert;
+  }
+}
+
+.bq-switch--input:checked {
+  ~ .bq-switch--control {
+    @apply bg-ui-primary;
+
+    .bq-switch--control__dot {
+      @apply translate-x-[calc(var(--switch--width)_-_var(--switch--dot-size)_-_8px)];
+    }
+  }
+}
+
+.bq-switch--control__icon {
+  --bq-icon--size: var(--switch--dot-size) !important;
+
+  &::part(base) {
+    @apply flex;
+  }
+}

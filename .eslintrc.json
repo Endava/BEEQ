@@ -1,4 +1,11 @@
 {
   "root": true,
-  "plugins": ["@nrwl/nx"]
+  "plugins": ["@nrwl/nx"],
+  "overrides": [
+    {
+      "files": "*.json",
+      "parser": "jsonc-eslint-parser",
+      "rules": {}
+    }
+  ]
 }
