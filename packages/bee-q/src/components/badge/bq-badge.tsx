@@ -65,7 +65,7 @@ export class BqBadge {
     this.handleSizePropChange();
   }
 
-  disconnectedcallback() {
+  disconnectedCallback() {
     this.observer?.disconnect();
   }
 
