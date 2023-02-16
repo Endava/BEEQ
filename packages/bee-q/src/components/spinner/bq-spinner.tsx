@@ -86,7 +86,7 @@ export class BqSpinner {
     this.setIconSize();
   }
 
-  disconnectedcallback() {
+  disconnectedCallback() {
     this.observer?.disconnect();
   }
 
