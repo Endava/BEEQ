@@ -26,20 +26,12 @@ npm install @bee-q/core@latest @bee-q/angular@latest --save
 
 ### Call `defineCustomElements`
 
-The Bee-Q core package includes the main function that is used to load the components in the collection and makes Angular aware of the custom tags of the web components. That function is called defineCustomElements()and it needs to be called once during the bootstrapping of your application. One convenient place to do this is in the `main.ts` as such:
+The Bee-Q core package includes the main function that is used to load the components in the collection and makes Angular aware of the custom tags of the web components. That function is called `defineCustomElements()` and it is handled by the `@bee-q/angular` wrapper itself. Yet, **if you need to support older versions of Microsoft Edge and Internet Explorer, you can apply the polyfills as follow**:
 
 ```ts
-import { defineCustomElements } from '@uefa/design-system/dist/loader';
+// main.ts
 
-...
-
-defineCustomElements(window);
-```
-
-If you need to support older versions of Microsoft Edge and Internet Explorer, you can apply the polyfills as follow:
-
-```ts
-import { applyPolyfills, defineCustomElements } from '@uefa/design-system/dist/loader';
+import { applyPolyfills, defineCustomElements } from '@bee-q/core/dist/loader';
 
 ...
 
@@ -52,6 +44,7 @@ applyPolyfills().then(() => {
 ### Add Bee-Q styles and assets
 
 > ❗️The icons SVG are shipped in a separate folder. Projects will need to include that folder in their build and try to make it in a certain way that it respond to: http://<domain>/svg
+
 ```json
 /** angular.json */
 {
@@ -115,7 +108,11 @@ import { AppComponent } from './app.component';
 export class AppModule {}
 ```
 
-> ❗️To enable two way binding and the use of [ngModel] within Bee-Q form components, you will need to add the Value Accessors in your module declarations, along with `@angular/forms`:
+### NgModel and two-way data binding
+
+To enable two-way binding and the use of [ngModel] within Bee-Q form components, you will need to add the Value Accessors in your module declarations, along with `@angular/forms`.
+
+> ❗️❗️ *Please notice that* **you might need to disable** `aot` *for enabling two-way data binding**. Details: https://github.com/ionic-team/stencil-ds-output-targets/issues/317*
 
 ```ts
 import { NgModule } from '@angular/core';
@@ -142,9 +139,19 @@ export class AppModule {}
 
 ```html
 <!-- Angular component template -->
+
 <bq-checkbox name="userTermsConditions" [(ngModel)]="termsConditions" (bqChange)="onTermsConditionsChange()">
   Yes, I agree with the Terms & Conditions
 </bq-checkbox>
+
+<bq-slider
+  min="0"
+  max="100"
+  type="range"
+  debounce-time="250"
+  [(ngModel)]="sliderValue"
+  (bqChange)="onSliderChange()"
+></bq-slider>
 ```
 
 ```ts
@@ -158,9 +165,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   termsConditions = true;
+  sliderValue = [20, 75];
 
   onTermsConditionsChange() {
-    console.log('termsConditions', this.termsConditions);
+    console.log('The terms and conditions value changed!', this.termsConditions);
+  }
+
+  onSliderChange() {
+    console.log('Slider value changed!', this.sliderValue);
   }
 }
 ```
