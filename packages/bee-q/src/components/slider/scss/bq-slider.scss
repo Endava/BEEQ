@@ -1,7 +1,11 @@
 @import './bq-slider-variables';
 
+:host {
+  @apply block;
+}
+
 .bq-slider {
-  @apply flex items-center;
+  @apply flex h-[calc(var(--bq-slider--thumb-size)_+_var(--bq-slider--size))] w-full items-center;
 
   .bq-slider__container {
     @apply relative h-[var(--bq-slider--size)] flex-grow rounded-[var(--bq-slider--border-radius)] bg-[var(--bq-slider--trackarea-color)];

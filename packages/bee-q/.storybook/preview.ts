@@ -32,10 +32,3 @@ export const parameters = {
     },
   },
 };
-
-const withThemeProvider = (storyFn, context) => {
-  const cssClasses = { centered: context.parameters.layout === 'centered' };
-
-  return html` <div class="bq-root ${classMap(cssClasses)}">${storyFn()}</div> `;
-};
-export const decorators = [withThemeProvider];

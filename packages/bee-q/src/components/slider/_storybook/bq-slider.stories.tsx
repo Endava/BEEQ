@@ -37,36 +37,32 @@ export default {
   },
 };
 
-const Template = (args) =>
-  html` <style>
-      .container {
-        width: 50%;
-      }
-    </style>
-    <div class="container">
-      <bq-slider
-        ?disabled=${args.disabled}
-        debounce-time=${args['debounce-time']}
-        gap=${args.gap}
-        .min=${args.min}
-        .max=${args.max}
-        .step=${args.step}
-        type=${args.type}
-        .value=${args.value}
-        ?value-indicator=${args['value-indicator']}
-        @bqBlur=${args.bqBlur}
-        @bqChange=${args.bqChange}
-        @bqFocus=${args.bqFocus}
-      ></bq-slider>
-    </div>`;
+const Template = (args) => html`
+  <div class="h-auto w-[450px]">
+    <bq-slider
+      ?disabled=${args.disabled}
+      debounce-time=${args['debounce-time']}
+      gap=${args.gap}
+      .min=${args.min}
+      .max=${args.max}
+      .step=${args.step}
+      type=${args.type}
+      .value=${args.value}
+      ?value-indicator=${args['value-indicator']}
+      @bqBlur=${args.bqBlur}
+      @bqChange=${args.bqChange}
+      @bqFocus=${args.bqFocus}
+    ></bq-slider>
+  </div>
+`;
 
-export const Single = (args) => Template(args);
+export const Single = Template.bind({});
 Single.args = {
   type: 'single',
   value: 30,
 };
 
-export const Range = (args) => Template(args);
+export const Range = Template.bind({});
 Range.args = {
   type: 'range',
   value: [30, 70],

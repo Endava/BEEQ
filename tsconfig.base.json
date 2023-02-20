@@ -19,11 +19,11 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "paths": {
-      "@bee-q/angular": ["packages/bee-q-angular/src/index.ts"],
+      "@bee-q/angular": ["dist/bee-q-angular"],
       "@bee-q/core": ["dist/bee-q"],
       "@bee-q/core/*": ["dist/bee-q/*"],
       "@bee-q/icons": ["packages/bee-q-icons/src/index.ts"],
-      "@bee-q/react": ["packages/bee-q-react/src/index.ts"]
+      "@bee-q/react": ["dist/bee-q-react"]
     }
   },
   "exclude": ["node_modules", "tmp"],
