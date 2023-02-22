@@ -57,7 +57,7 @@
     "@commitlint/cli": "17.4.4",
     "@commitlint/config-angular": "17.4.4",
     "@commitlint/config-conventional": "17.4.4",
-    "@jscutlery/semver": "2.29.3",
+    "@jscutlery/semver": "2.30.1",
     "@nrwl/angular": "14.8.6",
     "@nrwl/cli": "14.8.6",
     "@nrwl/devkit": "14.8.6",
