@@ -149,7 +149,8 @@
       "executor": "nx-stylelint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/bee-q/**/*.css", "packages/bee-q/**/*.scss"]
+        "lintFilePatterns": ["packages/bee-q/**/*.css", "packages/bee-q/**/*.scss"],
+        "configFile": "packages/bee-q/.stylelintrc.json"
       }
     }
   }
