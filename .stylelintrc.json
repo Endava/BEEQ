@@ -1,14 +1,14 @@
 {
-  "ignoreFiles": ["**/*"],
+  "ignoreFiles": ["**/*.{js,json,ts,tsx}"],
   "overrides": [
     {
       "files": ["**/*.css"],
-      "extends": ["stylelint-config-standard", "stylelint-config-prettier"],
+      "extends": ["stylelint-config-standard"],
       "rules": {}
     },
     {
       "files": ["**/*.scss"],
-      "extends": ["stylelint-config-sass-guidelines", "stylelint-config-prettier"],
+      "extends": ["stylelint-config-sass-guidelines"],
       "rules": {}
     }
   ],
