@@ -3,11 +3,11 @@
 .github/ @dgonzalezr
 
 # Any change related to the NPM dependencies
-# will require approval from @dgonzalezr.
+# will require approval from @dgonzalezr @endv-bogdanb.
 
-package.json @dgonzalezr
-package-lock.json @dgonzalezr
+package.json @dgonzalezr @endv-bogdanb
+package-lock.json @dgonzalezr @endv-bogdanb
 
-# Any change inside the `/libs` directory
-# will require approval from @dgonzalezr.
-/libs @dgonzalezr
+# Any change inside the `/packages` directory
+# will require approval from @dgonzalezr @endv-bogdanb.
+/packages @dgonzalezr @endv-bogdanb
