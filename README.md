@@ -73,13 +73,13 @@ Volta is not mandatory, you can still use any Node/NPM setup that fits you most,
 
 The Bee-Q components are published to the NPM package manager registry. You can use the `@bee-q/core` or any of the framework-specific wrappers (`@bee-q/angular`, `@bee-q/react`) depending on the technology stack of your project. Make sure the follow the usage instructions for each package:
 
-- 📘 [How to use the `@bee-q/core` package](libs/bee-q/README.md)
-- 📗 [How to use the `@bee-q/angular` package](libs/bee-q-angular/README.md)
-- 📕 [How to use the `@bee-q/react` package](libs/bee-q-react/README.md)
+- 📘 [How to use the `@bee-q/core` package](packages/bee-q/README.md)
+- 📗 [How to use the `@bee-q/angular` package](packages/bee-q-angular/README.md)
+- 📕 [How to use the `@bee-q/react` package](packages/bee-q-react/README.md)
 
 > _More [output targets](https://stenciljs.com/docs/overview) integration will be added later (e.g. Vue, Svelte)_
 
-Feel free to [check our Storybook](https://develop--631f6f60ace2c23753595513.chromatic.com/) to see all the Bee-Q components released. There you can find all the component's APIs (properties, events, and methods exposed) along with the variations that each component allows.
+Feel free to [check our Storybook](https://storybook.bee-q.design/) to see all the Bee-Q components released. There you can find all the component's APIs (properties, events, and methods exposed) along with the variations that each component allows.
 
 ## Running the project 🏃‍
 
