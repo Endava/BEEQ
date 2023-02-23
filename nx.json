@@ -3,7 +3,7 @@
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "npmScope": "bee-q",
   "affected": {
-    "defaultBase": "main"
+    "defaultBase": "develop"
   },
   "cli": {
     "defaultCollection": "@nxext/stencil"
