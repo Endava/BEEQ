@@ -83,10 +83,10 @@ Feel free to [check our Storybook](https://storybook.bee-q.design/) to see all t
 
 ## Running the project 🏃‍
 
-To develop/extend components on the Bee-Q Design System, clone this repo to a new directory:
+To develop/extend components on the Bee-Q Design System, please fork this repo in GitHub and clone it locally to a new directory:
 
 ```bash
-git clone git@github.com:dgonzalezr/bee-q.git Bee-Q-Design-System
+git clone https://github.com/<YOUR_GITHUB_USERNAME>/bee-q.git Bee-Q-Design-System
 git checkout develop
 cd Bee-Q-Design-System
 ```
@@ -132,7 +132,7 @@ nx affected
 
 ### Generate component
 
-Bee-q comes with a component generator that saves you time when creating the skeleton for a new component. In order to use the generator, you just need to run the following command and follow the instructions in your prompt CLI:
+Bee-q comes with a component generator that saves you time when creating the skeleton for a new component. To use the generator, you just need to run the following command and follow the instructions in your prompt CLI:
 
 ```bash
 npm run g
