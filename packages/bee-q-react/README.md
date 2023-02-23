@@ -22,6 +22,8 @@ if `@bee-q/core` package is installed you should update both
 npm install @bee-q/core@latest @bee-q/react@latest --save
 ```
 
+> ❗️The icons SVG are shipped in a separate folder. Projects will need to include that folder in their build and try to make it in a certain way that it respond to: http://<domain>/svg
+
 ## Usage
 
 ```jsx
