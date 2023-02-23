@@ -73,6 +73,7 @@ jobs:
         run: npx nx-cloud stop-all-agents
 
       - name: 📚 Publish to Chromatic
+        if: github.ref_name == 'develop'
         uses: chromaui/action@v1
         env:
           CI: true
