@@ -1,5 +1,6 @@
+import autoprefixer from 'autoprefixer';
 import { resolve } from 'path';
-import tailwind, { tailwindHMR } from 'stencil-tailwind-plugin';
+import tailwind, { tailwindGlobal, tailwindHMR } from 'stencil-tailwind-plugin';
 import tailwindcss from 'tailwindcss';
 
 import { Config } from '@stencil/core';
@@ -9,6 +10,15 @@ import { sass } from '@stencil/sass';
 
 import { angularValueAccessorBindings, generateCustomElementsJson } from './src/tools';
 import tailwindConf from '../../tailwind.config.js';
+
+const tailwindOpts = {
+  postcss: {
+    plugins: [tailwindcss(), autoprefixer()],
+  },
+  stripComments: true,
+  tailwindCssPath: resolve(__dirname, 'src/global/styles/tailwind.pcss').replace(/\\/g, '/'),
+  tailwindConf: tailwindConf,
+};
 
 export const config: Config = {
   namespace: 'bee-q',
@@ -29,14 +39,8 @@ export const config: Config = {
       sourceMapEmbed: true,
       sourceMapContents: true,
     }),
-    tailwind({
-      stripComments: true,
-      tailwindCssPath: resolve(__dirname, 'src/global/styles/tailwind.pcss').replace(/\\/g, '/'),
-      tailwindConf: tailwindConf,
-      postcss: {
-        plugins: [tailwindcss()],
-      },
-    }),
+    tailwindGlobal(tailwindOpts),
+    tailwind(tailwindOpts),
     tailwindHMR({
       tailwindConf: tailwindConf,
     }),
