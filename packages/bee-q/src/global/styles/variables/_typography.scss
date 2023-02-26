@@ -1,6 +1,7 @@
 :root {
   // font families
   --bq-font-family--inter: 'Inter', sans-serif;
+  --bq-font-family--outfit: 'Outfit', sans-serif;
 
   // font sizes
   --bq-font-size--xs: 12px;
@@ -15,11 +16,12 @@
   --bq-font-size--xxl5: 64px;
 
   // font weights
+  --bq-font-weight--thin: 100;
   --bq-font-weight--light: 300;
   --bq-font-weight--regular: 400;
   --bq-font-weight--medium: 500;
+  --bq-font-weight--semibold: 600;
   --bq-font-weight--bold: 700;
-  --bq-font-weight--extrabold: 800;
 
   // line heights
   --bq-font-line-height--regular: 1.2;

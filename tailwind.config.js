@@ -79,6 +79,7 @@ module.exports = {
     },
     fontFamily: {
       inter: 'var(--bq-font-family--inter)',
+      outfit: 'var(--bq-font-family--outfit)',
     },
     fontSize: {
       xs: 'var(--bq-font-size--xs)',
@@ -93,11 +94,12 @@ module.exports = {
       xxl5: 'var(--bq-font-size--xxl5)',
     },
     fontWeight: {
+      thin: 'var(--bq-font-weight--thin)',
       light: 'var(--bq-font-weight--light)',
       regular: 'var(--bq-font-weight--regular)',
       medium: 'var(--bq-font-weight--medium)',
+      semibold: 'var(--bq-font-weight--semibold)',
       bold: 'var(--bq-font-weight--bold)',
-      extrabold: 'var(--bq-font-weight--extrabold)',
     },
     lineHeight: {
       regular: 'var(--bq-font-line-height--regular)',
