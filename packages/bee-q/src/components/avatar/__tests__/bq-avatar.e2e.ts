@@ -31,9 +31,11 @@ describe('bq-avatar', () => {
 
   it('should render image', async () => {
     const page = await newE2EPage();
-    await page.setContent(
-      '<bq-avatar image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"></bq-avatar>',
-    );
+    await page.setContent(`
+      <bq-avatar
+        image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
+      ></bq-avatar>
+    `);
 
     const element = await page.find('bq-avatar >>> [part="img"]');
 
@@ -42,15 +44,13 @@ describe('bq-avatar', () => {
 
   it('should respect design style', async () => {
     const page = await newE2EPage();
-    await page.setContent(
-      `
+    await page.setContent(`
       <bq-avatar initials="JS" shape="circle" size="xsmall"></bq-avatar>
       <bq-avatar initials="JS" shape="square" size="xsmall"></bq-avatar>
       <bq-avatar initials="JS" shape="square" size="small"></bq-avatar>
       <bq-avatar initials="JS" shape="square" size="medium"></bq-avatar>
       <bq-avatar initials="JS" shape="square" size="large"></bq-avatar>
-      `,
-    );
+    `);
 
     const styleProps = ['width', 'borderRadius', 'height'] as const;
 

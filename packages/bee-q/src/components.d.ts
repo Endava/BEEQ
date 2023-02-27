@@ -33,6 +33,10 @@ export namespace Components {
      */
     interface BqAvatar {
         /**
+          * Alternate text for the avatar image if the image cannot be displayed
+         */
+        "altText": string;
+        /**
           * The image source to load on the avatar (this can be also a base64 encoded image)
          */
         "image": string;
@@ -576,6 +580,10 @@ declare namespace LocalJSX {
      * An avatar represents an object made of different pieces of information, in a way that is understandable at a glance.
      */
     interface BqAvatar {
+        /**
+          * Alternate text for the avatar image if the image cannot be displayed
+         */
+        "altText"?: string;
         /**
           * The image source to load on the avatar (this can be also a base64 encoded image)
          */
