@@ -244,7 +244,7 @@ export class BqCheckbox {
             )}
           </span>
         </div>
-        <span class="bq-checkbox__label ml-1 font-inter font-medium leading-large text-text-primary" part="label">
+        <span class="bq-checkbox__label ml-1 font-medium leading-large text-text-primary" part="label">
           <slot />
         </span>
       </label>
