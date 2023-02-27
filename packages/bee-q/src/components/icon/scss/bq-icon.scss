@@ -8,10 +8,10 @@
   @apply inline-block;
 }
 
-.bq-icon {
-  @apply h-[var(--bq-icon--size)] w-[var(--bq-icon--size)] text-[color:var(--bq-icon--color)];
-}
-
+/**
+ * This class is added on packages/bee-q/src/components/icon/helper/request.ts
+ * See lines 42 and 58 for details.
+ */
 .bq-icon__svg {
   @apply fill-current;
 }
