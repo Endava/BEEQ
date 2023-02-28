@@ -106,10 +106,12 @@ export class BqSpinner {
   // =======================================================
 
   private handleSlotChange = () => {
+    if (!this.slotElem) return;
+
     this.hasSlot = hasSlotContent(this.slotElem);
     if (!this.hasSlot) return;
 
-    const slot = this.slotElem?.querySelector('slot') ?? null;
+    const slot = this.slotElem.querySelector('slot') ?? null;
     if (isNil(slot)) return;
 
     this.slotContentLength = getTextContent(slot, { recurse: true }).length;
@@ -165,7 +167,7 @@ export class BqSpinner {
       >
         {!this.hasIconSlot && (
           <div
-            class="bq-spinner--loader relative text-[var(--bq-spinner--color)]"
+            class={`bq-spinner--loader ${this.size} relative text-[var(--bq-spinner--color)]`}
             aria-label="Loading..."
             role="status"
           >
@@ -195,7 +197,7 @@ export class BqSpinner {
         </span>
         {this.isTextDisplayed && (
           <span
-            class="bq-spinner--text flex items-center font-inter font-medium text-text-primary"
+            class="bq-spinner--text text-m font-medium leading-large text-text-primary"
             part="text"
             ref={(spanElem) => (this.slotElem = spanElem)}
           >
