@@ -16,7 +16,15 @@ jobs:
       - name: 🛠 Setup Node
         uses: volta-cli/action@v3
 
+      - name: 💫 Cache dependencies
+        id: cache-node-modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
+
       - name: 📦 Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: 🕵️‍♀️ Lint the Pull Request name

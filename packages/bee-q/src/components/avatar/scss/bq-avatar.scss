@@ -8,10 +8,6 @@
   @apply inline-block;
 }
 
-.bq-avatar {
-  @apply relative overflow-hidden;
-}
-
 .size {
   &--xsmall {
     @apply h-[var(--bq-avatar--size-xsmall)] w-[var(--bq-avatar--size-xsmall)] text-xs;
@@ -28,12 +24,4 @@
   &--large {
     @apply h-[var(--bq-avatar--size-large)] w-[var(--bq-avatar--size-large)] text-m;
   }
-}
-
-.bq-avatar__image {
-  @apply absolute top-0 left-0 h-full w-full object-cover;
-}
-
-.bq-avatar__initials {
-  @apply absolute top-0 left-0 inline-flex h-full w-full items-center justify-center font-inter font-bold;
 }
