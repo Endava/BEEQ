@@ -58,7 +58,7 @@ describe('bq-status', () => {
     const page = await newE2EPage();
     await page.setContent('<bq-status status="danger">Neutral status</bq-status>');
 
-    const style = await computedStyle(page, 'bq-status');
+    const style = await computedStyle(page, 'bq-status >>> [part="base"]');
 
     expect(style.height).toEqual('20px');
   });

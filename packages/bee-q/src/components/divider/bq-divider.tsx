@@ -160,29 +160,27 @@ export class BqDivider {
       ...(this.strokeBasis && { '--bq-divider--stroke-basis': `${this.strokeBasis}px` }),
     };
 
-    const baseClasses = {
-      'bq-divider': true,
-      [`bq-divider--${this.orientation}`]: true,
-      ['bq-divider--no-title']: !this.hasTitle,
-      [`bq-divider--title--${this.titleAlignment}`]: true,
-    };
-
     const strokeAttributes = this.getStrokeAttributes();
 
     return (
       <Host style={styles}>
         <div
-          class={baseClasses}
+          class={{
+            'bq-divider': true,
+            [`bq-divider--${this.orientation}`]: true,
+            [`bq-divider--title__${this.titleAlignment}`]: true,
+            'gap-0': !this.hasTitle,
+          }}
           part="base"
           ref={(div) => (this.titleElem = div)}
           role="separator"
           aria-orientation={this.orientation}
         >
-          <svg class="bq-stroke bq-divider--stroke--start" part="dash-start">
+          <svg class="bq-divider--stroke start" part="dash-start">
             <line {...strokeAttributes} part="dash-start-line" />
           </svg>
           <slot onSlotchange={this.handleSlotChange} />
-          <svg class="bq-stroke bq-divider--stroke--end" part="dash-end">
+          <svg class={{ 'bq-divider--stroke end': true, hidden: !this.hasTitle }} part="dash-end">
             <line {...strokeAttributes} part="dash-end-line" />
           </svg>
         </div>

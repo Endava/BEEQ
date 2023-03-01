@@ -8,8 +8,8 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      # Check for updates every weekday
-      interval: 'daily'
+      # Check for updates every 1 week
+      interval: 'weekly'
     open-pull-requests-limit: 50
     # Disable rebasing for pull requests, as having several open pull requests
     # all get simultaneously rebased and this can be noisy from a notification standpoint

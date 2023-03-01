@@ -10,7 +10,7 @@
 
 .bq-tooltip__panel {
   @apply absolute box-border w-[var(--bq-tooltip--width)] max-w-[var(--bq-tooltip--max-width)] px-[var(--bq-tooltip--paddingX)] py-[var(--bq-tooltip--paddingY)];
-  @apply pointer-events-none rounded-[var(--bq-tooltip--rounded-corners)] bg-[var(--bq-tooltip--background-color)] font-inter text-[length:var(--bq-tooltip--font-size)] leading-large text-[color:var(--bq-tooltip--text-color)];
+  @apply pointer-events-none rounded-[var(--bq-tooltip--rounded-corners)] bg-[var(--bq-tooltip--background-color)] text-[length:var(--bq-tooltip--font-size)] leading-large text-[color:var(--bq-tooltip--text-color)];
 }
 
 .bq-tooltip__arrow {

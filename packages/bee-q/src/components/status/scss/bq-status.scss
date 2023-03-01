@@ -1,9 +1,5 @@
 @import './bq-status-variables';
 
-:host {
-  @apply inline-block;
-}
-
 .bq-status__circle {
   @apply h-[var(--bq-status-circle--size)] w-[var(--bq-status-circle--size)];
 
@@ -33,5 +29,5 @@
 }
 
 .bq-status__text ::slotted(*) {
-  @apply m-0 p-0 font-inter text-s font-medium leading-regular text-text-primary;
+  @apply m-0 p-0 text-s font-medium leading-regular text-text-primary;
 }
