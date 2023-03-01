@@ -78,7 +78,6 @@ module.exports = {
       },
     },
     fontFamily: {
-      inter: 'var(--bq-font-family--inter)',
       outfit: 'var(--bq-font-family--outfit)',
     },
     fontSize: {
