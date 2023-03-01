@@ -32,14 +32,17 @@ export class BqAvatar {
   // Public Property API
   // ========================
 
+  /** Alternate text for the avatar image if the image cannot be displayed */
+  @Prop({ reflect: true }) altText: string;
+
   /** The image source to load on the avatar (this can be also a base64 encoded image) */
-  @Prop() image: string;
+  @Prop({ reflect: true }) image: string;
 
   /** A text to use for describing the avatar on assistive devices */
   @Prop({ reflect: true }) label: string;
 
   /** The text to display on avatar */
-  @Prop() initials: string;
+  @Prop({ reflect: true }) initials: string;
 
   /** The shape of the avatar */
   @Prop({ reflect: true }) shape: TAvatarShape = 'circle';
@@ -102,7 +105,7 @@ export class BqAvatar {
     return (
       <div
         class={{
-          'bq-avatar bg-ui-secondary': true,
+          'relative overflow-hidden bg-ui-secondary': true,
           [`size--${this.size}`]: true,
           'rounded-full': this.shape === 'circle',
           'rounded-xs': this.shape === 'square' && this.size === 'xsmall',
@@ -114,12 +117,21 @@ export class BqAvatar {
         part="base"
       >
         {this.initials && (
-          <span class="bq-avatar__initials" part="text">
+          <span
+            class="absolute top-0 left-0 inline-flex h-full w-full items-center justify-center font-bold"
+            part="text"
+          >
             {this.initials}
           </span>
         )}
         {this.image && !this.hasError && (
-          <img class="bq-avatar__image" alt="" part="img" src={this.image} onError={this.onImageError} />
+          <img
+            class="absolute top-0 left-0 h-full w-full object-cover"
+            alt={!!this.altText ? this.altText : undefined}
+            src={this.image}
+            onError={this.onImageError}
+            part="img"
+          />
         )}
       </div>
     );

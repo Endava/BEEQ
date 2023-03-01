@@ -13,6 +13,7 @@ An avatar represents an object made of different pieces of information, in a way
 
 | Property   | Attribute  | Description                                                                      | Type                                         | Default     |
 | ---------- | ---------- | -------------------------------------------------------------------------------- | -------------------------------------------- | ----------- |
+| `altText`  | `alt-text` | Alternate text for the avatar image if the image cannot be displayed             | `string`                                     | `undefined` |
 | `image`    | `image`    | The image source to load on the avatar (this can be also a base64 encoded image) | `string`                                     | `undefined` |
 | `initials` | `initials` | The text to display on avatar                                                    | `string`                                     | `undefined` |
 | `label`    | `label`    | A text to use for describing the avatar on assistive devices                     | `string`                                     | `undefined` |

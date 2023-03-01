@@ -81,24 +81,25 @@ jobs:
         with:
           timeout_minutes: 5
           max_attempts: 3
-          retry_on: error
-          command: npx nx affected --target=test --ci --code-coverage --exclude=workspace --output-style=stream-without-prefixes -- --runInBand
+          retry_on: any
+          command: npx nx affected --target=test --exclude=workspace --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
 
       - name: ⏳ Build
         uses: nick-fields/retry@v2
         with:
           timeout_minutes: 5
           max_attempts: 3
-          retry_on: error
+          retry_on: any
           command: npm run build
 
       - name: 🧪 Run E2E Tests (only affected)
         uses: nick-fields/retry@v2
         with:
-          timeout_minutes: 10
+          command: npx nx affected --target=e2e --exclude=workspace --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
           max_attempts: 3
-          retry_on: error
-          command: npx nx affected --target=e2e --ci --code-coverage --exclude=workspace --output-style=stream-without-prefixes -- --runInBand
+          on_retry_command: npm run build
+          retry_on: any
+          timeout_minutes: 10
 
       - name: 📴 Stop NX Cloud Agent
         run: npx nx-cloud stop-all-agents

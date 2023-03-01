@@ -48,9 +48,9 @@ const Template = (args) => {
       @bqBlur=${args.bqBlur}
     >
       <span slot="label">${args.label}</span>
-      <bq-radio value="option1"> option 1 </bq-radio>
-      <bq-radio value="option2"> option 2 </bq-radio>
-      <bq-radio value="option3"> option 3 </bq-radio>
+      <bq-radio value="option1"> Radio option 1 </bq-radio>
+      <bq-radio value="option2"> Radio option 2 </bq-radio>
+      <bq-radio value="option3"> Radio option 3 </bq-radio>
     </bq-radio-group>
   `;
 };
@@ -72,9 +72,9 @@ export const Disabled = (args) => {
         @bqBlur=${args.bqBlur}
       >
         <span slot="label">${args.label}</span>
-        <bq-radio value="option1"> option 1 </bq-radio>
-        <bq-radio value="option2"> option 2 </bq-radio>
-        <bq-radio value="option3"> option 3 </bq-radio>
+        <bq-radio value="option1"> Radio option 1 </bq-radio>
+        <bq-radio value="option2"> Radio option 2 </bq-radio>
+        <bq-radio value="option3"> Radio option 3 </bq-radio>
       </bq-radio-group>
       <bq-radio-group
         .name=${args.name + '1'}
@@ -87,9 +87,9 @@ export const Disabled = (args) => {
         @bqBlur=${args.bqBlur}
       >
         <span slot="label">${args.label}</span>
-        <bq-radio value="option1"> option 1 </bq-radio>
-        <bq-radio value="option2" disabled> option 2 </bq-radio>
-        <bq-radio value="option3"> option 3 </bq-radio>
+        <bq-radio value="option1"> Radio option 1 </bq-radio>
+        <bq-radio value="option2" disabled> Radio option 2 </bq-radio>
+        <bq-radio value="option3"> Radio option 3 </bq-radio>
       </bq-radio-group>
     </div>
   `;
