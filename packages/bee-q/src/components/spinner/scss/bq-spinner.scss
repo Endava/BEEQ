@@ -1,7 +1,6 @@
 /* -------------------------------------------------------------------------- */
-/*                                Spinner styles                */
+/*                               Spinner styles                               */
 /* -------------------------------------------------------------------------- */
-
 @import './bq-spinner-variables';
 
 :host {
@@ -10,103 +9,97 @@
 
 .bq-spinner {
   @apply flex;
+}
 
-  &.large {
-    .bq-spinner--loader {
-      @apply h-[var(--bq-spinner--size-large)] w-[var(--bq-spinner--size-large)];
-    }
+/* -------------------------------------------------------------------------- */
+/*                             Spinner loader size                            */
+/* -------------------------------------------------------------------------- */
 
-    .bq-spinner--text {
-      @apply text-[length:var(--bq-spinner--large-text-fontSize)] leading-[var(--bq-spinner--text-lineHeight)];
-    }
+.bq-spinner--loader.large {
+  @apply h-[var(--bq-spinner--size-large)] w-[var(--bq-spinner--size-large)];
+}
+
+.bq-spinner--loader.medium {
+  @apply h-[var(--bq-spinner--size-medium)] w-[var(--bq-spinner--size-medium)];
+}
+
+.bq-spinner--loader.small {
+  @apply h-[var(--bq-spinner--size-small)] w-[var(--bq-spinner--size-small)];
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                Text position                               */
+/* -------------------------------------------------------------------------- */
+
+.text-left,
+.text-right {
+  @apply flex-row items-center;
+
+  &.has-text {
+    @apply gap-x-4;
+  }
+}
+
+.text-left {
+  .bq-spinner--loader,
+  .bq-spinner--icon {
+    @apply order-2;
   }
 
-  &.medium {
-    .bq-spinner--loader {
-      @apply h-[var(--bq-spinner--size-medium)] w-[var(--bq-spinner--size-medium)];
-    }
+  .bq-spinner--text {
+    @apply order-1;
+  }
+}
 
-    .bq-spinner--text {
-      @apply text-[length:var(--bq-spinner--medium-text-fontSize)] leading-[var(--bq-spinner--text-lineHeight)];
-    }
+.text-right {
+  .bq-spinner--loader,
+  .bq-spinner--icon {
+    @apply order-1;
   }
 
-  &.small {
-    .bq-spinner--loader {
-      @apply h-[var(--bq-spinner--size-small)] w-[var(--bq-spinner--size-small)];
-    }
+  .bq-spinner--text {
+    @apply order-2;
+  }
+}
 
-    .bq-spinner--text {
-      @apply text-[length:var(--bq-spinner--small-text-fontSize)] leading-[var(--bq-spinner--text-lineHeight)];
-    }
+.text-above,
+.text-bellow {
+  @apply flex-col items-center;
+
+  &.has-text {
+    @apply gap-y-4;
+  }
+}
+
+.text-above {
+  .bq-spinner--loader,
+  .bq-spinner--icon {
+    @apply order-2;
   }
 
-  &.text-left,
-  &.text-right {
-    @apply flex-row items-center;
+  .bq-spinner--text {
+    @apply order-1;
+  }
+}
 
-    &.has-text {
-      @apply gap-x-4;
-    }
+.text-bellow {
+  .bq-spinner--loader,
+  .bq-spinner--icon {
+    @apply order-1;
   }
 
-  &.text-left {
-    .bq-spinner--loader,
-    .bq-spinner--icon {
-      @apply order-2;
-    }
-
-    .bq-spinner--text {
-      @apply order-1;
-    }
+  .bq-spinner--text {
+    @apply order-2;
   }
+}
 
-  &.text-right {
-    .bq-spinner--loader,
-    .bq-spinner--icon {
-      @apply order-1;
-    }
+/* -------------------------------------------------------------------------- */
+/*                      Animate slotted icon if provided                      */
+/* -------------------------------------------------------------------------- */
 
-    .bq-spinner--text {
-      @apply order-2;
-    }
-  }
-
-  &.text-above,
-  &.text-bellow {
-    @apply flex-col items-center;
-
-    &.has-text {
-      @apply gap-y-4;
-    }
-  }
-
-  &.text-above {
-    .bq-spinner--loader,
-    .bq-spinner--icon {
-      @apply order-2;
-    }
-
-    .bq-spinner--text {
-      @apply order-1;
-    }
-  }
-
-  &.text-bellow {
-    .bq-spinner--loader,
-    .bq-spinner--icon {
-      @apply order-1;
-    }
-
-    .bq-spinner--text {
-      @apply order-2;
-    }
-  }
-
-  &.is-animated {
-    .bq-spinner--icon,
-    .bq-spinner--loader > svg {
-      @apply animate-spin;
-    }
+.is-animated {
+  .bq-spinner--icon,
+  .bq-spinner--loader > svg {
+    @apply animate-spin;
   }
 }

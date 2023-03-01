@@ -149,20 +149,15 @@ describe('bq-spinner', () => {
     expect(smallStyle).toEqual({ width: '32px', height: '32px' });
     expect(mediumStyle).toEqual({ width: '48px', height: '48px' });
     expect(largeStyle).toEqual({ width: '56px', height: '56px' });
-    expect(smallTextStyle).toEqual({
-      fontSize: '12px',
-      fontWeight: '500',
-      lineHeight: getLineHeightValue(smallTextStyle.fontSize),
-    });
-    expect(mediumTextStyle).toEqual({
-      fontSize: '14px',
-      fontWeight: '500',
-      lineHeight: getLineHeightValue(mediumTextStyle.fontSize),
-    });
-    expect(largeTextStyle).toEqual({
+
+    const textStyleExpected = {
       fontSize: '16px',
       fontWeight: '500',
-      lineHeight: getLineHeightValue(largeTextStyle.fontSize),
-    });
+      lineHeight: getLineHeightValue(smallTextStyle.fontSize),
+    };
+
+    expect(smallTextStyle).toEqual(textStyleExpected);
+    expect(mediumTextStyle).toEqual(textStyleExpected);
+    expect(largeTextStyle).toEqual(textStyleExpected);
   });
 });

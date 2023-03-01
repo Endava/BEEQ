@@ -12,31 +12,31 @@ env:
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 
 jobs:
-  agents:
-    name: 🚔 Nx Cloud Agents
-    runs-on: ubuntu-latest
-    steps:
-      - name: 🔍 Check GH_TOKEN
-        if: env.GH_TOKEN == ''
-        shell: bash
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: echo "GH_TOKEN=${GITHUB_TOKEN}" >> $GITHUB_ENV
+  # agents:
+  #   name: 🚔 Nx Cloud Agents
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: 🔍 Check GH_TOKEN
+  #       if: env.GH_TOKEN == ''
+  #       shell: bash
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       run: echo "GH_TOKEN=${GITHUB_TOKEN}" >> $GITHUB_ENV
 
-      - name: 🛠 Setup Volta
-        uses: volta-cli/action@v3
+  #     - name: 🛠 Setup Volta
+  #       uses: volta-cli/action@v3
 
-      - name: 🛎 Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+  #     - name: 🛎 Checkout
+  #       uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0
 
-      - name: 📦 Install dependencies
-        run: |
-          npm ci
+  #     - name: 📦 Install dependencies
+  #       run: |
+  #         npm ci
 
-      - name: 👮🏼‍♀️ Start Nx Cloud Agent
-        run: npx nx-cloud start-agent
+  #     - name: 👮🏼‍♀️ Start Nx Cloud Agent
+  #       run: npx nx-cloud start-agent
 
   main:
     name: 🧑‍💻 Main job
@@ -71,37 +71,22 @@ jobs:
 
       - name: 📦 Install dependencies
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: npm ci
+        run: npm install
 
-      - name: 👮🏼‍♀️ Start NX Cloud Agent
-        run: npx nx-cloud start-ci-run
+      # - name: 👮🏼‍♀️ Start NX Cloud Agent
+      #   run: npx nx-cloud start-ci-run
 
       - name: 🩺 Run Linters and Unit Tests
-        uses: nick-fields/retry@v2
-        with:
-          timeout_minutes: 5
-          max_attempts: 3
-          retry_on: error
-          command: npx nx affected --target=test --ci --code-coverage --exclude=workspace --output-style=stream-without-prefixes -- --runInBand
+        run: npx nx run-many --target=test --exclude=workspace --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
 
       - name: ⏳ Build
-        uses: nick-fields/retry@v2
-        with:
-          timeout_minutes: 5
-          max_attempts: 3
-          retry_on: error
-          command: npm run build
+        run: npm run build
 
       - name: 🧪 Run E2E Tests (only affected)
-        uses: nick-fields/retry@v2
-        with:
-          timeout_minutes: 10
-          max_attempts: 3
-          retry_on: error
-          command: npx nx affected --target=e2e --ci --code-coverage --exclude=workspace --output-style=stream-without-prefixes -- --runInBand
+        run: npx nx run-many --target=e2e --exclude=workspace --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
 
-      - name: 📴 Stop NX Cloud Agent
-        run: npx nx-cloud stop-all-agents
+      # - name: 📴 Stop NX Cloud Agent
+      #   run: npx nx-cloud stop-all-agents
 
       - name: 📚 Publish to Chromatic
         if: github.ref_name != 'main'

@@ -10,6 +10,7 @@ export default {
     },
   },
   argTypes: {
+    'alt-text': { control: 'text' },
     image: { control: 'text' },
     label: { control: 'text' },
     initials: { control: 'text' },
@@ -23,8 +24,9 @@ export default {
   },
 };
 
-export const Image = (args) => html`
+const Template = (args) => html`
   <bq-avatar
+    alt-text=${args['alt-text']}
     image=${args.image}
     label=${args.label}
     initials=${args.initials}
@@ -32,13 +34,15 @@ export const Image = (args) => html`
     size=${args.size}
   ></bq-avatar>
 `;
+
+export const Image = Template.bind({});
 Image.args = {
+  'alt-text': 'User profile',
   image:
     'https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80',
 };
 
-export const Initials = (args) => Image(args);
+export const Initials = Template.bind({});
 Initials.args = {
-  image: undefined,
   initials: 'JS',
 };
