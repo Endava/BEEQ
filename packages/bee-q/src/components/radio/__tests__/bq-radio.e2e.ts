@@ -107,6 +107,6 @@ describe('bq-radio', () => {
 
     const style = await computedStyle(page, 'bq-radio >>> [part="base"]', ['height', 'gap', 'borderRadius']);
 
-    expect(style).toEqual({ height: '24px', gap: '8px', borderRadius: '8px' });
+    expect(style).toEqual({ height: '40px', gap: '8px', borderRadius: '8px' });
   });
 });

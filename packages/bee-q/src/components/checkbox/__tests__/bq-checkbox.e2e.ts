@@ -100,7 +100,7 @@ describe('bq-checkbox', () => {
       'borderRadius',
     ]);
 
-    expect(baseStyle).toEqual({ height: '24px' });
+    expect(baseStyle).toEqual({ height: '40px' });
     expect(checkboxStyle).toEqual({ borderWidth: '2px', borderRadius: '4px' });
   });
 });
