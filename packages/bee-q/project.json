@@ -82,14 +82,14 @@
     },
     "storybook-start-css": {
       "executor": "nx:run-commands",
-      "outputs": ["libs/bee-q/.storybook/css"],
+      "outputs": ["packages/bee-q/.storybook/css"],
       "options": {
         "command": "npx tailwindcss -i packages/bee-q/src/global/styles/tailwind.pcss -o packages/bee-q/.storybook/css/styles.css --postcss postcss.config.js --watch"
       }
     },
     "storybook-build-css": {
       "executor": "nx:run-commands",
-      "outputs": ["libs/bee-q/.storybook/css"],
+      "outputs": ["packages/bee-q/.storybook/css"],
       "options": {
         "command": "npx tailwindcss -i packages/bee-q/src/global/styles/tailwind.pcss -o packages/bee-q/.storybook/css/styles.css --postcss postcss.config.js --minify"
       }
