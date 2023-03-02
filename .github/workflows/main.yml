@@ -14,16 +14,16 @@ jobs:
     name: 🚔 Nx Cloud Agents
     runs-on: ubuntu-latest
     steps:
+      - name: 🛎 Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       - name: 🔍 Check GH_TOKEN
         uses: ./.github/actions/check-token
 
       - name: 🛠 Setup Volta
         uses: volta-cli/action@v3
-
-      - name: 🛎 Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
       - name: 💫 Load and cache dependencies
         uses: ./.github/actions/cache-deps
@@ -39,16 +39,16 @@ jobs:
     env:
       NX_BRANCH: ${{ github.head_ref || github.ref_name }}
     steps:
+      - name: 🛎 Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       - name: 🔍 Check GH_TOKEN
         uses: ./.github/actions/check-token
 
       - name: 🛠 Setup Volta
         uses: volta-cli/action@v3
-
-      - name: 🛎 Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
       - name: 💫 Load and cache dependencies
         uses: ./.github/actions/cache-deps
