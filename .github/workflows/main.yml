@@ -27,6 +27,8 @@ jobs:
 
       - name: 💫 Load and cache dependencies
         uses: ./.github/actions/cache-deps
+        with:
+          caching: 'false'
 
       - name: 👮🏼‍♀️ Start Nx Cloud Agent
         run: npx nx-cloud start-agent
@@ -50,6 +52,8 @@ jobs:
 
       - name: 💫 Load and cache dependencies
         uses: ./.github/actions/cache-deps
+        with:
+          caching: 'false'
 
       - name: 🩺 Run Linters and Unit Tests, ⏳ Build, 🧪 E2E Tests
         uses: ./.github/actions/test-build
