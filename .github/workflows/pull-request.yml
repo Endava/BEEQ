@@ -29,9 +29,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: 📦 Install dependencies
-        run: |
-          npm ci
+      - name: 💫 Load and cache dependencies
+        uses: ./.github/actions/cache-deps
 
       - name: 👮🏼‍♀️ Start Nx Cloud Agent
         run: npx nx-cloud start-agent
@@ -60,16 +59,8 @@ jobs:
       - name: 🕵️‍♀️ Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v3
 
-      - name: 💫 Cache dependencies
-        id: cache-node-modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
-
-      - name: 📦 Install dependencies
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: npm ci
+      - name: 💫 Load and cache dependencies
+        uses: ./.github/actions/cache-deps
 
       - name: 👮🏼‍♀️ Start NX Cloud Agent
         run: npx nx-cloud start-ci-run
@@ -99,15 +90,3 @@ jobs:
           exitOnceUploaded: true
           onlyChanged: true
           zip: true
-
-      - name: 🔐 Configure AWS Credentials
-        if: github.ref_name == 'main'
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{secrets.AWS_S3_BUCKET_REGION}}
-
-      - name: 🚀 Deploy to AWS S3
-        if: github.ref_name == 'main'
-        run: aws s3 sync dist/storybook/bee-q/ s3://${{secrets.AWS_S3_BUCKET}}/ --delete --output table
