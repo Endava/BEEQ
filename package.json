@@ -24,10 +24,10 @@
     "test:e2e": "nx affected --target=e2e --parallel=1 --exclude=workspace,bee-q-icons --output-style=stream-without-prefixes",
     "clean": "run-s clean:build clean:modules",
     "clean:build": "rimraf ./dist/**",
-    "clean:modules": "rimraf node_modules",
+    "clean:modules": "rimraf node_modules .cache",
     "pre-commit": "lint-staged --verbose",
     "prepare": "husky install",
-    "postinstall": "ngcc --properties es2020 browser module main",
+    "postinstall": "node node_modules/puppeteer/install.js && ngcc --properties es2020 browser module main",
     "g": "plop --cwd tools/generators/plop"
   },
   "dependencies": {
