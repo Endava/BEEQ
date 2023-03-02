@@ -15,11 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🔍 Check GH_TOKEN
-        if: env.GH_TOKEN == ''
-        shell: bash
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: echo "GH_TOKEN=${GITHUB_TOKEN}" >> $GITHUB_ENV
+        uses: ./.github/actions/check-token
 
       - name: 🛠 Setup Volta
         uses: volta-cli/action@v3
@@ -42,11 +38,7 @@ jobs:
       NX_BRANCH: ${{ github.head_ref || github.ref_name }}
     steps:
       - name: 🔍 Check GH_TOKEN
-        if: env.GH_TOKEN == ''
-        shell: bash
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: echo "GH_TOKEN=${GITHUB_TOKEN}" >> $GITHUB_ENV
+        uses: ./.github/actions/check-token
 
       - name: 🛠 Setup Volta
         uses: volta-cli/action@v3
