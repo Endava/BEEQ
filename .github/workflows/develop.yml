@@ -55,14 +55,4 @@ jobs:
         uses: ./.github/actions/test-build
 
       - name: 📚 Publish to Chromatic
-        uses: chromaui/action@v1
-        env:
-          CI: true
-        with:
-          workingDir: /
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          storybookBuildDir: dist/storybook/bee-q
-          autoAcceptChanges: true
-          exitOnceUploaded: true
-          onlyChanged: true
-          zip: true
+        uses: ./.github/actions/chromatic
