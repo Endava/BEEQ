@@ -64,7 +64,7 @@
     "storybook-build": {
       "executor": "@nrwl/storybook:build",
       "outputs": ["{options.outputPath}"],
-      "dependsOn": ["storybook-css-build"],
+      "dependsOn": ["build", "storybook-build-css"],
       "options": {
         "uiFramework": "@storybook/web-components",
         "outputPath": "dist/storybook/bee-q",
