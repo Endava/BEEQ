@@ -13,6 +13,9 @@ jobs:
   agents:
     name: 🚔 Nx Cloud Agents
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        agent: [1, 2, 3, 4, 5]
     steps:
       - name: 🛎 Checkout
         uses: actions/checkout@v3
@@ -32,7 +35,7 @@ jobs:
         with:
           caching: 'false'
 
-      - name: 👮🏼‍♀️ Start Nx Cloud Agent
+      - name: 👮🏼‍♀️ Start Nx Cloud Agent ${{ matrix.agent }}
         run: npx nx-cloud start-agent
 
   main:

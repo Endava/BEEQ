@@ -44,7 +44,7 @@
       }
     },
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["generate-icons"],
       "executor": "@nxext/stencil:build",
       "outputs": ["{options.outputPath}", "packages/bee-q", "packages/bee-q-angular/src", "packages/bee-q-react/src"],
       "options": {
@@ -121,6 +121,7 @@
       "dependsOn": ["lint"]
     },
     "e2e": {
+      "dependsOn": ["build"],
       "executor": "@nxext/stencil:e2e",
       "outputs": ["{options.outputPath}"],
       "options": {

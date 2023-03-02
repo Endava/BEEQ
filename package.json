@@ -14,7 +14,6 @@
   "scripts": {
     "prestart": "nx run bee-q:generate-icons",
     "start": "nx run-many --target=start --projects=bee-q --skip-nx-cache",
-    "prebuild": "nx run bee-q:generate-icons",
     "build": "run-s build:libs build:storybook:css build:storybook",
     "build:libs": "nx run-many --target=build --exclude=workspace,bee-q-icons --output-style=stream-without-prefixes",
     "build:storybook": "nx run bee-q:storybook-build --output-style=stream-without-prefixes",
