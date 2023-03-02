@@ -16,9 +16,7 @@ runs:
       shell: bash
 
     - name: ⏳ Build
-      run: |
-        npx nx run-many --target=build --exclude=workspace --output-style=stream-without-prefixes
-        npx nx run bee-q:storybook-build --output-style=stream-without-prefixes
+      run: npm run build
       shell: bash
 
     - name: 🧪 Run E2E Tests (only affected)

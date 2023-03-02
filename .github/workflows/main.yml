@@ -16,7 +16,7 @@ jobs:
     timeout-minutes: 30
     strategy:
       matrix:
-        agent: [1, 2, 3, 4, 5]
+        agent: [1, 2, 3]
     steps:
       - name: 🛎 Checkout
         uses: actions/checkout@v3
