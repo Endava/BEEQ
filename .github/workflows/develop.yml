@@ -13,7 +13,7 @@ jobs:
   agents:
     name: 🚔 Nx Cloud Agents
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 30
     strategy:
       matrix:
         agent: [1, 2, 3, 4, 5]
@@ -64,3 +64,5 @@ jobs:
 
       - name: 📚 Publish to Chromatic
         uses: ./.github/actions/chromatic
+        with:
+          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}

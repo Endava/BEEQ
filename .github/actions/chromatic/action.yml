@@ -1,6 +1,11 @@
 name: Publish to Chromatic
 description: Publish the Storybook build to Chromatic cloud workspace.
 
+inputs:
+  CHROMATIC_PROJECT_TOKEN:
+    description: Chromatic project token token to use
+    required: true
+
 runs:
   using: composite
   steps:
@@ -10,7 +15,7 @@ runs:
         CI: 'true'
       with:
         workingDir: /
-        projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+        projectToken: ${{ inputs.CHROMATIC_PROJECT_TOKEN }}
         storybookBuildDir: dist/storybook/bee-q
         autoAcceptChanges: true
         exitOnceUploaded: true
