@@ -21,6 +21,8 @@ jobs:
 
       - name: 🔍 Check GH_TOKEN
         uses: ./.github/actions/check-token
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 🛠 Setup Volta
         uses: volta-cli/action@v3
@@ -46,6 +48,8 @@ jobs:
 
       - name: 🔍 Check GH_TOKEN
         uses: ./.github/actions/check-token
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 🛠 Setup Volta
         uses: volta-cli/action@v3
