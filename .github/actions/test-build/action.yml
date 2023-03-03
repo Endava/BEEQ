@@ -7,10 +7,6 @@ runs:
     - name: 🕵️‍♀️ Derive appropriate SHAs for base and head for `nx affected` commands
       uses: nrwl/nx-set-shas@v3
 
-    - name: 👮🏼‍♀️ Start NX Cloud Agent
-      run: npx nx-cloud start-ci-run
-      shell: bash
-
     - name: 🩺 Run Linters and Unit Tests
       run: npx nx affected --target=test --exclude=workspace --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
       shell: bash
@@ -21,8 +17,4 @@ runs:
 
     - name: 🧪 Run E2E Tests (only affected)
       run: npx nx affected --target=e2e --exclude=workspace --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
-      shell: bash
-
-    - name: 📴 Stop NX Cloud Agent
-      run: npx nx-cloud stop-all-agents
       shell: bash

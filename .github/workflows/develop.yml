@@ -10,35 +10,8 @@ env:
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 
 jobs:
-  agents:
-    name: 🚔 Nx Cloud Agents
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    strategy:
-      matrix:
-        agent: [1, 2, 3]
-    steps:
-      - name: 🛎 Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: 🔍 Check GH_TOKEN
-        uses: ./.github/actions/check-token
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: 🛠 Setup Volta
-        uses: volta-cli/action@v3
-
-      - name: 💫 Load and cache dependencies
-        uses: ./.github/actions/cache-deps
-
-      - name: 👮🏼‍♀️ Start Nx Cloud Agent ${{ matrix.agent }}
-        run: npx nx-cloud start-agent
-
   main:
-    name: 🧑‍💻 Development CI
+    name: 🧑‍💻 Development push checks
     runs-on: ubuntu-latest
     env:
       NX_BRANCH: ${{ github.head_ref || github.ref_name }}
