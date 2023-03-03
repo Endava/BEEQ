@@ -6,6 +6,35 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+## [0.2.0](https://github.com/dgonzalezr/bee-q/compare/v0.1.0...v0.2.0) (2023-03-03)
+
+
+### Features
+
+* **spinner:** add `bq-spinner` component ([#75](https://github.com/dgonzalezr/bee-q/issues/75)) ([7ffce25](https://github.com/dgonzalezr/bee-q/commit/7ffce258bb1dfd26c77fe0d26c5109dde8dfb66f))
+* **switch:** add new `bq-switch` component ([#84](https://github.com/dgonzalezr/bee-q/issues/84)) ([7a86ed7](https://github.com/dgonzalezr/bee-q/commit/7a86ed7d4b08c2dbb12a0546871990274671f26d))
+* **utils:** add `setProperties()` method utility ([#80](https://github.com/dgonzalezr/bee-q/issues/80)) ([77a9c1a](https://github.com/dgonzalezr/bee-q/commit/77a9c1af694f0b6897e381efe5f8c130246e7663))
+* **utils:** add computed style properties filter ([#79](https://github.com/dgonzalezr/bee-q/issues/79)) ([d9f4a65](https://github.com/dgonzalezr/bee-q/commit/d9f4a65059afb6f66409520863b2bae42d971630))
+
+
+### Bug Fixes
+
+* **badge:** misspelled `disconnectedCallback` lifecycle method ([#90](https://github.com/dgonzalezr/bee-q/issues/90)) ([bb90159](https://github.com/dgonzalezr/bee-q/commit/bb90159bcd89bbae1203fcb2c3fce3ed833dcc74))
+* **slider:** missing Angular value accessor and host display CSS rule  ([#91](https://github.com/dgonzalezr/bee-q/issues/91)) ([57c8cdc](https://github.com/dgonzalezr/bee-q/commit/57c8cdce44ac6d38e8f8be4e0751c3bc97be77c1))
+* **spinner:** misspelled `disconnectedCallback` lifecycle method ([#89](https://github.com/dgonzalezr/bee-q/issues/89)) ([033c748](https://github.com/dgonzalezr/bee-q/commit/033c748f08ef70eb679aa783f786cc21f6701f84))
+* **tools:** remove extra '<' from plopjs e2e generator ([#86](https://github.com/dgonzalezr/bee-q/issues/86)) ([104c225](https://github.com/dgonzalezr/bee-q/commit/104c2256c1658bda6ef09ca0b0dc0020f8d5d8d1))
+
+
+### Documentation
+
+* **project:** update README usage section ([c975cc1](https://github.com/dgonzalezr/bee-q/commit/c975cc15c6dad52d29ea9221120b67267fc12338))
+* **spinner:** update shadow parts in the component's readme ([d0ee1bf](https://github.com/dgonzalezr/bee-q/commit/d0ee1bf0f2c34615ba02063a4af03eb8f6e6a934))
+
+
+### Test
+
+* **tooltip:** add e2e test ([#20](https://github.com/dgonzalezr/bee-q/issues/20)) ([91ef7a3](https://github.com/dgonzalezr/bee-q/commit/91ef7a3fb8128c6339707b51f507d6fa44c0495f))
+
 ## [0.1.0](https://github.com/dgonzalezr/bee-q/compare/v0.0.1-beta.5...v0.1.0) (2023-01-08)
 
 This release includes all feature and bug fixes from all prior Bee-Q pre-releases, as well as the following
