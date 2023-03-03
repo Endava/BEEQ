@@ -1,0 +1,17 @@
+name: Check GitHub token
+description: Check that the GitHub token is available
+
+inputs:
+  GITHUB_TOKEN:
+    description: Account GitHub token to use
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: 🔍 Check GH_TOKEN
+      if: env.GH_TOKEN == ''
+      env:
+        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+      run: echo "GH_TOKEN=${GITHUB_TOKEN}" >> $GITHUB_ENV
+      shell: bash

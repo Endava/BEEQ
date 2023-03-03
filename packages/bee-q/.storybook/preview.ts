@@ -1,12 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-import './css/styles.css';
-import { html } from 'lit-html';
-import { classMap } from 'lit-html/directives/class-map.js';
+import { defineCustomElements } from '@bee-q/core/dist/loader';
 import { setCustomElements } from '@storybook/web-components';
 
-import { defineCustomElements } from '@bee-q/core/dist/loader';
 import customElements from '../custom-elements.json';
+
+import './css/styles.css';
 
 defineCustomElements();
 setCustomElements(customElements);

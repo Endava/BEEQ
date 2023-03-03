@@ -39,6 +39,7 @@ node_modules
 !.vscode/stencil-component-starter.code-snippets
 
 # misc
+.cache
 /.sass-cache
 /connect.lock
 /coverage
