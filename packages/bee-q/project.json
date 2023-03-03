@@ -44,7 +44,7 @@
       }
     },
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["generate-icons"],
       "executor": "@nxext/stencil:build",
       "outputs": ["{options.outputPath}", "packages/bee-q", "packages/bee-q-angular/src", "packages/bee-q-react/src"],
       "options": {
@@ -63,8 +63,7 @@
     },
     "storybook-build": {
       "executor": "@nrwl/storybook:build",
-      "outputs": ["{options.outputPath}"],
-      "dependsOn": ["storybook-css-build"],
+      "outputs": ["{options.outputPath}", "{options.config.configFolder}"],
       "options": {
         "uiFramework": "@storybook/web-components",
         "outputPath": "dist/storybook/bee-q",
@@ -82,14 +81,14 @@
     },
     "storybook-start-css": {
       "executor": "nx:run-commands",
-      "outputs": ["libs/bee-q/.storybook/css"],
+      "outputs": ["packages/bee-q/.storybook/css"],
       "options": {
         "command": "npx tailwindcss -i packages/bee-q/src/global/styles/tailwind.pcss -o packages/bee-q/.storybook/css/styles.css --postcss postcss.config.js --watch"
       }
     },
     "storybook-build-css": {
       "executor": "nx:run-commands",
-      "outputs": ["libs/bee-q/.storybook/css"],
+      "outputs": ["packages/bee-q/.storybook/css"],
       "options": {
         "command": "npx tailwindcss -i packages/bee-q/src/global/styles/tailwind.pcss -o packages/bee-q/.storybook/css/styles.css --postcss postcss.config.js --minify"
       }
@@ -121,6 +120,7 @@
       "dependsOn": ["lint"]
     },
     "e2e": {
+      "dependsOn": ["build"],
       "executor": "@nxext/stencil:e2e",
       "outputs": ["{options.outputPath}"],
       "options": {
