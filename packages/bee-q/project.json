@@ -100,12 +100,12 @@
         "assetsFolder": "assets",
         "downloadPath": "packages/bee-q-icons/temp",
         "extractToPath": "packages/bee-q/src/components/icon/svg",
-        "fileName": "master.zip",
+        "fileName": "main.zip",
         "helperFile": "icons-set.ts",
         "outputDir": "packages/bee-q/src/components/icon/helper",
         "sourceDir": "packages/bee-q/src/components/icon/svg/regular",
-        "svgFolder": "web-master",
-        "sourceUrl": "https://github.com/phosphor-icons/phosphor-icons/archive/refs/heads"
+        "svgFolder": "core-main",
+        "sourceUrl": "https://github.com/phosphor-icons/core/archive/refs/heads"
       }
     },
     "test": {
