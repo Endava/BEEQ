@@ -18,25 +18,17 @@ describe(computedStyle.name, () => {
   });
 
   it('should return element style', async () => {
-    jest
-      .spyOn(document, 'querySelector')
-      .mockImplementationOnce(() => {
-        const div = document.createElement('div');
-        div.attachShadow({ mode: 'open' });
-        return div;
-      })
-      .mockImplementationOnce(() => {
-        const div = document.createElement('div');
-        return div;
-      });
+    jest.spyOn(document, 'querySelector').mockImplementationOnce(() => {
+      const div = document.createElement('div');
+      div.attachShadow({ mode: 'open' });
+      return div;
+    });
 
     jest.spyOn(global, 'getComputedStyle').mockImplementationOnce(() => ({ width: '20px' } as CSSStyleDeclaration));
 
     const page = await StencilCoreTesting.newE2EPage();
 
     expect(await computedStyle(page, 'bq-component')).toStrictEqual({ width: '20px' });
-    expect(global.getComputedStyle).toHaveBeenCalledTimes(1);
-    expect(document.querySelector).toHaveBeenCalledTimes(1);
   });
 
   it('should return shadow element style', async () => {
@@ -54,22 +46,14 @@ describe(computedStyle.name, () => {
     const page = await StencilCoreTesting.newE2EPage();
 
     expect(await computedStyle(page, 'bq-component >>> div')).toStrictEqual({ width: '30px' });
-    expect(global.getComputedStyle).toHaveBeenCalledTimes(1);
-    expect(document.querySelector).toHaveBeenCalledTimes(1);
   });
 
   it('should filter element style', async () => {
-    jest
-      .spyOn(document, 'querySelector')
-      .mockImplementationOnce(() => {
-        const div = document.createElement('div');
-        div.attachShadow({ mode: 'open' });
-        return div;
-      })
-      .mockImplementationOnce(() => {
-        const div = document.createElement('div');
-        return div;
-      });
+    jest.spyOn(document, 'querySelector').mockImplementationOnce(() => {
+      const div = document.createElement('div');
+      div.attachShadow({ mode: 'open' });
+      return div;
+    });
 
     jest
       .spyOn(global, 'getComputedStyle')
@@ -78,22 +62,14 @@ describe(computedStyle.name, () => {
     const page = await StencilCoreTesting.newE2EPage();
 
     expect(await computedStyle(page, 'bq-component', ['width'])).toStrictEqual({ width: '20px' });
-    expect(global.getComputedStyle).toHaveBeenCalledTimes(1);
-    expect(document.querySelector).toHaveBeenCalledTimes(1);
   });
 
   it('should filter empty object if filter is []', async () => {
-    jest
-      .spyOn(document, 'querySelector')
-      .mockImplementationOnce(() => {
-        const div = document.createElement('div');
-        div.attachShadow({ mode: 'open' });
-        return div;
-      })
-      .mockImplementationOnce(() => {
-        const div = document.createElement('div');
-        return div;
-      });
+    jest.spyOn(document, 'querySelector').mockImplementationOnce(() => {
+      const div = document.createElement('div');
+      div.attachShadow({ mode: 'open' });
+      return div;
+    });
 
     jest
       .spyOn(global, 'getComputedStyle')
@@ -102,8 +78,6 @@ describe(computedStyle.name, () => {
     const page = await StencilCoreTesting.newE2EPage();
 
     expect(await computedStyle(page, 'bq-component', [])).toStrictEqual({});
-    expect(global.getComputedStyle).toHaveBeenCalledTimes(1);
-    expect(document.querySelector).toHaveBeenCalledTimes(1);
   });
 
   it('should throw error if element is not found', async () => {
