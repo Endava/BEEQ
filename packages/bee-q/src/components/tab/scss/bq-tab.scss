@@ -10,7 +10,7 @@
 
 .bq-tab {
   @apply relative flex cursor-pointer items-center justify-center;
-  @apply text-s font-medium leading-large text-text-primary hover:text-text-accent;
+  @apply text-m font-medium leading-large hover:text-text-accent;
   /* resets button default style */
   @apply border-0 bg-transparent focus:outline-none focus-visible:outline-none;
 
@@ -39,7 +39,7 @@
   }
 
   &--large {
-    @apply py-3 px-6;
+    @apply py-3 px-6 text-l;
 
     ::slotted(bq-icon) {
       --bq-icon--size: 24px !important;
