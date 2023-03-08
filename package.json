@@ -9,7 +9,7 @@
   ],
   "repository": {
     "type": "Git",
-    "url": "https://github.com/dgonzalezr/bee-q"
+    "url": "https://github.com/Endava/bee-q"
   },
   "scripts": {
     "prestart": "nx run bee-q:generate-icons",
