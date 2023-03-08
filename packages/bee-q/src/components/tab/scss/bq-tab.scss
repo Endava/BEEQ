@@ -35,3 +35,17 @@
 .bq-tab__underline {
   @apply absolute bottom-0 h-[2px] w-full;
 }
+
+.bq-tab__icon {
+  &--small ::slotted(bq-icon) {
+    --bq-icon--size: 20px !important;
+  }
+
+  &--medium ::slotted(bq-icon) {
+    --bq-icon--size: 24px !important;
+  }
+
+  &--large ::slotted(bq-icon) {
+    --bq-icon--size: 24px !important;
+  }
+}

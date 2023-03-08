@@ -34,7 +34,7 @@ export const Default = (args) => Template(args);
 export const Icon = (args) => {
   return html`
     <bq-tab .size=${args.size} ?active=${args.active} ?disabled=${args.disabled}
-      ><bq-icon size=${args.size === 'small' ? 20 : 24} name="activity" slot="icon"></bq-icon>${args.text}</bq-tab
+      ><bq-icon name="arrow-circle-left" slot="icon"></bq-icon>${args.text}</bq-tab
     >
   `;
 };

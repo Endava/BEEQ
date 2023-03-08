@@ -1,4 +1,4 @@
-import { h, Component, Prop, Watch, Element, Event, EventEmitter, Method } from '@stencil/core';
+import { h, Component, Prop, Watch, Element, Event, EventEmitter, Method, State } from '@stencil/core';
 import { validatePropValue, hasSlotContent } from '../../shared/utils';
 import { TAB_SIZE, TTabSize } from './bq-tab.types';
 
@@ -21,8 +21,6 @@ export class BqTab {
 
   private iconSpanElement: HTMLSpanElement;
 
-  private hasIcon = false;
-
   // Reference to host HTML element
   // ===================================
 
@@ -31,6 +29,8 @@ export class BqTab {
   // State() variables
   // Inlined decorator, alphabetical order
   // =======================================
+
+  @State() hasIcon = false;
 
   // Public Property API
   // ========================
@@ -177,18 +177,22 @@ export class BqTab {
         tabindex={this.tabindex}
         part="base"
       >
-        <div part="icon" ref={(element) => (this.iconSpanElement = element)}>
+        <div
+          part="icon"
+          ref={(element) => (this.iconSpanElement = element)}
+          class={{ flex: true, [`bq-tab__icon--${this.size}`]: this.hasIcon }}
+        >
           <slot name="icon" onSlotchange={this.handleIconSlotChange} />
         </div>
-        <span
+        <div
           class={{
-            'font-inter text-s font-medium leading-large text-text-primary hover:text-text-accent': true,
+            'text-s font-medium leading-large text-text-primary hover:text-text-accent': true,
             'text-ui-primary': isActive,
           }}
           part="text"
         >
           <slot />
-        </span>
+        </div>
         <div class={{ 'bq-tab__underline': true, 'bg-ui-primary': isActive }} part="underline" />
       </button>
     );
