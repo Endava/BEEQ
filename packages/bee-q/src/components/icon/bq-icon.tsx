@@ -109,7 +109,7 @@ export class BqIcon {
     return (
       <Host style={styles}>
         <div
-          class="h-[var(--bq-icon--size)] w-[var(--bq-icon--size)] text-[color:var(--bq-icon--color)]"
+          class="flex h-[var(--bq-icon--size)] w-[var(--bq-icon--size)] text-[color:var(--bq-icon--color)]"
           innerHTML={this._svgContent}
           part="base"
           role="img"
