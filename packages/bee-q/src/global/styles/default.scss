@@ -2,3 +2,14 @@
 /*                                Default theme                               */
 /* -------------------------------------------------------------------------- */
 @import './themes/colors';
+
+/* -------------------------------------------------------------------------- */
+/*                                 Root styles                                */
+/* -------------------------------------------------------------------------- */
+
+html,
+body {
+  font-family: var(--bq-font-family--outfit);
+  font-size: var(--bq-font-size--m);
+  font-weight: var(--bq-font-weight--regular);
+}
