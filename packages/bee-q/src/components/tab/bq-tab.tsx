@@ -1,10 +1,9 @@
 import { h, Component, Prop, Watch, Element, Event, EventEmitter, Method, State } from '@stencil/core';
-import { validatePropValue, hasSlotContent } from '../../shared/utils';
+import { validatePropValue } from '../../shared/utils';
 import { TAB_SIZE, TTabSize } from './bq-tab.types';
 
 /**
  * @part base - The HTML button used under the hood.
- * @part icon - The HTML `<div>` element that holds the icon element.
  * @part text - The HTML `<span>` element that holds the text content.
  * @part underline - The HTML `<div>` element that display active state.
  */
@@ -18,8 +17,6 @@ export class BqTab {
   // ====================
 
   private buttonElement: HTMLButtonElement;
-
-  private iconSpanElement: HTMLSpanElement;
 
   // Reference to host HTML element
   // ===================================
@@ -145,10 +142,6 @@ export class BqTab {
     return `${-1 + +(this.active ?? 1)}`;
   }
 
-  private handleIconSlotChange = (): void => {
-    this.hasIcon = hasSlotContent(this.iconSpanElement);
-  };
-
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -163,8 +156,6 @@ export class BqTab {
           [`bq-tab--${this.size}`]: true,
           'text-ui-primary': isActive,
           'pointer-events-none cursor-not-allowed opacity-40': this.disabled,
-          'gap-1': this.hasIcon && this.size === 'small',
-          'gap-2': this.hasIcon && this.size !== 'small',
         }}
         id={this.tabId}
         onBlur={this.handleOnBlur}
@@ -178,10 +169,14 @@ export class BqTab {
         tabindex={this.tabindex}
         part="base"
       >
-        <div part="icon" ref={(element) => (this.iconSpanElement = element)} class={{ flex: true }}>
-          <slot name="icon" onSlotchange={this.handleIconSlotChange} />
-        </div>
-        <div part="text">
+        <div
+          class={{
+            'flex items-center justify-center': true,
+            'gap-1': this.size === 'small',
+            'gap-2': this.size !== 'small',
+          }}
+          part="text"
+        >
           <slot />
         </div>
         <div class={{ 'bq-tab__underline': true, 'bg-ui-primary': isActive }} part="underline" />

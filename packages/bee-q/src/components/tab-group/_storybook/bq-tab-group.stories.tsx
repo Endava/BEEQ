@@ -54,14 +54,14 @@ const IconTemplate = (args) => {
       @bqFocus=${args.bqFocus}
       @bqBlur=${args.bqBlur}
     >
-      <bq-tab tab-id="1"><bq-icon size="20" name="activity"></bq-icon>Tab</bq-tab>
-      <bq-tab tab-id="2"><bq-icon size="20" name="bell"></bq-icon>Tab</bq-tab>
-      <bq-tab tab-id="3"><bq-icon size="20" name="airplane-in-flight"></bq-icon>Long Tab name</bq-tab>
-      <bq-tab tab-id="4" disabled><bq-icon size="20" name="airplane-tilt"></bq-icon>Tab</bq-tab>
-      <bq-tab tab-id="5" active><bq-icon size="20" name="align-right-simple"></bq-icon>Tab</bq-tab>
-      <bq-tab tab-id="6"><bq-icon size="20" name="anchor"></bq-icon>Tab</bq-tab>
-      <bq-tab tab-id="7"><bq-icon size="20" name="anchor-simple"></bq-icon>Tab</bq-tab>
-      <bq-tab tab-id="8"><bq-icon size="20" name="android-logo"></bq-icon>Tab</bq-tab>
+      <bq-tab tab-id="1"><bq-icon name="activity"></bq-icon>Tab</bq-tab>
+      <bq-tab tab-id="2"><bq-icon name="bell"></bq-icon>Tab</bq-tab>
+      <bq-tab tab-id="3"><bq-icon name="airplane-in-flight"></bq-icon>Long Tab name</bq-tab>
+      <bq-tab tab-id="4" disabled><bq-icon name="airplane-tilt"></bq-icon>Tab</bq-tab>
+      <bq-tab tab-id="5" active><bq-icon name="align-right-simple"></bq-icon>Tab</bq-tab>
+      <bq-tab tab-id="6"><bq-icon name="anchor"></bq-icon>Tab</bq-tab>
+      <bq-tab tab-id="7"><bq-icon name="anchor-simple"></bq-icon>Tab</bq-tab>
+      <bq-tab tab-id="8"><bq-icon name="android-logo"></bq-icon>Tab</bq-tab>
     </bq-tab-group>
   `;
 };

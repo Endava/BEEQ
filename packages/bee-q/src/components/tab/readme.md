@@ -67,7 +67,6 @@ Type: `Promise<void>`
 | Part          | Description                                            |
 | ------------- | ------------------------------------------------------ |
 | `"base"`      | The HTML button used under the hood.                   |
-| `"icon"`      | The HTML `<div>` element that holds the icon element.  |
 | `"text"`      | The HTML `<span>` element that holds the text content. |
 | `"underline"` | The HTML `<div>` element that display active state.    |
 
