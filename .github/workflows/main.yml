@@ -32,8 +32,9 @@ jobs:
 
       - name: 💫 Load and cache dependencies
         uses: ./.github/actions/cache-deps
-        with:
-          caching: 'false'
+
+      - name: 📥 Download Chromium binary for E2E tests
+        run: node ./node_modules/puppeteer/install.js
 
       - name: 🩺 Run Linters and Unit Tests, ⏳ Build, 🧪 E2E Tests
         uses: ./.github/actions/test-build
