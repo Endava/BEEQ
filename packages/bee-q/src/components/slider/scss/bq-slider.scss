@@ -25,11 +25,11 @@
 }
 
 :host {
-  @apply block;
+  @apply block w-full;
 }
 
 .bq-slider {
-  @apply flex h-[calc(var(--bq-slider--thumb-size)_+_var(--bq-slider--size))] w-full items-center;
+  @apply flex h-[calc(var(--bq-slider--thumb-size)_+_var(--bq-slider--size))] w-full items-center text-start;
 }
 
 .bq-slider__container {
