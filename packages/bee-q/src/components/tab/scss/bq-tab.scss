@@ -9,8 +9,10 @@
 }
 
 .bq-tab {
-  @apply relative flex cursor-pointer items-center justify-center rounded-s border-0 bg-transparent focus:outline-none focus-visible:outline-none;
+  @apply relative flex cursor-pointer items-center justify-center;
   @apply text-s font-medium leading-large text-text-primary hover:text-text-accent;
+  /* resets button default style */
+  @apply border-0 bg-transparent focus:outline-none focus-visible:outline-none;
 
   &:focus-visible {
     @apply rounded-s ring-4 ring-system-alert;
@@ -22,31 +24,29 @@
 
   &--small {
     @apply py-1 px-4;
+
+    ::slotted(bq-icon) {
+      --bq-icon--size: 20px !important;
+    }
   }
 
   &--medium {
     @apply py-2 px-5;
+
+    ::slotted(bq-icon) {
+      --bq-icon--size: 24px !important;
+    }
   }
 
   &--large {
     @apply py-3 px-6;
+
+    ::slotted(bq-icon) {
+      --bq-icon--size: 24px !important;
+    }
   }
 }
 
 .bq-tab__underline {
   @apply absolute bottom-0 h-[2px] w-full;
-}
-
-.bq-tab__icon {
-  &--small ::slotted(bq-icon) {
-    --bq-icon--size: 20px !important;
-  }
-
-  &--medium ::slotted(bq-icon) {
-    --bq-icon--size: 24px !important;
-  }
-
-  &--large ::slotted(bq-icon) {
-    --bq-icon--size: 24px !important;
-  }
 }

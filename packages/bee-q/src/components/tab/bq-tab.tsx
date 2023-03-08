@@ -178,11 +178,7 @@ export class BqTab {
         tabindex={this.tabindex}
         part="base"
       >
-        <div
-          part="icon"
-          ref={(element) => (this.iconSpanElement = element)}
-          class={{ flex: true, [`bq-tab__icon--${this.size}`]: this.hasIcon }}
-        >
+        <div part="icon" ref={(element) => (this.iconSpanElement = element)} class={{ flex: true }}>
           <slot name="icon" onSlotchange={this.handleIconSlotChange} />
         </div>
         <div part="text">
