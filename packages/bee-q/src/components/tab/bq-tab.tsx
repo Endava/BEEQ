@@ -27,7 +27,7 @@ export class BqTab {
   // Inlined decorator, alphabetical order
   // =======================================
 
-  @State() hasIcon = false;
+  @State() isFocused = false;
 
   // Public Property API
   // ========================
@@ -46,6 +46,9 @@ export class BqTab {
 
   /** The tab panel id that the tab controls */
   @Prop({ reflect: true }) controls!: string;
+
+  /** If true tab has underline active  */
+  @Prop({ reflect: true }) divider = false;
 
   // Prop lifecycle events
   // =======================
@@ -168,6 +171,12 @@ export class BqTab {
         aria-selected={this.active ? 'true' : 'false'}
         tabindex={this.tabindex}
         part="base"
+        onFocusin={() => {
+          this.isFocused = true;
+        }}
+        onFocusout={() => {
+          this.isFocused = false;
+        }}
       >
         <div
           class={{
@@ -179,7 +188,14 @@ export class BqTab {
         >
           <slot />
         </div>
-        <div class={{ 'bq-tab__underline': true, 'bg-ui-primary': this.active }} part="underline" />
+        <div
+          class={{
+            'absolute bottom-0 w-full': true,
+            'h-[2px] bg-ui-primary': this.active,
+            'h-[1px] bg-text-secondary opacity-40': this.divider && (!this.active || this.isFocused),
+          }}
+          part="underline"
+        />
       </button>
     );
   }

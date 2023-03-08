@@ -23,10 +23,9 @@
 
 ## Shadow Parts
 
-| Part        | Description                                        |
-| ----------- | -------------------------------------------------- |
-| `"base"`    | The HTML div used to hold <bq-tab> elements.       |
-| `"divider"` | The HTML `<div>` element that display the divider. |
+| Part     | Description                                  |
+| -------- | -------------------------------------------- |
+| `"base"` | The HTML div used to hold <bq-tab> elements. |
 
 
 ----------------------------------------------

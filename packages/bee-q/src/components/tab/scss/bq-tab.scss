@@ -16,10 +16,6 @@
 
   &:focus-visible {
     @apply rounded-s ring-4 ring-system-alert;
-
-    .bq-tab__underline {
-      display: none;
-    }
   }
 
   &--small {
@@ -45,8 +41,4 @@
       --bq-icon--size: 24px !important;
     }
   }
-}
-
-.bq-tab__underline {
-  @apply absolute bottom-0 h-[2px] w-full;
 }

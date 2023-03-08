@@ -424,6 +424,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * If true tab has underline active
+         */
+        "divider": boolean;
+        /**
           * The size of the tab
          */
         "size": TTabSize;
@@ -1081,6 +1085,10 @@ declare namespace LocalJSX {
           * If true tab is disabled
          */
         "disabled"?: boolean;
+        /**
+          * If true tab has underline active
+         */
+        "divider"?: boolean;
         /**
           * Handler to be called when the tab loses focus
          */

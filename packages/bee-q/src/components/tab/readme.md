@@ -12,6 +12,7 @@
 | `active`                | `active`   | If true tab is active                  | `boolean`                        | `undefined` |
 | `controls` _(required)_ | `controls` | The tab panel id that the tab controls | `string`                         | `undefined` |
 | `disabled`              | `disabled` | If true tab is disabled                | `boolean`                        | `false`     |
+| `divider`               | `divider`  | If true tab has underline active       | `boolean`                        | `false`     |
 | `size`                  | `size`     | The size of the tab                    | `"large" \| "medium" \| "small"` | `'small'`   |
 | `tabId` _(required)_    | `tab-id`   | The id of the tab                      | `string`                         | `undefined` |
 
