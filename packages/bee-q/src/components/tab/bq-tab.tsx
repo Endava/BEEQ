@@ -161,6 +161,7 @@ export class BqTab {
         class={{
           'bq-tab': true,
           [`bq-tab--${this.size}`]: true,
+          'text-ui-primary': isActive,
           'pointer-events-none cursor-not-allowed opacity-40': this.disabled,
           'gap-1': this.hasIcon && this.size === 'small',
           'gap-2': this.hasIcon && this.size !== 'small',
@@ -184,13 +185,7 @@ export class BqTab {
         >
           <slot name="icon" onSlotchange={this.handleIconSlotChange} />
         </div>
-        <div
-          class={{
-            'text-s font-medium leading-large text-text-primary hover:text-text-accent': true,
-            'text-ui-primary': isActive,
-          }}
-          part="text"
-        >
+        <div part="text">
           <slot />
         </div>
         <div class={{ 'bq-tab__underline': true, 'bg-ui-primary': isActive }} part="underline" />

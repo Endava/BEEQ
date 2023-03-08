@@ -10,6 +10,7 @@
 
 .bq-tab {
   @apply relative flex cursor-pointer items-center justify-center rounded-s border-0 bg-transparent focus:outline-none focus-visible:outline-none;
+  @apply text-s font-medium leading-large text-text-primary hover:text-text-accent;
 
   &:focus-visible {
     @apply rounded-s ring-4 ring-system-alert;
