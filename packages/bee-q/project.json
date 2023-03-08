@@ -152,6 +152,23 @@
         "lintFilePatterns": ["packages/bee-q/**/*.css", "packages/bee-q/**/*.scss"],
         "configFile": "packages/bee-q/.stylelintrc.json"
       }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public",
+        "buildTarget": "production",
+        "tag": "latest",
+        "noBuild": true
+      }
+    },
+    "publish-beta": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public",
+        "buildTarget": "production",
+        "tag": "beta"
+      }
     }
   }
 }
