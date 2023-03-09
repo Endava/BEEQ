@@ -158,8 +158,7 @@
       "options": {
         "access": "public",
         "buildTarget": "production",
-        "tag": "latest",
-        "noBuild": true
+        "tag": "latest"
       }
     },
     "publish-beta": {
