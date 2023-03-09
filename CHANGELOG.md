@@ -6,6 +6,13 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+## [0.2.2](https://github.com/Endava/bee-q/compare/v0.2.1...v0.2.2) (2023-03-09)
+
+
+### Bug Fixes
+
+* **CI:** trigger NPM publish after a GitHub release is published ([#38](https://github.com/Endava/bee-q/issues/38)) ([284aacc](https://github.com/Endava/bee-q/commit/284aacc4155e61ecba358e2898a4a22d534a3c7a))
+
 ## [0.2.1](https://github.com/Endava/bee-q/compare/v0.2.0...v0.2.1) (2023-03-08)
 
 
