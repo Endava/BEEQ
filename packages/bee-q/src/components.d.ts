@@ -219,6 +219,8 @@ export namespace Components {
          */
         "weight"?: TIconWeight;
     }
+    interface BqMenu {
+    }
     interface BqRadio {
         /**
           * If true radio displays background on hover
@@ -580,6 +582,12 @@ declare global {
         prototype: HTMLBqIconElement;
         new (): HTMLBqIconElement;
     };
+    interface HTMLBqMenuElement extends Components.BqMenu, HTMLStencilElement {
+    }
+    var HTMLBqMenuElement: {
+        prototype: HTMLBqMenuElement;
+        new (): HTMLBqMenuElement;
+    };
     interface HTMLBqRadioElement extends Components.BqRadio, HTMLStencilElement {
     }
     var HTMLBqRadioElement: {
@@ -648,6 +656,7 @@ declare global {
         "bq-checkbox": HTMLBqCheckboxElement;
         "bq-divider": HTMLBqDividerElement;
         "bq-icon": HTMLBqIconElement;
+        "bq-menu": HTMLBqMenuElement;
         "bq-radio": HTMLBqRadioElement;
         "bq-radio-group": HTMLBqRadioGroupElement;
         "bq-slider": HTMLBqSliderElement;
@@ -864,6 +873,8 @@ declare namespace LocalJSX {
           * It set the icon weight/style
          */
         "weight"?: TIconWeight;
+    }
+    interface BqMenu {
     }
     interface BqRadio {
         /**
@@ -1166,6 +1177,7 @@ declare namespace LocalJSX {
         "bq-checkbox": BqCheckbox;
         "bq-divider": BqDivider;
         "bq-icon": BqIcon;
+        "bq-menu": BqMenu;
         "bq-radio": BqRadio;
         "bq-radio-group": BqRadioGroup;
         "bq-slider": BqSlider;
@@ -1196,6 +1208,7 @@ declare module "@stencil/core" {
              * Icons are simplified images that graphically explain the meaning of an object on the screen.
              */
             "bq-icon": LocalJSX.BqIcon & JSXBase.HTMLAttributes<HTMLBqIconElement>;
+            "bq-menu": LocalJSX.BqMenu & JSXBase.HTMLAttributes<HTMLBqMenuElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
             "bq-slider": LocalJSX.BqSlider & JSXBase.HTMLAttributes<HTMLBqSliderElement>;
