@@ -67,7 +67,7 @@
     "@nrwl/nx-plugin": "14.8.6",
     "@nrwl/react": "14.8.6",
     "@nrwl/storybook": "14.8.6",
-    "@nrwl/web": "14.8.6",
+    "@nrwl/web": "14.8.7",
     "@nrwl/workspace": "14.8.6",
     "@nxext/stencil": "14.0.6",
     "@stencil/angular-output-target": "0.5.0",
