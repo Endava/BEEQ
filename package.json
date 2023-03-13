@@ -61,7 +61,7 @@
     "@nrwl/cli": "14.8.6",
     "@nrwl/devkit": "14.8.6",
     "@nrwl/eslint-plugin-nx": "14.8.6",
-    "@nrwl/jest": "14.8.6",
+    "@nrwl/jest": "14.8.7",
     "@nrwl/js": "14.8.6",
     "@nrwl/nx-cloud": "^15.1.0",
     "@nrwl/nx-plugin": "14.8.6",
