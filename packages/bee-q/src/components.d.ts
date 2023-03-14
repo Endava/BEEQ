@@ -158,6 +158,9 @@ export namespace Components {
          */
         "value": string;
     }
+    interface BqDialog {
+        "isOpen": boolean;
+    }
     interface BqDivider {
         /**
           * If true, the divider has a dashed pattern
@@ -495,6 +498,12 @@ declare global {
         prototype: HTMLBqCheckboxElement;
         new (): HTMLBqCheckboxElement;
     };
+    interface HTMLBqDialogElement extends Components.BqDialog, HTMLStencilElement {
+    }
+    var HTMLBqDialogElement: {
+        prototype: HTMLBqDialogElement;
+        new (): HTMLBqDialogElement;
+    };
     interface HTMLBqDividerElement extends Components.BqDivider, HTMLStencilElement {
     }
     var HTMLBqDividerElement: {
@@ -564,6 +573,7 @@ declare global {
         "bq-badge": HTMLBqBadgeElement;
         "bq-button": HTMLBqButtonElement;
         "bq-checkbox": HTMLBqCheckboxElement;
+        "bq-dialog": HTMLBqDialogElement;
         "bq-divider": HTMLBqDividerElement;
         "bq-icon": HTMLBqIconElement;
         "bq-radio": HTMLBqRadioElement;
@@ -717,6 +727,9 @@ declare namespace LocalJSX {
           * A string representing the value of the checkbox. Primarily used to differentiate a list of related checkboxes that have the same name.
          */
         "value": string;
+    }
+    interface BqDialog {
+        "isOpen"?: boolean;
     }
     interface BqDivider {
         /**
@@ -1016,6 +1029,7 @@ declare namespace LocalJSX {
         "bq-badge": BqBadge;
         "bq-button": BqButton;
         "bq-checkbox": BqCheckbox;
+        "bq-dialog": BqDialog;
         "bq-divider": BqDivider;
         "bq-icon": BqIcon;
         "bq-radio": BqRadio;
@@ -1041,6 +1055,7 @@ declare module "@stencil/core" {
              */
             "bq-button": LocalJSX.BqButton & JSXBase.HTMLAttributes<HTMLBqButtonElement>;
             "bq-checkbox": LocalJSX.BqCheckbox & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
+            "bq-dialog": LocalJSX.BqDialog & JSXBase.HTMLAttributes<HTMLBqDialogElement>;
             "bq-divider": LocalJSX.BqDivider & JSXBase.HTMLAttributes<HTMLBqDividerElement>;
             /**
              * Icons are simplified images that graphically explain the meaning of an object on the screen.

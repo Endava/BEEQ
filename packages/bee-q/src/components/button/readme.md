@@ -45,6 +45,10 @@ Buttons are designed for users to take action on a page or a screen.
 
 ## Dependencies
 
+### Used by
+
+ - [bq-dialog](../dialog)
+
 ### Depends on
 
 - [bq-icon](../icon)
@@ -53,6 +57,7 @@ Buttons are designed for users to take action on a page or a screen.
 ```mermaid
 graph TD;
   bq-button --> bq-icon
+  bq-dialog --> bq-button
   style bq-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
