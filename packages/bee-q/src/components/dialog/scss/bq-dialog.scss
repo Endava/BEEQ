@@ -8,7 +8,7 @@
   @apply block;
 }
 
-.dialog-container {
+.bq-dialog-container {
   width: 320px;
   height: 186px;
   display: flex;
@@ -21,4 +21,20 @@
   background: #ffffff;
   box-shadow: 0px 2px 48px 16px rgba(0, 0, 0, 0.08);
   border-radius: 8px;
+}
+
+// Size
+
+.size {
+  &--small {
+    @apply w-[var(--bq-dialog--small-width)];
+  }
+
+  &--medium {
+    @apply w-[var(--bq-dialog--medium-width)];
+  }
+
+  &--large {
+    @apply w-[var(--bq-dialog--large-width)];
+  }
 }

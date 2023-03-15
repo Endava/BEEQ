@@ -1,4 +1,7 @@
-import { h, Component, Prop, Element } from '@stencil/core';
+import { h, Component, Prop, Element, Watch } from '@stencil/core';
+
+import { validatePropValue } from '../../shared/utils';
+import { DIALOG_SIZE, TDialogSize } from './bq-dialog.types';
 
 @Component({
   tag: 'bq-dialog',
@@ -22,9 +25,17 @@ export class BqDialog {
   // Public Property API
   // ========================
 
+  /** The size of the dialog */
+  @Prop({ reflect: true, mutable: true }) size: TDialogSize = 'medium';
+
   // Prop lifecycle events
   // =======================
   @Prop() isOpen = false;
+
+  @Watch('size')
+  checkPropValues() {
+    validatePropValue(DIALOG_SIZE, 'medium', this.el, 'size');
+  }
 
   // Events section
   // Requires JSDocs for public API documentation
@@ -35,6 +46,10 @@ export class BqDialog {
   // =====================================
   componentDidLoad() {
     this.dialogElement = this.el.shadowRoot.querySelector('.dialog');
+  }
+
+  componentWillLoad() {
+    this.checkPropValues();
   }
 
   // Listeners
@@ -56,6 +71,10 @@ export class BqDialog {
     this.dialogElement.style.display = 'block';
   }
 
+  closeDialog() {
+    this.dialogElement.style.display = 'none';
+  }
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -67,7 +86,20 @@ export class BqDialog {
           Open Dialog
         </bq-button>
         <div class="dialog" style={{ display: 'none' }}>
-          <div class="dialog-container">
+          <div
+            class={{
+              'bq-dialog-container': true,
+              [`size--${this.size}`]: true,
+            }}
+          >
+            <bq-icon
+              class="h-5 w-5 pl-1 pt-1"
+              name="info"
+              color="text--accent"
+              role="img"
+              title="Info"
+              part="icon-on"
+            />
             <h3>
               <slot name="title"></slot>
             </h3>
