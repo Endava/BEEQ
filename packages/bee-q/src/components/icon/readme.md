@@ -37,12 +37,14 @@ Icons are simplified images that graphically explain the meaning of an object on
 ### Used by
 
  - [bq-button](../button)
+ - [bq-dialog](../dialog)
  - [bq-switch](../switch)
 
 ### Graph
 ```mermaid
 graph TD;
   bq-button --> bq-icon
+  bq-dialog --> bq-icon
   bq-switch --> bq-icon
   style bq-icon fill:#f9f,stroke:#333,stroke-width:4px
 ```

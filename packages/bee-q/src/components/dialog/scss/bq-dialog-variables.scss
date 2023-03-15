@@ -3,5 +3,7 @@
 /* -------------------------------------------------------------------------- */
 
 :host {
-  --bq-dialog--margin: 1px;
+  --bq-dialog--small-width: 320px;
+  --bq-dialog--medium-width: 480px;
+  --bq-dialog--large-width: 640px;
 }
