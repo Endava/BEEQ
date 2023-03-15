@@ -46,6 +46,8 @@ module.exports = {
         'secondary-selected': 'var(--bq-text--secondary-selected)',
         'secondary-disabled': 'var(--bq-text--secondary-disabled)',
         'secondary-inverse': 'var(--bq-text--secondary-inverse)',
+        /** Inverse */
+        inverse: 'var(--bq-text--inverse)',
         /** Brand */
         brand: 'var(--bq-text--brand)',
         'brand-hover': 'var(--bq-text--brand-hover)',
