@@ -1,0 +1,44 @@
+/* -------------------------------------------------------------------------- */
+/*                       Theme: DEFAULT - Stroke colors                       */
+/* -------------------------------------------------------------------------- */
+
+:root {
+  /** Primary */
+  --bq-stroke--primary: var(--bq-grey-600);
+  --bq-stroke--primary-hover: var(--bq-grey-500);
+  --bq-stroke--primary-active: var(--bq-grey-700);
+  --bq-stroke--primary-disabled: var(--bq-grey-400);
+  /** Secondary */
+  --bq-stroke--secondary: var(--bq-grey-200);
+  --bq-stroke--secondary-hover: var(--bq-grey-100);
+  --bq-stroke--secondary-active: var(--bq-grey-300);
+  --bq-stroke--secondary-disabled: var(--bq-grey-100);
+  --bq-stroke--secondary-light: var(--bq-grey-50);
+  /** Tiertary */
+  --bq-stroke--tiertary: var(--bq-grey-900);
+  --bq-stroke--tiertary-hover: var(--bq-grey-800);
+  --bq-stroke--tiertary-active: var(--bq-neutral-black);
+  --bq-stroke--tiertary-disabled: var(--bq-grey-600);
+  /** Inverse */
+  --bq-stroke--inverse: var(--bq-neutral-white);
+  /** Brand */
+  --bq-stroke--accent: var(--bq-indigo-600);
+  --bq-stroke--accent-hover: var(--bq-indigo-500);
+  --bq-stroke--accent-active: var(--bq-indigo-700);
+  --bq-stroke--accent-disabled: var(--bq-indigo-400);
+  /** Success */
+  --bq-stroke--success: var(--bq-teal-600);
+  --bq-stroke--success-hover: var(--bq-teal-500);
+  --bq-stroke--success-active: var(--bq-teal-700);
+  --bq-stroke--success-disabled: var(--bq-teal-400);
+  /** Warning */
+  --bq-stroke--warning: var(--bq-gold-600);
+  --bq-stroke--warning-hover: var(--bq-gold-500);
+  --bq-stroke--warning-active: var(--bq-gold-700);
+  --bq-stroke--warning-disabled: var(--bq-gold-400);
+  /** Danger */
+  --bq-stroke--danger: var(--bq-red-600);
+  --bq-stroke--danger-hover: var(--bq-red-500);
+  --bq-stroke--danger-active: var(--bq-red-700);
+  --bq-stroke--danger-disabled: var(--bq-red-400);
+}

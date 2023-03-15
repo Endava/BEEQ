@@ -24,57 +24,146 @@ module.exports = {
     colors: {
       current: 'currentColor',
       transparent: 'transparent',
-      // Base Colours
-      background: {
-        light: 'var(--bq-background--light)',
-        card: 'var(--bq-background--card)',
+      /* -------------------------------------------------------------------------- */
+      /*                         Default Theme (Declarative)                        */
+      /* -------------------------------------------------------------------------- */
+      bg: {
+        primary: 'var(--bg-background--primary)',
+        secondary: 'var(--bg-background--secondary)',
+        tertiary: 'var(--bg-background--tertiary)',
+        inverse: 'var(--bg-background--inverse)',
+        brand: 'var(--bg-background--brand)',
+      },
+      text: {
+        /** Primary */
+        primary: 'var(--bq-text--primary)',
+        'primary-hover': 'var(--bq-text--primary-hover)',
+        'primary-active': 'var(--bq-text--primary-active)',
+        'primary-disabled': 'var(--bq-text--primary-disabled)',
+        /** Secondary */
+        secondary: 'var(--bq-text--secondary)',
+        'secondary-hover': 'var(--bq-text--secondary-hover)',
+        'secondary-selected': 'var(--bq-text--secondary-selected)',
+        'secondary-disabled': 'var(--bq-text--secondary-disabled)',
+        'secondary-inverse': 'var(--bq-text--secondary-inverse)',
+        /** Brand */
+        brand: 'var(--bq-text--brand)',
+        'brand-hover': 'var(--bq-text--brand-hover)',
+        'brand-selected': 'var(--bq-text--brand-selected)',
+        'brand-disabled': 'var(--bq-text--brand-disabled)',
+        /** Feedback */
+        success: 'var(--bq-text--success)',
+        warning: 'var(--bq-text--warning)',
+        danger: 'var(--bq-text--danger)',
+      },
+      icon: {
+        /** Primary */
+        primary: 'var(--bq-icon--primary)',
+        'primary-hover': 'var(--bq-icon--primary-hover)',
+        'primary-active': 'var(--bq-icon--primary-active)',
+        'primary-disabled': 'var(--bq-icon--primary-disabled)',
+        /** Secondary */
+        secondary: 'var(--bq-icon--secondary)',
+        'secondary-hover': 'var(--bq-icon--secondary-hover)',
+        'secondary-selected': 'var(--bq-icon--secondary-selected)',
+        'secondary-disabled': 'var(--bq-icon--secondary-disabled)',
+        'secondary-inverse': 'var(--bq-icon--secondary-inverse)',
+        /** Brand */
+        brand: 'var(--bq-icon--brand)',
+        'brand-hover': 'var(--bq-icon--brand-hover)',
+        'brand-selected': 'var(--bq-icon--brand-selected)',
+        'brand-disabled': 'var(--bq-icon--brand-disabled)',
+        /** Feedback */
+        success: 'var(--bq-icon--success)',
+        warning: 'var(--bq-icon--warning)',
+        danger: 'var(--bq-icon--danger)',
       },
       ui: {
+        /** Primary */
         primary: 'var(--bq-ui--primary)',
         'primary-hover': 'var(--bq-ui--primary-hover)',
         'primary-active': 'var(--bq-ui--primary-active)',
-        'primary-processing': 'var(--bq-ui--primary-processing)',
         'primary-disabled': 'var(--bq-ui--primary-disabled)',
+        /** Secondary */
         secondary: 'var(--bq-ui--secondary)',
         'secondary-hover': 'var(--bq-ui--secondary-hover)',
         'secondary-active': 'var(--bq-ui--secondary-active)',
-        'secondary-processing': 'var(--bq-ui--secondary-processing)',
         'secondary-disabled': 'var(--bq-ui--secondary-disabled)',
+        'secondary-light': 'var(--bq-ui--secondary-light)',
+        /** Tiertary */
+        tiertary: 'var(--bq-ui--tiertary)',
+        'tiertary-hover': 'var(--bq-ui--tiertary-hover)',
+        'tiertary-active': 'var(--bq-ui--tiertary-active)',
+        'tiertary-disabled': 'var(--bq-ui--tiertary-disabled)',
+        /** Inverse */
         inverse: 'var(--bq-ui--inverse)',
+        'inverse-hover': 'var(--bq-ui--inverse-hover)',
+        'inverse-active': 'var(--bq-ui--inverse-active)',
+        'inverse-disabled': 'var(--bq-ui--inverse-disabled)',
+        /** Brand */
+        accent: 'var(--bq-ui--accent)',
+        'accent-hover': 'var(--bq-ui--accent-hover)',
+        'accent-active': 'var(--bq-ui--accent-active)',
+        'accent-disabled': 'var(--bq-ui--accent-disabled)',
+        'accent-light': 'var(--bq-ui--accent-light)',
+        /** Success */
+        success: 'var(--bq-ui--success)',
+        'success-hover': 'var(--bq-ui--success-hover)',
+        'success-active': 'var(--bq-ui--success-active)',
+        'success-disabled': 'var(--bq-ui--success-disabled)',
+        'success-light': 'var(--bq-ui--success-light)',
+        /** Warning */
+        warning: 'var(--bq-ui--warning)',
+        'warning-hover': 'var(--bq-ui--warning-hover)',
+        'warning-active': 'var(--bq-ui--warning-active)',
+        'warning-disabled': 'var(--bq-ui--warning-disabled)',
+        'warning-light': 'var(--bq-ui--warning-light)',
+        /** Danger */
+        danger: 'var(--bq-ui--danger)',
+        'danger-hover': 'var(--bq-ui--danger-hover)',
+        'danger-active': 'var(--bq-ui--danger-active)',
+        'danger-disabled': 'var(--bq-ui--danger-disabled)',
+        'danger-light': 'var(--bq-ui--danger-light)',
       },
-      text: {
-        primary: 'var(--bq-text--primary)',
-        'primary-disabled': 'var(--bq-text--primary-disabled)',
-        secondary: 'var(--bq-text--secondary)',
-        'secondary-disabled': 'var(--bq-text--secondary-disabled)',
-        inverse: 'var(--bq-text--inverse)',
-        accent: 'var(--bq-text--accent)',
-      },
-      system: {
-        success: 'var(--bq-system--success)',
-        neutral: 'var(--bq-system--neutral)',
-        info: 'var(--bq-system--info)',
-        danger: 'var(--bq-system--danger)',
-        'danger-hover': 'var(--bq-system--danger-hover)',
-        'danger-active': 'var(--bq-system--danger-active)',
-        alert: 'var(--bq-system--alert)',
-        guide: 'var(--bq-system--guide)',
-      },
-      data: {
-        grey: 'var(--bq-data--grey)',
-        blue: 'var(--bq-data--blue)',
-        geekblue: 'var(--bq-data--geekblue)',
-        purple: 'var(--bq-data--purple)',
-        pink: 'var(--bq-data--pink)',
-        red: 'var(--bq-data--red)',
-        corai: 'var(--bq-data--corai)',
-        orange: 'var(--bq-data--orange)',
-        gold: 'var(--bq-data--gold)',
-        yellow: 'var(--bq-data--yellow)',
-        lime: 'var(--bq-data--lime)',
-        green: 'var(--bq-data--green)',
-        teal: 'var(--bq-data--teal)',
-        cyan: 'var(--bq-data--cyan)',
+      stroke: {
+        /** Primary */
+        primary: 'var(--bq-stroke--primary)',
+        'primary-hover': 'var(--bq-stroke--primary-hover)',
+        'primary-active': 'var(--bq-stroke--primary-active)',
+        'primary-disabled': 'var(--bq-stroke--primary-disabled)',
+        /** Secondary */
+        secondary: 'var(--bq-stroke--secondary)',
+        'secondary-hover': 'var(--bq-stroke--secondary-hover)',
+        'secondary-active': 'var(--bq-stroke--secondary-active)',
+        'secondary-disabled': 'var(--bq-stroke--secondary-disabled)',
+        'secondary-light': 'var(--bq-stroke--secondary-light)',
+        /** Tiertary */
+        tiertary: 'var(--bq-stroke--tiertary)',
+        'tiertary-hover': 'var(--bq-stroke--tiertary-hover)',
+        'tiertary-active': 'var(--bq-stroke--tiertary-active)',
+        'tiertary-disabled': 'var(--bq-stroke--tiertary-disabled)',
+        /** Inverse */
+        inverse: 'var(--bq-stroke--inverse)',
+        /** Brand */
+        accent: 'var(--bq-stroke--accent)',
+        'accent-hover': 'var(--bq-stroke--accent-hover)',
+        'accent-active': 'var(--bq-stroke--accent-active)',
+        'accent-disabled': 'var(--bq-stroke--accent-disabled)',
+        /** Success */
+        success: 'var(--bq-stroke--success)',
+        'success-hover': 'var(--bq-stroke--success-hover)',
+        'success-active': 'var(--bq-stroke--success-active)',
+        'success-disabled': 'var(--bq-stroke--success-disabled)',
+        /** Warning */
+        warning: 'var(--bq-stroke--warning)',
+        'warning-hover': 'var(--bq-stroke--warning-hover)',
+        'warning-active': 'var(--bq-stroke--warning-active)',
+        'warning-disabled': 'var(--bq-stroke--warning-disabled)',
+        /** Danger */
+        danger: 'var(--bq-stroke--danger)',
+        'danger-hover': 'var(--bq-stroke--danger-hover)',
+        'danger-active': 'var(--bq-stroke--danger-active)',
+        'danger-disabled': 'var(--bq-stroke--danger-disabled)',
       },
       /* -------------------------------------------------------------------------- */
       /*                         Extended colors (Primitive)                        */
