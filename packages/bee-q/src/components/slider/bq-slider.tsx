@@ -200,6 +200,29 @@ export class BqSlider {
     this.progressDivElement.style.right = rightPercent;
   };
 
+  private sanitizeArrayValue = (defaultValue): void => {
+    if (!Array.isArray(this.value)) return;
+
+    if (!this.value.length) {
+      this.value = defaultValue;
+      return;
+    }
+
+    if (this.isSingleSlider) {
+      this.value = this.value[0];
+      return;
+    }
+
+    if (this.value.length === 1) {
+      this.value[1] = this.value[0];
+    }
+
+    if (this.value.length > 1) {
+      this.value[0] = Math.min(this.value[0], this.value[1]);
+      this.value[1] = Math.max(this.value[0], this.value[1]);
+    }
+  };
+
   private sanitizePropValue = (): void => {
     const defaultValue = !this.isSingleSlider ? [0, 0] : 0;
 
@@ -210,24 +233,7 @@ export class BqSlider {
     this.value = isString(this.value) ? JSON.parse(this.value) : this.value;
 
     if (Array.isArray(this.value)) {
-      if (!this.value.length) {
-        this.value = defaultValue;
-        return;
-      }
-
-      if (this.isSingleSlider) {
-        this.value = this.value[0];
-        return;
-      }
-
-      if (this.value.length === 1) {
-        this.value[1] = this.value[0];
-      }
-
-      if (this.value.length > 1) {
-        this.value[0] = Math.min(this.value[0], this.value[1]);
-        this.value[1] = Math.max(this.value[0], this.value[1]);
-      }
+      this.sanitizeArrayValue(defaultValue);
     }
 
     if (typeof this.value === 'object' && !Array.isArray(this.value)) {
