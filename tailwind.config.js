@@ -23,6 +23,7 @@ module.exports = {
     },
     colors: {
       current: 'currentColor',
+      focus: 'var(--bq-stroke--warning)',
       transparent: 'transparent',
       /* -------------------------------------------------------------------------- */
       /*                         Default Theme (Declarative)                        */

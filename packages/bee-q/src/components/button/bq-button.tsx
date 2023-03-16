@@ -77,7 +77,7 @@ export class BqButton {
   /** The default behavior of the button */
   @Prop({ reflect: true }) type: TButtonType = 'button';
 
-  /** The variant of button to apply on top of the appearance */
+  /** The variant of button to apply on top of the appearance (applicable only to `appearance="primary"`) */
   @Prop({ reflect: true }) variant: TButtonVariant = 'standard';
 
   // Prop lifecycle events

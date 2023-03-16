@@ -108,7 +108,7 @@ export namespace Components {
          */
         "type": TButtonType;
         /**
-          * The variant of button to apply on top of the appearance
+          * The variant of button to apply on top of the appearance (applicable only to `appearance="primary"`)
          */
         "variant": TButtonVariant;
     }
@@ -668,7 +668,7 @@ declare namespace LocalJSX {
          */
         "type"?: TButtonType;
         /**
-          * The variant of button to apply on top of the appearance
+          * The variant of button to apply on top of the appearance (applicable only to `appearance="primary"`)
          */
         "variant"?: TButtonVariant;
     }
