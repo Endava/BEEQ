@@ -3,5 +3,17 @@
 /* -------------------------------------------------------------------------- */
 
 :host {
-  --bq-menu--margin: 1px;
+  --bq-menu-item--small-height: 48px;
+  --bq-menu-item--small-paddingX: 12px;
+  --bq-menu-item--small-paddingY: 24px;
+  --bq-menu-item--small-label: 14px;
+
+  --bq-menu-item--medium-height: 56px;
+  --bq-menu-item--medium-paddingX: 16px;
+  --bq-menu-item--medium-paddingY: 24px;
+  --bq-menu-item--medium-label: 16px;
+
+  --bq-menu--bg-color: #f8f8f9; // no var for these
+  --bq-menu-item--color: #2b2e33;
+  --bq-menu-item--hover: #f0f1f2;
 }

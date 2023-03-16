@@ -1,4 +1,5 @@
-import { h, Component } from '@stencil/core';
+import { h, Component, Prop } from '@stencil/core';
+import { TMenuItemSize } from './bq-menu.types';
 
 @Component({
   tag: 'bq-menu',
@@ -18,6 +19,9 @@ export class BqMenu {
 
   // Public Property API
   // ========================
+
+  /** The size of the menu item */
+  @Prop({ reflect: true }) size: TMenuItemSize = 'medium';
 
   // Prop lifecycle events
   // =======================
@@ -51,9 +55,39 @@ export class BqMenu {
 
   render() {
     return (
-      <p class="m-[var(--bq-menu--margin)]">
-        This is a Menu <slot />
-      </p>
+      <menu
+        role="menu"
+        class={{
+          'bq-menu': true,
+        }}
+      >
+        <li
+          class={{
+            'bq-menu__item': true,
+            [`${this.size}`]: true,
+          }}
+          tabindex="0"
+          role="menuitem"
+        >
+          <div class="bq-menu__item__container">
+            <bq-icon
+              class="bq-menu__item__container__icon"
+              name="user"
+              size={this.size === 'medium' ? '16' : '14'}
+              role="img"
+              title="Menu item"
+            />
+            <span
+              class={{
+                'bq-menu__item__container__label': true,
+                [`label--${this.size}`]: true,
+              }}
+            >
+              Label
+            </span>
+          </div>
+        </li>
+      </menu>
     );
   }
 }

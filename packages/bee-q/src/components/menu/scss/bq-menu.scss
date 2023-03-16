@@ -7,3 +7,54 @@
 :host {
   @apply block;
 }
+
+.bq-menu {
+  @apply m-0 flex h-[982px] w-[256px] gap-[8px] bg-[var(--bq-menu--bg-color)] p-[8px];
+}
+
+// Appearance
+
+.bq-menu__item {
+  @apply flex h-[56px] w-[240px] cursor-pointer items-center justify-center rounded-s bg-transparent;
+  @apply transition-[background-color,border-color,box-shadow] duration-200;
+  @apply focus:outline-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-system-alert;
+  @apply active:outline-none disabled:cursor-not-allowed;
+
+  &:hover {
+    @apply bg-[var(--bq-menu-item--hover)];
+  }
+
+  &:focus {
+    @apply outline-none;
+  }
+}
+
+.bq-menu__item__container {
+  @apply flex items-center gap-3 pl-9;
+
+  &__icon {
+    @apply text-[var(--bq-menu-item--color)];
+  }
+
+  &__label {
+    @apply h-[24px] w-[204px] leading-[24px] text-[var(--bq-menu-item--color)];
+  }
+}
+
+// Size
+
+.small {
+  @apply h-[var(--bq-menu-item--small-height)] px-[var(--bq-menu-item--small-paddingX)] py-[var(--bq-menu-item--small-paddingY)];
+}
+
+.medium {
+  @apply h-[var(--bq-menu-item--medium-height)] px-[var(--bq-menu-item--medium-paddingX)] py-[var(--bq-menu-item--medium-paddingY)];
+}
+
+.label--small {
+  @apply text-s;
+}
+
+.label--medium {
+  @apply text-m;
+}
