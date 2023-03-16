@@ -1,4 +1,6 @@
 import { h, Component, Prop } from '@stencil/core';
+
+// import { isDefined } from '../../shared/utils';
 import { TMenuItemSize } from './bq-menu.types';
 
 @Component({
@@ -22,6 +24,11 @@ export class BqMenu {
 
   /** The size of the menu item */
   @Prop({ reflect: true }) size: TMenuItemSize = 'medium';
+
+  /** State of menu item */
+  @Prop() disabled = false;
+
+  @Prop({ reflect: true }) href: string | undefined = undefined;
 
   // Prop lifecycle events
   // =======================
@@ -54,40 +61,45 @@ export class BqMenu {
   // ===================================
 
   render() {
+    /** wrapper element needed to show cursor not allowed on item disable */
+    const WrapperElem = 'section';
     return (
-      <menu
-        role="menu"
-        class={{
-          'bq-menu': true,
-        }}
-      >
-        <li
-          class={{
-            'bq-menu__item': true,
-            [`${this.size}`]: true,
-          }}
-          tabindex="0"
-          role="menuitem"
-        >
-          <div class="bq-menu__item__container">
-            <bq-icon
-              class="bq-menu__item__container__icon"
-              name="user"
-              size={this.size === 'medium' ? '16' : '14'}
-              role="img"
-              title="Menu item"
-            />
-            <span
-              class={{
-                'bq-menu__item__container__label': true,
-                [`label--${this.size}`]: true,
-              }}
-            >
-              Label
-            </span>
-          </div>
-        </li>
-      </menu>
+      <aside role="menu" class="bq-menu">
+        <WrapperElem class={{ wrapper: this.disabled }}>
+          <a
+            class={{
+              'bq-menu__item': true,
+              [`${this.size}`]: true,
+              group: true,
+              disabled: this.disabled,
+            }}
+            tabindex="0"
+            role="menuitem"
+            aria-disabled={JSON.stringify(this.disabled)}
+            href={this.href}
+            target="_self"
+            rel="noreferrer noopener"
+          >
+            <div class="bq-menu__item__container">
+              <bq-icon
+                class="bq-menu__item__container__icon"
+                name="user"
+                size={this.size === 'medium' ? '18' : '16'}
+                role="img"
+                title="Menu item"
+              />
+              <span
+                class={{
+                  'bq-menu__item__container__label': true,
+                  [`label--${this.size}`]: true,
+                }}
+              >
+                Label
+              </span>
+            </div>
+          </a>
+        </WrapperElem>
+      </aside>
     );
   }
 }
