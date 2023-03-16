@@ -28,7 +28,7 @@ export default {
   args: {
     orientation: 'horizontal',
     dashed: false,
-    'stroke-color': 'ui--secondary',
+    'stroke-color': 'stroke--secondary',
     'title-alignment': 'middle',
     'stroke-dash-width': 12,
     'stroke-dash-gap': 7,
