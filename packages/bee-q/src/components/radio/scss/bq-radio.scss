@@ -9,18 +9,20 @@
 }
 
 .bq-radio {
-  @apply inline-flex cursor-pointer items-center justify-center gap-2;
+  @apply inline-flex cursor-pointer items-center justify-center gap-2 transition-[background-color] duration-300;
   @apply rounded-s p-2 pr-4;
 
   &.is-disabled {
-    @apply cursor-not-allowed opacity-40;
-
     .bq-radio__circle {
-      @apply border-text-primary;
+      @apply border-icon-primary-disabled;
+    }
+
+    &.is-checked .bq-radio__circle {
+      @apply border-stroke-brand-disabled;
     }
 
     &.is-checked .bq-radio__checked {
-      @apply bg-text-primary;
+      @apply bg-icon-brand-disabled;
     }
   }
 
@@ -30,25 +32,22 @@
 
   &.is-checked:not(.is-disabled) {
     .bq-radio__circle {
-      @apply border-ui-primary;
+      @apply border-icon-brand;
     }
 
     .bq-radio__checked {
-      @apply bg-ui-primary;
+      @apply bg-ui-brand;
     }
   }
 
   &:not(.is-disabled):hover .bq-radio__circle {
-    @apply border-ui-primary;
+    @apply border-ui-brand-hover;
   }
 
   &.is-checked:not(.is-disabled):hover {
-    .bq-radio__checked {
-      background-color: lighten(var(--bq-ui--primary), 20%);
-    }
-
+    .bq-radio__checked,
     .bq-radio__circle {
-      border-color: lighten(var(--bq-ui--primary), 20%);
+      @apply border-icon-brand-hover;
     }
   }
 }
@@ -58,13 +57,17 @@
 
   &:focus-visible {
     ~ .bq-radio__circle {
-      @apply ring-4 ring-system-alert;
+      @apply ring-4 ring-focus ring-offset-1;
     }
   }
 }
 
+.bq-radio__control {
+  @apply box-border flex h-[var(--bq-radio--size)] w-[var(--bq-radio--size)] items-center justify-center rounded-full p-[2px];
+}
+
 .bq-radio__circle {
-  @apply relative box-border flex h-full w-full items-center justify-center rounded-full border-[length:var(--bq-radio--border-width)] border-solid border-text-primary p-[3px];
+  @apply relative box-border flex h-full w-full items-center justify-center rounded-full border-[length:var(--bq-radio--border-width)] border-solid border-icon-primary-hover p-[3px];
 }
 
 .bq-radio__checked {
@@ -75,6 +78,8 @@
   @apply font-medium leading-large text-text-primary;
 }
 
-.bq-radio__control {
-  @apply box-border flex h-[var(--bq-radio--size)] w-[var(--bq-radio--size)] items-center justify-center rounded-full p-[2px];
+.bq-radio__circle,
+.bq-radio__checked,
+.bq-radio__label {
+  @apply transition-[color,background-color,border-color,box-shadow] duration-300;
 }

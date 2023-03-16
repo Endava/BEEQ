@@ -11,12 +11,13 @@ export default {
     },
   },
   argTypes: {
-    orientation: { control: 'select', options: [...RADIO_GROUP_ORIENTATION] },
+    'background-on-hover': { control: 'boolean' },
+    'debounce-time': { control: 'number' },
     disabled: { control: 'boolean' },
     fieldset: { control: 'boolean' },
-    value: { control: 'text' },
     name: { control: 'text' },
-    'debounce-time': { control: 'number' },
+    value: { control: 'text' },
+    orientation: { control: 'select', options: [...RADIO_GROUP_ORIENTATION] },
     // Event handlers
     bqChange: { action: 'bqChange' },
     bqFocus: { action: 'bqFocus' },
@@ -25,6 +26,7 @@ export default {
     label: { control: 'text' },
   },
   args: {
+    'background-on-hover': false,
     orientation: 'vertical',
     value: 'option1',
     disabled: false,
@@ -37,12 +39,13 @@ export default {
 const Template = (args) => {
   return html`
     <bq-radio-group
-      .name=${args.name}
-      .value=${args.value}
-      .disabled=${args.disabled}
-      .orientation=${args.orientation}
-      .fieldset=${args.fieldset}
+      ?background-on-hover=${args['background-on-hover']}
       debounce-time=${args['debounce-time']}
+      ?disabled=${args.disabled}
+      ?fieldset=${args.fieldset}
+      name=${args.name}
+      orientation=${args.orientation}
+      value=${args.value}
       @bqChange=${args.bqChange}
       @bqFocus=${args.bqFocus}
       @bqBlur=${args.bqBlur}

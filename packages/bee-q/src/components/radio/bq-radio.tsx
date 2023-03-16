@@ -152,8 +152,8 @@ export class BqRadio {
     return (
       <label
         class={{
-          'bq-radio': true,
-          'is-disabled': this.disabled,
+          'bq-radio group': true,
+          'is-disabled !cursor-not-allowed': this.disabled,
           'is-checked': this.checked,
           'has-background': this.backgroundOnHover,
         }}
@@ -179,11 +179,14 @@ export class BqRadio {
             tabindex={this.tabindex}
             part="input"
           />
-          <div class={{ 'bq-radio__circle': true }} part="radio">
+          <div class="bq-radio__circle" part="radio">
             <div class="bq-radio__checked" />
           </div>
         </div>
-        <span class="bq-radio__label" part="label">
+        <span
+          class="bq-radio__label group-hover:text-text-primary-hover group-[.is-disabled]:text-text-primary-disabled"
+          part="label"
+        >
           <slot></slot>
         </span>
       </label>
