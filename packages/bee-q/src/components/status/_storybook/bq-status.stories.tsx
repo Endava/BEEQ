@@ -45,12 +45,6 @@ Info.args = {
   type: 'info',
 };
 
-export const Guide = (args) => Template(args);
-Guide.args = {
-  label: 'Guidance status',
-  type: 'guide',
-};
-
 export const Alert = (args) => Template(args);
 Alert.args = {
   label: 'Alert status',
