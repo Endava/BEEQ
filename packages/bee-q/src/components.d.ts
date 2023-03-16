@@ -221,6 +221,11 @@ export namespace Components {
     }
     interface BqMenu {
         /**
+          * State of menu item
+         */
+        "disabled": boolean;
+        "href": string | undefined;
+        /**
           * The size of the menu item
          */
         "size": TMenuItemSize;
@@ -801,6 +806,11 @@ declare namespace LocalJSX {
         "weight"?: TIconWeight;
     }
     interface BqMenu {
+        /**
+          * State of menu item
+         */
+        "disabled"?: boolean;
+        "href"?: string | undefined;
         /**
           * The size of the menu item
          */
