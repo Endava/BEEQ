@@ -1,4 +1,4 @@
-import { html, nothing } from 'lit-html';
+import { html } from 'lit-html';
 
 import { DIVIDER_TITLE_ALIGNMENT, DIVIDER_ORIENTATION, DIVIDER_STROKE_LINECAP } from '../bq-divider.types';
 import mdx from './bq-divider.mdx';
