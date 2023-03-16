@@ -1,7 +1,7 @@
 import { h, Component, Prop, Element, Watch } from '@stencil/core';
 
 import { validatePropValue } from '../../shared/utils';
-import { DIALOG_SIZE, TDialogSize } from './bq-dialog.types';
+import { DIALOG_SIZE, DIALOG_FOOTER_VARIANT, TDialogSize, TDialogFooterVariant } from './bq-dialog.types';
 
 @Component({
   tag: 'bq-dialog',
@@ -28,13 +28,18 @@ export class BqDialog {
   /** The size of the dialog */
   @Prop({ reflect: true, mutable: true }) size: TDialogSize = 'medium';
 
+  /** The variant of button to apply on top of the appearance */
+  @Prop({ reflect: true }) variant: TDialogFooterVariant = 'standard';
+
   // Prop lifecycle events
   // =======================
   @Prop() isOpen = false;
 
   @Watch('size')
+  @Watch('variant')
   checkPropValues() {
     validatePropValue(DIALOG_SIZE, 'medium', this.el, 'size');
+    validatePropValue(DIALOG_FOOTER_VARIANT, 'standard', this.el, 'variant');
   }
 
   // Events section
@@ -92,20 +97,37 @@ export class BqDialog {
               [`size--${this.size}`]: true,
             }}
           >
-            <bq-icon
-              class="h-5 w-5 pl-1 pt-1"
-              name="info"
-              color="text--accent"
-              role="img"
-              title="Info"
-              part="icon-on"
-            />
-            <h3>
-              <slot name="title"></slot>
-            </h3>
+            <header>
+              <bq-icon
+                class="h-5 w-5 pl-1 pt-1"
+                name="info"
+                color="text--accent"
+                role="img"
+                title="Info"
+                part="icon-on"
+              />
+              <h3>
+                <slot name="title" />
+              </h3>
+              <bq-icon
+                class="float-right pl-1 pt-1"
+                name="x"
+                role="img"
+                title="Close"
+                part="icon-on"
+                onClick={() => this.closeDialog()}
+              />
+            </header>
             <div class="content">
-              <slot></slot>
+              <slot name="content" />
             </div>
+            <footer
+              class={{
+                [`${this.variant}`]: true,
+              }}
+            >
+              <slot name="buttons" />
+            </footer>
           </div>
         </div>
       </div>

@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property | Attribute | Description            | Type                             | Default    |
-| -------- | --------- | ---------------------- | -------------------------------- | ---------- |
-| `isOpen` | `is-open` |                        | `boolean`                        | `false`    |
-| `size`   | `size`    | The size of the dialog | `"large" \| "medium" \| "small"` | `'medium'` |
+| Property  | Attribute | Description                                             | Type                             | Default      |
+| --------- | --------- | ------------------------------------------------------- | -------------------------------- | ------------ |
+| `isOpen`  | `is-open` |                                                         | `boolean`                        | `false`      |
+| `size`    | `size`    | The size of the dialog                                  | `"large" \| "medium" \| "small"` | `'medium'`   |
+| `variant` | `variant` | The variant of button to apply on top of the appearance | `"light" \| "standard"`          | `'standard'` |
 
 
 ## Shadow Parts
