@@ -11,7 +11,7 @@
   /** Secondary */
   --bq-text--secondary: var(--bq-grey-600);
   --bq-text--secondary-hover: var(--bq-grey-500);
-  --bq-text--secondary-selected: var(--bq-grey-700);
+  --bq-text--secondary-active: var(--bq-grey-700);
   --bq-text--secondary-disabled: var(--bq-grey-400);
   --bq-text--secondary-inverse: var(--bq-neutral-white);
   /** Inverse */
@@ -19,7 +19,7 @@
   /** Brand */
   --bq-text--brand: var(--bq-indigo-600);
   --bq-text--brand-hover: var(--bq-indigo-500);
-  --bq-text--brand-selected: var(--bq-indigo-700);
+  --bq-text--brand-active: var(--bq-indigo-700);
   --bq-text--brand-disabled: var(--bq-indigo-400);
   /** Feedback */
   --bq-text--success: var(--bq-teal-600);

@@ -28,11 +28,11 @@ module.exports = {
       /*                         Default Theme (Declarative)                        */
       /* -------------------------------------------------------------------------- */
       bg: {
-        primary: 'var(--bg-background--primary)',
-        secondary: 'var(--bg-background--secondary)',
-        tertiary: 'var(--bg-background--tertiary)',
-        inverse: 'var(--bg-background--inverse)',
-        brand: 'var(--bg-background--brand)',
+        primary: 'var(--bq-background--primary)',
+        secondary: 'var(--bq-background--secondary)',
+        tertiary: 'var(--bq-background--tertiary)',
+        inverse: 'var(--bq-background--inverse)',
+        brand: 'var(--bq-background--brand)',
       },
       text: {
         /** Primary */
@@ -43,7 +43,7 @@ module.exports = {
         /** Secondary */
         secondary: 'var(--bq-text--secondary)',
         'secondary-hover': 'var(--bq-text--secondary-hover)',
-        'secondary-selected': 'var(--bq-text--secondary-selected)',
+        'secondary-active': 'var(--bq-text--secondary-active)',
         'secondary-disabled': 'var(--bq-text--secondary-disabled)',
         'secondary-inverse': 'var(--bq-text--secondary-inverse)',
         /** Inverse */
@@ -51,7 +51,7 @@ module.exports = {
         /** Brand */
         brand: 'var(--bq-text--brand)',
         'brand-hover': 'var(--bq-text--brand-hover)',
-        'brand-selected': 'var(--bq-text--brand-selected)',
+        'brand-active': 'var(--bq-text--brand-active)',
         'brand-disabled': 'var(--bq-text--brand-disabled)',
         /** Feedback */
         success: 'var(--bq-text--success)',
@@ -67,13 +67,13 @@ module.exports = {
         /** Secondary */
         secondary: 'var(--bq-icon--secondary)',
         'secondary-hover': 'var(--bq-icon--secondary-hover)',
-        'secondary-selected': 'var(--bq-icon--secondary-selected)',
+        'secondary-active': 'var(--bq-icon--secondary-active)',
         'secondary-disabled': 'var(--bq-icon--secondary-disabled)',
         'secondary-inverse': 'var(--bq-icon--secondary-inverse)',
         /** Brand */
         brand: 'var(--bq-icon--brand)',
         'brand-hover': 'var(--bq-icon--brand-hover)',
-        'brand-selected': 'var(--bq-icon--brand-selected)',
+        'brand-active': 'var(--bq-icon--brand-active)',
         'brand-disabled': 'var(--bq-icon--brand-disabled)',
         /** Feedback */
         success: 'var(--bq-icon--success)',
@@ -103,11 +103,11 @@ module.exports = {
         'inverse-active': 'var(--bq-ui--inverse-active)',
         'inverse-disabled': 'var(--bq-ui--inverse-disabled)',
         /** Brand */
-        accent: 'var(--bq-ui--accent)',
-        'accent-hover': 'var(--bq-ui--accent-hover)',
-        'accent-active': 'var(--bq-ui--accent-active)',
-        'accent-disabled': 'var(--bq-ui--accent-disabled)',
-        'accent-light': 'var(--bq-ui--accent-light)',
+        brand: 'var(--bq-ui--brand)',
+        'brand-hover': 'var(--bq-ui--brand-hover)',
+        'brand-active': 'var(--bq-ui--brand-active)',
+        'brand-disabled': 'var(--bq-ui--brand-disabled)',
+        'brand-light': 'var(--bq-ui--brand-light)',
         /** Success */
         success: 'var(--bq-ui--success)',
         'success-hover': 'var(--bq-ui--success-hover)',
@@ -147,10 +147,10 @@ module.exports = {
         /** Inverse */
         inverse: 'var(--bq-stroke--inverse)',
         /** Brand */
-        accent: 'var(--bq-stroke--accent)',
-        'accent-hover': 'var(--bq-stroke--accent-hover)',
-        'accent-active': 'var(--bq-stroke--accent-active)',
-        'accent-disabled': 'var(--bq-stroke--accent-disabled)',
+        brand: 'var(--bq-stroke--brand)',
+        'brand-hover': 'var(--bq-stroke--brand-hover)',
+        'brand-active': 'var(--bq-stroke--brand-active)',
+        'brand-disabled': 'var(--bq-stroke--brand-disabled)',
         /** Success */
         success: 'var(--bq-stroke--success)',
         'success-hover': 'var(--bq-stroke--success-hover)',
