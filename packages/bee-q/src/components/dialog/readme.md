@@ -9,8 +9,7 @@
 
 | Property  | Attribute | Description                                             | Type                             | Default      |
 | --------- | --------- | ------------------------------------------------------- | -------------------------------- | ------------ |
-| `isOpen`  | `is-open` |                                                         | `boolean`                        | `false`      |
-| `size`    | `size`    | The size of the dialog                                  | `"large" \| "medium" \| "small"` | `'medium'`   |
+| `size`    | `size`    | The size of the dialog                                  | `"large" \| "medium" \| "small"` | `'large'`    |
 | `variant` | `variant` | The variant of button to apply on top of the appearance | `"light" \| "standard"`          | `'standard'` |
 
 

@@ -161,7 +161,6 @@ export namespace Components {
         "value": string;
     }
     interface BqDialog {
-        "isOpen": boolean;
         /**
           * The size of the dialog
          */
@@ -739,7 +738,6 @@ declare namespace LocalJSX {
         "value": string;
     }
     interface BqDialog {
-        "isOpen"?: boolean;
         /**
           * The size of the dialog
          */
