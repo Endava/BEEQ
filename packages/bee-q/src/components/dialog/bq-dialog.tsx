@@ -1,4 +1,4 @@
-import { h, Component, Prop, Element, Watch } from '@stencil/core';
+import { h, Component, Prop, Element, Watch, State } from '@stencil/core';
 
 import { validatePropValue } from '../../shared/utils';
 import { DIALOG_SIZE, DIALOG_FOOTER_VARIANT, TDialogSize, TDialogFooterVariant } from './bq-dialog.types';
@@ -19,6 +19,7 @@ export class BqDialog {
   @Element() el!: HTMLBqDialogElement;
 
   // State() variables
+  @State() isOpen = false;
   // Inlined decorator, alphabetical order
   // =======================================
 
@@ -26,19 +27,17 @@ export class BqDialog {
   // ========================
 
   /** The size of the dialog */
-  @Prop({ reflect: true, mutable: true }) size: TDialogSize = 'medium';
+  @Prop({ reflect: true, mutable: true }) size: TDialogSize = 'large';
 
   /** The variant of button to apply on top of the appearance */
   @Prop({ reflect: true }) variant: TDialogFooterVariant = 'standard';
 
   // Prop lifecycle events
   // =======================
-  @Prop() isOpen = false;
-
   @Watch('size')
   @Watch('variant')
   checkPropValues() {
-    validatePropValue(DIALOG_SIZE, 'medium', this.el, 'size');
+    validatePropValue(DIALOG_SIZE, 'large', this.el, 'size');
     validatePropValue(DIALOG_FOOTER_VARIANT, 'standard', this.el, 'variant');
   }
 
@@ -72,14 +71,15 @@ export class BqDialog {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  openDialog() {
-    this.dialogElement.style.display = 'block';
-  }
+  handleCloseClick = () => {
+    this.isOpen = false;
+  };
 
-  closeDialog() {
-    this.dialogElement.style.display = 'none';
-  }
-
+  handleOverlayClick = (event: MouseEvent) => {
+    if (event.target === this.dialogElement) {
+      this.isOpen = false;
+    }
+  };
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -87,49 +87,62 @@ export class BqDialog {
   render() {
     return (
       <div>
-        <bq-button class="px-3 py-3 no-underline" appearance="primary" onClick={() => this.openDialog()}>
+        <bq-button class="px-3 py-3 no-underline" appearance="primary" onClick={() => (this.isOpen = true)}>
           Open Dialog
         </bq-button>
-        <div class="dialog" style={{ display: 'none' }}>
+        {this.isOpen && (
           <div
-            class={{
-              'bq-dialog-container': true,
-              [`size--${this.size}`]: true,
-            }}
+            class="overlay dialog fixed flex h-screen w-full items-center justify-center"
+            onClick={this.handleOverlayClick}
+            ref={(el) => (this.dialogElement = el)}
           >
-            <header>
-              <bq-icon
-                class="h-5 w-5 pl-1 pt-1"
-                name="info"
-                color="text--accent"
-                role="img"
-                title="Info"
-                part="icon-on"
-              />
-              <h3>
-                <slot name="title" />
-              </h3>
-              <bq-icon
-                class="float-right pl-1 pt-1"
-                name="x"
-                role="img"
-                title="Close"
-                part="icon-on"
-                onClick={() => this.closeDialog()}
-              />
-            </header>
-            <div class="content">
-              <slot name="content" />
-            </div>
-            <footer
+            <div
               class={{
-                [`${this.variant}`]: true,
+                'bq-dialog-container': true,
+                [`size--${this.size}`]: true,
               }}
             >
-              <slot name="buttons" />
-            </footer>
+              <header
+                class={{
+                  [`size-header--${this.size}`]: true,
+                }}
+              >
+                <div class="bq-header flex">
+                  <div class="bq-placeholder-info">
+                    <slot name="info" />
+                  </div>
+                  <h3>
+                    <div
+                      class={{
+                        [`size-title--${this.size}`]: true,
+                      }}
+                    >
+                      <slot name="title" />
+                    </div>
+                  </h3>
+                  <bq-icon
+                    class="float-right pl-1 pt-1"
+                    name="x"
+                    role="img"
+                    title="Close"
+                    part="icon-on"
+                    onClick={this.handleCloseClick}
+                  />
+                </div>
+                <div class="bq-content-container">
+                  <slot name="content" />
+                </div>
+              </header>
+              <footer
+                class={{
+                  [`${this.variant}`]: true,
+                }}
+              >
+                <slot name="buttons" />
+              </footer>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     );
   }
