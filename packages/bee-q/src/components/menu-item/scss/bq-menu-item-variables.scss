@@ -3,5 +3,15 @@
 /* -------------------------------------------------------------------------- */
 
 :host {
-  --bq-menu-item--margin: 1px;
+  --bq-menu-item--small-height: 32px;
+  --bq-menu-item--small-paddingX: 8px;
+  --bq-menu-item--small-paddingY: 4px;
+
+  --bq-menu-item--medium-height: 48px;
+  --bq-menu-item--medium-paddingX: 16px;
+  --bq-menu-item--medium-paddingY: 12px;
+
+  --bq-menu-item--width: 240px;
+  --bq-menu-item--active: #edecfc;
+  --bq-menu-item--hover: #f0f1f2;
 }

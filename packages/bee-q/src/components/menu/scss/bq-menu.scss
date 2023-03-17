@@ -5,37 +5,5 @@
 @import './bq-menu-variables';
 
 .bq-menu {
-  @apply m-0 flex h-[var(--bq-menu--height)] w-[var(--bq-menu--width)] gap-[var(--bq-menu--gap)] bg-[var(--bq-menu--bg-color)] p-[var(--bq-menu--padding)];
-}
-
-// Appearance
-
-.bq-menu__item {
-  @apply flex h-[inherit] w-[var(--bq-menu-item--width)] cursor-pointer items-center justify-items-stretch gap-3 pl-9;
-  @apply rounded-s bg-transparent hover:bg-[var(--bq-menu-item--hover)] active:bg-[var(--bq-menu-item--active)];
-  @apply transition-[background-color,border-color,box-shadow] duration-200;
-  @apply focus:outline-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-system-alert;
-  @apply active:outline-none;
-
-  &__child {
-    @apply flex items-center text-text-primary group-active:text-text-accent;
-  }
-
-  &.disabled {
-    @apply pointer-events-none;
-  }
-}
-
-// Size
-
-.small {
-  @apply h-[var(--bq-menu-item--small-height)] px-[var(--bq-menu-item--small-paddingX)] py-[var(--bq-menu-item--small-paddingY)] text-s;
-}
-
-.medium {
-  @apply h-[var(--bq-menu-item--medium-height)] px-[var(--bq-menu-item--medium-paddingX)] py-[var(--bq-menu-item--medium-paddingY)] text-m;
-}
-
-.wrapper {
-  @apply h-fit;
+  @apply m-0 flex h-[var(--bq-menu--height)] w-[var(--bq-menu--width)] flex-col gap-[var(--bq-menu--gap)] bg-[var(--bq-menu--bg-color)] p-[var(--bq-menu--padding)];
 }
