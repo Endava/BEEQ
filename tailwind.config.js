@@ -418,15 +418,11 @@ module.exports = {
          *  }
          */
         '.focus': {
+          '--tw-ring-width': '2px',
           '--tw-ring-offset-width': '1px',
           '--tw-ring-color': theme('colors.focus'),
-          outline: `var(--tw-ring-offset-width) solid ${theme('colors.transparent')}`,
+          outline: `var(--tw-ring-width) solid ${theme('colors.focus')}`,
           outlineOffset: 'var(--tw-ring-offset-width)',
-          boxShadow: `
-            var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color),
-            var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color),
-            var(--tw-shadow,0 0 #0000)
-          `,
         },
       });
     }),

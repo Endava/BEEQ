@@ -5,29 +5,11 @@
 @import './bq-button.variables';
 
 @layer components {
-  /* SVG spinner icon animation */
-  @keyframes rotate {
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
-  @keyframes loading--spin {
-    0% {
-      transform: rotate(0deg);
-    }
-
-    to {
-      transform: rotate(1turn);
-    }
-  }
-
   // Common button base style
-
   .bq-button {
     @apply box-border flex cursor-[inherit] items-center justify-center rounded-m border-2 border-solid border-transparent text-m font-medium leading-large;
-    @apply transition-[background-color,border-color,box-shadow] duration-200;
-    @apply active:outline-none disabled:cursor-not-allowed;
+    @apply transition-[background-color,border-color,box-shadow] duration-300;
+    @apply disabled:cursor-not-allowed;
     @apply focus-visible:focus;
   }
 }
@@ -81,12 +63,16 @@
 .bq-button--link {
   @apply bg-transparent text-text-brand no-underline;
   // Link `HOVER` state
-  @apply hover:text-text-brand-hover hover:underline hover:decoration-ui-brand-hover hover:underline-offset-4;
+  @apply hover:text-text-brand-hover;
   // Link `ACTIVE` state
-  @apply active:text-text-brand-active active:hover:decoration-ui-brand-active;
+  @apply active:text-text-brand-active;
 
   &.disabled {
     @apply cursor-not-allowed text-text-brand-disabled no-underline;
+  }
+
+  .bq-button__label {
+    @apply relative before:absolute before:bottom-0 before:block before:h-[2px] before:w-full before:scale-x-0 before:transition-transform before:duration-300 before:content-empty;
   }
 }
 
@@ -156,5 +142,5 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-button__loader {
-  @apply absolute animate-[loading--spin_1s_infinite_linear];
+  @apply absolute animate-spin;
 }
