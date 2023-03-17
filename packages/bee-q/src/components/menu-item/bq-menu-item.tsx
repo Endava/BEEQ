@@ -1,4 +1,6 @@
-import { h, Component } from '@stencil/core';
+import { h, Component, Prop } from '@stencil/core';
+
+import { TMenuItemSize } from './bq-menu-item.types';
 
 @Component({
   tag: 'bq-menu-item',
@@ -18,6 +20,14 @@ export class BqMenuItem {
 
   // Public Property API
   // ========================
+
+  /** The size of the menu item */
+  @Prop({ reflect: true }) size: TMenuItemSize = 'medium';
+
+  /** State of menu item */
+  @Prop() disabled = false;
+
+  @Prop({ reflect: true }) href: string | undefined = undefined;
 
   // Prop lifecycle events
   // =======================
@@ -50,10 +60,37 @@ export class BqMenuItem {
   // ===================================
 
   render() {
+    /** wrapper element needed to show cursor not allowed on item disable */
+    const WrapperElem = 'section';
     return (
-      <p class="m-[var(--bq-menu-item--margin)]">
-        My name is Stencil <slot />
-      </p>
+      <WrapperElem class="wrapper">
+        <a
+          class={{
+            'bq-menu-item': true,
+            [`${this.size}`]: true,
+            group: true,
+            disabled: this.disabled,
+          }}
+          tabindex="0"
+          role="menuitem"
+          aria-disabled={JSON.stringify(this.disabled)}
+          href={this.href}
+          target="_self"
+          rel="noreferrer noopener"
+        >
+          <span class="bq-menu-item__child" part="prefix">
+            <slot name="prefix" />
+          </span>
+
+          <span class="bq-menu-item__child" part="label">
+            <slot />
+          </span>
+
+          <span class="bq-menu-item__child" part="suffix">
+            <slot name="suffix" />
+          </span>
+        </a>
+      </WrapperElem>
     );
   }
 }
