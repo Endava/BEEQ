@@ -14,18 +14,14 @@
 | `size`     | `size`     | The size of the menu item | `"medium" \| "small"` | `'medium'`  |
 
 
-## Dependencies
+## Shadow Parts
 
-### Depends on
+| Part       | Description |
+| ---------- | ----------- |
+| `"label"`  |             |
+| `"prefix"` |             |
+| `"suffix"` |             |
 
-- [bq-icon](../icon)
-
-### Graph
-```mermaid
-graph TD;
-  bq-menu --> bq-icon
-  style bq-menu fill:#f9f,stroke:#333,stroke-width:4px
-```
 
 ----------------------------------------------
 

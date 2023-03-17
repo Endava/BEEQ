@@ -1,6 +1,5 @@
 import { h, Component, Prop } from '@stencil/core';
 
-// import { isDefined } from '../../shared/utils';
 import { TMenuItemSize } from './bq-menu.types';
 
 @Component({
@@ -65,7 +64,7 @@ export class BqMenu {
     const WrapperElem = 'section';
     return (
       <aside role="menu" class="bq-menu">
-        <WrapperElem class={{ wrapper: this.disabled }}>
+        <WrapperElem class="wrapper">
           <a
             class={{
               'bq-menu__item': true,
@@ -80,23 +79,17 @@ export class BqMenu {
             target="_self"
             rel="noreferrer noopener"
           >
-            <div class="bq-menu__item__container">
-              <bq-icon
-                class="bq-menu__item__container__icon"
-                name="user"
-                size={this.size === 'medium' ? '18' : '16'}
-                role="img"
-                title="Menu item"
-              />
-              <span
-                class={{
-                  'bq-menu__item__container__label': true,
-                  [`label--${this.size}`]: true,
-                }}
-              >
-                Label
-              </span>
-            </div>
+            <span class="bq-menu__item__child" part="prefix">
+              <slot name="prefix" />
+            </span>
+
+            <span class="bq-menu__item__child" part="label">
+              <slot />
+            </span>
+
+            <span class="bq-menu__item__child" part="suffix">
+              <slot name="suffix" />
+            </span>
           </a>
         </WrapperElem>
       </aside>
