@@ -1,5 +1,6 @@
-/** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin');
 
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['packages/bee-q/**/*.{jsx,js,tsx,ts}'],
   theme: {
@@ -23,7 +24,7 @@ module.exports = {
     },
     colors: {
       current: 'currentColor',
-      focus: 'var(--bq-stroke--warning)',
+      focus: 'var(--bq-stroke--brand-focus)',
       transparent: 'transparent',
       /* -------------------------------------------------------------------------- */
       /*                         Default Theme (Declarative)                        */
@@ -401,7 +402,35 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addComponents, theme }) {
+      addComponents({
+        /**
+         * Common `FOCUS` state that should be used within `focus-visible` Tailwind CSS utility
+         * Examples of usage:
+         *
+         *  class="focus-visible:focus"
+         *
+         *  @apply focus-visible:focus
+         *
+         *  &:focus-visible {
+         *    @apply focus;
+         *  }
+         */
+        '.focus': {
+          '--tw-ring-offset-width': '1px',
+          '--tw-ring-color': theme('colors.focus'),
+          outline: `var(--tw-ring-offset-width) solid ${theme('colors.transparent')}`,
+          outlineOffset: 'var(--tw-ring-offset-width)',
+          boxShadow: `
+            var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color),
+            var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color),
+            var(--tw-shadow,0 0 #0000)
+          `,
+        },
+      });
+    }),
+  ],
   corePlugins: {
     preflight: false,
   },

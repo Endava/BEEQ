@@ -34,12 +34,10 @@
 }
 
 .bq-checkbox__input {
-  @apply focus:outline-none focus-visible:outline-none;
-
   // Checkbox square icon has `FOCUS`
   &:focus-visible {
     ~ .bq-checkbox__checkbox {
-      @apply ring-4 ring-focus ring-offset-1;
+      @apply focus;
     }
   }
 

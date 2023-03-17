@@ -53,11 +53,11 @@
 }
 
 .bq-radio__input {
-  @apply pointer-events-none absolute m-0 p-0 opacity-0 focus:outline-none focus-visible:outline-none;
+  @apply pointer-events-none absolute m-0 p-0 opacity-0;
 
   &:focus-visible {
     ~ .bq-radio__circle {
-      @apply ring-4 ring-focus ring-offset-1;
+      @apply focus;
     }
   }
 }

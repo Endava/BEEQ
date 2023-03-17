@@ -40,7 +40,7 @@
 
 .bq-switch--input:not(:disabled):focus-visible {
   ~ .bq-switch--control {
-    @apply ring-4 ring-focus ring-offset-1;
+    @apply focus;
   }
 }
 
