@@ -1,6 +1,4 @@
-import { h, Component, Prop } from '@stencil/core';
-
-import { TMenuItemSize } from './bq-menu.types';
+import { h, Component } from '@stencil/core';
 
 @Component({
   tag: 'bq-menu',
@@ -20,14 +18,6 @@ export class BqMenu {
 
   // Public Property API
   // ========================
-
-  /** The size of the menu item */
-  @Prop({ reflect: true }) size: TMenuItemSize = 'medium';
-
-  /** State of menu item */
-  @Prop() disabled = false;
-
-  @Prop({ reflect: true }) href: string | undefined = undefined;
 
   // Prop lifecycle events
   // =======================
@@ -60,38 +50,9 @@ export class BqMenu {
   // ===================================
 
   render() {
-    /** wrapper element needed to show cursor not allowed on item disable */
-    const WrapperElem = 'section';
     return (
-      <aside role="menu" class="bq-menu">
-        <WrapperElem class="wrapper">
-          <a
-            class={{
-              'bq-menu__item': true,
-              [`${this.size}`]: true,
-              group: true,
-              disabled: this.disabled,
-            }}
-            tabindex="0"
-            role="menuitem"
-            aria-disabled={JSON.stringify(this.disabled)}
-            href={this.href}
-            target="_self"
-            rel="noreferrer noopener"
-          >
-            <span class="bq-menu__item__child" part="prefix">
-              <slot name="prefix" />
-            </span>
-
-            <span class="bq-menu__item__child" part="label">
-              <slot />
-            </span>
-
-            <span class="bq-menu__item__child" part="suffix">
-              <slot name="suffix" />
-            </span>
-          </a>
-        </WrapperElem>
+      <aside class="bq-menu" role="menu" aria-label="Side menu" part="group">
+        <slot />
       </aside>
     );
   }

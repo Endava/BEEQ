@@ -4,6 +4,38 @@
 
 @import './bq-menu-item-variables';
 
-:host {
-  @apply block;
+// :host {
+//   @apply block;
+// }
+
+// Appearance
+
+.bq-menu-item {
+  @apply flex h-[inherit] w-[var(--bq-menu-item--width)] cursor-pointer items-center justify-items-stretch gap-3 pl-9;
+  @apply rounded-s bg-transparent hover:bg-[var(--bq-menu-item--hover)] active:bg-[var(--bq-menu-item--active)];
+  @apply transition-[background-color,border-color,box-shadow] duration-200;
+  @apply focus:outline-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-system-alert;
+  @apply active:outline-none;
+
+  &__child {
+    @apply flex items-center text-text-primary group-active:text-text-accent;
+  }
+
+  &.disabled {
+    @apply pointer-events-none;
+  }
+}
+
+.wrapper {
+  @apply h-fit;
+}
+
+// Size
+
+.small {
+  @apply h-[var(--bq-menu-item--small-height)] px-[var(--bq-menu-item--small-paddingX)] py-[var(--bq-menu-item--small-paddingY)] text-s;
+}
+
+.medium {
+  @apply h-[var(--bq-menu-item--medium-height)] px-[var(--bq-menu-item--medium-paddingX)] py-[var(--bq-menu-item--medium-paddingY)] text-m;
 }
