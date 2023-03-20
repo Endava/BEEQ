@@ -15,19 +15,19 @@
   @apply rounded-s bg-transparent hover:bg-[var(--bq-menu-item--hover)] active:bg-[var(--bq-menu-item--active)];
   @apply transition-[background-color,border-color,box-shadow] duration-200;
   @apply focus:outline-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-system-alert;
-  @apply active:outline-none;
+  @apply text-text-primary active:outline-none;
 
   &__child {
-    @apply flex items-center text-text-primary group-active:text-text-accent;
+    @apply flex items-center group-active:text-text-accent;
   }
 
   &.disabled {
-    @apply pointer-events-none;
+    @apply pointer-events-none text-text-primary-disabled;
   }
 }
 
 .wrapper {
-  @apply h-fit;
+  @apply h-fit cursor-not-allowed;
 }
 
 // Size
