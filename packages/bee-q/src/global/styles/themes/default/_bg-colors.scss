@@ -1,0 +1,11 @@
+/* -------------------------------------------------------------------------- */
+/*                     Theme: DEFAULT - Background colors                     */
+/* -------------------------------------------------------------------------- */
+
+:root {
+  --bq-background--primary: var(--bq-neutral-white);
+  --bq-background--secondary: var(--bq-grey-200);
+  --bq-background--tertiary: var(--bq-grey-600);
+  --bq-background--inverse: var(--bq-grey-800);
+  --bq-background--brand: var(--bq-indigo-600);
+}

@@ -1,0 +1,28 @@
+/* -------------------------------------------------------------------------- */
+/*                        Theme: DEFAULT - Text colors                        */
+/* -------------------------------------------------------------------------- */
+
+:root {
+  /** Primary */
+  --bq-text--primary: var(--bq-grey-900);
+  --bq-text--primary-hover: var(--bq-grey-800);
+  --bq-text--primary-active: var(--bq-neutral-black);
+  --bq-text--primary-disabled: var(--bq-grey-600);
+  /** Secondary */
+  --bq-text--secondary: var(--bq-grey-600);
+  --bq-text--secondary-hover: var(--bq-grey-500);
+  --bq-text--secondary-active: var(--bq-grey-700);
+  --bq-text--secondary-disabled: var(--bq-grey-400);
+  --bq-text--secondary-inverse: var(--bq-neutral-white);
+  /** Inverse */
+  --bq-text--inverse: var(--bq-neutral-white);
+  /** Brand */
+  --bq-text--brand: var(--bq-indigo-600);
+  --bq-text--brand-hover: var(--bq-indigo-500);
+  --bq-text--brand-active: var(--bq-indigo-700);
+  --bq-text--brand-disabled: var(--bq-indigo-400);
+  /** Feedback */
+  --bq-text--success: var(--bq-teal-600);
+  --bq-text--warning: var(--bq-gold-600);
+  --bq-text--danger: var(--bq-red-600);
+}
