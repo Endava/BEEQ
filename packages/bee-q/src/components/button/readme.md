@@ -21,7 +21,7 @@ Buttons are designed for users to take action on a page or a screen.
 | `size`       | `size`       | The size of the button                                                                                                                                                                  | `"large" \| "medium" \| "small"`               | `'medium'`   |
 | `target`     | `target`     | Where to display the linked URL, as the name for a browsing context (a `tab`, `window`, or `<iframe>`) Details: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-target | `"_blank" \| "_parent" \| "_self" \| "_top"`   | `undefined`  |
 | `type`       | `type`       | The default behavior of the button                                                                                                                                                      | `"button" \| "reset" \| "submit"`              | `'button'`   |
-| `variant`    | `variant`    | The variant of button to apply on top of the appearance                                                                                                                                 | `"danger" \| "ghost" \| "standard"`            | `'standard'` |
+| `variant`    | `variant`    | The variant of button to apply on top of the appearance (applicable only to `appearance="primary"`)                                                                                     | `"danger" \| "ghost" \| "standard"`            | `'standard'` |
 
 
 ## Events

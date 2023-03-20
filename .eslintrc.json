@@ -1,6 +1,9 @@
 {
   "root": true,
   "plugins": ["@nrwl/nx"],
+  "parserOptions": {
+    "ecmaVersion": 2019
+  },
   "overrides": [
     {
       "files": "*.json",

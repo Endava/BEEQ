@@ -58,7 +58,7 @@ export class BqDivider {
   @Prop({ reflect: true }) orientation: TDividerOrientation = 'horizontal';
 
   /** Set the stroke color of the divider. The value should be a valid value of the palette color */
-  @Prop({ reflect: true }) strokeColor?: string = 'ui--secondary';
+  @Prop({ reflect: true }) strokeColor?: string = 'stroke--secondary';
 
   /** Set the alignment of the title on the main axis of the divider (horizontal / vertical) */
   @Prop({ reflect: true }) titleAlignment?: TDividerTitleAlignment = 'middle';
