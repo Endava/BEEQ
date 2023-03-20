@@ -132,7 +132,7 @@
     "react-test-renderer": "18.2.0",
     "rimraf": "4.3.0",
     "stencil-tailwind-plugin": "1.7.0",
-    "stylelint": "15.2.0",
+    "stylelint": "15.3.0",
     "stylelint-config-sass-guidelines": "9.0.1",
     "stylelint-config-standard": "30.0.1",
     "tailwindcss": "3.2.7",
