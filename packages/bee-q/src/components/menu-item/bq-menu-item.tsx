@@ -71,7 +71,7 @@ export class BqMenuItem {
             group: true,
             disabled: this.disabled,
           }}
-          tabindex="0"
+          tabindex={this.disabled ? '-1' : '0'}
           role="menuitem"
           aria-disabled={JSON.stringify(this.disabled)}
           href={this.href}
