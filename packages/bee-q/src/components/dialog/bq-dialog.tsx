@@ -107,27 +107,22 @@ export class BqDialog {
                   [`size-header--${this.size}`]: true,
                 }}
               >
-                <div class="bq-header flex">
-                  <div class="bq-placeholder-info">
-                    <slot name="info" />
-                  </div>
-                  <h3>
-                    <div
-                      class={{
-                        [`size-title--${this.size}`]: true,
-                      }}
-                    >
-                      <slot name="title" />
+                <div class="bq-header flex justify-between">
+                  <div class="bq-placeholder-and-title flex">
+                    <div class="bq-placeholder-info">
+                      <slot name="info" />
                     </div>
-                  </h3>
-                  <bq-icon
-                    class="float-right pl-1 pt-1"
-                    name="x"
-                    role="img"
-                    title="Close"
-                    part="icon-on"
-                    onClick={this.handleCloseClick}
-                  />
+                    <h3>
+                      <div
+                        class={{
+                          [`size-title--${this.size}`]: true,
+                        }}
+                      >
+                        <slot name="title" />
+                      </div>
+                    </h3>
+                  </div>
+                  <bq-icon name="x" role="img" title="Close" part="icon-on" onClick={this.handleCloseClick} />
                 </div>
                 <div class="bq-content-container">
                   <slot name="content" />

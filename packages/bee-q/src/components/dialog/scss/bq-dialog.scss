@@ -31,6 +31,8 @@ header {
 
 .bq-placeholder-info {
   @apply h-[30px] w-[30px];
+  padding-top: 3.75px;
+  padding-left: 3.75px;
 }
 
 .bq-content-content {
@@ -38,11 +40,11 @@ header {
 }
 
 footer {
-  @apply flex h-[72px] w-full items-center justify-end py-3 px-6;
+  @apply flex h-[72px] w-full items-center justify-end py-6 px-6;
 
   &.light {
     background-color: #f8f8f9;
-    @apply px-0 pb-0;
+    border-radius: 8px;
   }
 }
 
@@ -66,18 +68,6 @@ footer {
   }
 }
 
-.size-header {
-  &--small {
-    @apply h-full w-[var(--bq-dialog--header-small-width)];
-  }
-  &--medium {
-    @apply h-full w-[var(--bq-dialog--header-medium-width)];
-  }
-  &--large {
-    @apply h-full w-[var(--bq-dialog--header-large-width)];
-  }
-}
-
 .size-title {
   &--small {
     @apply h-full w-[var(--bq-dialog--title-small-width)];
@@ -88,4 +78,8 @@ footer {
   &--large {
     @apply h-full w-[var(--bq-dialog--title-large-width)];
   }
+}
+
+bq-icon {
+  @apply hover:cursor-pointer;
 }
