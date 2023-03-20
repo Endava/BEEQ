@@ -150,21 +150,26 @@ export class BqTab {
   // ===================================
 
   render() {
+    const hasHover = !this.disabled && !this.active;
+    const isActiveDisabled = this.disabled && this.active;
+    const isActive = this.active && !this.disabled;
+
     return (
       <button
         ref={(el) => (this.buttonElement = el)}
         class={{
-          'bq-tab': true,
-          [`bq-tab--${this.size}`]: true,
-          'text-ui-primary': this.active,
-          'text-text-primary ': !this.active,
-          'pointer-events-none cursor-not-allowed opacity-40': this.disabled,
+          [`bq-tab bq-tab--${this.size} group`]: true,
+          'text-text-brand': isActive,
+          'text-text-primary disabled:text-text-primary-disabled': !this.active,
+          'text-text-brand-disabled': isActiveDisabled,
+          'hover:text-text-brand-hover': hasHover,
         }}
         id={this.tabId}
         onBlur={this.handleOnBlur}
         onClick={this.handleClick}
         onFocus={this.handleOnFocus}
         onKeyDown={this.handleOnKeyDown}
+        disabled={this.disabled}
         role="tab"
         aria-controls={this.controls}
         aria-disabled={this.disabled ? 'true' : 'false'}
@@ -190,9 +195,11 @@ export class BqTab {
         </div>
         <div
           class={{
-            'absolute bottom-0 w-full': true,
-            'h-[2px] bg-ui-primary': this.active,
-            'h-[1px] bg-text-secondary opacity-40': this.divider && (!this.active || this.isFocused),
+            'bq-tab__underline': true,
+            'border-b-2 border-solid border-b-stroke-brand': this.active && !this.disabled && !this.isFocused,
+            'border-b-2 border-solid border-b-stroke-brand-disabled': this.active && this.disabled && !this.isFocused,
+            'border-b-1 border-solid border-b-stroke-secondary':
+              (this.divider && !this.active) || (this.divider && this.isFocused),
           }}
           part="underline"
         />

@@ -9,13 +9,13 @@
 }
 
 .bq-tab {
-  @apply relative flex cursor-pointer items-center justify-center;
-  @apply text-m font-medium leading-large hover:text-text-accent;
+  @apply relative flex cursor-pointer items-center justify-center disabled:cursor-not-allowed;
+  @apply text-m font-medium leading-large;
   /* resets button default style */
   @apply border-0 bg-transparent focus:outline-none focus-visible:outline-none;
 
   &:focus-visible {
-    @apply rounded-s ring-4 ring-system-alert;
+    @apply focus rounded-s;
   }
 
   &--small {
@@ -41,4 +41,8 @@
       --bq-icon--size: 24px !important;
     }
   }
+}
+
+.bq-tab__underline {
+  @apply absolute bottom-0 w-full border-x-0 border-t-0;
 }
