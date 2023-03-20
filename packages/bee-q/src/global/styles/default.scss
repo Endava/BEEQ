@@ -9,9 +9,11 @@
 
 html,
 body {
-  color: var(--bq-text--primary);
+  @apply font-outfit text-m font-regular text-text-primary;
+}
 
-  font-family: var(--bq-font-family--outfit);
-  font-size: var(--bq-font-size--m);
-  font-weight: var(--bq-font-weight--regular);
+.link {
+  @apply relative inline-block rounded-xs text-text-brand no-underline focus-visible:focus hover:text-text-brand-hover active:text-text-brand-active;
+  @apply before:absolute before:bottom-0 before:block before:h-[2px] before:w-full before:scale-x-0 before:transition-transform before:duration-300 before:content-empty;
+  @apply hover:before:scale-x-100 hover:before:bg-stroke-brand-hover active:before:bg-stroke-brand-active;
 }
