@@ -22,7 +22,7 @@
   }
 
   &.disabled {
-    @apply pointer-events-none text-text-primary-disabled;
+    @apply pointer-events-none text-text-primary-disabled focus:ring-0;
   }
 }
 
