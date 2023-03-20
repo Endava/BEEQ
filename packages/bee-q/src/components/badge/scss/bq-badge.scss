@@ -9,7 +9,7 @@
 }
 
 .bq-badge {
-  @apply flex items-center justify-center rounded-xl bg-[color:var(--bq-badge--background-color)] text-[color:var(--bq-badge--text-color)];
+  @apply flex items-center justify-center rounded-xl border-[1px] border-solid border-stroke-primary bg-[color:var(--bq-badge--background-color)] text-[color:var(--bq-badge--text-color)];
 }
 
 .size {

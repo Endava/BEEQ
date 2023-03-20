@@ -1,5 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 import { computedStyle, setProperties } from '../../../shared/test-utils';
+import { STATUS_TYPE } from '../bq-status.types';
 
 describe('bq-status', () => {
   it('should render', async () => {
@@ -50,7 +51,7 @@ describe('bq-status', () => {
     expect(console).toHaveBeenCalledTimes(1);
     expect(console).toHaveBeenCalledWith(
       'warning',
-      '[BQ-STATUS] Please notice that "type" should be one of success|info|danger|neutral|guide|alert',
+      `[BQ-STATUS] Please notice that "type" should be one of ${STATUS_TYPE.join('|')}`,
     );
   });
 
