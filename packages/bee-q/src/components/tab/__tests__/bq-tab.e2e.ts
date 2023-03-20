@@ -50,12 +50,12 @@ describe('bq-tab', () => {
 
   it('should display icon', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-tab id="1"><bq-icon name="check" slot="icon"></bq-icon><p>Tab text</p></bq-tab>');
+    await page.setContent('<bq-tab id="1"><bq-icon name="check"></bq-icon><p>Tab text</p></bq-tab>');
 
     await page.$eval('bq-icon', waitForSvgLoad);
 
     const slotText = await page.$eval('bq-tab', (element) => {
-      const slotElement = element.shadowRoot.querySelector('[part="icon"] > slot');
+      const slotElement = element.shadowRoot.querySelector('[part="text"] > slot');
       const assignedElements = (slotElement as HTMLSlotElement).assignedElements({ flatten: true })[0];
 
       const svg = assignedElements.shadowRoot.querySelector('svg');
@@ -64,7 +64,7 @@ describe('bq-tab', () => {
     });
 
     expect(slotText).toBe(
-      '<path d="M104,192a8.5,8.5,0,0,1-5.7-2.3l-56-56a8.1,8.1,0,0,1,11.4-11.4L104,172.7,210.3,66.3a8.1,8.1,0,0,1,11.4,11.4l-112,112A8.5,8.5,0,0,1,104,192Z"></path>',
+      '<path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path>',
     );
   });
 
