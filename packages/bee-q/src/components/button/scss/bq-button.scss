@@ -8,7 +8,7 @@
   // Common button base style
   .bq-button {
     @apply box-border flex cursor-[inherit] items-center justify-center rounded-m border-2 border-solid border-transparent text-m font-medium leading-large;
-    @apply transition-[background-color,border-color,box-shadow] duration-300;
+    @apply transition-[background-color,border-color,color] duration-300;
     @apply disabled:cursor-not-allowed;
     @apply focus-visible:focus;
   }
@@ -63,16 +63,12 @@
 .bq-button--link {
   @apply bg-transparent text-text-brand no-underline;
   // Link `HOVER` state
-  @apply hover:text-text-brand-hover;
+  @apply hover:bg-ui-secondary-hover hover:text-text-brand-hover;
   // Link `ACTIVE` state
-  @apply active:text-text-brand-active;
+  @apply active:bg-ui-secondary-active active:text-text-brand-active;
 
   &.disabled {
-    @apply cursor-not-allowed text-text-brand-disabled no-underline;
-  }
-
-  .bq-button__label {
-    @apply relative before:absolute before:bottom-0 before:block before:h-[2px] before:w-full before:scale-x-0 before:transition-transform before:duration-300 before:content-empty;
+    @apply cursor-not-allowed bg-transparent text-text-brand-disabled;
   }
 }
 

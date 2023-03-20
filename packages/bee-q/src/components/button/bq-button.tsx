@@ -177,7 +177,7 @@ export class BqButton {
     return (
       <TagElem
         class={{
-          'bq-button group': true,
+          'bq-button': true,
           [`bq-button--${this.appearance}`]: true,
           [`${this.variant}`]: true,
           [`${this.size}`]: true,
@@ -194,7 +194,7 @@ export class BqButton {
         rel={isLink && this.target ? 'noreferrer noopener' : undefined}
         target={isLink ? this.target : undefined}
         type={this.type}
-        tabIndex={0}
+        tabIndex={this.disabled ? -1 : 0}
         onBlur={this.handleBlur}
         onFocus={this.handleFocus}
         onClick={this.handleClick}
@@ -202,11 +202,7 @@ export class BqButton {
         <span class="bq-button__prefix" ref={(spanElem) => (this.prefixElem = spanElem)} part="prefix">
           <slot name="prefix" onSlotchange={this.handleSlotChange} />
         </span>
-        <span
-          // The group-hover will only have effect when `this.type="link"` to animate the underline below the link text
-          class="bq-button__label group-hover:before:scale-x-100 group-hover:before:bg-stroke-brand-hover group-active:before:bg-stroke-brand-active"
-          part="label"
-        >
+        <span class="bq-button__label" part="label">
           <slot />
         </span>
         <span class="bq-button__suffix" ref={(spanElem) => (this.suffixElem = spanElem)} part="suffix">
