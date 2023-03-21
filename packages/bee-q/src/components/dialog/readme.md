@@ -13,11 +13,35 @@
 | `variant` | `variant` | The variant of button to apply on top of the appearance | `"light" \| "standard"`          | `'standard'` |
 
 
+## Methods
+
+### `close() => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `open() => Promise<void>`
+
+Method to be called to open the dialog
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+
 ## Shadow Parts
 
-| Part        | Description |
-| ----------- | ----------- |
-| `"icon-on"` |             |
+| Part             | Description |
+| ---------------- | ----------- |
+| `"button-close"` |             |
+| `"icon-close"`   |             |
 
 
 ## Dependencies
