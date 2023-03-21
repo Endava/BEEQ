@@ -1,4 +1,5 @@
-import { h, Component, Prop } from '@stencil/core';
+import { h, Component, Prop, State } from '@stencil/core';
+import { hasSlotContent } from '../../shared/utils';
 
 import { TMenuItemSize } from './bq-menu-item.types';
 
@@ -11,12 +12,16 @@ export class BqMenuItem {
   // Own Properties
   // ====================
 
+  private prefixElem: HTMLElement;
+
   // Reference to host HTML element
   // ===================================
 
   // State() variables
   // Inlined decorator, alphabetical order
   // =======================================
+
+  @State() private hasPrefix = false;
 
   // Public Property API
   // ========================
@@ -55,6 +60,10 @@ export class BqMenuItem {
   // These methods cannot be called from the host element.
   // =======================================================
 
+  private onSlotChange = () => {
+    this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -78,15 +87,22 @@ export class BqMenuItem {
           target="_self"
           rel="noreferrer noopener"
         >
-          <span class="bq-menu-item__child" part="prefix">
-            <slot name="prefix" />
+          <span class="bq-menu-item__child" ref={(elem) => (this.prefixElem = elem)} part="prefix">
+            <slot name="prefix" onSlotchange={this.onSlotChange} />
           </span>
 
-          <span class="bq-menu-item__child" part="label">
+          <span
+            class={{
+              'bq-menu-item__child': true,
+              label: true,
+              'has-prefix': this.hasPrefix,
+            }}
+            part="label"
+          >
             <slot />
           </span>
 
-          <span class="bq-menu-item__child" part="suffix">
+          <span class="bq-menu-item__child suffix" part="suffix">
             <slot name="suffix" />
           </span>
         </a>

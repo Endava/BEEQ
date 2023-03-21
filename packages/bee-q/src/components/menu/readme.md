@@ -24,12 +24,15 @@
 
 ### Depends on
 
+- [bq-button](../button)
 - [bq-icon](../icon)
 
 ### Graph
 ```mermaid
 graph TD;
+  bq-menu --> bq-button
   bq-menu --> bq-icon
+  bq-button --> bq-icon
   style bq-menu fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
