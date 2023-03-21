@@ -219,6 +219,40 @@ export namespace Components {
          */
         "weight"?: TIconWeight;
     }
+    interface BqNotification {
+        /**
+          * Description text of Notification
+         */
+        "description": string;
+        /**
+          * Trigger function when you want to close Notification
+         */
+        "hideNotification": () => Promise<void>;
+        /**
+          * URL text of Notification description. If you providing URL please make sure it's valid.
+         */
+        "href": string;
+        /**
+          * Set property if to false if you want to hide Close icon
+         */
+        "showClose": boolean;
+        /**
+          * Set property if you want Notification icon to be shown.
+         */
+        "showIcon": boolean;
+        /**
+          * Trigger function when you want to show Notification
+         */
+        "showNotification": () => Promise<void>;
+        /**
+          * Set the subject color if you don't want to be black. Subject color will also apply to Icon color if there is one.
+         */
+        "subjectColor": string;
+        /**
+          * Type of Notification
+         */
+        "type": string;
+    }
     interface BqRadio {
         /**
           * If true radio displays background on hover
@@ -580,6 +614,12 @@ declare global {
         prototype: HTMLBqIconElement;
         new (): HTMLBqIconElement;
     };
+    interface HTMLBqNotificationElement extends Components.BqNotification, HTMLStencilElement {
+    }
+    var HTMLBqNotificationElement: {
+        prototype: HTMLBqNotificationElement;
+        new (): HTMLBqNotificationElement;
+    };
     interface HTMLBqRadioElement extends Components.BqRadio, HTMLStencilElement {
     }
     var HTMLBqRadioElement: {
@@ -648,6 +688,7 @@ declare global {
         "bq-checkbox": HTMLBqCheckboxElement;
         "bq-divider": HTMLBqDividerElement;
         "bq-icon": HTMLBqIconElement;
+        "bq-notification": HTMLBqNotificationElement;
         "bq-radio": HTMLBqRadioElement;
         "bq-radio-group": HTMLBqRadioGroupElement;
         "bq-slider": HTMLBqSliderElement;
@@ -864,6 +905,32 @@ declare namespace LocalJSX {
           * It set the icon weight/style
          */
         "weight"?: TIconWeight;
+    }
+    interface BqNotification {
+        /**
+          * Description text of Notification
+         */
+        "description"?: string;
+        /**
+          * URL text of Notification description. If you providing URL please make sure it's valid.
+         */
+        "href"?: string;
+        /**
+          * Set property if to false if you want to hide Close icon
+         */
+        "showClose"?: boolean;
+        /**
+          * Set property if you want Notification icon to be shown.
+         */
+        "showIcon"?: boolean;
+        /**
+          * Set the subject color if you don't want to be black. Subject color will also apply to Icon color if there is one.
+         */
+        "subjectColor"?: string;
+        /**
+          * Type of Notification
+         */
+        "type"?: string;
     }
     interface BqRadio {
         /**
@@ -1166,6 +1233,7 @@ declare namespace LocalJSX {
         "bq-checkbox": BqCheckbox;
         "bq-divider": BqDivider;
         "bq-icon": BqIcon;
+        "bq-notification": BqNotification;
         "bq-radio": BqRadio;
         "bq-radio-group": BqRadioGroup;
         "bq-slider": BqSlider;
@@ -1196,6 +1264,7 @@ declare module "@stencil/core" {
              * Icons are simplified images that graphically explain the meaning of an object on the screen.
              */
             "bq-icon": LocalJSX.BqIcon & JSXBase.HTMLAttributes<HTMLBqIconElement>;
+            "bq-notification": LocalJSX.BqNotification & JSXBase.HTMLAttributes<HTMLBqNotificationElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
             "bq-slider": LocalJSX.BqSlider & JSXBase.HTMLAttributes<HTMLBqSliderElement>;
