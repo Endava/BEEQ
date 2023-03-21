@@ -220,6 +220,10 @@ export namespace Components {
         "weight"?: TIconWeight;
     }
     interface BqMenu {
+        /**
+          * Toggle menu
+         */
+        "collapsible": boolean;
     }
     interface BqMenuItem {
         /**
@@ -811,6 +815,10 @@ declare namespace LocalJSX {
         "weight"?: TIconWeight;
     }
     interface BqMenu {
+        /**
+          * Toggle menu
+         */
+        "collapsible"?: boolean;
     }
     interface BqMenuItem {
         /**

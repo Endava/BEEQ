@@ -1,4 +1,4 @@
-import { h, Component } from '@stencil/core';
+import { h, Component, Prop } from '@stencil/core';
 
 @Component({
   tag: 'bq-menu',
@@ -18,6 +18,9 @@ export class BqMenu {
 
   // Public Property API
   // ========================
+
+  /** Toggle menu */
+  @Prop() collapsible = true;
 
   // Prop lifecycle events
   // =======================
@@ -52,7 +55,20 @@ export class BqMenu {
   render() {
     return (
       <aside class="bq-menu" role="menu" aria-label="Side menu" part="group">
-        <slot />
+        <span class="bq-menu__header" part="header">
+          <slot name="header" />
+        </span>
+
+        <span class="bq-menu__content">
+          <slot />
+        </span>
+
+        {this.collapsible && (
+          <footer class="bq-menu__footer">
+            <bq-icon name="arrow-line-left" size="24"></bq-icon>
+            <slot name="footer" />
+          </footer>
+        )}
       </aside>
     );
   }

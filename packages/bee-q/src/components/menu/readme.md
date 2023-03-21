@@ -5,12 +5,33 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property      | Attribute     | Description | Type      | Default |
+| ------------- | ------------- | ----------- | --------- | ------- |
+| `collapsible` | `collapsible` | Toggle menu | `boolean` | `true`  |
+
+
 ## Shadow Parts
 
-| Part      | Description |
-| --------- | ----------- |
-| `"group"` |             |
+| Part       | Description |
+| ---------- | ----------- |
+| `"group"`  |             |
+| `"header"` |             |
 
+
+## Dependencies
+
+### Depends on
+
+- [bq-icon](../icon)
+
+### Graph
+```mermaid
+graph TD;
+  bq-menu --> bq-icon
+  style bq-menu fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 
