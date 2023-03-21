@@ -1,0 +1,51 @@
+/* -------------------------------------------------------------------------- */
+/*                         Theme: DEFAULT - UI colors                         */
+/* -------------------------------------------------------------------------- */
+
+:root {
+  /** Primary */
+  --bq-ui--primary: var(--bq-neutral-white);
+  --bq-ui--primary-hover: var(--bq-grey-50);
+  --bq-ui--primary-active: var(--bq-grey-200);
+  --bq-ui--primary-disabled: var(--bq-grey-100);
+  /** Secondary */
+  --bq-ui--secondary: var(--bq-grey-200);
+  --bq-ui--secondary-hover: var(--bq-grey-100);
+  --bq-ui--secondary-active: var(--bq-grey-300);
+  --bq-ui--secondary-disabled: var(--bq-grey-100);
+  --bq-ui--secondary-light: var(--bq-grey-50);
+  /** Tiertary */
+  --bq-ui--tiertary: var(--bq-grey-600);
+  --bq-ui--tiertary-hover: var(--bq-grey-500);
+  --bq-ui--tiertary-active: var(--bq-grey-700);
+  --bq-ui--tiertary-disabled: var(--bq-grey-400);
+  /** Inverse */
+  --bq-ui--inverse: var(--bq-grey-900);
+  --bq-ui--inverse-hover: var(--bq-grey-800);
+  --bq-ui--inverse-active: var(--bq-neutral-black);
+  --bq-ui--inverse-disabled: var(--bq-grey-600);
+  /** Brand */
+  --bq-ui--brand: var(--bq-indigo-600);
+  --bq-ui--brand-hover: var(--bq-indigo-500);
+  --bq-ui--brand-active: var(--bq-indigo-700);
+  --bq-ui--brand-disabled: var(--bq-indigo-400);
+  --bq-ui--brand-light: var(--bq-indigo-100);
+  /** Success */
+  --bq-ui--success: var(--bq-teal-600);
+  --bq-ui--success-hover: var(--bq-teal-500);
+  --bq-ui--success-active: var(--bq-teal-700);
+  --bq-ui--success-disabled: var(--bq-teal-400);
+  --bq-ui--success-light: var(--bq-teal-100);
+  /** Warning */
+  --bq-ui--warning: var(--bq-gold-600);
+  --bq-ui--warning-hover: var(--bq-gold-500);
+  --bq-ui--warning-active: var(--bq-gold-700);
+  --bq-ui--warning-disabled: var(--bq-gold-400);
+  --bq-ui--warning-light: var(--bq-gold-100);
+  /** Danger */
+  --bq-ui--danger: var(--bq-red-600);
+  --bq-ui--danger-hover: var(--bq-red-500);
+  --bq-ui--danger-active: var(--bq-red-700);
+  --bq-ui--danger-disabled: var(--bq-red-400);
+  --bq-ui--danger-light: var(--bq-red-100);
+}

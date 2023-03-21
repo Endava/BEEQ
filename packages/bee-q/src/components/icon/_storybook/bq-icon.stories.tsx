@@ -22,7 +22,7 @@ export default {
     weight: { control: 'select', options: [...ICON_WEIGHT] },
   },
   args: {
-    color: 'text--accent',
+    color: 'text--brand',
     size: 24,
     weight: 'regular',
   },
@@ -45,7 +45,7 @@ export const ExploreIcons = (args) => html`
     <p class="mt-2">
       Bee-Q icons are based on
       <a
-        class="text-text-accent"
+        class="link"
         href="https://phosphoricons.com/"
         target="_blank"
         title="Phosphor icons"
@@ -72,7 +72,7 @@ export const ExploreIcons = (args) => html`
       (icon) => html`
         <div class="group flex flex-col items-stretch text-center outline-0" role="button" tabindex="0">
           <div
-            class="mb-2 flex w-full justify-center rounded-m border border-solid border-ui-secondary py-4 px-0 transition-shadow group-hover:shadow-m"
+            class="mb-2 flex w-full justify-center rounded-m border border-solid border-stroke-secondary py-4 px-0 transition-shadow group-hover:shadow-m"
           >
             <bq-icon color=${args.color} .name=${icon as string} size=${args.size} weight=${args.weight}></bq-icon>
           </div>

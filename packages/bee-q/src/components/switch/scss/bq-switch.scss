@@ -28,25 +28,25 @@
 
 .bq-switch--input:checked:disabled {
   ~ .bq-switch--control {
-    @apply bg-ui-primary-disabled;
+    @apply bg-ui-brand-disabled;
   }
 }
 
 .bq-switch--input:not(:checked):disabled {
   ~ .bq-switch--control {
-    @apply bg-ui-secondary-disabled;
+    @apply bg-icon-secondary-disabled;
   }
 }
 
 .bq-switch--input:not(:disabled):focus-visible {
   ~ .bq-switch--control {
-    @apply ring-4 ring-system-alert;
+    @apply focus;
   }
 }
 
 .bq-switch--input:checked {
   ~ .bq-switch--control {
-    @apply bg-ui-primary;
+    @apply bg-ui-brand;
 
     .bq-switch--control__dot {
       @apply translate-x-[calc(var(--switch--width)_-_var(--switch--dot-size)_-_8px)];
@@ -60,4 +60,8 @@
   &::part(base) {
     @apply flex;
   }
+}
+
+.bq-switch--label {
+  @apply text-m font-medium leading-large text-text-primary transition-colors duration-300 group-[.is-disabled]:text-text-primary-disabled;
 }

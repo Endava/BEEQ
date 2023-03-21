@@ -1,4 +1,4 @@
-import { html, nothing } from 'lit-html';
+import { html } from 'lit-html';
 
 import { DIVIDER_TITLE_ALIGNMENT, DIVIDER_ORIENTATION, DIVIDER_STROKE_LINECAP } from '../bq-divider.types';
 import mdx from './bq-divider.mdx';
@@ -28,7 +28,7 @@ export default {
   args: {
     orientation: 'horizontal',
     dashed: false,
-    'stroke-color': 'ui--secondary',
+    'stroke-color': 'stroke--secondary',
     'title-alignment': 'middle',
     'stroke-dash-width': 12,
     'stroke-dash-gap': 7,

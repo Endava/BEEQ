@@ -15,7 +15,7 @@
   &:not(.is-checked),
   &:not(.is-indeterminate) {
     &:not(.is-disabled):hover .bq-checkbox__checkbox {
-      @apply border-ui-primary;
+      @apply border-icon-brand-hover;
     }
   }
 
@@ -28,45 +28,48 @@
   &.is-checked,
   &.is-indeterminate {
     &:not(.is-disabled):hover .bq-checkbox__checkbox {
-      background-color: lighten(var(--bq-ui--primary), 20%);
-      border-color: lighten(var(--bq-ui--primary), 20%);
+      @apply border-icon-brand-hover bg-ui-brand-hover;
     }
-  }
-
-  // Disabled state
-  &.is-disabled {
-    @apply cursor-not-allowed opacity-40;
   }
 }
 
 .bq-checkbox__input {
-  @apply focus:outline-none focus-visible:outline-none;
-
-  ~ .bq-checkbox__checkbox {
-    @apply transition-[color,background-color,border-color,box-shadow] duration-300;
-  }
-
+  // Checkbox square icon has `FOCUS`
   &:focus-visible {
     ~ .bq-checkbox__checkbox {
-      @apply ring-4 ring-system-alert;
+      @apply focus;
     }
   }
 
+  // Checkbox square icon is `CHECKED/INDETERMINATE`
   &:checked,
   &:indeterminate {
     ~ .bq-checkbox__checkbox {
-      @apply border-ui-primary bg-ui-primary;
+      @apply border-stroke-brand bg-ui-brand;
     }
   }
 
+  // Checkbox square icon is `CHECKED/INDETERMINATE` and `DISABLED`
   &:checked:disabled,
   &:indeterminate:disabled {
     ~ .bq-checkbox__checkbox {
-      @apply border-text-primary bg-text-primary;
+      @apply border-icon-brand-disabled bg-ui-brand-disabled;
+    }
+  }
+
+  &:disabled {
+    ~ .bq-checkbox__checkbox {
+      @apply border-icon-primary-disabled;
     }
   }
 }
 
+// Checkbox square icon `DEFAULT` state (not checked/indeterminate, not hover, not disabled)
 .bq-checkbox__checkbox {
-  @apply rounded-[var(--bq-checkbox--border-radius)] border-[length:var(--bq-checkbox--border-width)] border-solid border-text-primary;
+  @apply rounded-[var(--bq-checkbox--border-radius)] border-[length:var(--bq-checkbox--border-width)] border-solid border-icon-primary;
+}
+
+.bq-checkbox__checkbox,
+.bq-checkbox__label {
+  @apply transition-[color,background-color,border-color,box-shadow] duration-300;
 }

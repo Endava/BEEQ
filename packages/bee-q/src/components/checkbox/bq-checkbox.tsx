@@ -168,10 +168,10 @@ export class BqCheckbox {
     return (
       <label
         class={{
-          'bq-checkbox': true,
+          'bq-checkbox group': true,
           'is-checked': this.checked,
           'is-indeterminate': this.indeterminate,
-          'is-disabled': this.disabled,
+          'is-disabled !cursor-not-allowed': this.disabled,
           'has-background': this.backgroundOnHover,
         }}
         part="base"
@@ -244,7 +244,10 @@ export class BqCheckbox {
             )}
           </span>
         </div>
-        <span class="bq-checkbox__label ml-1 font-medium leading-large text-text-primary" part="label">
+        <span
+          class="bq-checkbox__label ml-1 text-start font-medium leading-large text-text-primary group-hover-[&:not(.is-disabled)]:text-text-primary-hover group-[.is-disabled]:text-text-primary-disabled"
+          part="label"
+        >
           <slot />
         </span>
       </label>

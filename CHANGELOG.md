@@ -6,6 +6,23 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+## [0.2.2](https://github.com/Endava/bee-q/compare/v0.2.1...v0.2.2) (2023-03-09)
+
+
+### Bug Fixes
+
+* **CI:** trigger NPM publish after a GitHub release is published ([#38](https://github.com/Endava/bee-q/issues/38)) ([284aacc](https://github.com/Endava/bee-q/commit/284aacc4155e61ecba358e2898a4a22d534a3c7a))
+
+## [0.2.1](https://github.com/Endava/bee-q/compare/v0.2.0...v0.2.1) (2023-03-08)
+
+
+### Bug Fixes
+
+* **Checkbox:**  label miss-alignment if parent has different alignment ([#35](https://github.com/Endava/bee-q/issues/35)) ([8a13ee8](https://github.com/Endava/bee-q/commit/8a13ee8c9d561948a684dc3699550962ee338b91))
+* **Font family:** use font `[@font-face](https://github.com/font-face)` instead of `[@import](https://github.com/import)` ([#32](https://github.com/Endava/bee-q/issues/32)) ([a69f74b](https://github.com/Endava/bee-q/commit/a69f74bebb50aebc00e66532396ba66c35ea7e8b))
+* **Icon:** base container alignment on custom size value ([#33](https://github.com/Endava/bee-q/issues/33)) ([c8299b2](https://github.com/Endava/bee-q/commit/c8299b2ef94fb39dc5b36a2f9f46daa904471f98))
+* **Slider:** layout styles break if parent have alignment ([#34](https://github.com/Endava/bee-q/issues/34)) ([f56e1fe](https://github.com/Endava/bee-q/commit/f56e1fe1251bcac96293bb1e1fed78b2071c67a9))
+
 ## [0.2.0](https://github.com/dgonzalezr/bee-q/compare/v0.1.0...v0.2.0) (2023-03-03)
 
 

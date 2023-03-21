@@ -31,6 +31,9 @@ export class BqRadioGroup {
   // Public Property API
   // ========================
 
+  /** If true, all radio inputs in the group will display a background on hover */
+  @Prop({ reflect: true }) backgroundOnHover? = false;
+
   /** Name of the HTML input form control. Submitted with the form as part of a name/value pair.  */
   @Prop({ reflect: true }) name!: string;
 
@@ -51,6 +54,21 @@ export class BqRadioGroup {
 
   // Prop lifecycle events
   // =======================
+
+  @Watch('backgroundOnHover')
+  @Watch('disabled')
+  @Watch('name')
+  @Watch('value')
+  handleGroupProperties() {
+    if (!this.bqRadioElements) return;
+
+    this.bqRadioElements.forEach((bqRadio) => {
+      bqRadio.backgroundOnHover = this.backgroundOnHover;
+      bqRadio.disabled = this.disabled;
+      bqRadio.name = this.name;
+      bqRadio.checked = !isNil(this.value) ? bqRadio.value === this.value : false;
+    });
+  }
 
   @Watch('orientation')
   checkPropValues() {
@@ -89,11 +107,7 @@ export class BqRadioGroup {
   }
 
   componentDidLoad() {
-    this.bqRadioElements.forEach((bqRadioElement) => {
-      bqRadioElement.name = this.name;
-      bqRadioElement.checked = !isNil(this.value) ? bqRadioElement.value === this.value : false;
-      bqRadioElement.disabled = bqRadioElement.disabled || this.disabled;
-    });
+    this.handleGroupProperties();
   }
 
   // Listeners
