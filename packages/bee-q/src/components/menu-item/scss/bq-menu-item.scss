@@ -4,14 +4,10 @@
 
 @import './bq-menu-item-variables';
 
-// :host {
-//   @apply block;
-// }
-
 // Appearance
 
 .bq-menu-item {
-  @apply flex h-[inherit] w-[var(--bq-menu-item--width)] cursor-pointer items-center justify-items-stretch gap-3 pl-9;
+  @apply mx-1.5 flex h-[inherit] w-[auto] cursor-pointer items-center justify-items-stretch gap-3 pl-9;
   @apply rounded-s bg-transparent hover:bg-[var(--bq-menu-item--hover)] active:bg-[var(--bq-menu-item--active)];
   @apply transition-[background-color,border-color,box-shadow] duration-200;
   @apply focus:outline-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-system-alert;
