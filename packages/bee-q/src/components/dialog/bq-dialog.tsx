@@ -119,8 +119,8 @@ export class BqDialog {
                 <slot name="content" />
               </div>
             </div>
-            <bq-button appearance="text" size="small" part="button-close" onClick={this.handleCloseClick}>
-              <bq-icon name="x" role="img" title="Close" part="icon-close" />
+            <bq-button appearance="text" size="small" part="button-close">
+              <bq-icon name="x" role="img" title="Close" part="icon-close" onClick={this.handleCloseClick} />
             </bq-button>
           </header>
           <footer
