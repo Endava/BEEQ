@@ -5,8 +5,7 @@
 @import './bq-notification-variables';
 
 a {
-  color: var(--bq-ui--primary);
-  text-decoration: none;
+  @apply text-text-brand no-underline;
 }
 
 .notification-shadow {
