@@ -1,0 +1,26 @@
+/* -------------------------------------------------------------------------- */
+/*                        Theme: DEFAULT - Icon colors                        */
+/* -------------------------------------------------------------------------- */
+
+:root {
+  /** Primary */
+  --bq-icon--primary: var(--bq-grey-900);
+  --bq-icon--primary-hover: var(--bq-grey-800);
+  --bq-icon--primary-active: var(--bq-neutral-black);
+  --bq-icon--primary-disabled: var(--bq-grey-600);
+  /** Secondary */
+  --bq-icon--secondary: var(--bq-grey-600);
+  --bq-icon--secondary-hover: var(--bq-grey-500);
+  --bq-icon--secondary-active: var(--bq-grey-700);
+  --bq-icon--secondary-disabled: var(--bq-grey-400);
+  --bq-icon--secondary-inverse: var(--bq-neutral-white);
+  /** Brand */
+  --bq-icon--brand: var(--bq-indigo-600);
+  --bq-icon--brand-hover: var(--bq-indigo-500);
+  --bq-icon--brand-active: var(--bq-indigo-700);
+  --bq-icon--brand-disabled: var(--bq-indigo-400);
+  /** Feedback */
+  --bq-icon--success: var(--bq-teal-600);
+  --bq-icon--warning: var(--bq-gold-600);
+  --bq-icon--danger: var(--bq-red-600);
+}

@@ -195,7 +195,7 @@ export class BqSwitch {
 
     return (
       <Host class={{ 'full-width': this.fullWidth }} style={hostStyle}>
-        <label class={{ 'bq-switch': true, ...labelCssClasses }} part="base">
+        <label class={{ 'bq-switch group': true, ...labelCssClasses }} part="base">
           {/* Hidden native HTML input */}
           <input
             class="bq-switch--input peer sr-only peer-checked:invisible"
@@ -216,7 +216,7 @@ export class BqSwitch {
           />
           {/* Control */}
           <div
-            class="bq-switch--control relative box-border flex h-[var(--switch--height)] w-[var(--switch--width)] justify-between rounded-full bg-text-secondary p-1 transition duration-300"
+            class="bq-switch--control relative box-border flex h-[var(--switch--height)] w-[var(--switch--width)] justify-between rounded-full bg-icon-secondary p-1 transition duration-300"
             part="control"
           >
             {this.innerLabel === 'icon' && (
@@ -231,7 +231,7 @@ export class BqSwitch {
             )}
             {/* Dot */}
             <div
-              class="bq-switch--control__dot absolute h-[var(--switch--dot-size)] w-[var(--switch--dot-size)] justify-end rounded-full bg-background-card transition duration-300"
+              class="bq-switch--control__dot absolute h-[var(--switch--dot-size)] w-[var(--switch--dot-size)] justify-end rounded-full bg-bg-primary transition duration-300"
               part="dot"
             />
             {this.innerLabel === 'icon' && (
@@ -248,7 +248,7 @@ export class BqSwitch {
           {/* Label */}
           <span
             class={{
-              'bq-switch--label text-m font-medium leading-large text-text-primary': true,
+              'bq-switch--label': true,
               'ml-3': this.hasLabel && !this.reverseOrder,
               'mr-3': this.hasLabel && this.reverseOrder,
             }}

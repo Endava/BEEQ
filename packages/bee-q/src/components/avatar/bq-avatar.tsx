@@ -105,7 +105,7 @@ export class BqAvatar {
     return (
       <div
         class={{
-          'relative overflow-hidden bg-ui-secondary': true,
+          'relative overflow-hidden bg-ui-secondary-light': true,
           [`size--${this.size}`]: true,
           'rounded-full': this.shape === 'circle',
           'rounded-xs': this.shape === 'square' && this.size === 'xsmall',

@@ -30,10 +30,7 @@ export const config: Config = {
         resolve(__dirname, '../../node_modules').replace(/\\/g, '/'),
         resolve(__dirname, 'src/global/styles').replace(/\\/g, '/'),
       ],
-      injectGlobalPaths: [
-        resolve(__dirname, 'src/global/styles/variables/index.scss').replace(/\\/g, '/'),
-        resolve(__dirname, 'src/global/styles/mixins/index.scss').replace(/\\/g, '/'),
-      ],
+      injectGlobalPaths: [resolve(__dirname, 'src/global/styles/variables/index.scss').replace(/\\/g, '/')],
       outputStyle: 'compressed',
       sourceMap: true,
       sourceMapEmbed: true,
