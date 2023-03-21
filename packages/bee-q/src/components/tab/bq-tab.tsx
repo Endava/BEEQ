@@ -1,4 +1,4 @@
-import { h, Component, Prop, Watch, Element, Event, EventEmitter, Method, State } from '@stencil/core';
+import { h, Component, Prop, Watch, Element, Event, EventEmitter, Method, Host } from '@stencil/core';
 import { validatePropValue } from '../../shared/utils';
 import { TAB_SIZE, TTabSize } from './bq-tab.types';
 
@@ -26,8 +26,6 @@ export class BqTab {
   // State() variables
   // Inlined decorator, alphabetical order
   // =======================================
-
-  @State() isFocused = false;
 
   // Public Property API
   // ========================
@@ -150,60 +148,49 @@ export class BqTab {
   // ===================================
 
   render() {
-    const hasHover = !this.disabled && !this.active;
-    const isActiveDisabled = this.disabled && this.active;
-    const isActive = this.active && !this.disabled;
-
     return (
-      <button
-        ref={(el) => (this.buttonElement = el)}
-        class={{
-          [`bq-tab bq-tab--${this.size} group`]: true,
-          'text-text-brand': isActive,
-          'text-text-primary disabled:text-text-primary-disabled': !this.active,
-          'text-text-brand-disabled': isActiveDisabled,
-          'hover:text-text-brand-hover': hasHover,
-        }}
-        id={this.tabId}
-        onBlur={this.handleOnBlur}
-        onClick={this.handleClick}
-        onFocus={this.handleOnFocus}
-        onKeyDown={this.handleOnKeyDown}
-        disabled={this.disabled}
-        role="tab"
-        aria-controls={this.controls}
-        aria-disabled={this.disabled ? 'true' : 'false'}
-        aria-selected={this.active ? 'true' : 'false'}
-        tabindex={this.tabindex}
-        part="base"
-        onFocusin={() => {
-          this.isFocused = true;
-        }}
-        onFocusout={() => {
-          this.isFocused = false;
-        }}
-      >
-        <div
+      <Host>
+        <button
+          ref={(el) => (this.buttonElement = el)}
           class={{
-            'flex items-center justify-center': true,
-            'gap-1': this.size === 'small',
-            'gap-2': this.size !== 'small',
+            [`bq-tab bq-tab--${this.size} group`]: true,
+            'text-text-brand disabled:text-text-brand-disabled': this.active,
+            'text-text-primary disabled:text-text-primary-disabled': !this.active,
           }}
-          part="text"
+          id={this.tabId}
+          onBlur={this.handleOnBlur}
+          onClick={this.handleClick}
+          onFocus={this.handleOnFocus}
+          onKeyDown={this.handleOnKeyDown}
+          disabled={this.disabled}
+          role="tab"
+          aria-controls={this.controls}
+          aria-disabled={this.disabled ? 'true' : 'false'}
+          aria-selected={this.active ? 'true' : 'false'}
+          tabindex={this.tabindex}
+          part="base"
         >
-          <slot />
-        </div>
+          <div
+            class={{
+              'flex items-center justify-center': true,
+              'gap-1': this.size === 'small',
+              'gap-2': this.size !== 'small',
+            }}
+            part="text"
+          >
+            <slot />
+          </div>
+        </button>
         <div
           class={{
             'bq-tab__underline': true,
-            'border-b-2 border-solid border-b-stroke-brand': this.active && !this.disabled && !this.isFocused,
-            'border-b-2 border-solid border-b-stroke-brand-disabled': this.active && this.disabled && !this.isFocused,
-            'border-b-1 border-solid border-b-stroke-secondary':
-              (this.divider && !this.active) || (this.divider && this.isFocused),
+            'border-b-2 border-solid border-b-stroke-brand': this.active,
+            'border-b-stroke-brand-disabled': this.disabled,
+            'border-b border-solid border-b-stroke-secondary': this.divider && !this.active,
           }}
           part="underline"
         />
-      </button>
+      </Host>
     );
   }
 }

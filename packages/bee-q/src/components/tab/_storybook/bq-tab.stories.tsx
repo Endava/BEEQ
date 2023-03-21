@@ -13,6 +13,7 @@ export default {
   argTypes: {
     active: { control: 'boolean' },
     disabled: { control: 'boolean' },
+    divider: { control: 'boolean' },
     size: { control: 'select', options: [...TAB_SIZE] },
     // Not part of the component
     text: { control: 'text' },
@@ -21,19 +22,24 @@ export default {
     text: 'Tab',
     active: false,
     disabled: false,
+    divider: false,
     size: 'small',
   },
 };
 
 const Template = (args) => {
-  return html` <bq-tab .size=${args.size} ?active=${args.active} ?disabled=${args.disabled}>${args.text}</bq-tab> `;
+  return html`
+    <bq-tab .size=${args.size} ?active=${args.active} ?disabled=${args.disabled} ?divider=${args.divider}
+      >${args.text}</bq-tab
+    >
+  `;
 };
 
 export const Default = (args) => Template(args);
 
 export const Icon = (args) => {
   return html`
-    <bq-tab .size=${args.size} ?active=${args.active} ?disabled=${args.disabled}
+    <bq-tab .size=${args.size} ?active=${args.active} ?disabled=${args.disabled} ?divider=${args.divider}
       ><bq-icon name="arrow-circle-left"></bq-icon>${args.text}</bq-tab
     >
   `;

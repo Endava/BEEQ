@@ -10,39 +10,34 @@
 
 .bq-tab {
   @apply relative flex cursor-pointer items-center justify-center disabled:cursor-not-allowed;
-  @apply text-m font-medium leading-large;
-  /* resets button default style */
-  @apply border-0 bg-transparent focus:outline-none focus-visible:outline-none;
-
-  &:focus-visible {
-    @apply focus rounded-s;
-  }
+  @apply text-m font-medium leading-large [&:not([disabled])]:hover:text-text-brand-hover;
+  @apply border-0 bg-transparent focus-visible:focus focus-visible:rounded-s;
 
   &--small {
-    @apply py-1 px-4;
+    @apply py-[var(--bq-tab--pading-vertical-small)] px-[var(--bq-tab--pading-horizontal-small)];
 
     ::slotted(bq-icon) {
-      --bq-icon--size: 20px !important;
+      --bq-icon--size: var(--bq-tab--icon-size-small) !important;
     }
   }
 
   &--medium {
-    @apply py-2 px-5;
+    @apply py-[var(--bq-tab--pading-vertical-medium)] px-[var(--bq-tab--pading-horizontal-medium)];
 
     ::slotted(bq-icon) {
-      --bq-icon--size: 24px !important;
+      --bq-icon--size: var(--bq-tab--icon-size-medium) !important;
     }
   }
 
   &--large {
-    @apply py-3 px-6 text-l;
+    @apply py-[var(--bq-tab--pading-vertical-large)] px-[var(--bq-tab--pading-horizontal-large)] text-l;
 
     ::slotted(bq-icon) {
-      --bq-icon--size: 24px !important;
+      --bq-icon--size: var(--bq-tab--icon-size-large) !important;
     }
   }
 }
 
 .bq-tab__underline {
-  @apply absolute bottom-0 w-full border-x-0 border-t-0;
+  @apply w-full border-x-0 border-t-0;
 }

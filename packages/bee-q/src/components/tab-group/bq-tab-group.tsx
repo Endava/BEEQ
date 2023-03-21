@@ -190,7 +190,7 @@ export class BqTabGroup {
 
   render() {
     return (
-      <div class="relative flex" role="tablist" part="base">
+      <div class="flex" role="tablist" part="base">
         <slot />
       </div>
     );
