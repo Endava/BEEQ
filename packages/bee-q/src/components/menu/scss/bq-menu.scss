@@ -8,7 +8,7 @@
   @apply m-0 flex h-[var(--bq-menu--height)] w-[var(--bq-menu--width)] flex-col gap-[var(--bq-menu--gap)] bg-[var(--bq-menu--bg-color)] p-[var(--bq-menu--padding)];
 
   &__header {
-    @apply flex h-[10vh] items-center py-[6px] px-0 text-text-accent;
+    @apply flex h-[10vh] items-center py-[6px] px-0 text-text-brand;
   }
 
   &__content {
