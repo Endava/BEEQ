@@ -65,8 +65,10 @@ export class BqMenu {
 
         {this.collapsible && (
           <footer class="bq-menu__footer">
-            <bq-icon name="arrow-line-left" size="24"></bq-icon>
-            <slot name="footer" />
+            <bq-button appearance="text">
+              <bq-icon name="arrow-line-left" size="24" slot="prefix"></bq-icon>
+              <slot name="footer" />
+            </bq-button>
           </footer>
         )}
       </aside>

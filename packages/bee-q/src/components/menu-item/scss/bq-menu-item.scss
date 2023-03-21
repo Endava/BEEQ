@@ -7,7 +7,7 @@
 // Appearance
 
 .bq-menu-item {
-  @apply mx-1.5 flex h-[inherit] w-[auto] cursor-pointer items-center justify-items-stretch gap-3 pl-9;
+  @apply mx-1.5 flex h-[inherit] w-[auto] cursor-pointer items-center justify-items-stretch pl-9;
   @apply rounded-s bg-transparent hover:bg-[var(--bq-menu-item--hover)] active:bg-[var(--bq-menu-item--active)];
   @apply transition-[background-color,border-color,box-shadow] duration-200;
   @apply focus-visible:focus;
@@ -24,6 +24,18 @@
 
 .wrapper {
   @apply h-fit cursor-not-allowed;
+}
+
+.has-prefix {
+  @apply px-1;
+}
+
+.label {
+  @apply inline-block max-w-[16vw] overflow-hidden text-ellipsis whitespace-nowrap;
+}
+
+.suffix {
+  @apply ml-auto;
 }
 
 // Size

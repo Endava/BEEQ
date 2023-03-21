@@ -8,7 +8,7 @@
   @apply m-0 flex h-[var(--bq-menu--height)] w-[var(--bq-menu--width)] flex-col gap-[var(--bq-menu--gap)] bg-[var(--bq-menu--bg-color)] p-[var(--bq-menu--padding)];
 
   &__header {
-    @apply flex h-[10vh] items-center py-[6px] px-0 text-text-brand;
+    @apply flex h-[10vh] items-center justify-center py-[6px] px-0 text-text-brand;
   }
 
   &__content {
@@ -16,6 +16,6 @@
   }
 
   &__footer {
-    @apply mt-auto flex cursor-pointer items-center gap-[12px] py-[6px] px-0;
+    @apply mt-auto flex justify-center py-[6px] px-0;
   }
 }
