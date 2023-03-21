@@ -1,0 +1,30 @@
+/* -------------------------------------------------------------------------- */
+/*                                Notification styles                */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-notification-variables';
+
+a {
+  color: var(--bq-ui--primary);
+  text-decoration: none;
+}
+
+.notification-shadow {
+  @apply shadow-m;
+}
+
+.notification-radius {
+  @apply rounded-[var(--bq-notification--border-radius)];
+}
+
+.title-font {
+  @apply text-m;
+}
+
+.description-font {
+  @apply text-s;
+}
+
+.w-notification-close {
+  min-width: 20px;
+}
