@@ -139,7 +139,7 @@ export class BqNotification {
             <div class="title-font font-semibold" style={styles} id="subject">
               <slot />
             </div>
-            <div class="description-font mt-3 font-regular">
+            <div class="description-slot-holder description-font font-regular">
               <slot name="description" />
             </div>
             <div class={{ 'mt-3': this.hasBtn }}>
