@@ -1,0 +1,67 @@
+/* -------------------------------------------------------------------------- */
+/*                                Toast styles                */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-toast-variables';
+
+@layer components {
+  /* SVG loading icon animation */
+  @keyframes rotate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes loading--spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(1turn);
+    }
+  }
+}
+
+:host {
+  @apply relative;
+}
+
+.toast-shadow {
+  @apply shadow-m;
+  padding: 10px;
+}
+
+.trigger-btn {
+  margin-top: 200px;
+}
+
+.bq-toast__icon {
+  &.default {
+    @apply text-text-primary;
+  }
+
+  &.info {
+    @apply text-system-info;
+  }
+
+  &.success {
+    @apply text-system-success;
+  }
+
+  &.alert {
+    @apply text-system-alert;
+  }
+
+  &.error {
+    @apply text-system-danger;
+  }
+
+  &.loading {
+    @apply animate-[loading--spin_1s_infinite_linear] cursor-wait text-text-accent;
+  }
+}
+
+.bq-toast-item__message {
+  @apply text-text-primary;
+}
