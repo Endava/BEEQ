@@ -42,23 +42,23 @@
   }
 
   &.info {
-    @apply text-system-info;
+    @apply text-text-brand;
   }
 
   &.success {
-    @apply text-system-success;
+    @apply text-text-success;
   }
 
   &.alert {
-    @apply text-system-alert;
+    @apply text-text-warning;
   }
 
   &.error {
-    @apply text-system-danger;
+    @apply text-text-danger;
   }
 
   &.loading {
-    @apply animate-[loading--spin_1s_infinite_linear] cursor-wait text-text-accent;
+    @apply animate-[loading--spin_1s_infinite_linear] cursor-wait text-text-primary;
   }
 }
 
