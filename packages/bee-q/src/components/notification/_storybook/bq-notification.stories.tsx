@@ -12,16 +12,12 @@ export default {
   },
   argTypes: {
     type: { control: 'select', options: [...NOTIFICATION_TYPES] },
-    description: { control: 'text' },
-    href: { control: 'text' },
     showIcon: { control: 'boolean' },
     showClose: { control: 'boolean' },
     subjectColor: { control: 'text' },
   },
   args: {
     type: 'info',
-    description: 'This is some description text text',
-    href: 'https://example.com',
     showIcon: true,
     showClose: true,
     subjectColor: 'data--black',
@@ -31,13 +27,14 @@ export default {
 const Template = (args) => {
   return html` <bq-notification
     type=${args.type}
-    description=${args.description}
-    href=${args.href}
     show-icon=${args.showIcon}
     subject-color=${args.subjectColor}
     show-close=${args.showClose}
   >
     Title
+    <span slot="description"
+      >This is some description text text <a class="link" href="https://example.com">Link</a></span
+    >
     <bq-avatar
       slot="avatar"
       alt-text=""

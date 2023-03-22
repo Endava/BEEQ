@@ -27,12 +27,6 @@ export class BqNotification {
   // Public Property API
   // ========================
 
-  /** Description text of Notification */
-  @Prop({ reflect: true }) description: string;
-
-  /** URL text of Notification description. If you providing URL please make sure it's valid. */
-  @Prop({ reflect: true }) href: string;
-
   /** Type of Notification */
   @Prop({ reflect: true }) type: string;
 
@@ -116,20 +110,6 @@ export class BqNotification {
     this.isHidden = false;
   };
 
-  private isValidURL = (str) => {
-    const pattern = new RegExp(
-      '^(https?:\\/\\/)?' +
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' +
-        '((\\d{1,3}\\.){3}\\d{1,3}))' +
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
-        '(\\?[;&a-z\\d%_.~+=-]*)?' +
-        '(\\#[-a-z\\d_]*)?$',
-      'i',
-    );
-
-    return !!pattern.test(str);
-  };
-
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -160,15 +140,7 @@ export class BqNotification {
               <slot />
             </div>
             <div class="description-font mt-3 font-regular">
-              <span id="description">{this.description}</span>
-              {this.href && this.isValidURL(this.href) && (
-                <span>
-                  {' '}
-                  <a href={this.href} class="font-medium" target="_blank" id="notification-url">
-                    Link
-                  </a>
-                </span>
-              )}
+              <slot name="description" />
             </div>
             <div class={{ 'mt-3': this.hasBtn }}>
               <span class={{ 'mr-2': this.hasBtn }} ref={(spanElem) => (this.buttonElem = spanElem)}>

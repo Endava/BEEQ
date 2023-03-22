@@ -221,17 +221,9 @@ export namespace Components {
     }
     interface BqNotification {
         /**
-          * Description text of Notification
-         */
-        "description": string;
-        /**
           * Trigger function when you want to close Notification
          */
         "hideNotification": () => Promise<void>;
-        /**
-          * URL text of Notification description. If you providing URL please make sure it's valid.
-         */
-        "href": string;
         /**
           * Set property if to false if you want to hide Close icon
          */
@@ -907,14 +899,6 @@ declare namespace LocalJSX {
         "weight"?: TIconWeight;
     }
     interface BqNotification {
-        /**
-          * Description text of Notification
-         */
-        "description"?: string;
-        /**
-          * URL text of Notification description. If you providing URL please make sure it's valid.
-         */
-        "href"?: string;
         /**
           * Set property if to false if you want to hide Close icon
          */
