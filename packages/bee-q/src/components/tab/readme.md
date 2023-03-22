@@ -29,6 +29,17 @@
 
 ## Methods
 
+### `focusable(value: boolean) => Promise<void>`
+
+Sets tabindex on the native `<button>` HTML element used under the hood.
+This method is used inside `<bq-tab-group>` to make tab focusable after the active one is focused
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 ### `vBlur() => Promise<void>`
 
 Remove focus from the native `<button>` HTML element used under the hood.

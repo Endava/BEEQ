@@ -1,4 +1,4 @@
-import { h, Component, Prop, Watch, Element, Event, EventEmitter, Method, Host } from '@stencil/core';
+import { h, Component, Prop, Watch, Element, Event, EventEmitter, Method, Host, State } from '@stencil/core';
 import { validatePropValue } from '../../shared/utils';
 import { TAB_SIZE, TTabSize } from './bq-tab.types';
 
@@ -26,6 +26,8 @@ export class BqTab {
   // State() variables
   // Inlined decorator, alphabetical order
   // =======================================
+
+  @State() tabIndex: number | null = null;
 
   // Public Property API
   // ========================
@@ -116,6 +118,15 @@ export class BqTab {
     this.buttonElement?.blur();
   }
 
+  /**
+   * Sets tabindex on the native `<button>` HTML element used under the hood.
+   * This method is used inside `<bq-tab-group>` to make tab focusable after the active one is focused
+   */
+  @Method()
+  async focusable(value: boolean) {
+    this.tabIndex = value ? 0 : null;
+  }
+
   // Local methods
   // Internal business logic.
   // These methods cannot be called from the host element.
@@ -140,7 +151,7 @@ export class BqTab {
 
   private get tabindex(): string {
     // NOTE: this.active is undefined when is not part of bq-tab-group
-    return `${-1 + +(this.active ?? 1)}`;
+    return `${this.tabIndex ?? -1 + +(this.active ?? 1)}`;
   }
 
   // render() function

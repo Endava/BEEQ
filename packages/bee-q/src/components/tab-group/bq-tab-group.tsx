@@ -63,6 +63,7 @@ export class BqTabGroup {
 
     this.bqTabElements.forEach((bqTabElement) => {
       bqTabElement.size = this.size;
+      bqTabElement.active = !isNil(this.value) ? bqTabElement.tabId === this.value : false;
       bqTabElement.divider = true;
     });
   }
@@ -84,10 +85,7 @@ export class BqTabGroup {
   }
 
   componentDidLoad() {
-    this.bqTabElements.forEach((bqTabElement) => {
-      bqTabElement.active = !isNil(this.value) ? bqTabElement.tabId === this.value : false;
-      bqTabElement.size = this.size;
-    });
+    this.checkPropValues();
   }
 
   // Listeners
@@ -97,6 +95,22 @@ export class BqTabGroup {
   onMouseDown(event: MouseEvent) {
     if (!isNil(this.focusedBqTab) && isHTMLElement(event.target, 'bq-tab') && this.el.contains(event.target)) {
       this.focusedBqTab = event.target;
+    }
+  }
+
+  @Listen('keyup', { target: 'body', passive: true, capture: true })
+  onKeyUp(event: KeyboardEvent) {
+    const { target } = event;
+
+    if (!isHTMLElement(target, 'bq-tab')) return;
+
+    this.makeTabsFocusable();
+  }
+
+  @Listen('blur', { capture: true })
+  onFocusOut(event: FocusEvent) {
+    if (isHTMLElement(event.relatedTarget, 'bq-tab')) {
+      this.focusedBqTab = event.relatedTarget;
     }
   }
 
@@ -140,6 +154,7 @@ export class BqTabGroup {
       event.stopPropagation();
     } else {
       this.focusedBqTab = null;
+      this.restoreTabsFocus();
     }
   }
 
@@ -155,7 +170,7 @@ export class BqTabGroup {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private focusTabSibbling(currentTarget: HTMLBqTabElement, direction: 'forward' | 'backward'): void {
+  private focusTabSibbling = (currentTarget: HTMLBqTabElement, direction: 'forward' | 'backward'): void => {
     let target: HTMLBqTabElement | null = null;
 
     this.bqTabElements.forEach((bqTabElement, index, elements) => {
@@ -170,19 +185,37 @@ export class BqTabGroup {
       target.vFocus();
       this.selectTab(target);
     }
-  }
+  };
+
+  private makeTabsFocusable = (): void => {
+    this.bqTabElements.forEach((bqTabElement) => {
+      if (bqTabElement.disabled) {
+        return;
+      }
+      bqTabElement.focusable(true);
+    });
+  };
+
+  private restoreTabsFocus = (): void => {
+    this.bqTabElements.forEach((bqTabElement) => {
+      if (bqTabElement.disabled || bqTabElement.active) {
+        return;
+      }
+      bqTabElement.focusable(false);
+    });
+  };
 
   private get bqTabElements(): HTMLBqTabElement[] {
     return Array.from(this.el.querySelectorAll('bq-tab'));
   }
 
-  private selectTab(target: HTMLBqTabElement): void {
+  private selectTab = (target: HTMLBqTabElement): void => {
     const { tabId } = target;
     target.active = true;
     this.value = tabId;
     this.focusedBqTab = target;
     this.debouncedBqChange({ value: tabId, target });
-  }
+  };
 
   // render() function
   // Always the last one in the class.
