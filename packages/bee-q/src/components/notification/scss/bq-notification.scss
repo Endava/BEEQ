@@ -5,7 +5,7 @@
 @import './bq-notification-variables';
 
 a {
-  @apply text-text-brand no-underline;
+  @apply font-medium text-text-brand no-underline;
 }
 
 .notification-shadow {
