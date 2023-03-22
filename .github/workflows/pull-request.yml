@@ -7,6 +7,7 @@ on:
 
 env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
   NX_VERBOSE_LOGGING: true
 
@@ -25,7 +26,7 @@ jobs:
       - name: 🔍 Check GH_TOKEN
         uses: ./.github/actions/check-token
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ env.GH_TOKEN }}
 
       - name: 🛠 Setup Volta
         uses: volta-cli/action@v3
@@ -42,4 +43,4 @@ jobs:
       - name: 📚 Publish to Chromatic
         uses: ./.github/actions/chromatic
         with:
-          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          CHROMATIC_PROJECT_TOKEN: ${{ env.CHROMATIC_PROJECT_TOKEN }}

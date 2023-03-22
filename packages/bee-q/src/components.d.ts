@@ -110,7 +110,7 @@ export namespace Components {
          */
         "type": TButtonType;
         /**
-          * The variant of button to apply on top of the appearance
+          * The variant of button to apply on top of the appearance (applicable only to `appearance="primary"`)
          */
         "variant": TButtonVariant;
     }
@@ -262,6 +262,10 @@ export namespace Components {
         "value": string;
     }
     interface BqRadioGroup {
+        /**
+          * If true, all radio inputs in the group will display a background on hover
+         */
+        "backgroundOnHover"?: boolean;
         /**
           * A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change
          */
@@ -703,7 +707,7 @@ declare namespace LocalJSX {
          */
         "type"?: TButtonType;
         /**
-          * The variant of button to apply on top of the appearance
+          * The variant of button to apply on top of the appearance (applicable only to `appearance="primary"`)
          */
         "variant"?: TButtonVariant;
     }
@@ -863,6 +867,10 @@ declare namespace LocalJSX {
         "value": string;
     }
     interface BqRadioGroup {
+        /**
+          * If true, all radio inputs in the group will display a background on hover
+         */
+        "backgroundOnHover"?: boolean;
         /**
           * A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change
          */

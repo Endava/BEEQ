@@ -41,6 +41,6 @@ Number.args = { content: '12' };
 
 export const Green = Template.bind({});
 Green.args = {
-  'background-color': 'data--green',
+  'background-color': 'ui--success',
   size: 'large',
 };
