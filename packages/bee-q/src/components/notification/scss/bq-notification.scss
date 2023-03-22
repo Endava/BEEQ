@@ -31,3 +31,7 @@ a {
 .avatar-slot-holder ::slotted(*) {
   @apply mr-2;
 }
+
+.description-slot-holder ::slotted(*) {
+  @apply mt-3 inline-block;
+}
