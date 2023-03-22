@@ -131,7 +131,7 @@ export class BqNotification {
             </div>
           )}
           {!this.showIcon && (
-            <div class="mr-2 inline-block text-left align-top" id="notification-avatar-holder">
+            <div class="avatar-slot-holder inline-block text-left align-top" id="notification-avatar-holder">
               <slot name="avatar" />
             </div>
           )}
