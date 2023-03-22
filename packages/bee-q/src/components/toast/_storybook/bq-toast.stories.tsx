@@ -19,7 +19,7 @@ export default {
   args: {
     type: 'default',
     text: 'This is toast message!',
-    textColor: 'data--blue',
+    textColor: 'ui--brand',
     icon: 'default',
   },
 };

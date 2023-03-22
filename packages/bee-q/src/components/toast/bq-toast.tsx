@@ -87,12 +87,12 @@ export class BqToast {
     const type = this.type;
     const textColor = this.textColor;
     const defaultColors = {
-      success: 'data--green',
-      error: 'data--red',
-      loading: 'data--blue',
-      alert: 'data--orange',
-      info: 'data--blue',
-      default: 'data--blue',
+      success: 'ui--success',
+      error: 'ui--danger',
+      loading: 'ui--brand',
+      alert: 'ui--warning',
+      info: 'ui--brand',
+      default: 'ui--brand',
     };
     const icons = {
       success: 'check-circle',
