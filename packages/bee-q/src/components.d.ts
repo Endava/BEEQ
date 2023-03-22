@@ -15,6 +15,7 @@ import { TSliderType } from "./components/slider/bq-slider.types";
 import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 import { TStatusType } from "./components/status/bq-status.types";
 import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
+import { TToastType } from "./components/toast/bq-toast.types";
 import { FloatingUIPlacement } from "./services/interfaces";
 export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 export { TBadgeSize } from "./components/badge/bq-badge.types";
@@ -26,6 +27,7 @@ export { TSliderType } from "./components/slider/bq-slider.types";
 export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 export { TStatusType } from "./components/status/bq-status.types";
 export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
+export { TToastType } from "./components/toast/bq-toast.types";
 export { FloatingUIPlacement } from "./services/interfaces";
 export namespace Components {
     /**
@@ -404,6 +406,32 @@ export namespace Components {
          */
         "value"?: string;
     }
+    interface BqToast {
+        /**
+          * Trigers function to hide toast
+         */
+        "hideToast": () => Promise<void>;
+        /**
+          * Icon of Toast
+         */
+        "icon": string;
+        /**
+          * Trigers function to show toast
+         */
+        "showToast": () => Promise<void>;
+        /**
+          * Text of Toast
+         */
+        "text": string;
+        /**
+          * Text color of Toast
+         */
+        "textColor": string;
+        /**
+          * Type of Toast
+         */
+        "type": TToastType;
+    }
     interface BqTooltip {
         /**
           * Set the action when the tooltip should be displayed, on hover (default) or click
@@ -553,6 +581,12 @@ declare global {
         prototype: HTMLBqSwitchElement;
         new (): HTMLBqSwitchElement;
     };
+    interface HTMLBqToastElement extends Components.BqToast, HTMLStencilElement {
+    }
+    var HTMLBqToastElement: {
+        prototype: HTMLBqToastElement;
+        new (): HTMLBqToastElement;
+    };
     interface HTMLBqTooltipElement extends Components.BqTooltip, HTMLStencilElement {
     }
     var HTMLBqTooltipElement: {
@@ -572,6 +606,7 @@ declare global {
         "bq-spinner": HTMLBqSpinnerElement;
         "bq-status": HTMLBqStatusElement;
         "bq-switch": HTMLBqSwitchElement;
+        "bq-toast": HTMLBqToastElement;
         "bq-tooltip": HTMLBqTooltipElement;
     }
 }
@@ -988,6 +1023,24 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface BqToast {
+        /**
+          * Icon of Toast
+         */
+        "icon"?: string;
+        /**
+          * Text of Toast
+         */
+        "text"?: string;
+        /**
+          * Text color of Toast
+         */
+        "textColor"?: string;
+        /**
+          * Type of Toast
+         */
+        "type"?: TToastType;
+    }
     interface BqTooltip {
         /**
           * Set the action when the tooltip should be displayed, on hover (default) or click
@@ -1024,6 +1077,7 @@ declare namespace LocalJSX {
         "bq-spinner": BqSpinner;
         "bq-status": BqStatus;
         "bq-switch": BqSwitch;
+        "bq-toast": BqToast;
         "bq-tooltip": BqTooltip;
     }
 }
@@ -1059,6 +1113,7 @@ declare module "@stencil/core" {
              * They should provide immediate results, giving users the freedom to control their preferences as needed.
              */
             "bq-switch": LocalJSX.BqSwitch & JSXBase.HTMLAttributes<HTMLBqSwitchElement>;
+            "bq-toast": LocalJSX.BqToast & JSXBase.HTMLAttributes<HTMLBqToastElement>;
             "bq-tooltip": LocalJSX.BqTooltip & JSXBase.HTMLAttributes<HTMLBqTooltipElement>;
         }
     }

@@ -38,12 +38,14 @@ Icons are simplified images that graphically explain the meaning of an object on
 
  - [bq-button](../button)
  - [bq-switch](../switch)
+ - [bq-toast](../toast)
 
 ### Graph
 ```mermaid
 graph TD;
   bq-button --> bq-icon
   bq-switch --> bq-icon
+  bq-toast --> bq-icon
   style bq-icon fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
