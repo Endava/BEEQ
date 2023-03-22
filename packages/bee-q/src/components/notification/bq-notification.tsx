@@ -22,7 +22,7 @@ export class BqNotification {
   // =======================================
 
   @State() private hasBtn = false;
-  @State() private isHidden = false;
+  @State() private isHidden = true;
 
   // Public Property API
   // ========================
