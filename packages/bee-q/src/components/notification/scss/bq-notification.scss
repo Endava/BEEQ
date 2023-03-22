@@ -27,3 +27,7 @@ a {
 .w-notification-close {
   min-width: 20px;
 }
+
+.avatar-slot-holder ::slotted(*) {
+  @apply mr-2;
+}
