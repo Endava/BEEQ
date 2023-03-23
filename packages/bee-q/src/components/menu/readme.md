@@ -7,17 +7,19 @@
 
 ## Properties
 
-| Property      | Attribute     | Description | Type      | Default |
-| ------------- | ------------- | ----------- | --------- | ------- |
-| `collapsible` | `collapsible` | Toggle menu | `boolean` | `true`  |
+| Property      | Attribute     | Description | Type                | Default  |
+| ------------- | ------------- | ----------- | ------------------- | -------- |
+| `collapsible` | `collapsible` | Toggle menu | `boolean`           | `true`   |
+| `theme`       | `theme`       |             | `"dark" \| "light"` | `'dark'` |
 
 
 ## Shadow Parts
 
-| Part       | Description |
-| ---------- | ----------- |
-| `"group"`  |             |
-| `"header"` |             |
+| Part        | Description |
+| ----------- | ----------- |
+| `"content"` |             |
+| `"group"`   |             |
+| `"header"`  |             |
 
 
 ## Dependencies

@@ -4,11 +4,13 @@
 
 @import './bq-menu-variables';
 
+/** common styling */
+
 .bq-menu {
-  @apply m-0 flex h-[var(--bq-menu--height)] w-[var(--bq-menu--width)] flex-col gap-[var(--bq-menu--gap)] bg-[var(--bq-menu--bg-color)] p-[var(--bq-menu--padding)];
+  @apply m-0 flex h-[var(--bq-menu--height)] w-[var(--bq-menu--width)] flex-col gap-[var(--bq-menu--gap)] p-[var(--bq-menu--padding)];
 
   &__header {
-    @apply flex h-[10vh] items-center justify-center py-[6px] px-0 text-text-brand;
+    @apply flex h-[10vh] items-center justify-center py-[6px] px-0;
   }
 
   &__content {
@@ -17,5 +19,25 @@
 
   &__footer {
     @apply mt-auto flex justify-center py-[6px] px-0;
+  }
+}
+
+/** theme light */
+
+[data-theme='light'] {
+  @apply bg-[var(--bq-menu--bg-color)];
+
+  .bq-menu__header {
+    @apply text-text-brand;
+  }
+}
+
+/** theme dark */
+
+[data-theme='dark'] {
+  @apply bg-bg-brand;
+
+  .bq-menu__header {
+    @apply text-text-secondary-inverse;
   }
 }
