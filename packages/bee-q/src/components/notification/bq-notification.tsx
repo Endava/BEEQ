@@ -1,5 +1,6 @@
-import { h, Component, Prop, Element, State, Method, Host } from '@stencil/core';
-import { hasSlotContent, getColorCSSVariable } from '../../shared/utils';
+import { h, Component, Prop, Element, State, Method, Host, Watch } from '@stencil/core';
+import { hasSlotContent, getColorCSSVariable, validatePropValue } from '../../shared/utils';
+import { NOTIFICATION_TYPES, TNotificationType } from './bg-notification.types';
 
 @Component({
   tag: 'bq-notification',
@@ -28,7 +29,7 @@ export class BqNotification {
   // ========================
 
   /** Type of Notification */
-  @Prop({ reflect: true }) type: string;
+  @Prop({ reflect: true }) type: TNotificationType = 'info';
 
   /** Set property if you want Notification icon to be shown. */
   @Prop({ reflect: true }) showIcon: boolean;
@@ -41,6 +42,10 @@ export class BqNotification {
 
   // Prop lifecycle events
   // =======================
+  @Watch('type')
+  checkPropValues() {
+    validatePropValue(NOTIFICATION_TYPES, 'info', this.el, 'type');
+  }
 
   // Events section
   // Requires JSDocs for public API documentation
@@ -49,6 +54,10 @@ export class BqNotification {
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
+
+  componentWillLoad() {
+    this.checkPropValues();
+  }
 
   // Listeners
   // ==============
