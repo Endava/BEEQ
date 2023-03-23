@@ -37,7 +37,7 @@ export class BqNotification {
   // ========================
 
   /** Type of Notification */
-  @Prop({ reflect: true }) type: TNotificationType = 'info';
+  @Prop({ reflect: true }) type: TNotificationType = 'default';
 
   /** Set property if you want Notification icon to be shown. */
   @Prop({ reflect: true }) showIcon: boolean;
@@ -52,7 +52,7 @@ export class BqNotification {
   // =======================
   @Watch('type')
   checkPropValues() {
-    validatePropValue(NOTIFICATION_TYPES, 'info', this.el, 'type');
+    validatePropValue(NOTIFICATION_TYPES, 'default', this.el, 'type');
   }
 
   // Events section
