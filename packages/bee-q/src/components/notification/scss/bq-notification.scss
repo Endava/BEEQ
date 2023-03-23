@@ -35,3 +35,7 @@ a {
 .description-slot-holder ::slotted(*) {
   @apply mt-3 inline-block;
 }
+
+.footer-container ::slotted(*) {
+  @apply mt-3 inline-block;
+}
