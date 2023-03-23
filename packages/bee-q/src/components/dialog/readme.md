@@ -17,7 +17,7 @@
 
 ### `close() => Promise<void>`
 
-
+Hides  the dialog
 
 #### Returns
 
@@ -27,7 +27,7 @@ Type: `Promise<void>`
 
 ### `open() => Promise<void>`
 
-Method to be called to open the dialog
+Shows the dialog
 
 #### Returns
 
@@ -38,10 +38,11 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part             | Description |
-| ---------------- | ----------- |
-| `"button-close"` |             |
-| `"icon-close"`   |             |
+| Part           | Description                                           |
+| -------------- | ----------------------------------------------------- |
+| `"base"`       | The component wrapper container inside the shadow DOM |
+| `"container"`  | The `<div>` container that holds the dialog content   |
+| `"icon-close"` | The icon that close the dialog on click               |
 
 
 ## Dependencies

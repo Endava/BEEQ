@@ -175,9 +175,12 @@ export namespace Components {
         "value": string;
     }
     interface BqDialog {
+        /**
+          * Hides  the dialog
+         */
         "close": () => Promise<void>;
         /**
-          * Method to be called to open the dialog
+          * Shows the dialog
          */
         "open": () => Promise<void>;
         /**

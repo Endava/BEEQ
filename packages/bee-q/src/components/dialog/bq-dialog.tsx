@@ -3,6 +3,12 @@ import { h, Component, Prop, Element, Watch, State, Method, Host } from '@stenci
 import { validatePropValue } from '../../shared/utils';
 import { DIALOG_SIZE, DIALOG_FOOTER_VARIANT, TDialogSize, TDialogFooterVariant } from './bq-dialog.types';
 
+/**
+ * @part base - The component wrapper container inside the shadow DOM
+ * @part container - The `<div>` container that holds the dialog content
+ * @part icon-close - The icon that close the dialog on click
+ */
+
 @Component({
   tag: 'bq-dialog',
   styleUrl: './scss/bq-dialog.scss',
@@ -63,12 +69,13 @@ export class BqDialog {
   // Requires JSDocs for public API documentation.
   // ===============================================
 
-  /** Method to be called to open the dialog */
+  /** Shows the dialog */
   @Method()
   async open() {
     this.isOpen = true;
   }
 
+  /** Hides  the dialog */
   @Method()
   async close() {
     this.isOpen = false;
@@ -93,7 +100,7 @@ export class BqDialog {
 
   render() {
     return (
-      <Host class={{ 'is-open': this.isOpen }}>
+      <Host class={{ 'is-open': this.isOpen }} part="base">
         <div
           class="overlay fixed h-full w-full bg-bg-tertiary opacity-75"
           onClick={this.handleOverlayClick}
@@ -104,6 +111,7 @@ export class BqDialog {
             'z-10 m-auto flex flex-col rounded-s bg-bg-primary shadow-m': true,
             [`size--${this.size}`]: true,
           }}
+          part="container"
         >
           <header class="bq-header">
             <div class="bq-placeholder-info">
@@ -112,14 +120,12 @@ export class BqDialog {
               </div>
             </div>
             <div class="flex flex-col pl-4">
-              <h3>
-                <slot name="title" />
-              </h3>
+              <slot name="title" />
               <div class="bq-description">
                 <slot name="content" />
               </div>
             </div>
-            <bq-button class="cursor-auto" appearance="text" size="small" part="button-close">
+            <bq-button class="cursor-auto" appearance="text" size="small">
               <bq-icon
                 class="cursor-pointer"
                 name="x"
