@@ -44,6 +44,7 @@ Type: `Promise<void>`
 | --------------- | ---------------------------------------------------------------------------------------------------------- |
 | `"avatar"`      | `<div>` container element of notification avatar component slot.  Will be shown if Prop showIcon is false. |
 | `"base"`        | The component's internal wrapper of the notification component.                                            |
+| `"close-icon"`  | `<div>` container element of notification close icon component.  Will be shown if Prop showClose is false. |
 | `"description"` | `<div>` container element of notification description slot                                                 |
 | `"footer"`      | `<div>` container element of notification footer slot                                                      |
 | `"icon"`        | `<div>` container element of notification icon component. Will be shown if Prop showIcon is true.          |
