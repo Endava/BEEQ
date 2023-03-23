@@ -1,4 +1,7 @@
-import { h, Component, Prop } from '@stencil/core';
+import { h, Component, Prop, Element } from '@stencil/core';
+import { isHTMLElement } from '../../shared/utils';
+
+import { TMenuTheme } from './bq-menu.types';
 
 @Component({
   tag: 'bq-menu',
@@ -12,6 +15,8 @@ export class BqMenu {
   // Reference to host HTML element
   // ===================================
 
+  @Element() el!: HTMLBqMenuElement;
+
   // State() variables
   // Inlined decorator, alphabetical order
   // =======================================
@@ -21,6 +26,8 @@ export class BqMenu {
 
   /** Toggle menu */
   @Prop() collapsible = true;
+
+  @Prop({ reflect: true }) theme: TMenuTheme = 'dark';
 
   // Prop lifecycle events
   // =======================
@@ -32,6 +39,11 @@ export class BqMenu {
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
+
+  componentDidLoad() {
+    this.setThemeBqMenuItemElems();
+    this.setButtonAttribute();
+  }
 
   // Listeners
   // ==============
@@ -48,18 +60,41 @@ export class BqMenu {
   // These methods cannot be called from the host element.
   // =======================================================
 
+  private setThemeBqMenuItemElems = (): void => {
+    const slot = this.el.shadowRoot.querySelector('.bq-menu').querySelector<HTMLSlotElement>('[part="content"] > slot');
+
+    const bqMenuItems: HTMLBqMenuItemElement[] = slot
+      .assignedElements({ flatten: true })
+      .filter((elem: HTMLBqMenuItemElement) => isHTMLElement(elem, 'bq-menu-item')) as [HTMLBqMenuItemElement];
+
+    // select the wrapper element and add 'data-theme' attr
+    bqMenuItems.forEach((elem: HTMLBqMenuItemElement) => {
+      const menuItemWrapper = elem.shadowRoot.querySelector('.wrapper');
+      menuItemWrapper.setAttribute('data-theme', this.theme);
+    });
+  };
+
+  /**
+   * set 'appearance' attr to button based on theme
+   * @returns void
+   */
+  private setButtonAttribute = (): void => {
+    const button: HTMLElement = this.el.shadowRoot.querySelector('bq-button');
+    this.theme === 'light' ? button.setAttribute('appearance', 'text') : button.setAttribute('appearance', 'primary');
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
 
   render() {
     return (
-      <aside class="bq-menu" role="menu" aria-label="Side menu" part="group">
+      <aside class="bq-menu" data-theme={this.theme} role="menu" aria-label="Side menu" part="group">
         <span class="bq-menu__header" part="header">
           <slot name="header" />
         </span>
 
-        <span class="bq-menu__content">
+        <span class="bq-menu__content" part="content">
           <slot />
         </span>
 

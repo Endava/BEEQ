@@ -10,6 +10,7 @@ import { TBadgeSize } from "./components/badge/bq-badge.types";
 import { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 import { TIconWeight } from "./components/icon/bq-icon.types";
+import { TMenuTheme } from "./components/menu/bq-menu.types";
 import { TMenuItemSize } from "./components/menu-item/bq-menu-item.types";
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 import { TSliderType } from "./components/slider/bq-slider.types";
@@ -23,6 +24,7 @@ export { TBadgeSize } from "./components/badge/bq-badge.types";
 export { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 export { TIconWeight } from "./components/icon/bq-icon.types";
+export { TMenuTheme } from "./components/menu/bq-menu.types";
 export { TMenuItemSize } from "./components/menu-item/bq-menu-item.types";
 export { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 export { TSliderType } from "./components/slider/bq-slider.types";
@@ -226,6 +228,7 @@ export namespace Components {
           * Toggle menu
          */
         "collapsible": boolean;
+        "theme": TMenuTheme;
     }
     interface BqMenuItem {
         /**
@@ -903,6 +906,7 @@ declare namespace LocalJSX {
           * Toggle menu
          */
         "collapsible"?: boolean;
+        "theme"?: TMenuTheme;
     }
     interface BqMenuItem {
         /**

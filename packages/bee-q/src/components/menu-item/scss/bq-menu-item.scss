@@ -7,27 +7,47 @@
 // Appearance
 
 .bq-menu-item {
-  @apply mx-1.5 flex h-[inherit] w-[auto] cursor-pointer items-center justify-items-stretch pl-9;
+  @apply flex h-[inherit] w-[auto] cursor-pointer items-center justify-items-stretch pl-9;
   @apply rounded-s bg-transparent hover:bg-[var(--bq-menu-item--hover)] active:bg-[var(--bq-menu-item--active)];
   @apply transition-[background-color,border-color,box-shadow] duration-200;
   @apply focus-visible:focus;
-  @apply text-text-primary active:outline-none;
+  @apply active:outline-none;
 
   &__child {
     @apply flex items-center group-active:text-text-brand;
   }
 
   &.disabled {
-    @apply pointer-events-none text-text-primary-disabled focus:ring-0;
+    @apply pointer-events-none focus:ring-0;
+  }
+}
+
+/** theme light */
+
+[data-theme='light'] {
+  .bq-menu-item {
+    @apply text-text-primary;
+
+    &.disabled {
+      @apply text-text-primary-disabled;
+    }
+  }
+}
+
+/** theme dark */
+
+[data-theme='dark'] {
+  .bq-menu-item {
+    @apply text-text-secondary-inverse hover:text-text-primary;
   }
 }
 
 .wrapper {
-  @apply h-fit cursor-not-allowed;
+  @apply mx-1.5 h-fit cursor-not-allowed;
 }
 
 .has-prefix {
-  @apply px-1;
+  @apply px-2;
 }
 
 .label {
