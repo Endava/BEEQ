@@ -11,7 +11,7 @@ export class BqNotification {
   // Own Properties
   // ====================
 
-  private buttonElem: HTMLElement;
+  private footerElem: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -22,7 +22,7 @@ export class BqNotification {
   // Inlined decorator, alphabetical order
   // =======================================
 
-  @State() private hasBtn = false;
+  @State() private hasFooter = false;
   @State() private isHidden = true;
 
   // Public Property API
@@ -121,7 +121,7 @@ export class BqNotification {
   };
 
   private handleSlotChange = () => {
-    this.hasBtn = hasSlotContent(this.buttonElem);
+    this.hasFooter = hasSlotContent(this.footerElem);
   };
 
   private closeNotification = () => {
@@ -161,13 +161,8 @@ export class BqNotification {
             <div class="description-slot-holder description-font font-regular">
               <slot name="description" />
             </div>
-            <div class={{ 'mt-3': this.hasBtn }}>
-              <span class={{ 'mr-2': this.hasBtn }} ref={(spanElem) => (this.buttonElem = spanElem)}>
-                <slot name="first-button" onSlotchange={this.handleSlotChange} />
-              </span>
-              <span>
-                <slot name="second-button" />
-              </span>
+            <div class={{ 'mt-3': this.hasFooter }} ref={(holderElem) => (this.footerElem = holderElem)}>
+              <slot name="notification-footer" onSlotchange={this.handleSlotChange} />
             </div>
           </div>
           {this.showClose && (
