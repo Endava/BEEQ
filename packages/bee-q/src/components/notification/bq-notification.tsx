@@ -142,7 +142,7 @@ export class BqNotification {
     };
 
     return (
-      <Host aria-hidden={this.isHidden} hidden={this.isHidden}>
+      <Host style={styles} aria-hidden={this.isHidden} hidden={this.isHidden}>
         <div class="bg-white notification-shadow notification-radius inline-block w-auto px-5 py-4">
           {this.showIcon && (
             <div class="mr-2 inline-block text-left align-top">
@@ -155,7 +155,7 @@ export class BqNotification {
             </div>
           )}
           <div class="max-w-x inline-block text-left align-top">
-            <div class="title-font font-semibold" style={styles}>
+            <div class="title-font font-semibold">
               <slot />
             </div>
             <div class="description-slot-holder description-font font-regular">
@@ -172,7 +172,13 @@ export class BqNotification {
           </div>
           {this.showClose && (
             <div class="w-notification-close inline-block text-right align-top">
-              <bq-icon name="x" size="14" class="cursor-pointer" onClick={this.closeNotification}></bq-icon>
+              <bq-icon
+                name="x"
+                color="icon--primary"
+                size="14"
+                class="cursor-pointer"
+                onClick={this.closeNotification}
+              ></bq-icon>
             </div>
           )}
         </div>
