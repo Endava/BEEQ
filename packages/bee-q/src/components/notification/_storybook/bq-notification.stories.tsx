@@ -17,10 +17,10 @@ export default {
     subjectColor: { control: 'text' },
   },
   args: {
-    type: 'info',
+    type: 'default',
     showIcon: true,
     showClose: true,
-    subjectColor: 'data--black',
+    subjectColor: '',
   },
 };
 

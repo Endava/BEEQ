@@ -7,12 +7,12 @@
 
 ## Properties
 
-| Property       | Attribute       | Description                                                                                                       | Type      | Default     |
-| -------------- | --------------- | ----------------------------------------------------------------------------------------------------------------- | --------- | ----------- |
-| `showClose`    | `show-close`    | Set property if to false if you want to hide Close icon                                                           | `boolean` | `undefined` |
-| `showIcon`     | `show-icon`     | Set property if you want Notification icon to be shown.                                                           | `boolean` | `undefined` |
-| `subjectColor` | `subject-color` | Set the subject color if you don't want to be black. Subject color will also apply to Icon color if there is one. | `string`  | `undefined` |
-| `type`         | `type`          | Type of Notification                                                                                              | `string`  | `undefined` |
+| Property       | Attribute       | Description                                                                                                       | Type                                                       | Default     |
+| -------------- | --------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ----------- |
+| `showClose`    | `show-close`    | Set property if to false if you want to hide Close icon                                                           | `boolean`                                                  | `undefined` |
+| `showIcon`     | `show-icon`     | Set property if you want Notification icon to be shown.                                                           | `boolean`                                                  | `undefined` |
+| `subjectColor` | `subject-color` | Set the subject color if you don't want to be black. Subject color will also apply to Icon color if there is one. | `string`                                                   | `undefined` |
+| `type`         | `type`          | Type of Notification                                                                                              | `"default" \| "error" \| "info" \| "success" \| "warning"` | `'info'`    |
 
 
 ## Methods

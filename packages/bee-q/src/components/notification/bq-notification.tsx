@@ -107,6 +107,19 @@ export class BqNotification {
     return icon;
   };
 
+  private getNotificationColor = () => {
+    const type = this.type;
+    const colors = {
+      default: 'ui--inverse-active',
+      success: 'ui--success',
+      info: 'ui--brand',
+      warning: 'ui--warning',
+      error: 'ui--danger',
+    };
+
+    return this.subjectColor && this.subjectColor !== '' ? this.subjectColor : colors[type];
+  };
+
   private handleSlotChange = () => {
     this.hasBtn = hasSlotContent(this.buttonElem);
   };
@@ -136,7 +149,7 @@ export class BqNotification {
         >
           {this.showIcon && (
             <div class="mr-2 inline-block text-left align-top" id="notification-icon-holder">
-              <bq-icon name={this.getNotificationIconName()} color={this.subjectColor} size="24"></bq-icon>
+              <bq-icon name={this.getNotificationIconName()} color={this.getNotificationColor()} size="24"></bq-icon>
             </div>
           )}
           {!this.showIcon && (
