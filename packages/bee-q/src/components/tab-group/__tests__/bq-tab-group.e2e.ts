@@ -86,8 +86,8 @@ describe('bq-tab-group', () => {
     await page.keyboard.press('ArrowRight');
     await page.keyboard.press('Tab');
 
-    expect(bqFocus).toHaveReceivedEventTimes(1);
+    expect(bqFocus).toHaveReceivedEventTimes(4);
     expect(bqChange).toHaveReceivedEventTimes(3);
-    expect(bqBlur).toHaveReceivedEventTimes(1);
+    expect(bqBlur).toHaveReceivedEventTimes(4);
   });
 });

@@ -430,7 +430,7 @@ export namespace Components {
         /**
           * Sets tabindex on the native `<button>` HTML element used under the hood. This method is used inside `<bq-tab-group>` to make tab focusable after the active one is focused
          */
-        "focusable": (value: boolean) => Promise<void>;
+        "enableFocus": (value: boolean) => Promise<void>;
         /**
           * The size of the tab
          */

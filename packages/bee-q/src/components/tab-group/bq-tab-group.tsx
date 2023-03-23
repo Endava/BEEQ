@@ -14,8 +14,6 @@ export class BqTabGroup {
   // Own Properties
   // ====================
 
-  private focusedBqTab: HTMLBqTabElement | null = null;
-
   private debouncedBqChange: TDebounce<{ value: string; target: HTMLBqTabElement }>;
 
   // Reference to host HTML element
@@ -91,13 +89,6 @@ export class BqTabGroup {
   // Listeners
   // ==============
 
-  @Listen('mousedown', { target: 'body', passive: true })
-  onMouseDown(event: MouseEvent) {
-    if (!isNil(this.focusedBqTab) && isHTMLElement(event.target, 'bq-tab') && this.el.contains(event.target)) {
-      this.focusedBqTab = event.target;
-    }
-  }
-
   @Listen('keyup', { target: 'body', passive: true, capture: true })
   onKeyUp(event: KeyboardEvent) {
     const { target } = event;
@@ -107,14 +98,7 @@ export class BqTabGroup {
     this.makeTabsFocusable();
   }
 
-  @Listen('blur', { capture: true })
-  onFocusOut(event: FocusEvent) {
-    if (isHTMLElement(event.relatedTarget, 'bq-tab')) {
-      this.focusedBqTab = event.relatedTarget;
-    }
-  }
-
-  @Listen('bqClick')
+  @Listen('bqClick', { passive: true })
   onBqClick(event: CustomEvent<HTMLBqTabElement>) {
     const { detail: target } = event;
     this.bqTabElements.forEach((bqTabElement) => (bqTabElement.active = bqTabElement === target));
@@ -122,7 +106,7 @@ export class BqTabGroup {
     this.selectTab(target);
   }
 
-  @Listen('bqKeyDown')
+  @Listen('bqKeyDown', { passive: true })
   onBqKeyDown(event: CustomEvent<KeyboardEvent>) {
     const { target } = event;
 
@@ -141,21 +125,9 @@ export class BqTabGroup {
     }
   }
 
-  @Listen('bqFocus', { capture: true })
-  onBqFocus(event: CustomEvent<HTMLBqTabElement>) {
-    if (event.detail !== this.focusedBqTab) return;
-
-    event.stopPropagation();
-  }
-
-  @Listen('bqBlur', { capture: true })
-  onBqBlur(event: CustomEvent<HTMLBqTabElement>) {
-    if (!isNil(this.focusedBqTab) && event.detail !== this.focusedBqTab) {
-      event.stopPropagation();
-    } else {
-      this.focusedBqTab = null;
-      this.restoreTabsFocus();
-    }
+  @Listen('bqBlur', { capture: true, passive: true })
+  onBqBlur() {
+    this.restoreTabsFocus();
   }
 
   // Public methods API
@@ -192,16 +164,14 @@ export class BqTabGroup {
       if (bqTabElement.disabled) {
         return;
       }
-      bqTabElement.focusable(true);
+      bqTabElement.enableFocus(true);
     });
   };
 
   private restoreTabsFocus = (): void => {
     this.bqTabElements.forEach((bqTabElement) => {
-      if (bqTabElement.disabled || bqTabElement.active) {
-        return;
-      }
-      bqTabElement.focusable(false);
+      if (bqTabElement.disabled || bqTabElement.active) return;
+      bqTabElement.enableFocus(false);
     });
   };
 
@@ -213,7 +183,6 @@ export class BqTabGroup {
     const { tabId } = target;
     target.active = true;
     this.value = tabId;
-    this.focusedBqTab = target;
     this.debouncedBqChange({ value: tabId, target });
   };
 

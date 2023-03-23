@@ -123,7 +123,7 @@ export class BqTab {
    * This method is used inside `<bq-tab-group>` to make tab focusable after the active one is focused
    */
   @Method()
-  async focusable(value: boolean) {
+  async enableFocus(value: boolean) {
     this.tabIndex = value ? 0 : null;
   }
 
