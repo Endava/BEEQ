@@ -143,7 +143,7 @@ export class BqNotification {
 
     return (
       <Host style={styles} aria-hidden={this.isHidden} hidden={this.isHidden}>
-        <div class="bg-white notification-shadow notification-radius inline-block w-auto px-5 py-4">
+        <div class="bg-white notification-shadow notification-radius inline-block w-auto p-[var(--bq-notification--padding)]">
           {this.showIcon && (
             <div class="mr-2 inline-block text-left align-top">
               <bq-icon name={this.getNotificationIconName()} color={this.getNotificationColor()} size="24"></bq-icon>
