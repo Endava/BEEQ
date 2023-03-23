@@ -9,6 +9,7 @@ import { NOTIFICATION_TYPES, TNotificationType } from './bg-notification.types';
  * @part avatar - `<div>` container element of notification avatar component slot.  Will be shown if Prop showIcon is false.
  * @part description - `<div>` container element of notification description slot
  * @part footer - `<div>` container element of notification footer slot
+ * @part close-icon - `<div>` container element of notification close icon component.  Will be shown if Prop showClose is false.
  */
 @Component({
   tag: 'bq-notification',
@@ -177,7 +178,7 @@ export class BqNotification {
             </div>
           </div>
           {this.showClose && (
-            <div class="w-notification-close inline-block text-right align-top">
+            <div class="w-notification-close inline-block text-right align-top" part="close-icon">
               <bq-icon
                 name="x"
                 color="icon--primary"
