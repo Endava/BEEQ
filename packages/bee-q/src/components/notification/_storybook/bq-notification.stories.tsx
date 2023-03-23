@@ -67,28 +67,14 @@ const Template = (args) => {
             shape="circle"
             size="small"
           ></bq-avatar>
-          <bq-button
-            slot="first-button"
-            appearance="primary"
-            href=""
-            size="small"
-            target=""
-            type="button"
-            variant="standard"
-          >
-            Button
-          </bq-button>
-          <bq-button
-            slot="second-button"
-            appearance="secondary"
-            href=""
-            size="small"
-            target=""
-            type="button"
-            variant="standard"
-          >
-            Button
-          </bq-button>
+          <div slot="notification-footer">
+            <bq-button appearance="primary" href="" size="small" target="" type="button" variant="standard">
+              Button
+            </bq-button>
+            <bq-button appearance="secondary" href="" size="small" target="" type="button" variant="standard">
+              Button
+            </bq-button>
+          </div>
         </bq-notification>
       </div>
     </div>
