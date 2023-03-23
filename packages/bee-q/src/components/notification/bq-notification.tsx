@@ -127,7 +127,7 @@ export class BqNotification {
         >
           {this.showIcon && (
             <div class="mr-2 inline-block text-left align-top" id="notification-icon-holder">
-              <bq-icon name={this.getNotificationIconName()} color={this.subjectColor} size="18"></bq-icon>
+              <bq-icon name={this.getNotificationIconName()} color={this.subjectColor} size="24"></bq-icon>
             </div>
           )}
           {!this.showIcon && (
