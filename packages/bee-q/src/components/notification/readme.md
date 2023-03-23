@@ -38,6 +38,18 @@ Type: `Promise<void>`
 
 
 
+## Shadow Parts
+
+| Part            | Description                                                                                                |
+| --------------- | ---------------------------------------------------------------------------------------------------------- |
+| `"avatar"`      | `<div>` container element of notification avatar component slot.  Will be shown if Prop showIcon is false. |
+| `"base"`        | The component's internal wrapper of the notification component.                                            |
+| `"description"` | `<div>` container element of notification description slot                                                 |
+| `"footer"`      | `<div>` container element of notification footer slot                                                      |
+| `"icon"`        | `<div>` container element of notification icon component. Will be shown if Prop showIcon is true.          |
+| `"title"`       | `<div>` container element of notification default slot.                                                    |
+
+
 ## Dependencies
 
 ### Depends on

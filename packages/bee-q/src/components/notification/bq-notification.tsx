@@ -2,6 +2,14 @@ import { h, Component, Prop, Element, State, Method, Host, Watch } from '@stenci
 import { hasSlotContent, getColorCSSVariable, validatePropValue } from '../../shared/utils';
 import { NOTIFICATION_TYPES, TNotificationType } from './bg-notification.types';
 
+/**
+ * @part base - The component's internal wrapper of the notification component.
+ * @part icon - `<div>` container element of notification icon component. Will be shown if Prop showIcon is true.
+ * @part title - `<div>` container element of notification default slot.
+ * @part avatar - `<div>` container element of notification avatar component slot.  Will be shown if Prop showIcon is false.
+ * @part description - `<div>` container element of notification description slot
+ * @part footer - `<div>` container element of notification footer slot
+ */
 @Component({
   tag: 'bq-notification',
   styleUrl: './scss/bq-notification.scss',
@@ -143,25 +151,28 @@ export class BqNotification {
 
     return (
       <Host style={styles} aria-hidden={this.isHidden} hidden={this.isHidden}>
-        <div class="bg-white notification-shadow notification-radius inline-block w-auto min-w-[var(--bq-notification--min-width)] p-[var(--bq-notification--padding)]">
+        <div
+          class="bg-white notification-shadow notification-radius inline-block w-auto min-w-[var(--bq-notification--min-width)] p-[var(--bq-notification--padding)]"
+          part="base"
+        >
           {this.showIcon && (
-            <div class="mr-2 inline-block text-left align-top">
+            <div class="mr-2 inline-block text-left align-top" part="icon">
               <bq-icon name={this.getNotificationIconName()} color={this.getNotificationColor()} size="24"></bq-icon>
             </div>
           )}
           {!this.showIcon && (
-            <div class="avatar-slot-holder inline-block text-left align-top">
+            <div class="avatar-slot-holder inline-block text-left align-top" part="avatar">
               <slot name="avatar" />
             </div>
           )}
           <div class="inline-block max-w-xs text-left align-top">
-            <div class="title-font font-semibold">
+            <div class="title-font font-semibold" part="title">
               <slot />
             </div>
-            <div class="description-slot-holder description-font font-regular">
+            <div class="description-slot-holder description-font font-regular" part="description">
               <slot name="description" />
             </div>
-            <div class={{ 'mt-3': this.hasFooter }} ref={(holderElem) => (this.footerElem = holderElem)}>
+            <div class={{ 'mt-3': this.hasFooter }} part="footer" ref={(holderElem) => (this.footerElem = holderElem)}>
               <slot name="notification-footer" onSlotchange={this.handleSlotChange} />
             </div>
           </div>
