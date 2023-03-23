@@ -1,6 +1,6 @@
 import { html } from 'lit-html';
 import mdx from './bq-notification.mdx';
-import { NOTIFICATION_TYPES } from '../bg-notification-types';
+import { NOTIFICATION_TYPES } from '../bg-notification.types';
 
 export default {
   title: 'Components/Notification',
