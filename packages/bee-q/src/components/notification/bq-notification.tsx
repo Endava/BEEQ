@@ -1,5 +1,5 @@
 import { h, Component, Prop, Element, State, Method, Host, Watch } from '@stencil/core';
-import { hasSlotContent, getColorCSSVariable, validatePropValue } from '../../shared/utils';
+import { getColorCSSVariable, validatePropValue } from '../../shared/utils';
 import { NOTIFICATION_TYPES, TNotificationType } from './bg-notification.types';
 
 /**
@@ -20,8 +20,6 @@ export class BqNotification {
   // Own Properties
   // ====================
 
-  private footerElem: HTMLElement;
-
   // Reference to host HTML element
   // ===================================
 
@@ -31,7 +29,6 @@ export class BqNotification {
   // Inlined decorator, alphabetical order
   // =======================================
 
-  @State() private hasFooter = false;
   @State() private isHidden = true;
 
   // Public Property API
@@ -129,10 +126,6 @@ export class BqNotification {
     return this.subjectColor && this.subjectColor !== '' ? this.subjectColor : colors[type];
   };
 
-  private handleSlotChange = () => {
-    this.hasFooter = hasSlotContent(this.footerElem);
-  };
-
   private closeNotification = () => {
     this.isHidden = true;
   };
@@ -173,8 +166,8 @@ export class BqNotification {
             <div class="description-slot-holder description-font font-regular" part="description">
               <slot name="description" />
             </div>
-            <div class={{ 'mt-3': this.hasFooter }} part="footer" ref={(holderElem) => (this.footerElem = holderElem)}>
-              <slot name="notification-footer" onSlotchange={this.handleSlotChange} />
+            <div class="footer-container" part="footer">
+              <slot name="notification-footer" />
             </div>
           </div>
           {this.showClose && (
