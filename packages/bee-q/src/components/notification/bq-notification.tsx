@@ -143,22 +143,19 @@ export class BqNotification {
 
     return (
       <Host aria-hidden={this.isHidden} hidden={this.isHidden}>
-        <div
-          class="bg-white notification-shadow notification-radius inline-block w-auto px-5 py-4"
-          id="notification-main-holder"
-        >
+        <div class="bg-white notification-shadow notification-radius inline-block w-auto px-5 py-4">
           {this.showIcon && (
-            <div class="mr-2 inline-block text-left align-top" id="notification-icon-holder">
+            <div class="mr-2 inline-block text-left align-top">
               <bq-icon name={this.getNotificationIconName()} color={this.getNotificationColor()} size="24"></bq-icon>
             </div>
           )}
           {!this.showIcon && (
-            <div class="avatar-slot-holder inline-block text-left align-top" id="notification-avatar-holder">
+            <div class="avatar-slot-holder inline-block text-left align-top">
               <slot name="avatar" />
             </div>
           )}
           <div class="max-w-x inline-block text-left align-top">
-            <div class="title-font font-semibold" style={styles} id="subject">
+            <div class="title-font font-semibold" style={styles}>
               <slot />
             </div>
             <div class="description-slot-holder description-font font-regular">
@@ -175,13 +172,7 @@ export class BqNotification {
           </div>
           {this.showClose && (
             <div class="w-notification-close inline-block text-right align-top">
-              <bq-icon
-                name="x"
-                size="14"
-                class="cursor-pointer"
-                id="close-notification"
-                onClick={this.closeNotification}
-              ></bq-icon>
+              <bq-icon name="x" size="14" class="cursor-pointer" onClick={this.closeNotification}></bq-icon>
             </div>
           )}
         </div>
