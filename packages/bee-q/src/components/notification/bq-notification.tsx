@@ -143,7 +143,7 @@ export class BqNotification {
 
     return (
       <Host style={styles} aria-hidden={this.isHidden} hidden={this.isHidden}>
-        <div class="bg-white notification-shadow notification-radius inline-block w-auto p-[var(--bq-notification--padding)]">
+        <div class="bg-white notification-shadow notification-radius inline-block w-auto min-w-[var(--bq-notification--min-width)] p-[var(--bq-notification--padding)]">
           {this.showIcon && (
             <div class="mr-2 inline-block text-left align-top">
               <bq-icon name={this.getNotificationIconName()} color={this.getNotificationColor()} size="24"></bq-icon>
@@ -154,7 +154,7 @@ export class BqNotification {
               <slot name="avatar" />
             </div>
           )}
-          <div class="max-w-x inline-block text-left align-top">
+          <div class="inline-block max-w-xs text-left align-top">
             <div class="title-font font-semibold">
               <slot />
             </div>
