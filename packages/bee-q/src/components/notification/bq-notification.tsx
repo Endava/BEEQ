@@ -1,5 +1,5 @@
 import { h, Component, Prop, Element, State, Method, Host, Watch } from '@stencil/core';
-import { getColorCSSVariable, validatePropValue } from '../../shared/utils';
+import { getColorCSSVariable, validatePropValue, isDefined } from '../../shared/utils';
 import { NOTIFICATION_TYPES, TNotificationType } from './bg-notification.types';
 
 /**
@@ -123,7 +123,7 @@ export class BqNotification {
       error: 'ui--danger',
     };
 
-    return this.subjectColor && this.subjectColor !== '' ? this.subjectColor : colors[type];
+    return isDefined(this.subjectColor) ? this.subjectColor : colors[type];
   };
 
   private hideNotification = () => {
