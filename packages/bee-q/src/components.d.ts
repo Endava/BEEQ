@@ -225,7 +225,11 @@ export namespace Components {
         /**
           * Trigger function when you want to close Notification
          */
-        "hideNotification": () => Promise<void>;
+        "hide": () => Promise<void>;
+        /**
+          * Trigger function when you want to show Notification
+         */
+        "show": () => Promise<void>;
         /**
           * Set property if to false if you want to hide Close icon
          */
@@ -234,10 +238,6 @@ export namespace Components {
           * Set property if you want Notification icon to be shown.
          */
         "showIcon": boolean;
-        /**
-          * Trigger function when you want to show Notification
-         */
-        "showNotification": () => Promise<void>;
         /**
           * Set the subject color if you don't want to be black. Subject color will also apply to Icon color if there is one.
          */

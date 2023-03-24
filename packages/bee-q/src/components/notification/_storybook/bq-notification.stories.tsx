@@ -29,7 +29,7 @@ const Template = (args) => {
     await customElements.whenDefined('bq-notification');
     const notificationElement = document.querySelector('bq-notification');
 
-    await notificationElement.showNotification();
+    await notificationElement.show();
   };
 
   return html`
