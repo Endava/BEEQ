@@ -116,11 +116,11 @@ export class BqNotification {
   private getNotificationColor = () => {
     const type = this.type;
     const colors = {
-      default: 'icon--primary',
-      success: 'icon--success',
-      info: 'icon--info',
-      warning: 'icon--warning',
-      error: 'icon--danger',
+      default: 'ui--inverse-active',
+      success: 'ui--success',
+      info: 'ui--brand',
+      warning: 'ui--warning',
+      error: 'ui--danger',
     };
 
     return this.subjectColor && this.subjectColor !== '' ? this.subjectColor : colors[type];
