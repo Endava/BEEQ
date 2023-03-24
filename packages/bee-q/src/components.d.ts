@@ -231,7 +231,7 @@ export namespace Components {
          */
         "show": () => Promise<void>;
         /**
-          * Set property if to false if you want to hide Close icon
+          * Set property to false if you want to hide Close icon
          */
         "showClose": boolean;
         /**
@@ -902,7 +902,7 @@ declare namespace LocalJSX {
     }
     interface BqNotification {
         /**
-          * Set property if to false if you want to hide Close icon
+          * Set property to false if you want to hide Close icon
          */
         "showClose"?: boolean;
         /**
