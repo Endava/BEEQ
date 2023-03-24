@@ -17,7 +17,7 @@
 
 ## Methods
 
-### `hideNotification() => Promise<void>`
+### `hide() => Promise<void>`
 
 Trigger function when you want to close Notification
 
@@ -27,7 +27,7 @@ Type: `Promise<void>`
 
 
 
-### `showNotification() => Promise<void>`
+### `show() => Promise<void>`
 
 Trigger function when you want to show Notification
 

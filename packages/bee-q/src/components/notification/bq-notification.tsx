@@ -79,16 +79,16 @@ export class BqNotification {
    * Trigger function when you want to close Notification
    */
   @Method()
-  async hideNotification() {
-    this.closeNotification();
+  async hide() {
+    this.hideNotification();
   }
 
   /**
    * Trigger function when you want to show Notification
    */
   @Method()
-  async showNotification() {
-    this.setNotificationOpened();
+  async show() {
+    this.showNotification();
   }
 
   // Local methods
@@ -126,11 +126,11 @@ export class BqNotification {
     return this.subjectColor && this.subjectColor !== '' ? this.subjectColor : colors[type];
   };
 
-  private closeNotification = () => {
+  private hideNotification = () => {
     this.isHidden = true;
   };
 
-  private setNotificationOpened = () => {
+  private showNotification = () => {
     this.isHidden = false;
   };
 
@@ -177,7 +177,7 @@ export class BqNotification {
                 color="icon--primary"
                 size="14"
                 class="cursor-pointer"
-                onClick={this.closeNotification}
+                onClick={this.hideNotification}
               ></bq-icon>
             </div>
           )}
