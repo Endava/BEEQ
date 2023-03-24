@@ -43,7 +43,7 @@ export class BqNotification {
   /** Set the subject color if you don't want to be black. Subject color will also apply to Icon color if there is one. */
   @Prop({ reflect: true }) subjectColor: string;
 
-  /** Set property if to false if you want to hide Close icon */
+  /** Set property to false if you want to hide Close icon */
   @Prop({ reflect: true }) showClose: boolean;
 
   // Prop lifecycle events
