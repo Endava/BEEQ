@@ -91,7 +91,7 @@
     "@types/mdx": "2.0.3",
     "@types/node": "18.15.3",
     "@types/puppeteer": "7.0.4",
-    "@types/react": "18.0.28",
+    "@types/react": "18.0.29",
     "@types/react-dom": "18.0.11",
     "@typescript-eslint/eslint-plugin": "5.55.0",
     "@typescript-eslint/parser": "5.55.0",
