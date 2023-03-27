@@ -7,15 +7,21 @@
 /** common styling */
 
 .bq-menu {
-  @apply fixed left-0 top-0 z-10 m-0 flex h-[var(--bq-menu--height)] w-[var(--bq-menu--width)] flex-col gap-[var(--bq-menu--gap)] p-[var(--bq-menu--padding)];
+  @apply fixed left-0 top-0 z-10 m-0 flex h-[var(--bq-menu--height)] flex-col gap-[var(--bq-menu--gap)];
   @apply transition-all duration-[0.6s] ease-in-out;
 
   &.bq-collapse {
-    @apply w-[80px];
+    &.small {
+      @apply w-[var(--bq-menu--small-width-collapse)] px-[var(--bq-menu--padding)];
+    }
+
+    &.medium {
+      @apply w-[var(--bq-menu--medium-width-collapse)] px-[var(--bq-menu--padding)];
+    }
   }
 
   &__header {
-    @apply mx-1.5 flex h-[15vh] items-center justify-between;
+    @apply mx-1.5 flex h-[15vh] items-center justify-between p-[inherit];
 
     ::slotted(*) {
       @apply min-w-[130px];
@@ -27,7 +33,7 @@
   }
 
   &__footer {
-    @apply mt-auto flex justify-start;
+    @apply mt-auto flex justify-start p-[inherit];
   }
 }
 
@@ -56,7 +62,7 @@
 }
 
 .bq-menu.bq-collapse .bq-menu__footer {
-  @apply translate-x-[-1rem] duration-[0.4s] ease-in-out;
+  @apply translate-x-[-0.5rem] duration-[0.4s] ease-in-out;
 }
 
 /** theme light */
@@ -82,9 +88,9 @@
 // Size
 
 .small {
-  @apply px-[var(--bq-menu-header--small-paddingX)] py-[var(--bq-menu-header--small-paddingY)] text-s;
+  @apply w-[var(--bq-menu--small-width)] px-[var(--bq-menu--small-paddingX)] py-[var(--bq-menu--small-paddingY)] text-s;
 }
 
 .medium {
-  @apply px-[var(--bq-menu-header--medium-paddingX)] py-[var(--bq-menu-header--medium-paddingY)] text-m;
+  @apply w-[var(--bq-menu--medium-width)] px-[var(--bq-menu--medium-paddingX)] py-[var(--bq-menu--medium-paddingY)] text-m;
 }

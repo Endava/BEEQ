@@ -97,8 +97,7 @@ export class BqMenu {
    * set class based on prop size
    */
   private setSizeClass = (): void => {
-    this.el.shadowRoot.querySelector('.bq-menu__header').classList.add(this.size);
-    this.el.shadowRoot.querySelector('footer').classList.add(this.size);
+    this.el.shadowRoot.querySelector('.bq-menu').classList.add(this.size);
   };
 
   private toggleMenu = (): void => {
@@ -161,7 +160,7 @@ export class BqMenu {
 
         {this.collapsible && (
           <footer class="bq-menu__footer">
-            <bq-button appearance="text" onBqClick={this.toggleMenu}>
+            <bq-button appearance="text" size={this.size} onBqClick={this.toggleMenu}>
               <bq-icon name={this.footerIcon} size="24" slot="prefix"></bq-icon>
               <slot name="footer" />
             </bq-button>
