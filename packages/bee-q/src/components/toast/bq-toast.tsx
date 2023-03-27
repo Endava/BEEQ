@@ -26,8 +26,6 @@ export class BqToast {
   // ========================
   /** Type of Toast */
   @Prop({ reflect: true, mutable: true }) type: TToastType = 'default';
-  /** Text of Toast */
-  @Prop({ reflect: true }) text: string;
   /** Text color of Toast */
   @Prop({ reflect: true }) textColor: string;
   /** Icon of Toast */
@@ -119,7 +117,7 @@ export class BqToast {
         <div class="toast-shadow inline-flex items-center gap-2 rounded-m font-semibold">
           <bq-icon class={`.bq-toast__icon`} name={icon} color={color} size="20" weight="bold"></bq-icon>
           <div style={styles} class="font-medium">
-            {this.text}
+            <slot name="text" />
           </div>
         </div>
       </Host>

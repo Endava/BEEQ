@@ -10,7 +10,6 @@
 | Property    | Attribute    | Description         | Type                                                                  | Default     |
 | ----------- | ------------ | ------------------- | --------------------------------------------------------------------- | ----------- |
 | `icon`      | `icon`       | Icon of Toast       | `string`                                                              | `undefined` |
-| `text`      | `text`       | Text of Toast       | `string`                                                              | `undefined` |
 | `textColor` | `text-color` | Text color of Toast | `string`                                                              | `undefined` |
 | `type`      | `type`       | Type of Toast       | `"alert" \| "default" \| "error" \| "info" \| "loading" \| "success"` | `'default'` |
 
