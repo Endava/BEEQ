@@ -51,7 +51,7 @@
 }
 
 .label {
-  @apply inline-block min-w-[30px] max-w-[16vw] overflow-hidden text-ellipsis whitespace-nowrap;
+  @apply inline-block min-w-[24px] max-w-[16vw] overflow-hidden text-ellipsis whitespace-nowrap;
 }
 
 .suffix {
@@ -59,7 +59,7 @@
 }
 
 .hide {
-  @apply min-w-0 opacity-0 transition-all duration-[0.6s] ease-in-out;
+  @apply min-w-0 p-0 opacity-0 transition-all duration-[0.6s] ease-in-out;
 }
 
 // Size
