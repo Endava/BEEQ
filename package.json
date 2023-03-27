@@ -130,7 +130,7 @@
     "prettier-plugin-tailwindcss": "0.2.5",
     "puppeteer": "19.7.5",
     "react-test-renderer": "18.2.0",
-    "rimraf": "4.3.0",
+    "rimraf": "4.4.1",
     "stencil-tailwind-plugin": "1.7.0",
     "stylelint": "15.3.0",
     "stylelint-config-sass-guidelines": "10.0.0",
