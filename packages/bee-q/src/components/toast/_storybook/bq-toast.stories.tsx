@@ -12,25 +12,20 @@ export default {
   },
   argTypes: {
     type: { control: 'select', options: [...TOAST_TYPE] },
-    text: { control: 'text' },
     textColor: { control: 'text' },
     icon: { control: 'text' },
   },
   args: {
     type: 'default',
-    text: 'This is toast message!',
     textColor: 'ui--brand',
     icon: 'default',
   },
 };
 
 const Template = (args) => {
-  return html`<bq-toast
-    text=${args.text}
-    type=${args.type}
-    icon=${args.icon}
-    text-color=${args.textColor}
-  ></bq-toast> `;
+  return html`<bq-toast type=${args.type} icon=${args.icon} text-color=${args.textColor}>
+    <span slot="text">This is some toast text message! </span></bq-toast
+  > `;
 };
 
 export const Default = (args) => Template(args);

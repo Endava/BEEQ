@@ -424,10 +424,6 @@ export namespace Components {
          */
         "showToast": () => Promise<void>;
         /**
-          * Text of Toast
-         */
-        "text": string;
-        /**
           * Text color of Toast
          */
         "textColor": string;
@@ -1036,10 +1032,6 @@ declare namespace LocalJSX {
           * Icon of Toast
          */
         "icon"?: string;
-        /**
-          * Text of Toast
-         */
-        "text"?: string;
         /**
           * Text color of Toast
          */
