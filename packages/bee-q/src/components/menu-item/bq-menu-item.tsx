@@ -1,8 +1,6 @@
 import { h, Component, Prop, State } from '@stencil/core';
+
 import { hasSlotContent } from '../../shared/utils';
-
-import { TMenuItemSize } from './bq-menu-item.types';
-
 @Component({
   tag: 'bq-menu-item',
   styleUrl: './scss/bq-menu-item.scss',
@@ -25,9 +23,6 @@ export class BqMenuItem {
 
   // Public Property API
   // ========================
-
-  /** The size of the menu item */
-  @Prop({ reflect: true }) size: TMenuItemSize = 'medium';
 
   /** State of menu item */
   @Prop() disabled = false;
@@ -76,7 +71,6 @@ export class BqMenuItem {
         <a
           class={{
             'bq-menu-item': true,
-            [`${this.size}`]: true,
             group: true,
             disabled: this.disabled,
           }}
