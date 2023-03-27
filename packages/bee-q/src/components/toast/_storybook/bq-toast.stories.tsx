@@ -23,9 +23,24 @@ export default {
 };
 
 const Template = (args) => {
-  return html`<bq-toast type=${args.type} icon=${args.icon} text-color=${args.textColor}>
-    <span slot="text">This is some toast text message! </span></bq-toast
-  > `;
+  const showToast = async () => {
+    await customElements.whenDefined('bq-toast');
+    const notificationElement = document.querySelector('bq-toast');
+
+    await notificationElement.showToast();
+  };
+  return html`
+    <div class="mb-2 inline-block w-full text-left">
+      <bq-button appearance="primary" size="small" target="" type="button" variant="standard" @bqClick=${showToast}>
+        Show Toast!
+      </bq-button>
+    </div>
+    <div class="mb-2 inline-block w-full text-left">
+      <bq-toast type=${args.type} icon=${args.icon} text-color=${args.textColor}>
+        <span slot="text">This is some toast text message! </span></bq-toast
+      >
+    </div>
+  `;
 };
 
 export const Default = (args) => Template(args);
