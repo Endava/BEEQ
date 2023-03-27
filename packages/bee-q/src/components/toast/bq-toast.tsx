@@ -20,7 +20,7 @@ export class BqToast {
   // Inlined decorator, alphabetical order
   // =======================================
   /** State of Toast */
-  @State() private shouldShowToast = true;
+  @State() private shouldShowToast = false;
 
   // Public Property API
   // ========================
@@ -115,7 +115,7 @@ export class BqToast {
     return (
       <Host aria-hidden={!this.shouldShowToast} hidden={!this.shouldShowToast}>
         <div class="toast-shadow inline-flex items-center gap-2 rounded-m font-semibold">
-          <bq-icon class={`.bq-toast__icon`} name={icon} color={color} size="20" weight="bold"></bq-icon>
+          <bq-icon class={`.bq-toast__icon`} name={icon} color={color} size="24" weight="bold"></bq-icon>
           <div style={styles} class="font-medium">
             <slot name="text" />
           </div>
