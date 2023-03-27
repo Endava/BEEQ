@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property      | Attribute     | Description | Type                | Default  |
-| ------------- | ------------- | ----------- | ------------------- | -------- |
-| `collapsible` | `collapsible` | Toggle menu | `boolean`           | `true`   |
-| `theme`       | `theme`       |             | `"dark" \| "light"` | `'dark'` |
+| Property      | Attribute     | Description               | Type                  | Default    |
+| ------------- | ------------- | ------------------------- | --------------------- | ---------- |
+| `collapsible` | `collapsible` | Toggle menu               | `boolean`             | `true`     |
+| `size`        | `size`        | The size of the menu item | `"medium" \| "small"` | `'medium'` |
+| `theme`       | `theme`       |                           | `"dark" \| "light"`   | `'light'`  |
 
 
 ## Shadow Parts
@@ -26,14 +27,14 @@
 
 ### Depends on
 
-- [bq-button](../button)
 - [bq-icon](../icon)
+- [bq-button](../button)
 
 ### Graph
 ```mermaid
 graph TD;
-  bq-menu --> bq-button
   bq-menu --> bq-icon
+  bq-menu --> bq-button
   bq-button --> bq-icon
   style bq-menu fill:#f9f,stroke:#333,stroke-width:4px
 ```
