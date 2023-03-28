@@ -13,21 +13,19 @@ export default {
   argTypes: {
     type: { control: 'select', options: [...TOAST_TYPE] },
     textColor: { control: 'text' },
-    icon: { control: 'text' },
   },
   args: {
     type: 'default',
     textColor: 'ui--brand',
-    icon: 'default',
   },
 };
 
 const Template = (args) => {
   const showToast = async () => {
     await customElements.whenDefined('bq-toast');
-    const notificationElement = document.querySelector('bq-toast');
+    const toastElement = document.querySelector('bq-toast');
 
-    await notificationElement.showToast();
+    await toastElement.showToast();
   };
   return html`
     <div class="mb-2 inline-block w-full text-left">
@@ -37,6 +35,7 @@ const Template = (args) => {
     </div>
     <div class="mb-2 inline-block w-full text-left">
       <bq-toast type=${args.type} icon=${args.icon} text-color=${args.textColor}>
+        <bq-icon slot="icon" name="info" color="ui--brand" size="24" weight="bold"></bq-icon>
         <span slot="text">This is some toast text message! </span></bq-toast
       >
     </div>

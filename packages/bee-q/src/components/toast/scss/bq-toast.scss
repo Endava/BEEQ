@@ -4,25 +4,6 @@
 
 @import './bq-toast-variables';
 
-@layer components {
-  /* SVG loading icon animation */
-  @keyframes rotate {
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
-  @keyframes loading--spin {
-    0% {
-      transform: rotate(0deg);
-    }
-
-    to {
-      transform: rotate(1turn);
-    }
-  }
-}
-
 :host {
   @apply relative;
 }
@@ -34,6 +15,10 @@
 
 .trigger-btn {
   margin-top: 200px;
+}
+
+.icon-wraper {
+  height: 24px;
 }
 
 .bq-toast__icon {

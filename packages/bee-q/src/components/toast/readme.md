@@ -7,11 +7,11 @@
 
 ## Properties
 
-| Property    | Attribute    | Description         | Type                                                                  | Default     |
-| ----------- | ------------ | ------------------- | --------------------------------------------------------------------- | ----------- |
-| `icon`      | `icon`       | Icon of Toast       | `string`                                                              | `undefined` |
-| `textColor` | `text-color` | Text color of Toast | `string`                                                              | `undefined` |
-| `type`      | `type`       | Type of Toast       | `"alert" \| "default" \| "error" \| "info" \| "loading" \| "success"` | `'default'` |
+| Property    | Attribute    | Description               | Type                                                                  | Default     |
+| ----------- | ------------ | ------------------------- | --------------------------------------------------------------------- | ----------- |
+| `showIcon`  | `show-icon`  | Should show icon of Toast | `boolean`                                                             | `true`      |
+| `textColor` | `text-color` | Text color of Toast       | `string`                                                              | `undefined` |
+| `type`      | `type`       | Type of Toast             | `"alert" \| "default" \| "error" \| "info" \| "loading" \| "success"` | `'default'` |
 
 
 ## Methods
@@ -35,6 +35,13 @@ Trigers function to show toast
 Type: `Promise<void>`
 
 
+
+
+## Shadow Parts
+
+| Part     | Description |
+| -------- | ----------- |
+| `"icon"` |             |
 
 
 ## Dependencies

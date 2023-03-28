@@ -416,9 +416,9 @@ export namespace Components {
          */
         "hideToast": () => Promise<void>;
         /**
-          * Icon of Toast
+          * Should show icon of Toast
          */
-        "icon": string;
+        "showIcon": boolean;
         /**
           * Trigers function to show toast
          */
@@ -1029,9 +1029,9 @@ declare namespace LocalJSX {
     }
     interface BqToast {
         /**
-          * Icon of Toast
+          * Should show icon of Toast
          */
-        "icon"?: string;
+        "showIcon"?: boolean;
         /**
           * Text color of Toast
          */
