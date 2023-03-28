@@ -28,8 +28,8 @@ export class BqToast {
   @Prop({ reflect: true, mutable: true }) type: TToastType = 'default';
   /** Text color of Toast */
   @Prop({ reflect: true }) textColor: string;
-  /** Icon of Toast */
-  @Prop({ reflect: true }) icon: string;
+  /** Should show icon of Toast */
+  @Prop({ reflect: true }) showIcon = true;
 
   // Prop lifecycle events
   // =======================
@@ -113,10 +113,17 @@ export class BqToast {
     const styles = { ...(this.textColor && { color: getColorCSSVariable(this.textColor) }) };
     const { color, icon } = this.getColorAndIcon();
     return (
-      <Host aria-hidden={!this.shouldShowToast} hidden={!this.shouldShowToast}>
-        <div class="toast-shadow inline-flex items-center gap-2 rounded-m font-semibold">
-          <bq-icon class={`.bq-toast__icon`} name={icon} color={color} size="24" weight="bold"></bq-icon>
-          <div style={styles} class="font-medium">
+      <Host style={styles} aria-hidden={!this.shouldShowToast} hidden={!this.shouldShowToast}>
+        <div class="toast-shadow inline-flex items-center gap-2 rounded-m font-semibold ">
+          {this.showIcon && (
+            <div class="icon-wraper inline-block text-left align-middle" part="icon">
+              <slot name="icon" />
+            </div>
+          )}
+          {!this.showIcon && (
+            <bq-icon class={`.bq-toast__icon`} name={icon} color={color} size="24" weight="bold"></bq-icon>
+          )}
+          <div class="inline-block align-middle font-medium">
             <slot name="text" />
           </div>
         </div>
