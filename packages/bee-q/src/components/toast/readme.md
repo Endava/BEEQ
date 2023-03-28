@@ -7,24 +7,15 @@
 
 ## Properties
 
-| Property    | Attribute    | Description               | Type                                                                  | Default     |
-| ----------- | ------------ | ------------------------- | --------------------------------------------------------------------- | ----------- |
-| `showIcon`  | `show-icon`  | Should show icon of Toast | `boolean`                                                             | `true`      |
-| `textColor` | `text-color` | Text color of Toast       | `string`                                                              | `undefined` |
-| `type`      | `type`       | Type of Toast             | `"alert" \| "default" \| "error" \| "info" \| "loading" \| "success"` | `'default'` |
+| Property        | Attribute         | Description                            | Type                                                                  | Default     |
+| --------------- | ----------------- | -------------------------------------- | --------------------------------------------------------------------- | ----------- |
+| `autoCloseTime` | `auto-close-time` | Should hide Toast after period of time | `number`                                                              | `undefined` |
+| `showIcon`      | `show-icon`       | Should show icon of Toast              | `boolean`                                                             | `false`     |
+| `textColor`     | `text-color`      | Text color of Toast                    | `string`                                                              | `undefined` |
+| `type`          | `type`            | Type of Toast                          | `"alert" \| "default" \| "error" \| "info" \| "loading" \| "success"` | `'default'` |
 
 
 ## Methods
-
-### `hideToast() => Promise<void>`
-
-Trigers function to hide toast
-
-#### Returns
-
-Type: `Promise<void>`
-
-
 
 ### `showToast() => Promise<void>`
 
