@@ -412,9 +412,9 @@ export namespace Components {
     }
     interface BqToast {
         /**
-          * Trigers function to hide toast
+          * Should hide Toast after period of time
          */
-        "hideToast": () => Promise<void>;
+        "autoCloseTime": number;
         /**
           * Should show icon of Toast
          */
@@ -1028,6 +1028,10 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface BqToast {
+        /**
+          * Should hide Toast after period of time
+         */
+        "autoCloseTime"?: number;
         /**
           * Should show icon of Toast
          */

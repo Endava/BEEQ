@@ -29,7 +29,9 @@ export class BqToast {
   /** Text color of Toast */
   @Prop({ reflect: true }) textColor: string;
   /** Should show icon of Toast */
-  @Prop({ reflect: true }) showIcon = true;
+  @Prop({ reflect: true }) showIcon = false;
+  /** Should hide Toast after period of time */
+  @Prop({ reflect: true }) autoCloseTime: number;
 
   // Prop lifecycle events
   // =======================
@@ -62,15 +64,16 @@ export class BqToast {
   /** Trigers function to show toast */
   @Method()
   async showToast() {
-    console.log('current shouldShowToast from show method', this.shouldShowToast);
     this.shouldShowToast = true;
-  }
-
-  /** Trigers function to hide toast */
-  @Method()
-  async hideToast() {
-    console.log('current shouldShowToast from hide method', this.shouldShowToast);
-    this.shouldShowToast = false;
+    if (!this.autoCloseTime) {
+      setTimeout(() => {
+        this.shouldShowToast = false;
+      }, 5000);
+    } else {
+      setTimeout(() => {
+        this.shouldShowToast = false;
+      }, this.autoCloseTime);
+    }
   }
 
   // Local methods

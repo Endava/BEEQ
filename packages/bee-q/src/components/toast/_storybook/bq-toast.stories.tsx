@@ -13,10 +13,12 @@ export default {
   argTypes: {
     type: { control: 'select', options: [...TOAST_TYPE] },
     textColor: { control: 'text' },
+    autoCloseTime: { control: 'number' },
   },
   args: {
     type: 'default',
     textColor: 'ui--brand',
+    autoCloseTime: 5000,
   },
 };
 
@@ -34,7 +36,7 @@ const Template = (args) => {
       </bq-button>
     </div>
     <div class="mb-2 inline-block w-full text-left">
-      <bq-toast type=${args.type} icon=${args.icon} text-color=${args.textColor}>
+      <bq-toast type=${args.type} icon=${args.icon} text-color=${args.textColor} auto-close-time=${args.autoCloseTime}>
         <bq-icon slot="icon" name="info" color="ui--brand" size="24" weight="bold"></bq-icon>
         <span slot="text">This is some toast text message! </span></bq-toast
       >
