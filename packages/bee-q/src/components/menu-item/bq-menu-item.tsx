@@ -1,4 +1,4 @@
-import { h, Component, Prop, State } from '@stencil/core';
+import { h, Component, Prop, State, EventEmitter, Event, Element } from '@stencil/core';
 
 import { hasSlotContent } from '../../shared/utils';
 @Component({
@@ -15,6 +15,8 @@ export class BqMenuItem {
   // Reference to host HTML element
   // ===================================
 
+  @Element() el!: HTMLBqMenuItemElement;
+
   // State() variables
   // Inlined decorator, alphabetical order
   // =======================================
@@ -24,10 +26,14 @@ export class BqMenuItem {
   // Public Property API
   // ========================
 
-  /** State of menu item */
+  /** If true, the item will be disabled (no interaction allowed) */
   @Prop() disabled = false;
 
+  /** Attribute link */
   @Prop({ reflect: true }) href: string | undefined = undefined;
+
+  /** If true, the item is set to active */
+  @Prop() active = false;
 
   // Prop lifecycle events
   // =======================
@@ -35,6 +41,15 @@ export class BqMenuItem {
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
+
+  /** Handler to be called when the item loses focus */
+  @Event() bqMenuItemBlur: EventEmitter<HTMLBqMenuItemElement>;
+
+  /** Handler to be called when the item is clicked */
+  @Event() bqMenuItemFocus: EventEmitter<HTMLBqMenuItemElement>;
+
+  /** Handler to be called when item gets focus */
+  @Event() bqMenuItemClick: EventEmitter<HTMLBqMenuItemElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -55,6 +70,24 @@ export class BqMenuItem {
   // These methods cannot be called from the host element.
   // =======================================================
 
+  private onBlur = () => {
+    this.bqMenuItemBlur.emit(this.el);
+  };
+
+  private onFocus = () => {
+    this.bqMenuItemFocus.emit(this.el);
+  };
+
+  private onClick = (event: Event) => {
+    if (this.disabled) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+
+    this.bqMenuItemClick.emit(this.el);
+  };
+
   private onSlotChange = () => {
     this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
   };
@@ -73,6 +106,7 @@ export class BqMenuItem {
             'bq-menu-item': true,
             group: true,
             disabled: this.disabled,
+            active: this.active,
           }}
           tabindex={this.disabled ? '-1' : '0'}
           role="menuitem"
@@ -80,6 +114,9 @@ export class BqMenuItem {
           href={this.href}
           target="_self"
           rel="noreferrer noopener"
+          onBlur={this.onBlur}
+          onFocus={this.onFocus}
+          onClick={this.onClick}
         >
           <span class="bq-menu-item__child" ref={(elem) => (this.prefixElem = elem)} part="prefix">
             <slot name="prefix" onSlotchange={this.onSlotChange} />

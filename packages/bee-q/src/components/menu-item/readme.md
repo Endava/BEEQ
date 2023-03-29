@@ -7,10 +7,20 @@
 
 ## Properties
 
-| Property   | Attribute  | Description        | Type      | Default     |
-| ---------- | ---------- | ------------------ | --------- | ----------- |
-| `disabled` | `disabled` | State of menu item | `boolean` | `false`     |
-| `href`     | `href`     |                    | `string`  | `undefined` |
+| Property   | Attribute  | Description                                                 | Type      | Default     |
+| ---------- | ---------- | ----------------------------------------------------------- | --------- | ----------- |
+| `active`   | `active`   | If true, the item is set to active                          | `boolean` | `false`     |
+| `disabled` | `disabled` | If true, the item will be disabled (no interaction allowed) | `boolean` | `false`     |
+| `href`     | `href`     | Attribute link                                              | `string`  | `undefined` |
+
+
+## Events
+
+| Event             | Description                                    | Type                                 |
+| ----------------- | ---------------------------------------------- | ------------------------------------ |
+| `bqMenuItemBlur`  | Handler to be called when the item loses focus | `CustomEvent<HTMLBqMenuItemElement>` |
+| `bqMenuItemClick` | Handler to be called when item gets focus      | `CustomEvent<HTMLBqMenuItemElement>` |
+| `bqMenuItemFocus` | Handler to be called when the item is clicked  | `CustomEvent<HTMLBqMenuItemElement>` |
 
 
 ## Shadow Parts
