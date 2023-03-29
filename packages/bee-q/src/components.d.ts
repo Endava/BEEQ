@@ -223,20 +223,30 @@ export namespace Components {
     }
     interface BqMenu {
         /**
-          * Toggle menu
+          * Show footer for collapsible menu (boolean)
          */
         "collapsible": boolean;
         /**
-          * The size of the menu item
+          * Set menu item size (small/medium)
          */
         "size": TMenuSize;
+        /**
+          * Set theme (light/dark)
+         */
         "theme": TMenuTheme;
     }
     interface BqMenuItem {
         /**
-          * State of menu item
+          * If true, the item is set to active
+         */
+        "active": boolean;
+        /**
+          * If true, the item will be disabled (no interaction allowed)
          */
         "disabled": boolean;
+        /**
+          * Attribute link
+         */
         "href": string | undefined;
     }
     interface BqRadio {
@@ -529,6 +539,14 @@ export interface BqCheckboxCustomEvent<T> extends CustomEvent<T> {
 export interface BqIconCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqIconElement;
+}
+export interface BqMenuCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqMenuElement;
+}
+export interface BqMenuItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqMenuItemElement;
 }
 export interface BqRadioCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -901,21 +919,55 @@ declare namespace LocalJSX {
     }
     interface BqMenu {
         /**
-          * Toggle menu
+          * Show footer for collapsible menu (boolean)
          */
         "collapsible"?: boolean;
         /**
-          * The size of the menu item
+          * Handler to be called when the item loses focus
+         */
+        "onBqBlur"?: (event: BqMenuCustomEvent<HTMLBqMenuItemElement>) => void;
+        /**
+          * Handler to be called when item is clicked
+         */
+        "onBqClick"?: (event: BqMenuCustomEvent<HTMLBqMenuItemElement>) => void;
+        /**
+          * Handler to be called when the item gets focus
+         */
+        "onBqFocus"?: (event: BqMenuCustomEvent<HTMLBqMenuItemElement>) => void;
+        /**
+          * Set menu item size (small/medium)
          */
         "size"?: TMenuSize;
+        /**
+          * Set theme (light/dark)
+         */
         "theme"?: TMenuTheme;
     }
     interface BqMenuItem {
         /**
-          * State of menu item
+          * If true, the item is set to active
+         */
+        "active"?: boolean;
+        /**
+          * If true, the item will be disabled (no interaction allowed)
          */
         "disabled"?: boolean;
+        /**
+          * Attribute link
+         */
         "href"?: string | undefined;
+        /**
+          * Handler to be called when the item loses focus
+         */
+        "onBqMenuItemBlur"?: (event: BqMenuItemCustomEvent<HTMLBqMenuItemElement>) => void;
+        /**
+          * Handler to be called when item gets focus
+         */
+        "onBqMenuItemClick"?: (event: BqMenuItemCustomEvent<HTMLBqMenuItemElement>) => void;
+        /**
+          * Handler to be called when the item is clicked
+         */
+        "onBqMenuItemFocus"?: (event: BqMenuItemCustomEvent<HTMLBqMenuItemElement>) => void;
     }
     interface BqRadio {
         /**

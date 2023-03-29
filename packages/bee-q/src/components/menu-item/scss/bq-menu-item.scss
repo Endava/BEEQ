@@ -31,6 +31,10 @@
     &.disabled {
       @apply text-text-primary-disabled;
     }
+
+    &.active {
+      @apply bg-[var(--bq-menu-item--active)] text-text-brand;
+    }
   }
 }
 
@@ -39,6 +43,14 @@
 [data-theme='dark'] {
   .bq-menu-item {
     @apply text-text-secondary-inverse hover:text-text-primary;
+
+    &.disabled {
+      // @apply text-text-primary-disabled;
+    }
+
+    &.active {
+      // @apply bg-[var(--bq-menu-item--active)] text-text-brand;
+    }
   }
 }
 
