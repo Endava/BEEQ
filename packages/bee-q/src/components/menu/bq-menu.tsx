@@ -1,4 +1,4 @@
-import { h, Component, Prop, Element, State } from '@stencil/core';
+import { h, Component, Prop, Element, State, Listen, Event, EventEmitter } from '@stencil/core';
 import { isHTMLElement } from '../../shared/utils';
 
 import { TMenuTheme, TMenuSize } from './bq-menu.types';
@@ -31,12 +31,13 @@ export class BqMenu {
   // Public Property API
   // ========================
 
-  /** The size of the menu item */
+  /** Set menu item size (small/medium) */
   @Prop({ reflect: true }) size: TMenuSize = 'medium';
 
-  /** Toggle menu */
+  /** Show footer for collapsible menu (boolean) */
   @Prop() collapsible = true;
 
+  /** Set theme (light/dark) */
   @Prop({ reflect: true }) theme: TMenuTheme = 'light';
 
   // Prop lifecycle events
@@ -45,6 +46,15 @@ export class BqMenu {
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
+
+  /** Handler to be called when the item loses focus */
+  @Event() bqBlur: EventEmitter<HTMLBqMenuItemElement>;
+
+  /** Handler to be called when the item gets focus  */
+  @Event() bqFocus: EventEmitter<HTMLBqMenuItemElement>;
+
+  /** Handler to be called when item is clicked */
+  @Event() bqClick: EventEmitter<HTMLBqMenuItemElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -58,6 +68,27 @@ export class BqMenu {
 
   // Listeners
   // ==============
+
+  @Listen('bqMenuItemBlur')
+  onBqMenuItemBlur(event: CustomEvent<HTMLBqMenuItemElement>) {
+    this.bqBlur.emit(event.detail);
+  }
+
+  @Listen('bqMenuItemFocus')
+  onBqMenuItemFocus(event: CustomEvent<HTMLBqMenuItemElement>) {
+    this.bqFocus.emit(event.detail);
+  }
+
+  @Listen('bqMenuItemClick')
+  onBqMenuItemClick(event: CustomEvent<HTMLBqMenuItemElement>) {
+    // emit to wrapper element
+    this.bqClick.emit(event.detail);
+
+    // set item to active
+    this.getBqMenuItemElems.forEach(
+      (bqMenuItem: HTMLBqMenuItemElement) => (bqMenuItem.active = bqMenuItem === event.detail),
+    );
+  }
 
   // Public methods API
   // These methods are exposed on the host element.
@@ -75,7 +106,7 @@ export class BqMenu {
    * set theme and size to bq-menu-item elements
    */
   private changeLayoutBqMenuItem = (): void => {
-    this.getBqMenuItemElems().forEach((elem: HTMLBqMenuItemElement) => {
+    this.getBqMenuItemElems.forEach((elem: HTMLBqMenuItemElement) => {
       const menuItemWrapper = elem.shadowRoot.querySelector('.wrapper') as HTMLElement;
       menuItemWrapper.setAttribute('data-theme', this.theme);
 
@@ -116,9 +147,7 @@ export class BqMenu {
    * on toggle menu, hide parts from menu item based on which slot has inner elem
    */
   private hidePartsFromMenuItems = (): void => {
-    const menuItems: HTMLBqMenuItemElement[] = this.getBqMenuItemElems();
-
-    menuItems.forEach((item: HTMLBqMenuItemElement) => {
+    this.getBqMenuItemElems.forEach((item: HTMLBqMenuItemElement) => {
       const bqIcon: HTMLBqIconElement = item.querySelector('[slot="prefix"]');
       const labelSlotInnerElements: Element[] = item.shadowRoot
         .querySelector<HTMLSlotElement>('[part="label"] > slot')
@@ -135,12 +164,12 @@ export class BqMenu {
     });
   };
 
-  private getBqMenuItemElems = (): HTMLBqMenuItemElement[] => {
+  private get getBqMenuItemElems(): HTMLBqMenuItemElement[] {
     const slot = this.el.shadowRoot.querySelector('.bq-menu').querySelector<HTMLSlotElement>('[part="content"] > slot');
     return slot
       .assignedElements({ flatten: true })
       .filter((elem: HTMLBqMenuItemElement) => isHTMLElement(elem, 'bq-menu-item')) as [HTMLBqMenuItemElement];
-  };
+  }
 
   // render() function
   // Always the last one in the class.
