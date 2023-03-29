@@ -1,8 +1,12 @@
 import { h, Component, Element, Prop, Watch, Method, State, Host } from '@stencil/core';
-import { validatePropValue } from '../../shared/utils';
+import { getColorCSSVariable, validatePropValue } from '../../shared/utils';
 import { TOAST_TYPE, TToastType } from './bq-toast.types';
-import { getColorCSSVariable } from '../../shared/utils';
 
+/**
+ * @part base - The component's internal wrapper of the Toast component.
+ * @part icon - `<div>` container element of toast icon component.
+ * @part text - `<div>` container element of toast text slot.
+ */
 @Component({
   tag: 'bq-toast',
   styleUrl: './scss/bq-toast.scss',
@@ -65,15 +69,10 @@ export class BqToast {
   @Method()
   async showToast() {
     this.shouldShowToast = true;
-    if (!this.autoCloseTime) {
-      setTimeout(() => {
-        this.shouldShowToast = false;
-      }, 5000);
-    } else {
-      setTimeout(() => {
-        this.shouldShowToast = false;
-      }, this.autoCloseTime);
-    }
+    const timeout = !this.autoCloseTime ? 5000 : this.autoCloseTime;
+    setTimeout(() => {
+      this.shouldShowToast = false;
+    }, timeout);
   }
 
   // Local methods
@@ -117,7 +116,7 @@ export class BqToast {
     const { color, icon } = this.getColorAndIcon();
     return (
       <Host style={styles} aria-hidden={!this.shouldShowToast} hidden={!this.shouldShowToast}>
-        <div class="toast-shadow inline-flex items-center gap-2 rounded-m font-semibold ">
+        <div class="toast-shadow inline-flex items-center gap-2 rounded-m font-semibold " part="base">
           {this.showIcon && (
             <div class="icon-wraper inline-block text-left align-middle" part="icon">
               <slot name="icon" />
@@ -126,7 +125,7 @@ export class BqToast {
           {!this.showIcon && (
             <bq-icon class={`.bq-toast__icon`} name={icon} color={color} size="24" weight="bold"></bq-icon>
           )}
-          <div class="inline-block align-middle font-medium">
+          <div class="inline-block align-middle font-medium" part="text">
             <slot name="text" />
           </div>
         </div>

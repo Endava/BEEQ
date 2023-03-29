@@ -30,9 +30,11 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part     | Description |
-| -------- | ----------- |
-| `"icon"` |             |
+| Part     | Description                                              |
+| -------- | -------------------------------------------------------- |
+| `"base"` | The component's internal wrapper of the Toast component. |
+| `"icon"` | `<div>` container element of toast icon component.       |
+| `"text"` | `<div>` container element of toast text slot.            |
 
 
 ## Dependencies
