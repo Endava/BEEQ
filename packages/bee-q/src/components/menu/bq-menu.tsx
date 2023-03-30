@@ -3,10 +3,15 @@ import { isHTMLElement } from '../../shared/utils';
 
 import { TMenuTheme, TMenuSize } from './bq-menu.types';
 
-const footerIcons = {
-  expand: 'arrow-line-left',
-  collapse: 'arrow-line-right',
-};
+enum FooterIconName {
+  Expand = 'arrow-line-left',
+  Collapse = 'arrow-line-right',
+}
+
+enum FooterIconSize {
+  Small = 34,
+  Large = 48,
+}
 
 /**
  * A menu is like a widget that offers a list of choices to the user.
@@ -33,7 +38,8 @@ export class BqMenu {
   // Inlined decorator, alphabetical order
   // =======================================
 
-  @State() private footerIcon = footerIcons.expand;
+  @State() private footerIconName = FooterIconName.Expand;
+  @State() private footerIconSize = FooterIconSize.Large;
 
   // Public Property API
   // ========================
@@ -141,13 +147,12 @@ export class BqMenu {
   };
 
   private toggleMenu = (): void => {
-    this.el.shadowRoot.querySelector('aside').classList.toggle('bq-collapse'); // 'bq' prefix to not interfere with tailwind built-in class
-    const footer: HTMLElement = this.el.shadowRoot.querySelector('footer');
+    const aside: HTMLElement = this.el.shadowRoot.querySelector('aside');
+    aside.classList.toggle('bq-collapse'); // 'bq' prefix to not interfere with tailwind built-in class
 
-    footer.classList.toggle('bq-collapse');
-    footer.classList.contains('bq-collapse')
-      ? (this.footerIcon = 'arrow-line-right')
-      : (this.footerIcon = 'arrow-line-left');
+    aside.classList.contains('bq-collapse')
+      ? (this.footerIconName = FooterIconName.Expand) && (this.footerIconSize = FooterIconSize.Small)
+      : (this.footerIconName = FooterIconName.Collapse) && (this.footerIconSize = FooterIconSize.Large);
 
     this.hidePartsFromMenuItems();
   };
@@ -188,7 +193,7 @@ export class BqMenu {
     return (
       <aside class="bq-menu" data-theme={this.theme} role="menu" aria-label="Side menu" part="group">
         <span class="bq-menu__header" part="header">
-          <bq-icon name="dev-to-logo" size="42"></bq-icon>
+          <bq-icon name="dev-to-logo" size={this.footerIconSize}></bq-icon>
           <slot name="header" />
         </span>
 
@@ -199,7 +204,7 @@ export class BqMenu {
         {this.collapsible && (
           <footer class="bq-menu__footer" part="footer">
             <bq-button appearance="text" size={this.size} onBqClick={this.toggleMenu}>
-              <bq-icon name={this.footerIcon} size="24" slot="prefix"></bq-icon>
+              <bq-icon name={this.footerIconName} size="20" slot="prefix"></bq-icon>
               <slot name="footer" />
             </bq-button>
           </footer>
