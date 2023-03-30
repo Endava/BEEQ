@@ -151,8 +151,8 @@ export class BqMenu {
     aside.classList.toggle('bq-collapse'); // 'bq' prefix to not interfere with tailwind built-in class
 
     aside.classList.contains('bq-collapse')
-      ? (this.footerIconName = FooterIconName.Expand) && (this.footerIconSize = FooterIconSize.Small)
-      : (this.footerIconName = FooterIconName.Collapse) && (this.footerIconSize = FooterIconSize.Large);
+      ? (this.footerIconName = FooterIconName.Collapse) && (this.footerIconSize = FooterIconSize.Small)
+      : (this.footerIconName = FooterIconName.Expand) && (this.footerIconSize = FooterIconSize.Large);
 
     this.hidePartsFromMenuItems();
   };
