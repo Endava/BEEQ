@@ -5,6 +5,10 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The menu item is used inside a `bq-menu` component
+
 ## Properties
 
 | Property   | Attribute  | Description                                                 | Type      | Default     |
@@ -25,11 +29,12 @@
 
 ## Shadow Parts
 
-| Part       | Description |
-| ---------- | ----------- |
-| `"label"`  |             |
-| `"prefix"` |             |
-| `"suffix"` |             |
+| Part       | Description                                                                     |
+| ---------- | ------------------------------------------------------------------------------- |
+| `"item"`   | The anchor tag element used to display a menu item.                             |
+| `"label"`  | The `<span>` tag element that acts as prefix container for the menu item label. |
+| `"prefix"` | The `<span>` tag element that acts as prefix container (bq-icon).               |
+| `"suffix"` | The `<span>` tag element that acts as prefix container (bq-icon).               |
 
 
 ----------------------------------------------

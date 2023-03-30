@@ -219,6 +219,9 @@ export namespace Components {
          */
         "weight"?: TIconWeight;
     }
+    /**
+     * A menu is like a widget that offers a list of choices to the user.
+     */
     interface BqMenu {
         /**
           * Show footer for collapsible menu (boolean)
@@ -233,6 +236,9 @@ export namespace Components {
          */
         "theme": TMenuTheme;
     }
+    /**
+     * The menu item is used inside a `bq-menu` component
+     */
     interface BqMenuItem {
         /**
           * If true, the item is set to active
@@ -552,12 +558,18 @@ declare global {
         prototype: HTMLBqIconElement;
         new (): HTMLBqIconElement;
     };
+    /**
+     * A menu is like a widget that offers a list of choices to the user.
+     */
     interface HTMLBqMenuElement extends Components.BqMenu, HTMLStencilElement {
     }
     var HTMLBqMenuElement: {
         prototype: HTMLBqMenuElement;
         new (): HTMLBqMenuElement;
     };
+    /**
+     * The menu item is used inside a `bq-menu` component
+     */
     interface HTMLBqMenuItemElement extends Components.BqMenuItem, HTMLStencilElement {
     }
     var HTMLBqMenuItemElement: {
@@ -837,6 +849,9 @@ declare namespace LocalJSX {
          */
         "weight"?: TIconWeight;
     }
+    /**
+     * A menu is like a widget that offers a list of choices to the user.
+     */
     interface BqMenu {
         /**
           * Show footer for collapsible menu (boolean)
@@ -863,6 +878,9 @@ declare namespace LocalJSX {
          */
         "theme"?: TMenuTheme;
     }
+    /**
+     * The menu item is used inside a `bq-menu` component
+     */
     interface BqMenuItem {
         /**
           * If true, the item is set to active
@@ -1160,7 +1178,13 @@ declare module "@stencil/core" {
              * Icons are simplified images that graphically explain the meaning of an object on the screen.
              */
             "bq-icon": LocalJSX.BqIcon & JSXBase.HTMLAttributes<HTMLBqIconElement>;
+            /**
+             * A menu is like a widget that offers a list of choices to the user.
+             */
             "bq-menu": LocalJSX.BqMenu & JSXBase.HTMLAttributes<HTMLBqMenuElement>;
+            /**
+             * The menu item is used inside a `bq-menu` component
+             */
             "bq-menu-item": LocalJSX.BqMenuItem & JSXBase.HTMLAttributes<HTMLBqMenuItemElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;

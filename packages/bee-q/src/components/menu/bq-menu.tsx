@@ -8,6 +8,13 @@ const footerIcons = {
   collapse: 'arrow-line-right',
 };
 
+/**
+ * A menu is like a widget that offers a list of choices to the user.
+ * @part group - The `aside` tag element used to group the menu item elements.
+ * @part header - The `span` tag element used to display the header part of the menu (bq-icon, title).
+ * @part content - The `span` tag element used to display the content of the menu (bq-menu-item components).
+ * @part footer - The `span` tag element used to display the collapsible element (text).
+ */
 @Component({
   tag: 'bq-menu',
   styleUrl: './scss/bq-menu.scss',
@@ -121,6 +128,8 @@ export class BqMenu {
    */
   private setButtonAttribute = (): void => {
     const button: HTMLElement = this.el.shadowRoot.querySelector('bq-button');
+    if (!button) return;
+
     this.theme === 'light' ? button.setAttribute('appearance', 'text') : button.setAttribute('appearance', 'primary');
   };
 
@@ -188,7 +197,7 @@ export class BqMenu {
         </span>
 
         {this.collapsible && (
-          <footer class="bq-menu__footer">
+          <footer class="bq-menu__footer" part="footer">
             <bq-button appearance="text" size={this.size} onBqClick={this.toggleMenu}>
               <bq-icon name={this.footerIcon} size="24" slot="prefix"></bq-icon>
               <slot name="footer" />
