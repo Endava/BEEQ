@@ -33,21 +33,13 @@
   }
 
   &__footer {
-    @apply mt-auto flex justify-start p-[inherit];
+    @apply mt-auto flex justify-start p-0;
   }
 }
 
 // tranisition out
 .bq-menu .bq-menu__header ::slotted(*),
 .bq-menu .bq-menu__footer ::slotted(*) {
-  @apply duration-[0.6s] ease-in-out;
-}
-
-.bq-menu .bq-menu__header > bq-icon {
-  @apply duration-[0.6s] ease-in-out;
-}
-
-.bq-menu .bq-menu__footer {
   @apply duration-[0.6s] ease-in-out;
 }
 
@@ -58,11 +50,11 @@
 }
 
 .bq-menu.bq-collapse .bq-menu__header > bq-icon {
-  @apply translate-x-[-0.5rem] duration-[0.4s] ease-in-out;
+  @apply translate-x-[0rem] duration-[2s] ease-in-out;
 }
 
 .bq-menu.bq-collapse .bq-menu__footer {
-  @apply translate-x-[-0.5rem] duration-[0.4s] ease-in-out;
+  @apply translate-x-[0rem] duration-[1s] ease-in-out;
 }
 
 /** theme light */
