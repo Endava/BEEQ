@@ -5,6 +5,10 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+A menu is like a widget that offers a list of choices to the user.
+
 ## Properties
 
 | Property      | Attribute     | Description                                | Type                  | Default    |
@@ -25,11 +29,12 @@
 
 ## Shadow Parts
 
-| Part        | Description |
-| ----------- | ----------- |
-| `"content"` |             |
-| `"group"`   |             |
-| `"header"`  |             |
+| Part        | Description                                                                               |
+| ----------- | ----------------------------------------------------------------------------------------- |
+| `"content"` | The `span` tag element used to display the content of the menu (bq-menu-item components). |
+| `"footer"`  | The `span` tag element used to display the collapsible element (text).                    |
+| `"group"`   | The `aside` tag element used to group the menu item elements.                             |
+| `"header"`  | The `span` tag element used to display the header part of the menu (bq-icon, title).      |
 
 
 ## Dependencies

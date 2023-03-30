@@ -1,6 +1,14 @@
 import { h, Component, Prop, State, EventEmitter, Event, Element } from '@stencil/core';
 
 import { hasSlotContent } from '../../shared/utils';
+
+/**
+ * The menu item is used inside a `bq-menu` component
+ * @part item - The anchor tag element used to display a menu item.
+ * @part prefix - The `<span>` tag element that acts as prefix container (bq-icon).
+ * @part label - The `<span>` tag element that acts as prefix container for the menu item label.
+ * @part suffix - The `<span>` tag element that acts as prefix container (bq-icon).
+ */
 @Component({
   tag: 'bq-menu-item',
   styleUrl: './scss/bq-menu-item.scss',
@@ -113,6 +121,7 @@ export class BqMenuItem {
           aria-disabled={JSON.stringify(this.disabled)}
           href={this.href}
           target="_self"
+          part="item"
           rel="noreferrer noopener"
           onBlur={this.onBlur}
           onFocus={this.onFocus}
