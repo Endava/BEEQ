@@ -38,8 +38,9 @@ const Template = (args) => {
     @bqFocus=${args.bqFocus}
     @bqClick=${args.bqClick}
   >
-    <!-- header slot -->
-    <h1 slot="header">Bee-Q</h1>
+    <!-- header slots -->
+    <bq-icon name="dev-to-logo" slot="header-prefix" size="48"></bq-icon>
+    <h1 slot="header-suffix">Bee-Q</h1>
 
     <!-- content -->
     <bq-menu-item>
