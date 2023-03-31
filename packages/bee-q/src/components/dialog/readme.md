@@ -38,11 +38,11 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part           | Description                                           |
-| -------------- | ----------------------------------------------------- |
-| `"base"`       | The component wrapper container inside the shadow DOM |
-| `"container"`  | The `<div>` container that holds the dialog content   |
-| `"icon-close"` | The icon that close the dialog on click               |
+| Part             | Description                                           |
+| ---------------- | ----------------------------------------------------- |
+| `"base"`         | The component wrapper container inside the shadow DOM |
+| `"button-close"` | The button that close the dialog on click             |
+| `"container"`    | The `<div>` container that holds the dialog content   |
 
 
 ## Dependencies
