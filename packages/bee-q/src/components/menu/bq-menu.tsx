@@ -39,7 +39,6 @@ export class BqMenu {
   // =======================================
 
   @State() private footerIconName = FooterIconName.Expand;
-  @State() private footerIconSize = FooterIconSize.Large;
 
   // Public Property API
   // ========================
@@ -150,9 +149,15 @@ export class BqMenu {
     const aside: HTMLElement = this.el.shadowRoot.querySelector('aside');
     aside.classList.toggle('bq-collapse'); // 'bq' prefix to not interfere with tailwind built-in class
 
+    const innerSlotElement: Element[] = aside
+      .querySelector<HTMLSlotElement>('[part="header-prefix"] > slot')
+      .assignedElements({ flatten: true })
+      .filter((elem: HTMLElement) => isHTMLElement(elem, 'bq-icon')) as [HTMLBqIconElement];
+    const bqIcon = innerSlotElement[0] as HTMLBqIconElement;
+
     aside.classList.contains('bq-collapse')
-      ? (this.footerIconName = FooterIconName.Collapse) && (this.footerIconSize = FooterIconSize.Small)
-      : (this.footerIconName = FooterIconName.Expand) && (this.footerIconSize = FooterIconSize.Large);
+      ? (this.footerIconName = FooterIconName.Collapse) && (bqIcon.size = FooterIconSize.Small)
+      : (this.footerIconName = FooterIconName.Expand) && (bqIcon.size = FooterIconSize.Large);
 
     this.hidePartsFromMenuItems();
   };
@@ -193,8 +198,13 @@ export class BqMenu {
     return (
       <aside class="bq-menu" data-theme={this.theme} role="menu" aria-label="Side menu" part="group">
         <span class="bq-menu__header" part="header">
-          <bq-icon name="dev-to-logo" size={this.footerIconSize}></bq-icon>
-          <slot name="header" />
+          <span class="bq-menu__header__prefix" part="header-prefix">
+            <slot name="header-prefix"></slot>
+          </span>
+
+          <span class="bq-menu__header__suffix" part="header-suffix">
+            <slot name="header-suffix" />
+          </span>
         </span>
 
         <span class="bq-menu__content" part="content">
