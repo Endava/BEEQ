@@ -29,26 +29,28 @@ A menu is like a widget that offers a list of choices to the user.
 
 ## Shadow Parts
 
-| Part        | Description                                                                               |
-| ----------- | ----------------------------------------------------------------------------------------- |
-| `"content"` | The `span` tag element used to display the content of the menu (bq-menu-item components). |
-| `"footer"`  | The `span` tag element used to display the collapsible element (text).                    |
-| `"group"`   | The `aside` tag element used to group the menu item elements.                             |
-| `"header"`  | The `span` tag element used to display the header part of the menu (bq-icon, title).      |
+| Part              | Description                                                                               |
+| ----------------- | ----------------------------------------------------------------------------------------- |
+| `"content"`       | The `span` tag element used to display the content of the menu (bq-menu-item components). |
+| `"footer"`        | The `span` tag element used to display the collapsible element (text).                    |
+| `"group"`         | The `aside` tag element used to group the menu item elements.                             |
+| `"header"`        | The `span` tag element used to display the header part of the menu (bq-icon, title).      |
+| `"header-prefix"` |                                                                                           |
+| `"header-suffix"` |                                                                                           |
 
 
 ## Dependencies
 
 ### Depends on
 
-- [bq-icon](../icon)
 - [bq-button](../button)
+- [bq-icon](../icon)
 
 ### Graph
 ```mermaid
 graph TD;
-  bq-menu --> bq-icon
   bq-menu --> bq-button
+  bq-menu --> bq-icon
   bq-button --> bq-icon
   style bq-menu fill:#f9f,stroke:#333,stroke-width:4px
 ```

@@ -21,11 +21,7 @@
   }
 
   &__header {
-    @apply mx-1.5 flex h-[15vh] items-center justify-between p-[inherit];
-
-    ::slotted(*) {
-      @apply min-w-[130px];
-    }
+    @apply mx-1.5 flex h-[15vh] items-center justify-between gap-4 p-[inherit];
   }
 
   &__content {
@@ -37,6 +33,18 @@
   }
 }
 
+.bq-menu__header__suffix {
+  @apply h-16;
+
+  ::slotted(*) {
+    @apply min-w-[130px];
+  }
+}
+
+.bq-menu__header__prefix {
+  @apply h-16;
+}
+
 // tranisition out
 .bq-menu .bq-menu__header ::slotted(*),
 .bq-menu .bq-menu__footer ::slotted(*) {
@@ -44,12 +52,12 @@
 }
 
 // transition in
-.bq-menu.bq-collapse .bq-menu__header ::slotted(*),
+.bq-menu.bq-collapse .bq-menu__header__suffix ::slotted(*),
 .bq-menu.bq-collapse .bq-menu__footer ::slotted(*) {
   @apply pointer-events-none w-0 text-[12px] opacity-0 duration-[0.4s];
 }
 
-.bq-menu.bq-collapse .bq-menu__header > bq-icon {
+.bq-menu.bq-collapse .bq-menu__header__prefix ::slotted(*) {
   @apply translate-x-[0rem] duration-[2s] ease-in-out;
 }
 
