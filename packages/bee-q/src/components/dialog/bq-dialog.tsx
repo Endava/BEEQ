@@ -6,7 +6,7 @@ import { DIALOG_SIZE, DIALOG_FOOTER_VARIANT, TDialogSize, TDialogFooterVariant }
 /**
  * @part base - The component wrapper container inside the shadow DOM
  * @part container - The `<div>` container that holds the dialog content
- * @part icon-close - The icon that close the dialog on click
+ * @part button-close - The button that close the dialog on click
  */
 
 @Component({
@@ -125,16 +125,17 @@ export class BqDialog {
                 <slot name="content" />
               </div>
             </div>
-            <bq-button class="cursor-auto" appearance="text" size="small">
-              <bq-icon
-                class="cursor-pointer"
-                name="x"
-                role="img"
-                title="Close"
-                part="icon-close"
+            <div>
+              <bq-button
+                class="cursor-auto"
+                appearance="text"
+                size="small"
                 onClick={this.handleCloseClick}
-              />
-            </bq-button>
+                part="button-close"
+              >
+                <bq-icon class="cursor-pointer" name="x" role="img" title="Close" />
+              </bq-button>
+            </div>
           </header>
           <footer
             class={{
