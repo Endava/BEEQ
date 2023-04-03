@@ -142,24 +142,25 @@ export class BqMenu {
    * set class based on prop size
    */
   private setSizeClass = (): void => {
-    this.el.shadowRoot.querySelector('.bq-menu').classList.add(this.size);
+    this.asideElement.classList.add(this.size);
+    this.asideElement.querySelector('[part="header"]').classList.add(this.size);
   };
 
   private toggleMenu = (): void => {
-    const aside: HTMLElement = this.el.shadowRoot.querySelector('aside');
-    aside.classList.toggle('bq-collapse'); // 'bq' prefix to not interfere with tailwind built-in class
+    this.asideElement.classList.toggle('bq-collapse'); // 'bq' prefix to not interfere with tailwind built-in class
 
-    const innerSlotElement: Element[] = aside
+    const innerSlotElement: Element[] = this.asideElement
       .querySelector<HTMLSlotElement>('[part="header-prefix"] > slot')
       .assignedElements({ flatten: true })
       .filter((elem: HTMLElement) => isHTMLElement(elem, 'bq-icon')) as [HTMLBqIconElement];
     const bqIcon = innerSlotElement[0] as HTMLBqIconElement;
 
-    aside.classList.contains('bq-collapse')
+    this.asideElement.classList.contains('bq-collapse')
       ? (this.footerIconName = FooterIconName.Collapse) && (bqIcon.size = FooterIconSize.Small)
       : (this.footerIconName = FooterIconName.Expand) && (bqIcon.size = FooterIconSize.Large);
 
     this.hidePartsFromMenuItems();
+    this.toggleClassOnMenuItem();
   };
 
   /**
@@ -183,11 +184,24 @@ export class BqMenu {
     });
   };
 
+  /**
+   * on menu toggle, also toggle `.bq-collapsed` class on anchor tag inside menu item
+   */
+  private toggleClassOnMenuItem = (): void => {
+    this.getBqMenuItemElems.forEach((item: HTMLBqMenuItemElement) =>
+      item.shadowRoot.querySelector<HTMLElement>('.bq-menu-item').classList.toggle('bq-collapsed'),
+    );
+  };
+
   private get getBqMenuItemElems(): HTMLBqMenuItemElement[] {
     const slot = this.el.shadowRoot.querySelector('.bq-menu').querySelector<HTMLSlotElement>('[part="content"] > slot');
     return slot
       .assignedElements({ flatten: true })
       .filter((elem: HTMLBqMenuItemElement) => isHTMLElement(elem, 'bq-menu-item')) as [HTMLBqMenuItemElement];
+  }
+
+  private get asideElement(): HTMLElement {
+    return this.el.shadowRoot.querySelector('.bq-menu');
   }
 
   // render() function
