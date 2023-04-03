@@ -9,12 +9,20 @@
 .bq-menu-item {
   @apply flex h-[inherit] w-[auto] cursor-pointer items-center justify-items-stretch pl-9;
   @apply rounded-s bg-transparent hover:bg-[var(--bq-menu-item--hover)] active:bg-[var(--bq-menu-item--active)];
-  @apply transition-[background-color,border-color,box-shadow] duration-200;
-  @apply focus-visible:focus;
-  @apply active:outline-none;
+  @apply focus-visible:focus active:outline-none;
 
   &__child {
     @apply flex items-center group-active:text-text-brand;
+  }
+
+  &.bq-collapsed {
+    &.small {
+      @apply py-[6px] px-[8px];
+    }
+
+    &.medium {
+      @apply py-[8px] px-[16px];
+    }
   }
 
   &.disabled {
@@ -77,9 +85,11 @@
 // Size
 
 .small {
-  @apply h-[var(--bq-menu-item--small-height)] px-[var(--bq-menu-item--small-paddingX)] py-[var(--bq-menu-item--small-paddingY)] text-s;
+  @apply h-[var(--bq-menu-item--small-height)] py-[var(--bq-menu-item--small-paddingY)] pl-[var(--bq-menu-item--small-paddingL)] pr-[var(--bq-menu-item--small-paddingR)] text-s;
+  @apply transition-[padding-left,padding-right] duration-[0.3s] ease-in-out;
 }
 
 .medium {
-  @apply h-[var(--bq-menu-item--medium-height)] px-[var(--bq-menu-item--medium-paddingX)] py-[var(--bq-menu-item--medium-paddingY)] text-m;
+  @apply h-[var(--bq-menu-item--medium-height)] py-[var(--bq-menu-item--medium-paddingY)] pl-[var(--bq-menu-item--medium-paddingL)] pr-[var(--bq-menu-item--medium-paddingR)] text-m;
+  @apply transition-[padding-left,padding-right] duration-[0.3s] ease-in-out;
 }
