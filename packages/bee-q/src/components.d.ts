@@ -604,11 +604,15 @@ export namespace Components {
          */
         "autoCloseTime": number;
         /**
+          * Triggers function to hide toast
+         */
+        "hideToast": () => Promise<void>;
+        /**
           * Should show icon of Toast
          */
         "showIcon": boolean;
         /**
-          * Trigers function to show toast
+          * Triggers function to show toast
          */
         "showToast": () => Promise<void>;
         /**

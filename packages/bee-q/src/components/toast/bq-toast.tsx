@@ -40,7 +40,11 @@ export class BqToast {
   // Prop lifecycle events
   // =======================
   @Watch('type')
+  @Watch('autoCloseTime')
   checkPropValues() {
+    if (this.autoCloseTime < 0) {
+      this.autoCloseTime = Math.max(0, this.autoCloseTime);
+    }
     validatePropValue(TOAST_TYPE, 'default', this.el, 'type');
   }
 
@@ -65,14 +69,21 @@ export class BqToast {
   // Requires JSDocs for public API documentation.
   // ===============================================
 
-  /** Trigers function to show toast */
+  /** Triggers function to show toast */
   @Method()
   async showToast() {
     this.shouldShowToast = true;
-    const timeout = !this.autoCloseTime ? 5000 : this.autoCloseTime;
-    setTimeout(() => {
-      this.shouldShowToast = false;
-    }, timeout);
+    if (this.autoCloseTime > 0) {
+      setTimeout(() => {
+        this.shouldShowToast = false;
+      }, this.autoCloseTime);
+    }
+  }
+
+  /** Triggers function to hide toast */
+  @Method()
+  async hideToast() {
+    this.shouldShowToast = false;
   }
 
   // Local methods
@@ -80,10 +91,7 @@ export class BqToast {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  // render() function
-  // Always the last one in the class.
-  // ===================================
-  private getColorAndIcon = () => {
+  private get iconColor() {
     const type = this.type;
     const textColor = this.textColor;
     const defaultColors = {
@@ -94,6 +102,15 @@ export class BqToast {
       info: 'ui--brand',
       default: 'ui--brand',
     };
+    let color = defaultColors[type];
+    if (textColor !== '') {
+      color = textColor;
+    }
+    return { color: color };
+  }
+
+  private get icon() {
+    const type = this.type;
     const icons = {
       success: 'check-circle',
       error: 'x-circle',
@@ -102,18 +119,18 @@ export class BqToast {
       info: 'info',
       default: 'info',
     };
-
-    let color = defaultColors[type];
     const icon = icons[type];
-    if (textColor !== '') {
-      color = textColor;
-    }
-    return { color: color, icon: icon };
-  };
+    return { icon: icon };
+  }
+
+  // render() function
+  // Always the last one in the class.
+  // ===================================
 
   render() {
     const styles = { ...(this.textColor && { color: getColorCSSVariable(this.textColor) }) };
-    const { color, icon } = this.getColorAndIcon();
+    const { color } = this.iconColor;
+    const { icon } = this.icon;
     return (
       <Host style={styles} aria-hidden={!this.shouldShowToast} hidden={!this.shouldShowToast}>
         <div class="toast-shadow inline-flex items-center gap-2 rounded-m font-semibold " part="base">
