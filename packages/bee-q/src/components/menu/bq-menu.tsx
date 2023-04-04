@@ -62,7 +62,7 @@ export class BqMenu {
   /** Handler to be called when the item loses focus */
   @Event() bqBlur: EventEmitter<HTMLBqMenuItemElement>;
 
-  /** Handler to be called when the item gets focus  */
+  /** Handler to be called when the item gets focus */
   @Event() bqFocus: EventEmitter<HTMLBqMenuItemElement>;
 
   /** Handler to be called when item is clicked */
@@ -76,6 +76,7 @@ export class BqMenu {
     this.changeLayoutBqMenuItem();
     this.setButtonAttribute();
     this.setSizeClass();
+    this.activateMenuItemBasedOnURL();
   }
 
   // Listeners
@@ -94,12 +95,12 @@ export class BqMenu {
   @Listen('bqMenuItemClick')
   onBqMenuItemClick(event: CustomEvent<HTMLBqMenuItemElement>) {
     this.bqClick.emit(event.detail);
-    this.setMenuItemToActive(event);
+    this.setMenuItemToActive(event.detail as HTMLBqMenuItemElement);
   }
 
   @Listen('bqMenuItemOnEnter')
   onBqMenuItemEnterPress(event: CustomEvent<HTMLBqMenuItemElement>) {
-    this.setMenuItemToActive(event);
+    this.setMenuItemToActive(event.detail as HTMLBqMenuItemElement);
   }
 
   // Public methods API
@@ -144,6 +145,18 @@ export class BqMenu {
   private setSizeClass = (): void => {
     this.asideElement.classList.add(this.size);
     this.asideElement.querySelector('[part="header"]').classList.add(this.size);
+  };
+
+  private activateMenuItemBasedOnURL = (): void => {
+    if (!window) return;
+
+    const pathname: string = window?.location?.pathname || '/';
+
+    this.getBqMenuItemElems.forEach((menuItem: HTMLBqMenuItemElement) => {
+      if (!menuItem.getAttribute('disabled') && menuItem.getAttribute('href') === pathname) {
+        this.setMenuItemToActive(menuItem as HTMLBqMenuItemElement);
+      }
+    });
   };
 
   private toggleMenu = (): void => {
@@ -197,9 +210,9 @@ export class BqMenu {
    * set value for `active` attr of menu item
    * @param event
    */
-  private setMenuItemToActive = (event: CustomEvent<HTMLBqMenuItemElement>): void => {
+  private setMenuItemToActive = (menuItemElement: HTMLBqMenuItemElement): void => {
     this.getBqMenuItemElems.forEach(
-      (bqMenuItem: HTMLBqMenuItemElement) => (bqMenuItem.active = bqMenuItem === event.detail),
+      (bqMenuItem: HTMLBqMenuItemElement) => (bqMenuItem.active = bqMenuItem === menuItemElement),
     );
   };
 
