@@ -20,11 +20,12 @@ The menu item is used inside a `bq-menu` component
 
 ## Events
 
-| Event             | Description                                    | Type                                 |
-| ----------------- | ---------------------------------------------- | ------------------------------------ |
-| `bqMenuItemBlur`  | Handler to be called when the item loses focus | `CustomEvent<HTMLBqMenuItemElement>` |
-| `bqMenuItemClick` | Handler to be called when item gets focus      | `CustomEvent<HTMLBqMenuItemElement>` |
-| `bqMenuItemFocus` | Handler to be called when the item is clicked  | `CustomEvent<HTMLBqMenuItemElement>` |
+| Event               | Description                                    | Type                                 |
+| ------------------- | ---------------------------------------------- | ------------------------------------ |
+| `bqMenuItemBlur`    | Handler to be called when the item loses focus | `CustomEvent<HTMLBqMenuItemElement>` |
+| `bqMenuItemClick`   | Handler to be called when item gets focus      | `CustomEvent<HTMLBqMenuItemElement>` |
+| `bqMenuItemFocus`   | Handler to be called when the item is clicked  | `CustomEvent<HTMLBqMenuItemElement>` |
+| `bqMenuItemOnEnter` | Handler to be called on enter key press        | `CustomEvent<HTMLBqMenuItemElement>` |
 
 
 ## Shadow Parts

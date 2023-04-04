@@ -93,13 +93,13 @@ export class BqMenu {
 
   @Listen('bqMenuItemClick')
   onBqMenuItemClick(event: CustomEvent<HTMLBqMenuItemElement>) {
-    // emit to wrapper element
     this.bqClick.emit(event.detail);
+    this.setMenuItemToActive(event);
+  }
 
-    // set item to active
-    this.getBqMenuItemElems.forEach(
-      (bqMenuItem: HTMLBqMenuItemElement) => (bqMenuItem.active = bqMenuItem === event.detail),
-    );
+  @Listen('bqMenuItemOnEnter')
+  onBqMenuItemEnterPress(event: CustomEvent<HTMLBqMenuItemElement>) {
+    this.setMenuItemToActive(event);
   }
 
   // Public methods API
@@ -190,6 +190,16 @@ export class BqMenu {
   private toggleClassOnMenuItem = (): void => {
     this.getBqMenuItemElems.forEach((item: HTMLBqMenuItemElement) =>
       item.shadowRoot.querySelector<HTMLElement>('.bq-menu-item').classList.toggle('bq-collapsed'),
+    );
+  };
+
+  /**
+   * set value for `active` attr of menu item
+   * @param event
+   */
+  private setMenuItemToActive = (event: CustomEvent<HTMLBqMenuItemElement>): void => {
+    this.getBqMenuItemElems.forEach(
+      (bqMenuItem: HTMLBqMenuItemElement) => (bqMenuItem.active = bqMenuItem === event.detail),
     );
   };
 
