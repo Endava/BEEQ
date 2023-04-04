@@ -128,8 +128,8 @@ export class BqMenuItem {
           aria-disabled={JSON.stringify(this.disabled)}
           href={this.href}
           target="_self"
-          part="item"
           rel="noreferrer noopener"
+          part="item"
           onBlur={this.onBlur}
           onFocus={this.onFocus}
           onClick={this.onClick}
