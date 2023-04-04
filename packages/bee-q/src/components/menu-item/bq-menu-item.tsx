@@ -59,6 +59,9 @@ export class BqMenuItem {
   /** Handler to be called when item gets focus */
   @Event() bqMenuItemClick: EventEmitter<HTMLBqMenuItemElement>;
 
+  /** Handler to be called on enter key press */
+  @Event() bqMenuItemOnEnter: EventEmitter<HTMLBqMenuItemElement>;
+
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
@@ -96,6 +99,10 @@ export class BqMenuItem {
     this.bqMenuItemClick.emit(this.el);
   };
 
+  private onKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Enter') this.bqMenuItemOnEnter.emit(this.el);
+  };
+
   private onSlotChange = () => {
     this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
   };
@@ -126,6 +133,7 @@ export class BqMenuItem {
           onBlur={this.onBlur}
           onFocus={this.onFocus}
           onClick={this.onClick}
+          onKeyDown={this.onKeyDown}
         >
           <span class="bq-menu-item__child" ref={(elem) => (this.prefixElem = elem)} part="prefix">
             <slot name="prefix" onSlotchange={this.onSlotChange} />

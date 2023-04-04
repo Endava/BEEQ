@@ -986,6 +986,10 @@ declare namespace LocalJSX {
           * Handler to be called when the item is clicked
          */
         "onBqMenuItemFocus"?: (event: BqMenuItemCustomEvent<HTMLBqMenuItemElement>) => void;
+        /**
+          * Handler to be called on enter key press
+         */
+        "onBqMenuItemOnEnter"?: (event: BqMenuItemCustomEvent<HTMLBqMenuItemElement>) => void;
     }
     interface BqRadio {
         /**
