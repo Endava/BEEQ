@@ -17,9 +17,19 @@
 
 ## Methods
 
+### `hideToast() => Promise<void>`
+
+Triggers function to hide toast
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 ### `showToast() => Promise<void>`
 
-Trigers function to show toast
+Triggers function to show toast
 
 #### Returns
 
