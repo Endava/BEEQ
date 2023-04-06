@@ -1,6 +1,7 @@
-import { h, Component, Prop, State, EventEmitter, Event, Element } from '@stencil/core';
+import { h, Component, Prop, State, EventEmitter, Event, Element, Method } from '@stencil/core';
 
 import { hasSlotContent } from '../../shared/utils';
+import { TMenuSize, TMenuTheme } from '../menu/bq-menu.types';
 
 /**
  * The menu item is used inside a `bq-menu` component
@@ -35,13 +36,16 @@ export class BqMenuItem {
   // ========================
 
   /** If true, the item will be disabled (no interaction allowed) */
-  @Prop() disabled = false;
+  @Prop({ reflect: true }) disabled = false;
 
   /** Attribute link */
   @Prop({ reflect: true }) href: string | undefined = undefined;
 
   /** If true, the item is set to active */
-  @Prop() active = false;
+  @Prop({ reflect: true }) active = false;
+
+  /** If true, the menu component is collapsed */
+  @Prop() collapsed = false;
 
   // Prop lifecycle events
   // =======================
@@ -75,6 +79,35 @@ export class BqMenuItem {
   // Public Methods must be async.
   // Requires JSDocs for public API documentation.
   // ===============================================
+
+  /**
+   * called from menu component on collapse
+   */
+  @Method()
+  async hidePartsFromMenuItems() {
+    const bqIcon: HTMLBqIconElement = this.el.querySelector('[slot="prefix"]');
+    const labelSlotInnerElements = this.el.shadowRoot
+      .querySelector<HTMLSlotElement>('[part="label"] > slot')
+      .assignedElements({ flatten: true });
+
+    if (bqIcon) {
+      this.el.shadowRoot.querySelector('[part="label"]').classList.toggle('hide');
+      this.el.shadowRoot.querySelector('[part="suffix"]').classList.toggle('hide');
+    } else if (labelSlotInnerElements.length) {
+      this.el.shadowRoot.querySelector('[part="suffix"]').classList.toggle('hide');
+    } else {
+      this.el.shadowRoot.querySelector('[part="label"]').classList.toggle('hide'); // hide label to set min-w-0 class
+    }
+  }
+
+  /**
+   * on Menu component componentDidLoad() hook, add size class and theme
+   */
+  @Method()
+  async addSizeClassAndTheme(size: TMenuSize, theme: TMenuTheme) {
+    this.el.shadowRoot.querySelector<HTMLElement>('.bq-menu-item').classList.add(size);
+    this.el.shadowRoot.querySelector<HTMLElement>('.wrapper').setAttribute('data-theme', theme);
+  }
 
   // Local methods
   // Internal business logic.
@@ -119,6 +152,7 @@ export class BqMenuItem {
         <a
           class={{
             'bq-menu-item': true,
+            'bq-collapsed': this.collapsed,
             group: true,
             disabled: this.disabled,
             active: this.active,
