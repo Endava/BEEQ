@@ -247,9 +247,21 @@ export namespace Components {
          */
         "active": boolean;
         /**
+          * on Menu component componentDidLoad() hook, add size class and theme
+         */
+        "addSizeClassAndTheme": (size: TMenuSize, theme: TMenuTheme) => Promise<void>;
+        /**
+          * If true, the menu component is collapsed
+         */
+        "collapsed": boolean;
+        /**
           * If true, the item will be disabled (no interaction allowed)
          */
         "disabled": boolean;
+        /**
+          * called from menu component on collapse
+         */
+        "hidePartsFromMenuItems": () => Promise<void>;
         /**
           * Attribute link
          */
@@ -966,6 +978,10 @@ declare namespace LocalJSX {
           * If true, the item is set to active
          */
         "active"?: boolean;
+        /**
+          * If true, the menu component is collapsed
+         */
+        "collapsed"?: boolean;
         /**
           * If true, the item will be disabled (no interaction allowed)
          */

@@ -116,16 +116,12 @@ export class BqMenu {
   // =======================================================
 
   /**
-   * set theme and size to bq-menu-item elements
+   * set theme and size to bq-menu-item components
    */
   private changeLayoutBqMenuItem = (): void => {
-    this.getBqMenuItemElems.forEach((elem: HTMLBqMenuItemElement) => {
-      const menuItemWrapper = elem.shadowRoot.querySelector('.wrapper') as HTMLElement;
-      menuItemWrapper.setAttribute('data-theme', this.theme);
-
-      const linkElem = menuItemWrapper.querySelector('.bq-menu-item') as HTMLElement;
-      linkElem.classList.add(this.size);
-    });
+    this.getBqMenuItemElems.forEach((target: HTMLBqMenuItemElement) =>
+      target.addSizeClassAndTheme(this.size, this.theme),
+    );
   };
 
   /**
@@ -154,7 +150,7 @@ export class BqMenu {
 
     this.getBqMenuItemElems.forEach((menuItem: HTMLBqMenuItemElement) => {
       if (!menuItem.getAttribute('disabled') && menuItem.getAttribute('href') === pathname) {
-        this.setMenuItemToActive(menuItem as HTMLBqMenuItemElement);
+        this.setMenuItemToActive(menuItem);
       }
     });
   };
@@ -167,43 +163,24 @@ export class BqMenu {
       .assignedElements({ flatten: true })
       .filter((elem: HTMLElement) => isHTMLElement(elem, 'bq-icon')) as [HTMLBqIconElement];
     const bqIcon = innerSlotElement[0] as HTMLBqIconElement;
+    const isMenuCollapsed: boolean = this.asideElement.classList.contains('bq-collapse');
 
-    this.asideElement.classList.contains('bq-collapse')
+    isMenuCollapsed
       ? (this.footerIconName = FooterIconName.Collapse) && (bqIcon.size = FooterIconSize.Small)
       : (this.footerIconName = FooterIconName.Expand) && (bqIcon.size = FooterIconSize.Large);
 
-    this.hidePartsFromMenuItems();
-    this.toggleClassOnMenuItem();
+    this.hidePartsFromMenuItems(isMenuCollapsed);
   };
 
   /**
    * on toggle menu, hide parts from menu item based on which slot has inner elem
+   * change `collapsed` value
    */
-  private hidePartsFromMenuItems = (): void => {
-    this.getBqMenuItemElems.forEach((item: HTMLBqMenuItemElement) => {
-      const bqIcon: HTMLBqIconElement = item.querySelector('[slot="prefix"]');
-      const labelSlotInnerElements: Element[] = item.shadowRoot
-        .querySelector<HTMLSlotElement>('[part="label"] > slot')
-        .assignedElements({ flatten: true });
-
-      if (bqIcon) {
-        item.shadowRoot.querySelector('[part="label"]').classList.toggle('hide');
-        item.shadowRoot.querySelector('[part="suffix"]').classList.toggle('hide');
-      } else if (labelSlotInnerElements.length) {
-        item.shadowRoot.querySelector('[part="suffix"]').classList.toggle('hide');
-      } else {
-        item.shadowRoot.querySelector('[part="label"]').classList.toggle('hide'); // hide label to set min-w-0 class
-      }
+  private hidePartsFromMenuItems = (isMenuCollapsed: boolean): void => {
+    this.getBqMenuItemElems.forEach((target: HTMLBqMenuItemElement) => {
+      target.hidePartsFromMenuItems();
+      target.collapsed = isMenuCollapsed;
     });
-  };
-
-  /**
-   * on menu toggle, also toggle `.bq-collapsed` class on anchor tag inside menu item
-   */
-  private toggleClassOnMenuItem = (): void => {
-    this.getBqMenuItemElems.forEach((item: HTMLBqMenuItemElement) =>
-      item.shadowRoot.querySelector<HTMLElement>('.bq-menu-item').classList.toggle('bq-collapsed'),
-    );
   };
 
   /**
