@@ -11,11 +11,12 @@ The menu item is used inside a `bq-menu` component
 
 ## Properties
 
-| Property   | Attribute  | Description                                                 | Type      | Default     |
-| ---------- | ---------- | ----------------------------------------------------------- | --------- | ----------- |
-| `active`   | `active`   | If true, the item is set to active                          | `boolean` | `false`     |
-| `disabled` | `disabled` | If true, the item will be disabled (no interaction allowed) | `boolean` | `false`     |
-| `href`     | `href`     | Attribute link                                              | `string`  | `undefined` |
+| Property    | Attribute   | Description                                                 | Type      | Default     |
+| ----------- | ----------- | ----------------------------------------------------------- | --------- | ----------- |
+| `active`    | `active`    | If true, the item is set to active                          | `boolean` | `false`     |
+| `collapsed` | `collapsed` | If true, the menu component is collapsed                    | `boolean` | `false`     |
+| `disabled`  | `disabled`  | If true, the item will be disabled (no interaction allowed) | `boolean` | `false`     |
+| `href`      | `href`      | Attribute link                                              | `string`  | `undefined` |
 
 
 ## Events
@@ -26,6 +27,29 @@ The menu item is used inside a `bq-menu` component
 | `bqMenuItemClick`   | Handler to be called when item gets focus      | `CustomEvent<HTMLBqMenuItemElement>` |
 | `bqMenuItemFocus`   | Handler to be called when the item is clicked  | `CustomEvent<HTMLBqMenuItemElement>` |
 | `bqMenuItemOnEnter` | Handler to be called on enter key press        | `CustomEvent<HTMLBqMenuItemElement>` |
+
+
+## Methods
+
+### `addSizeClassAndTheme(size: TMenuSize, theme: TMenuTheme) => Promise<void>`
+
+on Menu component componentDidLoad() hook, add size class and theme
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `hidePartsFromMenuItems() => Promise<void>`
+
+called from menu component on collapse
+
+#### Returns
+
+Type: `Promise<void>`
+
+
 
 
 ## Shadow Parts

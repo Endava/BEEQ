@@ -24,11 +24,11 @@
     @apply mx-1.5 flex items-center justify-between gap-4;
 
     &.small {
-      @apply h-[var(--bq-menu-header--small-height)] py-[var(--bq-menu-header--small-paddingY)] pr-[var(--bq-menu-header--small-paddingR)] pl-[var(--bq-menu-header--small-paddingL)];
+      @apply h-[var(--bq-menu-header--small-height)] w-auto py-[var(--bq-menu-header--small-paddingY)] pr-[var(--bq-menu-header--small-paddingR)] pl-[var(--bq-menu-header--small-paddingL)];
     }
 
     &.medium {
-      @apply h-[var(--bq-menu-header--medium-height)] py-[var(--bq-menu-header--medium-paddingY)] pr-[var(--bq-menu-header--medium-paddingR)] pl-[var(--bq-menu-header--medium-paddingL)];
+      @apply h-[var(--bq-menu-header--medium-height)] w-auto py-[var(--bq-menu-header--medium-paddingY)] pr-[var(--bq-menu-header--medium-paddingR)] pl-[var(--bq-menu-header--medium-paddingL)];
     }
   }
 
@@ -42,7 +42,7 @@
 }
 
 .bq-menu__header__suffix {
-  @apply flex h-16 items-center;
+  @apply flex items-center;
 
   ::slotted(*) {
     @apply min-w-[130px];
@@ -50,7 +50,7 @@
 }
 
 .bq-menu__header__prefix {
-  @apply flex h-16 items-center;
+  @apply flex items-center;
 }
 
 // transition out
