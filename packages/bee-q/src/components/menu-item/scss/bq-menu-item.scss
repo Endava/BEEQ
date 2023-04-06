@@ -53,11 +53,11 @@
     @apply text-text-secondary-inverse hover:text-text-primary;
 
     &.disabled {
-      // @apply text-text-primary-disabled;
+      @apply text-text-secondary-disabled;
     }
 
     &.active {
-      // @apply bg-[var(--bq-menu-item--active)] text-text-brand;
+      @apply bg-[var(--bq-menu-item--active)] text-text-brand;
     }
   }
 }
