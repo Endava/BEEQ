@@ -81,7 +81,7 @@
     "@storybook/addon-links": "6.5.16",
     "@storybook/builder-webpack5": "6.5.16",
     "@storybook/manager-webpack5": "6.5.16",
-    "@storybook/mdx2-csf": "0.0.4",
+    "@storybook/mdx2-csf": "1.0.0",
     "@storybook/web-components": "6.5.16",
     "@swc-node/register": "1.6.3",
     "@swc/cli": "0.1.62",
