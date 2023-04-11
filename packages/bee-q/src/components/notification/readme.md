@@ -13,7 +13,6 @@
 | `hasCustomIcon` | `has-custom-icon` | If true, the predefined icon type won't be shown and a custom icon provided on integration will be displayed instead | `boolean`                                                  | `false`     |
 | `hideIcon`      | `hide-icon`       | If true, the notification icon won't be shown                                                                        | `boolean`                                                  | `false`     |
 | `isOpen`        | `is-open`         | If true, the notification will be shown                                                                              | `boolean`                                                  | `false`     |
-| `subjectColor`  | `subject-color`   | Set the subject color if you don't want to be black. Subject color will also apply to Icon color if there is one.    | `string`                                                   | `undefined` |
 | `type`          | `type`            | Type of Notification                                                                                                 | `"default" \| "error" \| "info" \| "success" \| "warning"` | `'default'` |
 
 
@@ -46,7 +45,10 @@ Type: `Promise<void>`
 | --------------- | ---------------------------------------------------------------------------------------------------------- |
 | `"avatar"`      | `<div>` container element of notification avatar component slot.  Will be shown if Prop showIcon is false. |
 | `"base"`        | The component's internal wrapper of the notification component.                                            |
+| `"body"`        |                                                                                                            |
+| `"btn-close"`   |                                                                                                            |
 | `"close-icon"`  | `<div>` container element of notification close icon component.  Will be shown if Prop showClose is false. |
+| `"content"`     |                                                                                                            |
 | `"description"` | `<div>` container element of notification description slot                                                 |
 | `"footer"`      | `<div>` container element of notification footer slot                                                      |
 | `"icon"`        | `<div>` container element of notification icon component. Will be shown if Prop showIcon is true.          |
@@ -57,12 +59,15 @@ Type: `Promise<void>`
 
 ### Depends on
 
+- [bq-button](../button)
 - [bq-icon](../icon)
 
 ### Graph
 ```mermaid
 graph TD;
+  bq-notification --> bq-button
   bq-notification --> bq-icon
+  bq-button --> bq-icon
   style bq-notification fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
