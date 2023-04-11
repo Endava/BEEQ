@@ -3,14 +3,14 @@ import { validatePropValue } from '../../shared/utils';
 import { NOTIFICATION_TYPE, TNotificationType } from './bg-notification.types';
 
 /**
- * @part base - The component's internal wrapper of the notification component.
- * @part icon - `<div>` container element of notification icon component. Will be shown if Prop showIcon is true.
- * @part title - `<div>` container element of notification default slot.
- * @part avatar - `<div>` container element of notification avatar component slot.  Will be shown if Prop showIcon is false.
- * @part description - `<div>` container element of notification description slot
- * @part footer - `<div>` container element of notification footer slot
- * @part close-icon - `<div>` container element of notification close icon component.  Will be shown if Prop showClose is false.
+ * @part base - The wrapper container `<div>` of the element inside the shadow DOM
+ * @part body - The conatiner `<div>` that wraps the notification description content
+ * @part btn-close - The `bq-button` used to close the notification
+ * @part content - The conatiner `<div>` that wraps all the notification content (title, description, footer)
+ * @part footer - The conatiner `<div>` that wraps the notification footer content
+ * @part title - The conatiner `<div>` that wraps the notification title content
  */
+
 @Component({
   tag: 'bq-notification',
   styleUrl: './scss/bq-notification.scss',
