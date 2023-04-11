@@ -4,6 +4,10 @@
 
 @import './bq-notification.variables';
 
+:host {
+  @apply inline-block;
+}
+
 a {
   @apply font-medium text-text-brand no-underline;
 }

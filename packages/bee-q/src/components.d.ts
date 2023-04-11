@@ -231,6 +231,10 @@ export namespace Components {
          */
         "hideIcon": boolean;
         /**
+          * If true, the notification will be shown
+         */
+        "isOpen": boolean;
+        /**
           * Trigger function when you want to show Notification
          */
         "show": () => Promise<void>;
@@ -905,6 +909,10 @@ declare namespace LocalJSX {
           * If true, the notification icon won't be shown
          */
         "hideIcon"?: boolean;
+        /**
+          * If true, the notification will be shown
+         */
+        "isOpen"?: boolean;
         /**
           * Set property to false if you want to hide Close icon
          */
