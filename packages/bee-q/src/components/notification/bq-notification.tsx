@@ -1,6 +1,6 @@
 import { h, Component, Prop, Element, State, Method, Host, Watch } from '@stencil/core';
 import { getColorCSSVariable, validatePropValue, isDefined } from '../../shared/utils';
-import { NOTIFICATION_TYPES, TNotificationType } from './bg-notification.types';
+import { NOTIFICATION_TYPE, TNotificationType } from './bg-notification.types';
 
 /**
  * @part base - The component's internal wrapper of the notification component.
@@ -50,7 +50,7 @@ export class BqNotification {
   // =======================
   @Watch('type')
   checkPropValues() {
-    validatePropValue(NOTIFICATION_TYPES, 'default', this.el, 'type');
+    validatePropValue(NOTIFICATION_TYPE, 'default', this.el, 'type');
   }
 
   // Events section

@@ -1,6 +1,6 @@
 import { html } from 'lit-html';
 import mdx from './bq-notification.mdx';
-import { NOTIFICATION_TYPES } from '../bg-notification.types';
+import { NOTIFICATION_TYPE } from '../bg-notification.types';
 
 export default {
   title: 'Components/Notification',
@@ -11,7 +11,7 @@ export default {
     },
   },
   argTypes: {
-    type: { control: 'select', options: [...NOTIFICATION_TYPES] },
+    type: { control: 'select', options: [...NOTIFICATION_TYPE] },
     showIcon: { control: 'boolean' },
     showClose: { control: 'boolean' },
     subjectColor: { control: 'text' },
