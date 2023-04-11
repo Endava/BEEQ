@@ -8,6 +8,31 @@
   @apply inline-block;
 }
 
+/**
+ * Set the nocitication icon color based on the type value selected
+ */
+.notification--icon.color {
+  &-default {
+    @apply text-text-primary;
+  }
+
+  &-info {
+    @apply text-text-brand;
+  }
+
+  &-error {
+    @apply text-text-danger;
+  }
+
+  &-success {
+    @apply text-text-success;
+  }
+
+  &-warning {
+    @apply text-text-warning;
+  }
+}
+
 a {
   @apply font-medium text-text-brand no-underline;
 }

@@ -1,5 +1,5 @@
 import { h, Component, Prop, Element, Method, Host, Watch } from '@stencil/core';
-import { getColorCSSVariable, validatePropValue, isDefined } from '../../shared/utils';
+import { getColorCSSVariable, validatePropValue } from '../../shared/utils';
 import { NOTIFICATION_TYPE, TNotificationType } from './bg-notification.types';
 
 /**
@@ -34,6 +34,9 @@ export class BqNotification {
 
   /** If rue, the close button at the top right of the notification won't be shown */
   @Prop({ reflect: true }) disableClose: boolean = false;
+
+  /** If true, the predefined icon type won't be shown and a custom icon provided on integration will be displayed instead */
+  @Prop({ reflect: true }) hasCustomIcon = false;
 
   /** Type of Notification */
   @Prop({ reflect: true }) type: TNotificationType = 'default';
@@ -112,19 +115,6 @@ export class BqNotification {
     }
   }
 
-  private getNotificationColor = () => {
-    const type = this.type;
-    const colors = {
-      default: 'ui--inverse-active',
-      success: 'ui--success',
-      info: 'ui--brand',
-      warning: 'ui--warning',
-      error: 'ui--danger',
-    };
-
-    return isDefined(this.subjectColor) ? this.subjectColor : colors[type];
-  };
-
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -146,13 +136,13 @@ export class BqNotification {
           part="base"
         >
           {!this.hideIcon && (
-            <div class="mr-2 inline-block text-left align-top" part="icon">
-              <bq-icon name={this.iconName} color={this.getNotificationColor()} size="24"></bq-icon>
-            </div>
-          )}
-          {this.hideIcon && (
-            <div class="avatar-slot-holder inline-block text-left align-top" part="avatar">
-              <slot name="avatar" />
+            <div
+              class={{
+                'notification--icon mr-2 inline-block text-left align-top': true,
+                [`color-${this.type}`]: true, // The icon color will be based on the type (info, success, warning, error)
+              }}
+            >
+              {!this.hasCustomIcon ? <bq-icon name={this.iconName} /> : <slot name="icon" />}
             </div>
           )}
           <div class="inline-block max-w-xs text-left align-top">

@@ -227,6 +227,10 @@ export namespace Components {
          */
         "disableClose": boolean;
         /**
+          * If true, the predefined icon type won't be shown and a custom icon provided on integration will be displayed instead
+         */
+        "hasCustomIcon": boolean;
+        /**
           * Trigger function when you want to close Notification
          */
         "hide": () => Promise<void>;
@@ -909,6 +913,10 @@ declare namespace LocalJSX {
           * If rue, the close button at the top right of the notification won't be shown
          */
         "disableClose"?: boolean;
+        /**
+          * If true, the predefined icon type won't be shown and a custom icon provided on integration will be displayed instead
+         */
+        "hasCustomIcon"?: boolean;
         /**
           * If true, the notification icon won't be shown
          */
