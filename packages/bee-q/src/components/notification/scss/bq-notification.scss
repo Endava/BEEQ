@@ -33,38 +33,17 @@
   }
 }
 
-a {
-  @apply font-medium text-text-brand no-underline;
+/**
+ * Tweak the close bq-buton styles so it remain small wihout extra padding
+ */
+.notification--close::part(button) {
+  @apply h-fit rounded-s border-0 p-0;
 }
 
-.notification-shadow {
-  @apply shadow-m;
-}
-
-.notification-radius {
-  @apply rounded-[var(--bq-notification--border-radius)];
-}
-
-.title-font {
-  @apply text-m;
-}
-
-.description-font {
-  @apply text-s text-text-primary;
-}
-
-.w-notification-close {
-  min-width: 20px;
-}
-
-.avatar-slot-holder ::slotted(*) {
-  @apply mr-2;
-}
-
-.description-slot-holder ::slotted(*) {
-  @apply mt-3 inline-block;
-}
-
-.footer-container ::slotted(*) {
-  @apply mt-3 inline-block;
+/**
+ * Here we guarantee that if the footer actions are wrapped in a div container from the consumer side,
+ * the styles get applied to the that wrapping container directly
+ */
+[part='footer'] ::slotted(*) {
+  @apply flex items-start gap-2;
 }

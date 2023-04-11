@@ -247,10 +247,6 @@ export namespace Components {
          */
         "show": () => Promise<void>;
         /**
-          * Set the subject color if you don't want to be black. Subject color will also apply to Icon color if there is one.
-         */
-        "subjectColor": string;
-        /**
           * Type of Notification
          */
         "type": TNotificationType;
@@ -925,10 +921,6 @@ declare namespace LocalJSX {
           * If true, the notification will be shown
          */
         "isOpen"?: boolean;
-        /**
-          * Set the subject color if you don't want to be black. Subject color will also apply to Icon color if there is one.
-         */
-        "subjectColor"?: string;
         /**
           * Type of Notification
          */

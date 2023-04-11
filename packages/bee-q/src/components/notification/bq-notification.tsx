@@ -1,5 +1,5 @@
 import { h, Component, Prop, Element, Method, Host, Watch } from '@stencil/core';
-import { getColorCSSVariable, validatePropValue } from '../../shared/utils';
+import { validatePropValue } from '../../shared/utils';
 import { NOTIFICATION_TYPE, TNotificationType } from './bg-notification.types';
 
 /**
@@ -46,9 +46,6 @@ export class BqNotification {
 
   /** If true, the notification will be shown */
   @Prop({ reflect: true, mutable: true }) isOpen = false;
-
-  /** Set the subject color if you don't want to be black. Subject color will also apply to Icon color if there is one. */
-  @Prop({ reflect: true }) subjectColor: string;
 
   // Prop lifecycle events
   // =======================
@@ -120,13 +117,8 @@ export class BqNotification {
   // ===================================
 
   render() {
-    const styles = {
-      ...(this.subjectColor && { color: getColorCSSVariable(this.subjectColor) }),
-    };
-
     return (
       <Host
-        style={styles}
         class={{ '!hidden': !this.isOpen }}
         aria-hidden={!this.isOpen ? 'true' : 'false'}
         hidden={!this.isOpen ? 'true' : 'false'}
@@ -135,6 +127,19 @@ export class BqNotification {
           class="relative inline-flex min-w-[var(--bq-notification--min-width)] items-start rounded-[var(--bq-notification--border-radius)] bg-bg-primary p-[var(--bq-notification--padding)] shadow-m"
           part="base"
         >
+          {/* CLOSE BUTTON */}
+          {!this.disableClose && (
+            <bq-button
+              class="notification--close absolute right-5"
+              appearance="text"
+              size="small"
+              onClick={() => this.hide()}
+              part="btn-close"
+            >
+              <bq-icon name="x" />
+            </bq-button>
+          )}
+          {/* ICON */}
           {!this.hideIcon && (
             <div
               class={{
@@ -145,22 +150,21 @@ export class BqNotification {
               {!this.hasCustomIcon ? <bq-icon name={this.iconName} /> : <slot name="icon" />}
             </div>
           )}
-          <div class="inline-block max-w-xs text-left align-top">
-            <div class="title-font font-semibold" part="title">
+          {/* CONTENT */}
+          <div class="flex flex-col items-start gap-4" part="content">
+            {/* TITLE */}
+            <div class="title-font font-semibold leading-large" part="title">
               <slot />
             </div>
-            <div class="description-slot-holder description-font font-regular" part="description">
-              <slot name="description" />
+            {/* BODY */}
+            <div class="text-s leading-regular" part="body">
+              <slot name="body" />
             </div>
-            <div class="footer-container" part="footer">
-              <slot name="notification-footer" />
+            {/* FOOTER */}
+            <div class="flex items-start gap-2" part="footer">
+              <slot name="footer" />
             </div>
           </div>
-          {!this.disableClose && (
-            <div class="w-notification-close inline-block text-right align-top" part="close-icon">
-              <bq-icon name="x" color="icon--primary" class="cursor-pointer" onClick={() => this.hide()}></bq-icon>
-            </div>
-          )}
         </div>
       </Host>
     );
