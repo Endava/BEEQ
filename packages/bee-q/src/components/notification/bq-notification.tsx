@@ -9,6 +9,8 @@ import { NOTIFICATION_TYPE, TNotificationType } from './bg-notification.types';
  * @part btn-close - The `bq-button` used to close the notification
  * @part content - The conatiner `<div>` that wraps all the notification content (title, description, footer)
  * @part footer - The conatiner `<div>` that wraps the notification footer content
+ * @part icon-outline - The conatiner `<div>` that wraps the icon element
+ * @part icon - The `<bq-icon>` element used to render a predefined icon based on the notification type
  * @part title - The conatiner `<div>` that wraps the notification title content
  */
 
@@ -147,8 +149,9 @@ export class BqNotification {
                 'notification--icon mr-2 inline-block text-left align-top': true,
                 [`color-${this.type}`]: true, // The icon color will be based on the type (info, success, warning, error)
               }}
+              part="icon-outline"
             >
-              {!this.hasCustomIcon ? <bq-icon name={this.iconName} /> : <slot name="icon" />}
+              {!this.hasCustomIcon ? <bq-icon name={this.iconName} part="icon" /> : <slot name="icon" />}
             </div>
           )}
           {/* CONTENT */}
