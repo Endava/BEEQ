@@ -37,8 +37,8 @@ export class BqNotification {
   /** Type of Notification */
   @Prop({ reflect: true }) type: TNotificationType = 'default';
 
-  /** Set property if you want Notification icon to be shown. */
-  @Prop({ reflect: true }) showIcon: boolean;
+  /** If true, the notification icon won't be shown */
+  @Prop({ reflect: true }) hideIcon: boolean = false;
 
   /** Set the subject color if you don't want to be black. Subject color will also apply to Icon color if there is one. */
   @Prop({ reflect: true }) subjectColor: string;
@@ -97,7 +97,7 @@ export class BqNotification {
   // =======================================================
 
   private getNotificationIconName = () => {
-    if (!this.showIcon) return '';
+    if (this.hideIcon) return;
 
     const type = this.type;
     let icon = 'info';
@@ -149,12 +149,12 @@ export class BqNotification {
           class="bg-white notification-shadow notification-radius inline-block w-auto min-w-[var(--bq-notification--min-width)] p-[var(--bq-notification--padding)]"
           part="base"
         >
-          {this.showIcon && (
+          {!this.hideIcon && (
             <div class="mr-2 inline-block text-left align-top" part="icon">
               <bq-icon name={this.getNotificationIconName()} color={this.getNotificationColor()} size="24"></bq-icon>
             </div>
           )}
-          {!this.showIcon && (
+          {this.hideIcon && (
             <div class="avatar-slot-holder inline-block text-left align-top" part="avatar">
               <slot name="avatar" />
             </div>
