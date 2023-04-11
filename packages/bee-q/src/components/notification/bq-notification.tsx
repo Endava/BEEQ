@@ -1,4 +1,4 @@
-import { h, Component, Prop, Element, State, Method, Host, Watch } from '@stencil/core';
+import { h, Component, Prop, Element, Method, Host, Watch } from '@stencil/core';
 import { getColorCSSVariable, validatePropValue, isDefined } from '../../shared/utils';
 import { NOTIFICATION_TYPE, TNotificationType } from './bg-notification.types';
 
@@ -29,8 +29,6 @@ export class BqNotification {
   // Inlined decorator, alphabetical order
   // =======================================
 
-  @State() private isHidden = true;
-
   // Public Property API
   // ========================
 
@@ -39,6 +37,9 @@ export class BqNotification {
 
   /** If true, the notification icon won't be shown */
   @Prop({ reflect: true }) hideIcon: boolean = false;
+
+  /** If true, the notification will be shown */
+  @Prop({ reflect: true, mutable: true }) isOpen = false;
 
   /** Set the subject color if you don't want to be black. Subject color will also apply to Icon color if there is one. */
   @Prop({ reflect: true }) subjectColor: string;
@@ -80,7 +81,7 @@ export class BqNotification {
    */
   @Method()
   async hide() {
-    this.hideNotification();
+    this.isOpen = false;
   }
 
   /**
@@ -88,7 +89,7 @@ export class BqNotification {
    */
   @Method()
   async show() {
-    this.showNotification();
+    this.isOpen = true;
   }
 
   // Local methods
@@ -124,14 +125,6 @@ export class BqNotification {
     return isDefined(this.subjectColor) ? this.subjectColor : colors[type];
   };
 
-  private hideNotification = () => {
-    this.isHidden = true;
-  };
-
-  private showNotification = () => {
-    this.isHidden = false;
-  };
-
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -142,9 +135,14 @@ export class BqNotification {
     };
 
     return (
-      <Host style={styles} aria-hidden={this.isHidden} hidden={this.isHidden}>
+      <Host
+        style={styles}
+        class={{ '!hidden': !this.isOpen }}
+        aria-hidden={!this.isOpen ? 'true' : 'false'}
+        hidden={!this.isOpen ? 'true' : 'false'}
+      >
         <div
-          class="bg-white notification-shadow notification-radius inline-block w-auto min-w-[var(--bq-notification--min-width)] p-[var(--bq-notification--padding)]"
+          class="relative inline-flex min-w-[var(--bq-notification--min-width)] items-start rounded-[var(--bq-notification--border-radius)] bg-bg-primary p-[var(--bq-notification--padding)] shadow-m"
           part="base"
         >
           {!this.hideIcon && (
@@ -175,7 +173,7 @@ export class BqNotification {
                 color="icon--primary"
                 size="14"
                 class="cursor-pointer"
-                onClick={this.hideNotification}
+                onClick={() => this.hide()}
               ></bq-icon>
             </div>
           )}
