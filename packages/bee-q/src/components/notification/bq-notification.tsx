@@ -1,4 +1,5 @@
-import { h, Component, Prop, Element, Method, Host, Watch } from '@stencil/core';
+import { Component, Element, h, Host, Method, Prop, Watch } from '@stencil/core';
+
 import { validatePropValue } from '../../shared/utils';
 import { NOTIFICATION_TYPE, TNotificationType } from './bg-notification.types';
 
@@ -33,19 +34,19 @@ export class BqNotification {
   // ========================
 
   /** If rue, the close button at the top right of the notification won't be shown */
-  @Prop({ reflect: true }) disableClose: boolean = false;
+  @Prop({ reflect: true }) disableClose: boolean;
 
   /** If true, the predefined icon type won't be shown and a custom icon provided on integration will be displayed instead */
-  @Prop({ reflect: true }) hasCustomIcon = false;
+  @Prop({ reflect: true }) hasCustomIcon: boolean;
+
+  /** If true, the notification icon won't be shown */
+  @Prop({ reflect: true }) hideIcon: boolean;
+
+  /** If true, the notification will be shown */
+  @Prop({ reflect: true, mutable: true }) isOpen: boolean;
 
   /** Type of Notification */
   @Prop({ reflect: true }) type: TNotificationType = 'default';
-
-  /** If true, the notification icon won't be shown */
-  @Prop({ reflect: true }) hideIcon: boolean = false;
-
-  /** If true, the notification will be shown */
-  @Prop({ reflect: true, mutable: true }) isOpen = false;
 
   // Prop lifecycle events
   // =======================
