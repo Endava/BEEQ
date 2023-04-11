@@ -41,18 +41,14 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part            | Description                                                                                                |
-| --------------- | ---------------------------------------------------------------------------------------------------------- |
-| `"avatar"`      | `<div>` container element of notification avatar component slot.  Will be shown if Prop showIcon is false. |
-| `"base"`        | The component's internal wrapper of the notification component.                                            |
-| `"body"`        |                                                                                                            |
-| `"btn-close"`   |                                                                                                            |
-| `"close-icon"`  | `<div>` container element of notification close icon component.  Will be shown if Prop showClose is false. |
-| `"content"`     |                                                                                                            |
-| `"description"` | `<div>` container element of notification description slot                                                 |
-| `"footer"`      | `<div>` container element of notification footer slot                                                      |
-| `"icon"`        | `<div>` container element of notification icon component. Will be shown if Prop showIcon is true.          |
-| `"title"`       | `<div>` container element of notification default slot.                                                    |
+| Part          | Description                                                                                |
+| ------------- | ------------------------------------------------------------------------------------------ |
+| `"base"`      | The wrapper container `<div>` of the element inside the shadow DOM                         |
+| `"body"`      | The conatiner `<div>` that wraps the notification description content                      |
+| `"btn-close"` | The `bq-button` used to close the notification                                             |
+| `"content"`   | The conatiner `<div>` that wraps all the notification content (title, description, footer) |
+| `"footer"`    | The conatiner `<div>` that wraps the notification footer content                           |
+| `"title"`     | The conatiner `<div>` that wraps the notification title content                            |
 
 
 ## Dependencies
