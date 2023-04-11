@@ -7,13 +7,14 @@
 
 ## Properties
 
-| Property       | Attribute       | Description                                                                                                       | Type                                                       | Default     |
-| -------------- | --------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ----------- |
-| `disableClose` | `disable-close` | If rue, the close button at the top right of the notification won't be shown                                      | `boolean`                                                  | `false`     |
-| `hideIcon`     | `hide-icon`     | If true, the notification icon won't be shown                                                                     | `boolean`                                                  | `false`     |
-| `isOpen`       | `is-open`       | If true, the notification will be shown                                                                           | `boolean`                                                  | `false`     |
-| `subjectColor` | `subject-color` | Set the subject color if you don't want to be black. Subject color will also apply to Icon color if there is one. | `string`                                                   | `undefined` |
-| `type`         | `type`          | Type of Notification                                                                                              | `"default" \| "error" \| "info" \| "success" \| "warning"` | `'default'` |
+| Property        | Attribute         | Description                                                                                                          | Type                                                       | Default     |
+| --------------- | ----------------- | -------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ----------- |
+| `disableClose`  | `disable-close`   | If rue, the close button at the top right of the notification won't be shown                                         | `boolean`                                                  | `false`     |
+| `hasCustomIcon` | `has-custom-icon` | If true, the predefined icon type won't be shown and a custom icon provided on integration will be displayed instead | `boolean`                                                  | `false`     |
+| `hideIcon`      | `hide-icon`       | If true, the notification icon won't be shown                                                                        | `boolean`                                                  | `false`     |
+| `isOpen`        | `is-open`         | If true, the notification will be shown                                                                              | `boolean`                                                  | `false`     |
+| `subjectColor`  | `subject-color`   | Set the subject color if you don't want to be black. Subject color will also apply to Icon color if there is one.    | `string`                                                   | `undefined` |
+| `type`          | `type`            | Type of Notification                                                                                                 | `"default" \| "error" \| "info" \| "success" \| "warning"` | `'default'` |
 
 
 ## Methods

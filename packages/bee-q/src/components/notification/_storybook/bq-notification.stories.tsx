@@ -55,9 +55,9 @@ const Template = (args) => {
           show-close=${args.showClose}
         >
           Title
-          <span slot="description"
-            >This is some description text text <a class="link" href="https://example.com">Link</a></span
-          >
+          <span slot="description">
+            This is some description text text <a class="link" href="https://example.com">Link</a>
+          </span>
           <bq-avatar
             slot="avatar"
             alt-text=""
