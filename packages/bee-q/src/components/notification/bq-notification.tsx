@@ -32,6 +32,9 @@ export class BqNotification {
   // Public Property API
   // ========================
 
+  /** If rue, the close button at the top right of the notification won't be shown */
+  @Prop({ reflect: true }) disableClose: boolean = false;
+
   /** Type of Notification */
   @Prop({ reflect: true }) type: TNotificationType = 'default';
 
@@ -43,9 +46,6 @@ export class BqNotification {
 
   /** Set the subject color if you don't want to be black. Subject color will also apply to Icon color if there is one. */
   @Prop({ reflect: true }) subjectColor: string;
-
-  /** Set property to false if you want to hide Close icon */
-  @Prop({ reflect: true }) showClose: boolean;
 
   // Prop lifecycle events
   // =======================
@@ -166,15 +166,9 @@ export class BqNotification {
               <slot name="notification-footer" />
             </div>
           </div>
-          {this.showClose && (
+          {!this.disableClose && (
             <div class="w-notification-close inline-block text-right align-top" part="close-icon">
-              <bq-icon
-                name="x"
-                color="icon--primary"
-                size="14"
-                class="cursor-pointer"
-                onClick={() => this.hide()}
-              ></bq-icon>
+              <bq-icon name="x" color="icon--primary" class="cursor-pointer" onClick={() => this.hide()}></bq-icon>
             </div>
           )}
         </div>

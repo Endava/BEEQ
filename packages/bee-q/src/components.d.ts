@@ -223,6 +223,10 @@ export namespace Components {
     }
     interface BqNotification {
         /**
+          * If rue, the close button at the top right of the notification won't be shown
+         */
+        "disableClose": boolean;
+        /**
           * Trigger function when you want to close Notification
          */
         "hide": () => Promise<void>;
@@ -238,10 +242,6 @@ export namespace Components {
           * Trigger function when you want to show Notification
          */
         "show": () => Promise<void>;
-        /**
-          * Set property to false if you want to hide Close icon
-         */
-        "showClose": boolean;
         /**
           * Set the subject color if you don't want to be black. Subject color will also apply to Icon color if there is one.
          */
@@ -906,6 +906,10 @@ declare namespace LocalJSX {
     }
     interface BqNotification {
         /**
+          * If rue, the close button at the top right of the notification won't be shown
+         */
+        "disableClose"?: boolean;
+        /**
           * If true, the notification icon won't be shown
          */
         "hideIcon"?: boolean;
@@ -913,10 +917,6 @@ declare namespace LocalJSX {
           * If true, the notification will be shown
          */
         "isOpen"?: boolean;
-        /**
-          * Set property to false if you want to hide Close icon
-         */
-        "showClose"?: boolean;
         /**
           * Set the subject color if you don't want to be black. Subject color will also apply to Icon color if there is one.
          */
