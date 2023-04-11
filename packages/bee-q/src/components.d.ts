@@ -227,6 +227,10 @@ export namespace Components {
          */
         "hide": () => Promise<void>;
         /**
+          * If true, the notification icon won't be shown
+         */
+        "hideIcon": boolean;
+        /**
           * Trigger function when you want to show Notification
          */
         "show": () => Promise<void>;
@@ -234,10 +238,6 @@ export namespace Components {
           * Set property to false if you want to hide Close icon
          */
         "showClose": boolean;
-        /**
-          * Set property if you want Notification icon to be shown.
-         */
-        "showIcon": boolean;
         /**
           * Set the subject color if you don't want to be black. Subject color will also apply to Icon color if there is one.
          */
@@ -902,13 +902,13 @@ declare namespace LocalJSX {
     }
     interface BqNotification {
         /**
+          * If true, the notification icon won't be shown
+         */
+        "hideIcon"?: boolean;
+        /**
           * Set property to false if you want to hide Close icon
          */
         "showClose"?: boolean;
-        /**
-          * Set property if you want Notification icon to be shown.
-         */
-        "showIcon"?: boolean;
         /**
           * Set the subject color if you don't want to be black. Subject color will also apply to Icon color if there is one.
          */
