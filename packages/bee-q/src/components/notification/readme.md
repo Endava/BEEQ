@@ -41,14 +41,16 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part          | Description                                                                                |
-| ------------- | ------------------------------------------------------------------------------------------ |
-| `"base"`      | The wrapper container `<div>` of the element inside the shadow DOM                         |
-| `"body"`      | The conatiner `<div>` that wraps the notification description content                      |
-| `"btn-close"` | The `bq-button` used to close the notification                                             |
-| `"content"`   | The conatiner `<div>` that wraps all the notification content (title, description, footer) |
-| `"footer"`    | The conatiner `<div>` that wraps the notification footer content                           |
-| `"title"`     | The conatiner `<div>` that wraps the notification title content                            |
+| Part             | Description                                                                                |
+| ---------------- | ------------------------------------------------------------------------------------------ |
+| `"base"`         | The wrapper container `<div>` of the element inside the shadow DOM                         |
+| `"body"`         | The conatiner `<div>` that wraps the notification description content                      |
+| `"btn-close"`    | The `bq-button` used to close the notification                                             |
+| `"content"`      | The conatiner `<div>` that wraps all the notification content (title, description, footer) |
+| `"footer"`       | The conatiner `<div>` that wraps the notification footer content                           |
+| `"icon"`         | The `<bq-icon>` element used to render a predefined icon based on the notification type    |
+| `"icon-outline"` | The conatiner `<div>` that wraps the icon element                                          |
+| `"title"`        | The conatiner `<div>` that wraps the notification title content                            |
 
 
 ## Dependencies

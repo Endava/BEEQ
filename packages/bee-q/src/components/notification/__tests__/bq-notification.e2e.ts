@@ -6,7 +6,6 @@ describe('bq-notification', () => {
     await page.setContent('<bq-notification></bq-notification>');
 
     const element = await page.find('bq-notification');
-
     expect(element).toHaveClass('hydrated');
   });
 
@@ -15,58 +14,68 @@ describe('bq-notification', () => {
     await page.setContent('<bq-notification></bq-notification>');
 
     const element = await page.find('bq-notification');
-
     expect(element.shadowRoot).not.toBeNull();
   });
 
   it('should render basic notification', async () => {
     const page = await newE2EPage();
-    await page.setContent(
-      '<bq-notification>New Message<span slot="description">You have a new chat message</span></bq-notification>',
-    );
+    await page.setContent(`
+      <bq-notification>
+        Notification titl
+        <span slot="body">You have a new chat message</span>
+      </bq-notification>
+    `);
 
-    const description = await page.find('bq-notification >>> slot[name="description"]');
-
+    const description = await page.find('bq-notification >>> slot[name="body"]');
     expect(description).not.toBeNull();
   });
 
   it('should show notification with icon', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-notification type="info" show-icon="true">New Message</bq-notification>');
+    await page.setContent(`
+      <bq-notification type="info">Notification title</bq-notification>
+    `);
 
-    const iconHolder = await page.find('bq-notification >>> [part="icon"]');
-
+    const iconHolder = await page.find('bq-notification >>> [part="icon-outline"]');
     expect(iconHolder).not.toBeNull();
   });
 
-  it('should show notification with close icon', async () => {
+  it('should show notification with close button', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-notification type="info" show-close="true">New Message</bq-notification>');
+    await page.setContent(`
+      <bq-notification type="info">Notification title</bq-notification>
+    `);
 
-    const iconHolder = await page.find('bq-notification >>> [part="close-icon"]');
-
+    const iconHolder = await page.find('bq-notification >>> [part="btn-close"]');
     expect(iconHolder).not.toBeNull();
   });
 
   it('should show notification with avatar', async () => {
     const page = await newE2EPage();
-    await page.setContent(
-      '<bq-notification>New Message <bq-avatar slot="avatar" alt-text="" image="" label="Avatar component label" initials="JS" shape="circle" size="small"></bq-avatar></bq-notification>',
-    );
+    await page.setContent(`
+      <bq-notification has-custom-icon>
+        <bq-avatar slot="icon" label="Avatar component label" initials="JS" shape="circle" size="small"></bq-avatar>
+        Notification title
+      </bq-notification>
+    `);
 
-    const avatarSlot = await page.find('bq-notification >>> slot[name="avatar"]');
-
+    const avatarSlot = await page.find('bq-notification >>> slot[name="icon"]');
     expect(avatarSlot).not.toBeNull();
   });
 
   it('should show notification footer', async () => {
     const page = await newE2EPage();
-    await page.setContent(
-      '<bq-notification>New Message<div slot="footer"><bq-button appearance="primary" href="" size="small" target="" type="button" variant="standard">Button</bq-button><bq-button appearance="secondary" href="" size="small" target="" type="button" variant="standard">Button</bq-button></div></bq-notification>',
-    );
+    await page.setContent(`
+      <bq-notification>
+        Notification title
+        <div slot="footer">
+          <bq-button appearance="primary" type="button" variant="standard">Button</bq-button>
+          <bq-button appearance="secondary" variant="standard">Button</bq-button>
+        </div>
+      </bq-notification>',
+    `);
 
-    const footerSlot = await page.find('bq-notification >>> slot[name="notification-footer"]');
-
+    const footerSlot = await page.find('bq-notification >>> slot[name="footer"]');
     expect(footerSlot).not.toBeNull();
   });
 
@@ -79,11 +88,13 @@ describe('bq-notification', () => {
     await element.callMethod('show');
     await page.waitForChanges();
 
-    expect(element).not.toHaveAttribute('aria-hidden');
+    expect(element).toEqualAttribute('aria-hidden', 'false');
+    expect(element).toEqualAttribute('hidden', 'false');
 
     await element.callMethod('hide');
     await page.waitForChanges();
 
-    expect(element).toHaveAttribute('aria-hidden');
+    expect(element).toEqualAttribute('aria-hidden', 'true');
+    expect(element).toEqualAttribute('hidden', 'true');
   });
 });
