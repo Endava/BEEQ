@@ -96,22 +96,20 @@ export class BqNotification {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private getNotificationIconName = () => {
+  private get iconName() {
     if (this.hideIcon) return;
 
-    const type = this.type;
-    let icon = 'info';
-
-    if (type === 'success') {
-      icon = 'check-circle';
+    switch (this.type) {
+      case 'error':
+        return 'x-circle';
+      case 'success':
+        return 'check-circle';
+      case 'warning':
+        return 'warning-circle';
+      default:
+        return 'info';
     }
-
-    if (type === 'error') {
-      icon = 'x-circle';
-    }
-
-    return icon;
-  };
+  }
 
   private getNotificationColor = () => {
     const type = this.type;
@@ -151,7 +149,7 @@ export class BqNotification {
         >
           {!this.hideIcon && (
             <div class="mr-2 inline-block text-left align-top" part="icon">
-              <bq-icon name={this.getNotificationIconName()} color={this.getNotificationColor()} size="24"></bq-icon>
+              <bq-icon name={this.iconName} color={this.getNotificationColor()} size="24"></bq-icon>
             </div>
           )}
           {this.hideIcon && (
