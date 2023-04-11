@@ -12,15 +12,17 @@ export default {
   },
   argTypes: {
     type: { control: 'select', options: [...NOTIFICATION_TYPE] },
-    showIcon: { control: 'boolean' },
-    showClose: { control: 'boolean' },
-    subjectColor: { control: 'text' },
+    'has-custom-icon': { control: 'boolean' },
+    'hide-icon': { control: 'boolean' },
+    'is-open': { control: 'boolean' },
+    'disable-close': { control: 'boolean' },
   },
   args: {
     type: 'default',
-    showIcon: true,
-    showClose: true,
-    subjectColor: '',
+    'has-custom-icon': false,
+    'hide-icon': false,
+    'is-open': false,
+    'disable-close': false,
   },
 };
 
@@ -35,43 +37,27 @@ const Template = (args) => {
   return html`
     <div>
       <div class="mb-2 inline-block w-full text-center">
-        <bq-button
-          appearance="primary"
-          href=""
-          size="small"
-          target=""
-          type="button"
-          variant="standard"
-          @bqClick=${showNotification}
-        >
+        <bq-button appearance="primary" type="button" variant="standard" @bqClick=${showNotification}>
           Open Notification
         </bq-button>
       </div>
       <div class="inline-block w-full text-center">
         <bq-notification
+          disable-close=${args['disable-close']}
+          has-custom-icon=${args['has-custom-icon']}
+          hide-icon=${args['hide-icon']}
+          is-open=${args['is-open']}
           type=${args.type}
-          show-icon=${args.showIcon}
-          subject-color=${args.subjectColor}
-          show-close=${args.showClose}
         >
           Title
-          <span slot="description">
+          <span slot="body">
             This is some description text text <a class="link" href="https://example.com">Link</a>
           </span>
-          <bq-avatar
-            slot="avatar"
-            alt-text=""
-            image=""
-            label="Avatar component label"
-            initials="JS"
-            shape="circle"
-            size="small"
-          ></bq-avatar>
-          <div slot="notification-footer">
-            <bq-button appearance="primary" href="" size="small" target="" type="button" variant="standard">
+          <div slot="footer">
+            <bq-button slot="footer" appearance="primary" size="small" type="button" variant="standard">
               Button
             </bq-button>
-            <bq-button appearance="secondary" href="" size="small" target="" type="button" variant="standard">
+            <bq-button slot="footer" appearance="secondary" size="small" type="button" variant="standard">
               Button
             </bq-button>
           </div>
