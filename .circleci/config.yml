@@ -1,6 +1,9 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
+# Use the latest 2.1 version of CircleCI pipeline process engine
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
+
+orbs:
+  nx: nrwl/nx@1.6.1
 
 commands:
   setup-node:
@@ -30,26 +33,32 @@ jobs:
       - checkout
       - setup-node
       - restore_cache:
+          name: 💫 Restore Cache dependencies
           # See the configuration reference documentation for more details on using restore_cache and save_cache steps
           # https://circleci.com/docs/2.0/configuration-reference/?section=reference#save_cache
           keys:
             - node-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+            - node-deps-v1-{{ .Branch }}-
       - run:
           name: 📦 Install dependencies
-          command: npm ci
+          command: |
+            npm -v && node -v
+            npm i
       - save_cache:
+          name: 💾 Save Cache dependencies
           key: node-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
           paths:
             - ~/.npm
+      - nx/set-shas
       - run:
           name: 🩺 Run Linters and Unit Tests
-          command: npx nx affected --target=test --exclude=workspace --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
+          command: npx nx affected --target=test --base=$NX_BASE --head=$NX_HEAD --exclude=workspace --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
       - run:
           name: ⏳ Build
           command: npm run build
       - run:
           name: 🧪 Run E2E Tests (only affected)
-          command: npx nx affected --target=e2e --exclude=workspace --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
+          command: npx nx affected --target=e2e --base=$NX_BASE --head=$NX_HEAD --exclude=workspace --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
 
 workflows:
   sample:
