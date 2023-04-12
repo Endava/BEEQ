@@ -40,7 +40,6 @@ jobs:
       image: ubuntu-2204:2023.02.1
     environment:
       NX_BRANCH: << pipeline.git.branch >>
-    parallelism: 3
     # Then run your node commands!
     # CircleCI will report the results back to your VCS provider.
     steps:
