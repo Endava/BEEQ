@@ -54,7 +54,7 @@ const IconTemplate = (args) => {
       @bqFocus=${args.bqFocus}
       @bqBlur=${args.bqBlur}
     >
-      <bq-tab tab-id="1"><bq-icon name="activity" slot="icon"></bq-icon>Tab</bq-tab>
+      <bq-tab tab-id="1"><bq-icon name="pulse" slot="icon"></bq-icon>Tab</bq-tab>
       <bq-tab tab-id="2"><bq-icon name="bell" slot="icon"></bq-icon>Tab</bq-tab>
       <bq-tab tab-id="3"><bq-icon name="airplane-in-flight" slot="icon"></bq-icon>Long Tab name</bq-tab>
       <bq-tab tab-id="4" disabled><bq-icon name="airplane-tilt" slot="icon"></bq-icon>Tab</bq-tab>
