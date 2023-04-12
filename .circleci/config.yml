@@ -39,7 +39,7 @@ jobs:
     machine:
       image: ubuntu-2204:2023.02.1
     environment:
-      NX_BARNCH: << pipeline.git.branch >>
+      NX_BRANCH: << pipeline.git.branch >>
 
     # Then run your node commands!
     # CircleCI will report the results back to your VCS provider.
@@ -73,7 +73,9 @@ jobs:
         # Derives SHAs for base and head for use in `nx affected` commands in CI
       - run:
           name: 🩺 Run Linters and Unit Tests
-          command: npx nx affected --target=test --base=$NX_BASE --head=$NX_HEAD --exclude=workspace --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
+          command: |
+            echo $NX_BRANCH
+            npx nx affected --target=test --base=$NX_BASE --head=$NX_HEAD --exclude=workspace --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
       - run:
           name: ⏳ Build
           command: npm run build
