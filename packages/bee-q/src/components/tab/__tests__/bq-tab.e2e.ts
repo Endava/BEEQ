@@ -55,7 +55,7 @@ describe('bq-tab', () => {
     await page.$eval('bq-icon', waitForSvgLoad);
 
     const slotText = await page.$eval('bq-tab', (element) => {
-      const slotElement = element.shadowRoot.querySelector('[part="text"] > slot');
+      const slotElement = element.shadowRoot.querySelector('[part="icon"] > slot');
       const assignedElements = (slotElement as HTMLSlotElement).assignedElements({ flatten: true })[0];
 
       const svg = assignedElements.shadowRoot.querySelector('svg');
