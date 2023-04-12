@@ -16,6 +16,10 @@ export default {
       from: '../../../dist/bee-q/www/assets',
       to: '/assets',
     },
+    {
+      from: '../../../dist/bee-q/www/scripts',
+      to: '/scripts',
+    },
   ],
   webpackFinal: async (config: Configuration, options: Options) => {
     // apply any global webpack configs that might have been specified in .storybook/main.ts
