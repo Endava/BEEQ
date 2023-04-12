@@ -7,7 +7,7 @@ orbs:
 
 commands:
   setup-node:
-    description: Install volta & ensure consistent node & yarn versions are installed
+    description: Install volta & ensure consistent node and npm versions are installed
     steps:
       - run:
           name: 🛠 Setup Volta
@@ -18,6 +18,14 @@ commands:
       - run:
           name: ⚙️ Install node
           command: volta install node
+  chromatic-deployment:
+    description: Publish changes to Chromatic storybook
+    steps:
+      - run:
+          name: 📚 Publish to Chromatic
+          command: |
+            npx chromatic --project-token=${CHROMATIC_PROJECT_TOKEN} -d dist/storybook/bee-q --untraced "package.json" --untraced "package-lock.json" --auto-accept-changes --ci --exit-once-uploaded --only-changed --zip
+
 
 jobs:
   # Below is the definition of your job to build and test your app, you can rename and customize it as you want.
@@ -59,8 +67,9 @@ jobs:
       - run:
           name: 🧪 Run E2E Tests (only affected)
           command: npx nx affected --target=e2e --base=$NX_BASE --head=$NX_HEAD --exclude=workspace --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
+      - chromatic-deployment
 
 workflows:
-  sample:
+  ⏳ Build and Test:
     jobs:
       - build-and-test
