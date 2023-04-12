@@ -50,7 +50,7 @@ describe('bq-tab', () => {
 
   it('should display icon', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-tab id="1"><bq-icon name="check"></bq-icon><p>Tab text</p></bq-tab>');
+    await page.setContent('<bq-tab id="1"><bq-icon name="check" slot="icon"></bq-icon><p>Tab text</p></bq-tab>');
 
     await page.$eval('bq-icon', waitForSvgLoad);
 

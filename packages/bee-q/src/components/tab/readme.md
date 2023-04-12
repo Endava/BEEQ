@@ -76,11 +76,13 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part          | Description                                            |
-| ------------- | ------------------------------------------------------ |
-| `"base"`      | The HTML button used under the hood.                   |
-| `"text"`      | The HTML `<span>` element that holds the text content. |
-| `"underline"` | The HTML `<div>` element that display active state.    |
+| Part          | Description                                           |
+| ------------- | ----------------------------------------------------- |
+| `"base"`      | The HTML button used under the hood.                  |
+| `"content"`   | The HTML `<div>` element that holds the content.      |
+| `"icon"`      | The HTML `<div>` element that holds the icon content. |
+| `"text"`      | The HTML `<div>` element that holds the text content. |
+| `"underline"` | The HTML `<div>` element that display active state.   |
 
 
 ----------------------------------------------

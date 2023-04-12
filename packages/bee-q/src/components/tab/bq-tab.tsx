@@ -4,7 +4,9 @@ import { TAB_SIZE, TTabSize } from './bq-tab.types';
 
 /**
  * @part base - The HTML button used under the hood.
- * @part text - The HTML `<span>` element that holds the text content.
+ * @part content - The HTML `<div>` element that holds the content.
+ * @part icon - The HTML `<div>` element that holds the icon content.
+ * @part text - The HTML `<div>` element that holds the text content.
  * @part underline - The HTML `<div>` element that display active state.
  */
 @Component({
@@ -187,9 +189,14 @@ export class BqTab {
               'gap-1': this.size === 'small',
               'gap-2': this.size !== 'small',
             }}
-            part="text"
+            part="content"
           >
-            <slot />
+            <div class="flex" part="icon">
+              <slot name="icon" />
+            </div>
+            <div class="line-clamp-1" part="text">
+              <slot />
+            </div>
           </div>
         </button>
         <div

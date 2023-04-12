@@ -1,4 +1,5 @@
 import plugin from 'tailwindcss/plugin';
+const lineClampPlugin = require('@tailwindcss/line-clamp');
 import { DECLARATIVE_COLORS, PRIMITIVE_COLORS } from './config';
 
 import type { Config } from 'tailwindcss';
@@ -71,6 +72,7 @@ const config: Config = {
     },
   },
   plugins: [
+    lineClampPlugin(),
     plugin(function ({ addComponents, theme }) {
       addComponents({
         /**
