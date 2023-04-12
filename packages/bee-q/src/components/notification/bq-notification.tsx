@@ -35,7 +35,7 @@ export class BqNotification {
   // Public Property API
   // ========================
 
-  /** If rue, the close button at the top right of the notification won't be shown */
+  /** If true, the close button at the top right of the notification won't be shown */
   @Prop({ reflect: true }) disableClose: boolean;
 
   /** If true, the predefined icon type won't be shown and a custom icon provided on integration will be displayed instead */

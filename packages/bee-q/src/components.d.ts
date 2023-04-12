@@ -223,7 +223,7 @@ export namespace Components {
     }
     interface BqNotification {
         /**
-          * If rue, the close button at the top right of the notification won't be shown
+          * If true, the close button at the top right of the notification won't be shown
          */
         "disableClose": boolean;
         /**
@@ -906,7 +906,7 @@ declare namespace LocalJSX {
     }
     interface BqNotification {
         /**
-          * If rue, the close button at the top right of the notification won't be shown
+          * If true, the close button at the top right of the notification won't be shown
          */
         "disableClose"?: boolean;
         /**

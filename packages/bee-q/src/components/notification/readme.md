@@ -9,7 +9,7 @@
 
 | Property        | Attribute         | Description                                                                                                          | Type                                                       | Default     |
 | --------------- | ----------------- | -------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ----------- |
-| `disableClose`  | `disable-close`   | If rue, the close button at the top right of the notification won't be shown                                         | `boolean`                                                  | `undefined` |
+| `disableClose`  | `disable-close`   | If true, the close button at the top right of the notification won't be shown                                        | `boolean`                                                  | `undefined` |
 | `hasCustomIcon` | `has-custom-icon` | If true, the predefined icon type won't be shown and a custom icon provided on integration will be displayed instead | `boolean`                                                  | `undefined` |
 | `hideIcon`      | `hide-icon`       | If true, the notification icon won't be shown                                                                        | `boolean`                                                  | `undefined` |
 | `isOpen`        | `is-open`         | If true, the notification will be shown                                                                              | `boolean`                                                  | `undefined` |
