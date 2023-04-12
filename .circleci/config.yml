@@ -54,8 +54,8 @@ jobs:
           # Next, it will use the static fallback key node-deps-v1-{{ .Branch }}- to load the most recent valid cache
           # with the node-deps-v1-{{ .Branch }}- prefix.
           keys:
-            - node-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
-            - node-deps-v1-{{ .Branch }}-
+            - node-deps-{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-{{checksum "package-lock.json"}}
+            - node-deps-{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-
       - run:
           name: 📦 Install dependencies
           #  In this case, npm install will install only those dependencies that are not in the cache.
@@ -66,7 +66,7 @@ jobs:
           name: 💾 Save Cache dependencies
           # After all of the project’s dependencies have been loaded,
           # the save_cache step will save the updated dependency tree to a new cache in the node_modules directory.
-          key: node-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+          key: node-deps-{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-{{checksum "package-lock.json"}}
           paths:
             - node_modules
       - run:
@@ -87,7 +87,7 @@ jobs:
           command: npx nx affected --target=e2e --base=$NX_BASE --head=$NX_HEAD --exclude=workspace --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
       - store_test_results:
           name: 📥 Store test results
-          # Special step used to upload and store test results for a build
+          # Special step used to upload and store test results for a build (when available)
           path: test-results
       - chromatic-deployment
 
