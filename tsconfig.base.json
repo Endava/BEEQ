@@ -26,7 +26,8 @@
       "@bee-q/react": ["dist/bee-q-react"]
     }
   },
-  "exclude": ["node_modules", "tmp"],
+  "include": ["./config/**/*.ts"],
+  "exclude": ["./node_modules", "./tmp"],
   "references": [
     {
       "path": "./.storybook/tsconfig.json"

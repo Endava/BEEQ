@@ -216,7 +216,7 @@ export class BqSwitch {
           />
           {/* Control */}
           <div
-            class="bq-switch--control relative box-border flex h-[var(--switch--height)] w-[var(--switch--width)] justify-between rounded-full bg-icon-secondary p-1 transition duration-300"
+            class="bq-switch--control bg-icon-secondary relative box-border flex h-[var(--switch--height)] w-[var(--switch--width)] justify-between rounded-full p-1 transition duration-300"
             part="control"
           >
             {this.innerLabel === 'icon' && (
@@ -231,7 +231,7 @@ export class BqSwitch {
             )}
             {/* Dot */}
             <div
-              class="bq-switch--control__dot absolute h-[var(--switch--dot-size)] w-[var(--switch--dot-size)] justify-end rounded-full bg-bg-primary transition duration-300"
+              class="bq-switch--control__dot bg-bg-primary absolute h-[var(--switch--dot-size)] w-[var(--switch--dot-size)] justify-end rounded-full transition duration-300"
               part="dot"
             />
             {this.innerLabel === 'icon' && (

@@ -210,7 +210,7 @@ export class BqCheckbox {
             {this.checked && (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="absolute h-full w-full text-text-inverse"
+                class="text-text-inverse absolute h-full w-full"
                 viewBox="0 0 256 256"
               >
                 <path fill="none" d="M0 0h256v256H0z" />
@@ -227,7 +227,7 @@ export class BqCheckbox {
             {!this.checked && this.indeterminate && (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="absolute h-full w-full text-text-inverse"
+                class="text-text-inverse absolute h-full w-full"
                 viewBox="0 0 256 256"
                 fill="currentColor"
               >
@@ -245,7 +245,7 @@ export class BqCheckbox {
           </span>
         </div>
         <span
-          class="bq-checkbox__label ml-1 text-start font-medium leading-large text-text-primary group-hover-[&:not(.is-disabled)]:text-text-primary-hover group-[.is-disabled]:text-text-primary-disabled"
+          class="bq-checkbox__label leading-large text-text-primary group-hover-[&:not(.is-disabled)]:text-text-primary-hover group-[.is-disabled]:text-text-primary-disabled ml-1 text-start font-medium"
           part="label"
         >
           <slot />
