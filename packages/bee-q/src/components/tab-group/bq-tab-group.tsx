@@ -153,17 +153,16 @@ export class BqTabGroup {
       }
     });
 
-    if (target) {
-      target.vFocus();
-      this.selectTab(target);
-    }
+    if (!target) return;
+
+    target.vFocus();
+    this.selectTab(target);
   };
 
   private makeTabsFocusable = (): void => {
     this.bqTabElements.forEach((bqTabElement) => {
-      if (bqTabElement.disabled) {
-        return;
-      }
+      if (bqTabElement.disabled) return;
+
       bqTabElement.enableFocus(true);
     });
   };
