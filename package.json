@@ -94,7 +94,7 @@
     "@types/puppeteer": "7.0.4",
     "@types/react": "18.0.33",
     "@types/react-dom": "18.0.11",
-    "@typescript-eslint/eslint-plugin": "5.55.0",
+    "@typescript-eslint/eslint-plugin": "5.58.0",
     "@typescript-eslint/parser": "5.55.0",
     "@whitespace/storybook-addon-html": "5.1.4",
     "autoprefixer": "10.4.13",
