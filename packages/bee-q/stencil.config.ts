@@ -9,7 +9,7 @@ import { reactOutputTarget as react } from '@stencil/react-output-target';
 import { sass } from '@stencil/sass';
 
 import { angularValueAccessorBindings, generateCustomElementsJson } from './src/tools';
-import tailwindConf from '../../tailwind.config.js';
+import tailwindConf from '../../tailwind.config';
 
 const tailwindOpts = {
   postcss: {
@@ -66,7 +66,10 @@ export const config: Config = {
     },
     {
       type: 'www',
-      copy: [{ src: 'global/assets', dest: 'assets' }],
+      copy: [
+        { src: 'global/assets', dest: 'assets' },
+        { src: 'global/scripts/esm-loader.js', dest: 'scripts/esm-loader.js' },
+      ],
       serviceWorker: null, // disable service workers
     },
     angular({
