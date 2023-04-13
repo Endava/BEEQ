@@ -197,7 +197,7 @@ export class BqSpinner {
         </span>
         {this.isTextDisplayed && (
           <span
-            class="bq-spinner--text leading-large text-text-primary font-medium"
+            class="bq-spinner--text font-medium leading-large text-text-primary"
             part="text"
             ref={(spanElem) => (this.slotElem = spanElem)}
           >

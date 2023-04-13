@@ -40,7 +40,7 @@ export const ExploreIcons = (args) => html`
       text-decoration: none;
     }
   </style>
-  <div class="text-text-primary mb-8">
+  <div class="mb-8 text-text-primary">
     <h1 class="text-xl font-bold">We didn't reinvent the wheel</h1>
     <p class="mt-2">
       Bee-Q icons are based on
@@ -56,7 +56,7 @@ export const ExploreIcons = (args) => html`
       , is a flexible icon family for interfaces, diagrams, presentations — whatever, really, is free and open-source,
       licensed under MIT.
     </p>
-    <span class="text-text-secondary text-xs">
+    <span class="text-xs text-text-secondary">
       (Below, you're seeing only a few examples of the icons that the library provides)
     </span>
   </div>
@@ -72,7 +72,7 @@ export const ExploreIcons = (args) => html`
       (icon) => html`
         <div class="group flex flex-col items-stretch text-center outline-0" role="button" tabindex="0">
           <div
-            class="rounded-m border-stroke-secondary group-hover:shadow-m mb-2 flex w-full justify-center border border-solid px-0 py-4 transition-shadow"
+            class="mb-2 flex w-full justify-center rounded-m border border-solid border-stroke-secondary px-0 py-4 transition-shadow group-hover:shadow-m"
           >
             <bq-icon color=${args.color} .name=${icon as string} size=${args.size} weight=${args.weight}></bq-icon>
           </div>
