@@ -41,3 +41,8 @@
 .bq-tab__underline {
   @apply mt-[2px] w-full border-x-0 border-t-0;
 }
+
+.bq-tab,
+.bq-tab__underline {
+  @apply transition-[color,background-color,border-color,box-shadow] duration-300;
+}
