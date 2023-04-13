@@ -129,7 +129,7 @@ export class BqBadge {
           }}
           part="base"
         >
-          <span ref={(element) => (this.spanElement = element)} class="leading-large text-xs font-bold" part="number">
+          <span ref={(element) => (this.spanElement = element)} class="text-xs font-bold leading-large" part="number">
             <slot onSlotchange={this.onSlotChange}></slot>
           </span>
         </div>
