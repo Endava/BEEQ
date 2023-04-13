@@ -1,0 +1,48 @@
+/* -------------------------------------------------------------------------- */
+/*                                Tab styles                               */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-tab-variables';
+
+:host {
+  @apply inline-block;
+}
+
+.bq-tab {
+  @apply relative flex cursor-pointer items-center justify-center disabled:cursor-not-allowed;
+  @apply text-m leading-large [&:not([disabled])]:hover:text-text-brand-hover font-medium;
+  @apply focus-visible:focus border-0 bg-transparent focus-visible:rounded-s;
+
+  &--small {
+    @apply px-[var(--bq-tab--pading-horizontal-small)] py-[var(--bq-tab--pading-vertical-small)];
+
+    ::slotted(bq-icon) {
+      --bq-icon--size: var(--bq-tab--icon-size-small) !important;
+    }
+  }
+
+  &--medium {
+    @apply px-[var(--bq-tab--pading-horizontal-medium)] py-[var(--bq-tab--pading-vertical-medium)];
+
+    ::slotted(bq-icon) {
+      --bq-icon--size: var(--bq-tab--icon-size-medium) !important;
+    }
+  }
+
+  &--large {
+    @apply text-l px-[var(--bq-tab--pading-horizontal-large)] py-[var(--bq-tab--pading-vertical-large)];
+
+    ::slotted(bq-icon) {
+      --bq-icon--size: var(--bq-tab--icon-size-large) !important;
+    }
+  }
+}
+
+.bq-tab__underline {
+  @apply mt-[2px] w-full border-x-0 border-t-0;
+}
+
+.bq-tab,
+.bq-tab__underline {
+  @apply transition-[color,background-color,border-color,box-shadow] duration-300;
+}
