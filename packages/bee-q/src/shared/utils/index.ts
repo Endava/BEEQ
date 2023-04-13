@@ -1,5 +1,6 @@
 export * from './cssVariables';
 export * from './debounce';
+export * from './getNextElement';
 export * from './getRandom';
 export * from './isDefined';
 export * from './isEmpty';
