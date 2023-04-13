@@ -89,7 +89,7 @@ ReverseOrder.args = {
 
 export const FullWidth = (args) => html`
   <div class="m-auto max-w-md">
-    <div class="mb-4 text-m font-regular">
+    <div class="text-m font-regular mb-4">
       Use a combination of <code class="bg-ui-secondary-disabled text-text-primary">full-width</code>,
       <code class="bg-ui-secondary-disabled text-text-primary">justify-content</code> and
       <code class="bg-ui-secondary-disabled text-text-primary">reverse-order</code>

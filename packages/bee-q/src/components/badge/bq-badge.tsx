@@ -125,11 +125,11 @@ export class BqBadge {
             'bq-badge': true,
             [`size--${this.size}`]: this.contentLength === 0,
             digit: this.contentLength > 0,
-            'pr-2 pl-2': this.contentLength > 1,
+            'pl-2 pr-2': this.contentLength > 1,
           }}
           part="base"
         >
-          <span ref={(element) => (this.spanElement = element)} class="text-xs font-bold leading-large" part="number">
+          <span ref={(element) => (this.spanElement = element)} class="leading-large text-xs font-bold" part="number">
             <slot onSlotchange={this.onSlotChange}></slot>
           </span>
         </div>
