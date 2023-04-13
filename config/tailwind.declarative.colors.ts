@@ -2,7 +2,7 @@
 /*                Bee-Q declarative colors for Tailwind config                */
 /* -------------------------------------------------------------------------- */
 
-const DECLARATIVE_COLORS = {
+export const DECLARATIVE_COLORS = {
   bg: {
     primary: 'var(--bq-background--primary)',
     secondary: 'var(--bq-background--secondary)',
@@ -144,5 +144,3 @@ const DECLARATIVE_COLORS = {
     'danger-disabled': 'var(--bq-stroke--danger-disabled)',
   },
 };
-
-export { DECLARATIVE_COLORS };

@@ -3,7 +3,7 @@ import { DECLARATIVE_COLORS, PRIMITIVE_COLORS } from './config';
 
 import type { Config } from 'tailwindcss';
 
-export default {
+const config: Config = {
   content: ['packages/bee-q/**/*.{jsx,js,tsx,ts}'],
   theme: {
     borderRadius: {
@@ -98,4 +98,6 @@ export default {
   corePlugins: {
     preflight: false,
   },
-} as Config;
+};
+
+export default config;

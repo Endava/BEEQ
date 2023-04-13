@@ -2,7 +2,7 @@
 /*                 Bee-Q primitive colors for Tailwind config                 */
 /* -------------------------------------------------------------------------- */
 
-const PRIMITIVE_COLORS = {
+export const PRIMITIVE_COLORS = {
   blue: {
     100: 'var(--bq-blue-100)',
     200: 'var(--bq-blue-200)',
@@ -200,5 +200,3 @@ const PRIMITIVE_COLORS = {
     1000: 'var(--bq-yellow-1000)',
   },
 };
-
-export { PRIMITIVE_COLORS };
