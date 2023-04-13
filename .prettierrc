@@ -3,6 +3,5 @@
   "printWidth": 120,
   "semi": true,
   "singleQuote": true,
-  "trailingComma": "all",
-  "tailwindConfig": "tailwind.config.js"
+  "trailingComma": "all"
 }
