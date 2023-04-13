@@ -202,9 +202,9 @@ export class BqTab {
         <div
           class={{
             'bq-tab__underline': true,
-            'border-b-2 border-solid border-b-stroke-brand': this.active,
+            'border-b-stroke-brand border-b-2 border-solid': this.active,
             'border-b-stroke-brand-disabled': this.disabled,
-            'border-b border-solid border-b-stroke-secondary': this.divider && !this.active,
+            'border-b-stroke-secondary border-b border-solid': this.divider && !this.active,
           }}
           part="underline"
         />
