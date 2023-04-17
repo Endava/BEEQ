@@ -125,7 +125,7 @@
     "plop": "3.1.2",
     "postcss": "8.4.22",
     "postcss-import": "^15.1.0",
-    "postcss-preset-env": "^8.3.0",
+    "postcss-preset-env": "^8.3.2",
     "postcss-url": "10.1.3",
     "prettier": "2.8.5",
     "prettier-plugin-tailwindcss": "0.2.7",
