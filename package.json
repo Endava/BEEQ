@@ -53,7 +53,7 @@
     "@angular/cli": "14.2.10",
     "@angular/compiler-cli": "14.2.12",
     "@angular/language-service": "14.2.12",
-    "@commitlint/cli": "17.5.1",
+    "@commitlint/cli": "17.6.1",
     "@commitlint/config-angular": "17.4.4",
     "@commitlint/config-conventional": "17.4.4",
     "@jscutlery/semver": "2.29.3",
