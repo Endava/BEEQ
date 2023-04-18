@@ -31,6 +31,7 @@ const config: StorybookConfig = {
   ],
   docs: {
     autodocs: true,
+    defaultName: 'Overview',
   },
   webpackFinal: async (config, options) => {
     // apply any global webpack configs that might have been specified in .storybook/main.ts
