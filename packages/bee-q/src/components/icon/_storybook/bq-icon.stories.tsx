@@ -65,14 +65,14 @@ export const ExploreIcons = (args) => html`
     Explore all the icons available
     <bq-icon class="ml-4" name="caret-right" weight="regular" slot="suffix"></bq-icon>
   </bq-button>
-  <div class="icon-grid my-0 mx-auto grid grid-cols-[repeat(auto-fill,_minmax(75px,_1fr))] gap-6 gap-x-4">
+  <div class="icon-grid mx-auto my-0 grid grid-cols-[repeat(auto-fill,_minmax(75px,_1fr))] gap-6 gap-x-4">
     ${repeat(
       getRandomFromArray(args.icons, 36),
       (icon) => icon,
       (icon) => html`
         <div class="group flex flex-col items-stretch text-center outline-0" role="button" tabindex="0">
           <div
-            class="mb-2 flex w-full justify-center rounded-m border border-solid border-stroke-secondary py-4 px-0 transition-shadow group-hover:shadow-m"
+            class="mb-2 flex w-full justify-center rounded-m border border-solid border-stroke-secondary px-0 py-4 transition-shadow group-hover:shadow-m"
           >
             <bq-icon color=${args.color} .name=${icon as string} size=${args.size} weight=${args.weight}></bq-icon>
           </div>

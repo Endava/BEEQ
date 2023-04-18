@@ -125,7 +125,7 @@ export class BqBadge {
             'bq-badge': true,
             [`size--${this.size}`]: this.contentLength === 0,
             digit: this.contentLength > 0,
-            'pr-2 pl-2': this.contentLength > 1,
+            'pl-2 pr-2': this.contentLength > 1,
           }}
           part="base"
         >
