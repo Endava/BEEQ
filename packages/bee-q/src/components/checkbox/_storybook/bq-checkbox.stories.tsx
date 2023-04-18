@@ -1,7 +1,9 @@
 import { html } from 'lit-html';
 import mdx from './bq-checkbox.mdx';
 
-export default {
+import type { Meta, StoryObj } from '@storybook/web-components';
+
+const meta: Meta = {
   title: 'Components/Checkbox',
   component: 'bq-checkbox',
   parameters: {
@@ -39,6 +41,9 @@ export default {
   },
 };
 
+export default meta;
+type Story = StoryObj;
+
 const Template = (args) => html`
   <bq-checkbox
     ?background-on-hover=${args['background-on-hover']}
@@ -57,74 +62,88 @@ const Template = (args) => html`
   </bq-checkbox>
 `;
 
-export const Default = Template.bind({});
-
-export const LongLabel = Template.bind({});
-LongLabel.args = {
-  label: 'By clicking here, I state that I have read and understood the terms and conditions.',
+export const Default: Story = {
+  render: Template.bind({}),
 };
-LongLabel.parameters = {
-  viewport: {
-    defaultViewport: 'mobile1',
+
+export const LongLabel: Story = {
+  render: Template.bind({}),
+  args: {
+    label: 'By clicking here, I state that I have read and understood the terms and conditions.',
+  },
+  parameters: {
+    viewport: {
+      defaultViewport: 'mobile1',
+    },
   },
 };
 
-export const BackgroundOnHover = Template.bind({});
-BackgroundOnHover.args = {
-  'background-on-hover': true,
-};
-BackgroundOnHover.storyName = 'Background on hover';
-
-export const Checked = Template.bind({});
-Checked.args = {
-  checked: true,
+export const BackgroundOnHover: Story = {
+  render: Template.bind({}),
+  args: {
+    'background-on-hover': true,
+  },
+  name: 'Background on hover',
 };
 
-export const Disabled = Template.bind({});
-Disabled.args = {
-  disabled: true,
+export const Checked: Story = {
+  render: Template.bind({}),
+  args: {
+    checked: true,
+  },
 };
 
-export const Indeterminate = (args) => {
-  const allCheckboxChange = (event) => {
-    const interestCheckboxes = [
-      ...Array.from(document.querySelectorAll<HTMLInputElement>('bq-checkbox[name="interest"')),
-    ];
-    interestCheckboxes.forEach((interestCheckbox: HTMLInputElement) => {
-      interestCheckbox.checked = event.detail.checked;
-    });
-  };
+export const Disabled: Story = {
+  render: Template.bind({}),
+  args: {
+    disabled: true,
+  },
+};
 
-  const interestCheckboxChange = () => {
-    const allInterestCheckbox = document.querySelector<HTMLInputElement>('bq-checkbox[name="all-interests"');
-    const interestCheckboxes = document.querySelectorAll('bq-checkbox[name="interest"');
-    const onlyChecked = document.querySelectorAll('bq-checkbox[name="interest"][checked]').length;
-    allInterestCheckbox.indeterminate = onlyChecked > 0 && onlyChecked < interestCheckboxes.length;
-    allInterestCheckbox.checked = onlyChecked === interestCheckboxes.length;
-  };
+export const Indeterminate: Story = {
+  render: (args) => {
+    const allCheckboxChange = (event) => {
+      const interestCheckboxes = [
+        ...Array.from(document.querySelectorAll<HTMLInputElement>('bq-checkbox[name="interest"')),
+      ];
+      interestCheckboxes.forEach((interestCheckbox: HTMLInputElement) => {
+        interestCheckbox.checked = event.detail.checked;
+      });
+    };
 
-  return html`
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
-      ${Template(args)}
-      <div>
-        <bq-checkbox value="all" name="all-interests" background-on-hover @bqChange=${allCheckboxChange}>
-          Interests
-        </bq-checkbox>
-        <div style="display: flex; flex-direction: column; margin-left: 24px;">
-          <bq-checkbox value="music" name="interest" background-on-hover @bqChange=${interestCheckboxChange}>
-            Music
+    const interestCheckboxChange = () => {
+      const allInterestCheckbox = document.querySelector<HTMLInputElement>('bq-checkbox[name="all-interests"');
+      if (!allInterestCheckbox) return;
+
+      const interestCheckboxes = document.querySelectorAll('bq-checkbox[name="interest"');
+      const onlyChecked = document.querySelectorAll('bq-checkbox[name="interest"][checked]').length;
+      allInterestCheckbox.indeterminate = onlyChecked > 0 && onlyChecked < interestCheckboxes.length;
+      allInterestCheckbox.checked = onlyChecked === interestCheckboxes.length;
+    };
+
+    return html`
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+        ${Template(args)}
+        <div>
+          <bq-checkbox value="all" name="all-interests" background-on-hover @bqChange=${allCheckboxChange}>
+            Interests
           </bq-checkbox>
-          <bq-checkbox value="travel" name="interest" background-on-hover @bqChange=${interestCheckboxChange}>
-            Travel
-          </bq-checkbox>
-          <bq-checkbox value="sport" name="interest" background-on-hover @bqChange=${interestCheckboxChange}>
-            Sport
-          </bq-checkbox>
+          <div style="display: flex; flex-direction: column; margin-left: 24px;">
+            <bq-checkbox value="music" name="interest" background-on-hover @bqChange=${interestCheckboxChange}>
+              Music
+            </bq-checkbox>
+            <bq-checkbox value="travel" name="interest" background-on-hover @bqChange=${interestCheckboxChange}>
+              Travel
+            </bq-checkbox>
+            <bq-checkbox value="sport" name="interest" background-on-hover @bqChange=${interestCheckboxChange}>
+              Sport
+            </bq-checkbox>
+          </div>
         </div>
       </div>
-    </div>
-  `;
-};
-Indeterminate.args = {
-  indeterminate: true,
+    `;
+  },
+  args: {
+    indeterminate: true,
+  },
 };

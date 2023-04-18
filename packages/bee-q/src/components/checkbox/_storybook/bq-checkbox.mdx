@@ -1,41 +1,69 @@
-import { ArgsTable, Canvas, Story } from '@storybook/addon-docs';
+import { ArgTypes, Canvas, Story } from '@storybook/addon-docs';
+import * as CheckboxStories from './bq-checkbox.stories';
 
 # Checkbox
 
-Checkboxes allow users to select one or more items from a set of options.
+The checkbox is a UI component that allows users to select one or more options from a list of choices.
+It is commonly used in forms, surveys, and settings pages.
+
+## Usage
+
+When using checkboxes, it's important to keep in mind the following best practices:
+
+1. Use checkboxes for selecting multiple options from a list. This is helpful when options are not mutually exclusive.
+2. Use clear and concise labels for each checkbox option. Avoid jargon or ambiguous language.
+3. Group related checkbox options together and label them appropriately. This helps users understand option relationships and make a decision.
+4. Minimize cognitive load by using sensible default values. Ensure default values make sense for users or they may become confused.
+5. Use a single column layout for a list of checkboxes for easy reading and selection. This ensures checkboxes are large enough to be clicked.
+
+By following these best practices, you can ensure that your checkboxes are effective and user-friendly.
+
+## 👍 When to use
+
+Checkboxes should be used when:
+
+- The user needs to select one or more options from a list of choices.
+- The options are independent of each other.
+- The user needs to see all the options at once.
 
 ## Variations
 
 ### Default
 
 <Canvas>
-  <Story id="components-checkbox--default" />
+  <Story of={CheckboxStories.Default} />
 </Canvas>
 
 ### Background on hover enabled
 
 <Canvas>
-  <Story id="components-checkbox--background-on-hover" />
+  <Story of={CheckboxStories.BackgroundOnHover} />
+</Canvas>
+
+### Long label
+
+<Canvas>
+  <Story of={CheckboxStories.LongLabel} />
 </Canvas>
 
 ### Checked
 
 <Canvas>
-  <Story id="components-checkbox--checked" />
+  <Story of={CheckboxStories.Checked} />
 </Canvas>
 
 ### Disabled
 
 <Canvas>
-  <Story id="components-checkbox--disabled" />
+  <Story of={CheckboxStories.Disabled} />
 </Canvas>
 
 ### Indeterminate
 
 <Canvas>
-  <Story id="components-checkbox--indeterminate" />
+  <Story of={CheckboxStories.Indeterminate} />
 </Canvas>
 
 ## Properties
 
-<ArgsTable of="bq-checkbox" />
+<ArgTypes of="bq-checkbox" />
