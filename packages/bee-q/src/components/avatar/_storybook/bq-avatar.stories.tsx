@@ -1,7 +1,9 @@
 import { html } from 'lit-html';
 import mdx from './bq-avatar.mdx';
 
-export default {
+import type { Meta, StoryObj } from '@storybook/web-components';
+
+const meta: Meta = {
   title: 'Components/Avatar',
   component: 'bq-avatar',
   parameters: {
@@ -23,6 +25,8 @@ export default {
     size: 'medium',
   },
 };
+export default meta;
+type Story = StoryObj;
 
 const Template = (args) => html`
   <bq-avatar
@@ -35,14 +39,14 @@ const Template = (args) => html`
   ></bq-avatar>
 `;
 
-export const Image = Template.bind({});
+export const Image: Story = Template.bind({});
 Image.args = {
   'alt-text': 'User profile',
   image:
     'https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80',
 };
 
-export const Initials = Template.bind({});
+export const Initials: Story = Template.bind({});
 Initials.args = {
   initials: 'JS',
 };

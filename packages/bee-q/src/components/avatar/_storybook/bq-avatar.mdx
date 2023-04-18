@@ -1,33 +1,42 @@
-import { ArgsTable, Canvas, Story } from '@storybook/addon-docs';
+import { ArgTypes, Canvas, Story } from '@storybook/addon-docs';
+import * as AvataStories from './bq-avatar.stories';
 
 # Avatar
 
-An avatar represents an object made of different pieces of information, in a way that is understandable at a glance.
+The Avatar component is a simple and customizable element that displays an image or initials in a circular or square shape.
+This component is useful for displaying user profile pictures or any other image that represents a person or an entity.
 
 ## Usage
 
-Avatars are never used alone. They are always used inside other components or patterns, where they represent a complex object, like a person or a stadium, in a very reduced space.
+Here are some best practices to ensure a positive user experience with the Avatar component:
 
-If the content - the person's or the the stadium's picture - is not available, then they must give a hint about what kind of image should be there.
+- **Make it identifiable:** The avatar should be easily recognizable and should represent the user or entity accurately. It should be appropriate and relevant to the context in which it is used.
+- **Keep it simple:** The size and complexity of the avatar should be appropriate to the context in which it is used. A simple, clear design is usually better than a complex one that can be difficult to understand.
+- **Ensure consistency:** Use the same avatar across all instances of the user or entity to ensure consistency and familiarity.
+- **Provide alternative text:** Always provide alternative text for the avatar for users who cannot see the image. This can be achieved by using the `alt` attribute.
 
 ## 👍 When to use
 
-Use an avatar to consistently represent a person, group, or project where the visual or semantic relationship provides context to the content it's in proximity to.
+The Avatar component is commonly used in the following scenarios:
+
+- **Profile pictures:** The Avatar is commonly used to display a user's profile picture.
+- **Comment sections:** The Avatar is also commonly used in comment sections to display the picture of the user who made the comment.
+- **List views:** The Avatar can also be used in list views to provide a visual representation of the user or entity associated with an item in the list.
 
 ## Variations
 
 ### Image
 
 <Canvas>
-  <Story id="components-avatar--image" />
+  <Story of={AvataStories.Image} />
 </Canvas>
 
 ### Initials
 
 <Canvas>
-  <Story id="components-avatar--initials" />
+  <Story of={AvataStories.Initials} />
 </Canvas>
 
 ## Properties
 
-<ArgsTable of="bq-avatar" />
+<ArgTypes of="bq-avatar" />
