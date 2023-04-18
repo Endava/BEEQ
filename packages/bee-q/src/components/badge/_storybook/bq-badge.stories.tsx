@@ -1,8 +1,10 @@
 import { html } from 'lit-html';
-import mdx from './bq-badge.mdx';
 import { BADGE_SIZE } from '../bq-badge.types';
+import mdx from './bq-badge.mdx';
 
-export default {
+import type { Meta, StoryObj } from '@storybook/web-components';
+
+const meta: Meta = {
   title: 'Components/Badge',
   component: 'bq-badge',
   parameters: {
@@ -22,24 +24,27 @@ export default {
   },
 };
 
+export default meta;
+type Story = StoryObj;
+
 const Template = (args) => html`
   <bq-badge background-color=${args['background-color']} size=${args.size} text-color=${args['text-color']}>
     ${args.content}
   </bq-badge>
 `;
 
-export const Default = Template.bind({});
+export const Default: Story = Template.bind({});
 
-export const Medium = Template.bind({});
+export const Medium: Story = Template.bind({});
 Medium.args = { size: 'medium' };
 
-export const Digit = Template.bind({});
+export const Digit: Story = Template.bind({});
 Digit.args = { content: '2' };
 
-export const Number = Template.bind({});
+export const Number: Story = Template.bind({});
 Number.args = { content: '12' };
 
-export const Green = Template.bind({});
+export const Green: Story = Template.bind({});
 Green.args = {
   'background-color': 'ui--success',
   size: 'large',
