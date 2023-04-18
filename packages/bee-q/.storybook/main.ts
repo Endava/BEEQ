@@ -3,44 +3,54 @@ import TerserPlugin from 'terser-webpack-plugin';
 
 import { config as rootMain } from '../../../.storybook/main';
 
-import type { StorybookConfig, Options } from '@storybook/core-common';
-import type { Configuration } from 'webpack';
+import type { StorybookConfig } from '@storybook/web-components-webpack5';
 
-export default {
+const config: StorybookConfig = {
   ...rootMain,
-  framework: '@storybook/web-components',
-  stories: [...rootMain.stories, '../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
-  addons: [...(rootMain.addons || []), '@whitespace/storybook-addon-html', '@storybook/addon-a11y'],
-  staticDirs: [
-    {
-      from: '../../../dist/bee-q/www/assets',
-      to: '/assets',
+  framework: {
+    name: '@storybook/web-components-webpack5',
+    options: {
+      builder: { fsCache: false, lazyCompilation: true },
     },
-    {
-      from: '../../../dist/bee-q/www/scripts',
-      to: '/scripts',
-    },
+  },
+  features: {
+    // @see https://github.com/storybookjs/storybook/blob/main/docs/configure/overview.md#feature-flags
+    buildStoriesJson: true,
+    storyStoreV7: true,
+  },
+  stories: [...rootMain.stories, '../src/**/*.stories.@(mdx|ts|tsx)'],
+  addons: [
+    ...(rootMain.addons || []),
+    '@whitespace/storybook-addon-html',
+    '@storybook/addon-a11y',
+    '@storybook/addon-mdx-gfm',
   ],
-  webpackFinal: async (config: Configuration, options: Options) => {
+  staticDirs: [
+    { from: '../../../dist/bee-q/www/assets', to: '/assets' },
+    { from: '../../../dist/bee-q/www/scripts', to: '/scripts' },
+  ],
+  docs: {
+    autodocs: true,
+  },
+  webpackFinal: async (config, options) => {
     // apply any global webpack configs that might have been specified in .storybook/main.ts
     if (rootMain.webpackFinal) {
       config = await rootMain.webpackFinal(config, options);
     }
 
-    if (config.optimization) {
+    if (config.optimization && options.configType === 'PRODUCTION') {
       config.optimization.minimize = true;
       config.optimization.minimizer = [new TerserPlugin()];
     }
 
-    config.plugins?.push(
+    config.plugins!.push(
       new CopyPlugin({
-        patterns: [
-          { from: './dist/bee-q/dist/bee-q', to: './bee-q', globOptions: { ignore: ['**/svg/**'] } },
-          { from: './dist/bee-q/dist/bee-q/svg', to: './svg' },
-        ],
+        patterns: [{ from: './dist/bee-q/dist/bee-q', to: './bee-q' }],
       }),
     );
 
     return config;
   },
-} as StorybookConfig;
+};
+
+export default config;
