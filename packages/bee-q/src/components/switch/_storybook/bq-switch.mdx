@@ -1,18 +1,66 @@
-import { ArgsTable, Canvas, Story } from '@storybook/addon-docs';
+import { ArgTypes, Canvas, Story } from '@storybook/addon-docs';
+import * as SwitchStories from './bq-switch.stories';
 
 # Switch
 
-Toggle switches are digital on/off switches.
-They should provide immediate results, giving users the freedom to control their preferences as needed.
+The Switch component is a UI element that provides a switch-like interface to toggle a specific setting or option.
+It consists of a button or a switch that can be turned on or off, depending on the user's preference.
+
+## Usage
+
+Here are some best practices to follow when using the Switch component:
+
+- Use the Switch component when you want to allow users to turn a setting or option on or off quickly and easily.
+- Use clear and descriptive labels that accurately describe the function of the Switch component.
+- Always provide visual feedback when the Switch component is switched on or off.
+- Use Switch components only for simple on/off settings. If you have more complex settings, use a different interface element such as a checkbox or dropdown menu.
+
+## 👍 When to use
+
+The Switch component is ideal for use in the following scenarios:
+
+- When the user needs to turn a setting on or off quickly and easily.
+- When the setting is simple and requires only two options.
+- When the setting is frequently toggled on and off.
 
 ## Variations
 
 ### Default
 
 <Canvas>
-  <Story id="components-switch--default" />
+  <Story of={SwitchStories.Default} />
+</Canvas>
+
+### Checked
+
+<Canvas>
+  <Story of={SwitchStories.Checked} />
+</Canvas>
+
+### Disabled
+
+<Canvas>
+  <Story of={SwitchStories.Disabled} />
+</Canvas>
+
+### WithInnerLabel
+
+<Canvas>
+  <Story of={SwitchStories.WithInnerLabel} />
+</Canvas>
+
+### ReverseOrder
+
+<Canvas>
+  <Story of={SwitchStories.ReverseOrder} />
+</Canvas>
+
+### FullWidth
+
+<Canvas>
+  <Story of={SwitchStories.FullWidth} />
 </Canvas>
 
 ## Properties
 
-<ArgsTable of="bq-switch" />
+<ArgTypes of="bq-switch" />
