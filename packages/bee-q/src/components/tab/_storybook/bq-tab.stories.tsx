@@ -2,8 +2,10 @@ import { html } from 'lit-html';
 import mdx from './bq-tab.mdx';
 import { TAB_SIZE } from '../bq-tab.types';
 
-export default {
-  title: 'Components/Tab',
+import type { Args, Meta, StoryObj } from '@storybook/web-components';
+
+const meta: Meta = {
+  title: 'Components/Tabs/Tab',
   component: 'bq-tab',
   parameters: {
     docs: {
@@ -16,7 +18,7 @@ export default {
     divider: { control: 'boolean' },
     size: { control: 'select', options: [...TAB_SIZE] },
     // Not part of the component
-    text: { control: 'text' },
+    text: { control: 'text', table: { disable: true } },
   },
   args: {
     text: 'Tab',
@@ -26,21 +28,27 @@ export default {
     size: 'small',
   },
 };
+export default meta;
 
-const Template = (args) => {
+type Story = StoryObj;
+
+const Template = (args: Args) => {
   return html`
-    <bq-tab .size=${args.size} ?active=${args.active} ?disabled=${args.disabled} ?divider=${args.divider}
-      >${args.text}</bq-tab
-    >
+    <bq-tab .size=${args.size} ?active=${args.active} ?disabled=${args.disabled} ?divider=${args.divider}>
+      ${args.text}
+    </bq-tab>
   `;
 };
 
-export const Default = (args) => Template(args);
+export const Default: Story = {
+  render: Template,
+};
 
-export const Icon = (args) => {
-  return html`
-    <bq-tab .size=${args.size} ?active=${args.active} ?disabled=${args.disabled} ?divider=${args.divider}
-      ><bq-icon name="arrow-circle-left" slot="icon"></bq-icon>${args.text}</bq-tab
-    >
-  `;
+export const Icon: Story = {
+  render: (args: Args) => html`
+    <bq-tab .size=${args.size} ?active=${args.active} ?disabled=${args.disabled} ?divider=${args.divider}>
+      <bq-icon name="arrow-circle-left" slot="icon"></bq-icon>
+      ${args.text}
+    </bq-tab>
+  `,
 };

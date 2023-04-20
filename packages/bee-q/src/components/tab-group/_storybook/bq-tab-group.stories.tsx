@@ -2,9 +2,14 @@ import { html } from 'lit-html';
 import { TAB_SIZE } from '../../tab/bq-tab.types';
 import mdx from './bq-tab-group.mdx';
 
-export default {
-  title: 'Components/Tab group',
+import type { Args, Meta, StoryObj } from '@storybook/web-components';
+
+const meta: Meta = {
+  title: 'Components/Tabs',
   component: 'bq-tab-group',
+  subcomponents: {
+    BqTab: 'bq-tab',
+  },
   parameters: {
     docs: {
       page: mdx,
@@ -14,15 +19,18 @@ export default {
     size: { control: 'select', options: [...TAB_SIZE] },
     // Event handlers
     bqChange: { action: 'bqChange' },
-    bqFocus: { action: 'bqFocus' },
-    bqBlur: { action: 'bqBlur' },
+    bqFocus: { action: 'bqFocus', table: { disable: true } },
+    bqBlur: { action: 'bqBlur', table: { disable: true } },
   },
   args: {
     size: 'small',
   },
 };
+export default meta;
 
-const Template = (args) => {
+type Story = StoryObj;
+
+const Template = (args: Args) => {
   return html`
     <bq-tab-group
       value="5"
@@ -43,9 +51,11 @@ const Template = (args) => {
   `;
 };
 
-export const Default = Template.bind({});
+export const Default: Story = {
+  render: Template,
+};
 
-const IconTemplate = (args) => {
+const IconTemplate = (args: Args) => {
   return html`
     <bq-tab-group
       value="5"
@@ -66,4 +76,6 @@ const IconTemplate = (args) => {
   `;
 };
 
-export const Icon = IconTemplate.bind({});
+export const Icon: Story = {
+  render: IconTemplate,
+};
