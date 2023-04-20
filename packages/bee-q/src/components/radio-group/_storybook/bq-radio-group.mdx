@@ -1,27 +1,60 @@
-import { ArgsTable, Canvas, Story } from '@storybook/addon-docs';
+import { ArgTypes, Canvas, Story } from '@storybook/addon-docs';
+import * as RadioGroupStories from './bq-radio-group.stories'
 
 # Radio group
+
+Radio buttons are a type of form element that allows users to select a single option from a list of two or more options.
+They are commonly used in forms, surveys, and quizzes.
+
+## Usage
+
+When using radio button components in your forms or surveys, it is important to follow certain best practices to ensure a positive user experience. Here are some additional usage best practices to consider:
+
+- Use radio buttons consistently throughout the form or survey to create a clear and predictable user experience. Inconsistency can lead to confusion and frustration for users.
+- Use radio buttons sparingly to avoid overwhelming the user with too many options. Too many options can lead to decision paralysis and deter users from completing the form or survey.
+- Use radio buttons to provide the user with a limited set of options that are relevant to the task at hand. Offering too many irrelevant options can be distracting and frustrating for users.
+- Use radio buttons in conjunction with other form elements, such as text inputs and drop-down menus, to provide a more flexible and user-friendly interface. This can help accommodate a variety of user preferences and needs.
+
+### Points to Consider
+
+- Consider the order of the options. Arrange the options in a logical and meaningful order that makes sense to the user.
+- Consider the language and tone of the labels. Use language that is familiar to the user and matches the tone of the overall form or survey.
+- Consider the visual design of the radio buttons. Ensure that the radio buttons are easy to see and use, and that they are consistent with the overall design of the form or survey.
+- Consider the accessibility of the radio buttons. Ensure that the radio buttons can be easily used by users with disabilities, including those who use assistive technology.
+
+## 👍 When to use
+
+Radio buttons are best used when:
+
+- Users need to select only one option from a list of options
+- Users need to compare their options
+
+👎 Radio buttons are not recommended when:
+
+- Users need to select multiple options
+- Users need to input text or numbers
+- The list of options is too long
 
 ## Variations
 
 ### Default
 
 <Canvas>
-  <Story id="components-radio-group--default" />
+  <Story of={RadioGroupStories.Default} />
 </Canvas>
 
 ### Disabled
 
 <Canvas>
-  <Story id="components-radio-group--disabled" />
+  <Story of={RadioGroupStories.Disabled} />
 </Canvas>
 
 ### Fieldset
 
 <Canvas>
-  <Story id="components-radio-group--disabled" />
+  <Story of={RadioGroupStories.Disabled} />
 </Canvas>
 
 ## Properties
 
-<ArgsTable of="bq-radio-group" />
+<ArgTypes of="bq-radio-group" />
