@@ -1,16 +1,39 @@
-import { ArgsTable, Canvas, Story } from '@storybook/addon-docs';
+import { ArgTypes, Canvas, Story } from '@storybook/addon-docs';
+import * as IconStories from './bq-icon.stories';
 
 # Icons
 
-Icons are simplified images that graphically explain the meaning of an object on the screen, and can allow to take actions
+The Icon component is a visual representation of an object, action, or concept.
+It is a small graphical element that is used to enhance the user interface and improve user experience.
+The Icon component can be used in various ways, such as navigation bars, toolbars, buttons, menus, and so on.
 Bee-Q icons are based on [Phosphor icons library](https://phosphoricons.com/), is a flexible icon family for interfaces, diagrams, presentations — whatever, really, is free and open-source, licensed under MIT.
 
-## Example
+## Usage
+
+The Icon component should adhere to the following user experience best practices:
+
+- Use meaningful and recognizable icons that are easily recognizable and convey the intended meaning without any explanation.
+- Keep the icons simple and easy to understand, avoiding complex icons that may confuse users.
+- Use consistent icons throughout the application to improve users' ability to recognize them.
+- Adjust the size and spacing of the icons appropriately for their intended use, as icons that are too small or too large can be difficult to see and use.
+- Use color to enhance the visual appeal of the icons, but ensure that the colors are consistent with the overall design of the application.
+
+## 👍 When to use
+
+The Icon component can be used in various ways, such as:
+
+- Navigation - Use icons to represent different sections of the application, such as home, settings, profile, and so on.
+- Action buttons - Use icons to represent different actions, such as save, delete, edit, and so on.
+- Status indicators - Use icons to indicate the status of an object, such as success, error, warning, and so on.
+
+## Variants
+
+### Default
 
 <Canvas>
-  <Story id="components-icon--default" />
+  <Story of={IconStories.Default} />
 </Canvas>
 
 ## Properties
 
-<ArgsTable of="bq-icon" />
+<ArgTypes of="bq-icon" />
