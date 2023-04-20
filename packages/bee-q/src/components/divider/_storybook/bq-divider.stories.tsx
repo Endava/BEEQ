@@ -62,42 +62,58 @@ const Template = (args) => html`
   </div>
 `;
 
-export const Default = (args) => Template(args);
-Default.args = {
-  'title-text': 'Default divider',
+export const Default = {
+  render: Template,
+  args: {
+    'title-text': 'Default divider',
+  },
 };
 
-export const Horizontal = (args) => Template(args);
-Horizontal.args = {
-  'title-text': 'Horizontal divider',
+export const Horizontal = {
+  render: Template,
+  args: {
+    'title-text': 'Horizontal divider',
+  },
 };
 
-export const Vertical = (args) => Template(args);
-Vertical.args = {
-  orientation: 'vertical',
-  'title-text': 'Vertical divider',
+export const Vertical = {
+  render: Template,
+  args: {
+    orientation: 'vertical',
+    'title-text': 'Vertical divider',
+  },
 };
 
-export const DashedLine = (args) => Template(args);
-DashedLine.args = {
-  dashed: true,
+export const DashedLine = {
+  render: Template,
+  args: {
+    dashed: true,
+  },
 };
 
-export const NoTitle = (args) => Template(args);
-
-export const TextStart = (args) => Template(args);
-TextStart.args = {
-  'title-alignment': 'start',
-  'title-text': 'Text Start',
+export const NoTitle = {
+  render: Template,
 };
 
-export const TextEnd = (args) => Template(args);
-TextEnd.args = {
-  'title-alignment': 'end',
-  'title-text': 'Text End',
+export const TextStart = {
+  render: Template,
+  args: {
+    'title-alignment': 'start',
+    'title-text': 'Text Start',
+  },
 };
 
-export const TextMiddle = (args) => Template(args);
-TextMiddle.args = {
-  'title-text': 'Text Middle',
+export const TextEnd = {
+  render: Template,
+  args: {
+    'title-alignment': 'end',
+    'title-text': 'Text End',
+  },
+};
+
+export const TextMiddle = {
+  render: Template,
+  args: {
+    'title-text': 'Text Middle',
+  },
 };
