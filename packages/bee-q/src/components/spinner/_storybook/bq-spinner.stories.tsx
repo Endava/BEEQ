@@ -1,8 +1,9 @@
-import { html } from 'lit-html';
 import mdx from './bq-spinner.mdx';
+import { html } from 'lit-html';
+import { Args, Meta, StoryObj } from '@storybook/web-components';
 import { SPINNER_TEXT_POSITION, SPINNER_SIZE } from '../bq-spinner.types';
 
-export default {
+const meta: Meta = {
   title: 'Components/Spinner',
   component: 'bq-spinner',
   parameters: {
@@ -15,47 +16,52 @@ export default {
     animation: { control: 'boolean' },
     'text-position': { control: 'select', options: [...SPINNER_TEXT_POSITION] },
     size: { control: 'select', options: [...SPINNER_SIZE] },
+    // Not part of the component, the text data is handled in a slot
     text: { control: 'text' },
   },
   args: {
     animation: true,
     'text-position': 'bellow',
     size: 'large',
+    // Not part of the component
+    text: 'Loading...',
+  },
+};
+export default meta;
+
+type Story = StoryObj;
+
+const Template = (args: Args) => {
+  return html`
+    <bq-spinner ?animation=${args.animation} size=${args.size} text-position=${args['text-position']}>
+      <span>${args.text}</span>
+    </bq-spinner>
+  `;
+};
+
+export const Large: Story = {
+  render: Template,
+};
+
+export const Medium: Story = {
+  render: Template,
+  args: {
+    size: 'medium',
   },
 };
 
-const Template = (args) => {
-  return html`<bq-spinner ?animation=${args.animation} size=${args.size} text-position=${args['text-position']}>
-    <span>${args.text}</span>
-  </bq-spinner>`;
+export const Small: Story = {
+  render: Template,
+  args: {
+    size: 'small',
+  },
 };
 
-export const Large = (args) => Template(args);
-Large.args = {
-  text: 'Loading...',
-};
-
-export const Medium = (args) => Template(args);
-Medium.args = {
-  text: 'Loading...',
-  size: 'medium',
-};
-
-export const Small = (args) => Template(args);
-Small.args = {
-  text: 'Loading...',
-  size: 'small',
-};
-
-export const CustomIcon = (args) => html`<bq-spinner
-  ?animation=${args.animation}
-  size=${args.size}
-  text-position=${args['text-position']}
->
-  <bq-icon name="spinner-gap" slot="icon"></bq-icon>
-  <span>${args.text}</span>
-</bq-spinner>`;
-
-CustomIcon.args = {
-  text: 'Loading...',
+export const CustomIcon: Story = {
+  render: (args: Args) => html`
+    <bq-spinner ?animation=${args.animation} size=${args.size} text-position=${args['text-position']}>
+      <bq-icon name="spinner-gap" slot="icon"></bq-icon>
+      <span>${args.text}</span>
+    </bq-spinner>
+  `,
 };
