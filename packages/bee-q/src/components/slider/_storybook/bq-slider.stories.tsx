@@ -1,7 +1,8 @@
 import { html } from 'lit-html';
-import { Args, Meta, StoryObj } from '@storybook/web-components';
 import { SLIDER_TYPE } from '../bq-slider.types';
 import mdx from './bq-slider.mdx';
+
+import type { Args, Meta, StoryObj } from '@storybook/web-components';
 
 const meta: Meta = {
   title: 'Components/Slider',

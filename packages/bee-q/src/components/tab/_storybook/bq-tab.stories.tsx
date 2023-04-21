@@ -1,6 +1,6 @@
 import { html } from 'lit-html';
-import mdx from './bq-tab.mdx';
 import { TAB_SIZE } from '../bq-tab.types';
+import mdx from './bq-tab.mdx';
 
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
 

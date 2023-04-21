@@ -1,7 +1,7 @@
 import { html } from 'lit-html';
 import mdx from './bq-checkbox.mdx';
 
-import type { Meta, StoryObj } from '@storybook/web-components';
+import type { Args, Meta, StoryObj } from '@storybook/web-components';
 
 const meta: Meta = {
   title: 'Components/Checkbox',
@@ -40,11 +40,11 @@ const meta: Meta = {
     label: 'Checkbox label',
   },
 };
-
 export default meta;
+
 type Story = StoryObj;
 
-const Template = (args) => html`
+const Template = (args: Args) => html`
   <bq-checkbox
     ?background-on-hover=${args['background-on-hover']}
     .formId=${args['form-id']}
@@ -63,11 +63,11 @@ const Template = (args) => html`
 `;
 
 export const Default: Story = {
-  render: Template.bind({}),
+  render: Template,
 };
 
 export const LongLabel: Story = {
-  render: Template.bind({}),
+  render: Template,
   args: {
     label: 'By clicking here, I state that I have read and understood the terms and conditions.',
   },
@@ -79,7 +79,7 @@ export const LongLabel: Story = {
 };
 
 export const BackgroundOnHover: Story = {
-  render: Template.bind({}),
+  render: Template,
   args: {
     'background-on-hover': true,
   },
@@ -87,21 +87,21 @@ export const BackgroundOnHover: Story = {
 };
 
 export const Checked: Story = {
-  render: Template.bind({}),
+  render: Template,
   args: {
     checked: true,
   },
 };
 
 export const Disabled: Story = {
-  render: Template.bind({}),
+  render: Template,
   args: {
     disabled: true,
   },
 };
 
 export const Indeterminate: Story = {
-  render: (args) => {
+  render: (args: Args) => {
     const allCheckboxChange = (event) => {
       const interestCheckboxes = [
         ...Array.from(document.querySelectorAll<HTMLInputElement>('bq-checkbox[name="interest"')),

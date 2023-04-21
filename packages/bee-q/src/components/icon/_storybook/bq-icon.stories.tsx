@@ -1,12 +1,11 @@
 import { html } from 'lit-html';
 import { repeat } from 'lit-html/directives/repeat.js';
-import type { Args, Meta, StoryObj } from '@storybook/web-components';
-
 import { getRandomFromArray } from '../../../shared/utils';
 import { ICON_WEIGHT } from '../bq-icon.types';
 import { ICONS_SET } from '../helper/icons-set';
-
 import mdx from './bq-icon.mdx';
+
+import type { Args, Meta, StoryObj } from '@storybook/web-components';
 
 const meta: Meta = {
   title: 'Components/Icon',
@@ -30,8 +29,8 @@ const meta: Meta = {
     weight: 'regular',
   },
 };
-
 export default meta;
+
 type Story = StoryObj;
 
 const Template = (args: Args) => html`

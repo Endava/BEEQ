@@ -1,9 +1,10 @@
 import { html } from 'lit-html';
-
-import { DIVIDER_TITLE_ALIGNMENT, DIVIDER_ORIENTATION, DIVIDER_STROKE_LINECAP } from '../bq-divider.types';
+import { DIVIDER_ORIENTATION, DIVIDER_STROKE_LINECAP, DIVIDER_TITLE_ALIGNMENT } from '../bq-divider.types';
 import mdx from './bq-divider.mdx';
 
-export default {
+import type { Args, Meta, StoryObj } from '@storybook/web-components';
+
+const meta: Meta = {
   title: 'Components/Divider',
   component: 'bq-divider',
   parameters: {
@@ -37,8 +38,11 @@ export default {
     'stroke-linecap': 'butt',
   },
 };
+export default meta;
 
-const Template = (args) => html`
+type Story = StoryObj;
+
+const Template = (args: Args) => html`
   <style>
     .container {
       /* width: 40%; */
@@ -62,21 +66,21 @@ const Template = (args) => html`
   </div>
 `;
 
-export const Default = {
+export const Default: Story = {
   render: Template,
   args: {
     'title-text': 'Default divider',
   },
 };
 
-export const Horizontal = {
+export const Horizontal: Story = {
   render: Template,
   args: {
     'title-text': 'Horizontal divider',
   },
 };
 
-export const Vertical = {
+export const Vertical: Story = {
   render: Template,
   args: {
     orientation: 'vertical',
@@ -84,18 +88,18 @@ export const Vertical = {
   },
 };
 
-export const DashedLine = {
+export const DashedLine: Story = {
   render: Template,
   args: {
     dashed: true,
   },
 };
 
-export const NoTitle = {
+export const NoTitle: Story = {
   render: Template,
 };
 
-export const TextStart = {
+export const TextStart: Story = {
   render: Template,
   args: {
     'title-alignment': 'start',
@@ -103,7 +107,7 @@ export const TextStart = {
   },
 };
 
-export const TextEnd = {
+export const TextEnd: Story = {
   render: Template,
   args: {
     'title-alignment': 'end',
@@ -111,7 +115,7 @@ export const TextEnd = {
   },
 };
 
-export const TextMiddle = {
+export const TextMiddle: Story = {
   render: Template,
   args: {
     'title-text': 'Text Middle',

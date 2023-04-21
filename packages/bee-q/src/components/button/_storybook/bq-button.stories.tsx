@@ -1,5 +1,4 @@
-import { html, render } from 'lit-html';
-
+import { html } from 'lit-html';
 import { BUTTON_APPEARANCE, BUTTON_SIZE, BUTTON_TYPE, BUTTON_VARIANT } from '../bq-button.types';
 import mdx from './bq-button.mdx';
 
@@ -40,8 +39,8 @@ const meta: Meta = {
     variant: 'standard',
   },
 };
-
 export default meta;
+
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
@@ -63,14 +62,14 @@ const Template = (args: Args) => html`
 `;
 
 export const Primary: Story = {
-  render: Template.bind({}),
+  render: Template,
   args: {
     buttonText: 'Primary button',
   },
 };
 
 export const Secondary: Story = {
-  render: Template.bind({}),
+  render: Template,
   args: {
     appearance: 'secondary',
     buttonText: 'Secondary button',
@@ -78,7 +77,7 @@ export const Secondary: Story = {
 };
 
 export const Link: Story = {
-  render: Template.bind({}),
+  render: Template,
   args: {
     appearance: 'link',
     href: 'https://www.example.com',
@@ -88,7 +87,7 @@ export const Link: Story = {
 };
 
 export const Text: Story = {
-  render: Template.bind({}),
+  render: Template,
   args: {
     appearance: 'text',
     buttonText: 'Text button',
@@ -96,7 +95,7 @@ export const Text: Story = {
 };
 
 export const Loading: Story = {
-  render: Template.bind({}),
+  render: Template,
   args: {
     appearance: 'primary',
     loading: true,
