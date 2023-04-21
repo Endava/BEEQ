@@ -1,13 +1,12 @@
-import { ArgsTable, Canvas, Story } from '@storybook/addon-docs';
-import * as SpinnerStories from './bq-spinner.stories';
+import { ArgTypes, Stories, Title, Subtitle } from '@storybook/addon-docs';
 
-# Spinner
+<Title>Spinner</Title>
 
 The Spinner Component is a UI element used to indicate that an application is loading or processing data.
 Spinners are commonly used to provide feedback to the user when an action or request is being processed.
 This allows the user to know that the application is still working and that they should wait for the result.
 
-## Usage
+<Subtitle>Usage</Subtitle>
 
 - Use the Spinner component to indicate to the user that something is happening behind the scenes, such as a long-running process or data retrieval.
 - Use the Spinner component to indicate to the user that something is happening behind the scenes, such as a long-running process or data retrieval.
@@ -15,43 +14,14 @@ This allows the user to know that the application is still working and that they
 - Use the Spinner component sparingly and only when necessary. Overuse of the Spinner component can be distracting and frustrating to the user.
 - Use a clear and concise message to accompany the Spinner component, such as "Loading" or "Please wait".
 
-## 👍 When to use
+<Subtitle>👍 When to use</Subtitle>
 
 - When the user initiates an action that will take some time to complete.
 - When data is being retrieved or processed in the background.
 - When there is a delay in the application's response time.
 
-## 👎 When Not to Use the Spinner Component
+<Title>Properties</Title>
 
-- When the action being performed is quick and the user doesn't need feedback that something is happening.
-- When the action being performed is not critical and the user can wait without feedback.
+<ArgTypes of="bq-spinner" />
 
-## Variations
-
-### Large
-
-<Canvas>
-  <Story of={SpinnerStories.Large} />
-</Canvas>
-
-### Medium
-
-<Canvas>
-  <Story of={SpinnerStories.Medium} />
-</Canvas>
-
-### Small
-
-<Canvas>
-  <Story of={SpinnerStories.Small} />
-</Canvas>
-
-### Custom Icon
-
-<Canvas>
-  <Story of={SpinnerStories.CustomIcon} />
-</Canvas>
-
-## Properties
-
-<ArgsTable of="bq-spinner" />
+<Stories title="Usage examples" />

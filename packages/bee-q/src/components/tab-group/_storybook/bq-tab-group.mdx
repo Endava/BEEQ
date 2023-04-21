@@ -1,13 +1,12 @@
-import { ArgTypes, Canvas, Story } from '@storybook/addon-docs';
-import * as TabGroupStories from './bq-tab-group.stories';
+import { ArgTypes, Stories, Title, Subtitle } from '@storybook/addon-docs';
 
-# Tabs or Tab group
+<Title>Tabs or Tab Group</Title>
 
 The Tabs component is a user interface (UI) element that you can use to display content in multiple sections, allowing only one section to be visible at a time.
 Tabs are typically placed in a horizontal bar that displays clickable buttons with labels for each section.
 Tabs provide a clean and organized display of content, making it easier for users to navigate and understand the information presented.
 
-## Usage
+<Subtitle>Usage</Subtitle>
 
 - Use a clear and consistent visual hierarchy to indicate which sections are most important or relevant to the user.
 - Consider using icons or images in addition to text labels to make the purpose of each section more clear and visually appealing.
@@ -17,31 +16,17 @@ Tabs provide a clean and organized display of content, making it easier for user
 - Consider using animations or transitions to provide visual feedback when the user selects a new tab or section.
 - Test the Tabs component with real users to ensure that it is intuitive and meets their needs and expectations.
 
-## 👍 When to use
+<Subtitle>👍 When to use</Subtitle>
 
 - Use the Tabs component when you have a large amount of content that can be divided into distinct, related sections.
 - Use the Tabs component when you want to simplify the navigation of a complex interface, by dividing it into smaller, more manageable sections.
 
-## Variations
+<Title>Properties</Title>
 
-### Default
-
-<Canvas>
-  <Story of={TabGroupStories.Default} />
-</Canvas>
-
-### With Icons
-
-<Canvas>
-  <Story of={TabGroupStories.Icon} />
-</Canvas>
-
-## Properties
-
-### Tab group (`bq-tab-group`)
+<Subtitle>Tab group (`bq-tab-group`)</Subtitle>
 
 <ArgTypes of="bq-tab-group" />
 
-### Tab (`bq-tab`)
+<Subtitle>Tab (`bq-tab`)</Subtitle>
 
 <ArgTypes of="bq-tab" />

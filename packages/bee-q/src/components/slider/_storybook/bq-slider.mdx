@@ -1,12 +1,11 @@
-import { ArgTypes, Canvas, Story } from '@storybook/addon-docs';
-import * as SliderStories from './bq-slider.stories';
+import { ArgTypes, Stories, Title, Subtitle } from '@storybook/addon-docs';
 
-# Slider
+<Title>Slider</Title>
 
 The Slider component is a UI element that allows users to select a value from a range of values by sliding a thumb along a track.
 It is a widely used component in user interfaces and is commonly used to adjust settings, input numerical values, or filter content.
 
-## Usage
+<Subtitle>Usage</Subtitle>
 
 When designing a user interface, it is important to use Slider components in a way that is intuitive and enhances the user experience. Here are some best practices for using Slider components:
 
@@ -15,7 +14,7 @@ When designing a user interface, it is important to use Slider components in a w
 - Use a Slider when the range of values is small and easy to comprehend. Sliders are most effective when the range of values is small enough to be easily understood by the user.
 - Use a Slider when there is a need to provide visual feedback to the user. Sliders provide visual feedback that can be very helpful to users, especially when used in combination with other UI elements such as charts or graphs.
 
-## 👍 When to use
+<Subtitle>👍 When to use</Subtitle>
 
 Sliders are a versatile UI element that can be used in a variety of situations. Here are some situations where using a Slider is a good choice:
 
@@ -23,20 +22,8 @@ Sliders are a versatile UI element that can be used in a variety of situations. 
 - When the range of values is continuous and easy to comprehend. Sliders are best suited for continuous data ranges, rather than discrete values.
 - When there is a need to provide visual feedback to the user. Sliders provide visual feedback that can be very helpful to users, especially when used in combination with other UI elements such as charts or graphs.
 
-## Variations
-
-### Single
-
-<Canvas>
-  <Story of={SliderStories.Single} inline={true} />
-</Canvas>
-
-### Range
-
-<Canvas>
-  <Story of={SliderStories.Range} inline={true} />
-</Canvas>
-
-## Properties
+<Title>Properties</Title>
 
 <ArgTypes of="bq-slider" />
+
+<Stories title="Usage examples" />

@@ -7,9 +7,6 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 const meta: Meta = {
   title: 'Components/Tabs',
   component: 'bq-tab-group',
-  subcomponents: {
-    BqTab: 'bq-tab',
-  },
   parameters: {
     docs: {
       page: mdx,

@@ -1,12 +1,11 @@
-import { ArgTypes, Canvas, Story } from '@storybook/addon-docs';
-import * as BadgeStories from './bq-badge.stories';
+import { ArgTypes, Stories, Title, Subtitle } from '@storybook/addon-docs';
 
-# Badge
+<Title>Badge</Title>
 
 The Badge component is a visual indicator that can be added to various elements within a user interface.
 It is typically used to highlight important or relevant information, such as alerts, notifications, or statuses.
 
-## Usage
+<Subtitle>Usage</Subtitle>
 
 When using the Badge component, it is important to follow these user experience best practices:
 
@@ -16,7 +15,7 @@ When using the Badge component, it is important to follow these user experience 
 - **Avoid using too many colors:** While the Badge component can be colored to draw attention, it is important to avoid using too many colors. This can lead to a visually overwhelming user interface.
 - **Make it accessible:** Ensure that the Badge component is accessible to all users, including those with visual impairments. This can be achieved by using appropriate color contrast and providing alternative text descriptions.
 
-## 👍 When to use
+<Subtitle>👍 When to use</Subtitle>
 
 The Badge component can be used in a variety of situations, including:
 
@@ -24,26 +23,8 @@ The Badge component can be used in a variety of situations, including:
 - **Status indicators:** Use the Badge component to indicate the status of an item, such as whether it is new, in progress, or completed.
 - **Counters:** Use the Badge component to display a count of items, such as the number of unread messages or pending tasks.
 
-## Variations
-
-### Default
-
-<Canvas>
-  <Story of={BadgeStories.Default} />
-</Canvas>
-
-### Medium
-
-<Canvas>
-  <Story of={BadgeStories.Medium} />
-</Canvas>
-
-### Green
-
-<Canvas>
-  <Story of={BadgeStories.Green} />
-</Canvas>
-
-## Properties
+<Title>Properties</Title>
 
 <ArgTypes of="bq-badge" />
+
+<Stories title="Usage examples" />

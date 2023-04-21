@@ -1,12 +1,11 @@
-import { ArgTypes, Canvas, Story } from '@storybook/addon-docs';
-import * as CheckboxStories from './bq-checkbox.stories';
+import { ArgTypes, Stories, Title, Subtitle } from '@storybook/addon-docs';
 
-# Checkbox
+<Title>Checkbox</Title>
 
 The checkbox is a UI component that allows users to select one or more options from a list of choices.
 It is commonly used in forms, surveys, and settings pages.
 
-## Usage
+<Subtitle>Usage</Subtitle>
 
 When using checkboxes, it's important to keep in mind the following best practices:
 
@@ -18,7 +17,7 @@ When using checkboxes, it's important to keep in mind the following best practic
 
 By following these best practices, you can ensure that your checkboxes are effective and user-friendly.
 
-## 👍 When to use
+<Subtitle>👍 When to use</Subtitle>
 
 Checkboxes should be used when:
 
@@ -26,44 +25,8 @@ Checkboxes should be used when:
 - The options are independent of each other.
 - The user needs to see all the options at once.
 
-## Variations
-
-### Default
-
-<Canvas>
-  <Story of={CheckboxStories.Default} />
-</Canvas>
-
-### Background on hover enabled
-
-<Canvas>
-  <Story of={CheckboxStories.BackgroundOnHover} />
-</Canvas>
-
-### Long label
-
-<Canvas>
-  <Story of={CheckboxStories.LongLabel} />
-</Canvas>
-
-### Checked
-
-<Canvas>
-  <Story of={CheckboxStories.Checked} />
-</Canvas>
-
-### Disabled
-
-<Canvas>
-  <Story of={CheckboxStories.Disabled} />
-</Canvas>
-
-### Indeterminate
-
-<Canvas>
-  <Story of={CheckboxStories.Indeterminate} />
-</Canvas>
-
-## Properties
+<Title>Properties</Title>
 
 <ArgTypes of="bq-checkbox" />
+
+<Stories title="Usage examples" />

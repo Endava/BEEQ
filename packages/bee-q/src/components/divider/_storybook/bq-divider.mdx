@@ -1,12 +1,11 @@
-import { ArgTypes, Canvas, Story } from '@storybook/addon-docs';
-import * as DividerStories from './bq-divider.stories'
+import { ArgTypes, Stories, Title, Subtitle } from '@storybook/addon-docs';
 
-# Divider
+<Title>Divider</Title>
 
 A Divider is a UI component that visually separates or divides different sections or elements of a user interface.
 This can be helpful in creating a clear and organized layout, improving the overall readability of the interface.
 
-## Usage
+<Subtitle>Usage</Subtitle>
 
 - Use dividers consistently throughout the interface to maintain a clear and consistent look and feel.
 - Consider using different styles or colors for dividers to indicate different types of sections or elements.
@@ -15,63 +14,15 @@ This can be helpful in creating a clear and organized layout, improving the over
 - Avoid using dividers in a way that creates confusion, such as by separating elements that should be considered together.
 - Avoid using dividers in a way that blocks or hides other parts of the interface, reducing visibility and usability.
 
-## 👍 When to use
+<Subtitle>👍 When to use</Subtitle>
 
 - Use a divider component to visually separate or divide different sections or elements of a user interface.
 - Use a divider component to create clear boundaries between different sections or elements, such as between different sections of content or different groups of related items.
 - Use a divider component to group similar items, such as a list of related links or buttons.
 - Use a divider component to create a sense of hierarchy or order within the interface.
 
-## Variants
-
-### Default
-
-<Canvas>
-  <Story of={DividerStories.Default}/>
-</Canvas>
-
-### Horizontal
-
-<Canvas>
-  <Story of={DividerStories.Horizontal}/>
-</Canvas>
-
-### Vertical
-
-<Canvas>
-  <Story of={DividerStories.Vertical}/>
-</Canvas>
-
-### Dashed Line
-
-<Canvas>
-  <Story of={DividerStories.DashedLine} />
-</Canvas>
-
-### No Title
-
-<Canvas>
-  <Story of={DividerStories.NoTitle} />
-</Canvas>
-
-### Text start
-
-<Canvas>
-  <Story of={DividerStories.TextStart} />
-</Canvas>
-
-### Text end
-
-<Canvas>
-  <Story of={DividerStories.TextEnd} />
-</Canvas>
-
-### Text middle
-
-<Canvas>
-  <Story of={DividerStories.TextMiddle} />
-</Canvas>
-
-## Properties
+<Title>Properties</Title>
 
 <ArgTypes of="bq-divider" />
+
+<Stories title="Usage examples" />

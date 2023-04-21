@@ -1,12 +1,11 @@
-import { ArgTypes, Canvas, Story } from '@storybook/addon-docs';
-import * as AvataStories from './bq-avatar.stories';
+import { ArgTypes, Stories, Title, Subtitle } from '@storybook/addon-docs';
 
-# Avatar
+<Title>Avatar</Title>
 
 The Avatar component is a simple and customizable element that displays an image or initials in a circular or square shape.
 This component is useful for displaying user profile pictures or any other image that represents a person or an entity.
 
-## Usage
+<Subtitle>Usage</Subtitle>
 
 Here are some best practices to ensure a positive user experience with the Avatar component:
 
@@ -15,7 +14,7 @@ Here are some best practices to ensure a positive user experience with the Avata
 - **Ensure consistency:** Use the same avatar across all instances of the user or entity to ensure consistency and familiarity.
 - **Provide alternative text:** Always provide alternative text for the avatar for users who cannot see the image. This can be achieved by using the `alt` attribute.
 
-## 👍 When to use
+<Subtitle>👍 When to use</Subtitle>
 
 The Avatar component is commonly used in the following scenarios:
 
@@ -23,20 +22,8 @@ The Avatar component is commonly used in the following scenarios:
 - **Comment sections:** The Avatar is also commonly used in comment sections to display the picture of the user who made the comment.
 - **List views:** The Avatar can also be used in list views to provide a visual representation of the user or entity associated with an item in the list.
 
-## Variations
-
-### Image
-
-<Canvas>
-  <Story of={AvataStories.Image} />
-</Canvas>
-
-### Initials
-
-<Canvas>
-  <Story of={AvataStories.Initials} />
-</Canvas>
-
-## Properties
+<Title>Properties</Title>
 
 <ArgTypes of="bq-avatar" />
+
+<Stories title="Usage examples" />

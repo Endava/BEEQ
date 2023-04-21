@@ -1,18 +1,17 @@
-import { ArgTypes, Canvas, Story } from '@storybook/addon-docs';
-import * as StatusStories from './bq-status.stories';
+import { ArgTypes, Stories, Title, Subtitle } from '@storybook/addon-docs';
 
-# Status
+<Title>Status</Title>
 
 The Status Component is a UI element that communicates the status of an item, task, or process to the user.
 Statuses are commonly used to indicate the current state of an item, such as "completed" or "pending", or to provide updates on the progress of a task or process.
 
-## Usage
+<Subtitle>Usage</Subtitle>
 
 When using a Status Component, it's important to maintain clear and consistent language to describe the status of an item, task, or process across the entire application.
 This helps to avoid confusion or misunderstanding among users, as they will be able to easily understand the meaning of different statuses regardless of where they encounter them.
 By maintaining consistency, you can also establish a clear pattern for users to follow, which can help them to navigate and use your application more effectively.
 
-## 👍 When to use
+<Subtitle>👍 When to use</Subtitle>
 
 The Status Component is used for:
 
@@ -20,38 +19,8 @@ The Status Component is used for:
 - Providing updates and notifications about changes in the status of an item, task, or process, such as when a task has been completed or a process has been initiated.
 - Indicating the outcome of an action, such as whether a task was successful or failed.
 
-## Variations
-
-### Alert
-
-<Canvas>
-  <Story of={StatusStories.Alert} />
-</Canvas>
-
-### Danger
-
-<Canvas>
-  <Story of={StatusStories.Danger} />
-</Canvas>
-
-### Info
-
-<Canvas>
-  <Story of={StatusStories.Info} />
-</Canvas>
-
-### Neutral
-
-<Canvas>
-  <Story of={StatusStories.Neutral} />
-</Canvas>
-
-### Success
-
-<Canvas>
-  <Story of={StatusStories.Success} />
-</Canvas>
-
-## Properties
+<Title>Properties</Title>
 
 <ArgTypes of="bq-status" />
+
+<Stories title="Usage examples" />
