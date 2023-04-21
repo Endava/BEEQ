@@ -1,61 +1,27 @@
-import { ArgsTable, Canvas, Story } from '@storybook/addon-docs';
+import { ArgTypes, Stories, Subtitle, Title } from '@storybook/addon-docs';
+import * as TooltipStories from './bq-tooltip.stories';
 
-# Tooltip
+<Title>Tooltip</Title>
 
-Tooltip component allows users to display details on hover over an element
+A tooltip component is a user interface element that displays additional information about a particular element when the user hovers or clicks on it.
+It is usually displayed as a small pop-up box that appears near the element in question.
 
-## Placements
+<Subtitle>Best Practices</Subtitle>
 
-### Default
+To ensure that tooltips effectively provide additional information without hindering user experience, consider the following best practices:
 
-<Canvas>
-  <Story id="components-tooltip--default" />
-</Canvas>
+- Provide definitions for technical terms or jargon, especially in scientific or financial applications, to make complex information more accessible to users who may not be familiar with the terminology.
+- Display additional information about interactive elements, such as buttons, links, or other elements, to help users understand their purpose or function and how to interact with them effectively.
+- Present additional context or data about specific elements, such as charts, tables, or images, to help users better understand the content and make more informed decisions.
 
-### Bottom
+<Subtitle>👍 When to use</Subtitle>
 
-<Canvas>
-  <Story id="components-tooltip--bottom" />
-</Canvas>
+- When you want to provide additional information about an element without cluttering the UI.
+- When you want to provide context-specific help or guidance to the user.
+- When you want to clarify the meaning of a particular element.
 
-### Right
+<Subtitle>Properties</Subtitle>
 
-<Canvas>
-  <Story id="components-tooltip--right" />
-</Canvas>
+<ArgTypes of="bq-tooltip" />
 
-### Left
-
-<Canvas>
-  <Story id="components-tooltip--left" />
-</Canvas>
-
-## Customizations
-
-### No arrow
-
-<Canvas>
-  <Story id="components-tooltip--no-arrow" />
-</Canvas>
-
-### Same width
-
-<Canvas>
-  <Story id="components-tooltip--same-width" />
-</Canvas>
-
-### Long text
-
-<Canvas>
-  <Story id="components-tooltip--long-text" />
-</Canvas>
-
-### Display on click
-
-<Canvas>
-  <Story id="components-tooltip--display-on-click" />
-</Canvas>
-
-## Properties
-
-<ArgsTable of="bq-tooltip" />
+<Stories title="Usage examples" />
