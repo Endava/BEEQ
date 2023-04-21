@@ -12,8 +12,8 @@ export const parameters = {
   controls: { expanded: true, hideNoControlsWarning: true },
   docs: {
     story: {
-      inline: false,
-      iframeHeight: '250px',
+      inline: true,
+      height: '250px',
     },
   },
   html: {
