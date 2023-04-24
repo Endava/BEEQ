@@ -63,7 +63,7 @@
     "@nrwl/eslint-plugin-nx": "14.8.8",
     "@nrwl/jest": "14.8.8",
     "@nrwl/js": "14.8.8",
-    "@nrwl/nx-cloud": "^15.1.0",
+    "@nrwl/nx-cloud": "^16.0.1",
     "@nrwl/nx-plugin": "14.8.8",
     "@nrwl/react": "14.8.8",
     "@nrwl/storybook": "14.8.8",
