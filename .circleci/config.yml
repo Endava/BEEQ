@@ -1,0 +1,99 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine
+# See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+
+orbs:
+  nx: nrwl/nx@1.6.1
+
+# ---------------------------------------------------------------------------- #
+#              Sequence of steps as a map to be executed in a job              #
+# ---------------------------------------------------------------------------- #
+commands:
+  setup-node:
+    description: Install volta & ensure consistent node and npm versions are installed
+    steps:
+      - run:
+          name: 🛠 Setup Volta
+          command: |
+            curl https://get.volta.sh | bash
+            echo 'export VOLTA_HOME=$HOME/.volta' >> $BASH_ENV
+            echo 'export PATH=$VOLTA_HOME:$PATH' >> $BASH_ENV
+      - run:
+          name: ⚙️ Install node
+          command: volta install node
+  chromatic-deployment:
+    description: Publish changes to Chromatic storybook
+    steps:
+      - run:
+          name: 📚 Publish to Chromatic
+          command: |
+            npx chromatic --project-token=${CHROMATIC_PROJECT_TOKEN} -d dist/storybook/bee-q --untraced "package.json" --untraced "package-lock.json" --auto-accept-changes --ci --exit-once-uploaded --only-changed --zip
+
+# ---------------------------------------------------------------------------- #
+#                         Jobs are collections of steps                        #
+# ---------------------------------------------------------------------------- #
+jobs:
+  build-and-test:
+    # You can specify an image from Dockerhub or use one of our Convenience/Machine Images from CircleCI's Developer Hub.
+    # A list of available CircleCI Docker Machine Images are available here: https://circleci.com/developer/images?imageType=machine
+    machine:
+      image: ubuntu-2204:2023.02.1
+    environment:
+      NX_BRANCH: << pipeline.git.branch >>
+    # Then run your node commands!
+    # CircleCI will report the results back to your VCS provider.
+    steps:
+      # Checkout the code as the first step.
+      - checkout
+      - setup-node
+      - restore_cache:
+          name: 💫 Restore Cache dependencies
+          # CircleCI will first try to load a cache associated with the current version of package-lock.json.
+          # If the lock file has changed due to a dependency being added, then no cache will be found.
+          # Next, it will use the static fallback key node-deps-v1-{{ .Branch }}- to load the most recent valid cache
+          # with the node-deps-v1-{{ .Branch }}- prefix.
+          keys:
+            - node-deps-{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-{{checksum "package-lock.json"}}
+            - node-deps-{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-
+      - run:
+          name: 📦 Install dependencies
+          #  In this case, npm install will install only those dependencies that are not in the cache.
+          command: |
+            npm -v && node -v
+            npm i
+      - save_cache:
+          name: 💾 Save Cache dependencies
+          # After all of the project’s dependencies have been loaded,
+          # the save_cache step will save the updated dependency tree to a new cache in the node_modules directory.
+          key: node-deps-{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-{{checksum "package-lock.json"}}
+          paths:
+            - node_modules
+      - run:
+          name: 🗂️ Create `test-results` directory
+          # Use to store the test results
+          command: mkdir -p ./test-results
+      - nx/set-shas
+          # Derives SHAs for base and head for use in `nx affected` commands in CI
+      - run:
+          name: 🩺 Run Linters and Unit Tests
+          command: |
+            npx nx affected --target=test --base=$NX_BASE --head=$NX_HEAD --exclude=workspace --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
+      - run:
+          name: ⏳ Build
+          command: npm run build
+      - run:
+          name: 🧪 Run E2E Tests (only affected)
+          command: npx nx affected --target=e2e --base=$NX_BASE --head=$NX_HEAD --exclude=workspace --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
+      - store_test_results:
+          name: 📥 Store test results
+          # Special step used to upload and store test results for a build (when available)
+          path: test-results
+      - chromatic-deployment
+
+# ---------------------------------------------------------------------------- #
+#                         Used for orchastrate all jobs                        #
+# ---------------------------------------------------------------------------- #
+workflows:
+  ⏳ Build and Test:
+    jobs:
+      - build-and-test

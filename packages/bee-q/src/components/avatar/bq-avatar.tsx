@@ -118,7 +118,7 @@ export class BqAvatar {
       >
         {this.initials && (
           <span
-            class="absolute top-0 left-0 inline-flex h-full w-full items-center justify-center font-bold"
+            class="absolute left-0 top-0 inline-flex h-full w-full items-center justify-center font-bold"
             part="text"
           >
             {this.initials}
@@ -126,7 +126,7 @@ export class BqAvatar {
         )}
         {this.image && !this.hasError && (
           <img
-            class="absolute top-0 left-0 h-full w-full object-cover"
+            class="absolute left-0 top-0 h-full w-full object-cover"
             alt={!!this.altText ? this.altText : undefined}
             src={this.image}
             onError={this.onImageError}
