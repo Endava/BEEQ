@@ -123,7 +123,7 @@
     "nx": "14.8.6",
     "nx-stylelint": "14.0.2",
     "plop": "3.1.2",
-    "postcss": "8.4.22",
+    "postcss": "8.4.23",
     "postcss-import": "^15.1.0",
     "postcss-preset-env": "^8.3.2",
     "postcss-url": "10.1.3",
