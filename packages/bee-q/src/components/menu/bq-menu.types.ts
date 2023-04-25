@@ -1,4 +1,4 @@
-export const MENU_THEME = ['light', 'dark'] as const;
+export const MENU_THEME = ['light', 'brand', 'inverse'] as const;
 export type TMenuTheme = (typeof MENU_THEME)[number];
 
 export const MENU_SIZE = ['small', 'medium'] as const;

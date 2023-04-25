@@ -33,7 +33,7 @@
   }
 
   &__content {
-    @apply flex flex-col gap-2 overflow-y-auto overflow-x-hidden px-0 py-[6px];
+    @apply flex flex-col gap-2 overflow-y-auto overflow-x-hidden px-[3px] py-[6px];
   }
 
   &__footer {
@@ -87,11 +87,20 @@
   }
 }
 
-/** theme dark */
+/** theme brand */
 
-[data-theme='dark'] {
+[data-theme='brand'] {
   @apply bg-bg-brand;
+}
 
+/** theme inverse */
+
+[data-theme='inverse'] {
+  @apply bg-bg-inverse;
+}
+
+[data-theme='brand'],
+[data-theme='inverse'] {
   .bq-menu__header {
     @apply text-text-secondary-inverse;
   }

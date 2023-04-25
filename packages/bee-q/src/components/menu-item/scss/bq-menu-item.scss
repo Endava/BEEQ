@@ -9,7 +9,7 @@
 .bq-menu-item {
   @apply flex h-[inherit] w-[auto] cursor-not-allowed items-center justify-items-stretch pl-9;
   @apply rounded-s bg-transparent no-underline;
-  @apply focus-visible:focus active:outline-none;
+  @apply focus:focus focus-visible:focus active:outline-none;
 
   &__child {
     @apply flex items-center;
@@ -48,9 +48,10 @@
   }
 }
 
-/** theme dark */
+/** theme brand & inverse */
 
-[data-theme='dark'] {
+[data-theme='brand'],
+[data-theme='inverse'] {
   @apply text-text-secondary-inverse hover:text-text-primary;
 
   &.disabled {

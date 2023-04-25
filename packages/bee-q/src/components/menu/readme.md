@@ -11,11 +11,11 @@ A menu is like a widget that offers a list of choices to the user.
 
 ## Properties
 
-| Property      | Attribute     | Description                                | Type                  | Default    |
-| ------------- | ------------- | ------------------------------------------ | --------------------- | ---------- |
-| `collapsible` | `collapsible` | Show footer for collapsible menu (boolean) | `boolean`             | `true`     |
-| `size`        | `size`        | Set menu item size (small/medium)          | `"medium" \| "small"` | `'medium'` |
-| `theme`       | `theme`       | Set theme (light/dark)                     | `"dark" \| "light"`   | `'light'`  |
+| Property      | Attribute     | Description                                | Type                              | Default    |
+| ------------- | ------------- | ------------------------------------------ | --------------------------------- | ---------- |
+| `collapsible` | `collapsible` | Show footer for collapsible menu (boolean) | `boolean`                         | `true`     |
+| `size`        | `size`        | Set menu item size (small/medium)          | `"medium" \| "small"`             | `'medium'` |
+| `theme`       | `theme`       | Set theme (light/dark)                     | `"brand" \| "inverse" \| "light"` | `'light'`  |
 
 
 ## Events
