@@ -18,13 +18,4 @@ describe('bq-menu', () => {
 
     expect(element.shadowRoot).not.toBeNull();
   });
-
-  it('should display text', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-menu></bq-menu>');
-
-    const element = await page.find('bq-menu >>> p');
-
-    expect(element).toEqualText('This is a Menu');
-  });
 });
