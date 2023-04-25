@@ -74,7 +74,7 @@ export class BqMenu {
 
   componentDidLoad() {
     this.changeLayoutBqMenuItem();
-    this.setButtonAttribute();
+    this.setButtonAppereance();
     this.setSizeClass();
     this.activateMenuItemBasedOnURL();
   }
@@ -128,11 +128,21 @@ export class BqMenu {
    * set 'appearance' attr to button based on theme
    * @returns void
    */
-  private setButtonAttribute = (): void => {
+  private setButtonAppereance = (): void => {
     const button: HTMLElement = this.el.shadowRoot.querySelector('bq-button');
     if (!button) return;
 
-    this.theme === 'light' ? button.setAttribute('appearance', 'text') : button.setAttribute('appearance', 'primary');
+    button.shadowRoot.querySelector('button').style.background = 'transparent';
+
+    if (this.theme === 'brand') {
+      button.setAttribute('appearance', 'primary');
+    } else if (this.theme === 'inverse') {
+      // color of btn needs to be changed to fit the design
+      button.setAttribute('appearance', 'text');
+      button.shadowRoot.querySelector('button').style.color = 'white';
+    } else {
+      button.setAttribute('appearance', 'text');
+    }
   };
 
   /**
