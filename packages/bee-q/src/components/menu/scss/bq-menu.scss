@@ -24,16 +24,16 @@
     @apply mx-1.5 flex items-center justify-between gap-4;
 
     &.small {
-      @apply h-[var(--bq-menu-header--small-height)] w-auto py-[var(--bq-menu-header--small-paddingY)] pr-[var(--bq-menu-header--small-paddingR)] pl-[var(--bq-menu-header--small-paddingL)];
+      @apply h-[var(--bq-menu-header--small-height)] w-auto py-[var(--bq-menu-header--small-paddingY)] pl-[var(--bq-menu-header--small-paddingL)] pr-[var(--bq-menu-header--small-paddingR)];
     }
 
     &.medium {
-      @apply h-[var(--bq-menu-header--medium-height)] w-auto py-[var(--bq-menu-header--medium-paddingY)] pr-[var(--bq-menu-header--medium-paddingR)] pl-[var(--bq-menu-header--medium-paddingL)];
+      @apply h-[var(--bq-menu-header--medium-height)] w-auto py-[var(--bq-menu-header--medium-paddingY)] pl-[var(--bq-menu-header--medium-paddingL)] pr-[var(--bq-menu-header--medium-paddingR)];
     }
   }
 
   &__content {
-    @apply flex flex-col gap-2 overflow-y-auto overflow-x-hidden py-[6px] px-0;
+    @apply flex flex-col gap-2 overflow-y-auto overflow-x-hidden px-0 py-[6px];
   }
 
   &__footer {
@@ -80,7 +80,7 @@
 /** theme light */
 
 [data-theme='light'] {
-  @apply bg-[var(--bq-menu--bg-color)];
+  @apply bg-ui-secondary-light;
 
   .bq-menu__header {
     @apply text-text-brand;

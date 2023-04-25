@@ -7,63 +7,59 @@
 // Appearance
 
 .bq-menu-item {
-  @apply flex h-[inherit] w-[auto] cursor-pointer items-center justify-items-stretch pl-9;
-  @apply rounded-s bg-transparent no-underline hover:bg-[var(--bq-menu-item--hover)] active:bg-[var(--bq-menu-item--active)];
+  @apply flex h-[inherit] w-[auto] cursor-not-allowed items-center justify-items-stretch pl-9;
+  @apply rounded-s bg-transparent no-underline;
   @apply focus-visible:focus active:outline-none;
 
   &__child {
-    @apply flex items-center group-active:text-text-brand;
+    @apply flex items-center;
   }
 
   &.bq-collapsed {
     &.small {
-      @apply py-[6px] px-[8px];
+      @apply px-[var(--bq-menu-item--small-collapsedX)] py-[var(--bq-menu-item--small-collapsedY)];
     }
 
     &.medium {
-      @apply py-[8px] px-[16px];
+      @apply px-[var(--bq-menu-item--medium-collapsedX)] py-[var(--bq-menu-item--medium-collapsedY)];
     }
   }
 
   &.disabled {
-    @apply pointer-events-none focus:ring-0;
+    @apply focus:ring-0;
+  }
+
+  &:not(.disabled) {
+    @apply cursor-pointer hover:bg-ui-secondary-hover active:bg-indigo-100 group-active:text-text-brand;
   }
 }
 
 /** theme light */
 
 [data-theme='light'] {
-  .bq-menu-item {
-    @apply text-text-primary;
+  @apply text-text-primary;
 
-    &.disabled {
-      @apply text-text-primary-disabled;
-    }
+  &.disabled {
+    @apply text-text-primary-disabled;
+  }
 
-    &.active {
-      @apply bg-[var(--bq-menu-item--active)] text-text-brand;
-    }
+  &.active {
+    @apply bg-indigo-100 text-text-brand;
   }
 }
 
 /** theme dark */
 
 [data-theme='dark'] {
-  .bq-menu-item {
-    @apply text-text-secondary-inverse hover:text-text-primary;
+  @apply text-text-secondary-inverse hover:text-text-primary;
 
-    &.disabled {
-      @apply text-text-secondary-disabled;
-    }
-
-    &.active {
-      @apply bg-[var(--bq-menu-item--active)] text-text-brand;
-    }
+  &.disabled {
+    @apply text-text-secondary-disabled;
   }
-}
 
-.wrapper {
-  @apply mx-1.5 h-fit cursor-not-allowed;
+  &.active {
+    @apply bg-indigo-100 text-text-brand;
+  }
 }
 
 .has-prefix {
