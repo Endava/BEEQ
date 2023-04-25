@@ -106,7 +106,7 @@ export class BqMenuItem {
   @Method()
   async addSizeClassAndTheme(size: TMenuSize, theme: TMenuTheme) {
     this.el.shadowRoot.querySelector<HTMLElement>('.bq-menu-item').classList.add(size);
-    this.el.shadowRoot.querySelector<HTMLElement>('.wrapper').setAttribute('data-theme', theme);
+    this.el.shadowRoot.querySelector<HTMLElement>('.bq-menu-item').setAttribute('data-theme', theme);
   }
 
   // Local methods
@@ -114,11 +114,23 @@ export class BqMenuItem {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private onBlur = () => {
+  private onBlur = (event: Event) => {
+    if (this.disabled) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+
     this.bqMenuItemBlur.emit(this.el);
   };
 
-  private onFocus = () => {
+  private onFocus = (event: Event) => {
+    if (this.disabled) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+
     this.bqMenuItemFocus.emit(this.el);
   };
 
@@ -145,50 +157,46 @@ export class BqMenuItem {
   // ===================================
 
   render() {
-    /** wrapper element needed to show cursor not allowed on item disable */
-    const WrapperElem = 'section';
     return (
-      <WrapperElem class="wrapper">
-        <a
+      <a
+        class={{
+          'bq-menu-item': true,
+          'bq-collapsed': this.collapsed,
+          group: true,
+          disabled: this.disabled,
+          active: this.active,
+        }}
+        tabindex={this.disabled ? '-1' : '0'}
+        role="menuitem"
+        aria-disabled={JSON.stringify(this.disabled)}
+        href={this.href}
+        target="_self"
+        rel="noreferrer noopener"
+        part="item"
+        onBlur={this.onBlur}
+        onFocus={this.onFocus}
+        onClick={this.onClick}
+        onKeyDown={this.onKeyDown}
+      >
+        <span class="bq-menu-item__child" ref={(elem) => (this.prefixElem = elem)} part="prefix">
+          <slot name="prefix" onSlotchange={this.onSlotChange} />
+        </span>
+
+        <span
           class={{
-            'bq-menu-item': true,
-            'bq-collapsed': this.collapsed,
-            group: true,
-            disabled: this.disabled,
-            active: this.active,
+            'bq-menu-item__child': true,
+            label: true,
+            'has-prefix': this.hasPrefix,
           }}
-          tabindex={this.disabled ? '-1' : '0'}
-          role="menuitem"
-          aria-disabled={JSON.stringify(this.disabled)}
-          href={this.href}
-          target="_self"
-          rel="noreferrer noopener"
-          part="item"
-          onBlur={this.onBlur}
-          onFocus={this.onFocus}
-          onClick={this.onClick}
-          onKeyDown={this.onKeyDown}
+          part="label"
         >
-          <span class="bq-menu-item__child" ref={(elem) => (this.prefixElem = elem)} part="prefix">
-            <slot name="prefix" onSlotchange={this.onSlotChange} />
-          </span>
+          <slot />
+        </span>
 
-          <span
-            class={{
-              'bq-menu-item__child': true,
-              label: true,
-              'has-prefix': this.hasPrefix,
-            }}
-            part="label"
-          >
-            <slot />
-          </span>
-
-          <span class="bq-menu-item__child suffix" part="suffix">
-            <slot name="suffix" />
-          </span>
-        </a>
-      </WrapperElem>
+        <span class="bq-menu-item__child suffix" part="suffix">
+          <slot name="suffix" />
+        </span>
+      </a>
     );
   }
 }
