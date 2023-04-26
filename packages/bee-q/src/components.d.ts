@@ -995,11 +995,11 @@ declare namespace LocalJSX {
          */
         "onBqMenuItemBlur"?: (event: BqMenuItemCustomEvent<HTMLBqMenuItemElement>) => void;
         /**
-          * Handler to be called when item gets focus
+          * Handler to be called when the item is clicked
          */
         "onBqMenuItemClick"?: (event: BqMenuItemCustomEvent<HTMLBqMenuItemElement>) => void;
         /**
-          * Handler to be called when the item is clicked
+          * Handler to be called when the item gets focus
          */
         "onBqMenuItemFocus"?: (event: BqMenuItemCustomEvent<HTMLBqMenuItemElement>) => void;
         /**
