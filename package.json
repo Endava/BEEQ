@@ -80,7 +80,6 @@
     "@storybook/addon-docs": "7.0.5",
     "@storybook/addon-essentials": "7.0.5",
     "@storybook/addon-links": "7.0.5",
-    "@storybook/addon-mdx-gfm": "^7.0.5",
     "@storybook/mdx2-csf": "1.0.0",
     "@storybook/web-components": "7.0.5",
     "@storybook/web-components-webpack5": "7.0.5",

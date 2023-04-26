@@ -19,12 +19,7 @@ const config: StorybookConfig = {
     storyStoreV7: true,
   },
   stories: [...rootMain.stories, '../src/**/*.stories.@(mdx|ts|tsx)'],
-  addons: [
-    ...(rootMain.addons || []),
-    '@whitespace/storybook-addon-html',
-    '@storybook/addon-a11y',
-    '@storybook/addon-mdx-gfm',
-  ],
+  addons: [...(rootMain.addons || []), '@whitespace/storybook-addon-html', '@storybook/addon-a11y'],
   staticDirs: [
     { from: '../../../dist/bee-q/www/assets', to: '/assets' },
     { from: '../../../dist/bee-q/www/scripts', to: '/scripts' },
