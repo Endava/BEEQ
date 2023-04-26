@@ -1,9 +1,10 @@
 import { html } from 'lit-html';
-
-import { DIVIDER_TITLE_ALIGNMENT, DIVIDER_ORIENTATION, DIVIDER_STROKE_LINECAP } from '../bq-divider.types';
+import { DIVIDER_ORIENTATION, DIVIDER_STROKE_LINECAP, DIVIDER_TITLE_ALIGNMENT } from '../bq-divider.types';
 import mdx from './bq-divider.mdx';
 
-export default {
+import type { Args, Meta, StoryObj } from '@storybook/web-components';
+
+const meta: Meta = {
   title: 'Components/Divider',
   component: 'bq-divider',
   parameters: {
@@ -37,8 +38,11 @@ export default {
     'stroke-linecap': 'butt',
   },
 };
+export default meta;
 
-const Template = (args) => html`
+type Story = StoryObj;
+
+const Template = (args: Args) => html`
   <style>
     .container {
       /* width: 40%; */
@@ -62,42 +66,58 @@ const Template = (args) => html`
   </div>
 `;
 
-export const Default = (args) => Template(args);
-Default.args = {
-  'title-text': 'Default divider',
+export const Default: Story = {
+  render: Template,
+  args: {
+    'title-text': 'Default divider',
+  },
 };
 
-export const Horizontal = (args) => Template(args);
-Horizontal.args = {
-  'title-text': 'Horizontal divider',
+export const Horizontal: Story = {
+  render: Template,
+  args: {
+    'title-text': 'Horizontal divider',
+  },
 };
 
-export const Vertical = (args) => Template(args);
-Vertical.args = {
-  orientation: 'vertical',
-  'title-text': 'Vertical divider',
+export const Vertical: Story = {
+  render: Template,
+  args: {
+    orientation: 'vertical',
+    'title-text': 'Vertical divider',
+  },
 };
 
-export const DashedLine = (args) => Template(args);
-DashedLine.args = {
-  dashed: true,
+export const DashedLine: Story = {
+  render: Template,
+  args: {
+    dashed: true,
+  },
 };
 
-export const NoTitle = (args) => Template(args);
-
-export const TextStart = (args) => Template(args);
-TextStart.args = {
-  'title-alignment': 'start',
-  'title-text': 'Text Start',
+export const NoTitle: Story = {
+  render: Template,
 };
 
-export const TextEnd = (args) => Template(args);
-TextEnd.args = {
-  'title-alignment': 'end',
-  'title-text': 'Text End',
+export const TextStart: Story = {
+  render: Template,
+  args: {
+    'title-alignment': 'start',
+    'title-text': 'Text Start',
+  },
 };
 
-export const TextMiddle = (args) => Template(args);
-TextMiddle.args = {
-  'title-text': 'Text Middle',
+export const TextEnd: Story = {
+  render: Template,
+  args: {
+    'title-alignment': 'end',
+    'title-text': 'Text End',
+  },
+};
+
+export const TextMiddle: Story = {
+  render: Template,
+  args: {
+    'title-text': 'Text Middle',
+  },
 };

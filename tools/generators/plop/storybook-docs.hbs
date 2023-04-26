@@ -1,15 +1,13 @@
-import { ArgsTable, Canvas, Story } from '@storybook/addon-docs';
+import { ArgTypes, Stories, Title, Subtitle } from '@storybook/addon-docs';
 
-# {{sentenceCase name}}
+<Title>{{sentenceCase name}}</Title>
 
-## Variations
+<Subtitle>Usage</Subtitle>
 
-### Default
+<Subtitle>👍 When to use</Subtitle>
 
-<Canvas>
-  <Story id="components-{{kebabCase name}}--default" />
-</Canvas>
+<Title>Properties</Title>
 
-## Properties
+<ArgTypes of="bq-{{kebabCase name}}" />
 
-<ArgsTable of="bq-{{kebabCase name}}" />
+<Stories title="Usage examples" />

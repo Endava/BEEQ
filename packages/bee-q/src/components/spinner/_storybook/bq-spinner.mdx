@@ -1,33 +1,27 @@
-import { ArgsTable, Canvas, Story } from '@storybook/addon-docs';
+import { ArgTypes, Stories, Title, Subtitle } from '@storybook/addon-docs';
 
-# Spinner component is used to display data loading to the user
+<Title>Spinner</Title>
 
-## Variations
+The Spinner Component is a UI element used to indicate that an application is loading or processing data.
+Spinners are commonly used to provide feedback to the user when an action or request is being processed.
+This allows the user to know that the application is still working and that they should wait for the result.
 
-### Large
+<Subtitle>Usage</Subtitle>
 
-<Canvas>
-  <Story id="components-spinner--large" />
-</Canvas>
+- Use the Spinner component to indicate to the user that something is happening behind the scenes, such as a long-running process or data retrieval.
+- Use the Spinner component to indicate to the user that something is happening behind the scenes, such as a long-running process or data retrieval.
+- Use the Spinner component when the user has initiated an action that will take some time to complete, such as submitting a form or retrieving large amounts of data.
+- Use the Spinner component sparingly and only when necessary. Overuse of the Spinner component can be distracting and frustrating to the user.
+- Use a clear and concise message to accompany the Spinner component, such as "Loading" or "Please wait".
 
-### Medium
+<Subtitle>👍 When to use</Subtitle>
 
-<Canvas>
-  <Story id="components-spinner--medium" />
-</Canvas>
+- When the user initiates an action that will take some time to complete.
+- When data is being retrieved or processed in the background.
+- When there is a delay in the application's response time.
 
-### Small
+<Title>Properties</Title>
 
-<Canvas>
-  <Story id="components-spinner--small" />
-</Canvas>
+<ArgTypes of="bq-spinner" />
 
-### Custom Icon
-
-<Canvas>
-  <Story id="components-spinner--custom-icon" />
-</Canvas>
-
-## Properties
-
-<ArgsTable of="bq-spinner" />
+<Stories title="Usage examples" />
