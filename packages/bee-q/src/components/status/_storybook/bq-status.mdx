@@ -1,37 +1,26 @@
-import { ArgsTable, Canvas, Story } from '@storybook/addon-docs';
+import { ArgTypes, Stories, Title, Subtitle } from '@storybook/addon-docs';
 
-# Status
+<Title>Status</Title>
 
-Status component allows users to be correctly informed about a state, whether something new happened, their action is required or just an informative message.
+The Status Component is a UI element that communicates the status of an item, task, or process to the user.
+Statuses are commonly used to indicate the current state of an item, such as "completed" or "pending", or to provide updates on the progress of a task or process.
 
-## Variations
+<Subtitle>Usage</Subtitle>
 
-### Neutral
+When using a Status Component, it's important to maintain clear and consistent language to describe the status of an item, task, or process across the entire application.
+This helps to avoid confusion or misunderstanding among users, as they will be able to easily understand the meaning of different statuses regardless of where they encounter them.
+By maintaining consistency, you can also establish a clear pattern for users to follow, which can help them to navigate and use your application more effectively.
 
-<Canvas>
-  <Story id="components-status--neutral" />
-</Canvas>
+<Subtitle>👍 When to use</Subtitle>
 
-<Canvas>
-  <Story id="components-status--success" />
-</Canvas>
+The Status Component is used for:
 
-<Canvas>
-  <Story id="components-status--danger" />
-</Canvas>
+- Communicating the status of an item, task, or process, such as indicating whether a task is complete or pending, or the progress of a task or process.
+- Providing updates and notifications about changes in the status of an item, task, or process, such as when a task has been completed or a process has been initiated.
+- Indicating the outcome of an action, such as whether a task was successful or failed.
 
-<Canvas>
-  <Story id="components-status--info" />
-</Canvas>
+<Title>Properties</Title>
 
-<Canvas>
-  <Story id="components-status--guide" />
-</Canvas>
+<ArgTypes of="bq-status" />
 
-<Canvas>
-  <Story id="components-status--alert" />
-</Canvas>
-
-## Properties
-
-<ArgsTable of="bq-status" />
+<Stories title="Usage examples" />

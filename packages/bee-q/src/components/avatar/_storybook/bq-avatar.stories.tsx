@@ -1,7 +1,9 @@
 import { html } from 'lit-html';
 import mdx from './bq-avatar.mdx';
 
-export default {
+import type { Args, Meta, StoryObj } from '@storybook/web-components';
+
+const meta: Meta = {
   title: 'Components/Avatar',
   component: 'bq-avatar',
   parameters: {
@@ -23,8 +25,11 @@ export default {
     size: 'medium',
   },
 };
+export default meta;
 
-const Template = (args) => html`
+type Story = StoryObj;
+
+const Template = (args: Args) => html`
   <bq-avatar
     alt-text=${args['alt-text']}
     image=${args.image}
@@ -35,14 +40,18 @@ const Template = (args) => html`
   ></bq-avatar>
 `;
 
-export const Image = Template.bind({});
-Image.args = {
-  'alt-text': 'User profile',
-  image:
-    'https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80',
+export const Image: Story = {
+  render: Template,
+  args: {
+    'alt-text': 'User profile',
+    image:
+      'https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80',
+  },
 };
 
-export const Initials = Template.bind({});
-Initials.args = {
-  initials: 'JS',
+export const Initials: Story = {
+  render: Template,
+  args: {
+    initials: 'JS',
+  },
 };

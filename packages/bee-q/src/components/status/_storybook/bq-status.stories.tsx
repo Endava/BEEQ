@@ -1,8 +1,10 @@
 import { html } from 'lit-html';
-import mdx from './bq-status.mdx';
 import { STATUS_TYPE } from '../bq-status.types';
+import mdx from './bq-status.mdx';
 
-export default {
+import type { Args, Meta, StoryObj } from '@storybook/web-components';
+
+const meta: Meta = {
   title: 'Components/Status',
   component: 'bq-status',
   parameters: {
@@ -13,40 +15,53 @@ export default {
   argTypes: {
     type: { control: 'select', options: [...STATUS_TYPE] },
     // This control is not part of the component
-    label: { control: 'text' },
+    label: { control: 'text', table: { disable: true } },
   },
   args: {
     type: 'neutral',
   },
 };
+export default meta;
 
-const Template = (args) => html`<bq-status type=${args.type}>${args.label}</bq-status> `;
+type Story = StoryObj;
 
-export const Neutral = (args) => Template(args);
-Neutral.args = {
-  label: 'Neutral status',
+const Template = (args: Args) => html` <bq-status type=${args.type}>${args.label}</bq-status> `;
+
+export const Alert: Story = {
+  render: Template,
+  args: {
+    label: 'Alert status',
+    type: 'alert',
+  },
 };
 
-export const Success = (args) => Template(args);
-Success.args = {
-  label: 'Success status',
-  type: 'success',
+export const Danger: Story = {
+  render: Template,
+  args: {
+    label: 'Danger status',
+    type: 'danger',
+  },
 };
 
-export const Danger = (args) => Template(args);
-Danger.args = {
-  label: 'Danger status',
-  type: 'danger',
+export const Info: Story = {
+  render: Template,
+  args: {
+    label: 'Information status',
+    type: 'info',
+  },
 };
 
-export const Info = (args) => Template(args);
-Info.args = {
-  label: 'Information status',
-  type: 'info',
+export const Neutral: Story = {
+  render: Template,
+  args: {
+    label: 'Neutral status',
+  },
 };
 
-export const Alert = (args) => Template(args);
-Alert.args = {
-  label: 'Alert status',
-  type: 'alert',
+export const Success: Story = {
+  render: Template,
+  args: {
+    label: 'Success status',
+    type: 'success',
+  },
 };
