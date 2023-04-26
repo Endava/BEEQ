@@ -57,10 +57,10 @@ export class BqMenuItem {
   /** Handler to be called when the item loses focus */
   @Event() bqMenuItemBlur: EventEmitter<HTMLBqMenuItemElement>;
 
-  /** Handler to be called when the item is clicked */
+  /** Handler to be called when the item gets focus */
   @Event() bqMenuItemFocus: EventEmitter<HTMLBqMenuItemElement>;
 
-  /** Handler to be called when item gets focus */
+  /** Handler to be called when the item is clicked */
   @Event() bqMenuItemClick: EventEmitter<HTMLBqMenuItemElement>;
 
   /** Handler to be called on enter key press */
