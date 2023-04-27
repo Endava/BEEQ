@@ -33,7 +33,8 @@ The menu item is used inside a `bq-menu` component
 
 ### `addSizeClassAndTheme(size: TMenuSize, theme: TMenuTheme) => Promise<void>`
 
-on Menu component componentDidLoad() hook, add size class and theme
+called from Menu component on componentDidLoad() hook
+add size class and theme
 
 #### Returns
 
@@ -43,7 +44,7 @@ Type: `Promise<void>`
 
 ### `hidePartsFromMenuItems() => Promise<void>`
 
-called from menu component on collapse
+called from Menu component on collapse
 
 #### Returns
 

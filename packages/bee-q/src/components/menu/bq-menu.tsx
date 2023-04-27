@@ -1,7 +1,7 @@
-import { h, Component, Prop, Element, State, Listen, Event, EventEmitter } from '@stencil/core';
+import { h, Component, Prop, Element, State, Listen, Event, EventEmitter, Watch } from '@stencil/core';
 import { isHTMLElement } from '../../shared/utils';
 
-import { TMenuTheme, TMenuSize } from './bq-menu.types';
+import { MENU_SIZE, TMenuTheme, TMenuSize } from './bq-menu.types';
 
 enum FooterIconName {
   Expand = 'arrow-line-left',
@@ -47,13 +47,44 @@ export class BqMenu {
   @Prop({ reflect: true }) size: TMenuSize = 'medium';
 
   /** Show footer for collapsible menu (boolean) */
-  @Prop() collapsible = true;
+  @Prop({ reflect: true }) collapsible = true;
 
   /** Set theme (light/dark) */
   @Prop({ reflect: true }) theme: TMenuTheme = 'light';
 
   // Prop lifecycle events
   // =======================
+
+  @Watch('size')
+  onSizeChange() {
+    this.removePreviousSizeFromMenu();
+    this.setSizeClass();
+  }
+
+  @Watch('theme')
+  onThemeChange() {
+    this.setButtonAppereance();
+  }
+
+  @Watch('collapsible')
+  expandMenuWhenFalse() {
+    const isMenuCollapsed: boolean = this.asideElement.classList.contains('bq-collapse');
+
+    if (this.collapsible) {
+      // setTimeout to wait fot the button element to render
+      setTimeout(() => {
+        this.setButtonAppereance();
+      }, 10);
+    }
+
+    if (!this.collapsible && isMenuCollapsed) this.toggleMenu();
+  }
+
+  @Watch('size')
+  @Watch('theme')
+  onSizeThemeChange() {
+    this.changeLayoutBqMenuItem();
+  }
 
   // Events section
   // Requires JSDocs for public API documentation
@@ -133,24 +164,22 @@ export class BqMenu {
     if (!button) return;
 
     button.shadowRoot.querySelector('button').style.background = 'transparent';
-
-    if (this.theme === 'brand') {
-      button.setAttribute('appearance', 'primary');
-    } else if (this.theme === 'inverse') {
-      // color of btn needs to be changed to fit the design
-      button.setAttribute('appearance', 'text');
-      button.shadowRoot.querySelector('button').style.color = 'white';
-    } else {
-      button.setAttribute('appearance', 'text');
-    }
+    this.theme === 'light' ? button.setAttribute('appearance', 'text') : button.setAttribute('appearance', 'primary');
   };
 
   /**
-   * set class based on prop size
+   * add size class to menu element
    */
   private setSizeClass = (): void => {
     this.asideElement.classList.add(this.size);
     this.asideElement.querySelector('[part="header"]').classList.add(this.size);
+  };
+
+  private removePreviousSizeFromMenu = (): void => {
+    MENU_SIZE.forEach((size: TMenuSize) => {
+      this.asideElement.classList.remove(size);
+      this.asideElement.querySelector('[part="header"]').classList.remove(size);
+    });
   };
 
   private activateMenuItemBasedOnURL = (): void => {

@@ -247,7 +247,7 @@ export namespace Components {
          */
         "active": boolean;
         /**
-          * on Menu component componentDidLoad() hook, add size class and theme
+          * called from Menu component on componentDidLoad() hook add size class and theme
          */
         "addSizeClassAndTheme": (size: TMenuSize, theme: TMenuTheme) => Promise<void>;
         /**
@@ -259,7 +259,7 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * called from menu component on collapse
+          * called from Menu component on collapse
          */
         "hidePartsFromMenuItems": () => Promise<void>;
         /**
