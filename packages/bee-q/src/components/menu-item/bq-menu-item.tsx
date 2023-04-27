@@ -1,7 +1,7 @@
 import { h, Component, Prop, State, EventEmitter, Event, Element, Method } from '@stencil/core';
 
 import { hasSlotContent } from '../../shared/utils';
-import { TMenuSize, TMenuTheme } from '../menu/bq-menu.types';
+import { MENU_SIZE, TMenuSize, TMenuTheme } from '../menu/bq-menu.types';
 
 /**
  * The menu item is used inside a `bq-menu` component
@@ -81,7 +81,7 @@ export class BqMenuItem {
   // ===============================================
 
   /**
-   * called from menu component on collapse
+   * called from Menu component on collapse
    */
   @Method()
   async hidePartsFromMenuItems() {
@@ -101,10 +101,12 @@ export class BqMenuItem {
   }
 
   /**
-   * on Menu component componentDidLoad() hook, add size class and theme
+   * called from Menu component on componentDidLoad() hook
+   * add size class and theme
    */
   @Method()
   async addSizeClassAndTheme(size: TMenuSize, theme: TMenuTheme) {
+    this.removeSizeClassFromItem(); // first remove previous size class
     this.el.shadowRoot.querySelector<HTMLElement>('.bq-menu-item').classList.add(size);
     this.el.shadowRoot.querySelector<HTMLElement>('.bq-menu-item').setAttribute('data-theme', theme);
   }
@@ -150,6 +152,12 @@ export class BqMenuItem {
 
   private onSlotChange = () => {
     this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
+  };
+
+  private removeSizeClassFromItem = (): void => {
+    MENU_SIZE.forEach((size: TMenuSize) =>
+      this.el.shadowRoot.querySelector<HTMLElement>('.bq-menu-item').classList.remove(size),
+    );
   };
 
   // render() function

@@ -43,7 +43,7 @@ const Template = (args) => {
     <h1 slot="header-suffix">Bee-Q</h1>
 
     <!-- content -->
-    <bq-menu-item>
+    <bq-menu-item active="true">
       <bq-icon size="18" name="user" slot="prefix"></bq-icon>
       <span>Verified users</span>
       <bq-icon size="18" name="check" color="#34eb52" slot="suffix"></bq-icon>
@@ -69,9 +69,14 @@ Light.args = {
   theme: 'light',
 };
 
-export const Dark = (args) => Template(args);
-Dark.args = {
-  theme: 'dark',
+export const Brand = (args) => Template(args);
+Brand.args = {
+  theme: 'brand',
+};
+
+export const Inverse = (args) => Template(args);
+Inverse.args = {
+  theme: 'inverse',
 };
 
 export const Small = (args) => Template(args);
