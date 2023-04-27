@@ -1,5 +1,5 @@
-import addons from '@storybook/addons';
-import { create } from '@storybook/theming/create';
+import { addons } from '@storybook/manager-api';
+import { create } from '@storybook/theming';
 
 const theme = create({
   base: 'light',
@@ -8,6 +8,7 @@ const theme = create({
   colorSecondary: '#4F46E5',
 
   // BRAND
+  brandTarget: '_self',
   brandTitle: 'Bee-Q Design System',
   brandImage: './assets/bee-q_logo.svg',
 

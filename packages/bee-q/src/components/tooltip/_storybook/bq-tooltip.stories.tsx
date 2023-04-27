@@ -1,8 +1,10 @@
 import { html } from 'lit-html';
-import mdx from './bq-tooltip.mdx';
 import { TOOLTIP_PLACEMENT } from '../bq-tooltip.types';
+import mdx from './bq-tooltip.mdx';
 
-export default {
+import type { Args, Meta, StoryObj } from '@storybook/web-components';
+
+const meta: Meta = {
   title: 'Components/Tooltip',
   component: 'bq-tooltip',
   parameters: {
@@ -19,7 +21,7 @@ export default {
     'same-width': { control: 'boolean' },
     visible: { control: 'boolean' },
     // This control is not part of the component
-    text: { control: 'text' },
+    text: { control: 'text', table: { disable: true } },
   },
   args: {
     distance: 10,
@@ -30,8 +32,11 @@ export default {
     'same-width': false,
   },
 };
+export default meta;
 
-const Template = (args) => html`
+type Story = StoryObj;
+
+const Template = (args: Args) => html`
   <bq-tooltip
     distance=${args.distance}
     display-on=${args['display-on']}
@@ -45,71 +50,95 @@ const Template = (args) => html`
   </bq-tooltip>
 `;
 
-export const Default = Template.bind({});
-Default.args = {
-  text: "Yuhu! I'm a tooltip 🙃",
-  visible: true,
+export const Default: Story = {
+  render: Template,
+
+  args: {
+    text: "Yuhu! I'm a tooltip 🙃",
+    visible: true,
+  },
 };
 
-export const Bottom = Template.bind({});
-Bottom.args = {
-  text: "Yuhu! I'm a tooltip 🙃",
-  placement: 'bottom',
-  visible: true,
+export const Bottom: Story = {
+  render: Template,
+
+  args: {
+    text: "Yuhu! I'm a tooltip 🙃",
+    placement: 'bottom',
+    visible: true,
+  },
 };
 
-export const Right = Template.bind({});
-Right.args = {
-  text: "Yuhu! I'm a tooltip 🙃",
-  placement: 'right',
-  visible: true,
+export const Right: Story = {
+  render: Template,
+
+  args: {
+    text: "Yuhu! I'm a tooltip 🙃",
+    placement: 'right',
+    visible: true,
+  },
 };
 
-export const Left = Template.bind({});
-Left.args = {
-  text: "Yuhu! I'm a tooltip 🙃",
-  placement: 'left',
-  visible: true,
+export const Left: Story = {
+  render: Template,
+
+  args: {
+    text: "Yuhu! I'm a tooltip 🙃",
+    placement: 'left',
+    visible: true,
+  },
 };
 
-export const NoArrow = Template.bind({});
-NoArrow.args = {
-  text: "Yuhu! I'm a tooltip 🙃",
-  'hide-arrow': true,
-  visible: true,
+export const NoArrow: Story = {
+  render: Template,
+
+  args: {
+    text: "Yuhu! I'm a tooltip 🙃",
+    'hide-arrow': true,
+    visible: true,
+  },
 };
 
-export const SameWidth = Template.bind({});
-SameWidth.args = {
-  text: 'Tooltip',
-  'same-width': true,
-  visible: true,
+export const SameWidth: Story = {
+  render: Template,
+
+  args: {
+    text: 'Tooltip',
+    'same-width': true,
+    visible: true,
+  },
 };
 
-export const LongContent = Template.bind({});
-LongContent.args = {
-  text: "Yuhu! I'm a tooltip 🙃, and I'm a long text that probably shouldn't be shown here but 'ce sa fac'",
-  visible: true,
+export const LongContent: Story = {
+  render: Template,
+
+  args: {
+    text: "Yuhu! I'm a tooltip 🙃, and I'm a long text that probably shouldn't be shown here but 'ce sa fac'",
+    visible: true,
+  },
 };
 
-export const DisplayOnClick = (args) => html`
-  <bq-tooltip
-    distance=${args.distance}
-    display-on=${args['display-on']}
-    ?hide-arrow=${args['hide-arrow']}
-    placement=${args.placement}
-    same-width=${args['same-width']}
-    ?visible=${args.visible}
-  >
-    ${args.text}
-    <bq-button slot="trigger">
-      <bq-icon name="mouse" slot="prefix"></bq-icon>
-      Click me!
-    </bq-button>
-  </bq-tooltip>
-`;
-DisplayOnClick.args = {
-  'display-on': 'click',
-  text: "Yuhu! I'm a tooltip 🙃",
-  visible: true,
+export const DisplayOnClick: Story = {
+  render: (args: Args) => html`
+    <bq-tooltip
+      distance=${args.distance}
+      display-on=${args['display-on']}
+      ?hide-arrow=${args['hide-arrow']}
+      placement=${args.placement}
+      same-width=${args['same-width']}
+      ?visible=${args.visible}
+    >
+      ${args.text}
+      <bq-button slot="trigger">
+        <bq-icon name="mouse" slot="prefix"></bq-icon>
+        Click me!
+      </bq-button>
+    </bq-tooltip>
+  `,
+
+  args: {
+    'display-on': 'click',
+    text: "Yuhu! I'm a tooltip 🙃",
+    visible: true,
+  },
 };

@@ -11,8 +11,10 @@ setCustomElements(customElements);
 export const parameters = {
   controls: { expanded: true, hideNoControlsWarning: true },
   docs: {
-    inlineStories: false,
-    iframeHeight: '250px',
+    story: {
+      inline: true,
+      height: '250px',
+    },
   },
   html: {
     removeComments: true,

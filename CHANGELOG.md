@@ -6,6 +6,19 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+## [0.3.0](https://github.com/Endava/bee-q/compare/v0.2.2...v0.3.0) (2023-04-27)
+
+
+### Features
+
+* **tab:** add tab component ([#93](https://github.com/Endava/bee-q/issues/93)) ([6531f65](https://github.com/Endava/bee-q/commit/6531f6573b9bd7d34bcbbfef073f183a15075dbc))
+* **Tokens:** add extended palette color and update declarative colors ([#67](https://github.com/Endava/bee-q/issues/67)) ([be11954](https://github.com/Endava/bee-q/commit/be1195472f3dd041d8df11d18ebd471e07160896))
+
+
+### Documentation
+
+* **Storybook:** upgrade to Storybook v7 ([#163](https://github.com/Endava/bee-q/issues/163)) ([5edd176](https://github.com/Endava/bee-q/commit/5edd176a2cb3213b2ac7d181fb1eaf98d8f55331))
+
 ## [0.2.2](https://github.com/Endava/bee-q/compare/v0.2.1...v0.2.2) (2023-03-09)
 
 

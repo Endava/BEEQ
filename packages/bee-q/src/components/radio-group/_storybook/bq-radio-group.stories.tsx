@@ -2,7 +2,9 @@ import { html } from 'lit-html';
 import mdx from './bq-radio-group.mdx';
 import { RADIO_GROUP_ORIENTATION } from '../bq-radio-group.types';
 
-export default {
+import type { Args, Meta, StoryObj } from '@storybook/web-components';
+
+const meta: Meta = {
   title: 'Components/Radio Group',
   component: 'bq-radio-group',
   parameters: {
@@ -20,8 +22,8 @@ export default {
     orientation: { control: 'select', options: [...RADIO_GROUP_ORIENTATION] },
     // Event handlers
     bqChange: { action: 'bqChange' },
-    bqFocus: { action: 'bqFocus' },
-    bqBlur: { action: 'bqBlur' },
+    bqFocus: { action: 'bqFocus', table: { disable: true } },
+    bqBlur: { action: 'bqBlur', table: { disable: true } },
     // Not part of the component
     label: { control: 'text' },
   },
@@ -35,8 +37,11 @@ export default {
     'debounce-time': 0,
   },
 };
+export default meta;
 
-const Template = (args) => {
+type Story = StoryObj;
+
+const Template = (args: Args) => {
   return html`
     <bq-radio-group
       ?background-on-hover=${args['background-on-hover']}
@@ -58,56 +63,64 @@ const Template = (args) => {
   `;
 };
 
-export const Default = (args) => Template(args);
-
-export const Disabled = (args) => {
-  return html`
-    <div style="display: flex; gap: 16px">
-      <bq-radio-group
-        .name=${args.name}
-        .value=${args.value}
-        .disabled=${args.disabled}
-        .orientation=${args.orientation}
-        .fieldset=${args.fieldset}
-        debounce-time=${args['debounce-time']}
-        @bqChange=${args.bqChange}
-        @bqFocus=${args.bqFocus}
-        @bqBlur=${args.bqBlur}
-      >
-        <span slot="label">${args.label}</span>
-        <bq-radio value="option1"> Radio option 1 </bq-radio>
-        <bq-radio value="option2"> Radio option 2 </bq-radio>
-        <bq-radio value="option3"> Radio option 3 </bq-radio>
-      </bq-radio-group>
-      <bq-radio-group
-        .name=${args.name + '1'}
-        .value=${args.value}
-        .orientation=${args.orientation}
-        .fieldset=${args.fieldset}
-        debounce-time=${args['debounce-time']}
-        @bqChange=${args.bqChange}
-        @bqFocus=${args.bqFocus}
-        @bqBlur=${args.bqBlur}
-      >
-        <span slot="label">${args.label}</span>
-        <bq-radio value="option1"> Radio option 1 </bq-radio>
-        <bq-radio value="option2" disabled> Radio option 2 </bq-radio>
-        <bq-radio value="option3"> Radio option 3 </bq-radio>
-      </bq-radio-group>
-    </div>
-  `;
-};
-Disabled.args = {
-  disabled: true,
+export const Default: Story = {
+  render: Template,
 };
 
-export const Horizontal = (args) => Template(args);
-Horizontal.args = {
-  orientation: 'horizontal',
+export const Disabled: Story = {
+  render: (args: Args) => {
+    return html`
+      <div style="display: flex; gap: 16px">
+        <bq-radio-group
+          .name=${args.name}
+          .value=${args.value}
+          .disabled=${args.disabled}
+          .orientation=${args.orientation}
+          .fieldset=${args.fieldset}
+          debounce-time=${args['debounce-time']}
+          @bqChange=${args.bqChange}
+          @bqFocus=${args.bqFocus}
+          @bqBlur=${args.bqBlur}
+        >
+          <span slot="label">${args.label}</span>
+          <bq-radio value="option1"> Radio option 1 </bq-radio>
+          <bq-radio value="option2"> Radio option 2 </bq-radio>
+          <bq-radio value="option3"> Radio option 3 </bq-radio>
+        </bq-radio-group>
+        <bq-radio-group
+          .name=${args.name + '1'}
+          .value=${args.value}
+          .orientation=${args.orientation}
+          .fieldset=${args.fieldset}
+          debounce-time=${args['debounce-time']}
+          @bqChange=${args.bqChange}
+          @bqFocus=${args.bqFocus}
+          @bqBlur=${args.bqBlur}
+        >
+          <span slot="label">${args.label}</span>
+          <bq-radio value="option1"> Radio option 1 </bq-radio>
+          <bq-radio value="option2" disabled> Radio option 2 </bq-radio>
+          <bq-radio value="option3"> Radio option 3 </bq-radio>
+        </bq-radio-group>
+      </div>
+    `;
+  },
+  args: {
+    disabled: true,
+  },
 };
 
-export const Fieldset = (args) => Template(args);
-Fieldset.args = {
-  fieldset: true,
-  label: 'radio group',
+export const Horizontal = {
+  render: Template,
+  args: {
+    orientation: 'horizontal',
+  },
+};
+
+export const Fieldset = {
+  render: Template,
+  args: {
+    fieldset: true,
+    label: 'radio group',
+  },
 };

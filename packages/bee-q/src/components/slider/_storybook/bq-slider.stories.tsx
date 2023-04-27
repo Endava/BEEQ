@@ -1,8 +1,10 @@
 import { html } from 'lit-html';
-import mdx from './bq-slider.mdx';
 import { SLIDER_TYPE } from '../bq-slider.types';
+import mdx from './bq-slider.mdx';
 
-export default {
+import type { Args, Meta, StoryObj } from '@storybook/web-components';
+
+const meta: Meta = {
   title: 'Components/Slider',
   component: 'bq-slider',
   parameters: {
@@ -36,8 +38,11 @@ export default {
     'value-indicator': false,
   },
 };
+export default meta;
 
-const Template = (args) => html`
+type Story = StoryObj;
+
+const Template = (args: Args) => html`
   <div class="h-auto w-[450px]">
     <bq-slider
       ?disabled=${args.disabled}
@@ -56,14 +61,18 @@ const Template = (args) => html`
   </div>
 `;
 
-export const Single = Template.bind({});
-Single.args = {
-  type: 'single',
-  value: 30,
+export const Single: Story = {
+  render: Template,
+  args: {
+    type: 'single',
+    value: 30,
+  },
 };
 
-export const Range = Template.bind({});
-Range.args = {
-  type: 'range',
-  value: [30, 70],
+export const Range: Story = {
+  render: Template,
+  args: {
+    type: 'range',
+    value: [30, 70],
+  },
 };
