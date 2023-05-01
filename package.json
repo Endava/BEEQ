@@ -65,7 +65,7 @@
     "@nrwl/jest": "14.8.8",
     "@nrwl/js": "14.8.8",
     "@nrwl/nx-cloud": "^15.1.0",
-    "@nrwl/nx-plugin": "14.8.8",
+    "@nrwl/nx-plugin": "16.0.1",
     "@nrwl/react": "14.8.8",
     "@nrwl/storybook": "15.9.2",
     "@nrwl/web": "14.8.8",
