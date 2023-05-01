@@ -93,7 +93,7 @@
     "@types/node": "18.15.11",
     "@types/puppeteer": "7.0.4",
     "@types/react": "18.0.35",
-    "@types/react-dom": "18.0.11",
+    "@types/react-dom": "18.2.1",
     "@typescript-eslint/eslint-plugin": "5.58.0",
     "@typescript-eslint/parser": "5.58.0",
     "@whitespace/storybook-addon-html": "5.1.4",
