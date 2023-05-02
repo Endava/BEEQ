@@ -1,7 +1,9 @@
-import { Component, Element, h, Host, Method, Prop, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, Watch } from '@stencil/core';
 
 import { validatePropValue } from '../../shared/utils';
 import { NOTIFICATION_TYPE, TNotificationType } from './bg-notification.types';
+
+const notificationPortal = Object.assign(document.createElement('div'), { className: 'bq-notification-portal' });
 
 /**
  * @part base - The wrapper container `<div>` of the element inside the shadow DOM
@@ -61,6 +63,8 @@ export class BqNotification {
   // Requires JSDocs for public API documentation
   // ==============================================
 
+  @Event() bqHide: EventEmitter;
+
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
@@ -85,6 +89,7 @@ export class BqNotification {
   @Method()
   async hide() {
     this.isOpen = false;
+    this.bqHide.emit();
   }
 
   /**
@@ -95,14 +100,42 @@ export class BqNotification {
     this.isOpen = true;
   }
 
+  /** */
+  @Method()
+  async toast() {
+    return new Promise<void>((resolve) => {
+      if (notificationPortal.parentElement === null) {
+        document.body.append(notificationPortal);
+      }
+
+      notificationPortal.appendChild(this.el);
+
+      requestAnimationFrame(() => {
+        this.show();
+      });
+
+      this.el.addEventListener(
+        'bqHide',
+        () => {
+          notificationPortal.removeChild(this.el);
+          resolve();
+
+          // Remove the notification portal from the DOM when there are no more alerts
+          if (notificationPortal.querySelector('bq-notification') === null) {
+            notificationPortal.remove();
+          }
+        },
+        { once: true },
+      );
+    });
+  }
+
   // Local methods
   // Internal business logic.
   // These methods cannot be called from the host element.
   // =======================================================
 
   private get iconName() {
-    if (this.hideIcon) return;
-
     switch (this.type) {
       case 'error':
         return 'x-circle';
@@ -151,7 +184,9 @@ export class BqNotification {
               }}
               part="icon-outline"
             >
-              {!this.hasCustomIcon ? <bq-icon name={this.iconName} part="icon" /> : <slot name="icon" />}
+              {!this.hideIcon && [
+                !this.hasCustomIcon ? <bq-icon name={this.iconName} part="icon" /> : <slot name="icon" />,
+              ]}
             </div>
           )}
           {/* CONTENT */}

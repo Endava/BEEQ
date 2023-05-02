@@ -246,6 +246,7 @@ export namespace Components {
           * Trigger function when you want to show Notification
          */
         "show": () => Promise<void>;
+        "toast": () => Promise<void>;
         /**
           * Type of Notification
          */
@@ -541,6 +542,10 @@ export interface BqCheckboxCustomEvent<T> extends CustomEvent<T> {
 export interface BqIconCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqIconElement;
+}
+export interface BqNotificationCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqNotificationElement;
 }
 export interface BqRadioCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -921,6 +926,7 @@ declare namespace LocalJSX {
           * If true, the notification will be shown
          */
         "isOpen"?: boolean;
+        "onBqHide"?: (event: BqNotificationCustomEvent<any>) => void;
         /**
           * Type of Notification
          */

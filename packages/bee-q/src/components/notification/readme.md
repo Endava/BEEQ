@@ -16,6 +16,13 @@
 | `type`          | `type`            | Type of Notification                                                                                                 | `"default" \| "error" \| "info" \| "success" \| "warning"` | `'default'` |
 
 
+## Events
+
+| Event    | Description | Type               |
+| -------- | ----------- | ------------------ |
+| `bqHide` |             | `CustomEvent<any>` |
+
+
 ## Methods
 
 ### `hide() => Promise<void>`
@@ -31,6 +38,16 @@ Type: `Promise<void>`
 ### `show() => Promise<void>`
 
 Trigger function when you want to show Notification
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `toast() => Promise<void>`
+
+
 
 #### Returns
 
