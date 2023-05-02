@@ -20,7 +20,7 @@ const meta: Meta = {
     'disable-close': { control: 'boolean' },
   },
   args: {
-    type: 'default',
+    type: 'neutral',
     'has-custom-icon': false,
     'hide-icon': false,
     'is-open': false,
@@ -40,7 +40,7 @@ const Template = (args: Args) => html`
     type=${args.type}
   >
     Title
-    <span slot="body"> This is some description text text <a class="link" href="https://example.com">Link</a> </span>
+    <span slot="body"> This is some description text text <a class="bq-link" href="https://example.com">Link</a> </span>
     <div slot="footer">
       <bq-button appearance="primary" size="small"> Button </bq-button>
       <bq-button appearance="secondary" size="small"> Button </bq-button>

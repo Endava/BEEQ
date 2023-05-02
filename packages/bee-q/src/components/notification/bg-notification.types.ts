@@ -1,2 +1,2 @@
-export const NOTIFICATION_TYPE = ['default', 'info', 'success', 'warning', 'error'] as const;
+export const NOTIFICATION_TYPE = ['error', 'info', 'neutral', 'success', 'warning'] as const;
 export type TNotificationType = (typeof NOTIFICATION_TYPE)[number];

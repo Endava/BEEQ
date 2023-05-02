@@ -12,16 +12,16 @@
  * Set the nocitication icon color based on the type value selected
  */
 .notification--icon.color {
-  &-default {
-    @apply text-text-primary;
+  &-error {
+    @apply text-text-danger;
   }
 
   &-info {
     @apply text-text-brand;
   }
 
-  &-error {
-    @apply text-text-danger;
+  &-neutral {
+    @apply text-text-primary;
   }
 
   &-success {

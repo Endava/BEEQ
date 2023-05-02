@@ -50,13 +50,13 @@ export class BqNotification {
   @Prop({ reflect: true, mutable: true }) isOpen: boolean;
 
   /** Type of Notification */
-  @Prop({ reflect: true }) type: TNotificationType = 'default';
+  @Prop({ reflect: true }) type: TNotificationType = 'neutral';
 
   // Prop lifecycle events
   // =======================
   @Watch('type')
   checkPropValues() {
-    validatePropValue(NOTIFICATION_TYPE, 'default', this.el, 'type');
+    validatePropValue(NOTIFICATION_TYPE, 'neutral', this.el, 'type');
   }
 
   // Events section
@@ -158,6 +158,7 @@ export class BqNotification {
         class={{ '!hidden': !this.isOpen }}
         aria-hidden={!this.isOpen ? 'true' : 'false'}
         hidden={!this.isOpen ? 'true' : 'false'}
+        role="alert"
       >
         <div
           class="relative inline-flex min-w-[var(--bq-notification--min-width)] items-start rounded-[var(--bq-notification--border-radius)] bg-bg-primary p-[var(--bq-notification--padding)] shadow-m"
