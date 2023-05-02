@@ -2,7 +2,7 @@ import { html } from 'lit-html';
 import mdx from './bq-notification.mdx';
 
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
-import { NOTIFICATION_TYPE } from '../bg-notification.types';
+import { NOTIFICATION_TYPE } from '../bq-notification.types';
 
 const meta: Meta = {
   title: 'Components/Notification',
