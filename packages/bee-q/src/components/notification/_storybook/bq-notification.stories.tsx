@@ -20,7 +20,7 @@ const meta: Meta = {
     'disable-close': { control: 'boolean' },
   },
   args: {
-    type: 'neutral',
+    type: 'info',
     'has-custom-icon': false,
     'hide-icon': false,
     'is-open': false,
@@ -32,20 +32,49 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
-  <bq-notification
-    ?disable-close=${args['disable-close']}
-    ?has-custom-icon=${args['has-custom-icon']}
-    ?hide-icon=${args['hide-icon']}
-    ?is-open=${args['is-open']}
-    type=${args.type}
-  >
-    Title
-    <span slot="body"> This is some description text text <a class="bq-link" href="https://example.com">Link</a> </span>
-    <div slot="footer">
-      <bq-button appearance="primary" size="small"> Button </bq-button>
-      <bq-button appearance="secondary" size="small"> Button </bq-button>
-    </div>
-  </bq-notification>
+  <div class="flex flex-row gap-4">
+    <bq-notification
+      ?disable-close=${args['disable-close']}
+      ?has-custom-icon=${args['has-custom-icon']}
+      ?hide-icon=${args['hide-icon']}
+      ?is-open=${args['is-open']}
+      type=${args.type}
+    >
+      Title
+    </bq-notification>
+
+    <bq-notification
+      ?disable-close=${args['disable-close']}
+      ?has-custom-icon=${args['has-custom-icon']}
+      ?hide-icon=${args['hide-icon']}
+      ?is-open=${args['is-open']}
+      type=${args.type}
+    >
+      Title
+      <span slot="body">
+        This is some description text text
+        <a class="bq-link" href="https://example.com">Link</a>
+      </span>
+    </bq-notification>
+
+    <bq-notification
+      ?disable-close=${args['disable-close']}
+      ?has-custom-icon=${args['has-custom-icon']}
+      ?hide-icon=${args['hide-icon']}
+      ?is-open=${args['is-open']}
+      type=${args.type}
+    >
+      Title
+      <span slot="body">
+        This is some description text text
+        <a class="bq-link" href="https://example.com">Link</a>
+      </span>
+      <div slot="footer">
+        <bq-button appearance="primary" size="small"> Button </bq-button>
+        <bq-button appearance="secondary" size="small"> Button </bq-button>
+      </div>
+    </bq-notification>
+  </div>
 `;
 
 export const Default: Story = {
@@ -55,7 +84,39 @@ export const Default: Story = {
   },
 };
 
-export const Demo: Story = {
+export const Error: Story = {
+  render: Template,
+  args: {
+    'is-open': true,
+    type: 'error',
+  },
+};
+
+export const Neutral: Story = {
+  render: Template,
+  args: {
+    'is-open': true,
+    type: 'neutral',
+  },
+};
+
+export const Success: Story = {
+  render: Template,
+  args: {
+    'is-open': true,
+    type: 'success',
+  },
+};
+
+export const Warning: Story = {
+  render: Template,
+  args: {
+    'is-open': true,
+    type: 'warning',
+  },
+};
+
+export const Stacked: Story = {
   render: () => {
     const onButtonClick = (ev: CustomEvent) => {
       const getRandom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
