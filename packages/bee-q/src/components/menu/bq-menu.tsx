@@ -16,9 +16,11 @@ enum FooterIconSize {
 /**
  * A menu is like a widget that offers a list of choices to the user.
  * @part group - The `aside` tag element used to group the menu item elements.
- * @part header - The `span` tag element used to display the header part of the menu (bq-icon, title).
+ * @part header - The `span` tag element used to display the header part of the menu. Wrapper for prefix & suffix.
  * @part content - The `span` tag element used to display the content of the menu (bq-menu-item components).
  * @part footer - The `span` tag element used to display the collapsible element (text).
+ * @part header-prefix - The `span` tag element used to display the header part of the menu (bq-icon).
+ * @part header-suffix - The `span` tag element used to display the header part of the menu (title).
  */
 @Component({
   tag: 'bq-menu',
@@ -49,7 +51,7 @@ export class BqMenu {
   /** Show footer for collapsible menu (boolean) */
   @Prop({ reflect: true }) collapsible = true;
 
-  /** Set theme (light/dark) */
+  /** Set theme */
   @Prop({ reflect: true }) theme: TMenuTheme = 'light';
 
   // Prop lifecycle events

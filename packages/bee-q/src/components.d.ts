@@ -234,7 +234,7 @@ export namespace Components {
          */
         "size": TMenuSize;
         /**
-          * Set theme (light/dark)
+          * Set theme
          */
         "theme": TMenuTheme;
     }
@@ -966,7 +966,7 @@ declare namespace LocalJSX {
          */
         "size"?: TMenuSize;
         /**
-          * Set theme (light/dark)
+          * Set theme
          */
         "theme"?: TMenuTheme;
     }

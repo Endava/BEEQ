@@ -1,9 +1,10 @@
 import { html } from 'lit-html';
-
 import { MENU_SIZE, MENU_THEME } from '../bq-menu.types';
 import mdx from './bq-menu.mdx';
 
-export default {
+import type { Args, Meta, StoryObj } from '@storybook/web-components';
+
+const meta: Meta = {
   title: 'Components/Menu',
   component: 'bq-menu',
   parameters: {
@@ -28,9 +29,12 @@ export default {
     text: 'text',
   },
 };
+export default meta;
 
-const Template = (args) => {
-  return html`<bq-menu
+type Story = StoryObj;
+
+const Template = (args: Args) => html`
+  <bq-menu
     size=${args.size}
     ?collapsible=${args.collapsible}
     theme=${args.theme}
@@ -61,30 +65,40 @@ const Template = (args) => {
 
     <!-- footer slot -->
     <div slot="footer">Collapsible</div>
-  </bq-menu>`;
+  </bq-menu>
+`;
+
+export const Light: Story = {
+  render: Template,
+  args: {
+    theme: 'light',
+  },
 };
 
-export const Light = (args) => Template(args);
-Light.args = {
-  theme: 'light',
+export const Brand: Story = {
+  render: Template,
+  args: {
+    theme: 'brand',
+  },
 };
 
-export const Brand = (args) => Template(args);
-Brand.args = {
-  theme: 'brand',
+export const Inverse: Story = {
+  render: Template,
+  args: {
+    theme: 'inverse',
+  },
 };
 
-export const Inverse = (args) => Template(args);
-Inverse.args = {
-  theme: 'inverse',
+export const Small: Story = {
+  render: Template,
+  args: {
+    size: 'small',
+  },
 };
 
-export const Small = (args) => Template(args);
-Small.args = {
-  size: 'small',
-};
-
-export const Medium = (args) => Template(args);
-Medium.args = {
-  size: 'medium',
+export const Medium: Story = {
+  render: Template,
+  args: {
+    size: 'medium',
+  },
 };
