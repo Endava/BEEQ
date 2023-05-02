@@ -50,13 +50,13 @@ export class BqNotification {
   @Prop({ reflect: true, mutable: true }) isOpen: boolean;
 
   /** Type of Notification */
-  @Prop({ reflect: true }) type: TNotificationType = 'neutral';
+  @Prop({ reflect: true }) type: TNotificationType = 'info';
 
   // Prop lifecycle events
   // =======================
   @Watch('type')
   checkPropValues() {
-    validatePropValue(NOTIFICATION_TYPE, 'neutral', this.el, 'type');
+    validatePropValue(NOTIFICATION_TYPE, 'info', this.el, 'type');
   }
 
   // Events section
@@ -180,7 +180,7 @@ export class BqNotification {
           {!this.hideIcon && (
             <div
               class={{
-                'notification--icon mr-2 inline-block text-left align-top': true,
+                'notification--icon mr-2 flex text-left align-top': true,
                 [`color-${this.type}`]: true, // The icon color will be based on the type (info, success, warning, error)
               }}
               part="icon-outline"
@@ -191,7 +191,7 @@ export class BqNotification {
             </div>
           )}
           {/* CONTENT */}
-          <div class="flex flex-col items-start gap-4" part="content">
+          <div class="flex flex-col items-start" part="content">
             {/* TITLE */}
             <div class="title-font font-semibold leading-large" part="title">
               <slot />

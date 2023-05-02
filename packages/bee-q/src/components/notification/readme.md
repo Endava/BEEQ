@@ -13,7 +13,7 @@
 | `hasCustomIcon` | `has-custom-icon` | If true, the predefined icon type won't be shown and a custom icon provided on integration will be displayed instead | `boolean`                                                  | `undefined` |
 | `hideIcon`      | `hide-icon`       | If true, the notification icon won't be shown                                                                        | `boolean`                                                  | `undefined` |
 | `isOpen`        | `is-open`         | If true, the notification will be shown                                                                              | `boolean`                                                  | `undefined` |
-| `type`          | `type`            | Type of Notification                                                                                                 | `"error" \| "info" \| "neutral" \| "success" \| "warning"` | `'neutral'` |
+| `type`          | `type`            | Type of Notification                                                                                                 | `"error" \| "info" \| "neutral" \| "success" \| "warning"` | `'info'`    |
 
 
 ## Events
