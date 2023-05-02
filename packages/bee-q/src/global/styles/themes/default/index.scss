@@ -3,3 +3,12 @@
 @import './stroke-colors';
 @import './text-colors';
 @import './ui-colors';
+
+/* -------------------------------------------------------------------------- */
+/*                                 Root styles                                */
+/* -------------------------------------------------------------------------- */
+
+html,
+body {
+  @apply font-outfit text-m font-regular text-text-primary;
+}
