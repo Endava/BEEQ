@@ -1,8 +1,10 @@
 import { html } from 'lit-html';
 import mdx from './bq-notification.mdx';
+
+import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { NOTIFICATION_TYPE } from '../bg-notification.types';
 
-export default {
+const meta: Meta = {
   title: 'Components/Notification',
   component: 'bq-notification',
   parameters: {
@@ -25,46 +27,52 @@ export default {
     'disable-close': false,
   },
 };
+export default meta;
 
-const Template = (args) => {
-  const showNotification = async () => {
-    await customElements.whenDefined('bq-notification');
-    const notificationElement = document.querySelector('bq-notification');
+type Story = StoryObj;
 
-    await notificationElement.show();
-  };
-
-  return html`
-    <div>
-      <div class="mb-2 inline-block w-full text-center">
-        <bq-button appearance="primary" type="button" variant="standard" @bqClick=${showNotification}>
-          Open Notification
-        </bq-button>
-      </div>
-      <div class="inline-block w-full text-center">
-        <bq-notification
-          disable-close=${args['disable-close']}
-          has-custom-icon=${args['has-custom-icon']}
-          hide-icon=${args['hide-icon']}
-          is-open=${args['is-open']}
-          type=${args.type}
-        >
-          Title
-          <span slot="body">
-            This is some description text text <a class="link" href="https://example.com">Link</a>
-          </span>
-          <div slot="footer">
-            <bq-button slot="footer" appearance="primary" size="small" type="button" variant="standard">
-              Button
-            </bq-button>
-            <bq-button slot="footer" appearance="secondary" size="small" type="button" variant="standard">
-              Button
-            </bq-button>
-          </div>
-        </bq-notification>
-      </div>
+const Template = (args: Args) => html`
+  <bq-notification
+    ?disable-close=${args['disable-close']}
+    ?has-custom-icon=${args['has-custom-icon']}
+    ?hide-icon=${args['hide-icon']}
+    ?is-open=${args['is-open']}
+    type=${args.type}
+  >
+    Title
+    <span slot="body"> This is some description text text <a class="link" href="https://example.com">Link</a> </span>
+    <div slot="footer">
+      <bq-button appearance="primary" size="small"> Button </bq-button>
+      <bq-button appearance="secondary" size="small"> Button </bq-button>
     </div>
-  `;
+  </bq-notification>
+`;
+
+export const Default: Story = {
+  render: Template,
+  args: {
+    'is-open': true,
+  },
 };
 
-export const Default = Template.bind({});
+export const Demo: Story = {
+  render: () => {
+    const onButtonClick = (ev: CustomEvent) => {
+      const getRandom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
+
+      const notification = Object.assign(document.createElement('bq-notification'), {
+        type: getRandom(NOTIFICATION_TYPE as unknown as string[]) as string,
+        innerHTML: `
+          Title
+          <span slot="body"> This is some description text text <a class="bq-link" href="https://example.com">Link</a> </span>
+        `,
+      });
+
+      document.body.append(notification);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return (notification as any).toast();
+    };
+
+    return html` <bq-button @bqClick=${onButtonClick}>Open notification</bq-button> `;
+  },
+};
