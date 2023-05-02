@@ -47,3 +47,10 @@
 [part='footer'] ::slotted(*) {
   @apply flex items-start gap-2;
 }
+
+[part='body'],
+[part='footer'] {
+  ::slotted(*) {
+    @apply mt-4 block;
+  }
+}
