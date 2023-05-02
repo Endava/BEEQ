@@ -21,7 +21,7 @@ describe('bq-notification', () => {
     const page = await newE2EPage();
     await page.setContent(`
       <bq-notification>
-        Notification titl
+        Notification title
         <span slot="body">You have a new chat message</span>
       </bq-notification>
     `);
