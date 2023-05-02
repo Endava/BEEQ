@@ -1,10 +1,10 @@
-import { h, Component, Element, Prop, Listen, EventEmitter, Event, Watch } from '@stencil/core';
-
+import { h, Component, Element, Prop, Listen, EventEmitter, Event, Host, Watch } from '@stencil/core';
 import { debounce, getNextElement, isHTMLElement, isNil, TDebounce, validatePropValue } from '../../shared/utils';
 import { TAB_SIZE, TTabSize } from '../tab/bq-tab.types';
 
 /**
  * @part base - The HTML div used to hold <bq-tab> elements.
+ * @part divider - The HTML div used to display underline.
  */
 @Component({
   tag: 'bq-tab-group',
@@ -38,6 +38,9 @@ export class BqTabGroup {
   /** A number representing the delay value applied to bqChange event handler */
   @Prop({ reflect: true, mutable: true }) debounceTime = 0;
 
+  /** If true tab has underline active  */
+  @Prop({ reflect: true }) divider = true;
+
   // Prop lifecycle events
   // =======================
 
@@ -63,7 +66,6 @@ export class BqTabGroup {
     this.bqTabElements.forEach((bqTabElement) => {
       bqTabElement.size = this.size;
       bqTabElement.active = !isNil(this.value) ? bqTabElement.tabId === this.value : false;
-      bqTabElement.divider = true;
     });
   }
 
@@ -194,9 +196,12 @@ export class BqTabGroup {
 
   render() {
     return (
-      <div class="flex" role="tablist" part="base">
-        <slot />
-      </div>
+      <Host>
+        <div class="flex" role="tablist" part="base">
+          <slot />
+        </div>
+        {this.divider && <div class="bq-tab-group__divider" part="divider" />}
+      </Host>
     );
   }
 }

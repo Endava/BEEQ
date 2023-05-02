@@ -10,6 +10,7 @@
 | Property       | Attribute       | Description                                                             | Type                             | Default     |
 | -------------- | --------------- | ----------------------------------------------------------------------- | -------------------------------- | ----------- |
 | `debounceTime` | `debounce-time` | A number representing the delay value applied to bqChange event handler | `number`                         | `0`         |
+| `divider`      | `divider`       | If true tab has underline active                                        | `boolean`                        | `true`      |
 | `size`         | `size`          | The size of the tab                                                     | `"large" \| "medium" \| "small"` | `'small'`   |
 | `value`        | `value`         | A string representing the id of the selected tab.                       | `string`                         | `undefined` |
 
@@ -23,9 +24,10 @@
 
 ## Shadow Parts
 
-| Part     | Description                                  |
-| -------- | -------------------------------------------- |
-| `"base"` | The HTML div used to hold <bq-tab> elements. |
+| Part        | Description                                  |
+| ----------- | -------------------------------------------- |
+| `"base"`    | The HTML div used to hold <bq-tab> elements. |
+| `"divider"` | The HTML div used to display underline.      |
 
 
 ----------------------------------------------

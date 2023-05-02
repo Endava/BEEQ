@@ -3,5 +3,9 @@
 /* -------------------------------------------------------------------------- */
 
 :host {
-  @apply inline-block;
+  @apply block;
+}
+
+.bq-tab-group__divider {
+  @apply mt-[-2px] w-full border-x-0 border-b border-t-0 border-solid border-b-stroke-secondary;
 }
