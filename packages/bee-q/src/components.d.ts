@@ -223,6 +223,10 @@ export namespace Components {
     }
     interface BqNotification {
         /**
+          * If true, the notification will automatically hide after the specified amount of time
+         */
+        "autoDismiss": boolean;
+        /**
           * If true, the close button at the top right of the notification won't be shown
          */
         "disableClose": boolean;
@@ -246,6 +250,10 @@ export namespace Components {
           * Method to be called to show the notification component
          */
         "show": () => Promise<void>;
+        /**
+          * The length of time, in milliseconds, after which the notification will close itself. Only valid if `autoDismiss="true"`
+         */
+        "time": number;
         /**
           * This method can be used to display notifications in a fixed-position element that allows for stacking multiple notifications vertically.
          */
@@ -914,6 +922,10 @@ declare namespace LocalJSX {
     }
     interface BqNotification {
         /**
+          * If true, the notification will automatically hide after the specified amount of time
+         */
+        "autoDismiss"?: boolean;
+        /**
           * If true, the close button at the top right of the notification won't be shown
          */
         "disableClose"?: boolean;
@@ -937,6 +949,10 @@ declare namespace LocalJSX {
           * Callback handler to be called when the notification is shown
          */
         "onBqShow"?: (event: BqNotificationCustomEvent<any>) => void;
+        /**
+          * The length of time, in milliseconds, after which the notification will close itself. Only valid if `autoDismiss="true"`
+         */
+        "time"?: number;
         /**
           * Type of Notification
          */

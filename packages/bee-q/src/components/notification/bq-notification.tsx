@@ -25,6 +25,8 @@ export class BqNotification {
   // Own Properties
   // ====================
 
+  private autoDismissTimout: number;
+
   // Reference to host HTML element
   // ===================================
 
@@ -36,6 +38,9 @@ export class BqNotification {
 
   // Public Property API
   // ========================
+
+  /** If true, the notification will automatically hide after the specified amount of time */
+  @Prop({ reflect: true }) autoDismiss: boolean;
 
   /** If true, the close button at the top right of the notification won't be shown */
   @Prop({ reflect: true }) disableClose: boolean;
@@ -49,11 +54,20 @@ export class BqNotification {
   /** If true, the notification will be shown */
   @Prop({ reflect: true, mutable: true }) isOpen: boolean;
 
+  /** The length of time, in milliseconds, after which the notification will close itself. Only valid if `autoDismiss="true"` */
+  @Prop({ reflect: true }) time: number = 3000;
+
   /** Type of Notification */
   @Prop({ reflect: true }) type: TNotificationType = 'info';
 
   // Prop lifecycle events
   // =======================
+  @Watch('isOpen')
+  handleOpenChange() {
+    if (!this.isOpen) return;
+    this.restartAutoDismiss();
+  }
+
   @Watch('type')
   checkPropValues() {
     validatePropValue(NOTIFICATION_TYPE, 'info', this.el, 'type');
@@ -140,6 +154,13 @@ export class BqNotification {
     const ev = this.bqShow.emit(this.el);
     if (!ev.defaultPrevented) {
       this.isOpen = true;
+    }
+  };
+
+  private restartAutoDismiss = () => {
+    clearTimeout(this.autoDismissTimout);
+    if (this.autoDismiss) {
+      this.autoDismissTimout = window.setTimeout(() => this.hide(), this.time);
     }
   };
 
