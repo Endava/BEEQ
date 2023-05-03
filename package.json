@@ -97,7 +97,7 @@
     "@typescript-eslint/eslint-plugin": "5.58.0",
     "@typescript-eslint/parser": "5.58.0",
     "@whitespace/storybook-addon-html": "5.1.4",
-    "autoprefixer": "10.4.13",
+    "autoprefixer": "10.4.14",
     "chromatic": "6.17.3",
     "copy-webpack-plugin": "11.0.0",
     "copyfiles": "2.4.1",
