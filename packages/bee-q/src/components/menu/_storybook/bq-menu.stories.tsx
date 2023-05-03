@@ -14,7 +14,8 @@ const meta: Meta = {
   },
   argTypes: {
     size: { control: 'select', options: [...MENU_SIZE] },
-    collapsible: { control: 'boolean' },
+    'show-collapsible': { control: 'boolean' },
+    collapsed: { control: 'boolean' },
     theme: { control: 'select', options: [...MENU_THEME] },
     text: { control: 'text', table: { disable: true } },
     // Event handlers
@@ -24,7 +25,8 @@ const meta: Meta = {
   },
   args: {
     size: 'medium',
-    collapsible: true,
+    'show-collapsible': true,
+    collapsed: false,
     theme: 'light',
     text: 'text',
   },
@@ -36,7 +38,8 @@ type Story = StoryObj;
 const Template = (args: Args) => html`
   <bq-menu
     size=${args.size}
-    ?collapsible=${args.collapsible}
+    show-collapsible=${args['show-collapsible']}
+    collapsed=${args.collapsed}
     theme=${args.theme}
     @bqBlur=${args.bqBlur}
     @bqFocus=${args.bqFocus}

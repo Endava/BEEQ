@@ -11,11 +11,12 @@ A menu is like a widget that offers a list of choices to the user.
 
 ## Properties
 
-| Property      | Attribute     | Description                                | Type                              | Default    |
-| ------------- | ------------- | ------------------------------------------ | --------------------------------- | ---------- |
-| `collapsible` | `collapsible` | Show footer for collapsible menu (boolean) | `boolean`                         | `true`     |
-| `size`        | `size`        | Set menu item size (small/medium)          | `"medium" \| "small"`             | `'medium'` |
-| `theme`       | `theme`       | Set theme                                  | `"brand" \| "inverse" \| "light"` | `'light'`  |
+| Property          | Attribute          | Description                        | Type                              | Default    |
+| ----------------- | ------------------ | ---------------------------------- | --------------------------------- | ---------- |
+| `collapsed`       | `collapsed`        | Show menu as collapsed             | `boolean`                         | `false`    |
+| `showCollapsible` | `show-collapsible` | Show/hide footer (collapse option) | `boolean`                         | `false`    |
+| `size`            | `size`             | Set menu item size (small/medium)  | `"medium" \| "small"`             | `'medium'` |
+| `theme`           | `theme`            | Set theme                          | `"brand" \| "inverse" \| "light"` | `'light'`  |
 
 
 ## Events
@@ -32,7 +33,7 @@ A menu is like a widget that offers a list of choices to the user.
 | Part              | Description                                                                                      |
 | ----------------- | ------------------------------------------------------------------------------------------------ |
 | `"content"`       | The `span` tag element used to display the content of the menu (bq-menu-item components).        |
-| `"footer"`        | The `span` tag element used to display the collapsible element (text).                           |
+| `"footer"`        | The `span` tag element used to display the `footer` with the collapsible element.                |
 | `"group"`         | The `aside` tag element used to group the menu item elements.                                    |
 | `"header"`        | The `span` tag element used to display the header part of the menu. Wrapper for prefix & suffix. |
 | `"header-prefix"` | The `span` tag element used to display the header part of the menu (bq-icon).                    |

@@ -18,7 +18,7 @@ enum FooterIconSize {
  * @part group - The `aside` tag element used to group the menu item elements.
  * @part header - The `span` tag element used to display the header part of the menu. Wrapper for prefix & suffix.
  * @part content - The `span` tag element used to display the content of the menu (bq-menu-item components).
- * @part footer - The `span` tag element used to display the collapsible element (text).
+ * @part footer - The `span` tag element used to display the `footer` with the collapsible element.
  * @part header-prefix - The `span` tag element used to display the header part of the menu (bq-icon).
  * @part header-suffix - The `span` tag element used to display the header part of the menu (title).
  */
@@ -48,11 +48,14 @@ export class BqMenu {
   /** Set menu item size (small/medium) */
   @Prop({ reflect: true }) size: TMenuSize = 'medium';
 
-  /** Show footer for collapsible menu (boolean) */
-  @Prop({ reflect: true }) collapsible = true;
-
   /** Set theme */
   @Prop({ reflect: true }) theme: TMenuTheme = 'light';
+
+  /** Show/hide footer (collapse option) */
+  @Prop({ reflect: true }) showCollapsible = false;
+
+  /** Show menu as collapsed */
+  @Prop({ reflect: true }) collapsed = false;
 
   // Prop lifecycle events
   // =======================
@@ -68,18 +71,23 @@ export class BqMenu {
     this.setButtonAppereance();
   }
 
-  @Watch('collapsible')
+  @Watch('showCollapsible')
   expandMenuWhenFalse() {
     const isMenuCollapsed: boolean = this.asideElement.classList.contains('bq-collapse');
 
-    if (this.collapsible) {
+    if (this.showCollapsible) {
       // setTimeout to wait fot the button element to render
       setTimeout(() => {
         this.setButtonAppereance();
       }, 10);
     }
 
-    if (!this.collapsible && isMenuCollapsed) this.toggleMenu();
+    if (!this.showCollapsible && isMenuCollapsed) this.toggleMenu();
+  }
+
+  @Watch('collapsed')
+  onCollapsedChange() {
+    this.collapseMenuBasedOnProp();
   }
 
   @Watch('size')
@@ -110,6 +118,7 @@ export class BqMenu {
     this.setButtonAppereance();
     this.setSizeClass();
     this.activateMenuItemBasedOnURL();
+    if (this.showCollapsible && this.collapsed) this.toggleMenu(); // hide menu
   }
 
   // Listeners
@@ -196,6 +205,23 @@ export class BqMenu {
     });
   };
 
+  /**
+   * for storybook
+   * the `collapsed` prop is relevant only when `showCollapsible` is true
+   * @returns void
+   */
+  private collapseMenuBasedOnProp = (): void => {
+    if (!this.showCollapsible) return;
+    if (
+      (this.collapsed && this.asideElement.classList.contains('bq-collapse')) ||
+      (!this.collapsed && !this.asideElement.classList.contains('bq-collapse'))
+    ) {
+      return;
+    }
+
+    this.toggleMenu();
+  };
+
   private toggleMenu = (): void => {
     this.asideElement.classList.toggle('bq-collapse'); // 'bq' prefix to not interfere with tailwind built-in class
 
@@ -266,7 +292,7 @@ export class BqMenu {
           <slot />
         </span>
 
-        {this.collapsible && (
+        {this.showCollapsible && (
           <footer class="bq-menu__footer" part="footer">
             <bq-button appearance="text" size={this.size} onBqClick={this.toggleMenu}>
               <bq-icon name={this.footerIconName} size="20" slot="prefix"></bq-icon>

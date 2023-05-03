@@ -226,9 +226,13 @@ export namespace Components {
      */
     interface BqMenu {
         /**
-          * Show footer for collapsible menu (boolean)
+          * Show menu as collapsed
          */
-        "collapsible": boolean;
+        "collapsed": boolean;
+        /**
+          * Show/hide footer (collapse option)
+         */
+        "showCollapsible": boolean;
         /**
           * Set menu item size (small/medium)
          */
@@ -946,9 +950,9 @@ declare namespace LocalJSX {
      */
     interface BqMenu {
         /**
-          * Show footer for collapsible menu (boolean)
+          * Show menu as collapsed
          */
-        "collapsible"?: boolean;
+        "collapsed"?: boolean;
         /**
           * Handler to be called when the item loses focus
          */
@@ -961,6 +965,10 @@ declare namespace LocalJSX {
           * Handler to be called when the item gets focus
          */
         "onBqFocus"?: (event: BqMenuCustomEvent<HTMLBqMenuItemElement>) => void;
+        /**
+          * Show/hide footer (collapse option)
+         */
+        "showCollapsible"?: boolean;
         /**
           * Set menu item size (small/medium)
          */
