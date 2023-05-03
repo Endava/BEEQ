@@ -231,7 +231,7 @@ export namespace Components {
          */
         "hasCustomIcon": boolean;
         /**
-          * Trigger function when you want to close Notification
+          * Method to be called to hide the notification component
          */
         "hide": () => Promise<void>;
         /**
@@ -243,9 +243,12 @@ export namespace Components {
          */
         "isOpen": boolean;
         /**
-          * Trigger function when you want to show Notification
+          * Method to be called to show the notification component
          */
         "show": () => Promise<void>;
+        /**
+          * This method can be used to display notifications in a fixed-position element that allows for stacking multiple notifications vertically.
+         */
         "toast": () => Promise<void>;
         /**
           * Type of Notification
@@ -926,7 +929,14 @@ declare namespace LocalJSX {
           * If true, the notification will be shown
          */
         "isOpen"?: boolean;
+        /**
+          * Callback handler to be called when the notification is hidden
+         */
         "onBqHide"?: (event: BqNotificationCustomEvent<any>) => void;
+        /**
+          * Callback handler to be called when the notification is shown
+         */
+        "onBqShow"?: (event: BqNotificationCustomEvent<any>) => void;
         /**
           * Type of Notification
          */

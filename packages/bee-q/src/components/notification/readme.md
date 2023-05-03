@@ -18,16 +18,17 @@
 
 ## Events
 
-| Event    | Description | Type               |
-| -------- | ----------- | ------------------ |
-| `bqHide` |             | `CustomEvent<any>` |
+| Event    | Description                                                   | Type               |
+| -------- | ------------------------------------------------------------- | ------------------ |
+| `bqHide` | Callback handler to be called when the notification is hidden | `CustomEvent<any>` |
+| `bqShow` | Callback handler to be called when the notification is shown  | `CustomEvent<any>` |
 
 
 ## Methods
 
 ### `hide() => Promise<void>`
 
-Trigger function when you want to close Notification
+Method to be called to hide the notification component
 
 #### Returns
 
@@ -37,7 +38,7 @@ Type: `Promise<void>`
 
 ### `show() => Promise<void>`
 
-Trigger function when you want to show Notification
+Method to be called to show the notification component
 
 #### Returns
 
@@ -47,7 +48,8 @@ Type: `Promise<void>`
 
 ### `toast() => Promise<void>`
 
-
+This method can be used to display notifications in a fixed-position element
+that allows for stacking multiple notifications vertically.
 
 #### Returns
 

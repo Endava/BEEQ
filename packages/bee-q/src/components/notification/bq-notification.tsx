@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, Watch } from '@stencil/core';
 
 import { validatePropValue } from '../../shared/utils';
 import { NOTIFICATION_TYPE, TNotificationType } from './bq-notification.types';
@@ -63,7 +63,11 @@ export class BqNotification {
   // Requires JSDocs for public API documentation
   // ==============================================
 
+  /** Callback handler to be called when the notification is hidden */
   @Event() bqHide: EventEmitter;
+
+  /** Callback handler to be called when the notification is shown */
+  @Event() bqShow: EventEmitter;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -76,6 +80,17 @@ export class BqNotification {
   // Listeners
   // ==============
 
+  @Listen('bqHide')
+  onNotificationHide() {
+    if (!notificationPortal) return;
+
+    notificationPortal.removeChild(this.el);
+    // Remove the notification portal from the DOM when there are no more notifications
+    if (notificationPortal.querySelector('bq-notification') === null) {
+      notificationPortal.remove();
+    }
+  }
+
   // Public methods API
   // These methods are exposed on the host element.
   // Always use two lines.
@@ -83,50 +98,29 @@ export class BqNotification {
   // Requires JSDocs for public API documentation.
   // ===============================================
 
-  /**
-   * Trigger function when you want to close Notification
-   */
+  /** Method to be called to hide the notification component */
   @Method()
-  async hide() {
-    this.isOpen = false;
-    this.bqHide.emit();
+  async hide(): Promise<void> {
+    this.handleHide();
   }
 
-  /**
-   * Trigger function when you want to show Notification
-   */
+  /** Method to be called to show the notification component */
   @Method()
-  async show() {
-    this.isOpen = true;
+  async show(): Promise<void> {
+    this.handleShow();
   }
 
-  /** */
+  /** This method can be used to display notifications in a fixed-position element
+   * that allows for stacking multiple notifications vertically. */
   @Method()
   async toast() {
-    return new Promise<void>((resolve) => {
-      if (notificationPortal.parentElement === null) {
-        document.body.append(notificationPortal);
-      }
+    if (notificationPortal.parentElement === null) {
+      document.body.append(notificationPortal);
+    }
 
-      notificationPortal.appendChild(this.el);
-
-      requestAnimationFrame(() => {
-        this.show();
-      });
-
-      this.el.addEventListener(
-        'bqHide',
-        () => {
-          notificationPortal.removeChild(this.el);
-          resolve();
-
-          // Remove the notification portal from the DOM when there are no more alerts
-          if (notificationPortal.querySelector('bq-notification') === null) {
-            notificationPortal.remove();
-          }
-        },
-        { once: true },
-      );
+    notificationPortal.appendChild(this.el);
+    requestAnimationFrame(() => {
+      this.show();
     });
   }
 
@@ -135,7 +129,21 @@ export class BqNotification {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private get iconName() {
+  private handleHide = () => {
+    const ev = this.bqHide.emit(this.el);
+    if (!ev.defaultPrevented) {
+      this.isOpen = false;
+    }
+  };
+
+  private handleShow = () => {
+    const ev = this.bqShow.emit(this.el);
+    if (!ev.defaultPrevented) {
+      this.isOpen = true;
+    }
+  };
+
+  private get iconName(): string {
     switch (this.type) {
       case 'error':
         return 'x-circle';
