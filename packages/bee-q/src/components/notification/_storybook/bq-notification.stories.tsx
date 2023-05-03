@@ -13,18 +13,22 @@ const meta: Meta = {
     },
   },
   argTypes: {
-    type: { control: 'select', options: [...NOTIFICATION_TYPE] },
+    'auto-dismiss': { control: 'boolean' },
+    'disable-close': { control: 'boolean' },
     'has-custom-icon': { control: 'boolean' },
     'hide-icon': { control: 'boolean' },
     'is-open': { control: 'boolean' },
-    'disable-close': { control: 'boolean' },
+    time: { control: 'number' },
+    type: { control: 'select', options: [...NOTIFICATION_TYPE] },
   },
   args: {
-    type: 'info',
+    'auto-dismiss': false,
+    'disable-close': false,
     'has-custom-icon': false,
     'hide-icon': false,
     'is-open': false,
-    'disable-close': false,
+    time: 3000,
+    type: 'info',
   },
 };
 export default meta;
@@ -117,15 +121,23 @@ export const Warning: Story = {
 };
 
 export const Stacked: Story = {
-  render: () => {
+  render: (args: Args) => {
     const onButtonClick = (ev: CustomEvent) => {
       const getRandom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
+      const type = getRandom(NOTIFICATION_TYPE as unknown as string[]) as string;
 
       const notification = Object.assign(document.createElement('bq-notification'), {
-        type: getRandom(NOTIFICATION_TYPE as unknown as string[]) as string,
+        type,
+        autoDismiss: args['auto-dismiss'],
+        disableClose: args['disable-close'],
+        hideIcon: args['hide-icon'],
+        time: args.time,
         innerHTML: `
           Title
-          <span slot="body"> This is some description text text <a class="bq-link" href="https://example.com">Link</a> </span>
+          <span slot="body">
+            Here goes the description for the <strong>${type} notification</strong><br />
+            You can also add a <a class="bq-link" href="https://example.com">Link</a>
+          </span>
         `,
       });
 
@@ -145,5 +157,9 @@ export const Stacked: Story = {
       </p>
       <bq-button @bqClick=${onButtonClick}>Open notification</bq-button>
     `;
+  },
+  args: {
+    'auto-dismiss': true,
+    time: 3500,
   },
 };
