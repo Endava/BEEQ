@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, Watch } from '@stencil/core';
 
-import { validatePropValue } from '../../shared/utils';
+import { debounce, TDebounce, validatePropValue } from '../../shared/utils';
 import { NOTIFICATION_TYPE, TNotificationType } from './bq-notification.types';
 
 const notificationPortal = Object.assign(document.createElement('div'), { className: 'bq-notification-portal' });
@@ -25,7 +25,8 @@ export class BqNotification {
   // Own Properties
   // ====================
 
-  private autoDismissTimout: number;
+  // private autoDismissTimeout: number;
+  private autoDismissDebounce: TDebounce<void>;
 
   // Reference to host HTML element
   // ===================================
@@ -62,10 +63,25 @@ export class BqNotification {
 
   // Prop lifecycle events
   // =======================
+  @Watch('autoDismiss')
+  @Watch('time')
+  handleTimeout() {
+    this.autoDismissDebounce?.cancel();
+    if (!this.autoDismiss) return;
+
+    this.autoDismissDebounce = debounce(() => {
+      this.hide();
+    }, this.time);
+    // Make sure to autodismiss the notification if the `auto-dismiss` value changed while open
+    if (this.isOpen) this.autoDismissDebounce();
+  }
+
   @Watch('isOpen')
   handleOpenChange() {
-    if (!this.isOpen) return;
-    this.restartAutoDismiss();
+    this.autoDismissDebounce?.cancel();
+
+    if (!(this.autoDismiss && this.isOpen)) return;
+    this.autoDismissDebounce();
   }
 
   @Watch('type')
@@ -89,6 +105,7 @@ export class BqNotification {
 
   componentWillLoad() {
     this.checkPropValues();
+    this.handleTimeout();
   }
 
   // Listeners
@@ -96,12 +113,15 @@ export class BqNotification {
 
   @Listen('bqHide')
   onNotificationHide() {
-    if (!notificationPortal) return;
-
-    notificationPortal.removeChild(this.el);
-    // Remove the notification portal from the DOM when there are no more notifications
-    if (notificationPortal.querySelector('bq-notification') === null) {
-      notificationPortal.remove();
+    try {
+      notificationPortal.removeChild(this.el);
+      // Remove the notification portal from the DOM when there are no more notifications
+      if (notificationPortal.querySelector('bq-notification') === null) {
+        notificationPortal.remove();
+      }
+    } catch (error) {
+      if (error instanceof DOMException) return;
+      console.error(error);
     }
   }
 
@@ -154,13 +174,6 @@ export class BqNotification {
     const ev = this.bqShow.emit(this.el);
     if (!ev.defaultPrevented) {
       this.isOpen = true;
-    }
-  };
-
-  private restartAutoDismiss = () => {
-    clearTimeout(this.autoDismissTimout);
-    if (this.autoDismiss) {
-      this.autoDismissTimout = window.setTimeout(() => this.hide(), this.time);
     }
   };
 
