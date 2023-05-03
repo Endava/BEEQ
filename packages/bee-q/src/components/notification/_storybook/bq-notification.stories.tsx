@@ -38,20 +38,24 @@ type Story = StoryObj;
 const Template = (args: Args) => html`
   <div class="flex flex-row gap-4">
     <bq-notification
+      ?auto-dismiss=${args['auto-dismiss']}
       ?disable-close=${args['disable-close']}
       ?has-custom-icon=${args['has-custom-icon']}
       ?hide-icon=${args['hide-icon']}
       ?is-open=${args['is-open']}
+      time=${args.time}
       type=${args.type}
     >
       Title
     </bq-notification>
 
     <bq-notification
+      ?auto-dismiss=${args['auto-dismiss']}
       ?disable-close=${args['disable-close']}
       ?has-custom-icon=${args['has-custom-icon']}
       ?hide-icon=${args['hide-icon']}
       ?is-open=${args['is-open']}
+      time=${args.time}
       type=${args.type}
     >
       Title
@@ -62,10 +66,12 @@ const Template = (args: Args) => html`
     </bq-notification>
 
     <bq-notification
+      ?auto-dismiss=${args['auto-dismiss']}
       ?disable-close=${args['disable-close']}
       ?has-custom-icon=${args['has-custom-icon']}
       ?hide-icon=${args['hide-icon']}
       ?is-open=${args['is-open']}
+      time=${args.time}
       type=${args.type}
     >
       Title
