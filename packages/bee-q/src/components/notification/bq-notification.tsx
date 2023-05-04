@@ -25,7 +25,6 @@ export class BqNotification {
   // Own Properties
   // ====================
 
-  // private autoDismissTimeout: number;
   private autoDismissDebounce: TDebounce<void>;
 
   // Reference to host HTML element
@@ -120,8 +119,12 @@ export class BqNotification {
         notificationPortal.remove();
       }
     } catch (error) {
+      /**
+       * Skip DOMException error since it could be possible that
+       * in some situations the notification portal is missing
+       */
       if (error instanceof DOMException) return;
-      console.error(error);
+      throw error;
     }
   }
 
