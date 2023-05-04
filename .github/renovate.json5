@@ -115,7 +115,7 @@
   /**
    * Controls when Renovate rebases an existing branch.
    */
-  rebaseWhen: 'behind-base-branch',
+  rebaseWhen: 'never',
   /**
    * Enable Semantic Commit prefixes for commits and PR titles.
    */
