@@ -95,6 +95,13 @@
       groupName: 'types react',
       matchPackagePrefixes: ['@types/react'],
     },
+    /**
+     * Do not renovate peerDependencies versions/ranges.
+     */
+    {
+      enabled: false,
+      matchDepTypes: ['peerDependencies'],
+    },
   ],
   /**
    * This config option slows down the rate at which Renovate creates PRs.
@@ -108,7 +115,7 @@
   /**
    * Controls when Renovate rebases an existing branch.
    */
-  rebaseWhen: 'never',
+  rebaseWhen: 'behind-base-branch',
   /**
    * Enable Semantic Commit prefixes for commits and PR titles.
    */
