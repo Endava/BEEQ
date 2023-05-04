@@ -56,7 +56,7 @@ export const ExploreIcons: Story = {
       <p class="mt-2">
         Bee-Q icons are based on
         <a
-          class="link"
+          class="bq-link"
           href="https://phosphoricons.com/"
           target="_blank"
           title="Phosphor icons"

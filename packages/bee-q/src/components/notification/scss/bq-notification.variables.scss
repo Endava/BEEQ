@@ -1,0 +1,9 @@
+/* -------------------------------------------------------------------------- */
+/*                          Notification custom properties           */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  --bq-notification--border-radius: theme('borderRadius.s');
+  --bq-notification--padding: theme('padding.4');
+  --bq-notification--min-width: 320px;
+}

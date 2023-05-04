@@ -1,0 +1,56 @@
+/* -------------------------------------------------------------------------- */
+/*                                Notification styles                */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-notification.variables';
+
+:host {
+  @apply block;
+}
+
+/**
+ * Set the nocitication icon color based on the type value selected
+ */
+.notification--icon.color {
+  &-error {
+    @apply text-text-danger;
+  }
+
+  &-info {
+    @apply text-text-brand;
+  }
+
+  &-neutral {
+    @apply text-text-primary;
+  }
+
+  &-success {
+    @apply text-text-success;
+  }
+
+  &-warning {
+    @apply text-text-warning;
+  }
+}
+
+/**
+ * Tweak the close bq-buton styles so it remain small wihout extra padding
+ */
+.notification--close::part(button) {
+  @apply h-fit rounded-s border-0 p-0;
+}
+
+/**
+ * Here we guarantee that if the footer actions are wrapped in a div container from the consumer side,
+ * the styles get applied to the that wrapping container directly
+ */
+[part='footer'] ::slotted(*) {
+  @apply flex items-start gap-2;
+}
+
+[part='body'],
+[part='footer'] {
+  ::slotted(*) {
+    @apply mt-4 block;
+  }
+}
