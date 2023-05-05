@@ -1,0 +1,9 @@
+/* -------------------------------------------------------------------------- */
+/*                                Panel styles                */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-panel-variables';
+
+.panel {
+  @apply absolute m-0 h-[var(--bq-dropdown-panel--height)] w-[var(--bq-dropdown-panel--width)] overflow-y-auto overflow-x-hidden rounded-s p-2 shadow-m;
+}

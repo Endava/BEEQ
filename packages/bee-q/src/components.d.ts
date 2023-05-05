@@ -10,25 +10,25 @@ import { TBadgeSize } from "./components/badge/bq-badge.types";
 import { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 import { TIconWeight } from "./components/icon/bq-icon.types";
+import { FloatingUIPlacement } from "./services/interfaces";
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 import { TSliderType } from "./components/slider/bq-slider.types";
 import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 import { TStatusType } from "./components/status/bq-status.types";
 import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
 import { TTabSize } from "./components/tab/bq-tab.types";
-import { FloatingUIPlacement } from "./services/interfaces";
 export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 export { TBadgeSize } from "./components/badge/bq-badge.types";
 export { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 export { TIconWeight } from "./components/icon/bq-icon.types";
+export { FloatingUIPlacement } from "./services/interfaces";
 export { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 export { TSliderType } from "./components/slider/bq-slider.types";
 export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 export { TStatusType } from "./components/status/bq-status.types";
 export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
 export { TTabSize } from "./components/tab/bq-tab.types";
-export { FloatingUIPlacement } from "./services/interfaces";
 export namespace Components {
     /**
      * An avatar represents an object made of different pieces of information, in a way that is understandable at a glance.
@@ -198,6 +198,8 @@ export namespace Components {
          */
         "titleAlignment"?: TDividerTitleAlignment;
     }
+    interface BqDropdown {
+    }
     /**
      * Icons are simplified images that graphically explain the meaning of an object on the screen.
      */
@@ -218,6 +220,21 @@ export namespace Components {
           * It set the icon weight/style
          */
         "weight"?: TIconWeight;
+    }
+    interface BqPanel {
+        /**
+          * Distance between dropdown panel and the trigger element
+         */
+        "distance"?: number;
+        /**
+          * If true, panel is visible
+         */
+        "isVisible"?: boolean;
+        "openPanel": () => Promise<void>;
+        /**
+          * Position of the panel
+         */
+        "placement"?: FloatingUIPlacement;
     }
     interface BqRadio {
         /**
@@ -571,6 +588,12 @@ declare global {
         prototype: HTMLBqDividerElement;
         new (): HTMLBqDividerElement;
     };
+    interface HTMLBqDropdownElement extends Components.BqDropdown, HTMLStencilElement {
+    }
+    var HTMLBqDropdownElement: {
+        prototype: HTMLBqDropdownElement;
+        new (): HTMLBqDropdownElement;
+    };
     /**
      * Icons are simplified images that graphically explain the meaning of an object on the screen.
      */
@@ -579,6 +602,12 @@ declare global {
     var HTMLBqIconElement: {
         prototype: HTMLBqIconElement;
         new (): HTMLBqIconElement;
+    };
+    interface HTMLBqPanelElement extends Components.BqPanel, HTMLStencilElement {
+    }
+    var HTMLBqPanelElement: {
+        prototype: HTMLBqPanelElement;
+        new (): HTMLBqPanelElement;
     };
     interface HTMLBqRadioElement extends Components.BqRadio, HTMLStencilElement {
     }
@@ -647,7 +676,9 @@ declare global {
         "bq-button": HTMLBqButtonElement;
         "bq-checkbox": HTMLBqCheckboxElement;
         "bq-divider": HTMLBqDividerElement;
+        "bq-dropdown": HTMLBqDropdownElement;
         "bq-icon": HTMLBqIconElement;
+        "bq-panel": HTMLBqPanelElement;
         "bq-radio": HTMLBqRadioElement;
         "bq-radio-group": HTMLBqRadioGroupElement;
         "bq-slider": HTMLBqSliderElement;
@@ -840,6 +871,8 @@ declare namespace LocalJSX {
          */
         "titleAlignment"?: TDividerTitleAlignment;
     }
+    interface BqDropdown {
+    }
     /**
      * Icons are simplified images that graphically explain the meaning of an object on the screen.
      */
@@ -864,6 +897,20 @@ declare namespace LocalJSX {
           * It set the icon weight/style
          */
         "weight"?: TIconWeight;
+    }
+    interface BqPanel {
+        /**
+          * Distance between dropdown panel and the trigger element
+         */
+        "distance"?: number;
+        /**
+          * If true, panel is visible
+         */
+        "isVisible"?: boolean;
+        /**
+          * Position of the panel
+         */
+        "placement"?: FloatingUIPlacement;
     }
     interface BqRadio {
         /**
@@ -1165,7 +1212,9 @@ declare namespace LocalJSX {
         "bq-button": BqButton;
         "bq-checkbox": BqCheckbox;
         "bq-divider": BqDivider;
+        "bq-dropdown": BqDropdown;
         "bq-icon": BqIcon;
+        "bq-panel": BqPanel;
         "bq-radio": BqRadio;
         "bq-radio-group": BqRadioGroup;
         "bq-slider": BqSlider;
@@ -1192,10 +1241,12 @@ declare module "@stencil/core" {
             "bq-button": LocalJSX.BqButton & JSXBase.HTMLAttributes<HTMLBqButtonElement>;
             "bq-checkbox": LocalJSX.BqCheckbox & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
             "bq-divider": LocalJSX.BqDivider & JSXBase.HTMLAttributes<HTMLBqDividerElement>;
+            "bq-dropdown": LocalJSX.BqDropdown & JSXBase.HTMLAttributes<HTMLBqDropdownElement>;
             /**
              * Icons are simplified images that graphically explain the meaning of an object on the screen.
              */
             "bq-icon": LocalJSX.BqIcon & JSXBase.HTMLAttributes<HTMLBqIconElement>;
+            "bq-panel": LocalJSX.BqPanel & JSXBase.HTMLAttributes<HTMLBqPanelElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
             "bq-slider": LocalJSX.BqSlider & JSXBase.HTMLAttributes<HTMLBqSliderElement>;
