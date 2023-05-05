@@ -49,7 +49,7 @@ jobs:
         run: npx nx run-many --target=publish --exclude=workspace,bee-q-icons --output-style=stream-without-prefixes
 
       - name: 🔐 Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
