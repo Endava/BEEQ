@@ -1,4 +1,4 @@
-import { h, Component, Prop, Listen, Element, Method } from '@stencil/core';
+import { h, Component, Prop, Listen, Element, Method, Host } from '@stencil/core';
 
 import { FloatingUI } from '../../services/libraries';
 import { FloatingUIPlacement } from '../../services/interfaces';
@@ -100,9 +100,9 @@ export class BqPanel {
 
   render() {
     return (
-      <div class="panel" ref={(el) => (this.panel = el)} aria-hidden={!this.isVisible} hidden={!this.isVisible}>
+      <Host class="panel" ref={(el) => (this.panel = el)} aria-hidden={!this.isVisible} hidden={!this.isVisible}>
         <slot />
-      </div>
+      </Host>
     );
   }
 }
