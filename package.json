@@ -113,7 +113,7 @@
     "husky": "8.0.3",
     "jest": "27.5.1",
     "jest-environment-jsdom": "27.5.1",
-    "jsonc-eslint-parser": "2.1.0",
+    "jsonc-eslint-parser": "2.2.0",
     "lint-staged": "13.2.1",
     "lit-html": "2.7.2",
     "nanospinner": "1.1.0",
