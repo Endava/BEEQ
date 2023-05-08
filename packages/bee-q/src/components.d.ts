@@ -11,6 +11,7 @@ import { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./c
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 import { TIconWeight } from "./components/icon/bq-icon.types";
 import { TMenuSize, TMenuTheme } from "./components/menu/bq-menu.types";
+import { TNotificationType } from "./components/notification/bq-notification.types";
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 import { TSliderType } from "./components/slider/bq-slider.types";
 import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
@@ -24,6 +25,7 @@ export { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./c
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 export { TIconWeight } from "./components/icon/bq-icon.types";
 export { TMenuSize, TMenuTheme } from "./components/menu/bq-menu.types";
+export { TNotificationType } from "./components/notification/bq-notification.types";
 export { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 export { TSliderType } from "./components/slider/bq-slider.types";
 export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
@@ -270,6 +272,48 @@ export namespace Components {
           * Attribute link
          */
         "href": string | undefined;
+    }
+    interface BqNotification {
+        /**
+          * If true, the notification will automatically hide after the specified amount of time
+         */
+        "autoDismiss": boolean;
+        /**
+          * If true, the close button at the top right of the notification won't be shown
+         */
+        "disableClose": boolean;
+        /**
+          * If true, the predefined icon type won't be shown and a custom icon provided on integration will be displayed instead
+         */
+        "hasCustomIcon": boolean;
+        /**
+          * Method to be called to hide the notification component
+         */
+        "hide": () => Promise<void>;
+        /**
+          * If true, the notification icon won't be shown
+         */
+        "hideIcon": boolean;
+        /**
+          * If true, the notification will be shown
+         */
+        "isOpen": boolean;
+        /**
+          * Method to be called to show the notification component
+         */
+        "show": () => Promise<void>;
+        /**
+          * The length of time, in milliseconds, after which the notification will close itself. Only valid if `autoDismiss="true"`
+         */
+        "time": number;
+        /**
+          * This method can be used to display notifications in a fixed-position element that allows for stacking multiple notifications vertically.
+         */
+        "toast": () => Promise<void>;
+        /**
+          * Type of Notification
+         */
+        "type": TNotificationType;
     }
     interface BqRadio {
         /**
@@ -570,6 +614,10 @@ export interface BqMenuItemCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqMenuItemElement;
 }
+export interface BqNotificationCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqNotificationElement;
+}
 export interface BqRadioCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqRadioElement;
@@ -657,6 +705,12 @@ declare global {
     var HTMLBqMenuItemElement: {
         prototype: HTMLBqMenuItemElement;
         new (): HTMLBqMenuItemElement;
+    }
+    interface HTMLBqNotificationElement extends Components.BqNotification, HTMLStencilElement {
+    }
+    var HTMLBqNotificationElement: {
+        prototype: HTMLBqNotificationElement;
+        new (): HTMLBqNotificationElement;
     };
     interface HTMLBqRadioElement extends Components.BqRadio, HTMLStencilElement {
     }
@@ -728,6 +782,7 @@ declare global {
         "bq-icon": HTMLBqIconElement;
         "bq-menu": HTMLBqMenuElement;
         "bq-menu-item": HTMLBqMenuItemElement;
+        "bq-notification": HTMLBqNotificationElement;
         "bq-radio": HTMLBqRadioElement;
         "bq-radio-group": HTMLBqRadioGroupElement;
         "bq-slider": HTMLBqSliderElement;
@@ -1014,6 +1069,44 @@ declare namespace LocalJSX {
           * Handler to be called on enter key press
          */
         "onBqMenuItemOnEnter"?: (event: BqMenuItemCustomEvent<HTMLBqMenuItemElement>) => void;
+    }
+    interface BqNotification {
+        /**
+          * If true, the notification will automatically hide after the specified amount of time
+         */
+        "autoDismiss"?: boolean;
+        /**
+          * If true, the close button at the top right of the notification won't be shown
+         */
+        "disableClose"?: boolean;
+        /**
+          * If true, the predefined icon type won't be shown and a custom icon provided on integration will be displayed instead
+         */
+        "hasCustomIcon"?: boolean;
+        /**
+          * If true, the notification icon won't be shown
+         */
+        "hideIcon"?: boolean;
+        /**
+          * If true, the notification will be shown
+         */
+        "isOpen"?: boolean;
+        /**
+          * Callback handler to be called when the notification is hidden
+         */
+        "onBqHide"?: (event: BqNotificationCustomEvent<any>) => void;
+        /**
+          * Callback handler to be called when the notification is shown
+         */
+        "onBqShow"?: (event: BqNotificationCustomEvent<any>) => void;
+        /**
+          * The length of time, in milliseconds, after which the notification will close itself. Only valid if `autoDismiss="true"`
+         */
+        "time"?: number;
+        /**
+          * Type of Notification
+         */
+        "type"?: TNotificationType;
     }
     interface BqRadio {
         /**
@@ -1318,6 +1411,7 @@ declare namespace LocalJSX {
         "bq-icon": BqIcon;
         "bq-menu": BqMenu;
         "bq-menu-item": BqMenuItem;
+        "bq-notification": BqNotification;
         "bq-radio": BqRadio;
         "bq-radio-group": BqRadioGroup;
         "bq-slider": BqSlider;
@@ -1356,6 +1450,7 @@ declare module "@stencil/core" {
              * The menu item is used inside a `bq-menu` component
              */
             "bq-menu-item": LocalJSX.BqMenuItem & JSXBase.HTMLAttributes<HTMLBqMenuItemElement>;
+            "bq-notification": LocalJSX.BqNotification & JSXBase.HTMLAttributes<HTMLBqNotificationElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
             "bq-slider": LocalJSX.BqSlider & JSXBase.HTMLAttributes<HTMLBqSliderElement>;

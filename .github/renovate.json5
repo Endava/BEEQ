@@ -1,0 +1,123 @@
+{
+  $schema: 'https: //docs.renovatebot.com/renovate-schema.json',
+  /**
+   * Determine assignees based on configured code owners and changes in PR.
+   */
+  assigneesFromCodeOwners: true,
+  /**
+   * Prefix to use for all branch names made by Renovate.
+   */
+  branchPrefix: 'chore/',
+  /**
+   * Configuring dependencyDashboard to true will lead
+   * to the creation of a "Dependency Dashboard" issue within the repository.
+   * This issue has a list of all PRs pending, open, closed (unmerged) or in error.
+   * The goal of this issue is to give visibility into all updates that Renovate is managing.
+   */
+  dependencyDashboard: true,
+  /**
+   * The ignoreDeps configuration field allows you to define a list of dependency names to be ignored by Renovate.
+   * Currently it supports only "exact match" dependency names.
+   */
+  ignoreDeps: ['@types/jest', 'jest', 'jest-environment-jsdom'],
+  /**
+   * Labels to set in the Pull Request.
+   */
+  labels: ['chore ⚙️', 'dependencies 📦'],
+  /**
+   * Time required before a new release is considered stable.
+   */
+  minimumReleaseAge: '15 days',
+  /**
+   * Package rules lets you apply rules to individual packages
+   * or to groups of packages using regex pattern matching.
+   */
+  packageRules: [
+    {
+      groupName: '@angular',
+      matchPackagePrefixes: ['@angular'],
+      allowedVersions: '<15.0.0',
+    },
+    {
+      groupName: 'eslint',
+      matchPackagePrefixes: ['eslint'],
+    },
+    {
+      groupName: 'ng',
+      matchPackagePrefixes: ['ng-packagr'],
+      allowedVersions: '<15.0.0',
+    },
+    {
+      groupName: 'nx',
+      matchPackagePrefixes: ['@nrwl', 'nx'],
+      allowedVersions: '<15.0.0',
+      excludeDepNames: ['@nrwl/nx-cloud'],
+    },
+    {
+      groupName: '@nxext',
+      matchPackagePrefixes: ['@nxext'],
+      allowedVersions: '<15.0.0',
+    },
+    {
+      groupName: 'postcss',
+      matchPackagePrefixes: ['postcss'],
+    },
+    {
+      groupName: 'prettier',
+      matchPackagePrefixes: ['prettier'],
+    },
+    {
+      groupName: '@stencil',
+      matchPackagePrefixes: ['@stencil/'],
+    },
+    {
+      groupName: '@storybook',
+      matchPackagePrefixes: ['@storybook/', 'storybook'],
+    },
+    {
+      groupName: '@swc',
+      matchPackagePrefixes: ['@swc'],
+    },
+    {
+      groupName: 'stylelint',
+      matchPackagePrefixes: ['stylelint'],
+    },
+    {
+      groupName: 'typescript',
+      matchPackagePrefixes: ['typescript'],
+      allowedVersions: '<5.0.0',
+    },
+    {
+      groupName: 'typescript eslint',
+      matchPackagePrefixes: ['@typescript-eslint'],
+    },
+    {
+      groupName: 'types react',
+      matchPackagePrefixes: ['@types/react'],
+    },
+    /**
+     * Do not renovate peerDependencies versions/ranges.
+     */
+    {
+      enabled: false,
+      matchDepTypes: ['peerDependencies'],
+    },
+  ],
+  /**
+   * This config option slows down the rate at which Renovate creates PRs.
+   */
+  prHourlyLimit: 12,
+  /**
+   * Determines how to modify or update existing ranges.
+   * pin = convert ranges to exact versions, e.g. ^1.0.0 -> 1.1.0
+   */
+  rangeStrategy: 'pin',
+  /**
+   * Controls when Renovate rebases an existing branch.
+   */
+  rebaseWhen: 'never',
+  /**
+   * Enable Semantic Commit prefixes for commits and PR titles.
+   */
+  semanticCommits: true,
+}

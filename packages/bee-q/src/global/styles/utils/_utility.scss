@@ -1,0 +1,19 @@
+/*
+ * This file contains utility classes that cannot be included within a component.
+ * These classes must be used in the light DOM and not directly targeted by any rules in the stylesheet.
+ * In order to reduce the likelihood of conflicts, all classes within the file must begin with ".bq-".
+ */
+
+.bq-link {
+  @apply relative inline-block rounded-xs text-text-brand no-underline focus-visible:focus hover:text-text-brand-hover active:text-text-brand-active;
+  @apply before:absolute before:bottom-0 before:block before:h-[2px] before:w-full before:scale-x-0 before:transition-transform before:duration-300 before:content-empty;
+  @apply hover:before:scale-x-100 hover:before:bg-stroke-brand-hover active:before:bg-stroke-brand-active;
+}
+
+.bq-notification-portal {
+  @apply fixed end-0 top-0 z-50 max-h-full max-w-full;
+}
+
+.bq-notification-portal bq-notification {
+  @apply m-4;
+}

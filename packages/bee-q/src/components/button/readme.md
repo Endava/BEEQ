@@ -1,9 +1,6 @@
 # bq-button
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Overview
 
@@ -23,7 +20,6 @@ Buttons are designed for users to take action on a page or a screen.
 | `type`       | `type`       | The default behavior of the button                                                                                                                                                      | `"button" \| "reset" \| "submit"`              | `'button'`   |
 | `variant`    | `variant`    | The variant of button to apply on top of the appearance (applicable only to `appearance="primary"`)                                                                                     | `"danger" \| "ghost" \| "standard"`            | `'standard'` |
 
-
 ## Events
 
 | Event     | Description                                      | Type                               |
@@ -31,7 +27,6 @@ Buttons are designed for users to take action on a page or a screen.
 | `bqBlur`  | Handler to be called when the button loses focus | `CustomEvent<HTMLBqButtonElement>` |
 | `bqClick` | Handler to be called when button gets focus      | `CustomEvent<HTMLBqButtonElement>` |
 | `bqFocus` | Handler to be called when the button is clicked  | `CustomEvent<HTMLBqButtonElement>` |
-
 
 ## Shadow Parts
 
@@ -42,25 +37,30 @@ Buttons are designed for users to take action on a page or a screen.
 | `"prefix"` | The `<span>` tag element that acts as prefix container.       |
 | `"suffix"` | The `<span>` tag element that acts as suffix container.       |
 
-
 ## Dependencies
 
 ### Used by
 
- - [bq-menu](../menu)
+- [bq-notification](../notification)
+
+### Used by
+
+- [bq-menu](../menu)
 
 ### Depends on
 
 - [bq-icon](../icon)
 
 ### Graph
+
 ```mermaid
 graph TD;
   bq-button --> bq-icon
+  bq-notification --> bq-button
   bq-menu --> bq-button
   style bq-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_
