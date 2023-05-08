@@ -3,6 +3,8 @@ import mdx from './bq-panel.mdx';
 
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
 
+import { PANEL_PLACEMENT } from '../bq-panel.type';
+
 const meta: Meta = {
   title: 'Components/Panel',
   component: 'bq-panel',
@@ -10,21 +12,63 @@ const meta: Meta = {
     docs: {
       page: mdx,
     },
+    layout: 'centered',
   },
   argTypes: {
+    distance: { control: 'number' },
+    placement: { control: 'select', options: PANEL_PLACEMENT },
+    'is-visible': { control: 'boolean' },
     text: { control: 'text', table: { disable: true } },
   },
   args: {
-    text: 'text',
+    distance: 0,
+    placement: 'bottom',
+    'is-visible': true,
+    text: 'Some content in the panel',
   },
 };
 export default meta;
 
 type Story = StoryObj;
 
-const Template = (args: Args) => html`<bq-panel>${args.text}</bq-panel>`;
+const Template = (args: Args) => html`
+  <bq-dropdown>
+    <bq-button slot="trigger">Open</bq-button>
+    <bq-panel distance=${args.distance} placement=${args.placement} ?is-visible=${args['is-visible']}>
+      ${args.text}
+    </bq-panel>
+  </bq-dropdown>
+`;
 
-export const Default: Story = {
+export const Bottom: Story = {
   render: Template,
-  args: {},
+
+  args: {
+    text: 'Panel is displayed on the bottom',
+    placement: 'bottom',
+    'is-visible': true,
+    distance: 0,
+  },
+};
+
+export const Top: Story = {
+  render: Template,
+
+  args: {
+    text: 'Panel displayed on top',
+    placement: 'top',
+    'is-visible': true,
+    distance: 0,
+  },
+};
+
+export const Distance: Story = {
+  render: Template,
+
+  args: {
+    text: 'Hello!',
+    placement: 'bottom',
+    'is-visible': true,
+    distance: 10,
+  },
 };

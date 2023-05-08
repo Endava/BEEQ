@@ -7,10 +7,10 @@
 
 ## Shadow Parts
 
-| Part        | Description |
-| ----------- | ----------- |
-| `"panel"`   |             |
-| `"trigger"` |             |
+| Part        | Description                                                    |
+| ----------- | -------------------------------------------------------------- |
+| `"panel"`   | The `div` element used to display the panel element (bq-panel) |
+| `"trigger"` | The `div` element used to display the trigger element          |
 
 
 ----------------------------------------------

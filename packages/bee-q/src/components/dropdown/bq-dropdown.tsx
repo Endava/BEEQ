@@ -1,6 +1,10 @@
 import { h, Component, Element, Host } from '@stencil/core';
 import { isHTMLElement } from '../../shared/utils';
 
+/**
+ * @part trigger - The `div` element used to display the trigger element
+ * @part panel - The `div` element used to display the panel element (bq-panel)
+ */
 @Component({
   tag: 'bq-dropdown',
   styleUrl: './scss/bq-dropdown.scss',
@@ -63,7 +67,7 @@ export class BqDropdown {
       .filter((elem: HTMLElement) => isHTMLElement(elem, 'bq-panel')) as [HTMLBqPanelElement];
     const target = slots[0] as HTMLBqPanelElement;
 
-    target.openPanel();
+    target?.openPanel();
   };
 
   render() {

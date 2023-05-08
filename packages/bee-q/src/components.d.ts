@@ -267,7 +267,7 @@ export namespace Components {
     }
     interface BqPanel {
         /**
-          * Distance between dropdown panel and the trigger element
+          * Distance between the panel and the trigger element
          */
         "distance"?: number;
         /**
@@ -993,7 +993,7 @@ declare namespace LocalJSX {
     }
     interface BqPanel {
         /**
-          * Distance between dropdown panel and the trigger element
+          * Distance between the panel and the trigger element
          */
         "distance"?: number;
         /**

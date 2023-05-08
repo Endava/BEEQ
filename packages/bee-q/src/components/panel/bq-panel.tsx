@@ -1,4 +1,4 @@
-import { h, Component, Prop, Listen, Element, Method, Host } from '@stencil/core';
+import { h, Component, Prop, Listen, Element, Method, Host, Watch } from '@stencil/core';
 
 import { FloatingUI } from '../../services/libraries';
 import { FloatingUIPlacement } from '../../services/interfaces';
@@ -30,7 +30,19 @@ export class BqPanel {
   // Prop lifecycle events
   // =======================
 
-  /** Distance between dropdown panel and the trigger element */
+  @Watch('distance')
+  @Watch('placement')
+  onDistanceChange() {
+    this.floatingUI.init({
+      placement: this.placement,
+      distance: this.distance,
+      sameWidth: false,
+      strategy: 'fixed',
+      skidding: 0,
+    });
+  }
+
+  /** Distance between the panel and the trigger element */
   @Prop({ reflect: true }) distance?: number = 0;
 
   /** Position of the panel */
