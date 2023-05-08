@@ -7,3 +7,33 @@
 :host {
   @apply block;
 }
+
+.bq-option {
+  @apply flex h-[var(--bq-option--height)] w-full cursor-not-allowed items-center px-3 py-2;
+  @apply rounded-s bg-transparent;
+  @apply focus-visible:focus active:outline-none;
+
+  &__child {
+    @apply flex items-center;
+  }
+
+  &.disabled {
+    @apply text-text-primary-disabled focus:ring-0 active:text-text-primary-disabled;
+  }
+
+  &:not(.disabled) {
+    @apply cursor-pointer hover:bg-ui-secondary-hover active:bg-ui-brand-light active:text-text-brand;
+  }
+}
+
+.label {
+  @apply inline-block w-auto max-w-[var(--bq-option-label--m-width)] overflow-hidden text-ellipsis whitespace-nowrap px-[var(--bq-option-label--paddingX)];
+}
+
+.no-prefix {
+  @apply pl-0;
+}
+
+.suffix {
+  @apply ml-auto;
+}

@@ -271,6 +271,12 @@ export namespace Components {
          */
         "type": TNotificationType;
     }
+    interface BqOption {
+        /**
+          * If true, the dropdown item is disabled
+         */
+        "disabled"?: boolean;
+    }
     interface BqRadio {
         /**
           * If true radio displays background on hover
@@ -642,6 +648,12 @@ declare global {
         prototype: HTMLBqNotificationElement;
         new (): HTMLBqNotificationElement;
     };
+    interface HTMLBqOptionElement extends Components.BqOption, HTMLStencilElement {
+    }
+    var HTMLBqOptionElement: {
+        prototype: HTMLBqOptionElement;
+        new (): HTMLBqOptionElement;
+    };
     interface HTMLBqRadioElement extends Components.BqRadio, HTMLStencilElement {
     }
     var HTMLBqRadioElement: {
@@ -711,6 +723,7 @@ declare global {
         "bq-divider": HTMLBqDividerElement;
         "bq-icon": HTMLBqIconElement;
         "bq-notification": HTMLBqNotificationElement;
+        "bq-option": HTMLBqOptionElement;
         "bq-radio": HTMLBqRadioElement;
         "bq-radio-group": HTMLBqRadioGroupElement;
         "bq-slider": HTMLBqSliderElement;
@@ -973,6 +986,12 @@ declare namespace LocalJSX {
           * Type of Notification
          */
         "type"?: TNotificationType;
+    }
+    interface BqOption {
+        /**
+          * If true, the dropdown item is disabled
+         */
+        "disabled"?: boolean;
     }
     interface BqRadio {
         /**
@@ -1276,6 +1295,7 @@ declare namespace LocalJSX {
         "bq-divider": BqDivider;
         "bq-icon": BqIcon;
         "bq-notification": BqNotification;
+        "bq-option": BqOption;
         "bq-radio": BqRadio;
         "bq-radio-group": BqRadioGroup;
         "bq-slider": BqSlider;
@@ -1307,6 +1327,7 @@ declare module "@stencil/core" {
              */
             "bq-icon": LocalJSX.BqIcon & JSXBase.HTMLAttributes<HTMLBqIconElement>;
             "bq-notification": LocalJSX.BqNotification & JSXBase.HTMLAttributes<HTMLBqNotificationElement>;
+            "bq-option": LocalJSX.BqOption & JSXBase.HTMLAttributes<HTMLBqOptionElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
             "bq-slider": LocalJSX.BqSlider & JSXBase.HTMLAttributes<HTMLBqSliderElement>;
