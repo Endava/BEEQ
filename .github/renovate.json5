@@ -72,7 +72,7 @@
     },
     {
       groupName: '@storybook',
-      matchPackagePrefixes: ['@storybook/'],
+      matchPackagePrefixes: ['@storybook/', 'storybook'],
     },
     {
       groupName: '@swc',
