@@ -572,6 +572,10 @@ export interface BqNotificationCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqNotificationElement;
 }
+export interface BqOptionCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqOptionElement;
+}
 export interface BqRadioCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqRadioElement;
@@ -992,6 +996,22 @@ declare namespace LocalJSX {
           * If true, the dropdown item is disabled
          */
         "disabled"?: boolean;
+        /**
+          * Handler to be called when item loses focus
+         */
+        "onBqOptionBlur"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        /**
+          * Handler to be called when item is clicked
+         */
+        "onBqOptionClick"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        /**
+          * Handler to be called when item is focused
+         */
+        "onBqOptionFocus"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        /**
+          * Handler to be called on enter key press
+         */
+        "onBqOptionOnEnter"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
     }
     interface BqRadio {
         /**
