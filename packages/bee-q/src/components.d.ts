@@ -279,6 +279,11 @@ export namespace Components {
           * Position of the panel
          */
         "placement"?: FloatingUIPlacement;
+        /**
+          * set trigger element and init FloatingUI
+          * @param trigger - trigger element for the panel
+         */
+        "setTriggerElement": (trigger: HTMLElement) => Promise<void>;
     }
     interface BqRadio {
         /**

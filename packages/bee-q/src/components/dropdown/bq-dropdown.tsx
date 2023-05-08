@@ -41,6 +41,10 @@ export class BqDropdown {
   // Ordered by their natural call order
   // =====================================
 
+  componentDidLoad() {
+    this.initFloatingUIFromPanel();
+  }
+
   // Listeners
   // ==============
 
@@ -61,14 +65,25 @@ export class BqDropdown {
   // ===================================
 
   private openPanel = (): void => {
+    const target: HTMLBqPanelElement = this.panelElement;
+
+    target?.openPanel();
+  };
+
+  private initFloatingUIFromPanel = (): void => {
+    const target: HTMLBqPanelElement = this.panelElement;
+
+    target?.setTriggerElement(this.el);
+  };
+
+  private get panelElement(): HTMLBqPanelElement {
     const slots: Element[] = this.el.shadowRoot
       .querySelector<HTMLSlotElement>('[part="panel"] > slot')
       .assignedElements({ flatten: true })
       .filter((elem: HTMLElement) => isHTMLElement(elem, 'bq-panel')) as [HTMLBqPanelElement];
-    const target = slots[0] as HTMLBqPanelElement;
 
-    target?.openPanel();
-  };
+    return slots[0] as HTMLBqPanelElement;
+  }
 
   render() {
     return (

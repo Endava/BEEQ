@@ -5,7 +5,7 @@
 @import './bq-dropdown-variables';
 
 :host {
-  @apply relative;
+  @apply relative inline-block;
 }
 
 .trigger {

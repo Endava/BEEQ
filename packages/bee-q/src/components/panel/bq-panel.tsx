@@ -14,6 +14,7 @@ export class BqPanel {
 
   private panel: HTMLElement;
   private floatingUI: FloatingUI;
+  private trigger: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -32,7 +33,7 @@ export class BqPanel {
 
   @Watch('distance')
   @Watch('placement')
-  onDistanceChange() {
+  onPropChange() {
     this.floatingUI.init({
       placement: this.placement,
       distance: this.distance,
@@ -59,16 +60,6 @@ export class BqPanel {
   // Ordered by their natural call order
   // =====================================
 
-  componentDidLoad() {
-    this.floatingUI = new FloatingUI(this.getTriggerElement(), this.panel, {
-      placement: this.placement,
-      distance: this.distance,
-      sameWidth: false,
-      strategy: 'fixed',
-      skidding: 0,
-    });
-  }
-
   disconnectedCallback() {
     this.floatingUI?.destroy();
   }
@@ -79,7 +70,7 @@ export class BqPanel {
   /** On click outside the panel */
   @Listen('click', { target: 'document' })
   onClickOutsidePanel(event: MouseEvent) {
-    if (!event.composedPath().includes(this.panel) && !event.composedPath().includes(this.getTriggerElement())) {
+    if (!event.composedPath().includes(this.panel) && !event.composedPath().includes(this.trigger)) {
       this.isVisible = false;
     }
   }
@@ -97,13 +88,30 @@ export class BqPanel {
     this.floatingUI?.update();
   }
 
+  /**
+   * set trigger element and init FloatingUI
+   * @param trigger - trigger element for the panel
+   */
+  @Method()
+  async setTriggerElement(trigger: HTMLElement) {
+    this.trigger = trigger;
+
+    this.initFloatingUI();
+  }
+
   // Local methods
   // Internal business logic.
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private getTriggerElement = (): HTMLElement => {
-    return document.querySelector('bq-dropdown').shadowRoot.querySelector('[part="trigger"]');
+  private initFloatingUI = () => {
+    this.floatingUI = new FloatingUI(this.trigger, this.panel, {
+      placement: this.placement,
+      distance: this.distance,
+      sameWidth: false,
+      strategy: 'fixed',
+      skidding: 0,
+    });
   };
 
   // render() function

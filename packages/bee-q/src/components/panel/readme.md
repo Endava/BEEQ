@@ -26,6 +26,16 @@ Type: `Promise<void>`
 
 
 
+### `setTriggerElement(trigger: HTMLElement) => Promise<void>`
+
+set trigger element and init FloatingUI
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 
 ----------------------------------------------
 
