@@ -1,4 +1,6 @@
-import { h, Component } from '@stencil/core';
+import { h, Component, Prop, Element, State } from '@stencil/core';
+
+import { hasSlotContent } from '../../shared/utils';
 
 @Component({
   tag: 'bq-option',
@@ -9,15 +11,24 @@ export class BqOption {
   // Own Properties
   // ====================
 
+  private prefixElem: HTMLElement;
+
   // Reference to host HTML element
   // ===================================
+
+  @Element() el!: HTMLBqOptionElement;
 
   // State() variables
   // Inlined decorator, alphabetical order
   // =======================================
 
+  @State() hasPrefix = false;
+
   // Public Property API
   // ========================
+
+  /** If true, the dropdown item is disabled */
+  @Prop({ reflect: true }) disabled?: boolean = false;
 
   // Prop lifecycle events
   // =======================
@@ -45,15 +56,41 @@ export class BqOption {
   // These methods cannot be called from the host element.
   // =======================================================
 
+  private onSlotChange = () => {
+    this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
 
   render() {
     return (
-      <p class="m-[var(--bq-option--margin)]">
-        My name is Stencil <slot />
-      </p>
+      <div
+        class={{
+          'bq-option': true,
+          disabled: this.disabled,
+        }}
+        aria-role="listitem"
+        tabindex={this.disabled ? '-1' : '0'}
+      >
+        <span class="bq-option__child" ref={(elem) => (this.prefixElem = elem)} part="prefix">
+          <slot name="prefix" onSlotchange={this.onSlotChange} />
+        </span>
+        <span
+          class={{
+            'bq-option__child': true,
+            label: true,
+            'no-prefix': !this.hasPrefix,
+          }}
+          part="label"
+        >
+          <slot />
+        </span>
+        <span class="bq-option__child suffix" part="suffix">
+          <slot name="suffix" />
+        </span>
+      </div>
     );
   }
 }
