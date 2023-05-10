@@ -27,8 +27,14 @@ export class BqOption {
   // Public Property API
   // ========================
 
-  /** If true, the dropdown item is disabled */
+  /** If true, the dropdown item is disabled. */
   @Prop({ reflect: true }) disabled?: boolean = false;
+
+  /** A string representing the value of the option. */
+  @Prop({ reflect: true }) value?: string;
+
+  /** If true, the option is selected and active. */
+  @Prop({ reflect: true }) selected: boolean = false;
 
   // Prop lifecycle events
   // =======================
@@ -117,8 +123,9 @@ export class BqOption {
         class={{
           'bq-option': true,
           disabled: this.disabled,
+          active: this.selected,
         }}
-        aria-role="listitem"
+        aria-role="option"
         tabindex={this.disabled ? '-1' : '0'}
         onBlur={this.onBlur}
         onFocus={this.onFocus}

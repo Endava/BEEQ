@@ -265,9 +265,17 @@ export namespace Components {
     }
     interface BqOption {
         /**
-          * If true, the dropdown item is disabled
+          * If true, the dropdown item is disabled.
          */
         "disabled"?: boolean;
+        /**
+          * If true, the option is selected and active.
+         */
+        "selected": boolean;
+        /**
+          * A string representing the value of the option.
+         */
+        "value"?: string;
     }
     interface BqRadio {
         /**
@@ -977,7 +985,7 @@ declare namespace LocalJSX {
     }
     interface BqOption {
         /**
-          * If true, the dropdown item is disabled
+          * If true, the dropdown item is disabled.
          */
         "disabled"?: boolean;
         /**
@@ -996,6 +1004,14 @@ declare namespace LocalJSX {
           * Handler to be called on enter key press
          */
         "onBqOptionOnEnter"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        /**
+          * If true, the option is selected and active.
+         */
+        "selected"?: boolean;
+        /**
+          * A string representing the value of the option.
+         */
+        "value"?: string;
     }
     interface BqRadio {
         /**
