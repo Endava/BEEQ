@@ -1,4 +1,4 @@
-import { h, Component, Element, Host } from '@stencil/core';
+import { h, Component, Element, Host, Listen, Event, EventEmitter } from '@stencil/core';
 import { isHTMLElement } from '../../shared/utils';
 
 /**
@@ -25,8 +25,6 @@ export class BqDropdown {
   // Inlined decorator, alphabetical order
   // =======================================
 
-  // @State() private isVisible = false;
-
   // Public Property API
   // ========================
 
@@ -36,6 +34,18 @@ export class BqDropdown {
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
+
+  /** Handler to be called when the item loses focus */
+  @Event() bqBlur: EventEmitter<HTMLElement>;
+
+  /** Handler to be called when the item gets focus */
+  @Event() bqFocus: EventEmitter<HTMLElement>;
+
+  /** Handler to be called when item is changed (click/enter press) */
+  @Event() bqSelect: EventEmitter<HTMLElement>; // switch to HTMLBqOptionElement
+
+  /** Handler to be called when the panel switches state (visible/hidden) */
+  @Event() bqPanelOpen: EventEmitter<boolean>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -47,6 +57,30 @@ export class BqDropdown {
 
   // Listeners
   // ==============
+
+  @Listen('bqOptionBlur')
+  onBqOptionBlur(event: CustomEvent<HTMLElement>) {
+    // switch type to HTMLBqOptionElement
+    this.bqBlur.emit(event.detail);
+  }
+
+  @Listen('bqOptionFocus')
+  onBqOptionFocus(event: CustomEvent<HTMLElement>) {
+    // switch type to HTMLBqOptionElement
+    this.bqFocus.emit(event.detail);
+  }
+
+  @Listen('bqOptionClick')
+  @Listen('bqOptionOnEnter')
+  onBqOptionSelect(event: CustomEvent<HTMLElement>) {
+    // switch type to HTMLBqOptionElement
+    this.bqSelect.emit(event.detail);
+  }
+
+  @Listen('bqPanelVisibility')
+  onPanelStateChange(event: CustomEvent<boolean>) {
+    this.bqPanelOpen.emit(event.detail);
+  }
 
   // Public methods API
   // These methods are exposed on the host element.
@@ -67,7 +101,7 @@ export class BqDropdown {
   private openPanel = (): void => {
     const target: HTMLBqPanelElement = this.panelElement;
 
-    target?.openPanel();
+    target?.togglePanel();
   };
 
   private initFloatingUIFromPanel = (): void => {

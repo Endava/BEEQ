@@ -273,8 +273,7 @@ export namespace Components {
         /**
           * If true, panel is visible
          */
-        "isVisible"?: boolean;
-        "openPanel": () => Promise<void>;
+        "open"?: boolean;
         /**
           * Position of the panel
          */
@@ -284,6 +283,7 @@ export namespace Components {
           * @param trigger - trigger element for the panel
          */
         "setTriggerElement": (trigger: HTMLElement) => Promise<void>;
+        "togglePanel": () => Promise<void>;
     }
     interface BqRadio {
         /**
@@ -572,6 +572,10 @@ export interface BqCheckboxCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqCheckboxElement;
 }
+export interface BqDropdownCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqDropdownElement;
+}
 export interface BqIconCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqIconElement;
@@ -579,6 +583,10 @@ export interface BqIconCustomEvent<T> extends CustomEvent<T> {
 export interface BqNotificationCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqNotificationElement;
+}
+export interface BqPanelCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqPanelElement;
 }
 export interface BqRadioCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -932,6 +940,22 @@ declare namespace LocalJSX {
         "titleAlignment"?: TDividerTitleAlignment;
     }
     interface BqDropdown {
+        /**
+          * Handler to be called when the item loses focus
+         */
+        "onBqBlur"?: (event: BqDropdownCustomEvent<HTMLElement>) => void;
+        /**
+          * Handler to be called when the item gets focus
+         */
+        "onBqFocus"?: (event: BqDropdownCustomEvent<HTMLElement>) => void;
+        /**
+          * Handler to be called when the panel switches state (visible/hidden)
+         */
+        "onBqPanelOpen"?: (event: BqDropdownCustomEvent<boolean>) => void;
+        /**
+          * Handler to be called when item is changed (click/enter press)
+         */
+        "onBqSelect"?: (event: BqDropdownCustomEvent<HTMLElement>) => void;
     }
     /**
      * Icons are simplified images that graphically explain the meaning of an object on the screen.
@@ -1002,9 +1026,13 @@ declare namespace LocalJSX {
          */
         "distance"?: number;
         /**
+          * Handler to be called to check if the panel is open or closed
+         */
+        "onBqPanelVisibility"?: (event: BqPanelCustomEvent<boolean>) => void;
+        /**
           * If true, panel is visible
          */
-        "isVisible"?: boolean;
+        "open"?: boolean;
         /**
           * Position of the panel
          */

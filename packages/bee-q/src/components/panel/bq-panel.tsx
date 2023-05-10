@@ -1,4 +1,4 @@
-import { h, Component, Prop, Listen, Element, Method, Host, Watch } from '@stencil/core';
+import { h, Component, Prop, Listen, Element, Method, Host, Watch, EventEmitter, Event } from '@stencil/core';
 
 import { FloatingUI } from '../../services/libraries';
 import { FloatingUIPlacement } from '../../services/interfaces';
@@ -30,6 +30,10 @@ export class BqPanel {
 
   // Prop lifecycle events
   // =======================
+  @Watch('open')
+  emit() {
+    this.bqPanelVisibility.emit(this.open);
+  }
 
   @Watch('distance')
   @Watch('placement')
@@ -50,11 +54,14 @@ export class BqPanel {
   @Prop({ reflect: true }) placement?: FloatingUIPlacement = 'bottom';
 
   /** If true, panel is visible */
-  @Prop({ reflect: true }) isVisible?: boolean = false;
+  @Prop({ reflect: true }) open?: boolean = false;
 
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
+
+  /** Handler to be called to check if the panel is open or closed */
+  @Event() bqPanelVisibility: EventEmitter<boolean>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -71,7 +78,7 @@ export class BqPanel {
   @Listen('click', { target: 'document' })
   onClickOutsidePanel(event: MouseEvent) {
     if (!event.composedPath().includes(this.panel) && !event.composedPath().includes(this.trigger)) {
-      this.isVisible = false;
+      this.open = false;
     }
   }
 
@@ -83,8 +90,9 @@ export class BqPanel {
   // ===============================================
 
   @Method()
-  async openPanel() {
-    this.isVisible = !this.isVisible;
+  async togglePanel() {
+    this.open = !this.open;
+
     this.floatingUI?.update();
   }
 
@@ -120,7 +128,7 @@ export class BqPanel {
 
   render() {
     return (
-      <Host class="panel" ref={(el) => (this.panel = el)} aria-hidden={!this.isVisible} hidden={!this.isVisible}>
+      <Host class="panel" ref={(el) => (this.panel = el)} aria-hidden={!this.open} hidden={!this.open}>
         <slot />
       </Host>
     );
