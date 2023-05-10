@@ -24,6 +24,10 @@
   &:not(.disabled) {
     @apply cursor-pointer hover:bg-ui-secondary-hover active:bg-ui-brand-light active:text-text-brand;
   }
+
+  &.active {
+    @apply bg-ui-brand-light text-text-brand;
+  }
 }
 
 .label {
