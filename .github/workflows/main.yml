@@ -28,7 +28,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 🛠 Setup Volta
-        uses: volta-cli/action@v3
+        uses: volta-cli/action@v4
 
       - name: 💫 Load and cache dependencies
         uses: ./.github/actions/cache-deps

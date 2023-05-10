@@ -14,7 +14,7 @@ jobs:
           fetch-depth: 0
 
       - name: 🛠 Setup Node
-        uses: volta-cli/action@v3
+        uses: volta-cli/action@v4
 
       - name: 💫 Load and cache dependencies
         uses: ./.github/actions/cache-deps
