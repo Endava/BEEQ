@@ -1,4 +1,4 @@
-import { h, Component, Prop, Element, State, Event, EventEmitter, Listen } from '@stencil/core';
+import { h, Component, Prop, Element, State, Event, EventEmitter, Listen, Method } from '@stencil/core';
 
 import { hasSlotContent } from '../../shared/utils';
 
@@ -22,7 +22,10 @@ export class BqOption {
   // Inlined decorator, alphabetical order
   // =======================================
 
-  @State() hasPrefix = false;
+  @State() hasPrefix: boolean = false;
+
+  /** If true, option element is part of a group */
+  @State() isOptionInGroup: boolean = false;
 
   // Public Property API
   // ========================
@@ -74,6 +77,11 @@ export class BqOption {
   // Requires JSDocs for public API documentation.
   // ===============================================
 
+  @Method()
+  async setPaddingToOption() {
+    this.isOptionInGroup = true;
+  }
+
   // Local methods
   // Internal business logic.
   // These methods cannot be called from the host element.
@@ -124,6 +132,7 @@ export class BqOption {
           'bq-option': true,
           disabled: this.disabled,
           active: this.selected,
+          'option-group': this.isOptionInGroup,
         }}
         aria-role="option"
         tabindex={this.disabled ? '-1' : '0'}

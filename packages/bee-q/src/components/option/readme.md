@@ -24,6 +24,19 @@
 | `bqOptionOnEnter` | Handler to be called on enter key press    | `CustomEvent<HTMLBqOptionElement>` |
 
 
+## Methods
+
+### `setPaddingToOption() => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+
 ## Shadow Parts
 
 | Part       | Description |
