@@ -54,4 +54,26 @@ describe('bq-panel', () => {
     const sign = tooltipStyle.left.slice(-1);
     expect(sign).not.toEqual('-');
   });
+
+  it('should respect the design', async () => {
+    const page = await newE2EPage();
+    await page.setContent(`
+      <bq-dropdown>
+        <bq-button slot="trigger">Open</bq-button>
+
+        <bq-panel distance="0" placement="bottom">Some content in panel</bq-panel>
+      </bq-dropdown>
+    `);
+
+    const styleProps = ['height', 'width', 'boxShadow'] as const;
+
+    const panelStyle = await computedStyle(page, 'bq-panel', styleProps);
+
+    expect(panelStyle).toEqual({
+      height: '200px',
+      width: '320px',
+      boxShadow:
+        'rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.08) 0px 2px 48px 16px',
+    });
+  });
 });
