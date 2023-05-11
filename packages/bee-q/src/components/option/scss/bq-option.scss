@@ -9,7 +9,7 @@
 }
 
 .bq-option {
-  @apply flex h-[var(--bq-option--height)] w-full cursor-not-allowed items-center px-3 py-2;
+  @apply flex h-[var(--bq-option--height)] w-full cursor-not-allowed items-center px-3 py-2 text-m;
   @apply rounded-s bg-transparent;
   @apply focus-visible:focus active:outline-none;
 
@@ -31,7 +31,7 @@
 }
 
 .label {
-  @apply inline-block w-auto max-w-[var(--bq-option-label--m-width)] overflow-hidden text-ellipsis whitespace-nowrap px-[var(--bq-option-label--paddingX)];
+  @apply inline-block w-auto overflow-hidden text-ellipsis whitespace-nowrap px-[var(--bq-option-label--paddingX)];
 }
 
 .no-prefix {
@@ -40,4 +40,8 @@
 
 .suffix {
   @apply ml-auto;
+}
+
+.option-group {
+  @apply pl-11;
 }

@@ -272,10 +272,13 @@ export namespace Components {
           * If true, the option is selected and active.
          */
         "selected": boolean;
+        "setPaddingToOption": () => Promise<void>;
         /**
           * A string representing the value of the option.
          */
         "value"?: string;
+    }
+    interface BqOptionGroup {
     }
     interface BqRadio {
         /**
@@ -658,6 +661,12 @@ declare global {
         prototype: HTMLBqOptionElement;
         new (): HTMLBqOptionElement;
     };
+    interface HTMLBqOptionGroupElement extends Components.BqOptionGroup, HTMLStencilElement {
+    }
+    var HTMLBqOptionGroupElement: {
+        prototype: HTMLBqOptionGroupElement;
+        new (): HTMLBqOptionGroupElement;
+    };
     interface HTMLBqRadioElement extends Components.BqRadio, HTMLStencilElement {
     }
     var HTMLBqRadioElement: {
@@ -728,6 +737,7 @@ declare global {
         "bq-icon": HTMLBqIconElement;
         "bq-notification": HTMLBqNotificationElement;
         "bq-option": HTMLBqOptionElement;
+        "bq-option-group": HTMLBqOptionGroupElement;
         "bq-radio": HTMLBqRadioElement;
         "bq-radio-group": HTMLBqRadioGroupElement;
         "bq-slider": HTMLBqSliderElement;
@@ -1012,6 +1022,8 @@ declare namespace LocalJSX {
           * A string representing the value of the option.
          */
         "value"?: string;
+    }
+    interface BqOptionGroup {
     }
     interface BqRadio {
         /**
@@ -1316,6 +1328,7 @@ declare namespace LocalJSX {
         "bq-icon": BqIcon;
         "bq-notification": BqNotification;
         "bq-option": BqOption;
+        "bq-option-group": BqOptionGroup;
         "bq-radio": BqRadio;
         "bq-radio-group": BqRadioGroup;
         "bq-slider": BqSlider;
@@ -1348,6 +1361,7 @@ declare module "@stencil/core" {
             "bq-icon": LocalJSX.BqIcon & JSXBase.HTMLAttributes<HTMLBqIconElement>;
             "bq-notification": LocalJSX.BqNotification & JSXBase.HTMLAttributes<HTMLBqNotificationElement>;
             "bq-option": LocalJSX.BqOption & JSXBase.HTMLAttributes<HTMLBqOptionElement>;
+            "bq-option-group": LocalJSX.BqOptionGroup & JSXBase.HTMLAttributes<HTMLBqOptionGroupElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
             "bq-slider": LocalJSX.BqSlider & JSXBase.HTMLAttributes<HTMLBqSliderElement>;

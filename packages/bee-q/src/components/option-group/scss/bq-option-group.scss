@@ -1,0 +1,25 @@
+/* -------------------------------------------------------------------------- */
+/*                                Option group styles                */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-option-group-variables';
+
+:host {
+  @apply block;
+}
+
+.label {
+  @apply flex overflow-hidden overflow-ellipsis bg-transparent px-3 py-2 text-s leading-regular;
+
+  &__child {
+    @apply flex items-center;
+  }
+}
+
+.content {
+  @apply inline-block w-auto overflow-hidden text-ellipsis whitespace-nowrap px-3;
+}
+
+.suffix {
+  @apply ml-auto;
+}
