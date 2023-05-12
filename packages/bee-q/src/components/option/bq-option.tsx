@@ -67,7 +67,15 @@ export class BqOption {
 
   @Listen('keydown')
   onKeyDown(event: KeyboardEvent) {
-    if (event.key === 'Enter') this.bqOptionOnEnter.emit(this.el);
+    if (event.key === 'Enter') {
+      this.bqOptionOnEnter.emit(this.el);
+      this.selected = true;
+    }
+  }
+
+  @Listen('keyup')
+  onKeyUp(event: KeyboardEvent) {
+    if (event.key === 'Enter') this.selected = false;
   }
 
   // Public methods API
