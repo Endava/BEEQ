@@ -2,6 +2,11 @@ import { h, Component, Prop, Element, State, Event, EventEmitter, Listen, Method
 
 import { hasSlotContent } from '../../shared/utils';
 
+/**
+ * @part label - The `span` element in which the label text is displayed
+ * @part prefix - The `span` element in which the prefix is displayed (generally `bq-icon`)
+ * @part suffix - The `span` element in which the suffix is displayed (generally `bq-icon`)
+ */
 @Component({
   tag: 'bq-option',
   styleUrl: './scss/bq-option.scss',

@@ -39,11 +39,11 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part       | Description |
-| ---------- | ----------- |
-| `"label"`  |             |
-| `"prefix"` |             |
-| `"suffix"` |             |
+| Part       | Description                                                               |
+| ---------- | ------------------------------------------------------------------------- |
+| `"label"`  | The `span` element in which the label text is displayed                   |
+| `"prefix"` | The `span` element in which the prefix is displayed (generally `bq-icon`) |
+| `"suffix"` | The `span` element in which the suffix is displayed (generally `bq-icon`) |
 
 
 ----------------------------------------------
