@@ -265,7 +265,7 @@ export namespace Components {
     }
     interface BqOption {
         /**
-          * If true, the dropdown item is disabled.
+          * If true, the option is disabled.
          */
         "disabled"?: boolean;
         /**
@@ -995,7 +995,7 @@ declare namespace LocalJSX {
     }
     interface BqOption {
         /**
-          * If true, the dropdown item is disabled.
+          * If true, the option is disabled.
          */
         "disabled"?: boolean;
         /**
