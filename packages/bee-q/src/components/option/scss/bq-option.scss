@@ -31,7 +31,7 @@
 }
 
 .label {
-  @apply inline-block w-auto overflow-hidden text-ellipsis whitespace-nowrap px-[var(--bq-option-label--paddingX)];
+  @apply inline-block w-full overflow-hidden text-ellipsis whitespace-nowrap px-[var(--bq-option-label--paddingX)];
 }
 
 .no-prefix {

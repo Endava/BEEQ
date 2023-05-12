@@ -9,7 +9,7 @@
 
 | Property   | Attribute  | Description                                    | Type      | Default     |
 | ---------- | ---------- | ---------------------------------------------- | --------- | ----------- |
-| `disabled` | `disabled` | If true, the dropdown item is disabled.        | `boolean` | `false`     |
+| `disabled` | `disabled` | If true, the option is disabled.               | `boolean` | `false`     |
 | `selected` | `selected` | If true, the option is selected and active.    | `boolean` | `false`     |
 | `value`    | `value`    | A string representing the value of the option. | `string`  | `undefined` |
 

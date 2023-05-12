@@ -30,7 +30,7 @@ export class BqOption {
   // Public Property API
   // ========================
 
-  /** If true, the dropdown item is disabled. */
+  /** If true, the option is disabled. */
   @Prop({ reflect: true }) disabled?: boolean = false;
 
   /** A string representing the value of the option. */
