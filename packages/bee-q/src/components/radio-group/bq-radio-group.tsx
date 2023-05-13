@@ -1,6 +1,7 @@
 import { h, Component, Listen, Element, Event, Prop, EventEmitter, Watch } from '@stencil/core';
-import { debounce, isHTMLElement, isNil, TDebounce, validatePropValue } from '../../shared/utils';
+
 import { RADIO_GROUP_ORIENTATION, TRadioGroupOrientation } from './bq-radio-group.types';
+import { debounce, isHTMLElement, isNil, TDebounce, validatePropValue } from '../../shared/utils';
 /**
  * @part base - The component's internal wrapper of the radio components.
  * @part label - The `<legend>` element that holds the text content.

@@ -1,7 +1,8 @@
+import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
+
 import mdx from './bq-notification.mdx';
 
-import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { NOTIFICATION_TYPE } from '../bq-notification.types';
 
 const meta: Meta = {

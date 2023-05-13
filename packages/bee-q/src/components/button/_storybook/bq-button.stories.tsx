@@ -1,8 +1,8 @@
-import { html } from 'lit-html';
-import { BUTTON_APPEARANCE, BUTTON_SIZE, BUTTON_TYPE, BUTTON_VARIANT } from '../bq-button.types';
-import mdx from './bq-button.mdx';
-
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
+import { html } from 'lit-html';
+
+import mdx from './bq-button.mdx';
+import { BUTTON_APPEARANCE, BUTTON_SIZE, BUTTON_TYPE, BUTTON_VARIANT } from '../bq-button.types';
 
 const meta: Meta = {
   title: 'Components/Button',

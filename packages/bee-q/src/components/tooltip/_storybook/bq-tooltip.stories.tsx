@@ -1,8 +1,8 @@
-import { html } from 'lit-html';
-import { TOOLTIP_PLACEMENT } from '../bq-tooltip.types';
-import mdx from './bq-tooltip.mdx';
-
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
+import { html } from 'lit-html';
+
+import mdx from './bq-tooltip.mdx';
+import { TOOLTIP_PLACEMENT } from '../bq-tooltip.types';
 
 const meta: Meta = {
   title: 'Components/Tooltip',

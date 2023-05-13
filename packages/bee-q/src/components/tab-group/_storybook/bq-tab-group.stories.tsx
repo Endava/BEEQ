@@ -1,8 +1,8 @@
-import { html } from 'lit-html';
-import { TAB_SIZE } from '../../tab/bq-tab.types';
-import mdx from './bq-tab-group.mdx';
-
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
+import { html } from 'lit-html';
+
+import mdx from './bq-tab-group.mdx';
+import { TAB_SIZE } from '../../tab/bq-tab.types';
 
 const meta: Meta = {
   title: 'Components/Tabs',

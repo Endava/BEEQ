@@ -1,6 +1,7 @@
 import { h, Component, Prop, Watch, State, Element } from '@stencil/core';
-import { validatePropValue } from '../../shared/utils';
+
 import { TAvatarShape, TAvatarSize, AVATAR_SHAPE, AVATAR_SIZE } from './bq-avatar.types';
+import { validatePropValue } from '../../shared/utils';
 
 /**
  * An avatar represents an object made of different pieces of information, in a way that is understandable at a glance.
