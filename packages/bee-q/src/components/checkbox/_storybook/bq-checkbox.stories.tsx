@@ -1,7 +1,7 @@
-import { html } from 'lit-html';
-import mdx from './bq-checkbox.mdx';
-
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
+import { html } from 'lit-html';
+
+import mdx from './bq-checkbox.mdx';
 
 const meta: Meta = {
   title: 'Components/Checkbox',

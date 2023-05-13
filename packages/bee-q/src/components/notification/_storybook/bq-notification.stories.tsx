@@ -1,7 +1,8 @@
+import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
+
 import mdx from './bq-notification.mdx';
 
-import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { NOTIFICATION_TYPE } from '../bq-notification.types';
 
 const meta: Meta = {
@@ -128,9 +129,9 @@ export const Warning: Story = {
 
 export const Stacked: Story = {
   render: (args: Args) => {
-    const onButtonClick = (ev: CustomEvent) => {
+    const onButtonClick = () => {
       const getRandom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
-      const type = getRandom(NOTIFICATION_TYPE as unknown as string[]) as string;
+      const type = getRandom(NOTIFICATION_TYPE as unknown as string[]);
 
       const notification = Object.assign(document.createElement('bq-notification'), {
         type,
