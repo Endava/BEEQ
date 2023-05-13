@@ -5,21 +5,18 @@
     "types": ["node"],
     "composite": true
   },
-  "exclude": [
-    "**/*.spec.ts",
-    "**/*.spec.tsx",
-    "**/*.stories.ts",
-    "**/*.stories.js",
-    "**/*.stories.jsx",
-    "**/*.stories.tsx"
-  ],
+  "exclude": ["**/*.spec.ts", "**/*.spec.tsx"],
   "include": [
     "../../config/**/*.ts",
     "../../tailwind.config.ts",
     "**/*.js",
     "**/*.jsx",
+    "**/*.mdx",
+    "**/*.stories.js",
+    "**/*.stories.jsx",
+    "**/*.stories.ts",
+    "**/*.stories.tsx",
     "**/*.ts",
-    "**/*.tsx",
-    "**/*.mdx"
+    "**/*.tsx"
   ]
 }
