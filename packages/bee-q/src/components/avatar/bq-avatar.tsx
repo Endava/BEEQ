@@ -128,7 +128,7 @@ export class BqAvatar {
         {this.image && !this.hasError && (
           <img
             class="absolute left-0 top-0 h-full w-full object-cover"
-            alt={!!this.altText ? this.altText : undefined}
+            alt={this.altText ?? undefined}
             src={this.image}
             onError={this.onImageError}
             part="img"
