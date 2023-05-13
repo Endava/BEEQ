@@ -2,7 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "types": ["node"],
+    "types": ["node", "mdx"],
     "composite": true
   },
   "exclude": ["**/*.spec.ts", "**/*.spec.tsx"],
