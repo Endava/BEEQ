@@ -1,4 +1,5 @@
 import { h, Component, Element, Prop, Listen, EventEmitter, Event, Host, Watch } from '@stencil/core';
+
 import { debounce, getNextElement, isHTMLElement, isNil, TDebounce, validatePropValue } from '../../shared/utils';
 import { TAB_SIZE, TTabSize } from '../tab/bq-tab.types';
 
