@@ -5,6 +5,7 @@
       "jsx": true
     },
     "ecmaVersion": 2019,
+    "project": ["packages/bee-q/tsconfig.lib.json", "packages/bee-q/.storybook/tsconfig.json"],
     "sourceType": "module"
   },
   "settings": {
@@ -14,15 +15,19 @@
       "version": "detect"
     }
   },
+  "ignorePatterns": ["**/*.spec.ts", "**/*.spec.tsx"],
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx"],
+      "files": ["*.ts", "*.tsx", ".storybook/*.ts"],
       "extends": [
         // Uses the recommended rules from the @typescript-eslint/eslint-plugin
         "plugin:@typescript-eslint/recommended",
         // Enables eslint-plugin-prettier and eslint-config-prettier.
         // This will display prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
-        "plugin:prettier/recommended"
+        "plugin:storybook/recommended",
+        "plugin:prettier/recommended",
+        "plugin:import/recommended",
+        "plugin:import/typescript"
       ],
       "rules": {
         // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
@@ -32,8 +37,36 @@
         "@typescript-eslint/type-annotation-spacing": "off",
         "@typescript-eslint/member-ordering": "off",
         "@typescript-eslint/no-inferrable-types": "off",
-        "@typescript-eslint/no-unused-vars": "off",
-        "comma-dangle": "off"
+        "@typescript-eslint/no-unused-vars": [
+          "warn",
+          {
+            "argsIgnorePattern": "^_"
+          }
+        ],
+        "comma-dangle": "off",
+        "import/consistent-type-specifier-style": "error",
+        "import/no-named-as-default": "off",
+        "import/no-named-as-default-member": "off",
+        "import/namespace": [
+          // @see https://github.com/import-js/eslint-plugin-import/blob/v2.27.5/docs/rules/namespace.md
+          "error",
+          {
+            "allowComputed": true
+          }
+        ],
+        "import/order": [
+          // @see https://github.com/import-js/eslint-plugin-import/blob/v2.27.5/docs/rules/order.md
+          "error",
+          {
+            "newlines-between": "always-and-inside-groups",
+            "alphabetize": {
+              "caseInsensitive": true,
+              "order": "asc",
+              "orderImportKind": "asc"
+            },
+            "groups": ["builtin", "external", ["parent", "sibling"], "index"]
+          }
+        ]
       }
     },
     {

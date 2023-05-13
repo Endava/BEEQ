@@ -1,7 +1,8 @@
 import { Component, Event, EventEmitter, getAssetPath, h, Host, Prop, State, Watch } from '@stencil/core';
-import { getColorCSSVariable } from '../../shared/utils';
+
 import { TIconWeight } from './bq-icon.types';
 import { getSvgContent, iconContent } from './helper/request';
+import { getColorCSSVariable } from '../../shared/utils';
 
 /**
  * Icons are simplified images that graphically explain the meaning of an object on the screen.

@@ -1,4 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
+
 import { computedStyle, setProperties } from '../../../shared/test-utils';
 
 describe('bq-divider', () => {

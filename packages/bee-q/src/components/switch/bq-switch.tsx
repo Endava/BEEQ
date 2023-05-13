@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State } from '@stencil/core';
 
-import { getTextContent, isNil } from '../../shared/utils';
 import { TSwitchInnerLabel, TSwitchJustifyContent } from './bq-swithc.types';
+import { getTextContent, isNil } from '../../shared/utils';
 
 /**
  * Toggle switches are digital on/off switches.

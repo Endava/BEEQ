@@ -1,4 +1,5 @@
 import { promises as fs } from 'fs';
+
 import { JsonDocs } from '@stencil/core/internal';
 
 export const generateCustomElementsJson = async (docsData: JsonDocs) => {
