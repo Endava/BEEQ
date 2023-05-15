@@ -17,13 +17,13 @@ const meta: Meta = {
   argTypes: {
     distance: { control: 'number' },
     placement: { control: 'select', options: PANEL_PLACEMENT },
-    'is-visible': { control: 'boolean' },
+    open: { control: 'boolean' },
     text: { control: 'text', table: { disable: true } },
   },
   args: {
     distance: 0,
     placement: 'bottom',
-    'is-visible': true,
+    open: true,
     text: 'Some content in the panel',
   },
 };
@@ -34,41 +34,36 @@ type Story = StoryObj;
 const Template = (args: Args) => html`
   <bq-dropdown>
     <bq-button slot="trigger">Open</bq-button>
-    <bq-panel distance=${args.distance} placement=${args.placement} ?is-visible=${args['is-visible']}>
-      ${args.text}
-    </bq-panel>
+    <bq-panel distance=${args.distance} placement=${args.placement} open=${args.open}> ${args.text} </bq-panel>
   </bq-dropdown>
 `;
 
 export const Bottom: Story = {
   render: Template,
-
   args: {
     text: 'Panel is displayed on the bottom',
     placement: 'bottom',
-    'is-visible': true,
+    open: true,
     distance: 0,
   },
 };
 
 export const Top: Story = {
   render: Template,
-
   args: {
     text: 'Panel displayed on top',
     placement: 'top',
-    'is-visible': true,
+    open: true,
     distance: 0,
   },
 };
 
 export const Distance: Story = {
   render: Template,
-
   args: {
     text: 'Hello!',
     placement: 'bottom',
-    'is-visible': true,
+    open: true,
     distance: 10,
   },
 };

@@ -35,16 +35,16 @@ export class BqDropdown {
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Handler to be called when the item loses focus */
-  @Event() bqBlur: EventEmitter<HTMLElement>;
+  /** Handler to be called when `bq-option` item loses focus */
+  @Event() bqOptionBlur: EventEmitter<HTMLElement>; // switch to HTMLBqOptionElement
 
-  /** Handler to be called when the item gets focus */
-  @Event() bqFocus: EventEmitter<HTMLElement>;
+  /** Handler to be called when `bq-option` item gets focus */
+  @Event() bqOptionFocus: EventEmitter<HTMLElement>; // switch to HTMLBqOptionElement
 
-  /** Handler to be called when item is changed (click/enter press) */
-  @Event() bqSelect: EventEmitter<HTMLElement>; // switch to HTMLBqOptionElement
+  /** Handler to be called when `bq-option` is selected (on click/enter press) */
+  @Event() bqOptionSelect: EventEmitter<HTMLElement>; // switch to HTMLBqOptionElement
 
-  /** Handler to be called when the panel switches state (visible/hidden) */
+  /** Handler to be called when the `bq-panel` switches state (visible/hidden) */
   @Event() bqPanelOpen: EventEmitter<boolean>;
 
   // Component lifecycle events
@@ -61,20 +61,20 @@ export class BqDropdown {
   @Listen('bqOptionBlur')
   onBqOptionBlur(event: CustomEvent<HTMLElement>) {
     // switch type to HTMLBqOptionElement
-    this.bqBlur.emit(event.detail);
+    this.bqOptionBlur.emit(event.detail);
   }
 
   @Listen('bqOptionFocus')
   onBqOptionFocus(event: CustomEvent<HTMLElement>) {
     // switch type to HTMLBqOptionElement
-    this.bqFocus.emit(event.detail);
+    this.bqOptionFocus.emit(event.detail);
   }
 
   @Listen('bqOptionClick')
   @Listen('bqOptionOnEnter')
   onBqOptionSelect(event: CustomEvent<HTMLElement>) {
     // switch type to HTMLBqOptionElement
-    this.bqSelect.emit(event.detail);
+    this.bqOptionSelect.emit(event.detail);
   }
 
   @Listen('bqPanelVisibility')

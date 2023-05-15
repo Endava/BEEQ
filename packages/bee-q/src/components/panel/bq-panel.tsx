@@ -28,6 +28,15 @@ export class BqPanel {
   // Public Property API
   // ========================
 
+  /** Distance between the panel and the trigger element */
+  @Prop({ reflect: true }) distance?: number = 0;
+
+  /** Position of the panel */
+  @Prop({ reflect: true }) placement?: FloatingUIPlacement = 'bottom';
+
+  /** If true, panel is visible */
+  @Prop({ reflect: true }) open?: boolean = false;
+
   // Prop lifecycle events
   // =======================
   @Watch('open')
@@ -46,15 +55,6 @@ export class BqPanel {
       skidding: 0,
     });
   }
-
-  /** Distance between the panel and the trigger element */
-  @Prop({ reflect: true }) distance?: number = 0;
-
-  /** Position of the panel */
-  @Prop({ reflect: true }) placement?: FloatingUIPlacement = 'bottom';
-
-  /** If true, panel is visible */
-  @Prop({ reflect: true }) open?: boolean = false;
 
   // Events section
   // Requires JSDocs for public API documentation

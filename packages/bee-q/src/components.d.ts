@@ -941,21 +941,21 @@ declare namespace LocalJSX {
     }
     interface BqDropdown {
         /**
-          * Handler to be called when the item loses focus
+          * Handler to be called when `bq-option` item loses focus
          */
-        "onBqBlur"?: (event: BqDropdownCustomEvent<HTMLElement>) => void;
+        "onBqOptionBlur"?: (event: BqDropdownCustomEvent<HTMLElement>) => void;
         /**
-          * Handler to be called when the item gets focus
+          * Handler to be called when `bq-option` item gets focus
          */
-        "onBqFocus"?: (event: BqDropdownCustomEvent<HTMLElement>) => void;
+        "onBqOptionFocus"?: (event: BqDropdownCustomEvent<HTMLElement>) => void;
         /**
-          * Handler to be called when the panel switches state (visible/hidden)
+          * Handler to be called when `bq-option` is selected (on click/enter press)
+         */
+        "onBqOptionSelect"?: (event: BqDropdownCustomEvent<HTMLElement>) => void;
+        /**
+          * Handler to be called when the `bq-panel` switches state (visible/hidden)
          */
         "onBqPanelOpen"?: (event: BqDropdownCustomEvent<boolean>) => void;
-        /**
-          * Handler to be called when item is changed (click/enter press)
-         */
-        "onBqSelect"?: (event: BqDropdownCustomEvent<HTMLElement>) => void;
     }
     /**
      * Icons are simplified images that graphically explain the meaning of an object on the screen.
