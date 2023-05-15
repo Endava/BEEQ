@@ -1,6 +1,7 @@
 import { h, Component, Prop, Watch, State, Element } from '@stencil/core';
-import { validatePropValue } from '../../shared/utils';
+
 import { TAvatarShape, TAvatarSize, AVATAR_SHAPE, AVATAR_SIZE } from './bq-avatar.types';
+import { validatePropValue } from '../../shared/utils';
 
 /**
  * An avatar represents an object made of different pieces of information, in a way that is understandable at a glance.
@@ -127,7 +128,7 @@ export class BqAvatar {
         {this.image && !this.hasError && (
           <img
             class="absolute left-0 top-0 h-full w-full object-cover"
-            alt={!!this.altText ? this.altText : undefined}
+            alt={this.altText ?? undefined}
             src={this.image}
             onError={this.onImageError}
             part="img"
