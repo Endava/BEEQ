@@ -13,7 +13,11 @@
     "start": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["nx run bee-q:stencil-start", "nx run bee-q:storybook-start", "nx run bee-q:storybook-start-css"],
+        "commands": [
+          "nx run bee-q:stencil-start --noOpen",
+          "nx run bee-q:storybook-start-css",
+          "nx run bee-q:storybook-start"
+        ],
         "parallel": true
       }
     },
