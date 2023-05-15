@@ -1,6 +1,5 @@
 import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
-import { hasSlotContent, isDefined, isNil, validatePropValue } from '../../shared/utils';
 import {
   BUTTON_APPEARANCE,
   BUTTON_SIZE,
@@ -11,6 +10,7 @@ import {
   TButtonType,
   TButtonVariant,
 } from './bq-button.types';
+import { hasSlotContent, isDefined, isNil, validatePropValue } from '../../shared/utils';
 
 /**
  * Buttons are designed for users to take action on a page or a screen.

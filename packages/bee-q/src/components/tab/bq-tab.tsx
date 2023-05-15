@@ -1,6 +1,7 @@
 import { h, Component, Prop, Watch, Element, Event, EventEmitter, Method, Host, State } from '@stencil/core';
-import { validatePropValue } from '../../shared/utils';
+
 import { TAB_SIZE, TTabSize } from './bq-tab.types';
+import { validatePropValue } from '../../shared/utils';
 
 /**
  * @part base - The HTML button used under the hood.

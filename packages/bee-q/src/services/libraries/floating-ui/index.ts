@@ -1,5 +1,6 @@
 import { arrow, flip, hide, offset, shift, size } from '@floating-ui/core';
 import { autoUpdate, computePosition } from '@floating-ui/dom';
+
 import { FloatingUIOptions } from '../../interfaces';
 
 export class FloatingUI {

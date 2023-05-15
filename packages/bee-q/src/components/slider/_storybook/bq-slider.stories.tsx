@@ -1,8 +1,8 @@
-import { html } from 'lit-html';
-import { SLIDER_TYPE } from '../bq-slider.types';
-import mdx from './bq-slider.mdx';
-
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
+import { html } from 'lit-html';
+
+import mdx from './bq-slider.mdx';
+import { SLIDER_TYPE } from '../bq-slider.types';
 
 const meta: Meta = {
   title: 'Components/Slider',
