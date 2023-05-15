@@ -54,7 +54,7 @@ export const AvatarTrigger: Story = {
 };
 
 export const DropdownPosition: Story = {
-  render: (args: Args) => html`
+  render: () => html`
     <section>
       <bq-dropdown>
         <bq-button slot="trigger">Bottom</bq-button>
