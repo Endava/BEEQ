@@ -27,7 +27,6 @@ const config: StorybookConfig = {
   stories: ['../src/**/*.stories.@(mdx|ts|tsx)'],
   staticDirs: ['../../../dist/bee-q/www', { from: '../../../dist/bee-q/dist/bee-q', to: '/bee-q' }],
   viteFinal: async (config: InlineConfig, { configType }) => {
-    console.log('Initial vite config ==> ', JSON.stringify(config, null, 2));
     // Add your own config tweaks if needed and return the modified config
     return mergeConfig(config, {
       plugins: [configType === 'PRODUCTION' && turbosnap({ rootDir: config.root ?? process.cwd() })].filter(Boolean),

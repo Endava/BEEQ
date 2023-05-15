@@ -1,3 +1,5 @@
+import './css/sb-styles.css';
+
 import { defineCustomElements } from '@bee-q/core/dist/loader';
 import { setCustomElements } from '@storybook/web-components';
 
