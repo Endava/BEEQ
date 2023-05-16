@@ -265,7 +265,7 @@ export namespace Components {
     }
     interface BqOption {
         /**
-          * If true, the option is disabled.
+          * If true, the `bq-option` is disabled.
          */
         "disabled"?: boolean;
         /**
@@ -995,25 +995,25 @@ declare namespace LocalJSX {
     }
     interface BqOption {
         /**
-          * If true, the option is disabled.
+          * If true, the `bq-option` is disabled.
          */
         "disabled"?: boolean;
         /**
           * Handler to be called when item loses focus
          */
-        "onBqOptionBlur"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        "onBqBlur"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
         /**
           * Handler to be called when item is clicked
          */
-        "onBqOptionClick"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        "onBqClick"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
         /**
           * Handler to be called when item is focused
          */
-        "onBqOptionFocus"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        "onBqFocus"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
         /**
           * Handler to be called on enter key press
          */
-        "onBqOptionOnEnter"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        "onBqOnEnter"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
         /**
           * If true, the option is selected and active.
          */

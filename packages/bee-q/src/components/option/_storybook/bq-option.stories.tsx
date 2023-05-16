@@ -1,7 +1,8 @@
-import { html } from 'lit-html';
-import mdx from './bq-option.mdx';
-
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
+
+import { html } from 'lit-html';
+
+import mdx from './bq-option.mdx';
 
 const meta: Meta = {
   title: 'Components/Option',
@@ -80,8 +81,8 @@ export const Disabled: Story = {
   },
 };
 
-export const InPanel: Story = {
-  render: (args) => html`
+export const InDropdown: Story = {
+  render: () => html`
     <bq-dropdown style="position: absolute; left: 50%">
       <bq-button slot="trigger">Toggle panel</bq-button>
 
@@ -107,7 +108,7 @@ export const InPanel: Story = {
 };
 
 export const Group: Story = {
-  render: (args) => html`
+  render: () => html`
     <bq-dropdown style="position: absolute; left: 50%">
       <bq-button slot="trigger">Toggle panel</bq-button>
 

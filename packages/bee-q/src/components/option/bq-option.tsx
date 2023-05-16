@@ -35,7 +35,7 @@ export class BqOption {
   // Public Property API
   // ========================
 
-  /** If true, the option is disabled. */
+  /** If true, the `bq-option` is disabled. */
   @Prop({ reflect: true }) disabled?: boolean = false;
 
   /** A string representing the value of the option. */
@@ -52,16 +52,16 @@ export class BqOption {
   // ==============================================
 
   /** Handler to be called when item loses focus */
-  @Event() bqOptionBlur: EventEmitter<HTMLBqOptionElement>;
+  @Event() bqBlur: EventEmitter<HTMLBqOptionElement>;
 
   /** Handler to be called when item is focused */
-  @Event() bqOptionFocus: EventEmitter<HTMLBqOptionElement>;
+  @Event() bqFocus: EventEmitter<HTMLBqOptionElement>;
 
   /** Handler to be called when item is clicked */
-  @Event() bqOptionClick: EventEmitter<HTMLBqOptionElement>;
+  @Event() bqClick: EventEmitter<HTMLBqOptionElement>;
 
   /** Handler to be called on enter key press */
-  @Event() bqOptionOnEnter: EventEmitter<HTMLBqOptionElement>;
+  @Event() bqOnEnter: EventEmitter<HTMLBqOptionElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -73,7 +73,7 @@ export class BqOption {
   @Listen('keydown')
   onKeyDown(event: KeyboardEvent) {
     if (event.key === 'Enter') {
-      this.bqOptionOnEnter.emit(this.el);
+      this.bqOnEnter.emit(this.el);
       this.selected = true;
     }
   }
@@ -107,7 +107,7 @@ export class BqOption {
       return;
     }
 
-    this.bqOptionBlur.emit(this.el);
+    this.bqBlur.emit(this.el);
   };
 
   private onFocus = (event: Event) => {
@@ -117,7 +117,7 @@ export class BqOption {
       return;
     }
 
-    this.bqOptionFocus.emit(this.el);
+    this.bqFocus.emit(this.el);
   };
 
   private onClick = (event: Event) => {
@@ -127,7 +127,7 @@ export class BqOption {
       return;
     }
 
-    this.bqOptionClick.emit(this.el);
+    this.bqClick.emit(this.el);
   };
 
   private onSlotChange = () => {

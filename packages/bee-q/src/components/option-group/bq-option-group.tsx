@@ -1,4 +1,5 @@
 import { h, Component, Host, Element } from '@stencil/core';
+
 import { isHTMLElement } from '../../shared/utils';
 
 @Component({
