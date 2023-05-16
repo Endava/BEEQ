@@ -1,4 +1,5 @@
 import { h, Component, Element, Host, Listen, Event, EventEmitter } from '@stencil/core';
+
 import { isHTMLElement } from '../../shared/utils';
 
 /**
@@ -35,16 +36,16 @@ export class BqDropdown {
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Handler to be called when `bq-option` item loses focus */
+  /** Handler to be called when `bq-option` item loses focus. */
   @Event() bqOptionBlur: EventEmitter<HTMLElement>; // switch to HTMLBqOptionElement
 
-  /** Handler to be called when `bq-option` item gets focus */
+  /** Handler to be called when `bq-option` item gets focus. */
   @Event() bqOptionFocus: EventEmitter<HTMLElement>; // switch to HTMLBqOptionElement
 
-  /** Handler to be called when `bq-option` is selected (on click/enter press) */
+  /** Handler to be called when `bq-option` is selected (on click/enter press). */
   @Event() bqOptionSelect: EventEmitter<HTMLElement>; // switch to HTMLBqOptionElement
 
-  /** Handler to be called when the `bq-panel` switches state (visible/hidden) */
+  /** Handler to be called when the `bq-panel` switches state (visible/hidden). */
   @Event() bqPanelOpen: EventEmitter<boolean>;
 
   // Component lifecycle events
@@ -60,20 +61,20 @@ export class BqDropdown {
 
   @Listen('bqOptionBlur')
   onBqOptionBlur(event: CustomEvent<HTMLElement>) {
-    // switch type to HTMLBqOptionElement
+    // switch type to `HTMLBqOptionElement` & add condition `if (isHTMLElement(event.detail, 'bq-option'))`
     this.bqOptionBlur.emit(event.detail);
   }
 
   @Listen('bqOptionFocus')
   onBqOptionFocus(event: CustomEvent<HTMLElement>) {
-    // switch type to HTMLBqOptionElement
+    // switch type to `HTMLBqOptionElement` & add condition `if (isHTMLElement(event.detail, 'bq-option'))`
     this.bqOptionFocus.emit(event.detail);
   }
 
   @Listen('bqOptionClick')
   @Listen('bqOptionOnEnter')
   onBqOptionSelect(event: CustomEvent<HTMLElement>) {
-    // switch type to HTMLBqOptionElement
+    // switch type to `HTMLBqOptionElement` & add condition `if (isHTMLElement(event.detail, 'bq-option'))`
     this.bqOptionSelect.emit(event.detail);
   }
 

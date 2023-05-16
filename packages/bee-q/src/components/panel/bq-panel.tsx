@@ -1,7 +1,7 @@
 import { h, Component, Prop, Listen, Element, Method, Host, Watch, EventEmitter, Event } from '@stencil/core';
 
-import { FloatingUI } from '../../services/libraries';
 import { FloatingUIPlacement } from '../../services/interfaces';
+import { FloatingUI } from '../../services/libraries';
 
 @Component({
   tag: 'bq-panel',
@@ -34,7 +34,9 @@ export class BqPanel {
   /** Position of the panel */
   @Prop({ reflect: true }) placement?: FloatingUIPlacement = 'bottom';
 
-  /** If true, panel is visible */
+  /** If true, panel is visible.
+   * You can toggle this attribute to show/hide the panel.
+   */
   @Prop({ reflect: true }) open?: boolean = false;
 
   // Prop lifecycle events
@@ -60,7 +62,9 @@ export class BqPanel {
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Handler to be called to check if the panel is open or closed */
+  /** Handler to be called to check if the panel is open or closed.
+   * Will emit every time the state of the panel is changed.
+   */
   @Event() bqPanelVisibility: EventEmitter<boolean>;
 
   // Component lifecycle events

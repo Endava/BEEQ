@@ -1,7 +1,7 @@
+import type { Args, Meta, StoryObj } from '@storybook/web-components';
+
 import { html } from 'lit-html';
 import mdx from './bq-panel.mdx';
-
-import type { Args, Meta, StoryObj } from '@storybook/web-components';
 
 import { PANEL_PLACEMENT } from '../bq-panel.type';
 

@@ -271,7 +271,7 @@ export namespace Components {
          */
         "distance"?: number;
         /**
-          * If true, panel is visible
+          * If true, panel is visible. You can toggle this attribute to show/hide the panel.
          */
         "open"?: boolean;
         /**
@@ -941,19 +941,19 @@ declare namespace LocalJSX {
     }
     interface BqDropdown {
         /**
-          * Handler to be called when `bq-option` item loses focus
+          * Handler to be called when `bq-option` item loses focus.
          */
         "onBqOptionBlur"?: (event: BqDropdownCustomEvent<HTMLElement>) => void;
         /**
-          * Handler to be called when `bq-option` item gets focus
+          * Handler to be called when `bq-option` item gets focus.
          */
         "onBqOptionFocus"?: (event: BqDropdownCustomEvent<HTMLElement>) => void;
         /**
-          * Handler to be called when `bq-option` is selected (on click/enter press)
+          * Handler to be called when `bq-option` is selected (on click/enter press).
          */
         "onBqOptionSelect"?: (event: BqDropdownCustomEvent<HTMLElement>) => void;
         /**
-          * Handler to be called when the `bq-panel` switches state (visible/hidden)
+          * Handler to be called when the `bq-panel` switches state (visible/hidden).
          */
         "onBqPanelOpen"?: (event: BqDropdownCustomEvent<boolean>) => void;
     }
@@ -1026,11 +1026,11 @@ declare namespace LocalJSX {
          */
         "distance"?: number;
         /**
-          * Handler to be called to check if the panel is open or closed
+          * Handler to be called to check if the panel is open or closed. Will emit every time the state of the panel is changed.
          */
         "onBqPanelVisibility"?: (event: BqPanelCustomEvent<boolean>) => void;
         /**
-          * If true, panel is visible
+          * If true, panel is visible. You can toggle this attribute to show/hide the panel.
          */
         "open"?: boolean;
         /**
