@@ -1,6 +1,7 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
 
 import { html } from 'lit-html';
+
 import mdx from './bq-dropdown.mdx';
 
 const meta: Meta = {
