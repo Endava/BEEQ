@@ -2,21 +2,16 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "types": ["node", "mdx"],
+    "types": ["node"],
     "composite": true
   },
-  "exclude": ["**/*.spec.ts", "**/*.spec.tsx"],
-  "include": [
-    "../../config/**/*.ts",
-    "../../tailwind.config.ts",
-    "**/*.js",
-    "**/*.jsx",
-    "**/*.mdx",
+  "exclude": [
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/*.stories.ts",
     "**/*.stories.js",
     "**/*.stories.jsx",
-    "**/*.stories.ts",
-    "**/*.stories.tsx",
-    "**/*.ts",
-    "**/*.tsx"
-  ]
+    "**/*.stories.tsx"
+  ],
+  "include": ["../../config/**/*.ts", "../../tailwind.config.ts", "**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"]
 }

@@ -37,26 +37,25 @@ export const Default: Story = {
   render: Template,
 };
 
-export const Medium: Story = {
+export const Colorbackground: Story = {
   render: Template,
-  args: { size: 'medium' },
-};
-
-export const Digit: Story = {
-  render: Template,
-  args: { content: '2' },
-};
-
-export const Number: Story = {
-  render: Template,
-  args: { content: '12' },
-};
-
-export const Green: Story = {
-  render: Template,
-
   args: {
     'background-color': 'ui--success',
     size: 'large',
   },
+};
+
+export const SingleDigit: Story = {
+  render: Template,
+  args: { content: '2' },
+};
+
+export const TwoDigits: Story = {
+  render: Template,
+  args: { content: '12' },
+};
+
+export const SizeMedium: Story = {
+  render: Template,
+  args: { size: 'medium' },
 };

@@ -68,7 +68,7 @@ export const config: Config = {
       type: 'www',
       copy: [
         { src: 'global/assets', dest: 'assets' },
-        { src: 'global/scripts/esm-loader.js', dest: 'scripts/esm-loader.js' },
+        { src: 'global/scripts', dest: 'scripts' },
       ],
       serviceWorker: null, // disable service workers
     },
