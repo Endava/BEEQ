@@ -13,13 +13,13 @@ npm install @bee-q/angular
 - update the package
 
 ```
-npm install @bee-q/angular@latest --save
+npm install @bee-q/angular@latest
 ```
 
 if the `@bee-q/core` package is added to your `package.json` should update both
 
 ```
-npm install @bee-q/core@latest @bee-q/angular@latest --save
+npm install @bee-q/{core,angular}
 ```
 
 ## Setup
@@ -43,7 +43,7 @@ applyPolyfills().then(() => {
 
 ### Add Bee-Q styles and assets
 
-> ❗️The icons SVG are shipped in a separate folder. Projects will need to include that folder in their build and try to make it in a certain way that it respond to: http://<domain>/svg
+> ❗️The icons SVG are shipped in a separate folder. Projects will need to include `node_modules/@bee-q/core/dist/bee-q/svg` in their build and try to make it in a certain way that it respond to: `http://<domain>/svg`
 
 ```json
 /** angular.json */
