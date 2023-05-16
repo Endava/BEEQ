@@ -32,9 +32,9 @@ describe('bq-option', () => {
     const page = await newE2EPage();
     await page.setContent('<bq-option>Menu item label</bq-option>');
 
-    const bqFocus = await page.spyOnEvent('bqOptionFocus');
-    const bqBlur = await page.spyOnEvent('bqOptionBlur');
-    const bqClick = await page.spyOnEvent('bqOptionClick');
+    const bqFocus = await page.spyOnEvent('bqFocus');
+    const bqBlur = await page.spyOnEvent('bqBlur');
+    const bqClick = await page.spyOnEvent('bqClick');
 
     const element = await page.find('bq-option');
 
@@ -55,9 +55,9 @@ describe('bq-option', () => {
       </bq-option>
     `);
 
-    const bqFocus = await page.spyOnEvent('bqOptionFocus');
-    const bqBlur = await page.spyOnEvent('bqOptionBlur');
-    const bqClick = await page.spyOnEvent('bqOptionClick');
+    const bqFocus = await page.spyOnEvent('bqFocus');
+    const bqBlur = await page.spyOnEvent('bqBlur');
+    const bqClick = await page.spyOnEvent('bqClick');
     await page.keyboard.press('Tab');
 
     expect(bqFocus).toHaveReceivedEventTimes(1);
@@ -69,10 +69,10 @@ describe('bq-option', () => {
     const page = await newE2EPage();
     await page.setContent('<bq-option>Option 1</bq-option>');
 
-    const bqFocus = await page.spyOnEvent('bqOptionFocus');
-    const bqBlur = await page.spyOnEvent('bqOptionBlur');
-    const bqClick = await page.spyOnEvent('bqOptionClick');
-    const bqKeyEnter = await page.spyOnEvent('bqOptionOnEnter');
+    const bqFocus = await page.spyOnEvent('bqFocus');
+    const bqBlur = await page.spyOnEvent('bqBlur');
+    const bqClick = await page.spyOnEvent('bqClick');
+    const bqKeyEnter = await page.spyOnEvent('bqOnEnter');
 
     await page.keyboard.press('Tab');
     await page.keyboard.press('Enter');
@@ -87,9 +87,9 @@ describe('bq-option', () => {
     const page = await newE2EPage();
     await page.setContent('<bq-option disabled="true">Option 1</bq-option>');
 
-    const bqFocus = await page.spyOnEvent('bqOptionFocus');
-    const bqBlur = await page.spyOnEvent('bqOptionBlur');
-    const bqClick = await page.spyOnEvent('bqOptionClick');
+    const bqFocus = await page.spyOnEvent('bqFocus');
+    const bqBlur = await page.spyOnEvent('bqBlur');
+    const bqClick = await page.spyOnEvent('bqClick');
 
     const element = await page.find('bq-option');
 
