@@ -6,6 +6,8 @@
     "resolveJsonModule": true
   },
   "include": [
+    "../../config/**/*.ts",
+    "../../tailwind.config.ts",
     ".storybook/*.json",
     ".storybook/*.ts",
     "**/*.mdx",

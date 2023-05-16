@@ -72,6 +72,9 @@
       }
     },
     {
+      "parserOptions": {
+        "ecmaVersion": "latest"
+      },
       "files": ["*.js", "*.jsx"],
       "extends": ["plugin:prettier/recommended"],
       "rules": {}
