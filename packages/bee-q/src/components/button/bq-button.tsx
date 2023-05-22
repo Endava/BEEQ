@@ -65,6 +65,9 @@ export class BqButton {
   /** When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>` */
   @Prop({ reflect: true }) href: string;
 
+  /** It determinate how the content should be aligned */
+  @Prop({ reflect: true }) justifyContent: 'left' | 'center' | 'right' = 'center';
+
   /** If `true` it will display the button in a loading state */
   @Prop() loading = false;
 
@@ -182,6 +185,7 @@ export class BqButton {
         class={{
           'bq-button': true,
           [`bq-button--${this.appearance}`]: true,
+          [`content-${this.justifyContent}`]: true,
           [`${this.variant}`]: true,
           [`${this.size}`]: true,
           block: this.block,

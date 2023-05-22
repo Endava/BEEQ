@@ -100,6 +100,10 @@ export namespace Components {
          */
         "href": string;
         /**
+          * It determinate how the content should be aligned
+         */
+        "justifyContent": 'left' | 'center' | 'right';
+        /**
           * If `true` it will display the button in a loading state
          */
         "loading": boolean;
@@ -786,6 +790,10 @@ declare namespace LocalJSX {
           * When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`
          */
         "href"?: string;
+        /**
+          * It determinate how the content should be aligned
+         */
+        "justifyContent"?: 'left' | 'center' | 'right';
         /**
           * If `true` it will display the button in a loading state
          */

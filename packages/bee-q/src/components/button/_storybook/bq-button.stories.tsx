@@ -17,6 +17,7 @@ const meta: Meta = {
     block: { control: 'boolean' },
     disabled: { control: 'boolean' },
     href: { control: 'text' },
+    'justify-content': { control: 'select', options: ['left', 'center', 'right'] },
     loading: { control: 'boolean' },
     size: { control: 'select', options: [...BUTTON_SIZE] },
     target: { control: 'select', options: ['_blank', '_parent', '_self', '_top'] },
@@ -32,8 +33,9 @@ const meta: Meta = {
   args: {
     appearance: 'primary',
     block: false,
-    href: undefined,
     disabled: false,
+    href: undefined,
+    'justify-content': 'center',
     loading: false,
     size: 'medium',
     target: undefined,
@@ -51,6 +53,7 @@ const Template = (args: Args) => html`
     ?block=${args.block}
     ?disabled=${args.disabled}
     href=${args.href}
+    justify-content=${args['justify-content']}
     ?loading=${args.loading}
     size=${args.size}
     target=${args.target}
@@ -121,6 +124,7 @@ export const IconLeft: Story = {
       ?block=${args.block}
       ?disabled=${args.disabled}
       href=${args.href}
+      justify-content=${args['justify-content']}
       ?loading=${args.loading}
       size=${args.size}
       target=${args.target}
@@ -143,6 +147,7 @@ export const IconRight: Story = {
       ?block=${args.block}
       ?disabled=${args.disabled}
       href=${args.href}
+      justify-content=${args['justify-content']}
       ?loading=${args.loading}
       size=${args.size}
       target=${args.target}
@@ -165,6 +170,7 @@ export const OnlyIcon: Story = {
       ?block=${args.block}
       ?disabled=${args.disabled}
       href=${args.href}
+      justify-content=${args['justify-content']}
       ?loading=${args.loading}
       size=${args.size}
       target=${args.target}
