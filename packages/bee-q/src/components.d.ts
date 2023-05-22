@@ -84,6 +84,10 @@ export namespace Components {
          */
         "appearance": TButtonAppearance;
         /**
+          * If `true`, it will make the button fit to its parent width.
+         */
+        "block": boolean;
+        /**
           * If true, the button will be disabled (no interaction allowed)
          */
         "disabled": boolean;
@@ -766,6 +770,10 @@ declare namespace LocalJSX {
           * The appearance style to apply to the button
          */
         "appearance"?: TButtonAppearance;
+        /**
+          * If `true`, it will make the button fit to its parent width.
+         */
+        "block"?: boolean;
         /**
           * If true, the button will be disabled (no interaction allowed)
          */
