@@ -67,16 +67,16 @@ export class BqOptionGroup {
       <Host>
         <legend class="label">
           <span class="label__child" part="prefix">
-            <slot name="label-prefix" />
+            <slot name="header-prefix" />
           </span>
           <span class="label__child content" part="label">
-            <slot name="label" />
+            <slot name="header-label" />
           </span>
           <span class="label__child suffix" part="suffix">
-            <slot name="label-suffix" />
+            <slot name="header-suffix" />
           </span>
         </legend>
-        <div class="group" part="group">
+        <div class="group" role="group" part="group">
           <slot />
         </div>
       </Host>
