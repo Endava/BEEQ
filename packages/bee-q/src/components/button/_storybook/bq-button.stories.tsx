@@ -14,6 +14,7 @@ const meta: Meta = {
   },
   argTypes: {
     appearance: { control: 'select', options: [...BUTTON_APPEARANCE] },
+    block: { control: 'boolean' },
     disabled: { control: 'boolean' },
     href: { control: 'text' },
     loading: { control: 'boolean' },
@@ -30,6 +31,7 @@ const meta: Meta = {
   },
   args: {
     appearance: 'primary',
+    block: false,
     href: undefined,
     disabled: false,
     loading: false,
@@ -46,6 +48,7 @@ type Story = StoryObj;
 const Template = (args: Args) => html`
   <bq-button
     appearance=${args.appearance}
+    ?block=${args.block}
     ?disabled=${args.disabled}
     href=${args.href}
     ?loading=${args.loading}
@@ -103,10 +106,19 @@ export const Loading: Story = {
   },
 };
 
+export const Block: Story = {
+  render: Template,
+  args: {
+    block: true,
+    buttonText: 'Block button',
+  },
+};
+
 export const IconLeft: Story = {
   render: (args) => html`
     <bq-button
       appearance=${args.appearance}
+      ?block=${args.block}
       ?disabled=${args.disabled}
       href=${args.href}
       ?loading=${args.loading}
@@ -128,6 +140,7 @@ export const IconRight: Story = {
   render: (args) => html`
     <bq-button
       appearance=${args.appearance}
+      ?block=${args.block}
       ?disabled=${args.disabled}
       href=${args.href}
       ?loading=${args.loading}
@@ -149,6 +162,7 @@ export const OnlyIcon: Story = {
   render: (args) => html`
     <bq-button
       appearance=${args.appearance}
+      ?block=${args.block}
       ?disabled=${args.disabled}
       href=${args.href}
       ?loading=${args.loading}
