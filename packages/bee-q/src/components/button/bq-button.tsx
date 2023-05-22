@@ -50,6 +50,9 @@ export class BqButton {
   /** The appearance style to apply to the button */
   @Prop({ reflect: true }) appearance: TButtonAppearance = 'primary';
 
+  /** If `true`, it will make the button fit to its parent width. */
+  @Prop({ reflect: true }) block: boolean = false;
+
   /** If true, the button will be disabled (no interaction allowed) */
   @Prop() disabled = false;
 
@@ -181,6 +184,7 @@ export class BqButton {
           [`bq-button--${this.appearance}`]: true,
           [`${this.variant}`]: true,
           [`${this.size}`]: true,
+          block: this.block,
           disabled: this.disabled,
           'has-prefix': this.hasPrefix,
           'has-suffix': this.hasSuffix,
