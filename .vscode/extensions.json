@@ -13,11 +13,11 @@
     "ms-vsliveshare.vsliveshare",
     "nrwl.angular-console",
     "oouo-diogo-perdigao.docthis",
-    "phoenisx.cssvar",
     "runem.lit-plugin",
     "sonarsource.sonarlint-vscode",
     "stackbreak.comment-divider",
     "stylelint.vscode-stylelint",
-    "zignd.html-css-class-completion"
+    "zignd.html-css-class-completion",
+    "vunguyentuan.vscode-css-variables"
   ]
 }

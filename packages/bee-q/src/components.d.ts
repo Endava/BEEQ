@@ -84,6 +84,10 @@ export namespace Components {
          */
         "appearance": TButtonAppearance;
         /**
+          * If `true`, it will make the button fit to its parent width.
+         */
+        "block": boolean;
+        /**
           * If true, the button will be disabled (no interaction allowed)
          */
         "disabled": boolean;
@@ -95,6 +99,10 @@ export namespace Components {
           * When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`
          */
         "href": string;
+        /**
+          * It determinate how the content should be aligned
+         */
+        "justifyContent": 'left' | 'center' | 'right';
         /**
           * If `true` it will display the button in a loading state
          */
@@ -802,6 +810,10 @@ declare namespace LocalJSX {
          */
         "appearance"?: TButtonAppearance;
         /**
+          * If `true`, it will make the button fit to its parent width.
+         */
+        "block"?: boolean;
+        /**
           * If true, the button will be disabled (no interaction allowed)
          */
         "disabled"?: boolean;
@@ -813,6 +825,10 @@ declare namespace LocalJSX {
           * When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`
          */
         "href"?: string;
+        /**
+          * It determinate how the content should be aligned
+         */
+        "justifyContent"?: 'left' | 'center' | 'right';
         /**
           * If `true` it will display the button in a loading state
          */

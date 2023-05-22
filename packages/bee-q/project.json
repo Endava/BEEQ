@@ -13,7 +13,11 @@
     "start": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["nx run bee-q:stencil-start", "nx run bee-q:storybook-start", "nx run bee-q:storybook-start-css"],
+        "commands": [
+          "nx run bee-q:stencil-start --noOpen",
+          "nx run bee-q:storybook-start-css",
+          "nx run bee-q:storybook-start"
+        ],
         "parallel": true
       }
     },
@@ -66,7 +70,6 @@
       "options": {
         "outputDir": "dist/storybook/bee-q",
         "configDir": "packages/bee-q/.storybook",
-        "webpackStatsJson": true,
         "ci": true
       },
       "configurations": {
@@ -79,14 +82,14 @@
       "executor": "nx:run-commands",
       "outputs": ["packages/bee-q/.storybook/css"],
       "options": {
-        "command": "npx tailwindcss -i packages/bee-q/src/global/styles/tailwind.pcss -o packages/bee-q/.storybook/css/styles.css --postcss postcss.config.js --watch"
+        "command": "npx tailwindcss -i packages/bee-q/src/global/styles/tailwind.pcss -o packages/bee-q/.storybook/css/sb-styles.css --postcss ./postcss.config.js --watch"
       }
     },
     "storybook-build-css": {
       "executor": "nx:run-commands",
       "outputs": ["packages/bee-q/.storybook/css"],
       "options": {
-        "command": "npx tailwindcss -i packages/bee-q/src/global/styles/tailwind.pcss -o packages/bee-q/.storybook/css/styles.css --postcss postcss.config.js --minify"
+        "command": "npx tailwindcss -i packages/bee-q/src/global/styles/tailwind.pcss -o packages/bee-q/.storybook/css/sb-styles.css --postcss ./postcss.config.js --minify"
       }
     },
     "generate-icons": {
