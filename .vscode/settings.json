@@ -2,6 +2,12 @@
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "cssVariables.blacklistFolders": [
+    "dist",
+    "node_modules",
+    "out-tsc",
+    "tmp",
+  ],
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
