@@ -147,7 +147,7 @@ export class BqOption {
           active: this.selected,
           'option-group': this.isOptionInGroup,
         }}
-        aria-role="option"
+        role="option"
         tabindex={this.disabled ? '-1' : '0'}
         onBlur={this.onBlur}
         onFocus={this.onFocus}
