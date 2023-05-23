@@ -144,7 +144,7 @@ export class BqOption {
         class={{
           'bq-option': true,
           disabled: this.disabled,
-          active: this.selected,
+          active: !this.disabled && this.selected,
           'option-group': this.isOptionInGroup,
         }}
         role="option"
