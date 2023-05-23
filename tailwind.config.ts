@@ -69,6 +69,18 @@ const config: Config = {
       content: {
         empty: "''",
       },
+      spacing: {
+        xs2: 'var(--bq-spacing-xs2)',
+        xs: 'var(--bq-spacing-xs)',
+        s: 'var(--bq-spacing-s)',
+        m: 'var(--bq-spacing-m)',
+        l: 'var(--bq-spacing-l)',
+        xl: 'var(--bq-spacing-xl)',
+        xxl: 'var(--bq-spacing-xxl)',
+        xxl2: 'var(--bq-spacing-xxl2)',
+        xxl3: 'var(--bq-spacing-xxl3)',
+        xxl4: 'var(--bq-spacing-xxl4)',
+      },
     },
   },
   plugins: [
