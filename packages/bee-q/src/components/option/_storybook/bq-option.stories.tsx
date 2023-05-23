@@ -114,8 +114,8 @@ export const Group: Story = {
 
       <bq-panel distance="0" placement="bottom">
         <bq-option-group>
-          <bq-icon name="person-simple-run" size="16" slot="label-prefix"></bq-icon>
-          <span slot="label">Sport</span>
+          <bq-icon name="person-simple-run" size="16" slot="header-prefix"></bq-icon>
+          <span slot="header-label">Sport</span>
 
           <bq-option value="biking">
             <span>Biking</span>
@@ -139,8 +139,8 @@ export const Group: Story = {
         </bq-option-group>
 
         <bq-option-group>
-          <bq-icon name="fork-knife" size="16" slot="label-prefix"></bq-icon>
-          <span slot="label">Food</span>
+          <bq-icon name="fork-knife" size="16" slot="header-prefix"></bq-icon>
+          <span slot="header-label">Food</span>
 
           <bq-option value="pizza">
             <bq-icon name="pizza" size="16" slot="prefix"></bq-icon>
