@@ -44,6 +44,19 @@ Type: `Promise<void>`
 
 
 
+## Dependencies
+
+### Used by
+
+ - [bq-dropdown](../dropdown)
+
+### Graph
+```mermaid
+graph TD;
+  bq-dropdown --> bq-panel
+  style bq-panel fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

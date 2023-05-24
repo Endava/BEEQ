@@ -1,6 +1,6 @@
-import { h, Component, Element, Host, Listen, Event, EventEmitter } from '@stencil/core';
+import { h, Component, Element, Host, Listen, Event, EventEmitter, Prop } from '@stencil/core';
 
-import { isHTMLElement } from '../../shared/utils';
+import { FloatingUIPlacement } from '../../services/interfaces';
 
 /**
  * @part trigger - The `div` element used to display the trigger element
@@ -16,6 +16,7 @@ export class BqDropdown {
   // ====================
 
   public trigger: HTMLElement;
+  public panelElement: HTMLBqPanelElement;
 
   // Reference to host HTML element
   // ===================================
@@ -28,6 +29,17 @@ export class BqDropdown {
 
   // Public Property API
   // ========================
+
+  /** Distance between the panel and the trigger element */
+  @Prop({ reflect: true }) panelDistance?: number = 0;
+
+  /** Position of the panel */
+  @Prop({ reflect: true }) panelPlacement?: FloatingUIPlacement = 'bottom';
+
+  /** If true, panel is visible.
+   * You can toggle this attribute to show/hide the panel.
+   */
+  @Prop({ reflect: true }) panelOpen?: boolean = false;
 
   // Prop lifecycle events
   // =======================
@@ -95,10 +107,6 @@ export class BqDropdown {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  // render() function
-  // Always the last one in the class.
-  // ===================================
-
   private openPanel = (): void => {
     const target: HTMLBqPanelElement = this.panelElement;
 
@@ -111,14 +119,9 @@ export class BqDropdown {
     target?.setTriggerElement(this.el);
   };
 
-  private get panelElement(): HTMLBqPanelElement {
-    const slots: Element[] = this.el.shadowRoot
-      .querySelector<HTMLSlotElement>('[part="panel"] > slot')
-      .assignedElements({ flatten: true })
-      .filter((elem: HTMLElement) => isHTMLElement(elem, 'bq-panel')) as [HTMLBqPanelElement];
-
-    return slots[0] as HTMLBqPanelElement;
-  }
+  // render() function
+  // Always the last one in the class.
+  // ===================================
 
   render() {
     return (
@@ -126,9 +129,15 @@ export class BqDropdown {
         <div class="trigger" ref={(el) => (this.trigger = el)} onClick={this.openPanel} part="trigger">
           <slot name="trigger" />
         </div>
-        <div part="panel">
+        <bq-panel
+          distance={this.panelDistance}
+          placement={this.panelPlacement}
+          open={this.panelOpen}
+          ref={(el) => (this.panelElement = el)}
+          part="panel"
+        >
           <slot />
-        </div>
+        </bq-panel>
       </Host>
     );
   }

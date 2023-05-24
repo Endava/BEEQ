@@ -9,9 +9,9 @@ import { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 import { TBadgeSize } from "./components/badge/bq-badge.types";
 import { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
+import { FloatingUIPlacement } from "./services/interfaces";
 import { TIconWeight } from "./components/icon/bq-icon.types";
 import { TNotificationType } from "./components/notification/bq-notification.types";
-import { FloatingUIPlacement } from "./services/interfaces";
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 import { TSliderType } from "./components/slider/bq-slider.types";
 import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
@@ -22,9 +22,9 @@ export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 export { TBadgeSize } from "./components/badge/bq-badge.types";
 export { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
+export { FloatingUIPlacement } from "./services/interfaces";
 export { TIconWeight } from "./components/icon/bq-icon.types";
 export { TNotificationType } from "./components/notification/bq-notification.types";
-export { FloatingUIPlacement } from "./services/interfaces";
 export { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 export { TSliderType } from "./components/slider/bq-slider.types";
 export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
@@ -201,6 +201,18 @@ export namespace Components {
         "titleAlignment"?: TDividerTitleAlignment;
     }
     interface BqDropdown {
+        /**
+          * Distance between the panel and the trigger element
+         */
+        "panelDistance"?: number;
+        /**
+          * If true, panel is visible. You can toggle this attribute to show/hide the panel.
+         */
+        "panelOpen"?: boolean;
+        /**
+          * Position of the panel
+         */
+        "panelPlacement"?: FloatingUIPlacement;
     }
     /**
      * Icons are simplified images that graphically explain the meaning of an object on the screen.
@@ -956,6 +968,18 @@ declare namespace LocalJSX {
           * Handler to be called when the `bq-panel` switches state (visible/hidden).
          */
         "onBqPanelOpen"?: (event: BqDropdownCustomEvent<boolean>) => void;
+        /**
+          * Distance between the panel and the trigger element
+         */
+        "panelDistance"?: number;
+        /**
+          * If true, panel is visible. You can toggle this attribute to show/hide the panel.
+         */
+        "panelOpen"?: boolean;
+        /**
+          * Position of the panel
+         */
+        "panelPlacement"?: FloatingUIPlacement;
     }
     /**
      * Icons are simplified images that graphically explain the meaning of an object on the screen.

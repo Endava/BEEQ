@@ -24,7 +24,7 @@ describe('bq-dropdown', () => {
     await page.setContent(`
       <bq-dropdown>
         <bq-button slot="trigger">Open</bq-button>
-        <bq-panel></bq-panel>
+        <div></div>
       </bq-dropdown>
     `);
 
