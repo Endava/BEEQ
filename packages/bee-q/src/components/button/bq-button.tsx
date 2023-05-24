@@ -50,6 +50,9 @@ export class BqButton {
   /** The appearance style to apply to the button */
   @Prop({ reflect: true }) appearance: TButtonAppearance = 'primary';
 
+  /** If `true`, it will make the button fit to its parent width. */
+  @Prop({ reflect: true }) block: boolean = false;
+
   /** If true, the button will be disabled (no interaction allowed) */
   @Prop() disabled = false;
 
@@ -61,6 +64,9 @@ export class BqButton {
 
   /** When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>` */
   @Prop({ reflect: true }) href: string;
+
+  /** It determinate how the content should be aligned */
+  @Prop({ reflect: true }) justifyContent: 'left' | 'center' | 'right' = 'center';
 
   /** If `true` it will display the button in a loading state */
   @Prop() loading = false;
@@ -179,8 +185,10 @@ export class BqButton {
         class={{
           'bq-button': true,
           [`bq-button--${this.appearance}`]: true,
+          [`content-${this.justifyContent}`]: true,
           [`${this.variant}`]: true,
           [`${this.size}`]: true,
+          block: this.block,
           disabled: this.disabled,
           'has-prefix': this.hasPrefix,
           'has-suffix': this.hasSuffix,

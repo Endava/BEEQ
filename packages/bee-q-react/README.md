@@ -13,16 +13,16 @@ npm install @bee-q/react
 - update the package
 
 ```
-npm install @bee-q/react@latest --save
+npm install @bee-q/react@latest
 ```
 
 if `@bee-q/core` package is installed you should update both
 
 ```
-npm install @bee-q/core@latest @bee-q/react@latest --save
+npm install @bee-q/{core,react}
 ```
 
-> ❗️The icons SVG are shipped in a separate folder. Projects will need to include that folder in their build and try to make it in a certain way that it respond to: http://<domain>/svg
+> ❗️The icons SVG are shipped in a separate folder. Projects will need to include `node_modules/@bee-q/core/dist/bee-q/svg` in their build and try to make it in a certain way that it respond to: `http://<domain>/svg`
 
 ## Usage
 
