@@ -53,7 +53,7 @@ export default function (
       },
       {
         type: 'add',
-        path: '../../../packages/bee-q/src/components/{{kebabCase name}}/scss/bq-{{kebabCase name}}-variables.scss',
+        path: '../../../packages/bee-q/src/components/{{kebabCase name}}/scss/bq-{{kebabCase name}}.variables.scss',
         templateFile: './scss-variables.hbs',
         skipIfExists: true,
         skip: ({ stylingVariables }) => {

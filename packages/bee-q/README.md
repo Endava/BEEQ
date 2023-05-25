@@ -34,6 +34,8 @@ Bee-Q components are regular HTML elements, or custom elements (often referred t
 </html>
 ```
 
+> ❗️The icons SVG are shipped in a separate folder. Projects will need to include `node_modules/@bee-q/core/dist/bee-q/svg` in their build and try to make it in a certain way that it respond to: `http://<domain>/svg`
+
 ### Events
 
 You can listen for standard events such as click, mouseover, etc. as you normally would. Most of the Bee-Q components emit custom events, we highly recommend the use of those instead. They work the same way as standard events but are prefixed with `bq` to prevent collisions with standard events and other libraries.

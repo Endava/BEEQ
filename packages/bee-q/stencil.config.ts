@@ -1,12 +1,12 @@
-import autoprefixer from 'autoprefixer';
 import { resolve } from 'path';
-import tailwind, { tailwindGlobal, tailwindHMR } from 'stencil-tailwind-plugin';
-import tailwindcss from 'tailwindcss';
 
-import { Config } from '@stencil/core';
 import { angularOutputTarget as angular } from '@stencil/angular-output-target';
+import { Config } from '@stencil/core';
 import { reactOutputTarget as react } from '@stencil/react-output-target';
 import { sass } from '@stencil/sass';
+import autoprefixer from 'autoprefixer';
+import tailwind, { tailwindGlobal, tailwindHMR } from 'stencil-tailwind-plugin';
+import tailwindcss from 'tailwindcss';
 
 import { angularValueAccessorBindings, generateCustomElementsJson } from './src/tools';
 import tailwindConf from '../../tailwind.config';
@@ -68,7 +68,7 @@ export const config: Config = {
       type: 'www',
       copy: [
         { src: 'global/assets', dest: 'assets' },
-        { src: 'global/scripts/esm-loader.js', dest: 'scripts/esm-loader.js' },
+        { src: 'global/scripts', dest: 'scripts' },
       ],
       serviceWorker: null, // disable service workers
     },

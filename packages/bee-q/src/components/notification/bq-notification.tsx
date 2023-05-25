@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, Watch } from '@stencil/core';
 
-import { debounce, TDebounce, validatePropValue } from '../../shared/utils';
 import { NOTIFICATION_TYPE, TNotificationType } from './bq-notification.types';
+import { debounce, TDebounce, validatePropValue } from '../../shared/utils';
 
 const notificationPortal = Object.assign(document.createElement('div'), { className: 'bq-notification-portal' });
 

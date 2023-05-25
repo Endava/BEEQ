@@ -1,4 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
+
 import { computedStyle } from '../../../shared/test-utils';
 
 describe('bq-checkbox', () => {
