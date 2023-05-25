@@ -63,6 +63,9 @@ export class BqOption {
   /** Handler to be called on enter key press */
   @Event() bqOnEnter: EventEmitter<HTMLBqOptionElement>;
 
+  /** Handler to be called on enter key up */
+  @Event() bqOnEnterKeyUp: EventEmitter<HTMLBqOptionElement>;
+
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
@@ -80,7 +83,7 @@ export class BqOption {
 
   @Listen('keyup')
   onKeyUp(event: KeyboardEvent) {
-    if (event.key === 'Enter') this.selected = false;
+    if (event.key === 'Enter') this.bqOnEnterKeyUp.emit(this.el);
   }
 
   // Public methods API

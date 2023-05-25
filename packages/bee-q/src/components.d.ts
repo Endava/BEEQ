@@ -1031,6 +1031,10 @@ declare namespace LocalJSX {
          */
         "onBqOnEnter"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
         /**
+          * Handler to be called on enter key up
+         */
+        "onBqOnEnterKeyUp"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        /**
           * If true, the option is selected and active.
          */
         "selected"?: boolean;

@@ -16,12 +16,13 @@
 
 ## Events
 
-| Event       | Description                                | Type                               |
-| ----------- | ------------------------------------------ | ---------------------------------- |
-| `bqBlur`    | Handler to be called when item loses focus | `CustomEvent<HTMLBqOptionElement>` |
-| `bqClick`   | Handler to be called when item is clicked  | `CustomEvent<HTMLBqOptionElement>` |
-| `bqFocus`   | Handler to be called when item is focused  | `CustomEvent<HTMLBqOptionElement>` |
-| `bqOnEnter` | Handler to be called on enter key press    | `CustomEvent<HTMLBqOptionElement>` |
+| Event            | Description                                | Type                               |
+| ---------------- | ------------------------------------------ | ---------------------------------- |
+| `bqBlur`         | Handler to be called when item loses focus | `CustomEvent<HTMLBqOptionElement>` |
+| `bqClick`        | Handler to be called when item is clicked  | `CustomEvent<HTMLBqOptionElement>` |
+| `bqFocus`        | Handler to be called when item is focused  | `CustomEvent<HTMLBqOptionElement>` |
+| `bqOnEnter`      | Handler to be called on enter key press    | `CustomEvent<HTMLBqOptionElement>` |
+| `bqOnEnterKeyUp` | Handler to be called on enter key up       | `CustomEvent<HTMLBqOptionElement>` |
 
 
 ## Methods
