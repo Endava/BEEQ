@@ -71,23 +71,36 @@ export class BqDropdown {
   // Listeners
   // ==============
 
-  @Listen('bqOptionBlur')
+  @Listen('bqBlur')
   onBqOptionBlur(event: CustomEvent<HTMLElement>) {
-    // switch type to `HTMLBqOptionElement` & add condition `if (isHTMLElement(event.detail, 'bq-option'))`
+    // add condition `if (isHTMLElement(event.detail, 'bq-option'))`
     this.bqOptionBlur.emit(event.detail);
   }
 
-  @Listen('bqOptionFocus')
+  @Listen('bqFocus')
   onBqOptionFocus(event: CustomEvent<HTMLElement>) {
-    // switch type to `HTMLBqOptionElement` & add condition `if (isHTMLElement(event.detail, 'bq-option'))`
+    // add condition `if (isHTMLElement(event.detail, 'bq-option'))`
     this.bqOptionFocus.emit(event.detail);
   }
 
-  @Listen('bqOptionClick')
-  @Listen('bqOptionOnEnter')
-  onBqOptionSelect(event: CustomEvent<HTMLElement>) {
-    // switch type to `HTMLBqOptionElement` & add condition `if (isHTMLElement(event.detail, 'bq-option'))`
+  @Listen('bqClick')
+  @Listen('bqOnEnter')
+  onBqSelect(event: CustomEvent<HTMLElement>) {
+    // add condition `if (isHTMLElement(event.detail, 'bq-option'))`
     this.bqOptionSelect.emit(event.detail);
+  }
+
+  @Listen('bqClick')
+  onBqClick() {
+    // add condition `if (isHTMLElement(event.detail, 'bq-option'))`
+    this.panelElement?.togglePanel();
+  }
+
+  @Listen('bqOnEnterKeyUp')
+  onBqEnterKeyUp(event: CustomEvent<HTMLElement>) {
+    // add condition `if (isHTMLElement(event.detail, 'bq-option'))`
+    this.panelElement?.togglePanel();
+    event.detail.setAttribute('selected', 'false');
   }
 
   @Listen('bqPanelVisibility')
@@ -108,15 +121,11 @@ export class BqDropdown {
   // =======================================================
 
   private openPanel = (): void => {
-    const target: HTMLBqPanelElement = this.panelElement;
-
-    target?.togglePanel();
+    this.panelElement?.togglePanel();
   };
 
   private initFloatingUIFromPanel = (): void => {
-    const target: HTMLBqPanelElement = this.panelElement;
-
-    target?.setTriggerElement(this.el);
+    this.panelElement?.setTriggerElement(this.el);
   };
 
   // render() function
