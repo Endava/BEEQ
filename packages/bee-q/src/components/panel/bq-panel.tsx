@@ -96,7 +96,6 @@ export class BqPanel {
   @Method()
   async togglePanel() {
     this.open = !this.open;
-
     this.floatingUI?.update();
   }
 
@@ -107,7 +106,6 @@ export class BqPanel {
   @Method()
   async setTriggerElement(trigger: HTMLElement) {
     this.trigger = trigger;
-
     this.initFloatingUI();
   }
 

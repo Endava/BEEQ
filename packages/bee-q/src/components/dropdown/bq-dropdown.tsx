@@ -92,8 +92,7 @@ export class BqDropdown {
 
   @Listen('bqClick')
   onBqClick() {
-    // add condition `if (isHTMLElement(event.detail, 'bq-option'))`
-    this.panelElement?.togglePanel();
+    // if (isHTMLElement(event.detail, 'bq-option')) this.panelElement?.togglePanel();
   }
 
   @Listen('bqOnEnterKeyUp')
