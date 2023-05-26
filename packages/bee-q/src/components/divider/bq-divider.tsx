@@ -1,5 +1,5 @@
 import { h, Component, Element, Prop, Watch, Host, State } from '@stencil/core';
-import { validatePropValue, getColorCSSVariable, hasSlotContent, getTextContent } from '../../shared/utils';
+
 import {
   DIVIDER_ORIENTATION,
   DIVIDER_TITLE_ALIGNMENT,
@@ -9,6 +9,7 @@ import {
   TDividerTitleAlignment,
   TDividerStrokeLinecap,
 } from './bq-divider.types';
+import { validatePropValue, getColorCSSVariable, hasSlotContent, getTextContent } from '../../shared/utils';
 
 const strokeDrawPositions = {
   HORIZONTAL: (drawOffset: number) => {

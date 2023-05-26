@@ -1,8 +1,8 @@
-import { html } from 'lit-html';
-import { BUTTON_APPEARANCE, BUTTON_SIZE, BUTTON_TYPE, BUTTON_VARIANT } from '../bq-button.types';
-import mdx from './bq-button.mdx';
-
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
+import { html } from 'lit-html';
+
+import mdx from './bq-button.mdx';
+import { BUTTON_APPEARANCE, BUTTON_SIZE, BUTTON_TYPE, BUTTON_VARIANT } from '../bq-button.types';
 
 const meta: Meta = {
   title: 'Components/Button',
@@ -14,8 +14,10 @@ const meta: Meta = {
   },
   argTypes: {
     appearance: { control: 'select', options: [...BUTTON_APPEARANCE] },
+    block: { control: 'boolean' },
     disabled: { control: 'boolean' },
     href: { control: 'text' },
+    'justify-content': { control: 'select', options: ['left', 'center', 'right'] },
     loading: { control: 'boolean' },
     size: { control: 'select', options: [...BUTTON_SIZE] },
     target: { control: 'select', options: ['_blank', '_parent', '_self', '_top'] },
@@ -30,8 +32,10 @@ const meta: Meta = {
   },
   args: {
     appearance: 'primary',
-    href: undefined,
+    block: false,
     disabled: false,
+    href: undefined,
+    'justify-content': 'center',
     loading: false,
     size: 'medium',
     target: undefined,
@@ -46,8 +50,10 @@ type Story = StoryObj;
 const Template = (args: Args) => html`
   <bq-button
     appearance=${args.appearance}
+    ?block=${args.block}
     ?disabled=${args.disabled}
     href=${args.href}
+    justify-content=${args['justify-content']}
     ?loading=${args.loading}
     size=${args.size}
     target=${args.target}
@@ -103,12 +109,22 @@ export const Loading: Story = {
   },
 };
 
+export const Block: Story = {
+  render: Template,
+  args: {
+    block: true,
+    buttonText: 'Block button',
+  },
+};
+
 export const IconLeft: Story = {
   render: (args) => html`
     <bq-button
       appearance=${args.appearance}
+      ?block=${args.block}
       ?disabled=${args.disabled}
       href=${args.href}
+      justify-content=${args['justify-content']}
       ?loading=${args.loading}
       size=${args.size}
       target=${args.target}
@@ -128,8 +144,10 @@ export const IconRight: Story = {
   render: (args) => html`
     <bq-button
       appearance=${args.appearance}
+      ?block=${args.block}
       ?disabled=${args.disabled}
       href=${args.href}
+      justify-content=${args['justify-content']}
       ?loading=${args.loading}
       size=${args.size}
       target=${args.target}
@@ -149,8 +167,10 @@ export const OnlyIcon: Story = {
   render: (args) => html`
     <bq-button
       appearance=${args.appearance}
+      ?block=${args.block}
       ?disabled=${args.disabled}
       href=${args.href}
+      justify-content=${args['justify-content']}
       ?loading=${args.loading}
       size=${args.size}
       target=${args.target}

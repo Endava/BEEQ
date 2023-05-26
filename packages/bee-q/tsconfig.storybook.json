@@ -1,0 +1,24 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "types": ["node", "mdx"],
+    "resolveJsonModule": true
+  },
+  "include": [
+    "../../config/**/*.ts",
+    "../../tailwind.config.ts",
+    ".storybook/*.json",
+    ".storybook/*.ts",
+    "**/*.mdx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/*.stories.js",
+    "**/*.stories.jsx",
+    "**/*.stories.ts",
+    "**/*.stories.tsx",
+    "**/*.ts",
+    "**/*.tsx",
+    "custom-elements.json"
+  ]
+}

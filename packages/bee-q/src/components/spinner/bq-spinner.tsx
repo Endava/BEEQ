@@ -1,6 +1,7 @@
 import { h, Component, Prop, Element, Watch, State } from '@stencil/core';
-import { validatePropValue, hasSlotContent, isNil, getTextContent, getCSSVariableValue } from '../../shared/utils';
+
 import { SPINNER_TEXT_POSITION, SPINNER_SIZE, TSpinnerTextPosition, TSpinnerSize } from './bq-spinner.types';
+import { validatePropValue, hasSlotContent, isNil, getTextContent, getCSSVariableValue } from '../../shared/utils';
 
 /**
  * Spinners are designed for users to display data loading.

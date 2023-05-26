@@ -1,4 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
+
 import { computedStyle, sleep } from '../../../shared/test-utils';
 
 describe('bq-slider', () => {

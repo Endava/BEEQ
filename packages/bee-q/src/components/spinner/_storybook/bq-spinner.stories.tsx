@@ -1,8 +1,8 @@
-import { html } from 'lit-html';
-import { SPINNER_SIZE, SPINNER_TEXT_POSITION } from '../bq-spinner.types';
-import mdx from './bq-spinner.mdx';
-
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
+import { html } from 'lit-html';
+
+import mdx from './bq-spinner.mdx';
+import { SPINNER_SIZE, SPINNER_TEXT_POSITION } from '../bq-spinner.types';
 
 const meta: Meta = {
   title: 'Components/Spinner',

@@ -1,6 +1,7 @@
 import { h, Component, Prop, Watch, Host, Element, State } from '@stencil/core';
-import { getColorCSSVariable, getTextContent, isNil, validatePropValue } from '../../shared/utils';
+
 import { BADGE_SIZE, TBadgeSize } from './bq-badge.types';
+import { getColorCSSVariable, getTextContent, isNil, validatePropValue } from '../../shared/utils';
 
 /**
  * @part base - The component's internal wrapper that holds the count.

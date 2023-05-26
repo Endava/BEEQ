@@ -1,51 +1,36 @@
-import CopyPlugin from 'copy-webpack-plugin';
-import TerserPlugin from 'terser-webpack-plugin';
+import { join } from 'path';
+import { mergeConfig } from 'vite';
+import turbosnap from 'vite-plugin-turbosnap';
 
-import { config as rootMain } from '../../../.storybook/main';
-
-import type { StorybookConfig } from '@storybook/web-components-webpack5';
+import type { StorybookConfig } from '@storybook/web-components-vite';
+import type { InlineConfig } from 'vite';
 
 const config: StorybookConfig = {
-  ...rootMain,
-  framework: {
-    name: '@storybook/web-components-webpack5',
-    options: {
-      builder: { fsCache: false, lazyCompilation: true },
+  addons: ['@storybook/addon-essentials', '@whitespace/storybook-addon-html', '@storybook/addon-a11y'],
+  core: {
+    builder: {
+      name: '@storybook/builder-vite',
+      options: {
+        viteConfigPath: join(__dirname, '../vite.config.ts').replace(/\\/g, '/'),
+      },
     },
   },
-  features: {
-    // @see https://github.com/storybookjs/storybook/blob/main/docs/configure/overview.md#feature-flags
-    buildStoriesJson: true,
-    storyStoreV7: true,
-  },
-  stories: [...rootMain.stories, '../src/**/*.stories.@(mdx|ts|tsx)'],
-  addons: [...(rootMain.addons || []), '@whitespace/storybook-addon-html', '@storybook/addon-a11y'],
-  staticDirs: [
-    { from: '../../../dist/bee-q/www/assets', to: '/assets' },
-    { from: '../../../dist/bee-q/www/scripts', to: '/scripts' },
-  ],
   docs: {
     autodocs: true,
     defaultName: 'Overview',
   },
-  webpackFinal: async (config, options) => {
-    // apply any global webpack configs that might have been specified in .storybook/main.ts
-    if (rootMain.webpackFinal) {
-      config = await rootMain.webpackFinal(config, options);
-    }
-
-    if (config.optimization && options.configType === 'PRODUCTION') {
-      config.optimization.minimize = true;
-      config.optimization.minimizer = [new TerserPlugin()];
-    }
-
-    config.plugins!.push(
-      new CopyPlugin({
-        patterns: [{ from: './dist/bee-q/dist/bee-q', to: './bee-q' }],
-      }),
-    );
-
-    return config;
+  features: {
+    // @see https://github.com/storybookjs/storybook/blob/main/docs/configure/overview.md#feature-flags
+    buildStoriesJson: true,
+  },
+  framework: '@storybook/web-components-vite',
+  stories: ['../src/**/*.stories.@(mdx|ts|tsx)'],
+  staticDirs: ['../../../dist/bee-q/www', { from: '../../../dist/bee-q/dist/bee-q', to: '/bee-q' }],
+  viteFinal: async (config: InlineConfig, { configType }) => {
+    // Add your own config tweaks if needed and return the modified config
+    return mergeConfig(config, {
+      plugins: [configType === 'PRODUCTION' && turbosnap({ rootDir: config.root ?? process.cwd() })].filter(Boolean),
+    });
   },
 };
 
