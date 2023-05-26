@@ -133,19 +133,25 @@ export class BqTooltip {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private handleTriggerMouseOver = async () => {
-    if (this.displayOn !== 'hover') return;
-    await this.show();
+  private handleTriggerMouseOver = () => {
+    (async () => {
+      if (this.displayOn !== 'hover') return;
+      await this.show();
+    })();
   };
 
-  private handleTriggerMouseLeave = async () => {
-    if (this.displayOn !== 'hover') return;
-    await this.hide();
+  private handleTriggerMouseLeave = () => {
+    (async () => {
+      if (this.displayOn !== 'hover') return;
+      await this.hide();
+    })();
   };
 
-  private handleTriggerOnClick = async () => {
-    if (this.displayOn !== 'click') return;
-    await (this.visible ? this.hide() : this.show());
+  private handleTriggerOnClick = () => {
+    (async () => {
+      if (this.displayOn !== 'click') return;
+      await (this.visible ? this.hide() : this.show());
+    })();
   };
 
   private showTooltip = () => {
