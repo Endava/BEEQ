@@ -2,7 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 
 import { html } from 'lit-html';
 
-import mdx from './bq-menu.mdx';
+import mdx from './bq-side-menu.mdx';
 
 import { SIDE_MENU_SIZE, SIDE_MENU_THEME } from '../bq-side-menu.types';
 
