@@ -108,18 +108,18 @@ export class BqTabGroup {
   }
 
   @Listen('bqKeyDown', { passive: true })
-  onBqKeyDown(event: CustomEvent<KeyboardEvent>) {
+  async onBqKeyDown(event: CustomEvent<KeyboardEvent>) {
     const { target } = event;
 
     if (!isHTMLElement(target, 'bq-tab')) return;
 
     switch (event.detail.key) {
       case 'ArrowRight': {
-        this.focusTabSibbling(target, 'forward');
+        await this.focusTabSibbling(target, 'forward');
         break;
       }
       case 'ArrowLeft': {
-        this.focusTabSibbling(target, 'backward');
+        await this.focusTabSibbling(target, 'backward');
         break;
       }
       default:
@@ -127,8 +127,8 @@ export class BqTabGroup {
   }
 
   @Listen('bqBlur', { capture: true, passive: true })
-  onBqBlur() {
-    this.restoreTabsFocus();
+  async onBqBlur() {
+    await this.restoreTabsFocus();
   }
 
   // Public methods API
@@ -143,7 +143,10 @@ export class BqTabGroup {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private focusTabSibbling = (currentTarget: HTMLBqTabElement, direction: 'forward' | 'backward'): void => {
+  private focusTabSibbling = async (
+    currentTarget: HTMLBqTabElement,
+    direction: 'forward' | 'backward',
+  ): Promise<void> => {
     let target: HTMLBqTabElement | null = null;
 
     this.bqTabElements.forEach((bqTabElement, index, elements) => {
@@ -154,10 +157,10 @@ export class BqTabGroup {
       }
     });
 
-    if (!target) return;
-
-    target.vFocus();
-    this.selectTab(target);
+    if (target) {
+      await target.vFocus();
+      this.selectTab(target);
+    }
   };
 
   private makeTabsFocusable = (): void => {
@@ -171,6 +174,7 @@ export class BqTabGroup {
   private restoreTabsFocus = (): void => {
     this.bqTabElements.forEach((bqTabElement) => {
       if (bqTabElement.disabled || bqTabElement.active) return;
+
       bqTabElement.enableFocus(false);
     });
   };
