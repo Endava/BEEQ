@@ -104,7 +104,7 @@ const config: Config = {
           '--tw-ring-width': '2px',
           '--tw-ring-offset-width': '1px',
           '--tw-ring-color': theme('colors.focus'),
-          outline: `var(--tw-ring-width) solid ${theme('colors.focus')}`,
+          outline: `var(--tw-ring-width) solid ${String(theme('colors.focus'))}`,
           outlineOffset: 'var(--tw-ring-offset-width)',
         },
       });
