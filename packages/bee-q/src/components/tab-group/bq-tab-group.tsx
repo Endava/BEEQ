@@ -127,8 +127,8 @@ export class BqTabGroup {
   }
 
   @Listen('bqBlur', { capture: true, passive: true })
-  async onBqBlur() {
-    await this.restoreTabsFocus();
+  onBqBlur() {
+    this.restoreTabsFocus();
   }
 
   // Public methods API
