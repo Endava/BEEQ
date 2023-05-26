@@ -91,12 +91,12 @@ export class BqTabGroup {
   // ==============
 
   @Listen('keyup', { target: 'body', passive: true, capture: true })
-  onKeyUp(event: KeyboardEvent) {
+  async onKeyUp(event: KeyboardEvent) {
     const { target } = event;
 
     if (!isHTMLElement(target, 'bq-tab')) return;
 
-    this.makeTabsFocusable();
+    await this.makeTabsFocusable();
   }
 
   @Listen('bqClick', { passive: true })
@@ -127,8 +127,8 @@ export class BqTabGroup {
   }
 
   @Listen('bqBlur', { capture: true, passive: true })
-  onBqBlur() {
-    this.restoreTabsFocus();
+  async onBqBlur() {
+    await this.restoreTabsFocus();
   }
 
   // Public methods API
@@ -163,20 +163,18 @@ export class BqTabGroup {
     }
   };
 
-  private makeTabsFocusable = (): void => {
-    this.bqTabElements.forEach((bqTabElement) => {
+  private makeTabsFocusable = async (): Promise<void> => {
+    for (const bqTabElement of this.bqTabElements) {
       if (bqTabElement.disabled) return;
-
-      bqTabElement.enableFocus(true);
-    });
+      await bqTabElement.enableFocus(true);
+    }
   };
 
-  private restoreTabsFocus = (): void => {
-    this.bqTabElements.forEach((bqTabElement) => {
+  private restoreTabsFocus = async (): Promise<void> => {
+    for (const bqTabElement of this.bqTabElements) {
       if (bqTabElement.disabled || bqTabElement.active) return;
-
-      bqTabElement.enableFocus(false);
-    });
+      await bqTabElement.enableFocus(false);
+    }
   };
 
   private get bqTabElements(): HTMLBqTabElement[] {
