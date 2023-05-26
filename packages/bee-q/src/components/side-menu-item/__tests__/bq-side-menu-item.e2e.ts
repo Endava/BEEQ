@@ -1,42 +1,42 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-describe('bq-menu-item', () => {
+describe('bq-side-menu-item', () => {
   it('should render', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-menu-item></bq-menu-item>');
+    await page.setContent('<bq-side-menu-item></bq-side-menu-item>');
 
-    const element = await page.find('bq-menu-item');
+    const element = await page.find('bq-side-menu-item');
 
     expect(element).toHaveClass('hydrated');
   });
 
   it('should have shadow root', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-menu-item></bq-menu-item>');
+    await page.setContent('<bq-side-menu-item></bq-side-menu-item>');
 
-    const element = await page.find('bq-menu-item');
+    const element = await page.find('bq-side-menu-item');
 
     expect(element.shadowRoot).not.toBeNull();
   });
 
   it('should display text', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-menu-item> <span>Menu label</span> </bq-menu-item>');
+    await page.setContent('<bq-side-menu-item> <span>Menu label</span> </bq-side-menu-item>');
 
-    const element = await page.find('bq-menu-item > span');
+    const element = await page.find('bq-side-menu-item > span');
 
     expect(element).toEqualText('Menu label');
   });
 
   it('should trigger click', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-menu-item>Menu item label</bq-menu-item>');
+    await page.setContent('<bq-side-menu-item>Menu item label</bq-side-menu-item>');
 
-    const bqFocus = await page.spyOnEvent('bqMenuItemFocus');
-    const bqBlur = await page.spyOnEvent('bqMenuItemBlur');
-    const bqClick = await page.spyOnEvent('bqMenuItemClick');
+    const bqFocus = await page.spyOnEvent('bqSideMenuItemFocus');
+    const bqBlur = await page.spyOnEvent('bqSideMenuItemBlur');
+    const bqClick = await page.spyOnEvent('bqSideMenuItemClick');
 
-    const element = await page.find('bq-menu-item');
+    const element = await page.find('bq-side-menu-item');
 
     await element.click();
 
@@ -49,15 +49,15 @@ describe('bq-menu-item', () => {
 it('should be keyboard accessible', async () => {
   const page = await newE2EPage();
   await page.setContent(`
-      <bq-menu-item>
+      <bq-side-menu-item>
         <bq-icon size="18" name="user" slot="prefix"></bq-icon>
         <span>Verified users</span>
-      </bq-menu-item>
+      </bq-side-menu-item>
     `);
 
-  const bqFocus = await page.spyOnEvent('bqMenuItemFocus');
-  const bqBlur = await page.spyOnEvent('bqMenuItemBlur');
-  const bqClick = await page.spyOnEvent('bqMenuItemClick');
+  const bqFocus = await page.spyOnEvent('bqSideMenuItemFocus');
+  const bqBlur = await page.spyOnEvent('bqSideMenuItemBlur');
+  const bqClick = await page.spyOnEvent('bqSideMenuItemClick');
 
   await page.keyboard.press('Tab');
 
@@ -68,12 +68,12 @@ it('should be keyboard accessible', async () => {
 
 it('should handle Enter', async () => {
   const page = await newE2EPage();
-  await page.setContent('<bq-menu-item><span>Menu item label</span></bq-menu-item>');
+  await page.setContent('<bq-side-menu-item><span>Menu item label</span></bq-side-menu-item>');
 
-  const bqFocus = await page.spyOnEvent('bqMenuItemFocus');
-  const bqBlur = await page.spyOnEvent('bqMenuItemBlur');
-  const bqClick = await page.spyOnEvent('bqMenuItemClick');
-  const bqKeyEnter = await page.spyOnEvent('bqMenuItemOnEnter');
+  const bqFocus = await page.spyOnEvent('bqSideMenuItemFocus');
+  const bqBlur = await page.spyOnEvent('bqSideMenuItemBlur');
+  const bqClick = await page.spyOnEvent('bqSideMenuItemClick');
+  const bqKeyEnter = await page.spyOnEvent('bqSideMenuItemOnEnter');
 
   await page.keyboard.press('Tab');
   await page.keyboard.press('Enter');
@@ -86,13 +86,13 @@ it('should handle Enter', async () => {
 
 it('should handle `disabled` property', async () => {
   const page = await newE2EPage();
-  await page.setContent('<bq-menu-item disabled="true"><span>Menu item label</span></bq-menu-item>');
+  await page.setContent('<bq-side-menu-item disabled="true"><span>Menu item label</span></bq-side-menu-item>');
 
-  const bqFocus = await page.spyOnEvent('bqMenuItemFocus');
-  const bqBlur = await page.spyOnEvent('bqMenuItemBlur');
-  const bqClick = await page.spyOnEvent('bqMenuItemClick');
+  const bqFocus = await page.spyOnEvent('bqSideMenuItemFocus');
+  const bqBlur = await page.spyOnEvent('bqSideMenuItemBlur');
+  const bqClick = await page.spyOnEvent('bqSideMenuItemClick');
 
-  const element = await page.find('bq-menu-item');
+  const element = await page.find('bq-side-menu-item');
 
   element.click();
 
@@ -105,9 +105,9 @@ it('should handle `disabled` property', async () => {
 
 it('should render prefix element', async () => {
   const page = await newE2EPage();
-  await page.setContent('<bq-menu-item><span slot="prefix">Prefix</span></bq-menu-item>');
+  await page.setContent('<bq-side-menu-item><span slot="prefix">Prefix</span></bq-side-menu-item>');
 
-  const prefixText = await page.$eval('bq-menu-item', (element) => {
+  const prefixText = await page.$eval('bq-side-menu-item', (element) => {
     const slotElement = element.shadowRoot.querySelector('slot[name="prefix"]');
     const assignedElements = (slotElement as HTMLSlotElement).assignedElements({ flatten: true })[0];
 
@@ -119,9 +119,9 @@ it('should render prefix element', async () => {
 
 it('should render suffix element', async () => {
   const page = await newE2EPage();
-  await page.setContent('<bq-menu-item><span slot="suffix">Suffix</span></bq-menu-item>');
+  await page.setContent('<bq-side-menu-item><span slot="suffix">Suffix</span></bq-side-menu-item>');
 
-  const suffixText = await page.$eval('bq-menu-item', (element) => {
+  const suffixText = await page.$eval('bq-side-menu-item', (element) => {
     const slotElement = element.shadowRoot.querySelector('slot[name="suffix"]');
     const assignedElements = (slotElement as HTMLSlotElement).assignedElements({ flatten: true })[0];
 

@@ -1,7 +1,8 @@
 import { h, Component, Prop, State, EventEmitter, Event, Element, Method } from '@stencil/core';
 
 import { hasSlotContent } from '../../shared/utils';
-import { MENU_SIZE, TMenuSize, TMenuTheme } from '../menu/bq-menu.types';
+
+import { SIDE_MENU_SIZE, TSideMenuSize, TSideMenuTheme } from '../side-menu/bq-side-menu.types';
 
 /**
  * The menu item is used inside a `bq-menu` component
@@ -11,11 +12,11 @@ import { MENU_SIZE, TMenuSize, TMenuTheme } from '../menu/bq-menu.types';
  * @part suffix - The `<span>` tag element that acts as prefix container (bq-icon).
  */
 @Component({
-  tag: 'bq-menu-item',
-  styleUrl: './scss/bq-menu-item.scss',
+  tag: 'bq-side-menu-item',
+  styleUrl: './scss/bq-side-menu-item.scss',
   shadow: true,
 })
-export class BqMenuItem {
+export class BqSideMenuItem {
   // Own Properties
   // ====================
 
@@ -24,7 +25,7 @@ export class BqMenuItem {
   // Reference to host HTML element
   // ===================================
 
-  @Element() el!: HTMLBqMenuItemElement;
+  @Element() el!: HTMLBqSideMenuItemElement;
 
   // State() variables
   // Inlined decorator, alphabetical order
@@ -55,16 +56,16 @@ export class BqMenuItem {
   // ==============================================
 
   /** Handler to be called when the item loses focus */
-  @Event() bqMenuItemBlur: EventEmitter<HTMLBqMenuItemElement>;
+  @Event() bqSideMenuItemBlur: EventEmitter<HTMLBqSideMenuItemElement>;
 
   /** Handler to be called when the item gets focus */
-  @Event() bqMenuItemFocus: EventEmitter<HTMLBqMenuItemElement>;
+  @Event() bqSideMenuItemFocus: EventEmitter<HTMLBqSideMenuItemElement>;
 
   /** Handler to be called when the item is clicked */
-  @Event() bqMenuItemClick: EventEmitter<HTMLBqMenuItemElement>;
+  @Event() bqSideMenuItemClick: EventEmitter<HTMLBqSideMenuItemElement>;
 
   /** Handler to be called on enter key press */
-  @Event() bqMenuItemOnEnter: EventEmitter<HTMLBqMenuItemElement>;
+  @Event() bqSideMenuItemOnEnter: EventEmitter<HTMLBqSideMenuItemElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -105,7 +106,7 @@ export class BqMenuItem {
    * add size class and theme
    */
   @Method()
-  async addSizeClassAndTheme(size: TMenuSize, theme: TMenuTheme) {
+  async addSizeClassAndTheme(size: TSideMenuSize, theme: TSideMenuTheme) {
     this.removeSizeClassFromItem(); // first remove previous size class
     this.el.shadowRoot.querySelector<HTMLElement>('.bq-menu-item').classList.add(size);
     this.el.shadowRoot.querySelector<HTMLElement>('.bq-menu-item').setAttribute('data-theme', theme);
@@ -123,7 +124,7 @@ export class BqMenuItem {
       return;
     }
 
-    this.bqMenuItemBlur.emit(this.el);
+    this.bqSideMenuItemBlur.emit(this.el);
   };
 
   private onFocus = (event: Event) => {
@@ -133,7 +134,7 @@ export class BqMenuItem {
       return;
     }
 
-    this.bqMenuItemFocus.emit(this.el);
+    this.bqSideMenuItemFocus.emit(this.el);
   };
 
   private onClick = (event: Event) => {
@@ -143,11 +144,11 @@ export class BqMenuItem {
       return;
     }
 
-    this.bqMenuItemClick.emit(this.el);
+    this.bqSideMenuItemClick.emit(this.el);
   };
 
   private onKeyDown = (event: KeyboardEvent) => {
-    if (event.key === 'Enter') this.bqMenuItemOnEnter.emit(this.el);
+    if (event.key === 'Enter') this.bqSideMenuItemOnEnter.emit(this.el);
   };
 
   private onSlotChange = () => {
@@ -155,7 +156,7 @@ export class BqMenuItem {
   };
 
   private removeSizeClassFromItem = (): void => {
-    MENU_SIZE.forEach((size: TMenuSize) =>
+    SIDE_MENU_SIZE.forEach((size: TSideMenuSize) =>
       this.el.shadowRoot.querySelector<HTMLElement>('.bq-menu-item').classList.remove(size),
     );
   };

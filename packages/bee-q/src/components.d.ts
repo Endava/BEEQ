@@ -10,9 +10,9 @@ import { TBadgeSize } from "./components/badge/bq-badge.types";
 import { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 import { TIconWeight } from "./components/icon/bq-icon.types";
-import { TMenuSize, TMenuTheme } from "./components/menu/bq-menu.types";
 import { TNotificationType } from "./components/notification/bq-notification.types";
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
+import { TSideMenuSize, TSideMenuTheme } from "./components/side-menu/bq-side-menu.types";
 import { TSliderType } from "./components/slider/bq-slider.types";
 import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 import { TStatusType } from "./components/status/bq-status.types";
@@ -24,9 +24,9 @@ export { TBadgeSize } from "./components/badge/bq-badge.types";
 export { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 export { TIconWeight } from "./components/icon/bq-icon.types";
-export { TMenuSize, TMenuTheme } from "./components/menu/bq-menu.types";
 export { TNotificationType } from "./components/notification/bq-notification.types";
 export { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
+export { TSideMenuSize, TSideMenuTheme } from "./components/side-menu/bq-side-menu.types";
 export { TSliderType } from "./components/slider/bq-slider.types";
 export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 export { TStatusType } from "./components/status/bq-status.types";
@@ -223,56 +223,6 @@ export namespace Components {
          */
         "weight"?: TIconWeight;
     }
-    /**
-     * A menu is like a widget that offers a list of choices to the user.
-     */
-    interface BqMenu {
-        /**
-          * Show menu as collapsed
-         */
-        "collapsed": boolean;
-        /**
-          * Show/hide footer (collapse option)
-         */
-        "showCollapsible": boolean;
-        /**
-          * Set menu item size (small/medium)
-         */
-        "size": TMenuSize;
-        /**
-          * Set theme
-         */
-        "theme": TMenuTheme;
-    }
-    /**
-     * The menu item is used inside a `bq-menu` component
-     */
-    interface BqMenuItem {
-        /**
-          * If true, the item is set to active
-         */
-        "active": boolean;
-        /**
-          * called from Menu component on componentDidLoad() hook add size class and theme
-         */
-        "addSizeClassAndTheme": (size: TMenuSize, theme: TMenuTheme) => Promise<void>;
-        /**
-          * If true, the menu component is collapsed
-         */
-        "collapsed": boolean;
-        /**
-          * If true, the item will be disabled (no interaction allowed)
-         */
-        "disabled": boolean;
-        /**
-          * called from Menu component on collapse
-         */
-        "hidePartsFromMenuItems": () => Promise<void>;
-        /**
-          * Attribute link
-         */
-        "href": string | undefined;
-    }
     interface BqNotification {
         /**
           * If true, the notification will automatically hide after the specified amount of time
@@ -386,6 +336,56 @@ export namespace Components {
           * A string representing the value of the radio.
          */
         "value"?: string;
+    }
+    /**
+     * A menu is like a widget that offers a list of choices to the user.
+     */
+    interface BqSideMenu {
+        /**
+          * Show menu as collapsed
+         */
+        "collapsed": boolean;
+        /**
+          * Show/hide footer (collapse option)
+         */
+        "showCollapsible": boolean;
+        /**
+          * Set menu item size (small/medium)
+         */
+        "size": TSideMenuSize;
+        /**
+          * Set theme
+         */
+        "theme": TSideMenuTheme;
+    }
+    /**
+     * The menu item is used inside a `bq-menu` component
+     */
+    interface BqSideMenuItem {
+        /**
+          * If true, the item is set to active
+         */
+        "active": boolean;
+        /**
+          * called from Menu component on componentDidLoad() hook add size class and theme
+         */
+        "addSizeClassAndTheme": (size: TSideMenuSize, theme: TSideMenuTheme) => Promise<void>;
+        /**
+          * If true, the menu component is collapsed
+         */
+        "collapsed": boolean;
+        /**
+          * If true, the item will be disabled (no interaction allowed)
+         */
+        "disabled": boolean;
+        /**
+          * called from Menu component on collapse
+         */
+        "hidePartsFromMenuItems": () => Promise<void>;
+        /**
+          * Attribute link
+         */
+        "href": string | undefined;
     }
     interface BqSlider {
         /**
@@ -606,14 +606,6 @@ export interface BqIconCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqIconElement;
 }
-export interface BqMenuCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLBqMenuElement;
-}
-export interface BqMenuItemCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLBqMenuItemElement;
-}
 export interface BqNotificationCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqNotificationElement;
@@ -625,6 +617,14 @@ export interface BqRadioCustomEvent<T> extends CustomEvent<T> {
 export interface BqRadioGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqRadioGroupElement;
+}
+export interface BqSideMenuCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqSideMenuElement;
+}
+export interface BqSideMenuItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqSideMenuItemElement;
 }
 export interface BqSliderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -688,24 +688,6 @@ declare global {
         prototype: HTMLBqIconElement;
         new (): HTMLBqIconElement;
     };
-    /**
-     * A menu is like a widget that offers a list of choices to the user.
-     */
-    interface HTMLBqMenuElement extends Components.BqMenu, HTMLStencilElement {
-    }
-    var HTMLBqMenuElement: {
-        prototype: HTMLBqMenuElement;
-        new (): HTMLBqMenuElement;
-    };
-    /**
-     * The menu item is used inside a `bq-menu` component
-     */
-    interface HTMLBqMenuItemElement extends Components.BqMenuItem, HTMLStencilElement {
-    }
-    var HTMLBqMenuItemElement: {
-        prototype: HTMLBqMenuItemElement;
-        new (): HTMLBqMenuItemElement;
-    }
     interface HTMLBqNotificationElement extends Components.BqNotification, HTMLStencilElement {
     }
     var HTMLBqNotificationElement: {
@@ -723,6 +705,24 @@ declare global {
     var HTMLBqRadioGroupElement: {
         prototype: HTMLBqRadioGroupElement;
         new (): HTMLBqRadioGroupElement;
+    };
+    /**
+     * A menu is like a widget that offers a list of choices to the user.
+     */
+    interface HTMLBqSideMenuElement extends Components.BqSideMenu, HTMLStencilElement {
+    }
+    var HTMLBqSideMenuElement: {
+        prototype: HTMLBqSideMenuElement;
+        new (): HTMLBqSideMenuElement;
+    };
+    /**
+     * The menu item is used inside a `bq-menu` component
+     */
+    interface HTMLBqSideMenuItemElement extends Components.BqSideMenuItem, HTMLStencilElement {
+    }
+    var HTMLBqSideMenuItemElement: {
+        prototype: HTMLBqSideMenuItemElement;
+        new (): HTMLBqSideMenuItemElement;
     };
     interface HTMLBqSliderElement extends Components.BqSlider, HTMLStencilElement {
     }
@@ -780,11 +780,11 @@ declare global {
         "bq-checkbox": HTMLBqCheckboxElement;
         "bq-divider": HTMLBqDividerElement;
         "bq-icon": HTMLBqIconElement;
-        "bq-menu": HTMLBqMenuElement;
-        "bq-menu-item": HTMLBqMenuItemElement;
         "bq-notification": HTMLBqNotificationElement;
         "bq-radio": HTMLBqRadioElement;
         "bq-radio-group": HTMLBqRadioGroupElement;
+        "bq-side-menu": HTMLBqSideMenuElement;
+        "bq-side-menu-item": HTMLBqSideMenuItemElement;
         "bq-slider": HTMLBqSliderElement;
         "bq-spinner": HTMLBqSpinnerElement;
         "bq-status": HTMLBqStatusElement;
@@ -1000,76 +1000,6 @@ declare namespace LocalJSX {
          */
         "weight"?: TIconWeight;
     }
-    /**
-     * A menu is like a widget that offers a list of choices to the user.
-     */
-    interface BqMenu {
-        /**
-          * Show menu as collapsed
-         */
-        "collapsed"?: boolean;
-        /**
-          * Handler to be called when the item loses focus
-         */
-        "onBqBlur"?: (event: BqMenuCustomEvent<HTMLBqMenuItemElement>) => void;
-        /**
-          * Handler to be called when item is clicked
-         */
-        "onBqClick"?: (event: BqMenuCustomEvent<HTMLBqMenuItemElement>) => void;
-        /**
-          * Handler to be called when the item gets focus
-         */
-        "onBqFocus"?: (event: BqMenuCustomEvent<HTMLBqMenuItemElement>) => void;
-        /**
-          * Show/hide footer (collapse option)
-         */
-        "showCollapsible"?: boolean;
-        /**
-          * Set menu item size (small/medium)
-         */
-        "size"?: TMenuSize;
-        /**
-          * Set theme
-         */
-        "theme"?: TMenuTheme;
-    }
-    /**
-     * The menu item is used inside a `bq-menu` component
-     */
-    interface BqMenuItem {
-        /**
-          * If true, the item is set to active
-         */
-        "active"?: boolean;
-        /**
-          * If true, the menu component is collapsed
-         */
-        "collapsed"?: boolean;
-        /**
-          * If true, the item will be disabled (no interaction allowed)
-         */
-        "disabled"?: boolean;
-        /**
-          * Attribute link
-         */
-        "href"?: string | undefined;
-        /**
-          * Handler to be called when the item loses focus
-         */
-        "onBqMenuItemBlur"?: (event: BqMenuItemCustomEvent<HTMLBqMenuItemElement>) => void;
-        /**
-          * Handler to be called when the item is clicked
-         */
-        "onBqMenuItemClick"?: (event: BqMenuItemCustomEvent<HTMLBqMenuItemElement>) => void;
-        /**
-          * Handler to be called when the item gets focus
-         */
-        "onBqMenuItemFocus"?: (event: BqMenuItemCustomEvent<HTMLBqMenuItemElement>) => void;
-        /**
-          * Handler to be called on enter key press
-         */
-        "onBqMenuItemOnEnter"?: (event: BqMenuItemCustomEvent<HTMLBqMenuItemElement>) => void;
-    }
     interface BqNotification {
         /**
           * If true, the notification will automatically hide after the specified amount of time
@@ -1187,6 +1117,76 @@ declare namespace LocalJSX {
           * A string representing the value of the radio.
          */
         "value"?: string;
+    }
+    /**
+     * A menu is like a widget that offers a list of choices to the user.
+     */
+    interface BqSideMenu {
+        /**
+          * Show menu as collapsed
+         */
+        "collapsed"?: boolean;
+        /**
+          * Handler to be called when the item loses focus
+         */
+        "onBqBlur"?: (event: BqSideMenuCustomEvent<HTMLBqSideMenuItemElement>) => void;
+        /**
+          * Handler to be called when item is clicked
+         */
+        "onBqClick"?: (event: BqSideMenuCustomEvent<HTMLBqSideMenuItemElement>) => void;
+        /**
+          * Handler to be called when the item gets focus
+         */
+        "onBqFocus"?: (event: BqSideMenuCustomEvent<HTMLBqSideMenuItemElement>) => void;
+        /**
+          * Show/hide footer (collapse option)
+         */
+        "showCollapsible"?: boolean;
+        /**
+          * Set menu item size (small/medium)
+         */
+        "size"?: TSideMenuSize;
+        /**
+          * Set theme
+         */
+        "theme"?: TSideMenuTheme;
+    }
+    /**
+     * The menu item is used inside a `bq-menu` component
+     */
+    interface BqSideMenuItem {
+        /**
+          * If true, the item is set to active
+         */
+        "active"?: boolean;
+        /**
+          * If true, the menu component is collapsed
+         */
+        "collapsed"?: boolean;
+        /**
+          * If true, the item will be disabled (no interaction allowed)
+         */
+        "disabled"?: boolean;
+        /**
+          * Attribute link
+         */
+        "href"?: string | undefined;
+        /**
+          * Handler to be called when the item loses focus
+         */
+        "onBqSideMenuItemBlur"?: (event: BqSideMenuItemCustomEvent<HTMLBqSideMenuItemElement>) => void;
+        /**
+          * Handler to be called when the item is clicked
+         */
+        "onBqSideMenuItemClick"?: (event: BqSideMenuItemCustomEvent<HTMLBqSideMenuItemElement>) => void;
+        /**
+          * Handler to be called when the item gets focus
+         */
+        "onBqSideMenuItemFocus"?: (event: BqSideMenuItemCustomEvent<HTMLBqSideMenuItemElement>) => void;
+        /**
+          * Handler to be called on enter key press
+         */
+        "onBqSideMenuItemOnEnter"?: (event: BqSideMenuItemCustomEvent<HTMLBqSideMenuItemElement>) => void;
     }
     interface BqSlider {
         /**
@@ -1409,11 +1409,11 @@ declare namespace LocalJSX {
         "bq-checkbox": BqCheckbox;
         "bq-divider": BqDivider;
         "bq-icon": BqIcon;
-        "bq-menu": BqMenu;
-        "bq-menu-item": BqMenuItem;
         "bq-notification": BqNotification;
         "bq-radio": BqRadio;
         "bq-radio-group": BqRadioGroup;
+        "bq-side-menu": BqSideMenu;
+        "bq-side-menu-item": BqSideMenuItem;
         "bq-slider": BqSlider;
         "bq-spinner": BqSpinner;
         "bq-status": BqStatus;
@@ -1442,17 +1442,17 @@ declare module "@stencil/core" {
              * Icons are simplified images that graphically explain the meaning of an object on the screen.
              */
             "bq-icon": LocalJSX.BqIcon & JSXBase.HTMLAttributes<HTMLBqIconElement>;
-            /**
-             * A menu is like a widget that offers a list of choices to the user.
-             */
-            "bq-menu": LocalJSX.BqMenu & JSXBase.HTMLAttributes<HTMLBqMenuElement>;
-            /**
-             * The menu item is used inside a `bq-menu` component
-             */
-            "bq-menu-item": LocalJSX.BqMenuItem & JSXBase.HTMLAttributes<HTMLBqMenuItemElement>;
             "bq-notification": LocalJSX.BqNotification & JSXBase.HTMLAttributes<HTMLBqNotificationElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
+            /**
+             * A menu is like a widget that offers a list of choices to the user.
+             */
+            "bq-side-menu": LocalJSX.BqSideMenu & JSXBase.HTMLAttributes<HTMLBqSideMenuElement>;
+            /**
+             * The menu item is used inside a `bq-menu` component
+             */
+            "bq-side-menu-item": LocalJSX.BqSideMenuItem & JSXBase.HTMLAttributes<HTMLBqSideMenuItemElement>;
             "bq-slider": LocalJSX.BqSlider & JSXBase.HTMLAttributes<HTMLBqSliderElement>;
             /**
              * Spinners are designed for users to display data loading.

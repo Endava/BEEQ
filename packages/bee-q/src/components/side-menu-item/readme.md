@@ -21,17 +21,17 @@ The menu item is used inside a `bq-menu` component
 
 ## Events
 
-| Event               | Description                                    | Type                                 |
-| ------------------- | ---------------------------------------------- | ------------------------------------ |
-| `bqMenuItemBlur`    | Handler to be called when the item loses focus | `CustomEvent<HTMLBqMenuItemElement>` |
-| `bqMenuItemClick`   | Handler to be called when the item is clicked  | `CustomEvent<HTMLBqMenuItemElement>` |
-| `bqMenuItemFocus`   | Handler to be called when the item gets focus  | `CustomEvent<HTMLBqMenuItemElement>` |
-| `bqMenuItemOnEnter` | Handler to be called on enter key press        | `CustomEvent<HTMLBqMenuItemElement>` |
+| Event                   | Description                                    | Type                                     |
+| ----------------------- | ---------------------------------------------- | ---------------------------------------- |
+| `bqSideMenuItemBlur`    | Handler to be called when the item loses focus | `CustomEvent<HTMLBqSideMenuItemElement>` |
+| `bqSideMenuItemClick`   | Handler to be called when the item is clicked  | `CustomEvent<HTMLBqSideMenuItemElement>` |
+| `bqSideMenuItemFocus`   | Handler to be called when the item gets focus  | `CustomEvent<HTMLBqSideMenuItemElement>` |
+| `bqSideMenuItemOnEnter` | Handler to be called on enter key press        | `CustomEvent<HTMLBqSideMenuItemElement>` |
 
 
 ## Methods
 
-### `addSizeClassAndTheme(size: TMenuSize, theme: TMenuTheme) => Promise<void>`
+### `addSizeClassAndTheme(size: TSideMenuSize, theme: TSideMenuTheme) => Promise<void>`
 
 called from Menu component on componentDidLoad() hook
 add size class and theme

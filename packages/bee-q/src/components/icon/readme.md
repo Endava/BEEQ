@@ -2,6 +2,7 @@
 
 <!-- Auto Generated Below -->
 
+
 ## Overview
 
 Icons are simplified images that graphically explain the meaning of an object on the screen.
@@ -15,11 +16,13 @@ Icons are simplified images that graphically explain the meaning of an object on
 | `size`              | `size`    | Set the size of the SVG                                                                 | `number \| string`                                                | `24`        |
 | `weight`            | `weight`  | It set the icon weight/style                                                            | `"bold" \| "duotone" \| "fill" \| "light" \| "regular" \| "thin"` | `'regular'` |
 
+
 ## Events
 
 | Event       | Description                                           | Type               |
 | ----------- | ----------------------------------------------------- | ------------------ |
 | `svgLoaded` | Callback handler to be called when the SVG has loaded | `CustomEvent<any>` |
+
 
 ## Shadow Parts
 
@@ -28,26 +31,26 @@ Icons are simplified images that graphically explain the meaning of an object on
 | `"base"` | The component's internal wrapper that holds the icon SVG content. |
 | `"svg"`  | The `<svg>` tag element inside the component.                     |
 
+
 ## Dependencies
 
 ### Used by
 
-- [bq-button](../button)
-- [bq-notification](../notification)
-- [bq-menu](../menu)
-- [bq-switch](../switch)
+ - [bq-button](../button)
+ - [bq-notification](../notification)
+ - [bq-side-menu](../side-menu)
+ - [bq-switch](../switch)
 
 ### Graph
-
 ```mermaid
 graph TD;
   bq-button --> bq-icon
   bq-notification --> bq-icon
-  bq-menu --> bq-icon
+  bq-side-menu --> bq-icon
   bq-switch --> bq-icon
   style bq-icon fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

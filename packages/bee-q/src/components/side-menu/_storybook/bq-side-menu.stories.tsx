@@ -1,22 +1,24 @@
-import { html } from 'lit-html';
-import { MENU_SIZE, MENU_THEME } from '../bq-menu.types';
-import mdx from './bq-menu.mdx';
-
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
 
+import { html } from 'lit-html';
+
+import mdx from './bq-menu.mdx';
+
+import { SIDE_MENU_SIZE, SIDE_MENU_THEME } from '../bq-side-menu.types';
+
 const meta: Meta = {
-  title: 'Components/Menu',
-  component: 'bq-menu',
+  title: 'Components/Side Menu',
+  component: 'bq-side-menu',
   parameters: {
     docs: {
       page: mdx,
     },
   },
   argTypes: {
-    size: { control: 'select', options: [...MENU_SIZE] },
+    size: { control: 'select', options: [...SIDE_MENU_SIZE] },
     'show-collapsible': { control: 'boolean' },
     collapsed: { control: 'boolean' },
-    theme: { control: 'select', options: [...MENU_THEME] },
+    theme: { control: 'select', options: [...SIDE_MENU_THEME] },
     text: { control: 'text', table: { disable: true } },
     // Event handlers
     bqBlur: { action: 'bqBlur' },
@@ -36,7 +38,7 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
-  <bq-menu
+  <bq-side-menu
     size=${args.size}
     show-collapsible=${args['show-collapsible']}
     collapsed=${args.collapsed}
@@ -68,7 +70,7 @@ const Template = (args: Args) => html`
 
     <!-- footer slot -->
     <div slot="footer">Collapsible</div>
-  </bq-menu>
+  </bq-side-menu>
 `;
 
 export const Light: Story = {

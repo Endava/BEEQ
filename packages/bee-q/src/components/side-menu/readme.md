@@ -21,11 +21,11 @@ A menu is like a widget that offers a list of choices to the user.
 
 ## Events
 
-| Event     | Description                                    | Type                                 |
-| --------- | ---------------------------------------------- | ------------------------------------ |
-| `bqBlur`  | Handler to be called when the item loses focus | `CustomEvent<HTMLBqMenuItemElement>` |
-| `bqClick` | Handler to be called when item is clicked      | `CustomEvent<HTMLBqMenuItemElement>` |
-| `bqFocus` | Handler to be called when the item gets focus  | `CustomEvent<HTMLBqMenuItemElement>` |
+| Event     | Description                                    | Type                                     |
+| --------- | ---------------------------------------------- | ---------------------------------------- |
+| `bqBlur`  | Handler to be called when the item loses focus | `CustomEvent<HTMLBqSideMenuItemElement>` |
+| `bqClick` | Handler to be called when item is clicked      | `CustomEvent<HTMLBqSideMenuItemElement>` |
+| `bqFocus` | Handler to be called when the item gets focus  | `CustomEvent<HTMLBqSideMenuItemElement>` |
 
 
 ## Shadow Parts
@@ -50,10 +50,10 @@ A menu is like a widget that offers a list of choices to the user.
 ### Graph
 ```mermaid
 graph TD;
-  bq-menu --> bq-button
-  bq-menu --> bq-icon
+  bq-side-menu --> bq-button
+  bq-side-menu --> bq-icon
   bq-button --> bq-icon
-  style bq-menu fill:#f9f,stroke:#333,stroke-width:4px
+  style bq-side-menu fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

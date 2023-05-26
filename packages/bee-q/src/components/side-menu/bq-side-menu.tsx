@@ -1,7 +1,8 @@
 import { h, Component, Prop, Element, State, Listen, Event, EventEmitter, Watch } from '@stencil/core';
-import { isHTMLElement } from '../../shared/utils';
 
-import { MENU_SIZE, TMenuTheme, TMenuSize } from './bq-menu.types';
+import { SIDE_MENU_SIZE, TSideMenuTheme, TSideMenuSize } from './bq-side-menu.types';
+
+import { isHTMLElement } from '../../shared/utils';
 
 enum FooterIconName {
   Expand = 'arrow-line-left',
@@ -23,18 +24,18 @@ enum FooterIconSize {
  * @part header-suffix - The `span` tag element used to display the header part of the menu (title).
  */
 @Component({
-  tag: 'bq-menu',
-  styleUrl: './scss/bq-menu.scss',
+  tag: 'bq-side-menu',
+  styleUrl: './scss/bq-side-menu.scss',
   shadow: true,
 })
-export class BqMenu {
+export class BqSideMenu {
   // Own Properties
   // ====================
 
   // Reference to host HTML element
   // ===================================
 
-  @Element() el!: HTMLBqMenuElement;
+  @Element() el!: HTMLBqSideMenuElement;
 
   // State() variables
   // Inlined decorator, alphabetical order
@@ -46,10 +47,10 @@ export class BqMenu {
   // ========================
 
   /** Set menu item size (small/medium) */
-  @Prop({ reflect: true }) size: TMenuSize = 'medium';
+  @Prop({ reflect: true }) size: TSideMenuSize = 'medium';
 
   /** Set theme */
-  @Prop({ reflect: true }) theme: TMenuTheme = 'light';
+  @Prop({ reflect: true }) theme: TSideMenuTheme = 'light';
 
   /** Show/hide footer (collapse option) */
   @Prop({ reflect: true }) showCollapsible = false;
@@ -101,13 +102,13 @@ export class BqMenu {
   // ==============================================
 
   /** Handler to be called when the item loses focus */
-  @Event() bqBlur: EventEmitter<HTMLBqMenuItemElement>;
+  @Event() bqBlur: EventEmitter<HTMLBqSideMenuItemElement>;
 
   /** Handler to be called when the item gets focus */
-  @Event() bqFocus: EventEmitter<HTMLBqMenuItemElement>;
+  @Event() bqFocus: EventEmitter<HTMLBqSideMenuItemElement>;
 
   /** Handler to be called when item is clicked */
-  @Event() bqClick: EventEmitter<HTMLBqMenuItemElement>;
+  @Event() bqClick: EventEmitter<HTMLBqSideMenuItemElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -124,25 +125,25 @@ export class BqMenu {
   // Listeners
   // ==============
 
-  @Listen('bqMenuItemBlur')
-  onBqMenuItemBlur(event: CustomEvent<HTMLBqMenuItemElement>) {
+  @Listen('bqSideMenuItemBlur')
+  onBqMenuItemBlur(event: CustomEvent<HTMLBqSideMenuItemElement>) {
     this.bqBlur.emit(event.detail);
   }
 
-  @Listen('bqMenuItemFocus')
-  onBqMenuItemFocus(event: CustomEvent<HTMLBqMenuItemElement>) {
+  @Listen('bqSideMenuItemFocus')
+  onBqMenuItemFocus(event: CustomEvent<HTMLBqSideMenuItemElement>) {
     this.bqFocus.emit(event.detail);
   }
 
-  @Listen('bqMenuItemClick')
-  onBqMenuItemClick(event: CustomEvent<HTMLBqMenuItemElement>) {
+  @Listen('bqSideMenuItemClick')
+  onBqMenuItemClick(event: CustomEvent<HTMLBqSideMenuItemElement>) {
     this.bqClick.emit(event.detail);
-    this.setMenuItemToActive(event.detail as HTMLBqMenuItemElement);
+    this.setMenuItemToActive(event.detail as HTMLBqSideMenuItemElement);
   }
 
-  @Listen('bqMenuItemOnEnter')
-  onBqMenuItemEnterPress(event: CustomEvent<HTMLBqMenuItemElement>) {
-    this.setMenuItemToActive(event.detail as HTMLBqMenuItemElement);
+  @Listen('bqSideMenuItemOnEnter')
+  onBqMenuItemEnterPress(event: CustomEvent<HTMLBqSideMenuItemElement>) {
+    this.setMenuItemToActive(event.detail as HTMLBqSideMenuItemElement);
   }
 
   // Public methods API
@@ -161,7 +162,7 @@ export class BqMenu {
    * set theme and size to bq-menu-item components
    */
   private changeLayoutBqMenuItem = (): void => {
-    this.getBqMenuItemElems.forEach((target: HTMLBqMenuItemElement) =>
+    this.getBqMenuItemElems.forEach((target: HTMLBqSideMenuItemElement) =>
       target.addSizeClassAndTheme(this.size, this.theme),
     );
   };
@@ -187,7 +188,7 @@ export class BqMenu {
   };
 
   private removePreviousSizeFromMenu = (): void => {
-    MENU_SIZE.forEach((size: TMenuSize) => {
+    SIDE_MENU_SIZE.forEach((size: TSideMenuSize) => {
       this.asideElement.classList.remove(size);
       this.asideElement.querySelector('[part="header"]').classList.remove(size);
     });
@@ -198,7 +199,7 @@ export class BqMenu {
 
     const pathname: string = window?.location?.pathname || '/';
 
-    this.getBqMenuItemElems.forEach((menuItem: HTMLBqMenuItemElement) => {
+    this.getBqMenuItemElems.forEach((menuItem: HTMLBqSideMenuItemElement) => {
       if (!menuItem.getAttribute('disabled') && menuItem.getAttribute('href') === pathname) {
         this.setMenuItemToActive(menuItem);
       }
@@ -244,7 +245,7 @@ export class BqMenu {
    * change `collapsed` value
    */
   private hidePartsFromMenuItems = (isMenuCollapsed: boolean): void => {
-    this.getBqMenuItemElems.forEach((target: HTMLBqMenuItemElement) => {
+    this.getBqMenuItemElems.forEach((target: HTMLBqSideMenuItemElement) => {
       target.hidePartsFromMenuItems();
       target.collapsed = isMenuCollapsed;
     });
@@ -254,17 +255,19 @@ export class BqMenu {
    * set value for `active` attr of menu item
    * @param event
    */
-  private setMenuItemToActive = (menuItemElement: HTMLBqMenuItemElement): void => {
+  private setMenuItemToActive = (menuItemElement: HTMLBqSideMenuItemElement): void => {
     this.getBqMenuItemElems.forEach(
-      (bqMenuItem: HTMLBqMenuItemElement) => (bqMenuItem.active = bqMenuItem === menuItemElement),
+      (bqMenuItem: HTMLBqSideMenuItemElement) => (bqMenuItem.active = bqMenuItem === menuItemElement),
     );
   };
 
-  private get getBqMenuItemElems(): HTMLBqMenuItemElement[] {
+  private get getBqMenuItemElems(): HTMLBqSideMenuItemElement[] {
     const slot = this.el.shadowRoot.querySelector('.bq-menu').querySelector<HTMLSlotElement>('[part="content"] > slot');
     return slot
       .assignedElements({ flatten: true })
-      .filter((elem: HTMLBqMenuItemElement) => isHTMLElement(elem, 'bq-menu-item')) as [HTMLBqMenuItemElement];
+      .filter((elem: HTMLBqSideMenuItemElement) => isHTMLElement(elem, 'bq-side-menu-item')) as [
+      HTMLBqSideMenuItemElement,
+    ];
   }
 
   private get asideElement(): HTMLElement {
