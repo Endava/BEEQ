@@ -11,21 +11,22 @@ A menu is like a widget that offers a list of choices to the user.
 
 ## Properties
 
-| Property          | Attribute          | Description                        | Type                              | Default    |
-| ----------------- | ------------------ | ---------------------------------- | --------------------------------- | ---------- |
-| `collapsed`       | `collapsed`        | Show menu as collapsed             | `boolean`                         | `false`    |
-| `showCollapsible` | `show-collapsible` | Show/hide footer (collapse option) | `boolean`                         | `false`    |
-| `size`            | `size`             | Set menu item size (small/medium)  | `"medium" \| "small"`             | `'medium'` |
-| `theme`           | `theme`            | Set theme                          | `"brand" \| "inverse" \| "light"` | `'light'`  |
+| Property          | Attribute          | Description                                                          | Type                              | Default    |
+| ----------------- | ------------------ | -------------------------------------------------------------------- | --------------------------------- | ---------- |
+| `collapsed`       | `collapsed`        | Show menu as collapsed. Relevant only if `show-collapsible` is true. | `boolean`                         | `true`     |
+| `showCollapsible` | `show-collapsible` | Show/hide footer (collapse option).                                  | `boolean`                         | `true`     |
+| `size`            | `size`             | Set menu item size (small/medium).                                   | `"medium" \| "small"`             | `'medium'` |
+| `theme`           | `theme`            | Set theme.                                                           | `"brand" \| "inverse" \| "light"` | `'light'`  |
 
 
 ## Events
 
-| Event     | Description                                    | Type                                     |
-| --------- | ---------------------------------------------- | ---------------------------------------- |
-| `bqBlur`  | Handler to be called when the item loses focus | `CustomEvent<HTMLBqSideMenuItemElement>` |
-| `bqClick` | Handler to be called when item is clicked      | `CustomEvent<HTMLBqSideMenuItemElement>` |
-| `bqFocus` | Handler to be called when the item gets focus  | `CustomEvent<HTMLBqSideMenuItemElement>` |
+| Event      | Description                                                    | Type                                     |
+| ---------- | -------------------------------------------------------------- | ---------------------------------------- |
+| `bqBlur`   | Handler to be called when the item loses focus                 | `CustomEvent<HTMLBqSideMenuItemElement>` |
+| `bqClick`  | Handler to be called when item is clicked                      | `CustomEvent<HTMLBqSideMenuItemElement>` |
+| `bqFocus`  | Handler to be called when the item gets focus                  | `CustomEvent<HTMLBqSideMenuItemElement>` |
+| `bqSelect` | Handler to be called when item is selected (on click/on Enter) | `CustomEvent<HTMLBqSideMenuItemElement>` |
 
 
 ## Shadow Parts

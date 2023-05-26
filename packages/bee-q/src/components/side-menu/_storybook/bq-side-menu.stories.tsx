@@ -52,21 +52,21 @@ const Template = (args: Args) => html`
     <h1 slot="header-suffix">Bee-Q</h1>
 
     <!-- content -->
-    <bq-menu-item active="true">
+    <bq-side-menu-item active="true">
       <bq-icon size="18" name="user" slot="prefix"></bq-icon>
       <span>Verified users</span>
       <bq-icon size="18" name="check" color="#34eb52" slot="suffix"></bq-icon>
-    </bq-menu-item>
+    </bq-side-menu-item>
 
-    <bq-menu-item>
+    <bq-side-menu-item>
       <bq-icon size="18" name="presentation-chart" slot="prefix"></bq-icon>
       <span>Dashboard</span>
-    </bq-menu-item>
+    </bq-side-menu-item>
 
-    <bq-menu-item disabled="true">
+    <bq-side-menu-item disabled="true">
       <span>Do not enter</span>
       <bq-icon size="18" name="prohibit" slot="suffix"></bq-icon>
-    </bq-menu-item>
+    </bq-side-menu-item>
 
     <!-- footer slot -->
     <div slot="footer">Collapsible</div>

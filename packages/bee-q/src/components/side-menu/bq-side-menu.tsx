@@ -46,17 +46,17 @@ export class BqSideMenu {
   // Public Property API
   // ========================
 
-  /** Set menu item size (small/medium) */
+  /** Set menu item size (small/medium). */
   @Prop({ reflect: true }) size: TSideMenuSize = 'medium';
 
-  /** Set theme */
+  /** Set theme. */
   @Prop({ reflect: true }) theme: TSideMenuTheme = 'light';
 
-  /** Show/hide footer (collapse option) */
-  @Prop({ reflect: true }) showCollapsible = false;
+  /** Show/hide footer (collapse option). */
+  @Prop({ reflect: true }) showCollapsible = true;
 
-  /** Show menu as collapsed */
-  @Prop({ reflect: true }) collapsed = false;
+  /** Show menu as collapsed. Relevant only if `show-collapsible` is true. */
+  @Prop({ reflect: true }) collapsed = true;
 
   // Prop lifecycle events
   // =======================
@@ -110,6 +110,9 @@ export class BqSideMenu {
   /** Handler to be called when item is clicked */
   @Event() bqClick: EventEmitter<HTMLBqSideMenuItemElement>;
 
+  /** Handler to be called when item is selected (on click/on Enter) */
+  @Event() bqSelect: EventEmitter<HTMLBqSideMenuItemElement>;
+
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
@@ -138,12 +141,13 @@ export class BqSideMenu {
   @Listen('bqSideMenuItemClick')
   onBqMenuItemClick(event: CustomEvent<HTMLBqSideMenuItemElement>) {
     this.bqClick.emit(event.detail);
-    this.setMenuItemToActive(event.detail as HTMLBqSideMenuItemElement);
   }
 
+  @Listen('bqSideMenuItemClick')
   @Listen('bqSideMenuItemOnEnter')
-  onBqMenuItemEnterPress(event: CustomEvent<HTMLBqSideMenuItemElement>) {
-    this.setMenuItemToActive(event.detail as HTMLBqSideMenuItemElement);
+  onBqMenuItemSelect(event: CustomEvent<HTMLBqSideMenuItemElement>) {
+    this.bqSelect.emit(event.detail);
+    this.setMenuItemToActive(event.detail);
   }
 
   // Public methods API

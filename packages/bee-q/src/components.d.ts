@@ -350,19 +350,19 @@ export namespace Components {
      */
     interface BqSideMenu {
         /**
-          * Show menu as collapsed
+          * Show menu as collapsed. Relevant only if `show-collapsible` is true.
          */
         "collapsed": boolean;
         /**
-          * Show/hide footer (collapse option)
+          * Show/hide footer (collapse option).
          */
         "showCollapsible": boolean;
         /**
-          * Set menu item size (small/medium)
+          * Set menu item size (small/medium).
          */
         "size": TSideMenuSize;
         /**
-          * Set theme
+          * Set theme.
          */
         "theme": TSideMenuTheme;
     }
@@ -1139,7 +1139,7 @@ declare namespace LocalJSX {
      */
     interface BqSideMenu {
         /**
-          * Show menu as collapsed
+          * Show menu as collapsed. Relevant only if `show-collapsible` is true.
          */
         "collapsed"?: boolean;
         /**
@@ -1155,15 +1155,19 @@ declare namespace LocalJSX {
          */
         "onBqFocus"?: (event: BqSideMenuCustomEvent<HTMLBqSideMenuItemElement>) => void;
         /**
-          * Show/hide footer (collapse option)
+          * Handler to be called when item is selected (on click/on Enter)
+         */
+        "onBqSelect"?: (event: BqSideMenuCustomEvent<HTMLBqSideMenuItemElement>) => void;
+        /**
+          * Show/hide footer (collapse option).
          */
         "showCollapsible"?: boolean;
         /**
-          * Set menu item size (small/medium)
+          * Set menu item size (small/medium).
          */
         "size"?: TSideMenuSize;
         /**
-          * Set theme
+          * Set theme.
          */
         "theme"?: TSideMenuTheme;
     }
