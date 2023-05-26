@@ -70,6 +70,7 @@ const config: Config = {
         empty: "''",
       },
       spacing: {
+        xs3: 'var(--bq-spacing-xs3)',
         xs2: 'var(--bq-spacing-xs2)',
         xs: 'var(--bq-spacing-xs)',
         s: 'var(--bq-spacing-s)',
