@@ -42,7 +42,7 @@ export class BqTab {
   @Prop({ reflect: true }) disabled = false;
 
   /** The size of the tab */
-  @Prop({ reflect: true }) size: TTabSize = 'small';
+  @Prop({ reflect: true }) size: TTabSize = 'medium';
 
   /** The id of the tab */
   @Prop({ reflect: true }) tabId!: string;
@@ -58,7 +58,7 @@ export class BqTab {
 
   @Watch('size')
   checkPropValues() {
-    validatePropValue(TAB_SIZE, 'small', this.el, 'size');
+    validatePropValue(TAB_SIZE, 'medium', this.el, 'size');
   }
 
   // Events section
@@ -184,14 +184,7 @@ export class BqTab {
           tabindex={this.tabindex}
           part="base"
         >
-          <div
-            class={{
-              'flex items-center justify-center': true,
-              'gap-1': this.size === 'small',
-              'gap-2': this.size !== 'small',
-            }}
-            part="content"
-          >
+          <div class="flex items-center justify-center" part="content">
             <div class="flex" part="icon">
               <slot name="icon" />
             </div>
