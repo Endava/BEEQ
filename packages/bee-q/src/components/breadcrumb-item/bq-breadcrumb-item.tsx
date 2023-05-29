@@ -1,6 +1,6 @@
 import { h, Component, State, Prop } from '@stencil/core';
 
-import { hasSlotContent } from '../../shared/utils';
+import { hasSlotContent, isDefined } from '../../shared/utils';
 
 @Component({
   tag: 'bq-breadcrumb-item',
@@ -30,7 +30,17 @@ export class BqBreadcrumbItem {
   // Prop lifecycle events
   // =======================
 
+  /** If true, the item is the last element inside breadcrumb */
   @Prop() isLast: boolean = false;
+
+  /** If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered. */
+  @Prop({ reflect: true }) href: string;
+
+  /** Where to display the link in the browser context. Relevant only if `href` is set. */
+  @Prop({ reflect: true }) target: '_blank' | '_parent' | '_self' | '_top';
+
+  /** Where to display the link in the browser context. Relevant only if `href` is set. */
+  @Prop({ reflect: true }) rel: string = 'noreferrer noopener';
 
   // Events section
   // Requires JSDocs for public API documentation
@@ -65,9 +75,19 @@ export class BqBreadcrumbItem {
   // ===================================
 
   render() {
+    const isLink = isDefined(this.href);
+    const TagElem = isLink ? 'a' : 'button';
+
     return (
       <section class="flex h-5 items-center">
-        <div class="breadcrumb-item" role="listitem" tabindex="0">
+        <TagElem
+          class="breadcrumb-item"
+          role="listitem"
+          tabindex="0"
+          href={isLink ? this.href : undefined}
+          rel={isLink && this.target ? 'noreferrer noopener' : undefined}
+          target={isLink ? this.target : undefined}
+        >
           <span
             class={{
               'breadcrumb-item__prefix': true,
@@ -81,6 +101,7 @@ export class BqBreadcrumbItem {
           <span
             class={{
               'breadcrumb-item__label': true,
+              'text-text-brand': this.isLast,
             }}
             part="label"
           >
@@ -96,7 +117,7 @@ export class BqBreadcrumbItem {
           >
             <slot name="suffix" onSlotchange={this.onSlotChange}></slot>
           </span>
-        </div>
+        </TagElem>
         <span
           class={{
             'breadcrumb-separator': true,

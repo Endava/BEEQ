@@ -78,7 +78,22 @@ export namespace Components {
     interface BqBreadcrumb {
     }
     interface BqBreadcrumbItem {
+        /**
+          * If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
+         */
+        "href": string;
+        /**
+          * If true, the item is the last element inside breadcrumb
+         */
         "isLast": boolean;
+        /**
+          * Where to display the link in the browser context. Relevant only if `href` is set.
+         */
+        "rel": string;
+        /**
+          * Where to display the link in the browser context. Relevant only if `href` is set.
+         */
+        "target": '_blank' | '_parent' | '_self' | '_top';
     }
     /**
      * Buttons are designed for users to take action on a page or a screen.
@@ -788,7 +803,22 @@ declare namespace LocalJSX {
     interface BqBreadcrumb {
     }
     interface BqBreadcrumbItem {
+        /**
+          * If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
+         */
+        "href"?: string;
+        /**
+          * If true, the item is the last element inside breadcrumb
+         */
         "isLast"?: boolean;
+        /**
+          * Where to display the link in the browser context. Relevant only if `href` is set.
+         */
+        "rel"?: string;
+        /**
+          * Where to display the link in the browser context. Relevant only if `href` is set.
+         */
+        "target"?: '_blank' | '_parent' | '_self' | '_top';
     }
     /**
      * Buttons are designed for users to take action on a page or a screen.
