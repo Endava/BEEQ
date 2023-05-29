@@ -92,7 +92,7 @@ export class BqBreadcrumb {
 
   render() {
     return (
-      <Host>
+      <Host role="list">
         <slot></slot>
       </Host>
     );
