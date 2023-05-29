@@ -105,10 +105,9 @@ export class BqBreadcrumbItem {
     const TagElem = isLink ? 'a' : 'button';
 
     return (
-      <section class="flex h-5 items-center">
+      <section class="flex h-5 items-center" role="listitem">
         <TagElem
           class="breadcrumb-item"
-          role="listitem"
           tabindex="0"
           href={isLink ? this.href : undefined}
           rel={isLink && this.target ? 'noreferrer noopener' : undefined}
