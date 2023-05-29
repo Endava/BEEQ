@@ -34,7 +34,7 @@ const Template = () => html`
       Application List
       <bq-icon name="list-dashes" size="16" slot="suffix"></bq-icon>
     </bq-breadcrumb-item>
-    <bq-breadcrumb-item href="https://example.com/">App 1</bq-breadcrumb-item>
+    <bq-breadcrumb-item>App 1</bq-breadcrumb-item>
   </bq-breadcrumb>
 `;
 
@@ -43,7 +43,7 @@ export const Default: Story = {
   args: {},
 };
 
-export const BreadcrumbLinks: Story = {
+export const Links: Story = {
   render: () => html`
     <bq-breadcrumb>
       <bq-breadcrumb-item href="https://example.com/" target="_blank">
