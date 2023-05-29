@@ -299,7 +299,7 @@ export class BqSlider {
           <span
             class={{
               'is-hidden': !this.valueIndicator,
-              'bq-slider__label mr-4': true,
+              'bq-slider__label mr-m': true,
             }}
           >
             {this.minRangeValue.toFixed(this.stepDecimalNumber)}
@@ -343,7 +343,7 @@ export class BqSlider {
           <span
             class={{
               'is-hidden': !this.valueIndicator,
-              'bq-slider__label ml-4': true,
+              'bq-slider__label ml-m': true,
             }}
           >
             {this.maxRangeValue.toFixed(this.stepDecimalNumber)}
@@ -353,7 +353,7 @@ export class BqSlider {
           <span
             class={{
               'is-hidden': !this.valueIndicator,
-              'bq-slider__label ml-4': true,
+              'bq-slider__label ml-m': true,
             }}
           >
             {this.minRangeValue.toFixed(this.stepDecimalNumber)}

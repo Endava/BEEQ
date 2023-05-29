@@ -10,7 +10,7 @@
 
 .bq-radio {
   @apply inline-flex cursor-pointer items-center justify-center gap-2 transition-[background-color] duration-300;
-  @apply rounded-s p-2 pr-4;
+  @apply rounded-s p-xs pr-m;
 
   &.is-disabled {
     .bq-radio__circle {
