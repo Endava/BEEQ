@@ -75,6 +75,11 @@ export namespace Components {
          */
         "textColor"?: string;
     }
+    interface BqBreadcrumb {
+    }
+    interface BqBreadcrumbItem {
+        "isLast": boolean;
+    }
     /**
      * Buttons are designed for users to take action on a page or a screen.
      */
@@ -606,6 +611,18 @@ declare global {
         prototype: HTMLBqBadgeElement;
         new (): HTMLBqBadgeElement;
     };
+    interface HTMLBqBreadcrumbElement extends Components.BqBreadcrumb, HTMLStencilElement {
+    }
+    var HTMLBqBreadcrumbElement: {
+        prototype: HTMLBqBreadcrumbElement;
+        new (): HTMLBqBreadcrumbElement;
+    };
+    interface HTMLBqBreadcrumbItemElement extends Components.BqBreadcrumbItem, HTMLStencilElement {
+    }
+    var HTMLBqBreadcrumbItemElement: {
+        prototype: HTMLBqBreadcrumbItemElement;
+        new (): HTMLBqBreadcrumbItemElement;
+    };
     /**
      * Buttons are designed for users to take action on a page or a screen.
      */
@@ -706,6 +723,8 @@ declare global {
     interface HTMLElementTagNameMap {
         "bq-avatar": HTMLBqAvatarElement;
         "bq-badge": HTMLBqBadgeElement;
+        "bq-breadcrumb": HTMLBqBreadcrumbElement;
+        "bq-breadcrumb-item": HTMLBqBreadcrumbItemElement;
         "bq-button": HTMLBqButtonElement;
         "bq-checkbox": HTMLBqCheckboxElement;
         "bq-divider": HTMLBqDividerElement;
@@ -765,6 +784,11 @@ declare namespace LocalJSX {
           * Badge number color. The value should be a valid value of the palette color
          */
         "textColor"?: string;
+    }
+    interface BqBreadcrumb {
+    }
+    interface BqBreadcrumbItem {
+        "isLast"?: boolean;
     }
     /**
      * Buttons are designed for users to take action on a page or a screen.
@@ -1271,6 +1295,8 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "bq-avatar": BqAvatar;
         "bq-badge": BqBadge;
+        "bq-breadcrumb": BqBreadcrumb;
+        "bq-breadcrumb-item": BqBreadcrumbItem;
         "bq-button": BqButton;
         "bq-checkbox": BqCheckbox;
         "bq-divider": BqDivider;
@@ -1296,6 +1322,8 @@ declare module "@stencil/core" {
              */
             "bq-avatar": LocalJSX.BqAvatar & JSXBase.HTMLAttributes<HTMLBqAvatarElement>;
             "bq-badge": LocalJSX.BqBadge & JSXBase.HTMLAttributes<HTMLBqBadgeElement>;
+            "bq-breadcrumb": LocalJSX.BqBreadcrumb & JSXBase.HTMLAttributes<HTMLBqBreadcrumbElement>;
+            "bq-breadcrumb-item": LocalJSX.BqBreadcrumbItem & JSXBase.HTMLAttributes<HTMLBqBreadcrumbItemElement>;
             /**
              * Buttons are designed for users to take action on a page or a screen.
              */

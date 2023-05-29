@@ -1,0 +1,26 @@
+/* -------------------------------------------------------------------------- */
+/*                                Breadcrumb item styles                */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-breadcrumb-item.variables';
+
+.breadcrumb-item {
+  @apply flex items-center text-s font-regular leading-regular text-text-secondary;
+  @apply rounded-s bg-transparent focus-visible:focus active:outline-none;
+
+  &__prefix {
+    @apply flex items-center;
+  }
+
+  &__label {
+    @apply flex cursor-pointer items-center hover:text-text-brand-hover;
+  }
+
+  &__suffix {
+    @apply flex items-center;
+  }
+}
+
+.breadcrumb-separator {
+  @apply px-2;
+}
