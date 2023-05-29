@@ -101,7 +101,7 @@ describe('bq-tab', () => {
 
     const element = await page.find('bq-tab >>> [part="base"]');
 
-    element.click();
+    await element.click();
 
     await page.waitForChanges();
 

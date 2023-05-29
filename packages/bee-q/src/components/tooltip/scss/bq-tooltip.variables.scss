@@ -7,8 +7,8 @@
   --bq-tooltip--font-size: theme('fontSize.m');
   --bq-tooltip--width: max-content;
   --bq-tooltip--max-width: 320px;
-  --bq-tooltip--paddingX: theme('padding.2');
-  --bq-tooltip--paddingY: theme('padding.1');
+  --bq-tooltip--paddingX: theme('padding.xs');
+  --bq-tooltip--paddingY: theme('padding.xs2');
   --bq-tooltip--rounded-corners: theme('borderRadius.s');
   --bq-tooltip--text-color: theme('colors.text.inverse');
 }

@@ -36,7 +36,7 @@
   @apply flex-row items-center;
 
   &.has-text {
-    @apply gap-x-4;
+    @apply gap-x-m;
   }
 }
 
@@ -67,7 +67,7 @@
   @apply flex-col items-center;
 
   &.has-text {
-    @apply gap-y-4;
+    @apply gap-y-m;
   }
 }
 
