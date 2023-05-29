@@ -1,4 +1,4 @@
-import { h, Component, Host, Element } from '@stencil/core';
+import { h, Component, Host, Element, Listen, Event, EventEmitter } from '@stencil/core';
 
 import { isHTMLElement } from '../../shared/utils';
 
@@ -30,6 +30,15 @@ export class BqBreadcrumb {
   // Requires JSDocs for public API documentation
   // ==============================================
 
+  /** Handler to be called when `bq-breadcrumb-item` item loses focus. */
+  @Event() bqBreadcrumbBlur: EventEmitter<HTMLBqBreadcrumbItemElement>;
+
+  /** Handler to be called when `bq-breadcrumb-item` item gets focus. */
+  @Event() bqBreadcrumbFocus: EventEmitter<HTMLBqBreadcrumbItemElement>;
+
+  /** Handler to be called when `bq-breadcrumb-item` is selected (on click/enter press). */
+  @Event() bqBreadcrumbClick: EventEmitter<HTMLBqBreadcrumbItemElement>;
+
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
@@ -40,6 +49,21 @@ export class BqBreadcrumb {
 
   // Listeners
   // ==============
+
+  @Listen('bqBlur')
+  onBlur(event: CustomEvent<HTMLElement>) {
+    if (isHTMLElement(event.detail, 'bq-breadcrumb-item')) this.bqBreadcrumbBlur.emit(event.detail);
+  }
+
+  @Listen('bqFocus')
+  onFocus(event: CustomEvent<HTMLElement>) {
+    if (isHTMLElement(event.detail, 'bq-breadcrumb-item')) this.bqBreadcrumbFocus.emit(event.detail);
+  }
+
+  @Listen('bqClick')
+  onClick(event: CustomEvent<HTMLElement>) {
+    if (isHTMLElement(event.detail, 'bq-breadcrumb-item')) this.bqBreadcrumbClick.emit(event.detail);
+  }
 
   // Public methods API
   // These methods are exposed on the host element.

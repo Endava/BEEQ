@@ -570,6 +570,14 @@ export namespace Components {
         "visible"?: boolean;
     }
 }
+export interface BqBreadcrumbCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqBreadcrumbElement;
+}
+export interface BqBreadcrumbItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqBreadcrumbItemElement;
+}
 export interface BqButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqButtonElement;
@@ -801,6 +809,18 @@ declare namespace LocalJSX {
         "textColor"?: string;
     }
     interface BqBreadcrumb {
+        /**
+          * Handler to be called when `bq-breadcrumb-item` item loses focus.
+         */
+        "onBqBreadcrumbBlur"?: (event: BqBreadcrumbCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
+        /**
+          * Handler to be called when `bq-breadcrumb-item` is selected (on click/enter press).
+         */
+        "onBqBreadcrumbClick"?: (event: BqBreadcrumbCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
+        /**
+          * Handler to be called when `bq-breadcrumb-item` item gets focus.
+         */
+        "onBqBreadcrumbFocus"?: (event: BqBreadcrumbCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
     }
     interface BqBreadcrumbItem {
         /**
@@ -811,6 +831,18 @@ declare namespace LocalJSX {
           * If true, the item is the last element inside breadcrumb
          */
         "isLast"?: boolean;
+        /**
+          * Handler to be called when item loses focus
+         */
+        "onBqBlur"?: (event: BqBreadcrumbItemCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
+        /**
+          * Handler to be called when item is clicked
+         */
+        "onBqClick"?: (event: BqBreadcrumbItemCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
+        /**
+          * Handler to be called when item is focused
+         */
+        "onBqFocus"?: (event: BqBreadcrumbItemCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
         /**
           * Where to display the link in the browser context. Relevant only if `href` is set.
          */

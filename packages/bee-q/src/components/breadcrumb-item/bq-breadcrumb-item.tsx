@@ -1,4 +1,4 @@
-import { h, Component, State, Prop } from '@stencil/core';
+import { h, Component, State, Prop, Element, Event, EventEmitter } from '@stencil/core';
 
 import { hasSlotContent, isDefined } from '../../shared/utils';
 
@@ -16,6 +16,8 @@ export class BqBreadcrumbItem {
 
   // Reference to host HTML element
   // ===================================
+
+  @Element() el!: HTMLBqBreadcrumbItemElement;
 
   // State() variables
   // Inlined decorator, alphabetical order
@@ -46,6 +48,18 @@ export class BqBreadcrumbItem {
   // Requires JSDocs for public API documentation
   // ==============================================
 
+  /** Handler to be called when item loses focus */
+  @Event() bqBlur: EventEmitter<HTMLBqBreadcrumbItemElement>;
+
+  /** Handler to be called when item is focused */
+  @Event() bqFocus: EventEmitter<HTMLBqBreadcrumbItemElement>;
+
+  /** Handler to be called when item is clicked */
+  @Event() bqClick: EventEmitter<HTMLBqBreadcrumbItemElement>;
+
+  /** Handler to be called on enter key press */
+  // @Event() bqOnEnter: EventEmitter<HTMLBqBreadcrumbItemElement>;
+
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
@@ -64,6 +78,18 @@ export class BqBreadcrumbItem {
   // Internal business logic.
   // These methods cannot be called from the host element.
   // =======================================================
+
+  private onBlur = () => {
+    this.bqBlur.emit(this.el);
+  };
+
+  private onFocus = () => {
+    this.bqFocus.emit(this.el);
+  };
+
+  private onClick = () => {
+    this.bqClick.emit(this.el);
+  };
 
   private onSlotChange = () => {
     this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
@@ -87,6 +113,9 @@ export class BqBreadcrumbItem {
           href={isLink ? this.href : undefined}
           rel={isLink && this.target ? 'noreferrer noopener' : undefined}
           target={isLink ? this.target : undefined}
+          onBlur={this.onBlur}
+          onFocus={this.onFocus}
+          onClick={this.onClick}
         >
           <span
             class={{
