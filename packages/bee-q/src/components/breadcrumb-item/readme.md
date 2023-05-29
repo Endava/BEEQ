@@ -15,6 +15,15 @@
 | `target` | `target`  | Where to display the link in the browser context. Relevant only if `href` is set.                                    | `"_blank" \| "_parent" \| "_self" \| "_top"` | `undefined`             |
 
 
+## Events
+
+| Event     | Description                                | Type                                       |
+| --------- | ------------------------------------------ | ------------------------------------------ |
+| `bqBlur`  | Handler to be called when item loses focus | `CustomEvent<HTMLBqBreadcrumbItemElement>` |
+| `bqClick` | Handler to be called when item is clicked  | `CustomEvent<HTMLBqBreadcrumbItemElement>` |
+| `bqFocus` | Handler to be called when item is focused  | `CustomEvent<HTMLBqBreadcrumbItemElement>` |
+
+
 ## Shadow Parts
 
 | Part       | Description |
