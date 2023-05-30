@@ -25,7 +25,7 @@ const meta: Meta = {
     active: false,
     disabled: false,
     divider: false,
-    size: 'small',
+    size: 'medium',
   },
 };
 export default meta;
@@ -34,7 +34,7 @@ type Story = StoryObj;
 
 const Template = (args: Args) => {
   return html`
-    <bq-tab .size=${args.size} ?active=${args.active} ?disabled=${args.disabled} ?divider=${args.divider}>
+    <bq-tab size=${args.size} ?active=${args.active} ?disabled=${args.disabled} ?divider=${args.divider}>
       ${args.text}
     </bq-tab>
   `;
@@ -46,7 +46,7 @@ export const Default: Story = {
 
 export const Icon: Story = {
   render: (args: Args) => html`
-    <bq-tab .size=${args.size} ?active=${args.active} ?disabled=${args.disabled} ?divider=${args.divider}>
+    <bq-tab size=${args.size} ?active=${args.active} ?disabled=${args.disabled} ?divider=${args.divider}>
       <bq-icon name="arrow-circle-left" slot="icon"></bq-icon>
       ${args.text}
     </bq-tab>

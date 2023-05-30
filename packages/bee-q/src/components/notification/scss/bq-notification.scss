@@ -45,12 +45,12 @@
  * the styles get applied to the that wrapping container directly
  */
 [part='footer'] ::slotted(*) {
-  @apply flex items-start gap-2;
+  @apply flex items-start gap-xs;
 }
 
 [part='body'],
 [part='footer'] {
   ::slotted(*) {
-    @apply mt-4 block;
+    @apply mt-m block;
   }
 }

@@ -55,13 +55,12 @@ export class BqTooltip {
   // =======================
 
   @Watch('visible')
-  handleVisibleChange() {
+  async handleVisibleChange() {
     if (!this.visible) {
-      this.hide();
-      return;
+      return await this.hide();
     }
 
-    this.show();
+    await this.show();
   }
 
   @Watch('distance')
@@ -100,11 +99,11 @@ export class BqTooltip {
   // ==============
 
   @Listen('mousedown', { target: 'document' })
-  handleDocumentMouseDown(event: MouseEvent) {
+  async handleDocumentMouseDown(event: MouseEvent) {
     // Close when clicking outside of the close element
     const path = event.composedPath();
     if (!path.includes(this.el)) {
-      this.hide();
+      await this.hide();
     }
   }
 
@@ -135,18 +134,24 @@ export class BqTooltip {
   // =======================================================
 
   private handleTriggerMouseOver = () => {
-    if (this.displayOn !== 'hover') return;
-    this.show();
+    (async () => {
+      if (this.displayOn !== 'hover') return;
+      await this.show();
+    })();
   };
 
   private handleTriggerMouseLeave = () => {
-    if (this.displayOn !== 'hover') return;
-    this.hide();
+    (async () => {
+      if (this.displayOn !== 'hover') return;
+      await this.hide();
+    })();
   };
 
   private handleTriggerOnClick = () => {
-    if (this.displayOn !== 'click') return;
-    this.visible ? this.hide() : this.show();
+    (async () => {
+      if (this.displayOn !== 'click') return;
+      await (this.visible ? this.hide() : this.show());
+    })();
   };
 
   private showTooltip = () => {

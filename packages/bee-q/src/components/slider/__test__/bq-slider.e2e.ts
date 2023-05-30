@@ -54,8 +54,8 @@ describe('bq-slider', () => {
     });
     await page.waitForChanges();
 
-    const leftLabel = await page.find('bq-slider >>> span.bq-slider__label.mr-4');
-    const rightLabel = await page.find('bq-slider >>> span.bq-slider__label.ml-4');
+    const leftLabel = await page.find('bq-slider >>> span.bq-slider__label.mr-m');
+    const rightLabel = await page.find('bq-slider >>> span.bq-slider__label.ml-m');
 
     expect(leftLabel).not.toHaveClass('is-hidden');
     expect(rightLabel).not.toHaveClass('is-hidden');
