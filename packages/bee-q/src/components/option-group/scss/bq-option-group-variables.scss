@@ -2,4 +2,8 @@
 /*                          Option group custom properties           */
 /* -------------------------------------------------------------------------- */
 
-// :host {}
+:host {
+  --bq-option-group--label-paddingX: theme('spacing.s');
+  --bq-option-group--label-paddingY: theme('spacing.xs');
+  --bq-option-group--label-text-paddingX: theme('spacing.s');
+}

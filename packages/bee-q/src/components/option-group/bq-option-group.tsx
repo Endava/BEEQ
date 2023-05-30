@@ -69,7 +69,7 @@ export class BqOptionGroup {
           <span class="label__child" part="prefix">
             <slot name="header-prefix" />
           </span>
-          <span class="label__child content" part="label">
+          <span class="label__child label-text" part="label">
             <slot name="header-label" />
           </span>
           <span class="label__child suffix" part="suffix">

@@ -9,15 +9,15 @@
 }
 
 .label {
-  @apply flex overflow-hidden overflow-ellipsis bg-transparent px-3 py-2 text-s leading-regular;
+  @apply flex overflow-hidden overflow-ellipsis bg-transparent px-[var(--bq-option-group--label-paddingX)] py-[var(--bq-option-group--label-paddingY)] text-s leading-regular;
 
   &__child {
     @apply flex items-center;
   }
 }
 
-.content {
-  @apply inline-block w-auto overflow-hidden text-ellipsis whitespace-nowrap px-3;
+.label-text {
+  @apply inline-block w-auto overflow-hidden text-ellipsis whitespace-nowrap px-[var(--bq-option-group--label-text-paddingX)];
 }
 
 .suffix {
