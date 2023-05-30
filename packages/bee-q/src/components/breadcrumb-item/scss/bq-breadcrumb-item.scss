@@ -5,7 +5,7 @@
 @import './bq-breadcrumb-item.variables';
 
 .breadcrumb-item {
-  @apply flex items-center px-1 py-2 text-s font-regular leading-regular text-text-secondary;
+  @apply flex items-center px-[var(--bq-breadcrumb-item--paddingX)] py-[var(--bq-breadcrumb-item--paddingY)] text-s font-regular leading-regular text-text-secondary;
   @apply rounded-s border-none bg-transparent no-underline focus-visible:focus active:outline-none;
 
   &__prefix {
@@ -22,5 +22,5 @@
 }
 
 .breadcrumb-separator {
-  @apply px-1 text-xs;
+  @apply px-xs2 text-xs;
 }
