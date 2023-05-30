@@ -39,7 +39,7 @@ describe('bq-breadcrumb-item', () => {
 
   it('should render `a` tag', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-breadcrumb-item rel="https://example.com/">Home</bq-breadcrumb-item>');
+    await page.setContent('<bq-breadcrumb-item href="https://example.com/">Home</bq-breadcrumb-item>');
 
     const element = await page.find('bq-breadcrumb-item >>> .breadcrumb-item');
 
