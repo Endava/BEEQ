@@ -2,6 +2,7 @@
 /*                          Breadcrumb item custom properties           */
 /* -------------------------------------------------------------------------- */
 
-// :host {
-//   --bq-breadcrumb-item--margin: 1px;
-// }
+:host {
+  --bq-breadcrumb-item--paddingX: theme('spacing.xs2');
+  --bq-breadcrumb-item--paddingY: theme('spacing.xs');
+}
