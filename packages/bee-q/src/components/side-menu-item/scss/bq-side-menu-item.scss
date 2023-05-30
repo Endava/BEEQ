@@ -7,7 +7,7 @@
 // Appearance
 
 .bq-menu-item {
-  @apply flex h-[inherit] w-[auto] cursor-not-allowed items-center justify-items-stretch pl-9;
+  @apply flex h-[inherit] w-[auto] cursor-not-allowed items-center justify-items-stretch;
   @apply rounded-s bg-transparent no-underline;
   @apply focus-visible:focus active:outline-none;
 
@@ -64,7 +64,7 @@
 }
 
 .has-prefix {
-  @apply px-3;
+  @apply px-s;
 }
 
 .label {

@@ -21,7 +21,7 @@
   }
 
   &__header {
-    @apply mx-1.5 flex items-center justify-between gap-4;
+    @apply mx-xs2 flex items-center justify-between gap-4;
 
     &.small {
       @apply h-[var(--bq-menu-header--small-height)] w-auto py-[var(--bq-menu-header--small-paddingY)] pl-[var(--bq-menu-header--small-paddingL)] pr-[var(--bq-menu-header--small-paddingR)];
@@ -33,7 +33,7 @@
   }
 
   &__content {
-    @apply flex flex-col gap-2 overflow-y-auto overflow-x-hidden px-[3px] py-[6px];
+    @apply flex flex-col gap-2 overflow-y-auto overflow-x-hidden px-xs2 py-xs;
   }
 
   &__footer {

@@ -4,28 +4,28 @@
 
 :host {
   --bq-menu--height: 100vh;
-  --bq-menu--padding: 8px;
-  --bq-menu--gap: 8px;
+  --bq-menu--padding: theme('spacing.xs');
+  --bq-menu--gap: theme('spacing.xs');
 
   // small
-  --bq-menu-header--small-paddingR: 24px;
-  --bq-menu-header--small-paddingL: 32px;
-  --bq-menu-header--small-paddingY: 12px;
+  --bq-menu-header--small-paddingR: theme('spacing.l');
+  --bq-menu-header--small-paddingL: theme('spacing.xl');
+  --bq-menu-header--small-paddingY: theme('spacing.s');
   --bq-menu-header--small-height: 12vh;
 
   --bq-menu--small-width: 230px;
   --bq-menu--small-width-collapse: 60px;
-  --bq-menu--small-paddingX: 8px;
-  --bq-menu--small-paddingY: 8px;
+  --bq-menu--small-paddingX: theme('spacing.xs');
+  --bq-menu--small-paddingY: theme('spacing.xs');
 
   // medium
-  --bq-menu-header--medium-paddingR: 24px;
-  --bq-menu-header--medium-paddingL: 32px;
-  --bq-menu-header--medium-paddingY: 32px;
+  --bq-menu-header--medium-paddingR: theme('spacing.l');
+  --bq-menu-header--medium-paddingL: theme('spacing.xl');
+  --bq-menu-header--medium-paddingY: theme('spacing.xl');
   --bq-menu-header--medium-height: 15vh;
 
   --bq-menu--medium-width: 256px;
   --bq-menu--medium-width-collapse: 80px;
-  --bq-menu--medium-paddingX: 8px;
-  --bq-menu--medium-paddingY: 8px;
+  --bq-menu--medium-paddingX: theme('spacing.xs');
+  --bq-menu--medium-paddingY: theme('spacing.xs');
 }

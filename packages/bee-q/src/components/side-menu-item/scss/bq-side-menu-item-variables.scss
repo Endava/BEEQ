@@ -4,14 +4,14 @@
 
 :host {
   --bq-menu-item--small-height: 48px;
-  --bq-menu-item--small-paddingR: 24px;
-  --bq-menu-item--small-paddingL: 32px;
-  --bq-menu-item--small-paddingY: 12px;
+  --bq-menu-item--small-paddingR: theme('spacing.l');
+  --bq-menu-item--small-paddingL: theme('spacing.xl');
+  --bq-menu-item--small-paddingY: theme('spacing.s');
 
   --bq-menu-item--medium-height: 56px;
-  --bq-menu-item--medium-paddingR: 24px;
-  --bq-menu-item--medium-paddingL: 32px;
-  --bq-menu-item--medium-paddingY: 16px;
+  --bq-menu-item--medium-paddingR: theme('spacing.l');
+  --bq-menu-item--medium-paddingL: theme('spacing.xl');
+  --bq-menu-item--medium-paddingY: theme('spacing.m');
 
   --bq-menu-item--small-collapsedX: 10px;
   --bq-menu-item--small-collapsedY: 6px;
