@@ -4,5 +4,7 @@
 
 :host {
   --bq-option--height: 40px;
-  --bq-option-label--paddingX: 12px;
+  --bq-option--paddingX: theme('spacing.s');
+  --bq-option--paddingY: theme('spacing.xs');
+  --bq-option-label--paddingX: theme('spacing.s');
 }

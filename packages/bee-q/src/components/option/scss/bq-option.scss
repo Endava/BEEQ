@@ -9,7 +9,7 @@
 }
 
 .bq-option {
-  @apply flex h-[var(--bq-option--height)] w-full cursor-not-allowed items-center px-3 py-2 text-m;
+  @apply flex h-[var(--bq-option--height)] w-full cursor-not-allowed items-center px-[var(--bq-option--paddingX)] py-[var(--bq-option--paddingY)] text-m;
   @apply rounded-s bg-transparent;
   @apply focus-visible:focus active:outline-none;
 
@@ -43,5 +43,5 @@
 }
 
 .option-group {
-  @apply pl-11;
+  @apply pl-xxl;
 }
