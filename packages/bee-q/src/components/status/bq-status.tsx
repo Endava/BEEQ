@@ -68,7 +68,7 @@ export class BqStatus {
   // ===================================
   render() {
     return (
-      <div class="bq-status inline-flex items-center gap-2" part="base" role="status">
+      <div class="bq-status inline-flex items-center gap-xs" part="base" role="status">
         <bq-badge class={`bq-status__circle rounded-full ${this.type}`} size="medium" part="circle" role="img" />
         <div
           class="bq-status__text m-0 max-h-[20px] p-0 text-s font-medium leading-large text-text-primary"
