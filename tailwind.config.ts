@@ -69,6 +69,19 @@ const config: Config = {
       content: {
         empty: "''",
       },
+      spacing: {
+        xs3: 'var(--bq-spacing-xs3)',
+        xs2: 'var(--bq-spacing-xs2)',
+        xs: 'var(--bq-spacing-xs)',
+        s: 'var(--bq-spacing-s)',
+        m: 'var(--bq-spacing-m)',
+        l: 'var(--bq-spacing-l)',
+        xl: 'var(--bq-spacing-xl)',
+        xxl: 'var(--bq-spacing-xxl)',
+        xxl2: 'var(--bq-spacing-xxl2)',
+        xxl3: 'var(--bq-spacing-xxl3)',
+        xxl4: 'var(--bq-spacing-xxl4)',
+      },
     },
   },
   plugins: [
@@ -91,7 +104,7 @@ const config: Config = {
           '--tw-ring-width': '2px',
           '--tw-ring-offset-width': '1px',
           '--tw-ring-color': theme('colors.focus'),
-          outline: `var(--tw-ring-width) solid ${theme('colors.focus')}`,
+          outline: `var(--tw-ring-width) solid ${String(theme('colors.focus'))}`,
           outlineOffset: 'var(--tw-ring-offset-width)',
         },
       });

@@ -225,7 +225,7 @@ export class BqNotification {
           {!this.hideIcon && (
             <div
               class={{
-                'notification--icon mr-2 flex text-left align-top': true,
+                'notification--icon mr-xs flex text-left align-top': true,
                 [`color-${this.type}`]: true, // The icon color will be based on the type (info, success, warning, error)
               }}
               part="icon-outline"

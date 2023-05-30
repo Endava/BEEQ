@@ -4,14 +4,14 @@
 
 :host {
   --bq-button--small-height: 32px;
-  --bq-button--small-paddingX: 8px;
-  --bq-button--small-paddingY: 4px;
+  --bq-button--small-paddingX: theme('spacing.xs');
+  --bq-button--small-paddingY: theme('spacing.xs2');
 
   --bq-button--medium-height: 48px;
-  --bq-button--medium-paddingX: 16px;
-  --bq-button--medium-paddingY: 12px;
+  --bq-button--medium-paddingX: theme('spacing.m');
+  --bq-button--medium-paddingY: theme('spacing.s');
 
   --bq-button--large-height: 56px;
-  --bq-button--large-paddingX: 24px;
-  --bq-button--large-paddingY: 16px;
+  --bq-button--large-paddingX: theme('spacing.l');
+  --bq-button--large-paddingY: theme('spacing.m');
 }

@@ -10,14 +10,15 @@
 
 .bq-tab {
   @apply relative flex cursor-pointer items-center justify-center disabled:cursor-not-allowed;
-  @apply text-m leading-large [&:not([disabled])]:hover:text-text-brand-hover font-medium;
-  @apply focus-visible:focus border-0 bg-transparent focus-visible:rounded-s;
+  @apply text-m font-medium leading-large [&:not([disabled])]:hover:text-text-brand-hover;
+  @apply border-0 bg-transparent focus-visible:focus focus-visible:rounded-s;
 
   &--small {
     @apply px-[var(--bq-tab--pading-horizontal-small)] py-[var(--bq-tab--pading-vertical-small)];
 
     ::slotted(bq-icon) {
-      --bq-icon--size: var(--bq-tab--icon-size-small) !important;
+      --bq-icon--size: var(--bq-tab--icon-size-small) #{!important};
+      @apply mr-xs2;
     }
   }
 
@@ -25,21 +26,23 @@
     @apply px-[var(--bq-tab--pading-horizontal-medium)] py-[var(--bq-tab--pading-vertical-medium)];
 
     ::slotted(bq-icon) {
-      --bq-icon--size: var(--bq-tab--icon-size-medium) !important;
+      --bq-icon--size: var(--bq-tab--icon-size-medium) #{!important};
+      @apply mr-xs;
     }
   }
 
   &--large {
-    @apply text-l px-[var(--bq-tab--pading-horizontal-large)] py-[var(--bq-tab--pading-vertical-large)];
+    @apply px-[var(--bq-tab--pading-horizontal-large)] py-[var(--bq-tab--pading-vertical-large)] text-l;
 
     ::slotted(bq-icon) {
-      --bq-icon--size: var(--bq-tab--icon-size-large) !important;
+      --bq-icon--size: var(--bq-tab--icon-size-large) #{!important};
+      @apply mr-xs;
     }
   }
 }
 
 .bq-tab__underline {
-  @apply mt-[2px] w-full border-x-0 border-t-0;
+  @apply mt-xs3 w-full border-x-0 border-t-0;
 }
 
 .bq-tab,
