@@ -27,11 +27,12 @@
 
 ## Shadow Parts
 
-| Part       | Description |
-| ---------- | ----------- |
-| `"label"`  |             |
-| `"prefix"` |             |
-| `"suffix"` |             |
+| Part          | Description |
+| ------------- | ----------- |
+| `"label"`     |             |
+| `"prefix"`    |             |
+| `"separator"` |             |
+| `"suffix"`    |             |
 
 
 ## Dependencies
