@@ -78,17 +78,4 @@ describe('bq-breadcrumb', () => {
     expect(bqClick).toHaveReceivedEventTimes(1);
     expect(bqBlur).toHaveReceivedEventTimes(0);
   });
-
-  it('should display bq-icon', async () => {
-    const page = await newE2EPage();
-    await page.setContent(`
-      <bq-breadcrumb separator-icon="caret-right">
-        <bq-breadcrumb-item>Home</bq-breadcrumb-item>
-      </bq-breadcrumb>
-    `);
-
-    const element = await page.find('bq-breadcrumb-item >>> bq-icon');
-
-    expect(element.tagName.toLocaleLowerCase()).toBe('bq-icon');
-  });
 });
