@@ -76,6 +76,10 @@ export namespace Components {
         "textColor"?: string;
     }
     interface BqBreadcrumb {
+        /**
+          * The icon name used as separator. Default is `/`.
+         */
+        "separatorIcon": string;
     }
     interface BqBreadcrumbItem {
         /**
@@ -90,6 +94,10 @@ export namespace Components {
           * Where to display the link in the browser context. Relevant only if `href` is set.
          */
         "rel": string;
+        /**
+          * The icon name used as separator. Default is `/`.
+         */
+        "separatorIcon": string;
         /**
           * Where to display the link in the browser context. Relevant only if `href` is set.
          */
@@ -821,6 +829,10 @@ declare namespace LocalJSX {
           * Handler to be called when `bq-breadcrumb-item` item gets focus.
          */
         "onBqBreadcrumbFocus"?: (event: BqBreadcrumbCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
+        /**
+          * The icon name used as separator. Default is `/`.
+         */
+        "separatorIcon": string;
     }
     interface BqBreadcrumbItem {
         /**
@@ -847,6 +859,10 @@ declare namespace LocalJSX {
           * Where to display the link in the browser context. Relevant only if `href` is set.
          */
         "rel"?: string;
+        /**
+          * The icon name used as separator. Default is `/`.
+         */
+        "separatorIcon": string;
         /**
           * Where to display the link in the browser context. Relevant only if `href` is set.
          */

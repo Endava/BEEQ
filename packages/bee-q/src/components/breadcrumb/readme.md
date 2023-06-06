@@ -5,6 +5,13 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property                     | Attribute        | Description                                      | Type     | Default     |
+| ---------------------------- | ---------------- | ------------------------------------------------ | -------- | ----------- |
+| `separatorIcon` _(required)_ | `separator-icon` | The icon name used as separator. Default is `/`. | `string` | `undefined` |
+
+
 ## Events
 
 | Event               | Description                                                                        | Type                                       |

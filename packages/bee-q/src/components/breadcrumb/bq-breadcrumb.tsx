@@ -1,4 +1,4 @@
-import { h, Component, Host, Element, Listen, Event, EventEmitter } from '@stencil/core';
+import { h, Component, Host, Element, Listen, Event, EventEmitter, Prop } from '@stencil/core';
 
 import { isHTMLElement } from '../../shared/utils';
 
@@ -26,6 +26,9 @@ export class BqBreadcrumb {
   // Prop lifecycle events
   // =======================
 
+  /** The icon name used as separator. Default is `/`. */
+  @Prop() separatorIcon!: string;
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
@@ -44,6 +47,7 @@ export class BqBreadcrumb {
   // =====================================
 
   componentDidLoad() {
+    this.setIconAsSeparator();
     this.hideSeparatorFromLastItem();
   }
 
@@ -78,13 +82,23 @@ export class BqBreadcrumb {
   // =======================================================
 
   private hideSeparatorFromLastItem = () => {
-    const elements = this.el.shadowRoot
+    const elements = this.breadcrumbItems;
+    elements.slice(-1)[0].isLast = true;
+  };
+
+  private setIconAsSeparator = (): void => {
+    const lastIndex: number = this.breadcrumbItems.length - 1;
+    this.breadcrumbItems.forEach((item: HTMLBqBreadcrumbItemElement, index: number) =>
+      index !== lastIndex ? (item.separatorIcon = this.separatorIcon) : undefined,
+    );
+  };
+
+  private get breadcrumbItems(): HTMLBqBreadcrumbItemElement[] {
+    return this.el.shadowRoot
       .querySelector<HTMLSlotElement>('slot')
       .assignedElements({ flatten: true })
       .filter((elem: HTMLElement) => isHTMLElement(elem, 'bq-breadcrumb-item')) as [HTMLBqBreadcrumbItemElement];
-
-    elements.slice(-1)[0].isLast = true;
-  };
+  }
 
   // render() function
   // Always the last one in the class.

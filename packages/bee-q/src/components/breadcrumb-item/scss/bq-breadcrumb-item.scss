@@ -23,4 +23,8 @@
 
 .breadcrumb-separator {
   @apply px-xs2 text-xs;
+
+  bq-icon {
+    @apply flex items-center;
+  }
 }

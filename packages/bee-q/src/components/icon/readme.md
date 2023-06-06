@@ -36,6 +36,7 @@ Icons are simplified images that graphically explain the meaning of an object on
 
 ### Used by
 
+ - [bq-breadcrumb-item](../breadcrumb-item)
  - [bq-button](../button)
  - [bq-notification](../notification)
  - [bq-switch](../switch)
@@ -43,6 +44,7 @@ Icons are simplified images that graphically explain the meaning of an object on
 ### Graph
 ```mermaid
 graph TD;
+  bq-breadcrumb-item --> bq-icon
   bq-button --> bq-icon
   bq-notification --> bq-icon
   bq-switch --> bq-icon

@@ -35,6 +35,9 @@ export class BqBreadcrumbItem {
   /** If true, the item is the last element inside breadcrumb */
   @Prop() isLast: boolean = false;
 
+  /** The icon name used as separator. Default is `/`. */
+  @Prop() separatorIcon!: string;
+
   /** If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered. */
   @Prop({ reflect: true }) href: string;
 
@@ -56,9 +59,6 @@ export class BqBreadcrumbItem {
 
   /** Handler to be called when item is clicked */
   @Event() bqClick: EventEmitter<HTMLBqBreadcrumbItemElement>;
-
-  /** Handler to be called on enter key press */
-  // @Event() bqOnEnter: EventEmitter<HTMLBqBreadcrumbItemElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -103,6 +103,7 @@ export class BqBreadcrumbItem {
   render() {
     const isLink = isDefined(this.href);
     const TagElem = isLink ? 'a' : 'button';
+    const separatorElem = this.separatorIcon ? <bq-icon size="12" name={this.separatorIcon}></bq-icon> : '/';
 
     return (
       <section class="flex h-5 items-center" role="listitem">
@@ -119,7 +120,7 @@ export class BqBreadcrumbItem {
           <span
             class={{
               'breadcrumb-item__prefix': true,
-              'pr-2': this.hasPrefix,
+              'pr-xs': this.hasPrefix,
             }}
             ref={(elem) => (this.prefixElem = elem)}
             part="prefix"
@@ -138,7 +139,7 @@ export class BqBreadcrumbItem {
           <span
             class={{
               'breadcrumb-item__suffix': true,
-              'pl-2': this.hasSuffix,
+              'pl-xs': this.hasSuffix,
             }}
             ref={(elem) => (this.suffixElem = elem)}
             part="suffix"
@@ -152,7 +153,7 @@ export class BqBreadcrumbItem {
             hidden: this.isLast,
           }}
         >
-          /
+          {separatorElem}
         </span>
       </section>
     );
