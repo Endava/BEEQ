@@ -19,6 +19,8 @@ export class BqAvatar {
   // Own Properties
   // ====================
 
+  trimmedInitials: string;
+
   // Reference to host HTML element
   // ===================================
 
@@ -67,6 +69,12 @@ export class BqAvatar {
     validatePropValue(AVATAR_SIZE, 'medium', this.el, 'size');
   }
 
+  @Watch('initials')
+  @Watch('size')
+  onInitialsChnage() {
+    this.trimInitialsBasedOnSize();
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
@@ -76,6 +84,7 @@ export class BqAvatar {
   // =====================================
 
   componentWillLoad() {
+    this.trimInitialsBasedOnSize();
     this.checkPropValues();
   }
 
@@ -98,6 +107,28 @@ export class BqAvatar {
     this.hasError = true;
   };
 
+  private trimInitialsBasedOnSize = (): void => {
+    AVATAR_SIZE.forEach((size: TAvatarSize) => {
+      if (this.size === size) {
+        this.trimmedInitials = this.initials.substring(0, this.getIndex(size));
+      }
+    });
+  };
+
+  private getIndex = (size: TAvatarSize): number => {
+    switch (size) {
+      case 'small':
+        return 2;
+      case 'medium':
+        return 3;
+      case 'large':
+        return 4;
+      default:
+        // also === xsmall
+        return 1;
+    }
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -106,7 +137,7 @@ export class BqAvatar {
     return (
       <div
         class={{
-          'relative overflow-hidden bg-ui-secondary-light': true,
+          'relative overflow-hidden border-[2px] border-solid border-stroke-tiertary bg-ui-secondary-light': true,
           [`size--${this.size}`]: true,
           'rounded-full': this.shape === 'circle',
           'rounded-xs': this.shape === 'square' && this.size === 'xsmall',
@@ -122,7 +153,7 @@ export class BqAvatar {
             class="absolute left-0 top-0 inline-flex h-full w-full items-center justify-center font-bold"
             part="text"
           >
-            {this.initials}
+            {this.trimmedInitials}
           </span>
         )}
         {this.image && !this.hasError && (
