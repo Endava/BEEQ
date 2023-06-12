@@ -47,6 +47,10 @@ export namespace Components {
          */
         "altText": string;
         /**
+          * The string to display in the badge
+         */
+        "badgeContent": string;
+        /**
           * The image source to load on the avatar (this can be also a base64 encoded image)
          */
         "image": string;
@@ -885,6 +889,10 @@ declare namespace LocalJSX {
           * Alternate text for the avatar image if the image cannot be displayed
          */
         "altText"?: string;
+        /**
+          * The string to display in the badge
+         */
+        "badgeContent"?: string;
         /**
           * The image source to load on the avatar (this can be also a base64 encoded image)
          */

@@ -26,11 +26,13 @@
 
 ### Used by
 
+ - [bq-avatar](../avatar)
  - [bq-status](../status)
 
 ### Graph
 ```mermaid
 graph TD;
+  bq-avatar --> bq-badge
   bq-status --> bq-badge
   style bq-badge fill:#f9f,stroke:#333,stroke-width:4px
 ```

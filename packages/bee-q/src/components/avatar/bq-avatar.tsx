@@ -1,4 +1,4 @@
-import { h, Component, Prop, Watch, State, Element } from '@stencil/core';
+import { h, Component, Prop, Watch, State, Element, Host } from '@stencil/core';
 
 import { TAvatarShape, TAvatarSize, AVATAR_SHAPE, AVATAR_SIZE } from './bq-avatar.types';
 import { validatePropValue } from '../../shared/utils';
@@ -52,6 +52,9 @@ export class BqAvatar {
 
   /** The size of the avatar */
   @Prop({ reflect: true, mutable: true }) size: TAvatarSize = 'medium';
+
+  /** The string to display in the badge */
+  @Prop({ reflect: true }) badgeContent: string;
 
   // Prop lifecycle events
   // =======================
@@ -124,7 +127,7 @@ export class BqAvatar {
       case 'large':
         return 4;
       default:
-        // also === xsmall
+        // also if size === xsmall
         return 1;
     }
   };
@@ -135,37 +138,44 @@ export class BqAvatar {
 
   render() {
     return (
-      <div
-        class={{
-          'relative overflow-hidden border-[2px] border-solid border-stroke-tiertary bg-ui-secondary-light': true,
-          [`size--${this.size}`]: true,
-          'rounded-full': this.shape === 'circle',
-          'rounded-xs': this.shape === 'square' && this.size === 'xsmall',
-          'rounded-s': this.shape === 'square' && this.size === 'small',
-          'rounded-m': this.shape === 'square' && (this.size === 'medium' || this.size === 'large'),
-        }}
-        aria-label={this.label}
-        role="img"
-        part="base"
-      >
-        {this.initials && (
-          <span
-            class="absolute left-0 top-0 inline-flex h-full w-full items-center justify-center font-bold"
-            part="text"
-          >
-            {this.trimmedInitials}
-          </span>
+      <Host>
+        <div
+          class={{
+            'relative overflow-hidden border-[2px] border-solid border-stroke-tiertary bg-ui-secondary-light': true,
+            [`size--${this.size}`]: true,
+            'rounded-full': this.shape === 'circle',
+            'rounded-xs': this.shape === 'square' && this.size === 'xsmall',
+            'rounded-s': this.shape === 'square' && this.size === 'small',
+            'rounded-m': this.shape === 'square' && (this.size === 'medium' || this.size === 'large'),
+          }}
+          aria-label={this.label}
+          role="img"
+          part="base"
+        >
+          {this.initials && (
+            <span
+              class="absolute left-0 top-0 inline-flex h-full w-full items-center justify-center font-bold"
+              part="text"
+            >
+              {this.trimmedInitials}
+            </span>
+          )}
+          {this.image && !this.hasError && (
+            <img
+              class="absolute left-0 top-0 h-full w-full object-cover"
+              alt={this.altText ?? undefined}
+              src={this.image}
+              onError={this.onImageError}
+              part="img"
+            />
+          )}
+        </div>
+        {this.badgeContent && (
+          <bq-badge size="small" text-color="#fff">
+            {this.badgeContent}
+          </bq-badge>
         )}
-        {this.image && !this.hasError && (
-          <img
-            class="absolute left-0 top-0 h-full w-full object-cover"
-            alt={this.altText ?? undefined}
-            src={this.image}
-            onError={this.onImageError}
-            part="img"
-          />
-        )}
-      </div>
+      </Host>
     );
   }
 }

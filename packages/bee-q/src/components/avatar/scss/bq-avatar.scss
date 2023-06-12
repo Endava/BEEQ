@@ -5,7 +5,7 @@
 @import './bq-avatar.variables';
 
 :host {
-  @apply inline-block;
+  @apply relative inline-block;
 }
 
 .size {
@@ -24,4 +24,8 @@
   &--large {
     @apply h-[var(--bq-avatar--size-large)] w-[var(--bq-avatar--size-large)] text-m;
   }
+}
+
+bq-badge {
+  @apply absolute right-[var(--bq-avatar--badge-right)] top-[var(--bq-avatar--badge-top)] max-w-[var(--bq-avatar--badge-m-width)];
 }
