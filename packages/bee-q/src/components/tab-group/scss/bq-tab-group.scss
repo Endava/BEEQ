@@ -23,5 +23,5 @@
 .bq-tab-group--container {
   @include hide-scrollbar;
 
-  @apply p-xs2; // This will avoid cutting the outline focus style
+  @apply gap-xs2 p-xs2; // This will avoid cutting the outline focus style
 }

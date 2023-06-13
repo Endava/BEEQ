@@ -9,9 +9,9 @@
 }
 
 .bq-tab {
-  @apply relative flex cursor-pointer items-center justify-center disabled:cursor-not-allowed;
+  @apply relative flex cursor-pointer items-center justify-center rounded-s disabled:cursor-not-allowed;
   @apply text-m font-medium leading-large [&:not([disabled])]:hover:text-text-brand-hover;
-  @apply border-0 bg-transparent focus-visible:focus focus-visible:rounded-s;
+  @apply border-0 bg-transparent focus-visible:focus;
   @apply transition-[color,background-color,border-color,box-shadow] duration-300;
 
   &::after {
