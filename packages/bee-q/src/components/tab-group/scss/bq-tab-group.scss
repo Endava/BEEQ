@@ -7,12 +7,7 @@
 }
 
 .bq-tab--group {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    @apply hidden;
-  }
+  @include hide-scrollbar;
 }
 
 .bq-tab--group__divider {
