@@ -506,9 +506,9 @@ export namespace Components {
          */
         "debounceTime": number;
         /**
-          * If true tab has underline active
+          * If true, the underline divider below the tabs won't be shown
          */
-        "divider": boolean;
+        "disableDivider": boolean;
         /**
           * The size of the tab
          */
@@ -1229,9 +1229,9 @@ declare namespace LocalJSX {
          */
         "debounceTime"?: number;
         /**
-          * If true tab has underline active
+          * If true, the underline divider below the tabs won't be shown
          */
-        "divider"?: boolean;
+        "disableDivider"?: boolean;
         /**
           * Handler to be called when the tab value changes
          */

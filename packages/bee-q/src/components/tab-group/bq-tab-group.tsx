@@ -39,8 +39,8 @@ export class BqTabGroup {
   /** A number representing the delay value applied to bqChange event handler */
   @Prop({ reflect: true, mutable: true }) debounceTime = 0;
 
-  /** If true tab has underline active  */
-  @Prop({ reflect: true }) divider = true;
+  /** If true, the underline divider below the tabs won't be shown  */
+  @Prop({ reflect: true }) disableDivider = false;
 
   // Prop lifecycle events
   // =======================
@@ -208,7 +208,7 @@ export class BqTabGroup {
 
   render() {
     return (
-      <div class="bq-tab-group flex w-full" part="base">
+      <div class={{ 'bq-tab-group flex w-full': true, 'no-divider': this.disableDivider }} part="base">
         <div class="bq-tab-group--container flex overflow-x-auto" role="tablist" part="tabs">
           <slot />
         </div>
