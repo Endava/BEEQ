@@ -1,4 +1,4 @@
-import { h, Component, Element, Prop, Listen, EventEmitter, Event, Host, Watch } from '@stencil/core';
+import { h, Component, Element, Prop, Listen, EventEmitter, Event, Watch } from '@stencil/core';
 
 import { debounce, getNextElement, isHTMLElement, isNil, TDebounce, validatePropValue } from '../../shared/utils';
 import { TAB_SIZE, TTabSize } from '../tab/bq-tab.types';
@@ -197,16 +197,14 @@ export class BqTabGroup {
 
   render() {
     return (
-      <Host>
-        <div
-          class="flex w-full overflow-hidden whitespace-nowrap border-0 border-b border-solid border-stroke-secondary"
-          part="base"
-        >
-          <div class="bq-tab-group--container flex overflow-x-auto" role="tablist" part="tabs">
-            <slot />
-          </div>
+      <div
+        class="flex w-full overflow-hidden whitespace-nowrap border-0 border-b border-solid border-stroke-secondary"
+        part="base"
+      >
+        <div class="bq-tab-group--container flex overflow-x-auto overflow-y-hidden" role="tablist" part="tabs">
+          <slot />
         </div>
-      </Host>
+      </div>
     );
   }
 }
