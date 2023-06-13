@@ -197,11 +197,8 @@ export class BqTabGroup {
 
   render() {
     return (
-      <div
-        class="flex w-full overflow-hidden whitespace-nowrap border-0 border-b border-solid border-stroke-secondary"
-        part="base"
-      >
-        <div class="bq-tab-group--container flex overflow-x-auto overflow-y-hidden" role="tablist" part="tabs">
+      <div class="bq-tab-group flex w-full" part="base">
+        <div class="bq-tab-group--container flex overflow-x-auto" role="tablist" part="tabs">
           <slot />
         </div>
       </div>

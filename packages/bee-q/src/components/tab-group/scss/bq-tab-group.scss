@@ -6,6 +6,16 @@
   @apply block;
 }
 
+.bq-tab-group {
+  @apply relative;
+
+  &::after {
+    @apply absolute bottom-0 flex w-full border-0 border-b border-solid border-stroke-secondary content-empty;
+  }
+}
+
 .bq-tab-group--container {
   @include hide-scrollbar;
+
+  @apply py-xs2; // This will avoid cutting the outline focus style
 }

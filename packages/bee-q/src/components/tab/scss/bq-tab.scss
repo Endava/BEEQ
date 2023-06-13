@@ -12,6 +12,20 @@
   @apply relative flex cursor-pointer items-center justify-center disabled:cursor-not-allowed;
   @apply text-m font-medium leading-large [&:not([disabled])]:hover:text-text-brand-hover;
   @apply border-0 bg-transparent focus-visible:focus focus-visible:rounded-s;
+  @apply transition-[color,background-color,border-color,box-shadow] duration-300;
+
+  &::after {
+    @apply absolute -bottom-1 left-0 z-[1] block h-[2px] w-full bg-stroke-brand opacity-0 content-empty;
+    @apply transition-opacity duration-300 ease-linear;
+  }
+
+  &[aria-selected='true']::after {
+    @apply opacity-100;
+  }
+
+  &[disabled]::after {
+    @apply bg-stroke-brand-disabled;
+  }
 
   &--small {
     @apply px-[var(--bq-tab--pading-horizontal-small)] py-[var(--bq-tab--pading-vertical-small)];
@@ -39,13 +53,4 @@
       @apply mr-xs;
     }
   }
-}
-
-.bq-tab__underline {
-  @apply mt-xs3 w-full border-x-0 border-t-0;
-}
-
-.bq-tab,
-.bq-tab__underline {
-  @apply transition-[color,background-color,border-color,box-shadow] duration-300;
 }
