@@ -198,10 +198,10 @@ export class BqTabGroup {
   render() {
     return (
       <Host>
-        <div class="flex overflow-x-auto" role="tablist" part="base">
+        <div class="bq-tab--group flex overflow-x-auto" role="tablist" part="base">
           <slot />
         </div>
-        {this.divider && <div class="bq-tab-group__divider" part="divider" />}
+        {this.divider && <div class="bq-tab--group__divider" part="divider" />}
       </Host>
     );
   }
