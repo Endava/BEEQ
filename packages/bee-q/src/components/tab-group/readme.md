@@ -24,10 +24,10 @@
 
 ## Shadow Parts
 
-| Part        | Description                                  |
-| ----------- | -------------------------------------------- |
-| `"base"`    | The HTML div used to hold <bq-tab> elements. |
-| `"divider"` | The HTML div used to display underline.      |
+| Part     | Description                                 |
+| -------- | ------------------------------------------- |
+| `"base"` | The HTML div wrapper inside the shadow DOM. |
+| `"tabs"` | The HTML div used to hold the tab buttons.  |
 
 
 ----------------------------------------------

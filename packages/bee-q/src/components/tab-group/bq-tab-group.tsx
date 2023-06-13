@@ -4,8 +4,8 @@ import { debounce, getNextElement, isHTMLElement, isNil, TDebounce, validateProp
 import { TAB_SIZE, TTabSize } from '../tab/bq-tab.types';
 
 /**
- * @part base - The HTML div used to hold <bq-tab> elements.
- * @part divider - The HTML div used to display underline.
+ * @part base - The HTML div wrapper inside the shadow DOM.
+ * @part tabs - The HTML div used to hold the tab buttons.
  */
 @Component({
   tag: 'bq-tab-group',
@@ -198,10 +198,14 @@ export class BqTabGroup {
   render() {
     return (
       <Host>
-        <div class="bq-tab--group flex overflow-x-auto" role="tablist" part="base">
-          <slot />
+        <div
+          class="flex w-full overflow-hidden whitespace-nowrap border-0 border-b border-solid border-stroke-secondary"
+          part="base"
+        >
+          <div class="bq-tab-group--container flex overflow-x-auto" role="tablist" part="tabs">
+            <slot />
+          </div>
         </div>
-        {this.divider && <div class="bq-tab--group__divider" part="divider" />}
       </Host>
     );
   }
