@@ -17,5 +17,5 @@
 .bq-tab-group--container {
   @include hide-scrollbar;
 
-  @apply py-xs2; // This will avoid cutting the outline focus style
+  @apply p-xs2; // This will avoid cutting the outline focus style
 }
