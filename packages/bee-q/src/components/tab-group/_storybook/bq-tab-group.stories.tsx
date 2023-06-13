@@ -14,15 +14,15 @@ const meta: Meta = {
   },
   argTypes: {
     size: { control: 'select', options: [...TAB_SIZE] },
-    divider: { control: 'boolean' },
+    'disable-divider': { control: 'boolean' },
     // Event handlers
     bqChange: { action: 'bqChange' },
     bqFocus: { action: 'bqFocus', table: { disable: true } },
     bqBlur: { action: 'bqBlur', table: { disable: true } },
   },
   args: {
-    size: 'small',
-    divider: true,
+    size: 'medium',
+    'disable-divider': false,
   },
 };
 export default meta;
@@ -34,7 +34,7 @@ const Template = (args: Args) => {
     <bq-tab-group
       value="5"
       .size=${args.size}
-      ?divider=${args.divider}
+      ?disable-divider=${args['disable-divider']}
       @bqChange=${args.bqChange}
       @bqFocus=${args.bqFocus}
       @bqBlur=${args.bqBlur}
@@ -60,7 +60,7 @@ const IconTemplate = (args: Args) => {
     <bq-tab-group
       value="5"
       .size=${args.size}
-      ?divider=${args.divider}
+      ?disable-divider=${args['disable-divider']}
       @bqChange=${args.bqChange}
       @bqFocus=${args.bqFocus}
       @bqBlur=${args.bqBlur}
