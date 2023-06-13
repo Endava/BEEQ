@@ -94,12 +94,11 @@ export class BqTabGroup {
   // ==============
 
   @Listen('keyup', { target: 'body', passive: true, capture: true })
-  async onKeyUp(event: KeyboardEvent) {
+  onKeyUp(event: KeyboardEvent) {
     const { target } = event;
-
     if (!isHTMLElement(target, 'bq-tab')) return;
 
-    await this.makeTabsFocusable();
+    this.makeTabsFocusable();
   }
 
   @Listen('bqClick', { passive: true })
@@ -130,8 +129,8 @@ export class BqTabGroup {
   }
 
   @Listen('bqBlur', { capture: true, passive: true })
-  async onBqBlur() {
-    await this.restoreTabsFocus();
+  onBqBlur() {
+    this.restoreTabsFocus();
   }
 
   // Public methods API
@@ -166,18 +165,30 @@ export class BqTabGroup {
     }
   };
 
-  private makeTabsFocusable = async (): Promise<void> => {
-    for (const bqTabElement of this.bqTabElements) {
+  private makeTabsFocusable = (): void => {
+    this.bqTabElements.forEach((bqTabElement) => {
       if (bqTabElement.disabled) return;
-      await bqTabElement.enableFocus(true);
-    }
+
+      /**
+       * This is a "fire and forget" operation. The callback itself doesn't do anything special
+       * with the asynchronous code (doesn't await it or do anything with the result)
+       * Details: https://stackoverflow.com/a/63488201
+       */
+      (async () => {
+        await bqTabElement.enableFocus(true);
+      })();
+    });
   };
 
-  private restoreTabsFocus = async (): Promise<void> => {
-    for (const bqTabElement of this.bqTabElements) {
+  private restoreTabsFocus = (): void => {
+    this.bqTabElements.forEach((bqTabElement) => {
       if (bqTabElement.disabled || bqTabElement.active) return;
-      await bqTabElement.enableFocus(false);
-    }
+
+      /** @See line #173 */
+      (async () => {
+        await bqTabElement.enableFocus(false);
+      })();
+    });
   };
 
   private get bqTabElements(): HTMLBqTabElement[] {
