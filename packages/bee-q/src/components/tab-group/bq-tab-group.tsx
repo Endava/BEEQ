@@ -34,7 +34,7 @@ export class BqTabGroup {
   @Prop({ reflect: true, mutable: true }) value: string;
 
   /** The size of the tab */
-  @Prop({ reflect: true }) size: TTabSize = 'small';
+  @Prop({ reflect: true }) size: TTabSize = 'medium';
 
   /** A number representing the delay value applied to bqChange event handler */
   @Prop({ reflect: true, mutable: true }) debounceTime = 0;
@@ -62,7 +62,7 @@ export class BqTabGroup {
 
   @Watch('size')
   checkPropValues() {
-    validatePropValue(TAB_SIZE, 'small', this.el, 'size');
+    validatePropValue(TAB_SIZE, 'medium', this.el, 'size');
 
     this.bqTabElements.forEach((bqTabElement) => {
       bqTabElement.size = this.size;

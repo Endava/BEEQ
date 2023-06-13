@@ -11,7 +11,7 @@
 | -------------- | --------------- | ----------------------------------------------------------------------- | -------------------------------- | ----------- |
 | `debounceTime` | `debounce-time` | A number representing the delay value applied to bqChange event handler | `number`                         | `0`         |
 | `divider`      | `divider`       | If true tab has underline active                                        | `boolean`                        | `true`      |
-| `size`         | `size`          | The size of the tab                                                     | `"large" \| "medium" \| "small"` | `'small'`   |
+| `size`         | `size`          | The size of the tab                                                     | `"large" \| "medium" \| "small"` | `'medium'`  |
 | `value`        | `value`         | A string representing the id of the selected tab.                       | `string`                         | `undefined` |
 
 
