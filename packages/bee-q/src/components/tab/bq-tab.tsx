@@ -50,9 +50,6 @@ export class BqTab {
   /** The tab panel id that the tab controls */
   @Prop({ reflect: true }) controls!: string;
 
-  /** If true tab has underline active  */
-  @Prop({ reflect: true }) divider = false;
-
   // Prop lifecycle events
   // =======================
 
@@ -193,15 +190,6 @@ export class BqTab {
             </div>
           </div>
         </button>
-        <div
-          class={{
-            'bq-tab__underline': true,
-            'border-b-2 border-solid border-b-stroke-brand': this.active,
-            'border-b-stroke-brand-disabled': this.disabled,
-            'border-b border-solid border-b-stroke-secondary': this.divider && !this.active,
-          }}
-          part="underline"
-        />
       </Host>
     );
   }
