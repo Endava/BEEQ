@@ -1,7 +1,7 @@
 import { h, Component, Prop, Element, Watch, State, Method, Host } from '@stencil/core';
 
-import { validatePropValue } from '../../shared/utils';
 import { DIALOG_SIZE, DIALOG_FOOTER_VARIANT, TDialogSize, TDialogFooterVariant } from './bq-dialog.types';
+import { validatePropValue } from '../../shared/utils';
 
 /**
  * @part base - The component wrapper container inside the shadow DOM
@@ -139,7 +139,7 @@ export class BqDialog {
           </header>
           <footer
             class={{
-              'flex h-[72px] w-full items-center justify-end py-6 px-6': true,
+              'flex h-[72px] w-full items-center justify-end px-6 py-6': true,
               'rounded-s bg-ui-secondary-light': this.variant === 'light',
             }}
           >

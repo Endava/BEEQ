@@ -49,8 +49,8 @@ Buttons are designed for users to take action on a page or a screen.
 
 ### Used by
 
- - [bq-notification](../notification)
  - [bq-dialog](../dialog)
+ - [bq-notification](../notification)
 
 ### Depends on
 
@@ -60,8 +60,8 @@ Buttons are designed for users to take action on a page or a screen.
 ```mermaid
 graph TD;
   bq-button --> bq-icon
-  bq-notification --> bq-button
   bq-dialog --> bq-button
+  bq-notification --> bq-button
   style bq-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -1,4 +1,5 @@
 import { html } from 'lit-html';
+
 import mdx from './bq-dialog.mdx';
 
 import { DIALOG_FOOTER_VARIANT } from '../bq-dialog.types';
