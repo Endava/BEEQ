@@ -1,11 +1,12 @@
 import { h, Component, Prop, Element, Watch, State, Method, Host } from '@stencil/core';
 
 import { DIALOG_SIZE, TDialogSize, TDialogFooterAppearance, DIALOG_FOOTER_APPEARANCE } from './bq-dialog.types';
-import { validatePropValue } from '../../shared/utils';
+import { hasSlotContent, validatePropValue } from '../../shared/utils';
 
 /**
  * @part base - The component wrapper container inside the shadow DOM
  * @part container - The `<div>` container that holds the dialog content
+ * @part info - The `<div>` that holds the info icon
  * @part button-close - The button that close the dialog on click
  * @part footer - The `<footer>` that holds footer content
  */
@@ -20,6 +21,7 @@ export class BqDialog {
   // ====================
 
   private overlayElem: HTMLDivElement;
+  private infoElem: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -29,7 +31,9 @@ export class BqDialog {
   // Inlined decorator, alphabetical order
   // =======================================
 
-  @State() isOpen = false;
+  @State() private isOpen = false;
+
+  @State() private hasInfoIcon = false;
 
   // Public Property API
   // ========================
@@ -81,6 +85,7 @@ export class BqDialog {
   @Method()
   async open() {
     this.isOpen = true;
+    this.handleSlotChange();
   }
 
   /** Hides  the dialog */
@@ -102,6 +107,11 @@ export class BqDialog {
     if (event.target !== this.overlayElem || this.disableOutsideClickClose) return;
     this.isOpen = false;
   };
+
+  private handleSlotChange = () => {
+    this.hasInfoIcon = hasSlotContent(this.infoElem, 'info');
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -122,10 +132,12 @@ export class BqDialog {
           part="container"
         >
           <header class="bq-header">
-            <div class="bq-placeholder-info">
-              <div class="bq-info">
-                <slot name="info" />
-              </div>
+            <div
+              class={{ 'bq-placeholder-info': this.hasInfoIcon }}
+              ref={(divElem) => (this.infoElem = divElem)}
+              part="info"
+            >
+              <slot name="info" onSlotchange={this.handleSlotChange} />
             </div>
             <div class="flex flex-col pl-m">
               <slot name="title" />

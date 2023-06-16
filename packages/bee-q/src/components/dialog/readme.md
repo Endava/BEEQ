@@ -46,6 +46,7 @@ Type: `Promise<void>`
 | `"button-close"` | The button that close the dialog on click             |
 | `"container"`    | The `<div>` container that holds the dialog content   |
 | `"footer"`       | The `<footer>` that holds footer content              |
+| `"info"`         | The `<div>` that holds the info icon                  |
 
 
 ## Dependencies

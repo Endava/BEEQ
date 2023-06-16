@@ -57,9 +57,9 @@ const Template = (args: Args) => {
       </p>
       <footer slot="buttons">
         <bq-button appearance="primary" size="small" type="button" variant="ghost" class="hydrated">
-          Primary button
+          Ghost button
         </bq-button>
-        <bq-button appearance="primary" size="small" type="button" variant="standard"> Primary button </bq-button>
+        <bq-button appearance="primary" size="small" type="button" variant="standard"> Standard button </bq-button>
       </footer>
     </bq-dialog>
   `;
@@ -69,10 +69,66 @@ export const Default: Story = {
   render: Template,
 };
 
+const ConfirmTemplate = (args: Args) => {
+  const handleOpenDialog = async () => {
+    const dialogElem = document.querySelector('bq-dialog');
+    await dialogElem.open();
+  };
+
+  const handleCloseDialog = async () => {
+    const dialogElem = document.querySelector('bq-dialog');
+    await dialogElem.close();
+  };
+
+  return html`
+    <bq-button @bqClick=${handleOpenDialog}>Open Confirm Dialog</bq-button>
+    <bq-dialog
+      size=${args.size}
+      footer-apperance=${args['footer-apperance']}
+      closable=${args.closable}
+      ?disable-outside-click-close=${args['disable-outside-click-close']}
+    >
+      <h3 slot="title">Lorem Ipsum ?</h3>
+      <p slot="content">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+      <footer slot="buttons">
+        <bq-button
+          appearance="primary"
+          size="small"
+          type="button"
+          variant="ghost"
+          class="hydrated"
+          @bqClick=${handleCloseDialog}
+        >
+          Disagree
+        </bq-button>
+        <bq-button
+          appearance="primary"
+          size="small"
+          type="button"
+          variant="ghost"
+          class="hydrated"
+          @bqClick=${handleCloseDialog}
+        >
+          Agree
+        </bq-button>
+      </footer>
+    </bq-dialog>
+  `;
+};
+
+export const Confirm: Story = {
+  render: ConfirmTemplate,
+};
+
 const InformTemplate = (args: Args) => {
   const handleOpenDialog = async () => {
     const dialogElem = document.querySelector('bq-dialog');
     await dialogElem.open();
+  };
+
+  const handleCloseDialog = async () => {
+    const dialogElem = document.querySelector('bq-dialog');
+    await dialogElem.close();
   };
 
   return html`
@@ -90,7 +146,16 @@ const InformTemplate = (args: Args) => {
         a type specimen book.
       </p>
       <footer slot="buttons">
-        <bq-button appearance="primary" size="small" type="button" variant="ghost" class="hydrated"> Close </bq-button>
+        <bq-button
+          appearance="primary"
+          size="small"
+          type="button"
+          variant="ghost"
+          class="hydrated"
+          @bqClick=${handleCloseDialog}
+        >
+          Close
+        </bq-button>
       </footer>
     </bq-dialog>
   `;

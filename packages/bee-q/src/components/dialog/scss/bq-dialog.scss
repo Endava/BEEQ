@@ -28,10 +28,10 @@ header {
 
 .bq-placeholder-info {
   @apply pl-xs2 pt-xs2;
-}
 
-.bq-info {
-  @apply h-[30px] w-[30px];
+  ::slotted(bq-icon) {
+    --bq-icon--size: var(--bq-dialog--icon-size) !important;
+  }
 }
 
 // Size
