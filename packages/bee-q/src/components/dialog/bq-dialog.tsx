@@ -25,9 +25,10 @@ export class BqDialog {
   @Element() el!: HTMLBqDialogElement;
 
   // State() variables
-  @State() isOpen = false;
   // Inlined decorator, alphabetical order
   // =======================================
+
+  @State() isOpen = false;
 
   // Public Property API
   // ========================
@@ -119,7 +120,7 @@ export class BqDialog {
                 <slot name="info" />
               </div>
             </div>
-            <div class="flex flex-col pl-4">
+            <div class="flex flex-col pl-m">
               <slot name="title" />
               <div class="bq-description">
                 <slot name="content" />
@@ -139,7 +140,7 @@ export class BqDialog {
           </header>
           <footer
             class={{
-              'flex h-[72px] w-full items-center justify-end px-6 py-6': true,
+              'flex h-[72px] w-full items-center justify-end p-l': true,
               'rounded-s bg-ui-secondary-light': this.variant === 'light',
             }}
           >

@@ -1,10 +1,11 @@
+import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
 
 import mdx from './bq-dialog.mdx';
 
 import { DIALOG_FOOTER_VARIANT } from '../bq-dialog.types';
 
-export default {
+const meta: Meta = {
   title: 'Components/Dialog',
   component: 'bq-dialog',
   parameters: {
@@ -24,8 +25,18 @@ export default {
   },
 };
 
-const Template = (args) => {
-  return html` <bq-button>Open Dialog</bq-button>
+export default meta;
+
+type Story = StoryObj;
+
+const Template = (args: Args) => {
+  const handleOpenDialog = async () => {
+    const dialogElem = document.querySelector('bq-dialog');
+    await dialogElem.open();
+  };
+
+  return html`
+    <bq-button @bqClick=${handleOpenDialog}>Open Dialog</bq-button>
     <bq-dialog size=${args.size} variant=${args.variant}>
       <div slot="info">
         <bq-icon name="info" color="text--accent" role="img" title="Info" part="icon-on" />
@@ -43,15 +54,9 @@ const Template = (args) => {
         <bq-button appearance="primary" size="small" type="button" variant="standard"> Primary button </bq-button>
       </footer>
     </bq-dialog>
-
-    <script>
-      const buttonElem = document.querySelector('bq-button');
-      const dialogElem = document.querySelector('bq-dialog');
-
-      buttonElem.addEventListener('bqClick', async function () {
-        await dialogElem.open();
-      });
-    </script>`;
+  `;
 };
 
-export const Default = (args) => Template(args);
+export const Default: Story = {
+  render: Template,
+};

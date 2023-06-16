@@ -5,7 +5,7 @@
 @import './bq-dialog-variables';
 
 :host {
-  @apply fixed top-0 left-0 -z-10 flex h-full w-full items-center justify-center;
+  @apply fixed left-0 top-0 -z-10 flex h-full w-full items-center justify-center;
   @apply invisible #{!important};
 }
 
@@ -15,7 +15,7 @@
 }
 
 header {
-  @apply px-6 pt-6;
+  @apply px-l pt-l;
 }
 
 .open {
@@ -27,7 +27,7 @@ header {
 }
 
 .bq-placeholder-info {
-  @apply pt-1 pl-1;
+  @apply pl-xs2 pt-xs2;
 }
 
 .bq-info {
