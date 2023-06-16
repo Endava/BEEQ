@@ -1,4 +1,4 @@
-import { h, Component } from '@stencil/core';
+import { h, Component, Prop } from '@stencil/core';
 
 @Component({
   tag: 'bq-side-menu',
@@ -18,6 +18,9 @@ export class BqSideMenu {
 
   // Public Property API
   // ========================
+
+  /** If true, the container will reduce its width */
+  @Prop({ reflect: true }) collapse: boolean = false;
 
   // Prop lifecycle events
   // =======================
@@ -51,15 +54,12 @@ export class BqSideMenu {
 
   render() {
     return (
-      <div class="bq-side-menu flex grow flex-col overflow-y-auto bg-ui-secondary-light p-xs" part="base">
+      <aside class={{ 'bq-side-menu': true, 'is-collapsed': this.collapse }} role="menu" part="base">
         {/* Company logo and name */}
-        <div
-          class="bq-side-menu--logo box-content flex max-h-10 shrink-0 items-center p-l text-[color:var(--bq-side-menu--logo-color)]"
-          part="logo"
-        >
+        <div class={{ 'bq-side-menu--logo': true, 'is-collapsed': this.collapse }} part="logo">
           <slot name="logo" />
         </div>
-      </div>
+      </aside>
     );
   }
 }

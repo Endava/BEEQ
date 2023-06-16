@@ -344,6 +344,10 @@ export namespace Components {
         "value"?: string;
     }
     interface BqSideMenu {
+        /**
+          * If true, the container will reduce its width
+         */
+        "collapse": boolean;
     }
     interface BqSlider {
         /**
@@ -1064,6 +1068,10 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface BqSideMenu {
+        /**
+          * If true, the container will reduce its width
+         */
+        "collapse"?: boolean;
     }
     interface BqSlider {
         /**

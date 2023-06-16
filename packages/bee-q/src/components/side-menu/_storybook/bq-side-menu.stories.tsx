@@ -12,10 +12,10 @@ const meta: Meta = {
     },
   },
   argTypes: {
-    text: { control: 'text', table: { disable: true } },
+    collapse: { control: 'boolean' },
   },
   args: {
-    text: 'text',
+    collapse: false,
   },
 };
 export default meta;
@@ -23,7 +23,7 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
-  <bq-side-menu>
+  <bq-side-menu collapse=${args.collapse}>
     <div slot="logo">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-full" fill="none" viewBox="0 0 40 40">
         <path
