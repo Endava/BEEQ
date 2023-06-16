@@ -17,14 +17,13 @@ const meta: Meta = {
     text: { control: 'text', table: { disable: true } },
     size: { control: 'select', options: [...DIALOG_SIZE] },
     'footer-apperance': { control: 'select', options: [...DIALOG_FOOTER_APPEARANCE] },
-    closable: { control: 'boolean' },
+    'hide-close-button': { control: 'boolean' },
     'disable-outside-click-close': { control: 'boolean' },
   },
   args: {
     text: 'text',
     size: 'medium',
     'footer-apperance': 'standard',
-    closable: true,
   },
 };
 
@@ -43,10 +42,10 @@ const Template = (args: Args) => {
     <bq-dialog
       size=${args.size}
       footer-apperance=${args['footer-apperance']}
-      ?closable=${args.closable}
+      ?hide-close-button=${args['hide-close-button']}
       ?disable-outside-click-close=${args['disable-outside-click-close']}
     >
-      <div slot="info">
+      <div slot="icon">
         <bq-icon name="info" color="text--accent" role="img" title="Info" part="icon-on" />
       </div>
       <h3 slot="title">Title</h3>
@@ -55,11 +54,11 @@ const Template = (args: Args) => {
         standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make
         a type specimen book.
       </p>
-      <footer slot="buttons">
-        <bq-button appearance="primary" size="small" type="button" variant="ghost" class="hydrated">
+      <footer slot="footer">
+        <bq-button appearance="primary" size="medium" type="button" variant="ghost" class="hydrated">
           Ghost button
         </bq-button>
-        <bq-button appearance="primary" size="small" type="button" variant="standard"> Standard button </bq-button>
+        <bq-button appearance="primary" size="medium" type="button" variant="standard"> Standard button </bq-button>
       </footer>
     </bq-dialog>
   `;
@@ -85,15 +84,15 @@ const ConfirmTemplate = (args: Args) => {
     <bq-dialog
       size=${args.size}
       footer-apperance=${args['footer-apperance']}
-      closable=${args.closable}
+      ?hide-close-button=${args['hide-close-button']}
       ?disable-outside-click-close=${args['disable-outside-click-close']}
     >
       <h3 slot="title">Lorem Ipsum ?</h3>
       <p slot="content">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-      <footer slot="buttons">
+      <footer slot="footer">
         <bq-button
           appearance="primary"
-          size="small"
+          size="medium"
           type="button"
           variant="ghost"
           class="hydrated"
@@ -103,7 +102,7 @@ const ConfirmTemplate = (args: Args) => {
         </bq-button>
         <bq-button
           appearance="primary"
-          size="small"
+          size="medium"
           type="button"
           variant="ghost"
           class="hydrated"
@@ -118,49 +117,8 @@ const ConfirmTemplate = (args: Args) => {
 
 export const Confirm: Story = {
   render: ConfirmTemplate,
-};
-
-const InformTemplate = (args: Args) => {
-  const handleOpenDialog = async () => {
-    const dialogElem = document.querySelector('bq-dialog');
-    await dialogElem.open();
-  };
-
-  const handleCloseDialog = async () => {
-    const dialogElem = document.querySelector('bq-dialog');
-    await dialogElem.close();
-  };
-
-  return html`
-    <bq-button @bqClick=${handleOpenDialog}>Open Inform Dialog</bq-button>
-    <bq-dialog
-      size=${args.size}
-      footer-apperance=${args['footer-apperance']}
-      closable=${args.closable}
-      ?disable-outside-click-close=${args['disable-outside-click-close']}
-    >
-      <h3 slot="title">Something went wrong!</h3>
-      <p slot="content">
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make
-        a type specimen book.
-      </p>
-      <footer slot="buttons">
-        <bq-button
-          appearance="primary"
-          size="small"
-          type="button"
-          variant="ghost"
-          class="hydrated"
-          @bqClick=${handleCloseDialog}
-        >
-          Close
-        </bq-button>
-      </footer>
-    </bq-dialog>
-  `;
-};
-
-export const Inform: Story = {
-  render: InformTemplate,
+  args: {
+    'hide-close-button': true,
+    'disable-outside-click-close': true,
+  },
 };

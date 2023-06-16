@@ -7,12 +7,12 @@
 
 ## Properties
 
-| Property                   | Attribute                     | Description                              | Type                             | Default      |
-| -------------------------- | ----------------------------- | ---------------------------------------- | -------------------------------- | ------------ |
-| `closable`                 | `closable`                    | If true renders x icon                   | `boolean`                        | `true`       |
-| `disableOutsideClickClose` | `disable-outside-click-close` | If true  will not close on outside click | `boolean`                        | `false`      |
-| `footerApperance`          | `footer-apperance`            | The appearance of footer                 | `"highlight" \| "standard"`      | `'standard'` |
-| `size`                     | `size`                        | The size of the dialog                   | `"large" \| "medium" \| "small"` | `'medium'`   |
+| Property                   | Attribute                     | Description                             | Type                             | Default      |
+| -------------------------- | ----------------------------- | --------------------------------------- | -------------------------------- | ------------ |
+| `disableOutsideClickClose` | `disable-outside-click-close` | If true will not close on outside click | `boolean`                        | `false`      |
+| `footerApperance`          | `footer-apperance`            | The appearance of footer                | `"highlight" \| "standard"`      | `'standard'` |
+| `hideCloseButton`          | `hide-close-button`           | If true it hides close button           | `boolean`                        | `false`      |
+| `size`                     | `size`                        | The size of the dialog                  | `"large" \| "medium" \| "small"` | `'medium'`   |
 
 
 ## Methods
@@ -46,7 +46,7 @@ Type: `Promise<void>`
 | `"button-close"` | The button that close the dialog on click             |
 | `"container"`    | The `<div>` container that holds the dialog content   |
 | `"footer"`       | The `<footer>` that holds footer content              |
-| `"info"`         | The `<div>` that holds the info icon                  |
+| `"icon"`         | The `<div>` that holds the info icon                  |
 
 
 ## Dependencies

@@ -5,38 +5,30 @@
 @import './bq-dialog-variables';
 
 :host {
-  @apply fixed left-0 top-0 -z-10 flex h-full w-full items-center justify-center;
+  @apply fixed left-0 top-0 -z-[var(--bq-dialog-z-index)] flex h-full w-full items-center justify-center;
   @apply invisible #{!important};
 }
 
 :host(.is-open) {
-  @apply z-10;
+  @apply z-[var(--bq-dialog-z-index)];
   @apply visible #{!important};
 }
 
-header {
-  @apply px-l pt-l;
+.bq-dialog__header {
+  @apply flex justify-between px-l pt-l;
 }
 
-.open {
-  @apply flex;
-}
-
-.bq-header {
-  @apply flex justify-between;
-}
-
-.bq-placeholder-info {
+.bq-dialog__icon {
   @apply pl-xs2 pt-xs2;
 
   ::slotted(bq-icon) {
-    --bq-icon--size: var(--bq-dialog--icon-size) !important;
+    --bq-icon--size: var(--bq-dialog--icon-size) #{!important};
   }
 }
 
 // Size
 
-.size {
+.bq-dialog__size {
   &--small {
     @apply w-[var(--bq-dialog--small-width)];
   }
