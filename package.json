@@ -1,6 +1,6 @@
 {
   "name": "bee-q",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Bee-Q Design System",
   "license": "Apache-2.0",
   "private": true,
@@ -57,7 +57,7 @@
     "@commitlint/cli": "17.6.1",
     "@commitlint/config-angular": "17.6.1",
     "@commitlint/config-conventional": "17.6.1",
-    "@jscutlery/semver": "2.30.1",
+    "@jscutlery/semver": "2.29.3",
     "@nrwl/angular": "14.8.8",
     "@nrwl/cli": "14.8.8",
     "@nrwl/devkit": "14.8.8",
