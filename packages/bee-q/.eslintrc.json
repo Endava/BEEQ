@@ -73,6 +73,17 @@
     },
     {
       "parserOptions": {
+        "project": ["packages/bee-q/tsconfig.lib.json"]
+      },
+      "files": ["*.tsx"],
+      "extends": ["plugin:@stencil-community/recommended"],
+      "rules": {
+        "@stencil-community/strict-mutable": "off",
+        "@stencil-community/strict-boolean-conditions": "off"
+      }
+    },
+    {
+      "parserOptions": {
         "ecmaVersion": "latest"
       },
       "files": ["*.js", "*.jsx"],
