@@ -40,6 +40,12 @@ export class BqDialog {
   /** The appearance of footer */
   @Prop({ reflect: true }) footerApperance: TDialogFooterAppearance = 'standard';
 
+  /** If true renders x icon */
+  @Prop({ reflect: true }) closable = true;
+
+  /** If true  will not close on outside click */
+  @Prop({ reflect: true }) disableOutsideClickClose = false;
+
   // Prop lifecycle events
   // =======================
   @Watch('size')
@@ -93,7 +99,7 @@ export class BqDialog {
   };
 
   handleOverlayClick = (event: MouseEvent) => {
-    if (event.target !== this.overlayElem) return;
+    if (event.target !== this.overlayElem || this.disableOutsideClickClose) return;
     this.isOpen = false;
   };
   // render() function
@@ -127,16 +133,20 @@ export class BqDialog {
                 <slot name="content" />
               </div>
             </div>
-            <div>
-              <bq-button
-                class="cursor-auto"
-                appearance="text"
-                size="small"
-                onClick={this.handleCloseClick}
-                part="button-close"
-              >
-                <bq-icon class="cursor-pointer" name="x" role="img" title="Close" />
-              </bq-button>
+            <div part="button-close">
+              <slot name="button-close">
+                {this.closable && (
+                  <bq-button
+                    class="cursor-auto"
+                    appearance="text"
+                    size="small"
+                    onClick={this.handleCloseClick}
+                    slot="button-close"
+                  >
+                    <bq-icon class="cursor-pointer" name="x" role="img" title="Close" />
+                  </bq-button>
+                )}
+              </slot>
             </div>
           </header>
           <footer

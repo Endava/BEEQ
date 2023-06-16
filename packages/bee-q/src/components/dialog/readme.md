@@ -7,10 +7,12 @@
 
 ## Properties
 
-| Property          | Attribute          | Description              | Type                             | Default      |
-| ----------------- | ------------------ | ------------------------ | -------------------------------- | ------------ |
-| `footerApperance` | `footer-apperance` | The appearance of footer | `"highlight" \| "standard"`      | `'standard'` |
-| `size`            | `size`             | The size of the dialog   | `"large" \| "medium" \| "small"` | `'medium'`   |
+| Property                   | Attribute                     | Description                              | Type                             | Default      |
+| -------------------------- | ----------------------------- | ---------------------------------------- | -------------------------------- | ------------ |
+| `closable`                 | `closable`                    | If true renders x icon                   | `boolean`                        | `true`       |
+| `disableOutsideClickClose` | `disable-outside-click-close` | If true  will not close on outside click | `boolean`                        | `false`      |
+| `footerApperance`          | `footer-apperance`            | The appearance of footer                 | `"highlight" \| "standard"`      | `'standard'` |
+| `size`                     | `size`                        | The size of the dialog                   | `"large" \| "medium" \| "small"` | `'medium'`   |
 
 
 ## Methods

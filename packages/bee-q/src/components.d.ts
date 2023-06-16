@@ -176,9 +176,17 @@ export namespace Components {
     }
     interface BqDialog {
         /**
+          * If true renders x icon
+         */
+        "closable": boolean;
+        /**
           * Hides  the dialog
          */
         "close": () => Promise<void>;
+        /**
+          * If true  will not close on outside click
+         */
+        "disableOutsideClickClose": boolean;
         /**
           * The appearance of footer
          */
@@ -957,6 +965,14 @@ declare namespace LocalJSX {
         "value": string;
     }
     interface BqDialog {
+        /**
+          * If true renders x icon
+         */
+        "closable"?: boolean;
+        /**
+          * If true  will not close on outside click
+         */
+        "disableOutsideClickClose"?: boolean;
         /**
           * The appearance of footer
          */
