@@ -19,6 +19,7 @@ const meta: Meta = {
     'footer-apperance': { control: 'select', options: [...DIALOG_FOOTER_APPEARANCE] },
     'hide-close-button': { control: 'boolean' },
     'disable-outside-click-close': { control: 'boolean' },
+    'disable-esc-key-down-close': { control: 'boolean' },
   },
   args: {
     text: 'text',
@@ -44,22 +45,21 @@ const Template = (args: Args) => {
       footer-apperance=${args['footer-apperance']}
       ?hide-close-button=${args['hide-close-button']}
       ?disable-outside-click-close=${args['disable-outside-click-close']}
+      ?disable-esc-key-down-close=${args['disable-esc-key-down-close']}
     >
-      <div slot="icon">
-        <bq-icon name="info" color="text--accent" role="img" title="Info" part="icon-on" />
-      </div>
+      <bq-icon name="info" color="text--accent" role="img" title="Info" part="icon-on" slot="icon"></bq-icon>
       <h3 slot="title">Title</h3>
-      <p slot="content">
+      <p slot="description">
         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
         standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make
         a type specimen book.
       </p>
-      <footer slot="footer">
-        <bq-button appearance="primary" size="medium" type="button" variant="ghost" class="hydrated">
-          Ghost button
-        </bq-button>
-        <bq-button appearance="primary" size="medium" type="button" variant="standard"> Standard button </bq-button>
-      </footer>
+      <bq-button appearance="primary" size="medium" type="button" variant="ghost" class="hydrated" slot="footer">
+        Ghost button
+      </bq-button>
+      <bq-button appearance="primary" size="medium" type="button" variant="standard" slot="footer">
+        Standard button
+      </bq-button>
     </bq-dialog>
   `;
 };
@@ -86,31 +86,32 @@ const ConfirmTemplate = (args: Args) => {
       footer-apperance=${args['footer-apperance']}
       ?hide-close-button=${args['hide-close-button']}
       ?disable-outside-click-close=${args['disable-outside-click-close']}
+      ?disable-esc-key-down-close=${args['disable-esc-key-down-close']}
     >
       <h3 slot="title">Lorem Ipsum ?</h3>
-      <p slot="content">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-      <footer slot="footer">
-        <bq-button
-          appearance="primary"
-          size="medium"
-          type="button"
-          variant="ghost"
-          class="hydrated"
-          @bqClick=${handleCloseDialog}
-        >
-          Disagree
-        </bq-button>
-        <bq-button
-          appearance="primary"
-          size="medium"
-          type="button"
-          variant="ghost"
-          class="hydrated"
-          @bqClick=${handleCloseDialog}
-        >
-          Agree
-        </bq-button>
-      </footer>
+      <p slot="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+      <bq-button
+        appearance="primary"
+        size="medium"
+        type="button"
+        variant="ghost"
+        class="hydrated"
+        @bqClick=${handleCloseDialog}
+        slot="footer"
+      >
+        Disagree
+      </bq-button>
+      <bq-button
+        appearance="primary"
+        size="medium"
+        type="button"
+        variant="standard"
+        class="hydrated"
+        @bqClick=${handleCloseDialog}
+        slot="footer"
+      >
+        Agree
+      </bq-button>
     </bq-dialog>
   `;
 };
@@ -120,5 +121,6 @@ export const Confirm: Story = {
   args: {
     'hide-close-button': true,
     'disable-outside-click-close': true,
+    'disable-esc-key-down-close': true,
   },
 };

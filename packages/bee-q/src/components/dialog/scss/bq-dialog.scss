@@ -14,21 +14,13 @@
   @apply visible #{!important};
 }
 
-.bq-dialog__header {
-  @apply flex justify-between px-l pt-l;
+.bq-dialog__backdrop {
+  @apply fixed h-full w-full bg-bg-tertiary opacity-75;
 }
 
-.bq-dialog__icon {
-  @apply pl-xs2 pt-xs2;
+.bq-dialog__container {
+  @apply z-[var(--bq-dialog-z-index)] m-auto flex flex-col gap-l rounded-s bg-bg-primary shadow-m;
 
-  ::slotted(bq-icon) {
-    --bq-icon--size: var(--bq-dialog--icon-size) #{!important};
-  }
-}
-
-// Size
-
-.bq-dialog__size {
   &--small {
     @apply w-[var(--bq-dialog--small-width)];
   }
@@ -40,4 +32,34 @@
   &--large {
     @apply w-[var(--bq-dialog--large-width)];
   }
+}
+
+.bq-dialog__header {
+  @apply flex gap-s p-l pb-0;
+}
+
+.bq-dialog__title {
+  @apply flex min-h-[var(--bq-dialog--icon-size)] items-center justify-between;
+}
+
+.bq-dialog__icon {
+  @apply p-xs3 pb-0;
+
+  ::slotted(bq-icon) {
+    --bq-icon--size: var(--bq-dialog--icon-size) #{!important};
+  }
+}
+
+.bq-dialog__button-close {
+  @apply cursor-auto;
+  --bq-button--small-paddingX: theme('spacing.xs2');
+  --bq-button--small-paddingY: theme('spacing.xs2');
+
+  &::part(button) {
+    @apply border-none;
+  }
+}
+
+.bq-dialog__footer {
+  @apply flex w-full items-center justify-end gap-xs px-l py-s;
 }

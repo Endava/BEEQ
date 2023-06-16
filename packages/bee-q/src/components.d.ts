@@ -180,6 +180,10 @@ export namespace Components {
          */
         "close": () => Promise<void>;
         /**
+          * If true will not close on escape press
+         */
+        "disableEscKeyDownClose": boolean;
+        /**
           * If true will not close on outside click
          */
         "disableOutsideClickClose": boolean;
@@ -965,6 +969,10 @@ declare namespace LocalJSX {
         "value": string;
     }
     interface BqDialog {
+        /**
+          * If true will not close on escape press
+         */
+        "disableEscKeyDownClose"?: boolean;
         /**
           * If true will not close on outside click
          */
