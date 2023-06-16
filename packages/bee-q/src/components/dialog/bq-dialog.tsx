@@ -1,12 +1,13 @@
 import { h, Component, Prop, Element, Watch, State, Method, Host } from '@stencil/core';
 
-import { DIALOG_SIZE, DIALOG_FOOTER_VARIANT, TDialogSize, TDialogFooterVariant } from './bq-dialog.types';
+import { DIALOG_SIZE, TDialogSize, TDialogFooterAppearance, DIALOG_FOOTER_APPEARANCE } from './bq-dialog.types';
 import { validatePropValue } from '../../shared/utils';
 
 /**
  * @part base - The component wrapper container inside the shadow DOM
  * @part container - The `<div>` container that holds the dialog content
  * @part button-close - The button that close the dialog on click
+ * @part footer - The `<footer>` that holds footer content
  */
 
 @Component({
@@ -34,18 +35,18 @@ export class BqDialog {
   // ========================
 
   /** The size of the dialog */
-  @Prop({ reflect: true, mutable: true }) size: TDialogSize = 'large';
+  @Prop({ reflect: true, mutable: true }) size: TDialogSize = 'medium';
 
-  /** The variant of button to apply on top of the appearance */
-  @Prop({ reflect: true }) variant: TDialogFooterVariant = 'standard';
+  /** The appearance of footer */
+  @Prop({ reflect: true }) footerApperance: TDialogFooterAppearance = 'standard';
 
   // Prop lifecycle events
   // =======================
   @Watch('size')
-  @Watch('variant')
+  @Watch('footerApperance')
   checkPropValues() {
     validatePropValue(DIALOG_SIZE, 'large', this.el, 'size');
-    validatePropValue(DIALOG_FOOTER_VARIANT, 'standard', this.el, 'variant');
+    validatePropValue(DIALOG_FOOTER_APPEARANCE, 'standard', this.el, 'footerApperance');
   }
 
   // Events section
@@ -141,8 +142,9 @@ export class BqDialog {
           <footer
             class={{
               'flex h-[72px] w-full items-center justify-end p-l': true,
-              'rounded-s bg-ui-secondary-light': this.variant === 'light',
+              'rounded-s bg-ui-secondary-light': this.footerApperance === 'highlight',
             }}
+            part="footer"
           >
             <slot name="buttons" />
           </footer>

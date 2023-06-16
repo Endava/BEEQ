@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property  | Attribute | Description                                             | Type                             | Default      |
-| --------- | --------- | ------------------------------------------------------- | -------------------------------- | ------------ |
-| `size`    | `size`    | The size of the dialog                                  | `"large" \| "medium" \| "small"` | `'large'`    |
-| `variant` | `variant` | The variant of button to apply on top of the appearance | `"light" \| "standard"`          | `'standard'` |
+| Property          | Attribute          | Description              | Type                             | Default      |
+| ----------------- | ------------------ | ------------------------ | -------------------------------- | ------------ |
+| `footerApperance` | `footer-apperance` | The appearance of footer | `"highlight" \| "standard"`      | `'standard'` |
+| `size`            | `size`             | The size of the dialog   | `"large" \| "medium" \| "small"` | `'medium'`   |
 
 
 ## Methods
@@ -43,6 +43,7 @@ Type: `Promise<void>`
 | `"base"`         | The component wrapper container inside the shadow DOM |
 | `"button-close"` | The button that close the dialog on click             |
 | `"container"`    | The `<div>` container that holds the dialog content   |
+| `"footer"`       | The `<footer>` that holds footer content              |
 
 
 ## Dependencies

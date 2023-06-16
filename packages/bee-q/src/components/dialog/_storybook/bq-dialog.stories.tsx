@@ -3,7 +3,7 @@ import { html } from 'lit-html';
 
 import mdx from './bq-dialog.mdx';
 
-import { DIALOG_FOOTER_VARIANT } from '../bq-dialog.types';
+import { DIALOG_FOOTER_APPEARANCE } from '../bq-dialog.types';
 
 const meta: Meta = {
   title: 'Components/Dialog',
@@ -16,12 +16,12 @@ const meta: Meta = {
   argTypes: {
     text: { control: 'text', table: { disable: true } },
     size: { control: 'select', options: ['small', 'medium', 'large'] },
-    variant: { control: 'select', options: [...DIALOG_FOOTER_VARIANT] },
+    'footer-apperance': { control: 'select', options: [...DIALOG_FOOTER_APPEARANCE] },
   },
   args: {
     text: 'text',
     size: 'medium',
-    variant: 'standard',
+    'footer-apperance': 'standard',
   },
 };
 
@@ -37,7 +37,7 @@ const Template = (args: Args) => {
 
   return html`
     <bq-button @bqClick=${handleOpenDialog}>Open Dialog</bq-button>
-    <bq-dialog size=${args.size} variant=${args.variant}>
+    <bq-dialog size=${args.size} footer-apperance=${args['footer-apperance']}>
       <div slot="info">
         <bq-icon name="info" color="text--accent" role="img" title="Info" part="icon-on" />
       </div>
