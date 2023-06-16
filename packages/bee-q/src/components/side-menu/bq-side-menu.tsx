@@ -51,9 +51,15 @@ export class BqSideMenu {
 
   render() {
     return (
-      <p class="m-[var(--bq-side-menu--margin)]">
-        My name is Stencil <slot />
-      </p>
+      <div class="bq-side-menu flex grow flex-col overflow-y-auto bg-ui-secondary-light p-xs" part="base">
+        {/* Company logo and name */}
+        <div
+          class="bq-side-menu--logo box-content flex max-h-10 shrink-0 items-center p-l text-[color:var(--bq-side-menu--logo-color)]"
+          part="logo"
+        >
+          <slot name="logo" />
+        </div>
+      </div>
     );
   }
 }

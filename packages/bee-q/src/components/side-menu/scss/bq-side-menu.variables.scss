@@ -3,5 +3,6 @@
 /* -------------------------------------------------------------------------- */
 
 :host {
-  --bq-side-menu--margin: 1px;
+  --bq-side-menu--logo-color: theme('colors.text.brand');
+  --bq-side-menu--width: 256px;
 }

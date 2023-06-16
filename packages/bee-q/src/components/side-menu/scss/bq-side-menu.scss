@@ -5,5 +5,11 @@
 @import './bq-side-menu.variables';
 
 :host {
-  @apply block;
+  @apply absolute left-0 top-0 flex h-[100dvh] w-[var(--bq-side-menu--width)] overflow-hidden;
+}
+
+.bq-side-menu--logo {
+  ::slotted(div) {
+    @apply flex h-full w-full items-center gap-s text-xl font-bold;
+  }
 }
