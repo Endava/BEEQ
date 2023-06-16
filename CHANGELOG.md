@@ -6,6 +6,22 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+## [0.4.0](https://github.com/Endava/bee-q/compare/v0.3.0...v0.4.0) (2023-06-16)
+
+
+### Features
+
+* **button:** add `block` property to suport full width size ([#262](https://github.com/Endava/bee-q/issues/262)) ([03e1fad](https://github.com/Endava/bee-q/commit/03e1fad38c97328cab7b9234eeda3882e21706e3))
+* **button:** add `justifyContent` property to align the label content ([#263](https://github.com/Endava/bee-q/issues/263)) ([250d69b](https://github.com/Endava/bee-q/commit/250d69b296732491eb740297d0bdd7b59e6df32b))
+* **Notification:** add new `<bq-notification>` component ([#204](https://github.com/Endava/bee-q/issues/204)) ([fe4d4c1](https://github.com/Endava/bee-q/commit/fe4d4c188a45e2e7ad2007209d54563a37ea56a8))
+* **Tokens:** add spacing tokens ([#265](https://github.com/Endava/bee-q/issues/265)) ([62b9858](https://github.com/Endava/bee-q/commit/62b98581cc4b01651f3688ca9ebcb09d16dfd4b3))
+
+
+### Bug Fixes
+
+* **tab group:** make divider full width ([#205](https://github.com/Endava/bee-q/issues/205)) ([86e4ef3](https://github.com/Endava/bee-q/commit/86e4ef3405d9fd292fae0689bfdbcf0ee2f60127))
+* **tokens:** make feedback text color tokens accessible ([#268](https://github.com/Endava/bee-q/issues/268)) ([7906699](https://github.com/Endava/bee-q/commit/7906699dcc200332f11f7eb50e2392d7bf3ef2d1))
+
 ## [0.3.0](https://github.com/Endava/bee-q/compare/v0.2.2...v0.3.0) (2023-04-27)
 
 
