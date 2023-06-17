@@ -1,8 +1,10 @@
+import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
-import { TOAST_TYPE } from '../bq-toast.types';
-import mdx from './bq-toast.mdx';
 
-export default {
+import mdx from './bq-toast.mdx';
+import { TOAST_TYPE } from '../bq-toast.types';
+
+const meta: Meta = {
   title: 'Components/Toast',
   component: 'bq-toast',
   parameters: {
@@ -22,7 +24,11 @@ export default {
   },
 };
 
-const Template = (args) => {
+export default meta;
+
+type Story = StoryObj;
+
+const Template = (args: Args) => {
   const showToast = async () => {
     await customElements.whenDefined('bq-toast');
     const toastElement = document.querySelector('bq-toast');
@@ -44,4 +50,7 @@ const Template = (args) => {
   `;
 };
 
-export const Default = (args) => Template(args);
+export const Default: Story = {
+  render: Template,
+  args: {},
+};

@@ -1,6 +1,7 @@
 import { h, Component, Element, Prop, Watch, Method, State, Host } from '@stencil/core';
-import { getColorCSSVariable, validatePropValue } from '../../shared/utils';
+
 import { TOAST_TYPE, TToastType } from './bq-toast.types';
+import { getColorCSSVariable, validatePropValue } from '../../shared/utils';
 
 /**
  * @part base - The component's internal wrapper of the Toast component.
