@@ -1,7 +1,7 @@
 import { h, Component, Element, Prop, Watch, Method, State, Host } from '@stencil/core';
 
 import { TOAST_TYPE, TToastType } from './bq-toast.types';
-import { getColorCSSVariable, validatePropValue } from '../../shared/utils';
+import { assertUnreachable, isDefined, validatePropValue } from '../../shared/utils';
 
 /**
  * @part base - The component's internal wrapper of the Toast component.
@@ -29,12 +29,16 @@ export class BqToast {
 
   // Public Property API
   // ========================
+
   /** Type of Toast */
   @Prop({ reflect: true, mutable: true }) type: TToastType = 'default';
+
   /** Text color of Toast */
   @Prop({ reflect: true }) textColor: string;
+
   /** Should show icon of Toast */
   @Prop({ reflect: true }) showIcon = false;
+
   /** Should hide Toast after period of time */
   @Prop({ reflect: true }) autoCloseTime: number;
 
@@ -93,35 +97,61 @@ export class BqToast {
   // =======================================================
 
   private get iconColor() {
-    const type = this.type;
-    const textColor = this.textColor;
-    const defaultColors = {
-      success: 'ui--success',
-      error: 'ui--danger',
-      loading: 'ui--brand',
-      alert: 'ui--warning',
-      info: 'ui--brand',
-      default: 'ui--brand',
-    };
-    let color = defaultColors[type];
-    if (textColor !== '') {
-      color = textColor;
+    if (isDefined(this.textColor)) {
+      return this.textColor;
     }
-    return { color: color };
+
+    switch (this.type) {
+      case 'success': {
+        return 'ui--success';
+      }
+      case 'error': {
+        return 'ui--danger';
+      }
+      case 'loading': {
+        return 'ui--brand';
+      }
+      case 'alert': {
+        return 'ui--warning';
+      }
+      case 'info': {
+        return 'ui--brand';
+      }
+      case 'default': {
+        return 'ui--brand';
+      }
+      default: {
+        assertUnreachable(this.type);
+        return 'ui--brand';
+      }
+    }
   }
 
   private get icon() {
-    const type = this.type;
-    const icons = {
-      success: 'check-circle',
-      error: 'x-circle',
-      loading: 'spinner-gap',
-      alert: 'warning-circle',
-      info: 'info',
-      default: 'info',
-    };
-    const icon = icons[type];
-    return { icon: icon };
+    switch (this.type) {
+      case 'success': {
+        return 'check-circle';
+      }
+      case 'error': {
+        return 'x-circle';
+      }
+      case 'loading': {
+        return 'spinner-gap';
+      }
+      case 'alert': {
+        return 'warning-circle';
+      }
+      case 'info': {
+        return 'info';
+      }
+      case 'default': {
+        return 'info';
+      }
+      default: {
+        assertUnreachable(this.type);
+        return 'info';
+      }
+    }
   }
 
   // render() function
@@ -129,19 +159,22 @@ export class BqToast {
   // ===================================
 
   render() {
-    const styles = { ...(this.textColor && { color: getColorCSSVariable(this.textColor) }) };
-    const { color } = this.iconColor;
-    const { icon } = this.icon;
     return (
-      <Host style={styles} aria-hidden={!this.shouldShowToast} hidden={!this.shouldShowToast}>
-        <div class="toast-shadow inline-flex items-center gap-2 rounded-m font-semibold " part="base">
+      <Host aria-hidden={!this.shouldShowToast} hidden={!this.shouldShowToast}>
+        <div class="bq-toast" part="base">
           {this.showIcon && (
             <div class="icon-wraper inline-block text-left align-middle" part="icon">
               <slot name="icon" />
             </div>
           )}
           {!this.showIcon && (
-            <bq-icon class={`.bq-toast__icon`} name={icon} color={color} size="24" weight="bold"></bq-icon>
+            <bq-icon
+              class={`.bq-toast__icon`}
+              name={this.icon}
+              color={this.iconColor}
+              size="24"
+              weight="bold"
+            ></bq-icon>
           )}
           <div class="inline-block align-middle font-medium" part="text">
             <slot name="text" />

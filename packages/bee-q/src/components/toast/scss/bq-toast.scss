@@ -8,13 +8,8 @@
   @apply relative;
 }
 
-.toast-shadow {
-  @apply shadow-m;
-  padding: 10px;
-}
-
-.trigger-btn {
-  margin-top: 200px;
+.bq-toast {
+  @apply inline-flex items-center gap-xs rounded-s bg-ui-primary px-m py-[10px] shadow-l;
 }
 
 .icon-wraper {

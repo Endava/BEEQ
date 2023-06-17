@@ -19,7 +19,6 @@ const meta: Meta = {
   },
   args: {
     type: 'default',
-    textColor: 'ui--brand',
     autoCloseTime: 5000,
   },
 };
