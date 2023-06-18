@@ -1,0 +1,15 @@
+/* -------------------------------------------------------------------------- */
+/*                                Side menu item styles                */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-side-menu-item.variables';
+
+:host {
+  @apply block;
+}
+
+.bq-side-menu--item {
+  @apply flex items-center gap-x-s rounded-s bg-transparent text-m text-text-primary no-underline transition-colors duration-300;
+  @apply pb-[var(--bq-side-menu-item--padding-bottom)] pl-[var(--bq-side-menu-item--padding-left)] pr-[var(--bq-side-menu-item--padding-right)] pt-[var(--bq-side-menu-item--padding-top)];
+  @apply focus-visible:focus hover:bg-ui-secondary-hover;
+}

@@ -1,0 +1,10 @@
+/* -------------------------------------------------------------------------- */
+/*                          Side menu item custom properties           */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  --bq-side-menu-item--padding-top: theme('spacing.m');
+  --bq-side-menu-item--padding-bottom: theme('spacing.m');
+  --bq-side-menu-item--padding-left: theme('spacing.xl');
+  --bq-side-menu-item--padding-right: theme('spacing.l');
+}

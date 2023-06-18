@@ -349,6 +349,8 @@ export namespace Components {
          */
         "collapse": boolean;
     }
+    interface BqSideMenuItem {
+    }
     interface BqSlider {
         /**
           * A number representing the delay value applied to bqChange event handler
@@ -666,6 +668,12 @@ declare global {
         prototype: HTMLBqSideMenuElement;
         new (): HTMLBqSideMenuElement;
     };
+    interface HTMLBqSideMenuItemElement extends Components.BqSideMenuItem, HTMLStencilElement {
+    }
+    var HTMLBqSideMenuItemElement: {
+        prototype: HTMLBqSideMenuItemElement;
+        new (): HTMLBqSideMenuItemElement;
+    };
     interface HTMLBqSliderElement extends Components.BqSlider, HTMLStencilElement {
     }
     var HTMLBqSliderElement: {
@@ -726,6 +734,7 @@ declare global {
         "bq-radio": HTMLBqRadioElement;
         "bq-radio-group": HTMLBqRadioGroupElement;
         "bq-side-menu": HTMLBqSideMenuElement;
+        "bq-side-menu-item": HTMLBqSideMenuItemElement;
         "bq-slider": HTMLBqSliderElement;
         "bq-spinner": HTMLBqSpinnerElement;
         "bq-status": HTMLBqStatusElement;
@@ -1073,6 +1082,8 @@ declare namespace LocalJSX {
          */
         "collapse"?: boolean;
     }
+    interface BqSideMenuItem {
+    }
     interface BqSlider {
         /**
           * A number representing the delay value applied to bqChange event handler
@@ -1298,6 +1309,7 @@ declare namespace LocalJSX {
         "bq-radio": BqRadio;
         "bq-radio-group": BqRadioGroup;
         "bq-side-menu": BqSideMenu;
+        "bq-side-menu-item": BqSideMenuItem;
         "bq-slider": BqSlider;
         "bq-spinner": BqSpinner;
         "bq-status": BqStatus;
@@ -1330,6 +1342,7 @@ declare module "@stencil/core" {
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
             "bq-side-menu": LocalJSX.BqSideMenu & JSXBase.HTMLAttributes<HTMLBqSideMenuElement>;
+            "bq-side-menu-item": LocalJSX.BqSideMenuItem & JSXBase.HTMLAttributes<HTMLBqSideMenuItemElement>;
             "bq-slider": LocalJSX.BqSlider & JSXBase.HTMLAttributes<HTMLBqSliderElement>;
             /**
              * Spinners are designed for users to display data loading.
