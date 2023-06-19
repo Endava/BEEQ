@@ -13,7 +13,8 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-side-menu {
-  @apply fixed left-0 top-0 flex h-[100dvh] w-[var(--bq-side-menu--width)] grow flex-col bg-ui-secondary-light p-xs transition-all duration-150;
+  @apply fixed left-0 top-0 flex h-dynamic-vh w-[var(--bq-side-menu--width)] grow flex-col bg-ui-secondary-light p-xs;
+  @apply transition-[width] duration-150 ease-in-out;
 }
 
 .bq-side-menu.is-collapsed {

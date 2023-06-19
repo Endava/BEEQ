@@ -65,6 +65,10 @@ const config: Config = {
       large: 'var(--bq-font-line-height--large)',
     },
     extend: {
+      height: {
+        // Details: https://web.dev/viewport-units/#the-need-for-new-viewport-units
+        'dynamic-vh': '100dvh',
+      },
       content: {
         empty: "''",
       },
