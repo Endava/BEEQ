@@ -350,6 +350,14 @@ export namespace Components {
         "collapse": boolean;
     }
     interface BqSideMenuItem {
+        /**
+          * If true, the menu item will be shown as active/selected.
+         */
+        "active": boolean;
+        /**
+          * If true, the container will reduce its width
+         */
+        "collapse": boolean;
     }
     interface BqSlider {
         /**
@@ -1083,6 +1091,14 @@ declare namespace LocalJSX {
         "collapse"?: boolean;
     }
     interface BqSideMenuItem {
+        /**
+          * If true, the menu item will be shown as active/selected.
+         */
+        "active"?: boolean;
+        /**
+          * If true, the container will reduce its width
+         */
+        "collapse"?: boolean;
     }
     interface BqSlider {
         /**

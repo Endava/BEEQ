@@ -1,4 +1,4 @@
-import { h, Component } from '@stencil/core';
+import { h, Component, Prop } from '@stencil/core';
 
 @Component({
   tag: 'bq-side-menu-item',
@@ -18,6 +18,12 @@ export class BqSideMenuItem {
 
   // Public Property API
   // ========================
+
+  /** If true, the menu item will be shown as active/selected. */
+  @Prop({ reflect: true }) active: boolean = false;
+
+  /** If true, the container will reduce its width */
+  @Prop({ reflect: true }) collapse: boolean = false;
 
   // Prop lifecycle events
   // =======================
@@ -52,7 +58,11 @@ export class BqSideMenuItem {
   render() {
     return (
       // Current: "bg-gray-50 text-indigo-600", Default: "text-gray-700 hover:text-indigo-600 hover:bg-gray-50"
-      <a href="#" class="bq-side-menu--item" role="menuitem">
+      <a
+        href="#"
+        class={{ 'bq-side-menu--item': true, active: this.active, 'is-collapsed': this.collapse }}
+        role="menuitem"
+      >
         <slot />
       </a>
     );
