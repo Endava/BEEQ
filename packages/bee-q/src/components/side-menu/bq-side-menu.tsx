@@ -77,13 +77,13 @@ export class BqSideMenu {
 
   render() {
     return (
-      <aside class={{ 'bq-side-menu': true, 'is-collapsed': this.collapse }} part="base">
+      <aside class={{ 'bq-side-menu overflow-y-auto': true, 'is-collapsed': this.collapse }} part="base">
         {/* Company logo and name */}
         <div class={{ 'bq-side-menu--logo': true, 'is-collapsed': this.collapse }} part="logo">
           <slot name="logo" />
         </div>
         <nav
-          class="bq-side-menu--nav flex flex-col gap-y-xs overflow-y-auto"
+          class="bq-side-menu--nav flex flex-col gap-y-xs px-xs pt-xs2"
           role="menu"
           ref={(navElem) => (this.menuElem = navElem)}
         >

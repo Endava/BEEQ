@@ -3,6 +3,7 @@
 /* -------------------------------------------------------------------------- */
 
 :host {
+  --bq-side-menu--bg-color: theme('colors.ui.secondary-light');
   --bq-side-menu--brand-color: theme('colors.text.brand');
   --bq-side-menu--width: 256px;
   --bq-side-menu--width-collapse: 80px;

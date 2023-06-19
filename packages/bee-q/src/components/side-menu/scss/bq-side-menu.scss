@@ -13,12 +13,13 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-side-menu {
-  @apply fixed left-0 top-0 flex h-dynamic-vh w-[var(--bq-side-menu--width)] grow flex-col bg-ui-secondary-light p-xs;
-  @apply transition-[width] duration-150 ease-in-out;
+  @apply fixed left-0 top-0 flex h-dynamic-vh w-[var(--bq-side-menu--width)] grow flex-col bg-[var(--bq-side-menu--bg-color)];
+  @apply transition-[width] duration-300 ease-in-out;
+  @include hide-scrollbar;
 }
 
 .bq-side-menu.is-collapsed {
-  @apply w-[var(--bq-side-menu--width-collapse)] px-s;
+  @apply w-[var(--bq-side-menu--width-collapse)];
 }
 
 /* -------------------------------------------------------------------------- */
@@ -26,26 +27,10 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-side-menu--logo {
-  @apply box-content flex max-h-10 shrink-0 items-center p-l text-[color:var(--bq-side-menu--brand-color)];
+  @apply sticky top-0 p-xs;
+  @apply box-content flex items-center bg-[var(--bq-side-menu--bg-color)] text-[color:var(--bq-side-menu--brand-color)];
 
   ::slotted(div) {
-    @apply flex h-full w-full items-center gap-s text-xl font-bold transition-all duration-150;
+    @apply flex h-full w-full items-center gap-s text-xl font-bold;
   }
-}
-
-.bq-side-menu--logo.is-collapsed {
-  @apply px-xs;
-
-  // If collapsed, hide any possible text inside the slotted container
-  ::slotted(div) {
-    @apply gap-0 text-[0px];
-  }
-}
-
-/* -------------------------------------------------------------------------- */
-/*                            Navigation container                            */
-/* -------------------------------------------------------------------------- */
-
-.bq-side-menu--nav {
-  @include hide-scrollbar;
 }
