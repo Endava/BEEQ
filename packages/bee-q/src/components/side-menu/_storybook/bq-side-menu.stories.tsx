@@ -39,7 +39,7 @@ const Template = (args: Args) => html`
       <bq-icon name="star-four"></bq-icon>
       Menu item
     </bq-side-menu-item>
-    <bq-side-menu-item>
+    <bq-side-menu-item active>
       <bq-icon name="star-four"></bq-icon>
       Menu item
       <bq-badge class="ml-auto"> 5 </bq-badge>

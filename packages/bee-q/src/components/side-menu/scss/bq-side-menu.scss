@@ -17,7 +17,7 @@
 }
 
 .bq-side-menu.is-collapsed {
-  @apply w-[var(--bq-side-menu--width-collapse)];
+  @apply w-[var(--bq-side-menu--width-collapse)] px-s;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -33,7 +33,7 @@
 }
 
 .bq-side-menu--logo.is-collapsed {
-  @apply px-s py-l;
+  @apply px-xs py-l;
 
   // If collapsed, hide any possible text inside the slotted container
   ::slotted(div) {

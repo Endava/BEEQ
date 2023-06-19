@@ -1,4 +1,4 @@
-import { h, Component, Prop } from '@stencil/core';
+import { h, Component, Prop, Watch } from '@stencil/core';
 
 @Component({
   tag: 'bq-side-menu',
@@ -8,6 +8,9 @@ import { h, Component, Prop } from '@stencil/core';
 export class BqSideMenu {
   // Own Properties
   // ====================
+
+  private MENU_ITEM_SELECTOR = 'bq-side-menu-item';
+  private menuElem: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -25,6 +28,13 @@ export class BqSideMenu {
   // Prop lifecycle events
   // =======================
 
+  @Watch('collapse')
+  onCollapsePropChange() {
+    if (!this.menuItems.length) return;
+
+    this.menuItems.forEach((menuItem: HTMLBqSideMenuItemElement) => (menuItem.collapse = this.collapse));
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
@@ -32,6 +42,10 @@ export class BqSideMenu {
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
+
+  componentDidLoad() {
+    this.onCollapsePropChange();
+  }
 
   // Listeners
   // ==============
@@ -48,6 +62,15 @@ export class BqSideMenu {
   // These methods cannot be called from the host element.
   // =======================================================
 
+  private get menuItems() {
+    if (!this.menuElem) return [];
+
+    const slot = this.menuElem.querySelector('slot');
+    return [...slot.assignedElements({ flatten: true })].filter(
+      (el: HTMLBqSideMenuItemElement) => el.tagName.toLowerCase() === this.MENU_ITEM_SELECTOR,
+    ) as [HTMLBqSideMenuItemElement];
+  }
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -59,7 +82,7 @@ export class BqSideMenu {
         <div class={{ 'bq-side-menu--logo': true, 'is-collapsed': this.collapse }} part="logo">
           <slot name="logo" />
         </div>
-        <nav role="menu">
+        <nav class="flex flex-col gap-y-xs" role="menu" ref={(navElem) => (this.menuElem = navElem)}>
           <slot />
         </nav>
       </aside>
