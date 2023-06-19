@@ -9,13 +9,12 @@
 }
 
 .bq-side-menu--item {
-  @apply flex items-center gap-x-s rounded-s no-underline transition-colors duration-300;
-  @apply pb-[var(--bq-side-menu-item--padding-bottom)] pl-[var(--bq-side-menu-item--padding-left)] pr-[var(--bq-side-menu-item--padding-right)] pt-[var(--bq-side-menu-item--padding-top)];
+  @apply flex items-center gap-x-s rounded-s px-l py-m no-underline transition-colors duration-300;
   // Default state
   @apply bg-[var(--bq-side-menu-item--bg-default)] text-m text-[color:var(--bq-side-menu-item--text-default)];
   // Hover state
-  @apply text-[color:var(--bq-side-menu-item--text-hover)] hover:bg-[var(--bq-side-menu-item--bg-hover)] hover:text-m;
-  // Focus
+  @apply text-[color:var(--bq-side-menu-item--text-hover)] hover:cursor-pointer hover:bg-[var(--bq-side-menu-item--bg-hover)] hover:text-m;
+  // Focus state
   @apply focus-visible:focus;
 }
 
@@ -25,10 +24,15 @@
 }
 
 .bq-side-menu--item.is-collapsed {
-  @apply p-m text-[0px];
+  @apply justify-center gap-0;
 
-  // If collapsed, hide any possible text inside the slotted container
-  ::slotted(:not(bq-icon)) {
-    @apply hidden gap-0 text-[0px];
+  .bq-side-menu--item__label,
+  .bq-side-menu--item__suffix {
+    @apply sr-only scale-0;
   }
+}
+
+.bq-side-menu--item__label,
+.bq-side-menu--item__suffix {
+  @apply transition-all duration-300 ease-in-out;
 }

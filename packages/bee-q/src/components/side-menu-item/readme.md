@@ -13,6 +13,14 @@
 | `collapse` | `collapse` | If true, the container will reduce its width             | `boolean` | `false` |
 
 
+## Shadow Parts
+
+| Part       | Description |
+| ---------- | ----------- |
+| `"prefix"` |             |
+| `"suffix"` |             |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
