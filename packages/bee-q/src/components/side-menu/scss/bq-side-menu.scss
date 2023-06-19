@@ -34,10 +34,18 @@
 }
 
 .bq-side-menu--logo.is-collapsed {
-  @apply px-xs py-l;
+  @apply px-xs;
 
   // If collapsed, hide any possible text inside the slotted container
   ::slotted(div) {
     @apply gap-0 text-[0px];
   }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                            Navigation container                            */
+/* -------------------------------------------------------------------------- */
+
+.bq-side-menu--nav {
+  @include hide-scrollbar;
 }
