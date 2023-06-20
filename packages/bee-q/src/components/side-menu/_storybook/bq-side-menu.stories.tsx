@@ -2,6 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
 
 import BeeQSvg from './assets/bee-q-logo.svg';
+import BeeQSvgSmall from './assets/bee-q-logo_small.svg';
 
 import mdx from './bq-side-menu.mdx';
 
@@ -26,8 +27,8 @@ type Story = StoryObj;
 
 const Template = (args: Args) => html`
   <bq-side-menu collapse=${args.collapse}>
-    <div slot="logo">
-      <img src=${BeeQSvg} />
+    <div class="flex items-center gap-s py-6" slot="logo">
+      <img src=${!args.collapse ? BeeQSvg : BeeQSvgSmall} class="ml-s h-10" />
     </div>
     <bq-side-menu-item>
       <bq-icon name="star-four" slot="prefix"></bq-icon>

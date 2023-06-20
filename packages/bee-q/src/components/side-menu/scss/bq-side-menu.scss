@@ -29,8 +29,4 @@
 .bq-side-menu--logo {
   @apply sticky top-0 p-xs;
   @apply box-content flex items-center bg-[var(--bq-side-menu--bg-color)] text-[color:var(--bq-side-menu--brand-color)];
-
-  ::slotted(div) {
-    @apply flex h-full w-full items-center gap-s text-xl font-bold;
-  }
 }
