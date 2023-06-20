@@ -1,6 +1,6 @@
 import { h, Component, Prop, Watch, Host } from '@stencil/core';
 
-import { TSideMenuAppearance } from './bq-side-menu.types';
+import { TSideMenuAppearance, TSideMenuSize } from './bq-side-menu.types';
 
 @Component({
   tag: 'bq-side-menu',
@@ -29,6 +29,9 @@ export class BqSideMenu {
 
   /** If true, the container will reduce its width */
   @Prop({ reflect: true }) collapse: boolean = false;
+
+  /** It sets the size of the navigation menu items */
+  @Prop({ reflect: true }) size: TSideMenuSize = 'medium';
 
   // Prop lifecycle events
   // =======================

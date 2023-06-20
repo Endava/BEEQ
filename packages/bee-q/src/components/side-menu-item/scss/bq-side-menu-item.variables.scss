@@ -11,4 +11,7 @@
   --bq-side-menu-item--text-hover: theme('textColor.text.primary');
   --bq-side-menu-item--text-active: theme('textColor.text.brand');
   --bq-side-menu-item--text-disabled: theme('textColor.text.primary-disabled');
+
+  --bq-side-menu-item--paddingX: theme('space.l');
+  --bq-side-menu-item--paddingY: theme('space.m');
 }

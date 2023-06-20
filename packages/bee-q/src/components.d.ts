@@ -12,7 +12,7 @@ import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } fr
 import { TIconWeight } from "./components/icon/bq-icon.types";
 import { TNotificationType } from "./components/notification/bq-notification.types";
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
-import { TSideMenuAppearance } from "./components/side-menu/bq-side-menu.types";
+import { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
 import { TSliderType } from "./components/slider/bq-slider.types";
 import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 import { TStatusType } from "./components/status/bq-status.types";
@@ -26,7 +26,7 @@ export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } fr
 export { TIconWeight } from "./components/icon/bq-icon.types";
 export { TNotificationType } from "./components/notification/bq-notification.types";
 export { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
-export { TSideMenuAppearance } from "./components/side-menu/bq-side-menu.types";
+export { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
 export { TSliderType } from "./components/slider/bq-slider.types";
 export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 export { TStatusType } from "./components/status/bq-status.types";
@@ -354,6 +354,10 @@ export namespace Components {
           * If true, the container will reduce its width
          */
         "collapse": boolean;
+        /**
+          * It sets the size of the navigation menu items
+         */
+        "size": TSideMenuSize;
     }
     interface BqSideMenuItem {
         /**
@@ -1107,6 +1111,10 @@ declare namespace LocalJSX {
           * If true, the container will reduce its width
          */
         "collapse"?: boolean;
+        /**
+          * It sets the size of the navigation menu items
+         */
+        "size"?: TSideMenuSize;
     }
     interface BqSideMenuItem {
         /**

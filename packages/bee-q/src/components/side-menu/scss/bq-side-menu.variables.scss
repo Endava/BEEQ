@@ -6,7 +6,13 @@
   --bq-side-menu--bg-color: theme('colors.ui.secondary-light');
   --bq-side-menu--brand-color: theme('colors.stroke.brand');
   --bq-side-menu--width: 256px;
-  --bq-side-menu--width-collapse: 80px;
+  --bq-side-menu--width-collapse: 72px;
+}
+
+:host([size='small']) {
+  ::slotted(bq-side-menu-item) {
+    --bq-side-menu-item--paddingY: theme('space.s');
+  }
 }
 
 :host(.brand) {

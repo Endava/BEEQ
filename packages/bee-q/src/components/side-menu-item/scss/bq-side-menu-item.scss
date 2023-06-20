@@ -9,7 +9,7 @@
 }
 
 .bq-side-menu--item {
-  @apply flex items-center gap-x-s rounded-s px-l py-m no-underline transition-colors duration-150;
+  @apply flex items-center gap-x-s rounded-s px-[var(--bq-side-menu-item--paddingX)] py-[var(--bq-side-menu-item--paddingY)] no-underline transition-colors duration-150;
   // Default state
   @apply bg-[var(--bq-side-menu-item--bg-default)] text-m text-[color:var(--bq-side-menu-item--text-default)];
   // Hover state
