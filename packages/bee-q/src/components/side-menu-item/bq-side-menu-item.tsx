@@ -129,7 +129,7 @@ export class BqSideMenuItem {
         onClick={this.handleClick}
         aria-disabled={this.disabled ? 'true' : 'false'}
         role="menuitem"
-        tabindex={0}
+        tabindex={this.disabled ? -1 : 0}
         title={this.textContent}
       >
         <div class="bq-side-menu--item__prefix flex items-center" part="prefix">
