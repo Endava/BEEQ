@@ -4,7 +4,8 @@ import { debounce, getNextElement, isHTMLElement, isNil, TDebounce, validateProp
 import { TAB_SIZE, TTabSize } from '../tab/bq-tab.types';
 
 /**
- * @part base - The HTML div used to hold <bq-tab> elements.
+ * @part base - The HTML div wrapper inside the shadow DOM.
+ * @part tabs - The HTML div used to hold the tab buttons.
  */
 @Component({
   tag: 'bq-tab-group',
@@ -33,10 +34,13 @@ export class BqTabGroup {
   @Prop({ reflect: true, mutable: true }) value: string;
 
   /** The size of the tab */
-  @Prop({ reflect: true }) size: TTabSize = 'small';
+  @Prop({ reflect: true }) size: TTabSize = 'medium';
 
   /** A number representing the delay value applied to bqChange event handler */
   @Prop({ reflect: true, mutable: true }) debounceTime = 0;
+
+  /** If true, the underline divider below the tabs won't be shown  */
+  @Prop({ reflect: true }) disableDivider = false;
 
   // Prop lifecycle events
   // =======================
@@ -58,12 +62,11 @@ export class BqTabGroup {
 
   @Watch('size')
   checkPropValues() {
-    validatePropValue(TAB_SIZE, 'small', this.el, 'size');
+    validatePropValue(TAB_SIZE, 'medium', this.el, 'size');
 
     this.bqTabElements.forEach((bqTabElement) => {
       bqTabElement.size = this.size;
       bqTabElement.active = !isNil(this.value) ? bqTabElement.tabId === this.value : false;
-      bqTabElement.divider = true;
     });
   }
 
@@ -91,12 +94,11 @@ export class BqTabGroup {
   // ==============
 
   @Listen('keyup', { target: 'body', passive: true, capture: true })
-  async onKeyUp(event: KeyboardEvent) {
+  onKeyUp(event: KeyboardEvent) {
     const { target } = event;
-
     if (!isHTMLElement(target, 'bq-tab')) return;
 
-    await this.makeTabsFocusable();
+    this.makeTabsFocusable();
   }
 
   @Listen('bqClick', { passive: true })
@@ -127,8 +129,8 @@ export class BqTabGroup {
   }
 
   @Listen('bqBlur', { capture: true, passive: true })
-  async onBqBlur() {
-    await this.restoreTabsFocus();
+  onBqBlur() {
+    this.restoreTabsFocus();
   }
 
   // Public methods API
@@ -163,18 +165,30 @@ export class BqTabGroup {
     }
   };
 
-  private makeTabsFocusable = async (): Promise<void> => {
-    for (const bqTabElement of this.bqTabElements) {
+  private makeTabsFocusable = (): void => {
+    this.bqTabElements.forEach((bqTabElement) => {
       if (bqTabElement.disabled) return;
-      await bqTabElement.enableFocus(true);
-    }
+
+      /**
+       * This is a "fire and forget" operation. The callback itself doesn't do anything special
+       * with the asynchronous code (doesn't await it or do anything with the result)
+       * Details: https://stackoverflow.com/a/63488201
+       */
+      (async () => {
+        await bqTabElement.enableFocus(true);
+      })();
+    });
   };
 
-  private restoreTabsFocus = async (): Promise<void> => {
-    for (const bqTabElement of this.bqTabElements) {
+  private restoreTabsFocus = (): void => {
+    this.bqTabElements.forEach((bqTabElement) => {
       if (bqTabElement.disabled || bqTabElement.active) return;
-      await bqTabElement.enableFocus(false);
-    }
+
+      /** @See line #173 */
+      (async () => {
+        await bqTabElement.enableFocus(false);
+      })();
+    });
   };
 
   private get bqTabElements(): HTMLBqTabElement[] {
@@ -194,8 +208,10 @@ export class BqTabGroup {
 
   render() {
     return (
-      <div class="flex" role="tablist" part="base">
-        <slot />
+      <div class={{ 'bq-tab-group flex w-full': true, 'no-divider': this.disableDivider }} part="base">
+        <div class="bq-tab-group--container flex overflow-x-auto" role="tablist" part="tabs">
+          <slot />
+        </div>
       </div>
     );
   }

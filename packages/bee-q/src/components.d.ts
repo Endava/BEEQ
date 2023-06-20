@@ -493,10 +493,6 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * If true tab has underline active
-         */
-        "divider": boolean;
-        /**
           * Sets tabindex on the native `<button>` HTML element used under the hood. This method is used inside `<bq-tab-group>` to make tab focusable after the active one is focused
          */
         "enableFocus": (value: boolean) => Promise<void>;
@@ -526,6 +522,10 @@ export namespace Components {
           * A number representing the delay value applied to bqChange event handler
          */
         "debounceTime": number;
+        /**
+          * If true, the underline divider below the tabs won't be shown
+         */
+        "disableDivider": boolean;
         /**
           * The size of the tab
          */
@@ -1270,10 +1270,6 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * If true tab has underline active
-         */
-        "divider"?: boolean;
-        /**
           * Handler to be called when the tab loses focus
          */
         "onBqBlur"?: (event: BqTabCustomEvent<HTMLBqTabElement>) => void;
@@ -1303,6 +1299,10 @@ declare namespace LocalJSX {
           * A number representing the delay value applied to bqChange event handler
          */
         "debounceTime"?: number;
+        /**
+          * If true, the underline divider below the tabs won't be shown
+         */
+        "disableDivider"?: boolean;
         /**
           * Handler to be called when the tab value changes
          */

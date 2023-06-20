@@ -72,7 +72,6 @@ describe('bq-tab-group', () => {
       <bq-tab tab-id="2">Tab 2</bq-tab>
       <bq-tab tab-id="3">Tab 3</bq-tab>
       <bq-tab tab-id="4">Tab 4</bq-tab>
-      <bq-tab tab-id="5">Tab 5</bq-tab>
     </bq-tab-group>
     `);
 

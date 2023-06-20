@@ -1,0 +1,11 @@
+/**
+ * Hide the scrollbar while scrolling is still functional
+ */
+@mixin hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    @apply hidden;
+  }
+}
