@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property       | Attribute       | Description                                                             | Type                             | Default     |
-| -------------- | --------------- | ----------------------------------------------------------------------- | -------------------------------- | ----------- |
-| `debounceTime` | `debounce-time` | A number representing the delay value applied to bqChange event handler | `number`                         | `0`         |
-| `size`         | `size`          | The size of the tab                                                     | `"large" \| "medium" \| "small"` | `'small'`   |
-| `value`        | `value`         | A string representing the id of the selected tab.                       | `string`                         | `undefined` |
+| Property         | Attribute         | Description                                                             | Type                             | Default     |
+| ---------------- | ----------------- | ----------------------------------------------------------------------- | -------------------------------- | ----------- |
+| `debounceTime`   | `debounce-time`   | A number representing the delay value applied to bqChange event handler | `number`                         | `0`         |
+| `disableDivider` | `disable-divider` | If true, the underline divider below the tabs won't be shown            | `boolean`                        | `false`     |
+| `size`           | `size`            | The size of the tab                                                     | `"large" \| "medium" \| "small"` | `'medium'`  |
+| `value`          | `value`           | A string representing the id of the selected tab.                       | `string`                         | `undefined` |
 
 
 ## Events
@@ -23,9 +24,10 @@
 
 ## Shadow Parts
 
-| Part     | Description                                  |
-| -------- | -------------------------------------------- |
-| `"base"` | The HTML div used to hold <bq-tab> elements. |
+| Part     | Description                                 |
+| -------- | ------------------------------------------- |
+| `"base"` | The HTML div wrapper inside the shadow DOM. |
+| `"tabs"` | The HTML div used to hold the tab buttons.  |
 
 
 ----------------------------------------------
