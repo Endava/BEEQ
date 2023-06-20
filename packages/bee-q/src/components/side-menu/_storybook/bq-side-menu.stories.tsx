@@ -2,7 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html, nothing } from 'lit-html';
 
 import mdx from './bq-side-menu.mdx';
-import { SIDE_MENU_APPEARANCE } from '../bq-side-menu.types';
+import { SIDE_MENU_APPEARANCE, SIDE_MENU_SIZE } from '../bq-side-menu.types';
 
 const meta: Meta = {
   title: 'Components/Side menu',
@@ -15,10 +15,12 @@ const meta: Meta = {
   argTypes: {
     appearance: { control: 'select', options: [...SIDE_MENU_APPEARANCE] },
     collapse: { control: 'boolean' },
+    size: { control: 'inline-radio', options: [...SIDE_MENU_SIZE] },
   },
   args: {
     appearance: 'light',
     collapse: false,
+    size: SIDE_MENU_SIZE[0],
   },
 };
 export default meta;
@@ -26,7 +28,7 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
-  <bq-side-menu appearance=${args.appearance} collapse=${args.collapse}>
+  <bq-side-menu appearance=${args.appearance} collapse=${args.collapse} size=${args.size}>
     <div class="flex items-center gap-s py-6 pl-s" slot="logo">
       <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 40 40" class="h-10 w-10">
         <path
