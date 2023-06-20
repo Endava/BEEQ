@@ -14,7 +14,7 @@
 
 .bq-side-menu {
   @apply fixed left-0 top-0 flex h-dynamic-vh w-[var(--bq-side-menu--width)] grow flex-col bg-[var(--bq-side-menu--bg-color)];
-  @apply transition-[width] duration-300 ease-in-out;
+  @apply transition-[background-color,width] duration-150;
   @include hide-scrollbar;
 }
 

@@ -12,6 +12,7 @@ import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } fr
 import { TIconWeight } from "./components/icon/bq-icon.types";
 import { TNotificationType } from "./components/notification/bq-notification.types";
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
+import { TSideMenuAppearance } from "./components/side-menu/bq-side-menu.types";
 import { TSliderType } from "./components/slider/bq-slider.types";
 import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 import { TStatusType } from "./components/status/bq-status.types";
@@ -25,6 +26,7 @@ export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } fr
 export { TIconWeight } from "./components/icon/bq-icon.types";
 export { TNotificationType } from "./components/notification/bq-notification.types";
 export { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
+export { TSideMenuAppearance } from "./components/side-menu/bq-side-menu.types";
 export { TSliderType } from "./components/slider/bq-slider.types";
 export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 export { TStatusType } from "./components/status/bq-status.types";
@@ -344,6 +346,10 @@ export namespace Components {
         "value"?: string;
     }
     interface BqSideMenu {
+        /**
+          * It sets a predefined appearance of the side menu
+         */
+        "appearance": TSideMenuAppearance;
         /**
           * If true, the container will reduce its width
          */
@@ -1085,6 +1091,10 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface BqSideMenu {
+        /**
+          * It sets a predefined appearance of the side menu
+         */
+        "appearance"?: TSideMenuAppearance;
         /**
           * If true, the container will reduce its width
          */
