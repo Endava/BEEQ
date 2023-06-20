@@ -23,11 +23,11 @@ export class BqBreadcrumb {
   // Public Property API
   // ========================
 
-  // Prop lifecycle events
-  // =======================
-
   /** The icon name used as separator. Default is `/`. */
   @Prop() separatorIcon!: string;
+
+  // Prop lifecycle events
+  // =======================
 
   // Events section
   // Requires JSDocs for public API documentation
@@ -48,23 +48,22 @@ export class BqBreadcrumb {
 
   componentDidLoad() {
     this.setIconAsSeparator();
-    this.hideSeparatorFromLastItem();
   }
 
   // Listeners
   // ==============
 
-  @Listen('bqBlur')
+  @Listen('bqBlur', { passive: true })
   onBlur(event: CustomEvent<HTMLElement>) {
     if (isHTMLElement(event.detail, 'bq-breadcrumb-item')) this.bqBreadcrumbBlur.emit(event.detail);
   }
 
-  @Listen('bqFocus')
+  @Listen('bqFocus', { passive: true })
   onFocus(event: CustomEvent<HTMLElement>) {
     if (isHTMLElement(event.detail, 'bq-breadcrumb-item')) this.bqBreadcrumbFocus.emit(event.detail);
   }
 
-  @Listen('bqClick')
+  @Listen('bqClick', { passive: true })
   onClick(event: CustomEvent<HTMLElement>) {
     if (isHTMLElement(event.detail, 'bq-breadcrumb-item')) this.bqBreadcrumbClick.emit(event.detail);
   }
@@ -81,23 +80,15 @@ export class BqBreadcrumb {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private hideSeparatorFromLastItem = () => {
-    const elements = this.breadcrumbItems;
-    elements.slice(-1)[0].isLast = true;
-  };
-
   private setIconAsSeparator = (): void => {
-    const lastIndex: number = this.breadcrumbItems.length - 1;
-    this.breadcrumbItems.forEach((item: HTMLBqBreadcrumbItemElement, index: number) =>
-      index !== lastIndex ? (item.separatorIcon = this.separatorIcon) : undefined,
-    );
+    this.breadcrumbItems.forEach((item, index, arr) => {
+      item.separatorIcon = this.separatorIcon;
+      item.isLast = index === arr.length - 1;
+    });
   };
 
   private get breadcrumbItems(): HTMLBqBreadcrumbItemElement[] {
-    return this.el.shadowRoot
-      .querySelector<HTMLSlotElement>('slot')
-      .assignedElements({ flatten: true })
-      .filter((elem: HTMLElement) => isHTMLElement(elem, 'bq-breadcrumb-item')) as [HTMLBqBreadcrumbItemElement];
+    return Array.from(this.el.querySelectorAll('bq-breadcrumb-item'));
   }
 
   // render() function

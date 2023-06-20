@@ -29,9 +29,6 @@ export class BqBreadcrumbItem {
   // Public Property API
   // ========================
 
-  // Prop lifecycle events
-  // =======================
-
   /** If true, the item is the last element inside breadcrumb */
   @Prop() isLast: boolean = false;
 
@@ -46,6 +43,9 @@ export class BqBreadcrumbItem {
 
   /** Where to display the link in the browser context. Relevant only if `href` is set. */
   @Prop({ reflect: true }) rel: string = 'noreferrer noopener';
+
+  // Prop lifecycle events
+  // =======================
 
   // Events section
   // Requires JSDocs for public API documentation
