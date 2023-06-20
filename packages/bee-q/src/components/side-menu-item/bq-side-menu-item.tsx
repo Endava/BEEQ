@@ -30,7 +30,7 @@ export class BqSideMenuItem {
   /** If true, the menu item will be shown as active/selected. */
   @Prop({ reflect: true }) active: boolean = false;
 
-  /** If true, the container will reduce its width */
+  /** If true, the item label and suffix will be hidden and the with will be reduce according to its parent */
   @Prop({ reflect: true }) collapse: boolean = false;
 
   // Prop lifecycle events

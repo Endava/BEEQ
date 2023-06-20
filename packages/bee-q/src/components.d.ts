@@ -355,7 +355,7 @@ export namespace Components {
          */
         "active": boolean;
         /**
-          * If true, the container will reduce its width
+          * If true, the item label and suffix will be hidden and the with will be reduce according to its parent
          */
         "collapse": boolean;
     }
@@ -1096,7 +1096,7 @@ declare namespace LocalJSX {
          */
         "active"?: boolean;
         /**
-          * If true, the container will reduce its width
+          * If true, the item label and suffix will be hidden and the with will be reduce according to its parent
          */
         "collapse"?: boolean;
     }

@@ -12,9 +12,15 @@ const meta: Meta = {
     },
   },
   argTypes: {
+    active: { control: 'boolean' },
+    collapse: { control: 'boolean' },
+    // Not part of the component
     text: { control: 'text', table: { disable: true } },
   },
   args: {
+    active: false,
+    collapse: false,
+    // Not part of the component
     text: 'Menu item',
   },
 };
@@ -23,10 +29,10 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
-  <bq-side-menu-item>
-    <bq-icon name="star-four"></bq-icon>
+  <bq-side-menu-item ?active=${args.active} ?collapse=${args.collapse}>
+    <bq-icon name="star-four" slot="prefix"></bq-icon>
     ${args.text}
-    <bq-badge class="ml-auto"> 5 </bq-badge>
+    <bq-badge class="ml-auto" slot="suffix"> 5 </bq-badge>
   </bq-side-menu-item>
 `;
 
