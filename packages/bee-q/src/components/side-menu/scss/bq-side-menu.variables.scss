@@ -18,6 +18,7 @@
 
     --bq-side-menu-item--text-default: theme('textColor.text.inverse');
     --bq-side-menu-item--text-hover: theme('textColor.text.inverse');
+    --bq-side-menu-item--text-disabled: theme('textColor.text.secondary-disabled');
   }
 }
 
@@ -32,5 +33,6 @@
     --bq-side-menu-item--text-default: theme('textColor.text.inverse');
     --bq-side-menu-item--text-hover: theme('textColor.text.inverse');
     --bq-side-menu-item--text-active: theme('textColor.text.primary');
+    --bq-side-menu-item--text-disabled: theme('textColor.text.secondary-disabled');
   }
 }

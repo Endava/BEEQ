@@ -364,6 +364,10 @@ export namespace Components {
           * If true, the item label and suffix will be hidden and the with will be reduce according to its parent
          */
         "collapse": boolean;
+        /**
+          * If true, the menu item will be disabled (no interaction allowed)
+         */
+        "disabled": boolean;
     }
     interface BqSlider {
         /**
@@ -595,6 +599,10 @@ export interface BqRadioCustomEvent<T> extends CustomEvent<T> {
 export interface BqRadioGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqRadioGroupElement;
+}
+export interface BqSideMenuItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqSideMenuItemElement;
 }
 export interface BqSliderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1109,6 +1117,22 @@ declare namespace LocalJSX {
           * If true, the item label and suffix will be hidden and the with will be reduce according to its parent
          */
         "collapse"?: boolean;
+        /**
+          * If true, the menu item will be disabled (no interaction allowed)
+         */
+        "disabled"?: boolean;
+        /**
+          * Handler to be called when the button loses focus
+         */
+        "onBqBlur"?: (event: BqSideMenuItemCustomEvent<HTMLBqSideMenuItemElement>) => void;
+        /**
+          * Handler to be called when button gets focus
+         */
+        "onBqClick"?: (event: BqSideMenuItemCustomEvent<HTMLBqSideMenuItemElement>) => void;
+        /**
+          * Handler to be called when the button is clicked
+         */
+        "onBqFocus"?: (event: BqSideMenuItemCustomEvent<HTMLBqSideMenuItemElement>) => void;
     }
     interface BqSlider {
         /**

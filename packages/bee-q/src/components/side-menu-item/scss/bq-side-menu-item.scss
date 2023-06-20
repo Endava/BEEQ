@@ -13,14 +13,18 @@
   // Default state
   @apply bg-[var(--bq-side-menu-item--bg-default)] text-m text-[color:var(--bq-side-menu-item--text-default)];
   // Hover state
-  @apply hover:cursor-pointer hover:bg-[var(--bq-side-menu-item--bg-hover)] hover:text-m hover:text-[color:var(--bq-side-menu-item--text-hover)];
+  @apply [&:not(.disabled)]:hover:cursor-pointer [&:not(.disabled)]:hover:bg-[var(--bq-side-menu-item--bg-hover)] [&:not(.disabled)]:hover:text-m [&:not(.disabled)]:hover:text-[color:var(--bq-side-menu-item--text-hover)];
   // Focus state
-  @apply focus-visible:focus;
+  @apply [&:not(.disabled)]:focus-visible:focus;
 }
 
 .bq-side-menu--item.active {
   // Active state
   @apply bg-[var(--bq-side-menu-item--bg-active)] text-m text-[color:var(--bq-side-menu-item--text-active)];
+}
+
+.bq-side-menu--item.disabled {
+  @apply text-[color:var(--bq-side-menu-item--text-disabled)] hover:cursor-not-allowed;
 }
 
 .bq-side-menu--item.is-collapsed {

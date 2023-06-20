@@ -1,4 +1,4 @@
-import { h, Component, Prop, Element, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Prop, State } from '@stencil/core';
 
 import { getTextContent } from '../../shared/utils';
 
@@ -28,10 +28,13 @@ export class BqSideMenuItem {
   // ========================
 
   /** If true, the menu item will be shown as active/selected. */
-  @Prop({ reflect: true }) active: boolean = false;
+  @Prop() active: boolean = false;
 
   /** If true, the item label and suffix will be hidden and the with will be reduce according to its parent */
-  @Prop({ reflect: true }) collapse: boolean = false;
+  @Prop() collapse: boolean = false;
+
+  /** If true, the menu item will be disabled (no interaction allowed) */
+  @Prop() disabled: boolean = false;
 
   // Prop lifecycle events
   // =======================
@@ -39,6 +42,15 @@ export class BqSideMenuItem {
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
+
+  /** Handler to be called when the button loses focus */
+  @Event() bqBlur: EventEmitter<HTMLBqSideMenuItemElement>;
+
+  /** Handler to be called when the button is clicked */
+  @Event() bqFocus: EventEmitter<HTMLBqSideMenuItemElement>;
+
+  /** Handler to be called when button gets focus */
+  @Event() bqClick: EventEmitter<HTMLBqSideMenuItemElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -68,6 +80,36 @@ export class BqSideMenuItem {
     this.textContent = getTextContent(this.labelElem.querySelector('slot'));
   };
 
+  handleBlur = (ev: Event) => {
+    if (this.disabled) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      return;
+    }
+
+    this.bqBlur.emit(this.el);
+  };
+
+  handleFocus = (ev: Event) => {
+    if (this.disabled) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      return;
+    }
+
+    this.bqFocus.emit(this.el);
+  };
+
+  handleClick = (ev: Event) => {
+    if (this.disabled) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      return;
+    }
+
+    this.bqClick.emit(this.el);
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -79,8 +121,13 @@ export class BqSideMenuItem {
         class={{
           'bq-side-menu--item': true,
           active: this.active,
+          disabled: this.disabled,
           'is-collapsed': this.collapse,
         }}
+        onBlur={this.handleBlur}
+        onFocus={this.handleFocus}
+        onClick={this.handleClick}
+        aria-disabled={this.disabled ? 'true' : 'false'}
         role="menuitem"
         tabindex={0}
         title={this.textContent}
