@@ -29,9 +29,6 @@ export class BqOption {
 
   @State() hasPrefix: boolean = false;
 
-  /** If true, option element is part of a group */
-  @State() isOptionInGroup: boolean = false;
-
   // Public Property API
   // ========================
 
@@ -43,6 +40,9 @@ export class BqOption {
 
   /** If true, the option is selected and active. */
   @Prop({ reflect: true }) selected: boolean = false;
+
+  /** If true, option element is part of a group */
+  @Prop({ reflect: true }) isOptionInGroup: boolean = false;
 
   // Prop lifecycle events
   // =======================

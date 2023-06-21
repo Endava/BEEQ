@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property   | Attribute  | Description                                    | Type      | Default     |
-| ---------- | ---------- | ---------------------------------------------- | --------- | ----------- |
-| `disabled` | `disabled` | If true, the `bq-option` is disabled.          | `boolean` | `false`     |
-| `selected` | `selected` | If true, the option is selected and active.    | `boolean` | `false`     |
-| `value`    | `value`    | A string representing the value of the option. | `string`  | `undefined` |
+| Property          | Attribute            | Description                                    | Type      | Default     |
+| ----------------- | -------------------- | ---------------------------------------------- | --------- | ----------- |
+| `disabled`        | `disabled`           | If true, the `bq-option` is disabled.          | `boolean` | `false`     |
+| `isOptionInGroup` | `is-option-in-group` | If true, option element is part of a group     | `boolean` | `false`     |
+| `selected`        | `selected`           | If true, the option is selected and active.    | `boolean` | `false`     |
+| `value`           | `value`              | A string representing the value of the option. | `string`  | `undefined` |
 
 
 ## Events

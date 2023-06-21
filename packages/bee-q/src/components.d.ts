@@ -277,6 +277,10 @@ export namespace Components {
          */
         "disabled"?: boolean;
         /**
+          * If true, option element is part of a group
+         */
+        "isOptionInGroup": boolean;
+        /**
           * If true, the option is selected and active.
          */
         "selected": boolean;
@@ -1014,6 +1018,10 @@ declare namespace LocalJSX {
           * If true, the `bq-option` is disabled.
          */
         "disabled"?: boolean;
+        /**
+          * If true, option element is part of a group
+         */
+        "isOptionInGroup"?: boolean;
         /**
           * Handler to be called when item loses focus
          */
