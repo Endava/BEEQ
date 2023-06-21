@@ -80,16 +80,7 @@
   }
 
   /* Remove default margin */
-  body,
-  h1,
-  h2,
-  h3,
-  h4,
-  p,
-  figure,
-  blockquote,
-  dl,
-  dd {
+  * {
     margin: 0;
   }
 
@@ -106,9 +97,11 @@
 
   /* Set core body defaults */
   body {
+    line-height: var(--bq-font-line-height--large);
     min-height: 100vh;
     text-rendering: optimizeSpeed;
-    line-height: 1.5;
+
+    -webkit-font-smoothing: antialiased;
   }
 
   /* A elements that don't have a class get default styles */
@@ -118,9 +111,12 @@
 
   /* Make images easier to work with */
   img,
-  picture {
-    max-width: 100%;
+  picture,
+  video,
+  canvas,
+  svg {
     display: block;
+    max-width: 100%;
   }
 
   /* Inherit fonts for inputs and buttons */
@@ -129,6 +125,17 @@
   textarea,
   select {
     font: inherit;
+  }
+
+  /* Avoid text overflows */
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
   }
 
   /* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
