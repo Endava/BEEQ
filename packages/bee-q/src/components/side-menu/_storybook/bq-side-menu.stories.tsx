@@ -18,7 +18,7 @@ const meta: Meta = {
     size: { control: 'inline-radio', options: [...SIDE_MENU_SIZE] },
   },
   args: {
-    appearance: 'light',
+    appearance: 'default',
     collapse: false,
     size: SIDE_MENU_SIZE[0],
   },

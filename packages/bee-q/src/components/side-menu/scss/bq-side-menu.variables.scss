@@ -15,7 +15,7 @@
   }
 }
 
-:host(.brand) {
+:host([appearance='brand']) {
   --bq-side-menu--bg-color: theme('colors.ui.brand');
   --bq-side-menu--brand-color: theme('colors.stroke.inverse');
 
@@ -28,7 +28,7 @@
   }
 }
 
-:host(.inverse) {
+:host([appearance='inverse']) {
   --bq-side-menu--bg-color: theme('colors.ui.inverse');
   --bq-side-menu--brand-color: theme('colors.stroke.inverse');
 

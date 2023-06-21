@@ -1,4 +1,4 @@
-import { h, Component, Prop, Watch, Host } from '@stencil/core';
+import { h, Component, Prop, Watch } from '@stencil/core';
 
 import { TSideMenuAppearance, TSideMenuSize } from './bq-side-menu.types';
 
@@ -25,7 +25,7 @@ export class BqSideMenu {
   // ========================
 
   /** It sets a predefined appearance of the side menu */
-  @Prop({ reflect: true }) appearance: TSideMenuAppearance = 'light';
+  @Prop({ reflect: true }) appearance: TSideMenuAppearance = 'default';
 
   /** If true, the container will reduce its width */
   @Prop({ reflect: true }) collapse: boolean = false;
@@ -85,21 +85,19 @@ export class BqSideMenu {
 
   render() {
     return (
-      <Host class={this.appearance}>
-        <aside class={{ 'bq-side-menu overflow-y-auto': true, 'is-collapsed': this.collapse }} part="base">
-          {/* Company logo and name */}
-          <div class={{ 'bq-side-menu--logo': true, 'is-collapsed': this.collapse }} part="logo">
-            <slot name="logo" />
-          </div>
-          <nav
-            class="bq-side-menu--nav flex flex-col gap-y-xs px-xs pt-xs2"
-            role="menu"
-            ref={(navElem) => (this.menuElem = navElem)}
-          >
-            <slot />
-          </nav>
-        </aside>
-      </Host>
+      <aside class={{ 'bq-side-menu overflow-y-auto': true, 'is-collapsed': this.collapse }} part="base">
+        {/* Company logo and name */}
+        <div class={{ 'bq-side-menu--logo': true, 'is-collapsed': this.collapse }} part="logo">
+          <slot name="logo" />
+        </div>
+        <nav
+          class="bq-side-menu--nav flex flex-col gap-y-xs px-xs pt-xs2"
+          role="menu"
+          ref={(navElem) => (this.menuElem = navElem)}
+        >
+          <slot />
+        </nav>
+      </aside>
     );
   }
 }
