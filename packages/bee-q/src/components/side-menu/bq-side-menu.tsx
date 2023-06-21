@@ -11,8 +11,14 @@ export class BqSideMenu {
   // Own Properties
   // ====================
 
-  private MENU_ITEM_SELECTOR = 'bq-side-menu-item';
+  private menuItemCssSelector = 'bq-side-menu-item';
+
+  private bodyCss = 'bq-body--side-menu';
+  private bodyCssExpand = 'bq-body--side-menu__expand';
+  private bodyCssCollapse = 'bq-body--side-menu__collapse';
+
   private menuElem: HTMLElement;
+  private documentBody: HTMLBodyElement = document.querySelector('body');
 
   // Reference to host HTML element
   // ===================================
@@ -41,6 +47,7 @@ export class BqSideMenu {
     if (!this.menuItems.length) return;
 
     this.menuItems.forEach((menuItem: HTMLBqSideMenuItemElement) => (menuItem.collapse = this.collapse));
+    this.collapse ? this.collapseDocumentBody() : this.expandDocumentBody();
   }
 
   // Events section
@@ -52,7 +59,12 @@ export class BqSideMenu {
   // =====================================
 
   componentDidLoad() {
+    this.documentBody.classList.add(this.bodyCss);
     this.onCollapsePropChange();
+  }
+
+  disconnectedCallback() {
+    this.cleanDocumentBodyClass();
   }
 
   // Listeners
@@ -75,9 +87,27 @@ export class BqSideMenu {
 
     const slot = this.menuElem.querySelector('slot');
     return [...slot.assignedElements({ flatten: true })].filter(
-      (el: HTMLBqSideMenuItemElement) => el.tagName.toLowerCase() === this.MENU_ITEM_SELECTOR,
+      (el: HTMLBqSideMenuItemElement) => el.tagName.toLowerCase() === this.menuItemCssSelector,
     ) as [HTMLBqSideMenuItemElement];
   }
+
+  private collapseDocumentBody = () => {
+    if (!this.collapse) return;
+
+    this.documentBody.classList.remove(this.bodyCssExpand);
+    this.documentBody.classList.add(this.bodyCssCollapse);
+  };
+
+  private expandDocumentBody = () => {
+    if (this.collapse) return;
+
+    this.documentBody.classList.remove(this.bodyCssCollapse);
+    this.documentBody.classList.add(this.bodyCssExpand);
+  };
+
+  private cleanDocumentBodyClass = () => {
+    this.documentBody.classList.remove(this.bodyCss, this.bodyCssCollapse, this.bodyCssExpand);
+  };
 
   // render() function
   // Always the last one in the class.

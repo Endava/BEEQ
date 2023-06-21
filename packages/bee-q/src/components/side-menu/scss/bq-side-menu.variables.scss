@@ -5,8 +5,11 @@
 :host {
   --bq-side-menu--bg-color: theme('colors.ui.secondary-light');
   --bq-side-menu--brand-color: theme('colors.stroke.brand');
-  --bq-side-menu--width: 256px;
-  --bq-side-menu--width-collapse: 72px;
+  /**
+   * ⚠️ There are two CSS properties been added to the global (:root) scope
+   * `--bq-side-menu--width` and `--bq-side-menu--width--collapse`
+   * @see: packages/bee-q/src/global/styles/_components.scss
+   */
 }
 
 :host([size='small']) {
