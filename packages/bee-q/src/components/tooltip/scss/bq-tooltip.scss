@@ -9,7 +9,7 @@
 }
 
 .bq-tooltip__panel {
-  @apply absolute box-border w-[var(--bq-tooltip--width)] max-w-[var(--bq-tooltip--max-width)] px-[var(--bq-tooltip--paddingX)] py-[var(--bq-tooltip--paddingY)];
+  @apply fixed box-border w-[var(--bq-tooltip--width)] max-w-[var(--bq-tooltip--max-width)] px-[var(--bq-tooltip--paddingX)] py-[var(--bq-tooltip--paddingY)];
   @apply pointer-events-none rounded-[var(--bq-tooltip--rounded-corners)] bg-[var(--bq-tooltip--background-color)] text-[length:var(--bq-tooltip--font-size)] leading-large text-[color:var(--bq-tooltip--text-color)];
 }
 
@@ -20,6 +20,6 @@
   }
 
   &::before {
-    @apply top-0 left-0 rotate-45 bg-[var(--bq-tooltip--background-color)] content-[''];
+    @apply left-0 top-0 rotate-45 bg-[var(--bq-tooltip--background-color)] content-[''];
   }
 }
