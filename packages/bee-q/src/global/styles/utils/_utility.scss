@@ -19,11 +19,11 @@
 }
 
 .bq-body--side-menu__collapse {
-  @apply pl-[var(--bq-side-menu--width-collapse)];
+  @apply pl-[var(--bq-side-menu--width-collapse)] #{!important};
 }
 
 .bq-body--side-menu__expand {
-  @apply pl-[var(--bq-side-menu--width)];
+  @apply pl-[var(--bq-side-menu--width)] #{!important};
 }
 
 /**
