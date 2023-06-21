@@ -31,6 +31,19 @@
 | `"suffix"` |             |
 
 
+## Dependencies
+
+### Depends on
+
+- [bq-tooltip](../tooltip)
+
+### Graph
+```mermaid
+graph TD;
+  bq-side-menu-item --> bq-tooltip
+  style bq-side-menu-item fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

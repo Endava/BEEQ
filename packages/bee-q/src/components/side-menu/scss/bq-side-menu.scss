@@ -27,6 +27,6 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-side-menu--logo {
-  @apply sticky top-0 p-xs;
+  @apply sticky top-0 z-[1] p-xs;
   @apply box-content flex items-center bg-[var(--bq-side-menu--bg-color)] text-[color:var(--bq-side-menu--brand-color)];
 }

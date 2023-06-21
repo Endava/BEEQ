@@ -114,37 +114,45 @@ export class BqSideMenuItem {
   // Always the last one in the class.
   // ===================================
 
-  render() {
-    return (
-      // Current: "bg-gray-50 text-indigo-600", Default: "text-gray-700 hover:text-indigo-600 hover:bg-gray-50"
-      <a
-        class={{
-          'bq-side-menu--item': true,
-          active: this.active,
-          disabled: this.disabled,
-          'is-collapsed': this.collapse,
-        }}
-        onBlur={this.handleBlur}
-        onFocus={this.handleFocus}
-        onClick={this.handleClick}
-        aria-disabled={this.disabled ? 'true' : 'false'}
-        role="menuitem"
-        tabindex={this.disabled ? -1 : 0}
-        title={this.textContent}
+  private menuItem = () => (
+    <a
+      class={{
+        'bq-side-menu--item': true,
+        active: this.active,
+        disabled: this.disabled,
+        'is-collapsed': this.collapse,
+      }}
+      onBlur={this.handleBlur}
+      onFocus={this.handleFocus}
+      onClick={this.handleClick}
+      aria-disabled={this.disabled ? 'true' : 'false'}
+      role="menuitem"
+      tabindex={this.disabled ? -1 : 0}
+      slot="trigger"
+    >
+      <div class="bq-side-menu--item__prefix flex items-center" part="prefix">
+        <slot name="prefix" />
+      </div>
+      <div
+        class="bq-side-menu--item__label overflow-hidden text-ellipsis whitespace-nowrap"
+        ref={(labelElem) => (this.labelElem = labelElem)}
       >
-        <div class="bq-side-menu--item__prefix flex items-center" part="prefix">
-          <slot name="prefix" />
-        </div>
-        <div
-          class="bq-side-menu--item__label overflow-hidden text-ellipsis whitespace-nowrap"
-          ref={(labelElem) => (this.labelElem = labelElem)}
-        >
-          <slot onSlotchange={this.handleSlotChange} />
-        </div>
-        <div class="bq-side-menu--item__suffix ml-auto flex items-center" part="suffix">
-          <slot name="suffix" />
-        </div>
-      </a>
+        <slot onSlotchange={this.handleSlotChange} />
+      </div>
+      <div class="bq-side-menu--item__suffix ml-auto flex items-center" part="suffix">
+        <slot name="suffix" />
+      </div>
+    </a>
+  );
+
+  render() {
+    return !this.collapse ? (
+      this.menuItem()
+    ) : (
+      <bq-tooltip class="block" placement="right">
+        {this.textContent}
+        {this.menuItem()}
+      </bq-tooltip>
     );
   }
 }
