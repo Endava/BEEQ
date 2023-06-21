@@ -11,6 +11,7 @@ const meta: Meta = {
     docs: {
       page: mdx,
     },
+    layout: 'fullscreen',
   },
   argTypes: {
     appearance: { control: 'select', options: [...SIDE_MENU_APPEARANCE] },
@@ -40,40 +41,47 @@ const Template = (args: Args) => html`
       </svg>
       ${!args.collapse ? html`<h1 class="whitespace-nowrap text-xl">Bee-Q</h1>` : nothing}
     </div>
-    <bq-side-menu-item>
-      <bq-icon name="star-four" slot="prefix"></bq-icon>
-      Menu item
-    </bq-side-menu-item>
     <bq-side-menu-item active>
-      <bq-icon name="star-four" slot="prefix"></bq-icon>
-      Menu item akjasd kasjdh kjahsdkjash
+      <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+      Dashboard
+    </bq-side-menu-item>
+    <bq-side-menu-item>
+      <bq-icon name="package" slot="prefix"></bq-icon>
+      Products
       <bq-badge slot="suffix"> 5 </bq-badge>
     </bq-side-menu-item>
     <bq-side-menu-item disabled>
-      <bq-icon name="star-four" slot="prefix"></bq-icon>
-      Menu item
+      <bq-icon name="gauge" slot="prefix"></bq-icon>
+      Perfomance
     </bq-side-menu-item>
     <bq-side-menu-item>
-      <bq-icon name="star-four" slot="prefix"></bq-icon>
-      Menu item
+      <bq-icon name="truck" slot="prefix"></bq-icon>
+      Deliver
     </bq-side-menu-item>
     <bq-side-menu-item>
-      <bq-icon name="star-four" slot="prefix"></bq-icon>
-      Menu item
+      <bq-icon name="files" slot="prefix"></bq-icon>
+      Documents
     </bq-side-menu-item>
     <bq-side-menu-item>
-      <bq-icon name="star-four" slot="prefix"></bq-icon>
-      Menu item
+      <bq-icon name="stack" slot="prefix"></bq-icon>
+      Inventory
     </bq-side-menu-item>
     <bq-side-menu-item>
-      <bq-icon name="star-four" slot="prefix"></bq-icon>
-      Menu item
+      <bq-icon name="calendar" slot="prefix"></bq-icon>
+      Calendar
     </bq-side-menu-item>
     <bq-side-menu-item>
-      <bq-icon name="star-four" slot="prefix"></bq-icon>
-      Menu item
+      <bq-icon name="gear" slot="prefix"></bq-icon>
+      Settings
     </bq-side-menu-item>
   </bq-side-menu>
+
+  <main class="grid grid-cols-1 p-m">
+    <h1 class="mb-l">Dashboard</h1>
+    <div class="h-80 w-full border border-dashed border-stroke-secondary-light bg-ui-secondary-light">
+      <!-- Your content -->
+    </div>
+  </main>
 `;
 
 export const Default: Story = {
