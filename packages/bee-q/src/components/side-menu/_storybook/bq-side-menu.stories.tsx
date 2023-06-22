@@ -20,6 +20,8 @@ const meta: Meta = {
     // Events
     bqCollapse: { action: 'bqCollapse' },
     bqSelect: { action: 'bqSelect' },
+    // Not part of the public API
+    footerContent: { control: 'text', table: { disable: true } },
   },
   args: {
     appearance: 'default',
@@ -83,6 +85,7 @@ const Template = (args: Args) => html`
       <bq-icon name="gear" slot="prefix"></bq-icon>
       Settings
     </bq-side-menu-item>
+    ${args.footerContent}
   </bq-side-menu>
 
   <main class="grid grid-cols-1 p-m">
@@ -116,5 +119,24 @@ export const SmallSize: Story = {
   render: Template,
   args: {
     size: 'small',
+  },
+};
+
+export const WithFooter: Story = {
+  render: Template,
+  args: {
+    footerContent: html`
+      <div class="" slot="footer">
+        <bq-button appearance="text" slot="footer">
+          <bq-icon name="bell"></bq-icon>
+        </bq-button>
+        <bq-button appearance="text" slot="footer">
+          <bq-icon name="chats-circle"></bq-icon>
+        </bq-button>
+        <bq-button appearance="text" slot="footer">
+          <bq-icon name="sliders"></bq-icon>
+        </bq-button>
+      </div>
+    `,
   },
 };
