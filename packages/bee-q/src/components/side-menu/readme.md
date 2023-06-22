@@ -14,6 +14,14 @@
 | `size`       | `size`       | It sets the size of the navigation menu items    | `"medium" \| "small"`               | `'medium'`  |
 
 
+## Events
+
+| Event        | Description                                                                                                 | Type                                     |
+| ------------ | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| `bqCollapse` | Callback handler to be called when the Side menu changes its width from expanded to collapse and vice versa | `CustomEvent<{ collapse: boolean; }>`    |
+| `bqSelect`   | Callback handler to be called when the active/selected menu item changes                                    | `CustomEvent<HTMLBqSideMenuItemElement>` |
+
+
 ## Shadow Parts
 
 | Part     | Description |

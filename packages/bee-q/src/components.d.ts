@@ -604,6 +604,10 @@ export interface BqRadioGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqRadioGroupElement;
 }
+export interface BqSideMenuCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqSideMenuElement;
+}
 export interface BqSideMenuItemCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqSideMenuItemElement;
@@ -1111,6 +1115,14 @@ declare namespace LocalJSX {
           * If true, the container will reduce its width
          */
         "collapse"?: boolean;
+        /**
+          * Callback handler to be called when the Side menu changes its width from expanded to collapse and vice versa
+         */
+        "onBqCollapse"?: (event: BqSideMenuCustomEvent<{ collapse: boolean }>) => void;
+        /**
+          * Callback handler to be called when the active/selected menu item changes
+         */
+        "onBqSelect"?: (event: BqSideMenuCustomEvent<HTMLBqSideMenuItemElement>) => void;
         /**
           * It sets the size of the navigation menu items
          */

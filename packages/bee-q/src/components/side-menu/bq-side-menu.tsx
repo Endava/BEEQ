@@ -1,6 +1,8 @@
-import { h, Component, Prop, Watch } from '@stencil/core';
+import { EventEmitter } from '@angular/core';
+import { h, Component, Prop, Watch, Listen, Event } from '@stencil/core';
 
 import { TSideMenuAppearance, TSideMenuSize } from './bq-side-menu.types';
+import { isHTMLElement } from '../../shared/utils';
 
 @Component({
   tag: 'bq-side-menu',
@@ -44,15 +46,19 @@ export class BqSideMenu {
 
   @Watch('collapse')
   onCollapsePropChange() {
-    if (!this.menuItems.length) return;
-
-    this.menuItems.forEach((menuItem: HTMLBqSideMenuItemElement) => (menuItem.collapse = this.collapse));
-    this.collapse ? this.collapseDocumentBody() : this.expandDocumentBody();
+    this.handleCollapse();
+    this.bqCollapse.emit({ collapse: this.collapse });
   }
 
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
+
+  /** Callback handler to be called when the Side menu changes its width from expanded to collapse and vice versa */
+  @Event() bqCollapse: EventEmitter<{ collapse: boolean }>;
+
+  /** Callback handler to be called when the active/selected menu item changes */
+  @Event() bqSelect: EventEmitter<HTMLBqSideMenuItemElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -60,7 +66,7 @@ export class BqSideMenu {
 
   componentDidLoad() {
     this.documentBody.classList.add(this.bodyCss);
-    this.onCollapsePropChange();
+    this.handleCollapse();
   }
 
   disconnectedCallback() {
@@ -69,6 +75,17 @@ export class BqSideMenu {
 
   // Listeners
   // ==============
+
+  @Listen('bqClick', { passive: true })
+  onMenuItemClick(event: Event) {
+    const { target: item } = event;
+    if (!isHTMLElement(item, 'bq-side-menu-item')) return;
+
+    this.menuItems.forEach(
+      (menuItem: HTMLBqSideMenuItemElement) => (menuItem.active = !menuItem.disabled && menuItem === item),
+    );
+    this.bqSelect.emit(item);
+  }
 
   // Public methods API
   // These methods are exposed on the host element.
@@ -90,6 +107,13 @@ export class BqSideMenu {
       (el: HTMLBqSideMenuItemElement) => el.tagName.toLowerCase() === this.menuItemCssSelector,
     ) as [HTMLBqSideMenuItemElement];
   }
+
+  private handleCollapse = () => {
+    if (!this.menuItems.length) return;
+
+    this.menuItems.forEach((menuItem: HTMLBqSideMenuItemElement) => (menuItem.collapse = this.collapse));
+    this.collapse ? this.collapseDocumentBody() : this.expandDocumentBody();
+  };
 
   private collapseDocumentBody = () => {
     if (!this.collapse) return;
