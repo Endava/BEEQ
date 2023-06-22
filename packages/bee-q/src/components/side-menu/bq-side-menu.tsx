@@ -8,6 +8,7 @@ import { isHTMLElement } from '../../shared/utils';
  * @part base - HTML `<aside>` root container
  * @part footer - HTML `<div>` element that holds the footer
  * @part logo - HTML `<div>` element that holds the logo
+ * @part nav - HTML `<nav>` element that holds the navigation items
  */
 @Component({
   tag: 'bq-side-menu',
@@ -158,8 +159,9 @@ export class BqSideMenu {
         {/* Navigation content */}
         <nav
           class="bq-side-menu--nav flex flex-col gap-y-xs px-xs pt-xs2"
-          role="menu"
           ref={(navElem) => (this.menuElem = navElem)}
+          role="menu"
+          part="nav"
         >
           <slot />
         </nav>

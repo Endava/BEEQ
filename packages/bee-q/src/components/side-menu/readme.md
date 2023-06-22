@@ -37,11 +37,12 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part       | Description                                |
-| ---------- | ------------------------------------------ |
-| `"base"`   | HTML `<aside>` root container              |
-| `"footer"` | HTML `<div>` element that holds the footer |
-| `"logo"`   | HTML `<div>` element that holds the logo   |
+| Part       | Description                                          |
+| ---------- | ---------------------------------------------------- |
+| `"base"`   | HTML `<aside>` root container                        |
+| `"footer"` | HTML `<div>` element that holds the footer           |
+| `"logo"`   | HTML `<div>` element that holds the logo             |
+| `"nav"`    | HTML `<nav>` element that holds the navigation items |
 
 
 ----------------------------------------------
