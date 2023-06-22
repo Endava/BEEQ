@@ -4,7 +4,7 @@ import { html } from 'lit-html';
 import mdx from './bq-side-menu-item.mdx';
 
 const meta: Meta = {
-  title: 'Components/Side menu item',
+  title: 'Components/Side menu/Side menu item',
   component: 'bq-side-menu-item',
   parameters: {
     docs: {

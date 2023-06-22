@@ -17,6 +17,9 @@ const meta: Meta = {
     appearance: { control: 'select', options: [...SIDE_MENU_APPEARANCE] },
     collapse: { control: 'boolean' },
     size: { control: 'inline-radio', options: [...SIDE_MENU_SIZE] },
+    // Events
+    bqCollapse: { action: 'bqCollapse' },
+    bqSelect: { action: 'bqSelect' },
   },
   args: {
     appearance: 'default',
@@ -29,7 +32,13 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
-  <bq-side-menu appearance=${args.appearance} collapse=${args.collapse} size=${args.size}>
+  <bq-side-menu
+    appearance=${args.appearance}
+    collapse=${args.collapse}
+    size=${args.size}
+    @bqCollapse=${args.bqCollapse}
+    @bqSelect=${args.bqSelect}
+  >
     <div class="flex items-center gap-s py-6 pl-s" slot="logo">
       <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 40 40" class="h-10 w-10">
         <path
@@ -87,4 +96,25 @@ const Template = (args: Args) => html`
 export const Default: Story = {
   render: Template,
   args: {},
+};
+
+export const Appearance: Story = {
+  render: Template,
+  args: {
+    appearance: 'brand',
+  },
+};
+
+export const Collapse: Story = {
+  render: Template,
+  args: {
+    collapse: true,
+  },
+};
+
+export const SmallSize: Story = {
+  render: Template,
+  args: {
+    size: 'small',
+  },
 };
