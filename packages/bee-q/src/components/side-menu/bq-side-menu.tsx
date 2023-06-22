@@ -1,9 +1,14 @@
 import { EventEmitter } from '@angular/core';
-import { h, Component, Prop, Watch, Listen, Event } from '@stencil/core';
+import { h, Component, Prop, Watch, Listen, Event, Method } from '@stencil/core';
 
 import { TSideMenuAppearance, TSideMenuSize } from './bq-side-menu.types';
 import { isHTMLElement } from '../../shared/utils';
 
+/**
+ * @part base - HTML `<aside>` root container
+ * @part footer - HTML `<div>` element that holds the footer
+ * @part logo - HTML `<div>` element that holds the logo
+ */
 @Component({
   tag: 'bq-side-menu',
   styleUrl: './scss/bq-side-menu.scss',
@@ -94,6 +99,12 @@ export class BqSideMenu {
   // Requires JSDocs for public API documentation.
   // ===============================================
 
+  /** Toggle the collapse state of the side menu */
+  @Method()
+  async toggleCollapse() {
+    this.collapse = !this.collapse;
+  }
+
   // Local methods
   // Internal business logic.
   // These methods cannot be called from the host element.
@@ -144,6 +155,7 @@ export class BqSideMenu {
         <div class={{ 'bq-side-menu--logo': true, 'is-collapsed': this.collapse }} part="logo">
           <slot name="logo" />
         </div>
+        {/* Navigation content */}
         <nav
           class="bq-side-menu--nav flex flex-col gap-y-xs px-xs pt-xs2"
           role="menu"
@@ -151,6 +163,7 @@ export class BqSideMenu {
         >
           <slot />
         </nav>
+        {/* Footer */}
         <div
           class="bq-side-menu--footer sticky bottom-0 mt-auto flex justify-center bg-[var(--bq-side-menu--bg-color)] p-xs"
           part="footer"

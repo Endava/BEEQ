@@ -358,6 +358,10 @@ export namespace Components {
           * It sets the size of the navigation menu items
          */
         "size": TSideMenuSize;
+        /**
+          * Toggle the collapse state of the side menu
+         */
+        "toggleCollapse": () => Promise<void>;
     }
     interface BqSideMenuItem {
         /**

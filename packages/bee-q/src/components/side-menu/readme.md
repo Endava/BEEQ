@@ -22,13 +22,26 @@
 | `bqSelect`   | Callback handler to be called when the active/selected menu item changes                                    | `CustomEvent<HTMLBqSideMenuItemElement>` |
 
 
+## Methods
+
+### `toggleCollapse() => Promise<void>`
+
+Toggle the collapse state of the side menu
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+
 ## Shadow Parts
 
-| Part       | Description |
-| ---------- | ----------- |
-| `"base"`   |             |
-| `"footer"` |             |
-| `"logo"`   |             |
+| Part       | Description                                |
+| ---------- | ------------------------------------------ |
+| `"base"`   | HTML `<aside>` root container              |
+| `"footer"` | HTML `<div>` element that holds the footer |
+| `"logo"`   | HTML `<div>` element that holds the logo   |
 
 
 ----------------------------------------------
