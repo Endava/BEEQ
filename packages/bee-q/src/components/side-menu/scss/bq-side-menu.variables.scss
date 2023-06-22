@@ -11,37 +11,3 @@
    * @see: packages/bee-q/src/global/styles/_components.scss
    */
 }
-
-:host([size='small']) {
-  ::slotted(bq-side-menu-item) {
-    --bq-side-menu-item--paddingY: theme('space.s');
-  }
-}
-
-:host([appearance='brand']) {
-  --bq-side-menu--bg-color: theme('colors.ui.brand');
-  --bq-side-menu--brand-color: theme('colors.stroke.inverse');
-
-  ::slotted(bq-side-menu-item) {
-    --bq-side-menu-item--bg-hover: theme('backgroundColor.ui.brand-hover');
-
-    --bq-side-menu-item--text-default: theme('textColor.text.inverse');
-    --bq-side-menu-item--text-hover: theme('textColor.text.inverse');
-    --bq-side-menu-item--text-disabled: theme('textColor.text.secondary-disabled');
-  }
-}
-
-:host([appearance='inverse']) {
-  --bq-side-menu--bg-color: theme('colors.ui.inverse');
-  --bq-side-menu--brand-color: theme('colors.stroke.inverse');
-
-  ::slotted(bq-side-menu-item) {
-    --bq-side-menu-item--bg-hover: theme('backgroundColor.ui.inverse-hover');
-    --bq-side-menu-item--bg-active: theme('backgroundColor.ui.secondary-light');
-
-    --bq-side-menu-item--text-default: theme('textColor.text.inverse');
-    --bq-side-menu-item--text-hover: theme('textColor.text.inverse');
-    --bq-side-menu-item--text-active: theme('textColor.text.primary');
-    --bq-side-menu-item--text-disabled: theme('textColor.text.secondary-disabled');
-  }
-}

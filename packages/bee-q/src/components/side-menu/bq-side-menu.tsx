@@ -151,6 +151,12 @@ export class BqSideMenu {
         >
           <slot />
         </nav>
+        <div
+          class="bq-side-menu--footer sticky bottom-0 mt-auto flex justify-center bg-[var(--bq-side-menu--bg-color)] p-xs"
+          part="footer"
+        >
+          <slot name="footer"></slot>
+        </div>
       </aside>
     );
   }
