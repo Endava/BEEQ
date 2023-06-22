@@ -2,6 +2,14 @@ import { Component, Element, Event, EventEmitter, h, Prop, State } from '@stenci
 
 import { getTextContent } from '../../shared/utils';
 
+/**
+ * @part base - The component wrapper container inside the shadow DOM
+ * @part label - The label slot
+ * @part prefix - The prefix slot
+ * @part suffix - The suffix slot
+ * @part panel - The `<div>` container that holds the tooltip content (when the side menu is collapsed)
+ * @part trigger - The `<div>` container that holds the element which displays tooltip on hover (when the side menu is collapsed)
+ */
 @Component({
   tag: 'bq-side-menu-item',
   styleUrl: './scss/bq-side-menu-item.scss',
@@ -129,6 +137,7 @@ export class BqSideMenuItem {
       role="menuitem"
       tabindex={this.disabled ? -1 : 0}
       slot="trigger"
+      part="base"
     >
       <div class="bq-side-menu--item__prefix flex items-center" part="prefix">
         <slot name="prefix" />
@@ -149,7 +158,7 @@ export class BqSideMenuItem {
     return !this.collapse ? (
       this.menuItem()
     ) : (
-      <bq-tooltip class="block" placement="right">
+      <bq-tooltip class="block" placement="right" exportparts="trigger, panel">
         {this.textContent}
         {this.menuItem()}
       </bq-tooltip>

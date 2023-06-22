@@ -25,10 +25,14 @@
 
 ## Shadow Parts
 
-| Part       | Description |
-| ---------- | ----------- |
-| `"prefix"` |             |
-| `"suffix"` |             |
+| Part        | Description                                                                                                    |
+| ----------- | -------------------------------------------------------------------------------------------------------------- |
+| `"base"`    | The component wrapper container inside the shadow DOM                                                          |
+| `"label"`   | The label slot                                                                                                 |
+| `"panel"`   | The `<div>` container that holds the tooltip content (when the side menu is collapsed)                         |
+| `"prefix"`  | The prefix slot                                                                                                |
+| `"suffix"`  | The suffix slot                                                                                                |
+| `"trigger"` | The `<div>` container that holds the element which displays tooltip on hover (when the side menu is collapsed) |
 
 
 ## Dependencies
