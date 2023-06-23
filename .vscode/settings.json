@@ -39,5 +39,14 @@
   "prettier.prettierPath": "node_modules/prettier",
   "scss.validate": false,
   "stylelint.configFile": ".stylelintrc.json",
-  "stylelint.validate": ["css", "less", "scss", "postcss"]
+  "stylelint.validate": [
+    "css",
+    "less",
+    "scss",
+    "postcss"
+  ],
+  "sonarlint.connectedMode.project": {
+    "connectionId": "Endava",
+    "projectKey": "Endava_bee-q"
+  }
 }
