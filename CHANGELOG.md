@@ -6,6 +6,22 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+## [0.5.0](https://github.com/Endava/bee-q/compare/v0.4.0...v0.5.0) (2023-06-23)
+
+
+### Features
+
+* **CSS reset:** improve  global custom CSS reset ([#287](https://github.com/Endava/bee-q/issues/287)) ([b4500d2](https://github.com/Endava/bee-q/commit/b4500d21b1cc803e167e7dc3329e09a1b0736e16))
+* **side menu:** new `<bq-side-menu>` and `<bq-side-menu-item>` components ([#289](https://github.com/Endava/bee-q/issues/289)) ([f4935f1](https://github.com/Endava/bee-q/commit/f4935f17c51ad6418251bc766455fccbcecafefc))
+
+
+### Bug Fixes
+
+* **angular wrapper:** peerDependencies and versions allowed ([#291](https://github.com/Endava/bee-q/issues/291)) ([47a37e2](https://github.com/Endava/bee-q/commit/47a37e231dc15479fc8a25aa65ec9be67405d6f8))
+* **angular:** cannot mix multi and regular providers ([#290](https://github.com/Endava/bee-q/issues/290)) ([63852e4](https://github.com/Endava/bee-q/commit/63852e4ce285ae84ded849e1d3085babb5b2549d))
+* **plopjs:** storybook template eslint import order ([#280](https://github.com/Endava/bee-q/issues/280)) ([5c374cc](https://github.com/Endava/bee-q/commit/5c374cc55c53122a8ecb97d6d8a63bea48a9131e))
+* **react wrapper:** peerDependencies versions allowed ([#292](https://github.com/Endava/bee-q/issues/292)) ([91c49a3](https://github.com/Endava/bee-q/commit/91c49a3b9792a1dfcfc40a7c8d4da1d0588f9459))
+
 ## [0.4.0](https://github.com/Endava/bee-q/compare/v0.3.0...v0.4.0) (2023-06-16)
 
 
