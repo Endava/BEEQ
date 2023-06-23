@@ -1,0 +1,49 @@
+/* -------------------------------------------------------------------------- */
+/*                                Side menu item styles                */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-side-menu-item.variables';
+
+:host {
+  @apply block;
+}
+
+.bq-side-menu--item {
+  @apply flex items-center gap-x-s rounded-s px-[var(--bq-side-menu-item--paddingX)] py-[var(--bq-side-menu-item--paddingY)] no-underline transition-colors duration-150;
+
+  // Default state
+  @apply bg-[var(--bq-side-menu-item--bg-default)] text-m text-[color:var(--bq-side-menu-item--text-default)];
+
+  // Focus state
+  @apply [&:not(.disabled)]:focus-visible:focus;
+
+  // Hover state
+  @apply [&:not(.disabled)]:hover:cursor-pointer;
+
+  &:not(.disabled):not(.active):hover {
+    @apply hover:bg-[var(--bq-side-menu-item--bg-hover)] hover:text-m hover:text-[color:var(--bq-side-menu-item--text-hover)];
+  }
+}
+
+.bq-side-menu--item.active {
+  // Active state
+  @apply bg-[var(--bq-side-menu-item--bg-active)] text-m text-[color:var(--bq-side-menu-item--text-active)];
+}
+
+.bq-side-menu--item.disabled {
+  @apply text-[color:var(--bq-side-menu-item--text-disabled)] hover:cursor-not-allowed;
+}
+
+.bq-side-menu--item.is-collapsed {
+  @apply justify-center gap-0;
+
+  .bq-side-menu--item__label,
+  .bq-side-menu--item__suffix {
+    @apply sr-only scale-0;
+  }
+}
+
+.bq-side-menu--item__label,
+.bq-side-menu--item__suffix {
+  @apply transition-all duration-300 ease-in-out;
+}

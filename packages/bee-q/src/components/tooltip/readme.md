@@ -49,6 +49,19 @@ Type: `Promise<void>`
 | `"trigger"` | The `<div>` container that holds the element which displays tooltip on hover |
 
 
+## Dependencies
+
+### Used by
+
+ - [bq-side-menu-item](../side-menu-item)
+
+### Graph
+```mermaid
+graph TD;
+  bq-side-menu-item --> bq-tooltip
+  style bq-tooltip fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
