@@ -1,0 +1,93 @@
+/* -------------------------------------------------------------------------- */
+/*                                Side menu styles                */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-side-menu.variables';
+
+:host {
+  @apply flex overflow-hidden;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                               Aside container                              */
+/* -------------------------------------------------------------------------- */
+
+.bq-side-menu {
+  @apply fixed left-0 top-0 flex h-dynamic-vh w-[var(--bq-side-menu--width)] grow flex-col bg-[var(--bq-side-menu--bg-color)];
+  @apply transition-[background-color,width] duration-150;
+  @include hide-scrollbar;
+}
+
+.bq-side-menu.is-collapsed {
+  @apply w-[var(--bq-side-menu--width-collapse)];
+}
+
+/* -------------------------------------------------------------------------- */
+/*                               Logo container                               */
+/* -------------------------------------------------------------------------- */
+
+.bq-side-menu--logo {
+  @apply sticky top-0 z-[1] p-xs;
+  @apply box-content flex items-center bg-[var(--bq-side-menu--bg-color)] text-[color:var(--bq-side-menu--brand-color)];
+}
+
+.bq-side-menu--footer ::slotted([slot='footer']) {
+  --bq-ui--secondary-active: theme('backgroundColor.ui.brand-light');
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                 APPEARANCE                                 */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * The following change the default values of some CSS custom properties
+ * to make it complain with the side menu appearance selected
+ */
+
+:host([size='small']) {
+  ::slotted(bq-side-menu-item) {
+    --bq-side-menu-item--paddingY: theme('space.s');
+  }
+}
+
+:host([appearance='brand']) {
+  --bq-side-menu--bg-color: theme('colors.ui.brand');
+  --bq-side-menu--brand-color: theme('colors.stroke.inverse');
+
+  ::slotted(bq-side-menu-item) {
+    --bq-side-menu-item--bg-hover: theme('backgroundColor.ui.brand-hover');
+
+    --bq-side-menu-item--text-default: theme('textColor.text.inverse');
+    --bq-side-menu-item--text-hover: theme('textColor.text.inverse');
+    --bq-side-menu-item--text-disabled: theme('textColor.text.secondary-disabled');
+  }
+
+  .bq-side-menu--footer ::slotted([slot='footer']) {
+    --bq-ui--secondary-hover: theme('backgroundColor.ui.brand-hover');
+    --bq-ui--secondary-active: theme('backgroundColor.ui.brand-hover');
+
+    --bq-text--primary: theme('textColor.text.inverse');
+  }
+}
+
+:host([appearance='inverse']) {
+  --bq-side-menu--bg-color: theme('colors.ui.inverse');
+  --bq-side-menu--brand-color: theme('colors.stroke.inverse');
+
+  ::slotted(bq-side-menu-item) {
+    --bq-side-menu-item--bg-hover: theme('backgroundColor.ui.inverse-hover');
+    --bq-side-menu-item--bg-active: theme('backgroundColor.ui.secondary-light');
+
+    --bq-side-menu-item--text-default: theme('textColor.text.inverse');
+    --bq-side-menu-item--text-hover: theme('textColor.text.inverse');
+    --bq-side-menu-item--text-active: theme('textColor.text.primary');
+    --bq-side-menu-item--text-disabled: theme('textColor.text.secondary-disabled');
+  }
+
+  .bq-side-menu--footer ::slotted([slot='footer']) {
+    --bq-ui--secondary-hover: theme('backgroundColor.ui.inverse-hover');
+    --bq-ui--secondary-active: theme('backgroundColor.ui.inverse-hover');
+
+    --bq-text--primary: theme('textColor.text.inverse');
+  }
+}
