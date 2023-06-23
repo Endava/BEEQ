@@ -32,6 +32,9 @@ jobs:
       - name: 💫 Load and cache dependencies
         uses: ./.github/actions/cache-deps
 
+      - name: 🩺 Run Linters and Unit Tests and ⏳ Build
+        uses: ./.github/actions/build
+
       - name: 👀 Check NPM credentials
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
