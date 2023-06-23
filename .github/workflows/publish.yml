@@ -32,12 +32,6 @@ jobs:
       - name: 💫 Load and cache dependencies
         uses: ./.github/actions/cache-deps
 
-      - name: 📥 Download Chromium binary for E2E tests
-        run: node ./node_modules/puppeteer/install.js
-
-      - name: 🩺 Run Linters and Unit Tests, ⏳ Build, 🧪 E2E Tests
-        uses: ./.github/actions/test-build
-
       - name: 👀 Check NPM credentials
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
@@ -57,3 +51,6 @@ jobs:
 
       - name: 🚀 Deploy to AWS S3
         run: aws s3 sync dist/storybook/bee-q/ s3://${{secrets.AWS_S3_BUCKET}}/ --delete --output table
+
+      - name: 🚮 Invalidate AWS CloudFront distribution cache
+        run: aws cloudfront create-invalidation --distribution-id ${{secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID}} --paths "/*" --output table --cli-connect-timeout 15
