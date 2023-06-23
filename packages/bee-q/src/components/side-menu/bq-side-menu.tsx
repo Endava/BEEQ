@@ -1,5 +1,4 @@
-import { EventEmitter } from '@angular/core';
-import { h, Component, Prop, Watch, Listen, Event, Method } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Listen, Method, Prop, Watch } from '@stencil/core';
 
 import { TSideMenuAppearance, TSideMenuSize } from './bq-side-menu.types';
 import { isHTMLElement } from '../../shared/utils';
