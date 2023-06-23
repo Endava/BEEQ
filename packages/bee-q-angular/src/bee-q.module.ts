@@ -14,6 +14,7 @@ import { DIRECTIVES } from './directives';
       useFactory: () => {
         return defineCustomElements();
       },
+      multi: true,
     },
   ],
 })
