@@ -1,0 +1,17 @@
+/* -------------------------------------------------------------------------- */
+/*                          Side menu item custom properties           */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  --bq-side-menu-item--bg-default: theme('backgroundColor.transparent');
+  --bq-side-menu-item--bg-hover: theme('backgroundColor.ui.secondary-hover');
+  --bq-side-menu-item--bg-active: theme('backgroundColor.ui.brand-light');
+
+  --bq-side-menu-item--text-default: theme('textColor.text.primary');
+  --bq-side-menu-item--text-hover: theme('textColor.text.primary');
+  --bq-side-menu-item--text-active: theme('textColor.text.brand');
+  --bq-side-menu-item--text-disabled: theme('textColor.text.primary-disabled');
+
+  --bq-side-menu-item--paddingX: theme('space.l');
+  --bq-side-menu-item--paddingY: theme('space.m');
+}

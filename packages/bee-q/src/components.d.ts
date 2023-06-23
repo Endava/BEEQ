@@ -12,6 +12,7 @@ import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } fr
 import { TIconWeight } from "./components/icon/bq-icon.types";
 import { TNotificationType } from "./components/notification/bq-notification.types";
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
+import { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
 import { TSliderType } from "./components/slider/bq-slider.types";
 import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 import { TStatusType } from "./components/status/bq-status.types";
@@ -25,6 +26,7 @@ export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } fr
 export { TIconWeight } from "./components/icon/bq-icon.types";
 export { TNotificationType } from "./components/notification/bq-notification.types";
 export { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
+export { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
 export { TSliderType } from "./components/slider/bq-slider.types";
 export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 export { TStatusType } from "./components/status/bq-status.types";
@@ -343,6 +345,38 @@ export namespace Components {
          */
         "value"?: string;
     }
+    interface BqSideMenu {
+        /**
+          * It sets a predefined appearance of the side menu
+         */
+        "appearance": TSideMenuAppearance;
+        /**
+          * If true, the container will reduce its width
+         */
+        "collapse": boolean;
+        /**
+          * It sets the size of the navigation menu items
+         */
+        "size": TSideMenuSize;
+        /**
+          * Toggle the collapse state of the side menu
+         */
+        "toggleCollapse": () => Promise<void>;
+    }
+    interface BqSideMenuItem {
+        /**
+          * If true, the menu item will be shown as active/selected.
+         */
+        "active": boolean;
+        /**
+          * If true, the item label and suffix will be hidden and the with will be reduce according to its parent
+         */
+        "collapse": boolean;
+        /**
+          * If true, the menu item will be disabled (no interaction allowed)
+         */
+        "disabled": boolean;
+    }
     interface BqSlider {
         /**
           * A number representing the delay value applied to bqChange event handler
@@ -574,6 +608,14 @@ export interface BqRadioGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqRadioGroupElement;
 }
+export interface BqSideMenuCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqSideMenuElement;
+}
+export interface BqSideMenuItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqSideMenuItemElement;
+}
 export interface BqSliderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqSliderElement;
@@ -654,6 +696,18 @@ declare global {
         prototype: HTMLBqRadioGroupElement;
         new (): HTMLBqRadioGroupElement;
     };
+    interface HTMLBqSideMenuElement extends Components.BqSideMenu, HTMLStencilElement {
+    }
+    var HTMLBqSideMenuElement: {
+        prototype: HTMLBqSideMenuElement;
+        new (): HTMLBqSideMenuElement;
+    };
+    interface HTMLBqSideMenuItemElement extends Components.BqSideMenuItem, HTMLStencilElement {
+    }
+    var HTMLBqSideMenuItemElement: {
+        prototype: HTMLBqSideMenuItemElement;
+        new (): HTMLBqSideMenuItemElement;
+    };
     interface HTMLBqSliderElement extends Components.BqSlider, HTMLStencilElement {
     }
     var HTMLBqSliderElement: {
@@ -713,6 +767,8 @@ declare global {
         "bq-notification": HTMLBqNotificationElement;
         "bq-radio": HTMLBqRadioElement;
         "bq-radio-group": HTMLBqRadioGroupElement;
+        "bq-side-menu": HTMLBqSideMenuElement;
+        "bq-side-menu-item": HTMLBqSideMenuItemElement;
         "bq-slider": HTMLBqSliderElement;
         "bq-spinner": HTMLBqSpinnerElement;
         "bq-status": HTMLBqStatusElement;
@@ -1054,6 +1110,54 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface BqSideMenu {
+        /**
+          * It sets a predefined appearance of the side menu
+         */
+        "appearance"?: TSideMenuAppearance;
+        /**
+          * If true, the container will reduce its width
+         */
+        "collapse"?: boolean;
+        /**
+          * Callback handler to be called when the Side menu changes its width from expanded to collapse and vice versa
+         */
+        "onBqCollapse"?: (event: BqSideMenuCustomEvent<{ collapse: boolean }>) => void;
+        /**
+          * Callback handler to be called when the active/selected menu item changes
+         */
+        "onBqSelect"?: (event: BqSideMenuCustomEvent<HTMLBqSideMenuItemElement>) => void;
+        /**
+          * It sets the size of the navigation menu items
+         */
+        "size"?: TSideMenuSize;
+    }
+    interface BqSideMenuItem {
+        /**
+          * If true, the menu item will be shown as active/selected.
+         */
+        "active"?: boolean;
+        /**
+          * If true, the item label and suffix will be hidden and the with will be reduce according to its parent
+         */
+        "collapse"?: boolean;
+        /**
+          * If true, the menu item will be disabled (no interaction allowed)
+         */
+        "disabled"?: boolean;
+        /**
+          * Handler to be called when the button loses focus
+         */
+        "onBqBlur"?: (event: BqSideMenuItemCustomEvent<HTMLBqSideMenuItemElement>) => void;
+        /**
+          * Handler to be called when button gets focus
+         */
+        "onBqClick"?: (event: BqSideMenuItemCustomEvent<HTMLBqSideMenuItemElement>) => void;
+        /**
+          * Handler to be called when the button is clicked
+         */
+        "onBqFocus"?: (event: BqSideMenuItemCustomEvent<HTMLBqSideMenuItemElement>) => void;
+    }
     interface BqSlider {
         /**
           * A number representing the delay value applied to bqChange event handler
@@ -1278,6 +1382,8 @@ declare namespace LocalJSX {
         "bq-notification": BqNotification;
         "bq-radio": BqRadio;
         "bq-radio-group": BqRadioGroup;
+        "bq-side-menu": BqSideMenu;
+        "bq-side-menu-item": BqSideMenuItem;
         "bq-slider": BqSlider;
         "bq-spinner": BqSpinner;
         "bq-status": BqStatus;
@@ -1309,6 +1415,8 @@ declare module "@stencil/core" {
             "bq-notification": LocalJSX.BqNotification & JSXBase.HTMLAttributes<HTMLBqNotificationElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
+            "bq-side-menu": LocalJSX.BqSideMenu & JSXBase.HTMLAttributes<HTMLBqSideMenuElement>;
+            "bq-side-menu-item": LocalJSX.BqSideMenuItem & JSXBase.HTMLAttributes<HTMLBqSideMenuItemElement>;
             "bq-slider": LocalJSX.BqSlider & JSXBase.HTMLAttributes<HTMLBqSliderElement>;
             /**
              * Spinners are designed for users to display data loading.

@@ -10,6 +10,26 @@
   @apply hover:before:scale-x-100 hover:before:bg-stroke-brand-hover active:before:bg-stroke-brand-active;
 }
 
+/**
+ * Use these classes in the document.bobdy when side menu component is present
+ */
+
+.bq-body--side-menu {
+  @apply relative transition-[padding-left] duration-300;
+}
+
+.bq-body--side-menu__collapse {
+  @apply pl-[var(--bq-side-menu--width-collapse)] #{!important};
+}
+
+.bq-body--side-menu__expand {
+  @apply pl-[var(--bq-side-menu--width)] #{!important};
+}
+
+/**
+ * Use these classes for the notification portal container
+ */
+
 .bq-notification-portal {
   @apply fixed end-0 top-0 z-50 max-h-full max-w-full;
 }
