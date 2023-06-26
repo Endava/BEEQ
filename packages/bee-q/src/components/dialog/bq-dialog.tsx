@@ -1,19 +1,17 @@
-import { h, Component, Prop, Element, Watch, State, Method, Host, Listen } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
-import { DIALOG_SIZE, TDialogSize, TDialogFooterAppearance, DIALOG_FOOTER_APPEARANCE } from './bq-dialog.types';
+import { DIALOG_FOOTER_APPEARANCE, DIALOG_SIZE, TDialogFooterAppearance, TDialogSize } from './bq-dialog.types';
 import { hasSlotContent, validatePropValue } from '../../shared/utils';
 
 /**
- * @part base - The component wrapper container inside the shadow DOM
- * @part backdrop - The `<div>` that displays the background
+ * @part body- The `<main>` that holds the dialog body content
+ * @part button-close - The button that close the dialog on click
  * @part container - The `<div>` container that holds the dialog content
+ * @part dialog - The dialog container inside the shadow DOM
+ * @part footer - The `<footer>` that holds footer content
  * @part header - The `<header>` that holds the icon, title, description and close button
  * @part icon - The `<div>` that holds the info icon
  * @part title - The `<div>` that holds the title content
- * @part button-close - The button that close the dialog on click
- * @part description- The `<div>` that holds the description content
- * @part content- The `<main>` that holds the content
- * @part footer - The `<footer>` that holds footer content
  */
 
 @Component({
@@ -25,7 +23,7 @@ export class BqDialog {
   // Own Properties
   // ====================
 
-  private overlayElem: HTMLDivElement;
+  private dialogElem: HTMLDialogElement;
   private iconElem: HTMLDivElement;
   private contentElem: HTMLElement;
   private footerElem: HTMLElement;
@@ -38,44 +36,58 @@ export class BqDialog {
   // Inlined decorator, alphabetical order
   // =======================================
 
-  @State() private isOpen = false;
-
   @State() private hasIcon = false;
-
   @State() private hasContent = false;
-
   @State() private hasFooter = false;
 
   // Public Property API
   // ========================
 
-  /** The size of the dialog */
-  @Prop({ reflect: true, mutable: true }) size: TDialogSize = 'medium';
+  /** If true, the dialog will not close when the [Esc] key is press */
+  @Prop({ reflect: true }) disableCloseEscKeydown = false;
+
+  /** If true, the dialog will not close when clicking on the backdrop overlay */
+  @Prop({ reflect: true }) disableCloseClickOutside = false;
 
   /** The appearance of footer */
   @Prop({ reflect: true }) footerApperance: TDialogFooterAppearance = 'standard';
 
-  /** If true it hides close button */
+  /** If true, it hides the close button */
   @Prop({ reflect: true }) hideCloseButton = false;
 
-  /** If true will not close on outside click */
-  @Prop({ reflect: true }) disableOutsideClickClose = false;
+  /** If true, the dialog will be shown as open */
+  @Prop({ reflect: true }) open: boolean = false;
 
-  /** If true will not close on escape press */
-  @Prop({ reflect: true }) disableEscKeyDownClose = false;
+  /** The size of the dialog */
+  @Prop({ reflect: true, mutable: true }) size: TDialogSize = 'medium';
 
   // Prop lifecycle events
   // =======================
-  @Watch('size')
   @Watch('footerApperance')
+  @Watch('size')
   checkPropValues() {
     validatePropValue(DIALOG_SIZE, 'large', this.el, 'size');
     validatePropValue(DIALOG_FOOTER_APPEARANCE, 'standard', this.el, 'footerApperance');
   }
 
+  @Watch('open')
+  handleOpenChange() {
+    if (this.open) {
+      this.dialogElem.showModal();
+    } else {
+      this.dialogElem.close();
+    }
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
+
+  /** Callback handler emitted when the dialog will close */
+  @Event() bqClose!: EventEmitter<void>;
+
+  /** Callback handler emitted when the dialog will open */
+  @Event() bqOpen!: EventEmitter<void>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -85,15 +97,30 @@ export class BqDialog {
     this.checkPropValues();
   }
 
+  componentDidLoad() {
+    this.dialogElem.addEventListener('cancel', this.handleCancel);
+  }
+
+  disconnectedCallback() {
+    this.dialogElem.removeEventListener('cancel', this.handleCancel);
+  }
+
   // Listeners
   // ==============
 
-  @Listen('keydown', { target: 'body', passive: true })
-  async onKeyDown(event: KeyboardEvent) {
-    if (!this.open || this.disableEscKeyDownClose) return;
+  @Listen('mousedown', { target: 'window', capture: true })
+  handleMouseClick(event: MouseEvent) {
+    if (!this.open) return;
+    if (!this.dialogElem || this.disableCloseClickOutside) return;
 
-    if (event.key === 'Escape') {
-      await this.close();
+    const rect = this.dialogElem.getBoundingClientRect();
+    if (
+      event.clientY < rect.top ||
+      event.clientY > rect.bottom ||
+      event.clientX < rect.left ||
+      event.clientX > rect.right
+    ) {
+      this.handleClose();
     }
   }
 
@@ -106,14 +133,14 @@ export class BqDialog {
 
   /** Shows the dialog */
   @Method()
-  async open() {
-    this.isOpen = true;
+  async show() {
+    this.handleOpen();
   }
 
   /** Hides  the dialog */
   @Method()
-  async close() {
-    this.isOpen = false;
+  async hide() {
+    this.handleClose();
   }
 
   // Local methods
@@ -121,14 +148,33 @@ export class BqDialog {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private handleOverlayClick = (event: MouseEvent) => {
-    if (event.target !== this.overlayElem || this.disableOutsideClickClose) return;
+  private handleClose = () => {
+    if (!this.dialogElem) return;
 
-    this.isOpen = false;
+    const ev = this.bqClose.emit();
+    if (ev.defaultPrevented) return;
+
+    this.dialogElem.setAttribute('inert', 'true');
+    this.open = false;
   };
 
-  private handleCloseClick = () => {
-    this.isOpen = false;
+  private handleOpen = () => {
+    if (!this.dialogElem) return;
+
+    const ev = this.bqClose.emit();
+    if (ev.defaultPrevented) return;
+
+    this.dialogElem.removeAttribute('inert');
+    this.open = true;
+  };
+
+  private handleCancel = (event: KeyboardEvent) => {
+    if (this.disableCloseEscKeydown) {
+      event.preventDefault();
+      return;
+    }
+
+    this.handleClose();
   };
 
   private handleIconSlotChange = () => {
@@ -136,7 +182,7 @@ export class BqDialog {
   };
 
   private handleContentSlotChange = () => {
-    this.hasContent = hasSlotContent(this.contentElem, 'content');
+    this.hasContent = hasSlotContent(this.contentElem);
   };
 
   private handleFooterSlotChange = () => {
@@ -149,55 +195,50 @@ export class BqDialog {
 
   render() {
     return (
-      <Host class={{ 'is-open': this.isOpen }} part="base">
-        <div
-          class="bq-dialog__backdrop"
-          ref={(divElem) => (this.overlayElem = divElem)}
-          onClick={this.handleOverlayClick}
-          part="backdrop"
-        />
-        <div class={{ [`bq-dialog__container bq-dialog__container--${this.size}`]: true }} part="container">
-          <header class="bq-dialog__header" part="header">
-            <div class={{ 'bq-dialog__icon': this.hasIcon }} ref={(divElem) => (this.iconElem = divElem)} part="icon">
-              <slot name="icon" onSlotchange={this.handleIconSlotChange} />
-            </div>
-            <div class="flex flex-col gap-s">
-              <div class="bq-dialog__title" part="title">
-                <slot name="title" />
-                <div part="button-close" class="self-baseline" onClick={this.handleCloseClick}>
-                  <slot name="button-close">
-                    {!this.hideCloseButton && (
-                      <bq-button class="bq-dialog__button-close" appearance="text" size="small" slot="button-close">
-                        <bq-icon class="cursor-pointer" name="x" role="img" title="Close" />
-                      </bq-button>
-                    )}
-                  </slot>
-                </div>
-              </div>
-              <div part="description">
-                <slot name="description" />
-              </div>
-            </div>
-          </header>
-          <main
-            class={{ hidden: !this.hasContent, 'px-l': this.hasContent }}
-            ref={(mainElem) => (this.contentElem = mainElem)}
-            part="content"
+      <dialog
+        class={{ [`bq-dialog ${this.size}`]: true }}
+        ref={(dialogElem) => (this.dialogElem = dialogElem)}
+        part="dialog"
+      >
+        <header class="bq-dialog--header" part="header">
+          <div
+            class={{ 'bq-dialog--icon flex items-center p-0': true, '!hidden': !this.hasIcon }}
+            ref={(divElem) => (this.iconElem = divElem)}
+            part="icon"
           >
-            <slot name="content" onSlotchange={this.handleContentSlotChange} />
-          </main>
-          <footer
-            class={{
-              'bq-dialog__footer': this.hasFooter,
-              'bg-ui-secondary-light': this.footerApperance === 'highlight',
-            }}
-            ref={(footerElem) => (this.footerElem = footerElem)}
-            part="footer"
-          >
-            <slot name="footer" onSlotchange={this.handleFooterSlotChange} />
-          </footer>
-        </div>
-      </Host>
+            <slot name="icon" onSlotchange={this.handleIconSlotChange} />
+          </div>
+          <div class="bq-dialog--title flex flex-1" part="title">
+            <slot name="title" />
+          </div>
+          <div class="flex" onClick={this.handleClose} part="button-close">
+            <slot name="button-close">
+              {!this.hideCloseButton && (
+                <bq-button class="bq-dialog--close" appearance="text" size="small" slot="button-close">
+                  <bq-icon class="cursor-pointer" name="x" role="img" title="Close" />
+                </bq-button>
+              )}
+            </slot>
+          </div>
+        </header>
+        <main
+          class={{ hidden: !this.hasContent, 'overflow-y-auto px-l': this.hasContent }}
+          ref={(mainElem) => (this.contentElem = mainElem)}
+          part="body"
+        >
+          <slot onSlotchange={this.handleContentSlotChange} />
+        </main>
+        <footer
+          class={{
+            'bq-dialog--footer': this.hasFooter,
+            'bg-ui-secondary-light': this.footerApperance === 'highlight',
+          }}
+          ref={(footerElem) => (this.footerElem = footerElem)}
+          part="footer"
+        >
+          <slot name="footer" onSlotchange={this.handleFooterSlotChange} />
+        </footer>
+      </dialog>
     );
   }
 }

@@ -176,29 +176,33 @@ export namespace Components {
     }
     interface BqDialog {
         /**
-          * Hides  the dialog
+          * If true, the dialog will not close when clicking on the backdrop overlay
          */
-        "close": () => Promise<void>;
+        "disableCloseClickOutside": boolean;
         /**
-          * If true will not close on escape press
+          * If true, the dialog will not close when the [Esc] key is press
          */
-        "disableEscKeyDownClose": boolean;
-        /**
-          * If true will not close on outside click
-         */
-        "disableOutsideClickClose": boolean;
+        "disableCloseEscKeydown": boolean;
         /**
           * The appearance of footer
          */
         "footerApperance": TDialogFooterAppearance;
         /**
-          * If true it hides close button
+          * Hides  the dialog
+         */
+        "hide": () => Promise<void>;
+        /**
+          * If true, it hides the close button
          */
         "hideCloseButton": boolean;
         /**
+          * If true, the dialog will be shown as open
+         */
+        "open": boolean;
+        /**
           * Shows the dialog
          */
-        "open": () => Promise<void>;
+        "show": () => Promise<void>;
         /**
           * The size of the dialog
          */
@@ -624,6 +628,10 @@ export interface BqCheckboxCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqCheckboxElement;
 }
+export interface BqDialogCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqDialogElement;
+}
 export interface BqIconCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqIconElement;
@@ -970,21 +978,33 @@ declare namespace LocalJSX {
     }
     interface BqDialog {
         /**
-          * If true will not close on escape press
+          * If true, the dialog will not close when clicking on the backdrop overlay
          */
-        "disableEscKeyDownClose"?: boolean;
+        "disableCloseClickOutside"?: boolean;
         /**
-          * If true will not close on outside click
+          * If true, the dialog will not close when the [Esc] key is press
          */
-        "disableOutsideClickClose"?: boolean;
+        "disableCloseEscKeydown"?: boolean;
         /**
           * The appearance of footer
          */
         "footerApperance"?: TDialogFooterAppearance;
         /**
-          * If true it hides close button
+          * If true, it hides the close button
          */
         "hideCloseButton"?: boolean;
+        /**
+          * Callback handler emitted when the dialog will close
+         */
+        "onBqClose"?: (event: BqDialogCustomEvent<void>) => void;
+        /**
+          * Callback handler emitted when the dialog will open
+         */
+        "onBqOpen"?: (event: BqDialogCustomEvent<void>) => void;
+        /**
+          * If true, the dialog will be shown as open
+         */
+        "open"?: boolean;
         /**
           * The size of the dialog
          */

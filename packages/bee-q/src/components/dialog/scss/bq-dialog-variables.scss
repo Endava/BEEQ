@@ -2,10 +2,17 @@
 /*                          Dialog custom properties           */
 /* -------------------------------------------------------------------------- */
 
-:host {
+:host,
+::backdrop {
+  --bq-dialog--background: theme('colors.bg.primary');
+  --bq-dialog--background-backdrop: theme('colors.grey.600');
+
+  --bq-dialog--box-shadow: theme('boxShadow.m');
+  --bq-dialog--border-radius: theme('borderRadius.s');
+
+  --bq-dialog--width-small: 320px;
+  --bq-dialog--width-medium: 480px;
+  --bq-dialog--width-large: 640px;
+
   --bq-dialog-z-index: 10;
-  --bq-dialog--small-width: 320px;
-  --bq-dialog--medium-width: 480px;
-  --bq-dialog--large-width: 640px;
-  --bq-dialog--icon-size: 30px;
 }

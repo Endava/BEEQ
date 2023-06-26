@@ -7,18 +7,27 @@
 
 ## Properties
 
-| Property                   | Attribute                     | Description                             | Type                             | Default      |
-| -------------------------- | ----------------------------- | --------------------------------------- | -------------------------------- | ------------ |
-| `disableEscKeyDownClose`   | `disable-esc-key-down-close`  | If true will not close on escape press  | `boolean`                        | `false`      |
-| `disableOutsideClickClose` | `disable-outside-click-close` | If true will not close on outside click | `boolean`                        | `false`      |
-| `footerApperance`          | `footer-apperance`            | The appearance of footer                | `"highlight" \| "standard"`      | `'standard'` |
-| `hideCloseButton`          | `hide-close-button`           | If true it hides close button           | `boolean`                        | `false`      |
-| `size`                     | `size`                        | The size of the dialog                  | `"large" \| "medium" \| "small"` | `'medium'`   |
+| Property                   | Attribute                     | Description                                                              | Type                             | Default      |
+| -------------------------- | ----------------------------- | ------------------------------------------------------------------------ | -------------------------------- | ------------ |
+| `disableCloseClickOutside` | `disable-close-click-outside` | If true, the dialog will not close when clicking on the backdrop overlay | `boolean`                        | `false`      |
+| `disableCloseEscKeydown`   | `disable-close-esc-keydown`   | If true, the dialog will not close when the [Esc] key is press           | `boolean`                        | `false`      |
+| `footerApperance`          | `footer-apperance`            | The appearance of footer                                                 | `"highlight" \| "standard"`      | `'standard'` |
+| `hideCloseButton`          | `hide-close-button`           | If true, it hides the close button                                       | `boolean`                        | `false`      |
+| `open`                     | `open`                        | If true, the dialog will be shown as open                                | `boolean`                        | `false`      |
+| `size`                     | `size`                        | The size of the dialog                                                   | `"large" \| "medium" \| "small"` | `'medium'`   |
+
+
+## Events
+
+| Event     | Description                                         | Type                |
+| --------- | --------------------------------------------------- | ------------------- |
+| `bqClose` | Callback handler emitted when the dialog will close | `CustomEvent<void>` |
+| `bqOpen`  | Callback handler emitted when the dialog will open  | `CustomEvent<void>` |
 
 
 ## Methods
 
-### `close() => Promise<void>`
+### `hide() => Promise<void>`
 
 Hides  the dialog
 
@@ -28,7 +37,7 @@ Type: `Promise<void>`
 
 
 
-### `open() => Promise<void>`
+### `show() => Promise<void>`
 
 Shows the dialog
 
@@ -41,20 +50,17 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part                                                            | Description                                                             |
-| --------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| `"backdrop"`                                                    | The `<div>` that displays the background                                |
-| `"base"`                                                        | The component wrapper container inside the shadow DOM                   |
-| `"button-close"`                                                | The button that close the dialog on click                               |
-| `"container"`                                                   | The `<div>` container that holds the dialog content                     |
-| `"content"`                                                     |                                                                         |
-| `"content- The `<main>` that holds the content"`                |                                                                         |
-| `"description"`                                                 |                                                                         |
-| `"description- The `<div>` that holds the description content"` |                                                                         |
-| `"footer"`                                                      | The `<footer>` that holds footer content                                |
-| `"header"`                                                      | The `<header>` that holds the icon, title, description and close button |
-| `"icon"`                                                        | The `<div>` that holds the info icon                                    |
-| `"title"`                                                       | The `<div>` that holds the title content                                |
+| Part                                                      | Description                                                             |
+| --------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `"body"`                                                  |                                                                         |
+| `"body- The `<main>` that holds the dialog body content"` |                                                                         |
+| `"button-close"`                                          | The button that close the dialog on click                               |
+| `"container"`                                             | The `<div>` container that holds the dialog content                     |
+| `"dialog"`                                                | The dialog container inside the shadow DOM                              |
+| `"footer"`                                                | The `<footer>` that holds footer content                                |
+| `"header"`                                                | The `<header>` that holds the icon, title, description and close button |
+| `"icon"`                                                  | The `<div>` that holds the info icon                                    |
+| `"title"`                                                 | The `<div>` that holds the title content                                |
 
 
 ## Dependencies
