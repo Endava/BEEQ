@@ -20,6 +20,9 @@ const meta: Meta = {
     'hide-close-button': { control: 'boolean' },
     open: { control: 'boolean' },
     size: { control: 'select', options: [...DIALOG_SIZE] },
+    // Events
+    bqClose: { action: 'bqClose' },
+    bqOpen: { action: 'bqOpen' },
     // Not part of the public API
     noContent: { control: 'boolean', table: { disable: true } },
     noFooter: { control: 'boolean', table: { disable: true } },
@@ -56,9 +59,13 @@ const Template = (args: Args) => {
       ?hide-close-button=${args['hide-close-button']}
       ?open=${args.open}
       size=${args.size}
+      @bqClose=${args.bqClose}
+      @bqOpen=${args.bqOpen}
     >
-      <bq-icon name="info" size="30" color="text--accent" role="img" title="Info" slot="icon"></bq-icon>
-      <h3 slot="title">Title</h3>
+      <h3 class="flex items-center gap-s" slot="title">
+        <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
+        Title
+      </h3>
       ${!args.noContent
         ? html`
             <p>
@@ -83,12 +90,24 @@ const Template = (args: Args) => {
 
 export const Default: Story = {
   render: Template,
+  args: {
+    open: true,
+  },
+};
+
+export const HighlightFooter: Story = {
+  render: Template,
+  args: {
+    'footer-apperance': 'highlight',
+    open: true,
+  },
 };
 
 export const NoFooter: Story = {
   render: Template,
   args: {
     noFooter: true,
+    open: true,
   },
 };
 
@@ -98,13 +117,19 @@ const ConfirmTemplate = (args: Args) => {
     await dialogElem.show();
   };
 
-  const handleCloseDialog = async () => {
+  const handleDialogConfirm = async () => {
+    const dialogElem = document.querySelector('bq-dialog');
+    await dialogElem.hide();
+    alert('Account deactivated');
+  };
+
+  const handleDialogCancel = async () => {
     const dialogElem = document.querySelector('bq-dialog');
     await dialogElem.hide();
   };
 
   return html`
-    <bq-button @bqClick=${handleOpenDialog}>Open Confirm Dialog</bq-button>
+    <bq-button variant="ghost" @bqClick=${handleOpenDialog}>Deactivate account</bq-button>
     <bq-dialog
       ?disable-close-esc-keydown=${args['disable-close-esc-keydown']}
       ?disable-close-click-outside=${args['disable-close-click-outside']}
@@ -113,18 +138,21 @@ const ConfirmTemplate = (args: Args) => {
       ?open=${args.open}
       size=${args.size}
     >
-      <h3 slot="title">Please confirm</h3>
-      <p>Are your sure you want to leave this page?</p>
-      <span> All unsaved work will be lost. </span>
+      <h3 class="flex items-center gap-s" slot="title">
+        <bq-icon name="info" size="30" color="icon--danger" role="img" title="Danger"></bq-icon>
+        Deactivate account
+      </h3>
+      <p>Are your sure you want to deactivate your account? All of your data will be permanently removed.</p>
+      <span class="text-s text-text-secondary"> This action cannot be undone </span>
       <div class="flex gap-xs" slot="footer">
-        <bq-button variant="ghost" @bqClick=${handleCloseDialog}> Yes, I confirm </bq-button>
-        <bq-button variant="standard" slot="footer"> No, I want to stay </bq-button>
+        <bq-button appearance="secondary" @bqClick=${handleDialogCancel}> Cancel </bq-button>
+        <bq-button variant="danger" @bqClick=${handleDialogConfirm}> Yes, deactive </bq-button>
       </div>
     </bq-dialog>
   `;
 };
 
-export const Confirm: Story = {
+export const DialogConfirm: Story = {
   render: ConfirmTemplate,
   args: {
     'disable-close-click-outside': true,
