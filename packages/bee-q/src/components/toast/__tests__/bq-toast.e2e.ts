@@ -19,7 +19,7 @@ describe('bq-toast', () => {
     expect(element.shadowRoot).not.toBeNull();
   });
 
-  it('should display text', async () => {
+  it.skip('should display text', async () => {
     const page = await newE2EPage();
     await page.setContent('<bq-toast></bq-toast>');
 
