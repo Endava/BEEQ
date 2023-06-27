@@ -1,4 +1,3 @@
-export * from './assertUnreachable';
 export * from './cssVariables';
 export * from './debounce';
 export * from './getNextElement';
