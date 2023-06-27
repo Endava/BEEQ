@@ -1,0 +1,73 @@
+/* -------------------------------------------------------------------------- */
+/*                                Dialog styles                */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-dialog.variables';
+
+:host {
+  @apply fixed left-0 top-0 -z-10 flex h-dynamic-vh w-full items-center justify-center;
+  @apply invisible #{!important};
+}
+
+:host([open]) {
+  @apply z-[var(--bq-dialog-z-index)];
+  @apply visible #{!important};
+}
+
+/* --------------------------------- Dialog --------------------------------- */
+
+.bq-dialog {
+  @apply m-auto flex flex-col gap-l p-0;
+  @apply z-[var(--bq-dialog-z-index)] rounded-[var(--bq-dialog--border-radius)] border-none bg-[var(--bq-dialog--background)] shadow-[shadow:var(--bq-dialog--box-shadow)];
+  @apply opacity-50 transition-opacity duration-300 ease-in-out;
+
+  &.small {
+    @apply w-[var(--bq-dialog--width-small)];
+  }
+
+  &.medium {
+    @apply w-[var(--bq-dialog--width-medium)];
+  }
+
+  &.large {
+    @apply w-[var(--bq-dialog--width-large)];
+  }
+}
+
+.bq-dialog[open] {
+  @apply opacity-100;
+}
+
+/* ----------------------------- Dialog backdrop ---------------------------- */
+
+.bq-dialog::backdrop {
+  @apply bg-[var(--bq-dialog--background-backdrop)] opacity-0 transition-[opacity] duration-300 ease-in-out;
+}
+
+.bq-dialog[open]::backdrop {
+  @apply opacity-50;
+}
+
+/* ------------------------------ Dialog header ----------------------------- */
+
+.bq-dialog--header {
+  @apply sticky top-0 flex items-center gap-m p-[var(--bq-dialog--padding)] pb-0;
+}
+
+/* ------------------------------ Dialog footer ----------------------------- */
+
+.bq-dialog--footer {
+  @apply sticky bottom-0 flex w-full items-center justify-end gap-xs px-[var(--bq-dialog--padding)] py-s pt-0;
+}
+
+/* --------------------------- Dialog close button -------------------------- */
+
+.bq-dialog--close {
+  --bq-radius--m: theme('borderRadius.s');
+  --bq-button--small-paddingX: theme('spacing.xs2');
+  --bq-button--small-paddingY: theme('spacing.xs2');
+
+  &::part(button) {
+    @apply border-none;
+  }
+}

@@ -8,6 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 import { TBadgeSize } from "./components/badge/bq-badge.types";
 import { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
+import { TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 import { TIconWeight } from "./components/icon/bq-icon.types";
 import { TNotificationType } from "./components/notification/bq-notification.types";
@@ -22,6 +23,7 @@ import { FloatingUIPlacement } from "./services/interfaces";
 export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 export { TBadgeSize } from "./components/badge/bq-badge.types";
 export { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
+export { TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 export { TIconWeight } from "./components/icon/bq-icon.types";
 export { TNotificationType } from "./components/notification/bq-notification.types";
@@ -171,6 +173,44 @@ export namespace Components {
           * A string representing the value of the checkbox. Primarily used to differentiate a list of related checkboxes that have the same name.
          */
         "value": string;
+    }
+    interface BqDialog {
+        /**
+          * Dismiss or cancel the dialog
+         */
+        "cancel": () => Promise<void>;
+        /**
+          * If true, the dialog will not close when clicking on the backdrop overlay
+         */
+        "disableCloseClickOutside": boolean;
+        /**
+          * If true, the dialog will not close when the [Esc] key is press
+         */
+        "disableCloseEscKeydown": boolean;
+        /**
+          * The appearance of footer
+         */
+        "footerApperance": TDialogFooterAppearance;
+        /**
+          * Closes the dialog
+         */
+        "hide": () => Promise<void>;
+        /**
+          * If true, it hides the close button
+         */
+        "hideCloseButton": boolean;
+        /**
+          * If true, the dialog will be shown as open
+         */
+        "open": boolean;
+        /**
+          * Open the dialog
+         */
+        "show": () => Promise<void>;
+        /**
+          * The size of the dialog
+         */
+        "size": TDialogSize;
     }
     interface BqDivider {
         /**
@@ -592,6 +632,10 @@ export interface BqCheckboxCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqCheckboxElement;
 }
+export interface BqDialogCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqDialogElement;
+}
 export interface BqIconCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqIconElement;
@@ -662,6 +706,12 @@ declare global {
     var HTMLBqCheckboxElement: {
         prototype: HTMLBqCheckboxElement;
         new (): HTMLBqCheckboxElement;
+    };
+    interface HTMLBqDialogElement extends Components.BqDialog, HTMLStencilElement {
+    }
+    var HTMLBqDialogElement: {
+        prototype: HTMLBqDialogElement;
+        new (): HTMLBqDialogElement;
     };
     interface HTMLBqDividerElement extends Components.BqDivider, HTMLStencilElement {
     }
@@ -762,6 +812,7 @@ declare global {
         "bq-badge": HTMLBqBadgeElement;
         "bq-button": HTMLBqButtonElement;
         "bq-checkbox": HTMLBqCheckboxElement;
+        "bq-dialog": HTMLBqDialogElement;
         "bq-divider": HTMLBqDividerElement;
         "bq-icon": HTMLBqIconElement;
         "bq-notification": HTMLBqNotificationElement;
@@ -928,6 +979,44 @@ declare namespace LocalJSX {
           * A string representing the value of the checkbox. Primarily used to differentiate a list of related checkboxes that have the same name.
          */
         "value": string;
+    }
+    interface BqDialog {
+        /**
+          * If true, the dialog will not close when clicking on the backdrop overlay
+         */
+        "disableCloseClickOutside"?: boolean;
+        /**
+          * If true, the dialog will not close when the [Esc] key is press
+         */
+        "disableCloseEscKeydown"?: boolean;
+        /**
+          * The appearance of footer
+         */
+        "footerApperance"?: TDialogFooterAppearance;
+        /**
+          * If true, it hides the close button
+         */
+        "hideCloseButton"?: boolean;
+        /**
+          * Callback handler emitted when the dialog has been canceled or dismissed
+         */
+        "onBqCancel"?: (event: BqDialogCustomEvent<void>) => void;
+        /**
+          * Callback handler emitted when the dialog will close
+         */
+        "onBqClose"?: (event: BqDialogCustomEvent<void>) => void;
+        /**
+          * Callback handler emitted when the dialog will open
+         */
+        "onBqOpen"?: (event: BqDialogCustomEvent<void>) => void;
+        /**
+          * If true, the dialog will be shown as open
+         */
+        "open"?: boolean;
+        /**
+          * The size of the dialog
+         */
+        "size"?: TDialogSize;
     }
     interface BqDivider {
         /**
@@ -1377,6 +1466,7 @@ declare namespace LocalJSX {
         "bq-badge": BqBadge;
         "bq-button": BqButton;
         "bq-checkbox": BqCheckbox;
+        "bq-dialog": BqDialog;
         "bq-divider": BqDivider;
         "bq-icon": BqIcon;
         "bq-notification": BqNotification;
@@ -1407,6 +1497,7 @@ declare module "@stencil/core" {
              */
             "bq-button": LocalJSX.BqButton & JSXBase.HTMLAttributes<HTMLBqButtonElement>;
             "bq-checkbox": LocalJSX.BqCheckbox & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
+            "bq-dialog": LocalJSX.BqDialog & JSXBase.HTMLAttributes<HTMLBqDialogElement>;
             "bq-divider": LocalJSX.BqDivider & JSXBase.HTMLAttributes<HTMLBqDividerElement>;
             /**
              * Icons are simplified images that graphically explain the meaning of an object on the screen.
