@@ -1,15 +1,24 @@
-import { ArgsTable, Canvas, Story } from '@storybook/addon-docs';
+import { ArgTypes, Stories, Title, Subtitle } from '@storybook/addon-docs';
 
-# Dialog
+<Title>Dialog</Title>
 
-## Variations
+Description A Dialog is a UI component used to display additional content or prompt a user for action.
+It provides a way to display additional information, options, or controls in a separate, non-obstructive interface element.
 
-### Default
+<Subtitle>Usage</Subtitle>
 
-<Canvas>
-  <Story id="components-dialog--default" />
-</Canvas>
+To ensure a seamless user experience and maximize the effectiveness of the Dialog Modal component, it is recommended to follow these best practices:
 
-## Properties
+- Keep it simple: Avoid overwhelming the user with excessive content within the Dialog Modal. Strive for simplicity and present only the essential information or options necessary to complete the intended action or convey the message.
+- Use a clear and concise title: Provide a descriptive title that clearly communicates the purpose or content of the Dialog Modal. This helps users quickly understand the context and relevance of the dialog.
+- Prioritize actions: If there are multiple actions within the Dialog Modal, make sure to present them in an order that helps users easily identify and choose the appropriate action. Consider using clear call-to-action buttons with descriptive labels to guide the user.
 
-<ArgsTable of="bq-dialog" />
+<Subtitle>👍 When to use</Subtitle>
+
+- Displaying additional information, options, or controls that are relevant to a specific task or action.
+- Prompting a user for confirmation or input, such as when performing a potentially destructive action or making changes to a critical setting.
+- Providing a way for users to access related content or features without navigating away from the current interface.
+
+<Title>Properties</Title>
+
+<ArgTypes of="bq-dialog" />

@@ -4,7 +4,7 @@ import { DIALOG_FOOTER_APPEARANCE, DIALOG_SIZE, TDialogFooterAppearance, TDialog
 import { hasSlotContent, validatePropValue } from '../../shared/utils';
 
 /**
- * @part body- The `<main>` that holds the dialog body content
+ * @part body - The `<main>` that holds the dialog body content
  * @part button-close - The button that close the dialog on click
  * @part container - The `<div>` container that holds the dialog content
  * @part dialog - The `<dialog>` wrapper container inside the shadow DOM

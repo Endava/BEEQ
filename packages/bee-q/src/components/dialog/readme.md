@@ -61,16 +61,15 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part                                                      | Description                                                             |
-| --------------------------------------------------------- | ----------------------------------------------------------------------- |
-| `"body"`                                                  |                                                                         |
-| `"body- The `<main>` that holds the dialog body content"` |                                                                         |
-| `"button-close"`                                          | The button that close the dialog on click                               |
-| `"container"`                                             | The `<div>` container that holds the dialog content                     |
-| `"dialog"`                                                | The `<dialog>` wrapper container inside the shadow DOM                  |
-| `"footer"`                                                | The `<footer>` that holds footer content                                |
-| `"header"`                                                | The `<header>` that holds the icon, title, description and close button |
-| `"title"`                                                 | The `<div>` that holds the title content                                |
+| Part             | Description                                                             |
+| ---------------- | ----------------------------------------------------------------------- |
+| `"body"`         | The `<main>` that holds the dialog body content                         |
+| `"button-close"` | The button that close the dialog on click                               |
+| `"container"`    | The `<div>` container that holds the dialog content                     |
+| `"dialog"`       | The `<dialog>` wrapper container inside the shadow DOM                  |
+| `"footer"`       | The `<footer>` that holds footer content                                |
+| `"header"`       | The `<header>` that holds the icon, title, description and close button |
+| `"title"`        | The `<div>` that holds the title content                                |
 
 
 ## Dependencies
