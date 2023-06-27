@@ -19,17 +19,28 @@
 
 ## Events
 
-| Event     | Description                                         | Type                |
-| --------- | --------------------------------------------------- | ------------------- |
-| `bqClose` | Callback handler emitted when the dialog will close | `CustomEvent<void>` |
-| `bqOpen`  | Callback handler emitted when the dialog will open  | `CustomEvent<void>` |
+| Event      | Description                                                             | Type                |
+| ---------- | ----------------------------------------------------------------------- | ------------------- |
+| `bqCancel` | Callback handler emitted when the dialog has been canceled or dismissed | `CustomEvent<void>` |
+| `bqClose`  | Callback handler emitted when the dialog will close                     | `CustomEvent<void>` |
+| `bqOpen`   | Callback handler emitted when the dialog will open                      | `CustomEvent<void>` |
 
 
 ## Methods
 
+### `cancel() => Promise<void>`
+
+Dismiss or cancel the dialog
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 ### `hide() => Promise<void>`
 
-Hides  the dialog
+Closes the dialog
 
 #### Returns
 
@@ -39,7 +50,7 @@ Type: `Promise<void>`
 
 ### `show() => Promise<void>`
 
-Shows the dialog
+Open the dialog
 
 #### Returns
 

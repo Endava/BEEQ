@@ -176,6 +176,10 @@ export namespace Components {
     }
     interface BqDialog {
         /**
+          * Dismiss or cancel the dialog
+         */
+        "cancel": () => Promise<void>;
+        /**
           * If true, the dialog will not close when clicking on the backdrop overlay
          */
         "disableCloseClickOutside": boolean;
@@ -188,7 +192,7 @@ export namespace Components {
          */
         "footerApperance": TDialogFooterAppearance;
         /**
-          * Hides  the dialog
+          * Closes the dialog
          */
         "hide": () => Promise<void>;
         /**
@@ -200,7 +204,7 @@ export namespace Components {
          */
         "open": boolean;
         /**
-          * Shows the dialog
+          * Open the dialog
          */
         "show": () => Promise<void>;
         /**
@@ -993,6 +997,10 @@ declare namespace LocalJSX {
           * If true, it hides the close button
          */
         "hideCloseButton"?: boolean;
+        /**
+          * Callback handler emitted when the dialog has been canceled or dismissed
+         */
+        "onBqCancel"?: (event: BqDialogCustomEvent<void>) => void;
         /**
           * Callback handler emitted when the dialog will close
          */

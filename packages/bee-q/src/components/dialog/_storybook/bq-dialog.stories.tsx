@@ -21,6 +21,7 @@ const meta: Meta = {
     open: { control: 'boolean' },
     size: { control: 'select', options: [...DIALOG_SIZE] },
     // Events
+    bqCancel: { action: 'bqCancel' },
     bqClose: { action: 'bqClose' },
     bqOpen: { action: 'bqOpen' },
     // Not part of the public API
@@ -59,6 +60,7 @@ const Template = (args: Args) => {
       ?hide-close-button=${args['hide-close-button']}
       ?open=${args.open}
       size=${args.size}
+      @bqCancel=${args.bqCancel}
       @bqClose=${args.bqClose}
       @bqOpen=${args.bqOpen}
     >
@@ -125,7 +127,7 @@ const ConfirmTemplate = (args: Args) => {
 
   const handleDialogCancel = async () => {
     const dialogElem = document.querySelector('bq-dialog');
-    await dialogElem.hide();
+    await dialogElem.cancel();
   };
 
   return html`
@@ -137,6 +139,9 @@ const ConfirmTemplate = (args: Args) => {
       ?hide-close-button=${args['hide-close-button']}
       ?open=${args.open}
       size=${args.size}
+      @bqCancel=${args.bqCancel}
+      @bqClose=${args.bqClose}
+      @bqOpen=${args.bqOpen}
     >
       <h3 class="flex items-center gap-s" slot="title">
         <bq-icon name="info" size="30" color="icon--danger" role="img" title="Danger"></bq-icon>

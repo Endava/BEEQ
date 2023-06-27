@@ -80,6 +80,9 @@ export class BqDialog {
   // Requires JSDocs for public API documentation
   // ==============================================
 
+  /** Callback handler emitted when the dialog has been canceled or dismissed */
+  @Event() bqCancel!: EventEmitter<void>;
+
   /** Callback handler emitted when the dialog will close */
   @Event() bqClose!: EventEmitter<void>;
 
@@ -96,11 +99,11 @@ export class BqDialog {
 
   componentDidLoad() {
     this.handleOpenChange();
-    this.dialogElem.addEventListener('cancel', this.handleCancel);
+    this.dialogElem.addEventListener('cancel', this.handleEscDown);
   }
 
   disconnectedCallback() {
-    this.dialogElem.removeEventListener('cancel', this.handleCancel);
+    this.dialogElem.removeEventListener('cancel', this.handleEscDown);
   }
 
   // Listeners
@@ -110,6 +113,8 @@ export class BqDialog {
   handleMouseClick(event: MouseEvent) {
     if (!this.open) return;
     if (!this.dialogElem || this.disableCloseClickOutside) return;
+    // Skip if the mouse button is not the main button
+    if (event.button !== 0) return;
 
     const rect = this.dialogElem.getBoundingClientRect();
     if (
@@ -118,7 +123,7 @@ export class BqDialog {
       event.clientX < rect.left ||
       event.clientX > rect.right
     ) {
-      this.handleClose();
+      this.handleCancel();
     }
   }
 
@@ -129,16 +134,22 @@ export class BqDialog {
   // Requires JSDocs for public API documentation.
   // ===============================================
 
-  /** Shows the dialog */
+  /** Open the dialog */
   @Method()
   async show() {
     this.handleOpen();
   }
 
-  /** Hides  the dialog */
+  /** Closes the dialog */
   @Method()
   async hide() {
     this.handleClose();
+  }
+
+  /** Dismiss or cancel the dialog */
+  @Method()
+  async cancel() {
+    this.handleCancel();
   }
 
   // Local methods
@@ -166,13 +177,21 @@ export class BqDialog {
     this.open = true;
   };
 
-  private handleCancel = (event: KeyboardEvent) => {
+  private handleCancel = () => {
+    const ev = this.bqCancel.emit();
+    if (ev.defaultPrevented) return;
+
+    this.dialogElem.setAttribute('inert', 'true');
+    this.open = false;
+  };
+
+  private handleEscDown = (event: KeyboardEvent) => {
     if (this.disableCloseEscKeydown) {
       event.preventDefault();
       return;
     }
 
-    this.handleClose();
+    this.handleCancel();
   };
 
   private handleContentSlotChange = () => {
@@ -194,7 +213,7 @@ export class BqDialog {
           <div class="bq-dialog--title flex flex-1 items-center justify-between" part="title">
             <slot name="title" />
           </div>
-          <div class="flex" onClick={this.handleClose} part="button-close">
+          <div class="flex" onClick={this.handleCancel} part="button-close">
             <slot name="button-close">
               {!this.hideCloseButton && (
                 <bq-button class="bq-dialog--close" appearance="text" size="small" slot="button-close">
