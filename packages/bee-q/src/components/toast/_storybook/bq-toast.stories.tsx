@@ -2,6 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
 
 import mdx from './bq-toast.mdx';
+import { getRandomFromArray } from '../../../shared/utils';
 import { TOAST_PLACEMENT, TOAST_TYPE } from '../bq-toast.types';
 
 const meta: Meta = {
@@ -108,8 +109,10 @@ const StackableTemplate = (args: Args) => {
   const toggleToast = async () => {
     const toast = document.createElement('bq-toast');
 
+    const [type] = getRandomFromArray(TOAST_TYPE as unknown as unknown[], 1);
+
     Object.assign(toast, {
-      type: args.type,
+      type: type,
       hideIcon: args['hide-icon'],
       time: args.time,
       open: args.open,
@@ -127,7 +130,9 @@ const StackableTemplate = (args: Args) => {
 
 export const Stackable: Story = {
   render: StackableTemplate,
-  args: {
-    type: 'success',
+  argTypes: {
+    type: { control: 'select', table: { disable: true } },
+    open: { control: 'boolean', table: { disable: true } },
   },
+  args: {},
 };
