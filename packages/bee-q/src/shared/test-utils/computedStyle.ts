@@ -21,7 +21,7 @@ export const computedStyle = <T extends keyof CSSStyleDeclaration>(
         throw new Error(`Could not find element ${lightDomSelector}`);
       }
 
-      if (!!shadowDomSelector) {
+      if (shadowDomSelector) {
         element = element.shadowRoot.querySelector(shadowDomSelector);
 
         if (!element) {
