@@ -2,7 +2,8 @@
 /*                           Extended Palette Color                           */
 /* -------------------------------------------------------------------------- */
 
-:root {
+:root,
+::backdrop {
   /** Blue */
   --bq-blue-100: #e8f0fd;
   --bq-blue-200: #d0e2fb;

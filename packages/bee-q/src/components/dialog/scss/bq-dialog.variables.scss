@@ -1,0 +1,19 @@
+/* -------------------------------------------------------------------------- */
+/*                          Dialog custom properties           */
+/* -------------------------------------------------------------------------- */
+
+:host,
+::backdrop {
+  --bq-dialog--background: theme('colors.bg.primary');
+  --bq-dialog--background-backdrop: theme('colors.grey.600');
+
+  --bq-dialog--box-shadow: theme('boxShadow.m');
+  --bq-dialog--border-radius: theme('borderRadius.s');
+  --bq-dialog--padding: theme('spacing.l');
+
+  --bq-dialog--width-small: 320px;
+  --bq-dialog--width-medium: 480px;
+  --bq-dialog--width-large: 640px;
+
+  --bq-dialog-z-index: 10;
+}
