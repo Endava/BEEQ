@@ -68,7 +68,6 @@ describe('bq-switch', () => {
     await page.setContent(`
       <bq-switch inner-label="icon">Toggle me!</bq-switch>
     `);
-    // await page.waitForChanges();
 
     const switchControl = await page.find('bq-switch >>> .bq-switch--control');
     expect(switchControl).not.toBe(undefined);
