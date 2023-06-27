@@ -7,12 +7,13 @@
 
 ## Properties
 
-| Property   | Attribute   | Description                                                                  | Type                                                                 | Default     |
-| ---------- | ----------- | ---------------------------------------------------------------------------- | -------------------------------------------------------------------- | ----------- |
-| `hideIcon` | `hide-icon` | If true will hide toast icon                                                 | `boolean`                                                            | `false`     |
-| `open`     | `open`      | If true, the toast will be shown                                             | `boolean`                                                            | `undefined` |
-| `time`     | `time`      | The length of time, in milliseconds, after which the toast will close itself | `number`                                                             | `3000`      |
-| `type`     | `type`      | Type of toast                                                                | `"alert" \| "custom" \| "error" \| "info" \| "loading" \| "success"` | `'info'`    |
+| Property    | Attribute   | Description                                                                  | Type                                                                                              | Default           |
+| ----------- | ----------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ----------------- |
+| `hideIcon`  | `hide-icon` | If true will hide toast icon                                                 | `boolean`                                                                                         | `false`           |
+| `open`      | `open`      | If true, the toast will be shown                                             | `boolean`                                                                                         | `undefined`       |
+| `placement` | `placement` | Placement of toast                                                           | `"bottom-center" \| "bottom-left" \| "bottom-right" \| "top-center" \| "top-left" \| "top-right"` | `'bottom-center'` |
+| `time`      | `time`      | The length of time, in milliseconds, after which the toast will close itself | `number`                                                                                          | `3000`            |
+| `type`      | `type`      | Type of toast                                                                | `"alert" \| "custom" \| "error" \| "info" \| "loading" \| "success"`                              | `'info'`          |
 
 
 ## Events
@@ -36,6 +37,16 @@ Type: `Promise<void>`
 
 
 ### `show() => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `toast() => Promise<void>`
 
 
 

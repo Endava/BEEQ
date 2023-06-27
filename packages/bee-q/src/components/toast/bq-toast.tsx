@@ -1,7 +1,9 @@
-import { h, Host, Element, Event, EventEmitter, Component, Prop, Watch, Method } from '@stencil/core';
+import { h, Host, Element, Event, EventEmitter, Component, Prop, Watch, Method, Listen } from '@stencil/core';
 
-import { TOAST_TYPE, TToastType } from './bq-toast.types';
+import { TOAST_PLACEMENT, TOAST_TYPE, TToastPlacement, TToastType } from './bq-toast.types';
 import { TDebounce, debounce, validatePropValue } from '../../shared/utils';
+
+const toastPortal = Object.assign(document.createElement('div'), { className: 'bq-toast-portal' });
 
 /**
  * @part base - The component's internal wrapper of the Toast component.
@@ -33,6 +35,9 @@ export class BqToast {
   /** Type of toast */
   @Prop({ reflect: true, mutable: true }) type: TToastType = 'info';
 
+  /** Placement of toast */
+  @Prop({ reflect: true, mutable: true }) placement: TToastPlacement = 'bottom-center';
+
   /** If true will hide toast icon */
   @Prop({ reflect: true, mutable: true }) hideIcon = false;
 
@@ -46,8 +51,13 @@ export class BqToast {
   // =======================
 
   @Watch('type')
+  @Watch('placement')
   checkPropValues() {
     validatePropValue(TOAST_TYPE, 'default', this.el, 'type');
+    validatePropValue(TOAST_PLACEMENT, 'bottom-center', this.el, 'placement');
+
+    toastPortal.classList.remove(...TOAST_PLACEMENT);
+    toastPortal.classList.add(this.placement);
   }
 
   @Watch('time')
@@ -97,6 +107,24 @@ export class BqToast {
   // Listeners
   // ==============
 
+  @Listen('bqHide')
+  onNotificationHide() {
+    try {
+      toastPortal.removeChild(this.el);
+      // Remove the toast portal from the DOM when there are no more toasts
+      if (toastPortal.querySelector('bq-toast') === null) {
+        toastPortal.remove();
+      }
+    } catch (error) {
+      /**
+       * Skip DOMException error since it could be possible that
+       * in some situations the notification portal is missing
+       */
+      if (error instanceof DOMException) return;
+      throw error;
+    }
+  }
+
   // Public methods API
   // These methods are exposed on the host element.
   // Always use two lines.
@@ -112,6 +140,19 @@ export class BqToast {
   @Method()
   async hide(): Promise<void> {
     this.handleHide();
+  }
+
+  @Method()
+  async toast() {
+    if (toastPortal.parentElement === null) {
+      document.body.append(toastPortal);
+    }
+
+    toastPortal.appendChild(this.el);
+
+    requestAnimationFrame(() => {
+      this.show();
+    });
   }
 
   // Local methods

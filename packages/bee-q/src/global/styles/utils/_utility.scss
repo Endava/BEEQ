@@ -37,3 +37,39 @@
 .bq-notification-portal bq-notification {
   @apply m-4;
 }
+
+/**
+ * Use these classes for the toast portal container
+ */
+
+.bq-toast-portal {
+  @apply fixed z-50 flex max-h-full flex-col gap-xs2;
+
+  &.top-left {
+    @apply left-xxl2 top-xxl2;
+  }
+
+  &.top-center {
+    @apply left-1/2 top-xxl2;
+
+    transform: translate(-50%, 0);
+  }
+
+  &.top-right {
+    @apply right-xxl2 top-xxl2;
+  }
+
+  &.bottom-left {
+    @apply bottom-xxl2 left-xxl2;
+  }
+
+  &.bottom-center {
+    @apply bottom-xxl2 left-1/2;
+
+    transform: translate(-50%, 0);
+  }
+
+  &.bottom-right {
+    @apply bottom-xxl2 right-xxl2;
+  }
+}

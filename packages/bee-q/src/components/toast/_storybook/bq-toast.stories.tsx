@@ -2,7 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
 
 import mdx from './bq-toast.mdx';
-import { TOAST_TYPE } from '../bq-toast.types';
+import { TOAST_PLACEMENT, TOAST_TYPE } from '../bq-toast.types';
 
 const meta: Meta = {
   title: 'Components/Toast',
@@ -14,6 +14,7 @@ const meta: Meta = {
   },
   argTypes: {
     type: { control: 'select', options: [...TOAST_TYPE] },
+    placement: { control: 'select', options: [...TOAST_PLACEMENT] },
     'hide-icon': { control: 'boolean' },
     open: { control: 'boolean' },
     time: { control: 'number' },
@@ -24,6 +25,7 @@ const meta: Meta = {
   },
   args: {
     type: 'info',
+    placement: 'bottom-center',
     'hide-icon': false,
     open: false,
     time: 3000,
@@ -36,6 +38,7 @@ type Story = StoryObj;
 
 const Template = (args: Args) => {
   const onToastHide = (event) => {
+    args.bqHide(event);
     event.preventDefault();
   };
 
@@ -47,6 +50,8 @@ const Template = (args: Args) => {
           hide-icon=${args['hide-icon']}
           open=${args.open}
           time=${args.time}
+          placement=${args.placement}
+          @bqShow=${args.bqShow}
           @bqHide=${onToastHide}
         >
           ${args.text}
@@ -70,25 +75,20 @@ export const Default: Story = {
 };
 
 const CustomIconTemplate = (args: Args) => {
-  const toggleToast = async () => {
-    const toast = document.querySelector('bq-toast');
-
-    if (!toast.open) {
-      await toast.show();
-    } else {
-      await toast.hide();
-    }
+  const onToastHide = (event) => {
+    args.bqHide(event);
+    event.preventDefault();
   };
 
   return html`
-    <bq-button @bqClick=${toggleToast}>Toggle toast</bq-button>
     <bq-toast
       type=${args.type}
       hide-icon=${args['hide-icon']}
       open=${args.open}
       time=${args.time}
-      @bqShow=${args.bqHide}
-      @bqHide=${args.bqHide}
+      placement=${args.placement}
+      @bqShow=${args.bqShow}
+      @bqHide=${onToastHide}
     >
       ${args.text}
       <bq-icon slot="icon" size="24" weight="bold" name="star"></bq-icon>
@@ -98,6 +98,35 @@ const CustomIconTemplate = (args: Args) => {
 
 export const Custom: Story = {
   render: CustomIconTemplate,
+  args: {
+    type: 'success',
+    open: true,
+  },
+};
+
+const StackableTemplate = (args: Args) => {
+  const toggleToast = async () => {
+    const toast = document.createElement('bq-toast');
+
+    Object.assign(toast, {
+      type: args.type,
+      hideIcon: args['hide-icon'],
+      time: args.time,
+      open: args.open,
+      placement: args.placement,
+      innerHTML: args.text,
+    });
+
+    document.body.append(toast);
+
+    await toast.toast();
+  };
+
+  return html` <bq-button @bqClick=${toggleToast}>Toggle toast</bq-button> `;
+};
+
+export const Stackable: Story = {
+  render: StackableTemplate,
   args: {
     type: 'success',
   },

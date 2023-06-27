@@ -19,7 +19,7 @@ import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spin
 import { TStatusType } from "./components/status/bq-status.types";
 import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
 import { TTabSize } from "./components/tab/bq-tab.types";
-import { TToastType } from "./components/toast/bq-toast.types";
+import { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 import { FloatingUIPlacement } from "./services/interfaces";
 export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 export { TBadgeSize } from "./components/badge/bq-badge.types";
@@ -35,7 +35,7 @@ export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spin
 export { TStatusType } from "./components/status/bq-status.types";
 export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
 export { TTabSize } from "./components/tab/bq-tab.types";
-export { TToastType } from "./components/toast/bq-toast.types";
+export { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export { FloatingUIPlacement } from "./services/interfaces";
 export namespace Components {
     /**
@@ -608,11 +608,16 @@ export namespace Components {
           * If true, the toast will be shown
          */
         "open": boolean;
+        /**
+          * Placement of toast
+         */
+        "placement": TToastPlacement;
         "show": () => Promise<void>;
         /**
           * The length of time, in milliseconds, after which the toast will close itself
          */
         "time": number;
+        "toast": () => Promise<void>;
         /**
           * Type of toast
          */
@@ -1504,6 +1509,10 @@ declare namespace LocalJSX {
           * If true, the toast will be shown
          */
         "open"?: boolean;
+        /**
+          * Placement of toast
+         */
+        "placement"?: TToastPlacement;
         /**
           * The length of time, in milliseconds, after which the toast will close itself
          */
