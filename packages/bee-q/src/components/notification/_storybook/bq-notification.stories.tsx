@@ -95,7 +95,9 @@ export const Default: Story = {
   },
 };
 
-export const Error: Story = {
+export const ErrorType: Story = {
+  // Avoid sonarlint warning: 'Do not use "Error" to declare a variable - use another name'
+  name: 'Error',
   render: Template,
   args: {
     'is-open': true,
