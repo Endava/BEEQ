@@ -1,12 +1,11 @@
-import { h, Component, Element, Prop, Watch, Method, State, Host } from '@stencil/core';
+import { h, Host, Element, Event, EventEmitter, Component, Prop, Watch, Method } from '@stencil/core';
 
 import { TOAST_TYPE, TToastType } from './bq-toast.types';
-import { assertUnreachable, isDefined, validatePropValue } from '../../shared/utils';
+import { TDebounce, debounce, validatePropValue } from '../../shared/utils';
 
 /**
  * @part base - The component's internal wrapper of the Toast component.
  * @part icon - `<div>` container element of toast icon component.
- * @part text - `<div>` container element of toast text slot.
  */
 @Component({
   tag: 'bq-toast',
@@ -17,51 +16,82 @@ export class BqToast {
   // Own Properties
   // ====================
 
+  private autoDismissDebounce: TDebounce<void>;
+
   // Reference to host HTML element
   // ===================================
+
   @Element() el!: HTMLBqToastElement;
 
   // State() variables
   // Inlined decorator, alphabetical order
   // =======================================
-  /** State of Toast */
-  @State() private shouldShowToast = false;
 
   // Public Property API
   // ========================
 
-  /** Type of Toast */
-  @Prop({ reflect: true, mutable: true }) type: TToastType = 'default';
+  /** Type of toast */
+  @Prop({ reflect: true, mutable: true }) type: TToastType = 'info';
 
-  /** Text color of Toast */
-  @Prop({ reflect: true }) textColor: string;
+  /** If true will hide toast icon */
+  @Prop({ reflect: true, mutable: true }) hideIcon = false;
 
-  /** Should show icon of Toast */
-  @Prop({ reflect: true }) showIcon = false;
+  /** If true, the toast will be shown */
+  @Prop({ reflect: true, mutable: true }) open: boolean;
 
-  /** Should hide Toast after period of time */
-  @Prop({ reflect: true }) autoCloseTime: number;
+  /** The length of time, in milliseconds, after which the toast will close itself */
+  @Prop({ reflect: true }) time: number = 3000;
 
   // Prop lifecycle events
   // =======================
+
   @Watch('type')
-  @Watch('autoCloseTime')
   checkPropValues() {
-    if (this.autoCloseTime < 0) {
-      this.autoCloseTime = Math.max(0, this.autoCloseTime);
-    }
     validatePropValue(TOAST_TYPE, 'default', this.el, 'type');
+  }
+
+  @Watch('time')
+  handleTimeChange() {
+    this.autoDismissDebounce?.cancel();
+
+    this.time = Math.max(0, this.time);
+
+    this.autoDismissDebounce = debounce(() => {
+      this.hide();
+    }, this.time);
+  }
+
+  @Watch('open')
+  handleOpenChange() {
+    this.autoDismissDebounce?.cancel();
+
+    if (this.open) {
+      this.autoDismissDebounce?.();
+    }
   }
 
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
 
+  /** Callback handler to be called when the notification is hidden */
+  @Event() bqHide: EventEmitter<HTMLBqToastElement>;
+
+  /** Callback handler to be called when the notification is shown */
+  @Event() bqShow: EventEmitter<HTMLBqToastElement>;
+
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
+
   componentWillLoad() {
     this.checkPropValues();
+    this.handleTimeChange();
+    this.handleOpenChange();
+  }
+
+  disconnectedCallback() {
+    this.autoDismissDebounce?.cancel();
   }
 
   // Listeners
@@ -74,21 +104,14 @@ export class BqToast {
   // Requires JSDocs for public API documentation.
   // ===============================================
 
-  /** Triggers function to show toast */
   @Method()
-  async showToast() {
-    this.shouldShowToast = true;
-    if (this.autoCloseTime > 0) {
-      setTimeout(() => {
-        this.shouldShowToast = false;
-      }, this.autoCloseTime);
-    }
+  async show(): Promise<void> {
+    this.handleShow();
   }
 
-  /** Triggers function to hide toast */
   @Method()
-  async hideToast() {
-    this.shouldShowToast = false;
+  async hide(): Promise<void> {
+    this.handleHide();
   }
 
   // Local methods
@@ -96,38 +119,21 @@ export class BqToast {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private get iconColor() {
-    if (isDefined(this.textColor)) {
-      return this.textColor;
+  private handleShow = () => {
+    const ev = this.bqShow.emit(this.el);
+    if (!ev.defaultPrevented) {
+      this.open = true;
     }
+  };
 
-    switch (this.type) {
-      case 'success': {
-        return 'ui--success';
-      }
-      case 'error': {
-        return 'ui--danger';
-      }
-      case 'loading': {
-        return 'ui--brand';
-      }
-      case 'alert': {
-        return 'ui--warning';
-      }
-      case 'info': {
-        return 'ui--brand';
-      }
-      case 'default': {
-        return 'ui--brand';
-      }
-      default: {
-        assertUnreachable(this.type);
-        return 'ui--brand';
-      }
+  private handleHide = () => {
+    const ev = this.bqHide.emit(this.el);
+    if (!ev.defaultPrevented) {
+      this.open = false;
     }
-  }
+  };
 
-  private get icon() {
+  private get iconName() {
     switch (this.type) {
       case 'success': {
         return 'check-circle';
@@ -139,16 +145,12 @@ export class BqToast {
         return 'spinner-gap';
       }
       case 'alert': {
-        return 'warning-circle';
+        return 'warning';
       }
       case 'info': {
         return 'info';
       }
-      case 'default': {
-        return 'info';
-      }
       default: {
-        assertUnreachable(this.type);
         return 'info';
       }
     }
@@ -160,25 +162,19 @@ export class BqToast {
 
   render() {
     return (
-      <Host aria-hidden={!this.shouldShowToast} hidden={!this.shouldShowToast}>
+      <Host
+        class={{ '!hidden': !this.open }}
+        aria-hidden={!this.open ? 'true' : 'false'}
+        hidden={!this.open ? 'true' : 'false'}
+        role="alert"
+      >
         <div class="bq-toast" part="base">
-          {this.showIcon && (
-            <div class="icon-wraper inline-block text-left align-middle" part="icon">
-              <slot name="icon" />
-            </div>
-          )}
-          {!this.showIcon && (
-            <bq-icon
-              class={`.bq-toast__icon`}
-              name={this.icon}
-              color={this.iconColor}
-              size="24"
-              weight="bold"
-            ></bq-icon>
-          )}
-          <div class="inline-block align-middle font-medium" part="text">
-            <slot name="text" />
+          <div class={{ [`bq-toast--icon ${this.type}`]: true, '!hidden': this.hideIcon }} part="icon">
+            <slot name="icon">
+              <bq-icon name={this.iconName} size="24" weight="bold" slot="icon"></bq-icon>
+            </slot>
           </div>
+          <slot />
         </div>
       </Host>
     );

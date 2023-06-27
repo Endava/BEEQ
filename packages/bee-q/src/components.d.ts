@@ -599,28 +599,22 @@ export namespace Components {
         "value": string;
     }
     interface BqToast {
+        "hide": () => Promise<void>;
         /**
-          * Should hide Toast after period of time
+          * If true will hide toast icon
          */
-        "autoCloseTime": number;
+        "hideIcon": boolean;
         /**
-          * Triggers function to hide toast
+          * If true, the toast will be shown
          */
-        "hideToast": () => Promise<void>;
+        "open": boolean;
+        "show": () => Promise<void>;
         /**
-          * Should show icon of Toast
+          * The length of time, in milliseconds, after which the toast will close itself
          */
-        "showIcon": boolean;
+        "time": number;
         /**
-          * Triggers function to show toast
-         */
-        "showToast": () => Promise<void>;
-        /**
-          * Text color of Toast
-         */
-        "textColor": string;
-        /**
-          * Type of Toast
+          * Type of toast
          */
         "type": TToastType;
     }
@@ -707,6 +701,10 @@ export interface BqTabCustomEvent<T> extends CustomEvent<T> {
 export interface BqTabGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqTabGroupElement;
+}
+export interface BqToastCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqToastElement;
 }
 declare global {
     /**
@@ -1491,19 +1489,27 @@ declare namespace LocalJSX {
     }
     interface BqToast {
         /**
-          * Should hide Toast after period of time
+          * If true will hide toast icon
          */
-        "autoCloseTime"?: number;
+        "hideIcon"?: boolean;
         /**
-          * Should show icon of Toast
+          * Callback handler to be called when the notification is hidden
          */
-        "showIcon"?: boolean;
+        "onBqHide"?: (event: BqToastCustomEvent<HTMLBqToastElement>) => void;
         /**
-          * Text color of Toast
+          * Callback handler to be called when the notification is shown
          */
-        "textColor"?: string;
+        "onBqShow"?: (event: BqToastCustomEvent<HTMLBqToastElement>) => void;
         /**
-          * Type of Toast
+          * If true, the toast will be shown
+         */
+        "open"?: boolean;
+        /**
+          * The length of time, in milliseconds, after which the toast will close itself
+         */
+        "time"?: number;
+        /**
+          * Type of toast
          */
         "type"?: TToastType;
     }

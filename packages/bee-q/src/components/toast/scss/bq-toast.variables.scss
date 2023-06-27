@@ -1,0 +1,12 @@
+/* -------------------------------------------------------------------------- */
+/*                          Toast custom properties           */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  --bq-toast--info-icon-color: theme('colors.icon.brand');
+  --bq-toast--success-icon-color: theme('colors.icon.success');
+  --bq-toast--alert-icon-color: theme('colors.icon.warning');
+  --bq-toast--error-icon-color: theme('colors.icon.danger');
+  --bq-toast--loading-icon-color: theme('colors.icon.brand');
+  --bq-toast--custom-icon-color: theme('colors.icon.primary');
+}

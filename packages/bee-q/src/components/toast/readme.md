@@ -7,19 +7,27 @@
 
 ## Properties
 
-| Property        | Attribute         | Description                            | Type                                                                  | Default     |
-| --------------- | ----------------- | -------------------------------------- | --------------------------------------------------------------------- | ----------- |
-| `autoCloseTime` | `auto-close-time` | Should hide Toast after period of time | `number`                                                              | `undefined` |
-| `showIcon`      | `show-icon`       | Should show icon of Toast              | `boolean`                                                             | `false`     |
-| `textColor`     | `text-color`      | Text color of Toast                    | `string`                                                              | `undefined` |
-| `type`          | `type`            | Type of Toast                          | `"alert" \| "default" \| "error" \| "info" \| "loading" \| "success"` | `'default'` |
+| Property   | Attribute   | Description                                                                  | Type                                                                 | Default     |
+| ---------- | ----------- | ---------------------------------------------------------------------------- | -------------------------------------------------------------------- | ----------- |
+| `hideIcon` | `hide-icon` | If true will hide toast icon                                                 | `boolean`                                                            | `false`     |
+| `open`     | `open`      | If true, the toast will be shown                                             | `boolean`                                                            | `undefined` |
+| `time`     | `time`      | The length of time, in milliseconds, after which the toast will close itself | `number`                                                             | `3000`      |
+| `type`     | `type`      | Type of toast                                                                | `"alert" \| "custom" \| "error" \| "info" \| "loading" \| "success"` | `'info'`    |
+
+
+## Events
+
+| Event    | Description                                                   | Type                              |
+| -------- | ------------------------------------------------------------- | --------------------------------- |
+| `bqHide` | Callback handler to be called when the notification is hidden | `CustomEvent<HTMLBqToastElement>` |
+| `bqShow` | Callback handler to be called when the notification is shown  | `CustomEvent<HTMLBqToastElement>` |
 
 
 ## Methods
 
-### `hideToast() => Promise<void>`
+### `hide() => Promise<void>`
 
-Triggers function to hide toast
+
 
 #### Returns
 
@@ -27,9 +35,9 @@ Type: `Promise<void>`
 
 
 
-### `showToast() => Promise<void>`
+### `show() => Promise<void>`
 
-Triggers function to show toast
+
 
 #### Returns
 
@@ -44,7 +52,6 @@ Type: `Promise<void>`
 | -------- | -------------------------------------------------------- |
 | `"base"` | The component's internal wrapper of the Toast component. |
 | `"icon"` | `<div>` container element of toast icon component.       |
-| `"text"` | `<div>` container element of toast text slot.            |
 
 
 ## Dependencies

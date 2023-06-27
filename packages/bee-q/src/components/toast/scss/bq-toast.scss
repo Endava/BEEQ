@@ -2,46 +2,40 @@
 /*                                Toast styles                */
 /* -------------------------------------------------------------------------- */
 
-@import './bq-toast-variables';
+@import './bq-toast.variables';
 
 :host {
-  @apply relative;
+  @apply inline-block;
 }
 
 .bq-toast {
-  @apply inline-flex items-center gap-xs rounded-s bg-ui-primary px-m py-[10px] shadow-l;
+  @apply flex items-center gap-xs bg-bg-primary p-m shadow-l;
 }
 
-.icon-wraper {
-  height: 24px;
-}
-
-.bq-toast__icon {
-  &.default {
-    @apply text-text-primary;
-  }
+.bq-toast--icon {
+  @apply flex;
 
   &.info {
-    @apply text-text-brand;
+    @apply text-[var(--bq-toast--info-icon-color)];
   }
 
   &.success {
-    @apply text-text-success;
+    @apply text-[var(--bq-toast--success-icon-color)];
   }
 
   &.alert {
-    @apply text-text-warning;
+    @apply text-[var(--bq-toast--alert-icon-color)];
   }
 
   &.error {
-    @apply text-text-danger;
+    @apply text-[var(--bq-toast--error-icon-color)];
   }
 
   &.loading {
-    @apply animate-[loading--spin_1s_infinite_linear] cursor-wait text-text-primary;
+    @apply animate-spin text-[var(--bq-toast--loading-icon-color)];
   }
-}
 
-.bq-toast-item__message {
-  @apply text-text-primary;
+  &.custom {
+    @apply text-[var(--bq-toast--custom-icon-color)];
+  }
 }

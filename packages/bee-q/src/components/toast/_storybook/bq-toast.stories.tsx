@@ -14,42 +14,91 @@ const meta: Meta = {
   },
   argTypes: {
     type: { control: 'select', options: [...TOAST_TYPE] },
-    textColor: { control: 'text' },
-    autoCloseTime: { control: 'number' },
+    'hide-icon': { control: 'boolean' },
+    open: { control: 'boolean' },
+    time: { control: 'number' },
+    text: { control: 'text', table: { disable: true } },
+    // Event handlers
+    bqShow: { action: 'bqShow' },
+    bqHide: { action: 'bqHide' },
   },
   args: {
-    type: 'default',
-    autoCloseTime: 5000,
+    type: 'info',
+    'hide-icon': false,
+    open: false,
+    time: 3000,
+    text: 'This is a message',
   },
 };
-
 export default meta;
 
 type Story = StoryObj;
 
 const Template = (args: Args) => {
-  const showToast = async () => {
-    await customElements.whenDefined('bq-toast');
-    const toastElement = document.querySelector('bq-toast');
-
-    await toastElement.showToast();
+  const onToastHide = (event) => {
+    event.preventDefault();
   };
-  return html`
-    <div class="mb-2 inline-block w-full text-left">
-      <bq-button appearance="primary" size="small" target="" type="button" variant="standard" @bqClick=${showToast}>
-        Show Toast!
-      </bq-button>
-    </div>
-    <div class="mb-2 inline-block w-full text-left">
-      <bq-toast type=${args.type} icon=${args.icon} text-color=${args.textColor} auto-close-time=${args.autoCloseTime}>
-        <bq-icon slot="icon" name="info" color="ui--brand" size="24" weight="bold"></bq-icon>
-        <span slot="text">This is some toast text message! </span></bq-toast
-      >
-    </div>
-  `;
+
+  return html`${TOAST_TYPE.map(
+    (type) => html`
+      <div class="mb-xs2">
+        <bq-toast
+          type=${type}
+          hide-icon=${args['hide-icon']}
+          open=${args.open}
+          time=${args.time}
+          @bqHide=${onToastHide}
+        >
+          ${args.text}
+          ${type === 'custom' ? html`<bq-icon slot="icon" size="24" weight="bold" name="star"></bq-icon>` : null}
+        </bq-toast>
+      </div>
+    `,
+  )} `;
 };
 
 export const Default: Story = {
   render: Template,
-  args: {},
+  argTypes: {
+    type: { control: 'select', table: { disable: true } },
+    time: { control: 'number', table: { disable: true } },
+    open: { control: 'boolean', table: { disable: true } },
+  },
+  args: {
+    open: true,
+  },
+};
+
+const CustomIconTemplate = (args: Args) => {
+  const toggleToast = async () => {
+    const toast = document.querySelector('bq-toast');
+
+    if (!toast.open) {
+      await toast.show();
+    } else {
+      await toast.hide();
+    }
+  };
+
+  return html`
+    <bq-button @bqClick=${toggleToast}>Toggle toast</bq-button>
+    <bq-toast
+      type=${args.type}
+      hide-icon=${args['hide-icon']}
+      open=${args.open}
+      time=${args.time}
+      @bqShow=${args.bqHide}
+      @bqHide=${args.bqHide}
+    >
+      ${args.text}
+      <bq-icon slot="icon" size="24" weight="bold" name="star"></bq-icon>
+    </bq-toast>
+  `;
+};
+
+export const Custom: Story = {
+  render: CustomIconTemplate,
+  args: {
+    type: 'success',
+  },
 };
