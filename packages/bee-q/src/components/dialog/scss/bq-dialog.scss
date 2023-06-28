@@ -59,7 +59,7 @@
 /* ------------------------------ Dialog footer ----------------------------- */
 
 .bq-dialog--footer {
-  @apply sticky bottom-0 flex w-full items-center justify-end gap-xs px-[var(--bq-dialog--padding)] py-s pt-0;
+  @apply sticky bottom-0 flex w-full items-center justify-end gap-xs p-[var(--bq-dialog--padding)] pt-0;
 }
 
 /* --------------------------- Dialog close button -------------------------- */
