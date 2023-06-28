@@ -14,6 +14,7 @@ const meta: Meta = {
     },
   },
   argTypes: {
+    'disable-backdrop': { control: 'boolean' },
     'disable-close-click-outside': { control: 'boolean' },
     'disable-close-esc-keydown': { control: 'boolean' },
     'footer-apperance': { control: 'select', options: [...DIALOG_FOOTER_APPEARANCE] },
@@ -29,6 +30,7 @@ const meta: Meta = {
     noFooter: { control: 'boolean', table: { disable: true } },
   },
   args: {
+    'disable-backdrop': false,
     'disable-close-click-outside': false,
     'disable-close-esc-keydown': false,
     'hide-close-button': false,
@@ -54,6 +56,7 @@ const Template = (args: Args) => {
   return html`
     <bq-button @bqClick=${handleOpenDialog}>Open Dialog</bq-button>
     <bq-dialog
+      ?disable-backdrop=${args['disable-backdrop']}
       ?disable-close-esc-keydown=${args['disable-close-esc-keydown']}
       ?disable-close-click-outside=${args['disable-close-click-outside']}
       footer-apperance=${args['footer-apperance']}
@@ -113,6 +116,14 @@ export const NoFooter: Story = {
   },
 };
 
+export const NoBackdrop: Story = {
+  render: Template,
+  args: {
+    open: true,
+    'disable-backdrop': true,
+  },
+};
+
 const ConfirmTemplate = (args: Args) => {
   const handleOpenDialog = async () => {
     const dialogElem = document.querySelector('bq-dialog');
@@ -133,6 +144,7 @@ const ConfirmTemplate = (args: Args) => {
   return html`
     <bq-button variant="ghost" @bqClick=${handleOpenDialog}>Deactivate account</bq-button>
     <bq-dialog
+      ?disable-backdrop=${args['disable-backdrop']}
       ?disable-close-esc-keydown=${args['disable-close-esc-keydown']}
       ?disable-close-click-outside=${args['disable-close-click-outside']}
       footer-apperance=${args['footer-apperance']}
