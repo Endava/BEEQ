@@ -25,6 +25,7 @@ const meta: Meta = {
     bqCancel: { action: 'bqCancel' },
     bqClose: { action: 'bqClose' },
     bqOpen: { action: 'bqOpen' },
+    bqAfterOpen: { action: 'bqAfterOpen' },
     // Not part of the public API
     noContent: { control: 'boolean', table: { disable: true } },
     noFooter: { control: 'boolean', table: { disable: true } },
@@ -66,6 +67,7 @@ const Template = (args: Args) => {
       @bqCancel=${args.bqCancel}
       @bqClose=${args.bqClose}
       @bqOpen=${args.bqOpen}
+      @bqAfterOpen=${args.bqAfterOpen}
     >
       <h3 class="flex items-center gap-s" slot="title">
         <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
@@ -154,6 +156,7 @@ const ConfirmTemplate = (args: Args) => {
       @bqCancel=${args.bqCancel}
       @bqClose=${args.bqClose}
       @bqOpen=${args.bqOpen}
+      @bqAfterOpen=${args.bqAfterOpen}
     >
       <h3 class="flex items-center gap-s" slot="title">
         <bq-icon name="info" size="30" color="icon--danger" role="img" title="Danger"></bq-icon>
