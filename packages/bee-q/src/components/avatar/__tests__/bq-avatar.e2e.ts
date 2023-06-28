@@ -83,4 +83,24 @@ describe('bq-avatar', () => {
     expect(mediumSquareStyle).toEqual({ borderRadius: '12px', height: '48px', width: '48px' });
     expect(largeSquareStyle).toEqual({ borderRadius: '12px', height: '64px', width: '64px' });
   });
+
+  it('should render <bq-badge> tag', async () => {
+    const page = await newE2EPage();
+    await page.setContent(`
+      <bq-avatar
+        alt-text="User profile"
+        label="Label"
+        initials="JS"
+        shape="circle"
+        size="medium"
+      >
+        <bq-badge slot="badge" text-color="#fff">9</bq-badge>
+      </bq-avatar>
+    `);
+
+    const avatarElem = await page.find('bq-avatar');
+    const sideMenuItems = await avatarElem.findAll('bq-badge');
+
+    expect(sideMenuItems).toHaveLength(1);
+  });
 });
