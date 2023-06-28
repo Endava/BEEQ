@@ -84,7 +84,7 @@ describe('bq-avatar', () => {
     expect(largeSquareStyle).toEqual({ borderRadius: '12px', height: '64px', width: '64px' });
   });
 
-  it('should render <bq-badge> tag', async () => {
+  it('should render <bq-badge> component', async () => {
     const page = await newE2EPage();
     await page.setContent(`
       <bq-avatar

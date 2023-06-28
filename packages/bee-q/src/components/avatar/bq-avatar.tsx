@@ -53,9 +53,6 @@ export class BqAvatar {
   /** The size of the avatar */
   @Prop({ reflect: true, mutable: true }) size: TAvatarSize = 'medium';
 
-  // /** The string to display in the badge */
-  // @Prop({ reflect: true }) badgeContent: string;
-
   // Prop lifecycle events
   // =======================
 
