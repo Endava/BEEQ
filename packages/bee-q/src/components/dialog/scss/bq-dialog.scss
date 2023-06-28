@@ -17,9 +17,11 @@
 /* --------------------------------- Dialog --------------------------------- */
 
 .bq-dialog {
-  @apply m-auto flex flex-col gap-l p-0;
-  @apply z-[var(--bq-dialog-z-index)] rounded-[var(--bq-dialog--border-radius)] border-none bg-[var(--bq-dialog--background)] shadow-[shadow:var(--bq-dialog--box-shadow)];
+  @apply m-auto flex flex-col gap-[var(--bq-dialog--gap)] p-0;
+  @apply rounded-[var(--bq-dialog--border-radius)] bg-[var(--bq-dialog--background)] shadow-[shadow:var(--bq-dialog--box-shadow)];
   @apply opacity-50 transition-opacity duration-300 ease-in-out;
+
+  border: var(--bq-dialog--border-width) var(--bq-dialog--border-style) var(--bq-dialog--border-color);
 
   &.small {
     @apply w-[var(--bq-dialog--width-small)];
