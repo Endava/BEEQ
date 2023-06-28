@@ -49,7 +49,7 @@
     "build": {
       "dependsOn": ["generate-icons"],
       "executor": "@nxext/stencil:build",
-      "outputs": ["{options.outputPath}", "packages/bee-q", "packages/bee-q-angular/src", "packages/bee-q-react/src"],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "projectType": "library",
         "tsConfig": "packages/bee-q/tsconfig.lib.json",
