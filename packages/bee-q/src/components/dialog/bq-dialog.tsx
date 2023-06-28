@@ -6,7 +6,7 @@ import { hasSlotContent, validatePropValue } from '../../shared/utils';
 /**
  * @part body - The `<main>` that holds the dialog body content
  * @part button-close - The button that close the dialog on click
- * @part container - The `<div>` container that holds the dialog content
+ * @part content - The `<div>` container that holds the dialog title and body content
  * @part dialog - The `<dialog>` wrapper container inside the shadow DOM
  * @part footer - The `<footer>` that holds footer content
  * @part header - The `<header>` that holds the icon, title, description and close button
@@ -209,30 +209,32 @@ export class BqDialog {
   render() {
     return (
       <dialog class={`bq-dialog ${this.size}`} ref={(dialogElem) => (this.dialogElem = dialogElem)} part="dialog">
-        <header class="bq-dialog--header" part="header">
-          <div class="bq-dialog--title flex flex-1 items-center justify-between" part="title">
-            <slot name="title" />
+        <main class="flex flex-col gap-[var(--bq-dialog--title-body-gap)]" part="content">
+          <header class="bq-dialog--header" part="header">
+            <div class="bq-dialog--title flex flex-1 items-center justify-between" part="title">
+              <slot name="title" />
+            </div>
+            <div class="flex" onClick={this.handleCancel} part="button-close">
+              <slot name="button-close">
+                {!this.hideCloseButton && (
+                  <bq-button class="bq-dialog--close" appearance="text" size="small" slot="button-close">
+                    <bq-icon class="cursor-pointer" name="x" role="img" title="Close" />
+                  </bq-button>
+                )}
+              </slot>
+            </div>
+          </header>
+          <div
+            class={{
+              hidden: !this.hasContent,
+              'overflow-y-auto px-[var(--bq-dialog--padding)]': this.hasContent,
+              '!pb-[var(--bq-dialog--padding)]': !this.hasFooter,
+            }}
+            ref={(mainElem) => (this.contentElem = mainElem)}
+            part="body"
+          >
+            <slot onSlotchange={this.handleContentSlotChange} />
           </div>
-          <div class="flex" onClick={this.handleCancel} part="button-close">
-            <slot name="button-close">
-              {!this.hideCloseButton && (
-                <bq-button class="bq-dialog--close" appearance="text" size="small" slot="button-close">
-                  <bq-icon class="cursor-pointer" name="x" role="img" title="Close" />
-                </bq-button>
-              )}
-            </slot>
-          </div>
-        </header>
-        <main
-          class={{
-            hidden: !this.hasContent,
-            'overflow-y-auto px-[var(--bq-dialog--padding)]': this.hasContent,
-            '!pb-[var(--bq-dialog--padding)]': !this.hasFooter,
-          }}
-          ref={(mainElem) => (this.contentElem = mainElem)}
-          part="body"
-        >
-          <slot onSlotchange={this.handleContentSlotChange} />
         </main>
         <footer
           class={{

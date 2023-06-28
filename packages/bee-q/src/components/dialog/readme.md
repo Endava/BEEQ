@@ -65,7 +65,7 @@ Type: `Promise<void>`
 | ---------------- | ----------------------------------------------------------------------- |
 | `"body"`         | The `<main>` that holds the dialog body content                         |
 | `"button-close"` | The button that close the dialog on click                               |
-| `"container"`    | The `<div>` container that holds the dialog content                     |
+| `"content"`      | The `<div>` container that holds the dialog title and body content      |
 | `"dialog"`       | The `<dialog>` wrapper container inside the shadow DOM                  |
 | `"footer"`       | The `<footer>` that holds footer content                                |
 | `"header"`       | The `<header>` that holds the icon, title, description and close button |

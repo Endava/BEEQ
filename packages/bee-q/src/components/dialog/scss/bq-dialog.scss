@@ -17,7 +17,7 @@
 /* --------------------------------- Dialog --------------------------------- */
 
 .bq-dialog {
-  @apply m-auto flex flex-col gap-[var(--bq-dialog--gap)] p-0;
+  @apply m-auto flex flex-col gap-[var(--bq-dialog--content-footer-gap)] p-0;
   @apply rounded-[var(--bq-dialog--border-radius)] bg-[var(--bq-dialog--background)] shadow-[shadow:var(--bq-dialog--box-shadow)];
   @apply opacity-50 transition-opacity duration-300 ease-in-out;
 
