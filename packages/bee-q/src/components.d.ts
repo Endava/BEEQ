@@ -47,10 +47,6 @@ export namespace Components {
          */
         "altText": string;
         /**
-          * The string to display in the badge
-         */
-        "badgeContent": string;
-        /**
           * The image source to load on the avatar (this can be also a base64 encoded image)
          */
         "image": string;
@@ -77,7 +73,7 @@ export namespace Components {
          */
         "backgroundColor"?: string;
         /**
-          * The size of the badge
+          * The size of the badge. Relevant if badge has no content.
          */
         "size"?: TBadgeSize;
         /**
@@ -890,10 +886,6 @@ declare namespace LocalJSX {
          */
         "altText"?: string;
         /**
-          * The string to display in the badge
-         */
-        "badgeContent"?: string;
-        /**
           * The image source to load on the avatar (this can be also a base64 encoded image)
          */
         "image"?: string;
@@ -920,7 +912,7 @@ declare namespace LocalJSX {
          */
         "backgroundColor"?: string;
         /**
-          * The size of the badge
+          * The size of the badge. Relevant if badge has no content.
          */
         "size"?: TBadgeSize;
         /**

@@ -53,8 +53,8 @@ export class BqAvatar {
   /** The size of the avatar */
   @Prop({ reflect: true, mutable: true }) size: TAvatarSize = 'medium';
 
-  /** The string to display in the badge */
-  @Prop({ reflect: true }) badgeContent: string;
+  // /** The string to display in the badge */
+  // @Prop({ reflect: true }) badgeContent: string;
 
   // Prop lifecycle events
   // =======================
@@ -170,11 +170,7 @@ export class BqAvatar {
             />
           )}
         </div>
-        {this.badgeContent && (
-          <bq-badge size="small" text-color="#fff">
-            {this.badgeContent}
-          </bq-badge>
-        )}
+        <slot name="badge"></slot>
       </Host>
     );
   }

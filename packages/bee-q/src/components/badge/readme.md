@@ -10,7 +10,7 @@
 | Property          | Attribute          | Description                                                                    | Type                  | Default           |
 | ----------------- | ------------------ | ------------------------------------------------------------------------------ | --------------------- | ----------------- |
 | `backgroundColor` | `background-color` | Badge background color. The value should be a valid value of the palette color | `string`              | `'ui--danger'`    |
-| `size`            | `size`             | The size of the badge                                                          | `"medium" \| "small"` | `'small'`         |
+| `size`            | `size`             | The size of the badge. Relevant if badge has no content.                       | `"medium" \| "small"` | `'small'`         |
 | `textColor`       | `text-color`       | Badge number color. The value should be a valid value of the palette color     | `string`              | `'text--inverse'` |
 
 
@@ -26,13 +26,11 @@
 
 ### Used by
 
- - [bq-avatar](../avatar)
  - [bq-status](../status)
 
 ### Graph
 ```mermaid
 graph TD;
-  bq-avatar --> bq-badge
   bq-status --> bq-badge
   style bq-badge fill:#f9f,stroke:#333,stroke-width:4px
 ```
