@@ -1006,6 +1006,10 @@ declare namespace LocalJSX {
          */
         "hideCloseButton"?: boolean;
         /**
+          * Callback handler emitted when the dialog finish opening
+         */
+        "onBqAfterOpen"?: (event: BqDialogCustomEvent<void>) => void;
+        /**
           * Callback handler emitted when the dialog has been canceled or dismissed
          */
         "onBqCancel"?: (event: BqDialogCustomEvent<void>) => void;

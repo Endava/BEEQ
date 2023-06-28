@@ -92,6 +92,9 @@ export class BqDialog {
   /** Callback handler emitted when the dialog will open */
   @Event() bqOpen!: EventEmitter<void>;
 
+  /** Callback handler emitted when the dialog finish opening */
+  @Event() bqAfterOpen!: EventEmitter<void>;
+
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
@@ -103,10 +106,12 @@ export class BqDialog {
   componentDidLoad() {
     this.handleOpenChange();
     this.dialogElem.addEventListener('cancel', this.handleEscDown);
+    this.dialogElem.addEventListener('transitionend', this.handleTransitionEnd);
   }
 
   disconnectedCallback() {
-    this.dialogElem.removeEventListener('cancel', this.handleEscDown);
+    this.dialogElem?.removeEventListener('cancel', this.handleEscDown);
+    this.dialogElem?.removeEventListener('transitionend', this.handleTransitionEnd);
   }
 
   // Listeners
@@ -186,6 +191,10 @@ export class BqDialog {
 
     this.dialogElem.setAttribute('inert', 'true');
     this.open = false;
+  };
+
+  private handleTransitionEnd = () => {
+    this.open && this.bqAfterOpen.emit();
   };
 
   private handleEscDown = (event: KeyboardEvent) => {
