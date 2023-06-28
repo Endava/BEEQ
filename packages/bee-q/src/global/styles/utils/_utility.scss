@@ -43,7 +43,7 @@
  */
 
 .bq-toast-portal {
-  @apply fixed z-50 flex max-h-full flex-col gap-xs2;
+  @apply fixed z-50 flex max-h-full flex-col gap-s;
 
   &.top-left {
     @apply left-xxl2 top-xxl2;

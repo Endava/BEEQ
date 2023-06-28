@@ -3,6 +3,34 @@
 /* -------------------------------------------------------------------------- */
 
 :host {
+  /**
+   * @prop --bq-toast--background: Toast background color
+   * @prop --bq-toast--box-shadow: Toast box shadow
+   * @prop --bq-toast--padding-y: Toast vertical padding
+   * @prop --bq-toast--padding-x: Toast horizontal padding
+   * @prop --bq-toast--gap: Toast distance between icon and text
+   * @prop --bq-toast--border--radius: Toast border radius
+   * @prop --bq-toast--border-color: Toast border color
+   * @prop --bq-toast--border-style: Toast border style
+   * @prop --bq-toast--border-width: Toast border width
+   * @prop --bq-toast--info-icon-color: Toast icon color when type is 'info'
+   * @prop --bq-toast--success-icon-color: Toast icon color when type is 'success'
+   * @prop --bq-toast--alert-icon-color: Toast icon color when type is 'alert'
+   * @prop --bq-toast--error-icon-color: Toast icon color when type is 'error'
+   * @prop --bq-toast--loading-icon-color: Toast icon color when type is 'loading'
+   * @prop --bq-toast--custom-icon-color: Toast icon color when type is 'custom'
+   */
+
+  --bq-toast--background: theme('colors.bg.primary');
+  --bq-toast--box-shadow: theme('boxShadow.l');
+  --bq-toast--padding-y: theme('spacing.s');
+  --bq-toast--padding-x: theme('spacing.m');
+  --bq-toast--gap: theme('spacing.xs');
+  --bq-toast--border-radius: theme('borderRadius.s');
+  --bq-toast--border-width: unset;
+  --bq-toast--border-style: none;
+  --bq-toast--border-color: theme('colors.transparent');
+
   --bq-toast--info-icon-color: theme('colors.icon.brand');
   --bq-toast--success-icon-color: theme('colors.icon.success');
   --bq-toast--alert-icon-color: theme('colors.icon.warning');
