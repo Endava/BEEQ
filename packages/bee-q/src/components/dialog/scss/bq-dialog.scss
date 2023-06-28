@@ -5,19 +5,17 @@
 @import './bq-dialog.variables';
 
 :host {
-  @apply fixed left-0 top-0 -z-10 flex h-dynamic-vh w-full items-center justify-center;
   @apply invisible #{!important};
 }
 
 :host([open]) {
-  @apply z-[var(--bq-dialog-z-index)];
   @apply visible #{!important};
 }
 
 /* --------------------------------- Dialog --------------------------------- */
 
 .bq-dialog {
-  @apply m-auto flex flex-col gap-[var(--bq-dialog--content-footer-gap)] p-0;
+  @apply absolute left-1/2 top-1/2 m-auto flex -translate-x-1/2 -translate-y-1/2 transform flex-col gap-[var(--bq-dialog--content-footer-gap)] p-0;
   @apply rounded-[var(--bq-dialog--border-radius)] bg-[var(--bq-dialog--background)] shadow-[shadow:var(--bq-dialog--box-shadow)];
   @apply opacity-50 transition-opacity duration-300 ease-in-out;
 

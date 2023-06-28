@@ -180,6 +180,10 @@ export namespace Components {
          */
         "cancel": () => Promise<void>;
         /**
+          * If true, the backdrop overlay won't be shown when the dialog opens
+         */
+        "disableBackdrop": boolean;
+        /**
           * If true, the dialog will not close when clicking on the backdrop overlay
          */
         "disableCloseClickOutside": boolean;
@@ -981,6 +985,10 @@ declare namespace LocalJSX {
         "value": string;
     }
     interface BqDialog {
+        /**
+          * If true, the backdrop overlay won't be shown when the dialog opens
+         */
+        "disableBackdrop"?: boolean;
         /**
           * If true, the dialog will not close when clicking on the backdrop overlay
          */

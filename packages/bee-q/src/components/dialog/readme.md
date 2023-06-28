@@ -9,6 +9,7 @@
 
 | Property                   | Attribute                     | Description                                                              | Type                             | Default      |
 | -------------------------- | ----------------------------- | ------------------------------------------------------------------------ | -------------------------------- | ------------ |
+| `disableBackdrop`          | `disable-backdrop`            | If true, the backdrop overlay won't be shown when the dialog opens       | `boolean`                        | `false`      |
 | `disableCloseClickOutside` | `disable-close-click-outside` | If true, the dialog will not close when clicking on the backdrop overlay | `boolean`                        | `false`      |
 | `disableCloseEscKeydown`   | `disable-close-esc-keydown`   | If true, the dialog will not close when the [Esc] key is press           | `boolean`                        | `false`      |
 | `footerApperance`          | `footer-apperance`            | The appearance of footer                                                 | `"highlight" \| "standard"`      | `'standard'` |

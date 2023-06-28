@@ -40,6 +40,9 @@ export class BqDialog {
   // Public Property API
   // ========================
 
+  /** If true, the backdrop overlay won't be shown when the dialog opens */
+  @Prop({ reflect: true }) disableBackdrop = false;
+
   /** If true, the dialog will not close when the [Esc] key is press */
   @Prop({ reflect: true }) disableCloseEscKeydown = false;
 
@@ -70,7 +73,7 @@ export class BqDialog {
   @Watch('open')
   handleOpenChange() {
     if (this.open) {
-      this.dialogElem.showModal();
+      !this.disableBackdrop ? this.dialogElem.showModal() : this.dialogElem.show();
     } else {
       this.dialogElem.close();
     }
