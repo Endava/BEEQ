@@ -27,9 +27,9 @@
   --bq-dialog--box-shadow: theme('boxShadow.m');
 
   --bq-dialog--border-color: theme('colors.transparent');
-  --bq-dialog--border-style: solid;
-  --bq-dialog--border-width: 0;
   --bq-dialog--border-radius: theme('borderRadius.m');
+  --bq-dialog--border-style: none;
+  --bq-dialog--border-width: unset;
 
   --bq-dialog--padding: theme('spacing.l');
   --bq-dialog--content-footer-gap: theme('spacing.l');
