@@ -221,7 +221,7 @@ export class BqDialog {
   render() {
     return (
       <dialog class={`bq-dialog ${this.size}`} ref={(dialogElem) => (this.dialogElem = dialogElem)} part="dialog">
-        <main class="flex flex-col gap-[var(--bq-dialog--title-body-gap)]" part="content">
+        <main class="flex flex-col gap-[var(--bq-dialog--title-body-gap)] overflow-hidden" part="content">
           <header class="bq-dialog--header" part="header">
             <div class="bq-dialog--title flex flex-1 items-center justify-between" part="title">
               <slot name="title" />
