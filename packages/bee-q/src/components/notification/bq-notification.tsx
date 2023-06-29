@@ -1,19 +1,22 @@
-import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
 import { NOTIFICATION_TYPE, TNotificationType } from './bq-notification.types';
-import { debounce, TDebounce, validatePropValue } from '../../shared/utils';
+import { debounce, hasSlotContent, TDebounce, validatePropValue } from '../../shared/utils';
 
 const notificationPortal = Object.assign(document.createElement('div'), { className: 'bq-notification-portal' });
 
 /**
- * @part base - The wrapper container `<div>` of the element inside the shadow DOM
+ * @part base - The `<div>` container of the predefined bq-icon component.
  * @part body - The conatiner `<div>` that wraps the notification description content
  * @part btn-close - The `bq-button` used to close the notification
  * @part content - The conatiner `<div>` that wraps all the notification content (title, description, footer)
  * @part footer - The conatiner `<div>` that wraps the notification footer content
- * @part icon-outline - The conatiner `<div>` that wraps the icon element
  * @part icon - The `<bq-icon>` element used to render a predefined icon based on the notification type
+ * @part icon-outline - The conatiner `<div>` that wraps the icon element
+ * @part main - The conatiner `<div>` that wraps the notification main content (title, description)
+ * @part svg - The `<svg>` element of the predefined bq-icon component.
  * @part title - The conatiner `<div>` that wraps the notification title content
+ * @part wrapper - The wrapper container `<div>` of the element inside the shadow DOM
  */
 
 @Component({
@@ -26,6 +29,8 @@ export class BqNotification {
   // ====================
 
   private autoDismissDebounce: TDebounce<void>;
+  private bodyElem: HTMLDivElement;
+  private footerElem: HTMLDivElement;
 
   // Reference to host HTML element
   // ===================================
@@ -36,6 +41,9 @@ export class BqNotification {
   // Inlined decorator, alphabetical order
   // =======================================
 
+  @State() private hasContent = false;
+  @State() private hasFooter = false;
+
   // Public Property API
   // ========================
 
@@ -44,9 +52,6 @@ export class BqNotification {
 
   /** If true, the close button at the top right of the notification won't be shown */
   @Prop({ reflect: true }) disableClose: boolean;
-
-  /** If true, the predefined icon type won't be shown and a custom icon provided on integration will be displayed instead */
-  @Prop({ reflect: true }) hasCustomIcon: boolean;
 
   /** If true, the notification icon won't be shown */
   @Prop({ reflect: true }) hideIcon: boolean;
@@ -147,8 +152,7 @@ export class BqNotification {
     this.handleShow();
   }
 
-  /** This method can be used to display notifications in a fixed-position element
-   * that allows for stacking multiple notifications vertically. */
+  /** This method can be used to display notifications in a fixed-position element that allows for stacking multiple notifications vertically */
   @Method()
   async toast() {
     if (notificationPortal.parentElement === null) {
@@ -180,6 +184,14 @@ export class BqNotification {
     }
   };
 
+  private handleContentSlotChange = () => {
+    this.hasContent = hasSlotContent(this.bodyElem);
+  };
+
+  private handleFooterSlotChange = () => {
+    this.hasFooter = hasSlotContent(this.footerElem, 'footer');
+  };
+
   private get iconName(): string {
     switch (this.type) {
       case 'error':
@@ -199,16 +211,8 @@ export class BqNotification {
 
   render() {
     return (
-      <Host
-        class={{ '!hidden': !this.isOpen }}
-        aria-hidden={!this.isOpen ? 'true' : 'false'}
-        hidden={!this.isOpen ? 'true' : 'false'}
-        role="alert"
-      >
-        <div
-          class="relative inline-flex min-w-[var(--bq-notification--min-width)] items-start rounded-[var(--bq-notification--border-radius)] bg-bg-primary p-[var(--bq-notification--padding)] shadow-m"
-          part="base"
-        >
+      <Host aria-hidden={!this.isOpen ? 'true' : 'false'} hidden={!this.isOpen ? 'true' : 'false'} role="alert">
+        <div class="bq-notification" part="wrapper">
           {/* CLOSE BUTTON */}
           {!this.disableClose && (
             <bq-button
@@ -222,32 +226,41 @@ export class BqNotification {
             </bq-button>
           )}
           {/* ICON */}
-          {!this.hideIcon && (
-            <div
-              class={{
-                'notification--icon mr-xs flex text-left align-top': true,
-                [`color-${this.type}`]: true, // The icon color will be based on the type (info, success, warning, error)
-              }}
-              part="icon-outline"
-            >
-              {!this.hideIcon && [
-                !this.hasCustomIcon ? <bq-icon name={this.iconName} part="icon" /> : <slot name="icon" />,
-              ]}
-            </div>
-          )}
-          {/* CONTENT */}
-          <div class="flex flex-col items-start" part="content">
-            {/* TITLE */}
-            <div class="title-font font-semibold leading-large" part="title">
-              <slot />
-            </div>
-            {/* BODY */}
-            <div class="text-s leading-regular" part="body">
-              <slot name="body" />
+          <div
+            class={{
+              '!hidden': this.hideIcon,
+              [`color-${this.type}`]: true, // The icon color will be based on the type (info, success, warning, error)
+              'notification--icon mr-xs flex text-left align-top': true,
+            }}
+            part="icon-outline"
+          >
+            <slot name="icon">
+              <bq-icon name={this.iconName} part="icon" exportparts="base,svg" />
+            </slot>
+          </div>
+          {/* MAIN */}
+          <div class="flex flex-col items-start gap-[var(--bq-notification--content-footer-gap)]" part="main">
+            <div class="flex flex-col gap-[var(--bq-notification--title-body-gap)]" part="content">
+              {/* TITLE */}
+              <div class="title-font font-semibold leading-large" part="title">
+                <slot />
+              </div>
+              {/* BODY */}
+              <div
+                class={{ 'text-s leading-regular': true, '!hidden': !this.hasContent }}
+                ref={(div) => (this.bodyElem = div)}
+                part="body"
+              >
+                <slot name="body" onSlotchange={this.handleContentSlotChange} />
+              </div>
             </div>
             {/* FOOTER */}
-            <div class="flex items-start gap-2" part="footer">
-              <slot name="footer" />
+            <div
+              class={{ 'flex items-start gap-xs': true, '!hidden': !this.hasFooter }}
+              ref={(div) => (this.footerElem = div)}
+              part="footer"
+            >
+              <slot name="footer" onSlotchange={this.handleFooterSlotChange} />
             </div>
           </div>
         </div>

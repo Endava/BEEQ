@@ -28,7 +28,7 @@
 
 ### `hide() => Promise<void>`
 
-
+Method to be called to hide the toast component
 
 #### Returns
 
@@ -38,7 +38,7 @@ Type: `Promise<void>`
 
 ### `show() => Promise<void>`
 
-
+Method to be called to show the toast component
 
 #### Returns
 
@@ -48,7 +48,7 @@ Type: `Promise<void>`
 
 ### `toast() => Promise<void>`
 
-
+This method can be used to display toasts in a fixed-position element that allows for stacking multiple toasts vertically
 
 #### Returns
 
