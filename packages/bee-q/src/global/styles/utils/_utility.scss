@@ -45,7 +45,7 @@
 .bq-toast-portal {
   @apply fixed z-50 flex max-h-full flex-col gap-s;
   // NOTE: on mobile we display toast full screen top / bottom
-  @apply left-0 w-full px-s sm:left-auto sm:w-fit sm:px-0;
+  @apply left-0 w-full px-m sm:left-auto sm:w-fit sm:px-0;
 
   &.top-left {
     @apply top-xxl2 sm:left-xxl2;
