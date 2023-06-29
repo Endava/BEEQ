@@ -19,6 +19,7 @@ import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spin
 import { TStatusType } from "./components/status/bq-status.types";
 import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
 import { TTabSize } from "./components/tab/bq-tab.types";
+import { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 import { FloatingUIPlacement } from "./services/interfaces";
 export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 export { TBadgeSize } from "./components/badge/bq-badge.types";
@@ -34,6 +35,7 @@ export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spin
 export { TStatusType } from "./components/status/bq-status.types";
 export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
 export { TTabSize } from "./components/tab/bq-tab.types";
+export { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export { FloatingUIPlacement } from "./services/interfaces";
 export namespace Components {
     /**
@@ -596,6 +598,31 @@ export namespace Components {
          */
         "value": string;
     }
+    interface BqToast {
+        "hide": () => Promise<void>;
+        /**
+          * If true will hide toast icon
+         */
+        "hideIcon": boolean;
+        /**
+          * If true, the toast will be shown
+         */
+        "open": boolean;
+        /**
+          * Placement of toast
+         */
+        "placement": TToastPlacement;
+        "show": () => Promise<void>;
+        /**
+          * The length of time, in milliseconds, after which the toast will close itself
+         */
+        "time": number;
+        "toast": () => Promise<void>;
+        /**
+          * Type of toast
+         */
+        "type": TToastType;
+    }
     interface BqTooltip {
         /**
           * Set the action when the tooltip should be displayed, on hover (default) or click
@@ -679,6 +706,10 @@ export interface BqTabCustomEvent<T> extends CustomEvent<T> {
 export interface BqTabGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqTabGroupElement;
+}
+export interface BqToastCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqToastElement;
 }
 declare global {
     /**
@@ -805,6 +836,12 @@ declare global {
         prototype: HTMLBqTabGroupElement;
         new (): HTMLBqTabGroupElement;
     };
+    interface HTMLBqToastElement extends Components.BqToast, HTMLStencilElement {
+    }
+    var HTMLBqToastElement: {
+        prototype: HTMLBqToastElement;
+        new (): HTMLBqToastElement;
+    };
     interface HTMLBqTooltipElement extends Components.BqTooltip, HTMLStencilElement {
     }
     var HTMLBqTooltipElement: {
@@ -830,6 +867,7 @@ declare global {
         "bq-switch": HTMLBqSwitchElement;
         "bq-tab": HTMLBqTabElement;
         "bq-tab-group": HTMLBqTabGroupElement;
+        "bq-toast": HTMLBqToastElement;
         "bq-tooltip": HTMLBqTooltipElement;
     }
 }
@@ -1454,6 +1492,36 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface BqToast {
+        /**
+          * If true will hide toast icon
+         */
+        "hideIcon"?: boolean;
+        /**
+          * Callback handler to be called when the notification is hidden
+         */
+        "onBqHide"?: (event: BqToastCustomEvent<HTMLBqToastElement>) => void;
+        /**
+          * Callback handler to be called when the notification is shown
+         */
+        "onBqShow"?: (event: BqToastCustomEvent<HTMLBqToastElement>) => void;
+        /**
+          * If true, the toast will be shown
+         */
+        "open"?: boolean;
+        /**
+          * Placement of toast
+         */
+        "placement"?: TToastPlacement;
+        /**
+          * The length of time, in milliseconds, after which the toast will close itself
+         */
+        "time"?: number;
+        /**
+          * Type of toast
+         */
+        "type"?: TToastType;
+    }
     interface BqTooltip {
         /**
           * Set the action when the tooltip should be displayed, on hover (default) or click
@@ -1496,6 +1564,7 @@ declare namespace LocalJSX {
         "bq-switch": BqSwitch;
         "bq-tab": BqTab;
         "bq-tab-group": BqTabGroup;
+        "bq-toast": BqToast;
         "bq-tooltip": BqTooltip;
     }
 }
@@ -1537,6 +1606,7 @@ declare module "@stencil/core" {
             "bq-switch": LocalJSX.BqSwitch & JSXBase.HTMLAttributes<HTMLBqSwitchElement>;
             "bq-tab": LocalJSX.BqTab & JSXBase.HTMLAttributes<HTMLBqTabElement>;
             "bq-tab-group": LocalJSX.BqTabGroup & JSXBase.HTMLAttributes<HTMLBqTabGroupElement>;
+            "bq-toast": LocalJSX.BqToast & JSXBase.HTMLAttributes<HTMLBqToastElement>;
             "bq-tooltip": LocalJSX.BqTooltip & JSXBase.HTMLAttributes<HTMLBqTooltipElement>;
         }
     }

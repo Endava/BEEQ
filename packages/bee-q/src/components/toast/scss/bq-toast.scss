@@ -1,0 +1,44 @@
+/* -------------------------------------------------------------------------- */
+/*                                Toast styles                */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-toast.variables';
+
+:host {
+  @apply inline-block animate-slide-in will-change-transform;
+}
+
+.bq-toast {
+  @apply flex items-center gap-[var(--bq-toast--gap)] px-[var(--bq-toast--padding-x)] py-[var(--bq-toast--padding-y)];
+  @apply rounded-[var(--bq-toast--border-radius)] bg-[var(--bq-toast--background)] shadow-[shadow:var(--bq-toast--box-shadow)];
+
+  border: var(--bq-toast--border-width) var(--bq-toast--border-style) var(--bq-toast--border-color);
+}
+
+.bq-toast--icon {
+  @apply flex;
+
+  &.info {
+    @apply text-[var(--bq-toast--icon-color-info)];
+  }
+
+  &.success {
+    @apply text-[var(--bq-toast--icon-color-success)];
+  }
+
+  &.alert {
+    @apply text-[var(--bq-toast--icon-color-alert)];
+  }
+
+  &.error {
+    @apply text-[var(--bq-toast--icon-color-error)];
+  }
+
+  &.loading {
+    @apply animate-spin text-[var(--bq-toast--icon-color-loading)];
+  }
+
+  &.custom {
+    @apply text-[var(--bq-toast--icon-color-custom)];
+  }
+}
