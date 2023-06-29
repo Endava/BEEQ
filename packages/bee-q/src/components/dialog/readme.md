@@ -20,12 +20,13 @@
 
 ## Events
 
-| Event         | Description                                                             | Type                |
-| ------------- | ----------------------------------------------------------------------- | ------------------- |
-| `bqAfterOpen` | Callback handler emitted when the dialog finish opening                 | `CustomEvent<void>` |
-| `bqCancel`    | Callback handler emitted when the dialog has been canceled or dismissed | `CustomEvent<void>` |
-| `bqClose`     | Callback handler emitted when the dialog will close                     | `CustomEvent<void>` |
-| `bqOpen`      | Callback handler emitted when the dialog will open                      | `CustomEvent<void>` |
+| Event          | Description                                                             | Type                |
+| -------------- | ----------------------------------------------------------------------- | ------------------- |
+| `bqAfterClose` | Callback handler emitted when the dialog finish closing                 | `CustomEvent<void>` |
+| `bqAfterOpen`  | Callback handler emitted when the dialog finish opening                 | `CustomEvent<void>` |
+| `bqCancel`     | Callback handler emitted when the dialog has been canceled or dismissed | `CustomEvent<void>` |
+| `bqClose`      | Callback handler emitted when the dialog will close                     | `CustomEvent<void>` |
+| `bqOpen`       | Callback handler emitted when the dialog will open                      | `CustomEvent<void>` |
 
 
 ## Methods

@@ -25,6 +25,7 @@ export class BqDialog {
   private dialogElem: HTMLDialogElement;
   private contentElem: HTMLElement;
   private footerElem: HTMLElement;
+  private OPEN_CSS_CLASS = 'bq-dialog--open';
 
   // Reference to host HTML element
   // ===================================
@@ -73,6 +74,7 @@ export class BqDialog {
   @Watch('open')
   handleOpenChange() {
     if (this.open) {
+      this.el.classList.add(this.OPEN_CSS_CLASS);
       !this.disableBackdrop ? this.dialogElem.showModal() : this.dialogElem.show();
     } else {
       this.dialogElem.close();
@@ -94,6 +96,9 @@ export class BqDialog {
 
   /** Callback handler emitted when the dialog finish opening */
   @Event() bqAfterOpen!: EventEmitter<void>;
+
+  /** Callback handler emitted when the dialog finish closing */
+  @Event() bqAfterClose!: EventEmitter<void>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -194,7 +199,13 @@ export class BqDialog {
   };
 
   private handleTransitionEnd = () => {
-    this.open && this.bqAfterOpen.emit();
+    if (this.open) {
+      this.bqAfterOpen.emit();
+      return;
+    }
+
+    this.bqAfterClose.emit();
+    this.el.classList.remove(this.OPEN_CSS_CLASS);
   };
 
   private handleEscDown = (event: KeyboardEvent) => {

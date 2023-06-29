@@ -8,7 +8,7 @@
   @apply invisible #{!important};
 }
 
-:host([open]) {
+:host(.bq-dialog--open) {
   @apply visible #{!important};
 }
 

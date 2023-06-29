@@ -26,6 +26,7 @@ const meta: Meta = {
     bqClose: { action: 'bqClose' },
     bqOpen: { action: 'bqOpen' },
     bqAfterOpen: { action: 'bqAfterOpen' },
+    bqAfterClose: { action: 'bqAfterClose' },
     // Not part of the public API
     noContent: { control: 'boolean', table: { disable: true } },
     noFooter: { control: 'boolean', table: { disable: true } },
@@ -68,6 +69,7 @@ const Template = (args: Args) => {
       @bqClose=${args.bqClose}
       @bqOpen=${args.bqOpen}
       @bqAfterOpen=${args.bqAfterOpen}
+      @bqAfterClose=${args.bqAfterClose}
     >
       <h3 class="flex items-center gap-s" slot="title">
         <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
@@ -105,16 +107,16 @@ export const Default: Story = {
 export const HighlightFooter: Story = {
   render: Template,
   args: {
-    'footer-apperance': 'highlight',
     open: true,
+    'footer-apperance': 'highlight',
   },
 };
 
 export const NoFooter: Story = {
   render: Template,
   args: {
-    noFooter: true,
     open: true,
+    noFooter: true,
   },
 };
 
@@ -157,6 +159,7 @@ const ConfirmTemplate = (args: Args) => {
       @bqClose=${args.bqClose}
       @bqOpen=${args.bqOpen}
       @bqAfterOpen=${args.bqAfterOpen}
+      @bqAfterClose=${args.bqAfterClose}
     >
       <h3 class="flex items-center gap-s" slot="title">
         <bq-icon name="info" size="30" color="icon--danger" role="img" title="Danger"></bq-icon>
