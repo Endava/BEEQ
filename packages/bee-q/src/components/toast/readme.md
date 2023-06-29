@@ -59,10 +59,13 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part     | Description                                              |
-| -------- | -------------------------------------------------------- |
-| `"base"` | The component's internal wrapper of the Toast component. |
-| `"icon"` | `<div>` container element of toast icon component.       |
+| Part          | Description                                              |
+| ------------- | -------------------------------------------------------- |
+| `"base"`      | `<div>` container element of toast bq-icon component.    |
+| `"icon"`      |                                                          |
+| `"icon-info"` | `<div>` container element of toast icon component.       |
+| `"svg"`       | `<svg>` element inside toast bq-icon component.          |
+| `"wrapper"`   | The component's internal wrapper of the Toast component. |
 
 
 ## Dependencies

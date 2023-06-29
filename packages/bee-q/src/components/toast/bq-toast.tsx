@@ -6,8 +6,10 @@ import { TDebounce, debounce, validatePropValue } from '../../shared/utils';
 const toastPortal = Object.assign(document.createElement('div'), { className: 'bq-toast-portal' });
 
 /**
- * @part base - The component's internal wrapper of the Toast component.
- * @part icon - `<div>` container element of toast icon component.
+ * @part wrapper - The component's internal wrapper of the Toast component.
+ * @part icon-info - `<div>` container element of toast icon component.
+ * @part base - `<div>` container element of toast bq-icon component.
+ * @part svg - `<svg>` element inside toast bq-icon component.
  */
 @Component({
   tag: 'bq-toast',
@@ -209,10 +211,10 @@ export class BqToast {
         hidden={!this.open ? 'true' : 'false'}
         role="status"
       >
-        <output class="bq-toast" part="base">
+        <output class="bq-toast" part="wrapper">
           <div class={{ [`bq-toast--icon ${this.type}`]: true, '!hidden': this.hideIcon }} part="icon">
             <slot name="icon">
-              <bq-icon name={this.iconName} size="24" weight="bold" slot="icon"></bq-icon>
+              <bq-icon name={this.iconName} size="24" weight="bold" slot="icon" exportparts="base,svg"></bq-icon>
             </slot>
           </div>
           <slot />

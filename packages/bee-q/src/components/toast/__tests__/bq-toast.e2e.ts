@@ -74,7 +74,7 @@ describe('bq-toast', () => {
 
     const styleProps = ['padding', 'borderRadius', 'gap'] as const;
 
-    const style = await computedStyle(page, 'bq-toast >>> [part="base"]', styleProps);
+    const style = await computedStyle(page, 'bq-toast >>> [part="wrapper"]', styleProps);
 
     expect(style).toEqual({ padding: '12px 16px', borderRadius: '8px', gap: '8px' });
   });
