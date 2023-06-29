@@ -5,7 +5,18 @@
 @import './bq-notification.variables';
 
 :host {
+  @apply hidden;
+}
+
+:host([is-open]) {
   @apply block;
+}
+
+.bq-notification {
+  @apply relative flex  min-w-[var(--bq-notification--min-width)] p-[var(--bq-notification--padding)];
+  @apply rounded-[var(--bq-notification--border-radius)] bg-[var(--bq-notification--background)];
+
+  box-shadow: var(--bq-notification--box-shadow);
 }
 
 /**
@@ -13,23 +24,23 @@
  */
 .notification--icon.color {
   &-error {
-    @apply text-text-danger;
+    @apply text-[color:--bq-notification--icon-color-error];
   }
 
   &-info {
-    @apply text-text-brand;
+    @apply text-[color:--bq-notification--icon-color-info];
   }
 
   &-neutral {
-    @apply text-text-primary;
+    @apply text-[color:--bq-notification--icon-color-neutral];
   }
 
   &-success {
-    @apply text-text-success;
+    @apply text-[color:--bq-notification--icon-color-success];
   }
 
   &-warning {
-    @apply text-text-warning;
+    @apply text-[color:--bq-notification--icon-color-warning];
   }
 }
 
