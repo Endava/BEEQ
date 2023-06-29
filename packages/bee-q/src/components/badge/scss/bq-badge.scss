@@ -13,6 +13,7 @@
   @apply rounded-[var(--bq-badge--border-radius)] border-[length:var(--bq-badge--border-width)] border-[color:var(--bq-badge--border-color)];
 
   border-style: var(--bq-badge--border-style);
+  box-shadow: var(--bq-badge--box-shadow);
 }
 
 .size {

@@ -5,6 +5,7 @@
 :host {
   /**
    * @prop --bq-badge--background-color: Badge background color
+   * @prop --bq-badge--box-shadow: Badge box shadow
    * @prop --bq-badge--border-color: Badge border color
    * @prop --bq-badge--border-radius: Badge border radius
    * @prop --bq-badge--border-style: Badge border style
@@ -15,6 +16,7 @@
    * @prop --bq-badge--text-color: Badge text color
    */
   --bq-badge--background-color: theme('colors.ui.danger');
+  --bq-badge--box-shadow: none;
 
   --bq-badge--border-color: theme('colors.stroke.tiertary');
   --bq-badge--border-radius: theme('borderRadius.full');
