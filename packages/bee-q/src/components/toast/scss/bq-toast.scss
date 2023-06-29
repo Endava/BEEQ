@@ -19,26 +19,26 @@
   @apply flex;
 
   &.info {
-    @apply text-[var(--bq-toast--info-icon-color)];
+    @apply text-[var(--bq-toast--icon-color-info)];
   }
 
   &.success {
-    @apply text-[var(--bq-toast--success-icon-color)];
+    @apply text-[var(--bq-toast--icon-color-success)];
   }
 
   &.alert {
-    @apply text-[var(--bq-toast--alert-icon-color)];
+    @apply text-[var(--bq-toast--icon-color-alert)];
   }
 
   &.error {
-    @apply text-[var(--bq-toast--error-icon-color)];
+    @apply text-[var(--bq-toast--icon-color-error)];
   }
 
   &.loading {
-    @apply animate-spin text-[var(--bq-toast--loading-icon-color)];
+    @apply animate-spin text-[var(--bq-toast--icon-color-loading)];
   }
 
   &.custom {
-    @apply text-[var(--bq-toast--custom-icon-color)];
+    @apply text-[var(--bq-toast--icon-color-custom)];
   }
 }
