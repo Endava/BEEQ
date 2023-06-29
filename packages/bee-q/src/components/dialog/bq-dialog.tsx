@@ -6,7 +6,7 @@ import { hasSlotContent, validatePropValue } from '../../shared/utils';
 /**
  * @part body - The `<main>` that holds the dialog body content
  * @part button-close - The button that close the dialog on click
- * @part container - The `<div>` container that holds the dialog content
+ * @part content - The `<div>` container that holds the dialog title and body content
  * @part dialog - The `<dialog>` wrapper container inside the shadow DOM
  * @part footer - The `<footer>` that holds footer content
  * @part header - The `<header>` that holds the icon, title, description and close button
@@ -25,6 +25,7 @@ export class BqDialog {
   private dialogElem: HTMLDialogElement;
   private contentElem: HTMLElement;
   private footerElem: HTMLElement;
+  private OPEN_CSS_CLASS = 'bq-dialog--open';
 
   // Reference to host HTML element
   // ===================================
@@ -39,6 +40,9 @@ export class BqDialog {
 
   // Public Property API
   // ========================
+
+  /** If true, the backdrop overlay won't be shown when the dialog opens */
+  @Prop({ reflect: true }) disableBackdrop = false;
 
   /** If true, the dialog will not close when the [Esc] key is press */
   @Prop({ reflect: true }) disableCloseEscKeydown = false;
@@ -70,7 +74,8 @@ export class BqDialog {
   @Watch('open')
   handleOpenChange() {
     if (this.open) {
-      this.dialogElem.showModal();
+      this.el.classList.add(this.OPEN_CSS_CLASS);
+      !this.disableBackdrop ? this.dialogElem.showModal() : this.dialogElem.show();
     } else {
       this.dialogElem.close();
     }
@@ -89,6 +94,12 @@ export class BqDialog {
   /** Callback handler emitted when the dialog will open */
   @Event() bqOpen!: EventEmitter<void>;
 
+  /** Callback handler emitted when the dialog finish opening */
+  @Event() bqAfterOpen!: EventEmitter<void>;
+
+  /** Callback handler emitted when the dialog finish closing */
+  @Event() bqAfterClose!: EventEmitter<void>;
+
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
@@ -100,10 +111,12 @@ export class BqDialog {
   componentDidLoad() {
     this.handleOpenChange();
     this.dialogElem.addEventListener('cancel', this.handleEscDown);
+    this.dialogElem.addEventListener('transitionend', this.handleTransitionEnd);
   }
 
   disconnectedCallback() {
-    this.dialogElem.removeEventListener('cancel', this.handleEscDown);
+    this.dialogElem?.removeEventListener('cancel', this.handleEscDown);
+    this.dialogElem?.removeEventListener('transitionend', this.handleTransitionEnd);
   }
 
   // Listeners
@@ -185,6 +198,16 @@ export class BqDialog {
     this.open = false;
   };
 
+  private handleTransitionEnd = () => {
+    if (this.open) {
+      this.bqAfterOpen.emit();
+      return;
+    }
+
+    this.bqAfterClose.emit();
+    this.el.classList.remove(this.OPEN_CSS_CLASS);
+  };
+
   private handleEscDown = (event: KeyboardEvent) => {
     if (this.disableCloseEscKeydown) {
       event.preventDefault();
@@ -209,30 +232,32 @@ export class BqDialog {
   render() {
     return (
       <dialog class={`bq-dialog ${this.size}`} ref={(dialogElem) => (this.dialogElem = dialogElem)} part="dialog">
-        <header class="bq-dialog--header" part="header">
-          <div class="bq-dialog--title flex flex-1 items-center justify-between" part="title">
-            <slot name="title" />
+        <main class="flex flex-col gap-[var(--bq-dialog--title-body-gap)] overflow-hidden" part="content">
+          <header class="bq-dialog--header" part="header">
+            <div class="bq-dialog--title flex flex-1 items-center justify-between" part="title">
+              <slot name="title" />
+            </div>
+            <div class="flex" onClick={this.handleCancel} part="button-close">
+              <slot name="button-close">
+                {!this.hideCloseButton && (
+                  <bq-button class="bq-dialog--close" appearance="text" size="small" slot="button-close">
+                    <bq-icon class="cursor-pointer" name="x" role="img" title="Close" />
+                  </bq-button>
+                )}
+              </slot>
+            </div>
+          </header>
+          <div
+            class={{
+              hidden: !this.hasContent,
+              'overflow-y-auto px-[var(--bq-dialog--padding)]': this.hasContent,
+              '!pb-[var(--bq-dialog--padding)]': !this.hasFooter,
+            }}
+            ref={(mainElem) => (this.contentElem = mainElem)}
+            part="body"
+          >
+            <slot onSlotchange={this.handleContentSlotChange} />
           </div>
-          <div class="flex" onClick={this.handleCancel} part="button-close">
-            <slot name="button-close">
-              {!this.hideCloseButton && (
-                <bq-button class="bq-dialog--close" appearance="text" size="small" slot="button-close">
-                  <bq-icon class="cursor-pointer" name="x" role="img" title="Close" />
-                </bq-button>
-              )}
-            </slot>
-          </div>
-        </header>
-        <main
-          class={{
-            hidden: !this.hasContent,
-            'overflow-y-auto px-[var(--bq-dialog--padding)]': this.hasContent,
-            '!pb-[var(--bq-dialog--padding)]': !this.hasFooter,
-          }}
-          ref={(mainElem) => (this.contentElem = mainElem)}
-          part="body"
-        >
-          <slot onSlotchange={this.handleContentSlotChange} />
         </main>
         <footer
           class={{
