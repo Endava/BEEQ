@@ -44,32 +44,30 @@
 
 .bq-toast-portal {
   @apply fixed z-50 flex max-h-full flex-col gap-s;
+  // NOTE: on mobile we display toast full screen top / bottom
+  @apply left-0 w-full px-s sm:left-auto sm:w-fit sm:px-0;
 
   &.top-left {
-    @apply left-xxl2 top-xxl2;
+    @apply top-xxl2 sm:left-xxl2;
   }
 
   &.top-center {
-    @apply left-1/2 top-xxl2;
-
-    transform: translate(-50%, 0);
+    @apply top-xxl2 sm:left-1/2 sm:-translate-x-1/2;
   }
 
   &.top-right {
-    @apply right-xxl2 top-xxl2;
+    @apply top-xxl2 sm:right-xxl2;
   }
 
   &.bottom-left {
-    @apply bottom-xxl2 left-xxl2;
+    @apply bottom-xxl2 sm:left-xxl2;
   }
 
   &.bottom-center {
-    @apply bottom-xxl2 left-1/2;
-
-    transform: translate(-50%, 0);
+    @apply bottom-xxl2 sm:left-1/2 sm:-translate-x-1/2;
   }
 
   &.bottom-right {
-    @apply bottom-xxl2 right-xxl2;
+    @apply bottom-xxl2 sm:right-xxl2;
   }
 }
