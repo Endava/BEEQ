@@ -14,6 +14,7 @@ const meta: Meta = {
     },
   },
   argTypes: {
+    'disable-backdrop': { control: 'boolean' },
     'disable-close-click-outside': { control: 'boolean' },
     'disable-close-esc-keydown': { control: 'boolean' },
     'footer-apperance': { control: 'select', options: [...DIALOG_FOOTER_APPEARANCE] },
@@ -24,11 +25,14 @@ const meta: Meta = {
     bqCancel: { action: 'bqCancel' },
     bqClose: { action: 'bqClose' },
     bqOpen: { action: 'bqOpen' },
+    bqAfterOpen: { action: 'bqAfterOpen' },
+    bqAfterClose: { action: 'bqAfterClose' },
     // Not part of the public API
     noContent: { control: 'boolean', table: { disable: true } },
     noFooter: { control: 'boolean', table: { disable: true } },
   },
   args: {
+    'disable-backdrop': false,
     'disable-close-click-outside': false,
     'disable-close-esc-keydown': false,
     'hide-close-button': false,
@@ -54,6 +58,7 @@ const Template = (args: Args) => {
   return html`
     <bq-button @bqClick=${handleOpenDialog}>Open Dialog</bq-button>
     <bq-dialog
+      ?disable-backdrop=${args['disable-backdrop']}
       ?disable-close-esc-keydown=${args['disable-close-esc-keydown']}
       ?disable-close-click-outside=${args['disable-close-click-outside']}
       footer-apperance=${args['footer-apperance']}
@@ -63,6 +68,8 @@ const Template = (args: Args) => {
       @bqCancel=${args.bqCancel}
       @bqClose=${args.bqClose}
       @bqOpen=${args.bqOpen}
+      @bqAfterOpen=${args.bqAfterOpen}
+      @bqAfterClose=${args.bqAfterClose}
     >
       <h3 class="flex items-center gap-s" slot="title">
         <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
@@ -100,16 +107,24 @@ export const Default: Story = {
 export const HighlightFooter: Story = {
   render: Template,
   args: {
-    'footer-apperance': 'highlight',
     open: true,
+    'footer-apperance': 'highlight',
   },
 };
 
 export const NoFooter: Story = {
   render: Template,
   args: {
-    noFooter: true,
     open: true,
+    noFooter: true,
+  },
+};
+
+export const NoBackdrop: Story = {
+  render: Template,
+  args: {
+    open: true,
+    'disable-backdrop': true,
   },
 };
 
@@ -133,6 +148,7 @@ const ConfirmTemplate = (args: Args) => {
   return html`
     <bq-button variant="ghost" @bqClick=${handleOpenDialog}>Deactivate account</bq-button>
     <bq-dialog
+      ?disable-backdrop=${args['disable-backdrop']}
       ?disable-close-esc-keydown=${args['disable-close-esc-keydown']}
       ?disable-close-click-outside=${args['disable-close-click-outside']}
       footer-apperance=${args['footer-apperance']}
@@ -142,6 +158,8 @@ const ConfirmTemplate = (args: Args) => {
       @bqCancel=${args.bqCancel}
       @bqClose=${args.bqClose}
       @bqOpen=${args.bqOpen}
+      @bqAfterOpen=${args.bqAfterOpen}
+      @bqAfterClose=${args.bqAfterClose}
     >
       <h3 class="flex items-center gap-s" slot="title">
         <bq-icon name="info" size="30" color="icon--danger" role="img" title="Danger"></bq-icon>

@@ -43,7 +43,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: 🚀 Publish to NPM registry
-        run: npx nx run-many --target=publish --exclude=workspace,bee-q-icons --skip-nx-cache --output-style=stream-without-prefixes
+        run: npx nx run-many --target=publish --parallel=1 --exclude=workspace,bee-q-icons --skip-nx-cache --output-style=stream-without-prefixes
 
       - name: 🔐 Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
