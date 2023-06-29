@@ -85,6 +85,20 @@ const config: Config = {
         xxl3: 'var(--bq-spacing-xxl3)',
         xxl4: 'var(--bq-spacing-xxl4)',
       },
+      keyframes: {
+        'fade-in': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        'slide-up': {
+          '0%': {
+            transform: 'translateY(10px)',
+          },
+        },
+      },
+      animation: {
+        'slide-in': 'fade-in 0.3s ease, slide-up 0.3s ease',
+      },
     },
   },
   plugins: [
