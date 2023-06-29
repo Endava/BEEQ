@@ -61,11 +61,11 @@ Type: `Promise<void>`
 
 | Part          | Description                                              |
 | ------------- | -------------------------------------------------------- |
-| `"base"`      | `<div>` container element of toast bq-icon component.    |
+| `"base"`      | The `<div>` container of the internal bq-icon component. |
 | `"icon"`      |                                                          |
-| `"icon-info"` | `<div>` container element of toast icon component.       |
-| `"svg"`       | `<svg>` element inside toast bq-icon component.          |
-| `"wrapper"`   | The component's internal wrapper of the Toast component. |
+| `"icon-info"` | The `<div>` container that holds the icon component.     |
+| `"svg"`       | The `<svg>` element of the internal bq-icon component.   |
+| `"wrapper"`   | The component's internal wrapper inside the shadow DOM.  |
 
 
 ## Dependencies

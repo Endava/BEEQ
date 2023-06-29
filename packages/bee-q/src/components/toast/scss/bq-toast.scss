@@ -5,7 +5,7 @@
 @import './bq-toast.variables';
 
 :host {
-  @apply inline-block;
+  @apply inline-block animate-slide-in will-change-transform;
 }
 
 .bq-toast {
