@@ -9,10 +9,10 @@
 }
 
 .avatar {
-  @apply relative overflow-hidden;
-  @apply bg-[var(--bq-avatar-background)];
+  @apply relative overflow-hidden bg-[var(--bq-avatar-background)];
+  @apply border-[length:var(--bq-avatar--border-width)] border-[color:var(--bq-avatar--border-color)];
 
-  border: var(--bq-avatar--border-width) var(--bq-avatar--border-style) var(--bq-avatar--border-color);
+  border-style: var(--bq-avatar--border-style);
 }
 
 .size {

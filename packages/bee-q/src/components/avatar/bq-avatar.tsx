@@ -140,10 +140,11 @@ export class BqAvatar {
           class={{
             avatar: true,
             [`size--${this.size}`]: true,
-            'rounded-full': this.shape === 'circle',
-            'rounded-xs': this.shape === 'square' && this.size === 'xsmall',
-            'rounded-s': this.shape === 'square' && this.size === 'small',
-            'rounded-m': this.shape === 'square' && (this.size === 'medium' || this.size === 'large'),
+            'rounded-[var(--bq-avatar--border-radius-circle)]': this.shape === 'circle',
+            'rounded-[var(--bq-avatar--border-radius-squareXs)]': this.shape === 'square' && this.size === 'xsmall',
+            'rounded-[var(--bq-avatar--border-radius-squareS)]': this.shape === 'square' && this.size === 'small',
+            'rounded-[var(--bq-avatar--border-radius-squareM)]':
+              this.shape === 'square' && (this.size === 'medium' || this.size === 'large'),
           }}
           aria-label={this.label}
           role="img"

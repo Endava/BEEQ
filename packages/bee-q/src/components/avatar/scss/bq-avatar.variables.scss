@@ -9,7 +9,11 @@
   * @prop --bq-avatar--border-color: Avatar border color
   * @prop --bq-avatar--border-style: Avatar border style
   * @prop --bq-avatar--border-width: Avatar border width
-  * @prop --bq-avatar--border-radius: Avatar border radius
+
+  * @prop --bq-avatar--border-radius-circle: Avatar border radius for circle & any size
+  * @prop --bq-avatar--border-radius-squareXs: Avatar border radius for square & size xsmall
+  * @prop --bq-avatar--border-radius-squareS: Avatar border radius for square & size small
+  * @prop --bq-avatar--border-radius-squareM: Avatar border radius for square & size medium/large
 
   * @prop --bq-avatar--size-xsmall: Avatar xsmall size
   * @prop --bq-avatar--size-small: Avatar small size
@@ -25,8 +29,12 @@
 
   --bq-avatar--border-color: theme('colors.stroke.tiertary');
   --bq-avatar--border-style: solid;
-  --bq-avatar--border-width: theme('borderSpacing.xs3');
-  --bq-avatar--border-radius: theme('borderRadius.full');
+  --bq-avatar--border-width: 2px;
+
+  --bq-avatar--border-radius-circle: theme('borderRadius.full');
+  --bq-avatar--border-radius-squareXs: theme('borderRadius.xs');
+  --bq-avatar--border-radius-squareS: theme('borderRadius.s');
+  --bq-avatar--border-radius-squareM: theme('borderRadius.m');
 
   --bq-avatar--size-xsmall: 24px;
   --bq-avatar--size-small: 32px;
