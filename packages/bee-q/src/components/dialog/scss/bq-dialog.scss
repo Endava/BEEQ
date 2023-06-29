@@ -5,34 +5,34 @@
 @import './bq-dialog.variables';
 
 :host {
-  @apply fixed left-0 top-0 -z-10 flex h-dynamic-vh w-full items-center justify-center;
   @apply invisible #{!important};
 }
 
-:host([open]) {
-  @apply z-[var(--bq-dialog-z-index)];
+:host(.bq-dialog--open) {
   @apply visible #{!important};
 }
 
 /* --------------------------------- Dialog --------------------------------- */
 
 .bq-dialog {
-  @apply m-auto flex flex-col gap-[var(--bq-dialog--gap)] p-0;
+  @apply absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform flex-col gap-[var(--bq-dialog--content-footer-gap)] p-0;
   @apply rounded-[var(--bq-dialog--border-radius)] bg-[var(--bq-dialog--background)] shadow-[shadow:var(--bq-dialog--box-shadow)];
-  @apply opacity-50 transition-opacity duration-300 ease-in-out;
+  @apply opacity-0 transition-opacity duration-300 ease-in-out;
+  // If mobile resolution, dialog will be full width
+  @apply w-[90vw];
 
   border: var(--bq-dialog--border-width) var(--bq-dialog--border-style) var(--bq-dialog--border-color);
 
   &.small {
-    @apply w-[var(--bq-dialog--width-small)];
+    @apply sm:w-[var(--bq-dialog--width-small)];
   }
 
   &.medium {
-    @apply w-[var(--bq-dialog--width-medium)];
+    @apply sm:w-[var(--bq-dialog--width-medium)];
   }
 
   &.large {
-    @apply w-[var(--bq-dialog--width-large)];
+    @apply sm:w-[var(--bq-dialog--width-large)];
   }
 }
 
@@ -59,7 +59,7 @@
 /* ------------------------------ Dialog footer ----------------------------- */
 
 .bq-dialog--footer {
-  @apply sticky bottom-0 flex w-full items-center justify-end gap-xs p-[var(--bq-dialog--padding)] pt-0;
+  @apply sticky top-full flex w-full items-center justify-end gap-xs p-[var(--bq-dialog--padding)] pt-0;
 }
 
 /* --------------------------- Dialog close button -------------------------- */

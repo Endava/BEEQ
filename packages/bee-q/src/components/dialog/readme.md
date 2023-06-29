@@ -9,6 +9,7 @@
 
 | Property                   | Attribute                     | Description                                                              | Type                             | Default      |
 | -------------------------- | ----------------------------- | ------------------------------------------------------------------------ | -------------------------------- | ------------ |
+| `disableBackdrop`          | `disable-backdrop`            | If true, the backdrop overlay won't be shown when the dialog opens       | `boolean`                        | `false`      |
 | `disableCloseClickOutside` | `disable-close-click-outside` | If true, the dialog will not close when clicking on the backdrop overlay | `boolean`                        | `false`      |
 | `disableCloseEscKeydown`   | `disable-close-esc-keydown`   | If true, the dialog will not close when the [Esc] key is press           | `boolean`                        | `false`      |
 | `footerApperance`          | `footer-apperance`            | The appearance of footer                                                 | `"highlight" \| "standard"`      | `'standard'` |
@@ -19,11 +20,13 @@
 
 ## Events
 
-| Event      | Description                                                             | Type                |
-| ---------- | ----------------------------------------------------------------------- | ------------------- |
-| `bqCancel` | Callback handler emitted when the dialog has been canceled or dismissed | `CustomEvent<void>` |
-| `bqClose`  | Callback handler emitted when the dialog will close                     | `CustomEvent<void>` |
-| `bqOpen`   | Callback handler emitted when the dialog will open                      | `CustomEvent<void>` |
+| Event          | Description                                                             | Type                |
+| -------------- | ----------------------------------------------------------------------- | ------------------- |
+| `bqAfterClose` | Callback handler emitted when the dialog finish closing                 | `CustomEvent<void>` |
+| `bqAfterOpen`  | Callback handler emitted when the dialog finish opening                 | `CustomEvent<void>` |
+| `bqCancel`     | Callback handler emitted when the dialog has been canceled or dismissed | `CustomEvent<void>` |
+| `bqClose`      | Callback handler emitted when the dialog will close                     | `CustomEvent<void>` |
+| `bqOpen`       | Callback handler emitted when the dialog will open                      | `CustomEvent<void>` |
 
 
 ## Methods
@@ -65,7 +68,7 @@ Type: `Promise<void>`
 | ---------------- | ----------------------------------------------------------------------- |
 | `"body"`         | The `<main>` that holds the dialog body content                         |
 | `"button-close"` | The button that close the dialog on click                               |
-| `"container"`    | The `<div>` container that holds the dialog content                     |
+| `"content"`      | The `<div>` container that holds the dialog title and body content      |
 | `"dialog"`       | The `<dialog>` wrapper container inside the shadow DOM                  |
 | `"footer"`       | The `<footer>` that holds footer content                                |
 | `"header"`       | The `<header>` that holds the icon, title, description and close button |
