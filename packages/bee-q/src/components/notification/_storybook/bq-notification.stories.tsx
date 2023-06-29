@@ -3,6 +3,7 @@ import { html } from 'lit-html';
 
 import mdx from './bq-notification.mdx';
 
+import { getRandomFromArray } from '../../../shared/utils';
 import { NOTIFICATION_TYPE } from '../bq-notification.types';
 
 const meta: Meta = {
@@ -95,7 +96,9 @@ export const Default: Story = {
   },
 };
 
-export const Error: Story = {
+export const ErrorType: Story = {
+  // Avoid sonarlint warning: 'Do not use "Error" to declare a variable - use another name'
+  name: 'Error',
   render: Template,
   args: {
     'is-open': true,
@@ -130,9 +133,7 @@ export const Warning: Story = {
 export const Stacked: Story = {
   render: (args: Args) => {
     const onButtonClick = () => {
-      const getRandom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
-      const type = getRandom(NOTIFICATION_TYPE as unknown as string[]);
-
+      const [type] = getRandomFromArray(NOTIFICATION_TYPE as unknown as string[], 1);
       const notification = Object.assign(document.createElement('bq-notification'), {
         type,
         autoDismiss: args['auto-dismiss'],

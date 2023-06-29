@@ -49,7 +49,7 @@
     "build": {
       "dependsOn": ["generate-icons"],
       "executor": "@nxext/stencil:build",
-      "outputs": ["{options.outputPath}", "packages/bee-q", "packages/bee-q-angular/src", "packages/bee-q-react/src"],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "projectType": "library",
         "tsConfig": "packages/bee-q/tsconfig.lib.json",
@@ -152,11 +152,19 @@
         "configFile": "packages/bee-q/.stylelintrc.json"
       }
     },
+    "prepublish": {
+      "executor": "nx:run-commands",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "command": "mv dist/bee-q/dist/README.md dist/bee-q/"
+      }
+    },
     "publish": {
       "executor": "ngx-deploy-npm:deploy",
+      "dependsOn": ["prepublish"],
       "options": {
         "access": "public",
-        "buildTarget": "production",
+        "noBuild": true,
         "tag": "latest"
       }
     },

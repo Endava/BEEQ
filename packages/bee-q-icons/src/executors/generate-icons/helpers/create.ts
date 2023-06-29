@@ -1,4 +1,4 @@
-import { readdir, writeFile } from 'fs-extra';
+import { readdirSync, writeFileSync } from 'fs-extra';
 import { join, parse } from 'path';
 import { format } from 'prettier';
 
@@ -9,9 +9,9 @@ interface ICreateIconsSetFile {
 }
 
 export const createIconsSetFile = async ({ fileName, outputDir, sourceDir }: ICreateIconsSetFile) => {
-  return new Promise<void>(async (resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     try {
-      const files = (await readdir(sourceDir)).sort();
+      const files = readdirSync(sourceDir).sort();
       const svgArrayNames = files.map((filename) => parse(filename).name);
       const fileContent = `
         /**
@@ -33,7 +33,7 @@ export const createIconsSetFile = async ({ fileName, outputDir, sourceDir }: ICr
         singleQuote: true,
         trailingComma: 'all',
       });
-      await writeFile(join(outputDir, fileName), formattedContent);
+      writeFileSync(join(outputDir, fileName), formattedContent);
 
       resolve();
     } catch (error) {

@@ -10,10 +10,64 @@
   @apply hover:before:scale-x-100 hover:before:bg-stroke-brand-hover active:before:bg-stroke-brand-active;
 }
 
+/**
+ * Use these classes in the document.bobdy when side menu component is present
+ */
+
+.bq-body--side-menu {
+  @apply relative transition-[padding-left] duration-300;
+}
+
+.bq-body--side-menu__collapse {
+  @apply pl-[var(--bq-side-menu--width-collapse)] #{!important};
+}
+
+.bq-body--side-menu__expand {
+  @apply pl-[var(--bq-side-menu--width)] #{!important};
+}
+
+/**
+ * Use these classes for the notification portal container
+ */
+
 .bq-notification-portal {
   @apply fixed end-0 top-0 z-50 max-h-full max-w-full;
 }
 
 .bq-notification-portal bq-notification {
   @apply m-4;
+}
+
+/**
+ * Use these classes for the toast portal container
+ */
+
+.bq-toast-portal {
+  @apply fixed z-50 flex max-h-full flex-col gap-s;
+  // NOTE: on mobile we display toast full screen top / bottom
+  @apply left-0 w-full px-m sm:left-auto sm:w-fit sm:px-0;
+
+  &.top-left {
+    @apply top-xxl2 sm:left-xxl2;
+  }
+
+  &.top-center {
+    @apply top-xxl2 sm:left-1/2 sm:-translate-x-1/2;
+  }
+
+  &.top-right {
+    @apply top-xxl2 sm:right-xxl2;
+  }
+
+  &.bottom-left {
+    @apply bottom-xxl2 sm:left-xxl2;
+  }
+
+  &.bottom-center {
+    @apply bottom-xxl2 sm:left-1/2 sm:-translate-x-1/2;
+  }
+
+  &.bottom-right {
+    @apply bottom-xxl2 sm:right-xxl2;
+  }
 }

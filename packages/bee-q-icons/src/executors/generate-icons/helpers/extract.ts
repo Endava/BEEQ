@@ -17,18 +17,16 @@ export const extractIcons = async ({
   fileName,
   svgFolder,
 }: IExtractIcons) => {
-  return new Promise<void>(async (resolve, reject) => {
-    try {
-      await decompress(join(downloadPath, fileName), downloadPath);
-      // Remove all existing files under the `/svg/` folder (if there's any) to create a clean copy
-      await remove(extractToPath);
-      // Move the SVG assets to the icon component `/svg/` folder
-      await copy(join(downloadPath, svgFolder, assetsFolder), extractToPath, {
-        overwrite: true,
-      });
-      resolve();
-    } catch (error) {
-      reject(error);
-    }
-  });
+  try {
+    await decompress(join(downloadPath, fileName), downloadPath);
+    // Remove all existing files under the `/svg/` folder (if there's any) to create a clean copy
+    await remove(extractToPath);
+    // Move the SVG assets to the icon component `/svg/` folder
+    await copy(join(downloadPath, svgFolder, assetsFolder), extractToPath, {
+      overwrite: true,
+    });
+    Promise.resolve();
+  } catch (error) {
+    Promise.reject(error);
+  }
 };
