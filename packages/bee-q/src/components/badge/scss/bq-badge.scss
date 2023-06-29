@@ -9,7 +9,10 @@
 }
 
 .bq-badge {
-  @apply flex items-center justify-center rounded-xl border-[1px] border-solid border-stroke-primary bg-[color:var(--bq-badge--background-color)] text-[color:var(--bq-badge--text-color)];
+  @apply flex items-center justify-center bg-[color:var(--bq-badge--background-color)] text-[color:var(--bq-badge--text-color)];
+  @apply rounded-[var(--bq-badge--border-radius)] border-[length:var(--bq-badge--border-width)] border-[color:var(--bq-badge--border-color)];
+
+  border-style: var(--bq-badge--border-style);
 }
 
 .size {
