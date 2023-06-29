@@ -6,7 +6,7 @@ import { debounce, hasSlotContent, TDebounce, validatePropValue } from '../../sh
 const notificationPortal = Object.assign(document.createElement('div'), { className: 'bq-notification-portal' });
 
 /**
- * @part base - The wrapper container `<div>` of the element inside the shadow DOM
+ * @part base - The `<div>` container of the predefined bq-icon component.
  * @part body - The conatiner `<div>` that wraps the notification description content
  * @part btn-close - The `bq-button` used to close the notification
  * @part content - The conatiner `<div>` that wraps all the notification content (title, description, footer)
@@ -14,7 +14,9 @@ const notificationPortal = Object.assign(document.createElement('div'), { classN
  * @part icon - The `<bq-icon>` element used to render a predefined icon based on the notification type
  * @part icon-outline - The conatiner `<div>` that wraps the icon element
  * @part main - The conatiner `<div>` that wraps the notification main content (title, description)
+ * @part svg - The `<svg>` element of the predefined bq-icon component.
  * @part title - The conatiner `<div>` that wraps the notification title content
+ * @part wrapper - The wrapper container `<div>` of the element inside the shadow DOM
  */
 
 @Component({
@@ -210,7 +212,7 @@ export class BqNotification {
   render() {
     return (
       <Host aria-hidden={!this.isOpen ? 'true' : 'false'} hidden={!this.isOpen ? 'true' : 'false'} role="alert">
-        <div class="bq-notification" part="base">
+        <div class="bq-notification" part="wrapper">
           {/* CLOSE BUTTON */}
           {!this.disableClose && (
             <bq-button
@@ -233,7 +235,7 @@ export class BqNotification {
             part="icon-outline"
           >
             <slot name="icon">
-              <bq-icon name={this.iconName} part="icon" />
+              <bq-icon name={this.iconName} part="icon" exportparts="base,svg" />
             </slot>
           </div>
           {/* MAIN */}
