@@ -1,5 +1,5 @@
 {
-  "ignoreFiles": ["**/*.{js,json,ts,tsx}"],
+  "ignoreFiles": ["**/*.{js,json,ts,tsx}", "./dist/**/*", "./node_modules/**/*"],
   "overrides": [
     {
       "files": ["**/*.css"],
