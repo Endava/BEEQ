@@ -6,10 +6,10 @@ import { TDebounce, debounce, validatePropValue } from '../../shared/utils';
 const toastPortal = Object.assign(document.createElement('div'), { className: 'bq-toast-portal' });
 
 /**
- * @part wrapper - The component's internal wrapper of the Toast component.
- * @part icon-info - `<div>` container element of toast icon component.
- * @part base - `<div>` container element of toast bq-icon component.
- * @part svg - `<svg>` element inside toast bq-icon component.
+ * @part wrapper - The component's internal wrapper inside the shadow DOM.
+ * @part icon-info - The `<div>` container that holds the icon component.
+ * @part base - The `<div>` container of the internal bq-icon component.
+ * @part svg - The `<svg>` element of the internal bq-icon component.
  */
 @Component({
   tag: 'bq-toast',
