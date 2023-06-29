@@ -3,10 +3,40 @@
 /* -------------------------------------------------------------------------- */
 
 :host {
+  /**
+  * @prop --bq-avatar--background: Avatar background color
+
+  * @prop --bq-avatar--border-color: Avatar border color
+  * @prop --bq-avatar--border-style: Avatar border style
+  * @prop --bq-avatar--border-width: Avatar border width
+  * @prop --bq-avatar--border-radius: Avatar border radius
+
+  * @prop --bq-avatar--size-xsmall: Avatar xsmall size
+  * @prop --bq-avatar--size-small: Avatar small size
+  * @prop --bq-avatar--size-medium: Avatar medium size
+  * @prop --bq-avatar--size-large: Avatar large size
+
+  * @prop --bq-avatar--badge-top: Badge top position
+  * @prop --bq-avatar--badge-right: Badge right position
+  * @prop --bq-avatar--badge-left: Badge left position
+  */
+
+  --bq-avatar-background: theme('colors.ui.secondary-light');
+
+  --bq-avatar--border-color: theme('colors.stroke.tiertary');
+  --bq-avatar--border-style: solid;
+  --bq-avatar--border-width: theme('borderSpacing.xs3');
+  --bq-avatar--border-radius: theme('borderRadius.full');
+
   --bq-avatar--size-xsmall: 24px;
   --bq-avatar--size-small: 32px;
   --bq-avatar--size-medium: 48px;
   --bq-avatar--size-large: 64px;
+
+  --bq-avatar--font-size-xsmall: theme('fontSize.xs');
+  --bq-avatar--font-size-small: theme('fontSize.xs');
+  --bq-avatar--font-size-medium: theme('fontSize.m');
+  --bq-avatar--font-size-large: theme('fontSize.m');
 
   --bq-avatar--badge-top: 0;
   --bq-avatar--badge-right: 0;

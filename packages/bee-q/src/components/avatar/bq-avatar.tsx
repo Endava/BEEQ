@@ -138,7 +138,7 @@ export class BqAvatar {
       <Host>
         <div
           class={{
-            'relative overflow-hidden border-[2px] border-solid border-stroke-tiertary bg-ui-secondary-light': true,
+            avatar: true,
             [`size--${this.size}`]: true,
             'rounded-full': this.shape === 'circle',
             'rounded-xs': this.shape === 'square' && this.size === 'xsmall',

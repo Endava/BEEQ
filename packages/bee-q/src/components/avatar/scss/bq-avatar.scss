@@ -8,21 +8,28 @@
   @apply relative inline-block;
 }
 
+.avatar {
+  @apply relative overflow-hidden;
+  @apply bg-[var(--bq-avatar-background)];
+
+  border: var(--bq-avatar--border-width) var(--bq-avatar--border-style) var(--bq-avatar--border-color);
+}
+
 .size {
   &--xsmall {
-    @apply h-[var(--bq-avatar--size-xsmall)] w-[var(--bq-avatar--size-xsmall)] text-xs;
+    @apply h-[var(--bq-avatar--size-xsmall)] w-[var(--bq-avatar--size-xsmall)] text-[length:var(--bq-avatar--font-size-xsmall)];
   }
 
   &--small {
-    @apply h-[var(--bq-avatar--size-small)] w-[var(--bq-avatar--size-small)] text-xs;
+    @apply h-[var(--bq-avatar--size-small)] w-[var(--bq-avatar--size-small)] text-[length:var(--bq-avatar--font-size-small)];
   }
 
   &--medium {
-    @apply h-[var(--bq-avatar--size-medium)] w-[var(--bq-avatar--size-medium)] text-m;
+    @apply h-[var(--bq-avatar--size-medium)] w-[var(--bq-avatar--size-medium)] text-[length:var(--bq-avatar--font-size-medium)];
   }
 
   &--large {
-    @apply h-[var(--bq-avatar--size-large)] w-[var(--bq-avatar--size-large)] text-m;
+    @apply h-[var(--bq-avatar--size-large)] w-[var(--bq-avatar--size-large)] text-[length:var(--bq-avatar--font-size-large)];
   }
 }
 
