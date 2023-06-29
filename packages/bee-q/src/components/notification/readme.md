@@ -49,8 +49,7 @@ Type: `Promise<void>`
 
 ### `toast() => Promise<void>`
 
-This method can be used to display notifications in a fixed-position element
-that allows for stacking multiple notifications vertically.
+This method can be used to display notifications in a fixed-position element that allows for stacking multiple notifications vertically
 
 #### Returns
 

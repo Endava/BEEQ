@@ -307,7 +307,7 @@ export namespace Components {
          */
         "time": number;
         /**
-          * This method can be used to display notifications in a fixed-position element that allows for stacking multiple notifications vertically.
+          * This method can be used to display notifications in a fixed-position element that allows for stacking multiple notifications vertically
          */
         "toast": () => Promise<void>;
         /**
@@ -595,6 +595,9 @@ export namespace Components {
         "value": string;
     }
     interface BqToast {
+        /**
+          * Method to be called to hide the toast component
+         */
         "hide": () => Promise<void>;
         /**
           * If true will hide toast icon
@@ -608,11 +611,17 @@ export namespace Components {
           * Placement of toast
          */
         "placement": TToastPlacement;
+        /**
+          * Method to be called to show the toast component
+         */
         "show": () => Promise<void>;
         /**
           * The length of time, in milliseconds, after which the toast will close itself
          */
         "time": number;
+        /**
+          * This method can be used to display toasts in a fixed-position element that allows for stacking multiple toasts vertically
+         */
         "toast": () => Promise<void>;
         /**
           * Type of toast
