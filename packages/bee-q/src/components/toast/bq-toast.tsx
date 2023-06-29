@@ -134,16 +134,19 @@ export class BqToast {
   // Requires JSDocs for public API documentation.
   // ===============================================
 
+  /** Method to be called to show the toast component */
   @Method()
   async show(): Promise<void> {
     this.handleShow();
   }
 
+  /** Method to be called to hide the toast component */
   @Method()
   async hide(): Promise<void> {
     this.handleHide();
   }
 
+  /** This method can be used to display toasts in a fixed-position element that allows for stacking multiple toasts vertically */
   @Method()
   async toast() {
     if (toastPortal.parentElement === null) {
@@ -205,12 +208,7 @@ export class BqToast {
 
   render() {
     return (
-      <Host
-        class={{ '!hidden': !this.open }}
-        aria-hidden={!this.open ? 'true' : 'false'}
-        hidden={!this.open ? 'true' : 'false'}
-        role="status"
-      >
+      <Host aria-hidden={!this.open ? 'true' : 'false'} hidden={!this.open ? 'true' : 'false'} role="status">
         <output class="bq-toast" part="wrapper">
           <div class={{ [`bq-toast--icon ${this.type}`]: true, '!hidden': this.hideIcon }} part="icon">
             <slot name="icon">
