@@ -23,6 +23,7 @@ const meta: Meta = {
     label: 'Avatar component label',
     shape: 'circle',
     size: 'medium',
+    'badge-content': '9',
   },
 };
 export default meta;
@@ -66,7 +67,7 @@ export const WithBadge: Story = {
       shape=${args.shape}
       size=${args.size}
     >
-      <bq-badge slot="badge" text-color="#fff">9</bq-badge>
+      <bq-badge slot="badge" text-color="#fff">${args['badge-content']}</bq-badge>
     </bq-avatar>`,
   args: {
     image:

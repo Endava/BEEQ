@@ -168,7 +168,9 @@ export class BqAvatar {
             />
           )}
         </div>
-        <slot name="badge"></slot>
+        <div class="badge">
+          <slot name="badge"></slot>
+        </div>
       </Host>
     );
   }
