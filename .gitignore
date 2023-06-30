@@ -8,6 +8,7 @@
 # source files to ignore
 .angular
 master.zip
+packages/bee-q/.stencil
 packages/bee-q/.storybook/css/**
 packages/bee-q/custom-elements.json
 packages/bee-q/src/components/icon/svg/**

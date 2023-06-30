@@ -58,6 +58,7 @@ export const config: Config = {
     {
       type: 'dist-custom-elements',
       customElementsExportBehavior: 'auto-define-custom-elements',
+      minify: true,
     },
     {
       type: 'docs-vscode',
