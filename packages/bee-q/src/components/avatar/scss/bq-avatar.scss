@@ -8,7 +8,7 @@
   @apply relative inline-block;
 }
 
-.avatar {
+.bq-avatar {
   @apply relative overflow-hidden bg-[var(--bq-avatar-background)];
   @apply border-[length:var(--bq-avatar--border-width)] border-[color:var(--bq-avatar--border-color)];
 

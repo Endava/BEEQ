@@ -138,7 +138,7 @@ export class BqAvatar {
       <Host>
         <div
           class={{
-            avatar: true,
+            'bq-avatar': true,
             [`size--${this.size}`]: true,
             'rounded-[var(--bq-avatar--border-radius-circle)]': this.shape === 'circle',
             'rounded-[var(--bq-avatar--border-radius-squareXs)]': this.shape === 'square' && this.size === 'xsmall',
