@@ -134,7 +134,7 @@
     "puppeteer": "19.11.1",
     "react-test-renderer": "18.2.0",
     "rimraf": "5.0.1",
-    "stencil-tailwind-plugin": "1.7.0",
+    "stencil-tailwind-plugin": "1.8.0",
     "storybook": "7.0.20",
     "stylelint": "15.7.0",
     "stylelint-config-sass-guidelines": "10.0.0",
