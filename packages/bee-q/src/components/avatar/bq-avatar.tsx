@@ -1,4 +1,4 @@
-import { h, Component, Prop, Watch, State, Element } from '@stencil/core';
+import { h, Component, Prop, Watch, State, Element, Host } from '@stencil/core';
 
 import { TAvatarShape, TAvatarSize, AVATAR_SHAPE, AVATAR_SIZE } from './bq-avatar.types';
 import { validatePropValue } from '../../shared/utils';
@@ -18,6 +18,8 @@ import { validatePropValue } from '../../shared/utils';
 export class BqAvatar {
   // Own Properties
   // ====================
+
+  trimmedInitials: string;
 
   // Reference to host HTML element
   // ===================================
@@ -67,6 +69,12 @@ export class BqAvatar {
     validatePropValue(AVATAR_SIZE, 'medium', this.el, 'size');
   }
 
+  @Watch('initials')
+  @Watch('size')
+  onInitialsChnage() {
+    this.trimInitialsBasedOnSize();
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
@@ -76,6 +84,7 @@ export class BqAvatar {
   // =====================================
 
   componentWillLoad() {
+    this.trimInitialsBasedOnSize();
     this.checkPropValues();
   }
 
@@ -98,43 +107,79 @@ export class BqAvatar {
     this.hasError = true;
   };
 
+  private trimInitialsBasedOnSize = (): void => {
+    AVATAR_SIZE.forEach((size: TAvatarSize) => {
+      if (this.size === size) {
+        this.trimmedInitials = this.initials.substring(0, this.getIndex(size));
+      }
+    });
+  };
+
+  private getIndex = (size: TAvatarSize): number => {
+    switch (size) {
+      case 'small':
+        return 2;
+      case 'medium':
+        return 3;
+      case 'large':
+        return 4;
+      default:
+        // also if size === xsmall
+        return 1;
+    }
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
 
   render() {
     return (
-      <div
-        class={{
-          'relative overflow-hidden bg-ui-secondary-light': true,
-          [`size--${this.size}`]: true,
-          'rounded-full': this.shape === 'circle',
-          'rounded-xs': this.shape === 'square' && this.size === 'xsmall',
-          'rounded-s': this.shape === 'square' && this.size === 'small',
-          'rounded-m': this.shape === 'square' && (this.size === 'medium' || this.size === 'large'),
-        }}
-        aria-label={this.label}
-        role="img"
-        part="base"
-      >
-        {this.initials && (
-          <span
-            class="absolute left-0 top-0 inline-flex h-full w-full items-center justify-center font-bold"
-            part="text"
-          >
-            {this.initials}
-          </span>
-        )}
-        {this.image && !this.hasError && (
-          <img
-            class="absolute left-0 top-0 h-full w-full object-cover"
-            alt={this.altText ?? undefined}
-            src={this.image}
-            onError={this.onImageError}
-            part="img"
-          />
-        )}
-      </div>
+      <Host>
+        <div
+          class={{
+            'bq-avatar': true,
+            [`size--${this.size}`]: true,
+            'rounded-[var(--bq-avatar--border-radius-circle)]': this.shape === 'circle',
+            'rounded-[var(--bq-avatar--border-radius-squareXs)]': this.shape === 'square' && this.size === 'xsmall',
+            'rounded-[var(--bq-avatar--border-radius-squareS)]': this.shape === 'square' && this.size === 'small',
+            'rounded-[var(--bq-avatar--border-radius-squareM)]':
+              this.shape === 'square' && (this.size === 'medium' || this.size === 'large'),
+          }}
+          aria-label={this.label}
+          role="img"
+          part="base"
+        >
+          {this.initials && (
+            <span
+              class="absolute left-0 top-0 inline-flex h-full w-full items-center justify-center font-bold"
+              part="text"
+            >
+              {this.trimmedInitials}
+            </span>
+          )}
+          {this.image && !this.hasError && (
+            <img
+              class="absolute left-0 top-0 h-full w-full object-cover"
+              alt={this.altText ?? undefined}
+              src={this.image}
+              onError={this.onImageError}
+              part="img"
+            />
+          )}
+        </div>
+        <div
+          class={{
+            'absolute flex items-center justify-center': true,
+            'left-[var(--bq-avatar--badge-left-square)] top-[var(--bq-avatar--badge-top-square)]':
+              this.shape === 'square',
+            'left-[var(--bq-avatar--badge-left-circle)] top-[var(--bq-avatar--badge-top-circle)]':
+              this.shape === 'circle',
+          }}
+        >
+          <slot name="badge"></slot>
+        </div>
+      </Host>
     );
   }
 }
