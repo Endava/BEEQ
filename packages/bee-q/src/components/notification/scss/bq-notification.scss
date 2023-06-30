@@ -1,8 +1,22 @@
 /* -------------------------------------------------------------------------- */
-/*                                Notification styles                */
+/*                             Notification styles                            */
 /* -------------------------------------------------------------------------- */
 
 @import './bq-notification.variables';
+
+@layer utilities {
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes slide-in {
+    from {
+      transform: translateY(10px);
+    }
+  }
+}
 
 :host {
   @apply hidden;
@@ -14,10 +28,9 @@
 
 .bq-notification {
   @apply relative flex  min-w-[var(--bq-notification--min-width)] p-[var(--bq-notification--padding)];
-  @apply rounded-[var(--bq-notification--border-radius)] bg-[var(--bq-notification--background)];
-  @apply animate-slide-in;
+  @apply rounded-[var(--bq-notification--border-radius)] bg-[var(--bq-notification--background)] shadow-[shadow:var(--bq-notification--box-shadow)];
 
-  box-shadow: var(--bq-notification--box-shadow);
+  animation: fade-in 0.3s ease, slide-in 0.3s ease;
 }
 
 /**
