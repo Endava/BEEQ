@@ -595,9 +595,12 @@ export namespace Components {
         "value": string;
     }
     interface BqToast {
+<<<<<<< HEAD
         /**
           * Method to be called to hide the toast component
          */
+=======
+>>>>>>> eac78e6 (fix(avatar): change badge position based on shape)
         "hide": () => Promise<void>;
         /**
           * If true will hide toast icon
@@ -611,17 +614,23 @@ export namespace Components {
           * Placement of toast
          */
         "placement": TToastPlacement;
+<<<<<<< HEAD
         /**
           * Method to be called to show the toast component
          */
+=======
+>>>>>>> eac78e6 (fix(avatar): change badge position based on shape)
         "show": () => Promise<void>;
         /**
           * The length of time, in milliseconds, after which the toast will close itself
          */
         "time": number;
+<<<<<<< HEAD
         /**
           * This method can be used to display toasts in a fixed-position element that allows for stacking multiple toasts vertically
          */
+=======
+>>>>>>> eac78e6 (fix(avatar): change badge position based on shape)
         "toast": () => Promise<void>;
         /**
           * Type of toast

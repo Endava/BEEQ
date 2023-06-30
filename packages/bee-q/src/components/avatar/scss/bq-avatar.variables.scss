@@ -20,9 +20,10 @@
   * @prop --bq-avatar--size-medium: Avatar medium size
   * @prop --bq-avatar--size-large: Avatar large size
 
-  * @prop --bq-avatar--badge-top: Badge top position
-  * @prop --bq-avatar--badge-right: Badge right position
-  * @prop --bq-avatar--badge-left: Badge left position
+  * @prop --bq-avatar--badge-top-square: Badge top position shape square
+  * @prop --bq-avatar--badge-left-square: Badge left position shape square
+  * @prop --bq-avatar--badge-top-circle: Badge top position shape circle
+  * @prop --bq-avatar--badge-left-circle: Badge left position shape circle
   */
 
   --bq-avatar-background: theme('colors.ui.secondary-light');
@@ -46,7 +47,8 @@
   --bq-avatar--font-size-medium: theme('fontSize.m');
   --bq-avatar--font-size-large: theme('fontSize.m');
 
-  --bq-avatar--badge-top: 0;
-  --bq-avatar--badge-right: 0;
-  --bq-avatar--badge-left: 80%;
+  --bq-avatar--badge-top-square: -5px;
+  --bq-avatar--badge-left-square: 80%;
+  --bq-avatar--badge-top-circle: 0;
+  --bq-avatar--badge-left-circle: 75%;
 }

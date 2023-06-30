@@ -168,7 +168,15 @@ export class BqAvatar {
             />
           )}
         </div>
-        <div class="badge">
+        <div
+          class={{
+            'absolute flex items-center justify-center': true,
+            'left-[var(--bq-avatar--badge-left-square)] top-[var(--bq-avatar--badge-top-square)]':
+              this.shape === 'square',
+            'left-[var(--bq-avatar--badge-left-circle)] top-[var(--bq-avatar--badge-top-circle)]':
+              this.shape === 'circle',
+          }}
+        >
           <slot name="badge"></slot>
         </div>
       </Host>

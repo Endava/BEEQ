@@ -32,8 +32,3 @@
     @apply h-[var(--bq-avatar--size-large)] w-[var(--bq-avatar--size-large)] text-[length:var(--bq-avatar--font-size-large)];
   }
 }
-
-.badge {
-  @apply flex items-center justify-center;
-  @apply absolute left-[var(--bq-avatar--badge-left)] right-[var(--bq-avatar--badge-right)] top-[var(--bq-avatar--badge-top)];
-}
