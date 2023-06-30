@@ -71,7 +71,7 @@
     "@nrwl/workspace": "14.8.8",
     "@nxext/stencil": "14.0.6",
     "@stencil/angular-output-target": "0.7.1",
-    "@stencil/core": "3.4.0",
+    "@stencil/core": "4.0.1",
     "@stencil/react-output-target": "0.5.3",
     "@stencil/sass": "3.0.4",
     "@storybook/addon-a11y": "7.0.20",
