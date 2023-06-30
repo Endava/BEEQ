@@ -73,7 +73,7 @@ export namespace Components {
          */
         "backgroundColor"?: string;
         /**
-          * The size of the badge
+          * The size of the badge. Relevant if badge has no content.
          */
         "size"?: TBadgeSize;
         /**
@@ -912,7 +912,7 @@ declare namespace LocalJSX {
          */
         "backgroundColor"?: string;
         /**
-          * The size of the badge
+          * The size of the badge. Relevant if badge has no content.
          */
         "size"?: TBadgeSize;
         /**

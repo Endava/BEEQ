@@ -43,7 +43,7 @@ export class BqBadge {
   /** Badge number color. The value should be a valid value of the palette color */
   @Prop({ mutable: true, reflect: true }) textColor? = 'text--inverse';
 
-  /** The size of the badge */
+  /** The size of the badge. Relevant if badge has no content. */
   @Prop({ reflect: true, mutable: true }) size?: TBadgeSize = 'small';
 
   // Prop lifecycle events
