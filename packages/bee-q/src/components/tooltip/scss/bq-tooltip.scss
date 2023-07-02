@@ -4,22 +4,14 @@
 
 @import './bq-tooltip.variables';
 
-@layer utilities {
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-  }
-}
-
 .bq-tooltip--panel {
+  @include animation-fade-in;
+
   @apply pointer-events-none fixed box-border bg-[var(--bq-tooltip--background-color)];
   @apply w-[var(--bq-tooltip--width)] max-w-[var(--bq-tooltip--max-width)] px-[var(--bq-tooltip--paddingX)] py-[var(--bq-tooltip--paddingY)];
   @apply text-[length:var(--bq-tooltip--font-size)] leading-[var(--bq-tooltip--line-height)] text-[color:var(--bq-tooltip--text-color)];
   @apply rounded-[var(--bq-tooltip--border-radius)] border-[length:var(--bq-tooltip--border-width)] border-[color:var(--bq-tooltip--border-color)];
   @apply shadow-[shadow:var(--bq-tooltip--box-shadow)];
-
-  animation: fade-in 0.3s ease;
 }
 
 .bq-tooltip--arrow {

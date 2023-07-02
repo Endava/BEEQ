@@ -100,6 +100,6 @@
 .is-animated {
   .bq-spinner--icon,
   .bq-spinner--loader > svg {
-    @apply animate-spin;
+    @include animtion-spin;
   }
 }

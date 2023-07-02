@@ -4,20 +4,6 @@
 
 @import './bq-toast.variables';
 
-@layer utilities {
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-  }
-
-  @keyframes slide-in {
-    from {
-      transform: translateY(10px);
-    }
-  }
-}
-
 :host {
   @apply hidden;
 }
@@ -27,11 +13,12 @@
 }
 
 .bq-toast {
+  @include animation-slide-in;
+
   @apply flex items-center gap-[var(--bq-toast--gap)] px-[var(--bq-toast--padding-x)] py-[var(--bq-toast--padding-y)];
   @apply rounded-[var(--bq-toast--border-radius)] bg-[var(--bq-toast--background)] shadow-[shadow:var(--bq-toast--box-shadow)];
   @apply border-[length:var(--bq-toast--border-width)] border-[color:var(--bq-toast--border-color)];
 
-  animation: fade-in 0.3s ease, slide-in 0.3s ease;
   border-style: var(--bq-toast--border-style);
 }
 
@@ -55,7 +42,8 @@
   }
 
   &.loading {
-    @apply animate-spin text-[var(--bq-toast--icon-color-loading)];
+    @include animtion-spin;
+    @apply text-[var(--bq-toast--icon-color-loading)];
   }
 
   &.custom {
