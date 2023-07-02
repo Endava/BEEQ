@@ -4,29 +4,29 @@ import { create } from '@storybook/theming';
 const theme = create({
   base: 'light',
 
-  colorPrimary: '#009bb4',
-  colorSecondary: '#4F46E5',
+  colorPrimary: '#f0f1f2',
+  colorSecondary: '#4f46e5',
 
   // BRAND
   brandTarget: '_self',
   brandTitle: 'Bee-Q Design System',
-  brandImage: './assets/bee-q_logo.svg',
+  brandImage: './assets/beeq-logo.svg',
 
   // UI
-  appBg: '#F9FAFB',
-  appContentBg: '#FFFFFF',
+  appBg: '#f0f1f2',
+  appContentBg: '#fff',
 
   // Typography
-  fontBase: '"Inter", sans-serif',
+  fontBase: '"Outfit", sans-serif',
 
   // Text colors
-  textColor: '#1F2937',
-  textInverseColor: '#ffffff',
+  textColor: '#2b2e33',
+  textInverseColor: '#fff',
 
   // Toolbar default and active colors
-  barTextColor: '#1F2937',
+  barTextColor: '#2b2e33',
   barSelectedColor: '#6366F1',
-  barBg: '#F9FAFB',
+  barBg: '#f0f1f2',
 });
 
 addons.setConfig({
