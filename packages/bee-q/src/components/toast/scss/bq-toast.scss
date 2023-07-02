@@ -42,7 +42,7 @@
   }
 
   &.loading {
-    @include animtion-spin;
+    @include animation-spin;
     @apply text-[var(--bq-toast--icon-color-loading)];
   }
 

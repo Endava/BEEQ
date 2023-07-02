@@ -32,6 +32,6 @@
   animation: fade-in $duration $timing-function $delay, slide-in $duration $timing-function $delay;
 }
 
-@mixin animtion-spin($duration: 1s, $delay: 0s, $timing-function: linear) {
+@mixin animation-spin($duration: 1s, $delay: 0s, $timing-function: linear) {
   animation: spin $duration $timing-function $delay infinite;
 }

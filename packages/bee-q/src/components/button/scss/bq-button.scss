@@ -151,6 +151,6 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-button__loader {
-  @include animtion-spin;
+  @include animation-spin;
   @apply absolute;
 }
