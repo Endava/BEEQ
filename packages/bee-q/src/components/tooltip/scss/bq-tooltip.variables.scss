@@ -4,11 +4,20 @@
 
 :host {
   --bq-tooltip--background-color: theme('colors.ui.inverse');
+  --bq-tooltip--box-shadow: theme('boxShadow.m');
+
   --bq-tooltip--font-size: theme('fontSize.m');
-  --bq-tooltip--width: max-content;
-  --bq-tooltip--max-width: 320px;
+  --bq-tooltip--line-height: theme('lineHeight.large');
+  --bq-tooltip--text-color: theme('colors.text.inverse');
+
   --bq-tooltip--paddingX: theme('padding.xs');
   --bq-tooltip--paddingY: theme('padding.xs2');
-  --bq-tooltip--rounded-corners: theme('borderRadius.s');
-  --bq-tooltip--text-color: theme('colors.text.inverse');
+
+  --bq-tooltip--border-color: theme('colors.transparent');
+  --bq-tooltip--border-radius: theme('borderRadius.s');
+  --bq-tooltip--border-style: none;
+  --bq-tooltip--border-width: unset;
+
+  --bq-tooltip--max-width: 320px;
+  --bq-tooltip--width: max-content;
 }

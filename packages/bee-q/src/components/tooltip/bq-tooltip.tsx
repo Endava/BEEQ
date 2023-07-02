@@ -170,10 +170,10 @@ export class BqTooltip {
 
   render() {
     return (
-      <div class="relative" part="base">
+      <div class="bq-tooltip relative" part="base">
         {/* TRIGGER */}
         <div
-          class="bq-tooltip__trigger"
+          class="bq-tooltip--trigger"
           onMouseOver={this.handleTriggerMouseOver}
           onMouseLeave={this.handleTriggerMouseLeave}
           onClick={this.handleTriggerOnClick}
@@ -184,14 +184,14 @@ export class BqTooltip {
         </div>
         {/* PANEL */}
         <div
-          class="bq-tooltip__panel"
+          class="bq-tooltip--panel"
           aria-hidden={!this.visible}
           hidden={!this.visible}
           role="tooltip"
           ref={(el) => (this.panel = el)}
           part="panel"
         >
-          {!this.hideArrow && <div class="bq-tooltip__arrow" ref={(el) => (this.arrow = el)} />}
+          {!this.hideArrow && <div class="bq-tooltip--arrow" ref={(el) => (this.arrow = el)} />}
           <slot />
         </div>
       </div>

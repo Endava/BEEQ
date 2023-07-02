@@ -7,16 +7,16 @@ describe('bq-tooltip', () => {
     const page = await newE2EPage();
     await page.setContent('<bq-tooltip></bq-tooltip>');
 
-    const element = await page.find('bq-tooltip');
-    expect(element).toHaveClass('hydrated');
+    const tooltipElem = await page.find('bq-tooltip');
+    expect(tooltipElem).toHaveClass('hydrated');
   });
 
   it('should have shadow root', async () => {
     const page = await newE2EPage();
     await page.setContent('<bq-tooltip></bq-tooltip>');
 
-    const element = await page.find('bq-tooltip');
-    expect(element.shadowRoot).not.toBeNull();
+    const tooltipElem = await page.find('bq-tooltip');
+    expect(tooltipElem.shadowRoot).not.toBeNull();
   });
 
   it('should be visible on hover', async () => {
@@ -24,72 +24,64 @@ describe('bq-tooltip', () => {
     await page.setContent(`
       <bq-tooltip>
         Yuhu! A tooltip!
-        <bq-button slot="trigger">
-            Hover me!
-        </bq-button>
+        <bq-button slot="trigger"> Hover me! </bq-button>
       </bq-tooltip>
     `);
 
-    const element = await page.find('bq-tooltip >>> [part="panel"]');
-    expect(element).toHaveAttribute('aria-hidden');
+    const tooltipPanel = await page.find('bq-tooltip >>> [part="panel"]');
+    expect(tooltipPanel).toHaveAttribute('aria-hidden');
 
     const button = await page.find('bq-button');
     await button.hover();
-    expect(element).not.toHaveAttribute('aria-hidden');
+    expect(tooltipPanel).not.toHaveAttribute('aria-hidden');
   });
 
   it('should hide on mouse out', async () => {
     const page = await newE2EPage();
-    await page.setContent(`<div>
-      <div>another element</div>
-      <bq-tooltip>
-          Yuhu! A tooltip!
-          <bq-button slot="trigger">
-              Hover me!
-          </bq-button>
+    await page.setContent(`
+      <bq-tooltip visible>
+        Yuhu! A tooltip!
+        <bq-button bq-button slot="trigger"> Hover me! </bq-button>
       </bq-tooltip>
-    </div>`);
+    `);
 
-    const element = await page.find('bq-tooltip >>> [part="panel"]');
-    expect(element).toHaveAttribute('aria-hidden');
+    const tooltipPanel = await page.find('bq-tooltip >>> [part="panel"]');
+    expect(tooltipPanel).not.toHaveAttribute('aria-hidden');
 
-    const button = await page.find('bq-button');
-    await button.hover();
-    expect(element).not.toHaveAttribute('aria-hidden');
+    await page.click('body');
+    await page.waitForChanges();
 
-    const anotherEl = await page.find('div');
-    await anotherEl.hover();
-    expect(element).toHaveAttribute('aria-hidden');
+    expect(tooltipPanel).toHaveAttribute('aria-hidden');
   });
 
   it('should be visible only on click if specified', async () => {
     const page = await newE2EPage();
-    await page.setContent(`<bq-tooltip display-on="click">
+    await page.setContent(`
+      <bq-tooltip display-on="click">
         Yuhu! A tooltip!
-        <bq-button slot="trigger">
-            Hover me!
-        </bq-button>
-    </bq-tooltip>`);
+        <bq-button slot="trigger"> Hover me! </bq-button>
+      </bq-tooltip>
+    `);
 
-    const element = await page.find('bq-tooltip >>> [part="panel"]');
-    expect(element).toHaveAttribute('aria-hidden');
+    const tooltipPanel = await page.find('bq-tooltip >>> [part="panel"]');
+    expect(tooltipPanel).toHaveAttribute('aria-hidden');
 
     const button = await page.find('bq-button');
     await button.hover();
-    expect(element).toHaveAttribute('aria-hidden');
+    expect(tooltipPanel).toHaveAttribute('aria-hidden');
 
     await button.click();
-    expect(element).not.toHaveAttribute('aria-hidden');
+    expect(tooltipPanel).not.toHaveAttribute('aria-hidden');
   });
 
   it('should show in specified position', async () => {
     const page = await newE2EPage();
-    await page.setContent(`<bq-tooltip placement="left">
+    await page.setContent(`
+      <bq-tooltip placement="left">
         Yuhu! A tooltip!
-        <bq-button slot="trigger">
-            Hover me!
-        </bq-button>
-    </bq-tooltip>`);
+        <bq-button slot="trigger"> Hover me! </bq-button>
+      </bq-tooltip>
+    `);
 
     const button = await page.find('bq-button');
     await button.hover();
