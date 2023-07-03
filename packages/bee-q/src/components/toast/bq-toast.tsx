@@ -208,7 +208,12 @@ export class BqToast {
 
   render() {
     return (
-      <Host aria-hidden={!this.open ? 'true' : 'false'} hidden={!this.open ? 'true' : 'false'} role="status">
+      <Host
+        class={{ 'is-hidden': !this.open }}
+        aria-hidden={!this.open ? 'true' : 'false'}
+        hidden={!this.open ? 'true' : 'false'}
+        role="status"
+      >
         <output class="bq-toast" part="wrapper">
           <div class={{ [`bq-toast--icon ${this.type}`]: true, '!hidden': this.hideIcon }} part="icon">
             <slot name="icon">
