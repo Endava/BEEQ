@@ -6,6 +6,14 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+## [0.6.2](https://github.com/Endava/bee-q/compare/v0.6.1...v0.6.2) (2023-07-03)
+
+
+### Bug Fixes
+
+* **notification:** notification rendered as visible with `open="false"` ([#316](https://github.com/Endava/bee-q/issues/316)) ([371996c](https://github.com/Endava/bee-q/commit/371996c48ca5d507a74fcf70d16551e3d27bf622))
+* **toast:** toast rendered as visible with `open="false"` ([#315](https://github.com/Endava/bee-q/issues/315)) ([2b410aa](https://github.com/Endava/bee-q/commit/2b410aad4ca8d0eb496b7a49d022d2f9e4288bbc))
+
 ## [0.6.1](https://github.com/Endava/bee-q/compare/v0.6.0...v0.6.1) (2023-07-03)
 
 ## [0.6.0](https://github.com/Endava/bee-q/compare/v0.5.0...v0.6.0) (2023-07-03)
