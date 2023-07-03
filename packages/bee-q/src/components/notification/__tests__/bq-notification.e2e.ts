@@ -46,7 +46,7 @@ describe('bq-notification', () => {
 
   it('should render as open with `open="true"`', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-notification open></bq-notification>');
+    await page.setContent('<bq-notification open="true"></bq-notification>');
 
     const element = await page.find('bq-notification');
     expect(element).not.toEqualAttribute('aria-hidden', 'true');
