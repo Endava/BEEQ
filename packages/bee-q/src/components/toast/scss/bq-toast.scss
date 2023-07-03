@@ -5,11 +5,11 @@
 @import './bq-toast.variables';
 
 :host {
-  @apply hidden;
+  @apply inline-block;
 }
 
-:host([open]) {
-  @apply inline-block;
+:host(.is-hidden) {
+  @apply hidden;
 }
 
 .bq-toast {
