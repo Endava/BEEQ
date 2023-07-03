@@ -5,11 +5,11 @@
 @import './bq-notification.variables';
 
 :host {
-  @apply hidden;
+  @apply block;
 }
 
-:host([is-open]) {
-  @apply block;
+:host(.is-hidden) {
+  @apply hidden;
 }
 
 .bq-notification {
