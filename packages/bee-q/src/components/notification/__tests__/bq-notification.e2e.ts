@@ -17,6 +17,42 @@ describe('bq-notification', () => {
     expect(element.shadowRoot).not.toBeNull();
   });
 
+  it('should render as hidden', async () => {
+    const page = await newE2EPage();
+    await page.setContent('<bq-notification></bq-notification>');
+
+    const element = await page.find('bq-notification');
+    expect(element).toEqualAttribute('aria-hidden', 'true');
+    expect(element).toHaveClass('is-hidden');
+  });
+
+  it('should render as hidden with `open="false"`', async () => {
+    const page = await newE2EPage();
+    await page.setContent('<bq-notification open="false"></bq-notification>');
+
+    const element = await page.find('bq-notification');
+    expect(element).toEqualAttribute('aria-hidden', 'true');
+    expect(element).toHaveClass('is-hidden');
+  });
+
+  it('should render as open', async () => {
+    const page = await newE2EPage();
+    await page.setContent('<bq-notification open></bq-notification>');
+
+    const element = await page.find('bq-notification');
+    expect(element).not.toEqualAttribute('aria-hidden', 'true');
+    expect(element).not.toHaveClass('is-hidden');
+  });
+
+  it('should render as open with `open="true"`', async () => {
+    const page = await newE2EPage();
+    await page.setContent('<bq-notification open></bq-notification>');
+
+    const element = await page.find('bq-notification');
+    expect(element).not.toEqualAttribute('aria-hidden', 'true');
+    expect(element).not.toHaveClass('is-hidden');
+  });
+
   it('should render basic notification', async () => {
     const page = await newE2EPage();
     await page.setContent(`
