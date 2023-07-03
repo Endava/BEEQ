@@ -21,6 +21,42 @@ describe('bq-toast', () => {
     expect(element.shadowRoot).not.toBeNull();
   });
 
+  it('should render as hidden', async () => {
+    const page = await newE2EPage();
+    await page.setContent('<bq-toast></bq-toast>');
+
+    const element = await page.find('bq-toast');
+    expect(element).toEqualAttribute('aria-hidden', 'true');
+    expect(element).toHaveClass('is-hidden');
+  });
+
+  it('should render as hidden with `open="false"`', async () => {
+    const page = await newE2EPage();
+    await page.setContent('<bq-toast open="false"></bq-toast>');
+
+    const element = await page.find('bq-toast');
+    expect(element).toEqualAttribute('aria-hidden', 'true');
+    expect(element).toHaveClass('is-hidden');
+  });
+
+  it('should render as open', async () => {
+    const page = await newE2EPage();
+    await page.setContent('<bq-toast open></bq-toast>');
+
+    const element = await page.find('bq-toast');
+    expect(element).not.toEqualAttribute('aria-hidden', 'true');
+    expect(element).not.toHaveClass('is-hidden');
+  });
+
+  it('should render as open with `open="true"`', async () => {
+    const page = await newE2EPage();
+    await page.setContent('<bq-toast open="true"></bq-toast>');
+
+    const element = await page.find('bq-toast');
+    expect(element).not.toEqualAttribute('aria-hidden', 'true');
+    expect(element).not.toHaveClass('is-hidden');
+  });
+
   it('should display text', async () => {
     const page = await newE2EPage();
     await page.setContent('<bq-toast>Text</bq-toast>');
