@@ -297,7 +297,7 @@ export namespace Components {
         /**
           * If true, the notification will be shown
          */
-        "isOpen": boolean;
+        "open": boolean;
         /**
           * Method to be called to show the notification component
          */
@@ -1154,10 +1154,6 @@ declare namespace LocalJSX {
          */
         "hideIcon"?: boolean;
         /**
-          * If true, the notification will be shown
-         */
-        "isOpen"?: boolean;
-        /**
           * Callback handler to be called when the notification is hidden
          */
         "onBqHide"?: (event: BqNotificationCustomEvent<any>) => void;
@@ -1165,6 +1161,10 @@ declare namespace LocalJSX {
           * Callback handler to be called when the notification is shown
          */
         "onBqShow"?: (event: BqNotificationCustomEvent<any>) => void;
+        /**
+          * If true, the notification will be shown
+         */
+        "open"?: boolean;
         /**
           * The length of time, in milliseconds, after which the notification will close itself. Only valid if `autoDismiss="true"`
          */

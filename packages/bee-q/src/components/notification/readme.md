@@ -12,7 +12,7 @@
 | `autoDismiss`  | `auto-dismiss`  | If true, the notification will automatically hide after the specified amount of time                                    | `boolean`                                                  | `undefined` |
 | `disableClose` | `disable-close` | If true, the close button at the top right of the notification won't be shown                                           | `boolean`                                                  | `undefined` |
 | `hideIcon`     | `hide-icon`     | If true, the notification icon won't be shown                                                                           | `boolean`                                                  | `undefined` |
-| `isOpen`       | `is-open`       | If true, the notification will be shown                                                                                 | `boolean`                                                  | `undefined` |
+| `open`         | `open`          | If true, the notification will be shown                                                                                 | `boolean`                                                  | `undefined` |
 | `time`         | `time`          | The length of time, in milliseconds, after which the notification will close itself. Only valid if `autoDismiss="true"` | `number`                                                   | `3000`      |
 | `type`         | `type`          | Type of Notification                                                                                                    | `"error" \| "info" \| "neutral" \| "success" \| "warning"` | `'info'`    |
 
