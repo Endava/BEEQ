@@ -57,7 +57,7 @@ export class BqNotification {
   @Prop({ reflect: true }) hideIcon: boolean;
 
   /** If true, the notification will be shown */
-  @Prop({ reflect: true, mutable: true }) isOpen: boolean;
+  @Prop({ reflect: true, mutable: true }) open: boolean;
 
   /** The length of time, in milliseconds, after which the notification will close itself. Only valid if `autoDismiss="true"` */
   @Prop({ reflect: true }) time: number = 3000;
@@ -77,14 +77,14 @@ export class BqNotification {
       this.hide();
     }, this.time);
     // Make sure to autodismiss the notification if the `auto-dismiss` value changed while open
-    if (this.isOpen) this.autoDismissDebounce();
+    if (this.open) this.autoDismissDebounce();
   }
 
-  @Watch('isOpen')
+  @Watch('open')
   handleOpenChange() {
     this.autoDismissDebounce?.cancel();
 
-    if (!(this.autoDismiss && this.isOpen)) return;
+    if (!(this.autoDismiss && this.open)) return;
     this.autoDismissDebounce();
   }
 
@@ -173,14 +173,14 @@ export class BqNotification {
   private handleHide = () => {
     const ev = this.bqHide.emit(this.el);
     if (!ev.defaultPrevented) {
-      this.isOpen = false;
+      this.open = false;
     }
   };
 
   private handleShow = () => {
     const ev = this.bqShow.emit(this.el);
     if (!ev.defaultPrevented) {
-      this.isOpen = true;
+      this.open = true;
     }
   };
 
@@ -211,7 +211,12 @@ export class BqNotification {
 
   render() {
     return (
-      <Host aria-hidden={!this.isOpen ? 'true' : 'false'} hidden={!this.isOpen ? 'true' : 'false'} role="alert">
+      <Host
+        class={{ 'is-hidden': !this.open }}
+        aria-hidden={!this.open ? 'true' : 'false'}
+        hidden={!this.open ? 'true' : 'false'}
+        role="alert"
+      >
         <div class="bq-notification" part="wrapper">
           {/* CLOSE BUTTON */}
           {!this.disableClose && (

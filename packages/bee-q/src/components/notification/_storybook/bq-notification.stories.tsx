@@ -18,7 +18,7 @@ const meta: Meta = {
     'auto-dismiss': { control: 'boolean' },
     'disable-close': { control: 'boolean' },
     'hide-icon': { control: 'boolean' },
-    'is-open': { control: 'boolean' },
+    open: { control: 'boolean' },
     time: { control: 'number' },
     type: { control: 'select', options: [...NOTIFICATION_TYPE] },
     // Not part of the component API, but used for the story
@@ -28,7 +28,7 @@ const meta: Meta = {
     'auto-dismiss': false,
     'disable-close': false,
     'hide-icon': false,
-    'is-open': false,
+    open: false,
     time: 3000,
     type: 'info',
     // Not part of the component API, but used for the story
@@ -45,7 +45,7 @@ const Template = (args: Args) => html`
       ?auto-dismiss=${args['auto-dismiss']}
       ?disable-close=${args['disable-close']}
       ?hide-icon=${args['hide-icon']}
-      ?is-open=${args['is-open']}
+      ?open=${args.open}
       time=${args.time}
       type=${args.type}
     >
@@ -56,7 +56,7 @@ const Template = (args: Args) => html`
       ?auto-dismiss=${args['auto-dismiss']}
       ?disable-close=${args['disable-close']}
       ?hide-icon=${args['hide-icon']}
-      ?is-open=${args['is-open']}
+      ?open=${args.open}
       time=${args.time}
       type=${args.type}
     >
@@ -71,7 +71,7 @@ const Template = (args: Args) => html`
       ?auto-dismiss=${args['auto-dismiss']}
       ?disable-close=${args['disable-close']}
       ?hide-icon=${args['hide-icon']}
-      ?is-open=${args['is-open']}
+      ?open=${args.open}
       time=${args.time}
       type=${args.type}
     >
@@ -91,7 +91,7 @@ const Template = (args: Args) => html`
 export const Default: Story = {
   render: Template,
   args: {
-    'is-open': true,
+    open: true,
   },
 };
 
@@ -100,7 +100,7 @@ export const ErrorType: Story = {
   name: 'Error',
   render: Template,
   args: {
-    'is-open': true,
+    open: true,
     type: 'error',
   },
 };
@@ -108,7 +108,7 @@ export const ErrorType: Story = {
 export const Neutral: Story = {
   render: Template,
   args: {
-    'is-open': true,
+    open: true,
     type: 'neutral',
   },
 };
@@ -116,7 +116,7 @@ export const Neutral: Story = {
 export const Success: Story = {
   render: Template,
   args: {
-    'is-open': true,
+    open: true,
     type: 'success',
   },
 };
@@ -124,7 +124,7 @@ export const Success: Story = {
 export const Warning: Story = {
   render: Template,
   args: {
-    'is-open': true,
+    open: true,
     type: 'warning',
   },
 };
@@ -132,7 +132,7 @@ export const Warning: Story = {
 export const CustomIcon: Story = {
   render: Template,
   args: {
-    'is-open': true,
+    open: true,
     customIcon: true,
   },
 };
