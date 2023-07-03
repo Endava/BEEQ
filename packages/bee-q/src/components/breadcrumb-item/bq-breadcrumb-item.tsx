@@ -30,7 +30,7 @@ export class BqBreadcrumbItem {
   // ========================
 
   /** If true, the item is the last element inside breadcrumb */
-  @Prop() isLast: boolean = false;
+  @Prop() hideSeparatorIcon: boolean = false;
 
   /** The icon name used as separator. Default is `/`. */
   @Prop() separatorIcon!: string;
@@ -130,7 +130,7 @@ export class BqBreadcrumbItem {
           <span
             class={{
               'breadcrumb-item__label': true,
-              'text-text-brand': this.isLast,
+              'text-text-brand': this.hideSeparatorIcon,
             }}
             part="label"
           >
@@ -150,7 +150,7 @@ export class BqBreadcrumbItem {
         <span
           class={{
             'breadcrumb-separator': true,
-            hidden: this.isLast,
+            hidden: this.hideSeparatorIcon,
           }}
         >
           {separatorElem}

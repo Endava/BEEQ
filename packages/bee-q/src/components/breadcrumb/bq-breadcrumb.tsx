@@ -83,7 +83,7 @@ export class BqBreadcrumb {
   private setIconAsSeparator = (): void => {
     this.breadcrumbItems.forEach((item, index, arr) => {
       item.separatorIcon = this.separatorIcon;
-      item.isLast = index === arr.length - 1;
+      item.hideSeparatorIcon = index === arr.length - 1;
     });
   };
 

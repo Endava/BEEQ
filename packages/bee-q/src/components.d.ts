@@ -89,13 +89,13 @@ export namespace Components {
     }
     interface BqBreadcrumbItem {
         /**
+          * If true, the item is the last element inside breadcrumb
+         */
+        "hideSeparatorIcon": boolean;
+        /**
           * If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
          */
         "href": string;
-        /**
-          * If true, the item is the last element inside breadcrumb
-         */
-        "isLast": boolean;
         /**
           * Where to display the link in the browser context. Relevant only if `href` is set.
          */
@@ -985,13 +985,13 @@ declare namespace LocalJSX {
     }
     interface BqBreadcrumbItem {
         /**
+          * If true, the item is the last element inside breadcrumb
+         */
+        "hideSeparatorIcon"?: boolean;
+        /**
           * If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
          */
         "href"?: string;
-        /**
-          * If true, the item is the last element inside breadcrumb
-         */
-        "isLast"?: boolean;
         /**
           * Handler to be called when item loses focus
          */
