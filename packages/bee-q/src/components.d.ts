@@ -73,7 +73,7 @@ export namespace Components {
          */
         "backgroundColor"?: string;
         /**
-          * The size of the badge
+          * The size of the badge. Relevant if badge has no content.
          */
         "size"?: TBadgeSize;
         /**
@@ -315,10 +315,6 @@ export namespace Components {
          */
         "disableClose": boolean;
         /**
-          * If true, the predefined icon type won't be shown and a custom icon provided on integration will be displayed instead
-         */
-        "hasCustomIcon": boolean;
-        /**
           * Method to be called to hide the notification component
          */
         "hide": () => Promise<void>;
@@ -329,7 +325,7 @@ export namespace Components {
         /**
           * If true, the notification will be shown
          */
-        "isOpen": boolean;
+        "open": boolean;
         /**
           * Method to be called to show the notification component
          */
@@ -339,7 +335,7 @@ export namespace Components {
          */
         "time": number;
         /**
-          * This method can be used to display notifications in a fixed-position element that allows for stacking multiple notifications vertically.
+          * This method can be used to display notifications in a fixed-position element that allows for stacking multiple notifications vertically
          */
         "toast": () => Promise<void>;
         /**
@@ -627,6 +623,9 @@ export namespace Components {
         "value": string;
     }
     interface BqToast {
+        /**
+          * Method to be called to hide the toast component
+         */
         "hide": () => Promise<void>;
         /**
           * If true will hide toast icon
@@ -640,11 +639,17 @@ export namespace Components {
           * Placement of toast
          */
         "placement": TToastPlacement;
+        /**
+          * Method to be called to show the toast component
+         */
         "show": () => Promise<void>;
         /**
           * The length of time, in milliseconds, after which the toast will close itself
          */
         "time": number;
+        /**
+          * This method can be used to display toasts in a fixed-position element that allows for stacking multiple toasts vertically
+         */
         "toast": () => Promise<void>;
         /**
           * Type of toast
@@ -957,7 +962,7 @@ declare namespace LocalJSX {
          */
         "backgroundColor"?: string;
         /**
-          * The size of the badge
+          * The size of the badge. Relevant if badge has no content.
          */
         "size"?: TBadgeSize;
         /**
@@ -1247,17 +1252,9 @@ declare namespace LocalJSX {
          */
         "disableClose"?: boolean;
         /**
-          * If true, the predefined icon type won't be shown and a custom icon provided on integration will be displayed instead
-         */
-        "hasCustomIcon"?: boolean;
-        /**
           * If true, the notification icon won't be shown
          */
         "hideIcon"?: boolean;
-        /**
-          * If true, the notification will be shown
-         */
-        "isOpen"?: boolean;
         /**
           * Callback handler to be called when the notification is hidden
          */
@@ -1266,6 +1263,10 @@ declare namespace LocalJSX {
           * Callback handler to be called when the notification is shown
          */
         "onBqShow"?: (event: BqNotificationCustomEvent<any>) => void;
+        /**
+          * If true, the notification will be shown
+         */
+        "open"?: boolean;
         /**
           * The length of time, in milliseconds, after which the notification will close itself. Only valid if `autoDismiss="true"`
          */

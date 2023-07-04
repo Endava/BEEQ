@@ -6,6 +6,37 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+## [0.6.2](https://github.com/Endava/bee-q/compare/v0.6.1...v0.6.2) (2023-07-03)
+
+
+### Bug Fixes
+
+* **notification:** notification rendered as visible with `open="false"` ([#316](https://github.com/Endava/bee-q/issues/316)) ([371996c](https://github.com/Endava/bee-q/commit/371996c48ca5d507a74fcf70d16551e3d27bf622))
+* **toast:** toast rendered as visible with `open="false"` ([#315](https://github.com/Endava/bee-q/issues/315)) ([2b410aa](https://github.com/Endava/bee-q/commit/2b410aad4ca8d0eb496b7a49d022d2f9e4288bbc))
+
+## [0.6.1](https://github.com/Endava/bee-q/compare/v0.6.0...v0.6.1) (2023-07-03)
+
+## [0.6.0](https://github.com/Endava/bee-q/compare/v0.5.0...v0.6.0) (2023-07-03)
+
+
+### Features
+
+* **avatar:** support adding a badge to the avatar ([#267](https://github.com/Endava/bee-q/issues/267)) ([99c8c42](https://github.com/Endava/bee-q/commit/99c8c42892fa1fe389e5a6e3b1e5d14a6aa51496))
+* **dialog:** add new `<bq-dialog>` component ([#269](https://github.com/Endava/bee-q/issues/269)) ([fb53b87](https://github.com/Endava/bee-q/commit/fb53b87ef1c4da77588969fcef216f6b3c869ec0))
+* **dialog:** allow disable backdrop overlay and `bqAfterOpen` event ([#306](https://github.com/Endava/bee-q/issues/306)) ([41ecdfc](https://github.com/Endava/bee-q/commit/41ecdfc0f34db9c0e0e8427eaa1b39927153dcb4))
+* **toast:** add new `<bq-toast>` component ([#301](https://github.com/Endava/bee-q/issues/301)) ([5c22cc7](https://github.com/Endava/bee-q/commit/5c22cc778358bfba48d3a1026c9af0cbae734f77))
+
+
+### Bug Fixes
+
+* **angular wrapper:** this.appInits[i] is not a function ([#304](https://github.com/Endava/bee-q/issues/304)) ([7f64ee3](https://github.com/Endava/bee-q/commit/7f64ee3100f13594bc6ec7088b4ee10b46da1a0d))
+* **badge:** not being full rounded with one digit ([#307](https://github.com/Endava/bee-q/issues/307)) ([3bf70c8](https://github.com/Endava/bee-q/commit/3bf70c83fc7bc125f9b733fc50d5e5a2973ea667))
+* **CSS Shadow token:** wrong `shadow-m` token value ([#313](https://github.com/Endava/bee-q/issues/313)) ([f190123](https://github.com/Endava/bee-q/commit/f1901232898ec85efa3dc49268ac44abcbab49ce))
+* **dialog:** footer padding when standard and highlight ([#305](https://github.com/Endava/bee-q/issues/305)) ([f824942](https://github.com/Endava/bee-q/commit/f82494265893eeef786143ff08965de64e13a9a8))
+* **notification:** hidden CSS class not being applied ([#308](https://github.com/Endava/bee-q/issues/308)) ([e74bd24](https://github.com/Endava/bee-q/commit/e74bd24b80d0b88595e4c40e26b756560e678df4))
+* **sonarlint:** code smells and security reviews ([#303](https://github.com/Endava/bee-q/issues/303)) ([7862ba6](https://github.com/Endava/bee-q/commit/7862ba68dc7e153a26e4d03e221bad23f7f486c4))
+* **Sonarlint:** resolve major issues spotted by Sonarcloud ([#302](https://github.com/Endava/bee-q/issues/302)) ([00fd221](https://github.com/Endava/bee-q/commit/00fd2218b79096b64783c026d89f962c7c626be4))
+
 ## [0.5.0](https://github.com/Endava/bee-q/compare/v0.4.0...v0.5.0) (2023-06-23)
 
 

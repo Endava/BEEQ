@@ -1,5 +1,5 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
-import { html } from 'lit-html';
+import { html, nothing } from 'lit-html';
 
 import mdx from './bq-notification.mdx';
 
@@ -17,20 +17,22 @@ const meta: Meta = {
   argTypes: {
     'auto-dismiss': { control: 'boolean' },
     'disable-close': { control: 'boolean' },
-    'has-custom-icon': { control: 'boolean' },
     'hide-icon': { control: 'boolean' },
-    'is-open': { control: 'boolean' },
+    open: { control: 'boolean' },
     time: { control: 'number' },
     type: { control: 'select', options: [...NOTIFICATION_TYPE] },
+    // Not part of the component API, but used for the story
+    customIcon: { control: 'boolean', table: { disable: true } },
   },
   args: {
     'auto-dismiss': false,
     'disable-close': false,
-    'has-custom-icon': false,
     'hide-icon': false,
-    'is-open': false,
+    open: false,
     time: 3000,
     type: 'info',
+    // Not part of the component API, but used for the story
+    customIcon: false,
   },
 };
 export default meta;
@@ -42,25 +44,23 @@ const Template = (args: Args) => html`
     <bq-notification
       ?auto-dismiss=${args['auto-dismiss']}
       ?disable-close=${args['disable-close']}
-      ?has-custom-icon=${args['has-custom-icon']}
       ?hide-icon=${args['hide-icon']}
-      ?is-open=${args['is-open']}
+      ?open=${args.open}
       time=${args.time}
       type=${args.type}
     >
-      Title
+      ${args.customIcon ? html`<bq-icon name="thumbs-up" slot="icon"></bq-icon>` : nothing} Title
     </bq-notification>
 
     <bq-notification
       ?auto-dismiss=${args['auto-dismiss']}
       ?disable-close=${args['disable-close']}
-      ?has-custom-icon=${args['has-custom-icon']}
       ?hide-icon=${args['hide-icon']}
-      ?is-open=${args['is-open']}
+      ?open=${args.open}
       time=${args.time}
       type=${args.type}
     >
-      Title
+      ${args.customIcon ? html`<bq-icon name="thumbs-up" slot="icon"></bq-icon>` : nothing} Title
       <span slot="body">
         This is some description text text
         <a class="bq-link" href="https://example.com">Link</a>
@@ -70,20 +70,19 @@ const Template = (args: Args) => html`
     <bq-notification
       ?auto-dismiss=${args['auto-dismiss']}
       ?disable-close=${args['disable-close']}
-      ?has-custom-icon=${args['has-custom-icon']}
       ?hide-icon=${args['hide-icon']}
-      ?is-open=${args['is-open']}
+      ?open=${args.open}
       time=${args.time}
       type=${args.type}
     >
-      Title
+      ${args.customIcon ? html`<bq-icon name="thumbs-up" slot="icon"></bq-icon>` : nothing} Title
       <span slot="body">
         This is some description text text
         <a class="bq-link" href="https://example.com">Link</a>
       </span>
-      <div slot="footer">
+      <div class="flex gap-xs" slot="footer">
         <bq-button appearance="primary" size="small"> Button </bq-button>
-        <bq-button appearance="secondary" size="small"> Button </bq-button>
+        <bq-button appearance="link" size="small"> Button </bq-button>
       </div>
     </bq-notification>
   </div>
@@ -92,7 +91,7 @@ const Template = (args: Args) => html`
 export const Default: Story = {
   render: Template,
   args: {
-    'is-open': true,
+    open: true,
   },
 };
 
@@ -101,7 +100,7 @@ export const ErrorType: Story = {
   name: 'Error',
   render: Template,
   args: {
-    'is-open': true,
+    open: true,
     type: 'error',
   },
 };
@@ -109,7 +108,7 @@ export const ErrorType: Story = {
 export const Neutral: Story = {
   render: Template,
   args: {
-    'is-open': true,
+    open: true,
     type: 'neutral',
   },
 };
@@ -117,7 +116,7 @@ export const Neutral: Story = {
 export const Success: Story = {
   render: Template,
   args: {
-    'is-open': true,
+    open: true,
     type: 'success',
   },
 };
@@ -125,8 +124,16 @@ export const Success: Story = {
 export const Warning: Story = {
   render: Template,
   args: {
-    'is-open': true,
+    open: true,
     type: 'warning',
+  },
+};
+
+export const CustomIcon: Story = {
+  render: Template,
+  args: {
+    open: true,
+    customIcon: true,
   },
 };
 

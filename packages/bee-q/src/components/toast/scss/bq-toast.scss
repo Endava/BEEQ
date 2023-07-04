@@ -1,18 +1,25 @@
 /* -------------------------------------------------------------------------- */
-/*                                Toast styles                */
+/*                                Toast styles                                */
 /* -------------------------------------------------------------------------- */
 
 @import './bq-toast.variables';
 
 :host {
-  @apply inline-block animate-slide-in will-change-transform;
+  @apply inline-block;
+}
+
+:host(.is-hidden) {
+  @apply hidden;
 }
 
 .bq-toast {
+  @include animation-slide-in;
+
   @apply flex items-center gap-[var(--bq-toast--gap)] px-[var(--bq-toast--padding-x)] py-[var(--bq-toast--padding-y)];
   @apply rounded-[var(--bq-toast--border-radius)] bg-[var(--bq-toast--background)] shadow-[shadow:var(--bq-toast--box-shadow)];
+  @apply border-[length:var(--bq-toast--border-width)] border-[color:var(--bq-toast--border-color)];
 
-  border: var(--bq-toast--border-width) var(--bq-toast--border-style) var(--bq-toast--border-color);
+  border-style: var(--bq-toast--border-style);
 }
 
 .bq-toast--icon {
@@ -35,7 +42,8 @@
   }
 
   &.loading {
-    @apply animate-spin text-[var(--bq-toast--icon-color-loading)];
+    @include animation-spin;
+    @apply text-[var(--bq-toast--icon-color-loading)];
   }
 
   &.custom {
