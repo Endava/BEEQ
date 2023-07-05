@@ -45,7 +45,7 @@
     "regenerator-runtime": "0.13.11",
     "rxjs": "7.8.1",
     "tslib": "2.5.0",
-    "zone.js": "0.12.0"
+    "zone.js": "0.13.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "14.2.11",
