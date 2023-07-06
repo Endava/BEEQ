@@ -48,14 +48,18 @@ export const Links: Story = {
     <bq-breadcrumb>
       <bq-breadcrumb-item href="https://example.com/" target="_blank">
         <bq-icon name="house-line" size="16" slot="prefix"></bq-icon>
-        <span>Home</span>
+        <span slot="label">Home</span>
       </bq-breadcrumb-item>
-      <bq-breadcrumb-item href="https://example.com/center" target="_blank">Application Center</bq-breadcrumb-item>
+      <bq-breadcrumb-item href="https://example.com/center" target="_blank">
+        <span slot="label">Application Center</span>
+      </bq-breadcrumb-item>
       <bq-breadcrumb-item href="https://example.com/center/list" target="_blank">
-        Application List
+        <span slot="label">Application List</span>
         <bq-icon name="list-dashes" size="16" slot="suffix"></bq-icon>
       </bq-breadcrumb-item>
-      <bq-breadcrumb-item href="https://example.com/center/list/app" target="_blank">App 1</bq-breadcrumb-item>
+      <bq-breadcrumb-item href="https://example.com/center/list/app" target="_blank">
+        <span slot="label">App 1</span>
+      </bq-breadcrumb-item>
     </bq-breadcrumb>
   `,
 };

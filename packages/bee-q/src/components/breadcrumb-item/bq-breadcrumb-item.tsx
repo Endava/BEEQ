@@ -13,6 +13,7 @@ export class BqBreadcrumbItem {
 
   private prefixElem: HTMLElement;
   private suffixElem: HTMLElement;
+  private labelElem: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -25,6 +26,7 @@ export class BqBreadcrumbItem {
 
   @State() hasPrefix: boolean = false;
   @State() hasSuffix: boolean = false;
+  @State() hasLabel: boolean = false;
 
   // Public Property API
   // ========================
@@ -94,6 +96,7 @@ export class BqBreadcrumbItem {
   private onSlotChange = () => {
     this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
     this.hasSuffix = hasSlotContent(this.suffixElem, 'suffix');
+    this.hasLabel = hasSlotContent(this.labelElem, 'label');
   };
 
   // render() function
@@ -117,33 +120,22 @@ export class BqBreadcrumbItem {
           onFocus={this.onFocus}
           onClick={this.onClick}
         >
-          <span
-            class={{
-              'breadcrumb-item__prefix': true,
-              'pr-xs': this.hasPrefix,
-            }}
-            ref={(elem) => (this.prefixElem = elem)}
-            part="prefix"
-          >
+          <span class="breadcrumb-item__prefix" ref={(elem) => (this.prefixElem = elem)} part="prefix">
             <slot name="prefix" onSlotchange={this.onSlotChange}></slot>
           </span>
           <span
             class={{
               'breadcrumb-item__label': true,
               'text-text-brand': this.hideSeparatorIcon,
+              'pl-xs': this.hasPrefix && this.hasLabel,
+              'pr-xs': this.hasSuffix && this.hasLabel,
             }}
+            ref={(elem) => (this.labelElem = elem)}
             part="label"
           >
-            <slot></slot>
+            <slot name="label" onSlotchange={this.onSlotChange}></slot>
           </span>
-          <span
-            class={{
-              'breadcrumb-item__suffix': true,
-              'pl-xs': this.hasSuffix,
-            }}
-            ref={(elem) => (this.suffixElem = elem)}
-            part="suffix"
-          >
+          <span class="breadcrumb-item__suffix" ref={(elem) => (this.suffixElem = elem)} part="suffix">
             <slot name="suffix" onSlotchange={this.onSlotChange}></slot>
           </span>
         </TagElem>

@@ -5,8 +5,12 @@
 @import './bq-breadcrumb-item.variables';
 
 .breadcrumb-item {
-  @apply flex items-center px-[var(--bq-breadcrumb-item--paddingX)] py-[var(--bq-breadcrumb-item--paddingY)] text-s font-regular leading-regular text-text-secondary;
-  @apply rounded-s border-none bg-transparent no-underline focus-visible:focus active:outline-none;
+  @apply flex items-center font-regular leading-regular text-text-secondary no-underline focus-visible:focus active:outline-none;
+  @apply px-[var(--bq-breadcrumb-item--paddingX)] py-[var(--bq-breadcrumb-item--paddingY)] text-s;
+  @apply rounded-[var(--bq-breadcrumb-item--border-radius)] bg-[var(--bq-breadcrumb-item--background)] shadow-[shadow:var(--bq-breadcrumb-item--box-shadow)];
+  @apply border-[length:var(--bq-breadcrumb-item--border-width)] border-[color:var(--bq-breadcrumb-item--border-color)];
+
+  border-style: var(--bq-avatar--border-style);
 
   &__prefix {
     @apply flex items-center;
@@ -22,9 +26,9 @@
 }
 
 .breadcrumb-separator {
-  @apply px-xs2 text-xs;
+  @apply px-[var(--bq-breadcrumb-item--paddingX-separator)] text-[length:var(--bq-breadcrumb-item--font-size)];
 
-  bq-icon {
+  ::slotted(*) {
     @apply flex items-center;
   }
 }
