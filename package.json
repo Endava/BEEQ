@@ -54,7 +54,7 @@
     "@angular/language-service": "14.3.0",
     "@babel/plugin-proposal-export-default-from": "7.22.5",
     "@commitlint/cli": "17.6.5",
-    "@commitlint/config-angular": "17.6.1",
+    "@commitlint/config-angular": "17.6.5",
     "@commitlint/config-conventional": "17.6.1",
     "@jscutlery/semver": "2.29.3",
     "@nrwl/angular": "14.8.8",
