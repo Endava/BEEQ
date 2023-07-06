@@ -45,7 +45,7 @@
     {
       matchPackageNames: ['@jscutlery/semver'],
       allowedVersions: '<2.30.0',
-    }
+    },
     {
       groupName: '@nxext',
       matchPackagePrefixes: ['@nxext'],
@@ -75,7 +75,7 @@
     {
       matchPackageNames: ['ngx-deploy-npm'],
       allowedVersions: '<6.0.0',
-    }
+    },
     {
       groupName: 'nx',
       matchPackagePrefixes: ['@nrwl', 'nx'],
@@ -90,7 +90,6 @@
       groupName: 'prettier',
       matchPackagePrefixes: ['prettier'],
     },
-
     {
       groupName: 'stylelint',
       matchPackagePrefixes: ['stylelint'],
@@ -111,7 +110,7 @@
     {
       matchPackageNames: ['zone.js'],
       allowedVersions: '<0.13.0',
-    }
+    },
     /**
      * Do not renovate peerDependencies versions/ranges.
      */
