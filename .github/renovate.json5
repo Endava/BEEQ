@@ -19,7 +19,7 @@
    * The ignoreDeps configuration field allows you to define a list of dependency names to be ignored by Renovate.
    * Currently it supports only "exact match" dependency names.
    */
-  ignoreDeps: ['@types/jest', 'jest', 'jest-environment-jsdom'],
+  ignoreDeps: ['@types/jest', 'jest', 'jest-environment-jsdom', 'ts-jest'],
   /**
    * Labels to set in the Pull Request.
    */
@@ -39,32 +39,17 @@
       allowedVersions: '<15.0.0',
     },
     {
-      groupName: 'eslint',
-      matchPackagePrefixes: ['eslint'],
+      groupName: '@commitlint',
+      matchPackagePrefixes: ['@commitlint/'],
     },
     {
-      groupName: 'ng',
-      matchPackagePrefixes: ['ng-packagr'],
-      allowedVersions: '<15.0.0',
-    },
-    {
-      groupName: 'nx',
-      matchPackagePrefixes: ['@nrwl', 'nx'],
-      allowedVersions: '<15.0.0',
-      excludeDepNames: ['@nrwl/nx-cloud'],
-    },
+      matchPackageNames: ['@jscutlery/semver'],
+      allowedVersions: '<2.30.0',
+    }
     {
       groupName: '@nxext',
       matchPackagePrefixes: ['@nxext'],
       allowedVersions: '<15.0.0',
-    },
-    {
-      groupName: 'postcss',
-      matchPackagePrefixes: ['postcss'],
-    },
-    {
-      groupName: 'prettier',
-      matchPackagePrefixes: ['prettier'],
     },
     {
       groupName: '@stencil',
@@ -78,6 +63,34 @@
       groupName: '@swc',
       matchPackagePrefixes: ['@swc'],
     },
+    {
+      groupName: 'eslint',
+      matchPackagePrefixes: ['eslint'],
+    },
+    {
+      groupName: 'ng',
+      matchPackagePrefixes: ['ng-packagr'],
+      allowedVersions: '<15.0.0',
+    },
+    {
+      matchPackageNames: ['ngx-deploy-npm'],
+      allowedVersions: '<6.0.0',
+    }
+    {
+      groupName: 'nx',
+      matchPackagePrefixes: ['@nrwl', 'nx'],
+      allowedVersions: '<15.0.0',
+      excludeDepNames: ['@nrwl/nx-cloud'],
+    },
+    {
+      groupName: 'postcss',
+      matchPackagePrefixes: ['postcss'],
+    },
+    {
+      groupName: 'prettier',
+      matchPackagePrefixes: ['prettier'],
+    },
+
     {
       groupName: 'stylelint',
       matchPackagePrefixes: ['stylelint'],
@@ -95,6 +108,10 @@
       groupName: 'types react',
       matchPackagePrefixes: ['@types/react'],
     },
+    {
+      matchPackageNames: ['zone.js'],
+      allowedVersions: '<0.13.0',
+    }
     /**
      * Do not renovate peerDependencies versions/ranges.
      */
