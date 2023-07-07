@@ -5,26 +5,39 @@ describe('bq-input', () => {
     const page = await newE2EPage();
     await page.setContent('<bq-input></bq-input>');
 
-    const element = await page.find('bq-input');
-
-    expect(element).toHaveClass('hydrated');
+    const bqInputElem = await page.find('bq-input');
+    expect(bqInputElem).toHaveClass('hydrated');
   });
 
   it('should have shadow root', async () => {
     const page = await newE2EPage();
     await page.setContent('<bq-input></bq-input>');
 
-    const element = await page.find('bq-input');
-
-    expect(element.shadowRoot).not.toBeNull();
+    const bqInputElem = await page.find('bq-input');
+    expect(bqInputElem.shadowRoot).not.toBeNull();
   });
 
-  it('should display text', async () => {
+  it('should render with prefix icon', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-input></bq-input>');
+    await page.setContent(`
+      <bq-input>
+        <bq-icon name="user-circle" slot="prefix"></bq-icon>
+      </bq-input>
+    `);
 
-    const element = await page.find('bq-input >>> p');
+    const prefixContainerElem = await page.find('bq-input >>> .bq-input--prefix');
+    expect(prefixContainerElem).not.toHaveClass('hidden');
+  });
 
-    expect(element).toEqualText('My name is Stencil');
+  it('should render with suffix icon', async () => {
+    const page = await newE2EPage();
+    await page.setContent(`
+      <bq-input>
+        <bq-icon name="gear" slot="suffix"></bq-icon>
+      </bq-input>
+    `);
+
+    const suffixContainerElem = await page.find('bq-input >>> .bq-input--suffix');
+    expect(suffixContainerElem).not.toHaveClass('hidden');
   });
 });
