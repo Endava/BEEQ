@@ -3,5 +3,40 @@
 /* -------------------------------------------------------------------------- */
 
 :host {
-  --bq-input--margin: theme('spacing.m');
+  /**
+   * @prop --bq-input--background-color - Input background color
+   * @prop --bq-input--border-color - Input border color
+   * @prop --bq-input--border-color-hover - Input border color on hover
+   * @prop --bq-input--border-color-focus - Input border color on focus
+   * @prop --bq-input--border-color-disabled - Input border color when disabled
+   * @prop --bq-input--border-radius - Input border radius
+   * @prop --bq-input--border-width - Input border width
+   * @prop --bq-input--border-style - Input border style
+   * @prop --bq-input--gap - Gap between input content and prefix/suffix
+   * @prop --bq-input--pading-start - Input padding start
+   * @prop --bq-input--pading-end - Input padding end
+   * @prop --bq-input--paddingY - Input padding top and bottom
+   * @prop --bq-input--text-color - Input text color
+   * @prop --bq-input--text-size - Input text size
+   * @prop --bq-input--text-placeholder-color - Input placeholder text color
+   */
+  --bq-input--background-color: var(--bq-neutral-white);
+
+  --bq-input--border-color: theme('colors.stroke.tiertary');
+  --bq-input--border-color-hover: theme('colors.stroke.brand-hover');
+  --bq-input--border-color-focus: theme('colors.focus');
+  --bq-input--border-color-disabled: theme('colors.stroke.tiertary-disabled');
+  --bq-input--border-radius: theme('borderRadius.s');
+  --bq-input--border-width: 1px;
+  --bq-input--border-style: solid;
+
+  --bq-input--gap: var(--bq-spacing-xs);
+
+  --bq-input--pading-start: theme('spacing.m');
+  --bq-input--pading-end: theme('spacing.m');
+  --bq-input--paddingY: var(--bq-spacing-s);
+
+  --bq-input--text-color: theme('colors.text.primary');
+  --bq-input--text-size: theme('fontSize.m');
+  --bq-input--text-placeholder-color: theme('colors.text.secondary-disabled');
 }

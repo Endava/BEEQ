@@ -9,26 +9,30 @@
 }
 
 .bq-input--input {
-  @apply block w-full rounded-s border-0 ring-1 ring-inset ring-stroke-tiertary transition-[border-color,box-shadow];
+  @apply block w-full transition-[border-color,box-shadow];
+  // Border
+  @apply rounded-[var(--bq-input--border-radius)] border-[length:var(--bq-input--border-width)] border-[color:var(--bq-input--border-color)];
   // Padding
-  @apply px-[calc(var(--bq-spacing-m)_+_24px_+_var(--bq-spacing-xs))] py-s;
-  // Placeholder
-  @apply placeholder:text-text-secondary-disabled;
+  @apply py-[var(--bq-input--paddingY)] pe-[calc(var(--bq-input--pading-end)_+_24px_+_var(--bq-input--gap))] ps-[calc(var(--bq-input--pading-start)_+_24px_+_var(--bq-input--gap))];
+  // Text
+  @apply text-[length:var(--bq-input--text-size)] text-[color:var(--bq-input--text-color)] placeholder:text-[color:var(--bq-input--text-placeholder-color)];
   // Hover
-  @apply hover:ring-stroke-brand-hover;
+  @apply hover:border-[color:var(--bq-input--border-color-hover)];
   // Focus
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus;
+  @apply focus-visible:border-[color:var(--bq-input--border-color-focus)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus;
+
+  border-style: var(--bq-input--border-style);
 }
 
 .bq-input--prefix,
 .bq-input--suffix {
-  @apply pointer-events-none absolute inset-y-0 flex items-center text-stroke-primary;
+  @apply pointer-events-none absolute inset-y-0 flex items-center text-[color:var(--bq-input--text-color)];
 }
 
 .bq-input--prefix {
-  @apply left-0;
+  @apply start-[var(--bq-input--pading-start)];
 }
 
 .bq-input--suffix {
-  @apply right-0;
+  @apply end-[var(--bq-input--pading-end)];
 }

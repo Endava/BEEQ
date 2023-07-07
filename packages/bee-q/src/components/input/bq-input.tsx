@@ -81,7 +81,7 @@ export class BqInput {
       <div class="bq-input relative rounded-s" part="base">
         {/* Prefix */}
         <span
-          class={{ 'bq-input--prefix pl-m': true, hidden: !this.hasPrefix }}
+          class={{ 'bq-input--prefix': true, hidden: !this.hasPrefix }}
           part="prefix"
           ref={(spanElem) => (this.prefixElem = spanElem)}
         >
@@ -89,13 +89,13 @@ export class BqInput {
         </span>
         {/* HTML Input */}
         <input
-          class={{ 'bq-input--input': true, '!pl-m': !this.hasPrefix, '!pr-m': !this.hasSuffix }}
+          class={{ 'bq-input--input': true, '!ps-m': !this.hasPrefix, '!pe-m': !this.hasSuffix }}
           placeholder={this.placeholder}
           part="input"
         />
         {/* Suffix */}
         <span
-          class={{ 'bq-input--suffix pr-m': true, hidden: !this.hasSuffix }}
+          class={{ 'bq-input--suffix': true, hidden: !this.hasSuffix }}
           part="suffix"
           ref={(spanElem) => (this.suffixElem = spanElem)}
         >
