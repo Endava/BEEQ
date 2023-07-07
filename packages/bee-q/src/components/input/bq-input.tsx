@@ -1,5 +1,11 @@
-import { h, Component } from '@stencil/core';
+import { h, Component, Prop, Element } from '@stencil/core';
 
+/**
+ * @part base - The component's base wrapper.
+ * @part input - The native HTML input element used under the hood.
+ * @part prefix - The prefix slot container.
+ * @part suffix - The suffix slot container.
+ */
 @Component({
   tag: 'bq-input',
   styleUrl: './scss/bq-input.scss',
@@ -12,6 +18,8 @@ export class BqInput {
   // Reference to host HTML element
   // ===================================
 
+  @Element() el!: HTMLBqInputElement;
+
   // State() variables
   // Inlined decorator, alphabetical order
   // =======================================
@@ -21,6 +29,9 @@ export class BqInput {
 
   // Prop lifecycle events
   // =======================
+
+  /** The input placeholder text value */
+  @Prop() placeholder: string;
 
   // Events section
   // Requires JSDocs for public API documentation
@@ -51,9 +62,15 @@ export class BqInput {
 
   render() {
     return (
-      <p class="m-[var(--bq-input--margin)]">
-        My name is Stencil <slot />
-      </p>
+      <div class="bq-input relative rounded-s" part="base">
+        <span class="bq-input--prefix pl-m" part="prefix">
+          <slot name="prefix" />
+        </span>
+        <input class="bq-input--input" placeholder={this.placeholder} part="input" />
+        <span class="bq-input--suffix pr-m" part="suffix">
+          <slot name="suffix" />
+        </span>
+      </div>
     );
   }
 }

@@ -277,6 +277,12 @@ export namespace Components {
          */
         "weight"?: TIconWeight;
     }
+    interface BqInput {
+        /**
+          * The input placeholder text value
+         */
+        "placeholder": string;
+    }
     interface BqNotification {
         /**
           * If true, the notification will automatically hide after the specified amount of time
@@ -768,6 +774,12 @@ declare global {
         prototype: HTMLBqIconElement;
         new (): HTMLBqIconElement;
     };
+    interface HTMLBqInputElement extends Components.BqInput, HTMLStencilElement {
+    }
+    var HTMLBqInputElement: {
+        prototype: HTMLBqInputElement;
+        new (): HTMLBqInputElement;
+    };
     interface HTMLBqNotificationElement extends Components.BqNotification, HTMLStencilElement {
     }
     var HTMLBqNotificationElement: {
@@ -861,6 +873,7 @@ declare global {
         "bq-dialog": HTMLBqDialogElement;
         "bq-divider": HTMLBqDividerElement;
         "bq-icon": HTMLBqIconElement;
+        "bq-input": HTMLBqInputElement;
         "bq-notification": HTMLBqNotificationElement;
         "bq-radio": HTMLBqRadioElement;
         "bq-radio-group": HTMLBqRadioGroupElement;
@@ -1139,6 +1152,12 @@ declare namespace LocalJSX {
           * It set the icon weight/style
          */
         "weight"?: TIconWeight;
+    }
+    interface BqInput {
+        /**
+          * The input placeholder text value
+         */
+        "placeholder"?: string;
     }
     interface BqNotification {
         /**
@@ -1554,6 +1573,7 @@ declare namespace LocalJSX {
         "bq-dialog": BqDialog;
         "bq-divider": BqDivider;
         "bq-icon": BqIcon;
+        "bq-input": BqInput;
         "bq-notification": BqNotification;
         "bq-radio": BqRadio;
         "bq-radio-group": BqRadioGroup;
@@ -1589,6 +1609,7 @@ declare module "@stencil/core" {
              * Icons are simplified images that graphically explain the meaning of an object on the screen.
              */
             "bq-icon": LocalJSX.BqIcon & JSXBase.HTMLAttributes<HTMLBqIconElement>;
+            "bq-input": LocalJSX.BqInput & JSXBase.HTMLAttributes<HTMLBqInputElement>;
             "bq-notification": LocalJSX.BqNotification & JSXBase.HTMLAttributes<HTMLBqNotificationElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
