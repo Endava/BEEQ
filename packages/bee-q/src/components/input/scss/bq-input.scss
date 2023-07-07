@@ -11,7 +11,7 @@
 .bq-input--input {
   @apply block w-full rounded-s border-0 ring-1 ring-inset ring-stroke-tiertary transition-[border-color,box-shadow];
   // Padding
-  @apply px-[calc(var(--bq-spacing-m)_+_24px_+_var(--bq-spacing-xs))] py-[calc(var(--bq-spacing-s)_-_1px)];
+  @apply px-[calc(var(--bq-spacing-m)_+_24px_+_var(--bq-spacing-xs))] py-s;
   // Placeholder
   @apply placeholder:text-text-secondary-disabled;
   // Hover

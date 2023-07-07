@@ -1,4 +1,6 @@
-import { h, Component, Prop, Element } from '@stencil/core';
+import { Component, Element, h, Prop, State } from '@stencil/core';
+
+import { hasSlotContent } from '../../shared/utils';
 
 /**
  * @part base - The component's base wrapper.
@@ -15,6 +17,9 @@ export class BqInput {
   // Own Properties
   // ====================
 
+  private prefixElem?: HTMLElement;
+  private suffixElem?: HTMLElement;
+
   // Reference to host HTML element
   // ===================================
 
@@ -23,6 +28,9 @@ export class BqInput {
   // State() variables
   // Inlined decorator, alphabetical order
   // =======================================
+
+  @State() hasPrefix = false;
+  @State() hasSuffix = false;
 
   // Public Property API
   // ========================
@@ -56,6 +64,14 @@ export class BqInput {
   // These methods cannot be called from the host element.
   // =======================================================
 
+  private handlePrefixSlotChange = () => {
+    this.hasPrefix = hasSlotContent(this.prefixElem);
+  };
+
+  private handleSuffixSlotChange = () => {
+    this.hasSuffix = hasSlotContent(this.suffixElem);
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -63,12 +79,27 @@ export class BqInput {
   render() {
     return (
       <div class="bq-input relative rounded-s" part="base">
-        <span class="bq-input--prefix pl-m" part="prefix">
-          <slot name="prefix" />
+        {/* Prefix */}
+        <span
+          class={{ 'bq-input--prefix pl-m': true, hidden: !this.hasPrefix }}
+          part="prefix"
+          ref={(spanElem) => (this.prefixElem = spanElem)}
+        >
+          <slot name="prefix" onSlotchange={this.handlePrefixSlotChange} />
         </span>
-        <input class="bq-input--input" placeholder={this.placeholder} part="input" />
-        <span class="bq-input--suffix pr-m" part="suffix">
-          <slot name="suffix" />
+        {/* HTML Input */}
+        <input
+          class={{ 'bq-input--input': true, '!pl-m': !this.hasPrefix, '!pr-m': !this.hasSuffix }}
+          placeholder={this.placeholder}
+          part="input"
+        />
+        {/* Suffix */}
+        <span
+          class={{ 'bq-input--suffix pr-m': true, hidden: !this.hasSuffix }}
+          part="suffix"
+          ref={(spanElem) => (this.suffixElem = spanElem)}
+        >
+          <slot name="suffix" onSlotchange={this.handleSuffixSlotChange} />
         </span>
       </div>
     );
