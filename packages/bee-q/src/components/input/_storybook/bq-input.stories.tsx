@@ -1,5 +1,5 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
-import { html } from 'lit-html';
+import { html, nothing } from 'lit-html';
 
 import mdx from './bq-input.mdx';
 
@@ -12,19 +12,51 @@ const meta: Meta = {
     },
   },
   argTypes: {
-    text: { control: 'text', table: { disable: true } },
+    placeholder: { control: 'text' },
+    // Not part of the public API, so we don't want to expose it in the docs
+    prefix: { control: 'bolean', table: { disable: true } },
+    suffix: { control: 'bolean', table: { disable: true } },
   },
   args: {
-    text: 'text',
+    placeholder: 'Placeholder',
+    prefix: false,
+    suffix: false,
   },
 };
 export default meta;
 
 type Story = StoryObj;
 
-const Template = (args: Args) => html`<bq-input>${args.text}</bq-input>`;
+const Template = (args: Args) => html`
+  <bq-input placeholder=${args.placeholder}>
+    ${args.prefix ? html`<bq-icon name="user-circle" slot="prefix"></bq-icon>` : nothing}
+    ${args.suffix ? html`<bq-icon name="gear" slot="suffix"></bq-icon>` : nothing}
+  </bq-input>
+`;
 
 export const Default: Story = {
   render: Template,
-  args: {},
+};
+
+export const Prefix: Story = {
+  render: Template,
+  args: {
+    prefix: true,
+  },
+};
+
+export const Suffix: Story = {
+  render: Template,
+  args: {
+    suffix: true,
+  },
+};
+
+export const PrefixAndSuffix: Story = {
+  name: 'Prefix and Suffix',
+  render: Template,
+  args: {
+    prefix: true,
+    suffix: true,
+  },
 };
