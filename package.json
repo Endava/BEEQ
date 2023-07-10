@@ -54,9 +54,9 @@
     "@angular/compiler-cli": "14.3.0",
     "@angular/language-service": "14.3.0",
     "@babel/plugin-proposal-export-default-from": "7.22.5",
-    "@commitlint/cli": "17.6.5",
-    "@commitlint/config-angular": "17.6.5",
-    "@commitlint/config-conventional": "17.6.5",
+    "@commitlint/cli": "17.6.6",
+    "@commitlint/config-angular": "17.6.6",
+    "@commitlint/config-conventional": "17.6.6",
     "@jscutlery/semver": "2.29.3",
     "@nrwl/angular": "14.8.8",
     "@nrwl/cli": "14.8.8",
@@ -92,13 +92,13 @@
     "@types/mdx": "2.0.5",
     "@types/node": "20.3.1",
     "@types/puppeteer": "7.0.4",
-    "@types/react": "18.2.13",
+    "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
     "@typescript-eslint/eslint-plugin": "5.60.0",
     "@typescript-eslint/parser": "5.60.0",
     "@whitespace/storybook-addon-html": "5.1.6",
     "autoprefixer": "10.4.14",
-    "chromatic": "6.19.8",
+    "chromatic": "6.19.9",
     "copy-webpack-plugin": "11.0.0",
     "copyfiles": "2.4.1",
     "decompress": "4.2.1",
@@ -136,7 +136,7 @@
     "rimraf": "5.0.1",
     "stencil-tailwind-plugin": "1.8.0",
     "storybook": "7.0.25",
-    "stylelint": "15.8.0",
+    "stylelint": "15.9.0",
     "stylelint-config-sass-guidelines": "10.0.0",
     "stylelint-config-standard": "33.0.0",
     "tailwindcss": "3.3.2",
@@ -179,6 +179,6 @@
   },
   "volta": {
     "node": "18.16.1",
-    "npm": "9.7.1"
+    "npm": "9.7.2"
   }
 }
