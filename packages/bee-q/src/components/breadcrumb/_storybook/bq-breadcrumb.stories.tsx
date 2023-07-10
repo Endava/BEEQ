@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/web-components';
+import type { Args, Meta, StoryObj } from '@storybook/web-components';
 
 import { html } from 'lit-html';
 
@@ -14,27 +14,32 @@ const meta: Meta = {
   },
   argTypes: {
     text: { control: 'text', table: { disable: true } },
+    ['separator-icon']: { control: 'text' },
   },
   args: {
     text: 'text',
+    ['separator-icon']: '',
   },
 };
 export default meta;
 
 type Story = StoryObj;
 
-const Template = () => html`
-  <bq-breadcrumb>
+const Template = (args: Args) => html`
+  <bq-breadcrumb separator-icon=${args['separator-icon']}>
     <bq-breadcrumb-item>
-      <bq-icon name="house-line" size="16" slot="prefix"></bq-icon>
-      <span>Home</span>
+      <div class="flex items-center gap-xs">
+        <bq-icon name="house-line" size="16"></bq-icon>
+      </div>
     </bq-breadcrumb-item>
-    <bq-breadcrumb-item>Application Center</bq-breadcrumb-item>
+    <bq-breadcrumb-item>Men's Clothing</bq-breadcrumb-item>
     <bq-breadcrumb-item>
-      Application List
-      <bq-icon name="list-dashes" size="16" slot="suffix"></bq-icon>
+      <div class="flex items-center gap-xs">
+        <bq-icon name="shirt-folded" size="16"></bq-icon>
+        Shirts
+      </div>
     </bq-breadcrumb-item>
-    <bq-breadcrumb-item>App 1</bq-breadcrumb-item>
+    <bq-breadcrumb-item>Casual Shirts</bq-breadcrumb-item>
   </bq-breadcrumb>
 `;
 
@@ -43,22 +48,33 @@ export const Default: Story = {
   args: {},
 };
 
+export const CaretSeparator: Story = {
+  render: Template,
+  args: {
+    'separator-icon': 'caret-right',
+  },
+};
+
 export const Links: Story = {
   render: () => html`
     <bq-breadcrumb>
       <bq-breadcrumb-item href="https://example.com/" target="_blank">
-        <bq-icon name="house-line" size="16" slot="prefix"></bq-icon>
-        <span slot="label">Home</span>
+        <div class="flex items-center gap-xs">
+          <bq-icon name="house-line" size="16"></bq-icon>
+          <span>Home</span>
+        </div>
       </bq-breadcrumb-item>
       <bq-breadcrumb-item href="https://example.com/center" target="_blank">
-        <span slot="label">Application Center</span>
+        <span>Application Center</span>
       </bq-breadcrumb-item>
       <bq-breadcrumb-item href="https://example.com/center/list" target="_blank">
-        <span slot="label">Application List</span>
-        <bq-icon name="list-dashes" size="16" slot="suffix"></bq-icon>
+        <div class="flex items-center gap-xs">
+          <span>Application List</span>
+          <bq-icon name="list-dashes" size="16"></bq-icon>
+        </div>
       </bq-breadcrumb-item>
       <bq-breadcrumb-item href="https://example.com/center/list/app" target="_blank">
-        <span slot="label">App 1</span>
+        <span>App 1</span>
       </bq-breadcrumb-item>
     </bq-breadcrumb>
   `,

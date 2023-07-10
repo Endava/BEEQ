@@ -1,6 +1,6 @@
-import { h, Component, State, Prop, Element, Event, EventEmitter } from '@stencil/core';
+import { h, Component, Prop, Element, Event, EventEmitter } from '@stencil/core';
 
-import { hasSlotContent, isDefined } from '../../shared/utils';
+import { isDefined } from '../../shared/utils';
 
 @Component({
   tag: 'bq-breadcrumb-item',
@@ -11,10 +11,6 @@ export class BqBreadcrumbItem {
   // Own Properties
   // ====================
 
-  private prefixElem: HTMLElement;
-  private suffixElem: HTMLElement;
-  private labelElem: HTMLElement;
-
   // Reference to host HTML element
   // ===================================
 
@@ -23,10 +19,6 @@ export class BqBreadcrumbItem {
   // State() variables
   // Inlined decorator, alphabetical order
   // =======================================
-
-  @State() hasPrefix: boolean = false;
-  @State() hasSuffix: boolean = false;
-  @State() hasLabel: boolean = false;
 
   // Public Property API
   // ========================
@@ -93,12 +85,6 @@ export class BqBreadcrumbItem {
     this.bqClick.emit(this.el);
   };
 
-  private onSlotChange = () => {
-    this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
-    this.hasSuffix = hasSlotContent(this.suffixElem, 'suffix');
-    this.hasLabel = hasSlotContent(this.labelElem, 'label');
-  };
-
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -106,7 +92,11 @@ export class BqBreadcrumbItem {
   render() {
     const isLink = isDefined(this.href);
     const TagElem = isLink ? 'a' : 'button';
-    const separatorElem = this.separatorIcon ? <bq-icon size="12" name={this.separatorIcon}></bq-icon> : '/';
+    const separatorElem = this.separatorIcon ? (
+      <bq-icon size="12" name={this.separatorIcon}></bq-icon>
+    ) : (
+      <span class="flex h-3 w-3 items-center justify-center">/</span>
+    );
 
     return (
       <section class="flex h-5 items-center" role="listitem">
@@ -120,23 +110,13 @@ export class BqBreadcrumbItem {
           onFocus={this.onFocus}
           onClick={this.onClick}
         >
-          <span class="breadcrumb-item__prefix" ref={(elem) => (this.prefixElem = elem)} part="prefix">
-            <slot name="prefix" onSlotchange={this.onSlotChange}></slot>
-          </span>
           <span
             class={{
-              'breadcrumb-item__label': true,
               'text-text-brand': this.hideSeparatorIcon,
-              'pl-xs': this.hasPrefix && this.hasLabel,
-              'pr-xs': this.hasSuffix && this.hasLabel,
             }}
-            ref={(elem) => (this.labelElem = elem)}
-            part="label"
+            part="item"
           >
-            <slot name="label" onSlotchange={this.onSlotChange}></slot>
-          </span>
-          <span class="breadcrumb-item__suffix" ref={(elem) => (this.suffixElem = elem)} part="suffix">
-            <slot name="suffix" onSlotchange={this.onSlotChange}></slot>
+            <slot></slot>
           </span>
         </TagElem>
         <span
