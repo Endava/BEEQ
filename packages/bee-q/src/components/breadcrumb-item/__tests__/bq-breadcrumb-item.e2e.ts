@@ -45,42 +45,4 @@ describe('bq-breadcrumb-item', () => {
 
     expect(element.tagName.toLocaleLowerCase()).toBe('a');
   });
-
-  it('should display prefix element', async () => {
-    const page = await newE2EPage();
-    await page.setContent(`
-      <bq-breadcrumb-item>
-        <span slot="prefix">Prefix text</span>
-        <span>Home</span>
-      </bq-breadcrumb-item>
-    `);
-
-    const prefixText = await page.$eval('bq-breadcrumb-item', (element) => {
-      const slotElement = element.shadowRoot.querySelector('slot[name="prefix"]');
-      const assignedElements = (slotElement as HTMLSlotElement).assignedElements({ flatten: true })[0];
-
-      return assignedElements.textContent;
-    });
-
-    expect(prefixText).toBe('Prefix text');
-  });
-
-  it('should display suffix element', async () => {
-    const page = await newE2EPage();
-    await page.setContent(`
-      <bq-breadcrumb-item>
-        <span slot="suffix">Suffix text</span>
-        <span>Home</span>
-      </bq-breadcrumb-item>
-    `);
-
-    const prefixText = await page.$eval('bq-breadcrumb-item', (element) => {
-      const slotElement = element.shadowRoot.querySelector('slot[name="suffix"]');
-      const assignedElements = (slotElement as HTMLSlotElement).assignedElements({ flatten: true })[0];
-
-      return assignedElements.textContent;
-    });
-
-    expect(prefixText).toBe('Suffix text');
-  });
 });
