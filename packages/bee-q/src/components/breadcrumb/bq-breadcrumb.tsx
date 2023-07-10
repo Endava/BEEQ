@@ -1,4 +1,4 @@
-import { h, Component, Host, Element, Listen, Event, EventEmitter, Prop } from '@stencil/core';
+import { h, Component, Host, Element, Listen, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 
 import { isHTMLElement } from '../../shared/utils';
 
@@ -29,6 +29,11 @@ export class BqBreadcrumb {
   // Prop lifecycle events
   // =======================
 
+  @Watch('separatorIcon')
+  onIconChange() {
+    this.setSeparator();
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
@@ -45,10 +50,6 @@ export class BqBreadcrumb {
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
-
-  componentDidLoad() {
-    this.setIconAsSeparator();
-  }
 
   // Listeners
   // ==============
@@ -80,7 +81,7 @@ export class BqBreadcrumb {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private setIconAsSeparator = (): void => {
+  private setSeparator = (): void => {
     this.breadcrumbItems.forEach((item, index, arr) => {
       item.separatorIcon = this.separatorIcon;
       item.hideSeparatorIcon = index === arr.length - 1;
@@ -98,7 +99,7 @@ export class BqBreadcrumb {
   render() {
     return (
       <Host role="list">
-        <slot></slot>
+        <slot onSlotchange={this.setSeparator}></slot>
       </Host>
     );
   }
