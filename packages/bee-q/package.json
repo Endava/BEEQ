@@ -15,7 +15,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@floating-ui/dom": "1.4.2"
+    "@floating-ui/dom": "1.4.4"
   },
   "browserslist": [
     "> 1%",
