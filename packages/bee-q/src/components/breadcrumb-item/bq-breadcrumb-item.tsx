@@ -117,6 +117,7 @@ export class BqBreadcrumbItem {
         >
           <span
             class={{
+              'flex items-center gap-xs2': true,
               'text-text-brand': this.hideSeparatorIcon,
             }}
             part="content"
