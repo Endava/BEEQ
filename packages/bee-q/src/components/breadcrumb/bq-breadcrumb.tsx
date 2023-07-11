@@ -30,7 +30,7 @@ export class BqBreadcrumb {
   // =======================
 
   @Watch('separatorIcon')
-  onIconChange() {
+  handleSeparatorChange() {
     this.setSeparator();
   }
 

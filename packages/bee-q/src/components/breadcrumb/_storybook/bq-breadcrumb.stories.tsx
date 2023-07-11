@@ -15,6 +15,10 @@ const meta: Meta = {
   argTypes: {
     text: { control: 'text', table: { disable: true } },
     ['separator-icon']: { control: 'text' },
+    // Event handlers
+    bqBreadcrumbBlur: { action: 'bqBlur' },
+    bqBreadcrumbClick: { action: 'bqClick' },
+    bqBreadcrumbFocus: { action: 'bqFocus' },
   },
   args: {
     text: 'text',
@@ -26,7 +30,12 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
-  <bq-breadcrumb separator-icon=${args['separator-icon']}>
+  <bq-breadcrumb
+    separator-icon=${args['separator-icon']}
+    @bqBreadcrumbBlur=${args.bqBreadcrumbBlur}
+    @bqBreadcrumbClick=${args.bqBreadcrumbClick}
+    @bqBreadcrumbFocus=${args.bqBreadcrumbFocus}
+  >
     <bq-breadcrumb-item>
       <div class="flex items-center gap-xs">
         <bq-icon name="house-line" size="16"></bq-icon>
@@ -56,8 +65,12 @@ export const CaretSeparator: Story = {
 };
 
 export const Links: Story = {
-  render: () => html`
-    <bq-breadcrumb>
+  render: (args: Args) => html`
+    <bq-breadcrumb
+      @bqBreadcrumbBlur=${args.bqBreadcrumbBlur}
+      @bqBreadcrumbClick=${args.bqBreadcrumbClick}
+      @bqBreadcrumbFocus=${args.bqBreadcrumbFocus}
+    >
       <bq-breadcrumb-item href="https://example.com/" target="_blank">
         <div class="flex items-center gap-xs">
           <bq-icon name="house-line" size="16"></bq-icon>

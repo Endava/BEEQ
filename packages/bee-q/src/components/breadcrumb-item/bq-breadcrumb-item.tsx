@@ -1,7 +1,12 @@
-import { h, Component, Prop, Element, Event, EventEmitter } from '@stencil/core';
+import { h, Component, Prop, Element, Event, EventEmitter, Host } from '@stencil/core';
 
 import { isDefined } from '../../shared/utils';
 
+/**
+ * @part base - The component wrapper container (`button` or `a`)
+ * @part content - The `span` tag that loads the content item
+ * @part separator - The `span` tag that loads the separator
+ */
 @Component({
   tag: 'bq-breadcrumb-item',
   styleUrl: './scss/bq-breadcrumb-item.scss',
@@ -99,22 +104,22 @@ export class BqBreadcrumbItem {
     );
 
     return (
-      <section class="flex h-5 items-center" role="listitem">
+      <Host class="flex h-5 items-center" role="listitem">
         <TagElem
           class="breadcrumb-item"
-          tabindex="0"
           href={isLink ? this.href : undefined}
           rel={isLink && this.target ? 'noreferrer noopener' : undefined}
           target={isLink ? this.target : undefined}
           onBlur={this.onBlur}
           onFocus={this.onFocus}
           onClick={this.onClick}
+          part="base"
         >
           <span
             class={{
               'text-text-brand': this.hideSeparatorIcon,
             }}
-            part="item"
+            part="content"
           >
             <slot></slot>
           </span>
@@ -124,10 +129,11 @@ export class BqBreadcrumbItem {
             'breadcrumb-separator': true,
             hidden: this.hideSeparatorIcon,
           }}
+          part="separator"
         >
           {separatorElem}
         </span>
-      </section>
+      </Host>
     );
   }
 }
