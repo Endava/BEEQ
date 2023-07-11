@@ -75,9 +75,11 @@ export class BqDialog {
   handleOpenChange() {
     if (this.open) {
       this.el.classList.add(this.OPEN_CSS_CLASS);
+      this.removeInertAttribute();
       !this.disableBackdrop ? this.dialogElem.showModal() : this.dialogElem.show();
     } else {
       this.dialogElem.close();
+      this.setInertAttribute();
     }
   }
 
@@ -170,13 +172,21 @@ export class BqDialog {
   // These methods cannot be called from the host element.
   // =======================================================
 
+  private setInertAttribute() {
+    if (!this.dialogElem) return;
+    this.dialogElem.setAttribute('inert', 'true');
+  }
+
+  private removeInertAttribute() {
+    if (!this.dialogElem) return;
+    this.dialogElem.removeAttribute('inert');
+  }
+
   private handleClose = () => {
     if (!this.dialogElem) return;
 
     const ev = this.bqClose.emit();
     if (ev.defaultPrevented) return;
-
-    this.dialogElem.setAttribute('inert', 'true');
     this.open = false;
   };
 
@@ -186,7 +196,6 @@ export class BqDialog {
     const ev = this.bqOpen.emit();
     if (ev.defaultPrevented) return;
 
-    this.dialogElem.removeAttribute('inert');
     this.open = true;
   };
 
@@ -194,7 +203,6 @@ export class BqDialog {
     const ev = this.bqCancel.emit();
     if (ev.defaultPrevented) return;
 
-    this.dialogElem.setAttribute('inert', 'true');
     this.open = false;
   };
 
