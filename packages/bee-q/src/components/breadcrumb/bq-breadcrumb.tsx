@@ -2,6 +2,9 @@ import { h, Component, Element, Listen, Event, EventEmitter, Prop, Watch } from 
 
 import { isHTMLElement } from '../../shared/utils';
 
+/**
+ * @part navigation - The `nav` tag that loads the breadcrumb items
+ */
 @Component({
   tag: 'bq-breadcrumb',
   styleUrl: './scss/bq-breadcrumb.scss',
@@ -98,7 +101,7 @@ export class BqBreadcrumb {
 
   render() {
     return (
-      <nav class="breadcrumb" role="list">
+      <nav class="flex items-center" role="list" part="navigation">
         <slot onSlotchange={this.setSeparator}></slot>
       </nav>
     );

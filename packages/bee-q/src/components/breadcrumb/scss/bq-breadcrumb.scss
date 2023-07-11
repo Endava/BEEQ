@@ -2,6 +2,6 @@
 /*                                Breadcrumb styles                */
 /* -------------------------------------------------------------------------- */
 
-.breadcrumb {
-  @apply flex items-center;
+:host {
+  @apply block;
 }

@@ -21,6 +21,13 @@
 | `bqBreadcrumbFocus` | Handler to be called when `bq-breadcrumb-item` item gets focus.                    | `CustomEvent<HTMLBqBreadcrumbItemElement>` |
 
 
+## Shadow Parts
+
+| Part           | Description                                   |
+| -------------- | --------------------------------------------- |
+| `"navigation"` | The `nav` tag that loads the breadcrumb items |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
