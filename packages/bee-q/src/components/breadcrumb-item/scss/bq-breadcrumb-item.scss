@@ -5,8 +5,9 @@
 @import './bq-breadcrumb-item.variables';
 
 .breadcrumb-item {
-  @apply font-regular leading-regular text-text-secondary no-underline focus-visible:focus active:outline-none;
-  @apply px-[var(--bq-breadcrumb-item--paddingX)] py-[var(--bq-breadcrumb-item--paddingY)] text-[length:var(--bq-breadcrumb-item--font-size)];
+  @apply font-regular leading-[var(--bq-breadcrumb-item--line-height)] text-text-secondary no-underline focus-visible:focus active:outline-none;
+  @apply pe-[var(--bq-breadcrumb-item--padding-end)] ps-[var(--bq-breadcrumb-item--padding-start)];
+  @apply py-[var(--bq-breadcrumb-item--paddingY)] text-[length:var(--bq-breadcrumb-item--font-size)];
   @apply rounded-[var(--bq-breadcrumb-item--border-radius)] bg-[var(--bq-breadcrumb-item--background)] shadow-[shadow:var(--bq-breadcrumb-item--box-shadow)];
   @apply border-[length:var(--bq-breadcrumb-item--border-width)] border-[color:var(--bq-breadcrumb-item--border-color)];
   @apply cursor-pointer hover:text-text-brand-hover;
@@ -15,5 +16,6 @@
 }
 
 .breadcrumb-separator {
-  @apply flex items-center px-[var(--bq-breadcrumb-item--paddingX-separator)] text-[length:var(--bq-breadcrumb-item--font-size-separator)];
+  @apply flex items-center text-[length:var(--bq-breadcrumb-item--font-size-separator)];
+  @apply pe-[var(--bq-breadcrumb-item--padding-end-separator)] ps-[var(--bq-breadcrumb-item--padding-start-separator)];
 }

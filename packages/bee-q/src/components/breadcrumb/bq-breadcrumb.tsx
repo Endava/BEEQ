@@ -1,4 +1,4 @@
-import { h, Component, Host, Element, Listen, Event, EventEmitter, Prop, Watch } from '@stencil/core';
+import { h, Component, Element, Listen, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 
 import { isHTMLElement } from '../../shared/utils';
 
@@ -98,9 +98,9 @@ export class BqBreadcrumb {
 
   render() {
     return (
-      <Host role="list">
+      <nav class="breadcrumb" role="list">
         <slot onSlotchange={this.setSeparator}></slot>
-      </Host>
+      </nav>
     );
   }
 }

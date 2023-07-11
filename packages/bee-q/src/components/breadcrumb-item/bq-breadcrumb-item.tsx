@@ -1,4 +1,4 @@
-import { h, Component, Prop, Element, Event, EventEmitter, Host } from '@stencil/core';
+import { h, Component, Prop, Element, Event, EventEmitter } from '@stencil/core';
 
 import { isDefined } from '../../shared/utils';
 
@@ -100,11 +100,11 @@ export class BqBreadcrumbItem {
     const separatorElem = this.separatorIcon ? (
       <bq-icon size="12" name={this.separatorIcon}></bq-icon>
     ) : (
-      <span class="flex h-3 w-3 items-center justify-center">/</span>
+      <span class="flex w-3 items-center justify-center">/</span>
     );
 
     return (
-      <Host class="flex h-5 items-center" role="listitem">
+      <div class="flex items-center" role="listitem">
         <TagElem
           class="breadcrumb-item"
           href={isLink ? this.href : undefined}
@@ -134,7 +134,7 @@ export class BqBreadcrumbItem {
         >
           {separatorElem}
         </span>
-      </Host>
+      </div>
     );
   }
 }
