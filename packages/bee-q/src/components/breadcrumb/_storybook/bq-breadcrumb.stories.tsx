@@ -37,16 +37,12 @@ const Template = (args: Args) => html`
     @bqBreadcrumbFocus=${args.bqBreadcrumbFocus}
   >
     <bq-breadcrumb-item>
-      <div class="flex items-center gap-xs">
-        <bq-icon name="house-line" size="16"></bq-icon>
-      </div>
+      <bq-icon name="house-line" size="16"></bq-icon>
     </bq-breadcrumb-item>
     <bq-breadcrumb-item>Men's Clothing</bq-breadcrumb-item>
     <bq-breadcrumb-item>
-      <div class="flex items-center gap-xs">
-        <bq-icon name="shirt-folded" size="16"></bq-icon>
-        Shirts
-      </div>
+      <bq-icon name="shirt-folded" size="16"></bq-icon>
+      Shirts
     </bq-breadcrumb-item>
     <bq-breadcrumb-item>Casual Shirts</bq-breadcrumb-item>
   </bq-breadcrumb>
@@ -72,23 +68,15 @@ export const Links: Story = {
       @bqBreadcrumbFocus=${args.bqBreadcrumbFocus}
     >
       <bq-breadcrumb-item href="https://example.com/" target="_blank">
-        <div class="flex items-center gap-xs">
-          <bq-icon name="house-line" size="16"></bq-icon>
-          <span>Home</span>
-        </div>
+        <bq-icon name="house-line" size="16"></bq-icon>
+        Home
       </bq-breadcrumb-item>
-      <bq-breadcrumb-item href="https://example.com/center" target="_blank">
-        <span>Application Center</span>
-      </bq-breadcrumb-item>
+      <bq-breadcrumb-item href="https://example.com/center" target="_blank"> Application Center </bq-breadcrumb-item>
       <bq-breadcrumb-item href="https://example.com/center/list" target="_blank">
-        <div class="flex items-center gap-xs">
-          <span>Application List</span>
-          <bq-icon name="list-dashes" size="16"></bq-icon>
-        </div>
+        Application List
+        <bq-icon name="list-dashes" size="16"></bq-icon>
       </bq-breadcrumb-item>
-      <bq-breadcrumb-item href="https://example.com/center/list/app" target="_blank">
-        <span>App 1</span>
-      </bq-breadcrumb-item>
+      <bq-breadcrumb-item href="https://example.com/center/list/app" target="_blank">App 1 </bq-breadcrumb-item>
     </bq-breadcrumb>
   `,
 };
