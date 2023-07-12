@@ -89,6 +89,15 @@
     {
       groupName: 'prettier',
       matchPackagePrefixes: ['prettier'],
+      excludePackageNames: ['prettier', 'eslint-plugin-prettier'],
+    },
+    {
+      matchPackageNames: ['prettier'],
+      allowedVersions: '<3.0.0',
+    },
+    {
+      matchPackageNames: ['eslint-plugin-prettier'],
+      allowedVersions: '<5.0.0',
     },
     {
       groupName: 'stylelint',
