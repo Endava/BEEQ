@@ -24,7 +24,7 @@ describe(computedStyle.name, () => {
       return div;
     });
 
-    jest.spyOn(global, 'getComputedStyle').mockImplementationOnce(() => ({ width: '20px' }) as CSSStyleDeclaration);
+    jest.spyOn(global, 'getComputedStyle').mockImplementationOnce(() => ({ width: '20px' } as CSSStyleDeclaration));
 
     const page = await StencilCoreTesting.newE2EPage();
 
@@ -41,7 +41,7 @@ describe(computedStyle.name, () => {
       return div;
     });
 
-    jest.spyOn(global, 'getComputedStyle').mockImplementationOnce(() => ({ width: '30px' }) as CSSStyleDeclaration);
+    jest.spyOn(global, 'getComputedStyle').mockImplementationOnce(() => ({ width: '30px' } as CSSStyleDeclaration));
 
     const page = await StencilCoreTesting.newE2EPage();
 
@@ -57,7 +57,7 @@ describe(computedStyle.name, () => {
 
     jest
       .spyOn(global, 'getComputedStyle')
-      .mockImplementationOnce(() => ({ width: '20px', height: '30px' }) as CSSStyleDeclaration);
+      .mockImplementationOnce(() => ({ width: '20px', height: '30px' } as CSSStyleDeclaration));
 
     const page = await StencilCoreTesting.newE2EPage();
 
@@ -73,7 +73,7 @@ describe(computedStyle.name, () => {
 
     jest
       .spyOn(global, 'getComputedStyle')
-      .mockImplementationOnce(() => ({ width: '20px', height: '30px' }) as CSSStyleDeclaration);
+      .mockImplementationOnce(() => ({ width: '20px', height: '30px' } as CSSStyleDeclaration));
 
     const page = await StencilCoreTesting.newE2EPage();
 

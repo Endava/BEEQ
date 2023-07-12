@@ -32,13 +32,10 @@ export const computedStyle = <T extends keyof CSSStyleDeclaration>(
       const style = getComputedStyle(element);
 
       if (filter) {
-        return filter.reduce(
-          (acc, key) => {
-            acc[key] = style[key];
-            return acc;
-          },
-          {} as Pick<CSSStyleDeclaration, T>,
-        );
+        return filter.reduce((acc, key) => {
+          acc[key] = style[key];
+          return acc;
+        }, {} as Pick<CSSStyleDeclaration, T>);
       }
 
       return JSON.parse(JSON.stringify(style));
