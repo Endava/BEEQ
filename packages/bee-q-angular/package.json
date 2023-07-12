@@ -7,7 +7,7 @@
   "module": "dist/esm2015/index.js",
   "types": "dist/index.d.ts",
   "dependencies": {
-    "tslib": "2.5.3"
+    "tslib": "2.6.0"
   },
   "peerDependencies": {
     "@angular/common": ">=14.0.0",
