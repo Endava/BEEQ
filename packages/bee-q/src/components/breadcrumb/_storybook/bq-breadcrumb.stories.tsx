@@ -14,7 +14,6 @@ const meta: Meta = {
   },
   argTypes: {
     text: { control: 'text', table: { disable: true } },
-    ['separator-icon']: { control: 'text' },
     // Event handlers
     bqBreadcrumbBlur: { action: 'bqBlur' },
     bqBreadcrumbClick: { action: 'bqClick' },
@@ -22,7 +21,6 @@ const meta: Meta = {
   },
   args: {
     text: 'text',
-    ['separator-icon']: '',
   },
 };
 export default meta;
@@ -31,7 +29,6 @@ type Story = StoryObj;
 
 const Template = (args: Args) => html`
   <bq-breadcrumb
-    separator-icon=${args['separator-icon']}
     @bqBreadcrumbBlur=${args.bqBreadcrumbBlur}
     @bqBreadcrumbClick=${args.bqBreadcrumbClick}
     @bqBreadcrumbFocus=${args.bqBreadcrumbFocus}
@@ -55,9 +52,7 @@ export const Default: Story = {
 
 export const CaretSeparator: Story = {
   render: Template,
-  args: {
-    'separator-icon': 'caret-right',
-  },
+  args: {},
 };
 
 export const Links: Story = {

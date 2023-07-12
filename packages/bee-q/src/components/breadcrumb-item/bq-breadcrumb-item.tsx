@@ -31,9 +31,6 @@ export class BqBreadcrumbItem {
   /** If true, the item is the last element inside breadcrumb */
   @Prop() isLastItem: boolean = false;
 
-  /** The icon name used as separator. Default is `/`. */
-  @Prop() separatorIcon!: string;
-
   /** If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered. */
   @Prop({ reflect: true }) href: string;
 
@@ -97,11 +94,6 @@ export class BqBreadcrumbItem {
   render() {
     const isLink = isDefined(this.href);
     const TagElem = isLink ? 'a' : 'button';
-    const separatorElem = this.separatorIcon ? (
-      <bq-icon size="12" name={this.separatorIcon}></bq-icon>
-    ) : (
-      <span class="flex w-3 items-center justify-center">/</span>
-    );
 
     return (
       <div class="flex items-center" role="listitem">
@@ -129,11 +121,10 @@ export class BqBreadcrumbItem {
         <span
           class={{
             'breadcrumb-separator': true,
-            hidden: this.isLastItem,
           }}
           part="separator"
         >
-          {separatorElem}
+          <slot name="separator"></slot>
         </span>
       </div>
     );

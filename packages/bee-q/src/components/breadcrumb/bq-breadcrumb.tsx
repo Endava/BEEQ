@@ -1,4 +1,4 @@
-import { h, Component, Element, Listen, Event, EventEmitter, Prop, Watch } from '@stencil/core';
+import { h, Component, Element, Listen, Event, EventEmitter, Host } from '@stencil/core';
 
 import { isHTMLElement } from '../../shared/utils';
 
@@ -14,6 +14,8 @@ export class BqBreadcrumb {
   // Own Properties
   // ====================
 
+  private spanElem: HTMLElement;
+
   // Reference to host HTML element
   // ===================================
 
@@ -26,16 +28,8 @@ export class BqBreadcrumb {
   // Public Property API
   // ========================
 
-  /** The icon name used as separator. Default is `/`. */
-  @Prop() separatorIcon!: string;
-
   // Prop lifecycle events
   // =======================
-
-  @Watch('separatorIcon')
-  handleSeparatorChange() {
-    this.setSeparator();
-  }
 
   // Events section
   // Requires JSDocs for public API documentation
@@ -86,13 +80,39 @@ export class BqBreadcrumb {
 
   private setSeparator = (): void => {
     this.breadcrumbItems.forEach((item, index, arr) => {
-      item.separatorIcon = this.separatorIcon;
       item.isLastItem = index === arr.length - 1;
+      !item.isLastItem && item.append(this.getSeparatorElem());
     });
+  };
+
+  /**
+   * clone original element and add slot attr
+   * @returns cloned separator element
+   */
+  private getSeparatorElem = (): HTMLElement => {
+    const separator = this.separatorFromSlot || this.defaultSeparator;
+    const clone = separator.cloneNode(true) as HTMLElement;
+    clone.slot = 'separator';
+
+    return clone;
   };
 
   private get breadcrumbItems(): HTMLBqBreadcrumbItemElement[] {
     return Array.from(this.el.querySelectorAll('bq-breadcrumb-item'));
+  }
+
+  private get separatorFromSlot() {
+    return this.spanElem
+      .querySelector<HTMLSlotElement>('slot[name="separator"]')
+      .assignedElements({ flatten: true })[0] as HTMLElement;
+  }
+
+  private get defaultSeparator(): HTMLElement {
+    const newNode = document.createElement('span');
+    newNode.classList.add('flex', 'w-3', 'items-center', 'justify-center');
+    newNode.textContent = '/';
+
+    return newNode;
   }
 
   // render() function
@@ -101,9 +121,15 @@ export class BqBreadcrumb {
 
   render() {
     return (
-      <nav class="flex items-center" role="list" aria-label="breadcrumbs" part="navigation">
-        <slot onSlotchange={this.setSeparator}></slot>
-      </nav>
+      <Host>
+        <nav class="flex items-center" role="list" aria-label="breadcrumbs" part="navigation">
+          <slot onSlotchange={this.setSeparator}></slot>
+        </nav>
+
+        <span hidden aria-hidden="true" ref={(element) => (this.spanElem = element)}>
+          <slot name="separator"></slot>
+        </span>
+      </Host>
     );
   }
 }
