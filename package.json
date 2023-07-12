@@ -172,6 +172,7 @@
     "nx-stylelint": {
       "stylelint": "$stylelint"
     },
+    "prettier": "$prettier",
     "stylelint-config-sass-guidelines": {
       "stylelint": "$stylelint"
     },
