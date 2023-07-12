@@ -87,7 +87,7 @@ export class BqBreadcrumb {
   private setSeparator = (): void => {
     this.breadcrumbItems.forEach((item, index, arr) => {
       item.separatorIcon = this.separatorIcon;
-      item.hideSeparatorIcon = index === arr.length - 1;
+      item.isLastItem = index === arr.length - 1;
     });
   };
 
@@ -101,7 +101,7 @@ export class BqBreadcrumb {
 
   render() {
     return (
-      <nav class="flex items-center" role="list" part="navigation">
+      <nav class="flex items-center" role="list" aria-label="breadcrumbs" part="navigation">
         <slot onSlotchange={this.setSeparator}></slot>
       </nav>
     );

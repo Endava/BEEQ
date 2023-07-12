@@ -29,7 +29,7 @@ export class BqBreadcrumbItem {
   // ========================
 
   /** If true, the item is the last element inside breadcrumb */
-  @Prop() hideSeparatorIcon: boolean = false;
+  @Prop() isLastItem: boolean = false;
 
   /** The icon name used as separator. Default is `/`. */
   @Prop() separatorIcon!: string;
@@ -113,12 +113,13 @@ export class BqBreadcrumbItem {
           onBlur={this.onBlur}
           onFocus={this.onFocus}
           onClick={this.onClick}
+          aria-current={isLink && this.isLastItem ? 'location' : undefined} // indicates the last link as the current page
           part="base"
         >
           <span
             class={{
               'flex items-center gap-xs2': true,
-              'text-text-brand': this.hideSeparatorIcon,
+              'text-text-brand': this.isLastItem,
             }}
             part="content"
           >
@@ -128,7 +129,7 @@ export class BqBreadcrumbItem {
         <span
           class={{
             'breadcrumb-separator': true,
-            hidden: this.hideSeparatorIcon,
+            hidden: this.isLastItem,
           }}
           part="separator"
         >

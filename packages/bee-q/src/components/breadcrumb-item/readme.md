@@ -7,13 +7,13 @@
 
 ## Properties
 
-| Property                     | Attribute             | Description                                                                                                          | Type                                         | Default                 |
-| ---------------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- | ----------------------- |
-| `hideSeparatorIcon`          | `hide-separator-icon` | If true, the item is the last element inside breadcrumb                                                              | `boolean`                                    | `false`                 |
-| `href`                       | `href`                | If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered. | `string`                                     | `undefined`             |
-| `rel`                        | `rel`                 | Where to display the link in the browser context. Relevant only if `href` is set.                                    | `string`                                     | `'noreferrer noopener'` |
-| `separatorIcon` _(required)_ | `separator-icon`      | The icon name used as separator. Default is `/`.                                                                     | `string`                                     | `undefined`             |
-| `target`                     | `target`              | Where to display the link in the browser context. Relevant only if `href` is set.                                    | `"_blank" \| "_parent" \| "_self" \| "_top"` | `undefined`             |
+| Property                     | Attribute        | Description                                                                                                          | Type                                         | Default                 |
+| ---------------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- | ----------------------- |
+| `href`                       | `href`           | If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered. | `string`                                     | `undefined`             |
+| `isLastItem`                 | `is-last-item`   | If true, the item is the last element inside breadcrumb                                                              | `boolean`                                    | `false`                 |
+| `rel`                        | `rel`            | Where to display the link in the browser context. Relevant only if `href` is set.                                    | `string`                                     | `'noreferrer noopener'` |
+| `separatorIcon` _(required)_ | `separator-icon` | The icon name used as separator. Default is `/`.                                                                     | `string`                                     | `undefined`             |
+| `target`                     | `target`         | Where to display the link in the browser context. Relevant only if `href` is set.                                    | `"_blank" \| "_parent" \| "_self" \| "_top"` | `undefined`             |
 
 
 ## Events
