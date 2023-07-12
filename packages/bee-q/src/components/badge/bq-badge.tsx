@@ -43,7 +43,7 @@ export class BqBadge {
   /** Badge number color. The value should be a valid value of the palette color */
   @Prop({ mutable: true, reflect: true }) textColor? = 'text--inverse';
 
-  /** The size of the badge */
+  /** The size of the badge. Relevant if badge has no content. */
   @Prop({ reflect: true, mutable: true }) size?: TBadgeSize = 'small';
 
   // Prop lifecycle events
@@ -126,11 +126,11 @@ export class BqBadge {
             'bq-badge': true,
             [`size--${this.size}`]: this.contentLength === 0,
             digit: this.contentLength > 0,
-            'px-xs': this.contentLength > 1,
+            'px-xs2': this.contentLength > 1,
           }}
           part="base"
         >
-          <span ref={(element) => (this.spanElement = element)} class="text-xs font-bold leading-large" part="number">
+          <span ref={(element) => (this.spanElement = element)} class="text-xs font-bold leading-regular" part="number">
             <slot onSlotchange={this.onSlotChange}></slot>
           </span>
         </div>

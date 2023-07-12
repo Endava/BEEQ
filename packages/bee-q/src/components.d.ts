@@ -8,29 +8,37 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 import { TBadgeSize } from "./components/badge/bq-badge.types";
 import { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
+import { TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 import { FloatingUIPlacement } from "./services/interfaces";
 import { TIconWeight } from "./components/icon/bq-icon.types";
 import { TNotificationType } from "./components/notification/bq-notification.types";
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
+import { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
 import { TSliderType } from "./components/slider/bq-slider.types";
 import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 import { TStatusType } from "./components/status/bq-status.types";
 import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
 import { TTabSize } from "./components/tab/bq-tab.types";
+import { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
+import { FloatingUIPlacement } from "./services/interfaces";
 export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 export { TBadgeSize } from "./components/badge/bq-badge.types";
 export { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
+export { TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 export { FloatingUIPlacement } from "./services/interfaces";
 export { TIconWeight } from "./components/icon/bq-icon.types";
 export { TNotificationType } from "./components/notification/bq-notification.types";
 export { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
+export { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
 export { TSliderType } from "./components/slider/bq-slider.types";
 export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 export { TStatusType } from "./components/status/bq-status.types";
 export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
 export { TTabSize } from "./components/tab/bq-tab.types";
+export { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
+export { FloatingUIPlacement } from "./services/interfaces";
 export namespace Components {
     /**
      * An avatar represents an object made of different pieces of information, in a way that is understandable at a glance.
@@ -67,7 +75,7 @@ export namespace Components {
          */
         "backgroundColor"?: string;
         /**
-          * The size of the badge
+          * The size of the badge. Relevant if badge has no content.
          */
         "size"?: TBadgeSize;
         /**
@@ -170,6 +178,48 @@ export namespace Components {
          */
         "value": string;
     }
+    interface BqDialog {
+        /**
+          * Dismiss or cancel the dialog
+         */
+        "cancel": () => Promise<void>;
+        /**
+          * If true, the backdrop overlay won't be shown when the dialog opens
+         */
+        "disableBackdrop": boolean;
+        /**
+          * If true, the dialog will not close when clicking on the backdrop overlay
+         */
+        "disableCloseClickOutside": boolean;
+        /**
+          * If true, the dialog will not close when the [Esc] key is press
+         */
+        "disableCloseEscKeydown": boolean;
+        /**
+          * The appearance of footer
+         */
+        "footerApperance": TDialogFooterAppearance;
+        /**
+          * Closes the dialog
+         */
+        "hide": () => Promise<void>;
+        /**
+          * If true, it hides the close button
+         */
+        "hideCloseButton": boolean;
+        /**
+          * If true, the dialog will be shown as open
+         */
+        "open": boolean;
+        /**
+          * Open the dialog
+         */
+        "show": () => Promise<void>;
+        /**
+          * The size of the dialog
+         */
+        "size": TDialogSize;
+    }
     interface BqDivider {
         /**
           * If true, the divider has a dashed pattern
@@ -253,10 +303,6 @@ export namespace Components {
          */
         "disableClose": boolean;
         /**
-          * If true, the predefined icon type won't be shown and a custom icon provided on integration will be displayed instead
-         */
-        "hasCustomIcon": boolean;
-        /**
           * Method to be called to hide the notification component
          */
         "hide": () => Promise<void>;
@@ -267,7 +313,7 @@ export namespace Components {
         /**
           * If true, the notification will be shown
          */
-        "isOpen": boolean;
+        "open": boolean;
         /**
           * Method to be called to show the notification component
          */
@@ -277,7 +323,7 @@ export namespace Components {
          */
         "time": number;
         /**
-          * This method can be used to display notifications in a fixed-position element that allows for stacking multiple notifications vertically.
+          * This method can be used to display notifications in a fixed-position element that allows for stacking multiple notifications vertically
          */
         "toast": () => Promise<void>;
         /**
@@ -376,6 +422,38 @@ export namespace Components {
           * A string representing the value of the radio.
          */
         "value"?: string;
+    }
+    interface BqSideMenu {
+        /**
+          * It sets a predefined appearance of the side menu
+         */
+        "appearance": TSideMenuAppearance;
+        /**
+          * If true, the container will reduce its width
+         */
+        "collapse": boolean;
+        /**
+          * It sets the size of the navigation menu items
+         */
+        "size": TSideMenuSize;
+        /**
+          * Toggle the collapse state of the side menu
+         */
+        "toggleCollapse": () => Promise<void>;
+    }
+    interface BqSideMenuItem {
+        /**
+          * If true, the menu item will be shown as active/selected.
+         */
+        "active": boolean;
+        /**
+          * If true, the item label and suffix will be hidden and the with will be reduce according to its parent
+         */
+        "collapse": boolean;
+        /**
+          * If true, the menu item will be disabled (no interaction allowed)
+         */
+        "disabled": boolean;
     }
     interface BqSlider {
         /**
@@ -552,6 +630,40 @@ export namespace Components {
          */
         "value": string;
     }
+    interface BqToast {
+        /**
+          * Method to be called to hide the toast component
+         */
+        "hide": () => Promise<void>;
+        /**
+          * If true will hide toast icon
+         */
+        "hideIcon": boolean;
+        /**
+          * If true, the toast will be shown
+         */
+        "open": boolean;
+        /**
+          * Placement of toast
+         */
+        "placement": TToastPlacement;
+        /**
+          * Method to be called to show the toast component
+         */
+        "show": () => Promise<void>;
+        /**
+          * The length of time, in milliseconds, after which the toast will close itself
+         */
+        "time": number;
+        /**
+          * This method can be used to display toasts in a fixed-position element that allows for stacking multiple toasts vertically
+         */
+        "toast": () => Promise<void>;
+        /**
+          * Type of toast
+         */
+        "type": TToastType;
+    }
     interface BqTooltip {
         /**
           * Set the action when the tooltip should be displayed, on hover (default) or click
@@ -596,6 +708,10 @@ export interface BqDropdownCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqDropdownElement;
 }
+export interface BqDialogCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqDialogElement;
+}
 export interface BqIconCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqIconElement;
@@ -616,6 +732,14 @@ export interface BqRadioGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqRadioGroupElement;
 }
+export interface BqSideMenuCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqSideMenuElement;
+}
+export interface BqSideMenuItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqSideMenuItemElement;
+}
 export interface BqSliderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqSliderElement;
@@ -631,6 +755,10 @@ export interface BqTabCustomEvent<T> extends CustomEvent<T> {
 export interface BqTabGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqTabGroupElement;
+}
+export interface BqToastCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqToastElement;
 }
 declare global {
     /**
@@ -662,6 +790,12 @@ declare global {
     var HTMLBqCheckboxElement: {
         prototype: HTMLBqCheckboxElement;
         new (): HTMLBqCheckboxElement;
+    };
+    interface HTMLBqDialogElement extends Components.BqDialog, HTMLStencilElement {
+    }
+    var HTMLBqDialogElement: {
+        prototype: HTMLBqDialogElement;
+        new (): HTMLBqDialogElement;
     };
     interface HTMLBqDividerElement extends Components.BqDivider, HTMLStencilElement {
     }
@@ -708,6 +842,18 @@ declare global {
         prototype: HTMLBqRadioGroupElement;
         new (): HTMLBqRadioGroupElement;
     };
+    interface HTMLBqSideMenuElement extends Components.BqSideMenu, HTMLStencilElement {
+    }
+    var HTMLBqSideMenuElement: {
+        prototype: HTMLBqSideMenuElement;
+        new (): HTMLBqSideMenuElement;
+    };
+    interface HTMLBqSideMenuItemElement extends Components.BqSideMenuItem, HTMLStencilElement {
+    }
+    var HTMLBqSideMenuItemElement: {
+        prototype: HTMLBqSideMenuItemElement;
+        new (): HTMLBqSideMenuItemElement;
+    };
     interface HTMLBqSliderElement extends Components.BqSlider, HTMLStencilElement {
     }
     var HTMLBqSliderElement: {
@@ -751,6 +897,12 @@ declare global {
         prototype: HTMLBqTabGroupElement;
         new (): HTMLBqTabGroupElement;
     };
+    interface HTMLBqToastElement extends Components.BqToast, HTMLStencilElement {
+    }
+    var HTMLBqToastElement: {
+        prototype: HTMLBqToastElement;
+        new (): HTMLBqToastElement;
+    };
     interface HTMLBqTooltipElement extends Components.BqTooltip, HTMLStencilElement {
     }
     var HTMLBqTooltipElement: {
@@ -762,6 +914,7 @@ declare global {
         "bq-badge": HTMLBqBadgeElement;
         "bq-button": HTMLBqButtonElement;
         "bq-checkbox": HTMLBqCheckboxElement;
+        "bq-dialog": HTMLBqDialogElement;
         "bq-divider": HTMLBqDividerElement;
         "bq-dropdown": HTMLBqDropdownElement;
         "bq-icon": HTMLBqIconElement;
@@ -769,12 +922,15 @@ declare global {
         "bq-panel": HTMLBqPanelElement;
         "bq-radio": HTMLBqRadioElement;
         "bq-radio-group": HTMLBqRadioGroupElement;
+        "bq-side-menu": HTMLBqSideMenuElement;
+        "bq-side-menu-item": HTMLBqSideMenuItemElement;
         "bq-slider": HTMLBqSliderElement;
         "bq-spinner": HTMLBqSpinnerElement;
         "bq-status": HTMLBqStatusElement;
         "bq-switch": HTMLBqSwitchElement;
         "bq-tab": HTMLBqTabElement;
         "bq-tab-group": HTMLBqTabGroupElement;
+        "bq-toast": HTMLBqToastElement;
         "bq-tooltip": HTMLBqTooltipElement;
     }
 }
@@ -814,7 +970,7 @@ declare namespace LocalJSX {
          */
         "backgroundColor"?: string;
         /**
-          * The size of the badge
+          * The size of the badge. Relevant if badge has no content.
          */
         "size"?: TBadgeSize;
         /**
@@ -929,6 +1085,56 @@ declare namespace LocalJSX {
          */
         "value": string;
     }
+    interface BqDialog {
+        /**
+          * If true, the backdrop overlay won't be shown when the dialog opens
+         */
+        "disableBackdrop"?: boolean;
+        /**
+          * If true, the dialog will not close when clicking on the backdrop overlay
+         */
+        "disableCloseClickOutside"?: boolean;
+        /**
+          * If true, the dialog will not close when the [Esc] key is press
+         */
+        "disableCloseEscKeydown"?: boolean;
+        /**
+          * The appearance of footer
+         */
+        "footerApperance"?: TDialogFooterAppearance;
+        /**
+          * If true, it hides the close button
+         */
+        "hideCloseButton"?: boolean;
+        /**
+          * Callback handler emitted when the dialog finish closing
+         */
+        "onBqAfterClose"?: (event: BqDialogCustomEvent<void>) => void;
+        /**
+          * Callback handler emitted when the dialog finish opening
+         */
+        "onBqAfterOpen"?: (event: BqDialogCustomEvent<void>) => void;
+        /**
+          * Callback handler emitted when the dialog has been canceled or dismissed
+         */
+        "onBqCancel"?: (event: BqDialogCustomEvent<void>) => void;
+        /**
+          * Callback handler emitted when the dialog will close
+         */
+        "onBqClose"?: (event: BqDialogCustomEvent<void>) => void;
+        /**
+          * Callback handler emitted when the dialog will open
+         */
+        "onBqOpen"?: (event: BqDialogCustomEvent<void>) => void;
+        /**
+          * If true, the dialog will be shown as open
+         */
+        "open"?: boolean;
+        /**
+          * The size of the dialog
+         */
+        "size"?: TDialogSize;
+    }
     interface BqDivider {
         /**
           * If true, the divider has a dashed pattern
@@ -1032,17 +1238,9 @@ declare namespace LocalJSX {
          */
         "disableClose"?: boolean;
         /**
-          * If true, the predefined icon type won't be shown and a custom icon provided on integration will be displayed instead
-         */
-        "hasCustomIcon"?: boolean;
-        /**
           * If true, the notification icon won't be shown
          */
         "hideIcon"?: boolean;
-        /**
-          * If true, the notification will be shown
-         */
-        "isOpen"?: boolean;
         /**
           * Callback handler to be called when the notification is hidden
          */
@@ -1051,6 +1249,10 @@ declare namespace LocalJSX {
           * Callback handler to be called when the notification is shown
          */
         "onBqShow"?: (event: BqNotificationCustomEvent<any>) => void;
+        /**
+          * If true, the notification will be shown
+         */
+        "open"?: boolean;
         /**
           * The length of time, in milliseconds, after which the notification will close itself. Only valid if `autoDismiss="true"`
          */
@@ -1157,6 +1359,54 @@ declare namespace LocalJSX {
           * A string representing the value of the radio.
          */
         "value"?: string;
+    }
+    interface BqSideMenu {
+        /**
+          * It sets a predefined appearance of the side menu
+         */
+        "appearance"?: TSideMenuAppearance;
+        /**
+          * If true, the container will reduce its width
+         */
+        "collapse"?: boolean;
+        /**
+          * Callback handler to be called when the Side menu changes its width from expanded to collapse and vice versa
+         */
+        "onBqCollapse"?: (event: BqSideMenuCustomEvent<{ collapse: boolean }>) => void;
+        /**
+          * Callback handler to be called when the active/selected menu item changes
+         */
+        "onBqSelect"?: (event: BqSideMenuCustomEvent<HTMLBqSideMenuItemElement>) => void;
+        /**
+          * It sets the size of the navigation menu items
+         */
+        "size"?: TSideMenuSize;
+    }
+    interface BqSideMenuItem {
+        /**
+          * If true, the menu item will be shown as active/selected.
+         */
+        "active"?: boolean;
+        /**
+          * If true, the item label and suffix will be hidden and the with will be reduce according to its parent
+         */
+        "collapse"?: boolean;
+        /**
+          * If true, the menu item will be disabled (no interaction allowed)
+         */
+        "disabled"?: boolean;
+        /**
+          * Handler to be called when the button loses focus
+         */
+        "onBqBlur"?: (event: BqSideMenuItemCustomEvent<HTMLBqSideMenuItemElement>) => void;
+        /**
+          * Handler to be called when button gets focus
+         */
+        "onBqClick"?: (event: BqSideMenuItemCustomEvent<HTMLBqSideMenuItemElement>) => void;
+        /**
+          * Handler to be called when the button is clicked
+         */
+        "onBqFocus"?: (event: BqSideMenuItemCustomEvent<HTMLBqSideMenuItemElement>) => void;
     }
     interface BqSlider {
         /**
@@ -1349,6 +1599,36 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface BqToast {
+        /**
+          * If true will hide toast icon
+         */
+        "hideIcon"?: boolean;
+        /**
+          * Callback handler to be called when the notification is hidden
+         */
+        "onBqHide"?: (event: BqToastCustomEvent<HTMLBqToastElement>) => void;
+        /**
+          * Callback handler to be called when the notification is shown
+         */
+        "onBqShow"?: (event: BqToastCustomEvent<HTMLBqToastElement>) => void;
+        /**
+          * If true, the toast will be shown
+         */
+        "open"?: boolean;
+        /**
+          * Placement of toast
+         */
+        "placement"?: TToastPlacement;
+        /**
+          * The length of time, in milliseconds, after which the toast will close itself
+         */
+        "time"?: number;
+        /**
+          * Type of toast
+         */
+        "type"?: TToastType;
+    }
     interface BqTooltip {
         /**
           * Set the action when the tooltip should be displayed, on hover (default) or click
@@ -1377,6 +1657,7 @@ declare namespace LocalJSX {
         "bq-badge": BqBadge;
         "bq-button": BqButton;
         "bq-checkbox": BqCheckbox;
+        "bq-dialog": BqDialog;
         "bq-divider": BqDivider;
         "bq-dropdown": BqDropdown;
         "bq-icon": BqIcon;
@@ -1384,12 +1665,15 @@ declare namespace LocalJSX {
         "bq-panel": BqPanel;
         "bq-radio": BqRadio;
         "bq-radio-group": BqRadioGroup;
+        "bq-side-menu": BqSideMenu;
+        "bq-side-menu-item": BqSideMenuItem;
         "bq-slider": BqSlider;
         "bq-spinner": BqSpinner;
         "bq-status": BqStatus;
         "bq-switch": BqSwitch;
         "bq-tab": BqTab;
         "bq-tab-group": BqTabGroup;
+        "bq-toast": BqToast;
         "bq-tooltip": BqTooltip;
     }
 }
@@ -1407,6 +1691,7 @@ declare module "@stencil/core" {
              */
             "bq-button": LocalJSX.BqButton & JSXBase.HTMLAttributes<HTMLBqButtonElement>;
             "bq-checkbox": LocalJSX.BqCheckbox & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
+            "bq-dialog": LocalJSX.BqDialog & JSXBase.HTMLAttributes<HTMLBqDialogElement>;
             "bq-divider": LocalJSX.BqDivider & JSXBase.HTMLAttributes<HTMLBqDividerElement>;
             "bq-dropdown": LocalJSX.BqDropdown & JSXBase.HTMLAttributes<HTMLBqDropdownElement>;
             /**
@@ -1417,6 +1702,8 @@ declare module "@stencil/core" {
             "bq-panel": LocalJSX.BqPanel & JSXBase.HTMLAttributes<HTMLBqPanelElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
+            "bq-side-menu": LocalJSX.BqSideMenu & JSXBase.HTMLAttributes<HTMLBqSideMenuElement>;
+            "bq-side-menu-item": LocalJSX.BqSideMenuItem & JSXBase.HTMLAttributes<HTMLBqSideMenuItemElement>;
             "bq-slider": LocalJSX.BqSlider & JSXBase.HTMLAttributes<HTMLBqSliderElement>;
             /**
              * Spinners are designed for users to display data loading.
@@ -1430,6 +1717,7 @@ declare module "@stencil/core" {
             "bq-switch": LocalJSX.BqSwitch & JSXBase.HTMLAttributes<HTMLBqSwitchElement>;
             "bq-tab": LocalJSX.BqTab & JSXBase.HTMLAttributes<HTMLBqTabElement>;
             "bq-tab-group": LocalJSX.BqTabGroup & JSXBase.HTMLAttributes<HTMLBqTabGroupElement>;
+            "bq-toast": LocalJSX.BqToast & JSXBase.HTMLAttributes<HTMLBqToastElement>;
             "bq-tooltip": LocalJSX.BqTooltip & JSXBase.HTMLAttributes<HTMLBqTooltipElement>;
         }
     }

@@ -1,14 +1,14 @@
 {
   "name": "@bee-q/react",
-  "version": "0.4.0",
+  "version": "0.6.2",
   "license": "Apache-2.0",
   "description": "React specific wrapper for Bee-Q Design System components",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "peerDependencies": {
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
   },
   "browserslist": [
     "> 1%",

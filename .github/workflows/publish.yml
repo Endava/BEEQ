@@ -7,7 +7,6 @@ on:
 env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
-  NX_VERBOSE_LOGGING: true
 
 jobs:
   main:
@@ -32,11 +31,9 @@ jobs:
       - name: 💫 Load and cache dependencies
         uses: ./.github/actions/cache-deps
 
-      - name: 📥 Download Chromium binary for E2E tests
-        run: node ./node_modules/puppeteer/install.js
-
-      - name: 🩺 Run Linters and Unit Tests, ⏳ Build, 🧪 E2E Tests
-        uses: ./.github/actions/test-build
+      - name: ⏳ Build
+        run: npm run build
+        shell: bash
 
       - name: 👀 Check NPM credentials
         run: |
@@ -46,7 +43,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: 🚀 Publish to NPM registry
-        run: npx nx run-many --target=publish --exclude=workspace,bee-q-icons --output-style=stream-without-prefixes
+        run: npx nx run-many --target=publish --parallel=1 --exclude=workspace,bee-q-icons --skip-nx-cache --output-style=stream-without-prefixes
 
       - name: 🔐 Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -55,5 +52,8 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{secrets.AWS_S3_BUCKET_REGION}}
 
-      - name: 🚀 Deploy to AWS S3
+      - name: 🚚 Deploy to AWS S3
         run: aws s3 sync dist/storybook/bee-q/ s3://${{secrets.AWS_S3_BUCKET}}/ --delete --output table
+
+      - name: 🚮 Invalidate AWS CloudFront distribution cache
+        run: aws cloudfront create-invalidation --distribution-id ${{secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID}} --paths "/*" --output table --cli-connect-timeout 15

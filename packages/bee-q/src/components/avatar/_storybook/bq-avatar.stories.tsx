@@ -23,6 +23,7 @@ const meta: Meta = {
     label: 'Avatar component label',
     shape: 'circle',
     size: 'medium',
+    'badge-content': '9',
   },
 };
 export default meta;
@@ -53,5 +54,23 @@ export const Initials: Story = {
   render: Template,
   args: {
     initials: 'JS',
+  },
+};
+
+export const WithBadge: Story = {
+  render: (args: Args) =>
+    html`<bq-avatar
+      alt-text=${args['alt-text']}
+      image=${args.image}
+      label=${args.label}
+      initials=${args.initials}
+      shape=${args.shape}
+      size=${args.size}
+    >
+      <bq-badge slot="badge" text-color="#fff">${args['badge-content']}</bq-badge>
+    </bq-avatar>`,
+  args: {
+    image:
+      'https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80',
   },
 };
