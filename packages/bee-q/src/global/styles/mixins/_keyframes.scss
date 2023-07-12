@@ -29,7 +29,9 @@
 }
 
 @mixin animation-slide-in($duration: 0.3s, $delay: 0s, $timing-function: ease) {
-  animation: fade-in $duration $timing-function $delay, slide-in $duration $timing-function $delay;
+  animation:
+    fade-in $duration $timing-function $delay,
+    slide-in $duration $timing-function $delay;
 }
 
 @mixin animation-spin($duration: 1s, $delay: 0s, $timing-function: linear) {
