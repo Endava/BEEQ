@@ -96,7 +96,7 @@ export class BqBreadcrumbItem {
     const TagElem = isLink ? 'a' : 'button';
 
     return (
-      <div class="flex items-center" role="listitem">
+      <div class="flex items-center">
         <TagElem
           class="breadcrumb-item"
           href={isLink ? this.href : undefined}

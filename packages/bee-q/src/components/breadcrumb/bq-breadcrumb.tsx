@@ -90,8 +90,7 @@ export class BqBreadcrumb {
    * @returns cloned separator element
    */
   private getSeparatorElem = (): HTMLElement => {
-    const separator = this.separatorFromSlot || this.defaultSeparator;
-    const clone = separator.cloneNode(true) as HTMLElement;
+    const clone = this.separatorFromSlot.cloneNode(true) as HTMLElement;
     clone.slot = 'separator';
 
     return clone;
@@ -107,27 +106,21 @@ export class BqBreadcrumb {
       .assignedElements({ flatten: true })[0] as HTMLElement;
   }
 
-  private get defaultSeparator(): HTMLElement {
-    const newNode = document.createElement('span');
-    newNode.classList.add('flex', 'w-3', 'items-center', 'justify-center');
-    newNode.textContent = '/';
-
-    return newNode;
-  }
-
   // render() function
   // Always the last one in the class.
   // ===================================
 
   render() {
     return (
-      <Host>
-        <nav class="flex items-center" role="list" aria-label="breadcrumbs" part="navigation">
+      <Host aria-label="breadcrumbs">
+        <nav class="flex items-center" part="navigation">
           <slot onSlotchange={this.setSeparator}></slot>
         </nav>
 
         <span hidden aria-hidden="true" ref={(element) => (this.spanElem = element)}>
-          <slot name="separator"></slot>
+          <slot name="separator">
+            <span class="flex w-3 items-center justify-center">/</span>
+          </slot>
         </span>
       </Host>
     );
