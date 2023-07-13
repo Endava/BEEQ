@@ -78,7 +78,7 @@ export class BqInput {
 
   render() {
     return (
-      <div class="bq-input relative rounded-s" part="base">
+      <div class="bq-input" part="base">
         {/* Prefix */}
         <span
           class={{ 'bq-input--prefix': true, hidden: !this.hasPrefix }}
@@ -88,12 +88,7 @@ export class BqInput {
           <slot name="prefix" onSlotchange={this.handlePrefixSlotChange} />
         </span>
         {/* HTML Input */}
-        <input
-          class={{ 'bq-input--input': true, '!ps-m': !this.hasPrefix, '!pe-m': !this.hasSuffix }}
-          placeholder={this.placeholder}
-          part="input"
-        />
-        {/* Suffix */}
+        <input class="bq-input--control" placeholder={this.placeholder} part="input" />
         <span
           class={{ 'bq-input--suffix': true, hidden: !this.hasSuffix }}
           part="suffix"

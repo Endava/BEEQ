@@ -8,31 +8,39 @@
   @apply block;
 }
 
-.bq-input--input {
-  @apply block w-full transition-[border-color,box-shadow];
+.bq-input {
+  @apply flex w-full items-center transition-[border-color,box-shadow];
   // Border
-  @apply rounded-[var(--bq-input--border-radius)] border-[length:var(--bq-input--border-width)] border-[color:var(--bq-input--border-color)];
+  @apply rounded-[--bq-input--border-radius] border-[length:--bq-input--border-width] border-[color:--bq-input--border-color];
   // Padding
-  @apply py-[var(--bq-input--paddingY)] pe-[calc(var(--bq-input--pading-end)_+_24px_+_var(--bq-input--gap))] ps-[calc(var(--bq-input--pading-start)_+_24px_+_var(--bq-input--gap))];
+  @apply py-[--bq-input--paddingY] pe-[--bq-input--pading-end] ps-[--bq-input--pading-start];
   // Text
-  @apply text-[length:var(--bq-input--text-size)] text-[color:var(--bq-input--text-color)] placeholder:text-[color:var(--bq-input--text-placeholder-color)];
+  @apply text-[length:--bq-input--text-size] text-[color:--bq-input--text-color] placeholder:text-[color:--bq-input--text-placeholder-color];
   // Hover
-  @apply hover:border-[color:var(--bq-input--border-color-hover)];
+  @apply hover:border-[color:--bq-input--border-color-hover];
   // Focus
-  @apply focus-visible:border-[color:var(--bq-input--border-color-focus)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-focus;
+  @apply focus-within:border-[color:var(--bq-input--border-color-focus)] focus-within:outline-none focus-within:ring-1 focus-within:ring-focus;
 
   border-style: var(--bq-input--border-style);
 }
 
+.bq-input--control {
+  @apply flex-auto cursor-[inherit] bg-[inherit] font-[inherit] text-[length:inherit];
+  @apply m-0 h-[100%] min-w-[0] border-none p-0 focus:outline-none focus-visible:outline-none;
+
+  box-shadow: none;
+  font-weight: inherit;
+}
+
 .bq-input--prefix,
 .bq-input--suffix {
-  @apply pointer-events-none absolute inset-y-0 flex items-center text-[color:var(--bq-input--text-color)];
+  @apply pointer-events-none flex items-center text-[color:var(--bq-input--text-color)];
 }
 
 .bq-input--prefix {
-  @apply start-[var(--bq-input--pading-start)];
+  @apply me-[--bq-input--gap];
 }
 
 .bq-input--suffix {
-  @apply end-[var(--bq-input--pading-end)];
+  @apply ms-[--bq-input--gap];
 }
