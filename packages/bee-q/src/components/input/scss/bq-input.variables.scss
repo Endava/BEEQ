@@ -14,6 +14,7 @@
    * @prop --bq-input--border-style - Input border style
    * @prop --bq-input--gap - Gap between input content and prefix/suffix
    * @prop --bq-input--icon-size - Icon size to use in prefix/suffix and clear button
+   * @prop --bq-input--label-margin-bottom - Input label margin bottom
    * @prop --bq-input--pading-start - Input padding start
    * @prop --bq-input--pading-end - Input padding end
    * @prop --bq-input--paddingY - Input padding top and bottom
@@ -34,6 +35,8 @@
   --bq-input--gap: var(--bq-spacing-xs);
 
   --bq-input--icon-size: 24px;
+
+  --bq-input--label-margin-bottom: var(--bq-spacing-xs);
 
   --bq-input--pading-start: theme('spacing.m');
   --bq-input--pading-end: theme('spacing.m');

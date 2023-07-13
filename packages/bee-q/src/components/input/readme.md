@@ -30,7 +30,9 @@
 | `"base"`      | The component's base wrapper.                                   |
 | `"button"`    | The native HTML button used under the hood in the clear button. |
 | `"clear-btn"` | The clear button.                                               |
+| `"control"`   | The input control wrapper.                                      |
 | `"input"`     | The native HTML input element used under the hood.              |
+| `"label"`     | The label slot container.                                       |
 | `"prefix"`    | The prefix slot container.                                      |
 | `"suffix"`    | The suffix slot container.                                      |
 

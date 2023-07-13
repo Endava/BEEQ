@@ -20,6 +20,8 @@ const meta: Meta = {
     bqChange: { action: 'bqChange' },
     bqClear: { action: 'bqClear' },
     // Not part of the public API, so we don't want to expose it in the docs
+    noLabel: { control: 'bolean', table: { disable: true } },
+    optionalLabel: { control: 'bolean', table: { disable: true } },
     prefix: { control: 'bolean', table: { disable: true } },
     suffix: { control: 'bolean', table: { disable: true } },
   },
@@ -29,6 +31,7 @@ const meta: Meta = {
     placeholder: 'Placeholder',
     value: undefined,
     // Not part of the public API, so we don't want to expose it in the docs
+    optionalLabel: false,
     prefix: false,
     suffix: false,
   },
@@ -46,6 +49,16 @@ const Template = (args: Args) => html`
     @bqChange=${args.bqChange}
     @bqClear=${args.bqClear}
   >
+    ${!args.noLabel
+      ? !args.optionalLabel
+        ? html`<label slot="label">Input label</label>`
+        : html`
+            <div slot="label" class="flex flex-1">
+              <label class="flex flex-grow items-center">Input label</label>
+              <span class="text-text-secondary">Optional</span>
+            </div>
+          `
+      : nothing}
     ${args.prefix ? html`<bq-icon name="user-circle" slot="prefix"></bq-icon>` : nothing}
     ${args.suffix ? html`<bq-icon name="gear" slot="suffix"></bq-icon>` : nothing}
   </bq-input>
@@ -73,6 +86,26 @@ export const PrefixAndSuffix: Story = {
   name: 'Prefix and Suffix',
   render: Template,
   args: {
+    prefix: true,
+    suffix: true,
+  },
+};
+
+export const NoLabel: Story = {
+  name: 'With no Label',
+  render: Template,
+  args: {
+    noLabel: true,
+    prefix: true,
+    suffix: true,
+  },
+};
+
+export const Optional: Story = {
+  name: 'Label with "Optional"',
+  render: Template,
+  args: {
+    optionalLabel: true,
     prefix: true,
     suffix: true,
   },

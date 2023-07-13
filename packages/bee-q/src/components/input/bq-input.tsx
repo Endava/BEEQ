@@ -7,6 +7,8 @@ import { hasSlotContent } from '../../shared/utils';
  * @part base - The component's base wrapper.
  * @part button - The native HTML button used under the hood in the clear button.
  * @part clear-btn - The clear button.
+ * @part control - The input control wrapper.
+ * @part label - The label slot container.
  * @part input - The native HTML input element used under the hood.
  * @part prefix - The prefix slot container.
  * @part suffix - The suffix slot container.
@@ -21,6 +23,7 @@ export class BqInput {
   // ====================
 
   private inputElem?: HTMLInputElement;
+  private labelElem?: HTMLElement;
   private prefixElem?: HTMLElement;
   private suffixElem?: HTMLElement;
 
@@ -33,6 +36,7 @@ export class BqInput {
   // Inlined decorator, alphabetical order
   // =======================================
 
+  @State() hasLabel = false;
   @State() hasPrefix = false;
   @State() hasSuffix = false;
   @State() hasValue = false;
@@ -110,56 +114,71 @@ export class BqInput {
     this.hasSuffix = hasSlotContent(this.suffixElem);
   };
 
+  private handleLabelSlotChange = () => {
+    this.hasLabel = hasSlotContent(this.labelElem);
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
 
   render() {
     return (
-      <div class="bq-input--control group" part="base">
-        {/* Prefix */}
-        <span
-          class={{ 'bq-input--control__prefix': true, hidden: !this.hasPrefix }}
-          part="prefix"
-          ref={(spanElem) => (this.prefixElem = spanElem)}
+      <div class="bq-input" part="base">
+        <label
+          class={{ 'bq-input--label flex flex-grow text-s': true, hidden: !this.hasLabel }}
+          htmlFor="input"
+          ref={(labelElem) => (this.labelElem = labelElem)}
+          part="label"
         >
-          <slot name="prefix" onSlotchange={this.handlePrefixSlotChange} />
-        </span>
-        {/* HTML Input */}
-        <input
-          class="bq-input--control__input"
-          placeholder={this.placeholder}
-          ref={(inputElem) => (this.inputElem = inputElem)}
-          onInput={this.handleInputChange}
-          value={this.value}
-          part="input"
-        />
-        {/* Clear Button */}
-        {!this.disableClear && this.hasValue && (
-          // The clear button will be visible as long as the input has a value
-          // and the parent group is hovered or has focus-within
-          <bq-button
-            class="bq-input--control__clear ms-[--bq-input--gap] hidden group-hover:flex group-[:has(:focus-within)]:inline-block"
-            aria-label={this.clearButtonLabel}
-            appearance="text"
-            size="small"
-            part="clear-btn"
-            exportparts="button"
-            onBqClick={this.handleClearClick}
+          <slot name="label" onSlotchange={this.handleLabelSlotChange} />
+        </label>
+        <div class="bq-input--control group" part="control">
+          {/* Prefix */}
+          <span
+            class={{ 'bq-input--control__prefix': true, hidden: !this.hasPrefix }}
+            ref={(spanElem) => (this.prefixElem = spanElem)}
+            part="prefix"
           >
-            <slot name="clear-icon">
-              <bq-icon name="x-circle" class="flex" />
-            </slot>
-          </bq-button>
-        )}
-        {/* Suffix */}
-        <span
-          class={{ 'bq-input--control__suffix': true, hidden: !this.hasSuffix }}
-          part="suffix"
-          ref={(spanElem) => (this.suffixElem = spanElem)}
-        >
-          <slot name="suffix" onSlotchange={this.handleSuffixSlotChange} />
-        </span>
+            <slot name="prefix" onSlotchange={this.handlePrefixSlotChange} />
+          </span>
+          {/* HTML Input */}
+          <input
+            id="input"
+            class="bq-input--control__input"
+            placeholder={this.placeholder}
+            ref={(inputElem) => (this.inputElem = inputElem)}
+            onInput={this.handleInputChange}
+            value={this.value}
+            part="input"
+          />
+          {/* Clear Button */}
+          {!this.disableClear && this.hasValue && (
+            // The clear button will be visible as long as the input has a value
+            // and the parent group is hovered or has focus-within
+            <bq-button
+              class="bq-input--control__clear ms-[--bq-input--gap] hidden group-hover:flex group-[:has(:focus-within)]:inline-block"
+              appearance="text"
+              aria-label={this.clearButtonLabel}
+              size="small"
+              onBqClick={this.handleClearClick}
+              part="clear-btn"
+              exportparts="button"
+            >
+              <slot name="clear-icon">
+                <bq-icon name="x-circle" class="flex" />
+              </slot>
+            </bq-button>
+          )}
+          {/* Suffix */}
+          <span
+            class={{ 'bq-input--control__suffix': true, hidden: !this.hasSuffix }}
+            ref={(spanElem) => (this.suffixElem = spanElem)}
+            part="suffix"
+          >
+            <slot name="suffix" onSlotchange={this.handleSuffixSlotChange} />
+          </span>
+        </div>
       </div>
     );
   }

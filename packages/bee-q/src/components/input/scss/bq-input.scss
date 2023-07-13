@@ -8,6 +8,10 @@
   @apply block;
 }
 
+.bq-input--label {
+  @apply mb-[--bq-input--label-margin-bottom] flex flex-grow items-center gap-[--var(--bq-input--gap-label)] text-s;
+}
+
 .bq-input--control {
   @apply flex w-full items-center transition-[border-color,box-shadow];
   // Border
