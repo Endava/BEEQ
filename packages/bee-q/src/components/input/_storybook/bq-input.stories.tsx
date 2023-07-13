@@ -12,6 +12,7 @@ const meta: Meta = {
     },
   },
   argTypes: {
+    'disable-clear': { control: 'boolean' },
     placeholder: { control: 'text' },
     value: { control: 'text' },
     // Events
@@ -22,8 +23,10 @@ const meta: Meta = {
     suffix: { control: 'bolean', table: { disable: true } },
   },
   args: {
-    value: undefined,
+    'disable-clear': false,
     placeholder: 'Placeholder',
+    value: undefined,
+    // Not part of the public API, so we don't want to expose it in the docs
     prefix: false,
     suffix: false,
   },
@@ -33,7 +36,13 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
-  <bq-input placeholder=${args.placeholder} value=${args.value} @bqChange=${args.bqChange} @bqClear=${args.bqClear}>
+  <bq-input
+    ?disable-clear=${args['disable-clear']}
+    placeholder=${args.placeholder}
+    value=${args.value}
+    @bqChange=${args.bqChange}
+    @bqClear=${args.bqClear}
+  >
     ${args.prefix ? html`<bq-icon name="user-circle" slot="prefix"></bq-icon>` : nothing}
     ${args.suffix ? html`<bq-icon name="gear" slot="suffix"></bq-icon>` : nothing}
   </bq-input>

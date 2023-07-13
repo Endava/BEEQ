@@ -43,6 +43,9 @@ export class BqInput {
   // Prop lifecycle events
   // =======================
 
+  /** If true, the clear button won't be displayed */
+  @Prop({ reflect: true }) disableClear = false;
+
   /** The input placeholder text value */
   @Prop() placeholder: string;
 
@@ -129,7 +132,7 @@ export class BqInput {
           part="input"
         />
         {/* Clear Button */}
-        {this.hasValue && (
+        {!this.disableClear && this.hasValue && (
           // The clear button will be visible as long as the input has a value
           // and the parent group is hovered or has focus-within
           <bq-button

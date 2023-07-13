@@ -279,6 +279,10 @@ export namespace Components {
     }
     interface BqInput {
         /**
+          * If true, the clear button won't be displayed
+         */
+        "disableClear": boolean;
+        /**
           * The input placeholder text value
          */
         "placeholder": string;
@@ -1162,6 +1166,10 @@ declare namespace LocalJSX {
         "weight"?: TIconWeight;
     }
     interface BqInput {
+        /**
+          * If true, the clear button won't be displayed
+         */
+        "disableClear"?: boolean;
         /**
           * Callback handler emitted when the input value has changed
          */
