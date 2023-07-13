@@ -68,6 +68,13 @@ export const Default: Story = {
   render: Template,
 };
 
+export const Value: Story = {
+  render: Template,
+  args: {
+    value: 'Hello World!',
+  },
+};
+
 export const Prefix: Story = {
   render: Template,
   args: {

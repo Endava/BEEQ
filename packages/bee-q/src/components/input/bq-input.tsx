@@ -1,7 +1,7 @@
 import { EventEmitter } from '@angular/core';
-import { Component, Element, Event, h, Prop, State } from '@stencil/core';
+import { Component, Element, Event, h, Prop, State, Watch } from '@stencil/core';
 
-import { hasSlotContent } from '../../shared/utils';
+import { hasSlotContent, isDefined } from '../../shared/utils';
 
 /**
  * @part base - The component's base wrapper.
@@ -44,9 +44,6 @@ export class BqInput {
   // Public Property API
   // ========================
 
-  // Prop lifecycle events
-  // =======================
-
   /** The clear button aria label */
   @Prop({ reflect: true }) clearButtonLabel = 'Clear value';
 
@@ -58,6 +55,19 @@ export class BqInput {
 
   /** The input value, it can be used to reset the input to a previous value */
   @Prop({ reflect: true, mutable: true }) value: string | number | string[];
+
+  // Prop lifecycle events
+  // =======================
+
+  @Watch('value')
+  handleValueChange() {
+    if (Array.isArray(this.value)) {
+      this.hasValue = this.value.some((val) => val.length > 0);
+      return;
+    }
+
+    this.hasValue = isDefined(this.value);
+  }
 
   // Events section
   // Requires JSDocs for public API documentation
@@ -72,6 +82,10 @@ export class BqInput {
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
+
+  componentDidLoad() {
+    this.handleValueChange();
+  }
 
   // Listeners
   // ==============
@@ -91,13 +105,11 @@ export class BqInput {
   private handleInputChange = () => {
     this.value = this.inputElem.value;
     this.bqChange.emit({ value: this.value });
-    this.hasValue = this.value.length > 0;
   };
 
   private handleClearClick = (event: CustomEvent) => {
     this.inputElem.value = '';
     this.value = this.inputElem.value;
-    this.hasValue = false;
 
     this.bqClear.emit();
     this.bqChange.emit({ value: this.value });
