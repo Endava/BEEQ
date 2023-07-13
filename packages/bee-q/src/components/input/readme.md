@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property       | Attribute       | Description                                                            | Type                           | Default     |
-| -------------- | --------------- | ---------------------------------------------------------------------- | ------------------------------ | ----------- |
-| `disableClear` | `disable-clear` | If true, the clear button won't be displayed                           | `boolean`                      | `false`     |
-| `placeholder`  | `placeholder`   | The input placeholder text value                                       | `string`                       | `undefined` |
-| `value`        | `value`         | The input value, it can be used to reset the input to a previous value | `number \| string \| string[]` | `undefined` |
+| Property           | Attribute            | Description                                                            | Type                           | Default         |
+| ------------------ | -------------------- | ---------------------------------------------------------------------- | ------------------------------ | --------------- |
+| `clearButtonLabel` | `clear-button-label` | The clear button aria label                                            | `string`                       | `'Clear value'` |
+| `disableClear`     | `disable-clear`      | If true, the clear button won't be displayed                           | `boolean`                      | `false`         |
+| `placeholder`      | `placeholder`        | The input placeholder text value                                       | `string`                       | `undefined`     |
+| `value`            | `value`              | The input value, it can be used to reset the input to a previous value | `number \| string \| string[]` | `undefined`     |
 
 
 ## Events

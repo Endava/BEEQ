@@ -12,6 +12,7 @@ const meta: Meta = {
     },
   },
   argTypes: {
+    'clear-button-label': { control: 'text' },
     'disable-clear': { control: 'boolean' },
     placeholder: { control: 'text' },
     value: { control: 'text' },
@@ -23,6 +24,7 @@ const meta: Meta = {
     suffix: { control: 'bolean', table: { disable: true } },
   },
   args: {
+    'clear-button-label': 'Clear value',
     'disable-clear': false,
     placeholder: 'Placeholder',
     value: undefined,
@@ -37,6 +39,7 @@ type Story = StoryObj;
 
 const Template = (args: Args) => html`
   <bq-input
+    clear-button-label=${args['clear-button-label']}
     ?disable-clear=${args['disable-clear']}
     placeholder=${args.placeholder}
     value=${args.value}

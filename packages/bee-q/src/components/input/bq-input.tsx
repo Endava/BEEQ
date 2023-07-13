@@ -43,6 +43,9 @@ export class BqInput {
   // Prop lifecycle events
   // =======================
 
+  /** The clear button aria label */
+  @Prop({ reflect: true }) clearButtonLabel = 'Clear value';
+
   /** If true, the clear button won't be displayed */
   @Prop({ reflect: true }) disableClear = false;
 
@@ -137,6 +140,7 @@ export class BqInput {
           // and the parent group is hovered or has focus-within
           <bq-button
             class="bq-input--clear ms-[--bq-input--gap] hidden group-hover:flex group-[:has(:focus-within)]:inline-block"
+            aria-label={this.clearButtonLabel}
             appearance="text"
             size="small"
             part="clear-btn"

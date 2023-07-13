@@ -279,6 +279,10 @@ export namespace Components {
     }
     interface BqInput {
         /**
+          * The clear button aria label
+         */
+        "clearButtonLabel": string;
+        /**
           * If true, the clear button won't be displayed
          */
         "disableClear": boolean;
@@ -1166,6 +1170,10 @@ declare namespace LocalJSX {
         "weight"?: TIconWeight;
     }
     interface BqInput {
+        /**
+          * The clear button aria label
+         */
+        "clearButtonLabel"?: string;
         /**
           * If true, the clear button won't be displayed
          */
