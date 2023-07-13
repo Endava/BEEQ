@@ -5,6 +5,13 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property    | Attribute    | Description                            | Type     | Default         |
+| ----------- | ------------ | -------------------------------------- | -------- | --------------- |
+| `ariaLabel` | `aria-label` | The `aria-label` attribute for `<nav>` | `string` | `'breadcrumbs'` |
+
+
 ## Events
 
 | Event               | Description                                                                        | Type                                       |

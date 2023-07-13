@@ -1,4 +1,4 @@
-import { h, Component, Element, Listen, Event, EventEmitter, Host } from '@stencil/core';
+import { h, Component, Element, Listen, Event, EventEmitter, Host, Prop } from '@stencil/core';
 
 import { isHTMLElement } from '../../shared/utils';
 
@@ -27,6 +27,9 @@ export class BqBreadcrumb {
 
   // Public Property API
   // ========================
+
+  /** The `aria-label` attribute for `<nav>` */
+  @Prop({ reflect: true }) ariaLabel: string = 'breadcrumbs';
 
   // Prop lifecycle events
   // =======================
@@ -112,8 +115,8 @@ export class BqBreadcrumb {
 
   render() {
     return (
-      <Host aria-label="breadcrumbs">
-        <nav class="flex items-center" part="navigation">
+      <Host>
+        <nav class="flex items-center" aria-label={this.ariaLabel} part="navigation">
           <slot onSlotchange={this.setSeparator}></slot>
         </nav>
 

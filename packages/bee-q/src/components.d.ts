@@ -82,6 +82,10 @@ export namespace Components {
         "textColor"?: string;
     }
     interface BqBreadcrumb {
+        /**
+          * The `aria-label` attribute for `<nav>`
+         */
+        "ariaLabel": string;
     }
     interface BqBreadcrumbItem {
         /**
@@ -963,6 +967,10 @@ declare namespace LocalJSX {
         "textColor"?: string;
     }
     interface BqBreadcrumb {
+        /**
+          * The `aria-label` attribute for `<nav>`
+         */
+        "ariaLabel"?: string;
         /**
           * Handler to be called when `bq-breadcrumb-item` item loses focus.
          */

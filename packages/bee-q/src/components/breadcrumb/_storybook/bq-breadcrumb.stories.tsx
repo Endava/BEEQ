@@ -14,6 +14,7 @@ const meta: Meta = {
   },
   argTypes: {
     text: { control: 'text', table: { disable: true } },
+    ['aria-label']: { control: 'text' },
     // Event handlers
     bqBreadcrumbBlur: { action: 'bqBlur' },
     bqBreadcrumbClick: { action: 'bqClick' },
@@ -21,6 +22,7 @@ const meta: Meta = {
   },
   args: {
     text: 'text',
+    'aria-label': 'breadcrumbs',
   },
 };
 export default meta;

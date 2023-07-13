@@ -3,7 +3,8 @@ import { h, Component, Prop, Element, Event, EventEmitter } from '@stencil/core'
 import { isDefined } from '../../shared/utils';
 
 /**
- * @part base - The component wrapper container (`button` or `a`)
+ * @part base - The component wrapper container
+ * @part base - The breadcrumb item wrapper (`button` or `a`)
  * @part content - The `span` tag that loads the content item
  * @part separator - The `span` tag that loads the separator
  */
@@ -96,7 +97,7 @@ export class BqBreadcrumbItem {
     const TagElem = isLink ? 'a' : 'button';
 
     return (
-      <div class="flex items-center">
+      <div class="flex items-center" part="base">
         <TagElem
           class="breadcrumb-item"
           href={isLink ? this.href : undefined}
@@ -106,7 +107,7 @@ export class BqBreadcrumbItem {
           onFocus={this.onFocus}
           onClick={this.onClick}
           aria-current={isLink && this.isLastItem ? 'location' : undefined} // indicates the last link as the current page
-          part="base"
+          part="item"
         >
           <span
             class={{

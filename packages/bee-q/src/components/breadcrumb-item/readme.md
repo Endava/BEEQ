@@ -26,11 +26,12 @@
 
 ## Shadow Parts
 
-| Part          | Description                                       |
-| ------------- | ------------------------------------------------- |
-| `"base"`      | The component wrapper container (`button` or `a`) |
-| `"content"`   | The `span` tag that loads the content item        |
-| `"separator"` | The `span` tag that loads the separator           |
+| Part          | Description                                |
+| ------------- | ------------------------------------------ |
+| `"base"`      | The component wrapper container            |
+| `"content"`   | The `span` tag that loads the content item |
+| `"item"`      |                                            |
+| `"separator"` | The `span` tag that loads the separator    |
 
 
 ----------------------------------------------
