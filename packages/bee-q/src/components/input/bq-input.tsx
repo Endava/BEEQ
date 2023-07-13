@@ -116,10 +116,10 @@ export class BqInput {
 
   render() {
     return (
-      <div class="bq-input group" part="base">
+      <div class="bq-input--control group" part="base">
         {/* Prefix */}
         <span
-          class={{ 'bq-input--prefix': true, hidden: !this.hasPrefix }}
+          class={{ 'bq-input--control__prefix': true, hidden: !this.hasPrefix }}
           part="prefix"
           ref={(spanElem) => (this.prefixElem = spanElem)}
         >
@@ -127,7 +127,7 @@ export class BqInput {
         </span>
         {/* HTML Input */}
         <input
-          class="bq-input--control"
+          class="bq-input--control__input"
           placeholder={this.placeholder}
           ref={(inputElem) => (this.inputElem = inputElem)}
           onInput={this.handleInputChange}
@@ -139,7 +139,7 @@ export class BqInput {
           // The clear button will be visible as long as the input has a value
           // and the parent group is hovered or has focus-within
           <bq-button
-            class="bq-input--clear ms-[--bq-input--gap] hidden group-hover:flex group-[:has(:focus-within)]:inline-block"
+            class="bq-input--control__clear ms-[--bq-input--gap] hidden group-hover:flex group-[:has(:focus-within)]:inline-block"
             aria-label={this.clearButtonLabel}
             appearance="text"
             size="small"
@@ -154,7 +154,7 @@ export class BqInput {
         )}
         {/* Suffix */}
         <span
-          class={{ 'bq-input--suffix': true, hidden: !this.hasSuffix }}
+          class={{ 'bq-input--control__suffix': true, hidden: !this.hasSuffix }}
           part="suffix"
           ref={(spanElem) => (this.suffixElem = spanElem)}
         >

@@ -8,7 +8,7 @@
   @apply block;
 }
 
-.bq-input {
+.bq-input--control {
   @apply flex w-full items-center transition-[border-color,box-shadow];
   // Border
   @apply rounded-[--bq-input--border-radius] border-[length:--bq-input--border-width] border-[color:--bq-input--border-color];
@@ -24,7 +24,7 @@
   border-style: var(--bq-input--border-style);
 }
 
-.bq-input--control {
+.bq-input--control__input {
   @apply flex-auto cursor-[inherit] bg-[inherit] font-[inherit] text-[length:inherit];
   @apply m-0 min-h-[--bq-input--icon-size] min-w-[0] border-none p-0 focus:outline-none focus-visible:outline-none;
 
@@ -32,20 +32,20 @@
   font-weight: inherit;
 }
 
-.bq-input--clear::part(button) {
+.bq-input--control__clear::part(button) {
   @apply h-auto rounded-xs border-none p-0;
 }
 
-.bq-input--prefix,
-.bq-input--suffix {
+.bq-input--control__prefix,
+.bq-input--control__suffix {
   @apply pointer-events-none flex items-center text-[color:var(--bq-input--text-color)];
 }
 
-.bq-input--prefix {
+.bq-input--control__prefix {
   @apply me-[--bq-input--gap];
 }
 
-.bq-input--suffix {
+.bq-input--control__suffix {
   @apply ms-[--bq-input--gap];
 }
 
