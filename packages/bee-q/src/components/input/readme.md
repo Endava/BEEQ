@@ -7,20 +7,30 @@
 
 ## Properties
 
-| Property      | Attribute     | Description                      | Type     | Default     |
-| ------------- | ------------- | -------------------------------- | -------- | ----------- |
-| `placeholder` | `placeholder` | The input placeholder text value | `string` | `undefined` |
+| Property      | Attribute     | Description                                                            | Type                           | Default     |
+| ------------- | ------------- | ---------------------------------------------------------------------- | ------------------------------ | ----------- |
+| `placeholder` | `placeholder` | The input placeholder text value                                       | `string`                       | `undefined` |
+| `value`       | `value`       | The input value, it can be used to reset the input to a previous value | `number \| string \| string[]` | `undefined` |
+
+
+## Events
+
+| Event      | Description                                                    | Type                                                    |
+| ---------- | -------------------------------------------------------------- | ------------------------------------------------------- |
+| `bqChange` | Callback handler emitted when the input value has changed      | `CustomEvent<{ value: string \| number \| string[]; }>` |
+| `bqClear`  | Callback handler emitted when the input value has been cleared | `CustomEvent<void>`                                     |
 
 
 ## Shadow Parts
 
-| Part          | Description                                        |
-| ------------- | -------------------------------------------------- |
-| `"base"`      | The component's base wrapper.                      |
-| `"clear-btn"` | The clear button.                                  |
-| `"input"`     | The native HTML input element used under the hood. |
-| `"prefix"`    | The prefix slot container.                         |
-| `"suffix"`    | The suffix slot container.                         |
+| Part          | Description                                                     |
+| ------------- | --------------------------------------------------------------- |
+| `"base"`      | The component's base wrapper.                                   |
+| `"button"`    | The native HTML button used under the hood in the clear button. |
+| `"clear-btn"` | The clear button.                                               |
+| `"input"`     | The native HTML input element used under the hood.              |
+| `"prefix"`    | The prefix slot container.                                      |
+| `"suffix"`    | The suffix slot container.                                      |
 
 
 ## Dependencies

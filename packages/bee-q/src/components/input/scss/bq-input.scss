@@ -26,7 +26,7 @@
 
 .bq-input--control {
   @apply flex-auto cursor-[inherit] bg-[inherit] font-[inherit] text-[length:inherit];
-  @apply m-0 h-[100%] min-w-[0] border-none p-0 focus:outline-none focus-visible:outline-none;
+  @apply m-0 min-h-[--bq-input--icon-size] min-w-[0] border-none p-0 focus:outline-none focus-visible:outline-none;
 
   box-shadow: none;
   font-weight: inherit;
@@ -47,4 +47,9 @@
 
 .bq-input--suffix {
   @apply ms-[--bq-input--gap];
+}
+
+bq-icon,
+::slotted(bq-icon) {
+  --bq-icon--size: var(--bq-input--icon-size) !important;
 }

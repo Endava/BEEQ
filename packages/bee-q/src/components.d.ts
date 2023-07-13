@@ -282,6 +282,10 @@ export namespace Components {
           * The input placeholder text value
          */
         "placeholder": string;
+        /**
+          * The input value, it can be used to reset the input to a previous value
+         */
+        "value": string | number | string[];
     }
     interface BqNotification {
         /**
@@ -681,6 +685,10 @@ export interface BqDialogCustomEvent<T> extends CustomEvent<T> {
 export interface BqIconCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqIconElement;
+}
+export interface BqInputCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqInputElement;
 }
 export interface BqNotificationCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1155,9 +1163,21 @@ declare namespace LocalJSX {
     }
     interface BqInput {
         /**
+          * Callback handler emitted when the input value has changed
+         */
+        "onBqChange"?: (event: BqInputCustomEvent<{ value: string | number | string[] }>) => void;
+        /**
+          * Callback handler emitted when the input value has been cleared
+         */
+        "onBqClear"?: (event: BqInputCustomEvent<void>) => void;
+        /**
           * The input placeholder text value
          */
         "placeholder"?: string;
+        /**
+          * The input value, it can be used to reset the input to a previous value
+         */
+        "value"?: string | number | string[];
     }
     interface BqNotification {
         /**
