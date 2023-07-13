@@ -4,6 +4,7 @@ import { hasSlotContent } from '../../shared/utils';
 
 /**
  * @part base - The component's base wrapper.
+ * @part clear-btn - The clear button.
  * @part input - The native HTML input element used under the hood.
  * @part prefix - The prefix slot container.
  * @part suffix - The suffix slot container.
@@ -89,6 +90,19 @@ export class BqInput {
         </span>
         {/* HTML Input */}
         <input class="bq-input--control" placeholder={this.placeholder} part="input" />
+        {/* Clear Button */}
+        <bq-button
+          class="bq-input--clear ms-[--bq-input--gap]"
+          size="small"
+          appearance="text"
+          part="clear-btn"
+          exportparts="button"
+        >
+          <slot name="clear-icon">
+            <bq-icon name="x-circle" class="flex" />
+          </slot>
+        </bq-button>
+        {/* Suffix */}
         <span
           class={{ 'bq-input--suffix': true, hidden: !this.hasSuffix }}
           part="suffix"

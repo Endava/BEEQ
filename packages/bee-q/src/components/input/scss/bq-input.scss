@@ -32,6 +32,10 @@
   font-weight: inherit;
 }
 
+.bq-input--clear::part(button) {
+  @apply h-auto rounded-xs border-none p-0;
+}
+
 .bq-input--prefix,
 .bq-input--suffix {
   @apply pointer-events-none flex items-center text-[color:var(--bq-input--text-color)];

@@ -50,6 +50,7 @@ Buttons are designed for users to take action on a page or a screen.
 ### Used by
 
  - [bq-dialog](../dialog)
+ - [bq-input](../input)
  - [bq-notification](../notification)
 
 ### Depends on
@@ -61,6 +62,7 @@ Buttons are designed for users to take action on a page or a screen.
 graph TD;
   bq-button --> bq-icon
   bq-dialog --> bq-button
+  bq-input --> bq-button
   bq-notification --> bq-button
   style bq-button fill:#f9f,stroke:#333,stroke-width:4px
 ```

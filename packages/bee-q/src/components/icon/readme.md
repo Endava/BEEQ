@@ -38,6 +38,7 @@ Icons are simplified images that graphically explain the meaning of an object on
 
  - [bq-button](../button)
  - [bq-dialog](../dialog)
+ - [bq-input](../input)
  - [bq-notification](../notification)
  - [bq-switch](../switch)
  - [bq-toast](../toast)
@@ -47,6 +48,7 @@ Icons are simplified images that graphically explain the meaning of an object on
 graph TD;
   bq-button --> bq-icon
   bq-dialog --> bq-icon
+  bq-input --> bq-icon
   bq-notification --> bq-icon
   bq-switch --> bq-icon
   bq-toast --> bq-icon
