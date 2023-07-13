@@ -25,7 +25,7 @@ describe('bq-input', () => {
       </bq-input>
     `);
 
-    const prefixContainerElem = await page.find('bq-input >>> .bq-input--prefix');
+    const prefixContainerElem = await page.find('bq-input >>> .bq-input--control__prefix');
     expect(prefixContainerElem).not.toHaveClass('hidden');
   });
 
@@ -37,7 +37,60 @@ describe('bq-input', () => {
       </bq-input>
     `);
 
-    const suffixContainerElem = await page.find('bq-input >>> .bq-input--suffix');
+    const suffixContainerElem = await page.find('bq-input >>> .bq-input--control__suffix');
     expect(suffixContainerElem).not.toHaveClass('hidden');
+  });
+
+  it('should render with label content', async () => {
+    const page = await newE2EPage();
+    await page.setContent(`
+      <bq-input>
+        <label slot="label">Input label</label>
+      </bq-input>
+    `);
+
+    const labelContainerElem = await page.find('bq-input >>> .bq-input--label');
+    expect(labelContainerElem).not.toHaveClass('hidden');
+  });
+
+  it('should write and emit change event', async () => {
+    const inputValue = 'Hello World!';
+    const page = await newE2EPage();
+    await page.setContent(`
+      <bq-input></bq-input>
+    `);
+
+    const bqChange = await page.spyOnEvent('bqChange');
+
+    const bqInputElem = await page.find('bq-input');
+    const nativeInputElem = await page.find('bq-input >>> .bq-input--control__input');
+
+    await nativeInputElem.type(inputValue);
+    await page.waitForChanges();
+
+    expect(await bqInputElem.getProperty('value')).toBe('Hello World!');
+    expect(bqChange).toHaveReceivedEventTimes(inputValue.length);
+  });
+
+  it('should clear the value and emit clear event', async () => {
+    const page = await newE2EPage();
+    await page.setContent(`
+      <bq-input value="Hello World!"></bq-input>
+    `);
+
+    const bqClear = await page.spyOnEvent('bqClear');
+
+    const bqInputElem = await page.find('bq-input');
+    const nativeInputElem = await page.find('bq-input >>> .bq-input--control__input');
+    expect(await nativeInputElem.getProperty('value')).toBe('Hello World!');
+
+    await nativeInputElem.focus();
+    await page.waitForChanges();
+
+    const clearBtnElem = await page.find('bq-input >>> .bq-input--control__clear');
+    await clearBtnElem.click();
+
+    expect(bqClear).toHaveReceivedEventTimes(1);
+    expect(await bqInputElem.getProperty('value')).toEqual('');
   });
 });
