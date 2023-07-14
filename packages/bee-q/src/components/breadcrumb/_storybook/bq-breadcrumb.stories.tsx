@@ -15,6 +15,7 @@ const meta: Meta = {
   argTypes: {
     text: { control: 'text', table: { disable: true } },
     ['aria-label']: { control: 'text' },
+    htmlNode: { control: { type: 'object' } },
     // Event handlers
     bqBreadcrumbBlur: { action: 'bqBlur' },
     bqBreadcrumbClick: { action: 'bqClick' },
@@ -23,6 +24,7 @@ const meta: Meta = {
   args: {
     text: 'text',
     'aria-label': 'breadcrumbs',
+    htmlNode: '',
   },
 };
 export default meta;
@@ -35,6 +37,7 @@ const Template = (args: Args) => html`
     @bqBreadcrumbClick=${args.bqBreadcrumbClick}
     @bqBreadcrumbFocus=${args.bqBreadcrumbFocus}
   >
+    ${args.htmlNode}
     <bq-breadcrumb-item>
       <bq-icon name="house-line" size="16"></bq-icon>
     </bq-breadcrumb-item>
@@ -54,7 +57,9 @@ export const Default: Story = {
 
 export const CaretSeparator: Story = {
   render: Template,
-  args: {},
+  args: {
+    htmlNode: Object.assign(document.createElement('bq-icon'), { name: 'caret-right', size: '12', slot: 'separator' }),
+  },
 };
 
 export const Links: Story = {

@@ -78,4 +78,24 @@ describe('bq-breadcrumb', () => {
     expect(bqClick).toHaveReceivedEventTimes(1);
     expect(bqBlur).toHaveReceivedEventTimes(0);
   });
+
+  it('should render custom separator ', async () => {
+    const page = await newE2EPage();
+    await page.setContent(
+      `<bq-breadcrumb>
+        <bq-icon name="caret-right" slot="separator" size="12"></bq-icon>
+
+        <bq-breadcrumb-item>
+          <bq-icon name="house-line" size="16"></bq-icon>
+          <span>Home</span>
+        </bq-breadcrumb-item>
+        <bq-breadcrumb-item>Application Center</bq-breadcrumb-item>
+      </bq-breadcrumb>
+    `,
+    );
+
+    const separator = await page.find('bq-breadcrumb >>> bq-icon[slot="separator"]');
+
+    expect(separator).toBeDefined();
+  });
 });
