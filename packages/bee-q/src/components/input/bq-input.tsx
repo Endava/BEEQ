@@ -65,6 +65,18 @@ export class BqInput {
   /** The input placeholder text value */
   @Prop() placeholder: string;
 
+  /**
+   * The validation status of the input.
+   *
+   * @remarks
+   * This property is used to indicate the validation status of the input. It can be set to one of the following values:
+   * - `'none'`: No validation status is set.
+   * - `'error'`: The input has a validation error.
+   * - `'warning'`: The input has a validation warning.
+   * - `'success'`: The input has passed validation.
+   */
+  @Prop({ reflect: true }) validationStatus: 'error' | 'none' | 'success' | 'warning' = 'none';
+
   /** The input value, it can be used to reset the input to a previous value */
   @Prop({ reflect: true, mutable: true }) value: string | number | string[];
 
@@ -200,7 +212,7 @@ export class BqInput {
           <slot name="label" onSlotchange={this.handleLabelSlotChange} />
         </label>
         {/* Input control group */}
-        <div class="bq-input--control group" part="control">
+        <div class={`bq-input--control group validation-${this.validationStatus}`} part="control">
           {/* Prefix */}
           <span
             class={{ 'bq-input--control__prefix': true, hidden: !this.hasPrefix }}
@@ -252,7 +264,7 @@ export class BqInput {
         </div>
         {/* Helper text */}
         <div
-          class={{ 'bq-input--helper-text': true, hidden: !this.hasHelperText }}
+          class={{ [`bq-input--helper-text validation-${this.validationStatus}`]: true, hidden: !this.hasHelperText }}
           ref={(divElem) => (this.helperTextElem = divElem)}
           part="helper-text"
         >

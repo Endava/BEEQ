@@ -295,6 +295,11 @@ export namespace Components {
          */
         "placeholder": string;
         /**
+          * The validation status of the input.
+          * @remarks This property is used to indicate the validation status of the input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
+         */
+        "validationStatus": 'error' | 'none' | 'success' | 'warning';
+        /**
           * The input value, it can be used to reset the input to a previous value
          */
         "value": string | number | string[];
@@ -1210,6 +1215,11 @@ declare namespace LocalJSX {
           * The input placeholder text value
          */
         "placeholder"?: string;
+        /**
+          * The validation status of the input.
+          * @remarks This property is used to indicate the validation status of the input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
+         */
+        "validationStatus"?: 'error' | 'none' | 'success' | 'warning';
         /**
           * The input value, it can be used to reset the input to a previous value
          */

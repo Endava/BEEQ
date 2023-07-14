@@ -7,13 +7,14 @@
 
 ## Properties
 
-| Property           | Attribute            | Description                                                                                                                                                  | Type                           | Default         |
-| ------------------ | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------ | --------------- |
-| `clearButtonLabel` | `clear-button-label` | The clear button aria label                                                                                                                                  | `string`                       | `'Clear value'` |
-| `debounceTime`     | `debounce-time`      | The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur. | `number`                       | `0`             |
-| `disableClear`     | `disable-clear`      | If true, the clear button won't be displayed                                                                                                                 | `boolean`                      | `false`         |
-| `placeholder`      | `placeholder`        | The input placeholder text value                                                                                                                             | `string`                       | `undefined`     |
-| `value`            | `value`              | The input value, it can be used to reset the input to a previous value                                                                                       | `number \| string \| string[]` | `undefined`     |
+| Property           | Attribute            | Description                                                                                                                                                  | Type                                          | Default         |
+| ------------------ | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------- | --------------- |
+| `clearButtonLabel` | `clear-button-label` | The clear button aria label                                                                                                                                  | `string`                                      | `'Clear value'` |
+| `debounceTime`     | `debounce-time`      | The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur. | `number`                                      | `0`             |
+| `disableClear`     | `disable-clear`      | If true, the clear button won't be displayed                                                                                                                 | `boolean`                                     | `false`         |
+| `placeholder`      | `placeholder`        | The input placeholder text value                                                                                                                             | `string`                                      | `undefined`     |
+| `validationStatus` | `validation-status`  | The validation status of the input.                                                                                                                          | `"error" \| "none" \| "success" \| "warning"` | `'none'`        |
+| `value`            | `value`              | The input value, it can be used to reset the input to a previous value                                                                                       | `number \| string \| string[]`                | `undefined`     |
 
 
 ## Events
