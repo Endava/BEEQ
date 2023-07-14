@@ -23,7 +23,7 @@
   // Hover
   @apply hover:border-[color:--bq-input--border-color-hover];
   // Focus
-  @apply focus-within:border-[color:var(--bq-input--border-color-focus)] focus-within:outline-none focus-within:ring-1 focus-within:ring-focus;
+  @apply focus-within:border-[color:var(--bq-input--border-color-focus)] focus-within:outline-none focus-within:ring-1 focus-within:ring-inset focus-within:ring-ui-brand;
 
   border-style: var(--bq-input--border-style);
 }

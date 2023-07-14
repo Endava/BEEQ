@@ -169,7 +169,7 @@ export class BqInput {
             // The clear button will be visible as long as the input has a value
             // and the parent group is hovered or has focus-within
             <bq-button
-              class="bq-input--control__clear ms-[--bq-input--gap] hidden group-hover:flex group-[:has(:focus-within)]:inline-block"
+              class="bq-input--control__clear ms-[--bq-input--gap] hidden group-hover:inline-block group-[&:has(:focus-within)]:inline-block"
               appearance="text"
               aria-label={this.clearButtonLabel}
               size="small"
