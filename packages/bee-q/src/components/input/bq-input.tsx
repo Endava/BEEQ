@@ -17,7 +17,9 @@ import { hasSlotContent, isDefined, isHTMLElement } from '../../shared/utils';
 @Component({
   tag: 'bq-input',
   styleUrl: './scss/bq-input.scss',
-  shadow: true,
+  shadow: {
+    delegatesFocus: true,
+  },
 })
 export class BqInput {
   // Own Properties
