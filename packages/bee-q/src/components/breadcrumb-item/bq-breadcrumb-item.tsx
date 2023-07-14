@@ -29,6 +29,12 @@ export class BqBreadcrumbItem {
   // Public Property API
   // ========================
 
+  /**
+   * The aria-label that corresponds to the full title of the destination page.
+   * This won't be shown in the page, but it will be used by screen readers and other assistive devices.
+   */
+  @Prop() ariaLabel: string;
+
   /** If true, the item is the last element inside breadcrumb */
   @Prop() isLastItem: boolean = false;
 
@@ -97,7 +103,7 @@ export class BqBreadcrumbItem {
     const TagElem = isLink ? 'a' : 'button';
 
     return (
-      <div class="flex items-center" part="base">
+      <div class="flex items-center" aria-label={this.ariaLabel} part="base">
         <TagElem
           class="breadcrumb-item"
           href={isLink ? this.href : undefined}

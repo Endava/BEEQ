@@ -83,11 +83,15 @@ export namespace Components {
     }
     interface BqBreadcrumb {
         /**
-          * The `aria-label` attribute for `<nav>`
+          * The `aria-label` attribute to describe the type of navigation
          */
         "ariaLabel": string;
     }
     interface BqBreadcrumbItem {
+        /**
+          * The aria-label that corresponds to the full title of the destination page. This won't be shown in the page, but it will be used by screen readers and other assistive devices.
+         */
+        "ariaLabel": string;
         /**
           * If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
          */
@@ -968,7 +972,7 @@ declare namespace LocalJSX {
     }
     interface BqBreadcrumb {
         /**
-          * The `aria-label` attribute for `<nav>`
+          * The `aria-label` attribute to describe the type of navigation
          */
         "ariaLabel"?: string;
         /**
@@ -985,6 +989,10 @@ declare namespace LocalJSX {
         "onBqBreadcrumbFocus"?: (event: BqBreadcrumbCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
     }
     interface BqBreadcrumbItem {
+        /**
+          * The aria-label that corresponds to the full title of the destination page. This won't be shown in the page, but it will be used by screen readers and other assistive devices.
+         */
+        "ariaLabel"?: string;
         /**
           * If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
          */

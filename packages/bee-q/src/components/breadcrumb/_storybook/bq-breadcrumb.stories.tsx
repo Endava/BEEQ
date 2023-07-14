@@ -33,6 +33,7 @@ type Story = StoryObj;
 
 const Template = (args: Args) => html`
   <bq-breadcrumb
+    aria-label=${args['aria-label']}
     @bqBreadcrumbBlur=${args.bqBreadcrumbBlur}
     @bqBreadcrumbClick=${args.bqBreadcrumbClick}
     @bqBreadcrumbFocus=${args.bqBreadcrumbFocus}
@@ -65,6 +66,7 @@ export const CaretSeparator: Story = {
 export const Links: Story = {
   render: (args: Args) => html`
     <bq-breadcrumb
+      aria-label=${args['aria-label']}
       @bqBreadcrumbBlur=${args.bqBreadcrumbBlur}
       @bqBreadcrumbClick=${args.bqBreadcrumbClick}
       @bqBreadcrumbFocus=${args.bqBreadcrumbFocus}
@@ -78,7 +80,9 @@ export const Links: Story = {
         Application List
         <bq-icon name="list-dashes" size="16"></bq-icon>
       </bq-breadcrumb-item>
-      <bq-breadcrumb-item href="https://example.com/center/list/app" target="_blank">App 1 </bq-breadcrumb-item>
+      <bq-breadcrumb-item href="https://example.com/center/list/app" target="_blank" aria-label="first app">
+        First app
+      </bq-breadcrumb-item>
     </bq-breadcrumb>
   `,
 };
