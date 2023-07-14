@@ -53,6 +53,18 @@ describe('bq-input', () => {
     expect(labelContainerElem).not.toHaveClass('hidden');
   });
 
+  it('should render with helper content', async () => {
+    const page = await newE2EPage();
+    await page.setContent(`
+      <bq-input>
+        <span slot="helper-text">Helper text</span>
+      </bq-input>
+    `);
+
+    const helperContainerElem = await page.find('bq-input >>> .bq-input--helper-text');
+    expect(helperContainerElem).not.toHaveClass('hidden');
+  });
+
   it('should write and emit change event', async () => {
     const inputValue = 'Hello World!';
     const page = await newE2EPage();
