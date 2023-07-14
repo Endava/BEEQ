@@ -138,7 +138,7 @@ export class BqInput {
     return (
       <div class="bq-input" part="base">
         <label
-          class={{ 'bq-input--label flex flex-grow text-s': true, hidden: !this.hasLabel }}
+          class={{ 'bq-input--label': true, hidden: !this.hasLabel }}
           htmlFor="input"
           ref={(labelElem) => (this.labelElem = labelElem)}
           part="label"

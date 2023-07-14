@@ -13,8 +13,13 @@
    * @prop --bq-input--border-width - Input border width
    * @prop --bq-input--border-style - Input border style
    * @prop --bq-input--gap - Gap between input content and prefix/suffix
+   * @prop --bq-input--helper-margin-top - Helper text margin top
+   * @prop --bq-input--helper-text-color - Helper text color
+   * @prop --bq-input--helper-text-size - Helper text size
    * @prop --bq-input--icon-size - Icon size to use in prefix/suffix and clear button
    * @prop --bq-input--label-margin-bottom - Input label margin bottom
+   * @prop --bq-input--label-text-color - Input label text color
+   * @prop --bq-input--label-text-size - Input label text size
    * @prop --bq-input--pading-start - Input padding start
    * @prop --bq-input--pading-end - Input padding end
    * @prop --bq-input--paddingY - Input padding top and bottom
@@ -32,15 +37,21 @@
   --bq-input--border-width: 1px;
   --bq-input--border-style: solid;
 
-  --bq-input--gap: var(--bq-spacing-xs);
+  --bq-input--gap: theme('spacing.xs');
+
+  --bq-input--helper-margin-top: theme('spacing.xs');
+  --bq-input--helper-text-size: theme('fontSize.s');
+  --bq-input--helper-text-color: theme('colors.text.primary');
 
   --bq-input--icon-size: 24px;
 
-  --bq-input--label-margin-bottom: var(--bq-spacing-xs);
+  --bq-input--label-margin-bottom: theme('spacing.xs');
+  --bq-input--label-text-size: theme('fontSize.s');
+  --bq-input--label-text-color: theme('colors.text.primary');
 
   --bq-input--pading-start: theme('spacing.m');
   --bq-input--pading-end: theme('spacing.m');
-  --bq-input--paddingY: var(--bq-spacing-s);
+  --bq-input--paddingY: theme('spacing.s');
 
   --bq-input--text-color: theme('colors.text.primary');
   --bq-input--text-size: theme('fontSize.m');

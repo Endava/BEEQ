@@ -9,7 +9,8 @@
 }
 
 .bq-input--label {
-  @apply mb-[--bq-input--label-margin-bottom] flex flex-grow items-center gap-[--var(--bq-input--gap-label)] text-s;
+  @apply mb-[--bq-input--label-margin-bottom] flex flex-grow items-center gap-[--var(--bq-input--gap-label)];
+  @apply text-[length:--bq-input--label-text-size] text-[color:--bq-input--label-text-color];
 }
 
 .bq-input--control {
