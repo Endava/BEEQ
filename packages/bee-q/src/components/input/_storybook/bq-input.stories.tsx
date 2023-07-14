@@ -17,8 +17,11 @@ const meta: Meta = {
     placeholder: { control: 'text' },
     value: { control: 'text' },
     // Events
+    bqBlur: { action: 'bqBlur' },
     bqChange: { action: 'bqChange' },
     bqClear: { action: 'bqClear' },
+    bqFocus: { action: 'bqFocus' },
+    bqInput: { action: 'bqInput' },
     // Not part of the public API, so we don't want to expose it in the docs
     noLabel: { control: 'bolean', table: { disable: true } },
     noHelperText: { control: 'bolean', table: { disable: true } },
@@ -43,8 +46,11 @@ const Template = (args: Args) => html`
     ?disable-clear=${args['disable-clear']}
     placeholder=${args.placeholder}
     value=${args.value}
+    @bqBlur=${args.bqBlur}
     @bqChange=${args.bqChange}
     @bqClear=${args.bqClear}
+    @bqFocus=${args.bqFocus}
+    @bqInput=${args.bqInput}
   >
     ${!args.noLabel
       ? !args.optionalLabel

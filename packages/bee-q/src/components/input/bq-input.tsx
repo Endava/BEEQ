@@ -1,7 +1,7 @@
 import { EventEmitter } from '@angular/core';
 import { Component, Element, Event, h, Prop, State, Watch } from '@stencil/core';
 
-import { hasSlotContent, isDefined } from '../../shared/utils';
+import { hasSlotContent, isDefined, isHTMLElement } from '../../shared/utils';
 
 /**
  * @part base - The component's base wrapper.
@@ -76,11 +76,26 @@ export class BqInput {
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Callback handler emitted when the input value has changed */
-  @Event() bqChange!: EventEmitter<{ value: string | number | string[] }>;
+  /** Callback handler emitted when the input loses focus */
+  @Event() bqBlur!: EventEmitter<HTMLBqInputElement>;
+
+  /**
+   * Callback handler emitted when the input value has changed and the input loses focus.
+   * This handler is called whenever the user finishes typing or pasting text into the input field and then clicks outside of the input field.
+   */
+  @Event() bqChange!: EventEmitter<{ value: string | number | string[]; el: HTMLBqInputElement }>;
 
   /** Callback handler emitted when the input value has been cleared */
-  @Event() bqClear!: EventEmitter<void>;
+  @Event() bqClear!: EventEmitter<HTMLBqInputElement>;
+
+  /** Callback handler emitted when the input has received focus */
+  @Event() bqFocus!: EventEmitter<HTMLBqInputElement>;
+
+  /**
+   * Callback handler emitted when the input value changes.
+   * This handler is called whenever the user types or pastes text into the input field.
+   */
+  @Event() bqInput!: EventEmitter<{ value: string | number | string[]; el: HTMLBqInputElement }>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -105,20 +120,37 @@ export class BqInput {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private handleInputChange = () => {
-    this.value = this.inputElem.value;
-    this.bqChange.emit({ value: this.value });
+  private handleBlur = () => {
+    this.bqBlur.emit(this.el);
   };
 
-  private handleClearClick = (event: CustomEvent) => {
+  private handleFocus = () => {
+    this.bqFocus.emit(this.el);
+  };
+
+  private handleInput = (ev: Event) => {
+    if (!isHTMLElement(ev.target, 'input')) return;
+    this.value = ev.target.value;
+
+    this.bqInput.emit({ value: this.value, el: this.el });
+  };
+
+  private handleChange = (ev: Event) => {
+    if (!isHTMLElement(ev.target, 'input')) return;
+    this.value = ev.target.value;
+
+    this.bqChange.emit({ value: this.value, el: this.el });
+  };
+
+  private handleClearClick = (ev: CustomEvent) => {
     this.inputElem.value = '';
     this.value = this.inputElem.value;
 
-    this.bqClear.emit();
-    this.bqChange.emit({ value: this.value });
+    this.bqClear.emit(this.el);
+    this.bqChange.emit({ value: this.value, el: this.el });
     this.inputElem.focus();
 
-    event.stopPropagation();
+    ev.stopPropagation();
   };
 
   private handleLabelSlotChange = () => {
@@ -169,9 +201,13 @@ export class BqInput {
             class="bq-input--control__input"
             placeholder={this.placeholder}
             ref={(inputElem) => (this.inputElem = inputElem)}
-            onInput={this.handleInputChange}
             value={this.value}
             part="input"
+            // Events
+            onBlur={this.handleBlur}
+            onChange={this.handleChange}
+            onFocus={this.handleFocus}
+            onInput={this.handleInput}
           />
           {/* Clear Button */}
           {!this.disableClear && this.hasValue && (

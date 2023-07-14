@@ -1179,13 +1179,25 @@ declare namespace LocalJSX {
          */
         "disableClear"?: boolean;
         /**
-          * Callback handler emitted when the input value has changed
+          * Callback handler emitted when the input loses focus
          */
-        "onBqChange"?: (event: BqInputCustomEvent<{ value: string | number | string[] }>) => void;
+        "onBqBlur"?: (event: BqInputCustomEvent<HTMLBqInputElement>) => void;
+        /**
+          * Callback handler emitted when the input value has changed and the input loses focus. This handler is called whenever the user finishes typing or pasting text into the input field and then clicks outside of the input field.
+         */
+        "onBqChange"?: (event: BqInputCustomEvent<{ value: string | number | string[]; el: HTMLBqInputElement }>) => void;
         /**
           * Callback handler emitted when the input value has been cleared
          */
-        "onBqClear"?: (event: BqInputCustomEvent<void>) => void;
+        "onBqClear"?: (event: BqInputCustomEvent<HTMLBqInputElement>) => void;
+        /**
+          * Callback handler emitted when the input has received focus
+         */
+        "onBqFocus"?: (event: BqInputCustomEvent<HTMLBqInputElement>) => void;
+        /**
+          * Callback handler emitted when the input value changes. This handler is called whenever the user types or pastes text into the input field.
+         */
+        "onBqInput"?: (event: BqInputCustomEvent<{ value: string | number | string[]; el: HTMLBqInputElement }>) => void;
         /**
           * The input placeholder text value
          */
