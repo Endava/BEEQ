@@ -21,6 +21,7 @@ const meta: Meta = {
     bqClear: { action: 'bqClear' },
     // Not part of the public API, so we don't want to expose it in the docs
     noLabel: { control: 'bolean', table: { disable: true } },
+    noHelperText: { control: 'bolean', table: { disable: true } },
     optionalLabel: { control: 'bolean', table: { disable: true } },
     prefix: { control: 'bolean', table: { disable: true } },
     suffix: { control: 'bolean', table: { disable: true } },
@@ -30,10 +31,6 @@ const meta: Meta = {
     'disable-clear': false,
     placeholder: 'Placeholder',
     value: undefined,
-    // Not part of the public API, so we don't want to expose it in the docs
-    optionalLabel: false,
-    prefix: false,
-    suffix: false,
   },
 };
 export default meta;
@@ -61,10 +58,14 @@ const Template = (args: Args) => html`
       : nothing}
     ${args.prefix ? html`<bq-icon name="user-circle" slot="prefix"></bq-icon>` : nothing}
     ${args.suffix ? html`<bq-icon name="gear" slot="suffix"></bq-icon>` : nothing}
-    <span class="flex items-center gap-xs" slot="helper-text">
-      <bq-icon name="star"></bq-icon>
-      Helper text
-    </span>
+    ${!args.noHelperText
+      ? html`
+          <span class="flex items-center gap-xs" slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+        `
+      : nothing}
   </bq-input>
 `;
 
@@ -102,6 +103,16 @@ export const PrefixAndSuffix: Story = {
   },
 };
 
+export const Optional: Story = {
+  name: 'Label with "Optional"',
+  render: Template,
+  args: {
+    optionalLabel: true,
+    prefix: true,
+    suffix: true,
+  },
+};
+
 export const NoLabel: Story = {
   name: 'With no Label',
   render: Template,
@@ -112,11 +123,11 @@ export const NoLabel: Story = {
   },
 };
 
-export const Optional: Story = {
-  name: 'Label with "Optional"',
+export const NoHelperText: Story = {
+  name: 'With no Helper Text',
   render: Template,
   args: {
-    optionalLabel: true,
+    noHelperText: true,
     prefix: true,
     suffix: true,
   },
