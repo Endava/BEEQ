@@ -8,6 +8,7 @@ import { hasSlotContent, isDefined } from '../../shared/utils';
  * @part button - The native HTML button used under the hood in the clear button.
  * @part clear-btn - The clear button.
  * @part control - The input control wrapper.
+ * @part helper-text - The helper text slot container.
  * @part label - The label slot container.
  * @part input - The native HTML input element used under the hood.
  * @part prefix - The prefix slot container.
@@ -22,6 +23,7 @@ export class BqInput {
   // Own Properties
   // ====================
 
+  private helperTextElem?: HTMLElement;
   private inputElem?: HTMLInputElement;
   private labelElem?: HTMLElement;
   private prefixElem?: HTMLElement;
@@ -36,6 +38,7 @@ export class BqInput {
   // Inlined decorator, alphabetical order
   // =======================================
 
+  @State() hasHelperText = false;
   @State() hasLabel = false;
   @State() hasPrefix = false;
   @State() hasSuffix = false;
@@ -118,6 +121,10 @@ export class BqInput {
     event.stopPropagation();
   };
 
+  private handleLabelSlotChange = () => {
+    this.hasLabel = hasSlotContent(this.labelElem);
+  };
+
   private handlePrefixSlotChange = () => {
     this.hasPrefix = hasSlotContent(this.prefixElem);
   };
@@ -126,8 +133,8 @@ export class BqInput {
     this.hasSuffix = hasSlotContent(this.suffixElem);
   };
 
-  private handleLabelSlotChange = () => {
-    this.hasLabel = hasSlotContent(this.labelElem);
+  private handleHelperTextSlotChange = () => {
+    this.hasHelperText = hasSlotContent(this.helperTextElem);
   };
 
   // render() function
@@ -137,6 +144,7 @@ export class BqInput {
   render() {
     return (
       <div class="bq-input" part="base">
+        {/* Label */}
         <label
           class={{ 'bq-input--label': true, hidden: !this.hasLabel }}
           htmlFor="input"
@@ -145,6 +153,7 @@ export class BqInput {
         >
           <slot name="label" onSlotchange={this.handleLabelSlotChange} />
         </label>
+        {/* Input control group */}
         <div class="bq-input--control group" part="control">
           {/* Prefix */}
           <span
@@ -190,6 +199,14 @@ export class BqInput {
           >
             <slot name="suffix" onSlotchange={this.handleSuffixSlotChange} />
           </span>
+        </div>
+        {/* Helper text */}
+        <div
+          class={{ 'bq-input--helper-text': true, hidden: !this.hasHelperText }}
+          ref={(divElem) => (this.helperTextElem = divElem)}
+          part="helper-text"
+        >
+          <slot name="helper-text" onSlotchange={this.handleHelperTextSlotChange} />
         </div>
       </div>
     );

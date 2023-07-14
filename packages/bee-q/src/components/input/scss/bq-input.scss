@@ -13,6 +13,10 @@
   @apply text-[length:--bq-input--label-text-size] text-[color:--bq-input--label-text-color];
 }
 
+.bq-input--helper-text {
+  @apply mt-[--bq-input--helper-margin-top] text-[length:--bq-input--helper-text-size] text-[color:--bq-input--helper-text-color];
+}
+
 .bq-input--control {
   @apply flex w-full items-center transition-[border-color,box-shadow];
   // Border

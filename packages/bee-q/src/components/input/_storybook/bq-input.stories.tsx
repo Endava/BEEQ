@@ -61,6 +61,10 @@ const Template = (args: Args) => html`
       : nothing}
     ${args.prefix ? html`<bq-icon name="user-circle" slot="prefix"></bq-icon>` : nothing}
     ${args.suffix ? html`<bq-icon name="gear" slot="suffix"></bq-icon>` : nothing}
+    <span class="flex items-center gap-xs" slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
   </bq-input>
 `;
 
