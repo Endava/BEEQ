@@ -16,6 +16,7 @@ const meta: Meta = {
     'disable-clear': { control: 'boolean' },
     'debounce-time': { control: 'number' },
     placeholder: { control: 'text' },
+    'validation-status': { control: 'select', options: ['error', 'none', 'success', 'warning'] },
     value: { control: 'text' },
     // Events
     bqBlur: { action: 'bqBlur' },
@@ -35,6 +36,7 @@ const meta: Meta = {
     'disable-clear': false,
     'debounce-time': 0,
     placeholder: 'Placeholder',
+    'validation-status': 'none',
     value: undefined,
   },
 };
@@ -48,6 +50,7 @@ const Template = (args: Args) => html`
     ?disable-clear=${args['disable-clear']}
     debounce-time=${args['debounce-time']}
     placeholder=${args.placeholder}
+    validation-status=${args['validation-status']}
     value=${args.value}
     @bqBlur=${args.bqBlur}
     @bqChange=${args.bqChange}
@@ -110,6 +113,20 @@ export const PrefixAndSuffix: Story = {
     prefix: true,
     suffix: true,
   },
+};
+
+export const ValidationStatus: Story = {
+  name: 'Validation',
+  render: (args) => html`
+    <div class="flex flex-col gap-l">
+      <!-- Error -->
+      ${Template({ ...args, 'validation-status': 'error' })}
+      <!-- Succes -->
+      ${Template({ ...args, 'validation-status': 'success' })}
+      <!-- Warning -->
+      ${Template({ ...args, 'validation-status': 'warning' })}
+    </div>
+  `,
 };
 
 export const Optional: Story = {
