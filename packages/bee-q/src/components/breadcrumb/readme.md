@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property    | Attribute    | Description                                                   | Type     | Default     |
-| ----------- | ------------ | ------------------------------------------------------------- | -------- | ----------- |
-| `ariaLabel` | `aria-label` | The `aria-label` attribute to describe the type of navigation | `string` | `undefined` |
+| Property    | Attribute    | Description                                                   | Type     | Default         |
+| ----------- | ------------ | ------------------------------------------------------------- | -------- | --------------- |
+| `ariaLabel` | `aria-label` | The `aria-label` attribute to describe the type of navigation | `string` | `'Breadcrumbs'` |
 
 
 ## Events

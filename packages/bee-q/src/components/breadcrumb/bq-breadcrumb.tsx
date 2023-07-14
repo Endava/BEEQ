@@ -29,7 +29,7 @@ export class BqBreadcrumb {
   // ========================
 
   /** The `aria-label` attribute to describe the type of navigation */
-  @Prop({ reflect: true }) ariaLabel: string;
+  @Prop({ reflect: true }) ariaLabel: string = 'Breadcrumbs';
 
   // Prop lifecycle events
   // =======================

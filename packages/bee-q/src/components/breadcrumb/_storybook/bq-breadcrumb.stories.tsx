@@ -23,7 +23,7 @@ const meta: Meta = {
   },
   args: {
     text: 'text',
-    'aria-label': 'breadcrumbs',
+    'aria-label': 'Breadcrumbs',
     htmlNode: '',
   },
 };
@@ -33,21 +33,20 @@ type Story = StoryObj;
 
 const Template = (args: Args) => html`
   <bq-breadcrumb
-    aria-label=${args['aria-label']}
     @bqBreadcrumbBlur=${args.bqBreadcrumbBlur}
     @bqBreadcrumbClick=${args.bqBreadcrumbClick}
     @bqBreadcrumbFocus=${args.bqBreadcrumbFocus}
   >
     ${args.htmlNode}
-    <bq-breadcrumb-item>
+    <bq-breadcrumb-item aria-label="Home page">
       <bq-icon name="house-line" size="16"></bq-icon>
     </bq-breadcrumb-item>
-    <bq-breadcrumb-item>Men's Clothing</bq-breadcrumb-item>
-    <bq-breadcrumb-item>
+    <bq-breadcrumb-item aria-label="Men clothing">Men's Clothing</bq-breadcrumb-item>
+    <bq-breadcrumb-item aria-label="Shirts">
       <bq-icon name="shirt-folded" size="16"></bq-icon>
       Shirts
     </bq-breadcrumb-item>
-    <bq-breadcrumb-item>Casual Shirts</bq-breadcrumb-item>
+    <bq-breadcrumb-item aria-label="Casual shirts">Casual shirts</bq-breadcrumb-item>
   </bq-breadcrumb>
 `;
 
@@ -66,21 +65,22 @@ export const CaretSeparator: Story = {
 export const Links: Story = {
   render: (args: Args) => html`
     <bq-breadcrumb
-      aria-label=${args['aria-label']}
       @bqBreadcrumbBlur=${args.bqBreadcrumbBlur}
       @bqBreadcrumbClick=${args.bqBreadcrumbClick}
       @bqBreadcrumbFocus=${args.bqBreadcrumbFocus}
     >
-      <bq-breadcrumb-item href="https://example.com/" target="_blank">
+      <bq-breadcrumb-item href="https://example.com/" target="_blank" aria-label="Home page">
         <bq-icon name="house-line" size="16"></bq-icon>
         Home
       </bq-breadcrumb-item>
-      <bq-breadcrumb-item href="https://example.com/center" target="_blank"> Application Center </bq-breadcrumb-item>
-      <bq-breadcrumb-item href="https://example.com/center/list" target="_blank">
+      <bq-breadcrumb-item href="https://example.com/center" target="_blank" aria-label="Application center">
+        Application Center
+      </bq-breadcrumb-item>
+      <bq-breadcrumb-item href="https://example.com/center/list" target="_blank" aria-label="Application list">
         Application List
         <bq-icon name="list-dashes" size="16"></bq-icon>
       </bq-breadcrumb-item>
-      <bq-breadcrumb-item href="https://example.com/center/list/app" target="_blank" aria-label="first app">
+      <bq-breadcrumb-item href="https://example.com/center/list/app" target="_blank" aria-label="First app">
         First app
       </bq-breadcrumb-item>
     </bq-breadcrumb>
