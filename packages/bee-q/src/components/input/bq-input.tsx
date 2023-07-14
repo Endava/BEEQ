@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
-import { hasSlotContent, isDefined, isHTMLElement } from '../../shared/utils';
+import { debounce, hasSlotContent, isDefined, isHTMLElement, TDebounce } from '../../shared/utils';
 
 /**
  * @part base - The component's base wrapper.
@@ -30,6 +30,8 @@ export class BqInput {
   private prefixElem?: HTMLElement;
   private suffixElem?: HTMLElement;
 
+  private debounceBqInput: TDebounce<void>;
+
   // Reference to host HTML element
   // ===================================
 
@@ -50,6 +52,12 @@ export class BqInput {
 
   /** The clear button aria label */
   @Prop({ reflect: true }) clearButtonLabel = 'Clear value';
+
+  /**
+   * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
+   * A value of 0 means no debouncing will occur.
+   */
+  @Prop({ reflect: true, mutable: true }) debounceTime = 0;
 
   /** If true, the clear button won't be displayed */
   @Prop({ reflect: true }) disableClear = false;
@@ -130,10 +138,15 @@ export class BqInput {
   };
 
   private handleInput = (ev: Event) => {
+    this.debounceBqInput?.cancel();
+
     if (!isHTMLElement(ev.target, 'input')) return;
     this.value = ev.target.value;
 
-    this.bqInput.emit({ value: this.value, el: this.el });
+    this.debounceBqInput = debounce(() => {
+      this.bqInput.emit({ value: this.value, el: this.el });
+    }, this.debounceTime);
+    this.debounceBqInput();
   };
 
   private handleChange = (ev: Event) => {

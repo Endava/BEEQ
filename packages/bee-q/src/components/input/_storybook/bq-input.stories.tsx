@@ -14,6 +14,7 @@ const meta: Meta = {
   argTypes: {
     'clear-button-label': { control: 'text' },
     'disable-clear': { control: 'boolean' },
+    'debounce-time': { control: 'number' },
     placeholder: { control: 'text' },
     value: { control: 'text' },
     // Events
@@ -32,6 +33,7 @@ const meta: Meta = {
   args: {
     'clear-button-label': 'Clear value',
     'disable-clear': false,
+    'debounce-time': 0,
     placeholder: 'Placeholder',
     value: undefined,
   },
@@ -44,6 +46,7 @@ const Template = (args: Args) => html`
   <bq-input
     clear-button-label=${args['clear-button-label']}
     ?disable-clear=${args['disable-clear']}
+    debounce-time=${args['debounce-time']}
     placeholder=${args.placeholder}
     value=${args.value}
     @bqBlur=${args.bqBlur}
