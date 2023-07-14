@@ -1,5 +1,4 @@
-import { EventEmitter } from '@angular/core';
-import { Component, Element, Event, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
 import { hasSlotContent, isDefined, isHTMLElement } from '../../shared/utils';
 
