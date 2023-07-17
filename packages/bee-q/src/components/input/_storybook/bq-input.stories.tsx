@@ -1,4 +1,5 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { html, nothing } from 'lit-html';
 
 import mdx from './bq-input.mdx';
@@ -78,69 +79,74 @@ export default meta;
 
 type Story = StoryObj;
 
-const Template = (args: Args) => html`
-  <bq-input
-    autocapitalize=${args.autocapitalize}
-    autocomplete=${args.autocomplete}
-    autocorrect=${args.autocorrect}
-    ?autofocus=${args.autofocus}
-    clear-button-label=${args['clear-button-label']}
-    debounce-time=${args['debounce-time']}
-    ?disable-clear=${args['disable-clear']}
-    ?disabled=${args.disabled}
-    .form=${args.form}
-    iputmode=${args.inputmode}
-    .max=${args.max}
-    .maxlength=${args.maxlength}
-    .min=${args.min}
-    .minlength=${args.minlength}
-    .name=${args.name}
-    .pattern=${args.pattern}
-    placeholder=${args.placeholder}
-    ?readonly=${args.readonly}
-    ?required=${args.required}
-    .step=${args.step}
-    .type=${args.type}
-    validation-status=${args['validation-status']}
-    .value=${args.value}
-    @bqBlur=${args.bqBlur}
-    @bqChange=${args.bqChange}
-    @bqClear=${args.bqClear}
-    @bqFocus=${args.bqFocus}
-    @bqInput=${args.bqInput}
-  >
-    ${!args.noLabel
-      ? !args.optionalLabel
-        ? html`<label slot="label">Input label</label>`
-        : html`
-            <div slot="label" class="flex flex-1">
-              <label class="flex flex-grow items-center">
-                Input label
-                ${args.hasLabelTooltip
-                  ? html`
-                      <bq-tooltip class="ms-xs">
-                        <bq-icon name="info" slot="trigger"></bq-icon>
-                        You can provide more context detail by adding a tooltip to the label.
-                      </bq-tooltip>
-                    `
-                  : nothing}
-              </label>
-              <span class="text-text-secondary">Optional</span>
-            </div>
+const Template = (args: Args) => {
+  const tooltipTemplae = args.hasLabelTooltip
+    ? html`
+        <bq-tooltip class="ms-xs">
+          <bq-icon name="info" slot="trigger"></bq-icon>
+          You can provide more context detail by adding a tooltip to the label.
+        </bq-tooltip>
+      `
+    : nothing;
+  const labelTemplate = html`
+    <label class="flex flex-grow items-center" slot=${ifDefined(!args.optionalLabel ? 'label' : null)}>
+      Input label ${tooltipTemplae}
+    </label>
+  `;
+  const label = !args.optionalLabel
+    ? labelTemplate
+    : html`
+        <div slot="label" class="flex flex-1">
+          ${labelTemplate}
+          <span class="text-text-secondary">Optional</span>
+        </div>
+      `;
+
+  return html`
+    <bq-input
+      autocapitalize=${args.autocapitalize}
+      autocomplete=${args.autocomplete}
+      autocorrect=${args.autocorrect}
+      ?autofocus=${args.autofocus}
+      clear-button-label=${args['clear-button-label']}
+      debounce-time=${args['debounce-time']}
+      ?disable-clear=${args['disable-clear']}
+      ?disabled=${args.disabled}
+      .form=${args.form}
+      iputmode=${args.inputmode}
+      .max=${args.max}
+      .maxlength=${args.maxlength}
+      .min=${args.min}
+      .minlength=${args.minlength}
+      .name=${args.name}
+      .pattern=${args.pattern}
+      placeholder=${args.placeholder}
+      ?readonly=${args.readonly}
+      ?required=${args.required}
+      .step=${args.step}
+      .type=${args.type}
+      validation-status=${args['validation-status']}
+      .value=${args.value}
+      @bqBlur=${args.bqBlur}
+      @bqChange=${args.bqChange}
+      @bqClear=${args.bqClear}
+      @bqFocus=${args.bqFocus}
+      @bqInput=${args.bqInput}
+    >
+      ${!args.noLabel ? label : nothing}
+      ${args.prefix ? html`<bq-icon name="user-circle" slot="prefix"></bq-icon>` : nothing}
+      ${args.suffix ? html`<bq-icon name="gear" slot="suffix"></bq-icon>` : nothing}
+      ${!args.noHelperText
+        ? html`
+            <span class="flex items-center gap-xs" slot="helper-text">
+              <bq-icon name="star"></bq-icon>
+              Helper text
+            </span>
           `
-      : nothing}
-    ${args.prefix ? html`<bq-icon name="user-circle" slot="prefix"></bq-icon>` : nothing}
-    ${args.suffix ? html`<bq-icon name="gear" slot="suffix"></bq-icon>` : nothing}
-    ${!args.noHelperText
-      ? html`
-          <span class="flex items-center gap-xs" slot="helper-text">
-            <bq-icon name="star"></bq-icon>
-            Helper text
-          </span>
-        `
-      : nothing}
-  </bq-input>
-`;
+        : nothing}
+    </bq-input>
+  `;
+};
 
 export const Default: Story = {
   render: Template,
