@@ -1,5 +1,7 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
 
+import { ifDefined } from 'lit/directives/if-defined.js';
+
 import { html } from 'lit-html';
 
 import mdx from './bq-breadcrumb.mdx';
@@ -41,30 +43,30 @@ const Template = (args: Args) => html`
   >
     ${args.htmlNode}
     <bq-breadcrumb-item
-      href=${args.useLinks ? 'https://example.com/' : ''}
-      target=${args.useLinks ? '_blank' : ''}
+      href=${ifDefined(args.useLinks ? 'https://example.com/' : null)}
+      target=${ifDefined(args.useLinks ? '_blank' : null)}
       aria-label="Home page"
     >
       <bq-icon name="house-line" size="16"></bq-icon>
     </bq-breadcrumb-item>
     <bq-breadcrumb-item
-      href=${args.useLinks ? 'https://example.com/' : ''}
-      target=${args.useLinks ? '_blank' : ''}
+      href=${ifDefined(args.useLinks ? 'https://example.com/' : null)}
+      target=${ifDefined(args.useLinks ? '_blank' : null)}
       aria-label="Men clothing"
     >
       Men's Clothing
     </bq-breadcrumb-item>
     <bq-breadcrumb-item
-      href=${args.useLinks ? 'https://example.com/' : ''}
-      target=${args.useLinks ? '_blank' : ''}
+      href=${ifDefined(args.useLinks ? 'https://example.com/' : null)}
+      target=${ifDefined(args.useLinks ? '_blank' : null)}
       aria-label="Shirts"
     >
       <bq-icon name="shirt-folded" size="16"></bq-icon>
       Shirts
     </bq-breadcrumb-item>
     <bq-breadcrumb-item
-      href=${args.useLinks ? 'https://example.com/' : ''}
-      target=${args.useLinks ? '_blank' : ''}
+      href=${ifDefined(args.useLinks ? 'https://example.com/' : null)}
+      target=${ifDefined(args.useLinks ? '_blank' : null)}
       aria-label="Casual shirts"
     >
       Casual shirts
