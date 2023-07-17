@@ -80,7 +80,7 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => {
-  const tooltipTemplae = args.hasLabelTooltip
+  const tooltipTemplate = args.hasLabelTooltip
     ? html`
         <bq-tooltip class="ms-xs">
           <bq-icon name="info" slot="trigger"></bq-icon>
@@ -90,7 +90,7 @@ const Template = (args: Args) => {
     : nothing;
   const labelTemplate = html`
     <label class="flex flex-grow items-center" slot=${ifDefined(!args.optionalLabel ? 'label' : null)}>
-      Input label ${tooltipTemplae}
+      Input label ${tooltipTemplate}
     </label>
   `;
   const label = !args.optionalLabel
