@@ -2,6 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html, nothing } from 'lit-html';
 
 import mdx from './bq-input.mdx';
+import { INPUT_TYPE, INPUT_VALIDATION } from '../bq-input.types';
 
 const meta: Meta = {
   title: 'Components/Input',
@@ -12,11 +13,26 @@ const meta: Meta = {
     },
   },
   argTypes: {
+    autocapitalize: { control: 'text' },
+    autocomplete: { control: 'text' },
+    autocorrect: { control: 'inline-radio', options: ['on', 'off'] },
+    autofocus: { control: 'boolean' },
     'clear-button-label': { control: 'text' },
-    'disable-clear': { control: 'boolean' },
     'debounce-time': { control: 'number' },
+    'disable-clear': { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    max: { control: 'text' },
+    maxlength: { control: 'number' },
+    min: { control: 'text' },
+    minlength: { control: 'number' },
+    name: { control: 'text' },
+    pattern: { control: 'text' },
     placeholder: { control: 'text' },
-    'validation-status': { control: 'select', options: ['error', 'none', 'success', 'warning'] },
+    readonly: { control: 'boolean' },
+    required: { control: 'boolean' },
+    step: { control: 'text' },
+    type: { control: 'select', options: [...INPUT_TYPE] },
+    'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
     value: { control: 'text' },
     // Events
     bqBlur: { action: 'bqBlur' },
@@ -32,9 +48,26 @@ const meta: Meta = {
     suffix: { control: 'bolean', table: { disable: true } },
   },
   args: {
+    autocapitalize: 'off',
+    autocomplete: 'off',
+    autocorrect: 'off',
+    autofocus: false,
     'clear-button-label': 'Clear value',
     'disable-clear': false,
+    disabled: false,
     'debounce-time': 0,
+    form: undefined,
+    inputmode: 'text',
+    max: undefined,
+    maxlength: undefined,
+    min: undefined,
+    minlength: undefined,
+    name: 'input',
+    pattern: undefined,
+    readonly: false,
+    required: false,
+    step: undefined,
+    type: 'text',
     placeholder: 'Placeholder',
     'validation-status': 'none',
     value: undefined,
@@ -46,10 +79,27 @@ type Story = StoryObj;
 
 const Template = (args: Args) => html`
   <bq-input
+    autocapitalize=${args.autocapitalize}
+    autocomplete=${args.autocomplete}
+    autocorrect=${args.autocorrect}
+    ?autofocus=${args.autofocus}
     clear-button-label=${args['clear-button-label']}
-    ?disable-clear=${args['disable-clear']}
     debounce-time=${args['debounce-time']}
+    ?disable-clear=${args['disable-clear']}
+    ?disabled=${args.disabled}
+    form=${args.form}
+    iputmode=${args.inputmode}
+    .max=${args.max}
+    .maxlength=${args.maxlength}
+    .min=${args.min}
+    .minlength=${args.minlength}
+    .name=${args.name}
+    .pattern=${args.pattern}
     placeholder=${args.placeholder}
+    ?readonly=${args.readonly}
+    ?required=${args.required}
+    .step=${args.step}
+    .type=${args.type}
     validation-status=${args['validation-status']}
     value=${args.value}
     @bqBlur=${args.bqBlur}
@@ -115,6 +165,15 @@ export const PrefixAndSuffix: Story = {
   },
 };
 
+export const Disabled: Story = {
+  render: Template,
+  args: {
+    disabled: true,
+    prefix: true,
+    suffix: true,
+  },
+};
+
 export const ValidationStatus: Story = {
   name: 'Validation',
   render: (args) => html`
@@ -127,6 +186,10 @@ export const ValidationStatus: Story = {
       ${Template({ ...args, 'validation-status': 'warning' })}
     </div>
   `,
+  args: {
+    prefix: true,
+    suffix: true,
+  },
 };
 
 export const Optional: Story = {
