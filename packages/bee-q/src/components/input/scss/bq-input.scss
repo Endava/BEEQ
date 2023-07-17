@@ -84,6 +84,27 @@
 
   box-shadow: none;
   font-weight: inherit;
+
+  &::-webkit-datetime-edit-fields-wrapper,
+  &::-webkit-datetime-edit,
+  &::-webkit-datetime-edit-year-field,
+  &::-webkit-datetime-edit-month-field,
+  &::-webkit-datetime-edit-day-field,
+  &::-webkit-datetime-edit-hour-field,
+  &::-webkit-datetime-edit-minute-field,
+  &::-webkit-datetime-edit-second-field,
+  &::-webkit-datetime-edit-millisecond-field,
+  &::-webkit-datetime-edit-meridiem-field {
+    @apply p-0;
+  }
+
+  &[type='search']::-moz-search-cancel,
+  &[type='search']::-webkit-search-decoration,
+  &[type='search']::-webkit-search-cancel-button,
+  &[type='search']::-webkit-search-results-button,
+  &[type='search']::-webkit-search-results-decoration {
+    @apply hidden;
+  }
 }
 
 /* -------------------------------------------------------------------------- */
