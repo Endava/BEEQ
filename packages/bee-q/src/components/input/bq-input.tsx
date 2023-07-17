@@ -1,5 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
+import { TInputValidation, TInputValue } from './bq-input.types';
 import { debounce, hasSlotContent, isDefined, isHTMLElement, TDebounce } from '../../shared/utils';
 
 /**
@@ -51,19 +52,25 @@ export class BqInput {
   // ========================
 
   /** The clear button aria label */
-  @Prop({ reflect: true }) clearButtonLabel = 'Clear value';
+  @Prop({ reflect: true }) clearButtonLabel? = 'Clear value';
 
   /**
    * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
    * A value of 0 means no debouncing will occur.
    */
-  @Prop({ reflect: true, mutable: true }) debounceTime = 0;
+  @Prop({ reflect: true, mutable: true }) debounceTime? = 0;
+
+  /**
+   * Indicates whether the input is disabled or not.
+   * If `true`, the input is disabled and cannot be interacted with.
+   */
+  @Prop({ mutable: true }) disabled?: boolean = false;
 
   /** If true, the clear button won't be displayed */
-  @Prop({ reflect: true }) disableClear = false;
+  @Prop({ reflect: true }) disableClear? = false;
 
   /** The input placeholder text value */
-  @Prop() placeholder: string;
+  @Prop() placeholder?: string;
 
   /**
    * The validation status of the input.
@@ -75,10 +82,10 @@ export class BqInput {
    * - `'warning'`: The input has a validation warning.
    * - `'success'`: The input has passed validation.
    */
-  @Prop({ reflect: true }) validationStatus: 'error' | 'none' | 'success' | 'warning' = 'none';
+  @Prop({ reflect: true }) validationStatus: TInputValidation = 'none';
 
   /** The input value, it can be used to reset the input to a previous value */
-  @Prop({ reflect: true, mutable: true }) value: string | number | string[];
+  @Prop({ reflect: true, mutable: true }) value: TInputValue;
 
   // Prop lifecycle events
   // =======================
@@ -104,7 +111,7 @@ export class BqInput {
    * Callback handler emitted when the input value has changed and the input loses focus.
    * This handler is called whenever the user finishes typing or pasting text into the input field and then clicks outside of the input field.
    */
-  @Event() bqChange!: EventEmitter<{ value: string | number | string[]; el: HTMLBqInputElement }>;
+  @Event() bqChange!: EventEmitter<{ value: TInputValue; el: HTMLBqInputElement }>;
 
   /** Callback handler emitted when the input value has been cleared */
   @Event() bqClear!: EventEmitter<HTMLBqInputElement>;
@@ -116,7 +123,7 @@ export class BqInput {
    * Callback handler emitted when the input value changes.
    * This handler is called whenever the user types or pastes text into the input field.
    */
-  @Event() bqInput!: EventEmitter<{ value: string | number | string[]; el: HTMLBqInputElement }>;
+  @Event() bqInput!: EventEmitter<{ value: TInputValue; el: HTMLBqInputElement }>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -212,7 +219,14 @@ export class BqInput {
           <slot name="label" onSlotchange={this.handleLabelSlotChange} />
         </label>
         {/* Input control group */}
-        <div class={`bq-input--control group validation-${this.validationStatus}`} part="control">
+        <div
+          class={{
+            'bq-input--control group': true,
+            [`validation-${this.validationStatus}`]: true,
+            disabled: this.disabled,
+          }}
+          part="control"
+        >
           {/* Prefix */}
           <span
             class={{ 'bq-input--control__prefix': true, hidden: !this.hasPrefix }}
@@ -224,6 +238,8 @@ export class BqInput {
           {/* HTML Input */}
           <input
             id="input"
+            aria-disabled={this.disabled ? 'true' : 'false'}
+            disabled={this.disabled}
             class="bq-input--control__input"
             placeholder={this.placeholder}
             ref={(inputElem) => (this.inputElem = inputElem)}

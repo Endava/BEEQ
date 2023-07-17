@@ -46,11 +46,18 @@
   // Text
   @apply text-[length:--bq-input--text-size] text-[color:--bq-input--text-color] placeholder:text-[color:--bq-input--text-placeholder-color];
   // Hover
-  @apply [&:not(:focus-within)]:hover:border-[color:--bq-input--border-color-hover];
-  // Focus
-  @apply focus-within:border-[color:--bq-input--border-color-focus] focus-within:outline-none focus-within:ring-1 focus-within:ring-[color:--bq-input--border-color-focus];
+  @apply [&:not(:focus-within):not(.disabled)]:hover:border-[color:--bq-input--border-color-hover];
 
   border-style: var(--bq-input--border-style);
+
+  // Focus
+  &:not(.disabled) {
+    @apply focus-within:border-[color:--bq-input--border-color-focus] focus-within:outline-none focus-within:ring-1 focus-within:ring-[color:--bq-input--border-color-focus];
+  }
+}
+
+.bq-input--control.disabled {
+  @apply cursor-not-allowed border-[color:--bq-stroke--tiertary-disabled] bg-ui-secondary-disabled;
 }
 
 /* ------------------------------- Validation ------------------------------- */

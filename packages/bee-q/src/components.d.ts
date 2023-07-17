@@ -11,6 +11,7 @@ import { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./c
 import { TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 import { TIconWeight } from "./components/icon/bq-icon.types";
+import { TInputValidation, TInputValue } from "./components/input/bq-input.types";
 import { TNotificationType } from "./components/notification/bq-notification.types";
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 import { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
@@ -27,6 +28,7 @@ export { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./c
 export { TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 export { TIconWeight } from "./components/icon/bq-icon.types";
+export { TInputValidation, TInputValue } from "./components/input/bq-input.types";
 export { TNotificationType } from "./components/notification/bq-notification.types";
 export { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 export { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
@@ -281,28 +283,32 @@ export namespace Components {
         /**
           * The clear button aria label
          */
-        "clearButtonLabel": string;
+        "clearButtonLabel"?: string;
         /**
           * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur.
          */
-        "debounceTime": number;
+        "debounceTime"?: number;
         /**
           * If true, the clear button won't be displayed
          */
-        "disableClear": boolean;
+        "disableClear"?: boolean;
+        /**
+          * Indicates whether the input is disabled or not. If `true`, the input is disabled and cannot be interacted with.
+         */
+        "disabled"?: boolean;
         /**
           * The input placeholder text value
          */
-        "placeholder": string;
+        "placeholder"?: string;
         /**
           * The validation status of the input.
           * @remarks This property is used to indicate the validation status of the input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
          */
-        "validationStatus": 'error' | 'none' | 'success' | 'warning';
+        "validationStatus": TInputValidation;
         /**
           * The input value, it can be used to reset the input to a previous value
          */
-        "value": string | number | string[];
+        "value": TInputValue;
     }
     interface BqNotification {
         /**
@@ -1192,13 +1198,17 @@ declare namespace LocalJSX {
          */
         "disableClear"?: boolean;
         /**
+          * Indicates whether the input is disabled or not. If `true`, the input is disabled and cannot be interacted with.
+         */
+        "disabled"?: boolean;
+        /**
           * Callback handler emitted when the input loses focus
          */
         "onBqBlur"?: (event: BqInputCustomEvent<HTMLBqInputElement>) => void;
         /**
           * Callback handler emitted when the input value has changed and the input loses focus. This handler is called whenever the user finishes typing or pasting text into the input field and then clicks outside of the input field.
          */
-        "onBqChange"?: (event: BqInputCustomEvent<{ value: string | number | string[]; el: HTMLBqInputElement }>) => void;
+        "onBqChange"?: (event: BqInputCustomEvent<{ value: TInputValue; el: HTMLBqInputElement }>) => void;
         /**
           * Callback handler emitted when the input value has been cleared
          */
@@ -1210,7 +1220,7 @@ declare namespace LocalJSX {
         /**
           * Callback handler emitted when the input value changes. This handler is called whenever the user types or pastes text into the input field.
          */
-        "onBqInput"?: (event: BqInputCustomEvent<{ value: string | number | string[]; el: HTMLBqInputElement }>) => void;
+        "onBqInput"?: (event: BqInputCustomEvent<{ value: TInputValue; el: HTMLBqInputElement }>) => void;
         /**
           * The input placeholder text value
          */
@@ -1219,11 +1229,11 @@ declare namespace LocalJSX {
           * The validation status of the input.
           * @remarks This property is used to indicate the validation status of the input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
          */
-        "validationStatus"?: 'error' | 'none' | 'success' | 'warning';
+        "validationStatus"?: TInputValidation;
         /**
           * The input value, it can be used to reset the input to a previous value
          */
-        "value"?: string | number | string[];
+        "value"?: TInputValue;
     }
     interface BqNotification {
         /**
