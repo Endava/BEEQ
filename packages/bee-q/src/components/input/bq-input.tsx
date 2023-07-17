@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
-import { TInputValidation, TInputValue } from './bq-input.types';
+import { TInputType, TInputValidation, TInputValue } from './bq-input.types';
 import { debounce, hasSlotContent, isDefined, isHTMLElement, TDebounce } from '../../shared/utils';
 
 /**
@@ -51,6 +51,28 @@ export class BqInput {
   // Public Property API
   // ========================
 
+  /**
+   * Controls whether or not the input field should be capitalized and how.
+   * Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'.
+   * See: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
+   */
+  @Prop({ reflect: true }) autocapitalize: string = 'off';
+
+  /**
+   * Specifies whether or not the input field should have autocomplete enabled.
+   * See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
+   */
+  @Prop({ reflect: true }) autocomplete: string = 'off';
+
+  /**
+   * Controls whether or not the input field should have autocorrect enabled.
+   * Possible values are 'on' and 'off'.
+   */
+  @Prop({ reflect: true }) autocorrect: 'on' | 'off' = 'off';
+
+  /** If true, the input will be focused on component render */
+  @Prop({ reflect: true }) autofocus?: boolean;
+
   /** The clear button aria label */
   @Prop({ reflect: true }) clearButtonLabel? = 'Clear value';
 
@@ -69,8 +91,65 @@ export class BqInput {
   /** If true, the clear button won't be displayed */
   @Prop({ reflect: true }) disableClear? = false;
 
+  /** The ID of the form that the input field belongs to. */
+  @Prop({ reflect: true }) form?: string;
+
+  /**
+   * The inputmode attribute specifies what kind of input mechanism would be most helpful for users entering content into the input field.
+   * This allows a browser to display an appropriate virtual keyboard while editing.
+   * Possible values are 'none', 'text', 'decimal', 'numeric', 'tel', 'search', 'email', 'url', and 'date'.
+   */
+  @Prop() inputmode?: string;
+
+  /**
+   * The maximum value that the input field can accept.
+   * Only applies to date and number input types.
+   */
+  @Prop({ reflect: true }) max?: number | string;
+
+  /** The maximum number of characters that the input field can accept. */
+  @Prop({ reflect: true }) maxlength: number;
+
+  /**
+   * The minimum value that the input field can accept.
+   * Only applies to date and number input types.
+   */
+  @Prop({ reflect: true }) min?: number | string;
+
+  /** The minimum number of characters that the input field can accept. */
+  @Prop({ reflect: true }) minlength: number;
+
+  /** The input field name. */
+  @Prop({ reflect: true }) name!: string;
+
+  /**
+   * Specifies a regular expression the form control's value should match.
+   * See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern
+   */
+  @Prop({ reflect: true }) pattern?: string;
+
   /** The input placeholder text value */
-  @Prop() placeholder?: string;
+  @Prop({ reflect: true }) placeholder?: string;
+
+  /** If true, the input field cannot be modified. */
+  @Prop({ reflect: true }) readonly?: boolean;
+
+  /** Indicates whether or not the input field is required to be filled out before submitting the form. */
+  @Prop({ reflect: true }) required?: boolean;
+
+  /**
+   * A number that specifies the granularity that the value must adhere to.
+   * Valid for date, month, week, time, datetime-local, number, and range.
+   * See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
+   */
+  @Prop({ reflect: true }) step: number | 'any';
+
+  /**
+   * The type attribute specifies the type of input field to display.
+   * Possible values are 'text', 'password', 'email', 'number', 'tel', 'search', 'url', and more.
+   * See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types
+   */
+  @Prop({ reflect: true }) type: TInputType = 'text';
 
   /**
    * The validation status of the input.
@@ -238,11 +317,27 @@ export class BqInput {
           {/* HTML Input */}
           <input
             id="input"
-            aria-disabled={this.disabled ? 'true' : 'false'}
-            disabled={this.disabled}
             class="bq-input--control__input"
+            aria-disabled={this.disabled ? 'true' : 'false'}
+            autoCapitalize={this.autocapitalize}
+            autoComplete={this.autocomplete}
+            autoCorrect={this.autocorrect}
+            autoFocus={this.autofocus}
+            disabled={this.disabled}
+            form={this.form}
+            inputMode={this.inputmode}
+            max={this.max}
+            maxLength={this.maxlength}
+            min={this.min}
+            minLength={this.minlength}
+            name={this.name}
+            pattern={this.pattern}
             placeholder={this.placeholder}
             ref={(inputElem) => (this.inputElem = inputElem)}
+            readOnly={this.readonly}
+            required={this.required}
+            step={this.step}
+            type={this.type}
             value={this.value}
             part="input"
             // Events

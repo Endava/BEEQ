@@ -11,7 +11,7 @@ import { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./c
 import { TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 import { TIconWeight } from "./components/icon/bq-icon.types";
-import { TInputValidation, TInputValue } from "./components/input/bq-input.types";
+import { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
 import { TNotificationType } from "./components/notification/bq-notification.types";
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 import { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
@@ -28,7 +28,7 @@ export { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./c
 export { TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 export { TIconWeight } from "./components/icon/bq-icon.types";
-export { TInputValidation, TInputValue } from "./components/input/bq-input.types";
+export { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
 export { TNotificationType } from "./components/notification/bq-notification.types";
 export { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 export { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
@@ -281,6 +281,22 @@ export namespace Components {
     }
     interface BqInput {
         /**
+          * Controls whether or not the input field should be capitalized and how. Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
+         */
+        "autocapitalize": string;
+        /**
+          * Specifies whether or not the input field should have autocomplete enabled. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
+         */
+        "autocomplete": string;
+        /**
+          * Controls whether or not the input field should have autocorrect enabled. Possible values are 'on' and 'off'.
+         */
+        "autocorrect": 'on' | 'off';
+        /**
+          * If true, the input will be focused on component render
+         */
+        "autofocus"?: boolean;
+        /**
           * The clear button aria label
          */
         "clearButtonLabel"?: string;
@@ -297,9 +313,57 @@ export namespace Components {
          */
         "disabled"?: boolean;
         /**
+          * The ID of the form that the input field belongs to.
+         */
+        "form"?: string;
+        /**
+          * The inputmode attribute specifies what kind of input mechanism would be most helpful for users entering content into the input field. This allows a browser to display an appropriate virtual keyboard while editing. Possible values are 'none', 'text', 'decimal', 'numeric', 'tel', 'search', 'email', 'url', and 'date'.
+         */
+        "inputmode"?: string;
+        /**
+          * The maximum value that the input field can accept. Only applies to date and number input types.
+         */
+        "max"?: number | string;
+        /**
+          * The maximum number of characters that the input field can accept.
+         */
+        "maxlength": number;
+        /**
+          * The minimum value that the input field can accept. Only applies to date and number input types.
+         */
+        "min"?: number | string;
+        /**
+          * The minimum number of characters that the input field can accept.
+         */
+        "minlength": number;
+        /**
+          * The input field name.
+         */
+        "name": string;
+        /**
+          * Specifies a regular expression the form control's value should match. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern
+         */
+        "pattern"?: string;
+        /**
           * The input placeholder text value
          */
         "placeholder"?: string;
+        /**
+          * If true, the input field cannot be modified.
+         */
+        "readonly"?: boolean;
+        /**
+          * Indicates whether or not the input field is required to be filled out before submitting the form.
+         */
+        "required"?: boolean;
+        /**
+          * A number that specifies the granularity that the value must adhere to. Valid for date, month, week, time, datetime-local, number, and range. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
+         */
+        "step": number | 'any';
+        /**
+          * The type attribute specifies the type of input field to display. Possible values are 'text', 'password', 'email', 'number', 'tel', 'search', 'url', and more. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types
+         */
+        "type": TInputType;
         /**
           * The validation status of the input.
           * @remarks This property is used to indicate the validation status of the input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
@@ -1186,6 +1250,22 @@ declare namespace LocalJSX {
     }
     interface BqInput {
         /**
+          * Controls whether or not the input field should be capitalized and how. Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
+         */
+        "autocapitalize"?: string;
+        /**
+          * Specifies whether or not the input field should have autocomplete enabled. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
+         */
+        "autocomplete"?: string;
+        /**
+          * Controls whether or not the input field should have autocorrect enabled. Possible values are 'on' and 'off'.
+         */
+        "autocorrect"?: 'on' | 'off';
+        /**
+          * If true, the input will be focused on component render
+         */
+        "autofocus"?: boolean;
+        /**
           * The clear button aria label
          */
         "clearButtonLabel"?: string;
@@ -1201,6 +1281,34 @@ declare namespace LocalJSX {
           * Indicates whether the input is disabled or not. If `true`, the input is disabled and cannot be interacted with.
          */
         "disabled"?: boolean;
+        /**
+          * The ID of the form that the input field belongs to.
+         */
+        "form"?: string;
+        /**
+          * The inputmode attribute specifies what kind of input mechanism would be most helpful for users entering content into the input field. This allows a browser to display an appropriate virtual keyboard while editing. Possible values are 'none', 'text', 'decimal', 'numeric', 'tel', 'search', 'email', 'url', and 'date'.
+         */
+        "inputmode"?: string;
+        /**
+          * The maximum value that the input field can accept. Only applies to date and number input types.
+         */
+        "max"?: number | string;
+        /**
+          * The maximum number of characters that the input field can accept.
+         */
+        "maxlength"?: number;
+        /**
+          * The minimum value that the input field can accept. Only applies to date and number input types.
+         */
+        "min"?: number | string;
+        /**
+          * The minimum number of characters that the input field can accept.
+         */
+        "minlength"?: number;
+        /**
+          * The input field name.
+         */
+        "name": string;
         /**
           * Callback handler emitted when the input loses focus
          */
@@ -1222,9 +1330,29 @@ declare namespace LocalJSX {
          */
         "onBqInput"?: (event: BqInputCustomEvent<{ value: TInputValue; el: HTMLBqInputElement }>) => void;
         /**
+          * Specifies a regular expression the form control's value should match. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern
+         */
+        "pattern"?: string;
+        /**
           * The input placeholder text value
          */
         "placeholder"?: string;
+        /**
+          * If true, the input field cannot be modified.
+         */
+        "readonly"?: boolean;
+        /**
+          * Indicates whether or not the input field is required to be filled out before submitting the form.
+         */
+        "required"?: boolean;
+        /**
+          * A number that specifies the granularity that the value must adhere to. Valid for date, month, week, time, datetime-local, number, and range. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
+         */
+        "step"?: number | 'any';
+        /**
+          * The type attribute specifies the type of input field to display. Possible values are 'text', 'password', 'email', 'number', 'tel', 'search', 'url', and more. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types
+         */
+        "type"?: TInputType;
         /**
           * The validation status of the input.
           * @remarks This property is used to indicate the validation status of the input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
