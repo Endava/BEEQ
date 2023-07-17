@@ -104,29 +104,29 @@ const Template = (args: Args) => {
 
   return html`
     <bq-input
-      autocapitalize=${args.autocapitalize}
-      autocomplete=${args.autocomplete}
-      autocorrect=${args.autocorrect}
+      autocapitalize=${ifDefined(args.autocapitalize)}
+      autocomplete=${ifDefined(args.autocomplete)}
+      autocorrect=${ifDefined(args.autocorrect)}
       ?autofocus=${args.autofocus}
       clear-button-label=${args['clear-button-label']}
       debounce-time=${args['debounce-time']}
       ?disable-clear=${args['disable-clear']}
       ?disabled=${args.disabled}
-      .form=${args.form}
+      form=${ifDefined(args.form)}
       iputmode=${args.inputmode}
-      .max=${args.max}
-      .maxlength=${args.maxlength}
-      .min=${args.min}
-      .minlength=${args.minlength}
-      .name=${args.name}
-      .pattern=${args.pattern}
+      max=${ifDefined(args.max)}
+      maxlength=${ifDefined(args.maxlength)}
+      min=${ifDefined(args.min)}
+      minlength=${ifDefined(args.minlength)}
+      name=${ifDefined(args.name)}
+      pattern=${ifDefined(args.pattern)}
       placeholder=${args.placeholder}
       ?readonly=${args.readonly}
       ?required=${args.required}
-      .step=${args.step}
-      .type=${args.type}
+      step=${ifDefined(args.step)}
+      type=${ifDefined(args.type)}
       validation-status=${args['validation-status']}
-      .value=${args.value}
+      value=${ifDefined(args.value)}
       @bqBlur=${args.bqBlur}
       @bqChange=${args.bqChange}
       @bqClear=${args.bqClear}
