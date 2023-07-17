@@ -190,7 +190,7 @@ export class BqInput {
    * Callback handler emitted when the input value has changed and the input loses focus.
    * This handler is called whenever the user finishes typing or pasting text into the input field and then clicks outside of the input field.
    */
-  @Event() bqChange!: EventEmitter<{ value: TInputValue; el: HTMLBqInputElement }>;
+  @Event() bqChange!: EventEmitter<{ value: string | number | string[]; el: HTMLBqInputElement }>;
 
   /** Callback handler emitted when the input value has been cleared */
   @Event() bqClear!: EventEmitter<HTMLBqInputElement>;
@@ -202,7 +202,7 @@ export class BqInput {
    * Callback handler emitted when the input value changes.
    * This handler is called whenever the user types or pastes text into the input field.
    */
-  @Event() bqInput!: EventEmitter<{ value: TInputValue; el: HTMLBqInputElement }>;
+  @Event() bqInput!: EventEmitter<{ value: string | number | string[]; el: HTMLBqInputElement }>;
 
   // Component lifecycle events
   // Ordered by their natural call order

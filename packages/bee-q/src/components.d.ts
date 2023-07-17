@@ -1316,7 +1316,7 @@ declare namespace LocalJSX {
         /**
           * Callback handler emitted when the input value has changed and the input loses focus. This handler is called whenever the user finishes typing or pasting text into the input field and then clicks outside of the input field.
          */
-        "onBqChange"?: (event: BqInputCustomEvent<{ value: TInputValue; el: HTMLBqInputElement }>) => void;
+        "onBqChange"?: (event: BqInputCustomEvent<{ value: string | number | string[]; el: HTMLBqInputElement }>) => void;
         /**
           * Callback handler emitted when the input value has been cleared
          */
@@ -1328,7 +1328,7 @@ declare namespace LocalJSX {
         /**
           * Callback handler emitted when the input value changes. This handler is called whenever the user types or pastes text into the input field.
          */
-        "onBqInput"?: (event: BqInputCustomEvent<{ value: TInputValue; el: HTMLBqInputElement }>) => void;
+        "onBqInput"?: (event: BqInputCustomEvent<{ value: string | number | string[]; el: HTMLBqInputElement }>) => void;
         /**
           * Specifies a regular expression the form control's value should match. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern
          */
