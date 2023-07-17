@@ -15,18 +15,19 @@ const meta: Meta = {
     },
   },
   argTypes: {
-    text: { control: 'text', table: { disable: true } },
-    ['aria-label']: { control: 'text' },
-    htmlNode: { control: 'object', table: { disable: true } },
-    useLinks: { control: 'boolean', table: { disable: true } },
+    'aria-label': { control: 'text' },
     // Event handlers
     bqBreadcrumbBlur: { action: 'bqBlur' },
     bqBreadcrumbClick: { action: 'bqClick' },
     bqBreadcrumbFocus: { action: 'bqFocus' },
+    // Not part of the public API, so we don't want to expose it in the docs
+    text: { control: 'text', table: { disable: true } },
+    htmlNode: { control: 'object', table: { disable: true } },
+    useLinks: { control: 'boolean', table: { disable: true } },
   },
   args: {
-    text: 'text',
     'aria-label': 'Breadcrumbs',
+    text: 'text',
     htmlNode: '',
     useLinks: false,
   },
