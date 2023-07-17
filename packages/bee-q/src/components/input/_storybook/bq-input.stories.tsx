@@ -42,6 +42,7 @@ const meta: Meta = {
     bqInput: { action: 'bqInput' },
     // Not part of the public API, so we don't want to expose it in the docs
     noLabel: { control: 'bolean', table: { disable: true } },
+    hasLabelTooltip: { control: 'bolean', table: { disable: true } },
     noHelperText: { control: 'bolean', table: { disable: true } },
     optionalLabel: { control: 'bolean', table: { disable: true } },
     prefix: { control: 'bolean', table: { disable: true } },
@@ -87,7 +88,7 @@ const Template = (args: Args) => html`
     debounce-time=${args['debounce-time']}
     ?disable-clear=${args['disable-clear']}
     ?disabled=${args.disabled}
-    form=${args.form}
+    .form=${args.form}
     iputmode=${args.inputmode}
     .max=${args.max}
     .maxlength=${args.maxlength}
@@ -101,7 +102,7 @@ const Template = (args: Args) => html`
     .step=${args.step}
     .type=${args.type}
     validation-status=${args['validation-status']}
-    value=${args.value}
+    .value=${args.value}
     @bqBlur=${args.bqBlur}
     @bqChange=${args.bqChange}
     @bqClear=${args.bqClear}
@@ -113,7 +114,17 @@ const Template = (args: Args) => html`
         ? html`<label slot="label">Input label</label>`
         : html`
             <div slot="label" class="flex flex-1">
-              <label class="flex flex-grow items-center">Input label</label>
+              <label class="flex flex-grow items-center">
+                Input label
+                ${args.hasLabelTooltip
+                  ? html`
+                      <bq-tooltip class="ms-xs">
+                        <bq-icon name="info" slot="trigger"></bq-icon>
+                        You can provide more context detail by adding a tooltip to the label.
+                      </bq-tooltip>
+                    `
+                  : nothing}
+              </label>
               <span class="text-text-secondary">Optional</span>
             </div>
           `
@@ -199,6 +210,20 @@ export const Optional: Story = {
     optionalLabel: true,
     prefix: true,
     suffix: true,
+  },
+};
+
+export const Tooltip: Story = {
+  name: 'Label with "Info tooltip"',
+  render: Template,
+  args: {
+    hasLabelTooltip: true,
+    optionalLabel: true,
+    prefix: true,
+    suffix: true,
+  },
+  parameters: {
+    layout: 'centered',
   },
 };
 
