@@ -78,10 +78,32 @@ describe('bq-input', () => {
     const nativeInputElem = await page.find('bq-input >>> .bq-input--control__input');
 
     await nativeInputElem.type(inputValue);
+    await page.$eval('bq-input >>> .bq-input--control__input', (e: HTMLInputElement) => {
+      e.blur();
+    });
     await page.waitForChanges();
 
-    expect(await bqInputElem.getProperty('value')).toBe('Hello World!');
-    expect(bqChange).toHaveReceivedEventTimes(inputValue.length);
+    expect(await bqInputElem.getProperty('value')).toBe(inputValue);
+    expect(bqChange).toHaveReceivedEventTimes(1);
+  });
+
+  it('should write and emit input event', async () => {
+    const inputValue = 'Hello World!';
+    const page = await newE2EPage();
+    await page.setContent(`
+      <bq-input></bq-input>
+    `);
+
+    const bqInput = await page.spyOnEvent('bqInput');
+
+    const bqInputElem = await page.find('bq-input');
+    const nativeInputElem = await page.find('bq-input >>> .bq-input--control__input');
+
+    await nativeInputElem.type(inputValue);
+    await page.waitForChanges();
+
+    expect(await bqInputElem.getProperty('value')).toBe(inputValue);
+    expect(bqInput).toHaveReceivedEventTimes(inputValue.length);
   });
 
   it('should clear the value and emit clear event', async () => {
