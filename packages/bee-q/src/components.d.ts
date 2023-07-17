@@ -21,7 +21,6 @@ import { TStatusType } from "./components/status/bq-status.types";
 import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
 import { TTabSize } from "./components/tab/bq-tab.types";
 import { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
-import { FloatingUIPlacement } from "./services/interfaces";
 export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 export { TBadgeSize } from "./components/badge/bq-badge.types";
 export { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
@@ -38,7 +37,6 @@ export { TStatusType } from "./components/status/bq-status.types";
 export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
 export { TTabSize } from "./components/tab/bq-tab.types";
 export { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
-export { FloatingUIPlacement } from "./services/interfaces";
 export namespace Components {
     /**
      * An avatar represents an object made of different pieces of information, in a way that is understandable at a glance.
@@ -704,13 +702,13 @@ export interface BqCheckboxCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqCheckboxElement;
 }
-export interface BqDropdownCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLBqDropdownElement;
-}
 export interface BqDialogCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqDialogElement;
+}
+export interface BqDropdownCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqDropdownElement;
 }
 export interface BqIconCustomEvent<T> extends CustomEvent<T> {
     detail: T;

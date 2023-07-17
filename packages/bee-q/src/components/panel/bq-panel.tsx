@@ -1,4 +1,4 @@
-import { h, Component, Prop, Listen, Element, Method, Host, Watch, EventEmitter, Event } from '@stencil/core';
+import { h, Component, Prop, Listen, Element, Method, Watch, EventEmitter, Event } from '@stencil/core';
 
 import { FloatingUIPlacement } from '../../services/interfaces';
 import { FloatingUI } from '../../services/libraries';
@@ -130,9 +130,9 @@ export class BqPanel {
 
   render() {
     return (
-      <Host class="panel" ref={(el) => (this.panel = el)} aria-hidden={!this.open} hidden={!this.open}>
+      <div class="panel" ref={(el) => (this.panel = el)} aria-hidden={!this.open} hidden={!this.open}>
         <slot />
-      </Host>
+      </div>
     );
   }
 }

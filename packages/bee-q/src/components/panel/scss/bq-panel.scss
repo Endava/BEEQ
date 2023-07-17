@@ -5,6 +5,14 @@
 @import './bq-panel-variables';
 
 :host {
-  @apply absolute z-10 m-0 max-h-[var(--bq-panel--height)] w-[var(--bq-panel--width)] overflow-y-auto overflow-x-hidden rounded-s p-xs;
-  @apply shadow-m #{!important};
+  @apply block;
+}
+
+.panel {
+  @apply absolute z-[--bq-panel-z-index] m-0 max-h-[--bq-panel--height] w-[--bq-panel--width] overflow-y-auto overflow-x-hidden;
+  @apply rounded-[--bq-panel--border-radius] bg-[--bq-panel--background] shadow-[shadow:var(--bq-panel--box-shadow)];
+  @apply pe-[--bq-panel--padding-end] ps-[--bq-panel--padding-start];
+  @apply border-[length:var(--bq-panel--border-width)] border-[color:var(--bq-panel--border-color)];
+
+  border-style: var(--bq-panel--border-style);
 }

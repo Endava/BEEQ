@@ -134,9 +134,18 @@ export class BqDropdown {
   render() {
     return (
       <Host>
-        <div class="trigger" ref={(el) => (this.trigger = el)} onClick={this.openPanel} part="trigger">
+        {/* TRIGGER ELEMENT */}
+        <div
+          class="trigger"
+          ref={(el) => (this.trigger = el)}
+          onClick={this.openPanel}
+          aria-haspopup="true"
+          aria-expanded={this.panelOpen}
+          part="trigger"
+        >
           <slot name="trigger" />
         </div>
+        {/* PANEL */}
         <bq-panel
           distance={this.panelDistance}
           placement={this.panelPlacement}
