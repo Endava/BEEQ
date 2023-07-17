@@ -295,7 +295,7 @@ export namespace Components {
         /**
           * If true, the input will be focused on component render
          */
-        "autofocus"?: boolean;
+        "autofocus": boolean;
         /**
           * The clear button aria label
          */

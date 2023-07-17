@@ -71,7 +71,7 @@ export class BqInput {
   @Prop({ reflect: true }) autocorrect: 'on' | 'off' = 'off';
 
   /** If true, the input will be focused on component render */
-  @Prop({ reflect: true }) autofocus?: boolean;
+  @Prop({ reflect: true }) autofocus: boolean;
 
   /** The clear button aria label */
   @Prop({ reflect: true }) clearButtonLabel? = 'Clear value';
