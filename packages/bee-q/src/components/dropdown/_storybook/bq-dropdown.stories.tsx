@@ -6,6 +6,8 @@ import mdx from './bq-dropdown.mdx';
 
 import { PANEL_PLACEMENT } from '../../panel/bq-panel.type';
 
+const TRIGGER_ELEM_OPTIONS = ['default', 'menu', 'avatar'];
+
 const meta: Meta = {
   title: 'Components/Dropdown',
   component: 'bq-dropdown',
@@ -20,31 +22,86 @@ const meta: Meta = {
     'panel-placement': { control: 'select', options: PANEL_PLACEMENT },
     'panel-open': { control: 'boolean' },
     text: { control: 'text', table: { disable: true } },
+    htmlTrigger: { control: 'text', table: { disable: true }, options: TRIGGER_ELEM_OPTIONS },
+    // Event handlers
+    bqOptionBlur: { action: 'bqOptionBlur' },
+    bqOptionFocus: { action: 'bqOptionFocus' },
+    bqOptionSelect: { action: 'bqOptionSelect' },
+    bqPanelOpen: { action: 'bqPanelOpen' },
   },
   args: {
     'panel-distance': 0,
     'panel-placement': 'bottom',
     'panel-open': false,
     text: 'Content in the panel',
+    htmlTrigger: '',
   },
 };
 export default meta;
 
 type Story = StoryObj;
 
-export const Default: Story = {
-  render: (args: Args) => html`
+const Template = (args: Args) => {
+  const defaultTrigger = html` <bq-button
+    appearance="secondary"
+    size="medium"
+    type="button"
+    variant="standard"
+    slot="trigger"
+  >
+    <span class="flex items-center">
+      <span>Dropdown</span>
+      <bq-icon name="caret-down" class="pl-[3px]"></bq-icon>
+    </span>
+  </bq-button>`;
+
+  const menuTrigger = html` <bq-button
+    appearance="secondary"
+    href=""
+    size="medium"
+    target=""
+    type="button"
+    variant="standard"
+    slot="trigger"
+  >
+    <bq-icon name="dots-three-vertical"></bq-icon>
+  </bq-button>`;
+
+  const avatarTrigger = html` <bq-avatar
+    alt-text="User profile"
+    image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=80"
+    label="Avatar component label"
+    initials=""
+    shape="circle"
+    size="medium"
+    slot="trigger"
+  ></bq-avatar>`;
+
+  let triggerElem = null;
+
+  switch (args.htmlTrigger) {
+    case 'menu':
+      triggerElem = menuTrigger;
+      break;
+    case 'avatar':
+      triggerElem = avatarTrigger;
+      break;
+    default:
+      triggerElem = defaultTrigger;
+  }
+
+  return html`
     <bq-dropdown
       panel-distance=${args['panel-distance']}
       panel-placement=${args['panel-placement']}
       panel-open=${args['panel-open']}
+      @bqOptionBlur=${args.bqOptionBlur}
+      @bqOptionFocus=${args.bqOptionFocus}
+      @bqOptionSelect=${args.bqOptionSelect}
+      @bqPanelOpen=${args.bqPanelOpen}
     >
-      <bq-button appearance="secondary" size="medium" type="button" variant="standard" slot="trigger">
-        <span class="flex items-center">
-          <span>Dropdown</span>
-          <bq-icon name="caret-down" class="pl-[3px]"></bq-icon>
-        </span>
-      </bq-button>
+      <!-- TRIGGER ELEMENT -->
+      ${triggerElem}
 
       <!-- TODO: switch divs with bq-option after merge -->
       <div
@@ -71,35 +128,24 @@ export const Default: Story = {
         <bq-icon name="sign-out" size="16" slot="suffix"></bq-icon>
       </div>
     </bq-dropdown>
-  `,
+  `;
+};
+
+export const Default: Story = {
+  render: Template,
+  args: {},
 };
 
 export const MenuTrigger: Story = {
-  render: (args: Args) => html`
-    <bq-dropdown>
-      <bq-button appearance="secondary" href="" size="medium" target="" type="button" variant="standard" slot="trigger">
-        <bq-icon name="dots-three-vertical"></bq-icon>
-      </bq-button>
-
-      <div>${args.text}</div>
-    </bq-dropdown>
-  `,
+  render: Template,
+  args: {
+    htmlTrigger: 'menu',
+  },
 };
 
 export const AvatarTrigger: Story = {
-  render: (args: Args) => html`
-    <bq-dropdown>
-      <bq-avatar
-        alt-text="User profile"
-        image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=80"
-        label="Avatar component label"
-        initials=""
-        shape="circle"
-        size="medium"
-        slot="trigger"
-      ></bq-avatar>
-
-      <div>${args.text}</div>
-    </bq-dropdown>
-  `,
+  render: Template,
+  args: {
+    htmlTrigger: 'avatar',
+  },
 };

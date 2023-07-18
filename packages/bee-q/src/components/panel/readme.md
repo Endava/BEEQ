@@ -44,6 +44,13 @@ Type: `Promise<void>`
 
 
 
+## Shadow Parts
+
+| Part     | Description                                                       |
+| -------- | ----------------------------------------------------------------- |
+| `"base"` | The `div` element which acts as a container for the panel content |
+
+
 ## Dependencies
 
 ### Used by

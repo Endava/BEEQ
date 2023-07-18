@@ -3,6 +3,9 @@ import { h, Component, Prop, Listen, Element, Method, Watch, EventEmitter, Event
 import { FloatingUIPlacement } from '../../services/interfaces';
 import { FloatingUI } from '../../services/libraries';
 
+/**
+ * @part base - The `div` element which acts as a container for the panel content
+ */
 @Component({
   tag: 'bq-panel',
   styleUrl: './scss/bq-panel.scss',
@@ -130,7 +133,7 @@ export class BqPanel {
 
   render() {
     return (
-      <div class="panel" ref={(el) => (this.panel = el)} aria-hidden={!this.open} hidden={!this.open}>
+      <div class="panel" ref={(el) => (this.panel = el)} aria-hidden={!this.open} hidden={!this.open} part="base">
         <slot />
       </div>
     );
