@@ -79,32 +79,11 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-input--control__input {
-  @apply flex-auto cursor-[inherit] bg-[inherit] font-[inherit] text-[length:inherit];
+  @apply flex-auto cursor-[inherit] appearance-none bg-[inherit] font-[inherit] text-[length:inherit];
   @apply m-0 min-h-[--bq-input--icon-size] min-w-[0] border-none p-0 focus:outline-none focus-visible:outline-none;
 
   box-shadow: none;
   font-weight: inherit;
-
-  &::-webkit-datetime-edit-fields-wrapper,
-  &::-webkit-datetime-edit,
-  &::-webkit-datetime-edit-year-field,
-  &::-webkit-datetime-edit-month-field,
-  &::-webkit-datetime-edit-day-field,
-  &::-webkit-datetime-edit-hour-field,
-  &::-webkit-datetime-edit-minute-field,
-  &::-webkit-datetime-edit-second-field,
-  &::-webkit-datetime-edit-millisecond-field,
-  &::-webkit-datetime-edit-meridiem-field {
-    @apply p-0;
-  }
-
-  &[type='search']::-moz-search-cancel,
-  &[type='search']::-webkit-search-decoration,
-  &[type='search']::-webkit-search-cancel-button,
-  &[type='search']::-webkit-search-results-button,
-  &[type='search']::-webkit-search-results-decoration {
-    @apply hidden;
-  }
 }
 
 /* -------------------------------------------------------------------------- */
@@ -139,4 +118,36 @@
 bq-icon,
 ::slotted(bq-icon) {
   --bq-icon--size: var(--bq-input--icon-size) !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                          Hide webkit clear button                          */
+/* -------------------------------------------------------------------------- */
+
+/* Remove clear controls from search input */
+
+.bq-input--control__input::-moz-search-cancel {
+  @apply hidden appearance-none;
+}
+
+.bq-input--control__input::-webkit-search-decoration,
+.bq-input--control__input::-webkit-search-cancel-button,
+.bq-input--control__input::-webkit-search-results-button,
+.bq-input--control__input::-webkit-search-results-decoration {
+  @apply hidden appearance-none;
+}
+
+/* Remove native control extra padding from input date and datetime */
+
+.bq-input--control__input::-webkit-datetime-edit-fields-wrapper,
+.bq-input--control__input::-webkit-datetime-edit,
+.bq-input--control__input::-webkit-datetime-edit-year-field,
+.bq-input--control__input::-webkit-datetime-edit-month-field,
+.bq-input--control__input::-webkit-datetime-edit-day-field,
+.bq-input--control__input::-webkit-datetime-edit-hour-field,
+.bq-input--control__input::-webkit-datetime-edit-minute-field,
+.bq-input--control__input::-webkit-datetime-edit-second-field,
+.bq-input--control__input::-webkit-datetime-edit-millisecond-field,
+.bq-input--control__input::-webkit-datetime-edit-meridiem-field {
+  @apply p-0;
 }
