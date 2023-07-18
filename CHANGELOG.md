@@ -6,6 +6,26 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+## [0.7.0](https://github.com/Endava/bee-q/compare/v0.6.2...v0.7.0) (2023-07-18)
+
+
+### Features
+
+* **breadcrumb:** add new `bq-breadcrumb` component ([#266](https://github.com/Endava/bee-q/issues/266)) ([de4a705](https://github.com/Endava/bee-q/commit/de4a70535d13912f36769400ec253890f05a4d28))
+* **input:** add new `bq-input` component ([#344](https://github.com/Endava/bee-q/issues/344)) ([6c4d288](https://github.com/Endava/bee-q/commit/6c4d28868e536f9e8219754626b5d727997d2f71))
+
+
+### Bug Fixes
+
+* **dialog:** backdrop overlay color opacity ([#342](https://github.com/Endava/bee-q/issues/342)) ([fcf8f48](https://github.com/Endava/bee-q/commit/fcf8f48511fd43d86f05e895b75a18cb0edca16e))
+* **dialog:** dialog freeze when using `open` property ([#349](https://github.com/Endava/bee-q/issues/349)) ([252baa1](https://github.com/Endava/bee-q/commit/252baa12f70393f9d774cc3aebe7d35a02df0462))
+* **tab:** wrong gap space between icon and label ([#366](https://github.com/Endava/bee-q/issues/366)) ([87b52e3](https://github.com/Endava/bee-q/commit/87b52e3aa3df65fe2f59d6d05c19e78050b40cd8))
+
+
+### Style
+
+* **icon:** expected non-Promise value in a boolean conditional ([#365](https://github.com/Endava/bee-q/issues/365)) ([ea5bfcc](https://github.com/Endava/bee-q/commit/ea5bfcc240c135707a55d6421e662b3220f14b88))
+
 ## [0.6.2](https://github.com/Endava/bee-q/compare/v0.6.1...v0.6.2) (2023-07-03)
 
 
