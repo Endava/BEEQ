@@ -42,6 +42,11 @@ export class BqPanel {
    */
   @Prop({ reflect: true }) open?: boolean = false;
 
+  /** If true, the scrollbar is visible.
+   * You can toggle this attribute to show/hide the scrollbar.
+   */
+  @Prop({ reflect: true }) scrollbar?: boolean = false;
+
   // Prop lifecycle events
   // =======================
   @Watch('open')
@@ -133,7 +138,16 @@ export class BqPanel {
 
   render() {
     return (
-      <div class="panel" ref={(el) => (this.panel = el)} aria-hidden={!this.open} hidden={!this.open} part="base">
+      <div
+        class={{
+          panel: true,
+          'hide-scrollbar': !this.scrollbar,
+        }}
+        ref={(el) => (this.panel = el)}
+        aria-hidden={!this.open}
+        hidden={!this.open}
+        part="base"
+      >
         <slot />
       </div>
     );

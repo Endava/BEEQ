@@ -54,11 +54,11 @@ describe('bq-panel', () => {
   it('should respect the design', async () => {
     const page = await newE2EPage();
     await page.setContent(`
-      <bq-panel placement="left">Some contentin the panel</bq-panel>
+      <bq-panel placement="bottom">Some content in the panel</bq-panel>
     `);
 
     const styleProps = ['width', 'boxShadow'] as const;
-    const panelStyle = await computedStyle(page, 'bq-panel', styleProps);
+    const panelStyle = await computedStyle(page, 'bq-panel >>> [part="base"]', styleProps);
 
     expect(panelStyle).toEqual({
       width: '320px',

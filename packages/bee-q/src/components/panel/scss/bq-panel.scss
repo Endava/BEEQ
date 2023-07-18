@@ -16,3 +16,7 @@
 
   border-style: var(--bq-panel--border-style);
 }
+
+.hide-scrollbar {
+  @include hide-scrollbar;
+}

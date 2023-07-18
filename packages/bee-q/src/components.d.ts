@@ -288,7 +288,7 @@ export namespace Components {
     }
     interface BqDropdown {
         /**
-          * Distance between the panel and the trigger element
+          * Distance between the panel and the trigger element.
          */
         "panelDistance"?: number;
         /**
@@ -299,6 +299,10 @@ export namespace Components {
           * Position of the panel
          */
         "panelPlacement"?: FloatingUIPlacement;
+        /**
+          * Determines whether the scrollbar is visible or hidden within the panel.
+         */
+        "panelScrollbar"?: boolean;
     }
     /**
      * Icons are simplified images that graphically explain the meaning of an object on the screen.
@@ -467,6 +471,10 @@ export namespace Components {
           * Position of the panel
          */
         "placement"?: FloatingUIPlacement;
+        /**
+          * If true, the scrollbar is visible. You can toggle this attribute to show/hide the scrollbar.
+         */
+        "scrollbar"?: boolean;
         /**
           * set trigger element and init FloatingUI
           * @param trigger - trigger element for the panel
@@ -1399,7 +1407,7 @@ declare namespace LocalJSX {
          */
         "onBqPanelOpen"?: (event: BqDropdownCustomEvent<boolean>) => void;
         /**
-          * Distance between the panel and the trigger element
+          * Distance between the panel and the trigger element.
          */
         "panelDistance"?: number;
         /**
@@ -1410,6 +1418,10 @@ declare namespace LocalJSX {
           * Position of the panel
          */
         "panelPlacement"?: FloatingUIPlacement;
+        /**
+          * Determines whether the scrollbar is visible or hidden within the panel.
+         */
+        "panelScrollbar"?: boolean;
     }
     /**
      * Icons are simplified images that graphically explain the meaning of an object on the screen.
@@ -1602,6 +1614,10 @@ declare namespace LocalJSX {
           * Position of the panel
          */
         "placement"?: FloatingUIPlacement;
+        /**
+          * If true, the scrollbar is visible. You can toggle this attribute to show/hide the scrollbar.
+         */
+        "scrollbar"?: boolean;
     }
     interface BqRadio {
         /**

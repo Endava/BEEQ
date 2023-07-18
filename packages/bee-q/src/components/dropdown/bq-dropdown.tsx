@@ -30,7 +30,7 @@ export class BqDropdown {
   // Public Property API
   // ========================
 
-  /** Distance between the panel and the trigger element */
+  /** Distance between the panel and the trigger element. */
   @Prop({ reflect: true }) panelDistance?: number = 0;
 
   /** Position of the panel */
@@ -40,6 +40,11 @@ export class BqDropdown {
    * You can toggle this attribute to show/hide the panel.
    */
   @Prop({ reflect: true }) panelOpen?: boolean = false;
+
+  /**
+   * Determines whether the scrollbar is visible or hidden within the panel.
+   */
+  @Prop({ reflect: true }) panelScrollbar?: boolean = false;
 
   // Prop lifecycle events
   // =======================
@@ -71,38 +76,38 @@ export class BqDropdown {
   // Listeners
   // ==============
 
-  @Listen('bqBlur')
+  @Listen('bqBlur', { passive: true })
   onBqOptionBlur(event: CustomEvent<HTMLElement>) {
     // add condition `if (isHTMLElement(event.detail, 'bq-option'))`
     this.bqOptionBlur.emit(event.detail);
   }
 
-  @Listen('bqFocus')
+  @Listen('bqFocus', { passive: true })
   onBqOptionFocus(event: CustomEvent<HTMLElement>) {
     // add condition `if (isHTMLElement(event.detail, 'bq-option'))`
     this.bqOptionFocus.emit(event.detail);
   }
 
-  @Listen('bqClick')
-  @Listen('bqOnEnter')
+  @Listen('bqClick', { passive: true })
+  @Listen('bqOnEnter', { passive: true })
   onBqSelect(event: CustomEvent<HTMLElement>) {
     // add condition `if (isHTMLElement(event.detail, 'bq-option'))`
     this.bqOptionSelect.emit(event.detail);
   }
 
-  @Listen('bqClick')
+  @Listen('bqClick', { passive: true })
   onBqClick() {
     // if (isHTMLElement(event.detail, 'bq-option')) this.panelElement?.togglePanel();
   }
 
-  @Listen('bqOnEnterKeyUp')
+  @Listen('bqOnEnterKeyUp', { passive: true })
   onBqEnterKeyUp(event: CustomEvent<HTMLElement>) {
     // add condition `if (isHTMLElement(event.detail, 'bq-option'))`
     this.panelElement?.togglePanel();
     event.detail.setAttribute('selected', 'false');
   }
 
-  @Listen('bqPanelVisibility')
+  @Listen('bqPanelVisibility', { passive: true })
   onPanelStateChange(event: CustomEvent<boolean>) {
     this.bqPanelOpen.emit(event.detail);
   }
@@ -150,6 +155,7 @@ export class BqDropdown {
           distance={this.panelDistance}
           placement={this.panelPlacement}
           open={this.panelOpen}
+          scrollbar={this.panelScrollbar}
           ref={(el) => (this.panelElement = el)}
           part="panel"
         >
