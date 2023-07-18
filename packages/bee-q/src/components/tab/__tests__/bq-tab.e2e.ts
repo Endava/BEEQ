@@ -123,7 +123,7 @@ describe('bq-tab', () => {
     const largeStyle = await computedStyle(page, 'bq-tab[size="large"] >>> [part="base"]', ['padding']);
 
     expect(smallStyle).toEqual({ padding: '4px 16px' });
-    expect(mediumStyle).toEqual({ padding: '8px 20px' });
+    expect(mediumStyle).toEqual({ padding: '8px 24px' });
     expect(largeStyle).toEqual({ padding: '12px 24px' });
   });
 });
