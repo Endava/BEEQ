@@ -228,14 +228,20 @@ export class BqInput {
   // =======================================================
 
   private handleBlur = () => {
+    if (this.disabled) return;
+
     this.bqBlur.emit(this.el);
   };
 
   private handleFocus = () => {
+    if (this.disabled) return;
+
     this.bqFocus.emit(this.el);
   };
 
   private handleInput = (ev: Event) => {
+    if (this.disabled) return;
+
     this.debounceBqInput?.cancel();
 
     if (!isHTMLElement(ev.target, 'input')) return;
@@ -248,6 +254,8 @@ export class BqInput {
   };
 
   private handleChange = (ev: Event) => {
+    if (this.disabled) return;
+
     if (!isHTMLElement(ev.target, 'input')) return;
     this.value = ev.target.value;
 
@@ -255,6 +263,8 @@ export class BqInput {
   };
 
   private handleClearClick = (ev: CustomEvent) => {
+    if (this.disabled) return;
+
     this.inputElem.value = '';
     this.value = this.inputElem.value;
 
@@ -347,7 +357,7 @@ export class BqInput {
             onInput={this.handleInput}
           />
           {/* Clear Button */}
-          {!this.disableClear && this.hasValue && (
+          {this.hasValue && !this.disabled && !this.disableClear && (
             // The clear button will be visible as long as the input has a value
             // and the parent group is hovered or has focus-within
             <bq-button
