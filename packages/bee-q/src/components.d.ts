@@ -81,6 +81,34 @@ export namespace Components {
          */
         "textColor"?: string;
     }
+    interface BqBreadcrumb {
+        /**
+          * The `aria-label` attribute to describe the type of navigation
+         */
+        "ariaLabel": string;
+    }
+    interface BqBreadcrumbItem {
+        /**
+          * The aria-label that corresponds to the full title of the destination page. This won't be shown in the page, but it will be used by screen readers and other assistive devices.
+         */
+        "ariaLabel": string;
+        /**
+          * If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
+         */
+        "href": string;
+        /**
+          * If true, the item is the last element inside breadcrumb
+         */
+        "isLastItem": boolean;
+        /**
+          * Where to display the link in the browser context. Relevant only if `href` is set.
+         */
+        "rel": string;
+        /**
+          * Where to display the link in the browser context. Relevant only if `href` is set.
+         */
+        "target": '_blank' | '_parent' | '_self' | '_top';
+    }
     /**
      * Buttons are designed for users to take action on a page or a screen.
      */
@@ -660,6 +688,14 @@ export namespace Components {
         "visible"?: boolean;
     }
 }
+export interface BqBreadcrumbCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqBreadcrumbElement;
+}
+export interface BqBreadcrumbItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqBreadcrumbItemElement;
+}
 export interface BqButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqButtonElement;
@@ -731,6 +767,18 @@ declare global {
     var HTMLBqBadgeElement: {
         prototype: HTMLBqBadgeElement;
         new (): HTMLBqBadgeElement;
+    };
+    interface HTMLBqBreadcrumbElement extends Components.BqBreadcrumb, HTMLStencilElement {
+    }
+    var HTMLBqBreadcrumbElement: {
+        prototype: HTMLBqBreadcrumbElement;
+        new (): HTMLBqBreadcrumbElement;
+    };
+    interface HTMLBqBreadcrumbItemElement extends Components.BqBreadcrumbItem, HTMLStencilElement {
+    }
+    var HTMLBqBreadcrumbItemElement: {
+        prototype: HTMLBqBreadcrumbItemElement;
+        new (): HTMLBqBreadcrumbItemElement;
     };
     /**
      * Buttons are designed for users to take action on a page or a screen.
@@ -856,6 +904,8 @@ declare global {
     interface HTMLElementTagNameMap {
         "bq-avatar": HTMLBqAvatarElement;
         "bq-badge": HTMLBqBadgeElement;
+        "bq-breadcrumb": HTMLBqBreadcrumbElement;
+        "bq-breadcrumb-item": HTMLBqBreadcrumbItemElement;
         "bq-button": HTMLBqButtonElement;
         "bq-checkbox": HTMLBqCheckboxElement;
         "bq-dialog": HTMLBqDialogElement;
@@ -919,6 +969,58 @@ declare namespace LocalJSX {
           * Badge number color. The value should be a valid value of the palette color
          */
         "textColor"?: string;
+    }
+    interface BqBreadcrumb {
+        /**
+          * The `aria-label` attribute to describe the type of navigation
+         */
+        "ariaLabel"?: string;
+        /**
+          * Handler to be called when `bq-breadcrumb-item` item loses focus.
+         */
+        "onBqBreadcrumbBlur"?: (event: BqBreadcrumbCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
+        /**
+          * Handler to be called when `bq-breadcrumb-item` is selected (on click/enter press).
+         */
+        "onBqBreadcrumbClick"?: (event: BqBreadcrumbCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
+        /**
+          * Handler to be called when `bq-breadcrumb-item` item gets focus.
+         */
+        "onBqBreadcrumbFocus"?: (event: BqBreadcrumbCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
+    }
+    interface BqBreadcrumbItem {
+        /**
+          * The aria-label that corresponds to the full title of the destination page. This won't be shown in the page, but it will be used by screen readers and other assistive devices.
+         */
+        "ariaLabel"?: string;
+        /**
+          * If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
+         */
+        "href"?: string;
+        /**
+          * If true, the item is the last element inside breadcrumb
+         */
+        "isLastItem"?: boolean;
+        /**
+          * Handler to be called when item loses focus
+         */
+        "onBqBlur"?: (event: BqBreadcrumbItemCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
+        /**
+          * Handler to be called when item is clicked
+         */
+        "onBqClick"?: (event: BqBreadcrumbItemCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
+        /**
+          * Handler to be called when item is focused
+         */
+        "onBqFocus"?: (event: BqBreadcrumbItemCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
+        /**
+          * Where to display the link in the browser context. Relevant only if `href` is set.
+         */
+        "rel"?: string;
+        /**
+          * Where to display the link in the browser context. Relevant only if `href` is set.
+         */
+        "target"?: '_blank' | '_parent' | '_self' | '_top';
     }
     /**
      * Buttons are designed for users to take action on a page or a screen.
@@ -1549,6 +1651,8 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "bq-avatar": BqAvatar;
         "bq-badge": BqBadge;
+        "bq-breadcrumb": BqBreadcrumb;
+        "bq-breadcrumb-item": BqBreadcrumbItem;
         "bq-button": BqButton;
         "bq-checkbox": BqCheckbox;
         "bq-dialog": BqDialog;
@@ -1578,6 +1682,8 @@ declare module "@stencil/core" {
              */
             "bq-avatar": LocalJSX.BqAvatar & JSXBase.HTMLAttributes<HTMLBqAvatarElement>;
             "bq-badge": LocalJSX.BqBadge & JSXBase.HTMLAttributes<HTMLBqBadgeElement>;
+            "bq-breadcrumb": LocalJSX.BqBreadcrumb & JSXBase.HTMLAttributes<HTMLBqBreadcrumbElement>;
+            "bq-breadcrumb-item": LocalJSX.BqBreadcrumbItem & JSXBase.HTMLAttributes<HTMLBqBreadcrumbItemElement>;
             /**
              * Buttons are designed for users to take action on a page or a screen.
              */
