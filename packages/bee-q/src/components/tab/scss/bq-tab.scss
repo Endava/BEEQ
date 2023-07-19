@@ -10,7 +10,7 @@
 
 .bq-tab {
   @apply relative flex cursor-pointer items-center justify-center rounded-s disabled:cursor-not-allowed;
-  @apply text-m font-medium leading-large [&:not([disabled])]:hover:text-text-brand-hover;
+  @apply text-[length:--bq-tab--font-size] font-[--bq-tab--font-weight] leading-[--bq-tab--line-height] [&:not([disabled])]:hover:text-text-brand-hover;
   @apply border-0 bg-transparent focus-visible:focus;
   @apply transition-[color,background-color,border-color,box-shadow] duration-300;
 
@@ -33,7 +33,7 @@
   }
 
   &--small {
-    @apply px-[var(--bq-tab--pading-horizontal-small)] py-[var(--bq-tab--pading-vertical-small)];
+    @apply px-[--bq-tab--pading-horizontal-small] py-[--bq-tab--pading-vertical-small];
 
     ::slotted(bq-icon) {
       --bq-icon--size: var(--bq-tab--icon-size-small) #{!important};
@@ -42,7 +42,7 @@
   }
 
   &--medium {
-    @apply px-[var(--bq-tab--pading-horizontal-medium)] py-[var(--bq-tab--pading-vertical-medium)];
+    @apply px-[--bq-tab--pading-horizontal-medium] py-[--bq-tab--pading-vertical-medium];
 
     ::slotted(bq-icon) {
       --bq-icon--size: var(--bq-tab--icon-size-medium) #{!important};
@@ -51,7 +51,7 @@
   }
 
   &--large {
-    @apply px-[var(--bq-tab--pading-horizontal-large)] py-[var(--bq-tab--pading-vertical-large)] text-l;
+    @apply px-[--bq-tab--pading-horizontal-large] py-[--bq-tab--pading-vertical-large] text-l;
 
     ::slotted(bq-icon) {
       --bq-icon--size: var(--bq-tab--icon-size-large) #{!important};

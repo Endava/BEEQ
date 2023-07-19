@@ -29,5 +29,6 @@ export const parameters = {
       printWidth: 80,
       useTabs: false,
     },
+    root: '#root-inner',
   },
 };

@@ -29,9 +29,9 @@ const fetchSvg = async (url: string, sanitize: boolean): Promise<unknown> => {
 
 export const iconContent = new Map<string, string>();
 
-export const getSvgContent = (url: string, sanitize: boolean) => {
+export const getSvgContent = async (url: string, sanitize: boolean) => {
   // see if we already have a request for this SVG file
-  const req = requests.get(url);
+  const req = await requests.get(url);
   if (!req) return fetchSvg(url, sanitize);
 
   return req;
@@ -73,18 +73,18 @@ export const validateContent = (svgContent: string): string => {
 };
 
 export const isValid = (elm: HTMLElement): boolean => {
-  if (elm.nodeType === 1) {
+  if (elm.nodeType === Node.ELEMENT_NODE) {
     if (elm.nodeName.toLowerCase() === 'script') return false;
 
-    for (const element of Array.from(elm.attributes)) {
-      const val = element.value;
-      if (isString(val) && val.toLowerCase().indexOf('on') === 0) {
+    for (const attribute of Array.from(elm.attributes)) {
+      const value = attribute.value;
+      if (isString(value) && value.toLowerCase().startsWith('on')) {
         return false;
       }
     }
 
-    for (const element of Array.from(elm.childNodes)) {
-      if (!isValid(element as HTMLElement)) return false;
+    for (const childNode of Array.from(elm.children) as HTMLElement[]) {
+      if (!isValid(childNode)) return false;
     }
   }
   return true;

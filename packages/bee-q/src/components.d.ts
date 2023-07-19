@@ -8,28 +8,36 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 import { TBadgeSize } from "./components/badge/bq-badge.types";
 import { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
+import { TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 import { TIconWeight } from "./components/icon/bq-icon.types";
+import { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
 import { TNotificationType } from "./components/notification/bq-notification.types";
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
+import { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
 import { TSliderType } from "./components/slider/bq-slider.types";
 import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 import { TStatusType } from "./components/status/bq-status.types";
 import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
 import { TTabSize } from "./components/tab/bq-tab.types";
+import { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 import { FloatingUIPlacement } from "./services/interfaces";
 export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 export { TBadgeSize } from "./components/badge/bq-badge.types";
 export { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
+export { TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 export { TIconWeight } from "./components/icon/bq-icon.types";
+export { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
 export { TNotificationType } from "./components/notification/bq-notification.types";
 export { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
+export { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
 export { TSliderType } from "./components/slider/bq-slider.types";
 export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 export { TStatusType } from "./components/status/bq-status.types";
 export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
 export { TTabSize } from "./components/tab/bq-tab.types";
+export { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export { FloatingUIPlacement } from "./services/interfaces";
 export namespace Components {
     /**
@@ -67,13 +75,41 @@ export namespace Components {
          */
         "backgroundColor"?: string;
         /**
-          * The size of the badge
+          * The size of the badge. Relevant if badge has no content.
          */
         "size"?: TBadgeSize;
         /**
           * Badge number color. The value should be a valid value of the palette color
          */
         "textColor"?: string;
+    }
+    interface BqBreadcrumb {
+        /**
+          * The `aria-label` attribute to describe the type of navigation
+         */
+        "ariaLabel": string;
+    }
+    interface BqBreadcrumbItem {
+        /**
+          * The aria-label that corresponds to the full title of the destination page. This won't be shown in the page, but it will be used by screen readers and other assistive devices.
+         */
+        "ariaLabel": string;
+        /**
+          * If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
+         */
+        "href": string;
+        /**
+          * If true, the item is the last element inside breadcrumb
+         */
+        "isLastItem": boolean;
+        /**
+          * Where to display the link in the browser context. Relevant only if `href` is set.
+         */
+        "rel": string;
+        /**
+          * Where to display the link in the browser context. Relevant only if `href` is set.
+         */
+        "target": '_blank' | '_parent' | '_self' | '_top';
     }
     /**
      * Buttons are designed for users to take action on a page or a screen.
@@ -170,6 +206,48 @@ export namespace Components {
          */
         "value": string;
     }
+    interface BqDialog {
+        /**
+          * Dismiss or cancel the dialog
+         */
+        "cancel": () => Promise<void>;
+        /**
+          * If true, the backdrop overlay won't be shown when the dialog opens
+         */
+        "disableBackdrop": boolean;
+        /**
+          * If true, the dialog will not close when clicking on the backdrop overlay
+         */
+        "disableCloseClickOutside": boolean;
+        /**
+          * If true, the dialog will not close when the [Esc] key is press
+         */
+        "disableCloseEscKeydown": boolean;
+        /**
+          * The appearance of footer
+         */
+        "footerApperance": TDialogFooterAppearance;
+        /**
+          * Closes the dialog
+         */
+        "hide": () => Promise<void>;
+        /**
+          * If true, it hides the close button
+         */
+        "hideCloseButton": boolean;
+        /**
+          * If true, the dialog will be shown as open
+         */
+        "open": boolean;
+        /**
+          * Open the dialog
+         */
+        "show": () => Promise<void>;
+        /**
+          * The size of the dialog
+         */
+        "size": TDialogSize;
+    }
     interface BqDivider {
         /**
           * If true, the divider has a dashed pattern
@@ -229,6 +307,101 @@ export namespace Components {
          */
         "weight"?: TIconWeight;
     }
+    interface BqInput {
+        /**
+          * Controls whether or not the input field should be capitalized and how. Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
+         */
+        "autocapitalize": string;
+        /**
+          * Specifies whether or not the input field should have autocomplete enabled. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
+         */
+        "autocomplete": string;
+        /**
+          * Controls whether or not the input field should have autocorrect enabled. Possible values are 'on' and 'off'.
+         */
+        "autocorrect": 'on' | 'off';
+        /**
+          * If true, the input will be focused on component render
+         */
+        "autofocus": boolean;
+        /**
+          * The clear button aria label
+         */
+        "clearButtonLabel"?: string;
+        /**
+          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur.
+         */
+        "debounceTime"?: number;
+        /**
+          * If true, the clear button won't be displayed
+         */
+        "disableClear"?: boolean;
+        /**
+          * Indicates whether the input is disabled or not. If `true`, the input is disabled and cannot be interacted with.
+         */
+        "disabled"?: boolean;
+        /**
+          * The ID of the form that the input field belongs to.
+         */
+        "form"?: string;
+        /**
+          * The inputmode attribute specifies what kind of input mechanism would be most helpful for users entering content into the input field. This allows a browser to display an appropriate virtual keyboard while editing. Possible values are 'none', 'text', 'decimal', 'numeric', 'tel', 'search', 'email', 'url', and 'date'.
+         */
+        "inputmode"?: string;
+        /**
+          * The maximum value that the input field can accept. Only applies to date and number input types.
+         */
+        "max"?: number | string;
+        /**
+          * The maximum number of characters that the input field can accept.
+         */
+        "maxlength": number;
+        /**
+          * The minimum value that the input field can accept. Only applies to date and number input types.
+         */
+        "min"?: number | string;
+        /**
+          * The minimum number of characters that the input field can accept.
+         */
+        "minlength": number;
+        /**
+          * The input field name.
+         */
+        "name": string;
+        /**
+          * Specifies a regular expression the form control's value should match. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern
+         */
+        "pattern"?: string;
+        /**
+          * The input placeholder text value
+         */
+        "placeholder"?: string;
+        /**
+          * If true, the input field cannot be modified.
+         */
+        "readonly"?: boolean;
+        /**
+          * Indicates whether or not the input field is required to be filled out before submitting the form.
+         */
+        "required"?: boolean;
+        /**
+          * A number that specifies the granularity that the value must adhere to. Valid for date, month, week, time, datetime-local, number, and range. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
+         */
+        "step": number | 'any';
+        /**
+          * The type attribute specifies the type of input field to display. Possible values are 'text', 'password', 'email', 'number', 'tel', 'search', 'url', and more. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types
+         */
+        "type": TInputType;
+        /**
+          * The validation status of the input.
+          * @remarks This property is used to indicate the validation status of the input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
+         */
+        "validationStatus": TInputValidation;
+        /**
+          * The input value, it can be used to reset the input to a previous value
+         */
+        "value": TInputValue;
+    }
     interface BqNotification {
         /**
           * If true, the notification will automatically hide after the specified amount of time
@@ -238,10 +411,6 @@ export namespace Components {
           * If true, the close button at the top right of the notification won't be shown
          */
         "disableClose": boolean;
-        /**
-          * If true, the predefined icon type won't be shown and a custom icon provided on integration will be displayed instead
-         */
-        "hasCustomIcon": boolean;
         /**
           * Method to be called to hide the notification component
          */
@@ -253,7 +422,7 @@ export namespace Components {
         /**
           * If true, the notification will be shown
          */
-        "isOpen": boolean;
+        "open": boolean;
         /**
           * Method to be called to show the notification component
          */
@@ -263,7 +432,7 @@ export namespace Components {
          */
         "time": number;
         /**
-          * This method can be used to display notifications in a fixed-position element that allows for stacking multiple notifications vertically.
+          * This method can be used to display notifications in a fixed-position element that allows for stacking multiple notifications vertically
          */
         "toast": () => Promise<void>;
         /**
@@ -363,6 +532,38 @@ export namespace Components {
           * A string representing the value of the radio.
          */
         "value"?: string;
+    }
+    interface BqSideMenu {
+        /**
+          * It sets a predefined appearance of the side menu
+         */
+        "appearance": TSideMenuAppearance;
+        /**
+          * If true, the container will reduce its width
+         */
+        "collapse": boolean;
+        /**
+          * It sets the size of the navigation menu items
+         */
+        "size": TSideMenuSize;
+        /**
+          * Toggle the collapse state of the side menu
+         */
+        "toggleCollapse": () => Promise<void>;
+    }
+    interface BqSideMenuItem {
+        /**
+          * If true, the menu item will be shown as active/selected.
+         */
+        "active": boolean;
+        /**
+          * If true, the item label and suffix will be hidden and the with will be reduce according to its parent
+         */
+        "collapse": boolean;
+        /**
+          * If true, the menu item will be disabled (no interaction allowed)
+         */
+        "disabled": boolean;
     }
     interface BqSlider {
         /**
@@ -539,6 +740,40 @@ export namespace Components {
          */
         "value": string;
     }
+    interface BqToast {
+        /**
+          * Method to be called to hide the toast component
+         */
+        "hide": () => Promise<void>;
+        /**
+          * If true will hide toast icon
+         */
+        "hideIcon": boolean;
+        /**
+          * If true, the toast will be shown
+         */
+        "open": boolean;
+        /**
+          * Placement of toast
+         */
+        "placement": TToastPlacement;
+        /**
+          * Method to be called to show the toast component
+         */
+        "show": () => Promise<void>;
+        /**
+          * The length of time, in milliseconds, after which the toast will close itself
+         */
+        "time": number;
+        /**
+          * This method can be used to display toasts in a fixed-position element that allows for stacking multiple toasts vertically
+         */
+        "toast": () => Promise<void>;
+        /**
+          * Type of toast
+         */
+        "type": TToastType;
+    }
     interface BqTooltip {
         /**
           * Set the action when the tooltip should be displayed, on hover (default) or click
@@ -571,6 +806,14 @@ export namespace Components {
         "visible"?: boolean;
     }
 }
+export interface BqBreadcrumbCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqBreadcrumbElement;
+}
+export interface BqBreadcrumbItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqBreadcrumbItemElement;
+}
 export interface BqButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqButtonElement;
@@ -579,9 +822,17 @@ export interface BqCheckboxCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqCheckboxElement;
 }
+export interface BqDialogCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqDialogElement;
+}
 export interface BqIconCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqIconElement;
+}
+export interface BqInputCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqInputElement;
 }
 export interface BqNotificationCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -599,6 +850,14 @@ export interface BqRadioGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqRadioGroupElement;
 }
+export interface BqSideMenuCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqSideMenuElement;
+}
+export interface BqSideMenuItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqSideMenuItemElement;
+}
 export interface BqSliderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqSliderElement;
@@ -614,6 +873,10 @@ export interface BqTabCustomEvent<T> extends CustomEvent<T> {
 export interface BqTabGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqTabGroupElement;
+}
+export interface BqToastCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqToastElement;
 }
 declare global {
     /**
@@ -631,6 +894,18 @@ declare global {
         prototype: HTMLBqBadgeElement;
         new (): HTMLBqBadgeElement;
     };
+    interface HTMLBqBreadcrumbElement extends Components.BqBreadcrumb, HTMLStencilElement {
+    }
+    var HTMLBqBreadcrumbElement: {
+        prototype: HTMLBqBreadcrumbElement;
+        new (): HTMLBqBreadcrumbElement;
+    };
+    interface HTMLBqBreadcrumbItemElement extends Components.BqBreadcrumbItem, HTMLStencilElement {
+    }
+    var HTMLBqBreadcrumbItemElement: {
+        prototype: HTMLBqBreadcrumbItemElement;
+        new (): HTMLBqBreadcrumbItemElement;
+    };
     /**
      * Buttons are designed for users to take action on a page or a screen.
      */
@@ -646,6 +921,12 @@ declare global {
         prototype: HTMLBqCheckboxElement;
         new (): HTMLBqCheckboxElement;
     };
+    interface HTMLBqDialogElement extends Components.BqDialog, HTMLStencilElement {
+    }
+    var HTMLBqDialogElement: {
+        prototype: HTMLBqDialogElement;
+        new (): HTMLBqDialogElement;
+    };
     interface HTMLBqDividerElement extends Components.BqDivider, HTMLStencilElement {
     }
     var HTMLBqDividerElement: {
@@ -660,6 +941,12 @@ declare global {
     var HTMLBqIconElement: {
         prototype: HTMLBqIconElement;
         new (): HTMLBqIconElement;
+    };
+    interface HTMLBqInputElement extends Components.BqInput, HTMLStencilElement {
+    }
+    var HTMLBqInputElement: {
+        prototype: HTMLBqInputElement;
+        new (): HTMLBqInputElement;
     };
     interface HTMLBqNotificationElement extends Components.BqNotification, HTMLStencilElement {
     }
@@ -690,6 +977,18 @@ declare global {
     var HTMLBqRadioGroupElement: {
         prototype: HTMLBqRadioGroupElement;
         new (): HTMLBqRadioGroupElement;
+    };
+    interface HTMLBqSideMenuElement extends Components.BqSideMenu, HTMLStencilElement {
+    }
+    var HTMLBqSideMenuElement: {
+        prototype: HTMLBqSideMenuElement;
+        new (): HTMLBqSideMenuElement;
+    };
+    interface HTMLBqSideMenuItemElement extends Components.BqSideMenuItem, HTMLStencilElement {
+    }
+    var HTMLBqSideMenuItemElement: {
+        prototype: HTMLBqSideMenuItemElement;
+        new (): HTMLBqSideMenuItemElement;
     };
     interface HTMLBqSliderElement extends Components.BqSlider, HTMLStencilElement {
     }
@@ -734,6 +1033,12 @@ declare global {
         prototype: HTMLBqTabGroupElement;
         new (): HTMLBqTabGroupElement;
     };
+    interface HTMLBqToastElement extends Components.BqToast, HTMLStencilElement {
+    }
+    var HTMLBqToastElement: {
+        prototype: HTMLBqToastElement;
+        new (): HTMLBqToastElement;
+    };
     interface HTMLBqTooltipElement extends Components.BqTooltip, HTMLStencilElement {
     }
     var HTMLBqTooltipElement: {
@@ -743,21 +1048,28 @@ declare global {
     interface HTMLElementTagNameMap {
         "bq-avatar": HTMLBqAvatarElement;
         "bq-badge": HTMLBqBadgeElement;
+        "bq-breadcrumb": HTMLBqBreadcrumbElement;
+        "bq-breadcrumb-item": HTMLBqBreadcrumbItemElement;
         "bq-button": HTMLBqButtonElement;
         "bq-checkbox": HTMLBqCheckboxElement;
+        "bq-dialog": HTMLBqDialogElement;
         "bq-divider": HTMLBqDividerElement;
         "bq-icon": HTMLBqIconElement;
+        "bq-input": HTMLBqInputElement;
         "bq-notification": HTMLBqNotificationElement;
         "bq-option": HTMLBqOptionElement;
         "bq-option-group": HTMLBqOptionGroupElement;
         "bq-radio": HTMLBqRadioElement;
         "bq-radio-group": HTMLBqRadioGroupElement;
+        "bq-side-menu": HTMLBqSideMenuElement;
+        "bq-side-menu-item": HTMLBqSideMenuItemElement;
         "bq-slider": HTMLBqSliderElement;
         "bq-spinner": HTMLBqSpinnerElement;
         "bq-status": HTMLBqStatusElement;
         "bq-switch": HTMLBqSwitchElement;
         "bq-tab": HTMLBqTabElement;
         "bq-tab-group": HTMLBqTabGroupElement;
+        "bq-toast": HTMLBqToastElement;
         "bq-tooltip": HTMLBqTooltipElement;
     }
 }
@@ -797,13 +1109,65 @@ declare namespace LocalJSX {
          */
         "backgroundColor"?: string;
         /**
-          * The size of the badge
+          * The size of the badge. Relevant if badge has no content.
          */
         "size"?: TBadgeSize;
         /**
           * Badge number color. The value should be a valid value of the palette color
          */
         "textColor"?: string;
+    }
+    interface BqBreadcrumb {
+        /**
+          * The `aria-label` attribute to describe the type of navigation
+         */
+        "ariaLabel"?: string;
+        /**
+          * Handler to be called when `bq-breadcrumb-item` item loses focus.
+         */
+        "onBqBreadcrumbBlur"?: (event: BqBreadcrumbCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
+        /**
+          * Handler to be called when `bq-breadcrumb-item` is selected (on click/enter press).
+         */
+        "onBqBreadcrumbClick"?: (event: BqBreadcrumbCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
+        /**
+          * Handler to be called when `bq-breadcrumb-item` item gets focus.
+         */
+        "onBqBreadcrumbFocus"?: (event: BqBreadcrumbCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
+    }
+    interface BqBreadcrumbItem {
+        /**
+          * The aria-label that corresponds to the full title of the destination page. This won't be shown in the page, but it will be used by screen readers and other assistive devices.
+         */
+        "ariaLabel"?: string;
+        /**
+          * If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
+         */
+        "href"?: string;
+        /**
+          * If true, the item is the last element inside breadcrumb
+         */
+        "isLastItem"?: boolean;
+        /**
+          * Handler to be called when item loses focus
+         */
+        "onBqBlur"?: (event: BqBreadcrumbItemCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
+        /**
+          * Handler to be called when item is clicked
+         */
+        "onBqClick"?: (event: BqBreadcrumbItemCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
+        /**
+          * Handler to be called when item is focused
+         */
+        "onBqFocus"?: (event: BqBreadcrumbItemCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
+        /**
+          * Where to display the link in the browser context. Relevant only if `href` is set.
+         */
+        "rel"?: string;
+        /**
+          * Where to display the link in the browser context. Relevant only if `href` is set.
+         */
+        "target"?: '_blank' | '_parent' | '_self' | '_top';
     }
     /**
      * Buttons are designed for users to take action on a page or a screen.
@@ -912,6 +1276,56 @@ declare namespace LocalJSX {
          */
         "value": string;
     }
+    interface BqDialog {
+        /**
+          * If true, the backdrop overlay won't be shown when the dialog opens
+         */
+        "disableBackdrop"?: boolean;
+        /**
+          * If true, the dialog will not close when clicking on the backdrop overlay
+         */
+        "disableCloseClickOutside"?: boolean;
+        /**
+          * If true, the dialog will not close when the [Esc] key is press
+         */
+        "disableCloseEscKeydown"?: boolean;
+        /**
+          * The appearance of footer
+         */
+        "footerApperance"?: TDialogFooterAppearance;
+        /**
+          * If true, it hides the close button
+         */
+        "hideCloseButton"?: boolean;
+        /**
+          * Callback handler emitted when the dialog finish closing
+         */
+        "onBqAfterClose"?: (event: BqDialogCustomEvent<void>) => void;
+        /**
+          * Callback handler emitted when the dialog finish opening
+         */
+        "onBqAfterOpen"?: (event: BqDialogCustomEvent<void>) => void;
+        /**
+          * Callback handler emitted when the dialog has been canceled or dismissed
+         */
+        "onBqCancel"?: (event: BqDialogCustomEvent<void>) => void;
+        /**
+          * Callback handler emitted when the dialog will close
+         */
+        "onBqClose"?: (event: BqDialogCustomEvent<void>) => void;
+        /**
+          * Callback handler emitted when the dialog will open
+         */
+        "onBqOpen"?: (event: BqDialogCustomEvent<void>) => void;
+        /**
+          * If true, the dialog will be shown as open
+         */
+        "open"?: boolean;
+        /**
+          * The size of the dialog
+         */
+        "size"?: TDialogSize;
+    }
     interface BqDivider {
         /**
           * If true, the divider has a dashed pattern
@@ -975,6 +1389,121 @@ declare namespace LocalJSX {
          */
         "weight"?: TIconWeight;
     }
+    interface BqInput {
+        /**
+          * Controls whether or not the input field should be capitalized and how. Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
+         */
+        "autocapitalize"?: string;
+        /**
+          * Specifies whether or not the input field should have autocomplete enabled. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
+         */
+        "autocomplete"?: string;
+        /**
+          * Controls whether or not the input field should have autocorrect enabled. Possible values are 'on' and 'off'.
+         */
+        "autocorrect"?: 'on' | 'off';
+        /**
+          * If true, the input will be focused on component render
+         */
+        "autofocus"?: boolean;
+        /**
+          * The clear button aria label
+         */
+        "clearButtonLabel"?: string;
+        /**
+          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur.
+         */
+        "debounceTime"?: number;
+        /**
+          * If true, the clear button won't be displayed
+         */
+        "disableClear"?: boolean;
+        /**
+          * Indicates whether the input is disabled or not. If `true`, the input is disabled and cannot be interacted with.
+         */
+        "disabled"?: boolean;
+        /**
+          * The ID of the form that the input field belongs to.
+         */
+        "form"?: string;
+        /**
+          * The inputmode attribute specifies what kind of input mechanism would be most helpful for users entering content into the input field. This allows a browser to display an appropriate virtual keyboard while editing. Possible values are 'none', 'text', 'decimal', 'numeric', 'tel', 'search', 'email', 'url', and 'date'.
+         */
+        "inputmode"?: string;
+        /**
+          * The maximum value that the input field can accept. Only applies to date and number input types.
+         */
+        "max"?: number | string;
+        /**
+          * The maximum number of characters that the input field can accept.
+         */
+        "maxlength"?: number;
+        /**
+          * The minimum value that the input field can accept. Only applies to date and number input types.
+         */
+        "min"?: number | string;
+        /**
+          * The minimum number of characters that the input field can accept.
+         */
+        "minlength"?: number;
+        /**
+          * The input field name.
+         */
+        "name": string;
+        /**
+          * Callback handler emitted when the input loses focus
+         */
+        "onBqBlur"?: (event: BqInputCustomEvent<HTMLBqInputElement>) => void;
+        /**
+          * Callback handler emitted when the input value has changed and the input loses focus. This handler is called whenever the user finishes typing or pasting text into the input field and then clicks outside of the input field.
+         */
+        "onBqChange"?: (event: BqInputCustomEvent<{ value: string | number | string[]; el: HTMLBqInputElement }>) => void;
+        /**
+          * Callback handler emitted when the input value has been cleared
+         */
+        "onBqClear"?: (event: BqInputCustomEvent<HTMLBqInputElement>) => void;
+        /**
+          * Callback handler emitted when the input has received focus
+         */
+        "onBqFocus"?: (event: BqInputCustomEvent<HTMLBqInputElement>) => void;
+        /**
+          * Callback handler emitted when the input value changes. This handler is called whenever the user types or pastes text into the input field.
+         */
+        "onBqInput"?: (event: BqInputCustomEvent<{ value: string | number | string[]; el: HTMLBqInputElement }>) => void;
+        /**
+          * Specifies a regular expression the form control's value should match. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern
+         */
+        "pattern"?: string;
+        /**
+          * The input placeholder text value
+         */
+        "placeholder"?: string;
+        /**
+          * If true, the input field cannot be modified.
+         */
+        "readonly"?: boolean;
+        /**
+          * Indicates whether or not the input field is required to be filled out before submitting the form.
+         */
+        "required"?: boolean;
+        /**
+          * A number that specifies the granularity that the value must adhere to. Valid for date, month, week, time, datetime-local, number, and range. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
+         */
+        "step"?: number | 'any';
+        /**
+          * The type attribute specifies the type of input field to display. Possible values are 'text', 'password', 'email', 'number', 'tel', 'search', 'url', and more. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types
+         */
+        "type"?: TInputType;
+        /**
+          * The validation status of the input.
+          * @remarks This property is used to indicate the validation status of the input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
+         */
+        "validationStatus"?: TInputValidation;
+        /**
+          * The input value, it can be used to reset the input to a previous value
+         */
+        "value"?: TInputValue;
+    }
     interface BqNotification {
         /**
           * If true, the notification will automatically hide after the specified amount of time
@@ -985,17 +1514,9 @@ declare namespace LocalJSX {
          */
         "disableClose"?: boolean;
         /**
-          * If true, the predefined icon type won't be shown and a custom icon provided on integration will be displayed instead
-         */
-        "hasCustomIcon"?: boolean;
-        /**
           * If true, the notification icon won't be shown
          */
         "hideIcon"?: boolean;
-        /**
-          * If true, the notification will be shown
-         */
-        "isOpen"?: boolean;
         /**
           * Callback handler to be called when the notification is hidden
          */
@@ -1004,6 +1525,10 @@ declare namespace LocalJSX {
           * Callback handler to be called when the notification is shown
          */
         "onBqShow"?: (event: BqNotificationCustomEvent<any>) => void;
+        /**
+          * If true, the notification will be shown
+         */
+        "open"?: boolean;
         /**
           * The length of time, in milliseconds, after which the notification will close itself. Only valid if `autoDismiss="true"`
          */
@@ -1132,6 +1657,54 @@ declare namespace LocalJSX {
           * A string representing the value of the radio.
          */
         "value"?: string;
+    }
+    interface BqSideMenu {
+        /**
+          * It sets a predefined appearance of the side menu
+         */
+        "appearance"?: TSideMenuAppearance;
+        /**
+          * If true, the container will reduce its width
+         */
+        "collapse"?: boolean;
+        /**
+          * Callback handler to be called when the Side menu changes its width from expanded to collapse and vice versa
+         */
+        "onBqCollapse"?: (event: BqSideMenuCustomEvent<{ collapse: boolean }>) => void;
+        /**
+          * Callback handler to be called when the active/selected menu item changes
+         */
+        "onBqSelect"?: (event: BqSideMenuCustomEvent<HTMLBqSideMenuItemElement>) => void;
+        /**
+          * It sets the size of the navigation menu items
+         */
+        "size"?: TSideMenuSize;
+    }
+    interface BqSideMenuItem {
+        /**
+          * If true, the menu item will be shown as active/selected.
+         */
+        "active"?: boolean;
+        /**
+          * If true, the item label and suffix will be hidden and the with will be reduce according to its parent
+         */
+        "collapse"?: boolean;
+        /**
+          * If true, the menu item will be disabled (no interaction allowed)
+         */
+        "disabled"?: boolean;
+        /**
+          * Handler to be called when the button loses focus
+         */
+        "onBqBlur"?: (event: BqSideMenuItemCustomEvent<HTMLBqSideMenuItemElement>) => void;
+        /**
+          * Handler to be called when button gets focus
+         */
+        "onBqClick"?: (event: BqSideMenuItemCustomEvent<HTMLBqSideMenuItemElement>) => void;
+        /**
+          * Handler to be called when the button is clicked
+         */
+        "onBqFocus"?: (event: BqSideMenuItemCustomEvent<HTMLBqSideMenuItemElement>) => void;
     }
     interface BqSlider {
         /**
@@ -1324,6 +1897,36 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface BqToast {
+        /**
+          * If true will hide toast icon
+         */
+        "hideIcon"?: boolean;
+        /**
+          * Callback handler to be called when the notification is hidden
+         */
+        "onBqHide"?: (event: BqToastCustomEvent<HTMLBqToastElement>) => void;
+        /**
+          * Callback handler to be called when the notification is shown
+         */
+        "onBqShow"?: (event: BqToastCustomEvent<HTMLBqToastElement>) => void;
+        /**
+          * If true, the toast will be shown
+         */
+        "open"?: boolean;
+        /**
+          * Placement of toast
+         */
+        "placement"?: TToastPlacement;
+        /**
+          * The length of time, in milliseconds, after which the toast will close itself
+         */
+        "time"?: number;
+        /**
+          * Type of toast
+         */
+        "type"?: TToastType;
+    }
     interface BqTooltip {
         /**
           * Set the action when the tooltip should be displayed, on hover (default) or click
@@ -1350,21 +1953,28 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "bq-avatar": BqAvatar;
         "bq-badge": BqBadge;
+        "bq-breadcrumb": BqBreadcrumb;
+        "bq-breadcrumb-item": BqBreadcrumbItem;
         "bq-button": BqButton;
         "bq-checkbox": BqCheckbox;
+        "bq-dialog": BqDialog;
         "bq-divider": BqDivider;
         "bq-icon": BqIcon;
+        "bq-input": BqInput;
         "bq-notification": BqNotification;
         "bq-option": BqOption;
         "bq-option-group": BqOptionGroup;
         "bq-radio": BqRadio;
         "bq-radio-group": BqRadioGroup;
+        "bq-side-menu": BqSideMenu;
+        "bq-side-menu-item": BqSideMenuItem;
         "bq-slider": BqSlider;
         "bq-spinner": BqSpinner;
         "bq-status": BqStatus;
         "bq-switch": BqSwitch;
         "bq-tab": BqTab;
         "bq-tab-group": BqTabGroup;
+        "bq-toast": BqToast;
         "bq-tooltip": BqTooltip;
     }
 }
@@ -1377,21 +1987,27 @@ declare module "@stencil/core" {
              */
             "bq-avatar": LocalJSX.BqAvatar & JSXBase.HTMLAttributes<HTMLBqAvatarElement>;
             "bq-badge": LocalJSX.BqBadge & JSXBase.HTMLAttributes<HTMLBqBadgeElement>;
+            "bq-breadcrumb": LocalJSX.BqBreadcrumb & JSXBase.HTMLAttributes<HTMLBqBreadcrumbElement>;
+            "bq-breadcrumb-item": LocalJSX.BqBreadcrumbItem & JSXBase.HTMLAttributes<HTMLBqBreadcrumbItemElement>;
             /**
              * Buttons are designed for users to take action on a page or a screen.
              */
             "bq-button": LocalJSX.BqButton & JSXBase.HTMLAttributes<HTMLBqButtonElement>;
             "bq-checkbox": LocalJSX.BqCheckbox & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
+            "bq-dialog": LocalJSX.BqDialog & JSXBase.HTMLAttributes<HTMLBqDialogElement>;
             "bq-divider": LocalJSX.BqDivider & JSXBase.HTMLAttributes<HTMLBqDividerElement>;
             /**
              * Icons are simplified images that graphically explain the meaning of an object on the screen.
              */
             "bq-icon": LocalJSX.BqIcon & JSXBase.HTMLAttributes<HTMLBqIconElement>;
+            "bq-input": LocalJSX.BqInput & JSXBase.HTMLAttributes<HTMLBqInputElement>;
             "bq-notification": LocalJSX.BqNotification & JSXBase.HTMLAttributes<HTMLBqNotificationElement>;
             "bq-option": LocalJSX.BqOption & JSXBase.HTMLAttributes<HTMLBqOptionElement>;
             "bq-option-group": LocalJSX.BqOptionGroup & JSXBase.HTMLAttributes<HTMLBqOptionGroupElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
+            "bq-side-menu": LocalJSX.BqSideMenu & JSXBase.HTMLAttributes<HTMLBqSideMenuElement>;
+            "bq-side-menu-item": LocalJSX.BqSideMenuItem & JSXBase.HTMLAttributes<HTMLBqSideMenuItemElement>;
             "bq-slider": LocalJSX.BqSlider & JSXBase.HTMLAttributes<HTMLBqSliderElement>;
             /**
              * Spinners are designed for users to display data loading.
@@ -1405,6 +2021,7 @@ declare module "@stencil/core" {
             "bq-switch": LocalJSX.BqSwitch & JSXBase.HTMLAttributes<HTMLBqSwitchElement>;
             "bq-tab": LocalJSX.BqTab & JSXBase.HTMLAttributes<HTMLBqTabElement>;
             "bq-tab-group": LocalJSX.BqTabGroup & JSXBase.HTMLAttributes<HTMLBqTabGroupElement>;
+            "bq-toast": LocalJSX.BqToast & JSXBase.HTMLAttributes<HTMLBqToastElement>;
             "bq-tooltip": LocalJSX.BqTooltip & JSXBase.HTMLAttributes<HTMLBqTooltipElement>;
         }
     }

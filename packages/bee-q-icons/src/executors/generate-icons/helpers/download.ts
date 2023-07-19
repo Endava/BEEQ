@@ -10,17 +10,15 @@ interface IDownloadIcons {
 }
 
 export const downloadIcons = async ({ downloadPath, fileName, sourceUrl }: IDownloadIcons) => {
-  return new Promise<void>(async (resolve, reject) => {
-    try {
-      const response = await fetch(`${sourceUrl}/${fileName}`);
-      if (!response.body || !response.ok) throw new Error(response.statusText);
+  try {
+    const response = await fetch(`${sourceUrl}/${fileName}`);
+    if (!response.body || !response.ok) throw new Error(response.statusText);
 
-      const ws = createWriteStream(join(downloadPath, fileName));
-      // @ts-expect-error
-      await finished(Readable.fromWeb(response.body).pipe(ws));
-      resolve();
-    } catch (error) {
-      reject(error);
-    }
-  });
+    const ws = createWriteStream(join(downloadPath, fileName));
+    // @ts-expect-error
+    await finished(Readable.fromWeb(response.body).pipe(ws));
+    Promise.resolve();
+  } catch (error) {
+    Promise.reject(error);
+  }
 };
