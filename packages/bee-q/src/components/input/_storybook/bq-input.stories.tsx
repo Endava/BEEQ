@@ -64,7 +64,7 @@ const meta: Meta = {
     maxlength: undefined,
     min: undefined,
     minlength: undefined,
-    name: 'input',
+    name: 'bq-input',
     pattern: undefined,
     readonly: false,
     required: false,
@@ -196,11 +196,11 @@ export const ValidationStatus: Story = {
   render: (args) => html`
     <div class="flex flex-col gap-l">
       <!-- Error -->
-      ${Template({ ...args, 'validation-status': 'error' })}
+      ${Template({ ...args, name: 'bq-input-error', 'validation-status': 'error' })}
       <!-- Succes -->
-      ${Template({ ...args, 'validation-status': 'success' })}
+      ${Template({ ...args, name: 'bq-input-success', 'validation-status': 'success' })}
       <!-- Warning -->
-      ${Template({ ...args, 'validation-status': 'warning' })}
+      ${Template({ ...args, name: 'bq-input-warning', 'validation-status': 'warning' })}
     </div>
   `,
   args: {

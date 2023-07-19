@@ -32,6 +32,7 @@ export class BqInput {
   private suffixElem?: HTMLElement;
 
   private debounceBqInput: TDebounce<void>;
+  private fallbackInputId = 'input';
 
   // Reference to host HTML element
   // ===================================
@@ -301,7 +302,7 @@ export class BqInput {
         {/* Label */}
         <label
           class={{ 'bq-input--label': true, hidden: !this.hasLabel }}
-          htmlFor="input"
+          htmlFor={this.name || this.fallbackInputId}
           ref={(labelElem) => (this.labelElem = labelElem)}
           part="label"
         >
@@ -326,7 +327,7 @@ export class BqInput {
           </span>
           {/* HTML Input */}
           <input
-            id="input"
+            id={this.name || this.fallbackInputId}
             class="bq-input--control__input"
             aria-disabled={this.disabled ? 'true' : 'false'}
             autoCapitalize={this.autocapitalize}
