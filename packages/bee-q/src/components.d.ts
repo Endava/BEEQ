@@ -1391,18 +1391,6 @@ declare namespace LocalJSX {
     }
     interface BqDropdown {
         /**
-          * Handler to be called when `bq-option` item loses focus.
-         */
-        "onBqOptionBlur"?: (event: BqDropdownCustomEvent<HTMLElement>) => void;
-        /**
-          * Handler to be called when `bq-option` item gets focus.
-         */
-        "onBqOptionFocus"?: (event: BqDropdownCustomEvent<HTMLElement>) => void;
-        /**
-          * Handler to be called when `bq-option` is selected (on click/enter press).
-         */
-        "onBqOptionSelect"?: (event: BqDropdownCustomEvent<HTMLElement>) => void;
-        /**
           * Handler to be called when the `bq-panel` switches state (visible/hidden).
          */
         "onBqPanelOpen"?: (event: BqDropdownCustomEvent<boolean>) => void;

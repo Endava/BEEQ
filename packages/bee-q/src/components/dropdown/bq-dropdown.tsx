@@ -1,8 +1,9 @@
-import { h, Component, Element, Host, Listen, Event, EventEmitter, Prop } from '@stencil/core';
+import { h, Component, Element, Event, EventEmitter, Prop } from '@stencil/core';
 
 import { FloatingUIPlacement } from '../../services/interfaces';
 
 /**
+ * @part base - The component's internal wrapper.
  * @part trigger - The `div` element used to display the trigger element
  * @part panel - The `div` element used to display the panel element (bq-panel)
  */
@@ -53,15 +54,6 @@ export class BqDropdown {
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Handler to be called when `bq-option` item loses focus. */
-  @Event() bqOptionBlur: EventEmitter<HTMLElement>; // switch to HTMLBqOptionElement
-
-  /** Handler to be called when `bq-option` item gets focus. */
-  @Event() bqOptionFocus: EventEmitter<HTMLElement>; // switch to HTMLBqOptionElement
-
-  /** Handler to be called when `bq-option` is selected (on click/enter press). */
-  @Event() bqOptionSelect: EventEmitter<HTMLElement>; // switch to HTMLBqOptionElement
-
   /** Handler to be called when the `bq-panel` switches state (visible/hidden). */
   @Event() bqPanelOpen: EventEmitter<boolean>;
 
@@ -75,42 +67,6 @@ export class BqDropdown {
 
   // Listeners
   // ==============
-
-  @Listen('bqBlur', { passive: true })
-  onBqOptionBlur(event: CustomEvent<HTMLElement>) {
-    // add condition `if (isHTMLElement(event.detail, 'bq-option'))`
-    this.bqOptionBlur.emit(event.detail);
-  }
-
-  @Listen('bqFocus', { passive: true })
-  onBqOptionFocus(event: CustomEvent<HTMLElement>) {
-    // add condition `if (isHTMLElement(event.detail, 'bq-option'))`
-    this.bqOptionFocus.emit(event.detail);
-  }
-
-  @Listen('bqClick', { passive: true })
-  @Listen('bqOnEnter', { passive: true })
-  onBqSelect(event: CustomEvent<HTMLElement>) {
-    // add condition `if (isHTMLElement(event.detail, 'bq-option'))`
-    this.bqOptionSelect.emit(event.detail);
-  }
-
-  @Listen('bqClick', { passive: true })
-  onBqClick() {
-    // if (isHTMLElement(event.detail, 'bq-option')) this.panelElement?.togglePanel();
-  }
-
-  @Listen('bqOnEnterKeyUp', { passive: true })
-  onBqEnterKeyUp(event: CustomEvent<HTMLElement>) {
-    // add condition `if (isHTMLElement(event.detail, 'bq-option'))`
-    this.panelElement?.togglePanel();
-    event.detail.setAttribute('selected', 'false');
-  }
-
-  @Listen('bqPanelVisibility', { passive: true })
-  onPanelStateChange(event: CustomEvent<boolean>) {
-    this.bqPanelOpen.emit(event.detail);
-  }
 
   // Public methods API
   // These methods are exposed on the host element.
@@ -138,7 +94,7 @@ export class BqDropdown {
 
   render() {
     return (
-      <Host>
+      <div part="base">
         {/* TRIGGER ELEMENT */}
         <div
           class="trigger"
@@ -157,11 +113,12 @@ export class BqDropdown {
           open={this.panelOpen}
           scrollbar={this.panelScrollbar}
           ref={(el) => (this.panelElement = el)}
+          aria-labelledby="dropdown"
           part="panel"
         >
           <slot />
         </bq-panel>
-      </Host>
+      </div>
     );
   }
 }
