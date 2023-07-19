@@ -58,6 +58,14 @@
 
     @apply focus border-[color:--bq-input--border-color-focus];
   }
+
+  // Enable clear button whenever the input group control is hovered or has focus
+  &:not(.disabled):hover,
+  &:not(.disabled):focus-within {
+    .bq-input--control__clear {
+      @apply inline-block;
+    }
+  }
 }
 
 .bq-input--control.disabled {
