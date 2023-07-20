@@ -270,6 +270,7 @@ export class BqInput {
     this.value = this.inputElem.value;
 
     this.bqClear.emit(this.el);
+    this.bqInput.emit({ value: this.value, el: this.el });
     this.bqChange.emit({ value: this.value, el: this.el });
     this.inputElem.focus();
 
@@ -311,7 +312,7 @@ export class BqInput {
         {/* Input control group */}
         <div
           class={{
-            'bq-input--control group': true,
+            'bq-input--control': true,
             [`validation-${this.validationStatus}`]: true,
             disabled: this.disabled,
           }}
@@ -362,7 +363,7 @@ export class BqInput {
             // The clear button will be visible as long as the input has a value
             // and the parent group is hovered or has focus-within
             <bq-button
-              class="bq-input--control__clear ms-[--bq-input--gap] hidden group-hover:inline-block group-[&:has(:focus-within)]:inline-block"
+              class="bq-input--control__clear ms-[--bq-input--gap] hidden"
               appearance="text"
               aria-label={this.clearButtonLabel}
               size="small"
