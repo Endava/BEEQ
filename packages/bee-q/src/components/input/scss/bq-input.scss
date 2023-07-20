@@ -118,6 +118,12 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-input--control__clear::part(button) {
+  // Since the clear button is inside the input group control,
+  // we need to reset the focus ring styles
+  --bq-ring-width: initial;
+  --bq-ring-offset-width: initial;
+  --bq-ring-color-focus: initial;
+
   @apply h-auto rounded-xs border-none p-0;
 }
 
