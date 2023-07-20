@@ -101,8 +101,18 @@ const Template = (args: Args) => {
           <span class="text-text-secondary">Optional</span>
         </div>
       `;
+  const style = args.hasLabelTooltip
+    ? html`
+        <style>
+          bq-input {
+            width: 75vw;
+          }
+        </style>
+      `
+    : nothing;
 
   return html`
+    ${style}
     <bq-input
       autocapitalize=${ifDefined(args.autocapitalize)}
       autocomplete=${ifDefined(args.autocomplete)}
