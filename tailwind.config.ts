@@ -103,11 +103,8 @@ const config: Config = {
          *  }
          */
         '.focus': {
-          '--tw-ring-width': '2px',
-          '--tw-ring-offset-width': '1px',
-          '--tw-ring-color': theme('colors.focus'),
-          outline: `var(--tw-ring-width) solid ${String(theme('colors.focus'))}`,
-          outlineOffset: 'var(--tw-ring-offset-width)',
+          outline: `var(--bq-ring-width, 2px) solid var(--bq-ring-color-focus, ${String(theme('colors.focus'))})`,
+          outlineOffset: 'var(--bq-ring-offset-width, 1px)',
         },
       });
     }),
