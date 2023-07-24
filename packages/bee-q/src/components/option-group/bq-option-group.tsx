@@ -1,7 +1,5 @@
 import { h, Component, Host, Element } from '@stencil/core';
 
-import { isHTMLElement } from '../../shared/utils';
-
 /**
  * @part label - The `legend` tag element which acts as a container for the label
  * @part prefix - The prefix of the label
@@ -40,15 +38,6 @@ export class BqOptionGroup {
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
-
-  componentDidLoad() {
-    const slotElements = this.el.shadowRoot
-      .querySelector<HTMLSlotElement>('[part="group"] > slot')
-      .assignedElements({ flatten: true })
-      .filter((elem: HTMLElement) => isHTMLElement(elem, 'bq-option')) as [HTMLBqOptionElement];
-
-    slotElements.forEach((bqOption: HTMLBqOptionElement) => bqOption?.setPaddingToOption());
-  }
 
   // Listeners
   // ==============

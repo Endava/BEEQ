@@ -23,3 +23,7 @@
 .suffix {
   @apply ml-auto;
 }
+
+.group ::slotted(bq-option) {
+  @apply pl-xxl;
+}

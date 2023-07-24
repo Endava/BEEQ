@@ -1,4 +1,4 @@
-import { h, Component, Prop, Element, State, Event, EventEmitter, Listen, Method } from '@stencil/core';
+import { h, Component, Prop, Element, State, Event, EventEmitter, Listen } from '@stencil/core';
 
 import { hasSlotContent } from '../../shared/utils';
 
@@ -40,9 +40,6 @@ export class BqOption {
 
   /** If true, the option is selected and active. */
   @Prop({ reflect: true }) selected: boolean = false;
-
-  /** If true, option element is part of a group */
-  @Prop({ reflect: true }) isOptionInGroup: boolean = false;
 
   // Prop lifecycle events
   // =======================
@@ -89,11 +86,6 @@ export class BqOption {
   // Public Methods must be async.
   // Requires JSDocs for public API documentation.
   // ===============================================
-
-  @Method()
-  async setPaddingToOption() {
-    this.isOptionInGroup = true;
-  }
 
   // Local methods
   // Internal business logic.
@@ -145,7 +137,6 @@ export class BqOption {
           'bq-option': true,
           disabled: this.disabled,
           active: !this.disabled && this.selected,
-          'option-group': this.isOptionInGroup,
         }}
         role="option"
         aria-selected={this.selected}

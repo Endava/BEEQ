@@ -67,7 +67,7 @@ export class BqOptionList {
   onBqSelect(event: CustomEvent<HTMLElement>) {
     const { target: item } = event;
 
-    this.optionItems.forEach((option) => (option.selected = option === item));
+    this.optionItems.forEach((option: HTMLBqOptionElement) => (option.selected = option === item));
     if (isHTMLElement(item, 'bq-option')) this.bqSelect.emit(item);
   }
 
