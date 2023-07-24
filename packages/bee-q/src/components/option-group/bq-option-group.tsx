@@ -2,6 +2,13 @@ import { h, Component, Host, Element } from '@stencil/core';
 
 import { isHTMLElement } from '../../shared/utils';
 
+/**
+ * @part label - The `legend` tag element which acts as a container for the label
+ * @part prefix - The prefix of the label
+ * @part label - The text of the label
+ * @part suffix - The suffix of the label
+ * @part group - The `div` element which holds the option items
+ */
 @Component({
   tag: 'bq-option-group',
   styleUrl: './scss/bq-option-group.scss',
@@ -65,7 +72,7 @@ export class BqOptionGroup {
   render() {
     return (
       <Host>
-        <legend class="label">
+        <legend class="label" part="label">
           <span class="label__child" part="prefix">
             <slot name="header-prefix" />
           </span>

@@ -52,16 +52,16 @@ export class BqOption {
   // ==============================================
 
   /** Handler to be called when item loses focus */
-  @Event() bqBlur: EventEmitter<HTMLBqOptionElement>;
+  @Event() bqOptionBlur: EventEmitter<HTMLBqOptionElement>;
 
   /** Handler to be called when item is focused */
-  @Event() bqFocus: EventEmitter<HTMLBqOptionElement>;
+  @Event() bqOptionFocus: EventEmitter<HTMLBqOptionElement>;
 
   /** Handler to be called when item is clicked */
-  @Event() bqClick: EventEmitter<HTMLBqOptionElement>;
+  @Event() bqOptionClick: EventEmitter<HTMLBqOptionElement>;
 
   /** Handler to be called on enter key press */
-  @Event() bqOnEnter: EventEmitter<HTMLBqOptionElement>;
+  @Event() bqOptionEnter: EventEmitter<HTMLBqOptionElement>;
 
   /** Handler to be called on enter key up */
   @Event() bqOnEnterKeyUp: EventEmitter<HTMLBqOptionElement>;
@@ -75,10 +75,7 @@ export class BqOption {
 
   @Listen('keydown')
   onKeyDown(event: KeyboardEvent) {
-    if (event.key === 'Enter') {
-      this.bqOnEnter.emit(this.el);
-      this.selected = true;
-    }
+    if (event.key === 'Enter') this.bqOptionEnter.emit(this.el);
   }
 
   @Listen('keyup')
@@ -110,7 +107,7 @@ export class BqOption {
       return;
     }
 
-    this.bqBlur.emit(this.el);
+    this.bqOptionBlur.emit(this.el);
   };
 
   private onFocus = (event: Event) => {
@@ -120,7 +117,7 @@ export class BqOption {
       return;
     }
 
-    this.bqFocus.emit(this.el);
+    this.bqOptionFocus.emit(this.el);
   };
 
   private onClick = (event: Event) => {
@@ -130,7 +127,7 @@ export class BqOption {
       return;
     }
 
-    this.bqClick.emit(this.el);
+    this.bqOptionClick.emit(this.el);
   };
 
   private onSlotChange = () => {
@@ -151,6 +148,7 @@ export class BqOption {
           'option-group': this.isOptionInGroup,
         }}
         role="option"
+        aria-selected={this.selected}
         tabindex={this.disabled ? '-1' : '0'}
         onBlur={this.onBlur}
         onFocus={this.onFocus}

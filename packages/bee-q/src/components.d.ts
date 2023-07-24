@@ -461,6 +461,8 @@ export namespace Components {
     }
     interface BqOptionGroup {
     }
+    interface BqOptionList {
+    }
     interface BqRadio {
         /**
           * If true radio displays background on hover
@@ -842,6 +844,10 @@ export interface BqOptionCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqOptionElement;
 }
+export interface BqOptionListCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqOptionListElement;
+}
 export interface BqRadioCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqRadioElement;
@@ -966,6 +972,12 @@ declare global {
         prototype: HTMLBqOptionGroupElement;
         new (): HTMLBqOptionGroupElement;
     };
+    interface HTMLBqOptionListElement extends Components.BqOptionList, HTMLStencilElement {
+    }
+    var HTMLBqOptionListElement: {
+        prototype: HTMLBqOptionListElement;
+        new (): HTMLBqOptionListElement;
+    };
     interface HTMLBqRadioElement extends Components.BqRadio, HTMLStencilElement {
     }
     var HTMLBqRadioElement: {
@@ -1059,6 +1071,7 @@ declare global {
         "bq-notification": HTMLBqNotificationElement;
         "bq-option": HTMLBqOptionElement;
         "bq-option-group": HTMLBqOptionGroupElement;
+        "bq-option-list": HTMLBqOptionListElement;
         "bq-radio": HTMLBqRadioElement;
         "bq-radio-group": HTMLBqRadioGroupElement;
         "bq-side-menu": HTMLBqSideMenuElement;
@@ -1548,25 +1561,25 @@ declare namespace LocalJSX {
          */
         "isOptionInGroup"?: boolean;
         /**
-          * Handler to be called when item loses focus
-         */
-        "onBqBlur"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
-        /**
-          * Handler to be called when item is clicked
-         */
-        "onBqClick"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
-        /**
-          * Handler to be called when item is focused
-         */
-        "onBqFocus"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
-        /**
-          * Handler to be called on enter key press
-         */
-        "onBqOnEnter"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
-        /**
           * Handler to be called on enter key up
          */
         "onBqOnEnterKeyUp"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        /**
+          * Handler to be called when item loses focus
+         */
+        "onBqOptionBlur"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        /**
+          * Handler to be called when item is clicked
+         */
+        "onBqOptionClick"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        /**
+          * Handler to be called on enter key press
+         */
+        "onBqOptionEnter"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        /**
+          * Handler to be called when item is focused
+         */
+        "onBqOptionFocus"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
         /**
           * If true, the option is selected and active.
          */
@@ -1577,6 +1590,20 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface BqOptionGroup {
+    }
+    interface BqOptionList {
+        /**
+          * Handler to be called when `bq-option` item loses focus.
+         */
+        "onBqBlur"?: (event: BqOptionListCustomEvent<HTMLBqOptionElement>) => void;
+        /**
+          * Handler to be called when `bq-option` item gets focus.
+         */
+        "onBqFocus"?: (event: BqOptionListCustomEvent<HTMLBqOptionElement>) => void;
+        /**
+          * Handler to be called when `bq-option` is selected (on click/enter press).
+         */
+        "onBqSelect"?: (event: BqOptionListCustomEvent<HTMLBqOptionElement>) => void;
     }
     interface BqRadio {
         /**
@@ -1964,6 +1991,7 @@ declare namespace LocalJSX {
         "bq-notification": BqNotification;
         "bq-option": BqOption;
         "bq-option-group": BqOptionGroup;
+        "bq-option-list": BqOptionList;
         "bq-radio": BqRadio;
         "bq-radio-group": BqRadioGroup;
         "bq-side-menu": BqSideMenu;
@@ -2004,6 +2032,7 @@ declare module "@stencil/core" {
             "bq-notification": LocalJSX.BqNotification & JSXBase.HTMLAttributes<HTMLBqNotificationElement>;
             "bq-option": LocalJSX.BqOption & JSXBase.HTMLAttributes<HTMLBqOptionElement>;
             "bq-option-group": LocalJSX.BqOptionGroup & JSXBase.HTMLAttributes<HTMLBqOptionGroupElement>;
+            "bq-option-list": LocalJSX.BqOptionList & JSXBase.HTMLAttributes<HTMLBqOptionListElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
             "bq-side-menu": LocalJSX.BqSideMenu & JSXBase.HTMLAttributes<HTMLBqSideMenuElement>;
