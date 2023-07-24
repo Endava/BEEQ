@@ -1,11 +1,9 @@
 import './css/sb-styles.css';
 
-import { defineCustomElements } from '@bee-q/core/dist/loader';
 import { setCustomElements } from '@storybook/web-components';
 
 import customElements from '../custom-elements.json';
 
-defineCustomElements();
 setCustomElements(customElements);
 
 export const parameters = {

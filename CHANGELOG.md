@@ -6,6 +6,15 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+## [0.7.1](https://github.com/Endava/bee-q/compare/v0.7.0...v0.7.1) (2023-07-20)
+
+
+### Bug Fixes
+
+* **input:** clear button showing up when disabled ([#368](https://github.com/Endava/bee-q/issues/368)) ([df4c983](https://github.com/Endava/bee-q/commit/df4c983ddbcf413781e498092b6714a0a74c4d9f))
+* **input:** focus style missing on consumer apps ([#371](https://github.com/Endava/bee-q/issues/371)) ([b573d5e](https://github.com/Endava/bee-q/commit/b573d5e9df10719e848a31e8ba133e6c72c7e159))
+* **input:** set native input `id` from `name` prop value ([#370](https://github.com/Endava/bee-q/issues/370)) ([8e5b848](https://github.com/Endava/bee-q/commit/8e5b8484983748819ae8ce829a60254b0e03ce70))
+
 ## [0.7.0](https://github.com/Endava/bee-q/compare/v0.6.2...v0.7.0) (2023-07-18)
 
 
