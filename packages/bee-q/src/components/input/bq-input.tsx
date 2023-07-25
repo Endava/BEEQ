@@ -32,6 +32,7 @@ export class BqInput {
   private suffixElem?: HTMLElement;
 
   private debounceBqInput: TDebounce<void>;
+  private fallbackInputId = 'input';
 
   // Reference to host HTML element
   // ===================================
@@ -228,14 +229,20 @@ export class BqInput {
   // =======================================================
 
   private handleBlur = () => {
+    if (this.disabled) return;
+
     this.bqBlur.emit(this.el);
   };
 
   private handleFocus = () => {
+    if (this.disabled) return;
+
     this.bqFocus.emit(this.el);
   };
 
   private handleInput = (ev: Event) => {
+    if (this.disabled) return;
+
     this.debounceBqInput?.cancel();
 
     if (!isHTMLElement(ev.target, 'input')) return;
@@ -248,6 +255,8 @@ export class BqInput {
   };
 
   private handleChange = (ev: Event) => {
+    if (this.disabled) return;
+
     if (!isHTMLElement(ev.target, 'input')) return;
     this.value = ev.target.value;
 
@@ -255,10 +264,13 @@ export class BqInput {
   };
 
   private handleClearClick = (ev: CustomEvent) => {
+    if (this.disabled) return;
+
     this.inputElem.value = '';
     this.value = this.inputElem.value;
 
     this.bqClear.emit(this.el);
+    this.bqInput.emit({ value: this.value, el: this.el });
     this.bqChange.emit({ value: this.value, el: this.el });
     this.inputElem.focus();
 
@@ -291,7 +303,7 @@ export class BqInput {
         {/* Label */}
         <label
           class={{ 'bq-input--label': true, hidden: !this.hasLabel }}
-          htmlFor="input"
+          htmlFor={this.name || this.fallbackInputId}
           ref={(labelElem) => (this.labelElem = labelElem)}
           part="label"
         >
@@ -300,7 +312,7 @@ export class BqInput {
         {/* Input control group */}
         <div
           class={{
-            'bq-input--control group': true,
+            'bq-input--control': true,
             [`validation-${this.validationStatus}`]: true,
             disabled: this.disabled,
           }}
@@ -316,7 +328,7 @@ export class BqInput {
           </span>
           {/* HTML Input */}
           <input
-            id="input"
+            id={this.name || this.fallbackInputId}
             class="bq-input--control__input"
             aria-disabled={this.disabled ? 'true' : 'false'}
             autoCapitalize={this.autocapitalize}
@@ -347,11 +359,11 @@ export class BqInput {
             onInput={this.handleInput}
           />
           {/* Clear Button */}
-          {!this.disableClear && this.hasValue && (
+          {this.hasValue && !this.disabled && !this.disableClear && (
             // The clear button will be visible as long as the input has a value
             // and the parent group is hovered or has focus-within
             <bq-button
-              class="bq-input--control__clear ms-[--bq-input--gap] hidden group-hover:inline-block group-[&:has(:focus-within)]:inline-block"
+              class="bq-input--control__clear ms-[--bq-input--gap] hidden"
               appearance="text"
               aria-label={this.clearButtonLabel}
               size="small"

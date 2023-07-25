@@ -28,7 +28,9 @@
         "projectType": "library",
         "tsConfig": "packages/bee-q/tsconfig.lib.json",
         "configPath": "packages/bee-q/stencil.config.ts",
-        "outputPath": "dist/bee-q"
+        "outputPath": "dist/bee-q",
+        "watch": true,
+        "dev": true
       }
     },
     "storybook-start": {

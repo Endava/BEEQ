@@ -1,4 +1,4 @@
-import { h, Component, Prop, Watch, Element, Event, EventEmitter, Method, Host, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch } from '@stencil/core';
 
 import { TAB_SIZE, TTabSize } from './bq-tab.types';
 import { validatePropValue } from '../../shared/utils';
@@ -160,37 +160,35 @@ export class BqTab {
 
   render() {
     return (
-      <Host>
-        <button
-          ref={(el) => (this.buttonElement = el)}
-          class={{
-            [`bq-tab bq-tab--${this.size} group`]: true,
-            'text-text-brand disabled:text-text-brand-disabled': this.active,
-            'text-text-primary disabled:text-text-primary-disabled': !this.active,
-          }}
-          id={this.tabId}
-          onBlur={this.handleOnBlur}
-          onClick={this.handleClick}
-          onFocus={this.handleOnFocus}
-          onKeyDown={this.handleOnKeyDown}
-          disabled={this.disabled}
-          role="tab"
-          aria-controls={this.controls}
-          aria-disabled={this.disabled ? 'true' : 'false'}
-          aria-selected={this.active ? 'true' : 'false'}
-          tabindex={this.tabindex}
-          part="base"
-        >
-          <div class="flex items-center justify-center" part="content">
-            <div class="flex" part="icon">
-              <slot name="icon" />
-            </div>
-            <div class="line-clamp-1" part="text">
-              <slot />
-            </div>
+      <button
+        ref={(el) => (this.buttonElement = el)}
+        class={{
+          [`bq-tab bq-tab--${this.size}`]: true,
+          'text-text-brand disabled:text-text-brand-disabled': this.active,
+          'text-text-primary disabled:text-text-primary-disabled': !this.active,
+        }}
+        id={this.tabId}
+        onBlur={this.handleOnBlur}
+        onClick={this.handleClick}
+        onFocus={this.handleOnFocus}
+        onKeyDown={this.handleOnKeyDown}
+        disabled={this.disabled}
+        role="tab"
+        aria-controls={this.controls}
+        aria-disabled={this.disabled ? 'true' : 'false'}
+        aria-selected={this.active ? 'true' : 'false'}
+        tabindex={this.tabindex}
+        part="base"
+      >
+        <div class="flex items-center justify-center gap-[--bq-tab--label-icon-gap]" part="content">
+          <div class="flex" part="icon">
+            <slot name="icon" />
           </div>
-        </button>
-      </Host>
+          <div class="line-clamp-1" part="text">
+            <slot />
+          </div>
+        </div>
+      </button>
     );
   }
 }
