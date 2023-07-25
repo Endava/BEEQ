@@ -5,6 +5,13 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property | Attribute | Description | Type                  | Default    |
+| -------- | --------- | ----------- | --------------------- | ---------- |
+| `size`   | `size`    |             | `"medium" \| "small"` | `'medium'` |
+
+
 ## Shadow Parts
 
 | Part       | Description                                             |

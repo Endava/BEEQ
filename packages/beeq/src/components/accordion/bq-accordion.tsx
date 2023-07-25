@@ -1,4 +1,7 @@
-import { Component, h } from '@stencil/core';
+import { Component, Element, h, Prop, Watch } from '@stencil/core';
+
+import { ACCORDION_SIZE, TAccordionSize } from './bq-accordion.types';
+import { validatePropValue } from '../../shared/utils';
 
 /**
  * @part base - The `<details>` that holds the accordion content
@@ -13,6 +16,8 @@ export class BqAccordion {
   // Own Properties
   // ====================
 
+  @Element() el!: HTMLBqAccordionElement;
+
   // Reference to host HTML element
   // ===================================
 
@@ -23,8 +28,15 @@ export class BqAccordion {
   // Public Property API
   // ========================
 
+  @Prop({ reflect: true, mutable: true }) size: TAccordionSize = 'medium';
+
   // Prop lifecycle events
   // =======================
+
+  @Watch('size')
+  checkPropValues() {
+    validatePropValue(ACCORDION_SIZE, 'medium', this.el, 'size');
+  }
 
   // Events section
   // Requires JSDocs for public API documentation
@@ -33,6 +45,10 @@ export class BqAccordion {
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
+
+  componentWillLoad() {
+    this.checkPropValues();
+  }
 
   // Listeners
   // ==============
@@ -55,7 +71,7 @@ export class BqAccordion {
 
   render() {
     return (
-      <details class="bq-accordion" part="base">
+      <details class={{ [`bq-accordion ${this.size}`]: true }} part="base">
         <summary class="bq-accordion__summary" part="header">
           <slot name="header" />
         </summary>

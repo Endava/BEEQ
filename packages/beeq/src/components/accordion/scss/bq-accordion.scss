@@ -10,6 +10,18 @@
 
 .bq-accordion {
   @apply cursor-pointer;
+
+  &.small {
+    .bq-accordion__summary {
+      @apply py-[--bq-accordion--small-padding-y] pe-[--bq-accordion--small-padding-end] ps-[--bq-accordion--small-padding-start];
+    }
+  }
+
+  &.medium {
+    .bq-accordion__summary {
+      @apply py-[--bq-accordion--medium-padding-y] pe-[--bq-accordion--medium-padding-end] ps-[--bq-accordion--medium-padding-start];
+    }
+  }
 }
 
 .bq-accordion__summary {

@@ -2,6 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
 
 import mdx from './bq-accordion-group.mdx';
+import { ACCORDION_SIZE } from '../../accordion/bq-accordion.types';
 
 const meta: Meta = {
   title: 'Components/Accordions',
@@ -12,9 +13,11 @@ const meta: Meta = {
     },
   },
   argTypes: {
+    size: { control: 'select', options: [...ACCORDION_SIZE] },
     text: { control: 'text', table: { disable: true } },
   },
   args: {
+    size: 'medium',
     text: 'text',
   },
 };
@@ -24,10 +27,10 @@ type Story = StoryObj;
 
 const Template = (args: Args) => html`
   <bq-accordion-group>
-    <bq-accordion><span slot="header">${args.text}</span></bq-accordion>
-    <bq-accordion><span slot="header">${args.text}</span></bq-accordion>
-    <bq-accordion><span slot="header">${args.text}</span></bq-accordion>
-    <bq-accordion><span slot="header">${args.text}</span></bq-accordion>
+    <bq-accordion size=${args.size}><span slot="header">${args.text}</span></bq-accordion>
+    <bq-accordion size=${args.size}><span slot="header">${args.text}</span></bq-accordion>
+    <bq-accordion size=${args.size}><span slot="header">${args.text}</span></bq-accordion>
+    <bq-accordion size=${args.size}><span slot="header">${args.text}</span></bq-accordion>
   </bq-accordion-group>
 `;
 
