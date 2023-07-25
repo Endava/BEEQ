@@ -246,7 +246,7 @@ export class BqCheckbox {
           </span>
         </div>
         <span
-          class="bq-checkbox__label ml-xs2 text-start font-medium leading-large text-text-primary group-hover-[&:not(.is-disabled)]:text-text-primary-hover group-[.is-disabled]:text-text-primary-disabled"
+          class="bq-checkbox__label ml-xs2 text-start font-medium leading-regular text-text-primary group-hover-[&:not(.is-disabled)]:text-text-primary-hover group-[.is-disabled]:text-text-primary-disabled"
           part="label"
         >
           <slot />

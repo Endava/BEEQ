@@ -4,7 +4,7 @@ import { DECLARATIVE_COLORS, PRIMITIVE_COLORS } from './config';
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  content: ['packages/bee-q/**/*.{jsx,js,tsx,ts}'],
+  content: ['packages/bee-q/**/*.{jsx,js,tsx,ts,mdx}'],
   theme: {
     borderRadius: {
       none: 'var(--bq-radius--none)',
@@ -61,6 +61,7 @@ const config: Config = {
       bold: 'var(--bq-font-weight--bold)',
     },
     lineHeight: {
+      small: 'var(--bq-font-line-height--small)',
       regular: 'var(--bq-font-line-height--regular)',
       large: 'var(--bq-font-line-height--large)',
     },

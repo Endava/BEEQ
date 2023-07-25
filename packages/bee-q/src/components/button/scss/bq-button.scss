@@ -7,7 +7,7 @@
 @layer components {
   // Common button base style
   .bq-button {
-    @apply box-border flex cursor-[inherit] items-center justify-center rounded-m border-2 border-solid border-transparent text-m font-medium leading-large;
+    @apply box-border flex cursor-[inherit] items-center justify-center rounded-m border-2 border-solid border-transparent text-m font-medium leading-regular;
     @apply transition-[background-color,border-color,color] duration-300;
     @apply disabled:cursor-not-allowed;
     @apply focus-visible:focus;

@@ -247,7 +247,7 @@ export class BqNotification {
           <div class="flex flex-col items-start gap-[var(--bq-notification--content-footer-gap)]" part="main">
             <div class="flex flex-col gap-[var(--bq-notification--title-body-gap)]" part="content">
               {/* TITLE */}
-              <div class="title-font font-semibold leading-large" part="title">
+              <div class="title-font font-semibold leading-regular" part="title">
                 <slot />
               </div>
               {/* BODY */}
