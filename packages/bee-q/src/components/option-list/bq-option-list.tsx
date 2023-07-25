@@ -95,7 +95,7 @@ export class BqOptionList {
 
     const bqOptionItems: HTMLBqOptionElement[] = [];
 
-    this.slot.assignedElements({ flatten: true }).filter((elem: HTMLBqOptionElement | HTMLBqOptionGroupElement) => {
+    this.slot.assignedElements({ flatten: true }).forEach((elem: HTMLBqOptionElement | HTMLBqOptionGroupElement) => {
       if (isHTMLElement(elem, 'bq-option')) bqOptionItems.push(elem);
       if (isHTMLElement(elem, 'bq-option-group'))
         Array.from(elem.querySelectorAll('bq-option')).forEach((bqOption) => bqOptionItems.push(bqOption));
