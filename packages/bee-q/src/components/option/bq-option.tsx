@@ -33,7 +33,7 @@ export class BqOption {
   // Public Property API
   // ========================
 
-  /** If true, the `bq-option` is disabled. */
+  /** If true, the option is disabled. */
   @Prop({ reflect: true }) disabled?: boolean = false;
 
   /** A string representing the value of the option. Can be used to identify the item */

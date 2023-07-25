@@ -72,7 +72,7 @@ export class BqOptionGroup {
             <slot name="header-suffix" />
           </span>
         </legend>
-        <div class="group" role="group" part="group">
+        <div class="group" role="group" aria-label="Options" part="group">
           <slot />
         </div>
       </Host>

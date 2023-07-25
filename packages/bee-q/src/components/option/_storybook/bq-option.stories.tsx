@@ -45,17 +45,19 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
-  <bq-option
-    disabled=${args.disabled}
-    selected=${args.selected}
-    @bqOptionBlur=${args.bqOptionBlur}
-    @bqOptionFocus=${args.bqOptionFocus}
-    @bqOptionClick=${args.bqOptionClick}
-  >
-    ${args.htmlNodePrefix}
-    <span>${args.text}</span>
-    ${args.htmlNodeSuffix}
-  </bq-option>
+  <bq-option-list>
+    <bq-option
+      disabled=${args.disabled}
+      selected=${args.selected}
+      @bqOptionBlur=${args.bqOptionBlur}
+      @bqOptionFocus=${args.bqOptionFocus}
+      @bqOptionClick=${args.bqOptionClick}
+    >
+      ${args.htmlNodePrefix}
+      <span>${args.text}</span>
+      ${args.htmlNodeSuffix}
+    </bq-option>
+  </bq-option-list>
 `;
 
 export const Default: Story = {
@@ -65,7 +67,7 @@ export const Default: Story = {
   },
 };
 
-export const Selected: Story = {
+export const Active: Story = {
   render: Template,
   args: {
     selected: true,
