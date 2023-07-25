@@ -7,12 +7,11 @@
 
 ## Properties
 
-| Property          | Attribute            | Description                                    | Type      | Default     |
-| ----------------- | -------------------- | ---------------------------------------------- | --------- | ----------- |
-| `disabled`        | `disabled`           | If true, the `bq-option` is disabled.          | `boolean` | `false`     |
-| `isOptionInGroup` | `is-option-in-group` | If true, option element is part of a group     | `boolean` | `false`     |
-| `selected`        | `selected`           | If true, the option is selected and active.    | `boolean` | `false`     |
-| `value`           | `value`              | A string representing the value of the option. | `string`  | `undefined` |
+| Property   | Attribute  | Description                                    | Type      | Default     |
+| ---------- | ---------- | ---------------------------------------------- | --------- | ----------- |
+| `disabled` | `disabled` | If true, the `bq-option` is disabled.          | `boolean` | `false`     |
+| `selected` | `selected` | If true, the option is selected and active.    | `boolean` | `false`     |
+| `value`    | `value`    | A string representing the value of the option. | `string`  | `undefined` |
 
 
 ## Events
@@ -24,19 +23,6 @@
 | `bqOptionClick`  | Handler to be called when item is clicked  | `CustomEvent<HTMLBqOptionElement>` |
 | `bqOptionEnter`  | Handler to be called on enter key press    | `CustomEvent<HTMLBqOptionElement>` |
 | `bqOptionFocus`  | Handler to be called when item is focused  | `CustomEvent<HTMLBqOptionElement>` |
-
-
-## Methods
-
-### `setPaddingToOption() => Promise<void>`
-
-
-
-#### Returns
-
-Type: `Promise<void>`
-
-
 
 
 ## Shadow Parts

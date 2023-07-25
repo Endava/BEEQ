@@ -450,7 +450,7 @@ export namespace Components {
          */
         "selected": boolean;
         /**
-          * A string representing the value of the option.
+          * A string representing the value of the option. Can be used to identify the item
          */
         "value"?: string;
     }
@@ -1576,7 +1576,7 @@ declare namespace LocalJSX {
          */
         "selected"?: boolean;
         /**
-          * A string representing the value of the option.
+          * A string representing the value of the option. Can be used to identify the item
          */
         "value"?: string;
     }

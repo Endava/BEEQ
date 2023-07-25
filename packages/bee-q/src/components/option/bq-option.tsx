@@ -3,9 +3,10 @@ import { h, Component, Prop, Element, State, Event, EventEmitter, Listen } from 
 import { hasSlotContent } from '../../shared/utils';
 
 /**
- * @part label - The `span` element in which the label text is displayed
- * @part prefix - The `span` element in which the prefix is displayed (generally `bq-icon`)
- * @part suffix - The `span` element in which the suffix is displayed (generally `bq-icon`)
+ * @part base - The component's internal wrapper.
+ * @part label - The `span` element in which the label text is displayed.
+ * @part prefix - The `span` element in which the prefix is displayed (generally `bq-icon`).
+ * @part suffix - The `span` element in which the suffix is displayed (generally `bq-icon`).
  */
 @Component({
   tag: 'bq-option',
@@ -35,7 +36,7 @@ export class BqOption {
   /** If true, the `bq-option` is disabled. */
   @Prop({ reflect: true }) disabled?: boolean = false;
 
-  /** A string representing the value of the option. */
+  /** A string representing the value of the option. Can be used to identify the item */
   @Prop({ reflect: true }) value?: string;
 
   /** If true, the option is selected and active. */
@@ -144,6 +145,7 @@ export class BqOption {
         onBlur={this.onBlur}
         onFocus={this.onFocus}
         onClick={this.onClick}
+        part="base"
       >
         <span class="bq-option__child" ref={(elem) => (this.prefixElem = elem)} part="prefix">
           <slot name="prefix" onSlotchange={this.onSlotChange} />
