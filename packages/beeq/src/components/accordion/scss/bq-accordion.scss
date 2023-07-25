@@ -7,3 +7,15 @@
 :host {
   @apply block;
 }
+
+.bq-accordion {
+  @apply cursor-pointer;
+}
+
+.bq-accordion__summary {
+  @apply list-none;
+
+  &::marker {
+    @apply hidden;
+  }
+}

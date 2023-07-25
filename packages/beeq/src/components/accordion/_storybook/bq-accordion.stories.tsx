@@ -22,7 +22,7 @@ export default meta;
 
 type Story = StoryObj;
 
-const Template = (args: Args) => html`<bq-accordion>${args.text}</bq-accordion>`;
+const Template = (args: Args) => html`<bq-accordion><span slot="header">${args.text}</span></bq-accordion>`;
 
 export const Default: Story = {
   render: Template,

@@ -1,5 +1,9 @@
-import { h, Component } from '@stencil/core';
+import { Component, h } from '@stencil/core';
 
+/**
+ * @part base - The `<details>` that holds the accordion content
+ * @part header - The `<summary>` that holds the accordion header content
+ */
 @Component({
   tag: 'bq-accordion',
   styleUrl: './scss/bq-accordion.scss',
@@ -51,9 +55,12 @@ export class BqAccordion {
 
   render() {
     return (
-      <p class="m-[var(--bq-accordion--margin)]">
-        My name is Stencil <slot />
-      </p>
+      <details class="bq-accordion" part="base">
+        <summary class="bq-accordion__summary" part="header">
+          <slot name="header" />
+        </summary>
+        <slot />
+      </details>
     );
   }
 }

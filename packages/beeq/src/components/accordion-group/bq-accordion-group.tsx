@@ -1,4 +1,4 @@
-import { h, Component } from '@stencil/core';
+import { Component, h } from '@stencil/core';
 
 @Component({
   tag: 'bq-accordion-group',
@@ -51,9 +51,9 @@ export class BqAccordionGroup {
 
   render() {
     return (
-      <p class="m-[var(--bq-accordion-group--margin)]">
-        My name is Stencil <slot />
-      </p>
+      <div>
+        <slot />
+      </div>
     );
   }
 }
