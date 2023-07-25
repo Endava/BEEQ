@@ -54,8 +54,11 @@ export class BqDropdown {
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Handler to be called when the `bq-panel` switches state (visible/hidden). */
-  @Event() bqPanelOpen: EventEmitter<boolean>;
+  /**
+   * Handler to be called to check if the `bq-panel` switches state (visible/hidden).
+   * @returns CustomEvent - with value `{ opened: boolean }`
+   */
+  @Event() bqPanelChange: EventEmitter<{ opened: boolean }>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -69,12 +72,19 @@ export class BqDropdown {
   // ==============
 
   /** On click outside the panel */
-  @Listen('click', { target: 'document' })
+  @Listen('click', { target: 'document', passive: true })
   onClickOutsidePanel(event: MouseEvent) {
     // close the panel on click, except click within the panel or within the trigger element
     if (!event.composedPath().includes(this.panelElement) && !event.composedPath().includes(this.trigger)) {
       this.panelElement.open = false;
     }
+  }
+
+  @Listen('bqPanelVisibility', { passive: true })
+  onPanelVisibilityChange(event: CustomEvent) {
+    const isOpened: boolean = event.detail as boolean;
+
+    this.bqPanelChange.emit({ opened: isOpened });
   }
 
   // Public methods API

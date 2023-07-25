@@ -1391,9 +1391,10 @@ declare namespace LocalJSX {
     }
     interface BqDropdown {
         /**
-          * Handler to be called when the `bq-panel` switches state (visible/hidden).
+          * Handler to be called to check if the `bq-panel` switches states (visible/hidden).
+          * @returns CustomEvent - with value `{ opened: boolean }`
          */
-        "onBqPanelOpen"?: (event: BqDropdownCustomEvent<boolean>) => void;
+        "onBqPanelChange"?: (event: BqDropdownCustomEvent<{ opened: boolean }>) => void;
         /**
           * Distance between the panel and the trigger element.
          */

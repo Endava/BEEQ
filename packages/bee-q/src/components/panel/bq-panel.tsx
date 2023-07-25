@@ -51,7 +51,7 @@ export class BqPanel {
   // =======================
 
   @Watch('open')
-  emit() {
+  handleOpenProp() {
     this.bqPanelVisibility.emit(this.open);
   }
 
@@ -101,7 +101,7 @@ export class BqPanel {
 
   /**
    * set trigger element and init FloatingUI
-   * @param trigger - trigger element for the panel
+   * @param trigger - the trigger element for the panel
    */
   @Method()
   async setTriggerElement(trigger: HTMLElement) {
