@@ -141,6 +141,7 @@ export class BqOption {
         }}
         role="option"
         aria-selected={this.selected}
+        aria-disabled={this.disabled}
         tabindex={this.disabled ? '-1' : '0'}
         onBlur={this.onBlur}
         onFocus={this.onFocus}

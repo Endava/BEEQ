@@ -10,6 +10,38 @@
     <script nomodule src="/build/bee-q.js"></script>
   </head>
   <body>
-    <my-component first="Stencil" last="'Don't call me a framework' JS"></my-component>
+    <section style="width: 320px">
+      <bq-option-list>
+        <bq-option-group>
+          <bq-icon name="fork-knife" size="16" slot="header-prefix"></bq-icon>
+          <span slot="header-label">Food</span>
+
+          <bq-option value="pizza">
+            <bq-icon name="pizza" size="16" slot="prefix"></bq-icon>
+            <span>Pizza</span>
+            <bq-icon name="bowl-food" size="16" slot="suffix"></bq-icon>
+          </bq-option>
+
+          <bq-option value="seeds" disabled="true">
+            <bq-icon name="lock" size="16" slot="prefix"></bq-icon>
+            <span>Seeds</span>
+          </bq-option>
+
+          <bq-option value="orange">
+            <span>Slice of orange</span>
+            <bq-icon name="orange-slice" size="16" slot="suffix"></bq-icon>
+          </bq-option>
+        </bq-option-group>
+
+        <bq-option value="option3">
+          <span>Option 3</span>
+          <bq-icon name="gear" size="16" slot="suffix"></bq-icon>
+        </bq-option>
+
+        <bq-option value="option4">Option 4</bq-option>
+        <bq-option value="option5">Option 5</bq-option>
+        <bq-option value="option6">Option 6</bq-option>
+      </bq-option-list>
+    </section>
   </body>
 </html>
