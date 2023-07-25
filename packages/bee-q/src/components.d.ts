@@ -477,7 +477,7 @@ export namespace Components {
         "scrollbar"?: boolean;
         /**
           * set trigger element and init FloatingUI
-          * @param trigger - trigger element for the panel
+          * @param trigger - the trigger element for the panel
          */
         "setTriggerElement": (trigger: HTMLElement) => Promise<void>;
         "togglePanel": () => Promise<void>;
@@ -1391,7 +1391,7 @@ declare namespace LocalJSX {
     }
     interface BqDropdown {
         /**
-          * Handler to be called to check if the `bq-panel` switches states (visible/hidden).
+          * Handler to be called to check if the `bq-panel` switches state (visible/hidden).
           * @returns CustomEvent - with value `{ opened: boolean }`
          */
         "onBqPanelChange"?: (event: BqDropdownCustomEvent<{ opened: boolean }>) => void;

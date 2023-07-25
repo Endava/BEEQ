@@ -80,6 +80,17 @@ export class BqDropdown {
     }
   }
 
+  /**
+   * If the user press on Escape button
+   * or `<bq-dropdown>` loses focus
+   * then hide the panel
+   */
+  @Listen('keyup', { target: 'window', passive: true })
+  onEscape(event: KeyboardEvent) {
+    if (event.key === 'Escape' || (event.key === 'Tab' && !event.composedPath().includes(this.el)))
+      this.panelElement.open = false;
+  }
+
   @Listen('bqPanelVisibility', { passive: true })
   onPanelVisibilityChange(event: CustomEvent) {
     const isOpened: boolean = event.detail as boolean;
