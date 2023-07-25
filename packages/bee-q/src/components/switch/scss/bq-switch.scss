@@ -63,5 +63,5 @@
 }
 
 .bq-switch--label {
-  @apply text-m font-medium leading-large text-text-primary transition-colors duration-300 group-[.is-disabled]:text-text-primary-disabled;
+  @apply text-m font-medium leading-regular text-text-primary transition-colors duration-300 group-[.is-disabled]:text-text-primary-disabled;
 }
