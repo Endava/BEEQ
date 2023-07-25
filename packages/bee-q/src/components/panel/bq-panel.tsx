@@ -1,4 +1,4 @@
-import { h, Component, Prop, Listen, Element, Method, Watch, EventEmitter, Event } from '@stencil/core';
+import { h, Component, Prop, Element, Method, Watch, EventEmitter, Event } from '@stencil/core';
 
 import { FloatingUIPlacement } from '../../services/interfaces';
 import { FloatingUI } from '../../services/libraries';
@@ -49,6 +49,7 @@ export class BqPanel {
 
   // Prop lifecycle events
   // =======================
+
   @Watch('open')
   emit() {
     this.bqPanelVisibility.emit(this.open);
@@ -86,14 +87,6 @@ export class BqPanel {
   // Listeners
   // ==============
 
-  /** On click outside the panel */
-  @Listen('click', { target: 'document' })
-  onClickOutsidePanel(event: MouseEvent) {
-    if (!event.composedPath().includes(this.panel) && !event.composedPath().includes(this.trigger)) {
-      this.open = false;
-    }
-  }
-
   // Public methods API
   // These methods are exposed on the host element.
   // Always use two lines.
@@ -103,7 +96,6 @@ export class BqPanel {
 
   @Method()
   async togglePanel() {
-    this.open = !this.open;
     this.floatingUI?.update();
   }
 

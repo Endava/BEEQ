@@ -1,4 +1,4 @@
-import { h, Component, Element, Event, EventEmitter, Prop } from '@stencil/core';
+import { h, Component, Element, Event, EventEmitter, Prop, Listen } from '@stencil/core';
 
 import { FloatingUIPlacement } from '../../services/interfaces';
 
@@ -16,8 +16,8 @@ export class BqDropdown {
   // Own Properties
   // ====================
 
-  public trigger: HTMLElement;
-  public panelElement: HTMLBqPanelElement;
+  private trigger: HTMLElement;
+  private panelElement: HTMLBqPanelElement;
 
   // Reference to host HTML element
   // ===================================
@@ -68,6 +68,15 @@ export class BqDropdown {
   // Listeners
   // ==============
 
+  /** On click outside the panel */
+  @Listen('click', { target: 'document' })
+  onClickOutsidePanel(event: MouseEvent) {
+    // close the panel on click, except click within the panel or within the trigger element
+    if (!event.composedPath().includes(this.panelElement) && !event.composedPath().includes(this.trigger)) {
+      this.panelElement.open = false;
+    }
+  }
+
   // Public methods API
   // These methods are exposed on the host element.
   // Always use two lines.
@@ -82,6 +91,7 @@ export class BqDropdown {
 
   private openPanel = (): void => {
     this.panelElement?.togglePanel();
+    this.panelElement.open = !this.panelElement.open;
   };
 
   private initFloatingUIFromPanel = (): void => {
