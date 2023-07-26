@@ -9,9 +9,13 @@
 }
 
 .bq-option {
-  @apply flex h-[var(--bq-option--height)] w-full cursor-not-allowed items-center px-[var(--bq-option--paddingX)] py-[var(--bq-option--paddingY)] text-m;
-  @apply rounded-s bg-transparent;
+  @apply flex h-[--bq-option--height] w-full cursor-not-allowed items-center text-[length:--bq-option--font-size];
+  @apply py-[--bq-option--paddingY] pe-[--bq-option--padding-end] ps-[--bq-option--padding-start];
+  @apply rounded-[--bq-option--border-radius] bg-[--bq-option--background] shadow-[shadow:--bq-option--box-shadow];
+  @apply border-[length:--bq-option--border-width] border-[color:--bq-option--border-color];
   @apply focus-visible:focus active:outline-none;
+
+  border-style: var(--bq-option--border-style);
 
   &__child {
     @apply flex items-center;
@@ -31,11 +35,12 @@
 }
 
 .label {
-  @apply inline-block w-full overflow-hidden text-ellipsis whitespace-nowrap px-[var(--bq-option-label--paddingX)];
+  @apply inline-block w-full overflow-hidden text-ellipsis whitespace-nowrap;
+  @apply pe-[--bq-option-label--padding-end] ps-[--bq-option-label--padding-start];
 }
 
 .no-prefix {
-  @apply pl-0;
+  @apply ps-0;
 }
 
 .suffix {

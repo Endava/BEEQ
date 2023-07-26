@@ -3,8 +3,39 @@
 /* -------------------------------------------------------------------------- */
 
 :host {
+  /**
+  * @prop --bq-option--background: background color
+  * @prop --bq-option--font-size: font size
+
+  * @prop --bq-option--border-color: border color
+  * @prop --bq-option--border-style: border style
+  * @prop --bq-option--border-width: border width
+  * @prop --bq-option--border-radius: border radius
+
+  * @prop --bq-option--box-shadow: box shadow
+  
+  * @prop --bq-option--height: option height
+  * @prop --bq-option--padding-start: padding start X axis 
+  * @prop --bq-option--padding-end: padding end X axis
+  * @prop --bq-option--paddingY: padding Y axis
+  * @prop --bq-option-label--padding-start: option label padding start
+  * @prop --bq-option-label--padding-end: option label padding end
+  */
+
+  --bq-option--background: theme('colors.bg.primary');
+  --bq-option--font-size: theme('fontSize.m');
+
+  --bq-option--border-color: theme('colors.transparent');
+  --bq-option--border-style: none;
+  --bq-option--border-width: 0;
+  --bq-option--border-radius: theme('borderRadius.s');
+
+  --bq-option--box-shadow: none;
+
   --bq-option--height: 40px;
-  --bq-option--paddingX: theme('spacing.s');
+  --bq-option--padding-start: theme('spacing.s');
+  --bq-option--padding-end: theme('spacing.s');
   --bq-option--paddingY: theme('spacing.xs');
-  --bq-option-label--paddingX: theme('spacing.s');
+  --bq-option-label--padding-start: theme('spacing.s');
+  --bq-option-label--padding-end: theme('spacing.s');
 }
