@@ -24,7 +24,7 @@ const config: StorybookConfig = {
     buildStoriesJson: true,
   },
   framework: '@storybook/web-components-vite',
-  stories: ['../src/**/*.stories.@(mdx|ts|tsx)'],
+  stories: ['../src/_storybook/**/*.mdx', '../src/**/*.stories.@(mdx|ts|tsx)'],
   staticDirs: ['../../../dist/bee-q/www', { from: '../../../dist/bee-q/dist/bee-q', to: '/bee-q' }],
   viteFinal: async (config: InlineConfig, { configType }) => {
     // Add your own config tweaks if needed and return the modified config
