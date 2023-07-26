@@ -1,6 +1,6 @@
 import { Component, Element, h, Prop, Watch } from '@stencil/core';
 
-import { ACCORDION_SIZE, TAccordionSize } from './bq-accordion.types';
+import { ACCORDION_APPEARANCE, ACCORDION_SIZE, TAccordionAppearance, TAccordionSize } from './bq-accordion.types';
 import { validatePropValue } from '../../shared/utils';
 
 /**
@@ -33,12 +33,15 @@ export class BqAccordion {
 
   @Prop({ reflect: true, mutable: true }) size: TAccordionSize = 'medium';
 
+  @Prop({ reflect: true, mutable: true }) appearance: TAccordionAppearance = 'filled';
+
   // Prop lifecycle events
   // =======================
 
   @Watch('size')
   checkPropValues() {
     validatePropValue(ACCORDION_SIZE, 'medium', this.el, 'size');
+    validatePropValue(ACCORDION_APPEARANCE, 'filled', this.el, 'appearance');
   }
 
   // Events section
@@ -80,7 +83,7 @@ export class BqAccordion {
   render() {
     return (
       <details
-        class={{ [`bq-accordion ${this.size}`]: true }}
+        class={{ [`bq-accordion ${this.size} ${this.appearance} group`]: true }}
         open={this.expanded}
         onClick={this.handleClick}
         part="base"

@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { TAccordionSize } from "./components/accordion/bq-accordion.types";
+import { TAccordionAppearance, TAccordionSize } from "./components/accordion/bq-accordion.types";
 import { TAlertType } from "./components/alert/bq-alert.types";
 import { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 import { TBadgeSize } from "./components/badge/bq-badge.types";
@@ -28,7 +28,7 @@ import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq
 import { TTabSize } from "./components/tab/bq-tab.types";
 import { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 import { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
-export { TAccordionSize } from "./components/accordion/bq-accordion.types";
+export { TAccordionAppearance, TAccordionSize } from "./components/accordion/bq-accordion.types";
 export { TAlertType } from "./components/alert/bq-alert.types";
 export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 export { TBadgeSize } from "./components/badge/bq-badge.types";
@@ -53,6 +53,7 @@ export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq
 export { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export namespace Components {
     interface BqAccordion {
+        "appearance": TAccordionAppearance;
         "expanded": boolean;
         "size": TAccordionSize;
     }
@@ -1789,6 +1790,7 @@ declare global {
 }
 declare namespace LocalJSX {
     interface BqAccordion {
+        "appearance"?: TAccordionAppearance;
         "expanded"?: boolean;
         "size"?: TAccordionSize;
     }

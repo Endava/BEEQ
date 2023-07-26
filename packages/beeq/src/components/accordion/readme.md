@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property   | Attribute  | Description | Type                  | Default    |
-| ---------- | ---------- | ----------- | --------------------- | ---------- |
-| `expanded` | `expanded` |             | `boolean`             | `false`    |
-| `size`     | `size`     |             | `"medium" \| "small"` | `'medium'` |
+| Property     | Attribute    | Description | Type                  | Default    |
+| ------------ | ------------ | ----------- | --------------------- | ---------- |
+| `appearance` | `appearance` |             | `"filled" \| "ghost"` | `'filled'` |
+| `expanded`   | `expanded`   |             | `boolean`             | `false`    |
+| `size`       | `size`       |             | `"medium" \| "small"` | `'medium'` |
 
 
 ## Shadow Parts

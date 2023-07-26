@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------- */
-/*                          Accordion custom properties           */
+/*                         Accordion custom properties                        */
 /* -------------------------------------------------------------------------- */
 
 :host {
@@ -12,4 +12,14 @@
   --bq-accordion--medium-padding-start: theme('spacing.m');
   --bq-accordion--medium-padding-end: theme('spacing.m');
   --bq-accordion--medium-gap: theme('spacing.m');
+
+  --bq-accordion--filled-collapsed-background: theme('colors.ui.primary-alt');
+  --bq-accordion--filled-collapsed-hover: theme('colors.ui.secondary-hover');
+  --bq-accordion--filled-expanded-background: theme('colors.ui.brand-alt');
+  --bq-accordion--filled-expanded-collapsed-hover: theme('colors.ui.secondary-hover');
+
+  --bq-accordion--ghost-collapsed-background: theme('colors.transparent');
+  --bq-accordion--ghost-collapsed-hover: theme('colors.transparent');
+  --bq-accordion--ghost-expanded-background: theme('colors.transparent');
+  --bq-accordion--ghost-expanded-hover: theme('colors.transparent');
 }

@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------- */
-/*                                Accordion styles                */
+/*                              Accordion styles                              */
 /* -------------------------------------------------------------------------- */
 
 @import './bq-accordion.variables';
@@ -20,10 +20,32 @@
       @apply space-x-[--bq-accordion--medium-gap] py-[--bq-accordion--medium-padding-y] pe-[--bq-accordion--medium-padding-end] ps-[--bq-accordion--medium-padding-start];
     }
   }
+
+  &.filled {
+    .bq-accordion__summary {
+      @apply bg-[--bq-accordion--filled-collapsed-background] hover:bg-[--bq-accordion--filled-collapsed-background];
+    }
+
+    &[open] .bq-accordion__summary {
+      @apply bg-[--bq-accordion--filled-expanded-background] hover:bg-[--bq-accordion--filled-collapsed-background];
+    }
+  }
+
+  &.ghost {
+    .bq-accordion__summary {
+      @apply bg-[--bq-accordion--ghost-collapsed-background] hover:bg-[--bq-accordion--ghost-collapsed-background];
+    }
+
+    &[open] .bq-accordion__summary {
+      @apply bg-[--bq-accordion--ghost-expanded-background] hover:bg-[--bq-accordion--ghost-collapsed-background];
+    }
+  }
 }
 
 .bq-accordion__summary {
-  @apply flex cursor-pointer list-none items-center;
+  // !FIXME: move to variables
+  @apply rounded-xs;
+  @apply flex cursor-pointer list-none items-center focus-visible:focus;
 
   &::marker {
     @apply hidden;
