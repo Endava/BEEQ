@@ -94,8 +94,8 @@
     "@types/puppeteer": "7.0.4",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
-    "@typescript-eslint/eslint-plugin": "5.61.0",
-    "@typescript-eslint/parser": "5.61.0",
+    "@typescript-eslint/eslint-plugin": "6.0.0",
+    "@typescript-eslint/parser": "6.0.0",
     "@whitespace/storybook-addon-html": "5.1.6",
     "autoprefixer": "10.4.14",
     "chromatic": "6.19.9",
@@ -131,7 +131,7 @@
     "postcss-url": "10.1.3",
     "prettier": "2.8.8",
     "prettier-plugin-tailwindcss": "0.4.0",
-    "puppeteer": "20.8.0",
+    "puppeteer": "20.8.1",
     "react-test-renderer": "18.2.0",
     "rimraf": "5.0.1",
     "stencil-tailwind-plugin": "1.8.0",
@@ -164,6 +164,8 @@
     "@storybook/addon-docs": {
       "@storybook/mdx2-csf": "$@storybook/mdx2-csf"
     },
+    "@typescript-eslint/eslint-plugin": "$@typescript-eslint/eslint-plugin",
+    "@typescript-eslint/parser": "$@typescript-eslint/parser",
     "jest": "$jest",
     "jest-config": "$jest",
     "ngx-deploy-npm": {
