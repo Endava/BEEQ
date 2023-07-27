@@ -457,6 +457,10 @@ export namespace Components {
     interface BqOptionGroup {
     }
     interface BqOptionList {
+        /**
+          * If true, the option is selected and active.
+         */
+        "ariaLabel": string;
     }
     interface BqRadio {
         /**
@@ -1552,25 +1556,21 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * Handler to be called on enter key up
-         */
-        "onBqOnEnterKeyUp"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
-        /**
           * Handler to be called when item loses focus
          */
-        "onBqOptionBlur"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        "onBqBlur"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
         /**
           * Handler to be called when item is clicked
          */
-        "onBqOptionClick"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        "onBqClick"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
         /**
           * Handler to be called on enter key press
          */
-        "onBqOptionEnter"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        "onBqEnter"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
         /**
           * Handler to be called when item is focused
          */
-        "onBqOptionFocus"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        "onBqFocus"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
         /**
           * If true, the option is selected and active.
          */
@@ -1584,17 +1584,13 @@ declare namespace LocalJSX {
     }
     interface BqOptionList {
         /**
-          * Handler to be called when `bq-option` item loses focus.
+          * If true, the option is selected and active.
          */
-        "onBqBlur"?: (event: BqOptionListCustomEvent<HTMLBqOptionElement>) => void;
-        /**
-          * Handler to be called when `bq-option` item gets focus.
-         */
-        "onBqFocus"?: (event: BqOptionListCustomEvent<HTMLBqOptionElement>) => void;
+        "ariaLabel"?: string;
         /**
           * Handler to be called when `bq-option` is selected (on click/enter press).
          */
-        "onBqSelect"?: (event: BqOptionListCustomEvent<HTMLBqOptionElement>) => void;
+        "onBqSelect"?: (event: BqOptionListCustomEvent<{ value: string; item: HTMLBqOptionElement }>) => void;
     }
     interface BqRadio {
         /**

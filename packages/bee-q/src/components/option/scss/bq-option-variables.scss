@@ -14,12 +14,11 @@
 
   * @prop --bq-option--box-shadow: box shadow
   
-  * @prop --bq-option--height: option height
-  * @prop --bq-option--padding-start: padding start X axis 
-  * @prop --bq-option--padding-end: padding end X axis
+  * @prop --bq-option--gap-start: gap space between prefix and label
+  * @prop --bq-option--gap-end: gap space between label and suffix
   * @prop --bq-option--paddingY: padding Y axis
-  * @prop --bq-option-label--padding-start: option label padding start
-  * @prop --bq-option-label--padding-end: option label padding end
+  * @prop --bq-option--padding-start: option label padding start
+  * @prop --bq-option--padding-end: option label padding end
   */
 
   --bq-option--background: theme('colors.bg.primary');
@@ -32,10 +31,9 @@
 
   --bq-option--box-shadow: none;
 
-  --bq-option--height: 40px;
+  --bq-option--gap-start: theme('spacing.s');
+  --bq-option--gap-end: theme('spacing.s');
+  --bq-option--paddingY: theme('spacing.xs');
   --bq-option--padding-start: theme('spacing.s');
   --bq-option--padding-end: theme('spacing.s');
-  --bq-option--paddingY: theme('spacing.xs');
-  --bq-option-label--padding-start: theme('spacing.s');
-  --bq-option-label--padding-end: theme('spacing.s');
 }

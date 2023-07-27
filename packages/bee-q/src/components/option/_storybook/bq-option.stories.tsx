@@ -1,5 +1,5 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
-
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { html } from 'lit-html';
 
 import mdx from './bq-option.mdx';
@@ -16,49 +16,51 @@ const meta: Meta = {
     disabled: { control: 'boolean' },
     selected: { control: 'boolean' },
     // Event handlers
-    bqOptionBlur: { action: 'bqOptionBlur' },
-    bqOptionFocus: { action: 'bqOptionFocus' },
-    bqOptionClick: { action: 'bqOptionClick' },
+    bqBlur: { action: 'bqBlur' },
+    bqFocus: { action: 'bqFocus' },
+    bqClick: { action: 'bqClick' },
     // Not part of the public API, so we don't want to expose it in the docs
     text: { control: 'text', table: { disable: true } },
-    htmlNodePrefix: { control: 'object', table: { disable: true } },
-    htmlNodeSuffix: { control: 'object', table: { disable: true } },
   },
   args: {
     disabled: false,
     selected: false,
     text: 'Option label',
-    htmlNodePrefix: Object.assign(document.createElement('bq-icon'), {
-      name: 'user',
-      size: '16',
-      slot: 'prefix',
-    }),
-    htmlNodeSuffix: Object.assign(document.createElement('bq-icon'), {
-      name: 'gear',
-      size: '16',
-      slot: 'suffix',
-    }),
   },
 };
 export default meta;
 
 type Story = StoryObj;
 
-const Template = (args: Args) => html`
-  <bq-option-list>
-    <bq-option
-      disabled=${args.disabled}
-      selected=${args.selected}
-      @bqOptionBlur=${args.bqOptionBlur}
-      @bqOptionFocus=${args.bqOptionFocus}
-      @bqOptionClick=${args.bqOptionClick}
-    >
-      ${args.htmlNodePrefix}
-      <span>${args.text}</span>
-      ${args.htmlNodeSuffix}
-    </bq-option>
-  </bq-option-list>
-`;
+const Template = (args: Args) => {
+  const bqIconPrefix = html`<bq-icon
+    name=${ifDefined(!args.disabled ? 'user' : 'lock')}
+    size="16"
+    slot="prefix"
+  ></bq-icon>`;
+
+  const bqIconSuffix = html`<bq-icon
+    name=${ifDefined(!args.disabled ? 'gear' : 'chart-line')}
+    size="16"
+    slot="suffix"
+  ></bq-icon>`;
+
+  return html`
+    <bq-option-list>
+      <bq-option
+        ?disabled=${args.disabled}
+        ?selected=${args.selected}
+        @bqBlur=${args.bqBlur}
+        @bqFocus=${args.bqFocus}
+        @bqClick=${args.bqClick}
+      >
+        ${bqIconPrefix}
+        <span>${args.text}</span>
+        ${bqIconSuffix}
+      </bq-option>
+    </bq-option-list>
+  `;
+};
 
 export const Default: Story = {
   render: Template,
@@ -80,15 +82,5 @@ export const Disabled: Story = {
   args: {
     disabled: true,
     text: 'Admin dashboard',
-    htmlNodePrefix: Object.assign(document.createElement('bq-icon'), {
-      name: 'lock',
-      size: '16',
-      slot: 'prefix',
-    }),
-    htmlNodeSuffix: Object.assign(document.createElement('bq-icon'), {
-      name: 'chart-line',
-      size: '16',
-      slot: 'suffix',
-    }),
   },
 };

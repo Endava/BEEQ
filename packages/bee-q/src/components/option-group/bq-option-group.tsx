@@ -61,18 +61,21 @@ export class BqOptionGroup {
   render() {
     return (
       <Host>
-        <legend class="option-group__label" part="label">
-          <span class="option-group__label__child" part="prefix">
+        <legend class="bq-option-group" part="label">
+          <span class="option-group__prefix flex items-center" part="prefix">
             <slot name="header-prefix" />
           </span>
-          <span class="option-group__label__child label-text" part="label">
+          <span
+            class="bq-option-group__label inline-block w-auto overflow-hidden text-ellipsis whitespace-nowrap"
+            part="label"
+          >
             <slot name="header-label" />
           </span>
-          <span class="option-group__label__child suffix" part="suffix">
+          <span class="bq-option-group__suffix" part="suffix">
             <slot name="header-suffix" />
           </span>
         </legend>
-        <div class="option-group__container" role="group" aria-label="Options" part="group">
+        <div class="bq-option-group__container" role="group" aria-label="Options" part="group">
           <slot />
         </div>
       </Host>

@@ -5,13 +5,18 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property    | Attribute    | Description                                 | Type     | Default     |
+| ----------- | ------------ | ------------------------------------------- | -------- | ----------- |
+| `ariaLabel` | `aria-label` | If true, the option is selected and active. | `string` | `'Options'` |
+
+
 ## Events
 
-| Event      | Description                                                               | Type                               |
-| ---------- | ------------------------------------------------------------------------- | ---------------------------------- |
-| `bqBlur`   | Handler to be called when `bq-option` item loses focus.                   | `CustomEvent<HTMLBqOptionElement>` |
-| `bqFocus`  | Handler to be called when `bq-option` item gets focus.                    | `CustomEvent<HTMLBqOptionElement>` |
-| `bqSelect` | Handler to be called when `bq-option` is selected (on click/enter press). | `CustomEvent<HTMLBqOptionElement>` |
+| Event      | Description                                                               | Type                                                         |
+| ---------- | ------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| `bqSelect` | Handler to be called when `bq-option` is selected (on click/enter press). | `CustomEvent<{ value: string; item: HTMLBqOptionElement; }>` |
 
 
 ## Shadow Parts

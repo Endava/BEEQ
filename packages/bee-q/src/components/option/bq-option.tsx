@@ -18,6 +18,7 @@ export class BqOption {
   // ====================
 
   private prefixElem: HTMLElement;
+  private suffixElem: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -29,6 +30,7 @@ export class BqOption {
   // =======================================
 
   @State() hasPrefix: boolean = false;
+  @State() hasSuffix: boolean = false;
 
   // Public Property API
   // ========================
@@ -50,19 +52,16 @@ export class BqOption {
   // ==============================================
 
   /** Handler to be called when item loses focus */
-  @Event() bqOptionBlur: EventEmitter<HTMLBqOptionElement>;
+  @Event() bqBlur: EventEmitter<HTMLBqOptionElement>;
 
   /** Handler to be called when item is focused */
-  @Event() bqOptionFocus: EventEmitter<HTMLBqOptionElement>;
+  @Event() bqFocus: EventEmitter<HTMLBqOptionElement>;
 
   /** Handler to be called when item is clicked */
-  @Event() bqOptionClick: EventEmitter<HTMLBqOptionElement>;
+  @Event() bqClick: EventEmitter<HTMLBqOptionElement>;
 
   /** Handler to be called on enter key press */
-  @Event() bqOptionEnter: EventEmitter<HTMLBqOptionElement>;
-
-  /** Handler to be called on enter key up */
-  @Event() bqOnEnterKeyUp: EventEmitter<HTMLBqOptionElement>;
+  @Event() bqEnter: EventEmitter<HTMLBqOptionElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -73,12 +72,8 @@ export class BqOption {
 
   @Listen('keydown')
   onKeyDown(event: KeyboardEvent) {
-    if (event.key === 'Enter') this.bqOptionEnter.emit(this.el);
-  }
-
-  @Listen('keyup')
-  onKeyUp(event: KeyboardEvent) {
-    if (event.key === 'Enter') this.bqOnEnterKeyUp.emit(this.el);
+    if (event.key !== 'Enter') return;
+    this.bqEnter.emit(this.el);
   }
 
   // Public methods API
@@ -100,7 +95,7 @@ export class BqOption {
       return;
     }
 
-    this.bqOptionBlur.emit(this.el);
+    this.bqBlur.emit(this.el);
   };
 
   private onFocus = (event: Event) => {
@@ -110,7 +105,7 @@ export class BqOption {
       return;
     }
 
-    this.bqOptionFocus.emit(this.el);
+    this.bqFocus.emit(this.el);
   };
 
   private onClick = (event: Event) => {
@@ -120,11 +115,15 @@ export class BqOption {
       return;
     }
 
-    this.bqOptionClick.emit(this.el);
+    this.bqClick.emit(this.el);
   };
 
   private onSlotChange = () => {
     this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
+  };
+
+  private handleSuffixSlotChange = () => {
+    this.hasSuffix = hasSlotContent(this.suffixElem, 'suffix');
   };
 
   // render() function
@@ -148,21 +147,28 @@ export class BqOption {
         onClick={this.onClick}
         part="base"
       >
-        <span class="bq-option__child" ref={(elem) => (this.prefixElem = elem)} part="prefix">
+        <span
+          class={{
+            'bq-option__prefix me-[--bq-option--gap-start] flex items-center': true,
+            '!hidden': !this.hasPrefix,
+          }}
+          ref={(elem) => (this.prefixElem = elem)}
+          part="prefix"
+        >
           <slot name="prefix" onSlotchange={this.onSlotChange} />
+        </span>
+        <span class="bq-option__label" part="label">
+          <slot />
         </span>
         <span
           class={{
-            'bq-option__child': true,
-            label: true,
-            'no-prefix': !this.hasPrefix,
+            'bq-option__suffix ml-auto ms-[--bq-option--gap-end] flex items-center': true,
+            '!hidden': !this.hasSuffix,
           }}
-          part="label"
+          ref={(elem) => (this.suffixElem = elem)}
+          part="suffix"
         >
-          <slot />
-        </span>
-        <span class="bq-option__child suffix" part="suffix">
-          <slot name="suffix" />
+          <slot name="suffix" onSlotchange={this.handleSuffixSlotChange} />
         </span>
       </div>
     );

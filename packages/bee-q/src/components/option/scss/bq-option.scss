@@ -9,40 +9,25 @@
 }
 
 .bq-option {
-  @apply flex h-[--bq-option--height] w-full cursor-not-allowed items-center text-[length:--bq-option--font-size];
+  @apply flex w-full cursor-pointer items-center text-[length:--bq-option--font-size];
   @apply py-[--bq-option--paddingY] pe-[--bq-option--padding-end] ps-[--bq-option--padding-start];
   @apply rounded-[--bq-option--border-radius] bg-[--bq-option--background] shadow-[shadow:--bq-option--box-shadow];
   @apply border-[length:--bq-option--border-width] border-[color:--bq-option--border-color];
-  @apply focus-visible:focus active:outline-none;
+  // Transition
+  @apply transition-colors duration-150 ease-in-out;
+  // Focus
+  @apply [&:not(.disabled)]:focus-visible:focus;
+  // Hover
+  @apply [&:not(.disabled)]:hover:bg-ui-secondary-hover;
+  // Active
+  @apply [&.active:not(.disabled)]:bg-ui-brand-light [&.active:not(.disabled)]:text-text-brand;
+  // Disabled
+  @apply [&.disabled]:cursor-not-allowed [&.disabled]:text-text-primary-disabled;
 
   border-style: var(--bq-option--border-style);
-
-  &__child {
-    @apply flex items-center;
-  }
-
-  &.disabled {
-    @apply text-text-primary-disabled focus:ring-0 active:text-text-primary-disabled;
-  }
-
-  &:not(.disabled) {
-    @apply cursor-pointer hover:bg-ui-secondary-hover active:bg-ui-brand-light active:text-text-brand;
-  }
-
-  &.active {
-    @apply bg-ui-brand-light text-text-brand;
-  }
 }
 
-.label {
-  @apply inline-block w-full overflow-hidden text-ellipsis whitespace-nowrap;
+.bq-option__label {
+  @apply inline-block flex-auto overflow-hidden text-ellipsis whitespace-nowrap;
   @apply pe-[--bq-option-label--padding-end] ps-[--bq-option-label--padding-start];
-}
-
-.no-prefix {
-  @apply ps-0;
-}
-
-.suffix {
-  @apply ml-auto;
 }

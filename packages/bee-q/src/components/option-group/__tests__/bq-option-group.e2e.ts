@@ -69,8 +69,8 @@ describe('bq-option-group', () => {
     const page = await newE2EPage();
     await page.setContent(`
       <bq-option-group>
-      <bq-icon name="fork-knife" size="16" slot="header-prefix"></bq-icon>
-      <span slot="header-label">Food</span>
+        <bq-icon name="fork-knife" size="16" slot="header-prefix"></bq-icon>
+        <span slot="header-label">Food</span>
         <bq-option value="pizza">
           <bq-icon name="pizza" size="16" slot="prefix"></bq-icon>
           <span>Pizza</span>
