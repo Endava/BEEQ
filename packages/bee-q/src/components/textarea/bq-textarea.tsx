@@ -1,4 +1,4 @@
-import { h, Component, Element, Prop } from '@stencil/core';
+import { h, Component, Element, Prop, State } from '@stencil/core';
 
 @Component({
   tag: 'bq-textarea',
@@ -22,6 +22,8 @@ export class BqTextarea {
   // Inlined decorator, alphabetical order
   // =======================================
 
+  @State() private numberOfCharacters: number = 0;
+
   // Public Property API
   // ========================
 
@@ -30,6 +32,12 @@ export class BqTextarea {
    * If `false`, the textarea will have a fixed height specified by the `rows` property.
    */
   @Prop({ reflect: true }) autoGrow: boolean = false;
+
+  /**
+   * The maximum number of characters that can be entered into the textarea (`0`: no limit).
+   * When enabled, a character counter will be shown underneath the textarea.
+   */
+  @Prop({ reflect: true }) maxlength: number;
 
   /** The number of visible text lines for the control. It must be a positive integer */
   @Prop({ reflect: true }) rows: number = 5;
@@ -70,8 +78,15 @@ export class BqTextarea {
     inputElem.style.height = `${inputElem.scrollHeight}px`;
   };
 
+  private countCharacters = () => {
+    if (!this.maxlength || !this.textarea) return;
+
+    this.numberOfCharacters = this.textarea.value.length;
+  };
+
   private onInput = () => {
     this.autoResize();
+    this.countCharacters();
   };
 
   // render() function
@@ -87,18 +102,18 @@ export class BqTextarea {
         <textarea
           id="textarea"
           class="bq-textarea--input"
+          maxLength={this.maxlength > 0 ? this.maxlength : undefined}
           placeholder="Placeholder..."
-          onInput={this.onInput}
-          ref={(elem: HTMLTextAreaElement) => (this.textarea = elem)}
           rows={this.rows}
+          ref={(elem: HTMLTextAreaElement) => (this.textarea = elem)}
+          onInput={this.onInput}
         />
         <div class="flex justify-between">
           <span class="bq-textarea--helper-text mt-xs">
             <slot name="helper-text" />
           </span>
-          <span class="bq-textarea--counter mt-xs text-s text-text-secondary">
-            0/100
-            <slot name="counter" />
+          <span class={{ 'bq-textarea--counter mt-xs text-s text-text-secondary': true, '!hidden': !this.maxlength }}>
+            {this.numberOfCharacters}/{this.maxlength}
           </span>
         </div>
       </div>

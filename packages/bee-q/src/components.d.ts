@@ -747,6 +747,10 @@ export namespace Components {
          */
         "autoGrow": boolean;
         /**
+          * The maximum number of characters that can be entered into the textarea (`0`: no limit). When enabled, a character counter will be shown underneath the textarea.
+         */
+        "maxlength": number;
+        /**
           * The number of visible text lines for the control. It must be a positive integer
          */
         "rows": number;
@@ -1933,6 +1937,10 @@ declare namespace LocalJSX {
           * If `true`, the textarea will automatically grow and shrink to fit its contents. If `false`, the textarea will have a fixed height specified by the `rows` property.
          */
         "autoGrow"?: boolean;
+        /**
+          * The maximum number of characters that can be entered into the textarea (`0`: no limit). When enabled, a character counter will be shown underneath the textarea.
+         */
+        "maxlength"?: number;
         /**
           * The number of visible text lines for the control. It must be a positive integer
          */
