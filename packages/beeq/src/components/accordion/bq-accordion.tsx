@@ -31,6 +31,8 @@ export class BqAccordion {
 
   @Prop({ reflect: true, mutable: true }) expanded: boolean = false;
 
+  @Prop({ reflect: true }) disabled: boolean = false;
+
   @Prop({ reflect: true, mutable: true }) size: TAccordionSize = 'medium';
 
   @Prop({ reflect: true, mutable: true }) appearance: TAccordionAppearance = 'filled';
@@ -83,7 +85,7 @@ export class BqAccordion {
   render() {
     return (
       <details
-        class={{ [`bq-accordion ${this.size} ${this.appearance} group`]: true }}
+        class={{ [`bq-accordion ${this.size} ${this.appearance}`]: true, disabled: this.disabled }}
         open={this.expanded}
         onClick={this.handleClick}
         part="base"

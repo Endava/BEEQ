@@ -54,6 +54,7 @@ export { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export namespace Components {
     interface BqAccordion {
         "appearance": TAccordionAppearance;
+        "disabled": boolean;
         "expanded": boolean;
         "size": TAccordionSize;
     }
@@ -1791,6 +1792,7 @@ declare global {
 declare namespace LocalJSX {
     interface BqAccordion {
         "appearance"?: TAccordionAppearance;
+        "disabled"?: boolean;
         "expanded"?: boolean;
         "size"?: TAccordionSize;
     }

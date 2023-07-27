@@ -9,6 +9,10 @@
 }
 
 .bq-accordion {
+  &.disabled {
+    @apply pointer-events-none cursor-not-allowed;
+  }
+
   &.small {
     .bq-accordion__summary {
       @apply space-x-[--bq-accordion--small-gap] py-[--bq-accordion--small-padding-y] pe-[--bq-accordion--small-padding-end] ps-[--bq-accordion--small-padding-start];
@@ -37,6 +41,14 @@
     &[open] .bq-accordion__summary-text {
       @apply text-[--bq-accordion--filled-expanded-text-color];
     }
+
+    &.disabled .bq-accordion__summary-text {
+      @apply text-[--bq-accordion--filled-collapsed-disabled-text-color];
+    }
+
+    &[open].disabled .bq-accordion__summary-text {
+      @apply text-[--bq-accordion--filled-expanded-disabled-text-color];
+    }
   }
 
   &.ghost {
@@ -54,6 +66,14 @@
 
     &[open] .bq-accordion__summary-text {
       @apply text-[--bq-accordion--ghost-expanded-text-color];
+    }
+
+    &.disabled .bq-accordion__summary-text {
+      @apply text-[--bq-accordion--ghost-collapsed-disabled-text-color];
+    }
+
+    &[open].disabled .bq-accordion__summary-text {
+      @apply text-[--bq-accordion--ghost-expanded-disabled-text-color];
     }
   }
 }
