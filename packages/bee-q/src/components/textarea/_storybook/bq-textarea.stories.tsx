@@ -13,6 +13,7 @@ const meta: Meta = {
   },
   argTypes: {
     'auto-grow': { control: 'boolean' },
+    disabled: { control: 'boolean' },
     maxlength: { control: 'number' },
     name: { control: 'text' },
     placeholder: { control: 'text' },
@@ -20,6 +21,7 @@ const meta: Meta = {
   },
   args: {
     'auto-grow': false,
+    disabled: false,
     maxlength: 0,
     name: 'textarea',
     placeholder: 'Placeholder...',
@@ -33,6 +35,7 @@ type Story = StoryObj;
 const Template = (args: Args) => html`
   <bq-textarea
     ?auto-grow=${args['auto-grow']}
+    ?disabled=${args.disabled}
     maxlength=${args.maxlength}
     name=${args.name}
     placeholder=${args.placeholder}
