@@ -8,6 +8,9 @@
   @apply block w-full;
 }
 
+/* -------------------------------------------------------------------------- */
+/*                        Native HTML Textarea control                        */
+/* -------------------------------------------------------------------------- */
 .bq-textarea--input {
   @apply h-[inherit] flex-auto resize-y rounded-s border border-solid border-stroke-tiertary;
   // Padding
@@ -27,5 +30,59 @@
     --bq-ring-color-focus: theme(colors.stroke.brand);
 
     @apply focus border-[color:--bq-ring-color-focus];
+  }
+}
+
+/* ------------------------------- Validation ------------------------------- */
+
+.bq-textarea--input.validation-error {
+  @apply border-stroke-danger [&:not(.disabled):not(:focus-within)]:hover:border-stroke-danger-hover;
+
+  &:not(.disabled):focus-within {
+    --bq-ring-color-focus: theme('colors.stroke.danger-active');
+    @apply border-stroke-danger-active;
+  }
+}
+
+.bq-textarea--input.validation-success {
+  @apply border-stroke-success [&:not(.disabled):not(:focus-within)]:hover:border-stroke-success-hover;
+
+  &:not(.disabled):focus-within {
+    --bq-ring-color-focus: theme('colors.stroke.success-active');
+    @apply border-stroke-success-active;
+  }
+}
+
+.bq-textarea--input.validation-warning {
+  @apply border-stroke-warning [&:not(.disabled):not(:focus-within)]:hover:border-stroke-warning-hover;
+
+  &:not(.disabled):focus-within {
+    --bq-ring-color-focus: theme('colors.stroke.warning-active');
+    @apply border-stroke-warning-active;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                 Helper text                                */
+/* -------------------------------------------------------------------------- */
+
+.bq-textarea--helper.validation-error {
+  @apply text-text-danger;
+}
+
+.bq-textarea--helper.validation-success {
+  @apply text-text-success;
+}
+
+.bq-textarea--helper.validation-warning {
+  @apply text-text-warning;
+}
+
+/* ----------------------------- Helper counter ----------------------------- */
+
+/** Apply a disabled text color style to the textarea counter when the validation is none. */
+.bq-textarea--helper[class~='validation-none'] {
+  .bq-textarea--helper__counter {
+    @apply text-text-secondary-disabled;
   }
 }

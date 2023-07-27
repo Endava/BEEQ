@@ -767,6 +767,11 @@ export namespace Components {
          */
         "rows": number;
         /**
+          * The validation status of the input.
+          * @remarks This property is used to indicate the validation status of the input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
+         */
+        "validationStatus": TInputValidation;
+        /**
           * The value of the textarea. It can be used to reset the input to a previous value.
          */
         "value": string;
@@ -1973,6 +1978,11 @@ declare namespace LocalJSX {
           * The number of visible text lines for the control. It must be a positive integer.
          */
         "rows"?: number;
+        /**
+          * The validation status of the input.
+          * @remarks This property is used to indicate the validation status of the input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
+         */
+        "validationStatus"?: TInputValidation;
         /**
           * The value of the textarea. It can be used to reset the input to a previous value.
          */

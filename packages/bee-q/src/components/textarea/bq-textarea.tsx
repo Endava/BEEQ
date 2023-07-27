@@ -1,5 +1,7 @@
 import { h, Component, Element, Prop, State } from '@stencil/core';
 
+import { TInputValidation } from '../input/bq-input.types';
+
 @Component({
   tag: 'bq-textarea',
   styleUrl: './scss/bq-textarea.scss',
@@ -52,6 +54,18 @@ export class BqTextarea {
   /** The number of visible text lines for the control. It must be a positive integer. */
   @Prop({ reflect: true }) rows: number = 5;
 
+  /**
+   * The validation status of the input.
+   *
+   * @remarks
+   * This property is used to indicate the validation status of the input. It can be set to one of the following values:
+   * - `'none'`: No validation status is set.
+   * - `'error'`: The input has a validation error.
+   * - `'warning'`: The input has a validation warning.
+   * - `'success'`: The input has passed validation.
+   */
+  @Prop({ reflect: true }) validationStatus: TInputValidation = 'none';
+
   /** The value of the textarea. It can be used to reset the input to a previous value. */
   @Prop({ mutable: true }) value: string;
 
@@ -65,6 +79,10 @@ export class BqTextarea {
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
+
+  componentWillLoad() {
+    this.numberOfCharacters = this.value?.length ?? 0;
+  }
 
   // Listeners
   // ==============
@@ -117,7 +135,7 @@ export class BqTextarea {
         </label>
         <textarea
           id={this.name ?? this.fallbackId}
-          class="bq-textarea--input"
+          class={{ 'bq-textarea--input': true, [`validation-${this.validationStatus}`]: true }}
           disabled={this.disabled}
           maxLength={this.maxlength > 0 ? this.maxlength : undefined}
           placeholder={this.placeholder}
@@ -127,11 +145,16 @@ export class BqTextarea {
         >
           {this.value}
         </textarea>
-        <div class="flex justify-between">
-          <span class="bq-textarea--helper-text mt-xs">
+        <div
+          class={{
+            'bq-textarea--helper mt-xs flex items-center justify-between text-s': true,
+            [`validation-${this.validationStatus}`]: true,
+          }}
+        >
+          <span class="bq-textarea--helper__text">
             <slot name="helper-text" />
           </span>
-          <span class={{ 'bq-textarea--counter mt-xs text-s text-text-secondary': true, '!hidden': !this.maxlength }}>
+          <span class={{ 'bq-textarea--helper__counter': true, '!hidden': !this.maxlength }}>
             {this.numberOfCharacters}/{this.maxlength}
           </span>
         </div>
