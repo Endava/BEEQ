@@ -5,26 +5,28 @@ describe('bq-textarea', () => {
     const page = await newE2EPage();
     await page.setContent('<bq-textarea></bq-textarea>');
 
-    const element = await page.find('bq-textarea');
+    const textareaElem = await page.find('bq-textarea');
 
-    expect(element).toHaveClass('hydrated');
+    expect(textareaElem).toHaveClass('hydrated');
   });
 
   it('should have shadow root', async () => {
     const page = await newE2EPage();
     await page.setContent('<bq-textarea></bq-textarea>');
 
-    const element = await page.find('bq-textarea');
+    const textareaElem = await page.find('bq-textarea');
 
-    expect(element.shadowRoot).not.toBeNull();
+    expect(textareaElem.shadowRoot).not.toBeNull();
   });
 
-  it('should display text', async () => {
+  it('should display value', async () => {
+    const textValue = 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.';
     const page = await newE2EPage();
-    await page.setContent('<bq-textarea></bq-textarea>');
+    await page.setContent(`
+      <bq-textarea value="${textValue}"></bq-textarea>
+    `);
 
-    const element = await page.find('bq-textarea >>> p');
-
-    expect(element).toEqualText('My name is Stencil');
+    const textareaElem = await page.find('bq-textarea >>> .bq-textarea--input');
+    expect(await textareaElem.getProperty('value')).toBe(textValue);
   });
 });
