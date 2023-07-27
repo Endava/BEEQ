@@ -1,0 +1,9 @@
+/* -------------------------------------------------------------------------- */
+/*                          Textarea custom properties           */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  --bq-textarea--paddingY: theme('spacing.s');
+  --bq-textarea--padding-start: theme('spacing.m');
+  --bq-textarea--padding-end: theme('spacing.m');
+}

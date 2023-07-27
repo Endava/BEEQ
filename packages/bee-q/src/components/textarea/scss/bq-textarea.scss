@@ -1,0 +1,29 @@
+/* -------------------------------------------------------------------------- */
+/*                                Textarea styles                */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-textarea.variables';
+
+:host {
+  @apply block w-full;
+}
+
+.bq-textarea--input {
+  @apply h-[inherit] flex-auto rounded-s border border-solid border-stroke-tiertary;
+  // Padding
+  @apply py-[--bq-textarea--paddingY] pe-[--bq-textarea--padding-end] ps-[--bq-textarea--padding-start];
+  // Text
+  @apply text-m text-text-primary placeholder:text-text-secondary-disabled;
+  // Transition
+  @apply transition-colors ease-in-out;
+  // Hover
+  @apply [&:not(.disabled):not(:focus-within)]:hover:border-stroke-brand-hover;
+
+  &:not(.disabled):focus-within {
+    --bq-ring-width: 1px;
+    --bq-ring-offset-width: 0;
+    --bq-ring-color-focus: theme(colors.stroke.brand);
+
+    @apply focus border-[color:--bq-ring-color-focus];
+  }
+}

@@ -741,6 +741,8 @@ export namespace Components {
          */
         "value": string;
     }
+    interface BqTextarea {
+    }
     interface BqToast {
         /**
           * Method to be called to hide the toast component
@@ -1044,6 +1046,12 @@ declare global {
         prototype: HTMLBqTabGroupElement;
         new (): HTMLBqTabGroupElement;
     };
+    interface HTMLBqTextareaElement extends Components.BqTextarea, HTMLStencilElement {
+    }
+    var HTMLBqTextareaElement: {
+        prototype: HTMLBqTextareaElement;
+        new (): HTMLBqTextareaElement;
+    };
     interface HTMLBqToastElement extends Components.BqToast, HTMLStencilElement {
     }
     var HTMLBqToastElement: {
@@ -1081,6 +1089,7 @@ declare global {
         "bq-switch": HTMLBqSwitchElement;
         "bq-tab": HTMLBqTabElement;
         "bq-tab-group": HTMLBqTabGroupElement;
+        "bq-textarea": HTMLBqTextareaElement;
         "bq-toast": HTMLBqToastElement;
         "bq-tooltip": HTMLBqTooltipElement;
     }
@@ -1911,6 +1920,8 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface BqTextarea {
+    }
     interface BqToast {
         /**
           * If true will hide toast icon
@@ -1989,6 +2000,7 @@ declare namespace LocalJSX {
         "bq-switch": BqSwitch;
         "bq-tab": BqTab;
         "bq-tab-group": BqTabGroup;
+        "bq-textarea": BqTextarea;
         "bq-toast": BqToast;
         "bq-tooltip": BqTooltip;
     }
@@ -2037,6 +2049,7 @@ declare module "@stencil/core" {
             "bq-switch": LocalJSX.BqSwitch & JSXBase.HTMLAttributes<HTMLBqSwitchElement>;
             "bq-tab": LocalJSX.BqTab & JSXBase.HTMLAttributes<HTMLBqTabElement>;
             "bq-tab-group": LocalJSX.BqTabGroup & JSXBase.HTMLAttributes<HTMLBqTabGroupElement>;
+            "bq-textarea": LocalJSX.BqTextarea & JSXBase.HTMLAttributes<HTMLBqTextareaElement>;
             "bq-toast": LocalJSX.BqToast & JSXBase.HTMLAttributes<HTMLBqToastElement>;
             "bq-tooltip": LocalJSX.BqTooltip & JSXBase.HTMLAttributes<HTMLBqTooltipElement>;
         }
