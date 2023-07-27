@@ -1,6 +1,8 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
 
+import { ifDefined } from 'lit-html/directives/if-defined.js';
+
 import mdx from './bq-textarea.mdx';
 
 const meta: Meta = {
@@ -18,6 +20,7 @@ const meta: Meta = {
     name: { control: 'text' },
     placeholder: { control: 'text' },
     rows: { control: 'number' },
+    value: { control: 'text' },
   },
   args: {
     'auto-grow': false,
@@ -26,6 +29,7 @@ const meta: Meta = {
     name: 'textarea',
     placeholder: 'Placeholder...',
     rows: 5,
+    value: undefined,
   },
 };
 export default meta;
@@ -36,10 +40,11 @@ const Template = (args: Args) => html`
   <bq-textarea
     ?auto-grow=${args['auto-grow']}
     ?disabled=${args.disabled}
-    maxlength=${args.maxlength}
-    name=${args.name}
-    placeholder=${args.placeholder}
-    rows=${args.rows}
+    maxlength=${ifDefined(args.maxlength)}
+    name=${ifDefined(args.name)}
+    placeholder=${ifDefined(args.placeholder)}
+    rows=${ifDefined(args.rows)}
+    value=${ifDefined(args.value)}
   >
     <span slot="label">Label</span>
   </bq-textarea>
@@ -47,5 +52,12 @@ const Template = (args: Args) => html`
 
 export const Default: Story = {
   render: Template,
-  args: {},
+};
+
+export const InitialValue: Story = {
+  render: Template,
+  args: {
+    value:
+      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?',
+  },
 };
