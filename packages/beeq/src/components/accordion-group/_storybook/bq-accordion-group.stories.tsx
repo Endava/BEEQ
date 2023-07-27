@@ -35,15 +35,19 @@ const Template = (args: Args) => html`
   <bq-accordion-group>
     <bq-accordion size=${args.size} appearance=${args.appearance} .expanded=${args.expanded} .disabled=${args.disabled}>
       <span slot="header">${args.text}</span>
+      <div>hello world</div>
     </bq-accordion>
     <bq-accordion size=${args.size} appearance=${args.appearance} .expanded=${args.expanded} .disabled=${args.disabled}>
       <span slot="header">${args.text}</span>
+      <div>hello world</div>
     </bq-accordion>
     <bq-accordion size=${args.size} appearance=${args.appearance} .expanded=${args.expanded} .disabled=${args.disabled}>
       <span slot="header">${args.text}</span>
+      <div>hello world</div>
     </bq-accordion>
     <bq-accordion size=${args.size} appearance=${args.appearance} .expanded=${args.expanded} .disabled=${args.disabled}>
       <span slot="header">${args.text}</span>
+      <div>hello world</div>
     </bq-accordion>
   </bq-accordion-group>
 `;
