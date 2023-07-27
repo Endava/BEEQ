@@ -52,6 +52,9 @@ export class BqTextarea {
   /** The number of visible text lines for the control. It must be a positive integer. */
   @Prop({ reflect: true }) rows: number = 5;
 
+  /** The value of the textarea. It can be used to reset the input to a previous value. */
+  @Prop({ mutable: true }) value: string;
+
   // Prop lifecycle events
   // =======================
 
@@ -121,7 +124,9 @@ export class BqTextarea {
           rows={this.rows}
           ref={(elem: HTMLTextAreaElement) => (this.textarea = elem)}
           onInput={this.onInput}
-        />
+        >
+          {this.value}
+        </textarea>
         <div class="flex justify-between">
           <span class="bq-textarea--helper-text mt-xs">
             <slot name="helper-text" />

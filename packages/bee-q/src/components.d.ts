@@ -766,6 +766,10 @@ export namespace Components {
           * The number of visible text lines for the control. It must be a positive integer.
          */
         "rows": number;
+        /**
+          * The value of the textarea. It can be used to reset the input to a previous value.
+         */
+        "value": string;
     }
     interface BqToast {
         /**
@@ -1969,6 +1973,10 @@ declare namespace LocalJSX {
           * The number of visible text lines for the control. It must be a positive integer.
          */
         "rows"?: number;
+        /**
+          * The value of the textarea. It can be used to reset the input to a previous value.
+         */
+        "value"?: string;
     }
     interface BqToast {
         /**

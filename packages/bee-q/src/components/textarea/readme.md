@@ -15,6 +15,7 @@
 | `name` _(required)_        | `name`        | The name of the textarea element.                                                                                                                                   | `string`  | `undefined` |
 | `placeholder` _(required)_ | `placeholder` | The placeholder text to show when there is no value.                                                                                                                | `string`  | `undefined` |
 | `rows`                     | `rows`        | The number of visible text lines for the control. It must be a positive integer.                                                                                    | `number`  | `5`         |
+| `value`                    | `value`       | The value of the textarea. It can be used to reset the input to a previous value.                                                                                   | `string`  | `undefined` |
 
 
 ----------------------------------------------
