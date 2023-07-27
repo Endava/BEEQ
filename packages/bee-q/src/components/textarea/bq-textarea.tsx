@@ -34,6 +34,9 @@ export class BqTextarea {
    */
   @Prop({ reflect: true }) autoGrow: boolean = false;
 
+  /** If `true`, the user cannot interact with the textarea. */
+  @Prop({ reflect: true }) disabled: boolean = false;
+
   /**
    * The maximum number of characters that can be entered into the textarea (`0`: no limit).
    * When enabled, a character counter will be shown underneath the textarea.
@@ -112,6 +115,7 @@ export class BqTextarea {
         <textarea
           id={this.name ?? this.fallbackId}
           class="bq-textarea--input"
+          disabled={this.disabled}
           maxLength={this.maxlength > 0 ? this.maxlength : undefined}
           placeholder={this.placeholder}
           rows={this.rows}

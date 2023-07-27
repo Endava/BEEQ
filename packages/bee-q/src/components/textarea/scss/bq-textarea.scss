@@ -17,9 +17,11 @@
   // Transition
   @apply transition-colors ease-in-out;
   // Hover
-  @apply [&:not(.disabled):not(:focus-within)]:hover:border-stroke-brand-hover;
-
-  &:not(.disabled):focus-within {
+  @apply [&:not([disabled]):not(:focus-within)]:hover:border-stroke-brand-hover;
+  // Disabled
+  @apply disabled:cursor-not-allowed disabled:border-stroke-tiertary-disabled disabled:bg-ui-secondary-disabled;
+  // Focus
+  &:not([disabled]):focus-within {
     --bq-ring-width: 1px;
     --bq-ring-offset-width: 0;
     --bq-ring-color-focus: theme(colors.stroke.brand);
