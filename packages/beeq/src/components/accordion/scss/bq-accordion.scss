@@ -26,8 +26,16 @@
       @apply bg-[--bq-accordion--filled-collapsed-background] hover:bg-[--bq-accordion--filled-collapsed-background];
     }
 
+    .bq-accordion__summary-text {
+      @apply text-[--bq-accordion--filled-collapsed-text-color];
+    }
+
     &[open] .bq-accordion__summary {
       @apply bg-[--bq-accordion--filled-expanded-background] hover:bg-[--bq-accordion--filled-collapsed-background];
+    }
+
+    &[open] .bq-accordion__summary-text {
+      @apply text-[--bq-accordion--filled-expanded-text-color];
     }
   }
 
@@ -36,8 +44,16 @@
       @apply bg-[--bq-accordion--ghost-collapsed-background] hover:bg-[--bq-accordion--ghost-collapsed-background];
     }
 
+    .bq-accordion__summary-text {
+      @apply text-[--bq-accordion--ghost-collapsed-text-color];
+    }
+
     &[open] .bq-accordion__summary {
       @apply bg-[--bq-accordion--ghost-expanded-background] hover:bg-[--bq-accordion--ghost-collapsed-background];
+    }
+
+    &[open] .bq-accordion__summary-text {
+      @apply text-[--bq-accordion--ghost-expanded-text-color];
     }
   }
 }
