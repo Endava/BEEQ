@@ -11,15 +11,21 @@ const meta: Meta = {
       page: mdx,
     },
   },
-  argTypes: {},
-  args: {},
+  argTypes: {
+    'auto-grow': { control: 'boolean' },
+    rows: { control: 'number' },
+  },
+  args: {
+    'auto-grow': false,
+    rows: 5,
+  },
 };
 export default meta;
 
 type Story = StoryObj;
 
-const Template = (_args: Args) => html`
-  <bq-textarea>
+const Template = (args: Args) => html`
+  <bq-textarea ?auto-grow=${args['auto-grow']} rows=${args.rows}>
     <span slot="label">Label</span>
   </bq-textarea>
 `;
