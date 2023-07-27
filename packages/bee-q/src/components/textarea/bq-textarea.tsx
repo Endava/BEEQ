@@ -1,4 +1,4 @@
-import { h, Component, Element } from '@stencil/core';
+import { h, Component, Element, Prop } from '@stencil/core';
 
 @Component({
   tag: 'bq-textarea',
@@ -11,6 +11,8 @@ export class BqTextarea {
   // Own Properties
   // ====================
 
+  private textarea: HTMLTextAreaElement;
+
   // Reference to host HTML element
   // ===================================
 
@@ -22,6 +24,15 @@ export class BqTextarea {
 
   // Public Property API
   // ========================
+
+  /**
+   * If `true`, the textarea will automatically grow and shrink to fit its contents.
+   * If `false`, the textarea will have a fixed height specified by the `rows` property.
+   */
+  @Prop({ reflect: true }) autoGrow: boolean = false;
+
+  /** The number of visible text lines for the control. It must be a positive integer */
+  @Prop({ reflect: true }) rows: number = 5;
 
   // Prop lifecycle events
   // =======================
@@ -49,6 +60,20 @@ export class BqTextarea {
   // These methods cannot be called from the host element.
   // =======================================================
 
+  private autoResize = () => {
+    if (!this.autoGrow) return;
+
+    const inputElem = this.textarea;
+    if (!inputElem) return;
+
+    inputElem.style.height = 'auto';
+    inputElem.style.height = `${inputElem.scrollHeight}px`;
+  };
+
+  private onInput = () => {
+    this.autoResize();
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -59,7 +84,14 @@ export class BqTextarea {
         <label class="bq-textarea--label mb-xs text-s font-regular leading-regular" htmlFor="textarea">
           <slot name="label" />
         </label>
-        <textarea id="textarea" class="bq-textarea--input" placeholder="Placeholder..." />
+        <textarea
+          id="textarea"
+          class="bq-textarea--input"
+          placeholder="Placeholder..."
+          onInput={this.onInput}
+          ref={(elem: HTMLTextAreaElement) => (this.textarea = elem)}
+          rows={this.rows}
+        />
         <div class="flex justify-between">
           <span class="bq-textarea--helper-text mt-xs">
             <slot name="helper-text" />

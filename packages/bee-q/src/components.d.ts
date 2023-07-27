@@ -742,6 +742,14 @@ export namespace Components {
         "value": string;
     }
     interface BqTextarea {
+        /**
+          * If `true`, the textarea will automatically grow and shrink to fit its contents. If `false`, the textarea will have a fixed height specified by the `rows` property.
+         */
+        "autoGrow": boolean;
+        /**
+          * The number of visible text lines for the control. It must be a positive integer
+         */
+        "rows": number;
     }
     interface BqToast {
         /**
@@ -1921,6 +1929,14 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface BqTextarea {
+        /**
+          * If `true`, the textarea will automatically grow and shrink to fit its contents. If `false`, the textarea will have a fixed height specified by the `rows` property.
+         */
+        "autoGrow"?: boolean;
+        /**
+          * The number of visible text lines for the control. It must be a positive integer
+         */
+        "rows"?: number;
     }
     interface BqToast {
         /**

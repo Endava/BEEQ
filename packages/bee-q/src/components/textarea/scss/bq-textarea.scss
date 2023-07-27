@@ -9,7 +9,7 @@
 }
 
 .bq-textarea--input {
-  @apply h-[inherit] flex-auto rounded-s border border-solid border-stroke-tiertary;
+  @apply h-[inherit] flex-auto resize-y rounded-s border border-solid border-stroke-tiertary;
   // Padding
   @apply py-[--bq-textarea--paddingY] pe-[--bq-textarea--padding-end] ps-[--bq-textarea--padding-start];
   // Text
