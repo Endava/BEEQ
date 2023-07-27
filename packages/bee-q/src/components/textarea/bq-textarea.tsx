@@ -12,6 +12,7 @@ export class BqTextarea {
   // ====================
 
   private textarea: HTMLTextAreaElement;
+  private fallbackId = 'textarea';
 
   // Reference to host HTML element
   // ===================================
@@ -39,7 +40,13 @@ export class BqTextarea {
    */
   @Prop({ reflect: true }) maxlength: number;
 
-  /** The number of visible text lines for the control. It must be a positive integer */
+  /** The name of the textarea element. */
+  @Prop({ reflect: true }) name!: string;
+
+  /** The placeholder text to show when there is no value. */
+  @Prop({ reflect: true }) placeholder!: string;
+
+  /** The number of visible text lines for the control. It must be a positive integer. */
   @Prop({ reflect: true }) rows: number = 5;
 
   // Prop lifecycle events
@@ -96,14 +103,17 @@ export class BqTextarea {
   render() {
     return (
       <div class="bq-textarea flex flex-auto flex-col">
-        <label class="bq-textarea--label mb-xs text-s font-regular leading-regular" htmlFor="textarea">
+        <label
+          class="bq-textarea--label mb-xs text-s font-regular leading-regular"
+          htmlFor={this.name ?? this.fallbackId}
+        >
           <slot name="label" />
         </label>
         <textarea
-          id="textarea"
+          id={this.name ?? this.fallbackId}
           class="bq-textarea--input"
           maxLength={this.maxlength > 0 ? this.maxlength : undefined}
-          placeholder="Placeholder..."
+          placeholder={this.placeholder}
           rows={this.rows}
           ref={(elem: HTMLTextAreaElement) => (this.textarea = elem)}
           onInput={this.onInput}

@@ -751,7 +751,15 @@ export namespace Components {
          */
         "maxlength": number;
         /**
-          * The number of visible text lines for the control. It must be a positive integer
+          * The name of the textarea element.
+         */
+        "name": string;
+        /**
+          * The placeholder text to show when there is no value.
+         */
+        "placeholder": string;
+        /**
+          * The number of visible text lines for the control. It must be a positive integer.
          */
         "rows": number;
     }
@@ -1942,7 +1950,15 @@ declare namespace LocalJSX {
          */
         "maxlength"?: number;
         /**
-          * The number of visible text lines for the control. It must be a positive integer
+          * The name of the textarea element.
+         */
+        "name": string;
+        /**
+          * The placeholder text to show when there is no value.
+         */
+        "placeholder": string;
+        /**
+          * The number of visible text lines for the control. It must be a positive integer.
          */
         "rows"?: number;
     }
