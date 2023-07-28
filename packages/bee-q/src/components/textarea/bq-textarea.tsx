@@ -1,5 +1,6 @@
-import { h, Component, Element, Prop, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Prop, State } from '@stencil/core';
 
+import { debounce, isHTMLElement, TDebounce } from '../../shared/utils';
 import { TInputValidation } from '../input/bq-input.types';
 
 @Component({
@@ -13,6 +14,7 @@ export class BqTextarea {
   // Own Properties
   // ====================
 
+  private debounceBqInput: TDebounce<void>;
   private textarea: HTMLTextAreaElement;
   private fallbackId = 'textarea';
 
@@ -35,6 +37,12 @@ export class BqTextarea {
    * If `false`, the textarea will have a fixed height specified by the `rows` property.
    */
   @Prop({ reflect: true }) autoGrow: boolean = false;
+
+  /**
+   * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes.
+   * A value of 0 means no debouncing will occur.
+   */
+  @Prop({ reflect: true, mutable: true }) debounceTime? = 0;
 
   /** If `true`, the user cannot interact with the textarea. */
   @Prop({ reflect: true }) disabled: boolean = false;
@@ -76,6 +84,27 @@ export class BqTextarea {
   // Requires JSDocs for public API documentation
   // ==============================================
 
+  /** Callback handler emitted when the textarea loses focus */
+  @Event() bqBlur!: EventEmitter<HTMLBqTextareaElement>;
+
+  /**
+   * Callback handler emitted when the textarea value has changed and the textarea loses focus.
+   * This handler is called whenever the user finishes typing or pasting text into the textarea field and then clicks outside of the textarea field.
+   */
+  @Event() bqChange!: EventEmitter<{ value: string | number | string[]; el: HTMLBqTextareaElement }>;
+
+  /** Callback handler emitted when the textarea value has been cleared */
+  @Event() bqClear!: EventEmitter<HTMLBqTextareaElement>;
+
+  /** Callback handler emitted when the textarea has received focus */
+  @Event() bqFocus!: EventEmitter<HTMLBqTextareaElement>;
+
+  /**
+   * Callback handler emitted when the textarea value changes.
+   * This handler is called whenever the user types or pastes text into the textarea field.
+   */
+  @Event() bqInput!: EventEmitter<{ value: string | number | string[]; el: HTMLBqTextareaElement }>;
+
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
@@ -99,6 +128,44 @@ export class BqTextarea {
   // These methods cannot be called from the host element.
   // =======================================================
 
+  private handleBlur = () => {
+    if (this.disabled) return;
+
+    this.bqBlur.emit(this.el);
+  };
+
+  private handleFocus = () => {
+    if (this.disabled) return;
+
+    this.bqFocus.emit(this.el);
+  };
+
+  private handleChange = (ev: Event) => {
+    if (this.disabled) return;
+
+    if (!isHTMLElement(ev.target, 'textarea')) return;
+    this.value = ev.target.value;
+
+    this.bqChange.emit({ value: this.value, el: this.el });
+  };
+
+  private handleInput = (ev: Event) => {
+    if (this.disabled) return;
+
+    this.debounceBqInput?.cancel();
+
+    if (!isHTMLElement(ev.target, 'textarea')) return;
+    this.value = ev.target.value;
+
+    this.debounceBqInput = debounce(() => {
+      this.bqInput.emit({ value: this.value, el: this.el });
+    }, this.debounceTime);
+    this.debounceBqInput();
+
+    this.autoResize();
+    this.countCharacters();
+  };
+
   private autoResize = () => {
     if (!this.autoGrow) return;
 
@@ -113,11 +180,6 @@ export class BqTextarea {
     if (!this.maxlength || !this.textarea) return;
 
     this.numberOfCharacters = this.textarea.value.length;
-  };
-
-  private onInput = () => {
-    this.autoResize();
-    this.countCharacters();
   };
 
   // render() function
@@ -138,7 +200,10 @@ export class BqTextarea {
           placeholder={this.placeholder}
           rows={this.rows}
           ref={(elem: HTMLTextAreaElement) => (this.textarea = elem)}
-          onInput={this.onInput}
+          onBlur={this.handleBlur}
+          onChange={this.handleChange}
+          onFocus={this.handleFocus}
+          onInput={this.handleInput}
         >
           {this.value}
         </textarea>

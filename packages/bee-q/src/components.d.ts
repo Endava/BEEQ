@@ -747,6 +747,10 @@ export namespace Components {
          */
         "autoGrow": boolean;
         /**
+          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes. A value of 0 means no debouncing will occur.
+         */
+        "debounceTime"?: number;
+        /**
           * If `true`, the user cannot interact with the textarea.
          */
         "disabled": boolean;
@@ -913,6 +917,10 @@ export interface BqTabCustomEvent<T> extends CustomEvent<T> {
 export interface BqTabGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqTabGroupElement;
+}
+export interface BqTextareaCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqTextareaElement;
 }
 export interface BqToastCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1959,6 +1967,10 @@ declare namespace LocalJSX {
          */
         "autoGrow"?: boolean;
         /**
+          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes. A value of 0 means no debouncing will occur.
+         */
+        "debounceTime"?: number;
+        /**
           * If `true`, the user cannot interact with the textarea.
          */
         "disabled"?: boolean;
@@ -1970,6 +1982,26 @@ declare namespace LocalJSX {
           * The name of the textarea element.
          */
         "name": string;
+        /**
+          * Callback handler emitted when the textarea loses focus
+         */
+        "onBqBlur"?: (event: BqTextareaCustomEvent<HTMLBqTextareaElement>) => void;
+        /**
+          * Callback handler emitted when the textarea value has changed and the textarea loses focus. This handler is called whenever the user finishes typing or pasting text into the textarea field and then clicks outside of the textarea field.
+         */
+        "onBqChange"?: (event: BqTextareaCustomEvent<{ value: string | number | string[]; el: HTMLBqTextareaElement }>) => void;
+        /**
+          * Callback handler emitted when the textarea value has been cleared
+         */
+        "onBqClear"?: (event: BqTextareaCustomEvent<HTMLBqTextareaElement>) => void;
+        /**
+          * Callback handler emitted when the textarea has received focus
+         */
+        "onBqFocus"?: (event: BqTextareaCustomEvent<HTMLBqTextareaElement>) => void;
+        /**
+          * Callback handler emitted when the textarea value changes. This handler is called whenever the user types or pastes text into the textarea field.
+         */
+        "onBqInput"?: (event: BqTextareaCustomEvent<{ value: string | number | string[]; el: HTMLBqTextareaElement }>) => void;
         /**
           * The placeholder text to show when there is no value.
          */
