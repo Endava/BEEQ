@@ -1,12 +1,13 @@
-import { Component, Element, h, Prop, Watch } from '@stencil/core';
+import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 
 import { ACCORDION_APPEARANCE, ACCORDION_SIZE, TAccordionAppearance, TAccordionSize } from './bq-accordion.types';
-import { validatePropValue } from '../../shared/utils';
+import { hasSlotContent, validatePropValue } from '../../shared/utils';
 
 /**
  * @part base - The `<details>` that holds the accordion content
  * @part header - The `<summary>` that holds the accordion header content
- * @part text - The `<span>` that holds the accordion header text
+ * @part prefix - The `<div>` that holds the accordion text prefix icon / avatar
+ * @part text - The `<div>` that holds the accordion header text
  */
 @Component({
   tag: 'bq-accordion',
@@ -17,14 +18,18 @@ export class BqAccordion {
   // Own Properties
   // ====================
 
-  @Element() el!: HTMLBqAccordionElement;
+  prefixElem: HTMLDivElement;
 
   // Reference to host HTML element
   // ===================================
 
+  @Element() el!: HTMLBqAccordionElement;
+
   // State() variables
   // Inlined decorator, alphabetical order
   // =======================================
+
+  @State() private hasPrefix = false;
 
   // Public Property API
   // ========================
@@ -78,6 +83,10 @@ export class BqAccordion {
     this.expanded = !this.expanded;
   };
 
+  private handlePrefixSlotChange = () => {
+    this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -91,15 +100,22 @@ export class BqAccordion {
         part="base"
       >
         <summary class="bq-accordion__summary" part="header">
+          <div
+            ref={(element) => (this.prefixElem = element)}
+            class={{ 'bq-accordion__summary-prefix': true, '!hidden': !this.hasPrefix }}
+            part="prefix"
+          >
+            <slot name="prefix" onSlotchange={this.handlePrefixSlotChange} />
+          </div>
           <div class="bq-accordion__summary-text" part="text">
             <slot name="header" />
           </div>
-          <div class={{ hidden: this.expanded }}>
+          <div class={{ 'flex items-center justify-center': true, '!hidden': this.expanded }}>
             <slot name="expanded">
               <bq-icon name="plus" />
             </slot>
           </div>
-          <div class={{ hidden: !this.expanded }}>
+          <div class={{ 'flex items-center justify-center': true, '!hidden': !this.expanded }}>
             <slot name="collapsed">
               <bq-icon name="minus" />
             </slot>

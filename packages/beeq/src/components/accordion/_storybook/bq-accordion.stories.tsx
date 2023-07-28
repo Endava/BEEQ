@@ -46,3 +46,46 @@ export const Default: Story = {
   render: Template,
   args: {},
 };
+
+const IconTemplate = (args: Args) =>
+  html` <bq-accordion
+    size=${args.size}
+    appearance=${args.appearance}
+    .expanded=${args.expanded}
+    .disabled=${args.disabled}
+  >
+    <bq-icon name=${args['icon-name']} slot="prefix"></bq-icon>
+    <span slot="header">${args.text}</span>
+    <div>hello world</div>
+  </bq-accordion>`;
+
+export const Icon: Story = {
+  render: IconTemplate,
+  argTypes: {
+    'icon-name': { control: 'text' },
+  },
+  args: {
+    'icon-name': 'heart',
+  },
+};
+const AvatarTemplate = (args: Args) =>
+  html` <bq-accordion
+    size=${args.size}
+    appearance=${args.appearance}
+    .expanded=${args.expanded}
+    .disabled=${args.disabled}
+  >
+    <bq-avatar
+      size="xsmall"
+      image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
+      slot="prefix"
+    ></bq-avatar>
+    <span slot="header">${args.text}</span>
+    <div>hello world</div>
+  </bq-accordion>`;
+
+export const Avatar: Story = {
+  render: AvatarTemplate,
+  argTypes: {},
+  args: {},
+};

@@ -14,11 +14,11 @@
   }
 
   &.small .bq-accordion__summary {
-    @apply space-x-[--bq-accordion--small-gap] py-[--bq-accordion--small-padding-y] pe-[--bq-accordion--small-padding-end] ps-[--bq-accordion--small-padding-start];
+    @apply gap-[--bq-accordion--small-gap] py-[--bq-accordion--small-padding-y] pe-[--bq-accordion--small-padding-end] ps-[--bq-accordion--small-padding-start];
   }
 
   &.medium .bq-accordion__summary {
-    @apply space-x-[--bq-accordion--medium-gap] py-[--bq-accordion--medium-padding-y] pe-[--bq-accordion--medium-padding-end] ps-[--bq-accordion--medium-padding-start];
+    @apply gap-[--bq-accordion--medium-gap] py-[--bq-accordion--medium-padding-y] pe-[--bq-accordion--medium-padding-end] ps-[--bq-accordion--medium-padding-start];
   }
 
   &.filled {
@@ -86,4 +86,8 @@
 
 .bq-accordion__summary-text {
   @apply flex-1;
+}
+
+.bq-accordion__summary-prefix {
+  @apply flex items-center justify-center;
 }
