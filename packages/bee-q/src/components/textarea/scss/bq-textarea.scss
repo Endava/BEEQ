@@ -12,7 +12,7 @@
 /*                                    Label                                   */
 /* -------------------------------------------------------------------------- */
 
-.bq-textarea--label {
+.bq-textarea__label {
   @apply mb-[--bq-textarea--label-margin-bottom] text-[length:--bq-textarea--label-text-size] text-[color:--bq-textarea--label-text-color];
 }
 
@@ -20,7 +20,7 @@
 /*                        Native HTML Textarea control                        */
 /* -------------------------------------------------------------------------- */
 
-.bq-textarea--input {
+.bq-textarea__input {
   @apply h-[inherit] flex-auto resize-y bg-[--bq-textarea--background-color];
   // Border
   @apply rounded-[--bq-textarea--border-radius] border-[length:--bq-textarea--border-width] border-[color:--bq-textarea--border-color];
@@ -46,7 +46,7 @@
 
 /* ------------------------------- Validations ------------------------------- */
 
-.bq-textarea--input.validation-error {
+.bq-textarea__input.validation-error {
   @apply border-stroke-danger [&:not(.disabled):not(:focus-within)]:hover:border-stroke-danger-hover;
 
   &:not(.disabled):focus-within {
@@ -55,7 +55,7 @@
   }
 }
 
-.bq-textarea--input.validation-success {
+.bq-textarea__input.validation-success {
   @apply border-stroke-success [&:not(.disabled):not(:focus-within)]:hover:border-stroke-success-hover;
 
   &:not(.disabled):focus-within {
@@ -64,7 +64,7 @@
   }
 }
 
-.bq-textarea--input.validation-warning {
+.bq-textarea__input.validation-warning {
   @apply border-stroke-warning [&:not(.disabled):not(:focus-within)]:hover:border-stroke-warning-hover;
 
   &:not(.disabled):focus-within {
@@ -77,29 +77,29 @@
 /*                                 Helper text                                */
 /* -------------------------------------------------------------------------- */
 
-.bq-textarea--helper {
+.bq-textarea__helper {
   @apply mt-[--bq-textarea--helper-margin-top] text-[length:--bq-textarea--helper-text-size] text-[color:--bq-textarea--helper-text-color];
 }
 
 /* ------------------------------- Validations ------------------------------ */
 
-.bq-textarea--helper.validation-error {
+.bq-textarea__helper.validation-error {
   @apply text-text-danger;
 }
 
-.bq-textarea--helper.validation-success {
+.bq-textarea__helper.validation-success {
   @apply text-text-success;
 }
 
-.bq-textarea--helper.validation-warning {
+.bq-textarea__helper.validation-warning {
   @apply text-text-warning;
 }
 
 /* ----------------------------- Helper counter ----------------------------- */
 
 /** Apply a disabled text color style to the textarea counter when the validation is none. */
-.bq-textarea--helper[class~='validation-none'] {
-  .bq-textarea--helper__counter {
+.bq-textarea__helper[class~='validation-none'] {
+  .bq-textarea__helper--counter {
     @apply text-text-secondary-disabled;
   }
 }

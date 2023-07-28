@@ -127,12 +127,12 @@ export class BqTextarea {
   render() {
     return (
       <div class="bq-textarea flex flex-auto flex-col">
-        <label class="bq-textarea--label" htmlFor={this.name ?? this.fallbackId}>
+        <label class="bq-textarea__label" htmlFor={this.name ?? this.fallbackId}>
           <slot name="label" />
         </label>
         <textarea
           id={this.name ?? this.fallbackId}
-          class={{ 'bq-textarea--input': true, [`validation-${this.validationStatus}`]: true }}
+          class={{ 'bq-textarea__input': true, [`validation-${this.validationStatus}`]: true }}
           disabled={this.disabled}
           maxLength={this.maxlength > 0 ? this.maxlength : undefined}
           placeholder={this.placeholder}
@@ -144,14 +144,14 @@ export class BqTextarea {
         </textarea>
         <div
           class={{
-            'bq-textarea--helper flex items-center justify-between': true,
+            'bq-textarea__helper flex items-center justify-between': true,
             [`validation-${this.validationStatus}`]: true,
           }}
         >
-          <span class="bq-textarea--helper__text">
+          <span class="bq-textarea__helper--text">
             <slot name="helper-text" />
           </span>
-          <span class={{ 'bq-textarea--helper__counter': true, '!hidden': !this.maxlength }}>
+          <span class={{ 'bq-textarea__helper--counter': true, '!hidden': !this.maxlength }}>
             {this.numberOfCharacters}/{this.maxlength}
           </span>
         </div>
