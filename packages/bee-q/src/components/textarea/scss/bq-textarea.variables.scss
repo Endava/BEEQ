@@ -3,7 +3,52 @@
 /* -------------------------------------------------------------------------- */
 
 :host {
+  /**
+   * @prop --bq-textarea--background-color - Textarea background color
+   * @prop --bq-textarea--border-color - Textarea border color
+   * @prop --bq-textarea--border-color-hover - Textarea border color on hover
+   * @prop --bq-textarea--border-color-focus - Textarea border color on focus
+   * @prop --bq-textarea--border-color-disabled - Textarea border color when disabled
+   * @prop --bq-textarea--border-radius - Textarea border radius
+   * @prop --bq-textarea--border-width - Textarea border width
+   * @prop --bq-textarea--border-style - Textarea border style
+   * @prop --bq-textarea--helper-margin-top - Textarea helper text margin top
+   * @prop --bq-textarea--helper-text-color - Textarea helper text color
+   * @prop --bq-textarea--helper-text-size - Textarea helper text size
+   * @prop --bq-textarea--label-margin-bottom - Textarea label margin bottom
+   * @prop --bq-textarea--label-text-color - Textarea label text color
+   * @prop --bq-textarea--label-text-size - Textarea label text size
+   * @prop --bq-textarea--paddingY - Textarea padding top and bottom
+   * @prop --bq-textarea--padding-start - Textarea padding start
+   * @prop --bq-textarea--padding-end - Textarea padding end
+   * @prop --bq-textarea--text-color - Textarea text color
+   * @prop --bq-textarea--text-size - Textarea text size
+   * @prop --bq-textarea--text-placeholder-color - Textarea placeholder text color
+   */
+  --bq-textarea--background-color: theme('colors.ui.primary');
+  --bq-textarea--background-color-disabled: theme('colors.ui.secondary-disabled');
+
+  --bq-textarea--border-color: theme('colors.stroke.tiertary');
+  --bq-textarea--border-color-hover: theme('colors.stroke.brand-hover');
+  --bq-textarea--border-color-focus: theme('colors.stroke.brand');
+  --bq-textarea--border-color-disabled: theme('colors.stroke.tiertary-disabled');
+  --bq-textarea--border-radius: theme('borderRadius.s');
+  --bq-textarea--border-width: 1px;
+  --bq-textarea--border-style: solid;
+
+  --bq-textarea--helper-margin-top: theme('spacing.xs');
+  --bq-textarea--helper-text-size: theme('fontSize.s');
+  --bq-textarea--helper-text-color: theme('colors.text.primary');
+
+  --bq-textarea--label-margin-bottom: theme('spacing.xs');
+  --bq-textarea--label-text-size: theme('fontSize.s');
+  --bq-textarea--label-text-color: theme('colors.text.primary');
+
   --bq-textarea--paddingY: theme('spacing.s');
   --bq-textarea--padding-start: theme('spacing.m');
   --bq-textarea--padding-end: theme('spacing.m');
+
+  --bq-textarea--text-color: theme('colors.text.primary');
+  --bq-textarea--text-size: theme('fontSize.m');
+  --bq-textarea--text-placeholder-color: theme('colors.text.secondary-disabled');
 }

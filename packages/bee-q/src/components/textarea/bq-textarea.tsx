@@ -127,10 +127,7 @@ export class BqTextarea {
   render() {
     return (
       <div class="bq-textarea flex flex-auto flex-col">
-        <label
-          class="bq-textarea--label mb-xs text-s font-regular leading-regular"
-          htmlFor={this.name ?? this.fallbackId}
-        >
+        <label class="bq-textarea--label" htmlFor={this.name ?? this.fallbackId}>
           <slot name="label" />
         </label>
         <textarea
@@ -147,7 +144,7 @@ export class BqTextarea {
         </textarea>
         <div
           class={{
-            'bq-textarea--helper mt-xs flex items-center justify-between text-s': true,
+            'bq-textarea--helper flex items-center justify-between': true,
             [`validation-${this.validationStatus}`]: true,
           }}
         >

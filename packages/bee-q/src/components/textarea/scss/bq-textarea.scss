@@ -9,31 +9,42 @@
 }
 
 /* -------------------------------------------------------------------------- */
+/*                                    Label                                   */
+/* -------------------------------------------------------------------------- */
+
+.bq-textarea--label {
+  @apply mb-[--bq-textarea--label-margin-bottom] text-[length:--bq-textarea--label-text-size] text-[color:--bq-textarea--label-text-color];
+}
+
+/* -------------------------------------------------------------------------- */
 /*                        Native HTML Textarea control                        */
 /* -------------------------------------------------------------------------- */
+
 .bq-textarea--input {
-  @apply h-[inherit] flex-auto resize-y rounded-s border border-solid border-stroke-tiertary;
+  @apply h-[inherit] flex-auto resize-y bg-[--bq-textarea--background-color];
+  // Border
+  @apply rounded-[--bq-textarea--border-radius] border-[length:--bq-textarea--border-width] border-[color:--bq-textarea--border-color];
   // Padding
   @apply py-[--bq-textarea--paddingY] pe-[--bq-textarea--padding-end] ps-[--bq-textarea--padding-start];
   // Text
-  @apply text-m text-text-primary placeholder:text-text-secondary-disabled;
+  @apply text-[length:--bq-textarea--text-size] text-[color:--bq-textarea--text-color] placeholder:text-[color:--bq-textarea--text-placeholder-color];
   // Transition
   @apply transition-colors ease-in-out;
   // Hover
   @apply [&:not([disabled]):not(:focus-within)]:hover:border-stroke-brand-hover;
   // Disabled
-  @apply disabled:cursor-not-allowed disabled:border-stroke-tiertary-disabled disabled:bg-ui-secondary-disabled;
+  @apply disabled:cursor-not-allowed disabled:border-[color:--bq-input--border-color-disabled] disabled:bg-[--bq-textarea--background-color-disabled];
   // Focus
   &:not([disabled]):focus-within {
     --bq-ring-width: 1px;
     --bq-ring-offset-width: 0;
-    --bq-ring-color-focus: theme(colors.stroke.brand);
+    --bq-ring-color-focus: var(--bq-textarea--border-color-focus);
 
     @apply focus border-[color:--bq-ring-color-focus];
   }
 }
 
-/* ------------------------------- Validation ------------------------------- */
+/* ------------------------------- Validations ------------------------------- */
 
 .bq-textarea--input.validation-error {
   @apply border-stroke-danger [&:not(.disabled):not(:focus-within)]:hover:border-stroke-danger-hover;
@@ -65,6 +76,12 @@
 /* -------------------------------------------------------------------------- */
 /*                                 Helper text                                */
 /* -------------------------------------------------------------------------- */
+
+.bq-textarea--helper {
+  @apply mt-[--bq-textarea--helper-margin-top] text-[length:--bq-textarea--helper-text-size] text-[color:--bq-textarea--helper-text-color];
+}
+
+/* ------------------------------- Validations ------------------------------ */
 
 .bq-textarea--helper.validation-error {
   @apply text-text-danger;
