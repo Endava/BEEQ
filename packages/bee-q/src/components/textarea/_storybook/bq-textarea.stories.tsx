@@ -15,13 +15,21 @@ const meta: Meta = {
     },
   },
   argTypes: {
+    autocapitalize: { control: 'select', options: ['off', 'none', 'on', 'sentences', 'words', 'characters'] },
+    autocomplete: { control: 'text' },
+    autocorrect: { control: 'inline-radio', options: ['on', 'off'] },
+    autofocus: { control: 'boolean' },
     'auto-grow': { control: 'boolean' },
     'debounce-time': { control: 'number' },
     disabled: { control: 'boolean' },
+    form: { control: 'text' },
     maxlength: { control: 'number' },
     name: { control: 'text' },
     placeholder: { control: 'text' },
+    readonly: { control: 'boolean' },
+    required: { control: 'boolean' },
     rows: { control: 'number' },
+    spellcheck: { control: 'boolean' },
     'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
     value: { control: 'text' },
     // Events
@@ -33,13 +41,21 @@ const meta: Meta = {
     noHelperText: { control: 'bolean', table: { disable: true } },
   },
   args: {
+    autocapitalize: 'off',
+    autocomplete: 'off',
+    autocorrect: 'off',
+    autofocus: false,
     'auto-grow': false,
     'debounce-time': 0,
     disabled: false,
+    form: undefined,
     maxlength: 0,
     name: 'textarea',
     placeholder: 'Placeholder...',
+    readonly: false,
+    required: false,
     rows: 5,
+    spellcheck: false,
     'validation-status': 'none',
     value: undefined,
   },
@@ -50,13 +66,21 @@ type Story = StoryObj;
 
 const Template = (args: Args) => html`
   <bq-textarea
+    autocapitalize=${ifDefined(args.autocapitalize)}
+    autocomplete=${ifDefined(args.autocomplete)}
+    autocorrect=${ifDefined(args.autocorrect)}
+    ?autofocus=${args.autofocus}
     ?auto-grow=${args['auto-grow']}
     debounce-time=${ifDefined(args['debounce-time'])}
     ?disabled=${args.disabled}
+    form=${ifDefined(args.form)}
     maxlength=${ifDefined(args.maxlength)}
     name=${ifDefined(args.name)}
     placeholder=${ifDefined(args.placeholder)}
+    ?readonly=${args.readonly}
+    ?required=${args.required}
     rows=${ifDefined(args.rows)}
+    spellcheck=${ifDefined(args.spellcheck)}
     validation-status=${ifDefined(args['validation-status'])}
     value=${ifDefined(args.value)}
     @bqBlur=${args.bqBlur}
