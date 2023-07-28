@@ -8,6 +8,8 @@ import { hasSlotContent, validatePropValue } from '../../shared/utils';
  * @part header - The `<summary>` that holds the accordion header content
  * @part prefix - The `<div>` that holds the accordion text prefix icon / avatar
  * @part text - The `<div>` that holds the accordion header text
+ * @part suffix - The `<div>` that holds the accordion text suffix icon
+ * @part panel - The `<div>` that holds the accordion panel content
  */
 @Component({
   tag: 'bq-accordion',
@@ -135,7 +137,9 @@ export class BqAccordion {
             </slot>
           </div>
         </summary>
-        <slot />
+        <div class={'bq-accordion__panel'} part="panel">
+          <slot />
+        </div>
       </details>
     );
   }

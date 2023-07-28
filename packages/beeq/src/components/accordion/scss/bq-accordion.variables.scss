@@ -30,4 +30,18 @@
   --bq-accordion--ghost-expanded-hover: theme('colors.transparent');
   --bq-accordion--ghost-expanded-text-color: theme('colors.text.brand');
   --bq-accordion--ghost-expanded-disabled-text-color: theme('colors.text.brand-disabled');
+
+  --bq-accordion--panel-small-filled-padding-y: theme('spacing.s');
+  --bq-accordion--panel-small-filled-padding-start: theme('spacing.s');
+  --bq-accordion--panel-small-filled-padding-end: theme('spacing.s');
+  --bq-accordion--panel-medium-filled-padding-y: theme('spacing.m');
+  --bq-accordion--panel-medium-filled-padding-start: theme('spacing.m');
+  --bq-accordion--panel-medium-filled-padding-end: theme('spacing.m');
+
+  --bq-accordion--panel-small-ghost-padding-y: theme('spacing.s');
+  --bq-accordion--panel-small-ghost-padding-start: theme('spacing.l');
+  --bq-accordion--panel-small-ghost-padding-end: theme('spacing.l');
+  --bq-accordion--panel-medium-ghost-padding-y: theme('spacing.m');
+  --bq-accordion--panel-medium-ghost-padding-start: theme('spacing.xl');
+  --bq-accordion--panel-medium-ghost-padding-end: theme('spacing.xl');
 }

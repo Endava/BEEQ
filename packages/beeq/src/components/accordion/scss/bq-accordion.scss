@@ -72,6 +72,22 @@
       @apply text-[--bq-accordion--ghost-expanded-disabled-text-color];
     }
   }
+
+  &.small.filled .bq-accordion__panel {
+    @apply py-[--bq-accordion--panel-small-filled-padding-y] pe-[--bq-accordion--panel-small-filled-padding-end] ps-[--bq-accordion--panel-small-filled-padding-start];
+  }
+
+  &.medium.filled .bq-accordion__panel {
+    @apply py-[--bq-accordion--panel-medium-filled-padding-y] pe-[--bq-accordion--panel-medium-filled-padding-end] ps-[--bq-accordion--panel-medium-filled-padding-start];
+  }
+
+  &.small.ghost .bq-accordion__panel {
+    @apply py-[--bq-accordion--panel-small-ghost-padding-y] pe-[--bq-accordion--panel-small-ghost-padding-end] ps-[--bq-accordion--panel-small-ghost-padding-start];
+  }
+
+  &.medium.ghost .bq-accordion__panel {
+    @apply py-[--bq-accordion--panel-medium-ghost-padding-y] pe-[--bq-accordion--panel-medium-ghost-padding-end] ps-[--bq-accordion--panel-medium-ghost-padding-start];
+  }
 }
 
 .bq-accordion__summary {
