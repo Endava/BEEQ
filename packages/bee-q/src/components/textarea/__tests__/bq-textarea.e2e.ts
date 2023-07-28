@@ -26,7 +26,7 @@ describe('bq-textarea', () => {
       <bq-textarea value="${textValue}"></bq-textarea>
     `);
 
-    const textareaElem = await page.find('bq-textarea >>> .bq-textarea--input');
+    const textareaElem = await page.find('bq-textarea >>> .bq-textarea__input');
     expect(await textareaElem.getProperty('value')).toBe(textValue);
   });
 });
