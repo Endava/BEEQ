@@ -96,12 +96,12 @@ export class BqAccordion {
           </div>
           <div class={{ hidden: this.expanded }}>
             <slot name="expanded">
-              <bq-icon name="plus" size={24} />
+              <bq-icon name="plus" />
             </slot>
           </div>
           <div class={{ hidden: !this.expanded }}>
             <slot name="collapsed">
-              <bq-icon name="minus" size={24} />
+              <bq-icon name="minus" />
             </slot>
           </div>
         </summary>

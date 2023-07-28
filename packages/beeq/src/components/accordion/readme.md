@@ -10,6 +10,7 @@
 | Property     | Attribute    | Description | Type                  | Default    |
 | ------------ | ------------ | ----------- | --------------------- | ---------- |
 | `appearance` | `appearance` |             | `"filled" \| "ghost"` | `'filled'` |
+| `disabled`   | `disabled`   |             | `boolean`             | `false`    |
 | `expanded`   | `expanded`   |             | `boolean`             | `false`    |
 | `size`       | `size`       |             | `"medium" \| "small"` | `'medium'` |
 
