@@ -19,6 +19,7 @@ export class BqAccordion {
   // ====================
 
   prefixElem: HTMLDivElement;
+  suffixElem: HTMLDivElement;
 
   // Reference to host HTML element
   // ===================================
@@ -30,6 +31,7 @@ export class BqAccordion {
   // =======================================
 
   @State() private hasPrefix = false;
+  @State() private hasSuffix = false;
 
   // Public Property API
   // ========================
@@ -87,6 +89,10 @@ export class BqAccordion {
     this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
   };
 
+  private handleSuffixSlotChange = () => {
+    this.hasSuffix = hasSlotContent(this.suffixElem, 'suffix');
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -110,6 +116,14 @@ export class BqAccordion {
           <div class="bq-accordion__summary-text" part="text">
             <slot name="header" />
           </div>
+          <div
+            ref={(element) => (this.suffixElem = element)}
+            class={{ 'bq-accordion__summary-suffix': true, '!hidden': !this.hasSuffix }}
+            part="suffix"
+          >
+            <slot name="suffix" onSlotchange={this.handleSuffixSlotChange} />
+          </div>
+
           <div class={{ 'flex items-center justify-center': true, '!hidden': this.expanded }}>
             <slot name="expanded">
               <bq-icon name="plus" />

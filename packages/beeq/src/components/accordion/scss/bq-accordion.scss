@@ -88,6 +88,7 @@
   @apply flex-1;
 }
 
-.bq-accordion__summary-prefix {
+.bq-accordion__summary-prefix,
+.bq-accordion__summary-suffix {
   @apply flex items-center justify-center;
 }

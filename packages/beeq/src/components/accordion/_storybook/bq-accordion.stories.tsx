@@ -68,6 +68,7 @@ export const Icon: Story = {
     'icon-name': 'heart',
   },
 };
+
 const AvatarTemplate = (args: Args) =>
   html` <bq-accordion
     size=${args.size}
@@ -86,6 +87,30 @@ const AvatarTemplate = (args: Args) =>
 
 export const Avatar: Story = {
   render: AvatarTemplate,
+  argTypes: {},
+  args: {},
+};
+
+const MoreTemplate = (args: Args) => {
+  const handleClick = (event) => {
+    console.log('def here ??');
+    event.preventDefault();
+  };
+
+  return html` <bq-accordion
+    size=${args.size}
+    appearance=${args.appearance}
+    .expanded=${args.expanded}
+    .disabled=${args.disabled}
+  >
+    <span slot="header">${args.text}</span>
+    <bq-icon name="gear" @onClick=${handleClick} slot="suffix"></bq-icon>
+    <div>hello world</div>
+  </bq-accordion>`;
+};
+
+export const More: Story = {
+  render: MoreTemplate,
   argTypes: {},
   args: {},
 };
