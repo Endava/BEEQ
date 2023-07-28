@@ -16,6 +16,7 @@ const meta: Meta = {
   },
   argTypes: {
     'auto-grow': { control: 'boolean' },
+    'debounce-time': { control: 'number' },
     disabled: { control: 'boolean' },
     maxlength: { control: 'number' },
     name: { control: 'text' },
@@ -33,6 +34,7 @@ const meta: Meta = {
   },
   args: {
     'auto-grow': false,
+    'debounce-time': 0,
     disabled: false,
     maxlength: 0,
     name: 'textarea',
@@ -49,6 +51,7 @@ type Story = StoryObj;
 const Template = (args: Args) => html`
   <bq-textarea
     ?auto-grow=${args['auto-grow']}
+    debounce-time=${ifDefined(args['debounce-time'])}
     ?disabled=${args.disabled}
     maxlength=${ifDefined(args.maxlength)}
     name=${ifDefined(args.name)}
@@ -56,6 +59,10 @@ const Template = (args: Args) => html`
     rows=${ifDefined(args.rows)}
     validation-status=${ifDefined(args['validation-status'])}
     value=${ifDefined(args.value)}
+    @bqBlur=${args.bqBlur}
+    @bqChange=${args.bqChange}
+    @bqFocus=${args.bqFocus}
+    @bqInput=${args.bqInput}
   >
     <span slot="label">Label</span>
     ${!args.noHelperText
@@ -91,7 +98,7 @@ export const MaxLength: Story = {
 
 export const Validation: Story = {
   render: (args) => html`
-    <div class="flex gap-m">
+    <div class="grid grid-cols-1 gap-m sm:grid-cols-3">
       <!-- Error -->
       ${Template({ ...args, 'validation-status': 'error' })}
       <!-- Warning -->
