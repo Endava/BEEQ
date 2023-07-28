@@ -26,6 +26,7 @@
 | `spellcheck`               | `spellcheck`        | If true, the textarea content may be checked for spelling errors.                                                                                                                                                                                  | `boolean`                                     | `false`     |
 | `validationStatus`         | `validation-status` | The validation status of the textarea.                                                                                                                                                                                                             | `"error" \| "none" \| "success" \| "warning"` | `'none'`    |
 | `value`                    | `value`             | The value of the textarea. It can be used to reset the textarea to a previous value.                                                                                                                                                               | `string`                                      | `undefined` |
+| `wrap`                     | `wrap`              | Specifies how the text in a text area is to be wrapped when submitted in a form                                                                                                                                                                    | `"hard" \| "off" \| "soft"`                   | `'soft'`    |
 
 
 ## Events

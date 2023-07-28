@@ -110,6 +110,9 @@ export class BqTextarea {
   /** The value of the textarea. It can be used to reset the textarea to a previous value. */
   @Prop({ mutable: true }) value: string;
 
+  /** Specifies how the text in a text area is to be wrapped when submitted in a form */
+  @Prop({ reflect: true }) wrap: 'hard' | 'soft' | 'off' = 'soft';
+
   // Prop lifecycle events
   // =======================
 
@@ -241,6 +244,7 @@ export class BqTextarea {
           required={this.required}
           rows={this.rows}
           spellcheck={this.spellcheck}
+          wrap={this.wrap}
           ref={(elem: HTMLTextAreaElement) => (this.textarea = elem)}
           onBlur={this.handleBlur}
           onChange={this.handleChange}

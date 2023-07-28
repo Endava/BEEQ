@@ -811,6 +811,10 @@ export namespace Components {
           * The value of the textarea. It can be used to reset the textarea to a previous value.
          */
         "value": string;
+        /**
+          * Specifies how the text in a text area is to be wrapped when submitted in a form
+         */
+        "wrap": 'hard' | 'soft' | 'off';
     }
     interface BqToast {
         /**
@@ -2083,6 +2087,10 @@ declare namespace LocalJSX {
           * The value of the textarea. It can be used to reset the textarea to a previous value.
          */
         "value"?: string;
+        /**
+          * Specifies how the text in a text area is to be wrapped when submitted in a form
+         */
+        "wrap"?: 'hard' | 'soft' | 'off';
     }
     interface BqToast {
         /**
