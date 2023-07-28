@@ -112,11 +112,29 @@ export const InitialValue: Story = {
   },
 };
 
+export const Disabled: Story = {
+  render: Template,
+  args: {
+    disabled: true,
+    value:
+      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?',
+  },
+};
+
 export const MaxLength: Story = {
   render: Template,
   args: {
     maxlength: 100,
     value: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
+  },
+};
+
+export const ReadOnly: Story = {
+  render: Template,
+  args: {
+    readonly: true,
+    value:
+      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?',
   },
 };
 

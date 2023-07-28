@@ -85,10 +85,10 @@ export class BqTextarea {
   @Prop({ reflect: true }) placeholder!: string;
 
   /** If true, the textarea field cannot be modified. */
-  @Prop({ reflect: true }) readonly?: boolean;
+  @Prop({ reflect: true }) readonly?: boolean = false;
 
   /** Indicates whether or not the textarea field is required to be filled out before submitting the form. */
-  @Prop({ reflect: true }) required?: boolean;
+  @Prop({ reflect: true }) required?: boolean = false;
 
   /** The number of visible text lines for the control. It must be a positive integer. */
   @Prop({ reflect: true }) rows: number = 5;
