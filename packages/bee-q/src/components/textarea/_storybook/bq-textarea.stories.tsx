@@ -32,6 +32,7 @@ const meta: Meta = {
     spellcheck: { control: 'boolean' },
     'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
     value: { control: 'text' },
+    wrap: { control: 'select', options: ['hard', 'soft', 'off'] },
     // Events
     bqBlur: { action: 'bqBlur' },
     bqChange: { action: 'bqChange' },
@@ -58,6 +59,7 @@ const meta: Meta = {
     spellcheck: false,
     'validation-status': 'none',
     value: undefined,
+    wrap: 'soft',
   },
 };
 export default meta;
@@ -83,6 +85,7 @@ const Template = (args: Args) => html`
     spellcheck=${ifDefined(args.spellcheck)}
     validation-status=${ifDefined(args['validation-status'])}
     value=${ifDefined(args.value)}
+    wrap=${ifDefined(args.wrap)}
     @bqBlur=${args.bqBlur}
     @bqChange=${args.bqChange}
     @bqFocus=${args.bqFocus}
