@@ -51,7 +51,7 @@ export class BqAccordionGroup {
 
   render() {
     return (
-      <div>
+      <div class="bq-accordion-group">
         <slot />
       </div>
     );

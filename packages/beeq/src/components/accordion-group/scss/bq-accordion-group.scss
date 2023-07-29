@@ -7,3 +7,7 @@
 :host {
   @apply block;
 }
+
+.bq-accordion-group {
+  @apply flex flex-col gap-[--bq-accordion-group--gap];
+}
