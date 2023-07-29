@@ -50,7 +50,9 @@ export class BqAccordionGroup {
     if (this.multiple) return;
 
     this.bqAccordionElements.forEach((bqAccordionElement) => {
-      bqAccordionElement.expanded = bqAccordionElement === event.detail;
+      if (bqAccordionElement === event.detail) return;
+
+      bqAccordionElement.expanded = false;
     });
   }
 
