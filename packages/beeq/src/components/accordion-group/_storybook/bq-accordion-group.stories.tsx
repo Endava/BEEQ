@@ -13,14 +13,13 @@ const meta: Meta = {
     },
   },
   argTypes: {
-    expanded: { control: 'boolean' },
     disabled: { control: 'boolean' },
     appearance: { control: 'select', options: [...ACCORDION_APPEARANCE] },
+    'expand-all': { control: 'boolean' },
     size: { control: 'select', options: [...ACCORDION_SIZE] },
     text: { control: 'text', table: { disable: true } },
   },
   args: {
-    expanded: false,
     disabled: false,
     appearance: 'filled',
     size: 'medium',
@@ -32,20 +31,20 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
-  <bq-accordion-group>
-    <bq-accordion size=${args.size} appearance=${args.appearance} .expanded=${args.expanded} .disabled=${args.disabled}>
+  <bq-accordion-group ?expand-all=${args['expand-all']}>
+    <bq-accordion size=${args.size} appearance=${args.appearance} .disabled=${args.disabled}>
       <span slot="header">${args.text}</span>
       <div>hello world</div>
     </bq-accordion>
-    <bq-accordion size=${args.size} appearance=${args.appearance} .expanded=${args.expanded} .disabled=${args.disabled}>
+    <bq-accordion size=${args.size} appearance=${args.appearance} .disabled=${args.disabled} expanded>
       <span slot="header">${args.text}</span>
       <div>hello world</div>
     </bq-accordion>
-    <bq-accordion size=${args.size} appearance=${args.appearance} .expanded=${args.expanded} .disabled=${args.disabled}>
+    <bq-accordion size=${args.size} appearance=${args.appearance} .disabled=${args.disabled}>
       <span slot="header">${args.text}</span>
       <div>hello world</div>
     </bq-accordion>
-    <bq-accordion size=${args.size} appearance=${args.appearance} .expanded=${args.expanded} .disabled=${args.disabled}>
+    <bq-accordion size=${args.size} appearance=${args.appearance} .disabled=${args.disabled}>
       <span slot="header">${args.text}</span>
       <div>hello world</div>
     </bq-accordion>

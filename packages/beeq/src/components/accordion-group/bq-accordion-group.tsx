@@ -1,4 +1,6 @@
-import { Component, h } from '@stencil/core';
+import { Component, Element, h, Prop, Watch } from '@stencil/core';
+
+import { isNil } from '../../shared/utils';
 
 @Component({
   tag: 'bq-accordion-group',
@@ -12,6 +14,8 @@ export class BqAccordionGroup {
   // Reference to host HTML element
   // ===================================
 
+  @Element() el!: HTMLBqAccordionGroupElement;
+
   // State() variables
   // Inlined decorator, alphabetical order
   // =======================================
@@ -19,8 +23,20 @@ export class BqAccordionGroup {
   // Public Property API
   // ========================
 
+  @Prop({ reflect: true }) expandAll: boolean;
+
   // Prop lifecycle events
   // =======================
+
+  @Watch('expandAll')
+  checkPropValues() {
+    this.bqAccordionElements.forEach((bqAccordionElement) => {
+      // NOTE: if expandAll is nil we will keep accordion default state
+      if (!isNil(this.expandAll)) {
+        bqAccordionElement.expanded = this.expandAll;
+      }
+    });
+  }
 
   // Events section
   // Requires JSDocs for public API documentation
@@ -29,6 +45,10 @@ export class BqAccordionGroup {
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
+
+  componentWillLoad() {
+    this.checkPropValues();
+  }
 
   // Listeners
   // ==============
@@ -45,6 +65,9 @@ export class BqAccordionGroup {
   // These methods cannot be called from the host element.
   // =======================================================
 
+  private get bqAccordionElements(): HTMLBqAccordionElement[] {
+    return Array.from(this.el.querySelectorAll('bq-accordion'));
+  }
   // render() function
   // Always the last one in the class.
   // ===================================

@@ -59,6 +59,7 @@ export namespace Components {
         "size": TAccordionSize;
     }
     interface BqAccordionGroup {
+        "expandAll": boolean;
     }
     interface BqAlert {
         /**
@@ -1826,6 +1827,7 @@ declare namespace LocalJSX {
         "size"?: TAccordionSize;
     }
     interface BqAccordionGroup {
+        "expandAll"?: boolean;
     }
     interface BqAlert {
         /**
