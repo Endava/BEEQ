@@ -13,6 +13,13 @@
     @apply pointer-events-none cursor-not-allowed;
   }
 
+  &[open] .bq-accordion__summary {
+    @apply border-[length:--bq-accordion--expanded-border-width] border-[color:--bq-accordion--expanded-border-color];
+    @apply rounded-ee-[--bq-accordion--expanded-bottom-right-border-radius] rounded-es-[--bq-expanded--expanded-bottom-left-border-radius] rounded-se-[--bq-accordion--expanded-top-right-border-radius] rounded-ss-[--bq-accordion--expanded-top-left-border-radius];
+
+    border-style: var(--bq-accordion--expanded-border-style);
+  }
+
   &.small .bq-accordion__summary {
     @apply gap-[--bq-accordion--small-gap] py-[--bq-accordion--small-padding-y] pe-[--bq-accordion--small-padding-end] ps-[--bq-accordion--small-padding-start];
   }
@@ -91,9 +98,11 @@
 }
 
 .bq-accordion__summary {
-  // !FIXME: move to variables
-  @apply rounded-xs;
   @apply flex cursor-pointer list-none items-center focus-visible:focus;
+  @apply border-[length:--bq-accordion--collapsed-border-width] border-[color:--bq-accordion--collapsed-border-color];
+  @apply rounded-ee-[--bq-accordion--collapsed-bottom-right-border-radius] rounded-es-[--bq-accordion--collapsed-bottom-left-border-radius] rounded-se-[--bq-accordion--collapsed-top-right-border-radius] rounded-ss-[--bq-accordion--collapsed-top-left-border-radius];
+
+  border-style: var(--bq-accordion--collapsed-border-style);
 
   &::marker {
     @apply hidden;
