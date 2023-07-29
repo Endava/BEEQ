@@ -1,4 +1,4 @@
-import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
 import { ACCORDION_APPEARANCE, ACCORDION_SIZE, TAccordionAppearance, TAccordionSize } from './bq-accordion.types';
 import { hasSlotContent, validatePropValue } from '../../shared/utils';
@@ -59,6 +59,15 @@ export class BqAccordion {
   // Requires JSDocs for public API documentation
   // ==============================================
 
+  /** Handler to be called when the accordion is clicked */
+  @Event() bqClick: EventEmitter<HTMLBqAccordionElement>;
+
+  /** Handler to be called when the accordion gets focus */
+  @Event() bqFocus: EventEmitter<HTMLBqAccordionElement>;
+
+  /** Handler to be called when the accordion loses focus */
+  @Event() bqBlur: EventEmitter<HTMLBqAccordionElement>;
+
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
@@ -85,6 +94,15 @@ export class BqAccordion {
   private handleClick = (event: MouseEvent) => {
     event.preventDefault();
     this.expanded = !this.expanded;
+    this.bqClick.emit(this.el);
+  };
+
+  private handleFocus = () => {
+    this.bqFocus.emit(this.el);
+  };
+
+  private handleBlur = () => {
+    this.bqBlur.emit(this.el);
   };
 
   private handlePrefixSlotChange = () => {
@@ -107,7 +125,7 @@ export class BqAccordion {
         onClick={this.handleClick}
         part="base"
       >
-        <summary class="bq-accordion__summary" part="header">
+        <summary class="bq-accordion__summary" part="header" onFocus={this.handleFocus} onBlur={this.handleBlur}>
           <div
             ref={(element) => (this.prefixElem = element)}
             class={{ 'bq-accordion__summary-prefix': true, '!hidden': !this.hasPrefix }}

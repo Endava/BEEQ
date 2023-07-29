@@ -17,6 +17,11 @@ const meta: Meta = {
     disabled: { control: 'boolean' },
     appearance: { control: 'select', options: [...ACCORDION_APPEARANCE] },
     size: { control: 'select', options: [...ACCORDION_SIZE] },
+    // Event handlers
+    bqBlur: { action: 'bqBlur' },
+    bqFocus: { action: 'bqFocus' },
+    bqChange: { action: 'bqChange' },
+    // Not part of the component
     text: { control: 'text', table: { disable: true } },
   },
   args: {
@@ -37,6 +42,9 @@ const Template = (args: Args) =>
     appearance=${args.appearance}
     .expanded=${args.expanded}
     .disabled=${args.disabled}
+    @bqFocus=${args.bqFocus}
+    @bqClick=${args.bqClick}
+    @bqBlur=${args.bqBlur}
   >
     <span slot="header">${args.text}</span>
     <div>hello world</div>
@@ -53,6 +61,9 @@ const IconTemplate = (args: Args) =>
     appearance=${args.appearance}
     .expanded=${args.expanded}
     .disabled=${args.disabled}
+    @bqFocus=${args.bqFocus}
+    @bqClick=${args.bqClick}
+    @bqBlur=${args.bqBlur}
   >
     <bq-icon name=${args['icon-name']} slot="prefix"></bq-icon>
     <span slot="header">${args.text}</span>
@@ -75,6 +86,9 @@ const AvatarTemplate = (args: Args) =>
     appearance=${args.appearance}
     .expanded=${args.expanded}
     .disabled=${args.disabled}
+    @bqFocus=${args.bqFocus}
+    @bqClick=${args.bqClick}
+    @bqBlur=${args.bqBlur}
   >
     <bq-avatar
       size="xsmall"
@@ -102,6 +116,9 @@ const MoreTemplate = (args: Args) => {
     appearance=${args.appearance}
     .expanded=${args.expanded}
     .disabled=${args.disabled}
+    @bqFocus=${args.bqFocus}
+    @bqClick=${args.bqClick}
+    @bqBlur=${args.bqBlur}
   >
     <span slot="header">${args.text}</span>
     <bq-icon name="gear" @onClick=${handleClick} slot="suffix"></bq-icon>

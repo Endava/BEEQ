@@ -15,13 +15,25 @@
 | `size`       | `size`       |             | `"medium" \| "small"` | `'medium'` |
 
 
+## Events
+
+| Event     | Description                                         | Type                                  |
+| --------- | --------------------------------------------------- | ------------------------------------- |
+| `bqBlur`  | Handler to be called when the accordion loses focus | `CustomEvent<HTMLBqAccordionElement>` |
+| `bqClick` | Handler to be called when the accordion is clicked  | `CustomEvent<HTMLBqAccordionElement>` |
+| `bqFocus` | Handler to be called when the accordion gets focus  | `CustomEvent<HTMLBqAccordionElement>` |
+
+
 ## Shadow Parts
 
-| Part       | Description                                             |
-| ---------- | ------------------------------------------------------- |
-| `"base"`   | The `<details>` that holds the accordion content        |
-| `"header"` | The `<summary>` that holds the accordion header content |
-| `"text"`   | The `<span>` that holds the accordion header text       |
+| Part       | Description                                                    |
+| ---------- | -------------------------------------------------------------- |
+| `"base"`   | The `<details>` that holds the accordion content               |
+| `"header"` | The `<summary>` that holds the accordion header content        |
+| `"panel"`  | The `<div>` that holds the accordion panel content             |
+| `"prefix"` | The `<div>` that holds the accordion text prefix icon / avatar |
+| `"suffix"` | The `<div>` that holds the accordion text suffix icon          |
+| `"text"`   | The `<div>` that holds the accordion header text               |
 
 
 ## Dependencies
