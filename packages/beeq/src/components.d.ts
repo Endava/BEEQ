@@ -60,6 +60,7 @@ export namespace Components {
     }
     interface BqAccordionGroup {
         "expandAll": boolean;
+        "multiple": boolean;
     }
     interface BqAlert {
         /**
@@ -1828,6 +1829,7 @@ declare namespace LocalJSX {
     }
     interface BqAccordionGroup {
         "expandAll"?: boolean;
+        "multiple"?: boolean;
     }
     interface BqAlert {
         /**

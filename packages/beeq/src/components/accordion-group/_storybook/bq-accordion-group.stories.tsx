@@ -16,12 +16,14 @@ const meta: Meta = {
     disabled: { control: 'boolean' },
     appearance: { control: 'select', options: [...ACCORDION_APPEARANCE] },
     'expand-all': { control: 'boolean' },
+    multiple: { control: 'boolean' },
     size: { control: 'select', options: [...ACCORDION_SIZE] },
     text: { control: 'text', table: { disable: true } },
   },
   args: {
     disabled: false,
     appearance: 'filled',
+    multiple: false,
     size: 'medium',
     text: 'text',
   },
@@ -31,7 +33,7 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
-  <bq-accordion-group ?expand-all=${args['expand-all']}>
+  <bq-accordion-group ?expand-all=${args['expand-all']} ?multiple=${args.multiple}>
     <bq-accordion size=${args.size} appearance=${args.appearance} .disabled=${args.disabled}>
       <span slot="header">${args.text}</span>
       <div>hello world</div>

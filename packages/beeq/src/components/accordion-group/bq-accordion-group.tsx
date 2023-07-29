@@ -1,4 +1,4 @@
-import { Component, Element, h, Prop, Watch } from '@stencil/core';
+import { Component, Element, h, Listen, Prop, Watch } from '@stencil/core';
 
 import { isNil } from '../../shared/utils';
 
@@ -25,6 +25,8 @@ export class BqAccordionGroup {
 
   @Prop({ reflect: true }) expandAll: boolean;
 
+  @Prop({ reflect: true }) multiple: boolean = false;
+
   // Prop lifecycle events
   // =======================
 
@@ -41,6 +43,16 @@ export class BqAccordionGroup {
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
+
+  @Listen('bqClick', { passive: true })
+  onBqClick(event: CustomEvent<HTMLBqAccordionElement>) {
+    // We keep default behavior if multiple accordion can be expanded
+    if (this.multiple) return;
+
+    this.bqAccordionElements.forEach((bqAccordionElement) => {
+      bqAccordionElement.expanded = bqAccordionElement === event.detail;
+    });
+  }
 
   // Component lifecycle events
   // Ordered by their natural call order
