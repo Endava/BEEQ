@@ -113,6 +113,10 @@ export class BqAccordion {
     this.hasSuffix = hasSlotContent(this.suffixElem, 'suffix');
   };
 
+  private get open() {
+    return this.expanded && !this.disabled;
+  }
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -121,7 +125,7 @@ export class BqAccordion {
     return (
       <details
         class={{ [`bq-accordion ${this.size} ${this.appearance}`]: true, disabled: this.disabled }}
-        open={this.expanded}
+        open={this.open}
         onClick={this.handleClick}
         part="base"
       >
@@ -144,12 +148,12 @@ export class BqAccordion {
             <slot name="suffix" onSlotchange={this.handleSuffixSlotChange} />
           </div>
 
-          <div class={{ 'flex items-center justify-center': true, '!hidden': this.expanded }}>
+          <div class={{ 'flex items-center justify-center': true, '!hidden': this.open }}>
             <slot name="expanded">
               <bq-icon name="plus" />
             </slot>
           </div>
-          <div class={{ 'flex items-center justify-center': true, '!hidden': !this.expanded }}>
+          <div class={{ 'flex items-center justify-center': true, '!hidden': !this.open }}>
             <slot name="collapsed">
               <bq-icon name="minus" />
             </slot>
