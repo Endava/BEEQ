@@ -107,4 +107,35 @@ describe('bq-textarea', () => {
     expect(await bqTextareaElem.getProperty('value')).toBe(value);
     expect(bqInput).toHaveReceivedEventTimes(value.length);
   });
+
+  it('shold show and count all characters', async () => {
+    const value = 'Hello World!';
+    const maxlenght = 100;
+    const page = await newE2EPage({
+      html: `<bq-textarea maxlength="${maxlenght}"></bq-textarea>`,
+    });
+    const bqTextareaElem = await page.find('bq-textarea');
+    const nativeTextareaElem = await page.find('bq-textarea >>> .bq-textarea__input');
+    const counterElem = await page.find('bq-textarea >>> .bq-textarea__helper--counter');
+
+    bqTextareaElem.setProperty('value', value);
+    await page.waitForChanges();
+
+    expect(await nativeTextareaElem.getProperty('value')).toBe(value);
+    expect(await counterElem.getProperty('innerText')).toBe(`${value.length}/${maxlenght}`);
+  });
+
+  it('should truncate text bigger than maxlenght', async () => {
+    const value = 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.';
+    const page = await newE2EPage({
+      html: `<bq-textarea maxlength="10"></bq-textarea>`,
+    });
+    const bqTextareaElem = await page.find('bq-textarea');
+    const nativeTextareaElem = await page.find('bq-textarea >>> .bq-textarea__input');
+
+    bqTextareaElem.setProperty('value', value);
+    await page.waitForChanges();
+
+    expect(await nativeTextareaElem.getProperty('value')).toBe(value.substring(0, 10));
+  });
 });
