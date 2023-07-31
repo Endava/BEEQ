@@ -1,0 +1,39 @@
+/* -------------------------------------------------------------------------- */
+/*                          Option custom properties           */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  /**
+  * @prop --bq-option--background: background color
+  * @prop --bq-option--font-size: font size
+
+  * @prop --bq-option--border-color: border color
+  * @prop --bq-option--border-style: border style
+  * @prop --bq-option--border-width: border width
+  * @prop --bq-option--border-radius: border radius
+
+  * @prop --bq-option--box-shadow: box shadow
+  
+  * @prop --bq-option--gap-start: gap space between prefix and label
+  * @prop --bq-option--gap-end: gap space between label and suffix
+  * @prop --bq-option--paddingY: padding Y axis
+  * @prop --bq-option--padding-start: option label padding start
+  * @prop --bq-option--padding-end: option label padding end
+  */
+
+  --bq-option--background: theme('colors.bg.primary');
+  --bq-option--font-size: theme('fontSize.m');
+
+  --bq-option--border-color: theme('colors.transparent');
+  --bq-option--border-style: none;
+  --bq-option--border-width: 0;
+  --bq-option--border-radius: theme('borderRadius.s');
+
+  --bq-option--box-shadow: none;
+
+  --bq-option--gap-start: theme('spacing.s');
+  --bq-option--gap-end: theme('spacing.s');
+  --bq-option--paddingY: theme('spacing.xs');
+  --bq-option--padding-start: theme('spacing.s');
+  --bq-option--padding-end: theme('spacing.s');
+}
