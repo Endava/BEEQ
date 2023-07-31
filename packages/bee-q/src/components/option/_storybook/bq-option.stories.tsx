@@ -24,13 +24,13 @@ const meta: Meta = {
     // Not part of the public API, so we don't want to expose it in the docs
     children: { control: 'text', table: { disable: true } },
     text: { control: 'text', table: { disable: true } },
-    iconPreffix: { control: 'text', table: { disable: true } },
+    iconPrefix: { control: 'text', table: { disable: true } },
     iconSuffix: { control: 'text', table: { disable: true } },
   },
   args: {
     disabled: false,
     selected: false,
-    iconPreffix: undefined,
+    iconPrefix: undefined,
     iconSuffix: undefined,
   },
 };
@@ -43,7 +43,7 @@ const TemplateList = (args: Args) => html`
 `;
 
 const Template = (args: Args) => {
-  const bqIconPrefix = args.iconPreffix ? html`<bq-icon name=${args.iconPreffix} slot="prefix"></bq-icon>` : nothing;
+  const bqIconPrefix = args.iconPrefix ? html`<bq-icon name=${args.iconPrefix} slot="prefix"></bq-icon>` : nothing;
   const bqIconSuffix = args.iconSuffix ? html`<bq-icon name=${args.iconSuffix} slot="suffix"></bq-icon>` : nothing;
 
   return html`
@@ -68,11 +68,11 @@ export const Default: Story = {
       ...args,
       children: html`
         <!-- Option 1 -->
-        ${Template({ ...args, text: 'User profile', iconPreffix: 'user', value: 'user' })}
+        ${Template({ ...args, text: 'User profile', iconPrefix: 'user', value: 'user' })}
         <!-- Option 2 -->
-        ${Template({ ...args, text: 'Change password', iconPreffix: 'lock-simple', value: 'changepassword' })}
+        ${Template({ ...args, text: 'Change password', iconPrefix: 'lock-simple', value: 'changepassword' })}
         <!-- Option 3 -->
-        ${Template({ ...args, text: 'Close session', iconPreffix: 'sign-out', value: 'logout' })}
+        ${Template({ ...args, text: 'Close session', iconPrefix: 'sign-out', value: 'logout' })}
       `,
     })}`,
 };
@@ -83,11 +83,11 @@ export const Active: Story = {
       ...args,
       children: html`
         <!-- Option 1 -->
-        ${Template({ ...args, selected: true, text: 'User profile', iconPreffix: 'user', value: 'user' })}
+        ${Template({ ...args, selected: true, text: 'User profile', iconPrefix: 'user', value: 'user' })}
         <!-- Option 2 -->
-        ${Template({ ...args, text: 'Change password', iconPreffix: 'lock-simple', value: 'changepassword' })}
+        ${Template({ ...args, text: 'Change password', iconPrefix: 'lock-simple', value: 'changepassword' })}
         <!-- Option 3 -->
-        ${Template({ ...args, text: 'Close session', iconPreffix: 'sign-out', value: 'logout' })}
+        ${Template({ ...args, text: 'Close session', iconPrefix: 'sign-out', value: 'logout' })}
       `,
     })}`,
 };
@@ -98,13 +98,13 @@ export const Disabled: Story = {
       ...args,
       children: html`
         <!-- Option 1 -->
-        ${Template({ ...args, text: 'User profile', iconPreffix: 'user', value: 'user' })}
+        ${Template({ ...args, text: 'User profile', iconPrefix: 'user', value: 'user' })}
         <!-- Option 2 -->
-        ${Template({ ...args, disabled: true, text: 'Admin Dashboard', iconPreffix: 'layout', value: 'admin' })}
+        ${Template({ ...args, disabled: true, text: 'Admin Dashboard', iconPrefix: 'layout', value: 'admin' })}
         <!-- Option 3 -->
-        ${Template({ ...args, text: 'Change password', iconPreffix: 'lock-simple', value: 'changepassword' })}
+        ${Template({ ...args, text: 'Change password', iconPrefix: 'lock-simple', value: 'changepassword' })}
         <!-- Option 4 -->
-        ${Template({ ...args, text: 'Close session', iconPreffix: 'sign-out', value: 'logout' })}
+        ${Template({ ...args, text: 'Close session', iconPrefix: 'sign-out', value: 'logout' })}
       `,
     })}`,
 };
@@ -135,24 +135,24 @@ export const WithOptionGroup: Story = {
         <bq-option-group>
           <span slot="header-label">Sport</span>
           <!-- Option 1 -->
-          ${Template({ ...args, text: 'Running', iconSuffix: 'sneaker-move', value: 'running' })}
+          ${Template({ ...args, text: 'Running', iconPrefix: 'sneaker-move', value: 'running' })}
           <!-- Option 2 -->
-          ${Template({ ...args, text: 'Hiking', iconSuffix: 'boot', value: 'hiking' })}
+          ${Template({ ...args, text: 'Hiking', iconPrefix: 'boot', value: 'hiking' })}
           <!-- Option 3 -->
-          ${Template({ ...args, text: 'Biking', iconSuffix: 'person-simple-bike', value: 'biking' })}
+          ${Template({ ...args, text: 'Biking', iconPrefix: 'person-simple-bike', value: 'biking' })}
           <!-- Option 4 -->
-          ${Template({ ...args, text: 'Swimming', iconSuffix: 'swimming-pool', value: 'swimming' })}
+          ${Template({ ...args, text: 'Swimming', iconPrefix: 'swimming-pool', value: 'swimming' })}
         </bq-option-group>
         <bq-option-group>
           <span slot="header-label">Food</span>
           <!-- Option 1 -->
-          ${Template({ ...args, text: 'Pizza', iconSuffix: 'pizza', value: 'pizza' })}
+          ${Template({ ...args, text: 'Pizza', iconPrefix: 'pizza', value: 'pizza' })}
           <!-- Option 2 -->
-          ${Template({ ...args, text: 'Hamburger', iconSuffix: 'hamburger', value: 'hamburger' })}
+          ${Template({ ...args, text: 'Hamburger', iconPrefix: 'hamburger', value: 'hamburger' })}
           <!-- Option 3 -->
-          ${Template({ ...args, text: 'Cookie', iconSuffix: 'cookie', value: 'cookie' })}
+          ${Template({ ...args, text: 'Cookie', iconPrefix: 'cookie', value: 'cookie' })}
           <!-- Option 4 -->
-          ${Template({ ...args, text: 'Ice-cream', iconSuffix: 'ice-cream', value: 'ice-cream' })}
+          ${Template({ ...args, text: 'Ice-cream', iconPrefix: 'ice-cream', value: 'ice-cream' })}
         </bq-option-group>
       `,
     })}
