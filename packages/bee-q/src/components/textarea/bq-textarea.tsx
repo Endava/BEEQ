@@ -74,6 +74,9 @@ export class BqTextarea {
   /** If `true`, the user cannot interact with the textarea. */
   @Prop({ reflect: true }) disabled: boolean = false;
 
+  /** If `true`, it will block the user's ability to resize the textarea. */
+  @Prop({ reflect: true }) disableResize?: boolean = false;
+
   /** The ID of the form that the textarea field belongs to. */
   @Prop({ reflect: true }) form?: string;
 
@@ -247,7 +250,11 @@ export class BqTextarea {
         </label>
         <textarea
           id={this.name ?? this.fallbackId}
-          class={{ 'bq-textarea__input': true, [`validation-${this.validationStatus}`]: true }}
+          class={{
+            'bq-textarea__input': true,
+            'resize-none': this.disableResize,
+            [`validation-${this.validationStatus}`]: true,
+          }}
           autocapitalize={this.autocapitalize}
           autocomplete={this.autocomplete}
           autocorrect={this.autocorrect}

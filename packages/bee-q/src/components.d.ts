@@ -767,6 +767,10 @@ export namespace Components {
          */
         "debounceTime"?: number;
         /**
+          * If `true`, it will block the user's ability to resize the textarea.
+         */
+        "disableResize"?: boolean;
+        /**
           * If `true`, the user cannot interact with the textarea.
          */
         "disabled": boolean;
@@ -2022,6 +2026,10 @@ declare namespace LocalJSX {
           * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes. A value of 0 means no debouncing will occur.
          */
         "debounceTime"?: number;
+        /**
+          * If `true`, it will block the user's ability to resize the textarea.
+         */
+        "disableResize"?: boolean;
         /**
           * If `true`, the user cannot interact with the textarea.
          */

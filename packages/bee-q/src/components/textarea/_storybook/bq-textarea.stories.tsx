@@ -22,6 +22,7 @@ const meta: Meta = {
     'auto-grow': { control: 'boolean' },
     'debounce-time': { control: 'number' },
     disabled: { control: 'boolean' },
+    'disable-resize': { control: 'boolean' },
     form: { control: 'text' },
     maxlength: { control: 'number' },
     name: { control: 'text' },
@@ -49,6 +50,7 @@ const meta: Meta = {
     'auto-grow': false,
     'debounce-time': 0,
     disabled: false,
+    'disable-resize': false,
     form: undefined,
     maxlength: 0,
     name: 'textarea',
@@ -75,6 +77,7 @@ const Template = (args: Args) => html`
     ?auto-grow=${args['auto-grow']}
     debounce-time=${ifDefined(args['debounce-time'])}
     ?disabled=${args.disabled}
+    ?disable-resize=${args['disable-resize']}
     form=${ifDefined(args.form)}
     maxlength=${ifDefined(args.maxlength)}
     name=${ifDefined(args.name)}
