@@ -20,6 +20,7 @@ import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spin
 import { TStatusType } from "./components/status/bq-status.types";
 import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
 import { TTabSize } from "./components/tab/bq-tab.types";
+import { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 import { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 import { FloatingUIPlacement } from "./services/interfaces";
 export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
@@ -37,6 +38,7 @@ export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spin
 export { TStatusType } from "./components/status/bq-status.types";
 export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
 export { TTabSize } from "./components/tab/bq-tab.types";
+export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 export { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export { FloatingUIPlacement } from "./services/interfaces";
 export namespace Components {
@@ -749,7 +751,7 @@ export namespace Components {
         /**
           * Controls whether or not the textarea field should be capitalized and how. Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
          */
-        "autocapitalize": string;
+        "autocapitalize": TTextareaAutoCapitalize;
         /**
           * Specifies whether or not the textarea field should have autocomplete enabled. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
          */
@@ -818,7 +820,7 @@ export namespace Components {
         /**
           * Specifies how the text in a text area is to be wrapped when submitted in a form
          */
-        "wrap": 'hard' | 'soft' | 'off';
+        "wrap": TTextareaWrap;
     }
     interface BqToast {
         /**
@@ -2009,7 +2011,7 @@ declare namespace LocalJSX {
         /**
           * Controls whether or not the textarea field should be capitalized and how. Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
          */
-        "autocapitalize"?: string;
+        "autocapitalize"?: TTextareaAutoCapitalize;
         /**
           * Specifies whether or not the textarea field should have autocomplete enabled. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
          */
@@ -2098,7 +2100,7 @@ declare namespace LocalJSX {
         /**
           * Specifies how the text in a text area is to be wrapped when submitted in a form
          */
-        "wrap"?: 'hard' | 'soft' | 'off';
+        "wrap"?: TTextareaWrap;
     }
     interface BqToast {
         /**

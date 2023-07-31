@@ -1,5 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Prop, State } from '@stencil/core';
 
+import { TTextareaAutoCapitalize, TTextareaWrap } from './bq-textarea.types';
 import { debounce, hasSlotContent, isHTMLElement, TDebounce } from '../../shared/utils';
 import { TInputValidation } from '../input/bq-input.types';
 
@@ -42,7 +43,7 @@ export class BqTextarea {
    * Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'.
    * See: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
    */
-  @Prop({ reflect: true }) autocapitalize: string = 'off';
+  @Prop({ reflect: true }) autocapitalize: TTextareaAutoCapitalize = 'off';
 
   /**
    * Specifies whether or not the textarea field should have autocomplete enabled.
@@ -119,7 +120,7 @@ export class BqTextarea {
   @Prop({ mutable: true }) value: string;
 
   /** Specifies how the text in a text area is to be wrapped when submitted in a form */
-  @Prop({ reflect: true }) wrap: 'hard' | 'soft' | 'off' = 'soft';
+  @Prop({ reflect: true }) wrap: TTextareaWrap = 'soft';
 
   // Prop lifecycle events
   // =======================

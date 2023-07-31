@@ -5,6 +5,7 @@ import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import mdx from './bq-textarea.mdx';
 import { INPUT_VALIDATION } from '../../input/bq-input.types';
+import { TEXTAREA_AUTO_CAPITALIZE, TEXTAREA_WRAP } from '../bq-textarea.types';
 
 const meta: Meta = {
   title: 'Components/Textarea',
@@ -15,7 +16,7 @@ const meta: Meta = {
     },
   },
   argTypes: {
-    autocapitalize: { control: 'select', options: ['off', 'none', 'on', 'sentences', 'words', 'characters'] },
+    autocapitalize: { control: 'select', options: [...TEXTAREA_AUTO_CAPITALIZE] },
     autocomplete: { control: 'text' },
     autocorrect: { control: 'inline-radio', options: ['on', 'off'] },
     autofocus: { control: 'boolean' },
@@ -33,7 +34,7 @@ const meta: Meta = {
     spellcheck: { control: 'boolean' },
     'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
     value: { control: 'text' },
-    wrap: { control: 'select', options: ['hard', 'soft', 'off'] },
+    wrap: { control: 'select', options: [...TEXTAREA_WRAP] },
     // Events
     bqBlur: { action: 'bqBlur' },
     bqChange: { action: 'bqChange' },
