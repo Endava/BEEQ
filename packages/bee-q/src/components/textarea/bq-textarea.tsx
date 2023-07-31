@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Prop, State } from '@stencil/core';
 
-import { debounce, isHTMLElement, TDebounce } from '../../shared/utils';
+import { debounce, hasSlotContent, isHTMLElement, TDebounce } from '../../shared/utils';
 import { TInputValidation } from '../input/bq-input.types';
 
 @Component({
@@ -15,8 +15,11 @@ export class BqTextarea {
   // ====================
 
   private debounceBqInput: TDebounce<void>;
-  private textarea: HTMLTextAreaElement;
   private fallbackId = 'textarea';
+
+  private helperTextElem?: HTMLElement;
+  private labelElem?: HTMLLabelElement;
+  private textarea: HTMLTextAreaElement;
 
   // Reference to host HTML element
   // ===================================
@@ -27,6 +30,8 @@ export class BqTextarea {
   // Inlined decorator, alphabetical order
   // =======================================
 
+  @State() private hasHelperText = false;
+  @State() private hasLabel = false;
   @State() private numberOfCharacters: number = 0;
 
   // Public Property API
@@ -218,6 +223,14 @@ export class BqTextarea {
     this.numberOfCharacters = this.textarea.value.length;
   };
 
+  private handleLabelSlotChange = () => {
+    this.hasLabel = hasSlotContent(this.labelElem);
+  };
+
+  private handleHelperTextSlotChange = () => {
+    this.hasHelperText = hasSlotContent(this.helperTextElem);
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -225,8 +238,12 @@ export class BqTextarea {
   render() {
     return (
       <div class="bq-textarea flex flex-auto flex-col">
-        <label class="bq-textarea__label" htmlFor={this.name ?? this.fallbackId}>
-          <slot name="label" />
+        <label
+          class={{ 'bq-textarea__label': true, hidden: !this.hasLabel }}
+          htmlFor={this.name ?? this.fallbackId}
+          ref={(label: HTMLLabelElement) => (this.labelElem = label)}
+        >
+          <slot name="label" onSlotchange={this.handleLabelSlotChange} />
         </label>
         <textarea
           id={this.name ?? this.fallbackId}
@@ -257,12 +274,13 @@ export class BqTextarea {
           class={{
             'bq-textarea__helper flex items-center justify-between': true,
             [`validation-${this.validationStatus}`]: true,
+            hidden: !this.hasHelperText && !this.maxlength,
           }}
         >
-          <span class="bq-textarea__helper--text">
-            <slot name="helper-text" />
+          <span class="bq-textarea__helper--text" ref={(span: HTMLElement) => (this.helperTextElem = span)}>
+            <slot name="helper-text" onSlotchange={this.handleHelperTextSlotChange} />
           </span>
-          <span class={{ 'bq-textarea__helper--counter': true, '!hidden': !this.maxlength }}>
+          <span class={{ 'bq-textarea__helper--counter': true, hidden: !this.maxlength }}>
             {this.numberOfCharacters}/{this.maxlength}
           </span>
         </div>
