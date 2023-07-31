@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Prop, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
 import { TTextareaAutoCapitalize, TTextareaWrap } from './bq-textarea.types';
 import { debounce, hasSlotContent, isHTMLElement, TDebounce } from '../../shared/utils';
@@ -33,7 +33,6 @@ export class BqTextarea {
 
   @State() private hasHelperText = false;
   @State() private hasLabel = false;
-  @State() private numberOfCharacters: number = 0;
 
   // Public Property API
   // ========================
@@ -125,6 +124,15 @@ export class BqTextarea {
   // Prop lifecycle events
   // =======================
 
+  @Watch('value')
+  handleValueChange() {
+    if (!this.textarea) return;
+    if (!this.maxlength || this.value.length < this.maxlength) return;
+    // If the value is longer than the maxlength, we need to truncate it
+    this.value = this.value.substring(0, this.maxlength);
+    this.textarea.value = this.value;
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
@@ -154,12 +162,12 @@ export class BqTextarea {
   // Ordered by their natural call order
   // =====================================
 
-  componentWillLoad() {
-    this.numberOfCharacters = this.value?.length ?? 0;
-  }
-
   // Listeners
   // ==============
+
+  componentDidLoad() {
+    this.handleValueChange();
+  }
 
   // Public methods API
   // These methods are exposed on the host element.
@@ -172,6 +180,12 @@ export class BqTextarea {
   // Internal business logic.
   // These methods cannot be called from the host element.
   // =======================================================
+
+  private get numberOfCharacters() {
+    if (!this.maxlength || !this.textarea) return 0;
+
+    return this.value.length;
+  }
 
   private handleBlur = () => {
     if (this.disabled) return;
@@ -208,7 +222,6 @@ export class BqTextarea {
     this.debounceBqInput();
 
     this.autoResize();
-    this.countCharacters();
   };
 
   private autoResize = () => {
@@ -219,12 +232,6 @@ export class BqTextarea {
 
     inputElem.style.height = 'auto';
     inputElem.style.height = `${inputElem.scrollHeight}px`;
-  };
-
-  private countCharacters = () => {
-    if (!this.maxlength || !this.textarea) return;
-
-    this.numberOfCharacters = this.textarea.value.length;
   };
 
   private handleLabelSlotChange = () => {
