@@ -128,6 +128,21 @@ export const Disabled: Story = {
   },
 };
 
+export const DisableResize: Story = {
+  render: () => html`
+    <div class="grid grid-cols-1 gap-m sm:grid-cols-2">
+      <!-- Resize enabled -->
+      ${Template({ 'disable-resize': false, placeholder: 'Resize is enabled' })}
+      <!-- Resize disabled -->
+      ${Template({ 'disable-resize': true, placeholder: 'Resize is disabled' })}
+    </div>
+  `,
+  args: {
+    value:
+      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?',
+  },
+};
+
 export const MaxLength: Story = {
   render: Template,
   args: {
