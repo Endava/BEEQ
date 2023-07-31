@@ -440,6 +440,28 @@ export namespace Components {
          */
         "type": TNotificationType;
     }
+    interface BqOption {
+        /**
+          * If true, the option is disabled.
+         */
+        "disabled"?: boolean;
+        /**
+          * If true, the option is selected and active.
+         */
+        "selected": boolean;
+        /**
+          * A string representing the value of the option. Can be used to identify the item
+         */
+        "value"?: string;
+    }
+    interface BqOptionGroup {
+    }
+    interface BqOptionList {
+        /**
+          * If true, the option is selected and active.
+         */
+        "ariaLabel": string;
+    }
     interface BqRadio {
         /**
           * If true radio displays background on hover
@@ -817,6 +839,14 @@ export interface BqNotificationCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqNotificationElement;
 }
+export interface BqOptionCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqOptionElement;
+}
+export interface BqOptionListCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqOptionListElement;
+}
 export interface BqRadioCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqRadioElement;
@@ -929,6 +959,24 @@ declare global {
         prototype: HTMLBqNotificationElement;
         new (): HTMLBqNotificationElement;
     };
+    interface HTMLBqOptionElement extends Components.BqOption, HTMLStencilElement {
+    }
+    var HTMLBqOptionElement: {
+        prototype: HTMLBqOptionElement;
+        new (): HTMLBqOptionElement;
+    };
+    interface HTMLBqOptionGroupElement extends Components.BqOptionGroup, HTMLStencilElement {
+    }
+    var HTMLBqOptionGroupElement: {
+        prototype: HTMLBqOptionGroupElement;
+        new (): HTMLBqOptionGroupElement;
+    };
+    interface HTMLBqOptionListElement extends Components.BqOptionList, HTMLStencilElement {
+    }
+    var HTMLBqOptionListElement: {
+        prototype: HTMLBqOptionListElement;
+        new (): HTMLBqOptionListElement;
+    };
     interface HTMLBqRadioElement extends Components.BqRadio, HTMLStencilElement {
     }
     var HTMLBqRadioElement: {
@@ -1020,6 +1068,9 @@ declare global {
         "bq-icon": HTMLBqIconElement;
         "bq-input": HTMLBqInputElement;
         "bq-notification": HTMLBqNotificationElement;
+        "bq-option": HTMLBqOptionElement;
+        "bq-option-group": HTMLBqOptionGroupElement;
+        "bq-option-list": HTMLBqOptionListElement;
         "bq-radio": HTMLBqRadioElement;
         "bq-radio-group": HTMLBqRadioGroupElement;
         "bq-side-menu": HTMLBqSideMenuElement;
@@ -1499,6 +1550,48 @@ declare namespace LocalJSX {
          */
         "type"?: TNotificationType;
     }
+    interface BqOption {
+        /**
+          * If true, the option is disabled.
+         */
+        "disabled"?: boolean;
+        /**
+          * Handler to be called when item loses focus
+         */
+        "onBqBlur"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        /**
+          * Handler to be called when item is clicked
+         */
+        "onBqClick"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        /**
+          * Handler to be called on enter key press
+         */
+        "onBqEnter"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        /**
+          * Handler to be called when item is focused
+         */
+        "onBqFocus"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        /**
+          * If true, the option is selected and active.
+         */
+        "selected"?: boolean;
+        /**
+          * A string representing the value of the option. Can be used to identify the item
+         */
+        "value"?: string;
+    }
+    interface BqOptionGroup {
+    }
+    interface BqOptionList {
+        /**
+          * If true, the option is selected and active.
+         */
+        "ariaLabel"?: string;
+        /**
+          * Handler to be called when `bq-option` is selected (on click/enter press).
+         */
+        "onBqSelect"?: (event: BqOptionListCustomEvent<{ value: string; item: HTMLBqOptionElement }>) => void;
+    }
     interface BqRadio {
         /**
           * If true radio displays background on hover
@@ -1883,6 +1976,9 @@ declare namespace LocalJSX {
         "bq-icon": BqIcon;
         "bq-input": BqInput;
         "bq-notification": BqNotification;
+        "bq-option": BqOption;
+        "bq-option-group": BqOptionGroup;
+        "bq-option-list": BqOptionList;
         "bq-radio": BqRadio;
         "bq-radio-group": BqRadioGroup;
         "bq-side-menu": BqSideMenu;
@@ -1921,6 +2017,9 @@ declare module "@stencil/core" {
             "bq-icon": LocalJSX.BqIcon & JSXBase.HTMLAttributes<HTMLBqIconElement>;
             "bq-input": LocalJSX.BqInput & JSXBase.HTMLAttributes<HTMLBqInputElement>;
             "bq-notification": LocalJSX.BqNotification & JSXBase.HTMLAttributes<HTMLBqNotificationElement>;
+            "bq-option": LocalJSX.BqOption & JSXBase.HTMLAttributes<HTMLBqOptionElement>;
+            "bq-option-group": LocalJSX.BqOptionGroup & JSXBase.HTMLAttributes<HTMLBqOptionGroupElement>;
+            "bq-option-list": LocalJSX.BqOptionList & JSXBase.HTMLAttributes<HTMLBqOptionListElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
             "bq-side-menu": LocalJSX.BqSideMenu & JSXBase.HTMLAttributes<HTMLBqSideMenuElement>;

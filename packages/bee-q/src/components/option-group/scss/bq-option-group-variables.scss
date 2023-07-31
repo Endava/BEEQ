@@ -1,0 +1,33 @@
+/* -------------------------------------------------------------------------- */
+/*                          Option group custom properties           */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  /**
+  * @prop --bq-option-group--background: option group background color
+  * @prop --bq-option-group--font-size: option group font size
+  * @prop --bq-option-group--line-height: option group line height
+
+  * @prop --bq-option-group--label-padding-start: option group header padding start
+  * @prop --bq-option-group--label-padding-end: option group header padding start
+  * @prop --bq-option-group--label-paddingY: option group header padding Y axis
+
+  * @prop --bq-option-group--label-text-padding-start: option group text within label padding start
+  * @prop --bq-option-group--label-text-padding-end: option group text within label padding start
+
+  * @prop --bq-option-group--container-padding-start: option group container padding start
+  */
+
+  --bq-option-group--background: theme('colors.bg.primary');
+  --bq-option-group--font-size: theme('fontSize.s');
+  --bq-option-group--line-height: theme('lineHeight.regular');
+
+  --bq-option-group--label-padding-start: theme('spacing.s');
+  --bq-option-group--label-padding-end: theme('spacing.s');
+  --bq-option-group--label-paddingY: theme('spacing.xs');
+
+  --bq-option-group--label-text-padding-start: theme('spacing.s');
+  --bq-option-group--label-text-padding-end: theme('spacing.s');
+
+  --bq-option-group--container-padding-start: theme('spacing.xxl');
+}
