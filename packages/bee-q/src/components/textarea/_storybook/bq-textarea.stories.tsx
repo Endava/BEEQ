@@ -91,7 +91,7 @@ const Template = (args: Args) => html`
     @bqFocus=${args.bqFocus}
     @bqInput=${args.bqInput}
   >
-    <span slot="label">Label</span>
+    <label slot="label">Label</label>
     ${!args.noHelperText
       ? html`
           <span class="flex items-center gap-xs" slot="helper-text">
