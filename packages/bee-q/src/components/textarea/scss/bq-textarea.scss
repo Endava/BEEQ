@@ -1,0 +1,105 @@
+/* -------------------------------------------------------------------------- */
+/*                                Textarea styles                */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-textarea.variables';
+
+:host {
+  @apply block w-full;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                    Label                                   */
+/* -------------------------------------------------------------------------- */
+
+.bq-textarea__label {
+  @apply mb-[--bq-textarea--label-margin-bottom] text-[length:--bq-textarea--label-text-size] text-[color:--bq-textarea--label-text-color];
+}
+
+/* -------------------------------------------------------------------------- */
+/*                        Native HTML Textarea control                        */
+/* -------------------------------------------------------------------------- */
+
+.bq-textarea__input {
+  @apply h-[inherit] flex-auto resize-y bg-[--bq-textarea--background-color];
+  // Border
+  @apply rounded-[--bq-textarea--border-radius] border-[length:--bq-textarea--border-width] border-[color:--bq-textarea--border-color];
+  // Padding
+  @apply py-[--bq-textarea--paddingY] pe-[--bq-textarea--padding-end] ps-[--bq-textarea--padding-start];
+  // Text
+  @apply text-[length:--bq-textarea--text-size] text-[color:--bq-textarea--text-color] placeholder:text-[color:--bq-textarea--text-placeholder-color];
+  // Transition
+  @apply transition-colors ease-in-out;
+  // Hover
+  @apply [&:not([disabled]):not(:focus-within)]:hover:border-stroke-brand-hover;
+  // Disabled
+  @apply disabled:cursor-not-allowed disabled:border-[color:--bq-input--border-color-disabled] disabled:bg-[--bq-textarea--background-color-disabled];
+  // Focus
+  &:not([disabled]):focus-within {
+    --bq-ring-width: 1px;
+    --bq-ring-offset-width: 0;
+    --bq-ring-color-focus: var(--bq-textarea--border-color-focus);
+
+    @apply focus border-[color:--bq-ring-color-focus];
+  }
+}
+
+/* ------------------------------- Validations ------------------------------- */
+
+.bq-textarea__input.validation-error {
+  @apply border-stroke-danger [&:not(.disabled):not(:focus-within)]:hover:border-stroke-danger-hover;
+
+  &:not(.disabled):focus-within {
+    --bq-ring-color-focus: theme('colors.stroke.danger-active');
+    @apply border-stroke-danger-active;
+  }
+}
+
+.bq-textarea__input.validation-success {
+  @apply border-stroke-success [&:not(.disabled):not(:focus-within)]:hover:border-stroke-success-hover;
+
+  &:not(.disabled):focus-within {
+    --bq-ring-color-focus: theme('colors.stroke.success-active');
+    @apply border-stroke-success-active;
+  }
+}
+
+.bq-textarea__input.validation-warning {
+  @apply border-stroke-warning [&:not(.disabled):not(:focus-within)]:hover:border-stroke-warning-hover;
+
+  &:not(.disabled):focus-within {
+    --bq-ring-color-focus: theme('colors.stroke.warning-active');
+    @apply border-stroke-warning-active;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                 Helper text                                */
+/* -------------------------------------------------------------------------- */
+
+.bq-textarea__helper {
+  @apply mt-[--bq-textarea--helper-margin-top] text-[length:--bq-textarea--helper-text-size] text-[color:--bq-textarea--helper-text-color];
+}
+
+/* ------------------------------- Validations ------------------------------ */
+
+.bq-textarea__helper.validation-error {
+  @apply text-text-danger;
+}
+
+.bq-textarea__helper.validation-success {
+  @apply text-text-success;
+}
+
+.bq-textarea__helper.validation-warning {
+  @apply text-text-warning;
+}
+
+/* ----------------------------- Helper counter ----------------------------- */
+
+/** Apply a disabled text color style to the textarea counter when the validation is none. */
+.bq-textarea__helper[class~='validation-none'] {
+  .bq-textarea__helper--counter {
+    @apply text-text-secondary-disabled;
+  }
+}
