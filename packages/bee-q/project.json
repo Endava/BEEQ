@@ -34,7 +34,7 @@
       }
     },
     "storybook-start": {
-      "executor": "@nrwl/storybook:storybook",
+      "executor": "@nx/storybook:storybook",
       "options": {
         "loglevel": "silly",
         "configDir": "packages/bee-q/.storybook",
@@ -67,7 +67,8 @@
       }
     },
     "storybook-build": {
-      "executor": "@nrwl/storybook:build",
+      "dependsOn": ["storybook-build-css"],
+      "executor": "@nx/storybook:build",
       "outputs": ["{options.outputDir}", "{options.config.configDir}"],
       "options": {
         "outputDir": "dist/storybook/bee-q",
@@ -82,14 +83,14 @@
     },
     "storybook-start-css": {
       "executor": "nx:run-commands",
-      "outputs": ["packages/bee-q/.storybook/css"],
+      "outputs": ["{projectRoot}/.storybook/css"],
       "options": {
         "command": "npx tailwindcss -i packages/bee-q/src/global/styles/tailwind.pcss -o packages/bee-q/.storybook/css/sb-styles.css --postcss ./postcss.config.js --watch"
       }
     },
     "storybook-build-css": {
       "executor": "nx:run-commands",
-      "outputs": ["packages/bee-q/.storybook/css"],
+      "outputs": ["{projectRoot}/.storybook/css"],
       "options": {
         "command": "npx tailwindcss -i packages/bee-q/src/global/styles/tailwind.pcss -o packages/bee-q/.storybook/css/sb-styles.css --postcss ./postcss.config.js --minify"
       }
@@ -110,6 +111,7 @@
       }
     },
     "test": {
+      "dependsOn": ["lint"],
       "executor": "@nxext/stencil:test",
       "outputs": ["{options.outputPath}"],
       "options": {
@@ -117,11 +119,9 @@
         "tsConfig": "packages/bee-q/tsconfig.lib.json",
         "configPath": "packages/bee-q/stencil.config.ts",
         "outputPath": "dist/bee-q"
-      },
-      "dependsOn": ["lint"]
+      }
     },
     "e2e": {
-      "dependsOn": ["build"],
       "executor": "@nxext/stencil:e2e",
       "outputs": ["{options.outputPath}"],
       "options": {
@@ -140,7 +140,7 @@
       }
     },
     "eslint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/bee-q/**/*.{ts,tsx}"]
