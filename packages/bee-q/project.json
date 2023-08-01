@@ -30,7 +30,7 @@
         "configPath": "packages/bee-q/stencil.config.ts",
         "outputPath": "dist/bee-q",
         "watch": true,
-        "dev": true
+        "dev": false
       }
     },
     "storybook-start": {
