@@ -27,7 +27,7 @@
    * @prop --bq-input--text-size - Input text size
    * @prop --bq-input--text-placeholder-color - Input placeholder text color
    */
-  --bq-input--background-color: var(--bq-neutral-white);
+  --bq-input--background-color: theme('colors.ui.primary');
 
   --bq-input--border-color: theme('colors.stroke.tiertary');
   --bq-input--border-color-hover: theme('colors.stroke.brand-hover');

@@ -61,6 +61,7 @@ export class BqTabGroup {
   }
 
   @Watch('size')
+  @Watch('value')
   checkPropValues() {
     validatePropValue(TAB_SIZE, 'medium', this.el, 'size');
 

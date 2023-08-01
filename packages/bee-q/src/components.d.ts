@@ -21,6 +21,7 @@ import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spin
 import { TStatusType } from "./components/status/bq-status.types";
 import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
 import { TTabSize } from "./components/tab/bq-tab.types";
+import { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 import { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 export { TBadgeSize } from "./components/badge/bq-badge.types";
@@ -38,6 +39,7 @@ export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spin
 export { TStatusType } from "./components/status/bq-status.types";
 export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
 export { TTabSize } from "./components/tab/bq-tab.types";
+export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 export { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export namespace Components {
     /**
@@ -482,6 +484,28 @@ export namespace Components {
         "setTriggerElement": (trigger: HTMLElement) => Promise<void>;
         "togglePanel": () => Promise<void>;
     }
+    interface BqOption {
+        /**
+          * If true, the option is disabled.
+         */
+        "disabled"?: boolean;
+        /**
+          * If true, the option is selected and active.
+         */
+        "selected": boolean;
+        /**
+          * A string representing the value of the option. Can be used to identify the item
+         */
+        "value"?: string;
+    }
+    interface BqOptionGroup {
+    }
+    interface BqOptionList {
+        /**
+          * If true, the option is selected and active.
+         */
+        "ariaLabel": string;
+    }
     interface BqRadio {
         /**
           * If true radio displays background on hover
@@ -761,6 +785,85 @@ export namespace Components {
          */
         "value": string;
     }
+    interface BqTextarea {
+        /**
+          * If `true`, the textarea will automatically grow and shrink to fit its contents. If `false`, the textarea will have a fixed height specified by the `rows` property.
+         */
+        "autoGrow": boolean;
+        /**
+          * Controls whether or not the textarea field should be capitalized and how. Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
+         */
+        "autocapitalize": TTextareaAutoCapitalize;
+        /**
+          * Specifies whether or not the textarea field should have autocomplete enabled. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
+         */
+        "autocomplete": string;
+        /**
+          * Controls whether or not the textarea field should have autocorrect enabled. Possible values are 'on' and 'off'.
+         */
+        "autocorrect": 'on' | 'off';
+        /**
+          * If true, the textarea will be focused on component render
+         */
+        "autofocus": boolean;
+        /**
+          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes. A value of 0 means no debouncing will occur.
+         */
+        "debounceTime"?: number;
+        /**
+          * If `true`, it will block the user's ability to resize the textarea.
+         */
+        "disableResize"?: boolean;
+        /**
+          * If `true`, the user cannot interact with the textarea.
+         */
+        "disabled": boolean;
+        /**
+          * The ID of the form that the textarea field belongs to.
+         */
+        "form"?: string;
+        /**
+          * The maximum number of characters that can be entered into the textarea (`0`: no limit). When enabled, a character counter will be shown underneath the textarea.
+         */
+        "maxlength": number;
+        /**
+          * The name of the textarea element.
+         */
+        "name": string;
+        /**
+          * The placeholder text to show when there is no value.
+         */
+        "placeholder": string;
+        /**
+          * If true, the textarea field cannot be modified.
+         */
+        "readonly"?: boolean;
+        /**
+          * Indicates whether or not the textarea field is required to be filled out before submitting the form.
+         */
+        "required"?: boolean;
+        /**
+          * The number of visible text lines for the control. It must be a positive integer.
+         */
+        "rows": number;
+        /**
+          * If true, the textarea content may be checked for spelling errors.
+         */
+        "spellcheck": boolean;
+        /**
+          * The validation status of the textarea.
+          * @remarks This property is used to indicate the validation status of the textarea. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The textarea has a validation error. - `'warning'`: The textarea has a validation warning. - `'success'`: The textarea has passed validation.
+         */
+        "validationStatus": TInputValidation;
+        /**
+          * The value of the textarea. It can be used to reset the textarea to a previous value.
+         */
+        "value": string;
+        /**
+          * Specifies how the text in a text area is to be wrapped when submitted in a form
+         */
+        "wrap": TTextareaWrap;
+    }
     interface BqToast {
         /**
           * Method to be called to hide the toast component
@@ -867,6 +970,14 @@ export interface BqPanelCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqPanelElement;
 }
+export interface BqOptionCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqOptionElement;
+}
+export interface BqOptionListCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqOptionListElement;
+}
 export interface BqRadioCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqRadioElement;
@@ -898,6 +1009,10 @@ export interface BqTabCustomEvent<T> extends CustomEvent<T> {
 export interface BqTabGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqTabGroupElement;
+}
+export interface BqTextareaCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqTextareaElement;
 }
 export interface BqToastCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -990,6 +1105,24 @@ declare global {
     var HTMLBqPanelElement: {
         prototype: HTMLBqPanelElement;
         new (): HTMLBqPanelElement;
+    }
+    interface HTMLBqOptionElement extends Components.BqOption, HTMLStencilElement {
+    }
+    var HTMLBqOptionElement: {
+        prototype: HTMLBqOptionElement;
+        new (): HTMLBqOptionElement;
+    };
+    interface HTMLBqOptionGroupElement extends Components.BqOptionGroup, HTMLStencilElement {
+    }
+    var HTMLBqOptionGroupElement: {
+        prototype: HTMLBqOptionGroupElement;
+        new (): HTMLBqOptionGroupElement;
+    };
+    interface HTMLBqOptionListElement extends Components.BqOptionList, HTMLStencilElement {
+    }
+    var HTMLBqOptionListElement: {
+        prototype: HTMLBqOptionListElement;
+        new (): HTMLBqOptionListElement;
     };
     interface HTMLBqRadioElement extends Components.BqRadio, HTMLStencilElement {
     }
@@ -1058,6 +1191,12 @@ declare global {
         prototype: HTMLBqTabGroupElement;
         new (): HTMLBqTabGroupElement;
     };
+    interface HTMLBqTextareaElement extends Components.BqTextarea, HTMLStencilElement {
+    }
+    var HTMLBqTextareaElement: {
+        prototype: HTMLBqTextareaElement;
+        new (): HTMLBqTextareaElement;
+    };
     interface HTMLBqToastElement extends Components.BqToast, HTMLStencilElement {
     }
     var HTMLBqToastElement: {
@@ -1084,6 +1223,9 @@ declare global {
         "bq-input": HTMLBqInputElement;
         "bq-notification": HTMLBqNotificationElement;
         "bq-panel": HTMLBqPanelElement;
+        "bq-option": HTMLBqOptionElement;
+        "bq-option-group": HTMLBqOptionGroupElement;
+        "bq-option-list": HTMLBqOptionListElement;
         "bq-radio": HTMLBqRadioElement;
         "bq-radio-group": HTMLBqRadioGroupElement;
         "bq-side-menu": HTMLBqSideMenuElement;
@@ -1094,6 +1236,7 @@ declare global {
         "bq-switch": HTMLBqSwitchElement;
         "bq-tab": HTMLBqTabElement;
         "bq-tab-group": HTMLBqTabGroupElement;
+        "bq-textarea": HTMLBqTextareaElement;
         "bq-toast": HTMLBqToastElement;
         "bq-tooltip": HTMLBqTooltipElement;
     }
@@ -1608,6 +1751,48 @@ declare namespace LocalJSX {
          */
         "scrollbar"?: boolean;
     }
+    interface BqOption {
+        /**
+          * If true, the option is disabled.
+         */
+        "disabled"?: boolean;
+        /**
+          * Handler to be called when item loses focus
+         */
+        "onBqBlur"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        /**
+          * Handler to be called when item is clicked
+         */
+        "onBqClick"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        /**
+          * Handler to be called on enter key press
+         */
+        "onBqEnter"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        /**
+          * Handler to be called when item is focused
+         */
+        "onBqFocus"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
+        /**
+          * If true, the option is selected and active.
+         */
+        "selected"?: boolean;
+        /**
+          * A string representing the value of the option. Can be used to identify the item
+         */
+        "value"?: string;
+    }
+    interface BqOptionGroup {
+    }
+    interface BqOptionList {
+        /**
+          * If true, the option is selected and active.
+         */
+        "ariaLabel"?: string;
+        /**
+          * Handler to be called when `bq-option` is selected (on click/enter press).
+         */
+        "onBqSelect"?: (event: BqOptionListCustomEvent<{ value: string; item: HTMLBqOptionElement }>) => void;
+    }
     interface BqRadio {
         /**
           * If true radio displays background on hover
@@ -1927,6 +2112,105 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface BqTextarea {
+        /**
+          * If `true`, the textarea will automatically grow and shrink to fit its contents. If `false`, the textarea will have a fixed height specified by the `rows` property.
+         */
+        "autoGrow"?: boolean;
+        /**
+          * Controls whether or not the textarea field should be capitalized and how. Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
+         */
+        "autocapitalize"?: TTextareaAutoCapitalize;
+        /**
+          * Specifies whether or not the textarea field should have autocomplete enabled. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
+         */
+        "autocomplete"?: string;
+        /**
+          * Controls whether or not the textarea field should have autocorrect enabled. Possible values are 'on' and 'off'.
+         */
+        "autocorrect"?: 'on' | 'off';
+        /**
+          * If true, the textarea will be focused on component render
+         */
+        "autofocus"?: boolean;
+        /**
+          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes. A value of 0 means no debouncing will occur.
+         */
+        "debounceTime"?: number;
+        /**
+          * If `true`, it will block the user's ability to resize the textarea.
+         */
+        "disableResize"?: boolean;
+        /**
+          * If `true`, the user cannot interact with the textarea.
+         */
+        "disabled"?: boolean;
+        /**
+          * The ID of the form that the textarea field belongs to.
+         */
+        "form"?: string;
+        /**
+          * The maximum number of characters that can be entered into the textarea (`0`: no limit). When enabled, a character counter will be shown underneath the textarea.
+         */
+        "maxlength"?: number;
+        /**
+          * The name of the textarea element.
+         */
+        "name": string;
+        /**
+          * Callback handler emitted when the textarea loses focus
+         */
+        "onBqBlur"?: (event: BqTextareaCustomEvent<HTMLBqTextareaElement>) => void;
+        /**
+          * Callback handler emitted when the textarea value has changed and the textarea loses focus. This handler is called whenever the user finishes typing or pasting text into the textarea field and then clicks outside of the textarea field.
+         */
+        "onBqChange"?: (event: BqTextareaCustomEvent<{ value: string; el: HTMLBqTextareaElement }>) => void;
+        /**
+          * Callback handler emitted when the textarea value has been cleared
+         */
+        "onBqClear"?: (event: BqTextareaCustomEvent<HTMLBqTextareaElement>) => void;
+        /**
+          * Callback handler emitted when the textarea has received focus
+         */
+        "onBqFocus"?: (event: BqTextareaCustomEvent<HTMLBqTextareaElement>) => void;
+        /**
+          * Callback handler emitted when the textarea value changes. This handler is called whenever the user types or pastes text into the textarea field.
+         */
+        "onBqInput"?: (event: BqTextareaCustomEvent<{ value: string; el: HTMLBqTextareaElement }>) => void;
+        /**
+          * The placeholder text to show when there is no value.
+         */
+        "placeholder": string;
+        /**
+          * If true, the textarea field cannot be modified.
+         */
+        "readonly"?: boolean;
+        /**
+          * Indicates whether or not the textarea field is required to be filled out before submitting the form.
+         */
+        "required"?: boolean;
+        /**
+          * The number of visible text lines for the control. It must be a positive integer.
+         */
+        "rows"?: number;
+        /**
+          * If true, the textarea content may be checked for spelling errors.
+         */
+        "spellcheck"?: boolean;
+        /**
+          * The validation status of the textarea.
+          * @remarks This property is used to indicate the validation status of the textarea. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The textarea has a validation error. - `'warning'`: The textarea has a validation warning. - `'success'`: The textarea has passed validation.
+         */
+        "validationStatus"?: TInputValidation;
+        /**
+          * The value of the textarea. It can be used to reset the textarea to a previous value.
+         */
+        "value"?: string;
+        /**
+          * Specifies how the text in a text area is to be wrapped when submitted in a form
+         */
+        "wrap"?: TTextareaWrap;
+    }
     interface BqToast {
         /**
           * If true will hide toast icon
@@ -1994,6 +2278,9 @@ declare namespace LocalJSX {
         "bq-input": BqInput;
         "bq-notification": BqNotification;
         "bq-panel": BqPanel;
+        "bq-option": BqOption;
+        "bq-option-group": BqOptionGroup;
+        "bq-option-list": BqOptionList;
         "bq-radio": BqRadio;
         "bq-radio-group": BqRadioGroup;
         "bq-side-menu": BqSideMenu;
@@ -2004,6 +2291,7 @@ declare namespace LocalJSX {
         "bq-switch": BqSwitch;
         "bq-tab": BqTab;
         "bq-tab-group": BqTabGroup;
+        "bq-textarea": BqTextarea;
         "bq-toast": BqToast;
         "bq-tooltip": BqTooltip;
     }
@@ -2034,6 +2322,9 @@ declare module "@stencil/core" {
             "bq-input": LocalJSX.BqInput & JSXBase.HTMLAttributes<HTMLBqInputElement>;
             "bq-notification": LocalJSX.BqNotification & JSXBase.HTMLAttributes<HTMLBqNotificationElement>;
             "bq-panel": LocalJSX.BqPanel & JSXBase.HTMLAttributes<HTMLBqPanelElement>;
+            "bq-option": LocalJSX.BqOption & JSXBase.HTMLAttributes<HTMLBqOptionElement>;
+            "bq-option-group": LocalJSX.BqOptionGroup & JSXBase.HTMLAttributes<HTMLBqOptionGroupElement>;
+            "bq-option-list": LocalJSX.BqOptionList & JSXBase.HTMLAttributes<HTMLBqOptionListElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
             "bq-side-menu": LocalJSX.BqSideMenu & JSXBase.HTMLAttributes<HTMLBqSideMenuElement>;
@@ -2051,6 +2342,7 @@ declare module "@stencil/core" {
             "bq-switch": LocalJSX.BqSwitch & JSXBase.HTMLAttributes<HTMLBqSwitchElement>;
             "bq-tab": LocalJSX.BqTab & JSXBase.HTMLAttributes<HTMLBqTabElement>;
             "bq-tab-group": LocalJSX.BqTabGroup & JSXBase.HTMLAttributes<HTMLBqTabGroupElement>;
+            "bq-textarea": LocalJSX.BqTextarea & JSXBase.HTMLAttributes<HTMLBqTextareaElement>;
             "bq-toast": LocalJSX.BqToast & JSXBase.HTMLAttributes<HTMLBqToastElement>;
             "bq-tooltip": LocalJSX.BqTooltip & JSXBase.HTMLAttributes<HTMLBqTooltipElement>;
         }
