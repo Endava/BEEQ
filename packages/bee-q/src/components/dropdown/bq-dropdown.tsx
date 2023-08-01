@@ -37,7 +37,8 @@ export class BqDropdown {
   /** Position of the panel */
   @Prop({ reflect: true }) panelPlacement?: FloatingUIPlacement = 'bottom';
 
-  /** If true, panel is visible.
+  /**
+   * If true, panel is visible.
    * You can toggle this attribute to show/hide the panel.
    */
   @Prop({ reflect: true }) panelOpen?: boolean = false;
@@ -87,8 +88,9 @@ export class BqDropdown {
    */
   @Listen('keyup', { target: 'window', passive: true })
   onEscape(event: KeyboardEvent) {
-    if (event.key === 'Escape' || (event.key === 'Tab' && !event.composedPath().includes(this.el)))
+    if (event.key === 'Escape' || (event.key === 'Tab' && !event.composedPath().includes(this.el))) {
       this.panelElement.open = false;
+    }
   }
 
   @Listen('bqPanelVisibility', { passive: true })
@@ -96,6 +98,11 @@ export class BqDropdown {
     const isOpened: boolean = event.detail as boolean;
 
     this.bqPanelChange.emit({ opened: isOpened });
+  }
+
+  @Listen('bqSelect', { passive: true })
+  onItemSelect() {
+    this.panelElement.open = false;
   }
 
   // Public methods API
@@ -125,10 +132,10 @@ export class BqDropdown {
 
   render() {
     return (
-      <div part="base">
+      <div class="bq-dropdown" part="base">
         {/* TRIGGER ELEMENT */}
         <div
-          class="trigger"
+          class="bq-dropdown__trigger"
           ref={(el) => (this.trigger = el)}
           onClick={this.openPanel}
           aria-haspopup="true"
@@ -139,12 +146,14 @@ export class BqDropdown {
         </div>
         {/* PANEL */}
         <bq-panel
+          class="bq-dropdown__panel"
           distance={this.panelDistance}
           placement={this.panelPlacement}
           open={this.panelOpen}
           scrollbar={this.panelScrollbar}
           ref={(el) => (this.panelElement = el)}
           aria-labelledby="dropdown"
+          role="region"
           part="panel"
         >
           <slot />

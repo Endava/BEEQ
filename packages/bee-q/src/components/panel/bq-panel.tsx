@@ -132,7 +132,7 @@ export class BqPanel {
     return (
       <div
         class={{
-          panel: true,
+          'bq-panel': true,
           'hide-scrollbar': !this.scrollbar,
         }}
         ref={(el) => (this.panel = el)}

@@ -17,9 +17,9 @@
 
 ## Events
 
-| Event           | Description                                                                       | Type                                |
-| --------------- | --------------------------------------------------------------------------------- | ----------------------------------- |
-| `bqPanelChange` | Handler to be called to check if the `bq-panel` switches states (visible/hidden). | `CustomEvent<{ opened: boolean; }>` |
+| Event           | Description                                                                      | Type                                |
+| --------------- | -------------------------------------------------------------------------------- | ----------------------------------- |
+| `bqPanelChange` | Handler to be called to check if the `bq-panel` switches state (visible/hidden). | `CustomEvent<{ opened: boolean; }>` |
 
 
 ## Shadow Parts

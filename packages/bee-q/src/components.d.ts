@@ -460,6 +460,28 @@ export namespace Components {
          */
         "type": TNotificationType;
     }
+    interface BqOption {
+        /**
+          * If true, the option is disabled.
+         */
+        "disabled"?: boolean;
+        /**
+          * If true, the option is selected and active.
+         */
+        "selected": boolean;
+        /**
+          * A string representing the value of the option. Can be used to identify the item
+         */
+        "value"?: string;
+    }
+    interface BqOptionGroup {
+    }
+    interface BqOptionList {
+        /**
+          * If true, the option is selected and active.
+         */
+        "ariaLabel": string;
+    }
     interface BqPanel {
         /**
           * Distance between the panel and the trigger element
@@ -483,28 +505,6 @@ export namespace Components {
          */
         "setTriggerElement": (trigger: HTMLElement) => Promise<void>;
         "togglePanel": () => Promise<void>;
-    }
-    interface BqOption {
-        /**
-          * If true, the option is disabled.
-         */
-        "disabled"?: boolean;
-        /**
-          * If true, the option is selected and active.
-         */
-        "selected": boolean;
-        /**
-          * A string representing the value of the option. Can be used to identify the item
-         */
-        "value"?: string;
-    }
-    interface BqOptionGroup {
-    }
-    interface BqOptionList {
-        /**
-          * If true, the option is selected and active.
-         */
-        "ariaLabel": string;
     }
     interface BqRadio {
         /**
@@ -966,10 +966,6 @@ export interface BqNotificationCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqNotificationElement;
 }
-export interface BqPanelCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLBqPanelElement;
-}
 export interface BqOptionCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqOptionElement;
@@ -977,6 +973,10 @@ export interface BqOptionCustomEvent<T> extends CustomEvent<T> {
 export interface BqOptionListCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqOptionListElement;
+}
+export interface BqPanelCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqPanelElement;
 }
 export interface BqRadioCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1100,12 +1100,6 @@ declare global {
         prototype: HTMLBqNotificationElement;
         new (): HTMLBqNotificationElement;
     };
-    interface HTMLBqPanelElement extends Components.BqPanel, HTMLStencilElement {
-    }
-    var HTMLBqPanelElement: {
-        prototype: HTMLBqPanelElement;
-        new (): HTMLBqPanelElement;
-    }
     interface HTMLBqOptionElement extends Components.BqOption, HTMLStencilElement {
     }
     var HTMLBqOptionElement: {
@@ -1123,6 +1117,12 @@ declare global {
     var HTMLBqOptionListElement: {
         prototype: HTMLBqOptionListElement;
         new (): HTMLBqOptionListElement;
+    };
+    interface HTMLBqPanelElement extends Components.BqPanel, HTMLStencilElement {
+    }
+    var HTMLBqPanelElement: {
+        prototype: HTMLBqPanelElement;
+        new (): HTMLBqPanelElement;
     };
     interface HTMLBqRadioElement extends Components.BqRadio, HTMLStencilElement {
     }
@@ -1222,10 +1222,10 @@ declare global {
         "bq-icon": HTMLBqIconElement;
         "bq-input": HTMLBqInputElement;
         "bq-notification": HTMLBqNotificationElement;
-        "bq-panel": HTMLBqPanelElement;
         "bq-option": HTMLBqOptionElement;
         "bq-option-group": HTMLBqOptionGroupElement;
         "bq-option-list": HTMLBqOptionListElement;
+        "bq-panel": HTMLBqPanelElement;
         "bq-radio": HTMLBqRadioElement;
         "bq-radio-group": HTMLBqRadioGroupElement;
         "bq-side-menu": HTMLBqSideMenuElement;
@@ -1729,28 +1729,6 @@ declare namespace LocalJSX {
          */
         "type"?: TNotificationType;
     }
-    interface BqPanel {
-        /**
-          * Distance between the panel and the trigger element
-         */
-        "distance"?: number;
-        /**
-          * Handler to be called to check if the panel is open or closed. Will emit every time the state of the panel is changed.
-         */
-        "onBqPanelVisibility"?: (event: BqPanelCustomEvent<boolean>) => void;
-        /**
-          * If true, panel is visible. You can toggle this attribute to show/hide the panel.
-         */
-        "open"?: boolean;
-        /**
-          * Position of the panel
-         */
-        "placement"?: FloatingUIPlacement;
-        /**
-          * If true, the scrollbar is visible. You can toggle this attribute to show/hide the scrollbar.
-         */
-        "scrollbar"?: boolean;
-    }
     interface BqOption {
         /**
           * If true, the option is disabled.
@@ -1792,6 +1770,28 @@ declare namespace LocalJSX {
           * Handler to be called when `bq-option` is selected (on click/enter press).
          */
         "onBqSelect"?: (event: BqOptionListCustomEvent<{ value: string; item: HTMLBqOptionElement }>) => void;
+    }
+    interface BqPanel {
+        /**
+          * Distance between the panel and the trigger element
+         */
+        "distance"?: number;
+        /**
+          * Handler to be called to check if the panel is open or closed. Will emit every time the state of the panel is changed.
+         */
+        "onBqPanelVisibility"?: (event: BqPanelCustomEvent<boolean>) => void;
+        /**
+          * If true, panel is visible. You can toggle this attribute to show/hide the panel.
+         */
+        "open"?: boolean;
+        /**
+          * Position of the panel
+         */
+        "placement"?: FloatingUIPlacement;
+        /**
+          * If true, the scrollbar is visible. You can toggle this attribute to show/hide the scrollbar.
+         */
+        "scrollbar"?: boolean;
     }
     interface BqRadio {
         /**
@@ -2277,10 +2277,10 @@ declare namespace LocalJSX {
         "bq-icon": BqIcon;
         "bq-input": BqInput;
         "bq-notification": BqNotification;
-        "bq-panel": BqPanel;
         "bq-option": BqOption;
         "bq-option-group": BqOptionGroup;
         "bq-option-list": BqOptionList;
+        "bq-panel": BqPanel;
         "bq-radio": BqRadio;
         "bq-radio-group": BqRadioGroup;
         "bq-side-menu": BqSideMenu;
@@ -2321,10 +2321,10 @@ declare module "@stencil/core" {
             "bq-icon": LocalJSX.BqIcon & JSXBase.HTMLAttributes<HTMLBqIconElement>;
             "bq-input": LocalJSX.BqInput & JSXBase.HTMLAttributes<HTMLBqInputElement>;
             "bq-notification": LocalJSX.BqNotification & JSXBase.HTMLAttributes<HTMLBqNotificationElement>;
-            "bq-panel": LocalJSX.BqPanel & JSXBase.HTMLAttributes<HTMLBqPanelElement>;
             "bq-option": LocalJSX.BqOption & JSXBase.HTMLAttributes<HTMLBqOptionElement>;
             "bq-option-group": LocalJSX.BqOptionGroup & JSXBase.HTMLAttributes<HTMLBqOptionGroupElement>;
             "bq-option-list": LocalJSX.BqOptionList & JSXBase.HTMLAttributes<HTMLBqOptionListElement>;
+            "bq-panel": LocalJSX.BqPanel & JSXBase.HTMLAttributes<HTMLBqPanelElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
             "bq-side-menu": LocalJSX.BqSideMenu & JSXBase.HTMLAttributes<HTMLBqSideMenuElement>;

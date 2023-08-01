@@ -21,18 +21,18 @@ const meta: Meta = {
     'panel-distance': { control: 'number' },
     'panel-placement': { control: 'select', options: PANEL_PLACEMENT },
     'panel-open': { control: 'boolean' },
+    'panel-scrollbar': { control: 'boolean' },
+    // Event handlers
+    bqPanelChange: { action: 'bqPanelChange' },
+    // Not part of the public API, so we don't want to expose it in the
     text: { control: 'text', table: { disable: true } },
     htmlTrigger: { control: 'text', table: { disable: true }, options: TRIGGER_ELEM_OPTIONS },
-    // Event handlers
-    bqOptionBlur: { action: 'bqOptionBlur' },
-    bqOptionFocus: { action: 'bqOptionFocus' },
-    bqOptionSelect: { action: 'bqOptionSelect' },
-    bqPanelOpen: { action: 'bqPanelOpen' },
   },
   args: {
     'panel-distance': 0,
     'panel-placement': 'bottom',
     'panel-open': false,
+    'panel-scrollbar': true,
     text: 'Content in the panel',
     htmlTrigger: '',
   },
@@ -49,9 +49,9 @@ const Template = (args: Args) => {
     variant="standard"
     slot="trigger"
   >
-    <span class="flex items-center">
+    <span class="flex items-center gap-1">
       <span>Dropdown</span>
-      <bq-icon name="caret-down" class="pl-[3px]"></bq-icon>
+      <bq-icon name="caret-down"></bq-icon>
     </span>
   </bq-button>`;
 
@@ -95,45 +95,33 @@ const Template = (args: Args) => {
       panel-distance=${args['panel-distance']}
       panel-placement=${args['panel-placement']}
       panel-open=${args['panel-open']}
-      @bqOptionBlur=${args.bqOptionBlur}
-      @bqOptionFocus=${args.bqOptionFocus}
-      @bqOptionSelect=${args.bqOptionSelect}
-      @bqPanelOpen=${args.bqPanelOpen}
+      @bqPanelChange=${args.bqPanelChange}
     >
       <!-- TRIGGER ELEMENT -->
       ${triggerElem}
 
-      <!-- TODO: switch divs with bq-option after merge -->
-      <div
-        class="flex h-[40px] w-full cursor-pointer items-center rounded-s bg-transparent px-3 py-2 text-m focus-visible:focus hover:bg-ui-secondary-hover active:bg-ui-brand-light active:text-text-brand active:outline-none"
-      >
-        <bq-icon name="user" size="16" slot="prefix" class="flex items-center"></bq-icon>
-        <span class="flex w-full items-center overflow-hidden text-ellipsis whitespace-nowrap px-[12px]"
-          >My profile</span
-        >
-        <bq-icon name="gear" size="16" slot="suffix"></bq-icon>
-      </div>
-      <div
-        class="flex h-[40px] w-full cursor-pointer items-center rounded-s bg-transparent px-3 py-2 text-m focus-visible:focus hover:bg-ui-secondary-hover active:bg-ui-brand-light active:text-text-brand active:outline-none"
-      >
-        <bq-icon name="lock" size="16" slot="prefix" class="flex items-center"></bq-icon>
-        <span class="flex w-full items-center overflow-hidden text-ellipsis whitespace-nowrap px-[12px]"
-          >Dashboard</span
-        >
-      </div>
-      <div
-        class="flex h-[40px] w-full cursor-pointer items-center rounded-s bg-transparent px-3 py-2 text-m focus-visible:focus hover:bg-ui-secondary-hover active:bg-ui-brand-light active:text-text-brand active:outline-none"
-      >
-        <span class="flex w-full items-center overflow-hidden text-ellipsis whitespace-nowrap pl-0">Logout</span>
-        <bq-icon name="sign-out" size="16" slot="suffix"></bq-icon>
-      </div>
+      <bq-option-list>
+        <bq-option>
+          <bq-icon name="user" slot="prefix"></bq-icon>
+          <span>My profile</span>
+        </bq-option>
+
+        <bq-option>
+          <bq-icon name="sliders" slot="prefix"></bq-icon>
+          <span>Dashboard</span>
+        </bq-option>
+
+        <bq-option>
+          <span>Logout</span>
+          <bq-icon name="sign-out" slot="suffix"></bq-icon>
+        </bq-option>
+      </bq-option-list>
     </bq-dropdown>
   `;
 };
 
 export const Default: Story = {
   render: Template,
-  args: {},
 };
 
 export const MenuTrigger: Story = {
@@ -147,5 +135,19 @@ export const AvatarTrigger: Story = {
   render: Template,
   args: {
     htmlTrigger: 'avatar',
+  },
+};
+
+export const Top: Story = {
+  render: Template,
+  args: {
+    'panel-placement': top,
+  },
+};
+
+export const WithoutScrollbar: Story = {
+  render: Template,
+  args: {
+    'panel-scrollbar': false,
   },
 };
