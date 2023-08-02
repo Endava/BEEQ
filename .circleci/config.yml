@@ -38,6 +38,7 @@ jobs:
     # A list of available CircleCI Docker Machine Images are available here: https://circleci.com/developer/images?imageType=machine
     machine:
       image: ubuntu-2204:2023.02.1
+    parallelism: 4
     environment:
       NX_BRANCH: << pipeline.git.branch >>
     # Then run your node commands!

@@ -19,7 +19,7 @@
    * The ignoreDeps configuration field allows you to define a list of dependency names to be ignored by Renovate.
    * Currently it supports only "exact match" dependency names.
    */
-  ignoreDeps: ['@types/jest', 'jest', 'jest-environment-jsdom', 'ts-jest'],
+  ignoreDeps: ['@types/jest', 'babel-jest', 'jest', 'jest-environment-jsdom', 'ts-jest'],
   /**
    * Labels to set in the Pull Request.
    */
