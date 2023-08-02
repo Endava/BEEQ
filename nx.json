@@ -1,37 +1,32 @@
 {
   "extends": "nx/presets/npm.json",
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "npmScope": "bee-q",
   "affected": {
     "defaultBase": "develop"
   },
-  "cli": {
-    "defaultCollection": "@nxext/stencil"
-  },
-  "implicitDependencies": {
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
-    },
-    ".eslintrc.json": "*",
-    ".stylelintrc.json": "*"
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*"],
+    "production": [
+      "default",
+      "!{projectRoot}/**/*.spec.ts",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/jest.config.ts",
+      "!{projectRoot}/.eslintrc.json"
+    ]
   },
   "targetDefaults": {
     "build": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    },
+    "e2e": {
+      "dependsOn": ["build"],
+      "inputs": ["default", "^production"]
     }
-  },
-  "targetDependencies": {
-    "build": [
-      {
-        "target": "build",
-        "projects": "dependencies"
-      }
-    ]
   },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/nx-cloud",
+      "runner": "nx-cloud",
       "options": {
         "cacheableOperations": [
           "build",
@@ -47,12 +42,12 @@
     }
   },
   "generators": {
-    "@nrwl/react": {
+    "@nx/react": {
       "application": {
         "babel": true
       }
     },
-    "@nrwl/angular:application": {
+    "@nx/angular:application": {
       "style": "scss",
       "linter": "none",
       "unitTestRunner": "none",
@@ -61,11 +56,11 @@
       "skipTests": true,
       "standaloneConfig": true
     },
-    "@nrwl/angular:library": {
+    "@nx/angular:library": {
       "linter": "none",
       "unitTestRunner": "none"
     },
-    "@nrwl/angular:component": {
+    "@nx/angular:component": {
       "style": "scss"
     }
   }
