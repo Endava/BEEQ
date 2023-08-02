@@ -31,7 +31,7 @@ export class BqPanel {
   // Public Property API
   // ========================
 
-  /** Distance between the panel and the trigger element */
+  /** Distance (px) between the panel and the trigger element. */
   @Prop({ reflect: true }) distance?: number = 0;
 
   /** Position of the panel */

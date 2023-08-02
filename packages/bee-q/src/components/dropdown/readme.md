@@ -7,12 +7,12 @@
 
 ## Properties
 
-| Property         | Attribute         | Description                                                                      | Type                                                                                                                                                                 | Default    |
-| ---------------- | ----------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
-| `panelDistance`  | `panel-distance`  | Distance between the panel and the trigger element.                              | `number`                                                                                                                                                             | `0`        |
-| `panelOpen`      | `panel-open`      | If true, panel is visible. You can toggle this attribute to show/hide the panel. | `boolean`                                                                                                                                                            | `false`    |
-| `panelPlacement` | `panel-placement` | Position of the panel                                                            | `"bottom" \| "bottom-end" \| "bottom-start" \| "left" \| "left-end" \| "left-start" \| "right" \| "right-end" \| "right-start" \| "top" \| "top-end" \| "top-start"` | `'bottom'` |
-| `panelScrollbar` | `panel-scrollbar` | Determines whether the scrollbar is visible or hidden within the panel.          | `boolean`                                                                                                                                                            | `false`    |
+| Property         | Attribute         | Description                                                                      | Type                                                                                                                                                                 | Default          |
+| ---------------- | ----------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| `panelDistance`  | `panel-distance`  | Distance (px) between the panel and the trigger element.                         | `number`                                                                                                                                                             | `4`              |
+| `panelOpen`      | `panel-open`      | If true, panel is visible. You can toggle this attribute to show/hide the panel. | `boolean`                                                                                                                                                            | `false`          |
+| `panelPlacement` | `panel-placement` | Position of the panel                                                            | `"bottom" \| "bottom-end" \| "bottom-start" \| "left" \| "left-end" \| "left-start" \| "right" \| "right-end" \| "right-start" \| "top" \| "top-end" \| "top-start"` | `'bottom-start'` |
+| `panelScrollbar` | `panel-scrollbar` | Determines whether the scrollbar is visible or hidden within the panel.          | `boolean`                                                                                                                                                            | `false`          |
 
 
 ## Events

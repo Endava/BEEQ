@@ -28,8 +28,8 @@ const meta: Meta = {
     trigger: { control: 'text', table: { disable: true } },
   },
   args: {
-    'panel-distance': 0,
-    'panel-placement': 'bottom',
+    'panel-distance': 4,
+    'panel-placement': 'bottom-start',
     'panel-open': false,
     'panel-scrollbar': false,
     trigger: { control: 'text', table: { disable: true } },

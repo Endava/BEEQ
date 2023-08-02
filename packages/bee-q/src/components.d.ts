@@ -290,7 +290,7 @@ export namespace Components {
     }
     interface BqDropdown {
         /**
-          * Distance between the panel and the trigger element.
+          * Distance (px) between the panel and the trigger element.
          */
         "panelDistance"?: number;
         /**
@@ -484,7 +484,7 @@ export namespace Components {
     }
     interface BqPanel {
         /**
-          * Distance between the panel and the trigger element
+          * Distance (px) between the panel and the trigger element.
          */
         "distance"?: number;
         /**
@@ -1539,7 +1539,7 @@ declare namespace LocalJSX {
          */
         "onBqPanelChange"?: (event: BqDropdownCustomEvent<{ opened: boolean }>) => void;
         /**
-          * Distance between the panel and the trigger element.
+          * Distance (px) between the panel and the trigger element.
          */
         "panelDistance"?: number;
         /**
@@ -1773,7 +1773,7 @@ declare namespace LocalJSX {
     }
     interface BqPanel {
         /**
-          * Distance between the panel and the trigger element
+          * Distance (px) between the panel and the trigger element.
          */
         "distance"?: number;
         /**

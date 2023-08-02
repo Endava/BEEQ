@@ -31,11 +31,11 @@ export class BqDropdown {
   // Public Property API
   // ========================
 
-  /** Distance between the panel and the trigger element. */
-  @Prop({ reflect: true }) panelDistance?: number = 0;
+  /** Distance (px) between the panel and the trigger element. */
+  @Prop({ reflect: true }) panelDistance?: number = 4;
 
   /** Position of the panel */
-  @Prop({ reflect: true }) panelPlacement?: FloatingUIPlacement = 'bottom';
+  @Prop({ reflect: true }) panelPlacement?: FloatingUIPlacement = 'bottom-start';
 
   /**
    * If true, panel is visible.
