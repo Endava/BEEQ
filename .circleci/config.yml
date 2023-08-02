@@ -77,13 +77,13 @@ jobs:
       - run:
           name: 🩺 Run Linters and Unit Tests
           command: |
-            npx nx affected --target=test --base=$NX_BASE --head=$NX_HEAD --exclude=workspace --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
+            npx nx run bee-q:test --base=$NX_BASE --head=$NX_HEAD --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
       - run:
           name: ⏳ Build
           command: npm run build
       - run:
-          name: 🧪 Run E2E Tests (only affected)
-          command: npx nx affected --target=e2e --base=$NX_BASE --head=$NX_HEAD --exclude=workspace --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
+          name: 🧪 Run E2E Tests
+          command: npx nx run bee-q:e2e --base=$NX_BASE --head=$NX_HEAD --exclude=workspace --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
       - store_test_results:
           name: 📥 Store test results
           # Special step used to upload and store test results for a build (when available)

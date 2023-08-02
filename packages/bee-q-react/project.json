@@ -3,19 +3,19 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/bee-q-react/src",
   "projectType": "library",
+  "tags": ["wrapper", "react", "publishable"],
   "implicitDependencies": ["bee-q"],
-  "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
+      "executor": "@nx/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/bee-q-react",
         "tsConfig": "packages/bee-q-react/tsconfig.lib.json",
         "project": "packages/bee-q-react/package.json",
         "entryFile": "packages/bee-q-react/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+        "external": ["react", "react-dom", "react/jsx-runtime"],
+        "rollupConfig": "@nx/react/plugins/bundle-rollup",
         "compiler": "babel",
         "assets": [
           {
