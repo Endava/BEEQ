@@ -3,7 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/bee-q-react/src",
   "projectType": "library",
-  "tags": ["wrapper", "react"],
+  "tags": ["wrapper", "react", "publishable"],
   "implicitDependencies": ["bee-q"],
   "targets": {
     "build": {

@@ -3,7 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/bee-q/src",
   "projectType": "library",
-  "tags": ["components", "core"],
+  "tags": ["components", "core", "publishable"],
   "generators": {
     "@nxext/stencil:component": {
       "style": "scss"

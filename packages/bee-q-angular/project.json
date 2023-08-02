@@ -3,7 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/bee-q-angular/src",
   "projectType": "library",
-  "tags": ["wrapper", "angular"],
+  "tags": ["wrapper", "angular", "publishable"],
   "prefix": "bee-q",
   "implicitDependencies": ["bee-q"],
   "targets": {
