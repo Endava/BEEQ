@@ -43,15 +43,6 @@
       matchPackagePrefixes: ['@commitlint/'],
     },
     {
-      matchPackageNames: ['@jscutlery/semver'],
-      allowedVersions: '<2.30.0',
-    },
-    {
-      groupName: '@nxext',
-      matchPackagePrefixes: ['@nxext'],
-      allowedVersions: '<15.0.0',
-    },
-    {
       groupName: '@stencil',
       matchPackagePrefixes: ['@stencil/'],
     },
@@ -73,14 +64,8 @@
       allowedVersions: '<15.0.0',
     },
     {
-      matchPackageNames: ['ngx-deploy-npm'],
-      allowedVersions: '<6.0.0',
-    },
-    {
       groupName: 'nx',
-      matchPackagePrefixes: ['@nrwl', 'nx'],
-      allowedVersions: '<15.0.0',
-      excludeDepNames: ['@nrwl/nx-cloud'],
+      matchPackagePrefixes: ['@nx'],
     },
     {
       groupName: 'postcss',
