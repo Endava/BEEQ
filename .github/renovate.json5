@@ -19,7 +19,7 @@
    * The ignoreDeps configuration field allows you to define a list of dependency names to be ignored by Renovate.
    * Currently it supports only "exact match" dependency names.
    */
-  ignoreDeps: ['@types/jest', 'jest', 'jest-environment-jsdom', 'ts-jest'],
+  ignoreDeps: ['@types/jest', 'babel-jest', 'jest', 'jest-environment-jsdom', 'ts-jest'],
   /**
    * Labels to set in the Pull Request.
    */
@@ -43,15 +43,6 @@
       matchPackagePrefixes: ['@commitlint/'],
     },
     {
-      matchPackageNames: ['@jscutlery/semver'],
-      allowedVersions: '<2.30.0',
-    },
-    {
-      groupName: '@nxext',
-      matchPackagePrefixes: ['@nxext'],
-      allowedVersions: '<15.0.0',
-    },
-    {
       groupName: '@stencil',
       matchPackagePrefixes: ['@stencil/'],
     },
@@ -73,14 +64,8 @@
       allowedVersions: '<15.0.0',
     },
     {
-      matchPackageNames: ['ngx-deploy-npm'],
-      allowedVersions: '<6.0.0',
-    },
-    {
       groupName: 'nx',
-      matchPackagePrefixes: ['@nrwl', 'nx'],
-      allowedVersions: '<15.0.0',
-      excludeDepNames: ['@nrwl/nx-cloud'],
+      matchPackagePrefixes: ['@nx'],
     },
     {
       groupName: 'postcss',

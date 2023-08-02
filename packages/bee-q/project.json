@@ -3,12 +3,24 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/bee-q/src",
   "projectType": "library",
+  "tags": ["components", "core", "publishable"],
   "generators": {
     "@nxext/stencil:component": {
       "style": "scss"
     }
   },
-  "tags": [],
+  "namedInputs": {
+    "production": [
+      "default",
+      "!{projectRoot}/**/*.mdx",
+      "!{projectRoot}/**/*.e2e.ts",
+      "!{projectRoot}/**/*.spec.ts",
+      "!{projectRoot}/**/*.stories.tsx",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/jest.config.ts",
+      "!{projectRoot}/.eslintrc.json"
+    ]
+  },
   "targets": {
     "start": {
       "executor": "nx:run-commands",
@@ -34,7 +46,7 @@
       }
     },
     "storybook-start": {
-      "executor": "@nrwl/storybook:storybook",
+      "executor": "@nx/storybook:storybook",
       "options": {
         "loglevel": "silly",
         "configDir": "packages/bee-q/.storybook",
@@ -51,7 +63,7 @@
     "build": {
       "dependsOn": ["generate-icons"],
       "executor": "@nxext/stencil:build",
-      "outputs": ["{options.outputPath}"],
+      "outputs": ["{options.outputPath}", "{projectRoot}/custom-elements.json"],
       "options": {
         "projectType": "library",
         "tsConfig": "packages/bee-q/tsconfig.lib.json",
@@ -67,7 +79,8 @@
       }
     },
     "storybook-build": {
-      "executor": "@nrwl/storybook:build",
+      "dependsOn": ["storybook-build-css"],
+      "executor": "@nx/storybook:build",
       "outputs": ["{options.outputDir}", "{options.config.configDir}"],
       "options": {
         "outputDir": "dist/storybook/bee-q",
@@ -82,14 +95,14 @@
     },
     "storybook-start-css": {
       "executor": "nx:run-commands",
-      "outputs": ["packages/bee-q/.storybook/css"],
+      "outputs": ["{projectRoot}/.storybook/css"],
       "options": {
         "command": "npx tailwindcss -i packages/bee-q/src/global/styles/tailwind.pcss -o packages/bee-q/.storybook/css/sb-styles.css --postcss ./postcss.config.js --watch"
       }
     },
     "storybook-build-css": {
       "executor": "nx:run-commands",
-      "outputs": ["packages/bee-q/.storybook/css"],
+      "outputs": ["{projectRoot}/.storybook/css"],
       "options": {
         "command": "npx tailwindcss -i packages/bee-q/src/global/styles/tailwind.pcss -o packages/bee-q/.storybook/css/sb-styles.css --postcss ./postcss.config.js --minify"
       }
@@ -110,6 +123,7 @@
       }
     },
     "test": {
+      "dependsOn": ["lint"],
       "executor": "@nxext/stencil:test",
       "outputs": ["{options.outputPath}"],
       "options": {
@@ -117,11 +131,9 @@
         "tsConfig": "packages/bee-q/tsconfig.lib.json",
         "configPath": "packages/bee-q/stencil.config.ts",
         "outputPath": "dist/bee-q"
-      },
-      "dependsOn": ["lint"]
+      }
     },
     "e2e": {
-      "dependsOn": ["build"],
       "executor": "@nxext/stencil:e2e",
       "outputs": ["{options.outputPath}"],
       "options": {
@@ -140,7 +152,7 @@
       }
     },
     "eslint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/bee-q/**/*.{ts,tsx}"]
