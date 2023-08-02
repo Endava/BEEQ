@@ -1,8 +1,8 @@
 {
   "name": "bee-q-angular",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "projectType": "library",
   "sourceRoot": "packages/bee-q-angular/src",
+  "projectType": "library",
   "tags": ["wrapper", "angular"],
   "prefix": "bee-q",
   "implicitDependencies": ["bee-q"],

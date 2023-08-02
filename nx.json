@@ -4,12 +4,24 @@
   "affected": {
     "defaultBase": "develop"
   },
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*"],
+    "production": [
+      "default",
+      "!{projectRoot}/**/*.spec.ts",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/jest.config.ts",
+      "!{projectRoot}/.eslintrc.json"
+    ]
+  },
   "targetDefaults": {
     "build": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     },
     "e2e": {
-      "dependsOn": ["build"]
+      "dependsOn": ["build"],
+      "inputs": ["default", "^production"]
     }
   },
   "tasksRunnerOptions": {

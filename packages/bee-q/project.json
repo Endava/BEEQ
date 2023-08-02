@@ -9,6 +9,18 @@
       "style": "scss"
     }
   },
+  "namedInputs": {
+    "production": [
+      "default",
+      "!{projectRoot}/**/*.mdx",
+      "!{projectRoot}/**/*.e2e.ts",
+      "!{projectRoot}/**/*.spec.ts",
+      "!{projectRoot}/**/*.stories.tsx",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/jest.config.ts",
+      "!{projectRoot}/.eslintrc.json"
+    ]
+  },
   "targets": {
     "start": {
       "executor": "nx:run-commands",
@@ -51,7 +63,7 @@
     "build": {
       "dependsOn": ["generate-icons"],
       "executor": "@nxext/stencil:build",
-      "outputs": ["{options.outputPath}"],
+      "outputs": ["{options.outputPath}", "{projectRoot}/custom-elements.json"],
       "options": {
         "projectType": "library",
         "tsConfig": "packages/bee-q/tsconfig.lib.json",
