@@ -8,43 +8,19 @@
         "preset": {
           "name": "conventionalcommits",
           "types": [
-            {
-              "type": "feat",
-              "section": "Features"
-            },
-            {
-              "type": "fix",
-              "section": "Bug Fixes"
-            },
-            {
-              "type": "test",
-              "section": "Test"
-            },
-            {
-              "type": "docs",
-              "section": "Documentation"
-            },
-            {
-              "type": "style",
-              "section": "Style"
-            },
-            {
-              "type": "chore",
-              "hidden": true
-            },
-            {
-              "type": "refactor",
-              "hidden": true
-            },
-            {
-              "type": "perf",
-              "hidden": true
-            },
-            {
-              "type": "release",
-              "hidden": true
-            }
+            { "type": "feat", "section": "Features ⚡️" },
+            { "type": "fix", "section": "Bug Fixes 🐞" },
+            { "type": "test", "section": "Test 🧪" },
+            { "type": "docs", "section": "Documentation 📚" },
+            { "type": "style", "section": "Style 🎨" },
+            { "type": "chore", "section": "Chore ⚙️" },
+            { "type": "perf", "section": "Performance ⌛️" },
+            { "type": "refactor", "hidden": true },
+            { "type": "release", "hidden": true }
           ]
+        },
+        "commitParserOptions": {
+          "headerPattern": "^([A-Z]{3,}-\\d{1,5}):? (feat|fix|test|docs|style|chore|perf)(?:\\(([\\w-]+)\\))?\\S* (.+)$"
         },
         "changelogHeader": "# CHANGELOG\n\nAll notable changes to this project will be documented in this file.\n\nThe format is based on [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)\nand this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)\n\n",
         "commitMessageFormat": "release: ${version} [skip ci]",
