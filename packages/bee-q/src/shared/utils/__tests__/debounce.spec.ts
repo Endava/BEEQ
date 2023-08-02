@@ -3,9 +3,21 @@ import { debounce } from '..';
 describe(debounce.name, () => {
   beforeEach(() => {
     jest.useFakeTimers();
+
+    jest.spyOn(globalThis, 'requestAnimationFrame').mockImplementation((callback) => {
+      return setTimeout(() => {
+        callback(performance.now());
+      }, 0) as unknown as number;
+    });
+
+    jest.spyOn(globalThis, 'cancelAnimationFrame').mockImplementation((timer) => {
+      clearTimeout(timer);
+    });
   });
 
   afterEach(() => {
+    (globalThis.requestAnimationFrame as unknown as jest.SpyInstance).mockRestore();
+    (globalThis.cancelAnimationFrame as unknown as jest.SpyInstance).mockRestore();
     jest.useRealTimers();
   });
 

@@ -16,29 +16,39 @@ export type TDebounce<T> = TDebounceFnReturn<T> & { cancel: () => void } extends
  * @return {Function} The new debounced function.
  */
 export const debounce = <TFunc extends TFunction>(func: TFunc, wait = 0, immediate = false) => {
-  let timeout: NodeJS.Timeout;
+  let timeout: number;
 
   function debounceHandler(...args: Parameters<typeof func>) {
-    clearTimeout(timeout);
+    cancelAnimationFrame(timeout);
+
+    const currentTime = performance.now();
 
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const context = this;
 
-    function timeoutHandler(fn: TFunc, context: unknown, ...args: Parameters<typeof fn>) {
-      timeout = undefined;
-      fn.apply(context, args);
-    }
+    const handleFrameRequestCallback: FrameRequestCallback = (time) => {
+      cancelAnimationFrame(timeout);
+
+      const delta = time - currentTime;
+
+      if (delta < wait) {
+        timeout = requestAnimationFrame(handleFrameRequestCallback);
+      } else {
+        timeout = undefined;
+        func.apply(context, args);
+      }
+    };
 
     if (immediate && isNil(timeout)) {
       func.apply(context, args);
     }
 
-    timeout = setTimeout(timeoutHandler, wait, func, context, ...args);
+    timeout = requestAnimationFrame(handleFrameRequestCallback);
   }
 
   return Object.assign(debounceHandler, {
     cancel: () => {
-      clearTimeout(timeout);
+      cancelAnimationFrame(timeout);
     },
   });
 };
