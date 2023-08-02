@@ -3,9 +3,9 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "packages/bee-q-angular/src",
+  "tags": ["wrapper", "angular"],
   "prefix": "bee-q",
   "implicitDependencies": ["bee-q"],
-  "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/angular:package",

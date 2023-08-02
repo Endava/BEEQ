@@ -3,12 +3,12 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/bee-q/src",
   "projectType": "library",
+  "tags": ["components", "core"],
   "generators": {
     "@nxext/stencil:component": {
       "style": "scss"
     }
   },
-  "tags": [],
   "targets": {
     "start": {
       "executor": "nx:run-commands",
