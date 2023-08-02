@@ -1,4 +1,5 @@
 import { isNil } from './isNil';
+import { setRafTimeout } from './setRafTimeout';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TFunction = (...args: any[]) => unknown;
@@ -16,39 +17,28 @@ export type TDebounce<T> = TDebounceFnReturn<T> & { cancel: () => void } extends
  * @return {Function} The new debounced function.
  */
 export const debounce = <TFunc extends TFunction>(func: TFunc, wait = 0, immediate = false) => {
-  let timeout: number;
+  let cancel: () => void | undefined;
 
   function debounceHandler(...args: Parameters<typeof func>) {
-    cancelAnimationFrame(timeout);
-
-    const currentTime = performance.now();
+    cancel?.();
 
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const context = this;
 
-    const handleFrameRequestCallback: FrameRequestCallback = (time) => {
-      cancelAnimationFrame(timeout);
+    function timeoutHandler(fn: TFunc, context: unknown, ...args: Parameters<typeof fn>) {
+      fn.apply(context, args);
+    }
 
-      const delta = time - currentTime;
-
-      if (delta < wait) {
-        timeout = requestAnimationFrame(handleFrameRequestCallback);
-      } else {
-        timeout = undefined;
-        func.apply(context, args);
-      }
-    };
-
-    if (immediate && isNil(timeout)) {
+    if (immediate && isNil(cancel)) {
       func.apply(context, args);
     }
 
-    timeout = requestAnimationFrame(handleFrameRequestCallback);
+    cancel = setRafTimeout(timeoutHandler, wait, func, context, ...args);
   }
 
   return Object.assign(debounceHandler, {
     cancel: () => {
-      cancelAnimationFrame(timeout);
+      cancel();
     },
   });
 };
