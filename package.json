@@ -58,7 +58,7 @@
     "@commitlint/cli": "17.6.6",
     "@commitlint/config-angular": "17.6.6",
     "@commitlint/config-conventional": "17.6.6",
-    "@jscutlery/semver": "3.0.0",
+    "@jscutlery/semver": "3.1.0",
     "@nx/angular": "16.6.0",
     "@nx/devkit": "16.6.0",
     "@nx/eslint-plugin": "16.6.0",
