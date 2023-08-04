@@ -1,4 +1,4 @@
-import { h, Component, Prop, Element, Method, Watch, EventEmitter, Event } from '@stencil/core';
+import { h, Component, Prop, Element, Watch, EventEmitter, Event } from '@stencil/core';
 
 import { FloatingUIPlacement } from '../../services/interfaces';
 import { FloatingUI } from '../../services/libraries';
@@ -17,7 +17,6 @@ export class BqPanel {
 
   private panel: HTMLElement;
   private floatingUI: FloatingUI;
-  private trigger: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -31,16 +30,26 @@ export class BqPanel {
   // Public Property API
   // ========================
 
-  /** Distance (px) between the panel and the trigger element. */
-  @Prop({ reflect: true }) distance?: number = 0;
+  /** Represents the distance (gutter or margin) between the panel and the trigger element. */
+  @Prop({ reflect: true }) distance?: number = 4;
 
   /** Position of the panel */
-  @Prop({ reflect: true }) placement?: FloatingUIPlacement = 'bottom';
+  @Prop({ reflect: true }) placement?: FloatingUIPlacement = 'bottom-start';
 
-  /** If true, panel is visible.
-   * You can toggle this attribute to show/hide the panel.
-   */
+  /** If true, the panel will be visible. */
   @Prop({ reflect: true }) open?: boolean = false;
+
+  /** The trigger element for the panel */
+  @Prop() triggerElement?: HTMLElement;
+
+  /** Whether the panel should have the same width as the trigger element */
+  @Prop({ reflect: true }) sameWidth?: boolean = false;
+
+  /**  Represents the skidding between the panel and the trigger element. */
+  @Prop({ reflect: true }) skidding?: number = 0;
+
+  /** Defines the strategy to position the panel */
+  @Prop({ reflect: true }) strategy?: 'fixed' | 'absolute' = 'fixed';
 
   /** If true, the scrollbar is visible.
    * You can toggle this attribute to show/hide the scrollbar.
@@ -50,21 +59,30 @@ export class BqPanel {
   // Prop lifecycle events
   // =======================
 
+  @Watch('triggerElement')
+  onTriggerElementChange() {
+    if (!this.triggerElement) return;
+
+    this.floatingUI = new FloatingUI(this.triggerElement, this.panel, { ...this.options });
+  }
+
   @Watch('open')
-  handleOpenProp() {
-    this.bqPanelVisibility.emit(this.open);
+  handleOpenChange() {
+    if (!this.open) {
+      this.hidePanel();
+      return;
+    }
+
+    this.showPanel();
   }
 
   @Watch('distance')
   @Watch('placement')
+  @Watch('sameWidth')
+  @Watch('skidding')
+  @Watch('strategy')
   onPropChange() {
-    this.floatingUI.init({
-      placement: this.placement,
-      distance: this.distance,
-      sameWidth: false,
-      strategy: 'fixed',
-      skidding: 0,
-    });
+    this.floatingUI?.init({ ...this.options });
   }
 
   // Events section
@@ -80,6 +98,10 @@ export class BqPanel {
   // Ordered by their natural call order
   // =====================================
 
+  componentDidLoad() {
+    this.onTriggerElementChange();
+  }
+
   disconnectedCallback() {
     this.floatingUI?.destroy();
   }
@@ -94,35 +116,28 @@ export class BqPanel {
   // Requires JSDocs for public API documentation.
   // ===============================================
 
-  @Method()
-  async togglePanel() {
-    this.floatingUI?.update();
-  }
-
-  /**
-   * set trigger element and init FloatingUI
-   * @param trigger - the trigger element for the panel
-   */
-  @Method()
-  async setTriggerElement(trigger: HTMLElement) {
-    this.trigger = trigger;
-    this.initFloatingUI();
-  }
-
   // Local methods
   // Internal business logic.
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private initFloatingUI = () => {
-    this.floatingUI = new FloatingUI(this.trigger, this.panel, {
-      placement: this.placement,
+  private showPanel() {
+    this.floatingUI?.update();
+  }
+
+  private async hidePanel() {
+    this.open = false;
+  }
+
+  private get options() {
+    return {
       distance: this.distance,
-      sameWidth: false,
-      strategy: 'fixed',
-      skidding: 0,
-    });
-  };
+      placement: this.placement,
+      sameWidth: this.sameWidth,
+      skidding: this.skidding,
+      strategy: this.strategy,
+    };
+  }
 
   // render() function
   // Always the last one in the class.

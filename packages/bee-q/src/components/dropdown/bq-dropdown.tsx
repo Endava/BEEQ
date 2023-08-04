@@ -17,7 +17,6 @@ export class BqDropdown {
   // ====================
 
   private trigger: HTMLElement;
-  private panelElement: HTMLBqPanelElement;
 
   // Reference to host HTML element
   // ===================================
@@ -31,22 +30,31 @@ export class BqDropdown {
   // Public Property API
   // ========================
 
-  /** Distance (px) between the panel and the trigger element. */
-  @Prop({ reflect: true }) panelDistance?: number = 4;
+  /** Represents the distance (gutter or margin) between the panel and the trigger element. */
+  @Prop({ reflect: true }) distance?: number = 4;
 
   /** Position of the panel */
-  @Prop({ reflect: true }) panelPlacement?: FloatingUIPlacement = 'bottom-start';
+  @Prop({ reflect: true }) placement?: FloatingUIPlacement = 'bottom-start';
 
-  /**
-   * If true, panel is visible.
-   * You can toggle this attribute to show/hide the panel.
-   */
-  @Prop({ reflect: true }) panelOpen?: boolean = false;
+  /** If true, the panel will be visible. */
+  @Prop({ reflect: true }) open?: boolean = false;
+
+  /** The trigger element for the panel */
+  @Prop() triggerElement?: HTMLElement;
+
+  /** Whether the panel should have the same width as the trigger element */
+  @Prop({ reflect: true }) sameWidth?: boolean = false;
+
+  /**  Represents the skidding between the panel and the trigger element. */
+  @Prop({ reflect: true }) skidding?: number = 0;
+
+  /** Defines the strategy to position the panel */
+  @Prop({ reflect: true }) strategy?: 'fixed' | 'absolute' = 'fixed';
 
   /**
    * Determines whether the scrollbar is visible or hidden within the panel.
    */
-  @Prop({ reflect: true }) panelScrollbar?: boolean = false;
+  @Prop({ reflect: true }) scrollbar?: boolean = false;
 
   // Prop lifecycle events
   // =======================
@@ -65,31 +73,33 @@ export class BqDropdown {
   // Ordered by their natural call order
   // =====================================
 
-  componentDidLoad() {
-    this.initFloatingUIFromPanel();
-  }
-
   // Listeners
   // ==============
 
-  /** On click outside the panel */
+  /** Listens for the 'click' event on the document object
+   * and closes the dropdown panel if the click is outside the component.
+   */
   @Listen('click', { target: 'document', passive: true })
-  onClickOutsidePanel(event: MouseEvent) {
-    // close the panel on click, except click within the panel or within the trigger element
-    if (!event.composedPath().includes(this.panelElement) && !event.composedPath().includes(this.trigger)) {
-      this.panelElement.open = false;
+  onClickOutside(event: MouseEvent) {
+    if (!this.open) return;
+
+    // Close when clicking outside of the close element
+    const path = event.composedPath();
+    if (!path.includes(this.el)) {
+      this.open = false;
     }
   }
 
   /**
-   * If the user press on Escape button
-   * or `<bq-dropdown>` loses focus
-   * then hide the panel
+   * Listens for the 'keyup' event on the window object
+   * and closes the dropdown panel if the 'Escape' key or 'Tab' key outside the component is pressed.
    */
   @Listen('keyup', { target: 'window', passive: true })
   onEscape(event: KeyboardEvent) {
+    if (!this.open) return;
+
     if (event.key === 'Escape' || (event.key === 'Tab' && !event.composedPath().includes(this.el))) {
-      this.panelElement.open = false;
+      this.open = false;
     }
   }
 
@@ -102,7 +112,7 @@ export class BqDropdown {
 
   @Listen('bqSelect', { passive: true })
   onItemSelect() {
-    this.panelElement.open = false;
+    this.open = false;
   }
 
   // Public methods API
@@ -117,13 +127,8 @@ export class BqDropdown {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private openPanel = (): void => {
-    this.panelElement?.togglePanel();
-    this.panelElement.open = !this.panelElement.open;
-  };
-
-  private initFloatingUIFromPanel = (): void => {
-    this.panelElement?.setTriggerElement(this.el);
+  private togglePanel = (): void => {
+    this.open = !this.open;
   };
 
   // render() function
@@ -137,9 +142,9 @@ export class BqDropdown {
         <div
           class="bq-dropdown__trigger"
           ref={(el) => (this.trigger = el)}
-          onClick={this.openPanel}
+          onClick={this.togglePanel}
           aria-haspopup="true"
-          aria-expanded={this.panelOpen}
+          aria-expanded={this.open}
           part="trigger"
         >
           <slot name="trigger" />
@@ -147,11 +152,14 @@ export class BqDropdown {
         {/* PANEL */}
         <bq-panel
           class="bq-dropdown__panel"
-          distance={this.panelDistance}
-          placement={this.panelPlacement}
-          open={this.panelOpen}
-          scrollbar={this.panelScrollbar}
-          ref={(el) => (this.panelElement = el)}
+          distance={this.distance}
+          placement={this.placement}
+          open={this.open}
+          sameWidth={this.sameWidth}
+          skidding={this.skidding}
+          strategy={this.strategy}
+          triggerElement={this.trigger}
+          scrollbar={this.scrollbar}
           aria-labelledby="dropdown"
           role="region"
           part="panel"

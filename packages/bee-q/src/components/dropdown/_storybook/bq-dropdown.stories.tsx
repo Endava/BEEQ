@@ -16,10 +16,13 @@ const meta: Meta = {
     layout: 'centered',
   },
   argTypes: {
-    'panel-distance': { control: 'number' },
-    'panel-placement': { control: 'select', options: PANEL_PLACEMENT },
-    'panel-open': { control: 'boolean' },
-    'panel-scrollbar': { control: 'boolean' },
+    distance: { control: 'number' },
+    placement: { control: 'select', options: PANEL_PLACEMENT },
+    open: { control: 'boolean' },
+    'same-width': { control: 'boolean' },
+    skidding: { control: 'number' },
+    strategy: { control: 'select', options: ['fixed', 'absolute'] },
+    scrollbar: { control: 'boolean' },
     // Event handlers
     bqPanelChange: { action: 'bqPanelChange' },
     // Event handler (bq-option-list)
@@ -28,10 +31,13 @@ const meta: Meta = {
     trigger: { control: 'text', table: { disable: true } },
   },
   args: {
-    'panel-distance': 4,
-    'panel-placement': 'bottom-start',
-    'panel-open': false,
-    'panel-scrollbar': false,
+    distance: 4,
+    placement: 'bottom-start',
+    open: false,
+    'same-width': false,
+    skidding: 0,
+    strategy: 'fixed',
+    scrollbar: false,
     trigger: { control: 'text', table: { disable: true } },
   },
 };
@@ -41,10 +47,13 @@ type Story = StoryObj;
 
 const Template = (args: Args) => html`
   <bq-dropdown
-    panel-distance=${args['panel-distance']}
-    panel-placement=${args['panel-placement']}
-    panel-open=${args['panel-open']}
-    panel-scrollbar=${args['panel-scrollbar']}
+    distance=${args.distance}
+    placement=${args.placement}
+    ?open=${args.open}
+    ?same-width=${args['same-width']}
+    skidding=${args.skidding}
+    strategy=${args.strategy}
+    ?scrollbar=${args.scrollbar}
     @bqPanelChange=${args.bqPanelChange}
   >
     <!-- TRIGGER ELEMENT -->

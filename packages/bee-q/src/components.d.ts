@@ -290,21 +290,37 @@ export namespace Components {
     }
     interface BqDropdown {
         /**
-          * Distance (px) between the panel and the trigger element.
+          * Represents the distance (gutter or margin) between the panel and the trigger element.
          */
-        "panelDistance"?: number;
+        "distance"?: number;
         /**
-          * If true, panel is visible. You can toggle this attribute to show/hide the panel.
+          * If true, the panel will be visible.
          */
-        "panelOpen"?: boolean;
+        "open"?: boolean;
         /**
           * Position of the panel
          */
-        "panelPlacement"?: FloatingUIPlacement;
+        "placement"?: FloatingUIPlacement;
+        /**
+          * Whether the panel should have the same width as the trigger element
+         */
+        "sameWidth"?: boolean;
         /**
           * Determines whether the scrollbar is visible or hidden within the panel.
          */
-        "panelScrollbar"?: boolean;
+        "scrollbar"?: boolean;
+        /**
+          * Represents the skidding between the panel and the trigger element.
+         */
+        "skidding"?: number;
+        /**
+          * Defines the strategy to position the panel
+         */
+        "strategy"?: 'fixed' | 'absolute';
+        /**
+          * The trigger element for the panel
+         */
+        "triggerElement"?: HTMLElement;
     }
     /**
      * Icons are simplified images that graphically explain the meaning of an object on the screen.
@@ -484,11 +500,11 @@ export namespace Components {
     }
     interface BqPanel {
         /**
-          * Distance (px) between the panel and the trigger element.
+          * Represents the distance (gutter or margin) between the panel and the trigger element.
          */
         "distance"?: number;
         /**
-          * If true, panel is visible. You can toggle this attribute to show/hide the panel.
+          * If true, the panel will be visible.
          */
         "open"?: boolean;
         /**
@@ -496,15 +512,25 @@ export namespace Components {
          */
         "placement"?: FloatingUIPlacement;
         /**
+          * Whether the panel should have the same width as the trigger element
+         */
+        "sameWidth"?: boolean;
+        /**
           * If true, the scrollbar is visible. You can toggle this attribute to show/hide the scrollbar.
          */
         "scrollbar"?: boolean;
         /**
-          * set trigger element and init FloatingUI
-          * @param trigger - the trigger element for the panel
+          * Represents the skidding between the panel and the trigger element.
          */
-        "setTriggerElement": (trigger: HTMLElement) => Promise<void>;
-        "togglePanel": () => Promise<void>;
+        "skidding"?: number;
+        /**
+          * Defines the strategy to position the panel
+         */
+        "strategy"?: 'fixed' | 'absolute';
+        /**
+          * The trigger element for the panel
+         */
+        "triggerElement"?: HTMLElement;
     }
     interface BqRadio {
         /**
@@ -1534,26 +1560,42 @@ declare namespace LocalJSX {
     }
     interface BqDropdown {
         /**
+          * Represents the distance (gutter or margin) between the panel and the trigger element.
+         */
+        "distance"?: number;
+        /**
           * Handler to be called to check if the `bq-panel` switches state (visible/hidden).
           * @returns CustomEvent - with value `{ opened: boolean }`
          */
         "onBqPanelChange"?: (event: BqDropdownCustomEvent<{ opened: boolean }>) => void;
         /**
-          * Distance (px) between the panel and the trigger element.
+          * If true, the panel will be visible.
          */
-        "panelDistance"?: number;
-        /**
-          * If true, panel is visible. You can toggle this attribute to show/hide the panel.
-         */
-        "panelOpen"?: boolean;
+        "open"?: boolean;
         /**
           * Position of the panel
          */
-        "panelPlacement"?: FloatingUIPlacement;
+        "placement"?: FloatingUIPlacement;
+        /**
+          * Whether the panel should have the same width as the trigger element
+         */
+        "sameWidth"?: boolean;
         /**
           * Determines whether the scrollbar is visible or hidden within the panel.
          */
-        "panelScrollbar"?: boolean;
+        "scrollbar"?: boolean;
+        /**
+          * Represents the skidding between the panel and the trigger element.
+         */
+        "skidding"?: number;
+        /**
+          * Defines the strategy to position the panel
+         */
+        "strategy"?: 'fixed' | 'absolute';
+        /**
+          * The trigger element for the panel
+         */
+        "triggerElement"?: HTMLElement;
     }
     /**
      * Icons are simplified images that graphically explain the meaning of an object on the screen.
@@ -1773,7 +1815,7 @@ declare namespace LocalJSX {
     }
     interface BqPanel {
         /**
-          * Distance (px) between the panel and the trigger element.
+          * Represents the distance (gutter or margin) between the panel and the trigger element.
          */
         "distance"?: number;
         /**
@@ -1781,7 +1823,7 @@ declare namespace LocalJSX {
          */
         "onBqPanelVisibility"?: (event: BqPanelCustomEvent<boolean>) => void;
         /**
-          * If true, panel is visible. You can toggle this attribute to show/hide the panel.
+          * If true, the panel will be visible.
          */
         "open"?: boolean;
         /**
@@ -1789,9 +1831,25 @@ declare namespace LocalJSX {
          */
         "placement"?: FloatingUIPlacement;
         /**
+          * Whether the panel should have the same width as the trigger element
+         */
+        "sameWidth"?: boolean;
+        /**
           * If true, the scrollbar is visible. You can toggle this attribute to show/hide the scrollbar.
          */
         "scrollbar"?: boolean;
+        /**
+          * Represents the skidding between the panel and the trigger element.
+         */
+        "skidding"?: number;
+        /**
+          * Defines the strategy to position the panel
+         */
+        "strategy"?: 'fixed' | 'absolute';
+        /**
+          * The trigger element for the panel
+         */
+        "triggerElement"?: HTMLElement;
     }
     interface BqRadio {
         /**
