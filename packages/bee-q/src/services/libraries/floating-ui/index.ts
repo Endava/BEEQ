@@ -14,10 +14,10 @@ export class FloatingUI {
     this.panel = panel;
     this.options = Object.assign(
       {
-        distance: 20,
-        placement: 'bottom',
-        strategy: 'fixed',
-        sameWidth: false,
+        distance: options?.distance || 20,
+        placement: options?.placement || 'bottom',
+        strategy: options?.distance || 'fixed',
+        sameWidth: options?.sameWidth || false,
       },
       options,
     );
