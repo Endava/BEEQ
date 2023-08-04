@@ -1,4 +1,6 @@
-export const PANEL_PLACEMENT = [
+import { FloatingUIPlacement } from '../../services/interfaces';
+
+export const PANEL_PLACEMENT: ReadonlyArray<FloatingUIPlacement> = [
   'top',
   'top-start',
   'top-end',
