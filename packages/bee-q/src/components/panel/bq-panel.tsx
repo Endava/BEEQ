@@ -1,4 +1,4 @@
-import { h, Component, Prop, Element, Watch, EventEmitter, Event } from '@stencil/core';
+import { h, Component, Prop, Element, Watch } from '@stencil/core';
 
 import { FloatingUIPlacement } from '../../services/interfaces';
 import { FloatingUI } from '../../services/libraries';
@@ -51,11 +51,6 @@ export class BqPanel {
   /** Defines the strategy to position the panel */
   @Prop({ reflect: true }) strategy?: 'fixed' | 'absolute' = 'fixed';
 
-  /** If true, the scrollbar is visible.
-   * You can toggle this attribute to show/hide the scrollbar.
-   */
-  @Prop({ reflect: true }) scrollbar?: boolean = false;
-
   // Prop lifecycle events
   // =======================
 
@@ -88,11 +83,6 @@ export class BqPanel {
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
-
-  /** Handler to be called to check if the panel is open or closed.
-   * Will emit every time the state of the panel is changed.
-   */
-  @Event() bqPanelVisibility: EventEmitter<boolean>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -146,12 +136,9 @@ export class BqPanel {
   render() {
     return (
       <div
-        class={{
-          'bq-panel': true,
-          'hide-scrollbar': !this.scrollbar,
-        }}
+        class="bq-panel"
         ref={(el) => (this.panel = el)}
-        aria-hidden={!this.open}
+        aria-hidden={!this.open ? 'true' : 'false'}
         hidden={!this.open}
         part="base"
       >

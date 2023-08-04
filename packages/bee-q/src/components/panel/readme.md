@@ -7,23 +7,15 @@
 
 ## Properties
 
-| Property         | Attribute    | Description                                                                                  | Type                                                                                                                                                                 | Default          |
-| ---------------- | ------------ | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
-| `distance`       | `distance`   | Represents the distance (gutter or margin) between the panel and the trigger element.        | `number`                                                                                                                                                             | `4`              |
-| `open`           | `open`       | If true, the panel will be visible.                                                          | `boolean`                                                                                                                                                            | `false`          |
-| `placement`      | `placement`  | Position of the panel                                                                        | `"bottom" \| "bottom-end" \| "bottom-start" \| "left" \| "left-end" \| "left-start" \| "right" \| "right-end" \| "right-start" \| "top" \| "top-end" \| "top-start"` | `'bottom-start'` |
-| `sameWidth`      | `same-width` | Whether the panel should have the same width as the trigger element                          | `boolean`                                                                                                                                                            | `false`          |
-| `scrollbar`      | `scrollbar`  | If true, the scrollbar is visible. You can toggle this attribute to show/hide the scrollbar. | `boolean`                                                                                                                                                            | `false`          |
-| `skidding`       | `skidding`   | Represents the skidding between the panel and the trigger element.                           | `number`                                                                                                                                                             | `0`              |
-| `strategy`       | `strategy`   | Defines the strategy to position the panel                                                   | `"absolute" \| "fixed"`                                                                                                                                              | `'fixed'`        |
-| `triggerElement` | --           | The trigger element for the panel                                                            | `HTMLElement`                                                                                                                                                        | `undefined`      |
-
-
-## Events
-
-| Event               | Description                                                                                                           | Type                   |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------- | ---------------------- |
-| `bqPanelVisibility` | Handler to be called to check if the panel is open or closed. Will emit every time the state of the panel is changed. | `CustomEvent<boolean>` |
+| Property         | Attribute    | Description                                                                           | Type                                                                                                                                                                 | Default          |
+| ---------------- | ------------ | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| `distance`       | `distance`   | Represents the distance (gutter or margin) between the panel and the trigger element. | `number`                                                                                                                                                             | `4`              |
+| `open`           | `open`       | If true, the panel will be visible.                                                   | `boolean`                                                                                                                                                            | `false`          |
+| `placement`      | `placement`  | Position of the panel                                                                 | `"bottom" \| "bottom-end" \| "bottom-start" \| "left" \| "left-end" \| "left-start" \| "right" \| "right-end" \| "right-start" \| "top" \| "top-end" \| "top-start"` | `'bottom-start'` |
+| `sameWidth`      | `same-width` | Whether the panel should have the same width as the trigger element                   | `boolean`                                                                                                                                                            | `false`          |
+| `skidding`       | `skidding`   | Represents the skidding between the panel and the trigger element.                    | `number`                                                                                                                                                             | `0`              |
+| `strategy`       | `strategy`   | Defines the strategy to position the panel                                            | `"absolute" \| "fixed"`                                                                                                                                              | `'fixed'`        |
+| `triggerElement` | --           | The trigger element for the panel                                                     | `HTMLElement`                                                                                                                                                        | `undefined`      |
 
 
 ## Shadow Parts

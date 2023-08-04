@@ -51,11 +51,6 @@ export class BqDropdown {
   /** Defines the strategy to position the panel */
   @Prop({ reflect: true }) strategy?: 'fixed' | 'absolute' = 'fixed';
 
-  /**
-   * Determines whether the scrollbar is visible or hidden within the panel.
-   */
-  @Prop({ reflect: true }) scrollbar?: boolean = false;
-
   // Prop lifecycle events
   // =======================
 
@@ -101,13 +96,6 @@ export class BqDropdown {
     if (event.key === 'Escape' || (event.key === 'Tab' && !event.composedPath().includes(this.el))) {
       this.open = false;
     }
-  }
-
-  @Listen('bqPanelVisibility', { passive: true })
-  onPanelVisibilityChange(event: CustomEvent) {
-    const isOpened: boolean = event.detail as boolean;
-
-    this.bqPanelChange.emit({ opened: isOpened });
   }
 
   @Listen('bqSelect', { passive: true })
@@ -159,7 +147,6 @@ export class BqDropdown {
           skidding={this.skidding}
           strategy={this.strategy}
           triggerElement={this.trigger}
-          scrollbar={this.scrollbar}
           aria-labelledby="dropdown"
           role="region"
           part="panel"

@@ -22,10 +22,7 @@ const meta: Meta = {
     'same-width': { control: 'boolean' },
     skidding: { control: 'number' },
     strategy: { control: 'select', options: ['fixed', 'absolute'] },
-    scrollbar: { control: 'boolean' },
     // Event handlers
-    bqPanelChange: { action: 'bqPanelChange' },
-    // Event handler (bq-option-list)
     bqSelect: { action: 'bqSelect', table: { disable: true } },
     // Not part of the public API, so we don't want to expose it in the
     trigger: { control: 'text', table: { disable: true } },
@@ -37,7 +34,6 @@ const meta: Meta = {
     'same-width': false,
     skidding: 0,
     strategy: 'fixed',
-    scrollbar: false,
     trigger: { control: 'text', table: { disable: true } },
   },
 };
@@ -53,34 +49,33 @@ const Template = (args: Args) => html`
     ?same-width=${args['same-width']}
     skidding=${args.skidding}
     strategy=${args.strategy}
-    ?scrollbar=${args.scrollbar}
-    @bqPanelChange=${args.bqPanelChange}
+    @bqSelect=${args.bqSelect}
   >
     <!-- TRIGGER ELEMENT -->
     ${args.trigger}
 
-    <bq-option-list @bqSelect=${args.bqSelect}>
-      <bq-option>
+    <bq-option-list>
+      <bq-option value="users">
         <bq-icon name="users" slot="prefix"></bq-icon>
         <span>Users</span>
       </bq-option>
 
-      <bq-option>
+      <bq-option value="user">
         <bq-icon name="user" slot="prefix"></bq-icon>
         <span>My profile</span>
       </bq-option>
 
-      <bq-option>
+      <bq-option value="dashboard">
         <bq-icon name="sliders" slot="prefix"></bq-icon>
         <span>Dashboard</span>
       </bq-option>
 
-      <bq-option>
+      <bq-option value="settings">
         <span>Settings</span>
         <bq-icon name="gear" slot="prefix"></bq-icon>
       </bq-option>
 
-      <bq-option>
+      <bq-option value="logout">
         <span>Logout</span>
         <bq-icon name="sign-out" slot="suffix"></bq-icon>
       </bq-option>

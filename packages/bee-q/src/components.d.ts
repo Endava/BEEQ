@@ -306,10 +306,6 @@ export namespace Components {
          */
         "sameWidth"?: boolean;
         /**
-          * Determines whether the scrollbar is visible or hidden within the panel.
-         */
-        "scrollbar"?: boolean;
-        /**
           * Represents the skidding between the panel and the trigger element.
          */
         "skidding"?: number;
@@ -515,10 +511,6 @@ export namespace Components {
           * Whether the panel should have the same width as the trigger element
          */
         "sameWidth"?: boolean;
-        /**
-          * If true, the scrollbar is visible. You can toggle this attribute to show/hide the scrollbar.
-         */
-        "scrollbar"?: boolean;
         /**
           * Represents the skidding between the panel and the trigger element.
          */
@@ -999,10 +991,6 @@ export interface BqOptionCustomEvent<T> extends CustomEvent<T> {
 export interface BqOptionListCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqOptionListElement;
-}
-export interface BqPanelCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLBqPanelElement;
 }
 export interface BqRadioCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1581,10 +1569,6 @@ declare namespace LocalJSX {
          */
         "sameWidth"?: boolean;
         /**
-          * Determines whether the scrollbar is visible or hidden within the panel.
-         */
-        "scrollbar"?: boolean;
-        /**
           * Represents the skidding between the panel and the trigger element.
          */
         "skidding"?: number;
@@ -1819,10 +1803,6 @@ declare namespace LocalJSX {
          */
         "distance"?: number;
         /**
-          * Handler to be called to check if the panel is open or closed. Will emit every time the state of the panel is changed.
-         */
-        "onBqPanelVisibility"?: (event: BqPanelCustomEvent<boolean>) => void;
-        /**
           * If true, the panel will be visible.
          */
         "open"?: boolean;
@@ -1834,10 +1814,6 @@ declare namespace LocalJSX {
           * Whether the panel should have the same width as the trigger element
          */
         "sameWidth"?: boolean;
-        /**
-          * If true, the scrollbar is visible. You can toggle this attribute to show/hide the scrollbar.
-         */
-        "scrollbar"?: boolean;
         /**
           * Represents the skidding between the panel and the trigger element.
          */
