@@ -9,11 +9,12 @@
 }
 
 .bq-panel {
+  @include animation-fade-in;
+  @include hide-scrollbar;
   @apply absolute z-[--bq-panel-z-index] m-0 max-h-[--bq-panel--height] w-[--bq-panel--width] overflow-y-auto overflow-x-hidden;
   @apply rounded-[--bq-panel--border-radius] bg-[--bq-panel--background] shadow-[shadow:--bq-panel--box-shadow];
   @apply py-[--bq-panel--paddingY] pe-[--bq-panel--padding-end] ps-[--bq-panel--padding-start];
   @apply border-[length:--bq-panel--border-width] border-[color:--bq-panel--border-color];
-  @include hide-scrollbar;
 
   border-style: var(--bq-panel--border-style);
 }

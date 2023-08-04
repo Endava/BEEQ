@@ -147,25 +147,6 @@ export const SidePanel: Story = {
     })}
   `,
   args: {
-    'panel-placement': 'left-start',
-  },
-};
-
-export const WithScrollbar: Story = {
-  render: (args: Args) => html`
-    ${Template({
-      ...args,
-      trigger: html`
-        <bq-button appearance="secondary" size="medium" type="button" variant="standard" slot="trigger">
-          <span class="flex items-center gap-1">
-            <span>Dropdown</span>
-            <bq-icon name="caret-down"></bq-icon>
-          </span>
-        </bq-button>
-      `,
-    })}
-  `,
-  args: {
-    'panel-scrollbar': true,
+    placement: 'left-start',
   },
 };

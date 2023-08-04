@@ -128,11 +128,11 @@ export class BqDropdown {
       <div class="bq-dropdown" part="base">
         {/* TRIGGER ELEMENT */}
         <div
-          class="bq-dropdown__trigger"
+          class="bq-dropdown__trigger block"
           ref={(el) => (this.trigger = el)}
           onClick={this.togglePanel}
           aria-haspopup="true"
-          aria-expanded={this.open}
+          aria-expanded={this.open ? 'true' : 'false'}
           part="trigger"
         >
           <slot name="trigger" />
@@ -149,7 +149,8 @@ export class BqDropdown {
           triggerElement={this.trigger}
           aria-labelledby="dropdown"
           role="region"
-          part="panel"
+          part="dropdown"
+          exportparts="panel"
         >
           <slot />
         </bq-panel>
