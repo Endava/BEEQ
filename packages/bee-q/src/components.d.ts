@@ -968,10 +968,6 @@ export interface BqDialogCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqDialogElement;
 }
-export interface BqDropdownCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLBqDropdownElement;
-}
 export interface BqIconCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqIconElement;
@@ -1551,11 +1547,6 @@ declare namespace LocalJSX {
           * Represents the distance (gutter or margin) between the panel and the trigger element.
          */
         "distance"?: number;
-        /**
-          * Handler to be called to check if the `bq-panel` switches state (visible/hidden).
-          * @returns CustomEvent - with value `{ opened: boolean }`
-         */
-        "onBqPanelChange"?: (event: BqDropdownCustomEvent<{ opened: boolean }>) => void;
         /**
           * If true, the panel will be visible.
          */

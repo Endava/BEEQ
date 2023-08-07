@@ -18,13 +18,6 @@
 | `triggerElement` | --           | The trigger element for the panel                                                     | `HTMLElement`                                                                                                                                                        | `undefined`      |
 
 
-## Events
-
-| Event           | Description                                                                      | Type                                |
-| --------------- | -------------------------------------------------------------------------------- | ----------------------------------- |
-| `bqPanelChange` | Handler to be called to check if the `bq-panel` switches state (visible/hidden). | `CustomEvent<{ opened: boolean; }>` |
-
-
 ## Shadow Parts
 
 | Part         | Description                                                    |

@@ -1,4 +1,4 @@
-import { h, Component, Element, Event, EventEmitter, Prop, Listen } from '@stencil/core';
+import { h, Component, Element, Prop, Listen } from '@stencil/core';
 
 import { FloatingUIPlacement } from '../../services/interfaces';
 
@@ -57,12 +57,6 @@ export class BqDropdown {
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
-
-  /**
-   * Handler to be called to check if the `bq-panel` switches state (visible/hidden).
-   * @returns CustomEvent - with value `{ opened: boolean }`
-   */
-  @Event() bqPanelChange: EventEmitter<{ opened: boolean }>;
 
   // Component lifecycle events
   // Ordered by their natural call order
