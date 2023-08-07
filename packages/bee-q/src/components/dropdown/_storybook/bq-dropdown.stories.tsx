@@ -4,8 +4,6 @@ import { html } from 'lit-html';
 
 import mdx from './bq-dropdown.mdx';
 
-import { PANEL_PLACEMENT } from '../../panel/bq-panel.type';
-
 const meta: Meta = {
   title: 'Components/Dropdown',
   component: 'bq-dropdown',
@@ -17,7 +15,23 @@ const meta: Meta = {
   },
   argTypes: {
     distance: { control: 'number' },
-    placement: { control: 'select', options: PANEL_PLACEMENT },
+    placement: {
+      control: 'select',
+      options: [
+        'top',
+        'top-start',
+        'top-end',
+        'bottom',
+        'bottom-start',
+        'bottom-end',
+        'right',
+        'right-start',
+        'right-end',
+        'left',
+        'left-start',
+        'left-end',
+      ],
+    },
     open: { control: 'boolean' },
     'panel-height': { control: 'text' },
     'keep-open-on-select': { control: 'boolean' },
