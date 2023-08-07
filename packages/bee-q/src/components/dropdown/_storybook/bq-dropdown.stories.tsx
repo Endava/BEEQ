@@ -19,6 +19,8 @@ const meta: Meta = {
     distance: { control: 'number' },
     placement: { control: 'select', options: PANEL_PLACEMENT },
     open: { control: 'boolean' },
+    'panel-height': { control: 'text' },
+    'keep-open-on-select': { control: 'boolean' },
     'same-width': { control: 'boolean' },
     skidding: { control: 'number' },
     strategy: { control: 'select', options: ['fixed', 'absolute'] },
@@ -31,6 +33,8 @@ const meta: Meta = {
     distance: 4,
     placement: 'bottom-start',
     open: false,
+    'panel-height': undefined,
+    'keep-open-on-select': false,
     'same-width': false,
     skidding: 0,
     strategy: 'fixed',
@@ -46,6 +50,8 @@ const Template = (args: Args) => html`
     distance=${args.distance}
     placement=${args.placement}
     ?open=${args.open}
+    panel-height=${args['panel-height']}
+    ?keep-open-on-select=${args['keep-open-on-select']}
     ?same-width=${args['same-width']}
     skidding=${args.skidding}
     strategy=${args.strategy}
@@ -148,5 +154,24 @@ export const SidePanel: Story = {
   `,
   args: {
     placement: 'left-start',
+  },
+};
+
+export const KeepOpen: Story = {
+  render: (args: Args) => html`
+    ${Template({
+      ...args,
+      trigger: html`
+        <bq-button appearance="secondary" size="medium" type="button" variant="standard" slot="trigger">
+          <span class="flex items-center gap-1">
+            <span>Dropdown</span>
+            <bq-icon name="caret-down"></bq-icon>
+          </span>
+        </bq-button>
+      `,
+    })}
+  `,
+  args: {
+    'keep-open-on-select': true,
   },
 };

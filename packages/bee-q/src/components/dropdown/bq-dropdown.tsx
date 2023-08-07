@@ -5,7 +5,7 @@ import { FloatingUIPlacement } from '../../services/interfaces';
 /**
  * @part base - The component's internal wrapper.
  * @part trigger - The `div` element used to display the trigger element
- * @part panel - The `div` element used to display the panel element (bq-panel)
+ * @part dropdown - The `div` element used to display the panel element (bq-panel)
  */
 @Component({
   tag: 'bq-dropdown',
@@ -38,6 +38,12 @@ export class BqDropdown {
 
   /** If true, the panel will be visible. */
   @Prop({ reflect: true }) open?: boolean = false;
+
+  /** When set, it will override the height of the dropdown panel */
+  @Prop({ reflect: true }) panelHeight?: string;
+
+  /** If true, the panel will remain open after a selection is made. */
+  @Prop({ reflect: true }) keepOpenOnSelect?: boolean = false;
 
   /** The trigger element for the panel */
   @Prop() triggerElement?: HTMLElement;
@@ -94,6 +100,8 @@ export class BqDropdown {
 
   @Listen('bqSelect', { passive: true })
   onItemSelect() {
+    if (this.keepOpenOnSelect) return;
+
     this.open = false;
   }
 
@@ -118,6 +126,10 @@ export class BqDropdown {
   // ===================================
 
   render() {
+    const style = {
+      ...(this.panelHeight && { '--bq-panel--height': this.panelHeight }),
+    };
+
     return (
       <div class="bq-dropdown" part="base">
         {/* TRIGGER ELEMENT */}
@@ -133,6 +145,7 @@ export class BqDropdown {
         </div>
         {/* PANEL */}
         <bq-panel
+          style={style}
           class="bq-dropdown__panel"
           distance={this.distance}
           placement={this.placement}

@@ -294,9 +294,17 @@ export namespace Components {
          */
         "distance"?: number;
         /**
+          * If true, the panel will remain open after a selection is made.
+         */
+        "keepOpenOnSelect"?: boolean;
+        /**
           * If true, the panel will be visible.
          */
         "open"?: boolean;
+        /**
+          * When set, it will override the height of the dropdown panel
+         */
+        "panelHeight"?: string;
         /**
           * Position of the panel
          */
@@ -1548,9 +1556,17 @@ declare namespace LocalJSX {
          */
         "distance"?: number;
         /**
+          * If true, the panel will remain open after a selection is made.
+         */
+        "keepOpenOnSelect"?: boolean;
+        /**
           * If true, the panel will be visible.
          */
         "open"?: boolean;
+        /**
+          * When set, it will override the height of the dropdown panel
+         */
+        "panelHeight"?: string;
         /**
           * Position of the panel
          */
