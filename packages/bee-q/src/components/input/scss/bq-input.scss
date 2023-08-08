@@ -69,7 +69,7 @@
 }
 
 .bq-input--control.disabled {
-  @apply cursor-not-allowed border-[color:--bq-stroke--tiertary-disabled] bg-ui-secondary-disabled;
+  @apply cursor-not-allowed border-[color:--bq-stroke--tertiary-disabled] bg-ui-secondary-disabled;
 }
 
 /* ------------------------------- Validation ------------------------------- */

@@ -68,11 +68,11 @@ export const DECLARATIVE_COLORS = {
     'secondary-active': 'var(--bq-ui--secondary-active)',
     'secondary-disabled': 'var(--bq-ui--secondary-disabled)',
     'secondary-light': 'var(--bq-ui--secondary-light)',
-    /** Tiertary */
-    tiertary: 'var(--bq-ui--tiertary)',
-    'tiertary-hover': 'var(--bq-ui--tiertary-hover)',
-    'tiertary-active': 'var(--bq-ui--tiertary-active)',
-    'tiertary-disabled': 'var(--bq-ui--tiertary-disabled)',
+    /** Tertiary */
+    tertiary: 'var(--bq-ui--tertiary)',
+    'tertiary-hover': 'var(--bq-ui--tertiary-hover)',
+    'tertiary-active': 'var(--bq-ui--tertiary-active)',
+    'tertiary-disabled': 'var(--bq-ui--tertiary-disabled)',
     /** Inverse */
     inverse: 'var(--bq-ui--inverse)',
     'inverse-hover': 'var(--bq-ui--inverse-hover)',
@@ -115,11 +115,11 @@ export const DECLARATIVE_COLORS = {
     'secondary-active': 'var(--bq-stroke--secondary-active)',
     'secondary-disabled': 'var(--bq-stroke--secondary-disabled)',
     'secondary-light': 'var(--bq-stroke--secondary-light)',
-    /** Tiertary */
-    tiertary: 'var(--bq-stroke--tiertary)',
-    'tiertary-hover': 'var(--bq-stroke--tiertary-hover)',
-    'tiertary-active': 'var(--bq-stroke--tiertary-active)',
-    'tiertary-disabled': 'var(--bq-stroke--tiertary-disabled)',
+    /** tertiary */
+    tertiary: 'var(--bq-stroke--tertiary)',
+    'tertiary-hover': 'var(--bq-stroke--tertiary-hover)',
+    'tertiary-active': 'var(--bq-stroke--tertiary-active)',
+    'tertiary-disabled': 'var(--bq-stroke--tertiary-disabled)',
     /** Inverse */
     inverse: 'var(--bq-stroke--inverse)',
     /** Brand */
