@@ -17,7 +17,6 @@
 | `sameWidth`        | `same-width`          | Whether the panel should have the same width as the trigger element                   | `boolean`                                                                                                                                                            | `false`          |
 | `skidding`         | `skidding`            | Represents the skidding between the panel and the trigger element.                    | `number`                                                                                                                                                             | `0`              |
 | `strategy`         | `strategy`            | Defines the strategy to position the panel                                            | `"absolute" \| "fixed"`                                                                                                                                              | `'fixed'`        |
-| `triggerElement`   | --                    | The trigger element for the panel                                                     | `HTMLElement`                                                                                                                                                        | `undefined`      |
 
 
 ## Shadow Parts

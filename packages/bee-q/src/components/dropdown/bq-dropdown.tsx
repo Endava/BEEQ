@@ -16,8 +16,6 @@ export class BqDropdown {
   // Own Properties
   // ====================
 
-  private trigger: HTMLElement;
-
   // Reference to host HTML element
   // ===================================
 
@@ -44,9 +42,6 @@ export class BqDropdown {
 
   /** If true, the panel will remain open after a selection is made. */
   @Prop({ reflect: true }) keepOpenOnSelect?: boolean = false;
-
-  /** The trigger element for the panel */
-  @Prop() triggerElement?: HTMLElement;
 
   /** Whether the panel should have the same width as the trigger element */
   @Prop({ reflect: true }) sameWidth?: boolean = false;
@@ -135,7 +130,6 @@ export class BqDropdown {
         {/* TRIGGER ELEMENT */}
         <div
           class="bq-dropdown__trigger block"
-          ref={(el) => (this.trigger = el)}
           onClick={this.togglePanel}
           aria-haspopup="true"
           aria-expanded={this.open ? 'true' : 'false'}
@@ -153,7 +147,6 @@ export class BqDropdown {
           sameWidth={this.sameWidth}
           skidding={this.skidding}
           strategy={this.strategy}
-          triggerElement={this.trigger}
           aria-labelledby="dropdown"
           role="region"
           part="dropdown"

@@ -17,6 +17,7 @@ export class BqPanel {
 
   private panel: HTMLElement;
   private floatingUI: FloatingUI;
+  private trigger: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -39,9 +40,6 @@ export class BqPanel {
   /** If true, the panel will be visible. */
   @Prop({ reflect: true }) open?: boolean = false;
 
-  /** The trigger element for the panel */
-  @Prop() triggerElement?: HTMLElement;
-
   /** Whether the panel should have the same width as the trigger element */
   @Prop({ reflect: true }) sameWidth?: boolean = false;
 
@@ -53,13 +51,6 @@ export class BqPanel {
 
   // Prop lifecycle events
   // =======================
-
-  @Watch('triggerElement')
-  onTriggerElementChange() {
-    if (!this.triggerElement) return;
-
-    this.floatingUI = new FloatingUI(this.triggerElement, this.panel, { ...this.options });
-  }
 
   @Watch('open')
   handleOpenChange() {
@@ -89,7 +80,12 @@ export class BqPanel {
   // =====================================
 
   componentDidLoad() {
-    this.onTriggerElementChange();
+    // We need to find the trigger element from the parent to position the panel relative to it.
+    this.trigger = this.el.parentElement.querySelector('div[part="trigger"]');
+    if (!this.trigger) return;
+
+    this.floatingUI = new FloatingUI(this.trigger, this.panel, { ...this.options });
+    this.handleOpenChange();
   }
 
   disconnectedCallback() {

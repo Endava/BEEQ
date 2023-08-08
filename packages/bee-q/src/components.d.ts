@@ -321,10 +321,6 @@ export namespace Components {
           * Defines the strategy to position the panel
          */
         "strategy"?: 'fixed' | 'absolute';
-        /**
-          * The trigger element for the panel
-         */
-        "triggerElement"?: HTMLElement;
     }
     /**
      * Icons are simplified images that graphically explain the meaning of an object on the screen.
@@ -527,10 +523,6 @@ export namespace Components {
           * Defines the strategy to position the panel
          */
         "strategy"?: 'fixed' | 'absolute';
-        /**
-          * The trigger element for the panel
-         */
-        "triggerElement"?: HTMLElement;
     }
     interface BqRadio {
         /**
@@ -1583,10 +1575,6 @@ declare namespace LocalJSX {
           * Defines the strategy to position the panel
          */
         "strategy"?: 'fixed' | 'absolute';
-        /**
-          * The trigger element for the panel
-         */
-        "triggerElement"?: HTMLElement;
     }
     /**
      * Icons are simplified images that graphically explain the meaning of an object on the screen.
@@ -1829,10 +1817,6 @@ declare namespace LocalJSX {
           * Defines the strategy to position the panel
          */
         "strategy"?: 'fixed' | 'absolute';
-        /**
-          * The trigger element for the panel
-         */
-        "triggerElement"?: HTMLElement;
     }
     interface BqRadio {
         /**
