@@ -4,8 +4,9 @@ import { FloatingUIPlacement } from '../../services/interfaces';
 
 /**
  * @part base - The component's internal wrapper.
- * @part trigger - The `div` element used to display the trigger element
- * @part dropdown - The `div` element used to display the panel element (bq-panel)
+ * @part dropdown - The `<bq-panel>` element used under the hood to display the dropdown panel
+ * @part panel - The `<div>` element used to display and style the panel inside the `<bq-panel>` element
+ * @part trigger - The `<div>` element that hosts the trigger element
  */
 @Component({
   tag: 'bq-dropdown',

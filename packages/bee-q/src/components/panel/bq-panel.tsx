@@ -4,7 +4,7 @@ import { FloatingUIPlacement } from '../../services/interfaces';
 import { FloatingUI } from '../../services/libraries';
 
 /**
- * @part base - The `div` element which acts as a container for the panel content
+ * @part panel - The `<div>` element used to display and style the panel
  */
 @Component({
   tag: 'bq-panel',
@@ -136,7 +136,7 @@ export class BqPanel {
         ref={(el) => (this.panel = el)}
         aria-hidden={!this.open ? 'true' : 'false'}
         hidden={!this.open}
-        part="base"
+        part="panel"
       >
         <slot />
       </div>

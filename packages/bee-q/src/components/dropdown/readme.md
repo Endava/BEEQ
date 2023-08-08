@@ -21,11 +21,12 @@
 
 ## Shadow Parts
 
-| Part         | Description                                                    |
-| ------------ | -------------------------------------------------------------- |
-| `"base"`     | The component's internal wrapper.                              |
-| `"dropdown"` | The `div` element used to display the panel element (bq-panel) |
-| `"trigger"`  | The `div` element used to display the trigger element          |
+| Part         | Description                                                                             |
+| ------------ | --------------------------------------------------------------------------------------- |
+| `"base"`     | The component's internal wrapper.                                                       |
+| `"dropdown"` | The `<bq-panel>` element used under the hood to display the dropdown panel              |
+| `"panel"`    | The `<div>` element used to display and style the panel inside the `<bq-panel>` element |
+| `"trigger"`  | The `<div>` element that hosts the trigger element                                      |
 
 
 ## Dependencies

@@ -19,9 +19,9 @@
 
 ## Shadow Parts
 
-| Part     | Description                                                       |
-| -------- | ----------------------------------------------------------------- |
-| `"base"` | The `div` element which acts as a container for the panel content |
+| Part      | Description                                             |
+| --------- | ------------------------------------------------------- |
+| `"panel"` | The `<div>` element used to display and style the panel |
 
 
 ## Dependencies
