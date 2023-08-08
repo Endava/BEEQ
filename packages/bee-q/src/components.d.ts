@@ -10,6 +10,7 @@ import { TBadgeSize } from "./components/badge/bq-badge.types";
 import { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 import { TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
+import { FloatingUIPlacement } from "./services/interfaces";
 import { TIconWeight } from "./components/icon/bq-icon.types";
 import { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
 import { TNotificationType } from "./components/notification/bq-notification.types";
@@ -22,12 +23,12 @@ import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq
 import { TTabSize } from "./components/tab/bq-tab.types";
 import { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 import { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
-import { FloatingUIPlacement } from "./services/interfaces";
 export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 export { TBadgeSize } from "./components/badge/bq-badge.types";
 export { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 export { TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
+export { FloatingUIPlacement } from "./services/interfaces";
 export { TIconWeight } from "./components/icon/bq-icon.types";
 export { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
 export { TNotificationType } from "./components/notification/bq-notification.types";
@@ -40,7 +41,6 @@ export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq
 export { TTabSize } from "./components/tab/bq-tab.types";
 export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 export { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
-export { FloatingUIPlacement } from "./services/interfaces";
 export namespace Components {
     /**
      * An avatar represents an object made of different pieces of information, in a way that is understandable at a glance.
@@ -288,6 +288,40 @@ export namespace Components {
          */
         "titleAlignment"?: TDividerTitleAlignment;
     }
+    interface BqDropdown {
+        /**
+          * Represents the distance (gutter or margin) between the panel and the trigger element.
+         */
+        "distance"?: number;
+        /**
+          * If true, the panel will remain open after a selection is made.
+         */
+        "keepOpenOnSelect"?: boolean;
+        /**
+          * If true, the panel will be visible.
+         */
+        "open"?: boolean;
+        /**
+          * When set, it will override the height of the dropdown panel
+         */
+        "panelHeight"?: string;
+        /**
+          * Position of the panel
+         */
+        "placement"?: FloatingUIPlacement;
+        /**
+          * Whether the panel should have the same width as the trigger element
+         */
+        "sameWidth"?: boolean;
+        /**
+          * Represents the skidding between the panel and the trigger element.
+         */
+        "skidding"?: number;
+        /**
+          * Defines the strategy to position the panel
+         */
+        "strategy"?: 'fixed' | 'absolute';
+    }
     /**
      * Icons are simplified images that graphically explain the meaning of an object on the screen.
      */
@@ -463,6 +497,32 @@ export namespace Components {
           * If true, the option is selected and active.
          */
         "ariaLabel": string;
+    }
+    interface BqPanel {
+        /**
+          * Represents the distance (gutter or margin) between the panel and the trigger element.
+         */
+        "distance"?: number;
+        /**
+          * If true, the panel will be visible.
+         */
+        "open"?: boolean;
+        /**
+          * Position of the panel
+         */
+        "placement"?: FloatingUIPlacement;
+        /**
+          * Whether the panel should have the same width as the trigger element
+         */
+        "sameWidth"?: boolean;
+        /**
+          * Represents the skidding between the panel and the trigger element.
+         */
+        "skidding"?: number;
+        /**
+          * Defines the strategy to position the panel
+         */
+        "strategy"?: 'fixed' | 'absolute';
     }
     interface BqRadio {
         /**
@@ -1023,6 +1083,12 @@ declare global {
         prototype: HTMLBqDividerElement;
         new (): HTMLBqDividerElement;
     };
+    interface HTMLBqDropdownElement extends Components.BqDropdown, HTMLStencilElement {
+    }
+    var HTMLBqDropdownElement: {
+        prototype: HTMLBqDropdownElement;
+        new (): HTMLBqDropdownElement;
+    };
     /**
      * Icons are simplified images that graphically explain the meaning of an object on the screen.
      */
@@ -1061,6 +1127,12 @@ declare global {
     var HTMLBqOptionListElement: {
         prototype: HTMLBqOptionListElement;
         new (): HTMLBqOptionListElement;
+    };
+    interface HTMLBqPanelElement extends Components.BqPanel, HTMLStencilElement {
+    }
+    var HTMLBqPanelElement: {
+        prototype: HTMLBqPanelElement;
+        new (): HTMLBqPanelElement;
     };
     interface HTMLBqRadioElement extends Components.BqRadio, HTMLStencilElement {
     }
@@ -1156,12 +1228,14 @@ declare global {
         "bq-checkbox": HTMLBqCheckboxElement;
         "bq-dialog": HTMLBqDialogElement;
         "bq-divider": HTMLBqDividerElement;
+        "bq-dropdown": HTMLBqDropdownElement;
         "bq-icon": HTMLBqIconElement;
         "bq-input": HTMLBqInputElement;
         "bq-notification": HTMLBqNotificationElement;
         "bq-option": HTMLBqOptionElement;
         "bq-option-group": HTMLBqOptionGroupElement;
         "bq-option-list": HTMLBqOptionListElement;
+        "bq-panel": HTMLBqPanelElement;
         "bq-radio": HTMLBqRadioElement;
         "bq-radio-group": HTMLBqRadioGroupElement;
         "bq-side-menu": HTMLBqSideMenuElement;
@@ -1468,6 +1542,40 @@ declare namespace LocalJSX {
          */
         "titleAlignment"?: TDividerTitleAlignment;
     }
+    interface BqDropdown {
+        /**
+          * Represents the distance (gutter or margin) between the panel and the trigger element.
+         */
+        "distance"?: number;
+        /**
+          * If true, the panel will remain open after a selection is made.
+         */
+        "keepOpenOnSelect"?: boolean;
+        /**
+          * If true, the panel will be visible.
+         */
+        "open"?: boolean;
+        /**
+          * When set, it will override the height of the dropdown panel
+         */
+        "panelHeight"?: string;
+        /**
+          * Position of the panel
+         */
+        "placement"?: FloatingUIPlacement;
+        /**
+          * Whether the panel should have the same width as the trigger element
+         */
+        "sameWidth"?: boolean;
+        /**
+          * Represents the skidding between the panel and the trigger element.
+         */
+        "skidding"?: number;
+        /**
+          * Defines the strategy to position the panel
+         */
+        "strategy"?: 'fixed' | 'absolute';
+    }
     /**
      * Icons are simplified images that graphically explain the meaning of an object on the screen.
      */
@@ -1683,6 +1791,32 @@ declare namespace LocalJSX {
           * Handler to be called when `bq-option` is selected (on click/enter press).
          */
         "onBqSelect"?: (event: BqOptionListCustomEvent<{ value: string; item: HTMLBqOptionElement }>) => void;
+    }
+    interface BqPanel {
+        /**
+          * Represents the distance (gutter or margin) between the panel and the trigger element.
+         */
+        "distance"?: number;
+        /**
+          * If true, the panel will be visible.
+         */
+        "open"?: boolean;
+        /**
+          * Position of the panel
+         */
+        "placement"?: FloatingUIPlacement;
+        /**
+          * Whether the panel should have the same width as the trigger element
+         */
+        "sameWidth"?: boolean;
+        /**
+          * Represents the skidding between the panel and the trigger element.
+         */
+        "skidding"?: number;
+        /**
+          * Defines the strategy to position the panel
+         */
+        "strategy"?: 'fixed' | 'absolute';
     }
     interface BqRadio {
         /**
@@ -2164,12 +2298,14 @@ declare namespace LocalJSX {
         "bq-checkbox": BqCheckbox;
         "bq-dialog": BqDialog;
         "bq-divider": BqDivider;
+        "bq-dropdown": BqDropdown;
         "bq-icon": BqIcon;
         "bq-input": BqInput;
         "bq-notification": BqNotification;
         "bq-option": BqOption;
         "bq-option-group": BqOptionGroup;
         "bq-option-list": BqOptionList;
+        "bq-panel": BqPanel;
         "bq-radio": BqRadio;
         "bq-radio-group": BqRadioGroup;
         "bq-side-menu": BqSideMenu;
@@ -2203,6 +2339,7 @@ declare module "@stencil/core" {
             "bq-checkbox": LocalJSX.BqCheckbox & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
             "bq-dialog": LocalJSX.BqDialog & JSXBase.HTMLAttributes<HTMLBqDialogElement>;
             "bq-divider": LocalJSX.BqDivider & JSXBase.HTMLAttributes<HTMLBqDividerElement>;
+            "bq-dropdown": LocalJSX.BqDropdown & JSXBase.HTMLAttributes<HTMLBqDropdownElement>;
             /**
              * Icons are simplified images that graphically explain the meaning of an object on the screen.
              */
@@ -2212,6 +2349,7 @@ declare module "@stencil/core" {
             "bq-option": LocalJSX.BqOption & JSXBase.HTMLAttributes<HTMLBqOptionElement>;
             "bq-option-group": LocalJSX.BqOptionGroup & JSXBase.HTMLAttributes<HTMLBqOptionGroupElement>;
             "bq-option-list": LocalJSX.BqOptionList & JSXBase.HTMLAttributes<HTMLBqOptionListElement>;
+            "bq-panel": LocalJSX.BqPanel & JSXBase.HTMLAttributes<HTMLBqPanelElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
             "bq-side-menu": LocalJSX.BqSideMenu & JSXBase.HTMLAttributes<HTMLBqSideMenuElement>;
