@@ -1,5 +1,4 @@
-import { arrow, flip, hide, offset, shift, size } from '@floating-ui/core';
-import { autoUpdate, computePosition } from '@floating-ui/dom';
+import { arrow, autoUpdate, computePosition, flip, hide, offset, shift, size } from '@floating-ui/dom';
 
 import { FloatingUIOptions } from '../../interfaces';
 
@@ -54,8 +53,9 @@ export class FloatingUI {
       });
 
       Object.assign(this.panel.style, {
-        top: `${y}px`,
-        left: `${x}px`,
+        top: '0',
+        left: '0',
+        transform: `translate(${this.roundByDPR(x)}px,${this.roundByDPR(y)}px)`,
       });
 
       if (this.options.arrow) {
@@ -97,5 +97,10 @@ export class FloatingUI {
         return {};
       },
     };
+  }
+
+  private roundByDPR(value: number) {
+    const dpr = window.devicePixelRatio || 1;
+    return Math.round(value * dpr) / dpr;
   }
 }
