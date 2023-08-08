@@ -108,6 +108,8 @@ export class BqAvatar {
   };
 
   private trimInitialsBasedOnSize = (): void => {
+    if (!this.initials) return;
+
     AVATAR_SIZE.forEach((size: TAvatarSize) => {
       if (this.size === size) {
         this.trimmedInitials = this.initials.substring(0, this.getIndex(size));
