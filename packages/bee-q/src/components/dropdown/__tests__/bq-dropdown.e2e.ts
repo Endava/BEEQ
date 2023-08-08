@@ -5,7 +5,6 @@ describe('bq-dropdown', () => {
     const page = await newE2EPage({
       html: `<bq-dropdown></bq-dropdown>`,
     });
-
     const element = await page.find('bq-dropdown');
 
     expect(element).toHaveClass('hydrated');
@@ -15,7 +14,6 @@ describe('bq-dropdown', () => {
     const page = await newE2EPage({
       html: `<bq-dropdown></bq-dropdown>`,
     });
-
     const element = await page.find('bq-dropdown');
 
     expect(element.shadowRoot).not.toBeNull();
@@ -24,64 +22,68 @@ describe('bq-dropdown', () => {
   it('should be visible on click', async () => {
     const page = await newE2EPage({
       html: `
-      <bq-dropdown>
-        <bq-button slot="trigger">Open</bq-button>
-        <div>Some content in panel</div>
-      </bq-dropdown>`,
+        <bq-dropdown>
+          <bq-button slot="trigger">Open</bq-button>
+          <div>Some content in panel</div>
+        </bq-dropdown>
+      `,
     });
-
     const button = await page.find('bq-button');
+
     await button.click();
 
-    const dropdown = await page.find('bq-dropdown');
-    const panel = dropdown.shadowRoot.querySelector('bq-panel');
-
-    expect(panel).not.toHaveAttribute('aria-hidden');
+    const dropdownPanel = await page.find('bq-dropdown >>> .bq-dropdown__panel');
+    expect(dropdownPanel).toHaveAttribute('open');
   });
 
   it('should open based on `open` prop', async () => {
     const page = await newE2EPage({
       html: `
-      <bq-dropdown open="true">
-        <bq-button slot="trigger">Open</bq-button>
-        <div>Some content in panel</div>
-      </bq-dropdown>`,
+        <bq-dropdown open="true">
+          <bq-button slot="trigger">Open</bq-button>
+          <div>Some content in panel</div>
+        </bq-dropdown>
+      `,
     });
+    const dropdownPanel = await page.find('bq-dropdown >>> .bq-dropdown__panel');
 
-    const dropdown = await page.find('bq-dropdown');
-    const panel = dropdown.shadowRoot.querySelector('bq-panel');
-
-    expect(panel).not.toHaveAttribute('aria-hidden');
+    expect(dropdownPanel).toHaveAttribute('open');
   });
 
   it('should close on "Escape"', async () => {
-    // default value is "bottom-start"
     const page = await newE2EPage({
       html: `
-      <bq-dropdown placement="bottom">
-        <bq-button slot="trigger">Open</bq-button>
-        <div>Some content in panel</div>
-      </bq-dropdown>`,
+        <bq-dropdown open>
+          <bq-button slot="trigger">Open</bq-button>
+          <div>Some content in panel</div>
+        </bq-dropdown>
+      `,
     });
+    const dropdownPanel = await page.find('bq-dropdown >>> .bq-dropdown__panel');
+
+    expect(dropdownPanel).toHaveAttribute('open');
 
     await page.keyboard.press('Escape');
+    await page.waitForChanges();
 
-    const dropdown = await page.find('bq-dropdown');
-    const panel = dropdown.shadowRoot.querySelector('bq-panel');
-    expect(panel).not.toHaveAttribute('aria-hidden');
+    expect(dropdownPanel).not.toHaveAttribute('open');
   });
 
   it('should change placement value', async () => {
-    // default value is "bottom-start"
     const page = await newE2EPage({
       html: `
-      <bq-dropdown placement="bottom">
-        <bq-button slot="trigger">Open</bq-button>
-        <div>Some content in panel</div>
-      </bq-dropdown>`,
+        <bq-dropdown>
+          <bq-button slot="trigger">Open</bq-button>
+          <div>Some content in panel</div>
+        </bq-dropdown>
+      `,
     });
-
     const dropdown = await page.find('bq-dropdown');
-    expect(dropdown).toEqualAttribute('placement', 'bottom');
+    dropdown.setProperty('placement', 'bottom');
+
+    await page.waitForChanges();
+
+    const dropdownPanel = await page.find('bq-dropdown >>> .bq-dropdown__panel');
+    expect(dropdownPanel).toEqualAttribute('placement', 'bottom');
   });
 });
