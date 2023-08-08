@@ -11,7 +11,6 @@ const meta: Meta = {
     docs: {
       page: mdx,
     },
-    layout: 'centered',
   },
   argTypes: {
     distance: { control: 'number' },
@@ -108,84 +107,102 @@ export const Default: Story = {
     ${Template({
       ...args,
       trigger: html`
-        <bq-button appearance="secondary" size="medium" type="button" variant="standard" slot="trigger">
-          <span class="flex items-center gap-1">
-            <span>Dropdown</span>
-            <bq-icon name="caret-down"></bq-icon>
-          </span>
-        </bq-button>
-      `,
-    })}
-  `,
-};
-
-export const MenuTrigger: Story = {
-  render: (args: Args) => html`
-    ${Template({
-      ...args,
-      trigger: html`
-        <bq-button appearance="secondary" size="medium" type="button" variant="standard" slot="trigger">
-          <span class="flex items-center gap-1">
-            <bq-icon name="dots-three-vertical"></bq-icon>
-          </span>
-        </bq-button>
-      `,
-    })}
-  `,
-};
-
-export const AvatarTrigger: Story = {
-  render: (args: Args) => html`
-    ${Template({
-      ...args,
-      trigger: html`
-        <bq-avatar
-          alt-text="User profile"
-          image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=80"
-          label="Avatar component label"
-          shape="circle"
-          size="medium"
-          slot="trigger"
-        ></bq-avatar>
-      `,
-    })}
-  `,
-};
-
-export const SidePanel: Story = {
-  render: (args: Args) => html`
-    ${Template({
-      ...args,
-      trigger: html`
-        <bq-button appearance="secondary" size="medium" type="button" variant="standard" slot="trigger">
-          <span class="flex items-center gap-1">
-            <span>Dropdown</span>
-            <bq-icon name="caret-down"></bq-icon>
-          </span>
+        <bq-button slot="trigger">
+          Dropdown
+          <bq-icon name="caret-down" slot="suffix"></bq-icon>
         </bq-button>
       `,
     })}
   `,
   args: {
-    placement: 'left-start',
+    open: true,
+  },
+};
+
+export const Placement: Story = {
+  render: (args: Args) => html`
+    <div class="mt-xxl3 grid grid-cols-1 place-items-center gap-m sm:grid-cols-2">
+      <!-- Bottom end -->
+      ${Template({
+        ...args,
+        trigger: html`
+          <bq-button slot="trigger">
+            Dropdown
+            <bq-icon name="caret-down" slot="suffix"></bq-icon>
+          </bq-button>
+        `,
+      })}
+      <!-- Bottom end -->
+      ${Template({
+        ...args,
+        placement: 'bottom-end',
+        trigger: html`
+          <bq-button slot="trigger">
+            Dropdown
+            <bq-icon name="caret-down" slot="suffix"></bq-icon>
+          </bq-button>
+        `,
+      })}
+    </div>
+  `,
+  args: {
+    open: true,
+  },
+};
+
+export const CustomTrigger: Story = {
+  render: (args: Args) => html`
+    <div class="mt-xxl3 grid grid-cols-1 place-items-center gap-m sm:grid-cols-2">
+      <!-- Button icon -->
+      ${Template({
+        ...args,
+        trigger: html`
+          <bq-button appearance="secondary" size="medium" type="button" variant="standard" slot="trigger">
+            <span class="flex items-center gap-1">
+              <bq-icon name="dots-three-vertical"></bq-icon>
+            </span>
+          </bq-button>
+        `,
+      })}
+      <!-- Avatar -->
+      ${Template({
+        ...args,
+        trigger: html`
+          <bq-avatar
+            alt-text="User profile"
+            image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=80"
+            label="Avatar component label"
+            slot="trigger"
+          ></bq-avatar>
+        `,
+      })}
+    </div>
+  `,
+  args: {
+    open: true,
+    placement: 'bottom',
   },
 };
 
 export const KeepOpen: Story = {
   render: (args: Args) => html`
+    <div class="mb-l rounded-xs border border-solid border-stroke-success bg-ui-success-light p-m">
+      <strong> 💡 NOTE:</strong>
+      If <code class="text-text-danger">keepOpenOnSelect</code> is set, the dropdown will remain open after a selection
+      is made.
+    </div>
     ${Template({
       ...args,
       trigger: html`
-        <bq-button appearance="secondary" size="medium" type="button" variant="standard" slot="trigger">
-          <span class="flex items-center gap-1">
-            <span>Dropdown</span>
-            <bq-icon name="caret-down"></bq-icon>
-          </span>
+        <bq-button slot="trigger">
+          Dropdown
+          <bq-icon name="caret-down" slot="suffix"></bq-icon>
         </bq-button>
       `,
     })}
   `,
   args: {
     'keep-open-on-select': true,
+    open: true,
   },
 };
