@@ -124,7 +124,7 @@ export class BqAvatar {
       medium: 3,
       large: 4,
     };
-    return sizeIndexMap[size] || sizeIndexMap.xsmall;
+    return sizeIndexMap[size] ?? sizeIndexMap.xsmall;
   };
 
   // render() function
