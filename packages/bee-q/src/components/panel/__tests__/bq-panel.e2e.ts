@@ -39,7 +39,7 @@ describe('bq-panel', () => {
     });
 
     const styleProps = ['width', 'boxShadow', 'padding'] as const;
-    const panelStyle = await computedStyle(page, 'bq-panel >>> [part="base"]', styleProps);
+    const panelStyle = await computedStyle(page, 'bq-panel >>> [part="panel"]', styleProps);
 
     expect(panelStyle).toEqual({
       width: '320px',
