@@ -118,17 +118,13 @@ export class BqAvatar {
   };
 
   private getIndex = (size: TAvatarSize): number => {
-    switch (size) {
-      case 'small':
-        return 2;
-      case 'medium':
-        return 3;
-      case 'large':
-        return 4;
-      default:
-        // also if size === xsmall
-        return 1;
-    }
+    const sizeIndexMap = {
+      xsmall: 1,
+      small: 2,
+      medium: 3,
+      large: 4,
+    };
+    return sizeIndexMap[size] || sizeIndexMap.xsmall;
   };
 
   // render() function
