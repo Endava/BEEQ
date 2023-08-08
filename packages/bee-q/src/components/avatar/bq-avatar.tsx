@@ -108,6 +108,8 @@ export class BqAvatar {
   };
 
   private trimInitialsBasedOnSize = (): void => {
+    if (!this.initials) return;
+
     AVATAR_SIZE.forEach((size: TAvatarSize) => {
       if (this.size === size) {
         this.trimmedInitials = this.initials.substring(0, this.getIndex(size));
@@ -116,17 +118,13 @@ export class BqAvatar {
   };
 
   private getIndex = (size: TAvatarSize): number => {
-    switch (size) {
-      case 'small':
-        return 2;
-      case 'medium':
-        return 3;
-      case 'large':
-        return 4;
-      default:
-        // also if size === xsmall
-        return 1;
-    }
+    const sizeIndexMap = {
+      xsmall: 1,
+      small: 2,
+      medium: 3,
+      large: 4,
+    };
+    return sizeIndexMap[size] ?? sizeIndexMap.xsmall;
   };
 
   // render() function
@@ -171,9 +169,9 @@ export class BqAvatar {
         <div
           class={{
             'absolute flex items-center justify-center': true,
-            'left-[var(--bq-avatar--badge-left-square)] top-[var(--bq-avatar--badge-top-square)]':
+            'start-[var(--bq-avatar--badge-left-square)] top-[var(--bq-avatar--badge-top-square)]':
               this.shape === 'square',
-            'left-[var(--bq-avatar--badge-left-circle)] top-[var(--bq-avatar--badge-top-circle)]':
+            'start-[var(--bq-avatar--badge-left-circle)] top-[var(--bq-avatar--badge-top-circle)]':
               this.shape === 'circle',
           }}
         >
