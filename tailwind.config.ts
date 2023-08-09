@@ -1,4 +1,5 @@
 import plugin from 'tailwindcss/plugin';
+import ThemePlugin from './config/theme/default';
 import { DECLARATIVE_COLORS, PRIMITIVE_COLORS } from './config';
 
 import type { Config } from 'tailwindcss';
@@ -26,7 +27,6 @@ const config: Config = {
     },
     colors: {
       current: 'currentColor',
-      focus: 'var(--bq-stroke--brand-focus)',
       transparent: 'transparent',
       /* -------------------------------------------------------------------------- */
       /*                         Default Theme (Declarative)                        */
@@ -89,6 +89,7 @@ const config: Config = {
     },
   },
   plugins: [
+    ThemePlugin,
     plugin(function ({ addComponents, theme }) {
       addComponents({
         /**
