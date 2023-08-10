@@ -39,7 +39,7 @@
 .bq-button--primary.ghost {
   @apply border-stroke-brand bg-transparent text-text-brand;
   // Primary ghost `HOVER` state
-  @apply hover:border-stroke-brand-hover hover:text-text-brand-hover;
+  @apply hover:border-stroke-brand-hover hover:bg-ui-primary-hover hover:text-text-brand-hover;
   // Primary ghost `ACTIVE` state
   @apply active:border-stroke-brand-active active:text-text-brand-active;
   // Primary ghost `DISABLED` state

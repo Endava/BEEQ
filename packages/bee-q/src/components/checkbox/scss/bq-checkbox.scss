@@ -9,7 +9,7 @@
 }
 
 .bq-checkbox {
-  @apply inline-flex cursor-pointer select-none rounded-s p-xs pr-xs2 transition-colors duration-300;
+  @apply inline-flex cursor-pointer select-none space-x-xs rounded-s p-xs transition-colors duration-300;
 
   // Default hover state
   &:not(.is-checked),
@@ -37,7 +37,7 @@
   // Checkbox square icon has `FOCUS`
   &:focus-visible {
     ~ .bq-checkbox__checkbox {
-      @apply focus;
+      @apply focus border-stroke-brand;
     }
   }
 
