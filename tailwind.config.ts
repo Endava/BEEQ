@@ -1,30 +1,14 @@
+import ThemeSwapper from 'tailwindcss-theme-swapper';
 import plugin from 'tailwindcss/plugin';
-import ThemePlugin from './config/theme/default';
+
 import { DECLARATIVE_COLORS, PRIMITIVE_COLORS } from './config';
+import { DefaultDarkTheme, DefaultLightTheme, DefaultRootTheme } from './config/theme/default';
 
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  content: ['packages/bee-q/**/*.{jsx,js,tsx,ts,mdx}'],
+  content: ['packages/bee-q/src/**/*.{html,mdx,tsx,ts}'],
   theme: {
-    borderRadius: {
-      none: 'var(--bq-radius--none)',
-      xs2: 'var(--bq-radius--xs2)',
-      xs: 'var(--bq-radius--xs)',
-      s: 'var(--bq-radius--s)',
-      m: 'var(--bq-radius--m)',
-      l: 'var(--bq-radius--l)',
-      xl: 'var(--bq-radius--xl)',
-      base: 'var(--bq-radius--m)',
-      card: 'var(--bq-radius--l)',
-      full: 'var(--bq-radius--xl)',
-    },
-    boxShadow: {
-      xs: 'var(--bq-box-shadow--xs)',
-      s: 'var(--bq-box-shadow--s)',
-      m: 'var(--bq-box-shadow--m)',
-      l: 'var(--bq-box-shadow--l)',
-    },
     colors: {
       current: 'currentColor',
       transparent: 'transparent',
@@ -36,6 +20,21 @@ const config: Config = {
       /*                         Extended colors (Primitive)                        */
       /* -------------------------------------------------------------------------- */
       ...PRIMITIVE_COLORS,
+    },
+    borderRadius: {
+      none: 'var(--bq-radius--none)',
+      xs2: 'var(--bq-radius--xs2)',
+      xs: 'var(--bq-radius--xs)',
+      s: 'var(--bq-radius--s)',
+      m: 'var(--bq-radius--m)',
+      l: 'var(--bq-radius--l)',
+      full: 'var(--bq-radius--full)',
+    },
+    boxShadow: {
+      xs: 'var(--bq-box-shadow--xs)',
+      s: 'var(--bq-box-shadow--s)',
+      m: 'var(--bq-box-shadow--m)',
+      l: 'var(--bq-box-shadow--l)',
     },
     fontFamily: {
       outfit: 'var(--bq-font-family--outfit)',
@@ -89,7 +88,26 @@ const config: Config = {
     },
   },
   plugins: [
-    ThemePlugin,
+    ThemeSwapper({
+      themes: [
+        {
+          name: 'root',
+          selectors: [':root'],
+          theme: { ...DefaultRootTheme },
+        },
+        {
+          name: 'light',
+          selectors: [':root', '.light', '[data-theme="light"]', '[light]'],
+          theme: { ...DefaultLightTheme },
+        },
+        {
+          name: 'dark',
+          selectors: ['.dark', '[data-theme="dark"]', '[dark]'],
+          mediaQuery: '@media (prefers-color-scheme: dark)',
+          theme: { ...DefaultDarkTheme },
+        },
+      ],
+    }),
     plugin(function ({ addComponents, theme }) {
       addComponents({
         /**
