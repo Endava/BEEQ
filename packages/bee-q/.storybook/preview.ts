@@ -12,8 +12,10 @@ const withThemeProvider: DecoratorFunction<WebComponentsRenderer, { [x: string]:
   const {
     globals: { theme },
   } = context;
+  const body = document.querySelector('body.sb-show-main');
+  if (!body) return storyFn();
 
-  document.body.setAttribute('data-theme', (theme || 'Light').toLowerCase());
+  body.setAttribute('data-theme', (theme || 'Light').toLowerCase());
   return storyFn();
 };
 
