@@ -71,10 +71,10 @@ const Template = (args: Args) => {
       @bqAfterOpen=${args.bqAfterOpen}
       @bqAfterClose=${args.bqAfterClose}
     >
-      <h3 class="flex items-center gap-s" slot="title">
+      <h5 class="bold flex items-center gap-s" slot="title">
         <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
         Title
-      </h3>
+      </h5>
       ${!args.noContent
         ? html`
             <p>
@@ -161,10 +161,10 @@ const ConfirmTemplate = (args: Args) => {
       @bqAfterOpen=${args.bqAfterOpen}
       @bqAfterClose=${args.bqAfterClose}
     >
-      <h3 class="flex items-center gap-s" slot="title">
+      <h5 class="bold flex items-center gap-s" slot="title">
         <bq-icon name="info" size="30" color="icon--danger" role="img" title="Danger"></bq-icon>
         Deactivate account
-      </h3>
+      </h5>
       <p>Are your sure you want to deactivate your account? All of your data will be permanently removed.</p>
       <span class="text-s text-text-secondary"> This action cannot be undone </span>
       <div class="flex gap-xs" slot="footer">

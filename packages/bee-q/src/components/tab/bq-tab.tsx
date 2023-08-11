@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch } from '@stencil/core';
 
 import { TAB_SIZE, TTabSize } from './bq-tab.types';
-import { validatePropValue } from '../../shared/utils';
+import { hasSlotContent, validatePropValue } from '../../shared/utils';
 
 /**
  * @part base - The HTML button used under the hood.
@@ -20,6 +20,7 @@ export class BqTab {
   // ====================
 
   private buttonElement: HTMLButtonElement;
+  private iconElement: HTMLSpanElement;
 
   // Reference to host HTML element
   // ===================================
@@ -31,6 +32,7 @@ export class BqTab {
   // =======================================
 
   @State() tabIndex: number | null = null;
+  @State() hasIcon: boolean = false;
 
   // Public Property API
   // ========================
@@ -149,6 +151,10 @@ export class BqTab {
     this.bqKeyDown.emit(event);
   };
 
+  private handleIconSlotChange = () => {
+    this.hasIcon = hasSlotContent(this.iconElement, 'icon');
+  };
+
   private get tabindex(): string {
     // NOTE: this.active is undefined when is not part of bq-tab-group
     return `${this.tabIndex ?? -1 + +(this.active ?? 1)}`;
@@ -180,11 +186,11 @@ export class BqTab {
         tabindex={this.tabindex}
         part="base"
       >
-        <div class="flex items-center justify-center gap-[--bq-tab--label-icon-gap]" part="content">
-          <div class="flex" part="icon">
-            <slot name="icon" />
+        <div class="flex items-center justify-center" part="content">
+          <div class="flex" ref={(span: HTMLSpanElement) => (this.iconElement = span)} part="icon">
+            <slot name="icon" onSlotchange={this.handleIconSlotChange} />
           </div>
-          <div class="line-clamp-1" part="text">
+          <div class={{ 'line-clamp-1': true, 'ms-[--bq-tab--label-icon-gap]': this.hasIcon }} part="text">
             <slot />
           </div>
         </div>
