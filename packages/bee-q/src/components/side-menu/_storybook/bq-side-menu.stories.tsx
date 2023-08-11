@@ -90,7 +90,7 @@ const Template = (args: Args) => html`
 
   <main class="grid grid-cols-1 p-m">
     <h1 class="mb-l">Dashboard</h1>
-    <div class="h-80 w-full border border-dashed border-stroke-secondary-light bg-ui-secondary-light">
+    <div class="h-80 w-full border border-dashed border-stroke-primary bg-ui-primary-alt">
       <!-- Your content -->
     </div>
   </main>

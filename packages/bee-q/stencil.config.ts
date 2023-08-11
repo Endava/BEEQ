@@ -4,20 +4,15 @@ import { angularOutputTarget as angular } from '@stencil/angular-output-target';
 import { Config } from '@stencil/core';
 import { reactOutputTarget as react } from '@stencil/react-output-target';
 import { sass } from '@stencil/sass';
-import autoprefixer from 'autoprefixer';
-import tailwind, { tailwindGlobal, tailwindHMR } from 'stencil-tailwind-plugin';
-import tailwindcss from 'tailwindcss';
+import tailwind, { PluginConfigOpts, tailwindHMR } from 'stencil-tailwind-plugin';
 
 import { angularValueAccessorBindings, generateCustomElementsJson } from './src/tools';
 import tailwindConf from '../../tailwind.config';
 
-const tailwindOpts = {
-  postcss: {
-    plugins: [tailwindcss(), autoprefixer()],
-  },
-  stripComments: true,
-  tailwindCssPath: resolve(__dirname, 'src/global/styles/tailwind.pcss').replace(/\\/g, '/'),
+const tailwindOpts: PluginConfigOpts = {
+  postcss: resolve(__dirname, '../../postcss.config.js').replace(/\\/g, '/'),
   tailwindConf: tailwindConf,
+  stripComments: true,
 };
 
 export const config: Config = {
@@ -39,11 +34,9 @@ export const config: Config = {
       sourceMapEmbed: true,
       sourceMapContents: true,
     }),
-    tailwindGlobal(tailwindOpts),
+    // tailwindGlobal(tailwindOpts),
     tailwind(tailwindOpts),
-    tailwindHMR({
-      tailwindConf: tailwindConf,
-    }),
+    tailwindHMR({ tailwindConf }),
   ],
   outputTargets: [
     { type: 'docs-readme' },

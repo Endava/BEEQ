@@ -74,6 +74,8 @@ export const PRIMITIVE_COLORS = {
     700: 'var(--bq-grey-700)',
     800: 'var(--bq-grey-800)',
     900: 'var(--bq-grey-900)',
+    950: 'var(--bq-grey-950)',
+    1000: 'var(--bq-grey-1000)',
   },
   indigo: {
     100: 'var(--bq-indigo-100)',
@@ -86,6 +88,18 @@ export const PRIMITIVE_COLORS = {
     800: 'var(--bq-indigo-800)',
     900: 'var(--bq-indigo-900)',
     1000: 'var(--bq-indigo-1000)',
+  },
+  iris: {
+    100: 'var(--bq-iris-100)',
+    200: 'var(--bq-iris-200)',
+    300: 'var(--bq-iris-300)',
+    400: 'var(--bq-iris-400)',
+    500: 'var(--bq-iris-500)',
+    600: 'var(--bq-iris-600)',
+    700: 'var(--bq-iris-700)',
+    800: 'var(--bq-iris-800)',
+    900: 'var(--bq-iris-900)',
+    1000: 'var(--bq-iris-1000)',
   },
   lime: {
     100: 'var(--bq-lime-100)',

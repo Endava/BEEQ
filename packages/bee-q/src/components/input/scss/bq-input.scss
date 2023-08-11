@@ -69,7 +69,7 @@
 }
 
 .bq-input--control.disabled {
-  @apply cursor-not-allowed border-[color:--bq-stroke--tiertary-disabled] bg-ui-secondary-disabled;
+  @apply cursor-not-allowed border-[color:--bq-stroke--tertiary-disabled] bg-ui-secondary-disabled;
 }
 
 /* ------------------------------- Validation ------------------------------- */
@@ -106,7 +106,7 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-input--control__input {
-  @apply flex-auto cursor-[inherit] appearance-none bg-[inherit] font-[inherit] text-[length:inherit];
+  @apply flex-auto cursor-[inherit] appearance-none bg-[inherit] font-[inherit] text-[length:inherit] text-[color:inherit];
   @apply m-0 min-h-[--bq-input--icon-size] min-w-[0] border-none p-0 focus:outline-none focus-visible:outline-none;
 
   box-shadow: none;

@@ -178,7 +178,7 @@ export class BqCheckbox {
         part="base"
       >
         <div
-          class="bq-checkbox__control relative box-border flex h-[var(--bq-checkbox--size)] w-[var(--bq-checkbox--size)] items-center justify-center p-[2px]"
+          class="bq-checkbox__control relative box-border flex h-[var(--bq-checkbox--size)] w-[var(--bq-checkbox--size)] items-center justify-center p-xs3"
           part="control"
         >
           <input
@@ -211,7 +211,7 @@ export class BqCheckbox {
             {this.checked && (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="absolute h-full w-full text-text-inverse"
+                class="absolute h-full w-full text-neutral-white"
                 viewBox="0 0 256 256"
               >
                 <path fill="none" d="M0 0h256v256H0z" />
@@ -228,7 +228,7 @@ export class BqCheckbox {
             {!this.checked && this.indeterminate && (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="absolute h-full w-full text-text-inverse"
+                class="absolute h-full w-full text-neutral-white"
                 viewBox="0 0 256 256"
                 fill="currentColor"
               >
@@ -246,7 +246,7 @@ export class BqCheckbox {
           </span>
         </div>
         <span
-          class="bq-checkbox__label ml-xs2 text-start font-medium leading-regular text-text-primary group-hover-[&:not(.is-disabled)]:text-text-primary-hover group-[.is-disabled]:text-text-primary-disabled"
+          class="bq-checkbox__label ps-xs text-start font-medium leading-regular text-text-primary group-hover-[&:not(.is-disabled)]:text-text-primary-hover group-[.is-disabled]:text-text-primary-disabled"
           part="label"
         >
           <slot />

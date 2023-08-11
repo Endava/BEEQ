@@ -249,8 +249,8 @@ export class BqSwitch {
           <span
             class={{
               'bq-switch--label': true,
-              'ml-s': this.hasLabel && !this.reverseOrder,
-              'mr-s': this.hasLabel && this.reverseOrder,
+              'ms-s': this.hasLabel && !this.reverseOrder,
+              'me-s': this.hasLabel && this.reverseOrder,
             }}
             ref={(span) => (this.labelElem = span)}
             part="label"
