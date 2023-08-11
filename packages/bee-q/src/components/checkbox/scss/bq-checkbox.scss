@@ -9,7 +9,7 @@
 }
 
 .bq-checkbox {
-  @apply inline-flex cursor-pointer select-none space-x-xs rounded-s p-xs transition-colors duration-300;
+  @apply inline-flex cursor-pointer select-none rounded-s p-xs transition-colors duration-300 ease-in-out;
 
   // Default hover state
   &:not(.is-checked),
