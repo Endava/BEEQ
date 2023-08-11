@@ -4,34 +4,36 @@
 
 :host {
   /**
-  * @prop --bq-breadcrumb-item--background: background color
-  * @prop --bq-breadcrumb-item--font-size: font size
-
-  * @prop --bq-breadcrumb-item--border-color: border color
-  * @prop --bq-breadcrumb-item--border-style: border style
-  * @prop --bq-breadcrumb-item--border-width: border width
-  * @prop --bq-breadcrumb-item--border-radius: border radius
-
-  * @prop --bq-breadcrumb-item--box-shadow: box shadow
-
-  * @prop --bq-breadcrumb-item--paddingX: padding X axis
-  * @prop --bq-breadcrumb-item--paddingY: padding Y axis
-
-  * @prop --bq-breadcrumb-item--padding-separator: padding X axis on separator element
-  * @prop --bq-breadcrumb-item--font-size-separator: font size for separator
-
+  * @prop --bq-breadcrumb-item--background: Background color of the breadcrumb item.
+  * @prop --bq-breadcrumb-item--box-shadow: Box shadow of the breadcrumb item.
+  * @prop --bq-breadcrumb-item--border-color: Border color of the breadcrumb item.
+  * @prop --bq-breadcrumb-item--border-style: Border style of the breadcrumb item.
+  * @prop --bq-breadcrumb-item--border-width: Border width of the breadcrumb item.
+  * @prop --bq-breadcrumb-item--border-radius: Border radius of the breadcrumb item.
+  * @prop --bq-breadcrumb-item--line-height: Line height of the breadcrumb item.
+  * @prop --bq-breadcrumb-item--text-color: Text color of the breadcrumb item.
+  * @prop --bq-breadcrumb-item--text-size: Text size of the breadcrumb item.
+  * @prop --bq-breadcrumb-item--text-size-separator: Text size of the breadcrumb item separator.
+  * @prop --bq-breadcrumb-item--padding-start: Padding start of the breadcrumb item.
+  * @prop --bq-breadcrumb-item--padding-end: Padding end of the breadcrumb item.
+  * @prop --bq-breadcrumb-item--paddingY: Padding top and bottom of the breadcrumb item.
+  * @prop --bq-breadcrumb-item--padding-start-separator: Padding start of the breadcrumb item separator.
+  * @prop --bq-breadcrumb-item--padding-end-separator: Padding end of the breadcrumb item separator.
   */
 
   --bq-breadcrumb-item--background: theme('colors.transparent');
-  --bq-breadcrumb-item--font-size: theme('fontSize.s');
-  --bq-breadcrumb-item--line-height: theme('lineHeight.regular');
+  --bq-breadcrumb-item--box-shadow: none;
 
   --bq-breadcrumb-item--border-color: theme('colors.transparent');
   --bq-breadcrumb-item--border-style: none;
   --bq-breadcrumb-item--border-width: 0;
   --bq-breadcrumb-item--border-radius: theme('borderRadius.s');
 
-  --bq-breadcrumb-item--box-shadow: none;
+  --bq-breadcrumb-item--line-height: theme('lineHeight.regular');
+  --bq-breadcrumb-item--text-color: theme('colors.text.secondary');
+  --bq-breadcrumb-item--text-color-hover: theme('colors.text.brand-hover');
+  --bq-breadcrumb-item--text-size: theme('fontSize.s');
+  --bq-breadcrumb-item--text-size-separator: theme('fontSize.xs');
 
   --bq-breadcrumb-item--padding-start: theme('spacing.xs2');
   --bq-breadcrumb-item--padding-end: theme('spacing.xs2');
@@ -39,5 +41,4 @@
 
   --bq-breadcrumb-item--padding-start-separator: theme('spacing.xs2');
   --bq-breadcrumb-item--padding-end-separator: theme('spacing.xs2');
-  --bq-breadcrumb-item--font-size-separator: theme('fontSize.xs');
 }
