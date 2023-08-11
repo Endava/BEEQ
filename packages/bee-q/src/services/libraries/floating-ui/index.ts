@@ -11,15 +11,13 @@ export class FloatingUI {
   constructor(trigger: HTMLElement, panel: HTMLElement, options?: FloatingUIOptions) {
     this.trigger = trigger;
     this.panel = panel;
-    this.options = Object.assign(
-      {
-        distance: options?.distance || 20,
-        placement: options?.placement || 'bottom',
-        strategy: options?.distance || 'fixed',
-        sameWidth: options?.sameWidth || false,
-      },
-      options,
-    );
+    this.options = {
+      distance: 20,
+      placement: 'bottom',
+      strategy: 'fixed',
+      sameWidth: false,
+      ...options,
+    };
     this.init(options);
   }
 
