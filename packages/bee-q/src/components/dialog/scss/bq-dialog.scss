@@ -16,23 +16,24 @@
 
 .bq-dialog {
   @apply absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform flex-col gap-[var(--bq-dialog--content-footer-gap)] p-0;
-  @apply rounded-[var(--bq-dialog--border-radius)] bg-[var(--bq-dialog--background)] shadow-[shadow:var(--bq-dialog--box-shadow)];
+  @apply bg-[--bq-dialog--background] text-[--bq-dialog--text-color] shadow-[shadow:--bq-dialog--box-shadow];
+  @apply rounded-[var(--bq-dialog--border-radius)] border-[length:--bq-dialog--border-width] border-[color:--bq-dialog--border-color];
   @apply opacity-0 transition-opacity duration-300 ease-in-out;
   // If mobile resolution, dialog will be full width
   @apply w-[90vw];
 
-  border: var(--bq-dialog--border-width) var(--bq-dialog--border-style) var(--bq-dialog--border-color);
+  border-style: var(--bq-dialog--border-style);
 
   &.small {
-    @apply sm:w-[var(--bq-dialog--width-small)];
+    @apply sm:w-[--bq-dialog--width-small];
   }
 
   &.medium {
-    @apply sm:w-[var(--bq-dialog--width-medium)];
+    @apply sm:w-[--bq-dialog--width-medium];
   }
 
   &.large {
-    @apply sm:w-[var(--bq-dialog--width-large)];
+    @apply sm:w-[--bq-dialog--width-large];
   }
 }
 
@@ -43,7 +44,7 @@
 /* ----------------------------- Dialog backdrop ---------------------------- */
 
 .bq-dialog::backdrop {
-  @apply bg-[var(--bq-dialog--background-backdrop)] opacity-0 transition-[opacity] duration-300 ease-in-out;
+  @apply bg-[--bq-dialog--background-backdrop] opacity-0 transition-[opacity] duration-300 ease-in-out;
 }
 
 .bq-dialog[open]::backdrop {
@@ -53,13 +54,13 @@
 /* ------------------------------ Dialog header ----------------------------- */
 
 .bq-dialog--header {
-  @apply sticky top-0 flex items-center gap-m p-[var(--bq-dialog--padding)] pb-0;
+  @apply sticky top-0 flex items-center gap-m p-[--bq-dialog--padding] pb-0;
 }
 
 /* ------------------------------ Dialog footer ----------------------------- */
 
 .bq-dialog--footer {
-  @apply sticky top-full flex w-full items-center justify-end gap-xs p-[var(--bq-dialog--padding)] pt-0;
+  @apply sticky top-full flex w-full items-center justify-end gap-xs p-[--bq-dialog--padding] pt-0;
 }
 
 /* --------------------------- Dialog close button -------------------------- */
