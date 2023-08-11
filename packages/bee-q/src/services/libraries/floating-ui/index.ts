@@ -27,57 +27,59 @@ export class FloatingUI {
   }
 
   update() {
-    this.cleanUp = autoUpdate(this.trigger, this.panel, async () => {
-      const { x, y, placement, middlewareData } = await computePosition(this.trigger, this.panel, {
-        placement: this.options.placement,
-        strategy: this.options.strategy,
-        middleware: [
-          offset({ mainAxis: this.options.distance, crossAxis: this.options.skidding }),
-          flip(),
-          shift(),
-          size(
-            this.options.sameWidth && {
-              apply({ rects, elements }) {
-                Object.assign(elements.floating.style, {
-                  width: `${rects.reference.width}px`,
-                });
+    this.cleanUp = autoUpdate(this.trigger, this.panel, () => {
+      (async () => {
+        const { x, y, placement, middlewareData } = await computePosition(this.trigger, this.panel, {
+          placement: this.options.placement,
+          strategy: this.options.strategy,
+          middleware: [
+            offset({ mainAxis: this.options.distance, crossAxis: this.options.skidding }),
+            flip(),
+            shift(),
+            size(
+              this.options.sameWidth && {
+                apply({ rects, elements }) {
+                  Object.assign(elements.floating.style, {
+                    width: `${rects.reference.width}px`,
+                  });
+                },
               },
-            },
-          ),
-          arrow({ element: this.options.arrow || null }),
-          this.positionChange(),
-          hide(),
-        ],
-      });
-
-      Object.assign(this.panel.style, {
-        top: '0',
-        left: '0',
-        transform: `translate(${this.roundByDPR(x)}px,${this.roundByDPR(y)}px)`,
-      });
-
-      if (this.options.arrow) {
-        const { x: arrowX, y: arrowY } = middlewareData.arrow;
-        const staticSide = {
-          top: 'bottom',
-          right: 'left',
-          bottom: 'top',
-          left: 'right',
-        }[placement.split('-')[0]];
-
-        Object.assign(this.options.arrow.style, {
-          left: arrowX != null ? `${arrowX}px` : '',
-          top: arrowY != null ? `${arrowY}px` : '',
-          right: '',
-          bottom: '',
-          [staticSide]: '-4px',
+            ),
+            arrow({ element: this.options.arrow || null }),
+            this.positionChange(),
+            hide(),
+          ],
         });
-      }
 
-      const { referenceHidden } = middlewareData.hide;
-      Object.assign(this.panel.style, {
-        visibility: referenceHidden ? 'hidden' : 'visible',
-      });
+        Object.assign(this.panel.style, {
+          top: '0',
+          left: '0',
+          transform: `translate(${this.roundByDPR(x)}px,${this.roundByDPR(y)}px)`,
+        });
+
+        if (this.options.arrow) {
+          const { x: arrowX, y: arrowY } = middlewareData.arrow;
+          const staticSide = {
+            top: 'bottom',
+            right: 'left',
+            bottom: 'top',
+            left: 'right',
+          }[placement.split('-')[0]];
+
+          Object.assign(this.options.arrow.style, {
+            left: arrowX != null ? `${arrowX}px` : '',
+            top: arrowY != null ? `${arrowY}px` : '',
+            right: '',
+            bottom: '',
+            [staticSide]: '-4px',
+          });
+        }
+
+        const { referenceHidden } = middlewareData.hide;
+        Object.assign(this.panel.style, {
+          visibility: referenceHidden ? 'hidden' : 'visible',
+        });
+      })();
     });
   }
 
