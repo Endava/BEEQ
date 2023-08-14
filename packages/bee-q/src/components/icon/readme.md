@@ -40,6 +40,7 @@ Icons are simplified images that graphically explain the meaning of an object on
  - [bq-dialog](../dialog)
  - [bq-input](../input)
  - [bq-notification](../notification)
+ - [bq-select](../select)
  - [bq-switch](../switch)
  - [bq-toast](../toast)
 
@@ -50,6 +51,7 @@ graph TD;
   bq-dialog --> bq-icon
   bq-input --> bq-icon
   bq-notification --> bq-icon
+  bq-select --> bq-icon
   bq-switch --> bq-icon
   bq-toast --> bq-icon
   style bq-icon fill:#f9f,stroke:#333,stroke-width:4px

@@ -34,30 +34,37 @@
 
 ## Shadow Parts
 
-| Part            | Description |
-| --------------- | ----------- |
-| `"base"`        |             |
-| `"clear-btn"`   |             |
-| `"control"`     |             |
-| `"helper-text"` |             |
-| `"input"`       |             |
-| `"label"`       |             |
-| `"prefix"`      |             |
-| `"suffix"`      |             |
+| Part            | Description                                                     |
+| --------------- | --------------------------------------------------------------- |
+| `"base"`        | The component's base wrapper.                                   |
+| `"button"`      | The native HTML button used under the hood in the clear button. |
+| `"clear-btn"`   | The clear button.                                               |
+| `"control"`     | The input control wrapper.                                      |
+| `"helper-text"` | The helper text slot container.                                 |
+| `"input"`       | The native HTML input element used under the hood.              |
+| `"label"`       | The label slot container.                                       |
+| `"panel"`       | The select panel container                                      |
+| `"prefix"`      | The prefix slot container.                                      |
+| `"suffix"`      | The suffix slot container.                                      |
 
 
 ## Dependencies
 
 ### Depends on
 
+- [bq-dropdown](../dropdown)
 - [bq-button](../button)
 - [bq-icon](../icon)
+- [bq-option-list](../option-list)
 
 ### Graph
 ```mermaid
 graph TD;
+  bq-select --> bq-dropdown
   bq-select --> bq-button
   bq-select --> bq-icon
+  bq-select --> bq-option-list
+  bq-dropdown --> bq-panel
   bq-button --> bq-icon
   style bq-select fill:#f9f,stroke:#333,stroke-width:4px
 ```

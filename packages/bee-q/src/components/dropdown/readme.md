@@ -31,6 +31,10 @@
 
 ## Dependencies
 
+### Used by
+
+ - [bq-select](../select)
+
 ### Depends on
 
 - [bq-panel](../panel)
@@ -39,6 +43,7 @@
 ```mermaid
 graph TD;
   bq-dropdown --> bq-panel
+  bq-select --> bq-dropdown
   style bq-dropdown fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
