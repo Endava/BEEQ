@@ -18,7 +18,9 @@ import { TInputValidation, TInputValue } from '../input/bq-input.types';
 @Component({
   tag: 'bq-select',
   styleUrl: './scss/bq-select.scss',
-  shadow: true,
+  shadow: {
+    delegatesFocus: true,
+  },
 })
 export class BqSelect {
   // Own Properties
@@ -177,10 +179,11 @@ export class BqSelect {
     ev.stopPropagation();
   };
 
-  private handleSelect = (ev: CustomEvent<{ value: string | number | string[]; item: HTMLBqOptionElement }>) => {
+  private handleSelect = (ev: CustomEvent<{ value: TInputValue; item: HTMLBqOptionElement }>) => {
     if (this.disabled) return;
 
     this.value = ev.detail.value;
+    this.inputElem.focus();
   };
 
   private handleLabelSlotChange = () => {
