@@ -622,6 +622,10 @@ export namespace Components {
          */
         "name": string;
         /**
+          * If true, the Select panel will be visible.
+         */
+        "open"?: boolean;
+        /**
           * The Select input placeholder text value
          */
         "placeholder"?: string;
@@ -1986,10 +1990,6 @@ declare namespace LocalJSX {
          */
         "onBqBlur"?: (event: BqSelectCustomEvent<HTMLBqSelectElement>) => void;
         /**
-          * Callback handler emitted when the selected value has changed and the Select input loses focus
-         */
-        "onBqChange"?: (event: BqSelectCustomEvent<{ value: string | number | string[]; el: HTMLBqSelectElement }>) => void;
-        /**
           * Callback handler emitted when the selected value has been cleared
          */
         "onBqClear"?: (event: BqSelectCustomEvent<HTMLBqSelectElement>) => void;
@@ -1997,6 +1997,14 @@ declare namespace LocalJSX {
           * Callback handler emitted when the Select input has received focus
          */
         "onBqFocus"?: (event: BqSelectCustomEvent<HTMLBqSelectElement>) => void;
+        /**
+          * Callback handler emitted when the selected value has changed
+         */
+        "onBqSelect"?: (event: BqSelectCustomEvent<{ value: string | number | string[]; item: HTMLBqOptionElement }>) => void;
+        /**
+          * If true, the Select panel will be visible.
+         */
+        "open"?: boolean;
         /**
           * The Select input placeholder text value
          */

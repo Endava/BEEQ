@@ -15,6 +15,7 @@
 | `disabled`          | `disabled`           | Indicates whether the Select input is disabled or not. If `true`, the Select is disabled and cannot be interacted with. | `boolean`                                     | `false`         |
 | `form`              | `form`               | The ID of the form that the Select input belongs to.                                                                    | `string`                                      | `undefined`     |
 | `name` _(required)_ | `name`               | The Select input name.                                                                                                  | `string`                                      | `undefined`     |
+| `open`              | `open`               | If true, the Select panel will be visible.                                                                              | `boolean`                                     | `false`         |
 | `placeholder`       | `placeholder`        | The Select input placeholder text value                                                                                 | `string`                                      | `undefined`     |
 | `readonly`          | `readonly`           | If true, the Select input cannot be modified.                                                                           | `boolean`                                     | `undefined`     |
 | `required`          | `required`           | Indicates whether or not the Select input is required to be filled out before submitting the form.                      | `boolean`                                     | `undefined`     |
@@ -24,12 +25,12 @@
 
 ## Events
 
-| Event      | Description                                                                                   | Type                                                                             |
-| ---------- | --------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `bqBlur`   | Callback handler emitted when the Select input loses focus                                    | `CustomEvent<HTMLBqSelectElement>`                                               |
-| `bqChange` | Callback handler emitted when the selected value has changed and the Select input loses focus | `CustomEvent<{ value: string \| number \| string[]; el: HTMLBqSelectElement; }>` |
-| `bqClear`  | Callback handler emitted when the selected value has been cleared                             | `CustomEvent<HTMLBqSelectElement>`                                               |
-| `bqFocus`  | Callback handler emitted when the Select input has received focus                             | `CustomEvent<HTMLBqSelectElement>`                                               |
+| Event      | Description                                                       | Type                                                                               |
+| ---------- | ----------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `bqBlur`   | Callback handler emitted when the Select input loses focus        | `CustomEvent<HTMLBqSelectElement>`                                                 |
+| `bqClear`  | Callback handler emitted when the selected value has been cleared | `CustomEvent<HTMLBqSelectElement>`                                                 |
+| `bqFocus`  | Callback handler emitted when the Select input has received focus | `CustomEvent<HTMLBqSelectElement>`                                                 |
+| `bqSelect` | Callback handler emitted when the selected value has changed      | `CustomEvent<{ value: string \| number \| string[]; item: HTMLBqOptionElement; }>` |
 
 
 ## Shadow Parts

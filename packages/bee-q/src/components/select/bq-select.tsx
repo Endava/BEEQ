@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
-import { hasSlotContent, isDefined, isHTMLElement } from '../../shared/utils';
+import { getTextContent, hasSlotContent, isDefined } from '../../shared/utils';
 import { TInputValidation, TInputValue } from '../input/bq-input.types';
 
 /**
@@ -30,7 +30,7 @@ export class BqSelect {
   private prefixElem?: HTMLElement;
   private suffixElem?: HTMLElement;
 
-  private fallbackInputId = 'input';
+  private fallbackInputId = 'select';
 
   // Reference to host HTML element
   // ===================================
@@ -41,6 +41,7 @@ export class BqSelect {
   // Inlined decorator, alphabetical order
   // =======================================
 
+  @State() displayValue?: string;
   @State() hasHelperText = false;
   @State() hasLabel = false;
   @State() hasPrefix = false;
@@ -71,6 +72,9 @@ export class BqSelect {
   /** The Select input name. */
   @Prop({ reflect: true }) name!: string;
 
+  /** If true, the Select panel will be visible. */
+  @Prop({ reflect: true }) open?: boolean = false;
+
   /** The Select input placeholder text value */
   @Prop({ reflect: true }) placeholder?: string;
 
@@ -100,6 +104,8 @@ export class BqSelect {
 
   @Watch('value')
   handleValueChange() {
+    this.syncItemsFromValue();
+
     if (Array.isArray(this.value)) {
       this.hasValue = this.value.some((val) => val.length > 0);
       return;
@@ -115,14 +121,14 @@ export class BqSelect {
   /** Callback handler emitted when the Select input loses focus */
   @Event() bqBlur!: EventEmitter<HTMLBqSelectElement>;
 
-  /** Callback handler emitted when the selected value has changed and the Select input loses focus */
-  @Event() bqChange!: EventEmitter<{ value: string | number | string[]; el: HTMLBqSelectElement }>;
-
   /** Callback handler emitted when the selected value has been cleared */
   @Event() bqClear!: EventEmitter<HTMLBqSelectElement>;
 
   /** Callback handler emitted when the Select input has received focus */
   @Event() bqFocus!: EventEmitter<HTMLBqSelectElement>;
+
+  /** Callback handler emitted when the selected value has changed */
+  @Event() bqSelect!: EventEmitter<{ value: string | number | string[]; item: HTMLBqOptionElement }>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -159,26 +165,22 @@ export class BqSelect {
     this.bqFocus.emit(this.el);
   };
 
-  private handleChange = (ev: Event) => {
-    if (this.disabled) return;
-
-    if (!isHTMLElement(ev.target, 'input')) return;
-    this.value = ev.target.value;
-
-    this.bqChange.emit({ value: this.value, el: this.el });
-  };
-
   private handleClearClick = (ev: CustomEvent) => {
     if (this.disabled) return;
 
-    this.inputElem.value = '';
-    this.value = this.inputElem.value;
+    this.value = '';
+    this.displayValue = '';
 
     this.bqClear.emit(this.el);
-    this.bqChange.emit({ value: this.value, el: this.el });
     this.inputElem.focus();
 
     ev.stopPropagation();
+  };
+
+  private handleSelect = (ev: CustomEvent<{ value: string | number | string[]; item: HTMLBqOptionElement }>) => {
+    if (this.disabled) return;
+
+    this.value = ev.detail.value;
   };
 
   private handleLabelSlotChange = () => {
@@ -196,6 +198,28 @@ export class BqSelect {
   private handleHelperTextSlotChange = () => {
     this.hasHelperText = hasSlotContent(this.helperTextElem);
   };
+
+  private syncItemsFromValue = () => {
+    const items = this.options;
+    if (!items.length) return;
+
+    // Sync selected state
+    this.options.forEach((item: HTMLBqOptionElement) => (item.selected = item.value === this.value));
+    // Sync display label
+    const checkedItem = items.filter((item) => item.value === this.value)[0];
+    this.displayValue = checkedItem ? this.getOptionLabel(checkedItem) : '';
+  };
+
+  private getOptionLabel = (item: HTMLBqOptionElement) => {
+    const slot = item.shadowRoot.querySelector('slot:not([name])');
+    if (!slot) return;
+
+    return getTextContent(slot as HTMLSlotElement);
+  };
+
+  private get options() {
+    return Array.from(this.el.querySelectorAll('bq-option'));
+  }
 
   // render() function
   // Always the last one in the class.
@@ -237,8 +261,13 @@ export class BqSelect {
             <input
               id={this.name || this.fallbackInputId}
               class="bq-select--control__input"
-              aria-disabled={this.disabled ? 'true' : 'false'}
+              autoComplete="off"
+              autoCapitalize="off"
               autoFocus={this.autofocus}
+              aria-disabled={this.disabled ? 'true' : 'false'}
+              aria-controls="listbox"
+              aria-expanded={this.open}
+              aria-haspopup="listbox"
               disabled={this.disabled}
               form={this.form}
               name={this.name}
@@ -246,12 +275,12 @@ export class BqSelect {
               ref={(inputElem) => (this.inputElem = inputElem)}
               readOnly={true}
               required={this.required}
+              spellcheck={false}
               type="text"
-              value={this.value}
+              value={this.displayValue}
               part="input"
               // Events
               onBlur={this.handleBlur}
-              onChange={this.handleChange}
               onFocus={this.handleFocus}
             />
             {/* Clear Button */}
@@ -283,7 +312,7 @@ export class BqSelect {
               </slot>
             </span>
           </div>
-          <bq-option-list>
+          <bq-option-list aria-expanded={this.open} role="listbox" onBqSelect={this.handleSelect} tabIndex={-1}>
             <slot />
           </bq-option-list>
         </bq-dropdown>
