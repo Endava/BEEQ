@@ -3,6 +3,18 @@ import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '
 import { hasSlotContent, isDefined, isHTMLElement } from '../../shared/utils';
 import { TInputValidation, TInputValue } from '../input/bq-input.types';
 
+/**
+ * @part base - The component's base wrapper.
+ * @part button - The native HTML button used under the hood in the clear button.
+ * @part clear-btn - The clear button.
+ * @part control - The input control wrapper.
+ * @part helper-text - The helper text slot container.
+ * @part input - The native HTML input element used under the hood.
+ * @part label - The label slot container.
+ * @part panel - The select panel container
+ * @part prefix - The prefix slot container.
+ * @part suffix - The suffix slot container.
+ */
 @Component({
   tag: 'bq-select',
   styleUrl: './scss/bq-select.scss',
@@ -201,73 +213,80 @@ export class BqSelect {
         >
           <slot name="label" onSlotchange={this.handleLabelSlotChange} />
         </label>
-        {/* Input control group */}
-        <div
-          class={{
-            'bq-select--control': true,
-            [`validation-${this.validationStatus}`]: true,
-            disabled: this.disabled,
-          }}
-          part="control"
-        >
-          {/* Prefix */}
-          <span
-            class={{ 'bq-select--control__prefix': true, hidden: !this.hasPrefix }}
-            ref={(spanElem) => (this.prefixElem = spanElem)}
-            part="prefix"
+        {/* Select dropdown */}
+        <bq-dropdown class="bq-select__dropdown w-full" sameWidth exportparts="panel">
+          {/* Input control group */}
+          <div
+            class={{
+              'bq-select--control': true,
+              [`validation-${this.validationStatus}`]: true,
+              disabled: this.disabled,
+            }}
+            part="control"
+            slot="trigger"
           >
-            <slot name="prefix" onSlotchange={this.handlePrefixSlotChange} />
-          </span>
-          {/* HTML Input */}
-          <input
-            id={this.name || this.fallbackInputId}
-            class="bq-select--control__input"
-            aria-disabled={this.disabled ? 'true' : 'false'}
-            autoFocus={this.autofocus}
-            disabled={this.disabled}
-            form={this.form}
-            name={this.name}
-            placeholder={this.placeholder}
-            ref={(inputElem) => (this.inputElem = inputElem)}
-            readOnly={true}
-            required={this.required}
-            type="text"
-            value={this.value}
-            part="input"
-            // Events
-            onBlur={this.handleBlur}
-            onChange={this.handleChange}
-            onFocus={this.handleFocus}
-          />
-          {/* Clear Button */}
-          {this.hasValue && !this.disabled && !this.disableClear && (
-            // The clear button will be visible as long as the input has a value
-            // and the parent group is hovered or has focus-within
-            <bq-button
-              class="bq-select--control__clear ms-[--bq-select--gap] hidden"
-              appearance="text"
-              aria-label={this.clearButtonLabel}
-              size="small"
-              onBqClick={this.handleClearClick}
-              part="clear-btn"
-              exportparts="button"
+            {/* Prefix */}
+            <span
+              class={{ 'bq-select--control__prefix': true, hidden: !this.hasPrefix }}
+              ref={(spanElem) => (this.prefixElem = spanElem)}
+              part="prefix"
             >
-              <slot name="clear-icon">
-                <bq-icon name="x-circle" class="flex" />
+              <slot name="prefix" onSlotchange={this.handlePrefixSlotChange} />
+            </span>
+            {/* HTML Input */}
+            <input
+              id={this.name || this.fallbackInputId}
+              class="bq-select--control__input"
+              aria-disabled={this.disabled ? 'true' : 'false'}
+              autoFocus={this.autofocus}
+              disabled={this.disabled}
+              form={this.form}
+              name={this.name}
+              placeholder={this.placeholder}
+              ref={(inputElem) => (this.inputElem = inputElem)}
+              readOnly={true}
+              required={this.required}
+              type="text"
+              value={this.value}
+              part="input"
+              // Events
+              onBlur={this.handleBlur}
+              onChange={this.handleChange}
+              onFocus={this.handleFocus}
+            />
+            {/* Clear Button */}
+            {this.hasValue && !this.disabled && !this.disableClear && (
+              // The clear button will be visible as long as the input has a value
+              // and the parent group is hovered or has focus-within
+              <bq-button
+                class="bq-select--control__clear ms-[--bq-select--gap] hidden"
+                appearance="text"
+                aria-label={this.clearButtonLabel}
+                size="small"
+                onBqClick={this.handleClearClick}
+                part="clear-btn"
+                exportparts="button"
+              >
+                <slot name="clear-icon">
+                  <bq-icon name="x-circle" class="flex" />
+                </slot>
+              </bq-button>
+            )}
+            {/* Suffix */}
+            <span
+              class={{ 'bq-select--control__suffix': true }}
+              ref={(spanElem) => (this.suffixElem = spanElem)}
+              part="suffix"
+            >
+              <slot name="suffix" onSlotchange={this.handleSuffixSlotChange}>
+                <bq-icon name="caret-down" class="flex" />
               </slot>
-            </bq-button>
-          )}
-          {/* Suffix */}
-          <span
-            class={{ 'bq-select--control__suffix': true }}
-            ref={(spanElem) => (this.suffixElem = spanElem)}
-            part="suffix"
-          >
-            <slot name="suffix" onSlotchange={this.handleSuffixSlotChange}>
-              <bq-icon name="caret-down" class="flex" />
-            </slot>
-          </span>
-        </div>
+            </span>
+          </div>
+          <bq-option-list>
+            <slot />
+          </bq-option-list>
+        </bq-dropdown>
         {/* Helper text */}
         <div
           class={{ [`bq-select--helper-text validation-${this.validationStatus}`]: true, hidden: !this.hasHelperText }}
