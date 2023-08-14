@@ -596,6 +596,53 @@ export namespace Components {
          */
         "value"?: string;
     }
+    interface BqSelect {
+        /**
+          * If true, the Select input will be focused on component render
+         */
+        "autofocus": boolean;
+        /**
+          * The clear button aria label
+         */
+        "clearButtonLabel"?: string;
+        /**
+          * If true, the clear button won't be displayed
+         */
+        "disableClear"?: boolean;
+        /**
+          * Indicates whether the Select input is disabled or not. If `true`, the Select is disabled and cannot be interacted with.
+         */
+        "disabled"?: boolean;
+        /**
+          * The ID of the form that the Select input belongs to.
+         */
+        "form"?: string;
+        /**
+          * The Select input name.
+         */
+        "name": string;
+        /**
+          * The Select input placeholder text value
+         */
+        "placeholder"?: string;
+        /**
+          * If true, the Select input cannot be modified.
+         */
+        "readonly"?: boolean;
+        /**
+          * Indicates whether or not the Select input is required to be filled out before submitting the form.
+         */
+        "required"?: boolean;
+        /**
+          * The validation status of the Select input.
+          * @remarks This property is used to indicate the validation status of the select input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
+         */
+        "validationStatus": TInputValidation;
+        /**
+          * The select input value, it can be used to reset the field to a previous value
+         */
+        "value": TInputValue;
+    }
     interface BqSideMenu {
         /**
           * It sets a predefined appearance of the side menu
@@ -996,6 +1043,10 @@ export interface BqRadioGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqRadioGroupElement;
 }
+export interface BqSelectCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqSelectElement;
+}
 export interface BqSideMenuCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqSideMenuElement;
@@ -1146,6 +1197,12 @@ declare global {
         prototype: HTMLBqRadioGroupElement;
         new (): HTMLBqRadioGroupElement;
     };
+    interface HTMLBqSelectElement extends Components.BqSelect, HTMLStencilElement {
+    }
+    var HTMLBqSelectElement: {
+        prototype: HTMLBqSelectElement;
+        new (): HTMLBqSelectElement;
+    };
     interface HTMLBqSideMenuElement extends Components.BqSideMenu, HTMLStencilElement {
     }
     var HTMLBqSideMenuElement: {
@@ -1238,6 +1295,7 @@ declare global {
         "bq-panel": HTMLBqPanelElement;
         "bq-radio": HTMLBqRadioElement;
         "bq-radio-group": HTMLBqRadioGroupElement;
+        "bq-select": HTMLBqSelectElement;
         "bq-side-menu": HTMLBqSideMenuElement;
         "bq-side-menu-item": HTMLBqSideMenuItemElement;
         "bq-slider": HTMLBqSliderElement;
@@ -1898,6 +1956,69 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface BqSelect {
+        /**
+          * If true, the Select input will be focused on component render
+         */
+        "autofocus"?: boolean;
+        /**
+          * The clear button aria label
+         */
+        "clearButtonLabel"?: string;
+        /**
+          * If true, the clear button won't be displayed
+         */
+        "disableClear"?: boolean;
+        /**
+          * Indicates whether the Select input is disabled or not. If `true`, the Select is disabled and cannot be interacted with.
+         */
+        "disabled"?: boolean;
+        /**
+          * The ID of the form that the Select input belongs to.
+         */
+        "form"?: string;
+        /**
+          * The Select input name.
+         */
+        "name": string;
+        /**
+          * Callback handler emitted when the Select input loses focus
+         */
+        "onBqBlur"?: (event: BqSelectCustomEvent<HTMLBqSelectElement>) => void;
+        /**
+          * Callback handler emitted when the selected value has changed and the Select input loses focus
+         */
+        "onBqChange"?: (event: BqSelectCustomEvent<{ value: string | number | string[]; el: HTMLBqSelectElement }>) => void;
+        /**
+          * Callback handler emitted when the selected value has been cleared
+         */
+        "onBqClear"?: (event: BqSelectCustomEvent<HTMLBqSelectElement>) => void;
+        /**
+          * Callback handler emitted when the Select input has received focus
+         */
+        "onBqFocus"?: (event: BqSelectCustomEvent<HTMLBqSelectElement>) => void;
+        /**
+          * The Select input placeholder text value
+         */
+        "placeholder"?: string;
+        /**
+          * If true, the Select input cannot be modified.
+         */
+        "readonly"?: boolean;
+        /**
+          * Indicates whether or not the Select input is required to be filled out before submitting the form.
+         */
+        "required"?: boolean;
+        /**
+          * The validation status of the Select input.
+          * @remarks This property is used to indicate the validation status of the select input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
+         */
+        "validationStatus"?: TInputValidation;
+        /**
+          * The select input value, it can be used to reset the field to a previous value
+         */
+        "value"?: TInputValue;
+    }
     interface BqSideMenu {
         /**
           * It sets a predefined appearance of the side menu
@@ -2308,6 +2429,7 @@ declare namespace LocalJSX {
         "bq-panel": BqPanel;
         "bq-radio": BqRadio;
         "bq-radio-group": BqRadioGroup;
+        "bq-select": BqSelect;
         "bq-side-menu": BqSideMenu;
         "bq-side-menu-item": BqSideMenuItem;
         "bq-slider": BqSlider;
@@ -2352,6 +2474,7 @@ declare module "@stencil/core" {
             "bq-panel": LocalJSX.BqPanel & JSXBase.HTMLAttributes<HTMLBqPanelElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
+            "bq-select": LocalJSX.BqSelect & JSXBase.HTMLAttributes<HTMLBqSelectElement>;
             "bq-side-menu": LocalJSX.BqSideMenu & JSXBase.HTMLAttributes<HTMLBqSideMenuElement>;
             "bq-side-menu-item": LocalJSX.BqSideMenuItem & JSXBase.HTMLAttributes<HTMLBqSideMenuItemElement>;
             "bq-slider": LocalJSX.BqSlider & JSXBase.HTMLAttributes<HTMLBqSliderElement>;

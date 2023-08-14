@@ -1,0 +1,59 @@
+/* -------------------------------------------------------------------------- */
+/*                          Select custom properties                          */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  /**
+   * @prop --bq-select--background-color - Select background color
+   * @prop --bq-select--border-color - Select border color
+   * @prop --bq-select--border-color-hover - Select border color on hover
+   * @prop --bq-select--border-color-focus - Select border color on focus
+   * @prop --bq-select--border-color-disabled - Select border color when disabled
+   * @prop --bq-select--border-radius - Select border radius
+   * @prop --bq-select--border-width - Select border width
+   * @prop --bq-select--border-style - Select border style
+   * @prop --bq-select--gap - Gap between Select content and prefix/suffix
+   * @prop --bq-select--helper-margin-top - Helper text margin top
+   * @prop --bq-select--helper-text-color - Helper text color
+   * @prop --bq-select--helper-text-size - Helper text size
+   * @prop --bq-select--icon-size - Icon size to use in prefix/suffix and clear button
+   * @prop --bq-select--label-margin-bottom - Select label margin bottom
+   * @prop --bq-select--label-text-color - Select label text color
+   * @prop --bq-select--label-text-size - Select label text size
+   * @prop --bq-select--pading-start - Select padding start
+   * @prop --bq-select--pading-end - Select padding end
+   * @prop --bq-select--paddingY - Select padding top and bottom
+   * @prop --bq-select--text-color - Select text color
+   * @prop --bq-select--text-size - Select text size
+   * @prop --bq-select--text-placeholder-color - Select placeholder text color
+   */
+  --bq-select--background-color: theme('colors.ui.primary');
+
+  --bq-select--border-color: theme('colors.stroke.tertiary');
+  --bq-select--border-color-hover: theme('colors.stroke.brand-hover');
+  --bq-select--border-color-focus: theme('colors.stroke.brand');
+  --bq-select--border-color-disabled: theme('colors.stroke.tertiary-disabled');
+  --bq-select--border-radius: theme('borderRadius.s');
+  --bq-select--border-width: 1px;
+  --bq-select--border-style: solid;
+
+  --bq-select--gap: theme('spacing.xs');
+
+  --bq-select--helper-margin-top: theme('spacing.xs');
+  --bq-select--helper-text-size: theme('fontSize.s');
+  --bq-select--helper-text-color: theme('colors.text.primary');
+
+  --bq-select--icon-size: 24px;
+
+  --bq-select--label-margin-bottom: theme('spacing.xs');
+  --bq-select--label-text-size: theme('fontSize.s');
+  --bq-select--label-text-color: theme('colors.text.primary');
+
+  --bq-select--pading-start: theme('spacing.m');
+  --bq-select--pading-end: theme('spacing.m');
+  --bq-select--paddingY: theme('spacing.s');
+
+  --bq-select--text-color: theme('colors.text.primary');
+  --bq-select--text-size: theme('fontSize.m');
+  --bq-select--text-placeholder-color: theme('colors.text.secondary-disabled');
+}
