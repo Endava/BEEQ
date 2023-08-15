@@ -52,10 +52,10 @@ export class BqOption {
   // ==============================================
 
   /** Handler to be called when item loses focus */
-  @Event() bqBlur: EventEmitter<HTMLBqOptionElement>;
+  @Event({ bubbles: false }) bqBlur: EventEmitter<HTMLBqOptionElement>;
 
   /** Handler to be called when item is focused */
-  @Event() bqFocus: EventEmitter<HTMLBqOptionElement>;
+  @Event({ bubbles: false }) bqFocus: EventEmitter<HTMLBqOptionElement>;
 
   /** Handler to be called when item is clicked */
   @Event() bqClick: EventEmitter<HTMLBqOptionElement>;
