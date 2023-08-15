@@ -2,6 +2,8 @@ import { h, Component, Element, Prop, Listen } from '@stencil/core';
 
 import { FloatingUIPlacement } from '../../services/interfaces';
 
+let id = 0;
+
 /**
  * @part base - The component's internal wrapper.
  * @part dropdown - The `<bq-panel>` element used under the hood to display the dropdown panel
@@ -16,6 +18,8 @@ import { FloatingUIPlacement } from '../../services/interfaces';
 export class BqDropdown {
   // Own Properties
   // ====================
+
+  private dropdownPanelId = `bq-dropdown-panel-${++id}`;
 
   // Reference to host HTML element
   // ===================================
@@ -32,6 +36,9 @@ export class BqDropdown {
   /** Represents the distance (gutter or margin) between the panel and the trigger element. */
   @Prop({ reflect: true }) distance?: number = 4;
 
+  /** If true, the panel will remain open after a selection is made. */
+  @Prop({ reflect: true }) keepOpenOnSelect?: boolean = false;
+
   /** Position of the panel */
   @Prop({ reflect: true }) placement?: FloatingUIPlacement = 'bottom-start';
 
@@ -40,9 +47,6 @@ export class BqDropdown {
 
   /** When set, it will override the height of the dropdown panel */
   @Prop({ reflect: true }) panelHeight?: string;
-
-  /** If true, the panel will remain open after a selection is made. */
-  @Prop({ reflect: true }) keepOpenOnSelect?: boolean = false;
 
   /** Whether the panel should have the same width as the trigger element */
   @Prop({ reflect: true }) sameWidth?: boolean = false;
@@ -133,7 +137,7 @@ export class BqDropdown {
           class="bq-dropdown__trigger block"
           onClick={this.togglePanel}
           aria-haspopup="true"
-          aria-expanded={this.open ? 'true' : 'false'}
+          aria-controls={this.dropdownPanelId}
           part="trigger"
         >
           <slot name="trigger" />
@@ -141,6 +145,7 @@ export class BqDropdown {
         {/* PANEL */}
         <bq-panel
           style={style}
+          id={this.dropdownPanelId}
           class="bq-dropdown__panel"
           distance={this.distance}
           placement={this.placement}
@@ -148,8 +153,7 @@ export class BqDropdown {
           sameWidth={this.sameWidth}
           skidding={this.skidding}
           strategy={this.strategy}
-          aria-labelledby="dropdown"
-          role="region"
+          role="group"
           part="dropdown"
           exportparts="panel"
         >
