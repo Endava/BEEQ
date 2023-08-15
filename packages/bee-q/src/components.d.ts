@@ -290,6 +290,10 @@ export namespace Components {
     }
     interface BqDropdown {
         /**
+          * If true, the dropdown panel will be visible and won't be shown.
+         */
+        "disabled"?: boolean;
+        /**
           * Represents the distance (gutter or margin) between the panel and the trigger element.
          */
         "distance"?: number;
@@ -614,9 +618,17 @@ export namespace Components {
          */
         "disabled"?: boolean;
         /**
+          * Represents the distance (gutter or margin) between the Select panel and the input element.
+         */
+        "distance"?: number;
+        /**
           * The ID of the form that the Select input belongs to.
          */
         "form"?: string;
+        /**
+          * If true, the Select panel will remain open after a selection is made.
+         */
+        "keepOpenOnSelect"?: boolean;
         /**
           * The Select input name.
          */
@@ -626,9 +638,17 @@ export namespace Components {
          */
         "open"?: boolean;
         /**
+          * When set, it will override the height of the Select panel.
+         */
+        "panelHeight"?: string;
+        /**
           * The Select input placeholder text value
          */
         "placeholder"?: string;
+        /**
+          * Position of the Select panel
+         */
+        "placement"?: FloatingUIPlacement;
         /**
           * If true, the Select input cannot be modified.
          */
@@ -637,6 +657,18 @@ export namespace Components {
           * Indicates whether or not the Select input is required to be filled out before submitting the form.
          */
         "required"?: boolean;
+        /**
+          * Whether the panel should have the Select same width as the input element
+         */
+        "sameWidth"?: boolean;
+        /**
+          * Represents the skidding between the Select panel and the input element.
+         */
+        "skidding"?: number;
+        /**
+          * Defines the strategy to position the Select panel
+         */
+        "strategy"?: 'fixed' | 'absolute';
         /**
           * The validation status of the Select input.
           * @remarks This property is used to indicate the validation status of the select input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
@@ -1610,6 +1642,10 @@ declare namespace LocalJSX {
     }
     interface BqDropdown {
         /**
+          * If true, the dropdown panel will be visible and won't be shown.
+         */
+        "disabled"?: boolean;
+        /**
           * Represents the distance (gutter or margin) between the panel and the trigger element.
          */
         "distance"?: number;
@@ -1986,9 +2022,17 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * Represents the distance (gutter or margin) between the Select panel and the input element.
+         */
+        "distance"?: number;
+        /**
           * The ID of the form that the Select input belongs to.
          */
         "form"?: string;
+        /**
+          * If true, the Select panel will remain open after a selection is made.
+         */
+        "keepOpenOnSelect"?: boolean;
         /**
           * The Select input name.
          */
@@ -2014,9 +2058,17 @@ declare namespace LocalJSX {
          */
         "open"?: boolean;
         /**
+          * When set, it will override the height of the Select panel.
+         */
+        "panelHeight"?: string;
+        /**
           * The Select input placeholder text value
          */
         "placeholder"?: string;
+        /**
+          * Position of the Select panel
+         */
+        "placement"?: FloatingUIPlacement;
         /**
           * If true, the Select input cannot be modified.
          */
@@ -2025,6 +2077,18 @@ declare namespace LocalJSX {
           * Indicates whether or not the Select input is required to be filled out before submitting the form.
          */
         "required"?: boolean;
+        /**
+          * Whether the panel should have the Select same width as the input element
+         */
+        "sameWidth"?: boolean;
+        /**
+          * Represents the skidding between the Select panel and the input element.
+         */
+        "skidding"?: number;
+        /**
+          * Defines the strategy to position the Select panel
+         */
+        "strategy"?: 'fixed' | 'absolute';
         /**
           * The validation status of the Select input.
           * @remarks This property is used to indicate the validation status of the select input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.

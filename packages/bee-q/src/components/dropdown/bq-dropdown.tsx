@@ -20,6 +20,7 @@ export class BqDropdown {
   // ====================
 
   private dropdownPanelId = `bq-dropdown-panel-${++id}`;
+  private triggerElem: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -32,6 +33,9 @@ export class BqDropdown {
 
   // Public Property API
   // ========================
+
+  /** If true, the dropdown panel will be visible and won't be shown. */
+  @Prop({ reflect: true }) disabled?: boolean = false;
 
   /** Represents the distance (gutter or margin) between the panel and the trigger element. */
   @Prop({ reflect: true }) distance?: number = 4;
@@ -75,6 +79,10 @@ export class BqDropdown {
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
+
+  componentDidLoad() {
+    this.triggerElem = this.el.querySelector('[slot="trigger"]');
+  }
 
   // Listeners
   // ==============
@@ -126,6 +134,9 @@ export class BqDropdown {
   // =======================================================
 
   private togglePanel = (): void => {
+    // Don't toggle the panel if the component is disabled or the trigger element is disabled
+    if (this.disabled || this.triggerElem?.hasAttribute('disabled')) return;
+
     this.open = !this.open;
   };
 
@@ -140,12 +151,12 @@ export class BqDropdown {
 
     return (
       <div class="bq-dropdown" part="base">
-        {/* TRIGGER ELEMENT */}
+        {/* TRIGGER CONTAINER */}
         <div
           class="bq-dropdown__trigger block"
-          onClick={this.togglePanel}
-          aria-haspopup="true"
           aria-controls={this.dropdownPanelId}
+          aria-haspopup="true"
+          onClick={this.togglePanel}
           part="trigger"
         >
           <slot name="trigger" />
