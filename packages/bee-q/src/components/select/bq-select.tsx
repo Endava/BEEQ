@@ -1,5 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Prop, State, Watch } from '@stencil/core';
 
+import { FloatingUIPlacement } from '../../services/interfaces';
 import { getTextContent, hasSlotContent, isDefined } from '../../shared/utils';
 import { TInputValidation, TInputValue } from '../input/bq-input.types';
 
@@ -68,8 +69,14 @@ export class BqSelect {
   /** If true, the clear button won't be displayed */
   @Prop({ reflect: true }) disableClear? = false;
 
+  /** Represents the distance (gutter or margin) between the Select panel and the input element. */
+  @Prop({ reflect: true }) distance?: number = 8;
+
   /** The ID of the form that the Select input belongs to. */
   @Prop({ reflect: true }) form?: string;
+
+  /** If true, the Select panel will remain open after a selection is made. */
+  @Prop({ reflect: true }) keepOpenOnSelect?: boolean = false;
 
   /** The Select input name. */
   @Prop({ reflect: true }) name!: string;
@@ -77,14 +84,29 @@ export class BqSelect {
   /** If true, the Select panel will be visible. */
   @Prop({ reflect: true }) open?: boolean = false;
 
+  /** When set, it will override the height of the Select panel. */
+  @Prop({ reflect: true }) panelHeight?: string;
+
   /** The Select input placeholder text value */
   @Prop({ reflect: true }) placeholder?: string;
+
+  /** Position of the Select panel */
+  @Prop({ reflect: true }) placement?: FloatingUIPlacement = 'bottom';
 
   /** If true, the Select input cannot be modified. */
   @Prop({ reflect: true }) readonly?: boolean;
 
   /** Indicates whether or not the Select input is required to be filled out before submitting the form. */
   @Prop({ reflect: true }) required?: boolean;
+
+  /** Whether the panel should have the Select same width as the input element */
+  @Prop({ reflect: true }) sameWidth?: boolean = true;
+
+  /**  Represents the skidding between the Select panel and the input element. */
+  @Prop({ reflect: true }) skidding?: number = 0;
+
+  /** Defines the strategy to position the Select panel */
+  @Prop({ reflect: true }) strategy?: 'fixed' | 'absolute' = 'fixed';
 
   /**
    * The validation status of the Select input.
@@ -251,7 +273,19 @@ export class BqSelect {
           <slot name="label" onSlotchange={this.handleLabelSlotChange} />
         </label>
         {/* Select dropdown */}
-        <bq-dropdown class="bq-select__dropdown w-full" open={this.open} sameWidth exportparts="panel">
+        <bq-dropdown
+          class="bq-select__dropdown w-full"
+          disabled={this.disabled}
+          distance={this.distance}
+          keepOpenOnSelect={this.keepOpenOnSelect}
+          open={this.open}
+          panelHeight={this.panelHeight}
+          placement={this.placement}
+          sameWidth={this.sameWidth}
+          skidding={this.skidding}
+          strategy={this.strategy}
+          exportparts="panel"
+        >
           {/* Input control group */}
           <div
             class={{

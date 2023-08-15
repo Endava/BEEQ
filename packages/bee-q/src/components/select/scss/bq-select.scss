@@ -141,7 +141,7 @@
 }
 
 .bq-select--control__suffix {
-  @apply ms-[--bq-select--gap];
+  @apply ms-[--bq-select--gap] transition-transform duration-300 ease-in-out;
 }
 
 /* -------------------------------------------------------------------------- */
