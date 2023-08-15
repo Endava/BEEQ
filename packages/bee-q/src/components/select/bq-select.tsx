@@ -229,10 +229,13 @@ export class BqSelect {
   // ===================================
 
   render() {
+    const labelId = `bq-select__label-${this.name || this.fallbackInputId}`;
+
     return (
       <div class="bq-select" part="base">
         {/* Label */}
         <label
+          id={labelId}
           class={{ 'bq-select--label': true, hidden: !this.hasLabel }}
           htmlFor={this.name || this.fallbackInputId}
           ref={(labelElem) => (this.labelElem = labelElem)}
@@ -241,7 +244,7 @@ export class BqSelect {
           <slot name="label" onSlotchange={this.handleLabelSlotChange} />
         </label>
         {/* Select dropdown */}
-        <bq-dropdown class="bq-select__dropdown w-full" sameWidth exportparts="panel">
+        <bq-dropdown class="bq-select__dropdown w-full" open={this.open} sameWidth exportparts="panel">
           {/* Input control group */}
           <div
             class={{
@@ -268,7 +271,7 @@ export class BqSelect {
               autoCapitalize="off"
               autoFocus={this.autofocus}
               aria-disabled={this.disabled ? 'true' : 'false'}
-              aria-controls="listbox"
+              aria-controls={`bq-options-${this.name}`}
               aria-expanded={this.open}
               aria-haspopup="listbox"
               disabled={this.disabled}
@@ -315,7 +318,7 @@ export class BqSelect {
               </slot>
             </span>
           </div>
-          <bq-option-list aria-expanded={this.open} role="listbox" onBqSelect={this.handleSelect} tabIndex={-1}>
+          <bq-option-list id={`bq-options-${this.name}`} onBqSelect={this.handleSelect}>
             <slot />
           </bq-option-list>
         </bq-dropdown>
