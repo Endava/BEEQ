@@ -1,4 +1,4 @@
-import { h, Component, Element, Prop, Listen } from '@stencil/core';
+import { h, Component, Element, Prop, Listen, Event, EventEmitter, Watch } from '@stencil/core';
 
 import { FloatingUIPlacement } from '../../services/interfaces';
 
@@ -60,9 +60,17 @@ export class BqDropdown {
   // Prop lifecycle events
   // =======================
 
+  @Watch('open')
+  onOpenChange() {
+    this.bqOpen.emit({ open: this.open });
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
+
+  /** Callback handler to be called when the dropdown panel is opened or closed. */
+  @Event() bqOpen: EventEmitter<{ open: boolean }>;
 
   // Component lifecycle events
   // Ordered by their natural call order

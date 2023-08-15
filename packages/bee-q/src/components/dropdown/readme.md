@@ -19,6 +19,13 @@
 | `strategy`         | `strategy`            | Defines the strategy to position the panel                                            | `"absolute" \| "fixed"`                                                                                                                                              | `'fixed'`        |
 
 
+## Events
+
+| Event    | Description                                                                | Type                              |
+| -------- | -------------------------------------------------------------------------- | --------------------------------- |
+| `bqOpen` | Callback handler to be called when the dropdown panel is opened or closed. | `CustomEvent<{ open: boolean; }>` |
+
+
 ## Shadow Parts
 
 | Part         | Description                                                                             |

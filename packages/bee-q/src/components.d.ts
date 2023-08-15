@@ -1019,6 +1019,10 @@ export interface BqDialogCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqDialogElement;
 }
+export interface BqDropdownCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqDropdownElement;
+}
 export interface BqIconCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqIconElement;
@@ -1613,6 +1617,10 @@ declare namespace LocalJSX {
           * If true, the panel will remain open after a selection is made.
          */
         "keepOpenOnSelect"?: boolean;
+        /**
+          * Callback handler to be called when the dropdown panel is opened or closed.
+         */
+        "onBqOpen"?: (event: BqDropdownCustomEvent<{ open: boolean }>) => void;
         /**
           * If true, the panel will be visible.
          */
