@@ -44,7 +44,7 @@
   // Padding
   @apply py-[--bq-select--paddingY] pe-[--bq-select--pading-end] ps-[--bq-select--pading-start];
   // Text
-  @apply text-[length:--bq-select--text-size] text-[color:--bq-select--text-color] placeholder:text-[color:--bq-select--text-placeholder-color];
+  @apply select-none text-[length:--bq-select--text-size] text-[color:--bq-select--text-color] placeholder:text-[color:--bq-select--text-placeholder-color];
   // Hover
   @apply [&:not(.disabled):not(:focus-within)]:hover:border-[color:--bq-select--border-color-hover];
 
@@ -106,7 +106,7 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-select--control__input {
-  @apply flex-auto cursor-[inherit] appearance-none bg-[inherit] font-[inherit] text-[length:inherit] text-[color:inherit];
+  @apply flex-auto cursor-[inherit] select-none appearance-none bg-[inherit] font-[inherit] text-[length:inherit] text-[color:inherit];
   @apply m-0 min-h-[--bq-select--icon-size] min-w-[0] border-none p-0 focus:outline-none focus-visible:outline-none;
 
   box-shadow: none;
