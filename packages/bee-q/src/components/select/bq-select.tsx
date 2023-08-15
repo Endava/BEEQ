@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Listen, Prop, State, Watch } from '@stencil/core';
 
 import { getTextContent, hasSlotContent, isDefined } from '../../shared/utils';
 import { TInputValidation, TInputValue } from '../input/bq-input.types';
@@ -143,6 +143,13 @@ export class BqSelect {
   // Listeners
   // ==============
 
+  @Listen('bqOpen', { capture: true })
+  handleOpenChange(ev: CustomEvent<{ open: boolean }>) {
+    if (!ev.composedPath().includes(this.el)) return;
+
+    this.open = ev.detail.open;
+  }
+
   // Public methods API
   // These methods are exposed on the host element.
   // Always use two lines.
@@ -167,6 +174,13 @@ export class BqSelect {
     this.bqFocus.emit(this.el);
   };
 
+  private handleSelect = (ev: CustomEvent<{ value: TInputValue; item: HTMLBqOptionElement }>) => {
+    if (this.disabled) return;
+
+    this.value = ev.detail.value;
+    this.inputElem.focus();
+  };
+
   private handleClearClick = (ev: CustomEvent) => {
     if (this.disabled) return;
 
@@ -177,13 +191,6 @@ export class BqSelect {
     this.inputElem.focus();
 
     ev.stopPropagation();
-  };
-
-  private handleSelect = (ev: CustomEvent<{ value: TInputValue; item: HTMLBqOptionElement }>) => {
-    if (this.disabled) return;
-
-    this.value = ev.detail.value;
-    this.inputElem.focus();
   };
 
   private handleLabelSlotChange = () => {
@@ -309,7 +316,7 @@ export class BqSelect {
             )}
             {/* Suffix */}
             <span
-              class={{ 'bq-select--control__suffix': true }}
+              class={{ 'bq-select--control__suffix': true, 'rotate-180': this.open, 'rotate-0': !this.open }}
               ref={(spanElem) => (this.suffixElem = spanElem)}
               part="suffix"
             >
