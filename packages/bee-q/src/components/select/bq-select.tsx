@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Prop, State, Watch } from '@stencil/core';
 
 import { FloatingUIPlacement } from '../../services/interfaces';
-import { getTextContent, hasSlotContent, isDefined } from '../../shared/utils';
+import { getTextContent, hasSlotContent, isDefined, isHTMLElement } from '../../shared/utils';
 import { TInputValidation, TInputValue } from '../input/bq-input.types';
 
 /**
@@ -170,6 +170,15 @@ export class BqSelect {
     if (!ev.composedPath().includes(this.el)) return;
 
     this.open = ev.detail.open;
+  }
+
+  @Listen('bqFocus', { capture: true })
+  @Listen('bqBlur', { capture: true })
+  stopOptionFocusBlurPropagation(ev: CustomEvent) {
+    // Stop propagation of focus and blur events coming from the `bq-option` elements
+    if (isHTMLElement(ev.target, 'bq-select')) return;
+
+    ev.stopPropagation();
   }
 
   // Public methods API
