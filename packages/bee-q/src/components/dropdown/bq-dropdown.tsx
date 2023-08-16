@@ -1,6 +1,8 @@
-import { h, Component, Element, Prop, Listen } from '@stencil/core';
+import { h, Component, Element, Prop, Listen, Event, EventEmitter, Watch } from '@stencil/core';
 
 import { FloatingUIPlacement } from '../../services/interfaces';
+
+let id = 0;
 
 /**
  * @part base - The component's internal wrapper.
@@ -17,6 +19,9 @@ export class BqDropdown {
   // Own Properties
   // ====================
 
+  private dropdownPanelId = `bq-dropdown-panel-${++id}`;
+  private triggerElem: HTMLElement;
+
   // Reference to host HTML element
   // ===================================
 
@@ -29,8 +34,14 @@ export class BqDropdown {
   // Public Property API
   // ========================
 
+  /** If true, the dropdown panel will be visible and won't be shown. */
+  @Prop({ reflect: true }) disabled?: boolean = false;
+
   /** Represents the distance (gutter or margin) between the panel and the trigger element. */
   @Prop({ reflect: true }) distance?: number = 4;
+
+  /** If true, the panel will remain open after a selection is made. */
+  @Prop({ reflect: true }) keepOpenOnSelect?: boolean = false;
 
   /** Position of the panel */
   @Prop({ reflect: true }) placement?: FloatingUIPlacement = 'bottom-start';
@@ -40,9 +51,6 @@ export class BqDropdown {
 
   /** When set, it will override the height of the dropdown panel */
   @Prop({ reflect: true }) panelHeight?: string;
-
-  /** If true, the panel will remain open after a selection is made. */
-  @Prop({ reflect: true }) keepOpenOnSelect?: boolean = false;
 
   /** Whether the panel should have the same width as the trigger element */
   @Prop({ reflect: true }) sameWidth?: boolean = false;
@@ -56,13 +64,25 @@ export class BqDropdown {
   // Prop lifecycle events
   // =======================
 
+  @Watch('open')
+  onOpenChange() {
+    this.bqOpen.emit({ open: this.open });
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
 
+  /** Callback handler to be called when the dropdown panel is opened or closed. */
+  @Event() bqOpen: EventEmitter<{ open: boolean }>;
+
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
+
+  componentDidLoad() {
+    this.triggerElem = this.el.querySelector('[slot="trigger"]');
+  }
 
   // Listeners
   // ==============
@@ -114,6 +134,9 @@ export class BqDropdown {
   // =======================================================
 
   private togglePanel = (): void => {
+    // Don't toggle the panel if the component is disabled or the trigger element is disabled
+    if (this.disabled || this.triggerElem?.hasAttribute('disabled')) return;
+
     this.open = !this.open;
   };
 
@@ -128,12 +151,12 @@ export class BqDropdown {
 
     return (
       <div class="bq-dropdown" part="base">
-        {/* TRIGGER ELEMENT */}
+        {/* TRIGGER CONTAINER */}
         <div
           class="bq-dropdown__trigger block"
-          onClick={this.togglePanel}
+          aria-controls={this.dropdownPanelId}
           aria-haspopup="true"
-          aria-expanded={this.open ? 'true' : 'false'}
+          onClick={this.togglePanel}
           part="trigger"
         >
           <slot name="trigger" />
@@ -141,6 +164,7 @@ export class BqDropdown {
         {/* PANEL */}
         <bq-panel
           style={style}
+          id={this.dropdownPanelId}
           class="bq-dropdown__panel"
           distance={this.distance}
           placement={this.placement}
@@ -148,8 +172,7 @@ export class BqDropdown {
           sameWidth={this.sameWidth}
           skidding={this.skidding}
           strategy={this.strategy}
-          aria-labelledby="dropdown"
-          role="region"
+          role="group"
           part="dropdown"
           exportparts="panel"
         >
