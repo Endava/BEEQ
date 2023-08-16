@@ -36,7 +36,7 @@ describe('bq-select', () => {
         </bq-select>
       `,
     });
-    const prefixContainerElem = await page.find('bq-select >>> .bq-select--control__prefix');
+    const prefixContainerElem = await page.find('bq-select >>> .bq-select__control--prefix');
     expect(prefixContainerElem).not.toHaveClass('hidden');
   });
 
@@ -48,7 +48,7 @@ describe('bq-select', () => {
         </bq-select>
       `,
     });
-    const labelContainerElem = await page.find('bq-select >>> .bq-select--label');
+    const labelContainerElem = await page.find('bq-select >>> .bq-select__label');
 
     expect(labelContainerElem).not.toHaveClass('hidden');
   });
@@ -61,7 +61,7 @@ describe('bq-select', () => {
         </bq-select>
       `,
     });
-    const helperContainerElem = await page.find('bq-select >>> .bq-select--helper-text');
+    const helperContainerElem = await page.find('bq-select >>> .bq-select__helper-text');
 
     expect(helperContainerElem).not.toHaveClass('hidden');
   });
