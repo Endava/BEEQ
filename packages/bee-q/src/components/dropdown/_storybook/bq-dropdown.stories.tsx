@@ -13,6 +13,7 @@ const meta: Meta = {
     },
   },
   argTypes: {
+    disabled: { control: 'boolean' },
     distance: { control: 'number' },
     placement: {
       control: 'select',
@@ -43,6 +44,7 @@ const meta: Meta = {
     trigger: { control: 'text', table: { disable: true } },
   },
   args: {
+    disabled: false,
     distance: 4,
     placement: 'bottom-start',
     open: false,
@@ -60,6 +62,7 @@ type Story = StoryObj;
 
 const Template = (args: Args) => html`
   <bq-dropdown
+    ?disabled=${args.disabled}
     distance=${args.distance}
     placement=${args.placement}
     ?open=${args.open}

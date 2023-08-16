@@ -290,6 +290,10 @@ export namespace Components {
     }
     interface BqDropdown {
         /**
+          * If true, the dropdown panel will be visible and won't be shown.
+         */
+        "disabled"?: boolean;
+        /**
           * Represents the distance (gutter or margin) between the panel and the trigger element.
          */
         "distance"?: number;
@@ -595,6 +599,85 @@ export namespace Components {
           * A string representing the value of the radio.
          */
         "value"?: string;
+    }
+    interface BqSelect {
+        /**
+          * If true, the Select input will be focused on component render
+         */
+        "autofocus": boolean;
+        /**
+          * The clear button aria label
+         */
+        "clearButtonLabel"?: string;
+        /**
+          * If true, the clear button won't be displayed
+         */
+        "disableClear"?: boolean;
+        /**
+          * Indicates whether the Select input is disabled or not. If `true`, the Select is disabled and cannot be interacted with.
+         */
+        "disabled"?: boolean;
+        /**
+          * Represents the distance (gutter or margin) between the Select panel and the input element.
+         */
+        "distance"?: number;
+        /**
+          * The ID of the form that the Select input belongs to.
+         */
+        "form"?: string;
+        /**
+          * If true, the Select panel will remain open after a selection is made.
+         */
+        "keepOpenOnSelect"?: boolean;
+        /**
+          * The Select input name.
+         */
+        "name": string;
+        /**
+          * If true, the Select panel will be visible.
+         */
+        "open"?: boolean;
+        /**
+          * When set, it will override the height of the Select panel.
+         */
+        "panelHeight"?: string;
+        /**
+          * The Select input placeholder text value
+         */
+        "placeholder"?: string;
+        /**
+          * Position of the Select panel
+         */
+        "placement"?: FloatingUIPlacement;
+        /**
+          * If true, the Select input cannot be modified.
+         */
+        "readonly"?: boolean;
+        /**
+          * Indicates whether or not the Select input is required to be filled out before submitting the form.
+         */
+        "required"?: boolean;
+        /**
+          * Whether the panel should have the Select same width as the input element
+         */
+        "sameWidth"?: boolean;
+        /**
+          * Represents the skidding between the Select panel and the input element.
+         */
+        "skidding"?: number;
+        /**
+          * Defines the strategy to position the Select panel
+         */
+        "strategy"?: 'fixed' | 'absolute';
+        /**
+          * The validation status of the Select input.
+          * @remarks This property is used to indicate the validation status of the select input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
+         */
+        "validationStatus": TInputValidation;
+        /**
+          * The select input value, it can be used to reset the field to a previous value
+         */
+        "value": TInputValue;
     }
     interface BqSideMenu {
         /**
@@ -968,6 +1051,10 @@ export interface BqDialogCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqDialogElement;
 }
+export interface BqDropdownCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqDropdownElement;
+}
 export interface BqIconCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqIconElement;
@@ -995,6 +1082,10 @@ export interface BqRadioCustomEvent<T> extends CustomEvent<T> {
 export interface BqRadioGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqRadioGroupElement;
+}
+export interface BqSelectCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqSelectElement;
 }
 export interface BqSideMenuCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1146,6 +1237,12 @@ declare global {
         prototype: HTMLBqRadioGroupElement;
         new (): HTMLBqRadioGroupElement;
     };
+    interface HTMLBqSelectElement extends Components.BqSelect, HTMLStencilElement {
+    }
+    var HTMLBqSelectElement: {
+        prototype: HTMLBqSelectElement;
+        new (): HTMLBqSelectElement;
+    };
     interface HTMLBqSideMenuElement extends Components.BqSideMenu, HTMLStencilElement {
     }
     var HTMLBqSideMenuElement: {
@@ -1238,6 +1335,7 @@ declare global {
         "bq-panel": HTMLBqPanelElement;
         "bq-radio": HTMLBqRadioElement;
         "bq-radio-group": HTMLBqRadioGroupElement;
+        "bq-select": HTMLBqSelectElement;
         "bq-side-menu": HTMLBqSideMenuElement;
         "bq-side-menu-item": HTMLBqSideMenuItemElement;
         "bq-slider": HTMLBqSliderElement;
@@ -1544,6 +1642,10 @@ declare namespace LocalJSX {
     }
     interface BqDropdown {
         /**
+          * If true, the dropdown panel will be visible and won't be shown.
+         */
+        "disabled"?: boolean;
+        /**
           * Represents the distance (gutter or margin) between the panel and the trigger element.
          */
         "distance"?: number;
@@ -1551,6 +1653,10 @@ declare namespace LocalJSX {
           * If true, the panel will remain open after a selection is made.
          */
         "keepOpenOnSelect"?: boolean;
+        /**
+          * Callback handler to be called when the dropdown panel is opened or closed.
+         */
+        "onBqOpen"?: (event: BqDropdownCustomEvent<{ open: boolean }>) => void;
         /**
           * If true, the panel will be visible.
          */
@@ -1897,6 +2003,101 @@ declare namespace LocalJSX {
           * A string representing the value of the radio.
          */
         "value"?: string;
+    }
+    interface BqSelect {
+        /**
+          * If true, the Select input will be focused on component render
+         */
+        "autofocus"?: boolean;
+        /**
+          * The clear button aria label
+         */
+        "clearButtonLabel"?: string;
+        /**
+          * If true, the clear button won't be displayed
+         */
+        "disableClear"?: boolean;
+        /**
+          * Indicates whether the Select input is disabled or not. If `true`, the Select is disabled and cannot be interacted with.
+         */
+        "disabled"?: boolean;
+        /**
+          * Represents the distance (gutter or margin) between the Select panel and the input element.
+         */
+        "distance"?: number;
+        /**
+          * The ID of the form that the Select input belongs to.
+         */
+        "form"?: string;
+        /**
+          * If true, the Select panel will remain open after a selection is made.
+         */
+        "keepOpenOnSelect"?: boolean;
+        /**
+          * The Select input name.
+         */
+        "name": string;
+        /**
+          * Callback handler emitted when the Select input loses focus
+         */
+        "onBqBlur"?: (event: BqSelectCustomEvent<HTMLBqSelectElement>) => void;
+        /**
+          * Callback handler emitted when the selected value has been cleared
+         */
+        "onBqClear"?: (event: BqSelectCustomEvent<HTMLBqSelectElement>) => void;
+        /**
+          * Callback handler emitted when the Select input has received focus
+         */
+        "onBqFocus"?: (event: BqSelectCustomEvent<HTMLBqSelectElement>) => void;
+        /**
+          * Callback handler emitted when the selected value has changed
+         */
+        "onBqSelect"?: (event: BqSelectCustomEvent<{ value: string | number | string[]; item: HTMLBqOptionElement }>) => void;
+        /**
+          * If true, the Select panel will be visible.
+         */
+        "open"?: boolean;
+        /**
+          * When set, it will override the height of the Select panel.
+         */
+        "panelHeight"?: string;
+        /**
+          * The Select input placeholder text value
+         */
+        "placeholder"?: string;
+        /**
+          * Position of the Select panel
+         */
+        "placement"?: FloatingUIPlacement;
+        /**
+          * If true, the Select input cannot be modified.
+         */
+        "readonly"?: boolean;
+        /**
+          * Indicates whether or not the Select input is required to be filled out before submitting the form.
+         */
+        "required"?: boolean;
+        /**
+          * Whether the panel should have the Select same width as the input element
+         */
+        "sameWidth"?: boolean;
+        /**
+          * Represents the skidding between the Select panel and the input element.
+         */
+        "skidding"?: number;
+        /**
+          * Defines the strategy to position the Select panel
+         */
+        "strategy"?: 'fixed' | 'absolute';
+        /**
+          * The validation status of the Select input.
+          * @remarks This property is used to indicate the validation status of the select input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
+         */
+        "validationStatus"?: TInputValidation;
+        /**
+          * The select input value, it can be used to reset the field to a previous value
+         */
+        "value"?: TInputValue;
     }
     interface BqSideMenu {
         /**
@@ -2308,6 +2509,7 @@ declare namespace LocalJSX {
         "bq-panel": BqPanel;
         "bq-radio": BqRadio;
         "bq-radio-group": BqRadioGroup;
+        "bq-select": BqSelect;
         "bq-side-menu": BqSideMenu;
         "bq-side-menu-item": BqSideMenuItem;
         "bq-slider": BqSlider;
@@ -2352,6 +2554,7 @@ declare module "@stencil/core" {
             "bq-panel": LocalJSX.BqPanel & JSXBase.HTMLAttributes<HTMLBqPanelElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
+            "bq-select": LocalJSX.BqSelect & JSXBase.HTMLAttributes<HTMLBqSelectElement>;
             "bq-side-menu": LocalJSX.BqSideMenu & JSXBase.HTMLAttributes<HTMLBqSideMenuElement>;
             "bq-side-menu-item": LocalJSX.BqSideMenuItem & JSXBase.HTMLAttributes<HTMLBqSideMenuItemElement>;
             "bq-slider": LocalJSX.BqSlider & JSXBase.HTMLAttributes<HTMLBqSliderElement>;
