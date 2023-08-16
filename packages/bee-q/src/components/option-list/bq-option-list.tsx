@@ -43,6 +43,10 @@ export class BqOptionList {
   // Ordered by their natural call order
   // =====================================
 
+  componentDidLoad() {
+    this.el.setAttribute('role', 'listbox');
+  }
+
   // Listeners
   // ==============
 
@@ -77,7 +81,7 @@ export class BqOptionList {
       <div
         class="bq-option__list flex flex-col gap-y-[--bq-option-group--gapY-list]"
         part="base"
-        role="listbox"
+        role="group"
         aria-label={this.ariaLabel}
       >
         <slot />
