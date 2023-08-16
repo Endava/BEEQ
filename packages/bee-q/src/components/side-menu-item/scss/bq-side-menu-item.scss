@@ -8,7 +8,7 @@
   @apply block;
 }
 
-.bq-side-menu--item {
+.bq-side-menu__item {
   @apply flex items-center gap-x-s rounded-s px-[var(--bq-side-menu-item--paddingX)] py-[var(--bq-side-menu-item--paddingY)] no-underline transition-colors duration-150;
 
   // Default state
@@ -25,25 +25,25 @@
   }
 }
 
-.bq-side-menu--item.active {
+.bq-side-menu__item.active {
   // Active state
   @apply bg-[var(--bq-side-menu-item--bg-active)] text-m text-[color:var(--bq-side-menu-item--text-active)];
 }
 
-.bq-side-menu--item.disabled {
+.bq-side-menu__item.disabled {
   @apply text-[color:var(--bq-side-menu-item--text-disabled)] hover:cursor-not-allowed;
 }
 
-.bq-side-menu--item.is-collapsed {
+.bq-side-menu__item.is-collapsed {
   @apply justify-center gap-0;
 
-  .bq-side-menu--item__label,
-  .bq-side-menu--item__suffix {
+  .bq-side-menu__item--label,
+  .bq-side-menu__item--suffix {
     @apply sr-only scale-0;
   }
 }
 
-.bq-side-menu--item__label,
-.bq-side-menu--item__suffix {
+.bq-side-menu__item--label,
+.bq-side-menu__item--suffix {
   @apply transition-all duration-300 ease-in-out;
 }
