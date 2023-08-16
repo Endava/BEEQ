@@ -1,4 +1,5 @@
 import { isNil } from './isNil';
+import { setRafTimeout } from './setRafTimeout';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TFunction = (...args: any[]) => unknown;
@@ -16,29 +17,28 @@ export type TDebounce<T> = TDebounceFnReturn<T> & { cancel: () => void } extends
  * @return {Function} The new debounced function.
  */
 export const debounce = <TFunc extends TFunction>(func: TFunc, wait = 0, immediate = false) => {
-  let timeout: NodeJS.Timeout;
+  let cancel: () => void | undefined;
 
   function debounceHandler(...args: Parameters<typeof func>) {
-    clearTimeout(timeout);
+    cancel?.();
 
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const context = this;
 
     function timeoutHandler(fn: TFunc, context: unknown, ...args: Parameters<typeof fn>) {
-      timeout = undefined;
       fn.apply(context, args);
     }
 
-    if (immediate && isNil(timeout)) {
+    if (immediate && isNil(cancel)) {
       func.apply(context, args);
     }
 
-    timeout = setTimeout(timeoutHandler, wait, func, context, ...args);
+    cancel = setRafTimeout(timeoutHandler, wait, func, context, ...args);
   }
 
   return Object.assign(debounceHandler, {
     cancel: () => {
-      clearTimeout(timeout);
+      cancel();
     },
   });
 };
