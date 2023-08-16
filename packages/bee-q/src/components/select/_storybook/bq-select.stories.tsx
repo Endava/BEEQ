@@ -158,7 +158,7 @@ const Template = (args: Args) => {
     >
       ${!args.noLabel ? label : nothing}
       ${args.prefix ? html`<bq-icon name="user-circle" slot="prefix"></bq-icon>` : nothing}
-      ${args.suffix ? html`<bq-icon name="caret-circle-down" slot="suffix"></bq-icon>` : nothing}
+      ${args.suffix ? html`<bq-icon name="arrow-down" slot="suffix"></bq-icon>` : nothing}
       ${!args.noHelperText
         ? html`
             <span class="flex items-center gap-xs" slot="helper-text">
@@ -191,6 +191,27 @@ export const InitialValue: Story = {
   },
 };
 
+export const Disabled: Story = {
+  render: Template,
+  args: {
+    disabled: true,
+  },
+};
+
+export const Prefix: Story = {
+  render: Template,
+  args: {
+    prefix: true,
+  },
+};
+
+export const Suffix: Story = {
+  render: Template,
+  args: {
+    suffix: true,
+  },
+};
+
 export const Validation: Story = {
   render: (args) => html`
     <div class="grid grid-cols-1 gap-m sm:grid-cols-3">
@@ -204,6 +225,15 @@ export const Validation: Story = {
   `,
 };
 
+export const Optional: Story = {
+  name: 'Label with "Optional"',
+  render: Template,
+  args: {
+    optionalLabel: true,
+    prefix: true,
+  },
+};
+
 export const Tooltip: Story = {
   name: 'Label with "Info tooltip"',
   render: Template,
@@ -211,9 +241,39 @@ export const Tooltip: Story = {
     hasLabelTooltip: true,
     optionalLabel: true,
     prefix: true,
-    suffix: true,
   },
   parameters: {
     layout: 'centered',
+  },
+};
+
+export const Placement: Story = {
+  name: 'Panel placement',
+  render: Template,
+  args: {
+    hasLabelTooltip: true,
+    placement: 'top',
+    prefix: true,
+  },
+  parameters: {
+    layout: 'centered',
+  },
+};
+
+export const NoLabel: Story = {
+  name: 'With no Label',
+  render: Template,
+  args: {
+    noLabel: true,
+    prefix: true,
+  },
+};
+
+export const NoHelperText: Story = {
+  name: 'With no Helper Text',
+  render: Template,
+  args: {
+    noHelperText: true,
+    prefix: true,
   },
 };
