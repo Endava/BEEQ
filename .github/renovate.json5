@@ -43,6 +43,11 @@
       matchPackagePrefixes: ['@commitlint/'],
     },
     {
+      groupName: '@nx',
+      matchPackagePrefixes: ['@nx', 'nx'],
+      excludePackageNames: ['nx-cloud', 'nx-stylelint'],
+    },
+    {
       groupName: '@stencil',
       matchPackagePrefixes: ['@stencil/'],
     },
@@ -62,10 +67,6 @@
       groupName: 'ng',
       matchPackagePrefixes: ['ng-packagr'],
       allowedVersions: '<15.0.0',
-    },
-    {
-      groupName: 'nx',
-      matchPackagePrefixes: ['@nx'],
     },
     {
       groupName: 'postcss',
