@@ -276,7 +276,7 @@ export class BqSelect {
           id={labelId}
           class={{ 'bq-select__label': true, hidden: !this.hasLabel }}
           htmlFor={this.name || this.fallbackInputId}
-          ref={(labelElem) => (this.labelElem = labelElem)}
+          ref={(labelElem: HTMLSpanElement) => (this.labelElem = labelElem)}
           part="label"
         >
           <slot name="label" onSlotchange={this.handleLabelSlotChange} />
@@ -308,7 +308,7 @@ export class BqSelect {
             {/* Prefix */}
             <span
               class={{ 'bq-select__control--prefix': true, hidden: !this.hasPrefix }}
-              ref={(spanElem) => (this.prefixElem = spanElem)}
+              ref={(spanElem: HTMLSpanElement) => (this.prefixElem = spanElem)}
               part="prefix"
             >
               <slot name="prefix" onSlotchange={this.handlePrefixSlotChange} />
@@ -328,7 +328,7 @@ export class BqSelect {
               form={this.form}
               name={this.name}
               placeholder={this.placeholder}
-              ref={(inputElem) => (this.inputElem = inputElem)}
+              ref={(inputElem: HTMLInputElement) => (this.inputElem = inputElem)}
               readOnly={true}
               required={this.required}
               spellcheck={false}
@@ -360,7 +360,7 @@ export class BqSelect {
             {/* Suffix */}
             <span
               class={{ 'bq-select__control--suffix': true, 'rotate-180': this.open, 'rotate-0': !this.open }}
-              ref={(spanElem) => (this.suffixElem = spanElem)}
+              ref={(spanElem: HTMLSpanElement) => (this.suffixElem = spanElem)}
               part="suffix"
             >
               <slot name="suffix" onSlotchange={this.handleSuffixSlotChange}>
@@ -375,7 +375,7 @@ export class BqSelect {
         {/* Helper text */}
         <div
           class={{ [`bq-select__helper-text validation-${this.validationStatus}`]: true, hidden: !this.hasHelperText }}
-          ref={(divElem) => (this.helperTextElem = divElem)}
+          ref={(divElem: HTMLDivElement) => (this.helperTextElem = divElem)}
           part="helper-text"
         >
           <slot name="helper-text" onSlotchange={this.handleHelperTextSlotChange} />
