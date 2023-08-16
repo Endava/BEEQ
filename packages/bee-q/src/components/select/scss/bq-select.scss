@@ -12,24 +12,24 @@
 /*                            Label and Helper text                           */
 /* -------------------------------------------------------------------------- */
 
-.bq-select--label {
+.bq-select__label {
   @apply mb-[--bq-select--label-margin-bottom] flex flex-grow items-center gap-[--var(--bq-select--gap-label)];
   @apply text-[length:--bq-select--label-text-size] text-[color:--bq-select--label-text-color];
 }
 
-.bq-select--helper-text {
+.bq-select__helper-text {
   @apply mt-[--bq-select--helper-margin-top] text-[length:--bq-select--helper-text-size] text-[color:--bq-select--helper-text-color];
 }
 
-.bq-select--helper-text.validation-error {
+.bq-select__helper-text.validation-error {
   @apply text-text-danger;
 }
 
-.bq-select--helper-text.validation-success {
+.bq-select__helper-text.validation-success {
   @apply text-text-success;
 }
 
-.bq-select--helper-text.validation-warning {
+.bq-select__helper-text.validation-warning {
   @apply text-text-warning;
 }
 
@@ -37,7 +37,7 @@
 /*                         Select input group control                         */
 /* -------------------------------------------------------------------------- */
 
-.bq-select--control {
+.bq-select__control {
   @apply flex w-full items-center transition-[border-color,box-shadow];
   // Border
   @apply rounded-[--bq-select--border-radius] border-[length:--bq-select--border-width] border-[color:--bq-select--border-color];
@@ -62,19 +62,19 @@
   // Enable clear button whenever the input group control is hovered or has focus
   &:not(.disabled):hover,
   &:not(.disabled):focus-within {
-    .bq-select--control__clear {
+    .bq-select__control--clear {
       @apply inline-block;
     }
   }
 }
 
-.bq-select--control.disabled {
+.bq-select__control.disabled {
   @apply cursor-not-allowed border-[color:--bq-stroke--tertiary-disabled] bg-ui-secondary-disabled;
 }
 
 /* ------------------------------- Validation ------------------------------- */
 
-.bq-select--control.validation-error {
+.bq-select__control.validation-error {
   @apply border-stroke-danger [&:not(.disabled):not(:focus-within)]:hover:border-stroke-danger-hover;
 
   &:not(.disabled):focus-within {
@@ -83,7 +83,7 @@
   }
 }
 
-.bq-select--control.validation-success {
+.bq-select__control.validation-success {
   @apply border-stroke-success [&:not(.disabled):not(:focus-within)]:hover:border-stroke-success-hover;
 
   &:not(.disabled):focus-within {
@@ -92,7 +92,7 @@
   }
 }
 
-.bq-select--control.validation-warning {
+.bq-select__control.validation-warning {
   @apply border-stroke-warning [&:not(.disabled):not(:focus-within)]:hover:border-stroke-warning-hover;
 
   &:not(.disabled):focus-within {
@@ -105,7 +105,7 @@
 /*                              Native HTML Input                             */
 /* -------------------------------------------------------------------------- */
 
-.bq-select--control__input {
+.bq-select__control--input {
   @apply flex-auto cursor-[inherit] select-none appearance-none bg-[inherit] font-[inherit] text-[length:inherit] text-[color:inherit];
   @apply m-0 min-h-[--bq-select--icon-size] min-w-[0] border-none p-0 focus:outline-none focus-visible:outline-none;
 
@@ -117,7 +117,7 @@
 /*                                Clear button                                */
 /* -------------------------------------------------------------------------- */
 
-.bq-select--control__clear::part(button) {
+.bq-select__control--clear::part(button) {
   // Since the clear button is inside the input group control,
   // we need to reset the focus ring styles
   --bq-ring-width: initial;
@@ -131,16 +131,16 @@
 /*                              Prefix and suffix                             */
 /* -------------------------------------------------------------------------- */
 
-.bq-select--control__prefix,
-.bq-select--control__suffix {
+.bq-select__control--prefix,
+.bq-select__control--suffix {
   @apply pointer-events-none flex items-center text-[color:var(--bq-select--text-color)];
 }
 
-.bq-select--control__prefix {
+.bq-select__control--prefix {
   @apply me-[--bq-select--gap];
 }
 
-.bq-select--control__suffix {
+.bq-select__control--suffix {
   @apply ms-[--bq-select--gap] transition-transform duration-300 ease-in-out;
 }
 

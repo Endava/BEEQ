@@ -274,7 +274,7 @@ export class BqSelect {
         {/* Label */}
         <label
           id={labelId}
-          class={{ 'bq-select--label': true, hidden: !this.hasLabel }}
+          class={{ 'bq-select__label': true, hidden: !this.hasLabel }}
           htmlFor={this.name || this.fallbackInputId}
           ref={(labelElem) => (this.labelElem = labelElem)}
           part="label"
@@ -298,7 +298,7 @@ export class BqSelect {
           {/* Input control group */}
           <div
             class={{
-              'bq-select--control': true,
+              'bq-select__control': true,
               [`validation-${this.validationStatus}`]: true,
               disabled: this.disabled,
             }}
@@ -307,7 +307,7 @@ export class BqSelect {
           >
             {/* Prefix */}
             <span
-              class={{ 'bq-select--control__prefix': true, hidden: !this.hasPrefix }}
+              class={{ 'bq-select__control--prefix': true, hidden: !this.hasPrefix }}
               ref={(spanElem) => (this.prefixElem = spanElem)}
               part="prefix"
             >
@@ -316,7 +316,7 @@ export class BqSelect {
             {/* HTML Input */}
             <input
               id={this.name || this.fallbackInputId}
-              class="bq-select--control__input"
+              class="bq-select__control--input"
               autoComplete="off"
               autoCapitalize="off"
               autoFocus={this.autofocus}
@@ -344,7 +344,7 @@ export class BqSelect {
               // The clear button will be visible as long as the input has a value
               // and the parent group is hovered or has focus-within
               <bq-button
-                class="bq-select--control__clear ms-[--bq-select--gap] hidden"
+                class="bq-select__control--clear ms-[--bq-select--gap] hidden"
                 appearance="text"
                 aria-label={this.clearButtonLabel}
                 size="small"
@@ -359,7 +359,7 @@ export class BqSelect {
             )}
             {/* Suffix */}
             <span
-              class={{ 'bq-select--control__suffix': true, 'rotate-180': this.open, 'rotate-0': !this.open }}
+              class={{ 'bq-select__control--suffix': true, 'rotate-180': this.open, 'rotate-0': !this.open }}
               ref={(spanElem) => (this.suffixElem = spanElem)}
               part="suffix"
             >
@@ -374,7 +374,7 @@ export class BqSelect {
         </bq-dropdown>
         {/* Helper text */}
         <div
-          class={{ [`bq-select--helper-text validation-${this.validationStatus}`]: true, hidden: !this.hasHelperText }}
+          class={{ [`bq-select__helper-text validation-${this.validationStatus}`]: true, hidden: !this.hasHelperText }}
           ref={(divElem) => (this.helperTextElem = divElem)}
           part="helper-text"
         >
