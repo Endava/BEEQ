@@ -1,6 +1,6 @@
-# React Wrapper for Bee-Q
+# React Wrapper for BEEQ
 
-A lightweight utility that wraps Bee-Q custom elements ("web components") so they can be used like native React components.
+A lightweight utility that wraps BEEQ custom elements ("web components") so they can be used like native React components.
 
 ## Package installation
 
