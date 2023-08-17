@@ -125,7 +125,7 @@ export class BqSideMenuItem {
   private menuItem = () => (
     <a
       class={{
-        'bq-side-menu--item': true,
+        'bq-side-menu__item': true,
         active: this.active,
         disabled: this.disabled,
         'is-collapsed': this.collapse,
@@ -139,16 +139,16 @@ export class BqSideMenuItem {
       slot="trigger"
       part="base"
     >
-      <div class="bq-side-menu--item__prefix flex items-center" part="prefix">
+      <div class="bq-side-menu__item--prefix flex items-center" part="prefix">
         <slot name="prefix" />
       </div>
       <div
-        class="bq-side-menu--item__label overflow-hidden text-ellipsis whitespace-nowrap"
+        class="bq-side-menu__item--label overflow-hidden text-ellipsis whitespace-nowrap"
         ref={(labelElem) => (this.labelElem = labelElem)}
       >
         <slot onSlotchange={this.handleSlotChange} />
       </div>
-      <div class="bq-side-menu--item__suffix ml-auto flex items-center" part="suffix">
+      <div class="bq-side-menu__item--suffix ml-auto flex items-center" part="suffix">
         <slot name="suffix" />
       </div>
     </a>
@@ -158,7 +158,7 @@ export class BqSideMenuItem {
     return !this.collapse ? (
       this.menuItem()
     ) : (
-      <bq-tooltip class="block" placement="right" exportparts="trigger, panel">
+      <bq-tooltip class="bq-side-menu__item--tooltip block" placement="right" exportparts="trigger, panel">
         {this.textContent}
         {this.menuItem()}
       </bq-tooltip>
