@@ -1,4 +1,4 @@
-<div style="background-color: #fff; border-radius: 1rem; margin-bottom: 1.5rem; overflow: hidden">
+<div align="center">
   <img
     width="100%"
     src="./.github/BEEQ-overview.png"
