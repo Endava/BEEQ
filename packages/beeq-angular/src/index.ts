@@ -9,4 +9,4 @@ export * from './directives/components';
 /* -------------------------------------------------------------------------- */
 /*                               PACKAGE MODULE                               */
 /* -------------------------------------------------------------------------- */
-export { BeeQModule } from './bee-q.module';
+export { BeeQModule } from './beeq.module';
