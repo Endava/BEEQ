@@ -26,9 +26,9 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "nx run bee-q:stencil-start --noOpen",
-          "nx run bee-q:storybook-start-css",
-          "nx run bee-q:storybook-start"
+          "nx run beeq:stencil-start --noOpen",
+          "nx run beeq:storybook-start-css",
+          "nx run beeq:storybook-start"
         ],
         "parallel": true
       }
