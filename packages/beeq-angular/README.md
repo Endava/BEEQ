@@ -1,6 +1,6 @@
-# Angular Wrapper for Bee-Q
+# Angular Wrapper for BEEQ
 
-An Angular-specific wrapper on top of Bee-Q web components that enables NG_VALUE_ACCESSORS and allows you to bind input events directly to a value accessor for seamless integration in Angular’s bi-directional data flow.
+An Angular-specific wrapper on top of BEEQ web components that enables NG_VALUE_ACCESSORS and allows you to bind input events directly to a value accessor for seamless integration in Angular’s bi-directional data flow.
 
 ## Package installation
 
@@ -81,15 +81,15 @@ applyPolyfills().then(() => {
 }
 ```
 
-Bee-Q styles can be also imported into your application's main style file:
+BEEQ styles can be also imported into your application's main style file:
 
 ```css
 @import '~@bee-q/core/dist/bee-q/bee-q.css';
 ```
 
-### Add the Bee-Q Angular module to your application module
+### Add the BEEQ Angular module to your application module
 
-You will be able to add Bee-Q web components to your app by adding the `BeeQModule` exported by `@bee-q/angular`:
+You will be able to add BEEQ web components to your app by adding the `BeeQModule` exported by `@bee-q/angular`:
 
 ```ts
 import { NgModule } from '@angular/core';

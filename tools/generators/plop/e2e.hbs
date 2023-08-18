@@ -2,27 +2,27 @@ import { newE2EPage } from '@stencil/core/testing';
 
 describe('bq-{{kebabCase name}}', () => {
   it('should render', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-{{kebabCase name}}></bq-{{kebabCase name}}>');
-
+    const page = await newE2EPage({
+      html: '<bq-{{kebabCase name}}></bq-{{kebabCase name}}>',
+    });
     const element = await page.find('bq-{{kebabCase name}}');
 
     expect(element).toHaveClass('hydrated');
   });
 
   it('should have shadow root', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-{{kebabCase name}}></bq-{{kebabCase name}}>');
-
+    const page = await newE2EPage({
+      html: '<bq-{{kebabCase name}}></bq-{{kebabCase name}}>',
+    });
     const element = await page.find('bq-{{kebabCase name}}');
 
     expect(element.shadowRoot).not.toBeNull();
   });
 
   it('should display text', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-{{kebabCase name}}></bq-{{kebabCase name}}>');
-
+    const page = await newE2EPage({
+      html: '<bq-{{kebabCase name}}></bq-{{kebabCase name}}>',
+    });
     const element = await page.find('bq-{{kebabCase name}} >>> p');
 
     expect(element).toEqualText('My name is Stencil');

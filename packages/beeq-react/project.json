@@ -1,25 +1,25 @@
 {
-  "name": "bee-q-react",
+  "name": "beeq-react",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/bee-q-react/src",
+  "sourceRoot": "packages/beeq-react/src",
   "projectType": "library",
   "tags": ["wrapper", "react", "publishable"],
-  "implicitDependencies": ["bee-q"],
+  "implicitDependencies": ["beeq"],
   "targets": {
     "build": {
       "executor": "@nx/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/bee-q-react",
-        "tsConfig": "packages/bee-q-react/tsconfig.lib.json",
-        "project": "packages/bee-q-react/package.json",
-        "entryFile": "packages/bee-q-react/src/index.ts",
+        "outputPath": "dist/beeq-react",
+        "tsConfig": "packages/beeq-react/tsconfig.lib.json",
+        "project": "packages/beeq-react/package.json",
+        "entryFile": "packages/beeq-react/src/index.ts",
         "external": ["react", "react-dom", "react/jsx-runtime"],
         "rollupConfig": "@nx/react/plugins/bundle-rollup",
         "compiler": "babel",
         "assets": [
           {
-            "glob": "packages/bee-q-react/README.md",
+            "glob": "packages/beeq-react/README.md",
             "input": ".",
             "output": "."
           }

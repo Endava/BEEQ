@@ -53,7 +53,7 @@ jobs:
           aws-region: ${{secrets.AWS_S3_BUCKET_REGION}}
 
       - name: 🚚 Deploy to AWS S3
-        run: aws s3 sync dist/storybook/bee-q/ s3://${{secrets.AWS_S3_BUCKET}}/ --delete --output table
+        run: aws s3 sync dist/storybook/beeq/ s3://${{secrets.AWS_S3_BUCKET}}/ --delete --output table
 
       - name: 🚮 Invalidate AWS CloudFront distribution cache
         run: aws cloudfront create-invalidation --distribution-id ${{secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID}} --paths "/*" --output table --cli-connect-timeout 15

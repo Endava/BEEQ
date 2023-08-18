@@ -1,10 +1,10 @@
-# Bee-Q, a web component library initiative
+# BEEQ, a web component library initiative
 
-The elements and components provided by Bee-Q are being implemented with [Stencil](https://stenciljs.com/), a compiler that generates Web Components (more specifically, Custom Elements), combining the best concepts of the most popular frameworks into a simple build-time tool. You can read more about Stencil on their [official ](https://stenciljs.com/)website.
+The elements and components provided by BEEQ are being implemented with [Stencil](https://stenciljs.com/), a compiler that generates Web Components (more specifically, Custom Elements), combining the best concepts of the most popular frameworks into a simple build-time tool. You can read more about Stencil on their [official ](https://stenciljs.com/)website.
 
 ## Installation
 
-Bee-Q elements, components, patterns, utilities, etc., are available as an npm package.
+BEEQ elements, components, patterns, utilities, etc., are available as an npm package.
 
 ### For `stable` releases
 
@@ -38,7 +38,7 @@ Bee-Q components are regular HTML elements, or custom elements (often referred t
 
 ### Events
 
-You can listen for standard events such as click, mouseover, etc. as you normally would. Most of the Bee-Q components emit custom events, we highly recommend the use of those instead. They work the same way as standard events but are prefixed with `bq` to prevent collisions with standard events and other libraries.
+You can listen for standard events such as click, mouseover, etc. as you normally would. Most of the BEEQ components emit custom events, we highly recommend the use of those instead. They work the same way as standard events but are prefixed with `bq` to prevent collisions with standard events and other libraries.
 
 ```html
 <bq-checkbox>Checkbox label</bq-checkbox>

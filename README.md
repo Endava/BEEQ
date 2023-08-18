@@ -1,14 +1,14 @@
-<p align="center">
+<div align="center">
   <img
-    width="500"
-    src="https://user-images.githubusercontent.com/328492/189278210-da3353de-6ea2-4c97-9be3-b02ac6dd5997.jpg"
-    alt="Bee-Q Design System logo"
+    width="100%"
+    src="./.github/BEEQ-overview.png"
+    alt="BEEQ Design System"
   />
-</p>
+</div>
 
-<h1 align="center">Bee-Q, a web component library initiative</h1>
+<h1 align="center">BEEQ, a web component library initiative</h1>
 
-<p align="center">This repository holds the source code of the web component present in the Bee-Q Design System.</p>
+<p align="center">This repository holds the source code of the web components present in the BEEQ Design System.</p>
 
 <p align="center">
   <a aria-label="license" href="./LICENSE">
@@ -20,9 +20,9 @@
 
 | Package                                                          | Version                                                                                                            | Documentation                            |
 | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
-| [`@bee-q/core`](https://www.npmjs.com/package/@bee-q/core)       | [![version](https://img.shields.io/npm/v/@bee-q/core/latest.svg)](https://www.npmjs.com/package/@bee-q/core)       | [README](./packages/bee-q/README.md)         |
-| [`@bee-q/angular`](https://www.npmjs.com/package/@bee-q/angular) | [![version](https://img.shields.io/npm/v/@bee-q/angular/latest.svg)](https://www.npmjs.com/package/@bee-q/angular) | [README](./packages/bee-q-angular/README.md) |
-| [`@bee-q/react`](https://www.npmjs.com/package/@bee-q/react)     | [![version](https://img.shields.io/npm/v/@bee-q/react/latest.svg)](https://www.npmjs.com/package/@bee-q/react)     | [README](./packages/bee-q-react/README.md)   |
+| [`@bee-q/core`](https://www.npmjs.com/package/@bee-q/core)       | [![version](https://img.shields.io/npm/v/@bee-q/core/latest.svg)](https://www.npmjs.com/package/@bee-q/core)       | [README](./packages/beeq/README.md)         |
+| [`@bee-q/angular`](https://www.npmjs.com/package/@bee-q/angular) | [![version](https://img.shields.io/npm/v/@bee-q/angular/latest.svg)](https://www.npmjs.com/package/@bee-q/angular) | [README](./packages/beeq-angular/README.md) |
+| [`@bee-q/react`](https://www.npmjs.com/package/@bee-q/react)     | [![version](https://img.shields.io/npm/v/@bee-q/react/latest.svg)](https://www.npmjs.com/package/@bee-q/react)     | [README](./packages/beeq-react/README.md)   |
 
 </div>
 
@@ -34,9 +34,9 @@ The project has been structured as an [NX monorepo](https://nx.dev) :
 
 ```
 ├── 📁 packages
-  ├── 📁 bee-q
-  ├── 📁 bee-q-angular
-  ├── 📁 bee-q-react
+  ├── 📁 beeq
+  ├── 📁 beeq-angular
+  ├── 📁 beeq-react
   ├── ...
 ├── 📁 tools
 ├── package.json
@@ -45,9 +45,9 @@ The project has been structured as an [NX monorepo](https://nx.dev) :
 
 where:
 
-- **[packages/bee-q](./packages/bee-q/):** Core library (source for all the elements/components implemented)
-- **[packages/bee-q-angular](./packages/bee-q-angular):** Angular-specific wrapper for Bee-Q core library
-- **[packages/bee-q-react](./packages/bee-q-react):** ReactJS-specific wrapper for Bee-Q core library
+- **[packages/beeq](./packages/beeq/):** Core library (source for all the elements/components implemented)
+- **[packages/beeq-angular](./packages/beeq-angular):** Angular-specific wrapper for BEEQ core library
+- **[packages/beeq-react](./packages/beeq-react):** ReactJS-specific wrapper for BEEQ core library
 
 ### Dependencies 📡
 
@@ -55,7 +55,7 @@ We recommend the use of [Volta](https://volta.sh/) to manage Node and NPM versio
 
 > With Volta, you can select a Node engine once and then stop worrying about it. You can switch between projects and stop having to manually switch between Nodes.
 
-Once you have Volta installed, whenever you change to the Bee-Q folder locally, it will switch to the right Node version pinned on the `package.json`:
+Once you have Volta installed, whenever you change to the BEEQ folder locally, it will switch to the right Node version pinned on the `package.json`:
 
 ```json
   "volta": {
@@ -71,24 +71,24 @@ Volta is not mandatory, you can still use any Node/NPM setup that fits you most,
 
 ## Usage
 
-The Bee-Q components are published to the NPM package manager registry. You can use the `@bee-q/core` or any of the framework-specific wrappers (`@bee-q/angular`, `@bee-q/react`) depending on the technology stack of your project. Make sure the follow the usage instructions for each package:
+The BEEQ components are published to the NPM package manager registry. You can use the `@bee-q/core` or any of the framework-specific wrappers (`@bee-q/angular`, `@bee-q/react`) depending on the technology stack of your project. Make sure the follow the usage instructions for each package:
 
-- 📘 [How to use the `@bee-q/core` package](packages/bee-q/README.md)
-- 📗 [How to use the `@bee-q/angular` package](packages/bee-q-angular/README.md)
-- 📕 [How to use the `@bee-q/react` package](packages/bee-q-react/README.md)
+- 📘 [How to use the `@bee-q/core` package](packages/beeq/README.md)
+- 📗 [How to use the `@bee-q/angular` package](packages/beeq-angular/README.md)
+- 📕 [How to use the `@bee-q/react` package](packages/beeq-react/README.md)
 
 > _More [output targets](https://stenciljs.com/docs/overview) integration will be added later (e.g. Vue, Svelte)_
 
-Feel free to [check our Storybook](https://storybook.bee-q.design/) to see all the Bee-Q components released. There you can find all the component's APIs (properties, events, and methods exposed) along with the variations that each component allows.
+Feel free to [check our Storybook](https://storybook.bee-q.design/) to see all the BEEQ components released. There you can find all the component's APIs (properties, events, and methods exposed) along with the variations that each component allows.
 
 ## Running the project 🏃‍
 
-To develop/extend components on the Bee-Q Design System, please fork this repo in GitHub and clone it locally to a new directory:
+To develop/extend components on the BEEQ Design System, please fork this repo in GitHub and clone it locally to a new directory:
 
 ```bash
-git clone https://github.com/<YOUR_GITHUB_USERNAME>/bee-q.git Bee-Q-Design-System
+git clone https://github.com/<YOUR_GITHUB_USERNAME>/BEEQ.git BEEQ-Design-System
 git checkout develop
-cd Bee-Q-Design-System
+cd BEEQ-Design-System
 ```
 
 ### Installation ⚙️
@@ -114,7 +114,7 @@ npm run build
 
 ### Test 🧪
 
-Bee-Q uses [Jest](https://jestjs.io/) for unit tests and Jest and [Puppeteer](https://pptr.dev/) for end-to-end tests.
+BEEQ uses [Jest](https://jestjs.io/) for unit tests and Jest and [Puppeteer](https://pptr.dev/) for end-to-end tests.
 
 You can run all the tests once, by executing:
 
@@ -132,7 +132,7 @@ nx affected
 
 ### Generate component
 
-Bee-q comes with a component generator that saves you time when creating the skeleton for a new component. To use the generator, you just need to run the following command and follow the instructions in your prompt CLI:
+BEEQ comes with a component generator that saves you time when creating the skeleton for a new component. To use the generator, you just need to run the following command and follow the instructions in your prompt CLI:
 
 ```bash
 npm run g

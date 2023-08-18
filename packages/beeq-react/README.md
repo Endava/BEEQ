@@ -1,6 +1,6 @@
-# React Wrapper for Bee-Q
+# React Wrapper for BEEQ
 
-A lightweight utility that wraps Bee-Q custom elements ("web components") so they can be used like native React components.
+A lightweight utility that wraps BEEQ custom elements ("web components") so they can be used like native React components.
 
 ## Package installation
 
@@ -22,7 +22,15 @@ if `@bee-q/core` package is installed you should update both
 npm install @bee-q/{core,react}
 ```
 
-> ❗️The icons SVG are shipped in a separate folder. Projects will need to include `node_modules/@bee-q/core/dist/bee-q/svg` in their build and try to make it in a certain way that it respond to: `http://<domain>/svg`
+### Add Bee-Q styles and assets
+
+Make sure that BEEQ main style is imported into your application's main style file:
+
+```css
+@import "@bee-q/core/dist/bee-q/bee-q";
+```
+
+> ❗️The icons SVG are shipped in a separate folder. Depending on your React stack, your project will need to include `node_modules/@bee-q/core/dist/bee-q/svg` in the build in such a way that it respond to: `http://<domain>/svg`
 
 ## Usage
 

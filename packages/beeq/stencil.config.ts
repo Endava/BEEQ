@@ -71,13 +71,13 @@ export const config: Config = {
     },
     angular({
       componentCorePackage: '@bee-q/core',
-      directivesProxyFile: resolve(__dirname, '../bee-q-angular/src/directives/components.ts').replace(/\\/g, '/'),
-      directivesArrayFile: resolve(__dirname, '../bee-q-angular/src/directives/index.ts').replace(/\\/g, '/'),
+      directivesProxyFile: resolve(__dirname, '../beeq-angular/src/directives/components.ts').replace(/\\/g, '/'),
+      directivesArrayFile: resolve(__dirname, '../beeq-angular/src/directives/index.ts').replace(/\\/g, '/'),
       valueAccessorConfigs: angularValueAccessorBindings,
     }),
     react({
       componentCorePackage: '@bee-q/core',
-      proxiesFile: resolve(__dirname, '../bee-q-react/src/components.ts').replace(/\\/g, '/'),
+      proxiesFile: resolve(__dirname, '../beeq-react/src/components.ts').replace(/\\/g, '/'),
       includeDefineCustomElements: true,
     }),
   ],
