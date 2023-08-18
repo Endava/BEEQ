@@ -121,7 +121,7 @@
     "jest-environment-jsdom": "27.5.1",
     "jsonc-eslint-parser": "2.3.0",
     "lint-staged": "13.2.3",
-    "lit-html": "2.7.5",
+    "lit-html": "2.8.0",
     "nanospinner": "1.1.0",
     "ng-packagr": "14.2.2",
     "ngx-deploy-npm": "6.0.0",
