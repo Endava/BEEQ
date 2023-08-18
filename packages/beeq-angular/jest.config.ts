@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'bee-q-angular',
+  displayName: 'beeq-angular',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -9,7 +9,7 @@ export default {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../coverage/packages/bee-q-angular',
+  coverageDirectory: '../../coverage/packages/beeq-angular',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
   },

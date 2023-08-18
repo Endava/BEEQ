@@ -1,7 +1,7 @@
 {
-  "name": "bee-q",
+  "name": "beeq",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/bee-q/src",
+  "sourceRoot": "packages/beeq/src",
   "projectType": "library",
   "tags": ["components", "core", "publishable"],
   "generators": {
@@ -38,9 +38,9 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "projectType": "library",
-        "tsConfig": "packages/bee-q/tsconfig.lib.json",
-        "configPath": "packages/bee-q/stencil.config.ts",
-        "outputPath": "dist/bee-q",
+        "tsConfig": "packages/beeq/tsconfig.lib.json",
+        "configPath": "packages/beeq/stencil.config.ts",
+        "outputPath": "dist/beeq",
         "watch": true,
         "dev": false
       }
@@ -49,7 +49,7 @@
       "executor": "@nx/storybook:storybook",
       "options": {
         "loglevel": "silly",
-        "configDir": "packages/bee-q/.storybook",
+        "configDir": "packages/beeq/.storybook",
         "host": "127.0.0.1",
         "port": 9001,
         "open": true
@@ -66,9 +66,9 @@
       "outputs": ["{options.outputPath}", "{projectRoot}/custom-elements.json"],
       "options": {
         "projectType": "library",
-        "tsConfig": "packages/bee-q/tsconfig.lib.json",
-        "configPath": "packages/bee-q/stencil.config.ts",
-        "outputPath": "dist/bee-q",
+        "tsConfig": "packages/beeq/tsconfig.lib.json",
+        "configPath": "packages/beeq/stencil.config.ts",
+        "outputPath": "dist/beeq",
         "ci": true
       },
       "configurations": {
@@ -83,8 +83,8 @@
       "executor": "@nx/storybook:build",
       "outputs": ["{options.outputDir}", "{options.config.configDir}"],
       "options": {
-        "outputDir": "dist/storybook/bee-q",
-        "configDir": "packages/bee-q/.storybook",
+        "outputDir": "dist/storybook/beeq",
+        "configDir": "packages/beeq/.storybook",
         "ci": true
       },
       "configurations": {
@@ -97,14 +97,14 @@
       "executor": "nx:run-commands",
       "outputs": ["{projectRoot}/.storybook/css"],
       "options": {
-        "command": "npx tailwindcss -i packages/bee-q/src/global/styles/tailwind.pcss -o packages/bee-q/.storybook/css/sb-styles.css --postcss ./postcss.config.js --watch"
+        "command": "npx tailwindcss -i packages/beeq/src/global/styles/tailwind.pcss -o packages/beeq/.storybook/css/sb-styles.css --postcss ./postcss.config.js --watch"
       }
     },
     "storybook-build-css": {
       "executor": "nx:run-commands",
       "outputs": ["{projectRoot}/.storybook/css"],
       "options": {
-        "command": "npx tailwindcss -i packages/bee-q/src/global/styles/tailwind.pcss -o packages/bee-q/.storybook/css/sb-styles.css --postcss ./postcss.config.js --minify"
+        "command": "npx tailwindcss -i packages/beeq/src/global/styles/tailwind.pcss -o packages/beeq/.storybook/css/sb-styles.css --postcss ./postcss.config.js --minify"
       }
     },
     "generate-icons": {
@@ -112,12 +112,12 @@
       "outputs": ["{options.downloadPath}", "{options.extractToPath}", "{options.outputDir}"],
       "options": {
         "assetsFolder": "assets",
-        "downloadPath": "packages/bee-q-icons/temp",
-        "extractToPath": "packages/bee-q/src/components/icon/svg",
+        "downloadPath": "packages/beeq-icons/temp",
+        "extractToPath": "packages/beeq/src/components/icon/svg",
         "fileName": "main.zip",
         "helperFile": "icons-set.ts",
-        "outputDir": "packages/bee-q/src/components/icon/helper",
-        "sourceDir": "packages/bee-q/src/components/icon/svg/regular",
+        "outputDir": "packages/beeq/src/components/icon/helper",
+        "sourceDir": "packages/beeq/src/components/icon/svg/regular",
         "svgFolder": "core-main",
         "sourceUrl": "https://github.com/phosphor-icons/core/archive/refs/heads"
       }
@@ -128,9 +128,9 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "projectType": "library",
-        "tsConfig": "packages/bee-q/tsconfig.lib.json",
-        "configPath": "packages/bee-q/stencil.config.ts",
-        "outputPath": "dist/bee-q"
+        "tsConfig": "packages/beeq/tsconfig.lib.json",
+        "configPath": "packages/beeq/stencil.config.ts",
+        "outputPath": "dist/beeq"
       }
     },
     "e2e": {
@@ -138,16 +138,16 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "projectType": "library",
-        "tsConfig": "packages/bee-q/tsconfig.lib.json",
-        "configPath": "packages/bee-q/stencil.config.ts",
-        "outputPath": "dist/bee-q",
+        "tsConfig": "packages/beeq/tsconfig.lib.json",
+        "configPath": "packages/beeq/stencil.config.ts",
+        "outputPath": "dist/beeq",
         "noBuild": true
       }
     },
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["nx run bee-q:eslint", "nx run bee-q:stylelint"],
+        "commands": ["nx run beeq:eslint", "nx run beeq:stylelint"],
         "parallel": true
       }
     },
@@ -155,22 +155,22 @@
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/bee-q/**/*.{ts,tsx}"]
+        "lintFilePatterns": ["packages/beeq/**/*.{ts,tsx}"]
       }
     },
     "stylelint": {
       "executor": "nx-stylelint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/bee-q/**/*.css", "packages/bee-q/**/*.scss"],
-        "configFile": "packages/bee-q/.stylelintrc.json"
+        "lintFilePatterns": ["packages/beeq/**/*.css", "packages/beeq/**/*.scss"],
+        "configFile": "packages/beeq/.stylelintrc.json"
       }
     },
     "prepublish": {
       "executor": "nx:run-commands",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "command": "mv dist/bee-q/dist/README.md dist/bee-q/"
+        "command": "mv dist/beeq/dist/README.md dist/beeq/"
       }
     },
     "publish": {

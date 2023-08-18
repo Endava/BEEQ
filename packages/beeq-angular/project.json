@@ -1,24 +1,24 @@
 {
-  "name": "bee-q-angular",
+  "name": "beeq-angular",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/bee-q-angular/src",
+  "sourceRoot": "packages/beeq-angular/src",
   "projectType": "library",
   "tags": ["wrapper", "angular", "publishable"],
-  "prefix": "bee-q",
-  "implicitDependencies": ["bee-q"],
+  "prefix": "beeq",
+  "implicitDependencies": ["beeq"],
   "targets": {
     "build": {
       "executor": "@nx/angular:package",
-      "outputs": ["{workspaceRoot}/dist/bee-q-angular"],
+      "outputs": ["{workspaceRoot}/dist/beeq-angular"],
       "options": {
-        "project": "packages/bee-q-angular/ng-package.json"
+        "project": "packages/beeq-angular/ng-package.json"
       },
       "configurations": {
         "production": {
-          "tsConfig": "packages/bee-q-angular/tsconfig.lib.prod.json"
+          "tsConfig": "packages/beeq-angular/tsconfig.lib.prod.json"
         },
         "development": {
-          "tsConfig": "packages/bee-q-angular/tsconfig.lib.json"
+          "tsConfig": "packages/beeq-angular/tsconfig.lib.json"
         }
       },
       "defaultConfiguration": "production"
@@ -26,7 +26,7 @@
     "lint": {
       "executor": "@nx/linter:eslint",
       "options": {
-        "lintFilePatterns": ["packages/bee-q-angular/**/*.ts", "packages/bee-q-angular/**/*.html"]
+        "lintFilePatterns": ["packages/beeq-angular/**/*.ts", "packages/beeq-angular/**/*.html"]
       }
     },
     "publish": {

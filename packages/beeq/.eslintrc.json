@@ -18,7 +18,7 @@
   "overrides": [
     {
       "parserOptions": {
-        "project": ["packages/bee-q/tsconfig.lib.json", "packages/bee-q/tsconfig.storybook.json"]
+        "project": ["packages/beeq/tsconfig.lib.json", "packages/beeq/tsconfig.storybook.json"]
       },
       "files": ["*.ts", "*.tsx", ".storybook/*.ts"],
       "extends": [
