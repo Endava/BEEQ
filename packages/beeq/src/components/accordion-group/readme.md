@@ -10,6 +10,7 @@
 | Property    | Attribute    | Description | Type      | Default     |
 | ----------- | ------------ | ----------- | --------- | ----------- |
 | `expandAll` | `expand-all` |             | `boolean` | `undefined` |
+| `multiple`  | `multiple`   |             | `boolean` | `false`     |
 
 
 ----------------------------------------------
