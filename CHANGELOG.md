@@ -6,6 +6,102 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+## [0.8.0](https://github.com/Endava/bee-q/compare/v0.7.1...v0.8.0) (2023-08-18)
+
+
+### Features ⚡️
+
+* **Select:** add new `bq-select` component ([#449](https://github.com/Endava/bee-q/issues/449)) ([a03714f](https://github.com/Endava/bee-q/commit/a03714f4a57c5c48484bba3c274bdaa09dd9a550))
+* **textarea:** add new `bq-textarea` component ([#393](https://github.com/Endava/bee-q/issues/393)) ([f51b25f](https://github.com/Endava/bee-q/commit/f51b25fbaa46437ec91da5922c1deb95fc37621d))
+* **Theme:** add dark mode support ([#435](https://github.com/Endava/bee-q/issues/435)) ([db2a98d](https://github.com/Endava/bee-q/commit/db2a98d20490bc92305e16ef1c5ed40a8a1e7d15))
+* **Typography:** add global typography CSS styles ([#388](https://github.com/Endava/bee-q/issues/388)) ([187e2f2](https://github.com/Endava/bee-q/commit/187e2f2f9b6fe9afe60f5762b6913995cd9f5eeb))
+
+
+### Bug Fixes 🐞
+
+* **Avatar:** trim initials text only if exist ([#428](https://github.com/Endava/bee-q/issues/428)) ([4d56e41](https://github.com/Endava/bee-q/commit/4d56e4172f193a9cf7c307f8acc199a89ace9289))
+* **FloatingUI:** use object spread instead of `Object.assign()` ([#437](https://github.com/Endava/bee-q/issues/437)) ([0c0a3f3](https://github.com/Endava/bee-q/commit/0c0a3f3618871d89ad1fc479ad17e367ef1efee6))
+* **Side menu item:** misalignment when menu is collapsed ([#453](https://github.com/Endava/bee-q/issues/453)) ([4e6e3c8](https://github.com/Endava/bee-q/commit/4e6e3c8192834ee9de7bf230031f1e987862199c))
+* **tab:** update active tab when value is changed externally ([#402](https://github.com/Endava/bee-q/issues/402)) ([327fd50](https://github.com/Endava/bee-q/commit/327fd506dc8563379233a1bddfacb212b887dc5b))
+
+
+### Documentation 📚
+
+* all readme files and packages folder name to use `BEEQ` ([#454](https://github.com/Endava/bee-q/issues/454)) ([30e0992](https://github.com/Endava/bee-q/commit/30e0992e33fb1b0823cda93f692d5e7a388ab130))
+
+
+### Chore ⚙️
+
+* **deps:** update [@commitlint](https://github.com/commitlint) to v17.6.7 ([#417](https://github.com/Endava/bee-q/issues/417)) ([dda2ab0](https://github.com/Endava/bee-q/commit/dda2ab05fde42e64a8cd812868f2f9e7146b964f))
+* **deps:** update [@stencil](https://github.com/stencil) ([#387](https://github.com/Endava/bee-q/issues/387)) ([44850f5](https://github.com/Endava/bee-q/commit/44850f5da5fb0d054ab6c8f5be565372fcdf4724))
+* **deps:** update [@storybook](https://github.com/storybook) to v7.1.0 ([#376](https://github.com/Endava/bee-q/issues/376)) ([80275c7](https://github.com/Endava/bee-q/commit/80275c7a52b528d0c1fa1212c46768f07817d2f2))
+* **deps:** update [@storybook](https://github.com/storybook) to v7.1.1 ([#429](https://github.com/Endava/bee-q/issues/429)) ([948fc7a](https://github.com/Endava/bee-q/commit/948fc7ae2f23378232d5ca5d28024ad1ba47cb18))
+* **deps:** update [@storybook](https://github.com/storybook) to v7.2.3 ([#443](https://github.com/Endava/bee-q/issues/443)) ([176f17d](https://github.com/Endava/bee-q/commit/176f17dd39d99ab491bf669bb524e54fcb574d75))
+* **deps:** update [@storybook](https://github.com/storybook) to v7.3.1 ([#451](https://github.com/Endava/bee-q/issues/451)) ([fc331af](https://github.com/Endava/bee-q/commit/fc331af67e168ca05b8c0658314d7012160ebe06))
+* **deps:** update dependency @floating-ui/dom to v1.4.5 ([#399](https://github.com/Endava/bee-q/issues/399)) ([44b5491](https://github.com/Endava/bee-q/commit/44b5491c97c85badc9e472a1e287937aa901787b))
+* **deps:** update dependency @floating-ui/dom to v1.5.0 ([#441](https://github.com/Endava/bee-q/issues/441)) ([f41b315](https://github.com/Endava/bee-q/commit/f41b3153edd39da609e2ef9d79da2e9c9b8eaeb6))
+* **deps:** update dependency @floating-ui/dom to v1.5.1 ([#442](https://github.com/Endava/bee-q/issues/442)) ([6683c6d](https://github.com/Endava/bee-q/commit/6683c6dd10663eefeac37a74970550ef9f34a477))
+* **deps:** update dependency @jscutlery/semver to v3 ([#411](https://github.com/Endava/bee-q/issues/411)) ([70f796a](https://github.com/Endava/bee-q/commit/70f796a52b6f622c82216dca85022b29f197d098))
+* **deps:** update dependency @jscutlery/semver to v3.1.0 ([#413](https://github.com/Endava/bee-q/issues/413)) ([936cfde](https://github.com/Endava/bee-q/commit/936cfdee026095e8c69add4502ef54b417465b8f))
+* **deps:** update dependency @nrwl/nx-cloud to v16.1.0 ([#395](https://github.com/Endava/bee-q/issues/395)) ([80fd0cd](https://github.com/Endava/bee-q/commit/80fd0cd31fa4e3d7cafae2485295522c6760e593))
+* **deps:** update dependency @stencil/core to v4.0.3 ([#446](https://github.com/Endava/bee-q/issues/446)) ([0ba6039](https://github.com/Endava/bee-q/commit/0ba6039095fcc93c9eb979143c421b564915c763))
+* **deps:** update dependency @swc/core to v1.3.69 ([#397](https://github.com/Endava/bee-q/issues/397)) ([1455db5](https://github.com/Endava/bee-q/commit/1455db569c53f43e7363a168d96d767bc0d7e565))
+* **deps:** update dependency @swc/core to v1.3.70 ([#408](https://github.com/Endava/bee-q/issues/408)) ([772912c](https://github.com/Endava/bee-q/commit/772912c1c0579604ee7a0847cd6c7443c8aaa6aa))
+* **deps:** update dependency @swc/core to v1.3.71 ([#430](https://github.com/Endava/bee-q/issues/430)) ([89408a2](https://github.com/Endava/bee-q/commit/89408a2b91179f3f291b06d8460f1be045cd782e))
+* **deps:** update dependency @swc/core to v1.3.72 ([#444](https://github.com/Endava/bee-q/issues/444)) ([4325d1e](https://github.com/Endava/bee-q/commit/4325d1ec4b699d4dd06c38cd7cbce0b45bc50105))
+* **deps:** update dependency @swc/core to v1.3.73 ([#448](https://github.com/Endava/bee-q/issues/448)) ([da9d7f6](https://github.com/Endava/bee-q/commit/da9d7f681b204d8df4f4634cff27cb84a81a00eb))
+* **deps:** update dependency @types/node to v20.4.0 ([#378](https://github.com/Endava/bee-q/issues/378)) ([7e452fe](https://github.com/Endava/bee-q/commit/7e452fee92ea7648b941b4864957a5505b9fda63))
+* **deps:** update dependency @types/node to v20.4.1 ([#385](https://github.com/Endava/bee-q/issues/385)) ([b74cdfd](https://github.com/Endava/bee-q/commit/b74cdfd5a537e9da7677d36a83f2c5ddc566751e))
+* **deps:** update dependency @types/node to v20.4.2 ([#396](https://github.com/Endava/bee-q/issues/396)) ([3e219f0](https://github.com/Endava/bee-q/commit/3e219f0afb040d30d5535b805ec5b218170d0bb5))
+* **deps:** update dependency @types/node to v20.4.3 ([#426](https://github.com/Endava/bee-q/issues/426)) ([395f664](https://github.com/Endava/bee-q/commit/395f6646376ffe1b72fd502b8a28360243edc5e6))
+* **deps:** update dependency @types/node to v20.4.5 ([#427](https://github.com/Endava/bee-q/issues/427)) ([17a09a9](https://github.com/Endava/bee-q/commit/17a09a97cf880168cdf63db31bf6c7994670c284))
+* **deps:** update dependency @types/react to v18.2.15 ([#400](https://github.com/Endava/bee-q/issues/400)) ([973483d](https://github.com/Endava/bee-q/commit/973483d5ec890b5753d923034722e178e3c18004))
+* **deps:** update dependency @types/react to v18.2.17 ([#431](https://github.com/Endava/bee-q/issues/431)) ([b10a589](https://github.com/Endava/bee-q/commit/b10a5890e0ff6a12717ca8d7d0b5456b399e5a56))
+* **deps:** update dependency @types/react to v18.2.18 ([#447](https://github.com/Endava/bee-q/issues/447)) ([d1444a8](https://github.com/Endava/bee-q/commit/d1444a82c70098094ff6cbb9a57a5f3f29e7d013))
+* **deps:** update dependency @types/react-dom to v18.2.7 ([#394](https://github.com/Endava/bee-q/issues/394)) ([98a8725](https://github.com/Endava/bee-q/commit/98a872539c95f6ba58def97d58793256d790fa25))
+* **deps:** update dependency chromatic to v6.20.0 ([#425](https://github.com/Endava/bee-q/issues/425)) ([a13296b](https://github.com/Endava/bee-q/commit/a13296bdcb1635974c28b6fc5f04e72a581dd6a7))
+* **deps:** update dependency core-js to v3.31.1 ([#380](https://github.com/Endava/bee-q/issues/380)) ([64acc77](https://github.com/Endava/bee-q/commit/64acc775c22c7bb25d4fdcdf904d61a3d624676b))
+* **deps:** update dependency core-js to v3.32.0 ([#439](https://github.com/Endava/bee-q/issues/439)) ([1c01c78](https://github.com/Endava/bee-q/commit/1c01c789a3e8271bc7c647b4f19711eeba768137))
+* **deps:** update dependency eslint to v8.45.0 ([#405](https://github.com/Endava/bee-q/issues/405)) ([e594c37](https://github.com/Endava/bee-q/commit/e594c378463e8280a00c443b1d9fa118b2cfa52e))
+* **deps:** update dependency eslint-plugin-react to v7.33.0 ([#423](https://github.com/Endava/bee-q/issues/423)) ([4c7be76](https://github.com/Endava/bee-q/commit/4c7be76605e41143d26ac125e3fd63486356104e))
+* **deps:** update dependency eslint-plugin-storybook to v0.6.13 ([#420](https://github.com/Endava/bee-q/issues/420)) ([5925745](https://github.com/Endava/bee-q/commit/5925745dec7cfad5cf9ce0f0b132cb6644697d3d))
+* **deps:** update dependency lit-html to v2.7.5 ([#377](https://github.com/Endava/bee-q/issues/377)) ([366009f](https://github.com/Endava/bee-q/commit/366009f956c4821e7a659c4dfd0eb5e21935940f))
+* **deps:** update dependency lit-html to v2.8.0 ([#457](https://github.com/Endava/bee-q/issues/457)) ([d03c945](https://github.com/Endava/bee-q/commit/d03c945f922325c0cebb86c69afdef87aca1550b))
+* **deps:** update dependency npm to v9.8.0 ([#379](https://github.com/Endava/bee-q/issues/379)) ([0e06ced](https://github.com/Endava/bee-q/commit/0e06ced7ebc7a69d1d9b2a2f3520f423f2ece866))
+* **deps:** update dependency npm to v9.8.1 ([#419](https://github.com/Endava/bee-q/issues/419)) ([c62bab0](https://github.com/Endava/bee-q/commit/c62bab0b55ffb8fff1d35f877a9d377754fc0d65))
+* **deps:** update dependency postcss to v8.4.25 ([#383](https://github.com/Endava/bee-q/issues/383)) ([b9eb9e7](https://github.com/Endava/bee-q/commit/b9eb9e730934f6320af8bec78be4f795e2d6c7d3))
+* **deps:** update dependency prettier-plugin-tailwindcss to v0.4.1 ([#404](https://github.com/Endava/bee-q/issues/404)) ([0b09bef](https://github.com/Endava/bee-q/commit/0b09bef6d3564dd6d4513c46270adef85b534f24))
+* **deps:** update dependency puppeteer to v20.8.0 ([#384](https://github.com/Endava/bee-q/issues/384)) ([3158a8f](https://github.com/Endava/bee-q/commit/3158a8f1b274591f330198013a9687d4cd1fd902))
+* **deps:** update dependency puppeteer to v20.8.1 ([#391](https://github.com/Endava/bee-q/issues/391)) ([9f0df35](https://github.com/Endava/bee-q/commit/9f0df35fea90391efe3cc3d3b791c1dda8f0fa87))
+* **deps:** update dependency puppeteer to v20.8.2 ([#398](https://github.com/Endava/bee-q/issues/398)) ([5184be1](https://github.com/Endava/bee-q/commit/5184be171e995d6b8a3cbf273b3f7becbf7c44e8))
+* **deps:** update dependency puppeteer to v20.8.3 ([#409](https://github.com/Endava/bee-q/issues/409)) ([cb1ff7d](https://github.com/Endava/bee-q/commit/cb1ff7ddd830466bbd1f3d7aee9937dbe6761359))
+* **deps:** update dependency puppeteer to v20.9.0 ([#421](https://github.com/Endava/bee-q/issues/421)) ([a0d246c](https://github.com/Endava/bee-q/commit/a0d246cb61c89f90bfbcf99f6ee214c75c762ba4))
+* **deps:** update dependency puppeteer to v21 ([#455](https://github.com/Endava/bee-q/issues/455)) ([891e70b](https://github.com/Endava/bee-q/commit/891e70bec920a0a15da294a4d1cfd99be5732a20))
+* **deps:** update dependency stylelint to v15.10.1 ([#381](https://github.com/Endava/bee-q/issues/381)) ([b6e1a3d](https://github.com/Endava/bee-q/commit/b6e1a3daa947777d98a7712b2c55e86cf070fd40))
+* **deps:** update dependency stylelint to v15.10.2 ([#418](https://github.com/Endava/bee-q/issues/418)) ([b45d635](https://github.com/Endava/bee-q/commit/b45d6354a2ba49b451c64e9e11187bf0c3ec03a1))
+* **deps:** update dependency tailwindcss to v3.3.3 ([#401](https://github.com/Endava/bee-q/issues/401)) ([c99505c](https://github.com/Endava/bee-q/commit/c99505c18623103f0459c2bc7ee98d6505439e8b))
+* **deps:** update dependency tslib to v2.6.1 ([#432](https://github.com/Endava/bee-q/issues/432)) ([dfb9e6f](https://github.com/Endava/bee-q/commit/dfb9e6feff836512861c03d0bee583b4424584f8))
+* **deps:** update dependency vite to v4.4.0 ([#382](https://github.com/Endava/bee-q/issues/382)) ([f775927](https://github.com/Endava/bee-q/commit/f775927f097ecf5c57d788248dff01493af70658))
+* **deps:** update dependency vite to v4.4.2 ([#386](https://github.com/Endava/bee-q/issues/386)) ([2f6362c](https://github.com/Endava/bee-q/commit/2f6362c009a7439ad75c6ab486e571b60f313392))
+* **deps:** update dependency vite to v4.4.3 ([#392](https://github.com/Endava/bee-q/issues/392)) ([700e3cc](https://github.com/Endava/bee-q/commit/700e3cc4b96ebd41f72a2fab36aad7c847f81c0d))
+* **deps:** update dependency vite to v4.4.4 ([#403](https://github.com/Endava/bee-q/issues/403)) ([5325e78](https://github.com/Endava/bee-q/commit/5325e78bf402e5c29cbb067ae7beab43bb7f4ad8))
+* **deps:** update dependency vite to v4.4.5 ([#422](https://github.com/Endava/bee-q/issues/422)) ([00e1b88](https://github.com/Endava/bee-q/commit/00e1b88c8458dff8c99c5486e2882c7df9a11a95))
+* **deps:** update dependency vite to v4.4.6 ([#424](https://github.com/Endava/bee-q/issues/424)) ([84dfb61](https://github.com/Endava/bee-q/commit/84dfb61d839aaa9a25e19c93bbf58b7bd7711fc4))
+* **deps:** update dependency vite to v4.4.7 ([#433](https://github.com/Endava/bee-q/issues/433)) ([87857fd](https://github.com/Endava/bee-q/commit/87857fd8ff16eab77a3d8537ca6e48c993f76640))
+* **deps:** update dependency vite to v4.4.8 ([#450](https://github.com/Endava/bee-q/issues/450)) ([19062b5](https://github.com/Endava/bee-q/commit/19062b5cee2055d0af1fea7e595d957b10d3d729))
+* **deps:** update eslint ([#438](https://github.com/Endava/bee-q/issues/438)) ([2a0d576](https://github.com/Endava/bee-q/commit/2a0d576fd427abf9ef3de5f374e1ed02b93a8dde))
+* **deps:** update node.js to v18.17.0 ([#416](https://github.com/Endava/bee-q/issues/416)) ([6d618f6](https://github.com/Endava/bee-q/commit/6d618f6bc345cb0a2dc4551c24df3a8e6dc865bd))
+* **deps:** update nx to v16.7.0 ([#452](https://github.com/Endava/bee-q/issues/452)) ([70295c9](https://github.com/Endava/bee-q/commit/70295c9d21eb6c0f5c678aef83a40d6efe0436a9))
+* **deps:** update postcss ([#440](https://github.com/Endava/bee-q/issues/440)) ([67576b9](https://github.com/Endava/bee-q/commit/67576b9060b2c92af2e0b1b7cb0f429ef35062c4))
+* **deps:** update typescript eslint to v5.62.0 ([#389](https://github.com/Endava/bee-q/issues/389)) ([52407e2](https://github.com/Endava/bee-q/commit/52407e2c35fea3aab22b1c8127ae9c80ba9e9469))
+* **deps:** update typescript eslint to v6 ([#390](https://github.com/Endava/bee-q/issues/390)) ([05187ed](https://github.com/Endava/bee-q/commit/05187ed71e08e0f76c4c87c31decfb4346701fc0))
+* **deps:** update typescript eslint to v6.1.0 ([#407](https://github.com/Endava/bee-q/issues/407)) ([f840388](https://github.com/Endava/bee-q/commit/f84038864135dfe4ddd824f3b19ed12e650c4322))
+* **deps:** update typescript eslint to v6.2.0 ([#434](https://github.com/Endava/bee-q/issues/434)) ([c3e5685](https://github.com/Endava/bee-q/commit/c3e5685c8594a8d67d5f0fd98ad3ffd2b44d2a41))
+* **deps:** update typescript eslint to v6.2.1 ([#445](https://github.com/Endava/bee-q/issues/445)) ([87eb97c](https://github.com/Endava/bee-q/commit/87eb97c5f72ecdcecb78352b6dafb2192b566a42))
+* **Nx:** update to Nx 16 ([#406](https://github.com/Endava/bee-q/issues/406)) ([0959b19](https://github.com/Endava/bee-q/commit/0959b19ed43bd5f94f8f6216efa239f829800c53))
+* **renovate:** allow `[@nx](https://github.com/nx)` and `[@nxext](https://github.com/nxext)` new versions ([053b751](https://github.com/Endava/bee-q/commit/053b7512106af01267823b3aa53c3aa556eb32c5))
+* **Sonarcloud:** update code duplications exclusion pattern ([#436](https://github.com/Endava/bee-q/issues/436)) ([095760f](https://github.com/Endava/bee-q/commit/095760f1c6ed3382f8e253b094c8c51b6e870670))
+
 ## [0.7.1](https://github.com/Endava/bee-q/compare/v0.7.0...v0.7.1) (2023-07-20)
 
 
