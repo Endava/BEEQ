@@ -7,7 +7,7 @@ import { DefaultDarkTheme, DefaultLightTheme, DefaultRootTheme } from './config/
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  content: ['packages/bee-q/src/**/*.{html,mdx,tsx,ts}'],
+  content: ['packages/beeq/src/**/*.{html,mdx,tsx,ts}'],
   theme: {
     colors: {
       current: 'currentColor',

@@ -27,7 +27,7 @@ commands:
       - run:
           name: 📚 Publish to Chromatic
           command: |
-            npx chromatic --project-token=${CHROMATIC_PROJECT_TOKEN} -d dist/storybook/bee-q --untraced "package.json" --untraced "package-lock.json" --auto-accept-changes --ci --exit-once-uploaded --only-changed --zip
+            npx chromatic --project-token=${CHROMATIC_PROJECT_TOKEN} -d dist/storybook/beeq --untraced "package.json" --untraced "package-lock.json" --auto-accept-changes --ci --exit-once-uploaded --only-changed --zip
 
 # ---------------------------------------------------------------------------- #
 #                         Jobs are collections of steps                        #
@@ -78,13 +78,13 @@ jobs:
       - run:
           name: 🩺 Run Linters and Unit Tests
           command: |
-            npx nx run bee-q:test --base=$NX_BASE --head=$NX_HEAD --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
+            npx nx run beeq:test --base=$NX_BASE --head=$NX_HEAD --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
       - run:
           name: ⏳ Build
           command: npm run build
       - run:
           name: 🧪 Run E2E Tests
-          command: npx nx run bee-q:e2e --base=$NX_BASE --head=$NX_HEAD --exclude=workspace --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
+          command: npx nx run beeq:e2e --base=$NX_BASE --head=$NX_HEAD --exclude=workspace --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
       - store_test_results:
           name: 📥 Store test results
           # Special step used to upload and store test results for a build (when available)

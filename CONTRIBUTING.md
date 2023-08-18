@@ -1,10 +1,10 @@
-# Contributing to Bee-Q Design System
+# Contributing to BEEQ Design System
 
-First off, thanks for taking the time to contribute and help out to make Bee-Q better than it is today! 💪😁 🎉
+First off, thanks for taking the time to contribute and help out to make BEEQ better than it is today! 💪😁 🎉
 
 As a contributor, here are the guidelines we would like you to follow:
 
-- [Contributing to Bee-Q Design System](#contributing-to-bee-q-design-system)
+- [Contributing to BEEQ Design System](#contributing-to-beeq-design-system)
   - [✍️ Code of Conduct](#️-code-of-conduct)
   - [ We Develop with Github](#-we-develop-with-github)
   - [Pull Requests](#pull-requests)
@@ -178,7 +178,7 @@ Similarly, a Deprecation section should start with "DEPRECATED: " followed by a 
 
 ## <a name="recommended-ide-extensions"></a>👌 Recommended IDE Extensions
 
-We would like all our contributors to have the same experience while developing for Bee-Q, hence here is a list of Extensions we primarily use with [Visual Studio Code](https://code.visualstudio.com/) and recommend everyone to installed in their local environment:
+We would like all our contributors to have the same experience while developing for BEEQ, hence here is a list of Extensions we primarily use with [Visual Studio Code](https://code.visualstudio.com/) and recommend everyone to installed in their local environment:
 
 - Recommended
   - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)

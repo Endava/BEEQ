@@ -8,14 +8,14 @@
 # source files to ignore
 .angular
 master.zip
-packages/bee-q/.stencil
-packages/bee-q/.storybook/css/**
-packages/bee-q/custom-elements.json
-packages/bee-q/src/components/icon/svg/**
-packages/bee-q-angular/**/directives
-packages/bee-q-react/src/react-component-lib
-packages/bee-q-react/src/components.ts
-packages/bee-q-icons/temp/**
+packages/beeq/.stencil
+packages/beeq/.storybook/css/**
+packages/beeq/custom-elements.json
+packages/beeq/src/components/icon/svg/**
+packages/beeq-angular/**/directives
+packages/beeq-react/src/react-component-lib
+packages/beeq-react/src/components.ts
+packages/beeq-icons/temp/**
 !.gitkeep
 
 # dependencies
