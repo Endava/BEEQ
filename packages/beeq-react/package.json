@@ -2,7 +2,7 @@
   "name": "@bee-q/react",
   "version": "0.7.1",
   "license": "Apache-2.0",
-  "description": "React specific wrapper for Bee-Q Design System components",
+  "description": "React specific wrapper for BEEQ Design System components",
   "main": "./src/index.js",
   "module": "./src/index.js",
   "types": "./src/index.d.ts",
@@ -21,7 +21,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Endava/bee-q"
+    "url": "https://github.com/Endava/BEEQ"
   },
   "publishConfig": {
     "access": "public",
