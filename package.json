@@ -1,7 +1,7 @@
 {
-  "name": "bee-q",
+  "name": "beeq",
   "version": "0.7.1",
-  "description": "Bee-Q Design System",
+  "description": "BEEQ Design System",
   "license": "Apache-2.0",
   "private": true,
   "workspaces": [
@@ -10,7 +10,7 @@
   ],
   "repository": {
     "type": "Git",
-    "url": "https://github.com/Endava/bee-q"
+    "url": "https://github.com/Endava/BEEQ"
   },
   "scripts": {
     "prestart": "nx run beeq:generate-icons",
