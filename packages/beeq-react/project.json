@@ -7,23 +7,14 @@
   "implicitDependencies": ["beeq"],
   "targets": {
     "build": {
-      "executor": "@nx/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nx/js:tsc",
       "options": {
+        "clean": true,
+        "main": "packages/beeq-react/src/index.ts",
+        "assets": ["packages/beeq-react/README.md"],
         "outputPath": "dist/beeq-react",
-        "tsConfig": "packages/beeq-react/tsconfig.lib.json",
         "project": "packages/beeq-react/package.json",
-        "entryFile": "packages/beeq-react/src/index.ts",
-        "external": ["react", "react-dom", "react/jsx-runtime"],
-        "rollupConfig": "@nx/react/plugins/bundle-rollup",
-        "compiler": "babel",
-        "assets": [
-          {
-            "glob": "packages/beeq-react/README.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
+        "tsConfig": "packages/beeq-react/tsconfig.lib.json"
       }
     },
     "publish": {

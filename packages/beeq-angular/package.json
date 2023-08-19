@@ -2,10 +2,10 @@
   "name": "@bee-q/angular",
   "version": "0.8.0",
   "license": "Apache-2.0",
-  "description": "Angular specific wrapper for Bee-Q Design System components",
+  "description": "Angular specific wrapper for BEEQ Design System components",
   "main": "dist/esm2015/index.js",
   "module": "dist/esm2015/index.js",
-  "types": "dist/index.d.ts",
+  "types": "index.d.ts",
   "dependencies": {
     "tslib": "2.6.1"
   },
@@ -19,6 +19,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Endava/bee-q"
+    "url": "https://github.com/Endava/BEEQ"
   }
 }
