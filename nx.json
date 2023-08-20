@@ -5,7 +5,12 @@
     "defaultBase": "develop"
   },
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "{workspaceRoot}/tailwind.config.ts", "{workspaceRoot}/config/**/*"],
+    "default": [
+      "{projectRoot}/**/*",
+      "{workspaceRoot}/config/**/*",
+      "{workspaceRoot}/package.json",
+      "{workspaceRoot}/tailwind.config.ts"
+    ],
     "production": [
       "default",
       "!{projectRoot}/**/*.spec.ts",
