@@ -1,7 +1,7 @@
 {
-  "name": "beeq",
-  "version": "0.7.1",
-  "description": "BEEQ Design System",
+  "name": "bee-q",
+  "version": "0.8.1",
+  "description": "Bee-Q Design System",
   "license": "Apache-2.0",
   "private": true,
   "workspaces": [

@@ -1,6 +1,6 @@
 {
   "name": "@bee-q/react",
-  "version": "0.7.1",
+  "version": "0.8.1",
   "license": "Apache-2.0",
   "description": "React specific wrapper for BEEQ Design System components",
   "main": "./src/index.js",
