@@ -6,6 +6,23 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+## [0.8.1](https://github.com/Endava/BEEQ/compare/v0.8.0...v0.8.1) (2023-08-21)
+
+
+### Bug Fixes 🐞
+
+* **beeq-react:** wrong paths on package.json ([#462](https://github.com/Endava/BEEQ/issues/462)) ([9aa36a6](https://github.com/Endava/BEEQ/commit/9aa36a6872b9d35b542a5ffa3d6693c5567c95e2))
+
+
+### Chore ⚙️
+
+* **BEEQ react:** build using TypeScript instead of Rollup ([#463](https://github.com/Endava/BEEQ/issues/463)) ([e5ffe47](https://github.com/Endava/BEEQ/commit/e5ffe47d829b872057e3cfe7b9f939996c26c307))
+* **deps:** update [@nx](https://github.com/nx) to v16.7.2 ([#467](https://github.com/Endava/BEEQ/issues/467)) ([8f27ccf](https://github.com/Endava/BEEQ/commit/8f27ccf7cb8a6b0bbbd2e52dfcd25c90ea837c05))
+* **deps:** update [@stencil](https://github.com/stencil) ([#469](https://github.com/Endava/BEEQ/issues/469)) ([b227ea4](https://github.com/Endava/BEEQ/commit/b227ea4eae4e609f0515199ee3d1b100bb930e11))
+* **deps:** update [@storybook](https://github.com/storybook) to v7.3.2 ([#468](https://github.com/Endava/BEEQ/issues/468)) ([27f1123](https://github.com/Endava/BEEQ/commit/27f1123114b7a5d6925e1c1bee1e69e7c58d427b))
+* **deps:** update dependency puppeteer to v21.0.1 ([#461](https://github.com/Endava/BEEQ/issues/461)) ([00d136e](https://github.com/Endava/BEEQ/commit/00d136ec6888cb91a5b0bd4b7e059b60965db30c))
+* **deps:** update dependency regenerator-runtime to v0.14.0 ([#464](https://github.com/Endava/BEEQ/issues/464)) ([dbca3c1](https://github.com/Endava/BEEQ/commit/dbca3c179d6241a2ebec79c17725d02084327dd3))
+
 ## [0.8.0](https://github.com/Endava/bee-q/compare/v0.7.1...v0.8.0) (2023-08-18)
 
 
