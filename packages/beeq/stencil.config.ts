@@ -34,7 +34,6 @@ export const config: Config = {
       sourceMapEmbed: true,
       sourceMapContents: true,
     }),
-    // tailwindGlobal(tailwindOpts),
     tailwind(tailwindOpts),
     tailwindHMR({ tailwindConf }),
   ],
@@ -83,6 +82,12 @@ export const config: Config = {
   ],
   extras: {
     experimentalImportInjection: true,
+    /**
+     * Details:
+     * https://stenciljs.com/docs/config-extras#experimentalslotfixes
+     * https://discord.com/channels/520266681499779082/1108109881870925875/1143196247730176040
+     */
+    experimentalSlotFixes: true,
   },
   watchIgnoredRegex: /(custom-elements\.)((d\.ts)|(json))$/g,
   devServer: {
