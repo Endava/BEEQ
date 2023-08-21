@@ -1,7 +1,7 @@
 {
-  "name": "bee-q",
+  "name": "beeq",
   "version": "0.8.1",
-  "description": "Bee-Q Design System",
+  "description": "BEEQ Design System",
   "license": "Apache-2.0",
   "private": true,
   "workspaces": [
@@ -74,7 +74,7 @@
     "@nxext/stencil": "16.3.0",
     "@rollup/plugin-url": "8.0.1",
     "@stencil/angular-output-target": "0.8.1",
-    "@stencil/core": "4.0.5",
+    "@stencil/core": "4.1.0",
     "@stencil/react-output-target": "0.5.3",
     "@stencil/sass": "3.0.5",
     "@storybook/addon-a11y": "7.3.2",
