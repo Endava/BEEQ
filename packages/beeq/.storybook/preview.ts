@@ -2,11 +2,11 @@ import './css/sb-styles.css';
 
 import type { DecoratorFunction } from '@storybook/types';
 import type { Preview, WebComponentsRenderer } from '@storybook/web-components';
-import { setCustomElements } from '@storybook/web-components';
+import { setCustomElementsManifest } from '@storybook/web-components';
 
 import customElements from '../custom-elements.json';
 
-setCustomElements(customElements);
+setCustomElementsManifest(customElements);
 
 const withThemeProvider: DecoratorFunction<WebComponentsRenderer, { [x: string]: unknown }> = (storyFn, context) => {
   const {

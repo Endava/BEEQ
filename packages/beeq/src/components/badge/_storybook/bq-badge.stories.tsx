@@ -17,7 +17,7 @@ const meta: Meta = {
     size: { control: 'select', options: BADGE_SIZE },
     'text-color': { control: 'text' },
     // This control is not part of the component
-    content: { control: 'text' },
+    content: { control: 'text', table: { disable: true } },
   },
   args: {
     size: 'small',
@@ -37,11 +37,16 @@ export const Default: Story = {
   render: Template,
 };
 
-export const Colorbackground: Story = {
+export const SizeMedium: Story = {
+  render: Template,
+  args: { size: 'medium' },
+};
+
+export const BackgroundColor: Story = {
   render: Template,
   args: {
     'background-color': 'ui--success',
-    size: 'large',
+    size: 'medium',
   },
 };
 
@@ -55,7 +60,10 @@ export const TwoDigits: Story = {
   args: { content: '12' },
 };
 
-export const SizeMedium: Story = {
+export const WithText: Story = {
   render: Template,
-  args: { size: 'medium' },
+  args: {
+    'background-color': 'ui--success',
+    content: 'online',
+  },
 };

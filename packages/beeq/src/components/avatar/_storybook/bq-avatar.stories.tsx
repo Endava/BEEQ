@@ -18,6 +18,8 @@ const meta: Meta = {
     initials: { control: 'text' },
     shape: { control: 'inline-radio', options: ['circle', 'square'] },
     size: { control: 'select', options: ['xsmall', 'small', 'medium', 'large'] },
+    // Not part of the component API, but used for the storybook
+    'badge-content': { control: 'text', table: { disable: true } },
   },
   args: {
     label: 'Avatar component label',
