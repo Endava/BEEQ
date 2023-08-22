@@ -23,8 +23,12 @@
   }
 
   /* Set core root defaults */
-  html:focus-within {
-    @apply scroll-smooth;
+  html {
+    @apply text-m;
+
+    &:focus-within {
+      @apply scroll-smooth;
+    }
   }
 
   /* Set core body defaults */
