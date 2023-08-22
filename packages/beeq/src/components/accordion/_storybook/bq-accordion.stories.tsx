@@ -15,6 +15,7 @@ const meta: Meta = {
   argTypes: {
     expanded: { control: 'boolean' },
     disabled: { control: 'boolean' },
+    rotate: { control: 'boolean' },
     appearance: { control: 'select', options: [...ACCORDION_APPEARANCE] },
     size: { control: 'select', options: [...ACCORDION_SIZE] },
     // Event handlers
@@ -27,6 +28,7 @@ const meta: Meta = {
   args: {
     expanded: false,
     disabled: false,
+    rotate: false,
     appearance: 'filled',
     size: 'medium',
     text: 'text',
@@ -42,6 +44,7 @@ const Template = (args: Args) =>
     appearance=${args.appearance}
     .expanded=${args.expanded}
     .disabled=${args.disabled}
+    .rotate=${args.rotate}
     @bqFocus=${args.bqFocus}
     @bqClick=${args.bqClick}
     @bqBlur=${args.bqBlur}
@@ -61,6 +64,7 @@ const IconTemplate = (args: Args) =>
     appearance=${args.appearance}
     .expanded=${args.expanded}
     .disabled=${args.disabled}
+    .rotate=${args.rotate}
     @bqFocus=${args.bqFocus}
     @bqClick=${args.bqClick}
     @bqBlur=${args.bqBlur}
@@ -86,6 +90,7 @@ const AvatarTemplate = (args: Args) =>
     appearance=${args.appearance}
     .expanded=${args.expanded}
     .disabled=${args.disabled}
+    .rotate=${args.rotate}
     @bqFocus=${args.bqFocus}
     @bqClick=${args.bqClick}
     @bqBlur=${args.bqBlur}
@@ -107,7 +112,6 @@ export const Avatar: Story = {
 
 const MoreTemplate = (args: Args) => {
   const handleClick = (event) => {
-    console.log('def here ??');
     event.preventDefault();
   };
 
@@ -116,6 +120,7 @@ const MoreTemplate = (args: Args) => {
     appearance=${args.appearance}
     .expanded=${args.expanded}
     .disabled=${args.disabled}
+    .rotate=${args.rotate}
     @bqFocus=${args.bqFocus}
     @bqClick=${args.bqClick}
     @bqBlur=${args.bqBlur}

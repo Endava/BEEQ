@@ -56,6 +56,7 @@ export namespace Components {
         "appearance": TAccordionAppearance;
         "disabled": boolean;
         "expanded": boolean;
+        "rotate": boolean;
         "size": TAccordionSize;
     }
     interface BqAccordionGroup {
@@ -1825,6 +1826,7 @@ declare namespace LocalJSX {
           * Handler to be called when the accordion gets focus
          */
         "onBqFocus"?: (event: BqAccordionCustomEvent<HTMLBqAccordionElement>) => void;
+        "rotate"?: boolean;
         "size"?: TAccordionSize;
     }
     interface BqAccordionGroup {

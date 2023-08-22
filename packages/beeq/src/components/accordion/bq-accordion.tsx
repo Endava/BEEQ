@@ -42,6 +42,8 @@ export class BqAccordion {
 
   @Prop({ reflect: true }) disabled: boolean = false;
 
+  @Prop({ reflect: true }) rotate: boolean = false;
+
   @Prop({ reflect: true, mutable: true }) size: TAccordionSize = 'medium';
 
   @Prop({ reflect: true, mutable: true }) appearance: TAccordionAppearance = 'filled';
@@ -147,14 +149,21 @@ export class BqAccordion {
           >
             <slot name="suffix" onSlotchange={this.handleSuffixSlotChange} />
           </div>
-
-          <div class={{ 'flex items-center justify-center': true, '!hidden': this.open }}>
-            <slot name="expanded">
+          <div
+            class={{
+              'flex items-center justify-center': true,
+              '!hidden': this.open && !this.rotate,
+              'rotate-180': this.rotate && this.open,
+            }}
+          >
+            <slot name="expand">
               <bq-icon name="plus" />
             </slot>
           </div>
-          <div class={{ 'flex items-center justify-center': true, '!hidden': !this.open }}>
-            <slot name="collapsed">
+          <div
+            class={{ 'flex items-center justify-center': true, '!hidden': (!this.open && !this.rotate) || this.rotate }}
+          >
+            <slot name="collapse">
               <bq-icon name="minus" />
             </slot>
           </div>
