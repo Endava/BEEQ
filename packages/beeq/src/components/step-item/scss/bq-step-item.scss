@@ -1,0 +1,65 @@
+/* -------------------------------------------------------------------------- */
+/*                                Step item styles                */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-step-item-variables';
+
+:host {
+  --bq-icon--color: var(--bq-icon--primary);
+  --bq-divider--stroke-color: var(--bq-ui--secondary);
+}
+
+:host([status='current']) {
+  --bq-icon--color: var(--bq-icon--brand);
+}
+
+:host([status='error']) {
+  --bq-icon--color: var(--bq-icon--danger);
+}
+
+:host([status='completed']) {
+  --bq-icon--color: var(--bq-icon--success);
+}
+
+:host([status='disabled']) {
+  --bq-icon--color: var(--bq-icon--primary-disabled);
+}
+
+.bq-step-item {
+  bq-avatar::part(base) {
+    --bq-avatar--border-color: transparent;
+    @apply bg-ui-secondary text-text-secondary;
+  }
+}
+
+.bq-step-item--error {
+  bq-avatar::part(base) {
+    @apply bg-ui-danger text-text-danger;
+  }
+}
+
+.bq-step-item--current {
+  bq-avatar::part(base) {
+    @apply bg-ui-brand text-icon-secondary-inverse;
+  }
+}
+
+.bq-step-item--disabled {
+  bq-avatar::part(base) {
+    @apply bg-ui-secondary-disabled text-text-secondary-disabled;
+  }
+}
+
+.bq-step-item--completed {
+  bq-avatar::part(base) {
+    @apply bg-ui-success text-text-success;
+  }
+}
+
+.bq-step-item__description::slotted(*) {
+  @apply mt-1 text-s;
+}
+
+.bq-divider {
+  --bq-divider--stroke-color: var(--bq-ui--secondary);
+}

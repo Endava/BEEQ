@@ -19,6 +19,8 @@ import { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-si
 import { TSliderType } from "./components/slider/bq-slider.types";
 import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 import { TStatusType } from "./components/status/bq-status.types";
+import { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
+import { TStepItemStatus } from "./components/step-item/bq-step-item.types";
 import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
 import { TTabSize } from "./components/tab/bq-tab.types";
 import { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
@@ -37,6 +39,8 @@ export { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-si
 export { TSliderType } from "./components/slider/bq-slider.types";
 export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 export { TStatusType } from "./components/status/bq-status.types";
+export { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
+export { TStepItemStatus } from "./components/step-item/bq-step-item.types";
 export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
 export { TTabSize } from "./components/tab/bq-tab.types";
 export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
@@ -769,6 +773,39 @@ export namespace Components {
          */
         "type": TStatusType;
     }
+    interface BqStepItem {
+        /**
+          * It defines whether this step item is last in stepper
+         */
+        "isLast"?: boolean;
+        /**
+          * Step number
+         */
+        "number"?: number;
+        /**
+          * It defines prefix size
+         */
+        "size"?: TStepsSize;
+        /**
+          * It defines step item appearance based on its status
+         */
+        "status"?: TStepItemStatus;
+        /**
+          * It defines the type of steps
+         */
+        "type": TStepsType;
+        /**
+          * Step value
+         */
+        "value"?: string;
+    }
+    interface BqSteps {
+        "size": TStepsSize;
+        /**
+          * It defines the type of steps
+         */
+        "type": TStepsType;
+    }
     /**
      * Toggle switches are digital on/off switches.
      * They should provide immediate results, giving users the freedom to control their preferences as needed.
@@ -1096,6 +1133,14 @@ export interface BqSliderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqSliderElement;
 }
+export interface BqStepItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqStepItemElement;
+}
+export interface BqStepsCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqStepsElement;
+}
 export interface BqSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqSwitchElement;
@@ -1270,6 +1315,18 @@ declare global {
         prototype: HTMLBqStatusElement;
         new (): HTMLBqStatusElement;
     };
+    interface HTMLBqStepItemElement extends Components.BqStepItem, HTMLStencilElement {
+    }
+    var HTMLBqStepItemElement: {
+        prototype: HTMLBqStepItemElement;
+        new (): HTMLBqStepItemElement;
+    };
+    interface HTMLBqStepsElement extends Components.BqSteps, HTMLStencilElement {
+    }
+    var HTMLBqStepsElement: {
+        prototype: HTMLBqStepsElement;
+        new (): HTMLBqStepsElement;
+    };
     /**
      * Toggle switches are digital on/off switches.
      * They should provide immediate results, giving users the freedom to control their preferences as needed.
@@ -1335,6 +1392,8 @@ declare global {
         "bq-slider": HTMLBqSliderElement;
         "bq-spinner": HTMLBqSpinnerElement;
         "bq-status": HTMLBqStatusElement;
+        "bq-step-item": HTMLBqStepItemElement;
+        "bq-steps": HTMLBqStepsElement;
         "bq-switch": HTMLBqSwitchElement;
         "bq-tab": HTMLBqTabElement;
         "bq-tab-group": HTMLBqTabGroupElement;
@@ -2211,6 +2270,44 @@ declare namespace LocalJSX {
          */
         "type"?: TStatusType;
     }
+    interface BqStepItem {
+        /**
+          * It defines whether this step item is last in stepper
+         */
+        "isLast"?: boolean;
+        /**
+          * Step number
+         */
+        "number"?: number;
+        "onBqClick"?: (event: BqStepItemCustomEvent<{ target: HTMLBqStepItemElement; value: string }>) => void;
+        /**
+          * It defines prefix size
+         */
+        "size"?: TStepsSize;
+        /**
+          * It defines step item appearance based on its status
+         */
+        "status"?: TStepItemStatus;
+        /**
+          * It defines the type of steps
+         */
+        "type"?: TStepsType;
+        /**
+          * Step value
+         */
+        "value"?: string;
+    }
+    interface BqSteps {
+        /**
+          * Handler to be called when the tab value changes
+         */
+        "onBqChange"?: (event: BqStepsCustomEvent<{ target: HTMLBqStepItemElement; value: string }>) => void;
+        "size"?: TStepsSize;
+        /**
+          * It defines the type of steps
+         */
+        "type"?: TStepsType;
+    }
     /**
      * Toggle switches are digital on/off switches.
      * They should provide immediate results, giving users the freedom to control their preferences as needed.
@@ -2506,6 +2603,8 @@ declare namespace LocalJSX {
         "bq-slider": BqSlider;
         "bq-spinner": BqSpinner;
         "bq-status": BqStatus;
+        "bq-step-item": BqStepItem;
+        "bq-steps": BqSteps;
         "bq-switch": BqSwitch;
         "bq-tab": BqTab;
         "bq-tab-group": BqTabGroup;
@@ -2551,6 +2650,8 @@ declare module "@stencil/core" {
              */
             "bq-spinner": LocalJSX.BqSpinner & JSXBase.HTMLAttributes<HTMLBqSpinnerElement>;
             "bq-status": LocalJSX.BqStatus & JSXBase.HTMLAttributes<HTMLBqStatusElement>;
+            "bq-step-item": LocalJSX.BqStepItem & JSXBase.HTMLAttributes<HTMLBqStepItemElement>;
+            "bq-steps": LocalJSX.BqSteps & JSXBase.HTMLAttributes<HTMLBqStepsElement>;
             /**
              * Toggle switches are digital on/off switches.
              * They should provide immediate results, giving users the freedom to control their preferences as needed.
