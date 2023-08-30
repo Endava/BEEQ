@@ -4,7 +4,7 @@ import { create } from '@storybook/theming';
 const theme = create({
   base: 'light',
 
-  colorPrimary: '#f0f1f2',
+  colorPrimary: '#f7f8f9',
   colorSecondary: '#4f46e5',
 
   // BRAND
@@ -13,20 +13,22 @@ const theme = create({
   brandImage: './assets/beeq-logo.svg',
 
   // UI
-  appBg: '#f0f1f2',
+  appBg: '#f7f8f9',
   appContentBg: '#fff',
+  appBorderRadius: 12,
 
   // Typography
   fontBase: '"Outfit", sans-serif',
+  fontCode: 'monospace',
 
   // Text colors
-  textColor: '#2b2e33',
+  textColor: '#25282d',
   textInverseColor: '#fff',
 
   // Toolbar default and active colors
-  barTextColor: '#2b2e33',
-  barSelectedColor: '#6366F1',
-  barBg: '#f0f1f2',
+  barTextColor: '#25282d',
+  barSelectedColor: '#4f46e5',
+  barBg: '#f7f8f9',
 });
 
 addons.setConfig({
