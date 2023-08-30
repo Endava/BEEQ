@@ -1,0 +1,54 @@
+/* stylelint-disable custom-property-pattern */
+
+.sbdocs-wrapper {
+  padding: 0 !important;
+}
+
+.sbdocs-wrapper .sbdocs-content {
+  max-width: 100% !important;
+  min-height: 100vh;
+}
+
+.sbdocs-content a,
+.sbdocs-content blockquote,
+.sbdocs-content h1,
+.sbdocs-content h2,
+.sbdocs-content li,
+.sbdocs-content ol,
+.sbdocs-content p,
+.sbdocs-content table,
+.sbdocs-content td,
+.sbdocs-content th,
+.sbdocs-content tr,
+.sbdocs-content ul {
+  font-family: '"Outfit"', sans-serif;
+  font-size: var(--bq-font-size--m);
+  font-weight: var(--bq-font-weight--regular);
+  color: var(--bq-text--primary);
+}
+
+.sbdocs-content a {
+  color: var(--bq-text--brand);
+}
+
+.sbdocs-content h1,
+.sbdocs-content h2 {
+  line-height: var(--bq-font-line-height--small);
+}
+
+.sbdocs-content h1 {
+  font-size: var(--bq-font-size--xxl2);
+}
+
+.sbdocs-content h2 {
+  font-size: var(--bq-font-size--xxl);
+  border-bottom: 1px solid var(--bq-ui--secondary);
+}
+
+.docblock-typeset {
+  background-color: var(--bq-background--primary) !important;
+}
+
+.docs-story > div:first-child {
+  min-height: 250px;
+}
