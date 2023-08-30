@@ -9,7 +9,7 @@
 .angular
 master.zip
 packages/beeq/.stencil
-packages/beeq/.storybook/css/**
+packages/beeq/.storybook/assets/css/stories.css
 packages/beeq/custom-elements.json
 packages/beeq/src/components/icon/svg/**
 packages/beeq-angular/**/directives
