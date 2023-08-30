@@ -116,16 +116,18 @@ export class BqStepItem {
         ) : (
           <slot name="prefix"></slot>
         )}
-        <div
-          part="title"
-          class={{
-            'text-m': true,
-            'text-text-secondary-disabled': isDisabled,
-            'text-text-brand': isCurrent,
-            'pr-2': true,
-          }}
-        >
-          <slot />
+        <div>
+          <div
+            part="title"
+            class={{
+              'whitespace-nowrap pr-xs3 text-m': true,
+              'pointer-events-none text-text-secondary-disabled': isDisabled,
+              'text-text-brand': isCurrent,
+            }}
+          >
+            <slot />
+          </div>
+
           <div
             part="description"
             class={{
