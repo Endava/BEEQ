@@ -1,0 +1,364 @@
+import { DocsContainer, Meta, Source, Typeset } from '@storybook/blocks';
+
+<Meta title="Foundation/Typography" parameters={{
+  previewTabs: {
+    canvas: { hidden: true },
+  },
+  docs: {
+    container: ({ context }) => {
+      const { globals} = context.store.globals
+
+      const typography = {
+        type: {
+          primary: '"Outfit", sans-serif',
+        },
+        weight: {
+          regular: '400',
+          semibold: '500',
+          bold: '700',
+        },
+        size: {
+          xs: 12,
+          s: 14,
+          m: 16,
+          l: 20,
+          xl: 24,
+          xxl: 32,
+          xxl2: 40,
+          xxl3: 48,
+          xxl4: 56,
+          xxl5: 64,
+        },
+      };
+
+      const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+
+      return (
+        <DocsContainer context={context}>
+          <div className="flex min-h-[100vh] w-full justify-center bg-bg-primary pt-xl" data-theme={globals.theme.toLowerCase() ?? 'light'}>
+            <div className="container mx-auto px-l font-outfit text-m text-text-primary">
+              <h1>Typography</h1>
+
+              <p>
+                Typography is an essential part of any design system, and it's important to understand the different types of typography and how to use them effectively.
+                BEEQ uses the Outfit font, a versatile and modern typeface that caters to a wide range of typographical needs.
+              </p>
+
+              <p><strong>Font:</strong> <a className="bq-link text-text-brand" href="https://fonts.google.com/specimen/Outfit">Outfit</a></p>
+
+              <p>The Outfit font is carefully selected for its excellent legibility, adaptability, and aesthetic appeal, ensuring a cohesive and visually pleasing user experience.</p>
+
+              <h2>Display</h2>
+
+              <p>
+                Display typography is used for headlines, titles, and other large text elements that are meant to grab the reader's attention.
+                It is often used for special announcements, promotions, or other important messages that need to stand out from the rest of the content on the page.
+                To use the display font, add the `display` class to the element (recommended to be a <code>h1</code> HTML element).
+              </p>
+
+              <Source dark format="dedent" language="html" code={`<h1 class="display text-text-primary">${SampleText}</h1>`} />
+
+              <div className="rounded-xs border border-solid border-stroke-success bg-ui-success-alt p-m">
+                <strong>💡 NOTE:</strong>
+                <p>
+                  In addition to the `.display` class, you can also add the `.semibold` or `.bold` classes to change the font weight of the text.
+                  The `.semibold` class is a lighter weight than the `.bold` class, but still provides a noticeable difference in weight.
+                  **It applies to all headings, not just the display heading.**
+                </p>
+              </div>
+
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.xxl5)]}
+                fontWeight={typography.weight.normal}
+                sampleText={SampleText}
+              />
+
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.xxl5)]}
+                fontWeight={typography.weight.semibold}
+                sampleText={SampleText}
+              />
+
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.xxl5)]}
+                fontWeight={typography.weight.bold}
+                sampleText={SampleText}
+              />
+
+              <h2>H1</h2>
+
+              <p>
+                The H1 heading is typically used as the main heading of a page or section, and should be visually distinct from other headings on the page.
+                It is usually the largest and most prominent heading on the page, and is often used to introduce the main topic or purpose of the page.
+              </p>
+
+              <p>To set a H1 heading, you can use the native <code>h1</code> HTML tag:</p>
+
+              <Source dark format="dedent" language="html" code={`<h1>${SampleText}</h1>`} />
+              <p>or the <code>.h1</code> class:</p>
+              <Source dark format="dedent" language="html" code={`<p class="h1">${SampleText}</p>`} />
+
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.xxl4)]}
+                fontWeight={typography.weight.normal}
+                sampleText={SampleText}
+              />
+
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.xxl4)]}
+                fontWeight={typography.weight.semibold}
+                sampleText={SampleText}
+              />
+
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.xxl4)]}
+                fontWeight={typography.weight.bold}
+                sampleText={SampleText}
+              />
+
+              <h2>H2</h2>
+
+              <p>
+                The H2 heading is often used to introduce a new topic or section, and can be used to break up long blocks of text into more manageable sections.
+                It should be visually distinct from other headings on the page, and is usually the second largest and most prominent heading on the page.
+              </p>
+
+              <p>To set a H1 heading, you can use the native <code>h2</code> HTML tag:</p>
+
+              <Source dark format="dedent" language="html" code={`<h2>${SampleText}</h2>`} />
+              <p>or the <code>.h2</code> class:</p>
+              <Source dark format="dedent" language="html" code={`<p class="h2">${SampleText}</p>`} />
+
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.xxl3)]}
+                fontWeight={typography.weight.normal}
+                sampleText={SampleText}
+              />
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.xxl3)]}
+                fontWeight={typography.weight.semibold}
+                sampleText={SampleText}
+              />
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.xxl3)]}
+                fontWeight={typography.weight.bold}
+                sampleText={SampleText}
+              />
+
+              <h2>H3</h2>
+
+              <p>
+                The H3 heading is used to introduce subtopics or sections within a larger topic.
+                It should be visually distinct from other headings on the page, and is usually smaller than the H2 heading.
+              </p>
+
+              <p>To set a H1 heading, you can use the native <code>h3</code> HTML tag:</p>
+
+              <Source dark format="dedent" language="html" code={`<h3>${SampleText}</h3>`} />
+              <p>or the <code>.h3</code> class:</p>
+              <Source dark format="dedent" language="html" code={`<p class="h3">${SampleText}</p>`} />
+
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.xxl2)]}
+                fontWeight={typography.weight.normal}
+                sampleText={SampleText}
+              />
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.xxl2)]}
+                fontWeight={typography.weight.semibold}
+                sampleText={SampleText}
+              />
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.xxl2)]}
+                fontWeight={typography.weight.bold}
+                sampleText={SampleText}
+              />
+
+              <h2>H4</h2>
+
+              <p>
+                The H4 heading is used to introduce subtopics or sections within a larger topic.
+                It should be visually distinct from other headings on the page, and is usually smaller than the H3 heading.
+              </p>
+
+              <p>To set a H1 heading, you can use the native <code>h4</code> HTML tag:</p>
+
+              <Source dark format="dedent" language="html" code={`<h4>${SampleText}</h4>`} />
+              <p>or the <code>.h4</code> class:</p>
+              <Source dark format="dedent" language="html" code={`<p class="h4">${SampleText}</p>`} />
+
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.xxl)]}
+                fontWeight={typography.weight.normal}
+                sampleText={SampleText}
+              />
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.xxl)]}
+                fontWeight={typography.weight.semibold}
+                sampleText={SampleText}
+              />
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.xxl)]}
+                fontWeight={typography.weight.bold}
+                sampleText={SampleText}
+              />
+
+              <h2>H5</h2>
+
+              <p>
+                The H5 heading is used to introduce subtopics or sections within a larger topic.
+                It should be visually distinct from other headings on the page, and is usually smaller than the H4 heading.
+              </p>
+
+              <p>To set a H1 heading, you can use the native <code>h5</code> HTML tag:</p>
+
+              <Source dark format="dedent" language="html" code={`<h5>${SampleText}</h5>`} />
+              <p>or the <code>.h5</code> class:</p>
+              <Source dark format="dedent" language="html" code={`<p class="h5">${SampleText}</p>`} />
+
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.xl)]}
+                fontWeight={typography.weight.normal}
+                sampleText={SampleText}
+              />
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.xl)]}
+                fontWeight={typography.weight.semibold}
+                sampleText={SampleText}
+              />
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.xl)]}
+                fontWeight={typography.weight.bold}
+                sampleText={SampleText}
+              />
+
+              <h2>H6</h2>
+
+              <p>
+                The H6 heading is used to introduce subtopics or sections within a larger topic.
+                It should be visually distinct from other headings on the page, and is usually smaller than the H5 heading.
+              </p>
+
+              <p>To set a H1 heading, you can use the native <code>h6</code> HTML tag:</p>
+
+              <Source dark format="dedent" language="html" code={`<h6>${SampleText}</h6>`} />
+              <p>or the <code>.h6</code> class:</p>
+              <Source dark format="dedent" language="html" code={`<p class="h6">${SampleText}</p>`} />
+
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.l)]}
+                fontWeight={typography.weight.normal}
+                sampleText={SampleText}
+              />
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.l)]}
+                fontWeight={typography.weight.normal}
+                sampleText={SampleText}
+              />
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.l)]}
+                fontWeight={typography.weight.normal}
+                sampleText={SampleText}
+              />
+
+              <h2>Body</h2>
+
+              <p>The body text is used for the main content of a page, and should be visually distinct from other headings on the page.</p>
+
+              <div className="rounded-xs border border-solid border-stroke-warning bg-ui-warning-alt p-m">
+                ❗️ BEEQ set by default the body styles in the global CSS, so **you don't need to add any class to use it**.
+              </div>
+
+              <Source dark format="dedent" language="html" code={`<p>${SampleText}</p>`} />
+
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.m)]}
+                fontWeight={typography.weight.normal}
+                sampleText={SampleText}
+              />
+
+              <h2>Caption</h2>
+
+              <p>
+                The caption element is used to provide a short description or explanation about an image or other visual element.
+                It is typically used in conjunction with the figure element, which contains the visual element being described.
+              </p>
+
+              <p>To set a caption, you can use the native <code>figcaption</code> HTML tag:</p>
+
+              <Source dark format="dedent" language="html" code={`<figcaption>${SampleText}</figcaption>`} />
+              <p>or the <code>.caption</code> class:</p>
+              <Source dark format="dedent" language="html" code={`<p class="caption">${SampleText}</p>`} />
+
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.s)]}
+                fontWeight={typography.weight.normal}
+                sampleText={SampleText}
+              />
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.s)]}
+                fontWeight={typography.weight.semibold}
+                sampleText={SampleText}
+              />
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.s)]}
+                fontWeight={typography.weight.bold}
+                sampleText={SampleText}
+              />
+
+              <h2>Overline</h2>
+
+              <p>To set a overline, you can use the <code>.overline</code> CSS class:</p>
+
+              <Source dark format="dedent" language="html" code={`<span class="overline">${SampleText}</span>`} />
+
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.xs)]}
+                fontWeight={typography.weight.normal}
+                sampleText={SampleText}
+              />
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.xs)]}
+                fontWeight={typography.weight.semibold}
+                sampleText={SampleText}
+              />
+              <Typeset
+                fontFamily={typography.type.primary}
+                fontSizes={[Number(typography.size.xs)]}
+                fontWeight={typography.weight.bold}
+                sampleText={SampleText}
+              />
+            </div>
+          </div>
+        </DocsContainer>
+      )
+    },
+  },
+}} />
