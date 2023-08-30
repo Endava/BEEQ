@@ -42,9 +42,6 @@ export { TTabSize } from "./components/tab/bq-tab.types";
 export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 export { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export namespace Components {
-    /**
-     * An avatar represents an object made of different pieces of information, in a way that is understandable at a glance.
-     */
     interface BqAvatar {
         /**
           * Alternate text for the avatar image if the image cannot be displayed
@@ -1120,9 +1117,6 @@ export interface BqToastCustomEvent<T> extends CustomEvent<T> {
     target: HTMLBqToastElement;
 }
 declare global {
-    /**
-     * An avatar represents an object made of different pieces of information, in a way that is understandable at a glance.
-     */
     interface HTMLBqAvatarElement extends Components.BqAvatar, HTMLStencilElement {
     }
     var HTMLBqAvatarElement: {
@@ -1350,9 +1344,6 @@ declare global {
     }
 }
 declare namespace LocalJSX {
-    /**
-     * An avatar represents an object made of different pieces of information, in a way that is understandable at a glance.
-     */
     interface BqAvatar {
         /**
           * Alternate text for the avatar image if the image cannot be displayed
@@ -2527,9 +2518,6 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            /**
-             * An avatar represents an object made of different pieces of information, in a way that is understandable at a glance.
-             */
             "bq-avatar": LocalJSX.BqAvatar & JSXBase.HTMLAttributes<HTMLBqAvatarElement>;
             "bq-badge": LocalJSX.BqBadge & JSXBase.HTMLAttributes<HTMLBqBadgeElement>;
             "bq-breadcrumb": LocalJSX.BqBreadcrumb & JSXBase.HTMLAttributes<HTMLBqBreadcrumbElement>;
