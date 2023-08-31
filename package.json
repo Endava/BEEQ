@@ -129,7 +129,7 @@
     "nx-cloud": "16.3.0",
     "nx-stylelint": "15.0.0",
     "plop": "3.1.2",
-    "postcss": "8.4.27",
+    "postcss": "8.4.28",
     "postcss-import": "15.1.0",
     "postcss-preset-env": "9.1.1",
     "postcss-url": "10.1.3",
