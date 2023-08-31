@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property    | Attribute    | Description                                 | Type     | Default     |
-| ----------- | ------------ | ------------------------------------------- | -------- | ----------- |
-| `ariaLabel` | `aria-label` | If true, the option is selected and active. | `string` | `'Options'` |
+| Property    | Attribute    | Description              | Type     | Default     |
+| ----------- | ------------ | ------------------------ | -------- | ----------- |
+| `ariaLabel` | `aria-label` | Aria label for the list. | `string` | `'Options'` |
 
 
 ## Events

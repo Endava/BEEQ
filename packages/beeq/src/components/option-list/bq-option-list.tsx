@@ -29,7 +29,7 @@ export class BqOptionList {
   // Prop lifecycle events
   // =======================
 
-  /** If true, the option is selected and active. */
+  /** Aria label for the list. */
   @Prop({ reflect: true }) ariaLabel: string = 'Options';
 
   // Events section

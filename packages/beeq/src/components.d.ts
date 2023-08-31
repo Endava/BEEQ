@@ -495,7 +495,7 @@ export namespace Components {
     }
     interface BqOptionList {
         /**
-          * If true, the option is selected and active.
+          * Aria label for the list.
          */
         "ariaLabel": string;
     }
@@ -1881,7 +1881,7 @@ declare namespace LocalJSX {
     }
     interface BqOptionList {
         /**
-          * If true, the option is selected and active.
+          * Aria label for the list.
          */
         "ariaLabel"?: string;
         /**
