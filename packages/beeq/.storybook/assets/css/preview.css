@@ -22,7 +22,7 @@
 .sbdocs-content th,
 .sbdocs-content tr,
 .sbdocs-content ul {
-  font-family: '"Outfit"', sans-serif;
+  font-family: var(--bq-font-family--outfit);
   font-size: var(--bq-font-size--m);
   font-weight: var(--bq-font-weight--regular);
   color: var(--bq-text--primary);
@@ -48,6 +48,32 @@
 
 .docblock-typeset {
   background-color: var(--bq-background--primary) !important;
+}
+
+.docblock-argstable .docblock-argstable-body {
+  box-shadow: var(--bq-box-shadow--m);
+  filter: none !important;
+}
+
+.docblock-argstable .docblock-argstable-body > tr:first-of-type > td:first-of-type {
+  border-top-left-radius: var(--bq-radius--m) !important;
+}
+
+.docblock-argstable .docblock-argstable-body > tr:first-of-type > td:last-of-type {
+  border-top-right-radius: var(--bq-radius--m) !important;
+}
+
+.docblock-argstable .docblock-argstable-body > tr:last-of-type > td:first-of-type {
+  border-bottom-left-radius: var(--bq-radius--m) !important;
+}
+
+.docblock-argstable .docblock-argstable-body > tr:last-of-type > td:last-of-type {
+  border-bottom-right-radius: var(--bq-radius--m) !important;
+}
+
+.docblock-argstable .docblock-argstable-body > tr >td[colspan="1"],
+.docblock-argstable .docblock-argstable-body > tr >td[colspan="2"] {
+  background-color: var(--bq-ui--primary-alt) !important;
 }
 
 .docs-story > div:first-child {
