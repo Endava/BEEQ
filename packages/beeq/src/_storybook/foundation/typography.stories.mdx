@@ -6,7 +6,7 @@ import { DocsContainer, Meta, Source, Typeset } from '@storybook/blocks';
   },
   docs: {
     container: ({ context }) => {
-      const { globals} = context.store.globals
+      const { globals} = context.store.globals;
 
       const typography = {
         type: {
@@ -35,8 +35,8 @@ import { DocsContainer, Meta, Source, Typeset } from '@storybook/blocks';
 
       return (
         <DocsContainer context={context}>
-          <div className="flex min-h-[100vh] w-full justify-center bg-bg-primary pt-xl" data-theme={globals.theme.toLowerCase() ?? 'light'}>
-            <div className="container mx-auto px-l font-outfit text-m text-text-primary">
+          <div className="bq-doc__wrapper" data-theme={globals.theme.toLowerCase() ?? 'light'}>
+            <div className="bq-doc__container">
               <h1>Typography</h1>
 
               <p>

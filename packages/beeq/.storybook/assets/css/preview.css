@@ -1,3 +1,4 @@
+/* stylelint-disable media-feature-range-notation */
 /* stylelint-disable custom-property-pattern */
 
 .sbdocs-wrapper {
@@ -42,7 +43,7 @@
 
 .sbdocs-content h2 {
   font-size: var(--bq-font-size--xxl);
-  border-bottom: 1px solid var(--bq-ui--secondary);
+  border-bottom: none;
 }
 
 .docblock-typeset {
@@ -51,4 +52,48 @@
 
 .docs-story > div:first-child {
   min-height: 250px;
+}
+
+.bq-doc__wrapper {
+  display: flex;
+  justify-content: center;
+  background-color: var(--bq-background--primary);
+  padding-top: var(--bq-spacing-xl);
+  min-height: 100vh;
+  width: 100%;
+}
+
+
+.bq-doc__container {
+  font-family: '"Outfit"', sans-serif;
+  color: var(--bq-text--primary);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--bq-spacing-l);
+  padding-right: var(--bq-spacing-l);
+  width: 100%px;
+}
+
+@media (min-width: 640px) {
+  .bq-doc__container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .bq-doc__container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .bq-doc__container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .bq-doc__container {
+    max-width: 1280px;
+  }
 }
