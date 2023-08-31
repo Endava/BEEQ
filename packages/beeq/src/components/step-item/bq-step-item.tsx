@@ -120,7 +120,7 @@ export class BqStepItem {
           <div
             part="title"
             class={{
-              'whitespace-nowrap pr-xs3 text-m': true,
+              'pr-xs3 text-m': true,
               'pointer-events-none text-text-secondary-disabled': isDisabled,
               'text-text-brand': isCurrent,
             }}
@@ -142,6 +142,7 @@ export class BqStepItem {
 
         {!this.isLast && (
           <bq-divider
+            stroke-color="ui--secondary"
             class={{
               '-z-10 pt-3': true,
               'pt-4': this.size === 'medium',

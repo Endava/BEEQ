@@ -6,7 +6,6 @@
 
 :host {
   --bq-icon--color: var(--bq-icon--primary);
-  --bq-divider--stroke-color: var(--bq-ui--secondary);
 }
 
 :host([status='current']) {
@@ -52,14 +51,10 @@
 
 .bq-step-item--completed {
   bq-avatar::part(base) {
-    @apply bg-ui-success text-text-success;
+    @apply bg-ui-success-alt text-text-success;
   }
 }
 
 .bq-step-item__description::slotted(*) {
   @apply mt-1 text-s;
-}
-
-.bq-divider {
-  --bq-divider--stroke-color: var(--bq-ui--secondary);
 }
