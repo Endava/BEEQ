@@ -4,8 +4,6 @@ import { TAvatarShape, TAvatarSize, AVATAR_SHAPE, AVATAR_SIZE } from './bq-avata
 import { validatePropValue } from '../../shared/utils';
 
 /**
- * An avatar represents an object made of different pieces of information, in a way that is understandable at a glance.
- *
  * @part base - The component's internal wrapper.
  * @part img - The `<image>` tag element that load the image source.
  * @part text - The `<span>` tag element that renderd the `Initials` text string.
