@@ -1,31 +1,35 @@
 import { ArgTypes, Title, Subtitle } from '@storybook/addon-docs';
 
-<Title>Textarea</Title>
+<div className="bq-doc__wrapper" data-theme="light">
+  <div className="bq-doc__container" >
+    <Title>Textarea</Title>
 
-The Textarea component is a multi-line text input control that is often used in a form to collect user inputs like comments or reviews.
+    The Textarea component is a multi-line text input control that is often used in a form to collect user inputs like comments or reviews.
 
-<Subtitle>Usage</Subtitle>
+    <Subtitle>Usage</Subtitle>
 
-Some of the best practices for using the Textarea component are:
+    Some of the best practices for using the Textarea component are:
 
-- **Use a label**: Always associate a `<label>` element with the textarea for accessibility purposes.
-- **Use placeholder text**: You can use the placeholder attribute to provide a short hint that describes the expected value of the textarea.
-- **Use rows attribute**: You can use the rows attribute to specify an exact size for the textarea to take.
-- **Use maxlength attribute**: You can use the maxlength attribute to specify the maximum number of characters allowed in the textarea.
-- **Use wrap attribute**: You can use the wrap attribute to specify how the text in a textarea is to be wrapped when submitted in a form. The possible values are hard and soft. The hard value means that the text will be wrapped at the edge of the textarea and each line will end with a newline character. The soft value means that the text will not be wrapped by the browser and no newline characters will be added.
-- **Use autocomplete attribute**: You can use the autocomplete attribute to indicate whether the value of the textarea can be automatically completed by the browser based on previous user inputs. The possible values are on and off. The on value means that the browser can suggest values for the textarea, while the off value means that it cannot. This can help users save time and avoid typos.
+    - **Use a label**: Always associate a `<label>` element with the textarea for accessibility purposes.
+    - **Use placeholder text**: You can use the placeholder attribute to provide a short hint that describes the expected value of the textarea.
+    - **Use rows attribute**: You can use the rows attribute to specify an exact size for the textarea to take.
+    - **Use maxlength attribute**: You can use the maxlength attribute to specify the maximum number of characters allowed in the textarea.
+    - **Use wrap attribute**: You can use the wrap attribute to specify how the text in a textarea is to be wrapped when submitted in a form. The possible values are hard and soft. The hard value means that the text will be wrapped at the edge of the textarea and each line will end with a newline character. The soft value means that the text will not be wrapped by the browser and no newline characters will be added.
+    - **Use autocomplete attribute**: You can use the autocomplete attribute to indicate whether the value of the textarea can be automatically completed by the browser based on previous user inputs. The possible values are on and off. The on value means that the browser can suggest values for the textarea, while the off value means that it cannot. This can help users save time and avoid typos.
 
-<Subtitle>👍 When to use</Subtitle>
+    <Subtitle>👍 When to use</Subtitle>
 
-You should use a textarea component in a web application when you want to allow users to enter a sizeable amount of free-form text, for example a comment on a review or feedback form.
-A textarea can hold an unlimited number of characters and the text renders in a fixed-width. A textarea is different from a single-line text input field, which is more suitable for short and simple inputs like names or email addresses.
+    You should use a textarea component in a web application when you want to allow users to enter a sizeable amount of free-form text, for example a comment on a review or feedback form.
+    A textarea can hold an unlimited number of characters and the text renders in a fixed-width. A textarea is different from a single-line text input field, which is more suitable for short and simple inputs like names or email addresses.
 
-Some examples are:
+    Some examples are:
 
-- **Content management systems**: Web applications that allow users to create and edit web content.
-- **Social media platforms**: Web applications that allow users to post and share their thoughts, opinions, or experiences.
-- **Online surveys**: Web applications that allow users to provide feedback or opinions on various topics.
+    - **Content management systems**: Web applications that allow users to create and edit web content.
+    - **Social media platforms**: Web applications that allow users to post and share their thoughts, opinions, or experiences.
+    - **Online surveys**: Web applications that allow users to provide feedback or opinions on various topics.
 
-<Title>Properties</Title>
+    <Title>Properties</Title>
 
-<ArgTypes of="bq-textarea" />
+    <ArgTypes of="bq-textarea" />
+  </div>
+</div>

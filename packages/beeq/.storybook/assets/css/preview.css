@@ -1,0 +1,125 @@
+/* stylelint-disable media-feature-range-notation */
+/* stylelint-disable custom-property-pattern */
+
+.sbdocs-wrapper {
+  padding: 0 !important;
+}
+
+.sbdocs-wrapper .sbdocs-content {
+  max-width: 100% !important;
+  min-height: 100vh;
+}
+
+.sbdocs-content a,
+.sbdocs-content blockquote,
+.sbdocs-content h1,
+.sbdocs-content h2,
+.sbdocs-content li,
+.sbdocs-content ol,
+.sbdocs-content p,
+.sbdocs-content table,
+.sbdocs-content td,
+.sbdocs-content th,
+.sbdocs-content tr,
+.sbdocs-content ul {
+  font-family: var(--bq-font-family--outfit);
+  font-size: var(--bq-font-size--m);
+  font-weight: var(--bq-font-weight--regular);
+  color: var(--bq-text--primary);
+}
+
+.sbdocs-content a {
+  color: var(--bq-text--brand);
+}
+
+.sbdocs-content h1,
+.sbdocs-content h2 {
+  line-height: var(--bq-font-line-height--small);
+}
+
+.sbdocs-content h1 {
+  font-size: var(--bq-font-size--xxl2);
+}
+
+.sbdocs-content h2 {
+  font-size: var(--bq-font-size--xxl);
+  border-bottom: none;
+}
+
+.docblock-typeset {
+  background-color: var(--bq-background--primary) !important;
+}
+
+.docblock-argstable .docblock-argstable-body {
+  box-shadow: var(--bq-box-shadow--m);
+  filter: none !important;
+}
+
+.docblock-argstable .docblock-argstable-body > tr:first-of-type > td:first-of-type {
+  border-top-left-radius: var(--bq-radius--m) !important;
+}
+
+.docblock-argstable .docblock-argstable-body > tr:first-of-type > td:last-of-type {
+  border-top-right-radius: var(--bq-radius--m) !important;
+}
+
+.docblock-argstable .docblock-argstable-body > tr:last-of-type > td:first-of-type {
+  border-bottom-left-radius: var(--bq-radius--m) !important;
+}
+
+.docblock-argstable .docblock-argstable-body > tr:last-of-type > td:last-of-type {
+  border-bottom-right-radius: var(--bq-radius--m) !important;
+}
+
+.docblock-argstable .docblock-argstable-body > tr >td[colspan="1"],
+.docblock-argstable .docblock-argstable-body > tr >td[colspan="2"] {
+  background-color: var(--bq-ui--primary-alt) !important;
+}
+
+.docs-story > div:first-child {
+  min-height: 250px;
+}
+
+.bq-doc__wrapper {
+  display: flex;
+  justify-content: center;
+  background-color: var(--bq-background--primary);
+  padding-top: var(--bq-spacing-xl);
+  min-height: 100vh;
+  width: 100%;
+}
+
+
+.bq-doc__container {
+  font-family: '"Outfit"', sans-serif;
+  color: var(--bq-text--primary);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--bq-spacing-l);
+  padding-right: var(--bq-spacing-l);
+  width: 100%px;
+}
+
+@media (min-width: 640px) {
+  .bq-doc__container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .bq-doc__container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .bq-doc__container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .bq-doc__container {
+    max-width: 1280px;
+  }
+}

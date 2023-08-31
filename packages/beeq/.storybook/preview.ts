@@ -1,4 +1,4 @@
-import './css/sb-styles.css';
+import './assets/css/stories.css';
 
 import type { DecoratorFunction } from '@storybook/types';
 import type { Preview, WebComponentsRenderer } from '@storybook/web-components';

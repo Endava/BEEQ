@@ -1,0 +1,76 @@
+html,
+body {
+  font-family: '"Outfit"', sans-serif;
+  font-size: 1rem;
+}
+
+.search-field input {
+  border-color: #6b7280;
+  border-radius: 0.5rem;
+  border-width: 1px;
+  font-size: 16px;
+  min-height: 32px;
+}
+
+.search-field input:active,
+.search-field input:focus {
+  border-color: #4f46e5;
+  box-shadow: none;
+}
+
+.sidebar-item,
+.sidebar-item a {
+  display: flex !important;
+  align-items: center !important;
+  font-family: '"Outfit"', sans-serif;
+  font-size: 1rem !important;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.sidebar-item > span {
+  margin-top: initial !important;
+}
+
+.sidebar-item > svg,
+.sidebar-item a > svg {
+  height: 16px !important;
+  width: 16px !important;
+  margin-top: 0;
+}
+
+.sidebar-item > svg[color='primary'] {
+  color: #4f46e5;
+}
+
+.sidebar-item > svg[color='secondary'] {
+  color: #4f46e5;
+}
+
+.sidebar-subheading {
+  margin-top: 16px !important;
+  margin-bottom: 6px !important;
+  font-weight: 600 !important;
+  font-size: 1.125rem !important;
+  line-height: 20px !important;
+  min-height: 20px !important;
+  letter-spacing: 0.05rem !important;
+  text-transform: none !important;
+}
+
+.sidebar-subheading > button {
+  color: #a6aab3;
+  font-family: '"Outfit"', sans-serif;
+  font-size: 1.125rem;
+}
+
+.sidebar-subheading > button:not(.sidebar-subheading-action) > span {
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 6px solid;
+}
+
+.sidebar-subheading > button.sidebar-subheading-action > span > svg {
+  height: 16px !important;
+  width: 16px !important;
+}
