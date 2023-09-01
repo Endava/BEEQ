@@ -1,4 +1,4 @@
-import { h, Component, Host, Element } from '@stencil/core';
+import { Component, Element, h, Host } from '@stencil/core';
 
 /**
  * @part label - The `legend` tag element which acts as a container for the label

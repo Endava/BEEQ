@@ -60,13 +60,19 @@
           // @see https://github.com/import-js/eslint-plugin-import/blob/v2.27.5/docs/rules/order.md
           "error",
           {
-            "newlines-between": "always-and-inside-groups",
+            "groups": ["builtin", "external", ["parent", "sibling"], "index"],
+            "newlines-between": "always",
             "alphabetize": {
-              "caseInsensitive": true,
               "order": "asc",
-              "orderImportKind": "asc"
-            },
-            "groups": ["builtin", "external", ["parent", "sibling"], "index"]
+              "caseInsensitive": true
+            }
+          }
+        ],
+        "sort-imports": [
+          "error",
+          {
+            "ignoreCase": true,
+            "ignoreDeclarationSort": true
           }
         ]
       }

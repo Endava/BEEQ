@@ -1,7 +1,5 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
-
 import { ifDefined } from 'lit/directives/if-defined.js';
-
 import { html } from 'lit-html';
 
 import mdx from './bq-breadcrumb.mdx';

@@ -2,7 +2,6 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html, nothing } from 'lit-html';
 
 import mdx from './bq-notification.mdx';
-
 import { getRandomFromArray } from '../../../shared/utils';
 import { NOTIFICATION_TYPE } from '../bq-notification.types';
 
