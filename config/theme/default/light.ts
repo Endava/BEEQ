@@ -68,7 +68,6 @@ export const DefaultLightTheme = {
   'bq-stroke--primary-active': 'var(--bq-grey-300)',
   'bq-stroke--primary-disabled': 'var(--bq-grey-100)',
   'bq-stroke--primary-alt': 'var(--bq-grey-50)',
-  'bq-stroke--primary-alt-disabled': 'var(--bq-grey-200)',
   /** Secondary */
   'bq-stroke--secondary': 'var(--bq-grey-600)',
   'bq-stroke--secondary-hover': 'var(--bq-grey-500)',

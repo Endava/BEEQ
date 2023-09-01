@@ -58,7 +58,6 @@ export const DECLARATIVE_COLORS = {
     'primary-active': 'var(--bq-stroke--primary-active)',
     'primary-disabled': 'var(--bq-stroke--primary-disabled)',
     'primary-alt': 'var(--bq-stroke--primary-alt)',
-    'primary-alt-disabled': 'var(--bq-stroke--primary-alt-disabled)',
     secondary: 'var(--bq-stroke--secondary)',
     'secondary-hover': 'var(--bq-stroke--secondary-hover)',
     'secondary-active': 'var(--bq-stroke--secondary-active)',
