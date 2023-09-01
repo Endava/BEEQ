@@ -1,4 +1,4 @@
-import { h, Component, Element, Prop, Listen, Event, EventEmitter, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Listen, Prop, Watch } from '@stencil/core';
 
 import { FloatingUIPlacement } from '../../services/interfaces';
 

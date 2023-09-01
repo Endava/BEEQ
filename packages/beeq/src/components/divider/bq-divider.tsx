@@ -1,15 +1,15 @@
-import { h, Component, Element, Prop, Watch, Host, State } from '@stencil/core';
+import { Component, Element, h, Host, Prop, State, Watch } from '@stencil/core';
 
 import {
   DIVIDER_ORIENTATION,
-  DIVIDER_TITLE_ALIGNMENT,
   DIVIDER_ORIENTATION_ENUM,
   DIVIDER_STROKE_LINECAP,
+  DIVIDER_TITLE_ALIGNMENT,
   TDividerOrientation,
-  TDividerTitleAlignment,
   TDividerStrokeLinecap,
+  TDividerTitleAlignment,
 } from './bq-divider.types';
-import { validatePropValue, getColorCSSVariable, hasSlotContent, getTextContent } from '../../shared/utils';
+import { getColorCSSVariable, getTextContent, hasSlotContent, validatePropValue } from '../../shared/utils';
 
 const strokeDrawPositions = {
   HORIZONTAL: (drawOffset: number) => {

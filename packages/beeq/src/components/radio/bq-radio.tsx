@@ -1,4 +1,4 @@
-import { h, Component, Prop, EventEmitter, Event, Element, Method } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Method, Prop } from '@stencil/core';
 
 /**
  * @part base - The component's internal wrapper of the radio component.
