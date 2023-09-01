@@ -53,14 +53,35 @@ export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq
 export { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export namespace Components {
     interface BqAccordion {
+        /**
+          * The appearance style of accordion
+         */
         "appearance": TAccordionAppearance;
+        /**
+          * If true accordion is disabled
+         */
         "disabled": boolean;
+        /**
+          * If true accordion is expanded
+         */
         "expanded": boolean;
+        /**
+          * If true accordion expand icon is rotate 180deg when expanded
+         */
         "rotate": boolean;
+        /**
+          * The size of accordion
+         */
         "size": TAccordionSize;
     }
     interface BqAccordionGroup {
+        /**
+          * If true all accordions are expanded
+         */
         "expandAll": boolean;
+        /**
+          * If true multiple accordions can be expanded at the same time
+         */
         "multiple": boolean;
     }
     interface BqAlert {
@@ -1811,8 +1832,17 @@ declare global {
 }
 declare namespace LocalJSX {
     interface BqAccordion {
+        /**
+          * The appearance style of accordion
+         */
         "appearance"?: TAccordionAppearance;
+        /**
+          * If true accordion is disabled
+         */
         "disabled"?: boolean;
+        /**
+          * If true accordion is expanded
+         */
         "expanded"?: boolean;
         /**
           * Handler to be called when the accordion loses focus
@@ -1826,11 +1856,23 @@ declare namespace LocalJSX {
           * Handler to be called when the accordion gets focus
          */
         "onBqFocus"?: (event: BqAccordionCustomEvent<HTMLBqAccordionElement>) => void;
+        /**
+          * If true accordion expand icon is rotate 180deg when expanded
+         */
         "rotate"?: boolean;
+        /**
+          * The size of accordion
+         */
         "size"?: TAccordionSize;
     }
     interface BqAccordionGroup {
+        /**
+          * If true all accordions are expanded
+         */
         "expandAll"?: boolean;
+        /**
+          * If true multiple accordions can be expanded at the same time
+         */
         "multiple"?: boolean;
     }
     interface BqAlert {

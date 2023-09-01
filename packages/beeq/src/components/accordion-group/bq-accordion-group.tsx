@@ -23,8 +23,10 @@ export class BqAccordionGroup {
   // Public Property API
   // ========================
 
+  /** If true all accordions are expanded */
   @Prop({ reflect: true }) expandAll: boolean;
 
+  /** If true multiple accordions can be expanded at the same time */
   @Prop({ reflect: true }) multiple: boolean = false;
 
   // Prop lifecycle events

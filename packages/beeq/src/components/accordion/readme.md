@@ -7,13 +7,13 @@
 
 ## Properties
 
-| Property     | Attribute    | Description | Type                  | Default    |
-| ------------ | ------------ | ----------- | --------------------- | ---------- |
-| `appearance` | `appearance` |             | `"filled" \| "ghost"` | `'filled'` |
-| `disabled`   | `disabled`   |             | `boolean`             | `false`    |
-| `expanded`   | `expanded`   |             | `boolean`             | `false`    |
-| `rotate`     | `rotate`     |             | `boolean`             | `false`    |
-| `size`       | `size`       |             | `"medium" \| "small"` | `'medium'` |
+| Property     | Attribute    | Description                                                  | Type                  | Default    |
+| ------------ | ------------ | ------------------------------------------------------------ | --------------------- | ---------- |
+| `appearance` | `appearance` | The appearance style of accordion                            | `"filled" \| "ghost"` | `'filled'` |
+| `disabled`   | `disabled`   | If true accordion is disabled                                | `boolean`             | `false`    |
+| `expanded`   | `expanded`   | If true accordion is expanded                                | `boolean`             | `false`    |
+| `rotate`     | `rotate`     | If true accordion expand icon is rotate 180deg when expanded | `boolean`             | `false`    |
+| `size`       | `size`       | The size of accordion                                        | `"medium" \| "small"` | `'medium'` |
 
 
 ## Events
