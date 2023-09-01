@@ -1,4 +1,4 @@
-import { h, Component, Prop, Element, State, Event, EventEmitter, Listen } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Listen, Prop, State } from '@stencil/core';
 
 import { hasSlotContent } from '../../shared/utils';
 

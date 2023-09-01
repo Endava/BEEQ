@@ -2,7 +2,6 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html, nothing } from 'lit-html';
 
 import mdx from './bq-dialog.mdx';
-
 import { DIALOG_FOOTER_APPEARANCE, DIALOG_SIZE } from '../bq-dialog.types';
 
 const meta: Meta = {

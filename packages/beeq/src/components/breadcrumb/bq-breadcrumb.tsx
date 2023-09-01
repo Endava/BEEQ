@@ -1,4 +1,4 @@
-import { h, Component, Element, Listen, Event, EventEmitter, Host, Prop } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop } from '@stencil/core';
 
 import { isHTMLElement } from '../../shared/utils';
 

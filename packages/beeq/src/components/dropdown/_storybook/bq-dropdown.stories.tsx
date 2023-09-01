@@ -1,5 +1,4 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
-
 import { html } from 'lit-html';
 
 import mdx from './bq-dropdown.mdx';
@@ -189,7 +188,7 @@ export const CustomTrigger: Story = {
 
 export const KeepOpen: Story = {
   render: (args: Args) => html`
-    <div class="bg-ui-success-light mb-l rounded-m border border-solid border-stroke-success p-m">
+    <div class="mb-l rounded-m border border-solid border-stroke-success bg-ui-success-alt p-m">
       <p class="mb-xs text-m font-bold">💡 NOTE:</p>
       If <code class="text-text-danger">keepOpenOnSelect</code> is set, the dropdown will remain open after a selection
       is made.

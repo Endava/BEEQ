@@ -1,7 +1,7 @@
-import { h, Component, Prop, Element, Watch, Event, EventEmitter, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
 import { SLIDER_TYPE, TSliderType } from './bq-slider.types';
-import { validatePropValue, isString, debounce, TDebounce } from '../../shared/utils';
+import { debounce, isString, TDebounce, validatePropValue } from '../../shared/utils';
 
 @Component({
   tag: 'bq-slider',

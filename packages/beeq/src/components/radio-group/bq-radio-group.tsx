@@ -1,4 +1,4 @@
-import { h, Component, Listen, Element, Event, Prop, EventEmitter, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Listen, Prop, Watch } from '@stencil/core';
 
 import { RADIO_GROUP_ORIENTATION, TRadioGroupOrientation } from './bq-radio-group.types';
 import { debounce, isHTMLElement, isNil, TDebounce, validatePropValue } from '../../shared/utils';
