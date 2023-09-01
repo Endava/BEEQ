@@ -110,6 +110,8 @@ export const DefaultDarkTheme = {
   'bq-text--primary-hover': 'var(--bq-grey-200)',
   'bq-text--primary-active': 'var(--bq-grey-300)',
   'bq-text--primary-disabled': 'var(--bq-grey-800)',
+  'bq-text--primary-alt': 'var(--bq-grey-50)',
+  'bq-text--primary-alt-disabled': 'var(--bq-grey-50)',
   /** Secondary */
   'bq-text--secondary': 'var(--bq-grey-500)',
   'bq-text--secondary-hover': 'var(--bq-grey-600)',

@@ -39,6 +39,8 @@ export const DefaultLightTheme = {
   'bq-icon--primary-hover': 'var(--bq-grey-800)',
   'bq-icon--primary-active': 'var(--bq-grey-1000)',
   'bq-icon--primary-disabled': 'var(--bq-grey-400)',
+  'bq-icon--primary-alt': 'var(--bq-grey-50)',
+  'bq-icon--primary-alt-disabled': 'var(--bq-grey-200)',
   /** Secondary */
   'bq-icon--secondary': 'var(--bq-grey-600)',
   'bq-icon--secondary-hover': 'var(--bq-grey-500)',
@@ -66,6 +68,7 @@ export const DefaultLightTheme = {
   'bq-stroke--primary-active': 'var(--bq-grey-300)',
   'bq-stroke--primary-disabled': 'var(--bq-grey-100)',
   'bq-stroke--primary-alt': 'var(--bq-grey-50)',
+  'bq-stroke--primary-alt-disabled': 'var(--bq-grey-200)',
   /** Secondary */
   'bq-stroke--secondary': 'var(--bq-grey-600)',
   'bq-stroke--secondary-hover': 'var(--bq-grey-500)',
@@ -110,6 +113,8 @@ export const DefaultLightTheme = {
   'bq-text--primary-hover': 'var(--bq-grey-800)',
   'bq-text--primary-active': 'var(--bq-grey-1000)',
   'bq-text--primary-disabled': 'var(--bq-grey-400)',
+  'bq-text--primary-alt': 'var(--bq-neutral-white)',
+  'bq-text--primary-alt-disabled': 'var(--bq-grey-200)',
   /** Secondary */
   'bq-text--secondary': 'var(--bq-grey-600)',
   'bq-text--secondary-hover': 'var(--bq-grey-500)',
