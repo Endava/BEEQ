@@ -32,7 +32,7 @@
   // Primary `HOVER` and `ACTIVE` state
   @apply hover:bg-ui-brand-hover active:bg-ui-brand-active;
   // Primary `DISABLED` state
-  @apply disabled:border-stroke-brand-disabled disabled:bg-ui-brand-disabled;
+  @apply disabled:border-stroke-brand-disabled disabled:bg-ui-brand-disabled disabled:text-text-primary-alt-disabled;
   @apply disabled:hover:border-stroke-brand-disabled disabled:hover:bg-ui-brand-disabled;
 }
 
@@ -52,7 +52,7 @@
   // Primary danger `HOVER` and `ACTIVE` state
   @apply hover:bg-ui-danger-hover active:bg-ui-danger-active;
   // Primary danger `DISABLED` state
-  @apply disabled:border-stroke-danger-disabled disabled:bg-ui-danger-disabled;
+  @apply disabled:border-stroke-danger-disabled disabled:bg-ui-danger-disabled disabled:text-text-primary-alt-disabled;
   @apply disabled:hover:border-stroke-danger-disabled disabled:hover:bg-ui-danger-disabled;
 }
 

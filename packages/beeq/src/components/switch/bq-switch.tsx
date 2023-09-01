@@ -223,7 +223,7 @@ export class BqSwitch {
               <bq-icon
                 class="bq-switch--control__icon on"
                 name="check"
-                color="icon--primary-alt"
+                color={!this.disabled ? 'icon--primary-alt' : 'icon--primary-alt-disabled'}
                 role="img"
                 title="On"
                 part="icon-on"
@@ -231,14 +231,14 @@ export class BqSwitch {
             )}
             {/* Dot */}
             <div
-              class="bq-switch--control__dot absolute h-[var(--switch--dot-size)] w-[var(--switch--dot-size)] justify-end rounded-full bg-text-primary-alt transition duration-300"
+              class="bq-switch--control__dot absolute h-[var(--switch--dot-size)] w-[var(--switch--dot-size)] justify-end rounded-full bg-icon-primary-alt transition duration-300 group-[&.is-disabled]:bg-icon-primary-alt-disabled"
               part="dot"
             />
             {this.innerLabel === 'icon' && (
               <bq-icon
                 class="bq-switch--control__icon off"
                 name="x"
-                color="icon--primary-alt"
+                color={!this.disabled ? 'icon--primary-alt' : 'icon--primary-alt-disabled'}
                 role="img"
                 title="Off"
                 part="icon-off"
