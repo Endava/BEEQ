@@ -69,4 +69,13 @@ describe(debounce.name, () => {
     expect(spy).toHaveBeenNthCalledWith(1, '0');
     expect(spy).toHaveBeenLastCalledWith('test value');
   });
+
+  it('should not fail if cancel is called but the function is not initialised yet', () => {
+    const spy = jest.fn<void, string[]>();
+
+    const fn = debounce(spy, 250, true);
+
+    expect(fn.cancel).not.toThrow();
+    expect(fn.cancel).not.toThrowError(new TypeError('cancel is not a function'));
+  });
 });
