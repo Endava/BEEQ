@@ -38,7 +38,7 @@ export const debounce = <TFunc extends TFunction>(func: TFunc, wait = 0, immedia
 
   return Object.assign(debounceHandler, {
     cancel: () => {
-      cancel();
+      cancel?.();
     },
   });
 };
