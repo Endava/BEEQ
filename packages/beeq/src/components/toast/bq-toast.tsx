@@ -1,7 +1,7 @@
-import { h, Host, Element, Event, EventEmitter, Component, Prop, Watch, Method, Listen } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, Watch } from '@stencil/core';
 
 import { TOAST_PLACEMENT, TOAST_TYPE, TToastPlacement, TToastType } from './bq-toast.types';
-import { TDebounce, debounce, validatePropValue } from '../../shared/utils';
+import { debounce, TDebounce, validatePropValue } from '../../shared/utils';
 
 const toastPortal = Object.assign(document.createElement('div'), { className: 'bq-toast-portal' });
 

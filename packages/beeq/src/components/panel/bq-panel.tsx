@@ -1,4 +1,4 @@
-import { h, Component, Prop, Element, Watch } from '@stencil/core';
+import { Component, Element, h, Prop, Watch } from '@stencil/core';
 
 import { FloatingUIPlacement } from '../../services/interfaces';
 import { FloatingUI } from '../../services/libraries';
