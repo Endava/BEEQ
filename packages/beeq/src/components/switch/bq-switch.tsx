@@ -223,7 +223,7 @@ export class BqSwitch {
               <bq-icon
                 class="bq-switch--control__icon on"
                 name="check"
-                color="text--inverse"
+                color="icon--primary-alt"
                 role="img"
                 title="On"
                 part="icon-on"
@@ -231,14 +231,14 @@ export class BqSwitch {
             )}
             {/* Dot */}
             <div
-              class="bq-switch--control__dot absolute h-[var(--switch--dot-size)] w-[var(--switch--dot-size)] justify-end rounded-full bg-bg-primary transition duration-300"
+              class="bq-switch--control__dot absolute h-[var(--switch--dot-size)] w-[var(--switch--dot-size)] justify-end rounded-full bg-text-primary-alt transition duration-300"
               part="dot"
             />
             {this.innerLabel === 'icon' && (
               <bq-icon
                 class="bq-switch--control__icon off"
                 name="x"
-                color="text--inverse"
+                color="icon--primary-alt"
                 role="img"
                 title="Off"
                 part="icon-off"
