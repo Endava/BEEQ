@@ -97,7 +97,7 @@
   margin-right: auto;
   padding-left: var(--bq-spacing-l);
   padding-right: var(--bq-spacing-l);
-  width: 100%px;
+  width: 100%;
 }
 
 @media (min-width: 640px) {
