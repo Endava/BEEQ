@@ -43,6 +43,7 @@ export class BqStepItem {
   // Prop lifecycle events
   // =======================
   @Watch('type')
+  @Watch('size')
   checkPropValues() {
     validatePropValue(STEPS_TYPE, 'numeric', this.el, 'type');
     validatePropValue(STEPS_SIZE, 'medium', this.el, 'size');
@@ -56,6 +57,9 @@ export class BqStepItem {
   // Ordered by their natural call order
   // =====================================
 
+  componentWillLoad() {
+    this.checkPropValues();
+  }
   // Listeners
   // ==============
 

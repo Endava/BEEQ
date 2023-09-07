@@ -1,8 +1,10 @@
+import { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
+
 import mdx from './bq-steps.mdx';
 import { STEPS_SIZE, STEPS_TYPE } from '../bq-steps.types';
 
-export default {
+const meta: Meta = {
   title: 'Components/Steps',
   component: 'bq-steps',
   parameters: {
@@ -14,35 +16,25 @@ export default {
     text: { control: 'text', table: { disable: true } },
     type: { control: 'select', options: [...STEPS_TYPE] },
     size: { control: 'select', options: [...STEPS_SIZE] },
+    bqClick: { action: 'bqClick' },
   },
   args: {
     text: 'text',
+    type: 'numeric',
+    size: 'medium',
   },
 };
+export default meta;
 
-const Template = (args) => {
+const Template = (args: Args) => {
   return html` <bq-steps type=${args.type} class="p-2" size=${args.size}>
-    <!-- in JS, add event listener, asa lucrez cu events aici -->
-    <!-- icon mosteneste de la parinte culoarea, ma bazez pe asta -->
-    <!-- proprietate status -->
     <bq-step-item status="default" value="x">
-      <!-- slot pt prefix -->
-      <!-- attr trb sa fie "slot" cand vreau nume, name doar in componenta -->
-      <!-- ordinea nu conteaza -->
       <bq-icon slot="prefix" name="bell-ringing" size="24" weight="regular"></bq-icon>
-
-      <!-- numar sau iconita sau ce vreau ca user -->
-      <!-- componenta sa ofere partea de numeric type -->
-      <!-- un singur slot pt titlu si descriere -->
       <span>step item 1</span>
       <span slot="description">description for step</span>
     </bq-step-item>
     <bq-step-item status="disabled" value="xy">
-      <!-- slot pt prefix -->
-      <!-- attr trb sa fie "slot" cand vreau nume, name doar in componenta -->
-      <!-- ordinea nu conteaza -->
       <bq-icon slot="prefix" name="bell-ringing" size="24" weight="regular"></bq-icon>
-      <!-- un singur slot pt titlu si descriere -->
       <span>step item 2 with longerlongerlongerlongerlonger title</span>
       <span slot="description">description for step</span>
     </bq-step-item>
@@ -54,4 +46,6 @@ const Template = (args) => {
   </bq-steps>`;
 };
 
-export const Default = (args) => Template(args);
+export const Default: StoryObj = {
+  render: Template,
+};

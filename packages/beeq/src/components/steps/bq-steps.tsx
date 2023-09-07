@@ -88,7 +88,7 @@ export class BqSteps {
 
   render() {
     return (
-      <div class="flex w-full items-start justify-between" part="container">
+      <div class="flex w-full items-start" part="container">
         <slot />
       </div>
     );
