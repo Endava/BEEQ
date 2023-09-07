@@ -101,7 +101,7 @@
     "@whitespace/storybook-addon-html": "5.1.6",
     "autoprefixer": "10.4.15",
     "babel-jest": "27.5.1",
-    "chromatic": "6.22.0",
+    "chromatic": "6.23.0",
     "copy-webpack-plugin": "11.0.0",
     "copyfiles": "2.4.1",
     "decompress": "4.2.1",
