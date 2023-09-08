@@ -92,7 +92,7 @@
     "@testing-library/react": "14.0.0",
     "@types/jest": "27.5.1",
     "@types/mdx": "2.0.7",
-    "@types/node": "20.5.3",
+    "@types/node": "20.5.4",
     "@types/puppeteer": "7.0.4",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
