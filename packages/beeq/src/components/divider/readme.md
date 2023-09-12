@@ -29,19 +29,6 @@
 | `"dash-start-line"` | The component's internal line component of the divider's stroke                 |
 
 
-## Dependencies
-
-### Used by
-
- - [bq-step-item](../step-item)
-
-### Graph
-```mermaid
-graph TD;
-  bq-step-item --> bq-divider
-  style bq-divider fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

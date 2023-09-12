@@ -39,14 +39,12 @@
 
 - [bq-avatar](../avatar)
 - [bq-icon](../icon)
-- [bq-divider](../divider)
 
 ### Graph
 ```mermaid
 graph TD;
   bq-step-item --> bq-avatar
   bq-step-item --> bq-icon
-  bq-step-item --> bq-divider
   style bq-step-item fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

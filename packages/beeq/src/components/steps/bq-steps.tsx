@@ -1,7 +1,7 @@
 import { h, Component, Element, Prop, Watch, Event, EventEmitter, Listen } from '@stencil/core';
-import { validatePropValue } from '../../shared/utils';
+
 import { STEPS_SIZE, STEPS_TYPE, TStepsSize, TStepsType } from './bq-steps.types';
-// import { BqStepItem } from './step-item/bq-step-item';
+import { validatePropValue } from '../../shared/utils';
 
 @Component({
   // bq-stepper
@@ -35,6 +35,8 @@ export class BqSteps {
   checkPropValues() {
     validatePropValue(STEPS_TYPE, 'numeric', this.el, 'type');
     validatePropValue(STEPS_SIZE, 'medium', this.el, 'size');
+
+    this.setStepItemProps();
   }
   // Events section
   // Requires JSDocs for public API documentation
@@ -47,13 +49,7 @@ export class BqSteps {
   // Ordered by their natural call order
   // =====================================
   componentDidLoad() {
-    this.bqStepItemElements.forEach((bqStepItem: HTMLBqStepItemElement, index: number) => {
-      bqStepItem.type = this.type;
-      bqStepItem.number = index + 1;
-
-      bqStepItem.size = this.size;
-      bqStepItem.isLast = index === this.bqStepItemElements.length - 1;
-    });
+    this.setStepItemProps();
   }
 
   // Listeners
@@ -78,6 +74,16 @@ export class BqSteps {
     return Array.from(this.el.querySelectorAll('bq-step-item'));
   }
 
+  private setStepItemProps = () => {
+    this.bqStepItemElements.forEach((bqStepItem: HTMLBqStepItemElement, index: number) => {
+      bqStepItem.type = this.type;
+      bqStepItem.number = index + 1;
+
+      bqStepItem.size = this.size;
+      bqStepItem.isLast = index === this.bqStepItemElements.length - 1;
+    });
+  };
+
   // private handleChange = (event) => {
   //   this.bqChange.emit(event);
   // }
@@ -88,7 +94,7 @@ export class BqSteps {
 
   render() {
     return (
-      <div class="flex w-full items-start" part="container">
+      <div class="flex w-full items-start justify-between" part="container">
         <slot />
       </div>
     );

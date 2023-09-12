@@ -6,7 +6,6 @@
 
 :host {
   --bq-icon--color: var(--bq-icon--primary);
-  flex: 1;
 }
 
 :host([status='current']) {

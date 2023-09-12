@@ -1,7 +1,8 @@
 import { h, Component, Prop, Watch, Element, Event, EventEmitter } from '@stencil/core';
-import { STEPS_SIZE, STEPS_TYPE, TStepsSize, TStepsType } from '../steps/bq-steps.types';
+
 import { TStepItemStatus } from './bq-step-item.types';
 import { validatePropValue } from '../../shared/utils';
+import { STEPS_SIZE, STEPS_TYPE, TStepsSize, TStepsType } from '../steps/bq-steps.types';
 
 @Component({
   tag: 'bq-step-item',
@@ -143,16 +144,6 @@ export class BqStepItem {
             <slot name="description" />
           </div>
         </div>
-
-        {!this.isLast && (
-          <bq-divider
-            stroke-color="ui--secondary"
-            class={{
-              '-z-10 pt-3': true,
-              'pt-4': this.size === 'medium',
-            }}
-          />
-        )}
       </div>
     );
   }
