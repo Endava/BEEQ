@@ -110,18 +110,25 @@ export class BqStepItem {
         onClick={this.handleClick}
       >
         {this.type === 'numeric' ? (
-          <bq-avatar class="px-2" shape="circle" size={avatarSize} initials={this.number?.toString()}></bq-avatar>
+          <bq-avatar
+            class="bg-bg-primary px-2"
+            shape="circle"
+            size={avatarSize}
+            initials={this.number?.toString()}
+          ></bq-avatar>
         ) : this.type === 'dot' ? (
           <bq-icon
-            class="px-2"
+            class="bg-bg-primary px-2"
             name={this.getIconName()}
             weight={this.status === 'current' ? 'fill' : 'regular'}
             size={iconSize}
           />
         ) : (
-          <slot name="prefix"></slot>
+          <span class="bg-bg-primary px-2">
+            <slot name="prefix"></slot>
+          </span>
         )}
-        <div>
+        <div class="bg-bg-primary px-2">
           <div
             part="title"
             class={{

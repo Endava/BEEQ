@@ -32,6 +32,7 @@ export class BqSteps {
   // Prop lifecycle events
   // =======================
   @Watch('type')
+  @Watch('size')
   checkPropValues() {
     validatePropValue(STEPS_TYPE, 'numeric', this.el, 'type');
     validatePropValue(STEPS_SIZE, 'medium', this.el, 'size');
@@ -94,8 +95,15 @@ export class BqSteps {
 
   render() {
     return (
-      <div class="flex w-full items-start justify-between" part="container">
+      <div class="relative flex w-full items-start justify-between" part="container">
         <slot />
+        <bq-divider
+          stroke-color="ui--secondary"
+          class={{
+            'absolute left-0 right-0 -z-10 px-3 pt-3': true,
+            'pt-4': this.size === 'medium',
+          }}
+        />
       </div>
     );
   }
