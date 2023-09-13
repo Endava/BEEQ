@@ -21,6 +21,7 @@ const meta: Meta = {
   },
   args: {
     appearance: 'filled',
+    'expand-all': false,
     multiple: false,
     size: 'medium',
     text: 'text',

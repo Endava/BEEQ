@@ -7,26 +7,20 @@
   --bq-accordion--small-padding-start: theme('spacing.s');
   --bq-accordion--small-padding-end: theme('spacing.s');
   --bq-accordion--small-gap: theme('spacing.xs');
+  --bq-accordion--small-radius: theme('borderRadius.xs');
 
   --bq-accordion--medium-padding-y: theme('spacing.s');
   --bq-accordion--medium-padding-start: theme('spacing.m');
   --bq-accordion--medium-padding-end: theme('spacing.m');
   --bq-accordion--medium-gap: theme('spacing.m');
+  --bq-accordion--medium-radius: theme('borderRadius.xs');
 
   --bq-accordion--collapsed-border-color: theme('colors.transparent');
-  --bq-accordion--collapsed-top-left-border-radius: theme('borderRadius.xs');
-  --bq-accordion--collapsed-top-right-border-radius: theme('borderRadius.xs');
-  --bq-accordion--collapsed-bottom-left-border-radius: theme('borderRadius.xs');
-  --bq-accordion--collapsed-bottom-right-border-radius: theme('borderRadius.xs');
   --bq-accordion--collapsed-border-style: none;
   --bq-accordion--collapsed-border-width: unset;
 
   --bq-accordion--expanded-border-color: theme('colors.transparent');
   --bq-accordion--expanded-border-radius: theme('borderRadius.xs');
-  --bq-accordion--expanded-top-left-border-radius: theme('borderRadius.xs');
-  --bq-accordion--expanded-top-right-border-radius: theme('borderRadius.xs');
-  --bq-accordion--expanded-bottom-left-border-radius: 0;
-  --bq-accordion--expanded-bottom-right-border-radius: 0;
   --bq-accordion--expanded-border-style: none;
   --bq-accordion--expanded-border-width: unset;
 

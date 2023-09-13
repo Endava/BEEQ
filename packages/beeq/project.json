@@ -43,7 +43,7 @@
         "configPath": "packages/beeq/stencil.config.ts",
         "outputPath": "dist/beeq",
         "watch": true,
-        "dev": false
+        "dev": true
       }
     },
     "storybook-start": {
