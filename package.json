@@ -55,7 +55,7 @@
     "@angular/compiler-cli": "14.3.0",
     "@angular/language-service": "14.3.0",
     "@babel/plugin-proposal-export-default-from": "7.22.5",
-    "@babel/preset-react": "7.22.5",
+    "@babel/preset-react": "7.22.15",
     "@commitlint/cli": "17.7.1",
     "@commitlint/config-angular": "17.7.0",
     "@commitlint/config-conventional": "17.7.0",
