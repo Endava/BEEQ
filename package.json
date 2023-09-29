@@ -70,7 +70,7 @@
     "@nxext/stencil": "16.3.0",
     "@schematics/angular": "14.2.12",
     "@stencil/angular-output-target": "0.8.2",
-    "@stencil/core": "4.2.0",
+    "@stencil/core": "4.3.0",
     "@stencil/react-output-target": "0.5.3",
     "@stencil/sass": "3.0.5",
     "@storybook/addon-a11y": "7.4.0",
