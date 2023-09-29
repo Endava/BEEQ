@@ -4,6 +4,11 @@
   "affected": {
     "defaultBase": "develop"
   },
+  "workspaceLayout": {
+    "appsDir": "apps",
+    "libsDir": "packages",
+    "projectNameAndRootFormat": "derived"
+  },
   "namedInputs": {
     "default": [
       "{projectRoot}/**/*",
