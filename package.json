@@ -68,7 +68,7 @@
     "@nx/storybook": "16.8.1",
     "@nx/workspace": "16.8.1",
     "@nxext/stencil": "16.3.0",
-    "@schematics/angular": "14.2.12",
+    "@schematics/angular": "16.2.2",
     "@stencil/angular-output-target": "0.8.2",
     "@stencil/core": "4.3.0",
     "@stencil/react-output-target": "0.5.3",
