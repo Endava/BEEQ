@@ -1,14 +1,24 @@
-import { arrow, autoUpdate, computePosition, flip, hide, offset, shift, size } from '@floating-ui/dom';
+import {
+  arrow,
+  autoUpdate,
+  computePosition,
+  flip,
+  hide,
+  offset,
+  ReferenceElement,
+  shift,
+  size,
+} from '@floating-ui/dom';
 
 import { FloatingUIOptions } from '../../interfaces';
 
 export class FloatingUI {
   panel: HTMLElement;
-  trigger: HTMLElement;
+  trigger: ReferenceElement;
   options: FloatingUIOptions;
   cleanUp: () => void;
 
-  constructor(trigger: HTMLElement, panel: HTMLElement, options?: FloatingUIOptions) {
+  constructor(trigger: ReferenceElement, panel: HTMLElement, options?: FloatingUIOptions) {
     this.trigger = trigger;
     this.panel = panel;
     this.options = {
