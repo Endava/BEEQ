@@ -3,7 +3,7 @@
 version: 2.1
 
 orbs:
-  nx: nrwl/nx@1.6.1
+  nx: nrwl/nx@1.6.2
 
 # ---------------------------------------------------------------------------- #
 #              Sequence of steps as a map to be executed in a job              #
