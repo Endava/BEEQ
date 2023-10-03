@@ -29,6 +29,9 @@
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     },
+    "test": {
+      "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"]
+    },
     "e2e": {
       "dependsOn": ["build"],
       "inputs": ["default", "^production"]
@@ -72,6 +75,11 @@
     },
     "@nx/angular:component": {
       "style": "scss"
+    }
+  },
+  "pluginsConfig": {
+    "@nx/js": {
+      "analyzeSourceFiles": true
     }
   }
 }

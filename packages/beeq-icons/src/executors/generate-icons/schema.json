@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "cli": "nx",
-  "title": "CreateSet executor",
-  "description": "",
+  "version": 2,
+  "title": "BEEQ Icons",
+  "description": "Nx Executor that generates the SVG assets for the `bq-icon` component",
   "type": "object",
   "properties": {
     "assetsFolder": {

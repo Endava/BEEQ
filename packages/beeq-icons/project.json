@@ -1,21 +1,21 @@
 {
-  "name": "bee-q-icons",
+  "name": "beeq-icons",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/bee-q-icons/src",
   "projectType": "library",
+  "tags": ["internal", "nonpublisable"],
   "targets": {
     "lint": {
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "packages/bee-q-icons/**/*.ts",
-          "packages/bee-q-icons/generators.json",
-          "packages/bee-q-icons/executors.json",
-          "packages/bee-q-icons/package.json"
+          "packages/beeq-icons/**/*.ts",
+          "packages/beeq-icons/generators.json",
+          "packages/beeq-icons/executors.json",
+          "packages/beeq-icons/package.json"
         ]
       }
     }
-  },
-  "tags": []
+  }
 }

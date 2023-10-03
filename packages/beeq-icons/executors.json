@@ -4,7 +4,7 @@
     "generate": {
       "implementation": "./src/executors/generate-icons/executor",
       "schema": "./src/executors/generate-icons/schema.json",
-      "description": "It generated the Bee-Q SVG icon files"
+      "description": "It generated the BEEQ SVG icon files"
     }
   }
 }

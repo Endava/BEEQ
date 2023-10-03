@@ -1,6 +1,7 @@
 /* -------------------------------------------------------------------------- */
-/*                 @bee-q/icons:create-set executor properties                */
+/*                       BEEQ icons executor properties                       */
 /* -------------------------------------------------------------------------- */
+
 export interface IGenerateBeeQIcons {
   assetsFolder: string;
   downloadPath: string;
