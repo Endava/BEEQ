@@ -55,7 +55,7 @@
     "@commitlint/cli": "17.7.1",
     "@commitlint/config-angular": "17.7.0",
     "@commitlint/config-conventional": "17.7.0",
-    "@jest/transform": "27.5.1",
+    "@jest/transform": "29.7.0",
     "@jscutlery/semver": "3.1.0",
     "@nx/angular": "16.8.1",
     "@nx/devkit": "16.8.1",
