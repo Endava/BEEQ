@@ -64,6 +64,10 @@
       matchPackagePrefixes: ['eslint'],
     },
     {
+      groupName: 'floating-ui',
+      matchPackagePrefixes: ['@floating-ui'],
+    },
+    {
       groupName: 'ng',
       matchPackagePrefixes: ['ng-packagr'],
       allowedVersions: '<15.0.0',

@@ -1,3 +1,4 @@
+import { ReferenceElement } from '@floating-ui/dom';
 import { Component, Element, h, Prop, Watch } from '@stencil/core';
 
 import { FloatingUIPlacement } from '../../services/interfaces';
@@ -17,7 +18,7 @@ export class BqPanel {
 
   private panel: HTMLElement;
   private floatingUI: FloatingUI;
-  private trigger: HTMLElement;
+  private trigger: ReferenceElement;
 
   // Reference to host HTML element
   // ===================================
@@ -81,8 +82,13 @@ export class BqPanel {
 
   componentDidLoad() {
     // We need to find the trigger element from the parent to position the panel relative to it.
-    this.trigger = this.el.parentElement.querySelector('div[part="trigger"]');
-    if (!this.trigger) return;
+    const parentTrigger = this.el.parentElement.querySelector('div[part="trigger"]');
+    if (!parentTrigger) return;
+
+    this.trigger = {
+      getBoundingClientRect: () => parentTrigger.getBoundingClientRect(),
+      contextElement: parentTrigger,
+    };
 
     this.floatingUI = new FloatingUI(this.trigger, this.panel, { ...this.options });
     this.handleOpenChange();
