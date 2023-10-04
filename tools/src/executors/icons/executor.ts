@@ -1,9 +1,9 @@
 import { createSpinner } from 'nanospinner';
 import { createIconsSetFile, downloadIcons, extractIcons } from './helpers';
 
-import { IGenerateBeeQIcons } from './schema';
+import { IconsExecutorSchema } from './schema';
 
-export default async function generateBeeQIcons({
+export default async function runExecutor({
   assetsFolder,
   downloadPath,
   extractToPath,
@@ -13,7 +13,7 @@ export default async function generateBeeQIcons({
   sourceDir,
   sourceUrl,
   svgFolder,
-}: IGenerateBeeQIcons) {
+}: IconsExecutorSchema) {
   let success = true;
   const logSpinner = createSpinner('Download the Phosphor-icon library').start();
 

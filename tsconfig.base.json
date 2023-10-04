@@ -22,10 +22,9 @@
       "@bee-q/angular": ["dist/beeq-angular"],
       "@bee-q/core": ["dist/beeq"],
       "@bee-q/core/*": ["dist/beeq/*"],
-      "@bee-q/icons": ["packages/beeq-icons/src/index.ts"],
-      "@bee-q/react": ["dist/beeq-react"]
+      "@bee-q/react": ["dist/beeq-react"],
+      "@bee-q/tools": ["tools/src/index.ts"]
     }
   },
-  "include": ["./config/**/*.ts"],
   "exclude": ["./node_modules", "./tmp"]
 }
