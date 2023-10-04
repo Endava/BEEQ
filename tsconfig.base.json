@@ -26,6 +26,5 @@
       "@bee-q/react": ["dist/beeq-react"]
     }
   },
-  "include": ["./config/**/*.ts"],
   "exclude": ["./node_modules", "./tmp"]
 }

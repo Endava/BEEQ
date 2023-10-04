@@ -1,4 +1,4 @@
-import decompress from 'decompress';
+import * as decompress from 'decompress';
 import { copy, remove } from 'fs-extra';
 import { join } from 'node:path';
 
