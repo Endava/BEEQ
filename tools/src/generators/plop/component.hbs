@@ -1,4 +1,4 @@
-import { h, Component } from '@stencil/core';
+import { Component, h } from '@stencil/core';
 
 @Component({
   tag: 'bq-{{kebabCase name}}',
@@ -54,8 +54,8 @@ export class Bq{{pascalCase name}} {
   render() {
     return (
 {{#if stylingVariables}}
-      <p class="m-[var(--bq-{{kebabCase name}}--margin)]">
-{{else}}        
+      <p class="m-[--bq-{{kebabCase name}}--margin]">
+{{else}}
       <p>
 {{/if}}
         My name is Stencil <slot />

@@ -27,36 +27,36 @@
   /**
    * Time required before a new release is considered stable.
    */
-  minimumReleaseAge: '15 days',
+  minimumReleaseAge: '7 days',
   /**
    * Package rules lets you apply rules to individual packages
    * or to groups of packages using regex pattern matching.
    */
   packageRules: [
     {
-      groupName: '@angular',
-      matchPackagePrefixes: ['@angular'],
+      groupName: 'angular',
+      matchPackagePrefixes: ['@angular', '@schematics'],
       allowedVersions: '<15.0.0',
     },
     {
-      groupName: '@commitlint',
+      groupName: 'commitlint',
       matchPackagePrefixes: ['@commitlint/'],
     },
     {
-      groupName: '@nx',
+      groupName: 'nx',
       matchPackagePrefixes: ['@nx', 'nx'],
       excludePackageNames: ['nx-cloud', 'nx-stylelint'],
     },
     {
-      groupName: '@stencil',
+      groupName: 'stencil',
       matchPackagePrefixes: ['@stencil/'],
     },
     {
-      groupName: '@storybook',
+      groupName: 'storybook',
       matchPackagePrefixes: ['@storybook/', 'storybook'],
     },
     {
-      groupName: '@swc',
+      groupName: 'swc',
       matchPackagePrefixes: ['@swc'],
     },
     {
@@ -80,14 +80,6 @@
       groupName: 'prettier',
       matchPackagePrefixes: ['prettier'],
       excludePackageNames: ['prettier', 'eslint-plugin-prettier'],
-    },
-    {
-      matchPackageNames: ['prettier'],
-      allowedVersions: '<3.0.0',
-    },
-    {
-      matchPackageNames: ['eslint-plugin-prettier'],
-      allowedVersions: '<5.0.0',
     },
     {
       groupName: 'stylelint',

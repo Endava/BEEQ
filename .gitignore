@@ -2,8 +2,8 @@
 
 # compiled output
 /dist
-/tmp
 /out-tsc
+/tmp/**
 
 # source files to ignore
 .angular
@@ -15,7 +15,6 @@ packages/beeq/src/components/icon/svg/**
 packages/beeq-angular/**/directives
 packages/beeq-react/src/react-component-lib
 packages/beeq-react/src/components.ts
-packages/beeq-icons/temp/**
 !.gitkeep
 
 # dependencies
