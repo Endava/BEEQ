@@ -1,13 +1,13 @@
-# Bee-Q Icons: Custom plugin for downloading the icon SVGs
+# BEEQ Icons: Custom plugin for downloading the icon SVGs
 
-The `generate:icons` local executor will download the SVG files from the [Phosphor icons library](https://phosphoricons.com/) and place them into the Bee-Q assets.
+The `icons` local executor will download the SVG files from the [Phosphor icons library](https://phosphoricons.com/) and place them into the Bee-Q assets.
 
 ## Running the executor
 
 Although the executor is instantiated before the build and start scripts, it can be also triggered by executing the following in the command line:
 
 ```bash
-  npx nx run bee-q:generate-icons
+  npx nx run beeq:generate-icons
 ```
 
 While running we will see different outputs from each of the steps:
@@ -45,11 +45,11 @@ The local executor needs certain options to work as expected, you can find all t
   svgFolder: string; // Name of the SVG folder inside of the .zip package
 ```
 
-These options are set in the `generate-icons` target inside the [bee-q/project.json file](../bee-q/project.json):
+These options are set in the `icons` target inside the [beeq/project.json file](../packages/beeq/project.json):
 
 ```json
-  "generate-icons": {
-    "executor": "@bee-q/icons:generate",
+  "icons": {
+    "executor": "@bee-q/tools:icons",
     "outputs": ["{options.downloadPath}", "{options.extractToPath}", "{options.outputDir}"],
     "options": {
       "assetsFolder": "assets",

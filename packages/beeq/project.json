@@ -61,7 +61,7 @@
       }
     },
     "build": {
-      "dependsOn": ["generate-icons"],
+      "dependsOn": ["icons"],
       "executor": "@nxext/stencil:build",
       "outputs": ["{options.outputPath}", "{projectRoot}/custom-elements.json"],
       "options": {
@@ -107,12 +107,12 @@
         "command": "npx tailwindcss -i packages/beeq/src/global/styles/tailwind.pcss -o packages/beeq/.storybook/assets/css/stories.css --postcss ./postcss.config.js --minify"
       }
     },
-    "generate-icons": {
-      "executor": "@bee-q/icons:generate",
+    "icons": {
+      "executor": "@bee-q/tools:icons",
       "outputs": ["{options.downloadPath}", "{options.extractToPath}", "{options.outputDir}"],
       "options": {
         "assetsFolder": "assets",
-        "downloadPath": "packages/beeq-icons/temp",
+        "downloadPath": "tmp",
         "extractToPath": "packages/beeq/src/components/icon/svg",
         "fileName": "main.zip",
         "helperFile": "icons-set.ts",

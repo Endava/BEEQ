@@ -29,8 +29,10 @@
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     },
+    "test": {
+      "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"]
+    },
     "e2e": {
-      "dependsOn": ["build"],
       "inputs": ["default", "^production"]
     }
   },
@@ -41,7 +43,7 @@
         "cacheableOperations": [
           "build",
           "e2e",
-          "generate-icons",
+          "icons",
           "lint",
           "storybook-build",
           "storybook-build-css",
@@ -72,6 +74,11 @@
     },
     "@nx/angular:component": {
       "style": "scss"
+    }
+  },
+  "pluginsConfig": {
+    "@nx/js": {
+      "analyzeSourceFiles": true
     }
   }
 }
