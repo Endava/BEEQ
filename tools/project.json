@@ -1,0 +1,48 @@
+{
+  "name": "tools",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/tools/src",
+  "projectType": "library",
+  "tags": ["internal", "nonpublisable", "tools"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/tools",
+        "main": "packages/tools/src/index.ts",
+        "tsConfig": "packages/tools/tsconfig.lib.json",
+        "assets": [
+          "packages/tools/*.md",
+          {
+            "input": "./packages/tools/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/tools/src",
+            "glob": "**/*.d.ts",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/tools",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./packages/tools",
+            "glob": "executors.json",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/tools/**/*.ts", "packages/tools/package.json"]
+      }
+    }
+  }
+}

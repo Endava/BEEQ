@@ -43,7 +43,7 @@
         "cacheableOperations": [
           "build",
           "e2e",
-          "generate-icons",
+          "icons",
           "lint",
           "storybook-build",
           "storybook-build-css",

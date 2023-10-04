@@ -23,7 +23,7 @@
     "test:spec": "npx nx run beeq:test --output-style=stream-without-prefixes",
     "test:e2e": "npx nx run beeq:e2e --output-style=stream-without-prefixes",
     "clean": "run-s clean:build clean:modules",
-    "clean:build": "rimraf dist tmp packages/beeq/.stencil",
+    "clean:build": "rimraf dist packages/beeq/.stencil",
     "clean:modules": "rimraf node_modules .cache packages/**/node_modules",
     "pre-commit": "lint-staged --verbose",
     "prepare": "husky install",

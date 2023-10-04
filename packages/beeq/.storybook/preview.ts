@@ -41,21 +41,6 @@ const preview: Preview = {
         height: '250px',
       },
     },
-    // html: {
-    //   removeComments: true,
-    //   removeEmptyComments: true,
-    //   highlighter: {
-    //     showLineNumbers: true,
-    //     wrapLines: true,
-    //   },
-    //   prettier: {
-    //     htmlWhitespaceSensitivity: 'ignore',
-    //     tabWidth: 2,
-    //     printWidth: 80,
-    //     useTabs: false,
-    //   },
-    //   root: '#root-inner',
-    // },
   },
 };
 

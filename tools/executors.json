@@ -1,0 +1,9 @@
+{
+  "executors": {
+    "icons": {
+      "implementation": "./src/executors/icons/executor",
+      "schema": "./src/executors/icons/schema.json",
+      "description": "icons executor"
+    }
+  }
+}
