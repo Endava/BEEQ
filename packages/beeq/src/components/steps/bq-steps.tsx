@@ -5,6 +5,9 @@ import { validatePropValue } from '../../shared/utils';
 
 /**
  * @part container - The container wrapper of the Steps component
+ * @part divider-base - The base wrapper of the divider component
+ * @part divider-dash-start - The dash start wrapper of the divider component
+ * @part divider-dash-end - The dash end wrapper of the divider component
  */
 @Component({
   tag: 'bq-steps',
@@ -113,6 +116,7 @@ export class BqSteps {
         <bq-divider
           class={`absolute left-0 right-0 -z-10 px-s ${dividerPaddingTop}`}
           stroke-color={this.dividerColor}
+          exportparts="base: divider-base,dash-start:divider-dash-start,dash-end:divider-dash-end"
         />
       </div>
     );

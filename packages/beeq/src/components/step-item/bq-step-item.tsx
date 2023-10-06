@@ -4,6 +4,11 @@ import { STEP_ITEM_STATUS, TStepItemStatus } from './bq-step-item.types';
 import { isHTMLElement, validatePropValue } from '../../shared/utils';
 import { STEPS_SIZE, TStepsSize, TStepsType } from '../steps/bq-steps.types';
 
+/**
+ * @part base - The component's base wrapper.
+ * @part title - The component's title.
+ * @part description - The component's description.
+ */
 @Component({
   tag: 'bq-step-item',
   styleUrl: './scss/bq-step-item.scss',

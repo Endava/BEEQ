@@ -16,9 +16,12 @@
 
 ## Shadow Parts
 
-| Part          | Description                                  |
-| ------------- | -------------------------------------------- |
-| `"container"` | The container wrapper of the Steps component |
+| Part                   | Description                                     |
+| ---------------------- | ----------------------------------------------- |
+| `"container"`          | The container wrapper of the Steps component    |
+| `"divider-base"`       | The base wrapper of the divider component       |
+| `"divider-dash-end"`   | The dash end wrapper of the divider component   |
+| `"divider-dash-start"` | The dash start wrapper of the divider component |
 
 
 ## Dependencies

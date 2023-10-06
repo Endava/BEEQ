@@ -23,11 +23,11 @@
 
 ## Shadow Parts
 
-| Part            | Description |
-| --------------- | ----------- |
-| `"base"`        |             |
-| `"description"` |             |
-| `"title"`       |             |
+| Part            | Description                   |
+| --------------- | ----------------------------- |
+| `"base"`        | The component's base wrapper. |
+| `"description"` | The component's description.  |
+| `"title"`       | The component's title.        |
 
 
 ----------------------------------------------
