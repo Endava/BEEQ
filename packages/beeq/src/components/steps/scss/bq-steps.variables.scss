@@ -3,5 +3,10 @@
 /* -------------------------------------------------------------------------- */
 
 :host {
-  --bq-steps--margin: 1px;
+  /**
+   * @prop --bq-steps--divider-color - Divider color
+   * @prop --bq-steps--gap - Gap between steps
+   */
+  --bq-steps--divider-color: theme('colors.ui.secondary');
+  --bq-steps--gap: theme('spacing.m');
 }

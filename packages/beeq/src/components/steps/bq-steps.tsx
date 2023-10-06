@@ -1,6 +1,6 @@
-import { h, Component, Element, Prop, Watch, Event, EventEmitter, Listen } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Listen, Prop, Watch } from '@stencil/core';
 
-import { STEPS_SIZE, STEPS_TYPE, TStepsSize, TStepsType } from './bq-steps.types';
+import { STEPS_SIZE, TStepsSize } from './bq-steps.types';
 import { validatePropValue } from '../../shared/utils';
 
 @Component({
@@ -24,17 +24,17 @@ export class BqSteps {
   // Public Property API
   // ========================
 
-  /** It defines the type of steps */
-  @Prop({ reflect: true }) type: TStepsType = 'numeric';
-
+  /** The size of the steps */
   @Prop({ reflect: true }) size: TStepsSize = 'medium';
+
+  /** The color of the line that connects the steps. It should be a valid declarative color token. */
+  @Prop({ reflect: true }) dividerColor: string = 'ui--secondary';
 
   // Prop lifecycle events
   // =======================
   @Watch('type')
   @Watch('size')
   checkPropValues() {
-    validatePropValue(STEPS_TYPE, 'numeric', this.el, 'type');
     validatePropValue(STEPS_SIZE, 'medium', this.el, 'size');
 
     this.setStepItemProps();
@@ -71,17 +71,13 @@ export class BqSteps {
   // Internal business logic.
   // These methods cannot be called from the host element.
   // =======================================================
-  private get bqStepItemElements(): HTMLBqStepItemElement[] {
+  private get bqSteps(): HTMLBqStepItemElement[] {
     return Array.from(this.el.querySelectorAll('bq-step-item'));
   }
 
   private setStepItemProps = () => {
-    this.bqStepItemElements.forEach((bqStepItem: HTMLBqStepItemElement, index: number) => {
-      bqStepItem.type = this.type;
-      bqStepItem.number = index + 1;
-
-      bqStepItem.size = this.size;
-      bqStepItem.isLast = index === this.bqStepItemElements.length - 1;
+    this.bqSteps.forEach((bqStepElem: HTMLBqStepItemElement) => {
+      bqStepElem.size = this.size;
     });
   };
 
@@ -94,15 +90,14 @@ export class BqSteps {
   // ===================================
 
   render() {
+    const dividerPaddingTop = this.size === 'small' ? 'pt-s' : 'pt-m';
+
     return (
       <div class="relative flex w-full items-start justify-between" part="container">
         <slot />
         <bq-divider
-          stroke-color="ui--secondary"
-          class={{
-            'absolute left-0 right-0 -z-10 px-3 pt-3': true,
-            'pt-4': this.size === 'medium',
-          }}
+          class={`absolute left-0 right-0 -z-10 px-s ${dividerPaddingTop}`}
+          stroke-color={this.dividerColor}
         />
       </div>
     );
