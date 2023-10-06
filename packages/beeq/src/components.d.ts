@@ -19,7 +19,7 @@ import { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-si
 import { TSliderType } from "./components/slider/bq-slider.types";
 import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 import { TStatusType } from "./components/status/bq-status.types";
-import { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
+import { TStepsSize } from "./components/steps/bq-steps.types";
 import { TStepItemStatus } from "./components/step-item/bq-step-item.types";
 import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
 import { TTabSize } from "./components/tab/bq-tab.types";
@@ -39,7 +39,7 @@ export { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-si
 export { TSliderType } from "./components/slider/bq-slider.types";
 export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 export { TStatusType } from "./components/status/bq-status.types";
-export { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
+export { TStepsSize } from "./components/steps/bq-steps.types";
 export { TStepItemStatus } from "./components/step-item/bq-step-item.types";
 export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
 export { TTabSize } from "./components/tab/bq-tab.types";
@@ -775,14 +775,6 @@ export namespace Components {
     }
     interface BqStepItem {
         /**
-          * It defines whether this step item is last in stepper
-         */
-        "isLast"?: boolean;
-        /**
-          * Step number
-         */
-        "number"?: number;
-        /**
           * It defines prefix size
          */
         "size"?: TStepsSize;
@@ -790,21 +782,16 @@ export namespace Components {
           * It defines step item appearance based on its status
          */
         "status"?: TStepItemStatus;
-        /**
-          * It defines the type of steps
-         */
-        "type": TStepsType;
-        /**
-          * Step value
-         */
-        "value"?: string;
     }
     interface BqSteps {
-        "size": TStepsSize;
         /**
-          * It defines the type of steps
+          * The color of the line that connects the steps. It should be a valid declarative color token.
          */
-        "type": TStepsType;
+        "dividerColor": string;
+        /**
+          * The size of the steps
+         */
+        "size": TStepsSize;
     }
     /**
      * Toggle switches are digital on/off switches.
@@ -2271,14 +2258,6 @@ declare namespace LocalJSX {
         "type"?: TStatusType;
     }
     interface BqStepItem {
-        /**
-          * It defines whether this step item is last in stepper
-         */
-        "isLast"?: boolean;
-        /**
-          * Step number
-         */
-        "number"?: number;
         "onBqClick"?: (event: BqStepItemCustomEvent<{ target: HTMLBqStepItemElement; value: string }>) => void;
         /**
           * It defines prefix size
@@ -2288,25 +2267,20 @@ declare namespace LocalJSX {
           * It defines step item appearance based on its status
          */
         "status"?: TStepItemStatus;
-        /**
-          * It defines the type of steps
-         */
-        "type"?: TStepsType;
-        /**
-          * Step value
-         */
-        "value"?: string;
     }
     interface BqSteps {
+        /**
+          * The color of the line that connects the steps. It should be a valid declarative color token.
+         */
+        "dividerColor"?: string;
         /**
           * Handler to be called when the tab value changes
          */
         "onBqChange"?: (event: BqStepsCustomEvent<{ target: HTMLBqStepItemElement; value: string }>) => void;
-        "size"?: TStepsSize;
         /**
-          * It defines the type of steps
+          * The size of the steps
          */
-        "type"?: TStepsType;
+        "size"?: TStepsSize;
     }
     /**
      * Toggle switches are digital on/off switches.

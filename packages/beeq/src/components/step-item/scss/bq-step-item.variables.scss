@@ -1,0 +1,11 @@
+/* -------------------------------------------------------------------------- */
+/*                         Step item custom properties                        */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  --bq-step-item--prefix-color: theme('colors.icon.secondary');
+  --bq-step-item--prefix-color-current: theme('colors.icon.brand');
+  --bq-step-item--prefix-color-completed: theme('colors.icon.success');
+  --bq-step-item--prefix-color-error: theme('colors.icon.danger');
+  --bq-step-item--prefix-color-disabled: theme('colors.icon.secondary-disabled');
+}

@@ -7,14 +7,10 @@
 
 ## Properties
 
-| Property | Attribute | Description                                          | Type                                                             | Default     |
-| -------- | --------- | ---------------------------------------------------- | ---------------------------------------------------------------- | ----------- |
-| `isLast` | `is-last` | It defines whether this step item is last in stepper | `boolean`                                                        | `false`     |
-| `number` | `number`  | Step number                                          | `number`                                                         | `undefined` |
-| `size`   | `size`    | It defines prefix size                               | `"medium" \| "small"`                                            | `'medium'`  |
-| `status` | `status`  | It defines step item appearance based on its status  | `"completed" \| "current" \| "default" \| "disabled" \| "error"` | `'default'` |
-| `type`   | `type`    | It defines the type of steps                         | `"dot" \| "icon" \| "numeric"`                                   | `'numeric'` |
-| `value`  | `value`   | Step value                                           | `string`                                                         | `''`        |
+| Property | Attribute | Description                                         | Type                                                             | Default     |
+| -------- | --------- | --------------------------------------------------- | ---------------------------------------------------------------- | ----------- |
+| `size`   | `size`    | It defines prefix size                              | `"medium" \| "small"`                                            | `'medium'`  |
+| `status` | `status`  | It defines step item appearance based on its status | `"completed" \| "current" \| "default" \| "disabled" \| "error"` | `'default'` |
 
 
 ## Events
@@ -32,21 +28,6 @@
 | `"description"` |             |
 | `"title"`       |             |
 
-
-## Dependencies
-
-### Depends on
-
-- [bq-avatar](../avatar)
-- [bq-icon](../icon)
-
-### Graph
-```mermaid
-graph TD;
-  bq-step-item --> bq-avatar
-  bq-step-item --> bq-icon
-  style bq-step-item fill:#f9f,stroke:#333,stroke-width:4px
-```
 
 ----------------------------------------------
 

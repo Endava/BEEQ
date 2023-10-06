@@ -1,8 +1,8 @@
-import { h, Component, Prop, Watch, Element, Event, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Prop, Watch } from '@stencil/core';
 
-import { TStepItemStatus } from './bq-step-item.types';
-import { validatePropValue } from '../../shared/utils';
-import { STEPS_SIZE, STEPS_TYPE, TStepsSize, TStepsType } from '../steps/bq-steps.types';
+import { STEP_ITEM_STATUS, TStepItemStatus } from './bq-step-item.types';
+import { isHTMLElement, validatePropValue } from '../../shared/utils';
+import { STEPS_SIZE, TStepsSize } from '../steps/bq-steps.types';
 
 @Component({
   tag: 'bq-step-item',
@@ -23,32 +23,25 @@ export class BqStepItem {
 
   // Public Property API
   // ========================
-  /** It defines the type of steps */
-  @Prop({ reflect: true }) type: TStepsType = 'numeric';
-
-  /** Step number */
-  @Prop({ reflect: true }) number?: number;
-
-  /** It defines step item appearance based on its status */
-  @Prop({ reflect: true }) status?: TStepItemStatus = 'default';
 
   /** It defines prefix size */
   @Prop({ reflect: true }) size?: TStepsSize = 'medium';
 
-  /** It defines whether this step item is last in stepper */
-  @Prop({ reflect: true }) isLast?: boolean = false;
-
-  /** Step value */
-  @Prop({ reflect: true }) value?: string = '';
+  /** It defines step item appearance based on its status */
+  @Prop({ reflect: true }) status?: TStepItemStatus = 'default';
 
   // Prop lifecycle events
   // =======================
-  @Watch('type')
+
   @Watch('size')
+  @Watch('status')
   checkPropValues() {
-    validatePropValue(STEPS_TYPE, 'numeric', this.el, 'type');
     validatePropValue(STEPS_SIZE, 'medium', this.el, 'size');
+    validatePropValue(STEP_ITEM_STATUS, 'default', this.el, 'status');
+
+    this.handleIconPrefix();
   }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
@@ -61,6 +54,11 @@ export class BqStepItem {
   componentWillLoad() {
     this.checkPropValues();
   }
+
+  componentDidLoad() {
+    this.checkPropValues();
+  }
+
   // Listeners
   // ==============
 
@@ -76,16 +74,20 @@ export class BqStepItem {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  handleClick = () => this.bqClick.emit({ target: this.el, value: this.value.toString() });
+  private get isDisabled(): boolean {
+    return this.status === 'disabled';
+  }
 
-  getIconName = () => {
-    if (this.status === 'completed') {
-      return 'check-circle';
-    }
-    if (this.status === 'error') {
-      return 'x-circle';
-    }
-    return 'circle';
+  private get isCurrent(): boolean {
+    return this.status === 'current';
+  }
+
+  private handleIconPrefix = () => {
+    const iconElem = this.el.querySelector('[slot="prefix"]');
+    if (!iconElem || !isHTMLElement(iconElem, 'bq-icon')) return;
+
+    iconElem.size = this.size === 'small' ? 24 : 32;
+    iconElem.weight = this.isCurrent ? 'fill' : 'regular';
   };
 
   // render() function
@@ -93,60 +95,37 @@ export class BqStepItem {
   // ===================================
 
   render() {
-    const avatarSize = this.size === 'medium' ? 'small' : 'xsmall';
-    const iconSize = this.size === 'medium' ? 27 : 24;
-    const isDisabled = this.status === 'disabled';
-    const isCurrent = this.status === 'current';
-
     return (
       <div
         class={{
-          flex: true,
-          'bq-step-item': true,
+          'bq-step-item flex gap-s': true,
           [`bq-step-item--${this.status}`]: true,
-          'pointer-events-none': isDisabled,
+          'pointer-events-none': this.isDisabled,
         }}
         part="base"
-        onClick={this.handleClick}
       >
-        {this.type === 'numeric' ? (
-          <bq-avatar
-            class="bg-bg-primary px-2"
-            shape="circle"
-            size={avatarSize}
-            initials={this.number?.toString()}
-          ></bq-avatar>
-        ) : this.type === 'dot' ? (
-          <bq-icon
-            class="bg-bg-primary px-2"
-            name={this.getIconName()}
-            weight={this.status === 'current' ? 'fill' : 'regular'}
-            size={iconSize}
-          />
-        ) : (
-          <span class="bg-bg-primary px-2">
-            <slot name="prefix"></slot>
-          </span>
-        )}
-        <div class="bg-bg-primary px-2">
+        <div class={`bq-step-item__prefix relative ${this.status}`}>
+          <slot name="prefix" onSlotchange={this.handleIconPrefix} />
+        </div>
+        <div class="bq-step-item__content">
+          {/* TITLE */}
           <div
-            part="title"
             class={{
-              'pr-xs3 text-m': true,
-              'pointer-events-none text-text-secondary-disabled': isDisabled,
-              'text-text-brand': isCurrent,
+              'bq-step-item__content--title pr-xs3 text-m text-text-primary leading-regular': true,
+              'pointer-events-none text-text-secondary-disabled': this.isDisabled,
+              'text-text-brand': this.isCurrent,
             }}
+            part="title"
           >
             <slot />
           </div>
-
+          {/* DESCRIPTION */}
           <div
-            part="description"
             class={{
-              'mt-1 text-s': true,
-              'text-text-secondary': !isDisabled,
-              'text-text-secondary-disabled': isDisabled,
+              'bq-step-item__content--description text-s leading-regular text-text-primary-disabled': true,
+              'text-text-secondary-disabled': this.isDisabled,
             }}
+            part="description"
           >
             <slot name="description" />
           </div>

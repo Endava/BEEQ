@@ -2,59 +2,43 @@
 /*                                Step item styles                */
 /* -------------------------------------------------------------------------- */
 
-@import './bq-step-item-variables';
+@import './bq-step-item.variables';
 
 :host {
-  --bq-icon--color: var(--bq-icon--primary);
+  --bq-icon--color: theme('colors.icon.primary');
+  @apply bg-bg-primary;
 }
 
-:host([status='current']) {
-  --bq-icon--color: var(--bq-icon--brand);
-}
+.bq-step-item__prefix {
+  ::slotted(bq-icon) {
+    --bq-icon--color: var(--bq-step-item--prefix-color);
+  }
 
-:host([status='error']) {
-  --bq-icon--color: var(--bq-icon--danger);
-}
+  &.current {
+    ::slotted(bq-icon) {
+      --bq-icon--color: var(--bq-step-item--prefix-color-current);
+    }
+  }
 
-:host([status='completed']) {
-  --bq-icon--color: var(--bq-icon--success);
-}
+  &.completed {
+    ::slotted(bq-icon) {
+      --bq-icon--color: var(--bq-step-item--prefix-color-completed);
+    }
+  }
 
-:host([status='disabled']) {
-  --bq-icon--color: var(--bq-icon--primary-disabled);
-}
+  &.error {
+    ::slotted(bq-icon) {
+      --bq-icon--color: var(--bq-step-item--prefix-color-error);
+    }
+  }
 
-.bq-step-item {
-  bq-avatar::part(base) {
-    --bq-avatar--border-color: transparent;
-    @apply bg-ui-secondary text-text-secondary;
+  &.disabled {
+    ::slotted(bq-icon) {
+      --bq-icon--color: var(--bq-step-item--prefix-color-disabled);
+    }
   }
 }
 
-.bq-step-item--error {
-  bq-avatar::part(base) {
-    @apply bg-ui-danger text-text-danger;
-  }
-}
-
-.bq-step-item--current {
-  bq-avatar::part(base) {
-    @apply bg-ui-brand text-icon-secondary-inverse;
-  }
-}
-
-.bq-step-item--disabled {
-  bq-avatar::part(base) {
-    @apply bg-ui-secondary-disabled text-text-secondary-disabled;
-  }
-}
-
-.bq-step-item--completed {
-  bq-avatar::part(base) {
-    @apply bg-ui-success-alt text-text-success;
-  }
-}
-
-.bq-step-item__description::slotted(*) {
-  @apply mt-1 text-s;
+.bq-step-item__content--description::slotted(*) {
+  @apply text-s leading-regular text-text-primary-disabled;
 }

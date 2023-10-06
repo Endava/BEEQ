@@ -1,15 +1,32 @@
-import { ArgsTable, Canvas, Story } from '@storybook/addon-docs';
+import { ArgTypes, Title, Subtitle } from '@storybook/addon-docs';
 
-# Steps
+<div className="bq-doc__wrapper" data-theme="light">
+  <div className="bq-doc__container" >
+    <Title>Steps</Title>
 
-## Variations
+    The Steps Component is a UI element used to display a series of steps or stages in a process or task. Steps are commonly used in wizards, onboarding flows, or multi-step forms, and are a way to help users understand the progression of a task or process and their current status.
+    It typically consists of a visually appealing representation of the current step, along with optional labels, icons, or additional information associated with each step.
 
-### Default
+    <Subtitle>Usage</Subtitle>
 
-<Canvas>
-  <Story id="components-steps--default" />
-</Canvas>
+    - Displaying the steps in a wizard, onboarding flow, or multi-step form, so that users can understand the progression of the task and their current status.
+    - Providing an overview of the steps in a process or task, such as outlining the steps in a recipe or the stages of a project.
+    - Representing the progress of a task or process, such as indicating the current step, completed steps, and future steps.
 
-## Properties
+    <Subtitle>👍 When to use</Subtitle>
 
-<ArgsTable of="bq-steps" />
+    1. Multi-step processes: Use stepper items when there is a need to guide users through a multi-step process, such as signing up, completing a form, or placing an order.
+    2. Wizard-like interfaces: Stepper items work well for implementing wizard-like interfaces where users need to progress through a series of steps to complete a task.
+    3. Progress tracking: Stepper items can be used to visually track the progress of a user's actions, such as completing a tutorial or a course with multiple lessons.
+
+    <Title>Properties</Title>
+
+    <Subtitle>bq-steps</Subtitle>
+
+    <ArgTypes of="bq-steps" />
+
+    <Subtitle>bq-step-item</Subtitle>
+
+    <ArgTypes of="bq-step-item" />
+  </div>
+</div>
