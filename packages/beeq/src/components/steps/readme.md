@@ -14,13 +14,6 @@
 | `type`         | `type`          | The type of prefix element to use on the step items                                          | `"dot" \| "icon" \| "numeric"` | `undefined`       |
 
 
-## Events
-
-| Event      | Description                                     | Type                                                             |
-| ---------- | ----------------------------------------------- | ---------------------------------------------------------------- |
-| `bqChange` | Handler to be called when the tab value changes | `CustomEvent<{ target: HTMLBqStepItemElement; value: string; }>` |
-
-
 ## Shadow Parts
 
 | Part          | Description                                  |

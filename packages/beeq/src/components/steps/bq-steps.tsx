@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Listen, Prop, Watch } from '@stencil/core';
+import { Component, Element, h, Prop, Watch } from '@stencil/core';
 
 import { STEPS_SIZE, STEPS_TYPE, TStepsSize, TStepsType } from './bq-steps.types';
 import { validatePropValue } from '../../shared/utils';
@@ -53,9 +53,6 @@ export class BqSteps {
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Handler to be called when the tab value changes */
-  @Event() bqChange: EventEmitter<{ target: HTMLBqStepItemElement; value: string }>;
-
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
@@ -66,11 +63,6 @@ export class BqSteps {
 
   // Listeners
   // ==============
-
-  @Listen('bqClick')
-  onBqStepItemChange(event: CustomEvent<{ target: HTMLBqStepItemElement; value: string }>) {
-    this.bqChange.emit(event.detail);
-  }
 
   // Public methods API
   // These methods are exposed on the host element.

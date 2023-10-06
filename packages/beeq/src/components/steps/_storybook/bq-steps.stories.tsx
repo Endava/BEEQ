@@ -19,13 +19,9 @@ const meta: Meta = {
     size: { control: 'select', options: [...STEPS_SIZE] },
     // Not part of the public API
     children: { control: 'text', table: { disable: true } },
-    icon: { control: 'text', table: { disable: true } },
-    title: { control: 'text', table: { disable: true } },
-    description: { control: 'text', table: { disable: true } },
   },
   args: {
     'divider-color': 'ui--secondary',
-    text: 'text',
     size: 'medium',
   },
 };

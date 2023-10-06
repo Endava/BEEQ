@@ -277,7 +277,7 @@ export namespace Components {
          */
         "strokeDashWidth"?: number;
         /**
-          * Set the lineap of the divider's stroke. This is applicable when the stroke is dashed
+          * Set the line of the divider's stroke. This is applicable when the stroke is dashed
          */
         "strokeLinecap"?: TDividerStrokeLinecap;
         /**
@@ -1132,10 +1132,6 @@ export interface BqStepItemCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqStepItemElement;
 }
-export interface BqStepsCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLBqStepsElement;
-}
 export interface BqSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqSwitchElement;
@@ -1673,7 +1669,7 @@ declare namespace LocalJSX {
          */
         "strokeDashWidth"?: number;
         /**
-          * Set the lineap of the divider's stroke. This is applicable when the stroke is dashed
+          * Set the line of the divider's stroke. This is applicable when the stroke is dashed
          */
         "strokeLinecap"?: TDividerStrokeLinecap;
         /**
@@ -2285,10 +2281,6 @@ declare namespace LocalJSX {
           * The color of the line that connects the steps. It should be a valid declarative color token.
          */
         "dividerColor"?: string;
-        /**
-          * Handler to be called when the tab value changes
-         */
-        "onBqChange"?: (event: BqStepsCustomEvent<{ target: HTMLBqStepItemElement; value: string }>) => void;
         /**
           * The size of the steps
          */

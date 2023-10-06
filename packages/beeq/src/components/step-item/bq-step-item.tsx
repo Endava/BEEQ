@@ -25,7 +25,7 @@ export class BqStepItem {
   // ========================
 
   /** It defines prefix size */
-  @Prop({ reflect: true }) size?: TStepsSize;
+  @Prop({ reflect: true }) size?: TStepsSize = 'medium';
 
   /** It defines step item appearance based on its status */
   @Prop({ reflect: true }) status?: TStepItemStatus = 'default';
