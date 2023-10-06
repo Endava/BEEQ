@@ -22,9 +22,9 @@
 
 ## Shadow Parts
 
-| Part          | Description |
-| ------------- | ----------- |
-| `"container"` |             |
+| Part          | Description                                  |
+| ------------- | -------------------------------------------- |
+| `"container"` | The container wrapper of the Steps component |
 
 
 ## Dependencies

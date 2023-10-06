@@ -3,8 +3,10 @@ import { Component, Element, Event, EventEmitter, h, Listen, Prop, Watch } from 
 import { STEPS_SIZE, TStepsSize } from './bq-steps.types';
 import { validatePropValue } from '../../shared/utils';
 
+/**
+ * @part container - The container wrapper of the Steps component
+ */
 @Component({
-  // bq-stepper
   tag: 'bq-steps',
   styleUrl: './scss/bq-steps.scss',
   shadow: true,
@@ -13,8 +15,11 @@ export class BqSteps {
   // Own Properties
   // ====================
 
+  private stepElem: HTMLElement;
+
   // Reference to host HTML element
   // ===================================
+
   @Element() el!: HTMLBqStepsElement;
 
   // State() variables
@@ -32,6 +37,7 @@ export class BqSteps {
 
   // Prop lifecycle events
   // =======================
+
   @Watch('type')
   @Watch('size')
   checkPropValues() {
@@ -49,12 +55,14 @@ export class BqSteps {
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
+
   componentDidLoad() {
     this.setStepItemProps();
   }
 
   // Listeners
   // ==============
+
   @Listen('bqClick')
   onBqStepItemChange(event: CustomEvent<{ target: HTMLBqStepItemElement; value: string }>) {
     this.bqChange.emit(event.detail);
@@ -71,8 +79,14 @@ export class BqSteps {
   // Internal business logic.
   // These methods cannot be called from the host element.
   // =======================================================
+
   private get bqSteps(): HTMLBqStepItemElement[] {
-    return Array.from(this.el.querySelectorAll('bq-step-item'));
+    if (!this.stepElem) return [];
+
+    const slot = this.stepElem.querySelector('slot');
+    return [...slot.assignedElements({ flatten: true })].filter(
+      (el: HTMLBqSideMenuItemElement) => el.tagName.toLowerCase() === 'bq-step-item',
+    ) as [HTMLBqSideMenuItemElement];
   }
 
   private setStepItemProps = () => {
@@ -93,7 +107,11 @@ export class BqSteps {
     const dividerPaddingTop = this.size === 'small' ? 'pt-s' : 'pt-m';
 
     return (
-      <div class="relative flex w-full items-start justify-between" part="container">
+      <div
+        class="relative flex w-full items-start justify-between"
+        ref={(div) => (this.stepElem = div)}
+        part="container"
+      >
         <slot />
         <bq-divider
           class={`absolute left-0 right-0 -z-10 px-s ${dividerPaddingTop}`}
