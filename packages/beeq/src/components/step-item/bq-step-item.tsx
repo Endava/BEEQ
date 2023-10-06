@@ -2,7 +2,7 @@ import { Component, Element, Event, EventEmitter, h, Prop, Watch } from '@stenci
 
 import { STEP_ITEM_STATUS, TStepItemStatus } from './bq-step-item.types';
 import { isHTMLElement, validatePropValue } from '../../shared/utils';
-import { STEPS_SIZE, TStepsSize } from '../steps/bq-steps.types';
+import { STEPS_SIZE, TStepsSize, TStepsType } from '../steps/bq-steps.types';
 
 @Component({
   tag: 'bq-step-item',
@@ -25,10 +25,13 @@ export class BqStepItem {
   // ========================
 
   /** It defines prefix size */
-  @Prop({ reflect: true }) size?: TStepsSize = 'medium';
+  @Prop({ reflect: true }) size?: TStepsSize;
 
   /** It defines step item appearance based on its status */
   @Prop({ reflect: true }) status?: TStepItemStatus = 'default';
+
+  /** It defines the step item type used */
+  @Prop({ reflect: true }) type?: TStepsType;
 
   // Prop lifecycle events
   // =======================
@@ -104,7 +107,7 @@ export class BqStepItem {
         }}
         part="base"
       >
-        <div class={`bq-step-item__prefix relative ${this.status}`}>
+        <div class={`bq-step-item__prefix relative ${this.type} ${this.size} ${this.status}`}>
           <slot name="prefix" onSlotchange={this.handleIconPrefix} />
         </div>
         <div class="bq-step-item__content">

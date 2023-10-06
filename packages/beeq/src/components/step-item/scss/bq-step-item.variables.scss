@@ -8,4 +8,7 @@
   --bq-step-item--prefix-color-completed: theme('colors.icon.success');
   --bq-step-item--prefix-color-error: theme('colors.icon.danger');
   --bq-step-item--prefix-color-disabled: theme('colors.icon.secondary-disabled');
+
+  --bq-step-item--prefix-num-size: theme('spacing.xl');
+  --bq-step-item--prefix-num-bg-color: theme('colors.ui.secondary');
 }

@@ -19,7 +19,7 @@ import { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-si
 import { TSliderType } from "./components/slider/bq-slider.types";
 import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 import { TStatusType } from "./components/status/bq-status.types";
-import { TStepsSize } from "./components/steps/bq-steps.types";
+import { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
 import { TStepItemStatus } from "./components/step-item/bq-step-item.types";
 import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
 import { TTabSize } from "./components/tab/bq-tab.types";
@@ -39,7 +39,7 @@ export { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-si
 export { TSliderType } from "./components/slider/bq-slider.types";
 export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 export { TStatusType } from "./components/status/bq-status.types";
-export { TStepsSize } from "./components/steps/bq-steps.types";
+export { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
 export { TStepItemStatus } from "./components/step-item/bq-step-item.types";
 export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-swithc.types";
 export { TTabSize } from "./components/tab/bq-tab.types";
@@ -782,6 +782,10 @@ export namespace Components {
           * It defines step item appearance based on its status
          */
         "status"?: TStepItemStatus;
+        /**
+          * It defines the step item type used
+         */
+        "type"?: TStepsType;
     }
     interface BqSteps {
         /**
@@ -792,6 +796,10 @@ export namespace Components {
           * The size of the steps
          */
         "size": TStepsSize;
+        /**
+          * The type of prefix element to use on the step items
+         */
+        "type": TStepsType;
     }
     /**
      * Toggle switches are digital on/off switches.
@@ -2267,6 +2275,10 @@ declare namespace LocalJSX {
           * It defines step item appearance based on its status
          */
         "status"?: TStepItemStatus;
+        /**
+          * It defines the step item type used
+         */
+        "type"?: TStepsType;
     }
     interface BqSteps {
         /**
@@ -2281,6 +2293,10 @@ declare namespace LocalJSX {
           * The size of the steps
          */
         "size"?: TStepsSize;
+        /**
+          * The type of prefix element to use on the step items
+         */
+        "type"?: TStepsType;
     }
     /**
      * Toggle switches are digital on/off switches.

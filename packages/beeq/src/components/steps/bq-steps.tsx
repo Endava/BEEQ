@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Prop, Watch } from '@stencil/core';
 
-import { STEPS_SIZE, TStepsSize } from './bq-steps.types';
+import { STEPS_SIZE, STEPS_TYPE, TStepsSize, TStepsType } from './bq-steps.types';
 import { validatePropValue } from '../../shared/utils';
 
 /**
@@ -29,11 +29,14 @@ export class BqSteps {
   // Public Property API
   // ========================
 
+  /** The color of the line that connects the steps. It should be a valid declarative color token. */
+  @Prop({ reflect: true }) dividerColor: string = 'ui--secondary';
+
   /** The size of the steps */
   @Prop({ reflect: true }) size: TStepsSize = 'medium';
 
-  /** The color of the line that connects the steps. It should be a valid declarative color token. */
-  @Prop({ reflect: true }) dividerColor: string = 'ui--secondary';
+  /** The type of prefix element to use on the step items */
+  @Prop({ reflect: true }) type: TStepsType;
 
   // Prop lifecycle events
   // =======================
@@ -42,6 +45,7 @@ export class BqSteps {
   @Watch('size')
   checkPropValues() {
     validatePropValue(STEPS_SIZE, 'medium', this.el, 'size');
+    validatePropValue(STEPS_TYPE, 'numeric', this.el, 'type');
 
     this.setStepItemProps();
   }
@@ -92,6 +96,7 @@ export class BqSteps {
   private setStepItemProps = () => {
     this.bqSteps.forEach((bqStepElem: HTMLBqStepItemElement) => {
       bqStepElem.size = this.size;
+      bqStepElem.type = this.type;
     });
   };
 

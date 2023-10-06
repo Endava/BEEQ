@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property       | Attribute       | Description                                                                                  | Type                  | Default           |
-| -------------- | --------------- | -------------------------------------------------------------------------------------------- | --------------------- | ----------------- |
-| `dividerColor` | `divider-color` | The color of the line that connects the steps. It should be a valid declarative color token. | `string`              | `'ui--secondary'` |
-| `size`         | `size`          | The size of the steps                                                                        | `"medium" \| "small"` | `'medium'`        |
+| Property       | Attribute       | Description                                                                                  | Type                           | Default           |
+| -------------- | --------------- | -------------------------------------------------------------------------------------------- | ------------------------------ | ----------------- |
+| `dividerColor` | `divider-color` | The color of the line that connects the steps. It should be a valid declarative color token. | `string`                       | `'ui--secondary'` |
+| `size`         | `size`          | The size of the steps                                                                        | `"medium" \| "small"`          | `'medium'`        |
+| `type`         | `type`          | The type of prefix element to use on the step items                                          | `"dot" \| "icon" \| "numeric"` | `undefined`       |
 
 
 ## Events
