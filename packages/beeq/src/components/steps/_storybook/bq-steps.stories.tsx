@@ -1,5 +1,6 @@
 import { Args, Meta, StoryObj } from '@storybook/web-components';
-import { html } from 'lit-html';
+import { html, nothing } from 'lit-html';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import mdx from './bq-steps.mdx';
 import { STEPS_SIZE, STEPS_TYPE } from '../bq-steps.types';
@@ -13,39 +14,124 @@ const meta: Meta = {
     },
   },
   argTypes: {
-    text: { control: 'text', table: { disable: true } },
+    'divider-color': { control: 'text' },
     type: { control: 'select', options: [...STEPS_TYPE] },
     size: { control: 'select', options: [...STEPS_SIZE] },
-    bqClick: { action: 'bqClick' },
+    // Not part of the public API
+    children: { control: 'text', table: { disable: true } },
+    icon: { control: 'text', table: { disable: true } },
+    title: { control: 'text', table: { disable: true } },
+    description: { control: 'text', table: { disable: true } },
   },
   args: {
+    'divider-color': 'ui--secondary',
     text: 'text',
-    type: 'numeric',
     size: 'medium',
   },
 };
 export default meta;
 
 const Template = (args: Args) => {
-  return html` <bq-steps type=${args.type} class="p-2" size=${args.size}>
-    <bq-step-item status="default" value="x">
-      <bq-icon slot="prefix" name="bell-ringing" size="24" weight="regular"></bq-icon>
-      <span>step item 1</span>
-      <span slot="description">description for step</span>
-    </bq-step-item>
-    <bq-step-item status="disabled" value="xy">
-      <bq-icon slot="prefix" name="bell-ringing" size="24" weight="regular"></bq-icon>
-      <span>step item 2 with longerlongerlongerlongerlonger title</span>
-      <span slot="description">description for step</span>
-    </bq-step-item>
-    <bq-step-item status="completed" value="xyz">
-      <bq-icon slot="prefix" name="factory" size="24" weight="regular"></bq-icon>
-      <span>title</span>
-      <span slot="description">description for step 3</span>
-    </bq-step-item>
-  </bq-steps>`;
+  return html`
+    <bq-steps divider-color=${args['divider-color']} type=${args.type} size=${args.size}>
+      ${ifDefined(args.children) ? args.children : nothing}
+    </bq-steps>
+  `;
 };
 
-export const Default: StoryObj = {
+export const Dots: StoryObj = {
   render: Template,
+  args: {
+    type: 'dot',
+    children: html`
+      <bq-step-item status="default">
+        <bq-icon slot="prefix" name="circle"></bq-icon>
+        <span>Title</span>
+        <span slot="description">Description</span>
+      </bq-step-item>
+      <bq-step-item status="error">
+        <bq-icon slot="prefix" name="x-circle"></bq-icon>
+        <span>Title</span>
+        <span slot="description">Description</span>
+      </bq-step-item>
+      <bq-step-item status="completed">
+        <bq-icon slot="prefix" name="check-circle"></bq-icon>
+        <span>Title</span>
+        <span slot="description">Description</span>
+      </bq-step-item>
+      <bq-step-item status="current">
+        <bq-icon slot="prefix" name="circle"></bq-icon>
+        <span>Title</span>
+        <span slot="description">Description</span>
+      </bq-step-item>
+      <bq-step-item status="disabled">
+        <bq-icon slot="prefix" name="circle"></bq-icon>
+        <span>Title</span>
+        <span slot="description">Description</span>
+      </bq-step-item>
+    `,
+  },
+};
+
+export const Icons: StoryObj = {
+  render: Template,
+  args: {
+    type: 'icon',
+    children: html`
+      <bq-step-item status="completed">
+        <bq-icon slot="prefix" name="airplane-takeoff"></bq-icon>
+        <span>Flight</span>
+        <span slot="description">Reserve your flight</span>
+      </bq-step-item>
+      <bq-step-item status="completed">
+        <bq-icon slot="prefix" name="bed"></bq-icon>
+        <span>Accommodation</span>
+        <span slot="description">Reserve your accommodation</span>
+      </bq-step-item>
+      <bq-step-item status="error">
+        <bq-icon slot="prefix" name="car"></bq-icon>
+        <span>Rent a car</span>
+        <span slot="description">There was an error with your reservation</span>
+      </bq-step-item>
+      <bq-step-item status="current">
+        <bq-icon slot="prefix" name="tree-palm"></bq-icon>
+        <span>Enjoy your holidays!</span>
+        <span slot="description">You're ready for your vacations</span>
+      </bq-step-item>
+    `,
+  },
+};
+
+export const Numbers: StoryObj = {
+  render: Template,
+  args: {
+    type: 'numeric',
+    children: html`
+      <bq-step-item status="default">
+        <span slot="prefix">1</span>
+        <span>Title</span>
+        <span slot="description">Description</span>
+      </bq-step-item>
+      <bq-step-item status="completed">
+        <span slot="prefix">2</span>
+        <span>Title</span>
+        <span slot="description">Description</span>
+      </bq-step-item>
+      <bq-step-item status="error">
+        <span slot="prefix">3</span>
+        <span>Title</span>
+        <span slot="description">Description</span>
+      </bq-step-item>
+      <bq-step-item status="current">
+        <span slot="prefix">4</span>
+        <span>Title</span>
+        <span slot="description">Description</span>
+      </bq-step-item>
+      <bq-step-item status="disabled">
+        <span slot="prefix">4</span>
+        <span>Title</span>
+        <span slot="description">Description</span>
+      </bq-step-item>
+    `,
+  },
 };

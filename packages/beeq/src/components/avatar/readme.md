@@ -26,19 +26,6 @@
 | `"text"` | The `<span>` tag element that renderd the `Initials` text string. |
 
 
-## Dependencies
-
-### Used by
-
- - [bq-step-item](../step-item)
-
-### Graph
-```mermaid
-graph TD;
-  bq-step-item --> bq-avatar
-  style bq-avatar fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
