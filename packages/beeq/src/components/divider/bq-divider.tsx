@@ -23,7 +23,7 @@ const strokeDrawPositions = {
 /**
  * @part base - The component's internal wrapper.
  * @part dash-start - The component's internal svg wrapper for the start line of the divider's stroke
- * @part dash-end - The componet's internal svg wrapper for the end line of the divider's stroke
+ * @part dash-end - The component's internal svg wrapper for the end line of the divider's stroke
  * @part dash-start-line - The component's internal line component of the divider's stroke
  * @part dash-end-line - The component's internal line component of the divider's stroke
  */
@@ -76,7 +76,7 @@ export class BqDivider {
   /** Set the min width of the divider's stroke when text is not centered. Value expressed in px */
   @Prop({ reflect: true }) strokeBasis?: number = 20;
 
-  /** Set the lineap of the divider's stroke. This is applicable when the stroke is dashed */
+  /** Set the line of the divider's stroke. This is applicable when the stroke is dashed */
   @Prop({ reflect: true }) strokeLinecap?: TDividerStrokeLinecap = 'butt';
 
   // Prop lifecycle events

@@ -1,0 +1,23 @@
+/* -------------------------------------------------------------------------- */
+/*                         Step item custom properties                        */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  /**
+   * @prop --bq-step-item--prefix-color - Color of the prefix icon
+   * @prop --bq-step-item--prefix-color-current - Color of the prefix icon when current
+   * @prop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
+   * @prop --bq-step-item--prefix-color-error - Color of the prefix icon when error
+   * @prop --bq-step-item--prefix-color-disabled - Color of the prefix icon when disabled
+   * @prop --bq-step-item--prefix-num-size - Size of the prefix number
+   * @prop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
+   */
+  --bq-step-item--prefix-color: theme('colors.icon.secondary');
+  --bq-step-item--prefix-color-current: theme('colors.icon.brand');
+  --bq-step-item--prefix-color-completed: theme('colors.icon.success');
+  --bq-step-item--prefix-color-error: theme('colors.icon.danger');
+  --bq-step-item--prefix-color-disabled: theme('colors.icon.secondary-disabled');
+
+  --bq-step-item--prefix-num-size: theme('spacing.xl');
+  --bq-step-item--prefix-num-bg-color: theme('colors.ui.secondary');
+}

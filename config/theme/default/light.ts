@@ -120,8 +120,8 @@ export const DefaultLightTheme = {
   'bq-text--secondary-active': 'var(--bq-grey-700)',
   'bq-text--secondary-disabled': 'var(--bq-grey-400)',
   /** Inverse */
-  'bq-text--inverse': 'var(--bq-neutral-white)',
-  'bq-text--inverse-disabled': 'var(--bq-grey-50)',
+  'bq-text--inverse': 'var(--bq-grey-50)',
+  'bq-text--inverse-disabled': 'var(--bq-grey-100)',
   /** Brand */
   'bq-text--brand': 'var(--bq-iris-600)',
   'bq-text--brand-hover': 'var(--bq-iris-500)',
