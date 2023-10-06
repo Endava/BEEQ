@@ -1,0 +1,17 @@
+/* -------------------------------------------------------------------------- */
+/*                                Steps styles                */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-steps.variables';
+
+:host {
+  @apply block;
+}
+
+::slotted(bq-step-item:not(:first-child)) {
+  @apply ps-[--bq-steps--gap];
+}
+
+::slotted(bq-step-item:not(:last-child)) {
+  @apply pe-[--bq-steps--gap];
+}

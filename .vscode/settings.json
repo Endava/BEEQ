@@ -36,7 +36,6 @@
   },
   "html.customData": ["./dist/bee-q/custom-elements.json"],
   "less.validate": false,
-  "prettier.prettierPath": "node_modules/prettier",
   "scss.validate": false,
   "stylelint.configFile": ".stylelintrc.json",
   "stylelint.validate": [
