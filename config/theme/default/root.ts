@@ -13,7 +13,7 @@ export const DefaultRootTheme = {
   'bq-box-shadow--m': '0 10px 48px -16px rgba(0, 0, 0, 0.12)',
   'bq-box-shadow--l': '0 20px 58px -16px rgba(0, 0, 0, 0.16)',
   // Fonts
-  'bq-font-family--outfit': "'Outfit', sans-serif",
+  'bq-font-family': "'Outfit', sans-serif",
   'bq-font-size--xs': '0.75rem', // 12px
   'bq-font-size--s': '0.875rem', // 14px
   'bq-font-size--m': '1rem', // 16px

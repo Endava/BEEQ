@@ -2,6 +2,9 @@
 /*              Custom normalize styles for Tailwind CSS (reset)              */
 /* -------------------------------------------------------------------------- */
 
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&family=Outfit:wght@100;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&family=Roboto:wght@100;300;400;500;700&display=swap');
+
 /* stylelint-disable selector-no-qualifying-type */
 @layer base {
   /* Box sizing rules */
@@ -33,7 +36,7 @@
 
   /* Set core body defaults */
   body {
-    @apply min-h-screen bg-bg-primary font-outfit leading-regular text-text-primary antialiased;
+    @apply min-h-screen bg-bg-primary font-default leading-regular text-text-primary antialiased;
     text-rendering: optimizeSpeed;
   }
 

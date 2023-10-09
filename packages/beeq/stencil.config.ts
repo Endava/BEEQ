@@ -27,7 +27,7 @@ export const config: Config = {
       ],
       injectGlobalPaths: [
         resolve(__dirname, 'src/global/styles/mixins/index.scss').replace(/\\/g, '/'),
-        resolve(__dirname, 'src/global/styles/variables/index.scss').replace(/\\/g, '/'),
+        // resolve(__dirname, 'src/global/styles/variables/index.scss').replace(/\\/g, '/'),
       ],
       outputStyle: 'compressed',
       sourceMap: true,
@@ -39,26 +39,14 @@ export const config: Config = {
   ],
   outputTargets: [
     { type: 'docs-readme' },
-    {
-      type: 'dist-hydrate-script',
-      dir: 'dist/hydrate',
-    },
-    {
-      type: 'docs-custom',
-      generator: generateCustomElementsJson,
-    },
+    { type: 'docs-custom', generator: generateCustomElementsJson },
+    { type: 'docs-vscode', file: 'custom-elements.json' },
+    { type: 'dist', copy: [{ src: '../README.md' }] },
+    { type: 'dist-hydrate-script', dir: 'dist/hydrate' },
     {
       type: 'dist-custom-elements',
       customElementsExportBehavior: 'auto-define-custom-elements',
       minify: true,
-    },
-    {
-      type: 'docs-vscode',
-      file: 'custom-elements.json',
-    },
-    {
-      type: 'dist',
-      copy: [{ src: '../README.md' }],
     },
     {
       type: 'www',

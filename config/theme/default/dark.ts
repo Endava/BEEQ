@@ -42,7 +42,7 @@ export const DefaultDarkTheme = {
   'bq-icon--primary-alt': 'var(--bq-white)',
   'bq-icon--primary-alt-disabled': 'var(--bq-grey-200)',
   /** Secondary */
-  'bq-icon--secondary': 'var(-  -bq-grey-400)',
+  'bq-icon--secondary': 'var(--bq-grey-400)',
   'bq-icon--secondary-hover': 'var(--bq-grey-500)',
   'bq-icon--secondary-active': 'var(--bq-grey-300)',
   'bq-icon--secondary-disabled': 'var(--bq-grey-600)',
