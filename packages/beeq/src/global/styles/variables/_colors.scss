@@ -60,18 +60,18 @@
   --bq-green-900: #0c4a28;
   --bq-green-1000: #062514;
   /** Grey */
-  --bq-grey-50: #f7f8f9;
-  --bq-grey-100: #f0f1f2;
-  --bq-grey-200: #e1e3e6;
-  --bq-grey-300: #c4c7cc;
+  --bq-grey-100: #f1f2f4;
+  --bq-grey-200: #e7e8eb;
+  --bq-grey-300: #caccd2;
   --bq-grey-400: #a6aab3;
+  --bq-grey-50: #f6f6f8;
   --bq-grey-500: #898e99;
-  --bq-grey-600: #6b7280;
-  --bq-grey-700: #565b66;
-  --bq-grey-800: #40444d;
-  --bq-grey-900: #25282d;
-  --bq-grey-950: #17191c;
-  --bq-grey-1000: #101112;
+  --bq-grey-600: #646a77;
+  --bq-grey-700: #3f4350;
+  --bq-grey-800: #2a2c35;
+  --bq-grey-900: #1c1d23;
+  --bq-grey-950: #15161a;
+  --bq-grey-1000: #0d0e11;
   /** Indigo */
   --bq-indigo-100: #edecfc;
   --bq-indigo-200: #dcdafa;
@@ -117,8 +117,8 @@
   --bq-magenta-900: #58083c;
   --bq-magenta-1000: #2c041e;
   /** Neutral */
-  --bq-neutral-white: #fff;
-  --bq-neutral-black: #000;
+  --bq-neutral-white: #fbfbfc;
+  --bq-neutral-black: #060708;
   /** Orange */
   --bq-orange-100: #fbf0e9;
   --bq-orange-200: #f8e1d4;
@@ -196,4 +196,34 @@
   --bq-yellow-800: #917f0b;
   --bq-yellow-900: #615507;
   --bq-yellow-1000: #302a04;
+
+  /* -------------------------------------------------------------------------- */
+  /*               These groups are exclusive for the Endava theme              */
+  /* -------------------------------------------------------------------------- */
+
+  /** Endava Grey */
+  --bq-endava-grey-100: #e2e6e9;
+  --bq-endava-grey-200: #cbd2d6;
+  --bq-endava-grey-300: #aeb8bf;
+  --bq-endava-grey-400: #8c99a2;
+  --bq-endava-grey-50: #eef1f2;
+  --bq-endava-grey-500: #6a7a84;
+  --bq-endava-grey-600: #394b56;
+  --bq-endava-grey-700: #243642;
+  --bq-endava-grey-800: #192b37;
+  --bq-endava-grey-900: #13212b;
+  --bq-endava-grey-950: #0e181e;
+  --bq-endava-grey-1000: #080e12;
+
+  /** Endava Orange */
+  --bq-endava-orange-100: #ffeeed;
+  --bq-endava-orange-200: #f8e1d4;
+  --bq-endava-orange-300: #f1c2a8;
+  --bq-endava-orange-400: #ff9889;
+  --bq-endava-orange-500: #ff795e;
+  --bq-endava-orange-600: #de411b;
+  --bq-endava-orange-700: #ac3215;
+  --bq-endava-orange-800: #7a240f;
+  --bq-endava-orange-900: #481509;
+  --bq-endava-orange-1000: #2f0e06;
 }
