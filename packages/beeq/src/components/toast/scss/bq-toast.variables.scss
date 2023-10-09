@@ -21,7 +21,7 @@
    * @prop --bq-toast--icon-color-custom: Toast icon color when type is 'custom'
    */
 
-  --bq-toast--background: theme('colors.bg.primary');
+  --bq-toast--background: theme('colors.ui.primary');
   --bq-toast--box-shadow: theme('boxShadow.l');
 
   --bq-toast--padding-y: theme('spacing.s');

@@ -1,4 +1,4 @@
-import { Component, Element, h, Host } from '@stencil/core';
+import { Component, Element, h } from '@stencil/core';
 
 /**
  * @part label - The `legend` tag element which acts as a container for the label
@@ -60,8 +60,8 @@ export class BqOptionGroup {
 
   render() {
     return (
-      <Host>
-        <legend class="bq-option-group" part="label">
+      <div class="bg-ui-primary">
+        <legend class="bq-option-group mb-[--bq-option-group--gapY-list]" part="label">
           <span class="option-group__prefix flex items-center" part="prefix">
             <slot name="header-prefix" />
           </span>
@@ -75,10 +75,15 @@ export class BqOptionGroup {
             <slot name="header-suffix" />
           </span>
         </legend>
-        <div class="bq-option-group__container" role="group" aria-label="Options" part="group">
+        <div
+          class="bq-option-group__container flex flex-col gap-[--bq-option-group--gapY-list]"
+          role="group"
+          aria-label="Options"
+          part="group"
+        >
           <slot />
         </div>
-      </Host>
+      </div>
     );
   }
 }

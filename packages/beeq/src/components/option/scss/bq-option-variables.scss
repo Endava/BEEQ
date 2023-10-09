@@ -13,7 +13,7 @@
   * @prop --bq-option--border-radius: border radius
 
   * @prop --bq-option--box-shadow: box shadow
-  
+
   * @prop --bq-option--gap-start: gap space between prefix and label
   * @prop --bq-option--gap-end: gap space between label and suffix
   * @prop --bq-option--paddingY: padding Y axis
@@ -21,7 +21,7 @@
   * @prop --bq-option--padding-end: option label padding end
   */
 
-  --bq-option--background: theme('colors.bg.primary');
+  --bq-option--background: theme('colors.ui.primary');
   --bq-option--font-size: theme('fontSize.m');
 
   --bq-option--border-color: theme('colors.transparent');
