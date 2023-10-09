@@ -10,12 +10,13 @@ setCustomElementsManifest(customElements);
 
 const withThemeProvider: DecoratorFunction<WebComponentsRenderer, { [x: string]: unknown }> = (storyFn, context) => {
   const {
-    globals: { theme },
+    globals: { theme, mode },
   } = context;
   const body = document.querySelector('body.sb-show-main');
   if (!body) return storyFn();
 
-  body.setAttribute('data-theme', (theme || 'Light').toLowerCase());
+  body.setAttribute('bq-theme', (theme || 'BEEQ').toLowerCase());
+  body.setAttribute('bq-mode', (mode || 'Light').toLowerCase());
   return storyFn();
 };
 
@@ -24,6 +25,16 @@ const preview: Preview = {
   globalTypes: {
     theme: {
       name: 'Theme',
+      description: 'Theme for BEEQ components',
+      defaultValue: 'BEEQ',
+      toolbar: {
+        icon: 'globe',
+        items: ['BEEQ', 'Endava'],
+        dynamicTitle: true,
+      },
+    },
+    mode: {
+      name: 'Mode',
       description: 'Theme mode for BEEQ components',
       defaultValue: 'Light',
       toolbar: {
