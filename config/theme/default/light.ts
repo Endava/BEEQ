@@ -3,24 +3,24 @@ export const DefaultLightTheme = {
   /*                              Background colors                             */
   /* -------------------------------------------------------------------------- */
   'bq-background--primary': 'var(--bq-neutral-white)',
-  'bq-background--secondary': 'var(--bq-grey-50)',
+  'bq-background--secondary': 'var(--bq-grey-100)',
   'bq-background--tertiary': 'var(--bq-grey-200)',
-  'bq-background--alt': 'var(--bq-grey-600)',
+  'bq-background--alt': 'var(--bq-grey-300)',
   'bq-background--inverse': 'var(--bq-grey-900)',
   'bq-background--brand': 'var(--bq-iris-600)',
-  'bq-background--overlay': 'var(--bq-grey-900)',
+  'bq-background--overlay': 'var(--bq-grey-900)', // with opacity: 60%
   /* -------------------------------------------------------------------------- */
   /*                                 Data colors                                */
   /* -------------------------------------------------------------------------- */
-  'bq-data--black': 'var(--bq-grey-950)',
   'bq-data--blue': 'var(--bq-blue-600)',
+  'bq-data--brand': 'var(--bq-iris-600)',
   'bq-data--corai': 'var(--bq-corai-600)',
   'bq-data--cyan': 'var(--bq-cyan-600)',
   'bq-data--green': 'var(--bq-green-600)',
   'bq-data--grey': 'var(--bq-grey-600)',
-  'bq-data--indigo': 'var(--bq-indigo-600)',
+  'bq-data--inverse': 'var(--bq-grey-950)',
   'bq-data--lime': 'var(--bq-lime-600)',
-  'bq-data--magenta': 'var(--bq-magenta-500)',
+  'bq-data--magenta': 'var(--bq-magenta-600)',
   'bq-data--orange': 'var(--bq-orange-600)',
   'bq-data--purple': 'var(--bq-purple-600)',
   'bq-data--red': 'var(--bq-red-600)',
@@ -35,11 +35,11 @@ export const DefaultLightTheme = {
   /*                                Icons colors                                */
   /* -------------------------------------------------------------------------- */
   /** Primary */
-  'bq-icon--primary': 'var(--bq-grey-900)',
-  'bq-icon--primary-hover': 'var(--bq-grey-800)',
-  'bq-icon--primary-active': 'var(--bq-grey-1000)',
-  'bq-icon--primary-disabled': 'var(--bq-grey-400)',
-  'bq-icon--primary-alt': 'var(--bq-grey-50)',
+  'bq-icon--primary': 'var(--bq-grey-800)',
+  'bq-icon--primary-hover': 'var(--bq-grey-700)',
+  'bq-icon--primary-active': 'var(--bq-grey-900)',
+  'bq-icon--primary-disabled': 'var(--bq-grey-500)',
+  'bq-icon--primary-alt': 'var(--bq-neutral-white)',
   'bq-icon--primary-alt-disabled': 'var(--bq-grey-200)',
   /** Secondary */
   'bq-icon--secondary': 'var(--bq-grey-600)',
@@ -47,8 +47,8 @@ export const DefaultLightTheme = {
   'bq-icon--secondary-active': 'var(--bq-grey-700)',
   'bq-icon--secondary-disabled': 'var(--bq-grey-400)',
   /** Inverse */
-  'bq-icon--inverse': 'var(--bq-neutral-white)',
-  'bq-icon--inverse-disabled': 'var(--bq-grey-50)',
+  'bq-icon--inverse': 'var(--bq-grey-50)',
+  'bq-icon--inverse-disabled': 'var(--bq-grey-100)',
   /** Brand */
   'bq-icon--brand': 'var(--bq-iris-600)',
   'bq-icon--brand-hover': 'var(--bq-iris-500)',
@@ -72,7 +72,7 @@ export const DefaultLightTheme = {
   'bq-stroke--secondary': 'var(--bq-grey-600)',
   'bq-stroke--secondary-hover': 'var(--bq-grey-500)',
   'bq-stroke--secondary-active': 'var(--bq-grey-700)',
-  'bq-stroke--secondary-disabled': 'var(--bq-grey-400)',
+  'bq-stroke--secondary-disabled': 'var(--bq-grey-300)',
   /** Tertiary */
   'bq-stroke--tertiary': 'var(--bq-grey-900)',
   'bq-stroke--tertiary-hover': 'var(--bq-grey-800)',
@@ -104,14 +104,19 @@ export const DefaultLightTheme = {
   'bq-stroke--danger-hover': 'var(--bq-red-500)',
   'bq-stroke--danger-active': 'var(--bq-red-700)',
   'bq-stroke--danger-disabled': 'var(--bq-red-400)',
+  /** Info */
+  'bq-stroke--info': 'var(--bq-blue-600)',
+  'bq-stroke--info-hover': 'var(--bq-blue-500)',
+  'bq-stroke--info-active': 'var(--bq-blue-700)',
+  'bq-stroke--info-disabled': 'var(--bq-blue-400)',
   /* -------------------------------------------------------------------------- */
   /*                                 Text colors                                */
   /* -------------------------------------------------------------------------- */
   /** Primary */
-  'bq-text--primary': 'var(--bq-grey-900)',
-  'bq-text--primary-hover': 'var(--bq-grey-800)',
-  'bq-text--primary-active': 'var(--bq-grey-1000)',
-  'bq-text--primary-disabled': 'var(--bq-grey-400)',
+  'bq-text--primary': 'var(--bq-grey-800)',
+  'bq-text--primary-hover': 'var(--bq-grey-700)',
+  'bq-text--primary-active': 'var(--bq-grey-900)',
+  'bq-text--primary-disabled': 'var(--bq-grey-500)',
   'bq-text--primary-alt': 'var(--bq-neutral-white)',
   'bq-text--primary-alt-disabled': 'var(--bq-grey-200)',
   /** Secondary */
@@ -129,7 +134,7 @@ export const DefaultLightTheme = {
   'bq-text--brand-disabled': 'var(--bq-iris-400)',
   /** Feedback */
   'bq-text--info': 'var(--bq-blue-700)',
-  'bq-text--success': 'var(--bq-teal-800)',
+  'bq-text--success': 'var(--bq-teal-700)',
   'bq-text--warning': 'var(--bq-gold-700)',
   'bq-text--danger': 'var(--bq-red-700)',
   /* -------------------------------------------------------------------------- */
@@ -137,20 +142,20 @@ export const DefaultLightTheme = {
   /* -------------------------------------------------------------------------- */
   /** Primary */
   'bq-ui--primary': 'var(--bq-neutral-white)',
-  'bq-ui--primary-hover': 'var(--bq-grey-50)',
-  'bq-ui--primary-active': 'var(--bq-grey-200)',
-  'bq-ui--primary-disabled': 'var(--bq-grey-100)',
+  'bq-ui--primary-hover': 'var(--bq-grey-100)',
+  'bq-ui--primary-active': 'var(--bq-grey-300)',
+  'bq-ui--primary-disabled': 'var(--bq-grey-50)',
   'bq-ui--primary-alt': 'var(--bq-grey-50)',
   /** Secondary */
   'bq-ui--secondary': 'var(--bq-grey-200)',
-  'bq-ui--secondary-hover': 'var(--bq-grey-100)',
-  'bq-ui--secondary-active': 'var(--bq-grey-300)',
+  'bq-ui--secondary-hover': 'var(--bq-grey-300)',
+  'bq-ui--secondary-active': 'var(--bq-grey-400)',
   'bq-ui--secondary-disabled': 'var(--bq-grey-100)',
   /** Tertiary */
-  'bq-ui--tertiary': 'var(--bq-grey-600)',
-  'bq-ui--tertiary-hover': 'var(--bq-grey-500)',
-  'bq-ui--tertiary-active': 'var(--bq-grey-700)',
-  'bq-ui--tertiary-disabled': 'var(--bq-grey-100)',
+  'bq-ui--tertiary': 'var(--bq-grey-500)',
+  'bq-ui--tertiary-hover': 'var(--bq-grey-400)',
+  'bq-ui--tertiary-active': 'var(--bq-grey-600)',
+  'bq-ui--tertiary-disabled': 'var(--bq-grey-300)',
   /** Inverse */
   'bq-ui--inverse': 'var(--bq-grey-900)',
   'bq-ui--inverse-hover': 'var(--bq-grey-800)',
@@ -180,4 +185,10 @@ export const DefaultLightTheme = {
   'bq-ui--danger-active': 'var(--bq-red-700)',
   'bq-ui--danger-disabled': 'var(--bq-red-400)',
   'bq-ui--danger-alt': 'var(--bq-red-100)',
+  /** Info */
+  'bq-ui--info': 'var(--bq-blue-600)',
+  'bq-ui--info-hover': 'var(--bq-blue-500)',
+  'bq-ui--info-active': 'var(--bq-blue-700)',
+  'bq-ui--info-disabled': 'var(--bq-blue-400)',
+  'bq-ui--info-alt': 'var(--bq-blue-100)',
 };
