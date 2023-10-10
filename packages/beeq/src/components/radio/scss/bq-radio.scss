@@ -27,7 +27,7 @@
   }
 
   &.has-background:not(.is-disabled):hover {
-    @apply bg-ui-secondary-hover;
+    @apply bg-ui-primary-hover;
   }
 
   &.is-checked:not(.is-disabled) {
