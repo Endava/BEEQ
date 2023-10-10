@@ -43,6 +43,8 @@ export const DECLARATIVE_COLORS = {
     'secondary-disabled': 'var(--bq-icon--secondary-disabled)',
     'secondary-inverse': 'var(--bq-icon--secondary-inverse)',
     'secondary-inverse-disabled': 'var(--bq-icon--secondary-inverse-disabled)',
+    inverse: 'var(--bq-icon--inverse)',
+    'inverse-disabled': 'var(--bq-icon--inverse-disabled)',
     brand: 'var(--bq-icon--brand)',
     'brand-hover': 'var(--bq-icon--brand-hover)',
     'brand-active': 'var(--bq-icon--brand-active)',

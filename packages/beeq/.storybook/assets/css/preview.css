@@ -22,7 +22,7 @@
 .sbdocs-content th,
 .sbdocs-content tr,
 .sbdocs-content ul {
-  font-family: var(--bq-font-family--outfit);
+  font-family: var(--bq-font-family);
   font-size: var(--bq-font-size--m);
   font-weight: var(--bq-font-weight--regular);
   color: var(--bq-text--primary);

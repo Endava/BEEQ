@@ -12,14 +12,14 @@
   * @prop --bq-panel--border-width: Panel border width
 
   * @prop --bq-panel--box-shadow: Panel box shadow
-  * @prop --bq-panel--padding: Panel padding 
+  * @prop --bq-panel--padding: Panel padding
 
   * @prop --bq-panel--height: Panel height
   * @prop --bq-panel--width: Panel width
   * @prop --bq-panel-z-index: Panel z-index applied when opened
   */
 
-  --bq-panel--background: theme('colors.bg.primary');
+  --bq-panel--background: theme('colors.ui.primary');
 
   --bq-panel--border-color: theme('colors.transparent');
   --bq-panel--border-radius: theme('borderRadius.s');

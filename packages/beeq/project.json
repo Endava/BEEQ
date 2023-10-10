@@ -97,14 +97,14 @@
       "executor": "nx:run-commands",
       "outputs": ["{projectRoot}/.storybook/assets/css"],
       "options": {
-        "command": "npx tailwindcss -i packages/beeq/src/global/styles/tailwind.pcss -o packages/beeq/.storybook/assets/css/stories.css --postcss ./postcss.config.js --watch"
+        "command": "npx tailwindcss -i packages/beeq/src/global/styles/default.scss -o packages/beeq/.storybook/assets/css/stories.css --postcss ./postcss.config.js --watch"
       }
     },
     "storybook-build-css": {
       "executor": "nx:run-commands",
       "outputs": ["{projectRoot}/.storybook/assets/css"],
       "options": {
-        "command": "npx tailwindcss -i packages/beeq/src/global/styles/tailwind.pcss -o packages/beeq/.storybook/assets/css/stories.css --postcss ./postcss.config.js --minify"
+        "command": "npx tailwindcss -i packages/beeq/src/global/styles/default.scss -o packages/beeq/.storybook/assets/css/stories.css --postcss ./postcss.config.js --minify"
       }
     },
     "icons": {

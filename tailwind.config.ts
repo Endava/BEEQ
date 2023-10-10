@@ -2,7 +2,14 @@ import ThemeSwapper from 'tailwindcss-theme-swapper';
 import plugin from 'tailwindcss/plugin';
 
 import { DECLARATIVE_COLORS, PRIMITIVE_COLORS } from './config';
-import { DefaultDarkTheme, DefaultLightTheme, DefaultRootTheme } from './config/theme/default';
+import {
+  DefaultDarkTheme,
+  DefaultLightTheme,
+  DefaultRootTheme,
+  EndavaDarkTheme,
+  EndavaLightTheme,
+  EndavaRootTheme,
+} from './config/theme';
 
 import type { Config } from 'tailwindcss';
 
@@ -37,7 +44,9 @@ const config: Config = {
       l: 'var(--bq-box-shadow--l)',
     },
     fontFamily: {
+      default: 'var(--bq-font-family)',
       outfit: 'var(--bq-font-family--outfit)',
+      poppins: 'var(--bq-font-family--poppins)',
     },
     fontSize: {
       xs: 'var(--bq-font-size--xs)',
@@ -97,14 +106,28 @@ const config: Config = {
         },
         {
           name: 'light',
-          selectors: [':root', '.light', '[data-theme="light"]', '[light]'],
+          selectors: [':root', '.light', '.beeq.light', '[bq-mode="light"]'],
           theme: { ...DefaultLightTheme },
         },
         {
           name: 'dark',
-          selectors: ['.dark', '[data-theme="dark"]', '[dark]'],
-          mediaQuery: '@media (prefers-color-scheme: dark)',
+          selectors: ['.dark', '.beeq.dark', '[bq-mode="dark"]'],
           theme: { ...DefaultDarkTheme },
+        },
+        {
+          name: 'endava',
+          selectors: ['.endava', '[bq-theme="endava"]'],
+          theme: { ...EndavaRootTheme },
+        },
+        {
+          name: 'endava-light',
+          selectors: ['.endava.light', '[bq-theme="endava"][bq-mode="light"]'],
+          theme: { ...EndavaLightTheme },
+        },
+        {
+          name: 'endava-dark',
+          selectors: ['.endava.dark', '[bq-theme="endava"][bq-mode="dark"]'],
+          theme: { ...EndavaDarkTheme },
         },
       ],
     }),
