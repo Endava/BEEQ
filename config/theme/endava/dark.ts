@@ -39,7 +39,7 @@ export const EndavaDarkTheme = {
   'bq-icon--primary-hover': 'var(--bq-endava-grey-200)',
   'bq-icon--primary-active': 'var(--bq-endava-grey-50)',
   'bq-icon--primary-disabled': 'var(--bq-endava-grey-500)',
-  'bq-icon--primary-alt': 'var(--bq-white)',
+  'bq-icon--primary-alt': 'var(--bq-neutral-white)',
   'bq-icon--primary-alt-disabled': 'var(--bq-endava-grey-200)',
   /** Secondary */
   'bq-icon--secondary': 'var(--bq-endava-grey-400)',
