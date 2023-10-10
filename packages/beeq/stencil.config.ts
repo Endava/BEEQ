@@ -27,7 +27,7 @@ export const config: Config = {
       ],
       injectGlobalPaths: [
         resolve(__dirname, 'src/global/styles/mixins/index.scss').replace(/\\/g, '/'),
-        // resolve(__dirname, 'src/global/styles/variables/index.scss').replace(/\\/g, '/'),
+        resolve(__dirname, 'src/global/styles/variables/index.scss').replace(/\\/g, '/'),
       ],
       outputStyle: 'compressed',
       sourceMap: true,
