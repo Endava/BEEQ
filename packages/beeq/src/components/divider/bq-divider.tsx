@@ -181,7 +181,7 @@ export class BqDivider {
             <line {...strokeAttributes} part="dash-start-line" />
           </svg>
           <slot onSlotchange={this.handleSlotChange} />
-          <svg class={{ 'bq-divider--stroke end': true, hidden: !this.hasTitle }} part="dash-end">
+          <svg class={{ 'bq-divider--stroke end': true, '!hidden': !this.hasTitle }} part="dash-end">
             <line {...strokeAttributes} part="dash-end-line" />
           </svg>
         </div>

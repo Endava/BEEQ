@@ -274,7 +274,7 @@ export class BqSelect {
         {/* Label */}
         <label
           id={labelId}
-          class={{ 'bq-select__label': true, hidden: !this.hasLabel }}
+          class={{ 'bq-select__label': true, '!hidden': !this.hasLabel }}
           htmlFor={this.name || this.fallbackInputId}
           ref={(labelElem: HTMLSpanElement) => (this.labelElem = labelElem)}
           part="label"
@@ -307,7 +307,7 @@ export class BqSelect {
           >
             {/* Prefix */}
             <span
-              class={{ 'bq-select__control--prefix': true, hidden: !this.hasPrefix }}
+              class={{ 'bq-select__control--prefix': true, '!hidden': !this.hasPrefix }}
               ref={(spanElem: HTMLSpanElement) => (this.prefixElem = spanElem)}
               part="prefix"
             >
@@ -374,7 +374,10 @@ export class BqSelect {
         </bq-dropdown>
         {/* Helper text */}
         <div
-          class={{ [`bq-select__helper-text validation-${this.validationStatus}`]: true, hidden: !this.hasHelperText }}
+          class={{
+            [`bq-select__helper-text validation-${this.validationStatus}`]: true,
+            '!hidden': !this.hasHelperText,
+          }}
           ref={(divElem: HTMLDivElement) => (this.helperTextElem = divElem)}
           part="helper-text"
         >
