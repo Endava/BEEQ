@@ -1,19 +1,19 @@
-export const DefaultDarkTheme = {
+export const EndavaDarkTheme = {
   /* -------------------------------------------------------------------------- */
   /*                              Background colors                             */
   /* -------------------------------------------------------------------------- */
-  'bq-background--primary': 'var(--bq-grey-1000)',
-  'bq-background--secondary': 'var(--bq-grey-950)',
-  'bq-background--tertiary': 'var(--bq-grey-800)',
-  'bq-background--alt': 'var(--bq-grey-700)',
-  'bq-background--inverse': 'var(--bq-grey-600)',
-  'bq-background--brand': 'var(--bq-iris-600)',
-  'bq-background--overlay': 'var(--bq-grey-900)', // with opacity: 60%
+  'bq-background--primary': 'var(--bq-endava-grey-1000)',
+  'bq-background--secondary': 'var(--bq-endava-grey-950)',
+  'bq-background--tertiary': 'var(--bq-endava-grey-800)',
+  'bq-background--alt': 'var(--bq-endava-grey-700)',
+  'bq-background--inverse': 'var(--bq-endava-grey-600)',
+  'bq-background--brand': 'var(--bq-endava-orange-600)',
+  'bq-background--overlay': 'var(--bq-endava-grey-900)', // with opacity: 60%
   /* -------------------------------------------------------------------------- */
   /*                                 Data colors                                */
   /* -------------------------------------------------------------------------- */
   'bq-data--blue': 'var(--bq-blue-500)',
-  'bq-data--brand': 'var(--bq-iris-500)',
+  'bq-data--brand': 'var(--bq-endava-orange-500)',
   'bq-data--corai': 'var(--bq-corai-500)',
   'bq-data--cyan': 'var(--bq-cyan-500)',
   'bq-data--green': 'var(--bq-green-500)',
@@ -30,30 +30,30 @@ export const DefaultDarkTheme = {
   /* -------------------------------------------------------------------------- */
   /*                                    Focus                                   */
   /* -------------------------------------------------------------------------- */
-  'bq-focus': 'var(--bq-iris-500)',
+  'bq-focus': 'var(--bq-endava-orange-500)',
   /* -------------------------------------------------------------------------- */
   /*                                Icons colors                                */
   /* -------------------------------------------------------------------------- */
   /** Primary */
-  'bq-icon--primary': 'var(--bq-grey-100)',
-  'bq-icon--primary-hover': 'var(--bq-grey-200)',
-  'bq-icon--primary-active': 'var(--bq-grey-50)',
-  'bq-icon--primary-disabled': 'var(--bq-grey-500)',
+  'bq-icon--primary': 'var(--bq-endava-grey-100)',
+  'bq-icon--primary-hover': 'var(--bq-endava-grey-200)',
+  'bq-icon--primary-active': 'var(--bq-endava-grey-50)',
+  'bq-icon--primary-disabled': 'var(--bq-endava-grey-500)',
   'bq-icon--primary-alt': 'var(--bq-neutral-white)',
-  'bq-icon--primary-alt-disabled': 'var(--bq-grey-200)',
+  'bq-icon--primary-alt-disabled': 'var(--bq-endava-grey-200)',
   /** Secondary */
-  'bq-icon--secondary': 'var(--bq-grey-400)',
-  'bq-icon--secondary-hover': 'var(--bq-grey-500)',
-  'bq-icon--secondary-active': 'var(--bq-grey-300)',
-  'bq-icon--secondary-disabled': 'var(--bq-grey-600)',
+  'bq-icon--secondary': 'var(--bq-endava-grey-400)',
+  'bq-icon--secondary-hover': 'var(--bq-endava-grey-500)',
+  'bq-icon--secondary-active': 'var(--bq-endava-grey-300)',
+  'bq-icon--secondary-disabled': 'var(--bq-endava-grey-600)',
   /** Inverse */
-  'bq-icon--inverse': 'var(--bq-grey-800)',
-  'bq-icon--inverse-disabled': 'var(--bq-grey-900)',
+  'bq-icon--inverse': 'var(--bq-endava-grey-800)',
+  'bq-icon--inverse-disabled': 'var(--bq-endava-grey-900)',
   /** Brand */
-  'bq-icon--brand': 'var(--bq-iris-400)',
-  'bq-icon--brand-hover': 'var(--bq-iris-500)',
-  'bq-icon--brand-active': 'var(--bq-iris-600)',
-  'bq-icon--brand-disabled': 'var(--bq-iris-700)',
+  'bq-icon--brand': 'var(--bq-endava-orange-400)',
+  'bq-icon--brand-hover': 'var(--bq-endava-orange-500)',
+  'bq-icon--brand-active': 'var(--bq-endava-orange-600)',
+  'bq-icon--brand-disabled': 'var(--bq-endava-orange-700)',
   /** Feedback */
   'bq-icon--info': 'var(--bq-blue-600)',
   'bq-icon--success': 'var(--bq-teal-600)',
@@ -63,32 +63,32 @@ export const DefaultDarkTheme = {
   /*                                Stroke colors                               */
   /* -------------------------------------------------------------------------- */
   /** Primary */
-  'bq-stroke--primary': 'var(--bq-grey-900)',
-  'bq-stroke--primary-hover': 'var(--bq-grey-950)',
-  'bq-stroke--primary-active': 'var(--bq-grey-700)',
-  'bq-stroke--primary-disabled': 'var(--bq-grey-800)',
-  'bq-stroke--primary-alt': 'var(--bq-grey-1000)',
+  'bq-stroke--primary': 'var(--bq-endava-grey-900)',
+  'bq-stroke--primary-hover': 'var(--bq-endava-grey-950)',
+  'bq-stroke--primary-active': 'var(--bq-endava-grey-700)',
+  'bq-stroke--primary-disabled': 'var(--bq-endava-grey-800)',
+  'bq-stroke--primary-alt': 'var(--bq-endava-grey-1000)',
   /** Secondary */
-  'bq-stroke--secondary': 'var(--bq-grey-700)',
-  'bq-stroke--secondary-hover': 'var(--bq-grey-600)',
-  'bq-stroke--secondary-active': 'var(--bq-grey-500)',
-  'bq-stroke--secondary-disabled': 'var(--bq-grey-800)',
+  'bq-stroke--secondary': 'var(--bq-endava-grey-700)',
+  'bq-stroke--secondary-hover': 'var(--bq-endava-grey-600)',
+  'bq-stroke--secondary-active': 'var(--bq-endava-grey-500)',
+  'bq-stroke--secondary-disabled': 'var(--bq-endava-grey-800)',
   /** Tertiary */
-  'bq-stroke--tertiary': 'var(--bq-grey-400)',
-  'bq-stroke--tertiary-hover': 'var(--bq-grey-500)',
-  'bq-stroke--tertiary-active': 'var(--bq-grey-600)',
-  'bq-stroke--tertiary-disabled': 'var(--bq-grey-700)',
+  'bq-stroke--tertiary': 'var(--bq-endava-grey-400)',
+  'bq-stroke--tertiary-hover': 'var(--bq-endava-grey-500)',
+  'bq-stroke--tertiary-active': 'var(--bq-endava-grey-600)',
+  'bq-stroke--tertiary-disabled': 'var(--bq-endava-grey-700)',
   /** Inverse */
-  'bq-stroke--inverse': 'var(--bq-grey-950)',
-  'bq-stroke--inverse-hover': 'var(--bq-grey-900)',
-  'bq-stroke--inverse-active': 'var(--bq-grey-700)',
-  'bq-stroke--inverse-disabled': 'var(--bq-grey-800)',
+  'bq-stroke--inverse': 'var(--bq-endava-grey-950)',
+  'bq-stroke--inverse-hover': 'var(--bq-endava-grey-900)',
+  'bq-stroke--inverse-active': 'var(--bq-endava-grey-700)',
+  'bq-stroke--inverse-disabled': 'var(--bq-endava-grey-800)',
   /** Brand */
-  'bq-stroke--brand': 'var(--bq-iris-500)',
-  'bq-stroke--brand-hover': 'var(--bq-iris-400)',
-  'bq-stroke--brand-active': 'var(--bq-iris-600)',
-  'bq-stroke--brand-disabled': 'var(--bq-iris-700)',
-  'bq-stroke--brand-alt': 'var(--bq-iris-900)',
+  'bq-stroke--brand': 'var(--bq-endava-orange-500)',
+  'bq-stroke--brand-hover': 'var(--bq-endava-orange-400)',
+  'bq-stroke--brand-active': 'var(--bq-endava-orange-600)',
+  'bq-stroke--brand-disabled': 'var(--bq-endava-orange-700)',
+  'bq-stroke--brand-alt': 'var(--bq-endava-orange-900)',
   /** Success */
   'bq-stroke--success': 'var(--bq-teal-600)',
   'bq-stroke--success-hover': 'var(--bq-teal-700)',
@@ -113,25 +113,25 @@ export const DefaultDarkTheme = {
   /*                                 Text colors                                */
   /* -------------------------------------------------------------------------- */
   /** Primary */
-  'bq-text--primary': 'var(--bq-grey-100)',
-  'bq-text--primary-hover': 'var(--bq-grey-200)',
-  'bq-text--primary-active': 'var(--bq-grey-50)',
-  'bq-text--primary-disabled': 'var(--bq-grey-500)',
+  'bq-text--primary': 'var(--bq-endava-grey-100)',
+  'bq-text--primary-hover': 'var(--bq-endava-grey-200)',
+  'bq-text--primary-active': 'var(--bq-endava-grey-50)',
+  'bq-text--primary-disabled': 'var(--bq-endava-grey-500)',
   'bq-text--primary-alt': 'var(--bq-neutral-white)',
-  'bq-text--primary-alt-disabled': 'var(--bq-grey-200)',
+  'bq-text--primary-alt-disabled': 'var(--bq-endava-grey-200)',
   /** Secondary */
-  'bq-text--secondary': 'var(--bq-grey-400)',
-  'bq-text--secondary-hover': 'var(--bq-grey-500)',
-  'bq-text--secondary-active': 'var(--bq-grey-300)',
-  'bq-text--secondary-disabled': 'var(--bq-grey-600)',
+  'bq-text--secondary': 'var(--bq-endava-grey-400)',
+  'bq-text--secondary-hover': 'var(--bq-endava-grey-500)',
+  'bq-text--secondary-active': 'var(--bq-endava-grey-300)',
+  'bq-text--secondary-disabled': 'var(--bq-endava-grey-600)',
   /** Inverse */
-  'bq-text--inverse': 'var(--bq-grey-800)',
-  'bq-text--inverse-disabled': 'var(--bq-grey-900)',
+  'bq-text--inverse': 'var(--bq-endava-grey-800)',
+  'bq-text--inverse-disabled': 'var(--bq-endava-grey-900)',
   /** Brand */
-  'bq-text--brand': 'var(--bq-iris-400)',
-  'bq-text--brand-hover': 'var(--bq-iris-500)',
-  'bq-text--brand-active': 'var(--bq-iris-600)',
-  'bq-text--brand-disabled': 'var(--bq-iris-700)',
+  'bq-text--brand': 'var(--bq-endava-orange-400)',
+  'bq-text--brand-hover': 'var(--bq-endava-orange-500)',
+  'bq-text--brand-active': 'var(--bq-endava-orange-600)',
+  'bq-text--brand-disabled': 'var(--bq-endava-orange-700)',
   /** Feedback */
   'bq-text--info': 'var(--bq-blue-600)',
   'bq-text--success': 'var(--bq-teal-600)',
@@ -141,32 +141,32 @@ export const DefaultDarkTheme = {
   /*                                  UI colors                                 */
   /* -------------------------------------------------------------------------- */
   /** Primary */
-  'bq-ui--primary': 'var(--bq-grey-900)',
-  'bq-ui--primary-hover': 'var(--bq-grey-950)',
-  'bq-ui--primary-active': 'var(--bq-grey-800)',
-  'bq-ui--primary-disabled': 'var(--bq-grey-950)',
-  'bq-ui--primary-alt': 'var(--bq-grey-950)',
+  'bq-ui--primary': 'var(--bq-endava-grey-900)',
+  'bq-ui--primary-hover': 'var(--bq-endava-grey-950)',
+  'bq-ui--primary-active': 'var(--bq-endava-grey-800)',
+  'bq-ui--primary-disabled': 'var(--bq-endava-grey-950)',
+  'bq-ui--primary-alt': 'var(--bq-endava-grey-950)',
   /** Secondary */
-  'bq-ui--secondary': 'var(--bq-grey-800)',
-  'bq-ui--secondary-hover': 'var(--bq-grey-700)',
-  'bq-ui--secondary-active': 'var(--bq-grey-600)',
-  'bq-ui--secondary-disabled': 'var(--bq-grey-900)',
+  'bq-ui--secondary': 'var(--bq-endava-grey-800)',
+  'bq-ui--secondary-hover': 'var(--bq-endava-grey-700)',
+  'bq-ui--secondary-active': 'var(--bq-endava-grey-600)',
+  'bq-ui--secondary-disabled': 'var(--bq-endava-grey-900)',
   /** Tertiary */
-  'bq-ui--tertiary': 'var(--bq-grey-700)',
-  'bq-ui--tertiary-hover': 'var(--bq-grey-600)',
-  'bq-ui--tertiary-active': 'var(--bq-grey-500)',
-  'bq-ui--tertiary-disabled': 'var(--bq-grey-800)',
+  'bq-ui--tertiary': 'var(--bq-endava-grey-700)',
+  'bq-ui--tertiary-hover': 'var(--bq-endava-grey-600)',
+  'bq-ui--tertiary-active': 'var(--bq-endava-grey-500)',
+  'bq-ui--tertiary-disabled': 'var(--bq-endava-grey-800)',
   /** Inverse */
-  'bq-ui--inverse': 'var(--bq-grey-100)',
-  'bq-ui--inverse-hover': 'var(--bq-grey-200)',
-  'bq-ui--inverse-active': 'var(--bq-grey-300)',
-  'bq-ui--inverse-disabled': 'var(--bq-grey-50)',
+  'bq-ui--inverse': 'var(--bq-endava-grey-100)',
+  'bq-ui--inverse-hover': 'var(--bq-endava-grey-200)',
+  'bq-ui--inverse-active': 'var(--bq-endava-grey-300)',
+  'bq-ui--inverse-disabled': 'var(--bq-endava-grey-50)',
   /** Brand */
-  'bq-ui--brand': 'var(--bq-iris-600)',
-  'bq-ui--brand-hover': 'var(--bq-iris-800)',
-  'bq-ui--brand-active': 'var(--bq-iris-700)',
-  'bq-ui--brand-disabled': 'var(--bq-iris-900)',
-  'bq-ui--brand-alt': 'var(--bq-iris-1000)',
+  'bq-ui--brand': 'var(--bq-endava-orange-600)',
+  'bq-ui--brand-hover': 'var(--bq-endava-orange-800)',
+  'bq-ui--brand-active': 'var(--bq-endava-orange-700)',
+  'bq-ui--brand-disabled': 'var(--bq-endava-orange-900)',
+  'bq-ui--brand-alt': 'var(--bq-endava-orange-1000)',
   /** Success */
   'bq-ui--success': 'var(--bq-teal-600)',
   'bq-ui--success-hover': 'var(--bq-teal-700)',

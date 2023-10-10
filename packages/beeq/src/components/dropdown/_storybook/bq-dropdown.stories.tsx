@@ -41,6 +41,7 @@ const meta: Meta = {
     bqSelect: { action: 'bqSelect', table: { disable: true } },
     // Not part of the public API, so we don't want to expose it in the
     trigger: { control: 'text', table: { disable: true } },
+    enableOptionGroup: { control: 'boolean', table: { disable: true } },
   },
   args: {
     disabled: false,
@@ -52,57 +53,69 @@ const meta: Meta = {
     'same-width': false,
     skidding: 0,
     strategy: 'fixed',
-    trigger: { control: 'text', table: { disable: true } },
   },
 };
 export default meta;
 
 type Story = StoryObj;
 
-const Template = (args: Args) => html`
-  <bq-dropdown
-    ?disabled=${args.disabled}
-    distance=${args.distance}
-    placement=${args.placement}
-    ?open=${args.open}
-    panel-height=${args['panel-height']}
-    ?keep-open-on-select=${args['keep-open-on-select']}
-    ?same-width=${args['same-width']}
-    skidding=${args.skidding}
-    strategy=${args.strategy}
-    @bqSelect=${args.bqSelect}
-  >
-    <!-- TRIGGER ELEMENT -->
-    ${args.trigger}
+const Template = (args: Args) => {
+  const optionItems = html`
+    <bq-option value="users">
+      <bq-icon name="users" slot="prefix"></bq-icon>
+      <span>Users</span>
+    </bq-option>
 
-    <bq-option-list>
-      <bq-option value="users">
-        <bq-icon name="users" slot="prefix"></bq-icon>
-        <span>Users</span>
-      </bq-option>
+    <bq-option value="user">
+      <bq-icon name="user" slot="prefix"></bq-icon>
+      <span>My profile</span>
+    </bq-option>
 
-      <bq-option value="user">
-        <bq-icon name="user" slot="prefix"></bq-icon>
-        <span>My profile</span>
-      </bq-option>
+    <bq-option value="dashboard">
+      <bq-icon name="sliders" slot="prefix"></bq-icon>
+      <span>Dashboard</span>
+    </bq-option>
 
-      <bq-option value="dashboard">
-        <bq-icon name="sliders" slot="prefix"></bq-icon>
-        <span>Dashboard</span>
-      </bq-option>
+    <bq-option value="settings">
+      <span>Settings</span>
+      <bq-icon name="gear" slot="prefix"></bq-icon>
+    </bq-option>
 
-      <bq-option value="settings">
-        <span>Settings</span>
-        <bq-icon name="gear" slot="prefix"></bq-icon>
-      </bq-option>
+    <bq-option value="logout">
+      <span>Logout</span>
+      <bq-icon name="sign-out" slot="suffix"></bq-icon>
+    </bq-option>
+  `;
 
-      <bq-option value="logout">
-        <span>Logout</span>
-        <bq-icon name="sign-out" slot="suffix"></bq-icon>
-      </bq-option>
-    </bq-option-list>
-  </bq-dropdown>
-`;
+  const options = args.enableOptionGroup
+    ? html`
+        <bq-option-group>
+          <span slot="header-label">Configuration</span>
+          ${optionItems}
+        </bq-option-group>
+      `
+    : optionItems;
+
+  return html`
+    <bq-dropdown
+      ?disabled=${args.disabled}
+      distance=${args.distance}
+      placement=${args.placement}
+      ?open=${args.open}
+      panel-height=${args['panel-height']}
+      ?keep-open-on-select=${args['keep-open-on-select']}
+      ?same-width=${args['same-width']}
+      skidding=${args.skidding}
+      strategy=${args.strategy}
+      @bqSelect=${args.bqSelect}
+    >
+      <!-- TRIGGER ELEMENT -->
+      ${args.trigger}
+
+      <bq-option-list> ${options} </bq-option-list>
+    </bq-dropdown>
+  `;
+};
 
 export const Default: Story = {
   render: (args: Args) => html`
@@ -206,5 +219,23 @@ export const KeepOpen: Story = {
   args: {
     'keep-open-on-select': true,
     open: true,
+  },
+};
+
+export const WithOptionGroup: Story = {
+  render: (args: Args) => html`
+    ${Template({
+      ...args,
+      trigger: html`
+        <bq-button slot="trigger">
+          Dropdown
+          <bq-icon name="caret-down" slot="suffix"></bq-icon>
+        </bq-button>
+      `,
+    })}
+  `,
+  args: {
+    open: true,
+    enableOptionGroup: true,
   },
 };

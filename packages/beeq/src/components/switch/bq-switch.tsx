@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State } from '@stencil/core';
 
-import { TSwitchInnerLabel, TSwitchJustifyContent } from './bq-swithc.types';
+import { TSwitchInnerLabel, TSwitchJustifyContent } from './bq-switch.types';
 import { getTextContent, isNil } from '../../shared/utils';
 
 /**
@@ -189,6 +189,7 @@ export class BqSwitch {
 
     const labelCssClasses = {
       'has-background': this.backgroundOnHover,
+      'is-checked': this.checked,
       'is-disabled': this.disabled,
       'flex-row-reverse': this.reverseOrder,
     };
@@ -216,7 +217,7 @@ export class BqSwitch {
           />
           {/* Control */}
           <div
-            class="bq-switch--control relative box-border flex h-[var(--switch--height)] w-[var(--switch--width)] justify-between rounded-full bg-icon-secondary p-xs2 transition duration-300"
+            class="bq-switch--control relative box-border flex h-[var(--switch--height)] w-[var(--switch--width)] justify-between rounded-full bg-ui-tertiary p-xs2 transition duration-300"
             part="control"
           >
             {this.innerLabel === 'icon' && (
@@ -230,15 +231,12 @@ export class BqSwitch {
               />
             )}
             {/* Dot */}
-            <div
-              class="bq-switch--control__dot absolute h-[var(--switch--dot-size)] w-[var(--switch--dot-size)] justify-end rounded-full bg-icon-primary-alt transition duration-300 group-[&.is-disabled]:bg-icon-primary-alt-disabled"
-              part="dot"
-            />
+            <div class="bq-switch--control__dot" part="dot" />
             {this.innerLabel === 'icon' && (
               <bq-icon
                 class="bq-switch--control__icon off"
                 name="x"
-                color={!this.disabled ? 'icon--primary-alt' : 'icon--primary-alt-disabled'}
+                color={!this.disabled ? 'icon--inverse' : 'icon--inverse-disabled'}
                 role="img"
                 title="Off"
                 part="icon-off"
