@@ -61,7 +61,7 @@ describe('bq-textarea', () => {
     });
     const helperContainerElem = await page.find('bq-textarea >>> .bq-textarea__helper--counter');
 
-    expect(helperContainerElem).not.toHaveClass('hidden');
+    expect(helperContainerElem).not.toHaveClass('!hidden');
   });
 
   it('should hide helper content if no helper text and maxlenght counter', async () => {
@@ -70,7 +70,7 @@ describe('bq-textarea', () => {
     });
     const helperContainerElem = await page.find('bq-textarea >>> .bq-textarea__helper');
 
-    expect(helperContainerElem).toHaveClass('hidden');
+    expect(helperContainerElem).toHaveClass('!hidden');
   });
 
   it('should write and emit change event', async () => {
@@ -108,7 +108,7 @@ describe('bq-textarea', () => {
     expect(bqInput).toHaveReceivedEventTimes(value.length);
   });
 
-  it('shold show and count all characters', async () => {
+  it('should show and count all characters', async () => {
     const value = 'Hello World!';
     const maxlenght = 100;
     const page = await newE2EPage({
