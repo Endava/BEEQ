@@ -18,7 +18,7 @@
 
   // Display background on hover (if enabled)
   &.has-background:not(.is-disabled):hover {
-    @apply bg-ui-secondary-hover;
+    @apply bg-ui-primary-hover;
   }
 
   &.is-disabled {
@@ -34,7 +34,7 @@
 
 .bq-switch--input:not(:checked):disabled {
   ~ .bq-switch--control {
-    @apply bg-icon-secondary-disabled;
+    @apply bg-ui-tertiary-disabled;
   }
 }
 
@@ -52,6 +52,12 @@
       @apply translate-x-[calc(var(--switch--width)_-_var(--switch--dot-size)_-_8px)];
     }
   }
+}
+
+.bq-switch--control__dot {
+  @apply absolute h-[var(--switch--dot-size)] w-[var(--switch--dot-size)] justify-end rounded-full;
+  @apply bg-icon-inverse group-[&.is-disabled]:bg-icon-inverse-disabled group-[&.is-checked]:bg-icon-primary-alt;
+  @apply transition duration-300;
 }
 
 .bq-switch--control__icon {

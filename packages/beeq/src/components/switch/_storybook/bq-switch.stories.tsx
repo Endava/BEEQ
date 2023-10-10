@@ -2,7 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
 
 import mdx from './bq-switch.mdx';
-import { SWITCH_INNER_LABEL, SWITCH_JUSTIFY_CONTENT } from '../bq-swithc.types';
+import { SWITCH_INNER_LABEL, SWITCH_JUSTIFY_CONTENT } from '../bq-switch.types';
 
 const meta: Meta = {
   title: 'Components/Switch',
