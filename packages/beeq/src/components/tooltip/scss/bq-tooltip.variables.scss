@@ -3,6 +3,20 @@
 /* -------------------------------------------------------------------------- */
 
 :host {
+  /**
+   * @prop --bq-tooltip--background-color - Tooltip background color
+   * @prop --bq-tooltip--box-shadow - Tooltip box shadow
+   * @prop --bq-tooltip--font-size - Tooltip font size
+   * @prop --bq-tooltip--line-height - Tooltip line height
+   * @prop --bq-tooltip--text-color - Tooltip text color
+   * @prop --bq-tooltip--paddingX - Tooltip horizontal padding
+   * @prop --bq-tooltip--paddingY - Tooltip vertical padding
+   * @prop --bq-tooltip--border-color - Tooltip border color
+   * @prop --bq-tooltip--border-radius - Tooltip border radius
+   * @prop --bq-tooltip--border-style - Tooltip border style
+   * @prop --bq-tooltip--border-width - Tooltip border width
+   * @prop --bq-tooltip--z-index: Tooltip z-index
+   */
   --bq-tooltip--background-color: theme('colors.ui.inverse');
   --bq-tooltip--box-shadow: theme('boxShadow.m');
 
@@ -20,4 +34,6 @@
 
   --bq-tooltip--max-width: 320px;
   --bq-tooltip--width: max-content;
+
+  --bq-tooltip--z-index: theme('zIndex.10');
 }
