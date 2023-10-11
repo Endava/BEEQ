@@ -52,6 +52,7 @@
     "@angular/language-service": "14.3.0",
     "@babel/core": "7.23.0",
     "@babel/preset-react": "7.22.15",
+    "@bee-q/storybook-addon-html": "5.1.7",
     "@commitlint/cli": "17.7.2",
     "@commitlint/config-angular": "17.7.0",
     "@commitlint/config-conventional": "17.7.0",

@@ -6,7 +6,7 @@ import type { StorybookConfig } from '@storybook/web-components-vite';
 import type { InlineConfig } from 'vite';
 
 const config: StorybookConfig = {
-  addons: ['@storybook/addon-essentials', '@storybook/addon-a11y'],
+  addons: ['@storybook/addon-essentials', '@bee-q/storybook-addon-html', '@storybook/addon-a11y'],
   core: {
     builder: {
       name: '@storybook/builder-vite',
