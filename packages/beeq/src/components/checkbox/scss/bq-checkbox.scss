@@ -21,10 +21,10 @@
 
   // Display background on hover (if enabled)
   &.has-background:not(.is-disabled):hover {
-    @apply bg-ui-secondary-hover;
+    @apply bg-ui-primary-hover;
   }
 
-  // Checked/Inderterminate hover state
+  // Checked/Indeterminate hover state
   &.is-checked,
   &.is-indeterminate {
     &:not(.is-disabled):hover .bq-checkbox__checkbox {

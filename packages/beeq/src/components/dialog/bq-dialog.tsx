@@ -257,7 +257,7 @@ export class BqDialog {
           </header>
           <div
             class={{
-              hidden: !this.hasContent,
+              '!hidden': !this.hasContent,
               'overflow-y-auto px-[var(--bq-dialog--padding)]': this.hasContent,
               '!pb-[var(--bq-dialog--padding)]': !this.hasFooter,
             }}
@@ -269,7 +269,7 @@ export class BqDialog {
         </main>
         <footer
           class={{
-            hidden: !this.hasFooter,
+            '!hidden': !this.hasFooter,
             'bq-dialog--footer': this.hasFooter,
             'bg-ui-primary-alt !py-s': this.footerApperance === 'highlight',
           }}
