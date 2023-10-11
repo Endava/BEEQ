@@ -118,11 +118,11 @@ export class BqTabGroup {
 
     switch (event.detail.key) {
       case 'ArrowRight': {
-        await this.focusTabSibbling(target, 'forward');
+        await this.focusTabSibling(target, 'forward');
         break;
       }
       case 'ArrowLeft': {
-        await this.focusTabSibbling(target, 'backward');
+        await this.focusTabSibling(target, 'backward');
         break;
       }
       default:
@@ -146,7 +146,7 @@ export class BqTabGroup {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private focusTabSibbling = async (
+  private focusTabSibling = async (
     currentTarget: HTMLBqTabElement,
     direction: 'forward' | 'backward',
   ): Promise<void> => {

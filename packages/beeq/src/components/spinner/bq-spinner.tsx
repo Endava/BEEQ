@@ -189,7 +189,7 @@ export class BqSpinner {
           class={{
             'bq-spinner--icon': true,
             flex: this.hasIconSlot,
-            hidden: !this.hasIconSlot,
+            '!hidden': !this.hasIconSlot,
           }}
           ref={(spanElem) => (this.iconSlotElem = spanElem)}
           part="custom-icon"

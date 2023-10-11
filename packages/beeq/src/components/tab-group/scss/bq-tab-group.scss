@@ -10,7 +10,7 @@
   @apply relative;
 
   &::after {
-    @apply absolute bottom-0 flex w-full border-0 border-b border-solid border-stroke-secondary content-empty;
+    @apply absolute bottom-0 flex w-full border-0 border-b border-solid border-bg-tertiary content-empty;
   }
 }
 
