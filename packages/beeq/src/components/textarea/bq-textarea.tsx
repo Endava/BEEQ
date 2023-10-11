@@ -250,7 +250,7 @@ export class BqTextarea {
     return (
       <div class="bq-textarea flex flex-auto flex-col">
         <label
-          class={{ 'bq-textarea__label': true, hidden: !this.hasLabel }}
+          class={{ 'bq-textarea__label': true, '!hidden': !this.hasLabel }}
           htmlFor={this.name ?? this.fallbackId}
           ref={(label: HTMLLabelElement) => (this.labelElem = label)}
         >
@@ -289,13 +289,13 @@ export class BqTextarea {
           class={{
             'bq-textarea__helper flex items-center justify-between': true,
             [`validation-${this.validationStatus}`]: true,
-            hidden: !this.hasHelperText && !this.maxlength,
+            '!hidden': !this.hasHelperText && !this.maxlength,
           }}
         >
           <span class="bq-textarea__helper--text" ref={(span: HTMLElement) => (this.helperTextElem = span)}>
             <slot name="helper-text" onSlotchange={this.handleHelperTextSlotChange} />
           </span>
-          <span class={{ 'bq-textarea__helper--counter': true, hidden: !this.maxlength }}>
+          <span class={{ 'bq-textarea__helper--counter': true, '!hidden': !this.maxlength }}>
             {this.numberOfCharacters}/{this.maxlength}
           </span>
         </div>
