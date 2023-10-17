@@ -71,8 +71,8 @@
   border-bottom-right-radius: var(--bq-radius--m) !important;
 }
 
-.docblock-argstable .docblock-argstable-body > tr >td[colspan="1"],
-.docblock-argstable .docblock-argstable-body > tr >td[colspan="2"] {
+.docblock-argstable .docblock-argstable-body > tr > td[colspan='1'],
+.docblock-argstable .docblock-argstable-body > tr > td[colspan='2'] {
   background-color: var(--bq-ui--primary-alt) !important;
 }
 
@@ -88,7 +88,6 @@
   min-height: 100vh;
   width: 100%;
 }
-
 
 .bq-doc__container {
   font-family: '"Outfit"', sans-serif;

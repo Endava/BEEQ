@@ -1,6 +1,6 @@
 export default {
   // Global prettier
-  '*.{js,json,ts,tsx,scss}': 'prettier --write --config ./.prettierrc',
-  // Bee-q linters
-  'libs/bee-q/src/**/*.*': 'npm run test:spec -- --findRelatedTests',
+  '{apps,packages,tools}/**/*.{js,json,ts,tsx,scss}': (files) => `nx format:write --files=${files.join(',')}`,
+  // BEEQ linters
+  'packages/beeq/src/**/*.*': 'npm run test:spec -- --findRelatedTests',
 };
