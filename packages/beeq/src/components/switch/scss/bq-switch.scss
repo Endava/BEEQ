@@ -56,7 +56,7 @@
 
 .bq-switch--control__dot {
   @apply absolute h-[var(--switch--dot-size)] w-[var(--switch--dot-size)] justify-end rounded-full;
-  @apply bg-icon-inverse group-[&.is-disabled]:bg-icon-inverse-disabled group-[&.is-checked]:bg-icon-primary-alt;
+  @apply bg-icon-inverse group-[&.is-checked]:bg-icon-primary-alt group-[&.is-disabled]:bg-icon-inverse-disabled;
   @apply transition duration-300;
 }
 
