@@ -4,6 +4,7 @@
 .vscode
 .DS_Store
 .stencil
+.circleci
 
 ### History ###
 # Ignore all local history of files
@@ -28,3 +29,6 @@ www
 # so we need to exclude it from the prettier formatting
 packages/beeq/src/components.d.ts
 packages/beeq/custom-elements.json
+tools/src/generators/plop/*.hbs
+*.md
+*.mdx
