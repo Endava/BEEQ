@@ -55,7 +55,7 @@ describe('bq-textarea', () => {
     expect(helperContainerElem).not.toHaveClass('hidden');
   });
 
-  it('should render with maxlenght counter', async () => {
+  it('should render with maxlength counter', async () => {
     const page = await newE2EPage({
       html: `<bq-textarea maxlength="100"></bq-textarea>`,
     });
@@ -64,7 +64,7 @@ describe('bq-textarea', () => {
     expect(helperContainerElem).not.toHaveClass('!hidden');
   });
 
-  it('should hide helper content if no helper text and maxlenght counter', async () => {
+  it('should hide helper content if no helper text and maxlength counter', async () => {
     const page = await newE2EPage({
       html: `<bq-textarea></bq-textarea>`,
     });
@@ -74,7 +74,7 @@ describe('bq-textarea', () => {
   });
 
   it('should write and emit change event', async () => {
-    const value = 'Hello World!';
+    const value = 'Hello';
     const page = await newE2EPage({
       html: `<bq-textarea></bq-textarea>`,
     });
@@ -93,15 +93,17 @@ describe('bq-textarea', () => {
   });
 
   it('should write and emit input event', async () => {
-    const value = 'Hello World!';
+    const value = 'Hello';
     const page = await newE2EPage({
       html: `<bq-textarea></bq-textarea>`,
     });
-    const bqInput = await page.spyOnEvent('bqInput');
-    const bqTextareaElem = await page.find('bq-textarea');
-    const nativeTextareaElem = await page.find('bq-textarea >>> .bq-textarea__input');
 
-    await nativeTextareaElem.type(value);
+    const bqInput = await page.spyOnEvent('bqInput');
+
+    const bqTextareaElem = await page.find('bq-textarea');
+
+    await page.focus('bq-textarea >>> .bq-textarea__input');
+    await page.keyboard.type(value);
     await page.waitForChanges();
 
     expect(await bqTextareaElem.getProperty('value')).toBe(value);
@@ -109,7 +111,7 @@ describe('bq-textarea', () => {
   });
 
   it('should show and count all characters', async () => {
-    const value = 'Hello World!';
+    const value = 'Hello';
     const maxlenght = 100;
     const page = await newE2EPage({
       html: `<bq-textarea maxlength="${maxlenght}"></bq-textarea>`,
