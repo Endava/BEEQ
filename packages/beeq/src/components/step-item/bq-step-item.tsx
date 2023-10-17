@@ -119,7 +119,7 @@ export class BqStepItem {
           {/* TITLE */}
           <div
             class={{
-              'bq-step-item__content--title pr-xs3 text-m text-text-primary leading-regular': true,
+              'bq-step-item__content--title pr-xs3 text-m leading-regular text-text-primary': true,
               'pointer-events-none text-text-secondary-disabled': this.isDisabled,
               'text-text-brand': this.isCurrent,
             }}
