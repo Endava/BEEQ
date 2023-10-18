@@ -46,8 +46,8 @@
     "zone.js": "0.12.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "14.2.12",
-    "@angular/cli": "14.2.12",
+    "@angular-devkit/build-angular": "14.2.13",
+    "@angular/cli": "14.2.13",
     "@angular/compiler-cli": "14.3.0",
     "@angular/language-service": "14.3.0",
     "@babel/core": "7.23.2",
@@ -70,7 +70,7 @@
     "@nx/workspace": "16.10.0",
     "@nxext/stencil": "16.3.0",
     "@rollup/plugin-url": "8.0.2",
-    "@schematics/angular": "14.2.12",
+    "@schematics/angular": "14.2.13",
     "@stencil/angular-output-target": "0.8.2",
     "@stencil/core": "4.5.0",
     "@stencil/react-output-target": "0.5.3",
