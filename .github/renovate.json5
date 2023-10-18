@@ -27,75 +27,77 @@
   /**
    * Time required before a new release is considered stable.
    */
-  minimumReleaseAge: '7 days',
+  minimumReleaseAge: '3 days',
   /**
    * Package rules lets you apply rules to individual packages
    * or to groups of packages using regex pattern matching.
    */
   packageRules: [
     {
-      groupName: 'angular',
+      groupName: 'Angular',
       matchPackagePrefixes: ['@angular', '@schematics'],
       allowedVersions: '<15.0.0',
     },
     {
-      groupName: 'commitlint',
+      groupName: 'Commitlint',
       matchPackagePrefixes: ['@commitlint/'],
     },
     {
-      groupName: 'nx',
+      groupName: 'Nx',
       matchPackagePrefixes: ['@nx', 'nx'],
       excludePackageNames: ['nx-cloud', 'nx-stylelint'],
     },
     {
-      groupName: 'stencil',
+      groupName: 'Stencil',
       matchPackagePrefixes: ['@stencil/'],
     },
     {
-      groupName: 'storybook',
+      groupName: 'Storybook',
       matchPackagePrefixes: ['@storybook/', 'storybook'],
     },
     {
-      groupName: 'swc',
+      groupName: 'Swc',
       matchPackagePrefixes: ['@swc'],
     },
     {
-      groupName: 'eslint',
+      groupName: 'Eslint',
       matchPackagePrefixes: ['eslint'],
+      schedule: ['before 11am on monday'],
     },
     {
-      groupName: 'floating-ui',
+      groupName: 'Floating-UI',
       matchPackagePrefixes: ['@floating-ui'],
     },
     {
-      groupName: 'ng',
+      groupName: 'Ng',
       matchPackagePrefixes: ['ng-packagr'],
       allowedVersions: '<15.0.0',
     },
     {
-      groupName: 'postcss',
+      groupName: 'PostCSS',
       matchPackagePrefixes: ['postcss'],
     },
     {
-      groupName: 'prettier',
+      groupName: 'Prettier',
       matchPackagePrefixes: ['prettier'],
       excludePackageNames: ['prettier', 'eslint-plugin-prettier'],
     },
     {
-      groupName: 'stylelint',
+      groupName: 'Stylelint',
       matchPackagePrefixes: ['stylelint'],
     },
     {
-      groupName: 'typescript',
+      groupName: 'Typescript',
       matchPackagePrefixes: ['typescript'],
       allowedVersions: '<5.0.0',
     },
     {
-      groupName: 'typescript eslint',
+      groupName: 'Typescript-Eslint',
       matchPackagePrefixes: ['@typescript-eslint'],
+      schedule: ['before 11am on monday'],
     },
     {
-      groupName: 'types react',
+      groupName: 'Types React',
       matchPackagePrefixes: ['@types/react'],
     },
     {
@@ -111,10 +113,6 @@
     },
   ],
   /**
-   * This config option slows down the rate at which Renovate creates PRs.
-   */
-  prHourlyLimit: 12,
-  /**
    * Determines how to modify or update existing ranges.
    * pin = convert ranges to exact versions, e.g. ^1.0.0 -> 1.1.0
    */
@@ -123,6 +121,11 @@
    * Controls when Renovate rebases an existing branch.
    */
   rebaseWhen: 'never',
+  /**
+   * Run every Monday and Thursday between 00 and 12 (UTC time)
+   * {@see https://crontab.guru} for debugging cron schedules
+   */
+  schedule: ['* 00-12 * * MON,THU'],
   /**
    * Enable Semantic Commit prefixes for commits and PR titles.
    */
