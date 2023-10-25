@@ -18,6 +18,11 @@ commands:
             curl https://get.volta.sh | bash
             echo 'export VOLTA_HOME=$HOME/.volta' >> $BASH_ENV
             echo 'export PATH=$VOLTA_HOME:$PATH' >> $BASH_ENV
+      - run:
+          name: 🔎 Check Node and NPM versions
+          command: |
+            $HOME/.volta/bin/node --version
+            $HOME/.volta/bin/npm --version
   chromatic-deployment:
     description: Publish changes to Chromatic storybook
     steps:
@@ -89,7 +94,7 @@ jobs:
       - chromatic-deployment
 
 # ---------------------------------------------------------------------------- #
-#                         Used for orchastrate all jobs                        #
+#                         Used for orchestrate all jobs                        #
 # ---------------------------------------------------------------------------- #
 workflows:
   ⏳ Build and Test:
