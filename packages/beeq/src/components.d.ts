@@ -1165,34 +1165,101 @@ declare global {
         prototype: HTMLBqBadgeElement;
         new (): HTMLBqBadgeElement;
     };
+    interface HTMLBqBreadcrumbElementEventMap {
+        "bqBreadcrumbBlur": HTMLBqBreadcrumbItemElement;
+        "bqBreadcrumbFocus": HTMLBqBreadcrumbItemElement;
+        "bqBreadcrumbClick": HTMLBqBreadcrumbItemElement;
+    }
     interface HTMLBqBreadcrumbElement extends Components.BqBreadcrumb, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqBreadcrumbElementEventMap>(type: K, listener: (this: HTMLBqBreadcrumbElement, ev: BqBreadcrumbCustomEvent<HTMLBqBreadcrumbElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqBreadcrumbElementEventMap>(type: K, listener: (this: HTMLBqBreadcrumbElement, ev: BqBreadcrumbCustomEvent<HTMLBqBreadcrumbElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqBreadcrumbElement: {
         prototype: HTMLBqBreadcrumbElement;
         new (): HTMLBqBreadcrumbElement;
     };
+    interface HTMLBqBreadcrumbItemElementEventMap {
+        "bqBlur": HTMLBqBreadcrumbItemElement;
+        "bqFocus": HTMLBqBreadcrumbItemElement;
+        "bqClick": HTMLBqBreadcrumbItemElement;
+    }
     interface HTMLBqBreadcrumbItemElement extends Components.BqBreadcrumbItem, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqBreadcrumbItemElementEventMap>(type: K, listener: (this: HTMLBqBreadcrumbItemElement, ev: BqBreadcrumbItemCustomEvent<HTMLBqBreadcrumbItemElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqBreadcrumbItemElementEventMap>(type: K, listener: (this: HTMLBqBreadcrumbItemElement, ev: BqBreadcrumbItemCustomEvent<HTMLBqBreadcrumbItemElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqBreadcrumbItemElement: {
         prototype: HTMLBqBreadcrumbItemElement;
         new (): HTMLBqBreadcrumbItemElement;
     };
+    interface HTMLBqButtonElementEventMap {
+        "bqBlur": HTMLBqButtonElement;
+        "bqFocus": HTMLBqButtonElement;
+        "bqClick": HTMLBqButtonElement;
+    }
     /**
      * Buttons are designed for users to take action on a page or a screen.
      */
     interface HTMLBqButtonElement extends Components.BqButton, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqButtonElementEventMap>(type: K, listener: (this: HTMLBqButtonElement, ev: BqButtonCustomEvent<HTMLBqButtonElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqButtonElementEventMap>(type: K, listener: (this: HTMLBqButtonElement, ev: BqButtonCustomEvent<HTMLBqButtonElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqButtonElement: {
         prototype: HTMLBqButtonElement;
         new (): HTMLBqButtonElement;
     };
+    interface HTMLBqCheckboxElementEventMap {
+        "bqChange": { checked: boolean };
+        "bqFocus": HTMLBqCheckboxElement;
+        "bqBlur": HTMLBqCheckboxElement;
+    }
     interface HTMLBqCheckboxElement extends Components.BqCheckbox, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqCheckboxElementEventMap>(type: K, listener: (this: HTMLBqCheckboxElement, ev: BqCheckboxCustomEvent<HTMLBqCheckboxElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqCheckboxElementEventMap>(type: K, listener: (this: HTMLBqCheckboxElement, ev: BqCheckboxCustomEvent<HTMLBqCheckboxElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqCheckboxElement: {
         prototype: HTMLBqCheckboxElement;
         new (): HTMLBqCheckboxElement;
     };
+    interface HTMLBqDialogElementEventMap {
+        "bqCancel": void;
+        "bqClose": void;
+        "bqOpen": void;
+        "bqAfterOpen": void;
+        "bqAfterClose": void;
+    }
     interface HTMLBqDialogElement extends Components.BqDialog, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqDialogElementEventMap>(type: K, listener: (this: HTMLBqDialogElement, ev: BqDialogCustomEvent<HTMLBqDialogElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqDialogElementEventMap>(type: K, listener: (this: HTMLBqDialogElement, ev: BqDialogCustomEvent<HTMLBqDialogElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqDialogElement: {
         prototype: HTMLBqDialogElement;
@@ -1204,34 +1271,97 @@ declare global {
         prototype: HTMLBqDividerElement;
         new (): HTMLBqDividerElement;
     };
+    interface HTMLBqDropdownElementEventMap {
+        "bqOpen": { open: boolean };
+    }
     interface HTMLBqDropdownElement extends Components.BqDropdown, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqDropdownElementEventMap>(type: K, listener: (this: HTMLBqDropdownElement, ev: BqDropdownCustomEvent<HTMLBqDropdownElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqDropdownElementEventMap>(type: K, listener: (this: HTMLBqDropdownElement, ev: BqDropdownCustomEvent<HTMLBqDropdownElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqDropdownElement: {
         prototype: HTMLBqDropdownElement;
         new (): HTMLBqDropdownElement;
     };
+    interface HTMLBqIconElementEventMap {
+        "svgLoaded": any;
+    }
     /**
      * Icons are simplified images that graphically explain the meaning of an object on the screen.
      */
     interface HTMLBqIconElement extends Components.BqIcon, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqIconElementEventMap>(type: K, listener: (this: HTMLBqIconElement, ev: BqIconCustomEvent<HTMLBqIconElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqIconElementEventMap>(type: K, listener: (this: HTMLBqIconElement, ev: BqIconCustomEvent<HTMLBqIconElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqIconElement: {
         prototype: HTMLBqIconElement;
         new (): HTMLBqIconElement;
     };
+    interface HTMLBqInputElementEventMap {
+        "bqBlur": HTMLBqInputElement;
+        "bqChange": { value: string | number | string[]; el: HTMLBqInputElement };
+        "bqClear": HTMLBqInputElement;
+        "bqFocus": HTMLBqInputElement;
+        "bqInput": { value: string | number | string[]; el: HTMLBqInputElement };
+    }
     interface HTMLBqInputElement extends Components.BqInput, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqInputElementEventMap>(type: K, listener: (this: HTMLBqInputElement, ev: BqInputCustomEvent<HTMLBqInputElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqInputElementEventMap>(type: K, listener: (this: HTMLBqInputElement, ev: BqInputCustomEvent<HTMLBqInputElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqInputElement: {
         prototype: HTMLBqInputElement;
         new (): HTMLBqInputElement;
     };
+    interface HTMLBqNotificationElementEventMap {
+        "bqHide": any;
+        "bqShow": any;
+    }
     interface HTMLBqNotificationElement extends Components.BqNotification, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqNotificationElementEventMap>(type: K, listener: (this: HTMLBqNotificationElement, ev: BqNotificationCustomEvent<HTMLBqNotificationElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqNotificationElementEventMap>(type: K, listener: (this: HTMLBqNotificationElement, ev: BqNotificationCustomEvent<HTMLBqNotificationElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqNotificationElement: {
         prototype: HTMLBqNotificationElement;
         new (): HTMLBqNotificationElement;
     };
+    interface HTMLBqOptionElementEventMap {
+        "bqBlur": HTMLBqOptionElement;
+        "bqFocus": HTMLBqOptionElement;
+        "bqClick": HTMLBqOptionElement;
+        "bqEnter": HTMLBqOptionElement;
+    }
     interface HTMLBqOptionElement extends Components.BqOption, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqOptionElementEventMap>(type: K, listener: (this: HTMLBqOptionElement, ev: BqOptionCustomEvent<HTMLBqOptionElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqOptionElementEventMap>(type: K, listener: (this: HTMLBqOptionElement, ev: BqOptionCustomEvent<HTMLBqOptionElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqOptionElement: {
         prototype: HTMLBqOptionElement;
@@ -1243,7 +1373,18 @@ declare global {
         prototype: HTMLBqOptionGroupElement;
         new (): HTMLBqOptionGroupElement;
     };
+    interface HTMLBqOptionListElementEventMap {
+        "bqSelect": { value: string; item: HTMLBqOptionElement };
+    }
     interface HTMLBqOptionListElement extends Components.BqOptionList, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqOptionListElementEventMap>(type: K, listener: (this: HTMLBqOptionListElement, ev: BqOptionListCustomEvent<HTMLBqOptionListElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqOptionListElementEventMap>(type: K, listener: (this: HTMLBqOptionListElement, ev: BqOptionListCustomEvent<HTMLBqOptionListElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqOptionListElement: {
         prototype: HTMLBqOptionListElement;
@@ -1255,37 +1396,114 @@ declare global {
         prototype: HTMLBqPanelElement;
         new (): HTMLBqPanelElement;
     };
+    interface HTMLBqRadioElementEventMap {
+        "bqClick": HTMLBqRadioElement;
+        "bqFocus": HTMLBqRadioElement;
+        "bqBlur": HTMLBqRadioElement;
+        "bqKeyDown": KeyboardEvent;
+    }
     interface HTMLBqRadioElement extends Components.BqRadio, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqRadioElementEventMap>(type: K, listener: (this: HTMLBqRadioElement, ev: BqRadioCustomEvent<HTMLBqRadioElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqRadioElementEventMap>(type: K, listener: (this: HTMLBqRadioElement, ev: BqRadioCustomEvent<HTMLBqRadioElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqRadioElement: {
         prototype: HTMLBqRadioElement;
         new (): HTMLBqRadioElement;
     };
+    interface HTMLBqRadioGroupElementEventMap {
+        "bqChange": { value: string; target: HTMLBqRadioElement };
+    }
     interface HTMLBqRadioGroupElement extends Components.BqRadioGroup, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqRadioGroupElementEventMap>(type: K, listener: (this: HTMLBqRadioGroupElement, ev: BqRadioGroupCustomEvent<HTMLBqRadioGroupElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqRadioGroupElementEventMap>(type: K, listener: (this: HTMLBqRadioGroupElement, ev: BqRadioGroupCustomEvent<HTMLBqRadioGroupElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqRadioGroupElement: {
         prototype: HTMLBqRadioGroupElement;
         new (): HTMLBqRadioGroupElement;
     };
+    interface HTMLBqSelectElementEventMap {
+        "bqBlur": HTMLBqSelectElement;
+        "bqClear": HTMLBqSelectElement;
+        "bqFocus": HTMLBqSelectElement;
+        "bqSelect": { value: string | number | string[]; item: HTMLBqOptionElement };
+    }
     interface HTMLBqSelectElement extends Components.BqSelect, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqSelectElementEventMap>(type: K, listener: (this: HTMLBqSelectElement, ev: BqSelectCustomEvent<HTMLBqSelectElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqSelectElementEventMap>(type: K, listener: (this: HTMLBqSelectElement, ev: BqSelectCustomEvent<HTMLBqSelectElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqSelectElement: {
         prototype: HTMLBqSelectElement;
         new (): HTMLBqSelectElement;
     };
+    interface HTMLBqSideMenuElementEventMap {
+        "bqCollapse": { collapse: boolean };
+        "bqSelect": HTMLBqSideMenuItemElement;
+    }
     interface HTMLBqSideMenuElement extends Components.BqSideMenu, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqSideMenuElementEventMap>(type: K, listener: (this: HTMLBqSideMenuElement, ev: BqSideMenuCustomEvent<HTMLBqSideMenuElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqSideMenuElementEventMap>(type: K, listener: (this: HTMLBqSideMenuElement, ev: BqSideMenuCustomEvent<HTMLBqSideMenuElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqSideMenuElement: {
         prototype: HTMLBqSideMenuElement;
         new (): HTMLBqSideMenuElement;
     };
+    interface HTMLBqSideMenuItemElementEventMap {
+        "bqBlur": HTMLBqSideMenuItemElement;
+        "bqFocus": HTMLBqSideMenuItemElement;
+        "bqClick": HTMLBqSideMenuItemElement;
+    }
     interface HTMLBqSideMenuItemElement extends Components.BqSideMenuItem, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqSideMenuItemElementEventMap>(type: K, listener: (this: HTMLBqSideMenuItemElement, ev: BqSideMenuItemCustomEvent<HTMLBqSideMenuItemElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqSideMenuItemElementEventMap>(type: K, listener: (this: HTMLBqSideMenuItemElement, ev: BqSideMenuItemCustomEvent<HTMLBqSideMenuItemElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqSideMenuItemElement: {
         prototype: HTMLBqSideMenuItemElement;
         new (): HTMLBqSideMenuItemElement;
     };
+    interface HTMLBqSliderElementEventMap {
+        "bqChange": { value: number | Array<number> | string; el: HTMLBqSliderElement };
+        "bqBlur": HTMLBqSliderElement;
+        "bqFocus": HTMLBqSliderElement;
+    }
     interface HTMLBqSliderElement extends Components.BqSlider, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqSliderElementEventMap>(type: K, listener: (this: HTMLBqSliderElement, ev: BqSliderCustomEvent<HTMLBqSliderElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqSliderElementEventMap>(type: K, listener: (this: HTMLBqSliderElement, ev: BqSliderCustomEvent<HTMLBqSliderElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqSliderElement: {
         prototype: HTMLBqSliderElement;
@@ -1306,7 +1524,18 @@ declare global {
         prototype: HTMLBqStatusElement;
         new (): HTMLBqStatusElement;
     };
+    interface HTMLBqStepItemElementEventMap {
+        "bqClick": { target: HTMLBqStepItemElement; value: string };
+    }
     interface HTMLBqStepItemElement extends Components.BqStepItem, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqStepItemElementEventMap>(type: K, listener: (this: HTMLBqStepItemElement, ev: BqStepItemCustomEvent<HTMLBqStepItemElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqStepItemElementEventMap>(type: K, listener: (this: HTMLBqStepItemElement, ev: BqStepItemCustomEvent<HTMLBqStepItemElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqStepItemElement: {
         prototype: HTMLBqStepItemElement;
@@ -1318,35 +1547,100 @@ declare global {
         prototype: HTMLBqStepsElement;
         new (): HTMLBqStepsElement;
     };
+    interface HTMLBqSwitchElementEventMap {
+        "bqChange": { checked: boolean };
+        "bqFocus": HTMLBqSwitchElement;
+        "bqBlur": HTMLBqSwitchElement;
+    }
     /**
      * Toggle switches are digital on/off switches.
      * They should provide immediate results, giving users the freedom to control their preferences as needed.
      */
     interface HTMLBqSwitchElement extends Components.BqSwitch, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqSwitchElementEventMap>(type: K, listener: (this: HTMLBqSwitchElement, ev: BqSwitchCustomEvent<HTMLBqSwitchElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqSwitchElementEventMap>(type: K, listener: (this: HTMLBqSwitchElement, ev: BqSwitchCustomEvent<HTMLBqSwitchElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqSwitchElement: {
         prototype: HTMLBqSwitchElement;
         new (): HTMLBqSwitchElement;
     };
+    interface HTMLBqTabElementEventMap {
+        "bqClick": HTMLBqTabElement;
+        "bqFocus": HTMLBqTabElement;
+        "bqBlur": HTMLBqTabElement;
+        "bqKeyDown": KeyboardEvent;
+    }
     interface HTMLBqTabElement extends Components.BqTab, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqTabElementEventMap>(type: K, listener: (this: HTMLBqTabElement, ev: BqTabCustomEvent<HTMLBqTabElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqTabElementEventMap>(type: K, listener: (this: HTMLBqTabElement, ev: BqTabCustomEvent<HTMLBqTabElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqTabElement: {
         prototype: HTMLBqTabElement;
         new (): HTMLBqTabElement;
     };
+    interface HTMLBqTabGroupElementEventMap {
+        "bqChange": { target: HTMLBqTabElement; value: string };
+    }
     interface HTMLBqTabGroupElement extends Components.BqTabGroup, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqTabGroupElementEventMap>(type: K, listener: (this: HTMLBqTabGroupElement, ev: BqTabGroupCustomEvent<HTMLBqTabGroupElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqTabGroupElementEventMap>(type: K, listener: (this: HTMLBqTabGroupElement, ev: BqTabGroupCustomEvent<HTMLBqTabGroupElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqTabGroupElement: {
         prototype: HTMLBqTabGroupElement;
         new (): HTMLBqTabGroupElement;
     };
+    interface HTMLBqTextareaElementEventMap {
+        "bqBlur": HTMLBqTextareaElement;
+        "bqChange": { value: string; el: HTMLBqTextareaElement };
+        "bqClear": HTMLBqTextareaElement;
+        "bqFocus": HTMLBqTextareaElement;
+        "bqInput": { value: string; el: HTMLBqTextareaElement };
+    }
     interface HTMLBqTextareaElement extends Components.BqTextarea, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqTextareaElementEventMap>(type: K, listener: (this: HTMLBqTextareaElement, ev: BqTextareaCustomEvent<HTMLBqTextareaElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqTextareaElementEventMap>(type: K, listener: (this: HTMLBqTextareaElement, ev: BqTextareaCustomEvent<HTMLBqTextareaElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqTextareaElement: {
         prototype: HTMLBqTextareaElement;
         new (): HTMLBqTextareaElement;
     };
+    interface HTMLBqToastElementEventMap {
+        "bqHide": HTMLBqToastElement;
+        "bqShow": HTMLBqToastElement;
+    }
     interface HTMLBqToastElement extends Components.BqToast, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqToastElementEventMap>(type: K, listener: (this: HTMLBqToastElement, ev: BqToastCustomEvent<HTMLBqToastElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqToastElementEventMap>(type: K, listener: (this: HTMLBqToastElement, ev: BqToastCustomEvent<HTMLBqToastElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqToastElement: {
         prototype: HTMLBqToastElement;

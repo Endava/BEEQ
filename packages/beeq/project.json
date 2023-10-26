@@ -63,7 +63,13 @@
     "build": {
       "dependsOn": ["icons"],
       "executor": "@nxext/stencil:build",
-      "outputs": ["{options.outputPath}", "{projectRoot}/custom-elements.json"],
+      "outputs": [
+        "{options.outputPath}",
+        "{projectRoot}/custom-elements.json",
+        "{workspaceRoot}/packages/beeq-angular/src/directives",
+        "{workspaceRoot}/packages/beeq-react/src/react-component-lib",
+        "{workspaceRoot}/packages/beeq-react/src/components.ts"
+      ],
       "options": {
         "projectType": "library",
         "tsConfig": "packages/beeq/tsconfig.lib.json",
