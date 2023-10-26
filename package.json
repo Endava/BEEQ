@@ -138,7 +138,7 @@
     "stylelint": "15.11.0",
     "stylelint-config-sass-guidelines": "10.0.0",
     "stylelint-config-standard": "34.0.0",
-    "tailwindcss": "3.3.3",
+    "tailwindcss": "3.3.5",
     "tailwindcss-theme-swapper": "0.7.3",
     "ts-jest": "27.1.5",
     "ts-node": "10.9.1",
