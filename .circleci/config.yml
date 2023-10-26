@@ -36,7 +36,7 @@ commands:
 # ---------------------------------------------------------------------------- #
 jobs:
   build-and-test:
-    # You can specify an image from Dockerhub or use one of our Convenience/Machine Images from CircleCI's Developer Hub.
+    # You can specify an image from DockerHub or use one of our Convenience/Machine Images from CircleCI's Developer Hub.
     # A list of available CircleCI Docker Machine Images are available here: https://circleci.com/developer/images?imageType=machine
     machine:
       image: ubuntu-2204:2023.02.1
@@ -60,10 +60,8 @@ jobs:
             - node-deps-{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-
       - run:
           name: 📦 Install dependencies
-          #  In this case, npm install will install only those dependencies that are not in the cache.
-          command: |
-            npm -v && node -v
-            npm i
+          #  In this case, only those dependencies that are not in the cache will be installed.
+          command: npm ci
       - save_cache:
           name: 💾 Save Cache dependencies
           # After all of the project’s dependencies have been loaded,
