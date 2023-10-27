@@ -75,6 +75,7 @@
     "@stencil/core": "4.7.0",
     "@stencil/react-output-target": "0.5.3",
     "@stencil/sass": "3.0.7",
+    "@stencil/vue-output-target": "0.8.6",
     "@storybook/addon-a11y": "7.5.2",
     "@storybook/addon-actions": "7.5.2",
     "@storybook/addon-docs": "7.5.2",
@@ -144,7 +145,8 @@
     "typescript": "5.1.6",
     "vite": "4.5.0",
     "vite-plugin-turbosnap": "1.0.3",
-    "vite-tsconfig-paths": "4.2.1"
+    "vite-tsconfig-paths": "4.2.1",
+    "vue": "3.3.7"
   },
   "overrides": {
     "@typescript-eslint/eslint-plugin": "$@typescript-eslint/eslint-plugin",
