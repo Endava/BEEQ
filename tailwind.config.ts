@@ -13,7 +13,7 @@ import {
 
 import type { Config } from 'tailwindcss';
 
-const config: Config = {
+export default {
   content: ['packages/beeq/src/**/*.{html,mdx,tsx,ts}'],
   theme: {
     colors: {
@@ -155,6 +155,4 @@ const config: Config = {
   corePlugins: {
     preflight: false,
   },
-};
-
-export default config;
+} satisfies Config;
