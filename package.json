@@ -27,29 +27,29 @@
     "clean:modules": "rimraf node_modules .cache packages/**/node_modules",
     "pre-commit": "lint-staged --verbose",
     "prepare": "husky install",
-    "postinstall": "node node_modules/puppeteer/install.mjs && ngcc --properties es2020 browser module main",
+    "postinstall": "node node_modules/puppeteer/install.mjs",
     "g": "plop --cwd tools/src/generators/plop"
   },
   "dependencies": {
-    "@angular/animations": "14.3.0",
-    "@angular/common": "14.3.0",
-    "@angular/compiler": "14.3.0",
-    "@angular/core": "14.3.0",
-    "@angular/forms": "14.3.0",
-    "@angular/platform-browser": "14.3.0",
-    "@angular/platform-browser-dynamic": "14.3.0",
-    "@angular/router": "14.3.0",
+    "@angular/animations": "16.2.11",
+    "@angular/common": "16.2.11",
+    "@angular/compiler": "16.2.11",
+    "@angular/core": "16.2.11",
+    "@angular/forms": "16.2.11",
+    "@angular/platform-browser": "16.2.11",
+    "@angular/platform-browser-dynamic": "16.2.11",
+    "@angular/router": "16.2.11",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "rxjs": "7.8.1",
     "tslib": "2.6.2",
-    "zone.js": "0.12.0"
+    "zone.js": "0.13.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "14.2.12",
-    "@angular/cli": "14.2.12",
-    "@angular/compiler-cli": "14.3.0",
-    "@angular/language-service": "14.3.0",
+    "@angular-devkit/build-angular": "16.2.8",
+    "@angular/cli": "16.2.8",
+    "@angular/compiler-cli": "16.2.11",
+    "@angular/language-service": "16.2.11",
     "@babel/core": "7.23.2",
     "@babel/preset-react": "7.22.15",
     "@bee-q/storybook-addon-html": "5.1.7",
@@ -70,7 +70,7 @@
     "@nx/workspace": "16.10.0",
     "@nxext/stencil": "16.3.0",
     "@rollup/plugin-url": "8.0.2",
-    "@schematics/angular": "14.2.12",
+    "@schematics/angular": "16.2.8",
     "@stencil/angular-output-target": "0.8.2",
     "@stencil/core": "4.6.0",
     "@stencil/react-output-target": "0.5.3",
@@ -118,7 +118,7 @@
     "lint-staged": "15.0.2",
     "lit-html": "3.0.0",
     "nanospinner": "1.1.0",
-    "ng-packagr": "14.2.2",
+    "ng-packagr": "16.2.3",
     "ngx-deploy-npm": "7.0.1",
     "npm-run-all": "4.1.5",
     "nx": "16.10.0",
@@ -142,12 +142,17 @@
     "tailwindcss-theme-swapper": "0.7.3",
     "ts-jest": "27.1.5",
     "ts-node": "10.9.1",
-    "typescript": "4.8.4",
+    "typescript": "5.1.6",
     "vite": "4.5.0",
     "vite-plugin-turbosnap": "1.0.3",
     "vite-tsconfig-paths": "4.2.1"
   },
   "overrides": {
+    "@angular/compiler-cli": "$@angular/compiler-cli",
+    "@angular-devkit/build-angular": {
+      "jest": "$jest",
+      "ts-jest": "$ts-jest"
+    },
     "@jest/environment": "$jest",
     "@nx/jest": {
       "jest": "$jest"
@@ -164,7 +169,9 @@
     "@typescript-eslint/eslint-plugin": "$@typescript-eslint/eslint-plugin",
     "@typescript-eslint/parser": "$@typescript-eslint/parser",
     "jest-config": "$jest",
+    "jest-environment-jsdom": "$jest-environment-jsdom",
     "ts-jest": {
+      "jest": "$jest",
       "typescript": "$typescript"
     }
   },
