@@ -68,7 +68,7 @@
     "@nx/rollup": "17.0.2",
     "@nx/storybook": "17.0.2",
     "@nx/workspace": "17.0.2",
-    "@nxext/stencil": "17.0.0",
+    "@nxext/stencil": "17.0.2",
     "@rollup/plugin-url": "8.0.2",
     "@schematics/angular": "16.2.8",
     "@stencil/angular-output-target": "0.8.2",
@@ -147,13 +147,6 @@
     "vite-tsconfig-paths": "4.2.1"
   },
   "overrides": {
-    "@nxext/stencil": {
-      "@nx/jest": "$@nx/jest",
-      "@nx/eslint": "$@nx/eslint",
-      "@nx/react": "$@nx/react",
-      "@nx/storybook": "$@nx/storybook",
-      "@stencil/core": "$@stencil/core"
-    },
     "@typescript-eslint/eslint-plugin": "$@typescript-eslint/eslint-plugin",
     "@typescript-eslint/parser": "$@typescript-eslint/parser",
     "ngx-deploy-npm": {

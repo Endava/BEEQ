@@ -1,0 +1,10 @@
+{
+  "node": {
+    "index": {
+      "template": "https://mirrors.dotsrc.org/nodejs/release/index.json"
+    },
+    "distro": {
+      "template": "https://mirrors.dotsrc.org/nodejs/release/v{{version}}/node-v{{version}}-{{os}}-{{arch}}.tar.gz"
+    }
+  }
+}
