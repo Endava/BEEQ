@@ -19,7 +19,7 @@
    * The ignoreDeps configuration field allows you to define a list of dependency names to be ignored by Renovate.
    * Currently it supports only "exact match" dependency names.
    */
-  ignoreDeps: ['@types/jest', 'babel-jest', 'jest', 'jest-environment-jsdom', 'ts-jest'],
+  ignoreDeps: [],
   /**
    * Labels to set in the Pull Request.
    */
@@ -27,7 +27,7 @@
   /**
    * Time required before a new release is considered stable.
    */
-  minimumReleaseAge: '3 days',
+  minimumReleaseAge: '1 days',
   /**
    * Package rules lets you apply rules to individual packages
    * or to groups of packages using regex pattern matching.
@@ -35,8 +35,7 @@
   packageRules: [
     {
       groupName: 'Angular',
-      matchPackagePrefixes: ['@angular', '@schematics'],
-      allowedVersions: '<15.0.0',
+      matchPackagePrefixes: ['@angular', '@schematics', 'ng-packagr'],
     },
     {
       groupName: 'Commitlint',
@@ -69,11 +68,6 @@
       matchPackagePrefixes: ['@floating-ui'],
     },
     {
-      groupName: 'Ng',
-      matchPackagePrefixes: ['ng-packagr'],
-      allowedVersions: '<15.0.0',
-    },
-    {
       groupName: 'PostCSS',
       matchPackagePrefixes: ['postcss'],
     },
@@ -89,7 +83,7 @@
     {
       groupName: 'Typescript',
       matchPackagePrefixes: ['typescript'],
-      allowedVersions: '<5.0.0',
+      allowedVersions: '<5.2.0',
     },
     {
       groupName: 'Typescript-Eslint',
@@ -102,7 +96,7 @@
     },
     {
       matchPackageNames: ['zone.js'],
-      allowedVersions: '<0.13.0',
+      allowedVersions: '<0.14.0',
     },
     /**
      * Do not renovate peerDependencies versions/ranges.
@@ -122,10 +116,10 @@
    */
   rebaseWhen: 'never',
   /**
-   * Run every Monday and Thursday between 00 and 12 (UTC time)
+   * Run every Monday between 00 and 12 (UTC time)
    * {@see https://crontab.guru} for debugging cron schedules
    */
-  schedule: ['* 00-12 * * 1,4'],
+  schedule: ['* 00-12 * * 1'],
   /**
    * Enable Semantic Commit prefixes for commits and PR titles.
    */
