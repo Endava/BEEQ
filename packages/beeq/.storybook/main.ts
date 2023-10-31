@@ -5,7 +5,7 @@ import turbosnap from 'vite-plugin-turbosnap';
 import type { StorybookConfig } from '@storybook/web-components-vite';
 import type { InlineConfig } from 'vite';
 
-const config: StorybookConfig = {
+export default {
   addons: ['@storybook/addon-essentials', '@bee-q/storybook-addon-html', '@storybook/addon-a11y'],
   core: {
     builder: {
@@ -53,6 +53,4 @@ const config: StorybookConfig = {
       document.addEventListener('touchstart', function () {}, false);
     </script>
   `,
-};
-
-export default config;
+} satisfies StorybookConfig;
