@@ -19,6 +19,7 @@ yarn-error.log*
 .pnp
 
 ### BUILD ###
+/.nx/cache
 build
 coverage
 dist

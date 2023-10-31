@@ -24,7 +24,7 @@
       "defaultConfiguration": "production"
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": ["packages/beeq-angular/**/*.ts", "packages/beeq-angular/**/*.html"]
       }

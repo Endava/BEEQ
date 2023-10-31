@@ -6,8 +6,7 @@
   },
   "workspaceLayout": {
     "appsDir": "apps",
-    "libsDir": "packages",
-    "projectNameAndRootFormat": "derived"
+    "libsDir": "packages"
   },
   "namedInputs": {
     "default": [
@@ -27,32 +26,34 @@
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
+      "inputs": ["production", "^production"],
+      "cache": true
     },
     "test": {
-      "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"]
+      "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"],
+      "cache": true
     },
     "e2e": {
-      "inputs": ["default", "^production"]
+      "inputs": ["default", "^production"],
+      "cache": true
+    },
+    "icons": {
+      "cache": true
+    },
+    "lint": {
+      "cache": true
+    },
+    "storybook-build": {
+      "cache": true
+    },
+    "storybook-build-css": {
+      "cache": true
+    },
+    "stylelint": {
+      "cache": true
     }
   },
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx-cloud",
-      "options": {
-        "cacheableOperations": [
-          "build",
-          "e2e",
-          "icons",
-          "lint",
-          "storybook-build",
-          "storybook-build-css",
-          "stylelint",
-          "test"
-        ]
-      }
-    }
-  },
+  "nxCloudAccessToken": "ZTI2Yzg0YzktODZiMi00Yjg2LTlhMmMtYWI3NDhkODkzZjlmfHJlYWQtb25seQ==",
   "generators": {
     "@nx/react": {
       "application": {
