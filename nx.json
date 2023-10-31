@@ -6,8 +6,7 @@
   },
   "workspaceLayout": {
     "appsDir": "apps",
-    "libsDir": "packages",
-    "projectNameAndRootFormat": "derived"
+    "libsDir": "packages"
   },
   "namedInputs": {
     "default": [
@@ -54,6 +53,7 @@
       "cache": true
     }
   },
+  "nxCloudAccessToken": "ZTI2Yzg0YzktODZiMi00Yjg2LTlhMmMtYWI3NDhkODkzZjlmfHJlYWQtb25seQ==",
   "generators": {
     "@nx/react": {
       "application": {
