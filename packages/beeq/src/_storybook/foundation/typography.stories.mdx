@@ -35,7 +35,7 @@ import { DocsContainer, Meta, Source, Typeset } from '@storybook/blocks';
 
       return (
         <DocsContainer context={context}>
-          <div className="bq-doc__wrapper" data-theme={globals.theme.toLowerCase() ?? 'light'}>
+          <div className="bq-doc__wrapper" bq-theme={globals.theme.toLowerCase() ?? 'beeq'} bq-mode={globals.mode.toLowerCase() ?? 'light'}>
             <div className="bq-doc__container">
               <h1>Typography</h1>
 
