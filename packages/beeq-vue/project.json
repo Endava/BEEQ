@@ -23,6 +23,21 @@
       "options": {
         "lintFilePatterns": ["packages/beeq-vue/**/*.ts", "packages/beeq-vue/package.json"]
       }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public",
+        "noBuild": true,
+        "tag": "latest"
+      }
+    },
+    "publish-beta": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public",
+        "tag": "beta"
+      }
     }
   }
 }
