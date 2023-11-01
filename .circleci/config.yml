@@ -23,12 +23,6 @@ commands:
           command: |
             $HOME/.volta/bin/node --version
             $HOME/.volta/bin/npm --version
-  update_nx_json:
-    description: Update nx.json and add the NX_CLOUD_ACCESS_TOKEN value
-    steps:
-      - run:
-          name: 📝 Update nx.json
-          command: node scripts/update-nx.js
   chromatic-deployment:
     description: Publish changes to Chromatic storybook
     steps:
@@ -79,7 +73,6 @@ jobs:
           name: 🗂️ Create `test-results` directory
           # Use to store the test results
           command: mkdir -p ./test-results
-      - update_nx_json
       - nx/set-shas
           # Derives SHAs for base and head for use in `nx affected` commands in CI
       - run:
