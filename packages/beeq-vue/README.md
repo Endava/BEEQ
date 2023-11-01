@@ -30,7 +30,7 @@ Make sure that BEEQ main style is imported into your application's main style fi
 @import "@bee-q/core/dist/bee-q/bee-q";
 ```
 
-> ❗️The icons SVG are shipped in a separate folder. Depending on your React stack, your project will need to include `node_modules/@bee-q/core/dist/bee-q/svg` in the build in such a way that it respond to: `http://<domain>/svg`
+> ❗️The icons SVG are shipped in a separate folder. Depending on your stack, your project will need to include `node_modules/@bee-q/core/dist/bee-q/svg` in the build in such a way that it respond to: `http://<domain>/svg`
 
 ## Usage
 
