@@ -8,7 +8,7 @@ export const angularValueAccessorBindings: ValueAccessorConfig[] = [
     type: 'boolean',
   },
   {
-    elementSelectors: ['bq-input', 'bq-radio-group', 'bq-select', 'bq-slider'],
+    elementSelectors: ['bq-input', 'bq-radio-group', 'bq-select', 'bq-slider', 'bq-textarea'],
     event: 'bqChange',
     targetAttr: 'value',
     type: 'text',
