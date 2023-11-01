@@ -22,7 +22,7 @@ if `@bee-q/core` package is installed you should update both
 npm install @bee-q/{core,react}
 ```
 
-### Add Bee-Q styles and assets
+### Add BEEQ styles and assets
 
 Make sure that BEEQ main style is imported into your application's main style file:
 

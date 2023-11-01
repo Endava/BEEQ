@@ -2,7 +2,7 @@
   "name": "@bee-q/core",
   "version": "0.9.0",
   "license": "Apache-2.0",
-  "description": "BEEQ, a Design System components rulled by Endavan developers :)",
+  "description": "BEEQ, a Design System components ruled by Endavan developers :)",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.js",
   "es2015": "./dist/esm/index.mjs",

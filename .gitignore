@@ -16,6 +16,8 @@ packages/beeq/src/components/icon/svg/**
 packages/beeq-angular/**/directives
 packages/beeq-react/src/react-component-lib
 packages/beeq-react/src/components.ts
+packages/beeq-vue/src/vue-component-lib
+packages/beeq-vue/src/components.ts
 !.gitkeep
 
 # dependencies

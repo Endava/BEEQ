@@ -23,6 +23,7 @@
 | [`@bee-q/core`](https://www.npmjs.com/package/@bee-q/core)       | [![version](https://img.shields.io/npm/v/@bee-q/core/latest.svg)](https://www.npmjs.com/package/@bee-q/core)       | [README](./packages/beeq/README.md)         |
 | [`@bee-q/angular`](https://www.npmjs.com/package/@bee-q/angular) | [![version](https://img.shields.io/npm/v/@bee-q/angular/latest.svg)](https://www.npmjs.com/package/@bee-q/angular) | [README](./packages/beeq-angular/README.md) |
 | [`@bee-q/react`](https://www.npmjs.com/package/@bee-q/react)     | [![version](https://img.shields.io/npm/v/@bee-q/react/latest.svg)](https://www.npmjs.com/package/@bee-q/react)     | [README](./packages/beeq-react/README.md)   |
+| [`@bee-q/vue`](https://www.npmjs.com/package/@bee-q/vue)     | [![version](https://img.shields.io/npm/v/@bee-q/vue/latest.svg)](https://www.npmjs.com/package/@bee-q/vue)     | [README](./packages/beeq-vue/README.md)   |
 
 </div>
 
@@ -37,6 +38,7 @@ The project has been structured as an [NX monorepo](https://nx.dev) :
   ├── 📁 beeq
   ├── 📁 beeq-angular
   ├── 📁 beeq-react
+  ├── 📁 beeq-vue
   ├── ...
 ├── 📁 tools
 ├── package.json
@@ -47,7 +49,8 @@ where:
 
 - **[packages/beeq](./packages/beeq/):** Core library (source for all the elements/components implemented)
 - **[packages/beeq-angular](./packages/beeq-angular):** Angular-specific wrapper for BEEQ core library
-- **[packages/beeq-react](./packages/beeq-react):** ReactJS-specific wrapper for BEEQ core library
+- **[packages/beeq-react](./packages/beeq-react):** React.js-specific wrapper for BEEQ core library
+- **[packages/beeq-vue](./packages/beeq-vue):** Vue.js-specific wrapper for BEEQ core library
 
 ### Dependencies 📡
 
@@ -55,12 +58,12 @@ We recommend the use of [Volta](https://volta.sh/) to manage Node and NPM versio
 
 > With Volta, you can select a Node engine once and then stop worrying about it. You can switch between projects and stop having to manually switch between Nodes.
 
-Once you have Volta installed, whenever you change to the BEEQ folder locally, it will switch to the right Node version pinned on the `package.json`:
+Once you have Volta installed, whenever you change to the BEEQ folder locally, it will switch to the right Node and NPM versions pinned in the `package.json`:
 
 ```json
   "volta": {
-    "node": "18.14.0",
-    "npm": "9.3.1"
+    "node": "20.9.0",
+    "npm": "10.2.1"
   }
 ```
 
