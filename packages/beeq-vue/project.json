@@ -14,7 +14,7 @@
         "outputPath": "dist/beeq-vue",
         "main": "packages/beeq-vue/src/index.ts",
         "tsConfig": "packages/beeq-vue/tsconfig.lib.json",
-        "assets": []
+        "assets": ["packages/beeq-vue/README.md"]
       }
     },
     "lint": {

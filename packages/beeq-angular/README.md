@@ -26,7 +26,7 @@ npm install @bee-q/{core,angular}
 
 ### Call `defineCustomElements`
 
-The Bee-Q core package includes the main function that is used to load the components in the collection and makes Angular aware of the custom tags of the web components. That function is called `defineCustomElements()` and it is handled by the `@bee-q/angular` wrapper itself. Yet, **if you need to support older versions of Microsoft Edge and Internet Explorer, you can apply the polyfills as follow**:
+The BEEQ core package includes the main function that is used to load the components in the collection and makes Angular aware of the custom tags of the web components. That function is called `defineCustomElements()` and it is handled by the `@bee-q/angular` wrapper itself. Yet, **if you need to support older versions of Microsoft Edge and Internet Explorer, you can apply the polyfills as follow**:
 
 ```ts
 // main.ts
@@ -35,13 +35,13 @@ import { applyPolyfills, defineCustomElements } from '@bee-q/core/dist/loader';
 
 ...
 
-// Aplied the polyfills for Edge/IE browser support
+// Apply the polyfills for Edge/IE browser support
 applyPolyfills().then(() => {
   defineCustomElements(window);
 })
 ```
 
-### Add Bee-Q styles and assets
+### Add BEEQ styles and assets
 
 > ❗️The icons SVG are shipped in a separate folder. Projects will need to include `node_modules/@bee-q/core/dist/bee-q/svg` in their build and try to make it in a certain way that it respond to: `http://<domain>/svg`
 
@@ -110,7 +110,7 @@ export class AppModule {}
 
 ### NgModel and two-way data binding
 
-To enable two-way binding and the use of [ngModel] within Bee-Q form components, you will need to add the Value Accessors in your module declarations, along with `@angular/forms`.
+To enable two-way binding and the use of [ngModel] within BEEQ form components, you will need to add the Value Accessors in your module declarations, along with `@angular/forms`.
 
 > ❗️❗️ *Please notice that* **you might need to disable** `aot` *for enabling two-way data binding**. Details: https://github.com/ionic-team/stencil-ds-output-targets/issues/317*
 

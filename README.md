@@ -23,6 +23,7 @@
 | [`@bee-q/core`](https://www.npmjs.com/package/@bee-q/core)       | [![version](https://img.shields.io/npm/v/@bee-q/core/latest.svg)](https://www.npmjs.com/package/@bee-q/core)       | [README](./packages/beeq/README.md)         |
 | [`@bee-q/angular`](https://www.npmjs.com/package/@bee-q/angular) | [![version](https://img.shields.io/npm/v/@bee-q/angular/latest.svg)](https://www.npmjs.com/package/@bee-q/angular) | [README](./packages/beeq-angular/README.md) |
 | [`@bee-q/react`](https://www.npmjs.com/package/@bee-q/react)     | [![version](https://img.shields.io/npm/v/@bee-q/react/latest.svg)](https://www.npmjs.com/package/@bee-q/react)     | [README](./packages/beeq-react/README.md)   |
+| [`@bee-q/vue`](https://www.npmjs.com/package/@bee-q/vue)     | [![version](https://img.shields.io/npm/v/@bee-q/vue/latest.svg)](https://www.npmjs.com/package/@bee-q/vue)     | [README](./packages/beeq-vue/README.md)   |
 
 </div>
 
