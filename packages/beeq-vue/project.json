@@ -1,0 +1,43 @@
+{
+  "name": "beeq-vue",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/beeq-vue/src",
+  "projectType": "library",
+  "tags": ["wrapper", "vue", "publishable"],
+  "implicitDependencies": ["beeq"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "clean": true,
+        "outputPath": "dist/beeq-vue",
+        "main": "packages/beeq-vue/src/index.ts",
+        "tsConfig": "packages/beeq-vue/tsconfig.lib.json",
+        "assets": ["packages/beeq-vue/README.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/beeq-vue/**/*.ts", "packages/beeq-vue/package.json"]
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public",
+        "noBuild": true,
+        "tag": "latest"
+      }
+    },
+    "publish-beta": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public",
+        "tag": "beta"
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@bee-q/vue",
+  "version": "0.9.0",
+  "license": "Apache-2.0",
+  "description": "Vue specific wrapper for BEEQ Design System components",
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "peerDependencies": {
+    "vue": ">=3.3.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 3 Chrome major versions",
+    "last 3 Firefox major versions",
+    "last 3 Safari major versions",
+    "last 2 Edge major versions",
+    "last 3 ChromeAndroid major versions",
+    "last 3 iOS major versions"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Endava/BEEQ"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  }
+}

@@ -4,9 +4,10 @@ import { angularOutputTarget as angular } from '@stencil/angular-output-target';
 import { Config } from '@stencil/core';
 import { reactOutputTarget as react } from '@stencil/react-output-target';
 import { sass } from '@stencil/sass';
+import { vueOutputTarget as vue } from '@stencil/vue-output-target';
 import tailwind, { PluginConfigOpts, tailwindHMR } from 'stencil-tailwind-plugin';
 
-import { angularValueAccessorBindings, generateCustomElementsJson } from './src/tools';
+import { angularValueAccessorBindings, generateCustomElementsJson, vueComponentModels } from './src/tools';
 import tailwindConf from '../../tailwind.config';
 
 const tailwindOpts: PluginConfigOpts = {
@@ -66,6 +67,11 @@ export const config: Config = {
       componentCorePackage: '@bee-q/core',
       proxiesFile: resolve(__dirname, '../beeq-react/src/components.ts').replace(/\\/g, '/'),
       includeDefineCustomElements: true,
+    }),
+    vue({
+      componentCorePackage: '@bee-q/core',
+      proxiesFile: resolve(__dirname, '../beeq-vue/src/components.ts').replace(/\\/g, '/'),
+      componentModels: vueComponentModels,
     }),
   ],
   extras: {
