@@ -1,0 +1,45 @@
+{
+  "name": "beeq-tailwindcss",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/beeq-tailwindcss/src",
+  "projectType": "library",
+  "tags": ["publishable", "preset", "tailwindcss"],
+  "targets": {
+    "build2": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "clean": true,
+        "outputPath": "dist/beeq-tailwindcss",
+        "main": "packages/beeq-tailwindcss/src/index.ts",
+        "assets": ["packages/beeq-tailwindcss/*.md"],
+        "project": "packages/beeq-tailwindcss/package.json",
+        "tsConfig": "packages/beeq-tailwindcss/tsconfig.lib.json",
+        "sourcemap": true
+      }
+    },
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "deleteOutputPath": true,
+        "outputPath": "dist/beeq-tailwindcss",
+        "main": "packages/beeq-tailwindcss/src/index.js",
+        "tsConfig": "packages/beeq-tailwindcss/tsconfig.lib.json",
+        "assets": ["packages/beeq-tailwindcss/*.md"],
+        "format": ["cjs"],
+        "esbuildOptions": {
+          "legalComments": "none",
+          "minify": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/beeq-tailwindcss/**/*.js", "packages/beeq-tailwindcss/package.json"]
+      }
+    }
+  }
+}

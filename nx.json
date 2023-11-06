@@ -43,6 +43,10 @@
     "lint": {
       "cache": true
     },
+    "beeq-tailwindcss": {
+      "cache": true,
+      "outputs": ["{workspaceRoot}/dist/beeq-tailwindcss"]
+    },
     "storybook-build": {
       "cache": true
     },

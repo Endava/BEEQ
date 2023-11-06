@@ -1,0 +1,18 @@
+{
+  "name": "@bee-q/tailwindcss",
+  "version": "0.0.1",
+  "license": "Apache-2.0",
+  "description": "Vue specific wrapper for BEEQ Design System components",
+  "main": "./index.cjs",
+  "peerDependencies": {
+    "tailwindcss-theme-swapper": "^0.7.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Endava/BEEQ"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  }
+}
