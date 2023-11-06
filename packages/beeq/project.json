@@ -4,6 +4,7 @@
   "sourceRoot": "packages/beeq/src",
   "projectType": "library",
   "tags": ["components", "core", "publishable"],
+  "implicitDependencies": ["beeq-tailwindcss"],
   "generators": {
     "@nxext/stencil:component": {
       "style": "scss"
@@ -61,7 +62,7 @@
       }
     },
     "build": {
-      "dependsOn": ["icons"],
+      "dependsOn": [{ "target": "icons" }, { "projects": ["beeq-tailwindcss"], "target": "build" }],
       "executor": "@nxext/stencil:build",
       "outputs": [
         "{options.outputPath}",
@@ -161,7 +162,7 @@
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/beeq/**/*.{ts,tsx}"]
+        "lintFilePatterns": ["packages/beeq/**/*.{ts,tsx}", "packages/beeq/package.json"]
       }
     },
     "stylelint": {

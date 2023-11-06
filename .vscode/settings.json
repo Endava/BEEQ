@@ -32,7 +32,9 @@
   "css.validate": false,
   "editor.formatOnSave": true,
   "files.associations": {
-    "*.json5": "json5"
+    "*.css": "tailwindcss",
+    "*.json5": "json5",
+    "*.scss": "tailwindcss"
   },
   "html.customData": ["./dist/bee-q/custom-elements.json"],
   "less.validate": false,
