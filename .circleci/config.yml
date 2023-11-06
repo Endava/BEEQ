@@ -76,6 +76,9 @@ jobs:
       - nx/set-shas
           # Derives SHAs for base and head for use in `nx affected` commands in CI
       - run:
+          name: 🎨 Build BEEQ Tailwind CSS preset
+          command: npx nx run beeq-tailwindcss:build --base=$NX_BASE --head=$NX_HEAD --output-style=stream-without-prefixes
+      - run:
           name: 🩺 Run Linters and Unit Tests
           command: |
             npx nx run beeq:test --base=$NX_BASE --head=$NX_HEAD --output-style=stream-without-prefixes -- --ci --code-coverage --runInBand
