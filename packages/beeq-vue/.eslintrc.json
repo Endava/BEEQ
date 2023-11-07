@@ -4,21 +4,27 @@
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rules": {}
+      "extends": [
+        // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+        "plugin:@typescript-eslint/recommended"
+      ],
+      "rules": {
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "prefer-const": "off"
+      }
     },
     {
-      "files": ["*.ts", "*.tsx"],
-      "rules": {}
-    },
-    {
-      "files": ["*.js", "*.jsx"],
-      "rules": {}
-    },
-    {
-      "files": ["*.json"],
+      "files": ["{package,project}.json"],
       "parser": "jsonc-eslint-parser",
       "rules": {
-        "@nx/dependency-checks": "error"
+        "@nx/dependency-checks": [
+          "error",
+          {
+            "ignoredDependencies": ["@bee-q/core", "react", "react-dom"],
+            "ignoredFiles": ["{projectRoot}/esbuild.config.{js,ts,mjs,mts}"]
+          }
+        ]
       }
     }
   ]
