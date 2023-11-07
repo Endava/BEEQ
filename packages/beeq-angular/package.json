@@ -7,6 +7,7 @@
   "module": "dist/esm2015/index.js",
   "types": "index.d.ts",
   "dependencies": {
+    "@bee-q/core": "*",
     "tslib": "^2.6.2"
   },
   "peerDependencies": {
