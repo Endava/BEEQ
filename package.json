@@ -48,6 +48,8 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "16.2.8",
+    "@angular-eslint/eslint-plugin": "16.2.0",
+    "@angular-eslint/eslint-plugin-template": "16.2.0",
     "@angular/cli": "16.2.8",
     "@angular/compiler-cli": "16.2.11",
     "@angular/language-service": "16.2.11",
@@ -103,6 +105,7 @@
     "babel-jest": "29.7.0",
     "chromatic": "7.5.4",
     "copy-webpack-plugin": "11.0.0",
+    "core-js": "3.33.2",
     "decompress": "4.2.1",
     "eslint": "8.52.0",
     "eslint-config-prettier": "9.0.0",
