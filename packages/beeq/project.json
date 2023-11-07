@@ -130,7 +130,6 @@
       }
     },
     "test": {
-      "dependsOn": ["lint"],
       "executor": "@nxext/stencil:test",
       "outputs": ["{options.outputPath}"],
       "options": {
@@ -152,17 +151,11 @@
       }
     },
     "lint": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": ["nx run beeq:eslint", "nx run beeq:stylelint"],
-        "parallel": true
-      }
-    },
-    "eslint": {
       "executor": "@nx/eslint:lint",
+      "dependsOn": [{ "target": "stylelint" }],
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/beeq/**/*.{ts,tsx}", "packages/beeq/package.json"]
+        "lintFilePatterns": ["packages/beeq/**/*.{ts,tsx}", "packages/beeq/package.json", "packages/beeq/project.json"]
       }
     },
     "stylelint": {
