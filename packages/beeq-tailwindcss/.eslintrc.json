@@ -1,13 +1,12 @@
 {
   "extends": ["../../.eslintrc.json"],
   "ignorePatterns": ["!**/*"],
+  "parserOptions": {
+    "sourceType": "module"
+  },
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "parserOptions": {
-        "project": ["packages/beeq-tailwindcss/tsconfig.*?.json"],
-        "sourceType": "module"
-      },
       "extends": [
         "plugin:@typescript-eslint/recommended",
         "plugin:prettier/recommended",
@@ -48,15 +47,7 @@
       }
     },
     {
-      "files": ["*.ts", "*.tsx"],
-      "rules": {}
-    },
-    {
-      "files": ["*.js", "*.jsx"],
-      "rules": {}
-    },
-    {
-      "files": ["*.json"],
+      "files": ["{package,project}.json"],
       "parser": "jsonc-eslint-parser",
       "rules": {
         "@nx/dependency-checks": [

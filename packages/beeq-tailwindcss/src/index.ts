@@ -6,6 +6,7 @@ import { Config } from 'tailwindcss/types/config';
 import ThemeSwapper from 'tailwindcss-theme-swapper';
 
 import {
+  CSS_COLORS,
   DECLARATIVE_COLORS,
   DefaultDarkTheme,
   DefaultLightTheme,
@@ -133,7 +134,10 @@ export default {
         },
       ],
     }),
-    plugin(function ({ addComponents, theme }) {
+    plugin(function ({ addBase, addComponents, theme }) {
+      addBase({
+        ':root, ::backdrop': { ...CSS_COLORS },
+      });
       addComponents({
         /**
          * Common `FOCUS` state that should be used within `focus-visible` Tailwind CSS utility
@@ -156,4 +160,14 @@ export default {
   ],
 } satisfies Partial<Config>;
 
-export { DefaultRootTheme, DefaultLightTheme, DefaultDarkTheme, EndavaRootTheme, EndavaLightTheme, EndavaDarkTheme };
+export {
+  CSS_COLORS,
+  DECLARATIVE_COLORS,
+  DefaultDarkTheme,
+  DefaultLightTheme,
+  DefaultRootTheme,
+  EndavaDarkTheme,
+  EndavaLightTheme,
+  EndavaRootTheme,
+  PRIMITIVE_COLORS,
+};

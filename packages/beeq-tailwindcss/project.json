@@ -10,7 +10,6 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "format": ["esm", "cjs"],
-        "compiler": "swc",
         "deleteOutputPath": true,
         "generateExportsField": true,
         "outputPath": "dist/beeq-tailwindcss",
@@ -31,7 +30,11 @@
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/beeq-tailwindcss/**/*.js", "packages/beeq-tailwindcss/package.json"]
+        "lintFilePatterns": [
+          "packages/beeq-tailwindcss/**/*.ts",
+          "packages/beeq-tailwindcss/package.json",
+          "packages/beeq-tailwindcss/project.json"
+        ]
       }
     }
   }
