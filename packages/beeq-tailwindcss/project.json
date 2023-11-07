@@ -6,19 +6,25 @@
   "tags": ["publishable", "preset", "tailwindcss"],
   "targets": {
     "build": {
-      "executor": "@nx/esbuild:esbuild",
+      "executor": "@nx/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "format": ["esm", "cjs"],
+        "compiler": "swc",
         "deleteOutputPath": true,
+        "generateExportsField": true,
         "outputPath": "dist/beeq-tailwindcss",
-        "main": "packages/beeq-tailwindcss/src/index.js",
+        "main": "packages/beeq-tailwindcss/src/index.ts",
         "tsConfig": "packages/beeq-tailwindcss/tsconfig.lib.json",
-        "assets": ["packages/beeq-tailwindcss/*.md"],
-        "format": ["cjs"],
-        "esbuildOptions": {
-          "legalComments": "none",
-          "minify": true
-        }
+        "project": "packages/beeq-tailwindcss/package.json",
+        "external": ["tailwindcss", "tailwindcss-theme-swapper"],
+        "assets": [
+          {
+            "glob": "packages/beeq-tailwindcss/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
       }
     },
     "lint": {

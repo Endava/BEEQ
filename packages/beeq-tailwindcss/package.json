@@ -3,8 +3,11 @@
   "version": "0.10.0",
   "license": "Apache-2.0",
   "description": "BEEQ's opinionated TailwindCSS configuration",
-  "main": "./index.cjs",
+  "main": "./index.cjs.js",
+  "module": "./index.esm.js",
+  "types": "./src/index.d.ts",
   "peerDependencies": {
+    "tailwindcss": "^3.3.2",
     "tailwindcss-theme-swapper": "^0.7.3"
   },
   "repository": {
