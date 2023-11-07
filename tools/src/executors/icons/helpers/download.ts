@@ -15,6 +15,7 @@ export const downloadIcons = async ({ downloadPath, fileName, sourceUrl }: IDown
     if (!response.body || !response.ok) throw new Error(response.statusText);
 
     const ws = createWriteStream(join(downloadPath, fileName));
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     await finished(Readable.fromWeb(response.body).pipe(ws));
     Promise.resolve();
