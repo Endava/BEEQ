@@ -1,6 +1,6 @@
 {
   "root": true,
-  "plugins": ["@nrwl/nx"],
+  "plugins": ["@nx"],
   "parserOptions": {
     "ecmaVersion": 2019
   },
