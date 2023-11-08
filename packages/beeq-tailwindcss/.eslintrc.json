@@ -53,6 +53,7 @@
         "@nx/dependency-checks": [
           "error",
           {
+            "ignoredDependencies": ["tailwindcss"],
             "ignoredFiles": ["{projectRoot}/esbuild.config.{js,ts,mjs,mts}"]
           }
         ]
