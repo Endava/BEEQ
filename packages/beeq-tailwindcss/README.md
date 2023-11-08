@@ -59,6 +59,17 @@ The preset includes a CSS reset that removes all the default browser styles. If 
 @tailwind utilities;
 ```
 
+## Fonts 🖋
+
+The preset does not include the fonts by default, but you can add them in your CSS entry file or use your own custom fonts:
+
+```css
+/* BEEQ Outfit font */
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100;300;400;600;700&display=swap");
+/* ENDAVA Roboto */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
+```
+
 ## Typography 📝
 
 The preset includes a typography plugin that adds a set of default typography styles to your application. It is not enabled by default, so you need to add it to your `tailwind.config.js` file:
@@ -107,7 +118,7 @@ export default {
 
 ## Complete example
 
-[CodeSandbox](https://codesandbox.io/s/beeq-tailwindcss-preset-example-1x2x2?file=/tailwind.config.js)
+[CodeSandbox](https://codesandbox.io/p/sandbox/beeq-tailwind-css-preset-swrtfk?file=%2Ftailwind.config.ts)
 
 ## Documentation 📙
 
