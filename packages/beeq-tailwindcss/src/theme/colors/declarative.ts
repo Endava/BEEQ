@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------- */
-/*                Bee-Q declarative colors for Tailwind config                */
+/*                 BEEQ declarative colors for Tailwind config                */
 /* -------------------------------------------------------------------------- */
 
 export const DECLARATIVE_COLORS = {

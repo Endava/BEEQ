@@ -1,0 +1,41 @@
+{
+  "name": "beeq-tailwindcss",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/beeq-tailwindcss/src",
+  "projectType": "library",
+  "tags": ["publishable", "preset", "tailwindcss"],
+  "targets": {
+    "build": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "format": ["esm", "cjs"],
+        "deleteOutputPath": true,
+        "generateExportsField": true,
+        "outputPath": "dist/beeq-tailwindcss",
+        "main": "packages/beeq-tailwindcss/src/index.ts",
+        "tsConfig": "packages/beeq-tailwindcss/tsconfig.lib.json",
+        "project": "packages/beeq-tailwindcss/package.json",
+        "external": ["tailwindcss", "tailwindcss-theme-swapper"],
+        "assets": [
+          {
+            "glob": "packages/beeq-tailwindcss/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/beeq-tailwindcss/**/*.ts",
+          "packages/beeq-tailwindcss/package.json",
+          "packages/beeq-tailwindcss/project.json"
+        ]
+      }
+    }
+  }
+}

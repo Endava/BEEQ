@@ -1,10 +1,16 @@
 {
-  "extends": ["plugin:@nrwl/nx/react", "../../.eslintrc.json"],
+  "extends": ["../../.eslintrc.json"],
   "ignorePatterns": ["!**/*"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rules": {}
+      "extends": [
+        // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+        "plugin:@typescript-eslint/recommended"
+      ],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off"
+      }
     },
     {
       "files": ["*.ts", "*.tsx"],
@@ -13,6 +19,19 @@
     {
       "files": ["*.js", "*.jsx"],
       "rules": {}
+    },
+    {
+      "files": ["{package,project}.json"],
+      "parser": "jsonc-eslint-parser",
+      "rules": {
+        "@nx/dependency-checks": [
+          "error",
+          {
+            "ignoredDependencies": ["@bee-q/core", "react", "react-dom"],
+            "ignoredFiles": ["{projectRoot}/esbuild.config.{js,ts,mjs,mts}"]
+          }
+        ]
+      }
     }
   ]
 }

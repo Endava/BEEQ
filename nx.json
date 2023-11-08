@@ -1,9 +1,6 @@
 {
   "extends": "nx/presets/npm.json",
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "affected": {
-    "defaultBase": "develop"
-  },
   "workspaceLayout": {
     "appsDir": "apps",
     "libsDir": "packages"
@@ -42,6 +39,10 @@
     },
     "lint": {
       "cache": true
+    },
+    "beeq-tailwindcss": {
+      "cache": true,
+      "outputs": ["{workspaceRoot}/dist/beeq-tailwindcss"]
     },
     "storybook-build": {
       "cache": true

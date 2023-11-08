@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------- */
-/*                 Bee-Q primitive colors for Tailwind config                 */
+/*                  BEEQ primitive colors for Tailwind config                 */
 /* -------------------------------------------------------------------------- */
 
 export const PRIMITIVE_COLORS = {

@@ -1,0 +1,21 @@
+{
+  "name": "@bee-q/tailwindcss",
+  "version": "0.10.0",
+  "license": "Apache-2.0",
+  "description": "BEEQ's opinionated TailwindCSS configuration",
+  "main": "./index.cjs.js",
+  "module": "./index.esm.js",
+  "types": "./src/index.d.ts",
+  "peerDependencies": {
+    "tailwindcss": "^3.3.2",
+    "tailwindcss-theme-swapper": "^0.7.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Endava/BEEQ"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  }
+}
