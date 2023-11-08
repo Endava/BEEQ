@@ -6,14 +6,11 @@ BEEQ TailwindCSS is a preset that adds BEEQ's opinionated TailwindCSS configurat
 
 Before starting to use BEEQ TailwindCSS, you need to have installed:
 
-- [@bee-q/core](../beeq/README.md)
 - [TailwindCSS](https://tailwindcss.com/docs/installation)
 
-Make sure that BEEQ main styles are added to your application's main style file before Tailwind CSS directives:
+Make sure that Tailwind CSS directives are added to your main CSS file:
 
 ```css
-@import "@bee-q/core/dist/bee-q/bee-q.css";
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -28,9 +25,11 @@ npm i -D @bee-q/tailwindcss
 ## Usage 🚀
 
 ```js
+const beeqPreset = require('@bee-q/tailwindcss');
+
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
-  presets: [require('@bee-q/tailwindcss')],
+  presets: [beeqPreset],
   ...
 }
 ```
@@ -46,6 +45,65 @@ export default {
   ...
 }
 ```
+
+## CSS reset 🧹
+
+The preset includes a CSS reset that removes all the default browser styles. If you want to use your own reset, you can add your own CSS reset code to the `@base` layer of TailwindCSS:
+
+```css
+@tailwind base;
+@layer base {
+  /* Your CSS reset code */
+}
+@tailwind components;
+@tailwind utilities;
+```
+
+## Typography 📝
+
+The preset includes a typography plugin that adds a set of default typography styles to your application. It is not enabled by default, so you need to add it to your `tailwind.config.js` file:
+
+```js
+const beeqPreset = require('@bee-q/tailwindcss');
+const { TYPOGRAPHY_DEFAULT } = require('@bee-q/tailwindcss');
+
+module.exports = {
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  presets: [require('@bee-q/tailwindcss')],
+  ...
+  plugins: [
+    plugin(function ({ addBase }) {
+      // Use the default typography styles
+      addBase({ ...TYPOGRAPHY_DEFAULT });
+    }),
+  ],
+}
+```
+
+or via TypeScript:
+
+```ts
+import plugin from "tailwindcss/plugin";
+import { default as beeqPreset, TYPOGRAPHY_DEFAULT } from "@bee-q/tailwindcss";
+import type { Config } from "tailwindcss";
+
+export default {
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  presets: [beeqPreset],
+  theme: {},
+  plugins: [
+    plugin(function ({ addBase }) {
+      // Use the default typography styles
+      addBase({ ...TYPOGRAPHY_DEFAULT });
+    }),
+  ],
+  corePlugins: {
+    preflight: false,
+  },
+} satisfies Config;
+```
+
+> Note: you can always override this styles by adding your own CSS code to the `@base` layer of TailwindCSS.
 
 ## Complete example
 
