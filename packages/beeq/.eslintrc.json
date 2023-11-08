@@ -84,6 +84,28 @@
       "files": ["*.js", "*.jsx"],
       "extends": ["plugin:prettier/recommended"],
       "rules": {}
+    },
+    {
+      "files": ["{package,project}.json"],
+      "parser": "jsonc-eslint-parser",
+      "rules": {
+        "@nx/dependency-checks": [
+          "error",
+          {
+            "ignoredDependencies": [
+              "@stencil/core",
+              "@stencil/angular-output-target",
+              "@stencil/react-output-target",
+              "@stencil/vue-output-target",
+              "@stencil/sass",
+              "stencil-tailwind-plugin",
+              "vite",
+              "vite-tsconfig-paths"
+            ],
+            "ignoredFiles": ["{projectRoot}/esbuild.config.{js,ts,mjs,mts}"]
+          }
+        ]
+      }
     }
   ]
 }

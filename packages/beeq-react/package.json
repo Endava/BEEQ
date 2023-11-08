@@ -6,9 +6,13 @@
   "main": "./src/index.js",
   "module": "./src/index.js",
   "types": "./src/index.d.ts",
+  "dependencies": {
+    "@bee-q/core": "*"
+  },
   "peerDependencies": {
     "react": ">=18.0.0",
-    "react-dom": ">=18.0.0"
+    "react-dom": ">=18.0.0",
+    "tslib": "^2.6.2"
   },
   "browserslist": [
     "> 1%",

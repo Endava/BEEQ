@@ -23,6 +23,7 @@
       "@bee-q/core": ["dist/beeq"],
       "@bee-q/core/*": ["dist/beeq/*"],
       "@bee-q/react": ["dist/beeq-react"],
+      "@bee-q/tailwindcss": ["dist/beeq-tailwindcss"],
       "@bee-q/tools": ["tools/src/index.ts"],
       "@bee-q/vue": ["dist/beeq-vue"]
     }

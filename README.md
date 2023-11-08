@@ -24,6 +24,7 @@
 | [`@bee-q/angular`](https://www.npmjs.com/package/@bee-q/angular) | [![version](https://img.shields.io/npm/v/@bee-q/angular/latest.svg)](https://www.npmjs.com/package/@bee-q/angular) | [README](./packages/beeq-angular/README.md) |
 | [`@bee-q/react`](https://www.npmjs.com/package/@bee-q/react)     | [![version](https://img.shields.io/npm/v/@bee-q/react/latest.svg)](https://www.npmjs.com/package/@bee-q/react)     | [README](./packages/beeq-react/README.md)   |
 | [`@bee-q/vue`](https://www.npmjs.com/package/@bee-q/vue)     | [![version](https://img.shields.io/npm/v/@bee-q/vue/latest.svg)](https://www.npmjs.com/package/@bee-q/vue)     | [README](./packages/beeq-vue/README.md)   |
+| [`@bee-q/tailwindcss`](https://www.npmjs.com/package/@bee-q/tailwindcss)     | [![version](https://img.shields.io/npm/v/@bee-q/tailwindcss/latest.svg)](https://www.npmjs.com/package/@bee-q/tailwindcss)     | [README](./packages/beeq-tailwindcss/README.md)   |
 
 </div>
 
@@ -40,6 +41,8 @@ The project has been structured as an [NX monorepo](https://nx.dev) :
   ├── 📁 beeq-react
   ├── 📁 beeq-vue
   ├── ...
+  ├── 📁 beeq-tailwindcss
+  ├── ...
 ├── 📁 tools
 ├── package.json
 ├── package-lock.json
@@ -51,6 +54,7 @@ where:
 - **[packages/beeq-angular](./packages/beeq-angular):** Angular-specific wrapper for BEEQ core library
 - **[packages/beeq-react](./packages/beeq-react):** React.js-specific wrapper for BEEQ core library
 - **[packages/beeq-vue](./packages/beeq-vue):** Vue.js-specific wrapper for BEEQ core library
+- **[packages/beeq-tailwindcss](./packages/beeq-tailwindcss):** BEEQ's opinionated TailwindCSS configuration
 
 ### Dependencies 📡
 
@@ -79,10 +83,10 @@ The BEEQ components are published to the NPM package manager registry. You can u
 - 📘 [How to use the `@bee-q/core` package](packages/beeq/README.md)
 - 📗 [How to use the `@bee-q/angular` package](packages/beeq-angular/README.md)
 - 📕 [How to use the `@bee-q/react` package](packages/beeq-react/README.md)
+- 📙 [How to use the `@bee-q/vue` package](packages/beeq-vue/README.md)
+- 📓 [How to use the `@bee-q/tailwindcss` preset](packages/beeq-tailwindcss/README.md)
 
-> _More [output targets](https://stenciljs.com/docs/overview) integration will be added later (e.g. Vue, Svelte)_
-
-Feel free to [check our Storybook](https://storybook.bee-q.design/) to see all the BEEQ components released. There you can find all the component's APIs (properties, events, and methods exposed) along with the variations that each component allows.
+Feel free to [check our Storybook](https://storybook.beeq.design/) to see all the BEEQ components released. There you can find all the component's APIs (properties, events, and methods exposed) along with the variations that each component allows.
 
 ## Running the project 🏃‍
 

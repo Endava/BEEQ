@@ -21,7 +21,11 @@
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/beeq-vue/**/*.ts", "packages/beeq-vue/package.json"]
+        "lintFilePatterns": [
+          "packages/beeq-vue/**/*.ts",
+          "packages/beeq-react/package.json",
+          "packages/beeq-react/project.json"
+        ]
       }
     },
     "publish": {
