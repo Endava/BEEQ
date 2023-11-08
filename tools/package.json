@@ -7,9 +7,9 @@
   "typings": "./src/index.d.ts",
   "executors": "./executors.json",
   "dependencies": {
-    "nanospinner": "^1.1.0",
+    "nanospinner": "1.1.0",
     "fs-extra": "11.1.1",
-    "prettier": "^3.0.3",
-    "decompress": "^4.2.1"
+    "prettier": "3.0.3",
+    "decompress": "4.2.1"
   }
 }
