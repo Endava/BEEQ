@@ -15,6 +15,8 @@ import {
   EndavaLightTheme,
   EndavaRootTheme,
   PRIMITIVE_COLORS,
+  reset,
+  TYPOGRAPHY_DEFAULT,
 } from './theme';
 
 export default {
@@ -100,6 +102,32 @@ export default {
     },
   },
   plugins: [
+    plugin(function ({ addBase, addComponents, theme }) {
+      addBase({
+        // CSS variables
+        ':root, ::backdrop': { ...CSS_COLORS },
+        // CSS reset
+        ...reset,
+      });
+      addComponents({
+        /**
+         * Common `FOCUS` state that should be used within `focus-visible` Tailwind CSS utility
+         * Examples of usage:
+         *
+         *  class="focus-visible:focus"
+         *
+         *  @apply focus-visible:focus
+         *
+         *  &:focus-visible {
+         *    @apply focus;
+         *  }
+         */
+        '.focus': {
+          outline: `var(--bq-ring-width, 2px) solid var(--bq-ring-color-focus, ${String(theme('colors.focus'))})`,
+          outlineOffset: 'var(--bq-ring-offset-width, 1px)',
+        },
+      });
+    }),
     ThemeSwapper({
       themes: [
         {
@@ -134,29 +162,6 @@ export default {
         },
       ],
     }),
-    plugin(function ({ addBase, addComponents, theme }) {
-      addBase({
-        ':root, ::backdrop': { ...CSS_COLORS },
-      });
-      addComponents({
-        /**
-         * Common `FOCUS` state that should be used within `focus-visible` Tailwind CSS utility
-         * Examples of usage:
-         *
-         *  class="focus-visible:focus"
-         *
-         *  @apply focus-visible:focus
-         *
-         *  &:focus-visible {
-         *    @apply focus;
-         *  }
-         */
-        '.focus': {
-          outline: `var(--bq-ring-width, 2px) solid var(--bq-ring-color-focus, ${String(theme('colors.focus'))})`,
-          outlineOffset: 'var(--bq-ring-offset-width, 1px)',
-        },
-      });
-    }),
   ],
 } satisfies Partial<Config>;
 
@@ -170,4 +175,5 @@ export {
   EndavaLightTheme,
   EndavaRootTheme,
   PRIMITIVE_COLORS,
+  TYPOGRAPHY_DEFAULT,
 };
