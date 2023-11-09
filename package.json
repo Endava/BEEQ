@@ -152,7 +152,7 @@
     "vite": "4.5.0",
     "vite-plugin-turbosnap": "1.0.3",
     "vite-tsconfig-paths": "4.2.1",
-    "vue": "3.3.7"
+    "vue": "3.3.8"
   },
   "overrides": {
     "@typescript-eslint/eslint-plugin": "$@typescript-eslint/eslint-plugin",
