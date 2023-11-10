@@ -80,7 +80,7 @@
     "@stencil/core": "4.7.1",
     "@stencil/react-output-target": "0.5.3",
     "@stencil/sass": "3.0.7",
-    "@stencil/vue-output-target": "0.8.6",
+    "@stencil/vue-output-target": "0.8.7",
     "@storybook/addon-a11y": "7.5.3",
     "@storybook/addon-actions": "7.5.3",
     "@storybook/addon-docs": "7.5.3",
