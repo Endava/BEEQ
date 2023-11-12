@@ -8,7 +8,7 @@
   "types": "./src/index.d.ts",
   "peerDependencies": {
     "tailwindcss": "^3.3.2",
-    "tailwindcss-theme-swapper": "^0.7.3"
+    "tailwindcss-theme-swapper": "^0.8.0"
   },
   "repository": {
     "type": "git",
