@@ -21,6 +21,10 @@
    */
   ignoreDeps: [],
   /**
+   * Skip any package file whose path matches one of these.
+   */
+  ignorePaths: ['packages/**/package.json'],
+  /**
    * Labels to set in the Pull Request.
    */
   labels: ['chore ⚙️', 'dependencies 📦'],
@@ -104,10 +108,6 @@
     {
       enabled: false,
       matchDepTypes: ['peerDependencies'],
-    },
-    {
-      "excludeRepositories": ["packages/**"],
-      "enabled": false
     },
   ],
   /**
