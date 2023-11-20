@@ -105,6 +105,10 @@
       enabled: false,
       matchDepTypes: ['peerDependencies'],
     },
+    {
+      "excludeRepositories": ["/packages\/.*$/"],
+      "enabled": false
+    },
   ],
   /**
    * Determines how to modify or update existing ranges.
