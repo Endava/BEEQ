@@ -72,28 +72,28 @@ For running the project in your local development environment please [follow the
 
 ### <a name="branching-strategy"></a> Branching strategy
 
-We follow a **GitFlow**'ish branch strategy, where:
+We follow a **GitHub**'ish branch strategy, where:
 
-- `main` branch is used for stable releases
-- `develop` branch is used for integration of the 'next beta releases'
+- `main` our base branch used for stable releases
 
-In that sense, **we recommend to all our contributors to [install git-flow CLI](https://github.com/petervanderdoes/gitflow-avh/wiki#installing-git-flow)** and to get familiar with how to work with `git-flow`, please [check this article from Tower (a git-gui client) for more details](https://www.git-tower.com/learn/git/ebook/en/command-line/advanced-topics/git-flow).
+For GitHub flow, the general process is as follows:
+- Every change that is worked on is branched directly off of `main` into a feature branch.
+- Once a feature is ready it is tested on the feature branch and the code is reviewed before being merged to `main`.
+- Once the feature has been merged to main it should be released to production.
 
-> _When setting locally git-flow, please, make sure to use the default values._
+Github flow is pretty simple and straightforward, but if you want to know more about it, please check the [Github Flow](https://guides.github.com/introduction/flow/) documentation.
 
-If you still prefer to do manual branches, please try to follow and respect our branch naming conventions:
-
-- ❗️ When starting to work on a new feature or bugfix, branch off from the `develop` branch:
+- ❗️ When starting to work on a new feature or bugfix, branch off from the `main` branch:
 
 ```bash
-git switch -c feature/<feature-name> develop
-git checkout -b feature/<feature-name> develop
+git switch -c feat/<feature-name> main
+git checkout -b feat/<feature-name> main
 # or
-git switch -c bugfix/<fix-name> develop
-git checkout -b bugfix/<fix-name> develop
+git switch -c fix/<fix-name> main
+git checkout -b fix/<fix-name> main
 ```
 
-- ❗️ When starting to work on a hotfix, branch off from the `main` branch:
+- ❗️ When starting to work on a hotfix:
 
 ```bash
 git switch -c hotfix/<fix-name> main
