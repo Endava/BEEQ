@@ -23,7 +23,7 @@
   /**
    * Skip any package file whose path matches one of these.
    */
-  ignorePaths: ['packages/**/package.json'],
+  ignorePaths: ['packages/**/package.json', 'tools/package.json'],
   /**
    * Labels to set in the Pull Request.
    */

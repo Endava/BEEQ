@@ -100,17 +100,17 @@ git switch -c hotfix/<fix-name> main
 git checkout -b hotfix/<fix-name> main
 ```
 
-- For changes related to tests and documentation we recommend a manual branch creation from `develop`:
+- For changes related to tests and documentation we recommend:
 
 ```bash
-git switch -c tests/<test-change> develop
-git checkout -b tests/<test-change> develop
+git switch -c tests/<test-change> main
+git checkout -b tests/<test-change> main
 # or
-git switch -c docs/<doc-change> develop
-git checkout -b docs/<doc-change> develop
+git switch -c docs/<doc-change> main
+git checkout -b docs/<doc-change> main
 ```
 
-- Other branch naming conventions (**_all of them should branch off from the `develop` branch_**):
+- Other branch naming conventions (**_all of them should branch off from the `main` branch_**):
   - **chore**: changes to the build process or auxiliary tools and libraries such as documentation generation
   - **style**: changes that do not affect the meaning of the code (white space, formatting, missing semi-colons, etc)
   - **refactor**: a code change that neither fixes a bug nor adds a feature
