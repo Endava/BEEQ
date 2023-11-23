@@ -46,6 +46,8 @@ export { TTabSize } from "./components/tab/bq-tab.types";
 export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 export { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export namespace Components {
+    interface BqAlert {
+    }
     interface BqAvatar {
         /**
           * Alternate text for the avatar image if the image cannot be displayed
@@ -1153,6 +1155,12 @@ export interface BqToastCustomEvent<T> extends CustomEvent<T> {
     target: HTMLBqToastElement;
 }
 declare global {
+    interface HTMLBqAlertElement extends Components.BqAlert, HTMLStencilElement {
+    }
+    var HTMLBqAlertElement: {
+        prototype: HTMLBqAlertElement;
+        new (): HTMLBqAlertElement;
+    };
     interface HTMLBqAvatarElement extends Components.BqAvatar, HTMLStencilElement {
     }
     var HTMLBqAvatarElement: {
@@ -1653,6 +1661,7 @@ declare global {
         new (): HTMLBqTooltipElement;
     };
     interface HTMLElementTagNameMap {
+        "bq-alert": HTMLBqAlertElement;
         "bq-avatar": HTMLBqAvatarElement;
         "bq-badge": HTMLBqBadgeElement;
         "bq-breadcrumb": HTMLBqBreadcrumbElement;
@@ -1688,6 +1697,8 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface BqAlert {
+    }
     interface BqAvatar {
         /**
           * Alternate text for the avatar image if the image cannot be displayed
@@ -2855,6 +2866,7 @@ declare namespace LocalJSX {
         "visible"?: boolean;
     }
     interface IntrinsicElements {
+        "bq-alert": BqAlert;
         "bq-avatar": BqAvatar;
         "bq-badge": BqBadge;
         "bq-breadcrumb": BqBreadcrumb;
@@ -2893,6 +2905,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "bq-alert": LocalJSX.BqAlert & JSXBase.HTMLAttributes<HTMLBqAlertElement>;
             "bq-avatar": LocalJSX.BqAvatar & JSXBase.HTMLAttributes<HTMLBqAvatarElement>;
             "bq-badge": LocalJSX.BqBadge & JSXBase.HTMLAttributes<HTMLBqBadgeElement>;
             "bq-breadcrumb": LocalJSX.BqBreadcrumb & JSXBase.HTMLAttributes<HTMLBqBreadcrumbElement>;
