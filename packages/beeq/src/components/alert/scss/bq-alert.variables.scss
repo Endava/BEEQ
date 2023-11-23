@@ -4,7 +4,36 @@
 
 :host {
   /**
-   * @prop --bq-alert--margin - Alert margin
+   * @prop --bq-alert--background: The alert background color
+   * @prop --bq-alert--box-shadow: The alert box shadow
+   * @prop --bq-alert--border-color: The alert border color
+   * @prop --bq-alert--border-radius: The alert border radius
+   * @prop --bq-alert--border-style: The alert border style
+   * @prop --bq-alert--border-width: The alert border width
+   * @prop --bq-alert--content-footer-gap: The alert content and footer gap
+   * @prop --bq-alert--title-body-gap: The alert title and body gap
+   * @prop --bq-alert--icon-color-error: The alert icon color for error type
+   * @prop --bq-alert--icon-color-info: The alert icon color for info type
+   * @prop --bq-alert--icon-color-neutral: The alert icon color for neutral type
+   * @prop --bq-alert--icon-color-success: The alert icon color for success type
+   * @prop --bq-alert--icon-color-warning: The alert icon color for warning type
+   * @prop --bq-alert--padding: The alert padding
+   * @prop --bq-alert--min-width: The alert min width
    */
-  --bq-alert--margin: theme('spacing.m');
+
+  --bq-alert--background: theme('colors.ui.brand-alt');
+
+  --bq-alert--border-radius: theme('borderRadius.s');
+
+  --bq-alert--content-footer-gap: theme('spacing.m');
+  --bq-alert--title-body-gap: theme('spacing.s');
+
+  --bq-alert--icon-color-info: theme('colors.icon.brand');
+  --bq-alert--icon-color-success: theme('colors.icon.success');
+  --bq-alert--icon-color-warning: theme('colors.icon.warning');
+  --bq-alert--icon-color-error: theme('colors.icon.danger');
+
+  --bq-alert--padding: theme('padding.s');
+
+  --bq-alert--min-width: 320px;
 }

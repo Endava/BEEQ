@@ -7,3 +7,57 @@
 :host {
   @apply block;
 }
+
+:host(.is-hidden) {
+  @apply hidden;
+}
+
+.bq-alert {
+  @include animation-slide-in;
+
+  @apply relative flex min-w-[var(--bq-alert--min-width)] p-[var(--bq-alert--padding)];
+  @apply rounded-[var(--bq-alert--border-radius)] bg-[var(--bq-alert--background)];
+}
+
+/**
+ * Set the alert background color based on the type value selected
+ */
+
+.alert--background.background {
+  &-info {
+    @apply text-[color:--bq-alert--background-info];
+  }
+
+  &-success {
+    @apply text-[color:--bq-alert--background-success];
+  }
+
+  &-warning {
+    @apply text-[color:--bq-alert--background-warning];
+  }
+
+  &-error {
+    @apply text-[color:--bq-alert--background-error];
+  }
+}
+
+/**
+ * Set the alert icon color based on the type value selected
+ */
+.alert--icon.color {
+  &-info {
+    @apply text-[color:--bq-alert--icon-color-info];
+  }
+
+  &-success {
+    @apply text-[color:--bq-alert--icon-color-success];
+  }
+
+  &-warning {
+    @apply text-[color:--bq-alert--icon-color-warning];
+  }
+
+  &-error {
+    @apply text-[color:--bq-alert--icon-color-error];
+  }
+}
