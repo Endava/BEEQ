@@ -210,6 +210,7 @@ export class BqNotification {
   // ===================================
 
   render() {
+    // test
     return (
       <Host
         class={{ 'is-hidden': !this.open }}
