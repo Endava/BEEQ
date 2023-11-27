@@ -50,9 +50,17 @@ export { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export namespace Components {
     interface BqAlert {
         /**
+          * If true, the alert will automatically hide after the specified amount of time
+         */
+        "autoDismiss": boolean;
+        /**
           * If true, the close button at the top right of the alert won't be shown
          */
         "disableClose": boolean;
+        /**
+          * Method to be called to hide the alert component
+         */
+        "hide": () => Promise<void>;
         /**
           * If true, the alert icon won't be shown
          */
@@ -61,6 +69,14 @@ export namespace Components {
           * If true, the alert will be shown
          */
         "open": boolean;
+        /**
+          * Method to be called to show the alert component
+         */
+        "show": () => Promise<void>;
+        /**
+          * The length of time, in milliseconds, after which the alert will close itself. Only valid if `autoDismiss="true"`
+         */
+        "time": number;
         /**
           * Type of Alert
          */
@@ -1080,6 +1096,10 @@ export namespace Components {
         "visible"?: boolean;
     }
 }
+export interface BqAlertCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqAlertElement;
+}
 export interface BqBreadcrumbCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqBreadcrumbElement;
@@ -1173,7 +1193,19 @@ export interface BqToastCustomEvent<T> extends CustomEvent<T> {
     target: HTMLBqToastElement;
 }
 declare global {
+    interface HTMLBqAlertElementEventMap {
+        "bqHide": any;
+        "bqShow": any;
+    }
     interface HTMLBqAlertElement extends Components.BqAlert, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqAlertElementEventMap>(type: K, listener: (this: HTMLBqAlertElement, ev: BqAlertCustomEvent<HTMLBqAlertElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqAlertElementEventMap>(type: K, listener: (this: HTMLBqAlertElement, ev: BqAlertCustomEvent<HTMLBqAlertElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqAlertElement: {
         prototype: HTMLBqAlertElement;
@@ -1717,6 +1749,10 @@ declare global {
 declare namespace LocalJSX {
     interface BqAlert {
         /**
+          * If true, the alert will automatically hide after the specified amount of time
+         */
+        "autoDismiss"?: boolean;
+        /**
           * If true, the close button at the top right of the alert won't be shown
          */
         "disableClose"?: boolean;
@@ -1725,9 +1761,21 @@ declare namespace LocalJSX {
          */
         "hideIcon"?: boolean;
         /**
+          * Callback handler to be called when the notification is hidden
+         */
+        "onBqHide"?: (event: BqAlertCustomEvent<any>) => void;
+        /**
+          * Callback handler to be called when the notification is shown
+         */
+        "onBqShow"?: (event: BqAlertCustomEvent<any>) => void;
+        /**
           * If true, the alert will be shown
          */
         "open"?: boolean;
+        /**
+          * The length of time, in milliseconds, after which the alert will close itself. Only valid if `autoDismiss="true"`
+         */
+        "time"?: number;
         /**
           * Type of Alert
          */

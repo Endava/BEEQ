@@ -13,10 +13,11 @@
 }
 
 .bq-alert {
-  @include animation-slide-in;
-
   @apply relative flex min-w-[var(--bq-alert--min-width)] p-[var(--bq-alert--padding)];
-  @apply rounded-[var(--bq-alert--border-radius)] bg-[var(--bq-alert--background)];
+  @apply rounded-[var(--bq-alert--border-radius)];
+
+  border-width: var(--bq-alert--border-width);
+  border-style: var(--bq-alert--border-style);
 }
 
 /**
@@ -25,19 +26,49 @@
 
 .alert--background.background {
   &-info {
-    @apply text-[color:--bq-alert--background-info];
+    @apply bg-[color:--bq-alert--background-info];
   }
 
   &-success {
-    @apply text-[color:--bq-alert--background-success];
+    @apply bg-[color:--bq-alert--background-success];
   }
 
   &-warning {
-    @apply text-[color:--bq-alert--background-warning];
+    @apply bg-[color:--bq-alert--background-warning];
   }
 
   &-error {
-    @apply text-[color:--bq-alert--background-error];
+    @apply bg-[color:--bq-alert--background-error];
+  }
+
+  &-custom {
+    @apply bg-[color:--bq-alert--background-custom];
+  }
+}
+
+/**
+ * Set the alert border color based on the type value selected
+ */
+
+.alert--border.border {
+  &-info {
+    @apply border-[color:--bq-alert--border-info];
+  }
+
+  &-success {
+    @apply border-[color:--bq-alert--border-success];
+  }
+
+  &-warning {
+    @apply border-[color:--bq-alert--border-warning];
+  }
+
+  &-error {
+    @apply border-[color:--bq-alert--border-error];
+  }
+
+  &-custom {
+    @apply border-[color:--bq-alert--border-custom];
   }
 }
 
@@ -60,4 +91,15 @@
   &-error {
     @apply text-[color:--bq-alert--icon-color-error];
   }
+
+  &-custom {
+    @apply text-[color:--bq-alert--icon-color-custom];
+  }
+}
+
+/**
+ * Tweak the close bq-buton styles so it remain small wihout extra padding
+ */
+.alert--close::part(button) {
+  @apply h-fit rounded-s border-0 p-0;
 }
