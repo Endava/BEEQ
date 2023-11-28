@@ -89,17 +89,20 @@ const Template = (args: Args) => html`
 `;
 
 const TemplateSticky = (args: Args) => html`
-  <bq-alert
-    ?auto-dismiss=${args['auto-dismiss']}
-    ?disable-close=${args['disable-close']}
-    ?hide-icon=${args['hide-icon']}
-    ?sticky=${args['sticky']}
-    ?open=${args.open}
-    time=${args.time}
-    type=${args.type}
-  >
-    ${args.customIcon ? html`<bq-icon name="star" slot="icon"></bq-icon>` : nothing} Title
-  </bq-alert>
+  <div class="flex">
+    <bq-alert
+      ?auto-dismiss=${args['auto-dismiss']}
+      ?disable-close=${args['disable-close']}
+      ?hide-icon=${args['hide-icon']}
+      ?sticky=${args['sticky']}
+      ?open=${args.open}
+      time=${args.time}
+      type=${args.type}
+    >
+      ${args.customIcon ? html`<bq-icon name="star" slot="icon"></bq-icon>` : nothing} Title
+      <bq-button appearance="link" size="small"> Button </bq-button>
+    </bq-alert>
+  </div>
 `;
 
 export const Default: Story = {
@@ -145,10 +148,20 @@ export const CustomIcon: Story = {
   },
 };
 
-export const StickyTemplate: Story = {
+export const NormalSticky: Story = {
   name: 'Sticky',
   render: TemplateSticky,
   args: {
     open: true,
+  },
+};
+
+export const StickyTemplate: Story = {
+  name: 'Custom Sticky',
+  render: TemplateSticky,
+  args: {
+    open: true,
+    customIcon: true,
+    type: 'custom',
   },
 };
