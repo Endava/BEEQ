@@ -65,6 +65,9 @@ export class BqAlert {
   /** Type of Alert */
   @Prop({ reflect: true }) type: TAlertType = 'info';
 
+  /** If true, the alert component will remain fixed at the top of the page, occupying the full viewport */
+  @Prop({ reflect: true }) sticky: boolean;
+
   // Prop lifecycle events
   // =======================
   @Watch('autoDismiss')
@@ -196,7 +199,7 @@ export class BqAlert {
   render() {
     return (
       <Host
-        class={{ 'is-hidden': !this.open }}
+        class={{ 'is-hidden': !this.open, 'sticky top-0 w-full': !!this.sticky }}
         aria-hidden={!this.open ? 'true' : 'false'}
         hidden={!this.open ? 'true' : 'false'}
         role="alert"
@@ -207,6 +210,7 @@ export class BqAlert {
             [`background-${this.type}`]: true,
             [`border-${this.type}`]: true,
             'alert--background alert--border': true,
+            'bq-alert-sticky-top-full-viewport': !!this.sticky,
           }}
           part="wrapper"
         >
@@ -227,7 +231,7 @@ export class BqAlert {
             class={{
               '!hidden': this.hideIcon,
               [`color-${this.type}`]: true, // The icon color will be based on the type (info, success, warning, error)
-              'alert--icon mr-xs flex text-left align-top': true,
+              'alert--icon mr-s flex text-left align-top': true,
             }}
             part="icon-outline"
           >

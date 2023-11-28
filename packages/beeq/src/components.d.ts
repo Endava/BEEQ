@@ -74,6 +74,10 @@ export namespace Components {
          */
         "show": () => Promise<void>;
         /**
+          * If true, the alert component will remain fixed at the top of the page, occupying the full viewport
+         */
+        "sticky": boolean;
+        /**
           * The length of time, in milliseconds, after which the alert will close itself. Only valid if `autoDismiss="true"`
          */
         "time": number;
@@ -1772,6 +1776,10 @@ declare namespace LocalJSX {
           * If true, the alert will be shown
          */
         "open"?: boolean;
+        /**
+          * If true, the alert component will remain fixed at the top of the page, occupying the full viewport
+         */
+        "sticky"?: boolean;
         /**
           * The length of time, in milliseconds, after which the alert will close itself. Only valid if `autoDismiss="true"`
          */

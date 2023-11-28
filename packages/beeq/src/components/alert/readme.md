@@ -13,6 +13,7 @@
 | `disableClose` | `disable-close` | If true, the close button at the top right of the alert won't be shown                                           | `boolean`                                                 | `undefined` |
 | `hideIcon`     | `hide-icon`     | If true, the alert icon won't be shown                                                                           | `boolean`                                                 | `undefined` |
 | `open`         | `open`          | If true, the alert will be shown                                                                                 | `boolean`                                                 | `undefined` |
+| `sticky`       | `sticky`        | If true, the alert component will remain fixed at the top of the page, occupying the full viewport               | `boolean`                                                 | `undefined` |
 | `time`         | `time`          | The length of time, in milliseconds, after which the alert will close itself. Only valid if `autoDismiss="true"` | `number`                                                  | `3000`      |
 | `type`         | `type`          | Type of Alert                                                                                                    | `"custom" \| "error" \| "info" \| "success" \| "warning"` | `'info'`    |
 

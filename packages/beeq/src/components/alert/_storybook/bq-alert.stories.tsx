@@ -16,6 +16,7 @@ const meta: Meta = {
     'auto-dismiss': { control: 'boolean' },
     'disable-close': { control: 'boolean' },
     'hide-icon': { control: 'boolean' },
+    sticky: { control: 'boolean' },
     open: { control: 'boolean' },
     time: { control: 'number' },
     type: { control: 'select', options: [...ALERT_TYPE] },
@@ -26,6 +27,7 @@ const meta: Meta = {
     'auto-dismiss': false,
     'disable-close': false,
     'hide-icon': false,
+    sticky: false,
     open: false,
     time: 3000,
     type: 'info',
@@ -86,6 +88,20 @@ const Template = (args: Args) => html`
   </div>
 `;
 
+const TemplateSticky = (args: Args) => html`
+  <bq-alert
+    ?auto-dismiss=${args['auto-dismiss']}
+    ?disable-close=${args['disable-close']}
+    ?hide-icon=${args['hide-icon']}
+    ?sticky=${args['sticky']}
+    ?open=${args.open}
+    time=${args.time}
+    type=${args.type}
+  >
+    ${args.customIcon ? html`<bq-icon name="star" slot="icon"></bq-icon>` : nothing} Title
+  </bq-alert>
+`;
+
 export const Default: Story = {
   render: Template,
   args: {
@@ -126,5 +142,13 @@ export const CustomIcon: Story = {
     open: true,
     customIcon: true,
     type: 'custom',
+  },
+};
+
+export const StickyTemplate: Story = {
+  name: 'Sticky',
+  render: TemplateSticky,
+  args: {
+    open: true,
   },
 };

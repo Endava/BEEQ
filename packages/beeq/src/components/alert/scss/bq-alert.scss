@@ -20,6 +20,10 @@
   border-style: var(--bq-alert--border-style);
 }
 
+.bq-alert-sticky-top-full-viewport {
+  @apply items-center justify-center rounded-none border-none;
+}
+
 /**
  * Set the alert background color based on the type value selected
  */
