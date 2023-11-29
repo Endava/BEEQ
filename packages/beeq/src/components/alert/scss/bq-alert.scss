@@ -22,9 +22,7 @@
 
 .bq-alert {
   @apply relative flex min-w-[var(--bq-alert--min-width)] p-[var(--bq-alert--padding)];
-  @apply rounded-[var(--bq-alert--border-radius)];
-
-  border-width: var(--bq-alert--border-width);
+  @apply rounded-[var(--bq-alert--border-radius)] border-[length:--bq-alert--border-width];
   border-style: var(--bq-alert--border-style);
 }
 

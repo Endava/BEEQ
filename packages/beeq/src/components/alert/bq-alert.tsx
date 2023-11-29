@@ -187,8 +187,7 @@ export class BqAlert {
       >
         <div
           class={{
-            'bq-alert': true,
-            [`bq-alert__${this.type}`]: true,
+            [`bq-alert bq-alert__${this.type}`]: true,
             'is-sticky': this.sticky,
           }}
           part="wrapper"
