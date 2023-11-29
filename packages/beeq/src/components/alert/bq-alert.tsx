@@ -1,19 +1,19 @@
-import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State, Watch } from '@stencil/core';
 
 import { ALERT_TYPE, TAlertType } from './bq-alert.types';
 import { debounce, hasSlotContent, TDebounce, validatePropValue } from '../../shared/utils';
 
 /**
  * @part base - The `<div>` container of the predefined bq-icon component
- * @part body - The conatiner `<div>` that wraps the alert description content
+ * @part body - The container `<div>` that wraps the alert description content
  * @part btn-close - The `bq-button` used to close the alert
- * @part content - The conatiner `<div>` that wraps all the alert content (title, description, footer)
- * @part footer - The conatiner `<div>` that wraps the alert footer content
+ * @part content - The container `<div>` that wraps all the alert content (title, description, footer)
+ * @part footer - The container `<div>` that wraps the alert footer content
  * @part icon - The `<bq-icon>` element used to render a predefined icon based on the alert type (info, success, warning, error, default)
- * @part icon-outline - The conatiner `<div>` that wraps the icon element
- * @part main - The conatiner `<div>` that wraps the alert main content (title, description)
+ * @part icon-outline - The container `<div>` that wraps the icon element
+ * @part main - The container `<div>` that wraps the alert main content (title, description)
  * @part svg - The `<svg>` element of the predefined bq-icon component
- * @part title - The conatiner `<div>` that wraps the alert title content
+ * @part title - The container `<div>` that wraps the alert title content
  * @part wrapper - The wrapper container `<div>` of the element inside the shadow DOM
  */
 

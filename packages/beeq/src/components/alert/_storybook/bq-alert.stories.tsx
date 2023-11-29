@@ -73,14 +73,16 @@ const Template = (args: Args) => html`
     >
       ${args.type === 'default' ? html`<bq-icon name="star" slot="icon"></bq-icon>` : nothing} Title
       ${!args.sticky
-        ? html` <span slot="body">
+        ? html`
+            <span slot="body">
               Description
               <a class="bq-link" href="https://example.com">Link</a>
             </span>
             <div class="flex gap-xs" slot="footer">
               <bq-button appearance="primary" size="small"> Button </bq-button>
               <bq-button appearance="link" size="small"> Button </bq-button>
-            </div>`
+            </div>
+          `
         : nothing}
     </bq-alert>
   </div>

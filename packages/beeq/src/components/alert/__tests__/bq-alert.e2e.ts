@@ -103,8 +103,14 @@ describe('bq-alert', () => {
   });
 
   it('should call methods', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-alert></bq-alert>');
+    const page = await newE2EPage({
+      html: `
+        <bq-alert>
+          Alert title
+          <span slot="body">You have a new alert message</span>
+        </bq-alert>
+      `,
+    });
 
     const element = await page.find('bq-alert');
 
