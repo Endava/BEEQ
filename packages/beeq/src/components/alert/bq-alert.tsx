@@ -3,8 +3,6 @@ import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop,
 import { ALERT_TYPE, TAlertType } from './bq-alert.types';
 import { debounce, hasSlotContent, TDebounce, validatePropValue } from '../../shared/utils';
 
-const alertPortal = Object.assign(document.createElement('div'), { className: 'bq-alert-portal' });
-
 /**
  * @part base - The `<div>` container of the predefined bq-icon component
  * @part body - The conatiner `<div>` that wraps the alert description content
@@ -116,23 +114,6 @@ export class BqAlert {
   }
   // Listeners
   // ==============
-  @Listen('bqHide')
-  onAlertHide() {
-    try {
-      alertPortal.removeChild(this.el);
-      // Remove the alert portal from the DOM when there are no more alerts
-      if (alertPortal.querySelector('bq-alert') === null) {
-        alertPortal.remove();
-      }
-    } catch (error) {
-      /**
-       * Skip DOMExpection error since it could be possible that
-       * in some situations the alert portal is missing
-       */
-      if (error instanceof DOMException) return;
-      throw error;
-    }
-  }
 
   // Public methods API
   // These methods are exposed on the host element.
