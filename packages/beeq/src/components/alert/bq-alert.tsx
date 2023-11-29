@@ -148,7 +148,7 @@ export class BqAlert {
   private handleShow = () => {
     const ev = this.bqShow.emit(this.el);
     if (!ev.defaultPrevented) {
-      this.open = false;
+      this.open = true;
     }
   };
 
