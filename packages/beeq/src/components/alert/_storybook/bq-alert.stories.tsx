@@ -20,8 +20,6 @@ const meta: Meta = {
     open: { control: 'boolean' },
     time: { control: 'number' },
     type: { control: 'select', options: [...ALERT_TYPE] },
-    // Not part of the component API, but used for the story
-    customIcon: { control: 'booolean', table: { disabled: true } },
   },
   args: {
     'auto-dismiss': false,
@@ -30,9 +28,7 @@ const meta: Meta = {
     sticky: false,
     open: false,
     time: 3000,
-    type: 'info',
-    // Not part of the component API, but used for the story
-    customIcon: false,
+    type: 'default',
   },
 };
 export default meta;
@@ -49,7 +45,7 @@ const Template = (args: Args) => html`
       time=${args.time}
       type=${args.type}
     >
-      ${args.customIcon ? html`<bq-icon name="star" slot="icon"></bq-icon>` : nothing} Title
+      ${args.type === 'default' ? html`<bq-icon name="star" slot="icon"></bq-icon>` : nothing} Title
     </bq-alert>
 
     <bq-alert
@@ -60,7 +56,7 @@ const Template = (args: Args) => html`
       time=${args.time}
       type=${args.type}
     >
-      ${args.customIcon ? html`<bq-icon name="star" slot="icon"></bq-icon>` : nothing} Title
+      ${args.type === 'default' ? html`<bq-icon name="star" slot="icon"></bq-icon>` : nothing} Title
       <span slot="body">
         Description
         <a class="bq-link" href="https://example.com">Link</a>
@@ -75,34 +71,38 @@ const Template = (args: Args) => html`
       time=${args.time}
       type=${args.type}
     >
-      ${args.customIcon ? html`<bq-icon name="star" slot="icon"></bq-icon>` : nothing} Title
-      <span slot="body">
-        Description
-        <a class="bq-link" href="https://example.com">Link</a>
-      </span>
-      <div class="flex gap-xs" slot="footer">
-        <bq-button appearance="primary" size="small"> Button </bq-button>
-        <bq-button appearance="link" size="small"> Button </bq-button>
-      </div>
+      ${args.type === 'default' ? html`<bq-icon name="star" slot="icon"></bq-icon>` : nothing} Title
+      ${!args.sticky
+        ? html` <span slot="body">
+              Description
+              <a class="bq-link" href="https://example.com">Link</a>
+            </span>
+            <div class="flex gap-xs" slot="footer">
+              <bq-button appearance="primary" size="small"> Button </bq-button>
+              <bq-button appearance="link" size="small"> Button </bq-button>
+            </div>`
+        : nothing}
     </bq-alert>
   </div>
 `;
 
 const TemplateSticky = (args: Args) => html`
-  <div class="flex">
-    <bq-alert
-      ?auto-dismiss=${args['auto-dismiss']}
-      ?disable-close=${args['disable-close']}
-      ?hide-icon=${args['hide-icon']}
-      ?sticky=${args['sticky']}
-      ?open=${args.open}
-      time=${args.time}
-      type=${args.type}
-    >
-      ${args.customIcon ? html`<bq-icon name="star" slot="icon"></bq-icon>` : nothing} Title
-      <bq-button appearance="link" size="small"> Button </bq-button>
-    </bq-alert>
-  </div>
+  <bq-alert
+    ?auto-dismiss=${args['auto-dismiss']}
+    ?disable-close=${args['disable-close']}
+    ?hide-icon=${args['hide-icon']}
+    ?sticky=${args['sticky']}
+    ?open=${args.open}
+    time=${args.time}
+    type=${args.type}
+  >
+    ${args.type === 'default' ? html`<bq-icon name="star" slot="icon"></bq-icon>` : nothing} Title
+    <bq-button appearance="link" size="small"> Button </bq-button>
+  </bq-alert>
+  <main class="grid grid-cols-1 p-m">
+    <h1 class="mb-l">Dashboard</h1>
+    <div class="h-80 w-full border border-dashed border-stroke-primary bg-ui-primary-alt"></div>
+  </main>
 `;
 
 export const Default: Story = {
@@ -112,8 +112,15 @@ export const Default: Story = {
   },
 };
 
-export const SuccessType: Story = {
-  name: 'Success',
+export const Info: Story = {
+  render: Template,
+  args: {
+    open: true,
+    type: 'info',
+  },
+};
+
+export const Success: Story = {
   render: Template,
   args: {
     open: true,
@@ -121,8 +128,7 @@ export const SuccessType: Story = {
   },
 };
 
-export const WarningType: Story = {
-  name: 'Warning',
+export const Warning: Story = {
   render: Template,
   args: {
     open: true,
@@ -139,29 +145,11 @@ export const ErrorType: Story = {
   },
 };
 
-export const CustomIcon: Story = {
-  render: Template,
-  args: {
-    open: true,
-    customIcon: true,
-    type: 'custom',
-  },
-};
-
-export const NormalSticky: Story = {
-  name: 'Sticky',
+export const Sticky: Story = {
   render: TemplateSticky,
   args: {
     open: true,
-  },
-};
-
-export const StickyTemplate: Story = {
-  name: 'Custom Sticky',
-  render: TemplateSticky,
-  args: {
-    open: true,
-    customIcon: true,
-    type: 'custom',
+    sticky: true,
+    type: 'error',
   },
 };

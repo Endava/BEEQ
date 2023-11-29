@@ -11,7 +11,7 @@ const alertPortal = Object.assign(document.createElement('div'), { className: 'b
  * @part btn-close - The `bq-button` used to close the alert
  * @part content - The conatiner `<div>` that wraps all the alert content (title, description, footer)
  * @part footer - The conatiner `<div>` that wraps the alert footer content
- * @part icon - The `<bq-icon>` element used to render a predefined icon based on the alert type (info, success, warning, error, custom)
+ * @part icon - The `<bq-icon>` element used to render a predefined icon based on the alert type (info, success, warning, error, default)
  * @part icon-outline - The conatiner `<div>` that wraps the icon element
  * @part main - The conatiner `<div>` that wraps the alert main content (title, description)
  * @part svg - The `<svg>` element of the predefined bq-icon component
@@ -63,7 +63,7 @@ export class BqAlert {
   @Prop({ reflect: true }) time: number = 3000;
 
   /** Type of Alert */
-  @Prop({ reflect: true }) type: TAlertType = 'info';
+  @Prop({ reflect: true }) type: TAlertType = 'default';
 
   /** If true, the alert component will remain fixed at the top of the page, occupying the full viewport */
   @Prop({ reflect: true }) sticky: boolean;
@@ -199,7 +199,7 @@ export class BqAlert {
   render() {
     return (
       <Host
-        class={{ 'is-hidden': !this.open, 'sticky top-0 w-full': !!this.sticky }}
+        class={{ 'is-hidden': !this.open, 'is-sticky': this.sticky }}
         aria-hidden={!this.open ? 'true' : 'false'}
         hidden={!this.open ? 'true' : 'false'}
         role="alert"
@@ -207,17 +207,15 @@ export class BqAlert {
         <div
           class={{
             'bq-alert': true,
-            [`background-${this.type}`]: true,
-            [`border-${this.type}`]: true,
-            'alert--background alert--border': true,
-            'bq-alert-sticky-top-full-viewport': !!this.sticky,
+            [`bq-alert__${this.type}`]: true,
+            'is-sticky': this.sticky,
           }}
           part="wrapper"
         >
           {/* CLOSE BUTTON */}
           {!this.disableClose && (
             <bq-button
-              class="alert--close absolute right-5 focus-visible:focus"
+              class="bq-alert__close absolute right-5 focus-visible:focus"
               appearance="text"
               size="small"
               onClick={() => this.hide()}
@@ -229,21 +227,26 @@ export class BqAlert {
           {/* ICON */}
           <div
             class={{
+              [`bq-alert__icon--${this.type} mr-s flex text-left align-top`]: true,
               '!hidden': this.hideIcon,
-              [`color-${this.type}`]: true, // The icon color will be based on the type (info, success, warning, error)
-              'alert--icon mr-s flex text-left align-top': true,
             }}
             part="icon-outline"
           >
             <slot name="icon">
-              <bq-icon name={this.iconName} part="icon" exportparts="base,svg" />
+              {this.type !== 'default' && <bq-icon name={this.iconName} part="icon" exportparts="base,svg" />}
             </slot>
           </div>
           {/* MAIN */}
           <div class="flex flex-col items-start gap-[var(--bq-alert--content-footer-gap)]" part="main">
             <div class="flex flex-col gap-[var(--bq-alert--title-body-gap)]" part="content">
               {/* TITLE */}
-              <div class="title-font font-semibold leading-regular text-text-primary" part="title">
+              <div
+                class={{
+                  'title-font font-semibold leading-regular text-text-primary': true,
+                  'flex items-center': this.sticky,
+                }}
+                part="title"
+              >
                 <slot />
               </div>
               {/* BODY */}

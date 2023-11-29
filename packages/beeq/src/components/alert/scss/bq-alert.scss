@@ -12,6 +12,14 @@
   @apply hidden;
 }
 
+:host(.is-sticky) {
+  @apply fixed inset-0 top-0 z-[var(--bq-alert--z-index)] w-full;
+
+  .bq-alert {
+    @apply items-center justify-center rounded-none;
+  }
+}
+
 .bq-alert {
   @apply relative flex min-w-[var(--bq-alert--min-width)] p-[var(--bq-alert--padding)];
   @apply rounded-[var(--bq-alert--border-radius)];
@@ -20,90 +28,58 @@
   border-style: var(--bq-alert--border-style);
 }
 
-.bq-alert-sticky-top-full-viewport {
-  @apply items-center justify-center rounded-none border-none;
-}
-
 /**
- * Set the alert background color based on the type value selected
+ * Set the alert background and border color based on the type value selected
  */
 
-.alert--background.background {
-  &-info {
-    @apply bg-[color:--bq-alert--background-info];
-  }
-
-  &-success {
-    @apply bg-[color:--bq-alert--background-success];
-  }
-
-  &-warning {
-    @apply bg-[color:--bq-alert--background-warning];
-  }
-
-  &-error {
-    @apply bg-[color:--bq-alert--background-error];
-  }
-
-  &-custom {
-    @apply bg-[color:--bq-alert--background-custom];
-  }
+.bq-alert__default {
+  @apply border-[color:--bq-alert--border-default] bg-[color:--bq-alert--background-default];
 }
 
-/**
- * Set the alert border color based on the type value selected
- */
+.bq-alert__error {
+  @apply border-[color:--bq-alert--border-error] bg-[color:--bq-alert--background-error];
+}
 
-.alert--border.border {
-  &-info {
-    @apply border-[color:--bq-alert--border-info];
-  }
+.bq-alert__info {
+  @apply border-[color:--bq-alert--border-info] bg-[color:--bq-alert--background-info];
+}
 
-  &-success {
-    @apply border-[color:--bq-alert--border-success];
-  }
+.bq-alert__success {
+  @apply border-[color:--bq-alert--border-success] bg-[color:--bq-alert--background-success];
+}
 
-  &-warning {
-    @apply border-[color:--bq-alert--border-warning];
-  }
-
-  &-error {
-    @apply border-[color:--bq-alert--border-error];
-  }
-
-  &-custom {
-    @apply border-[color:--bq-alert--border-custom];
-  }
+.bq-alert__warning {
+  @apply border-[color:--bq-alert--border-warning] bg-[color:--bq-alert--background-warning];
 }
 
 /**
  * Set the alert icon color based on the type value selected
  */
-.alert--icon.color {
-  &-info {
-    @apply text-[color:--bq-alert--icon-color-info];
+.bq-alert__icon {
+  &--default {
+    @apply text-[color:--bq-alert--icon-color-default];
   }
 
-  &-success {
-    @apply text-[color:--bq-alert--icon-color-success];
-  }
-
-  &-warning {
-    @apply text-[color:--bq-alert--icon-color-warning];
-  }
-
-  &-error {
+  &--error {
     @apply text-[color:--bq-alert--icon-color-error];
   }
 
-  &-custom {
-    @apply text-[color:--bq-alert--icon-color-custom];
+  &--info {
+    @apply text-[color:--bq-alert--icon-color-info];
+  }
+
+  &--success {
+    @apply text-[color:--bq-alert--icon-color-success];
+  }
+
+  &--warning {
+    @apply text-[color:--bq-alert--icon-color-warning];
   }
 }
 
 /**
  * Tweak the close bq-buton styles so it remain small wihout extra padding
  */
-.alert--close::part(button) {
+.bq-alert__close::part(button) {
   @apply h-fit rounded-s border-0 p-0;
 }

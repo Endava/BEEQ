@@ -101,4 +101,23 @@ describe('bq-alert', () => {
     const footerSlot = await page.find('bq-alert >>> slot[name="footer"]');
     expect(footerSlot).not.toBeNull();
   });
+
+  it('should call methods', async () => {
+    const page = await newE2EPage();
+    await page.setContent('<bq-alert></bq-alert>');
+
+    const element = await page.find('bq-alert');
+
+    await element.callMethod('show');
+    await page.waitForChanges();
+
+    expect(element).toEqualAttribute('aria-hidden', 'false');
+    expect(element).toEqualAttribute('hidden', 'false');
+
+    await element.callMethod('hide');
+    await page.waitForChanges();
+
+    expect(element).toEqualAttribute('aria-hidden', 'true');
+    expect(element).toEqualAttribute('hidden', 'true');
+  });
 });
