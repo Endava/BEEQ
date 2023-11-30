@@ -1,0 +1,67 @@
+/* -------------------------------------------------------------------------- */
+/*                   Alert custom properties                  */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  /**
+   * @prop --bq-alert--background: The alert background color
+   * @prop --bq-alert--border-radius: The alert border radius
+   * @prop --bq-alert--content-footer-gap: The alert content and footer gap
+   * @prop --bq-alert--title-body-gap: The alert title and body gap
+
+   * @prop --bq-alert--border-color: The alert border color
+   * @prop --bq-alert--border-style: The alert border style
+   * @prop --bq-alert--border-width: The alert border width
+
+   * @prop --bq-alert--background-info: The alert background color for info type
+   * @prop --bq-alert--background-success: The alert background color for success type
+   * @prop --bq-alert--background-warning: The alert background color for warning type
+   * @prop --bq-alert--background-error: The alert background color for error type
+
+   * @prop --bq-alert--border-info: The alert border color for info type
+   * @prop --bq-alert--border-success: The alert border color for success type
+   * @prop --bq-alert--border-warning: The alert border color for warning type
+   * @prop --bq-alert--border-error: The alert border color for error type
+   * @prop --bq-alert--border-width: The alert border width
+   * @prop --bq-alert--border-style: The alert border style
+
+   * @prop --bq-alert--icon-color-info: The alert icon color for info type
+   * @prop --bq-alert--icon-color-success: The alert icon color for success type
+   * @prop --bq-alert--icon-color-warning: The alert icon color for warning type
+   * @prop --bq-alert--icon-color-error: The alert icon color for error type
+
+   * @prop --bq-alert--padding: The alert padding
+   * @prop --bq-alert--min-width: The alert min width
+   */
+
+  --bq-alert--background: theme('colors.ui.secondary');
+
+  --bq-alert--border-radius: theme('borderRadius.s');
+
+  --bq-alert--content-footer-gap: theme('spacing.s');
+  --bq-alert--title-body-gap: theme('spacing.s');
+
+  --bq-alert--background-info: theme('colors.ui.brand-alt');
+  --bq-alert--background-success: theme('colors.ui.success-alt');
+  --bq-alert--background-warning: theme('colors.ui.warning-alt');
+  --bq-alert--background-error: theme('colors.ui.danger-alt');
+  --bq-alert--background-default: theme('colors.ui.primary-alt');
+
+  --bq-alert--border-info: theme('colors.stroke.brand');
+  --bq-alert--border-success: theme('colors.stroke.success');
+  --bq-alert--border-warning: theme('colors.stroke.warning');
+  --bq-alert--border-error: theme('colors.stroke.danger');
+  --bq-alert--border-default: theme('colors.stroke.secondary');
+  --bq-alert--border-width: 1px;
+  --bq-alert--border-style: solid;
+
+  --bq-alert--icon-color-info: theme('colors.icon.brand');
+  --bq-alert--icon-color-success: theme('colors.icon.success');
+  --bq-alert--icon-color-warning: theme('colors.icon.warning');
+  --bq-alert--icon-color-error: theme('colors.icon.danger');
+  --bq-alert--icon-color-default: theme('colors.icon.primary');
+
+  --bq-alert--padding: theme('padding.s');
+
+  --bq-alert--min-width: 320px;
+}

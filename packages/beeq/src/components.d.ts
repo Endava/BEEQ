@@ -5,6 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { TAlertType } from "./components/alert/bq-alert.types";
 import { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 import { TBadgeSize } from "./components/badge/bq-badge.types";
 import { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
@@ -25,6 +26,7 @@ import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq
 import { TTabSize } from "./components/tab/bq-tab.types";
 import { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 import { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
+export { TAlertType } from "./components/alert/bq-alert.types";
 export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 export { TBadgeSize } from "./components/badge/bq-badge.types";
 export { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
@@ -46,6 +48,44 @@ export { TTabSize } from "./components/tab/bq-tab.types";
 export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 export { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export namespace Components {
+    interface BqAlert {
+        /**
+          * If true, the alert will automatically hide after the specified amount of time
+         */
+        "autoDismiss": boolean;
+        /**
+          * If true, the close button at the top right of the alert won't be shown
+         */
+        "disableClose": boolean;
+        /**
+          * Method to be called to hide the alert component
+         */
+        "hide": () => Promise<void>;
+        /**
+          * If true, the alert icon won't be shown
+         */
+        "hideIcon": boolean;
+        /**
+          * If true, the alert will be shown
+         */
+        "open": boolean;
+        /**
+          * Method to be called to show the alert component
+         */
+        "show": () => Promise<void>;
+        /**
+          * If true, the alert component will remain fixed at the top of the page, occupying the full viewport
+         */
+        "sticky": boolean;
+        /**
+          * The length of time, in milliseconds, after which the alert will close itself. Only valid if `autoDismiss="true"`
+         */
+        "time": number;
+        /**
+          * Type of Alert
+         */
+        "type": TAlertType;
+    }
     interface BqAvatar {
         /**
           * Alternate text for the avatar image if the image cannot be displayed
@@ -1060,6 +1100,10 @@ export namespace Components {
         "visible"?: boolean;
     }
 }
+export interface BqAlertCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqAlertElement;
+}
 export interface BqBreadcrumbCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqBreadcrumbElement;
@@ -1153,6 +1197,24 @@ export interface BqToastCustomEvent<T> extends CustomEvent<T> {
     target: HTMLBqToastElement;
 }
 declare global {
+    interface HTMLBqAlertElementEventMap {
+        "bqHide": any;
+        "bqShow": any;
+    }
+    interface HTMLBqAlertElement extends Components.BqAlert, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqAlertElementEventMap>(type: K, listener: (this: HTMLBqAlertElement, ev: BqAlertCustomEvent<HTMLBqAlertElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqAlertElementEventMap>(type: K, listener: (this: HTMLBqAlertElement, ev: BqAlertCustomEvent<HTMLBqAlertElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLBqAlertElement: {
+        prototype: HTMLBqAlertElement;
+        new (): HTMLBqAlertElement;
+    };
     interface HTMLBqAvatarElement extends Components.BqAvatar, HTMLStencilElement {
     }
     var HTMLBqAvatarElement: {
@@ -1653,6 +1715,7 @@ declare global {
         new (): HTMLBqTooltipElement;
     };
     interface HTMLElementTagNameMap {
+        "bq-alert": HTMLBqAlertElement;
         "bq-avatar": HTMLBqAvatarElement;
         "bq-badge": HTMLBqBadgeElement;
         "bq-breadcrumb": HTMLBqBreadcrumbElement;
@@ -1688,6 +1751,44 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface BqAlert {
+        /**
+          * If true, the alert will automatically hide after the specified amount of time
+         */
+        "autoDismiss"?: boolean;
+        /**
+          * If true, the close button at the top right of the alert won't be shown
+         */
+        "disableClose"?: boolean;
+        /**
+          * If true, the alert icon won't be shown
+         */
+        "hideIcon"?: boolean;
+        /**
+          * Callback handler to be called when the notification is hidden
+         */
+        "onBqHide"?: (event: BqAlertCustomEvent<any>) => void;
+        /**
+          * Callback handler to be called when the notification is shown
+         */
+        "onBqShow"?: (event: BqAlertCustomEvent<any>) => void;
+        /**
+          * If true, the alert will be shown
+         */
+        "open"?: boolean;
+        /**
+          * If true, the alert component will remain fixed at the top of the page, occupying the full viewport
+         */
+        "sticky"?: boolean;
+        /**
+          * The length of time, in milliseconds, after which the alert will close itself. Only valid if `autoDismiss="true"`
+         */
+        "time"?: number;
+        /**
+          * Type of Alert
+         */
+        "type"?: TAlertType;
+    }
     interface BqAvatar {
         /**
           * Alternate text for the avatar image if the image cannot be displayed
@@ -2855,6 +2956,7 @@ declare namespace LocalJSX {
         "visible"?: boolean;
     }
     interface IntrinsicElements {
+        "bq-alert": BqAlert;
         "bq-avatar": BqAvatar;
         "bq-badge": BqBadge;
         "bq-breadcrumb": BqBreadcrumb;
@@ -2893,6 +2995,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "bq-alert": LocalJSX.BqAlert & JSXBase.HTMLAttributes<HTMLBqAlertElement>;
             "bq-avatar": LocalJSX.BqAvatar & JSXBase.HTMLAttributes<HTMLBqAvatarElement>;
             "bq-badge": LocalJSX.BqBadge & JSXBase.HTMLAttributes<HTMLBqBadgeElement>;
             "bq-breadcrumb": LocalJSX.BqBreadcrumb & JSXBase.HTMLAttributes<HTMLBqBreadcrumbElement>;

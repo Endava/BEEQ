@@ -36,6 +36,7 @@ Icons are simplified images that graphically explain the meaning of an object on
 
 ### Used by
 
+ - [bq-alert](../alert)
  - [bq-button](../button)
  - [bq-dialog](../dialog)
  - [bq-input](../input)
@@ -47,6 +48,7 @@ Icons are simplified images that graphically explain the meaning of an object on
 ### Graph
 ```mermaid
 graph TD;
+  bq-alert --> bq-icon
   bq-button --> bq-icon
   bq-dialog --> bq-icon
   bq-input --> bq-icon
