@@ -1,0 +1,85 @@
+/* -------------------------------------------------------------------------- */
+/*                        Alert styles                        */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-alert.variables';
+
+:host {
+  @apply block;
+}
+
+:host(.is-hidden) {
+  @apply hidden;
+}
+
+:host(.is-sticky) {
+  @apply fixed inset-0 top-0 z-[var(--bq-alert--z-index)] w-full;
+
+  .bq-alert {
+    @apply items-center justify-center rounded-none;
+  }
+}
+
+.bq-alert {
+  @include animation-fade-in;
+
+  @apply relative flex min-w-[var(--bq-alert--min-width)] p-[var(--bq-alert--padding)];
+  @apply rounded-[var(--bq-alert--border-radius)] border-[length:--bq-alert--border-width];
+  border-style: var(--bq-alert--border-style);
+}
+
+/**
+ * Set the alert background and border color based on the type value selected
+ */
+
+.bq-alert__default {
+  @apply border-[color:--bq-alert--border-default] bg-[color:--bq-alert--background-default];
+}
+
+.bq-alert__error {
+  @apply border-[color:--bq-alert--border-error] bg-[color:--bq-alert--background-error];
+}
+
+.bq-alert__info {
+  @apply border-[color:--bq-alert--border-info] bg-[color:--bq-alert--background-info];
+}
+
+.bq-alert__success {
+  @apply border-[color:--bq-alert--border-success] bg-[color:--bq-alert--background-success];
+}
+
+.bq-alert__warning {
+  @apply border-[color:--bq-alert--border-warning] bg-[color:--bq-alert--background-warning];
+}
+
+/**
+ * Set the alert icon color based on the type value selected
+ */
+.bq-alert__icon {
+  &--default {
+    @apply text-[color:--bq-alert--icon-color-default];
+  }
+
+  &--error {
+    @apply text-[color:--bq-alert--icon-color-error];
+  }
+
+  &--info {
+    @apply text-[color:--bq-alert--icon-color-info];
+  }
+
+  &--success {
+    @apply text-[color:--bq-alert--icon-color-success];
+  }
+
+  &--warning {
+    @apply text-[color:--bq-alert--icon-color-warning];
+  }
+}
+
+/**
+ * Tweak the close bq-buton styles so it remain small wihout extra padding
+ */
+.bq-alert__close::part(button) {
+  @apply h-fit rounded-s border-0 p-0;
+}
