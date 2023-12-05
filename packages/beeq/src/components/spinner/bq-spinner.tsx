@@ -196,15 +196,16 @@ export class BqSpinner {
         >
           <slot name="icon" onSlotchange={this.handleIconSlotChange} />
         </span>
-        {this.isTextDisplayed && (
-          <span
-            class="bq-spinner--text font-medium leading-regular text-text-primary"
-            part="text"
-            ref={(spanElem) => (this.slotElem = spanElem)}
-          >
-            <slot onSlotchange={this.handleSlotChange} />
-          </span>
-        )}
+        <span
+          class={{
+            'bq-spinner--text font-medium leading-regular text-text-primary': true,
+            '!hidden': !this.isTextDisplayed,
+          }}
+          part="text"
+          ref={(spanElem) => (this.slotElem = spanElem)}
+        >
+          <slot onSlotchange={this.handleSlotChange} />
+        </span>
       </div>
     );
   }

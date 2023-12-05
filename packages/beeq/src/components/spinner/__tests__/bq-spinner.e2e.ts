@@ -1,16 +1,12 @@
-import { E2EElement, newE2EPage } from '@stencil/core/testing';
+import { newE2EPage } from '@stencil/core/testing';
 
 import { computedStyle, setProperties } from '../../../shared/test-utils';
 
 describe('bq-spinner', () => {
-  const checkSpinnerHasClass = (element: E2EElement, className: string) => {
-    const spinner = element.shadowRoot.querySelector('.bq-spinner');
-    return spinner.classList.contains(className);
-  };
-
   it('should render', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-spinner></bq-spinner>');
+    const page = await newE2EPage({
+      html: '<bq-spinner></bq-spinner>',
+    });
 
     const element = await page.find('bq-spinner');
 
@@ -18,72 +14,68 @@ describe('bq-spinner', () => {
   });
 
   it('should have shadow root', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-spinner></bq-spinner>');
+    const page = await newE2EPage({
+      html: '<bq-spinner></bq-spinner>',
+    });
 
     const element = await page.find('bq-spinner');
-
     expect(element.shadowRoot).not.toBeNull();
   });
 
   it('should handle `animation` property', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-spinner animation></bq-spinner>');
+    const page = await newE2EPage({
+      html: '<bq-spinner animation></bq-spinner>',
+    });
 
     const element = await page.find('bq-spinner >>> .bq-spinner');
-
     expect(element.classList.contains('is-animated')).toBe(true);
   });
 
   it('should handle `size` property', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-spinner size="large"></bq-spinner>');
+    const page = await newE2EPage({
+      html: '<bq-spinner></bq-spinner>',
+    });
 
-    const element = await page.find('bq-spinner');
+    const element = await page.find('bq-spinner >>> .bq-spinner');
+    expect(element).toHaveClass('medium');
 
-    expect(checkSpinnerHasClass(element, 'large')).toBe(true);
-
-    await setProperties(page, 'bq-spinner', { size: 'medium' });
-
-    expect(checkSpinnerHasClass(element, 'medium')).toBe(true);
+    await setProperties(page, 'bq-spinner', { size: 'large' });
+    expect(element).toHaveClass('large');
 
     await setProperties(page, 'bq-spinner', { size: 'small' });
-
-    expect(checkSpinnerHasClass(element, 'small')).toBe(true);
+    expect(element).toHaveClass('small');
   });
 
   it('should handle `text-position` property', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-spinner text-position="above"></bq-spinner>');
+    const page = await newE2EPage({
+      html: '<bq-spinner text-position="above"></bq-spinner>',
+    });
 
-    const element = await page.find('bq-spinner');
-
-    expect(checkSpinnerHasClass(element, 'text-above')).toBe(true);
+    const element = await page.find('bq-spinner >>> .bq-spinner');
+    expect(element).toHaveClass('text-above');
 
     await setProperties(page, 'bq-spinner', { textPosition: 'bellow' });
-
-    expect(checkSpinnerHasClass(element, 'text-bellow')).toBe(true);
+    expect(element).toHaveClass('text-bellow');
 
     await setProperties(page, 'bq-spinner', { textPosition: 'left' });
-
-    expect(checkSpinnerHasClass(element, 'text-left')).toBe(true);
+    expect(element).toHaveClass('text-left');
 
     await setProperties(page, 'bq-spinner', { textPosition: 'right' });
-
-    expect(checkSpinnerHasClass(element, 'text-right')).toBe(true);
+    expect(element).toHaveClass('text-right');
 
     await setProperties(page, 'bq-spinner', { textPosition: 'none' });
-    const spinnerText = await page.find('bq-spinner >>> .bq-spinner--text');
 
-    expect(checkSpinnerHasClass(element, 'text-none')).toBe(true);
-    expect(spinnerText).toBeNull();
+    const spinnerText = await page.find('bq-spinner >>> .bq-spinner--text');
+    expect(spinnerText).toHaveClass('!hidden');
+    expect(element).toHaveClass('text-none');
   });
 
   it('should render icon slot element', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-spinner><bq-icon name="spinner-gap" slot="icon"></bq-icon></bq-spinner>');
-    const spinnerIcon = await page.find('bq-spinner >>> .bq-spinner--icon');
+    const page = await newE2EPage({
+      html: '<bq-spinner><bq-icon name="spinner-gap" slot="icon"></bq-icon></bq-spinner>',
+    });
 
+    const spinnerIcon = await page.find('bq-spinner >>> .bq-spinner--icon');
     const iconSlotElements = await page.$eval('bq-spinner', (element) => {
       const slotElement = element.shadowRoot.querySelector('slot[name="icon"]');
       const assignedElements = (slotElement as HTMLSlotElement).assignedElements({ flatten: true });
@@ -96,8 +88,9 @@ describe('bq-spinner', () => {
   });
 
   it('should handle invalid properties', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-spinner></bq-spinner>');
+    const page = await newE2EPage({
+      html: '<bq-spinner></bq-spinner>',
+    });
 
     const console: jest.Mock<void, string[]> = jest.fn();
     page.on('console', (message) => console(message.type(), message.text()));
@@ -120,12 +113,13 @@ describe('bq-spinner', () => {
   });
 
   it('should respect design style', async () => {
-    const page = await newE2EPage();
-    await page.setContent(`
-      <bq-spinner size="small" text-position="bellow"></bq-spinner>
-      <bq-spinner size="medium" text-position="bellow"></bq-spinner>
-      <bq-spinner size="large" text-position="bellow"></bq-spinner>
-    `);
+    const page = await newE2EPage({
+      html: `
+        <bq-spinner size="small" text-position="bellow"></bq-spinner>
+        <bq-spinner size="medium" text-position="bellow"></bq-spinner>
+        <bq-spinner size="large" text-position="bellow"></bq-spinner>
+      `,
+    });
 
     const getLineHeightValue = (fontSize: string): string => {
       return `${(150 * parseInt(fontSize)) / 100}px`;
