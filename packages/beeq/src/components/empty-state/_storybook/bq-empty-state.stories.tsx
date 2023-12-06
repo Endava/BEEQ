@@ -62,16 +62,45 @@ const TemplateWithCTA = (args: Args) => html`
 `;
 
 export const Default: Story = {
-  render: Template,
-  args: {},
+  render: (args: Args) => html` <bq-empty-state size=${args.size}> Title </bq-empty-state> `,
 };
 
 export const WithBody: Story = {
-  render: TemplateWithBody,
-  args: {},
+  render: (args: Args) => html`
+    <div class="flex flex-row gap-20">
+      <bq-empty-state size=${args.size}>
+        Title
+        <span slot="body"> Description </span>
+      </bq-empty-state>
+      <bq-empty-state size=${args.size}>
+        Title <span slot="body"> Description <a class="bq-link" href="https://example.com">Link</a> </span>
+      </bq-empty-state>
+    </div>
+  `,
 };
 
 export const WithCallToAction: Story = {
-  render: TemplateWithCTA,
-  args: {},
+  render: (args: Args) => html`
+    <div class="flex flex-row gap-20">
+      <bq-empty-state size=${args.size}>
+        Title <span slot="body"> Description <a class="bq-link" href="https://example.com">Link</a> </span>
+        <div class="flex gap-xs" slot="footer">
+          <bq-button appearance="primary" size="small"> Button </bq-button>
+        </div>
+      </bq-empty-state>
+      <bq-empty-state size=${args.size}>
+        Title <span slot="body"> Description <a class="bq-link" href="https://example.com">Link</a> </span>
+        <div class="flex gap-xs" slot="footer">
+          <bq-button size="small" variant="ghost"> Button </bq-button>
+        </div>
+      </bq-empty-state>
+      <bq-empty-state size=${args.size}>
+        Title <span slot="body"> Description <a class="bq-link" href="https://example.com">Link</a> </span>
+        <div class="flex gap-xs" slot="footer">
+          <bq-button size="small" variant="ghost"> Button </bq-button>
+          <bq-button appearance="primary" size="small"> Button </bq-button>
+        </div>
+      </bq-empty-state>
+    </div>
+  `,
 };
