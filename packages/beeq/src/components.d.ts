@@ -50,6 +50,10 @@ export { TTabSize } from "./components/tab/bq-tab.types";
 export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 export { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export namespace Components {
+    interface BqAccordion {
+    }
+    interface BqAccordionGroup {
+    }
     interface BqAlert {
         /**
           * If true, the alert will automatically hide after the specified amount of time
@@ -1205,6 +1209,18 @@ export interface BqToastCustomEvent<T> extends CustomEvent<T> {
     target: HTMLBqToastElement;
 }
 declare global {
+    interface HTMLBqAccordionElement extends Components.BqAccordion, HTMLStencilElement {
+    }
+    var HTMLBqAccordionElement: {
+        prototype: HTMLBqAccordionElement;
+        new (): HTMLBqAccordionElement;
+    };
+    interface HTMLBqAccordionGroupElement extends Components.BqAccordionGroup, HTMLStencilElement {
+    }
+    var HTMLBqAccordionGroupElement: {
+        prototype: HTMLBqAccordionGroupElement;
+        new (): HTMLBqAccordionGroupElement;
+    };
     interface HTMLBqAlertElementEventMap {
         "bqHide": any;
         "bqShow": any;
@@ -1729,6 +1745,8 @@ declare global {
         new (): HTMLBqTooltipElement;
     };
     interface HTMLElementTagNameMap {
+        "bq-accordion": HTMLBqAccordionElement;
+        "bq-accordion-group": HTMLBqAccordionGroupElement;
         "bq-alert": HTMLBqAlertElement;
         "bq-avatar": HTMLBqAvatarElement;
         "bq-badge": HTMLBqBadgeElement;
@@ -1766,6 +1784,10 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface BqAccordion {
+    }
+    interface BqAccordionGroup {
+    }
     interface BqAlert {
         /**
           * If true, the alert will automatically hide after the specified amount of time
@@ -2977,6 +2999,8 @@ declare namespace LocalJSX {
         "visible"?: boolean;
     }
     interface IntrinsicElements {
+        "bq-accordion": BqAccordion;
+        "bq-accordion-group": BqAccordionGroup;
         "bq-alert": BqAlert;
         "bq-avatar": BqAvatar;
         "bq-badge": BqBadge;
@@ -3017,6 +3041,8 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "bq-accordion": LocalJSX.BqAccordion & JSXBase.HTMLAttributes<HTMLBqAccordionElement>;
+            "bq-accordion-group": LocalJSX.BqAccordionGroup & JSXBase.HTMLAttributes<HTMLBqAccordionGroupElement>;
             "bq-alert": LocalJSX.BqAlert & JSXBase.HTMLAttributes<HTMLBqAlertElement>;
             "bq-avatar": LocalJSX.BqAvatar & JSXBase.HTMLAttributes<HTMLBqAvatarElement>;
             "bq-badge": LocalJSX.BqBadge & JSXBase.HTMLAttributes<HTMLBqBadgeElement>;
