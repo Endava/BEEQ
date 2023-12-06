@@ -12,6 +12,7 @@ import { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./c
 import { TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 import { FloatingUIPlacement } from "./services/interfaces";
+import { TEmptyStateSize } from "./components/empty-state/bq-empty-state.types";
 import { TIconWeight } from "./components/icon/bq-icon.types";
 import { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
 import { TNotificationType } from "./components/notification/bq-notification.types";
@@ -33,6 +34,7 @@ export { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./c
 export { TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 export { FloatingUIPlacement } from "./services/interfaces";
+export { TEmptyStateSize } from "./components/empty-state/bq-empty-state.types";
 export { TIconWeight } from "./components/icon/bq-icon.types";
 export { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
 export { TNotificationType } from "./components/notification/bq-notification.types";
@@ -366,6 +368,12 @@ export namespace Components {
           * Defines the strategy to position the panel
          */
         "strategy"?: 'fixed' | 'absolute';
+    }
+    interface BqEmptyState {
+        /**
+          * The size of the empty state component
+         */
+        "size": TEmptyStateSize;
     }
     /**
      * Icons are simplified images that graphically explain the meaning of an object on the screen.
@@ -1350,6 +1358,12 @@ declare global {
         prototype: HTMLBqDropdownElement;
         new (): HTMLBqDropdownElement;
     };
+    interface HTMLBqEmptyStateElement extends Components.BqEmptyState, HTMLStencilElement {
+    }
+    var HTMLBqEmptyStateElement: {
+        prototype: HTMLBqEmptyStateElement;
+        new (): HTMLBqEmptyStateElement;
+    };
     interface HTMLBqIconElementEventMap {
         "svgLoaded": any;
     }
@@ -1725,6 +1739,7 @@ declare global {
         "bq-dialog": HTMLBqDialogElement;
         "bq-divider": HTMLBqDividerElement;
         "bq-dropdown": HTMLBqDropdownElement;
+        "bq-empty-state": HTMLBqEmptyStateElement;
         "bq-icon": HTMLBqIconElement;
         "bq-input": HTMLBqInputElement;
         "bq-notification": HTMLBqNotificationElement;
@@ -2117,6 +2132,12 @@ declare namespace LocalJSX {
           * Defines the strategy to position the panel
          */
         "strategy"?: 'fixed' | 'absolute';
+    }
+    interface BqEmptyState {
+        /**
+          * The size of the empty state component
+         */
+        "size"?: TEmptyStateSize;
     }
     /**
      * Icons are simplified images that graphically explain the meaning of an object on the screen.
@@ -2966,6 +2987,7 @@ declare namespace LocalJSX {
         "bq-dialog": BqDialog;
         "bq-divider": BqDivider;
         "bq-dropdown": BqDropdown;
+        "bq-empty-state": BqEmptyState;
         "bq-icon": BqIcon;
         "bq-input": BqInput;
         "bq-notification": BqNotification;
@@ -3008,6 +3030,7 @@ declare module "@stencil/core" {
             "bq-dialog": LocalJSX.BqDialog & JSXBase.HTMLAttributes<HTMLBqDialogElement>;
             "bq-divider": LocalJSX.BqDivider & JSXBase.HTMLAttributes<HTMLBqDividerElement>;
             "bq-dropdown": LocalJSX.BqDropdown & JSXBase.HTMLAttributes<HTMLBqDropdownElement>;
+            "bq-empty-state": LocalJSX.BqEmptyState & JSXBase.HTMLAttributes<HTMLBqEmptyStateElement>;
             /**
              * Icons are simplified images that graphically explain the meaning of an object on the screen.
              */
