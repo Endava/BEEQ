@@ -6,6 +6,7 @@ import { validatePropValue } from '../../shared/utils';
 /**
  * @part base - The `<details>` that holds the accordion content
  * @part header - The `<summary>` that holds the accordion header content
+ * @part text - The `<span>` that holds the accordion header text
  */
 @Component({
   tag: 'bq-accordion',
@@ -27,6 +28,8 @@ export class BqAccordion {
 
   // Public Property API
   // ========================
+
+  @Prop({ reflect: true, mutable: true }) expanded: boolean = false;
 
   @Prop({ reflect: true, mutable: true }) size: TAccordionSize = 'medium';
 
@@ -65,15 +68,37 @@ export class BqAccordion {
   // These methods cannot be called from the host element.
   // =======================================================
 
+  private handleClick = (event: MouseEvent) => {
+    event.preventDefault();
+    this.expanded = !this.expanded;
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
 
   render() {
     return (
-      <details class={{ [`bq-accordion ${this.size}`]: true }} part="base">
+      <details
+        class={{ [`bq-accordion ${this.size}`]: true }}
+        open={this.expanded}
+        onClick={this.handleClick}
+        part="base"
+      >
         <summary class="bq-accordion__summary" part="header">
-          <slot name="header" />
+          <div class="bq-accordion__summary-text" part="text">
+            <slot name="header" />
+          </div>
+          <div class={{ hidden: this.expanded }}>
+            <slot name="expanded">
+              <bq-icon name="plus" size={24} />
+            </slot>
+          </div>
+          <div class={{ hidden: !this.expanded }}>
+            <slot name="collapsed">
+              <bq-icon name="minus" size={24} />
+            </slot>
+          </div>
         </summary>
         <slot />
       </details>

@@ -13,10 +13,12 @@ const meta: Meta = {
     },
   },
   argTypes: {
+    expanded: { control: 'boolean' },
     size: { control: 'select', options: [...ACCORDION_SIZE] },
     text: { control: 'text', table: { disable: true } },
   },
   args: {
+    expanded: false,
     size: 'medium',
     text: 'text',
   },
@@ -27,10 +29,10 @@ type Story = StoryObj;
 
 const Template = (args: Args) => html`
   <bq-accordion-group>
-    <bq-accordion size=${args.size}><span slot="header">${args.text}</span></bq-accordion>
-    <bq-accordion size=${args.size}><span slot="header">${args.text}</span></bq-accordion>
-    <bq-accordion size=${args.size}><span slot="header">${args.text}</span></bq-accordion>
-    <bq-accordion size=${args.size}><span slot="header">${args.text}</span></bq-accordion>
+    <bq-accordion size=${args.size} .expanded=${args.expanded}><span slot="header">${args.text}</span></bq-accordion>
+    <bq-accordion size=${args.size} .expanded=${args.expanded}><span slot="header">${args.text}</span></bq-accordion>
+    <bq-accordion size=${args.size} .expanded=${args.expanded}><span slot="header">${args.text}</span></bq-accordion>
+    <bq-accordion size=${args.size} .expanded=${args.expanded}><span slot="header">${args.text}</span></bq-accordion>
   </bq-accordion-group>
 `;
 

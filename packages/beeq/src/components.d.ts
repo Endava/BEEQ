@@ -53,6 +53,7 @@ export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq
 export { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export namespace Components {
     interface BqAccordion {
+        "expanded": boolean;
         "size": TAccordionSize;
     }
     interface BqAccordionGroup {
@@ -1788,6 +1789,7 @@ declare global {
 }
 declare namespace LocalJSX {
     interface BqAccordion {
+        "expanded"?: boolean;
         "size"?: TAccordionSize;
     }
     interface BqAccordionGroup {

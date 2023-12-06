@@ -9,25 +9,27 @@
 }
 
 .bq-accordion {
-  @apply cursor-pointer;
-
   &.small {
     .bq-accordion__summary {
-      @apply py-[--bq-accordion--small-padding-y] pe-[--bq-accordion--small-padding-end] ps-[--bq-accordion--small-padding-start];
+      @apply space-x-[--bq-accordion--small-gap] py-[--bq-accordion--small-padding-y] pe-[--bq-accordion--small-padding-end] ps-[--bq-accordion--small-padding-start];
     }
   }
 
   &.medium {
     .bq-accordion__summary {
-      @apply py-[--bq-accordion--medium-padding-y] pe-[--bq-accordion--medium-padding-end] ps-[--bq-accordion--medium-padding-start];
+      @apply space-x-[--bq-accordion--medium-gap] py-[--bq-accordion--medium-padding-y] pe-[--bq-accordion--medium-padding-end] ps-[--bq-accordion--medium-padding-start];
     }
   }
 }
 
 .bq-accordion__summary {
-  @apply list-none;
+  @apply flex cursor-pointer list-none items-center;
 
   &::marker {
     @apply hidden;
   }
+}
+
+.bq-accordion__summary-text {
+  @apply flex-1;
 }
