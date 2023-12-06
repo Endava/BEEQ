@@ -14,13 +14,14 @@
 
 ## Shadow Parts
 
-| Part        | Description                                                                                                        |
-| ----------- | ------------------------------------------------------------------------------------------------------------------ |
-| `"body"`    | The container `<div>` that wraps the alert description content                                                     |
-| `"footer"`  | The container `<div>` that wraps the alert footer content                                                          |
-| `"icon"`    | The `<bq-icon>` element used to render a predefined icon size based on the empty state size (small, medium, large) |
-| `"title"`   | The container `<div>` that wraps the empty state title content                                                     |
-| `"wrapper"` | The wrapper container `<div>` of the element inside the shadow DOM                                                 |
+| Part          | Description                                                                                                        |
+| ------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `"body"`      | The container `<div>` that wraps the alert description content                                                     |
+| `"footer"`    | The container `<div>` that wraps the alert footer content                                                          |
+| `"icon"`      | The `<bq-icon>` element used to render a predefined icon size based on the empty state size (small, medium, large) |
+| `"thumbnail"` | The container `<div>` that wraps the thumbnail element                                                             |
+| `"title"`     | The container `<div>` that wraps the empty state title content                                                     |
+| `"wrapper"`   | The wrapper container `<div>` of the element inside the shadow DOM                                                 |
 
 
 ## Dependencies

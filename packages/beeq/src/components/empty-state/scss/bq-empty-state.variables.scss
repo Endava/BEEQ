@@ -1,22 +1,3 @@
 /* -------------------------------------------------------------------------- */
 /*                   Empty state custom properties                  */
 /* -------------------------------------------------------------------------- */
-
-:host {
-  /**
-    * @prop --bq-empty-state--title-font-size-large: The font size of the title in the empty state when it is in the "small" size
-    * @prop --bq-empty-state--title-font-size-large: The font size of the title in the empty state when it is in the "medium" size
-    * @prop --bq-empty-state--title-font-size-large: The font size of the title in the empty state when it is in the "large" size
-
-    * @prop --bq-empty-state--body-font-size-large: The font size of the body in the empty state when it is in the "small" size
-    * @prop --bq-empty-state--body-font-size-large: The font size of the body in the empty state when it is in the "medium" size
-    * @prop --bq-empty-state--body-font-size-large: The font size of the body in the empty state when it is in the "large" size
-  */
-  --bq-empty-state--title-font-size-small: theme('fontSize.m');
-  --bq-empty-state--title-font-size-medium: theme('fontSize.l');
-  --bq-empty-state--title-font-size-large: theme('fontSize.xxl2');
-
-  --bq-empty-state--body-font-size-small: theme('fontSize.s');
-  --bq-empty-state--body-font-size-medium: theme('fontSize.m');
-  --bq-empty-state--body-font-size-large: theme('fontSize.l');
-}
