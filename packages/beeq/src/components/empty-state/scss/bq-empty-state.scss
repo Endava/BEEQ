@@ -3,3 +3,7 @@
 /* -------------------------------------------------------------------------- */
 
 @import './bq-empty-state.variables';
+
+:host {
+  @apply relative inline-block;
+}
