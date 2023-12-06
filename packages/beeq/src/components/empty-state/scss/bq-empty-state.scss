@@ -1,0 +1,93 @@
+/* -------------------------------------------------------------------------- */
+/*                        Empty state styles                        */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-empty-state.variables';
+
+:host {
+  @apply relative inline-block;
+}
+
+.bq-empty-state {
+  @apply flex flex-col items-center;
+}
+
+/**
+ * Set the font size for title based on the size value selected
+ */
+
+.bq-empty-state-title-font-size__small {
+  @apply text-[length:var(--bq-empty-state--title-font-size-small)];
+}
+
+.bq-empty-state-title-font-size__medium {
+  @apply text-[length:var(--bq-empty-state--title-font-size-medium)];
+}
+
+.bq-empty-state-title-font-size__large {
+  @apply text-[length:var(--bq-empty-state--title-font-size-large)];
+}
+
+/**
+ * Set the font size for body based on the size value selected
+ */
+
+.bq-empty-state-body-font-size__small {
+  @apply text-[length:var(--bq-empty-state--body-font-size-small)];
+}
+
+.bq-empty-state-body-font-size__medium {
+  @apply text-[length:var(--bq-empty-state--body-font-size-medium)];
+}
+
+.bq-empty-state-body-font-size__large {
+  @apply text-[length:var(--bq-empty-state--body-font-size-large)];
+}
+
+/**
+ * Set the margin bottom of the icon based on the size value selected
+ */
+
+.bq-empty-state-icon-margin-bottom__small {
+  @apply mb-m;
+}
+
+.bq-empty-state-icon-margin-bottom__medium {
+  @apply mb-xl;
+}
+
+.bq-empty-state-icon-margin-bottom__large {
+  @apply mb-12;
+}
+
+/**
+ * Set the margin bottom of the title based on the size value selected
+ */
+
+.bq-empty-state-title-margin-bottom__small {
+  @apply mb-s;
+}
+
+.bq-empty-state-title-margin-bottom__medium {
+  @apply mb-m;
+}
+
+.bq-empty-state-title-margin-bottom__large {
+  @apply mb-l;
+}
+
+/**
+ * Set the margin bottom of the body based on the size value selected
+ */
+
+.bq-empty-state-body-margin-bottom__small {
+  @apply mb-m;
+}
+
+.bq-empty-state-body-margin-bottom__medium {
+  @apply mb-l;
+}
+
+.bq-empty-state-body-margin-bottom__large {
+  @apply mb-xl;
+}

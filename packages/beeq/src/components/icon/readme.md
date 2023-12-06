@@ -39,6 +39,7 @@ Icons are simplified images that graphically explain the meaning of an object on
  - [bq-alert](../alert)
  - [bq-button](../button)
  - [bq-dialog](../dialog)
+ - [bq-empty-state](../empty-state)
  - [bq-input](../input)
  - [bq-notification](../notification)
  - [bq-select](../select)
@@ -51,6 +52,7 @@ graph TD;
   bq-alert --> bq-icon
   bq-button --> bq-icon
   bq-dialog --> bq-icon
+  bq-empty-state --> bq-icon
   bq-input --> bq-icon
   bq-notification --> bq-icon
   bq-select --> bq-icon
