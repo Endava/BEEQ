@@ -173,7 +173,7 @@ export class BqAccordion {
             </slot>
           </div>
         </summary>
-        <div class={'bq-accordion__panel'} part="panel">
+        <div class="bq-accordion__panel overflow-hidden" part="panel">
           <slot />
         </div>
       </details>

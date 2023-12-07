@@ -40,7 +40,7 @@
 
   &.filled {
     .bq-accordion__summary {
-      @apply bg-[--bq-accordion--filled-collapsed-background] hover:bg-[--bq-accordion--filled-collapsed-background];
+      @apply bg-[--bq-accordion--filled-collapsed-background] hover:bg-[--bq-accordion--filled-collapsed-hover];
     }
 
     .bq-accordion__summary-text {
@@ -54,7 +54,7 @@
     }
 
     &[open] .bq-accordion__summary {
-      @apply bg-[--bq-accordion--filled-expanded-background] hover:bg-[--bq-accordion--filled-collapsed-background];
+      @apply bg-[--bq-accordion--filled-expanded-background] hover:bg-[--bq-accordion--filled-collapsed-hover];
     }
 
     &[open] .bq-accordion__summary-text {
@@ -72,7 +72,7 @@
 
   &.ghost {
     .bq-accordion__summary {
-      @apply bg-[--bq-accordion--ghost-collapsed-background] hover:bg-[--bq-accordion--ghost-collapsed-background];
+      @apply bg-[--bq-accordion--ghost-collapsed-background] hover:bg-[--bq-accordion--ghost-collapsed-hover];
     }
 
     .bq-accordion__summary-text {
@@ -86,7 +86,7 @@
     }
 
     &[open] .bq-accordion__summary {
-      @apply bg-[--bq-accordion--ghost-expanded-background] hover:bg-[--bq-accordion--ghost-collapsed-background];
+      @apply bg-[--bq-accordion--ghost-expanded-background] hover:bg-[--bq-accordion--ghost-expanded-hover];
     }
 
     &[open] .bq-accordion__summary-text {
@@ -120,7 +120,7 @@
 }
 
 .bq-accordion__summary {
-  @apply flex cursor-pointer list-none items-center focus-visible:focus;
+  @apply flex cursor-pointer list-none items-center transition-colors duration-300 ease-in-out focus-visible:focus;
   @apply border-[length:--bq-accordion--collapsed-border-width] border-[color:--bq-accordion--collapsed-border-color];
 
   border-style: var(--bq-accordion--collapsed-border-style);
