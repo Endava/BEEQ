@@ -1001,6 +1001,8 @@ export namespace Components {
          */
         "value": string;
     }
+    interface BqTag {
+    }
     interface BqTextarea {
         /**
           * If `true`, the textarea will automatically grow and shrink to fit its contents. If `false`, the textarea will have a fixed height specified by the `rows` property.
@@ -1750,6 +1752,12 @@ declare global {
         prototype: HTMLBqTabGroupElement;
         new (): HTMLBqTabGroupElement;
     };
+    interface HTMLBqTagElement extends Components.BqTag, HTMLStencilElement {
+    }
+    var HTMLBqTagElement: {
+        prototype: HTMLBqTagElement;
+        new (): HTMLBqTagElement;
+    };
     interface HTMLBqTextareaElementEventMap {
         "bqBlur": HTMLBqTextareaElement;
         "bqChange": { value: string; el: HTMLBqTextareaElement };
@@ -1829,6 +1837,7 @@ declare global {
         "bq-switch": HTMLBqSwitchElement;
         "bq-tab": HTMLBqTabElement;
         "bq-tab-group": HTMLBqTabGroupElement;
+        "bq-tag": HTMLBqTagElement;
         "bq-textarea": HTMLBqTextareaElement;
         "bq-toast": HTMLBqToastElement;
         "bq-tooltip": HTMLBqTooltipElement;
@@ -2941,6 +2950,8 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface BqTag {
+    }
     interface BqTextarea {
         /**
           * If `true`, the textarea will automatically grow and shrink to fit its contents. If `false`, the textarea will have a fixed height specified by the `rows` property.
@@ -3127,6 +3138,7 @@ declare namespace LocalJSX {
         "bq-switch": BqSwitch;
         "bq-tab": BqTab;
         "bq-tab-group": BqTabGroup;
+        "bq-tag": BqTag;
         "bq-textarea": BqTextarea;
         "bq-toast": BqToast;
         "bq-tooltip": BqTooltip;
@@ -3182,6 +3194,7 @@ declare module "@stencil/core" {
             "bq-switch": LocalJSX.BqSwitch & JSXBase.HTMLAttributes<HTMLBqSwitchElement>;
             "bq-tab": LocalJSX.BqTab & JSXBase.HTMLAttributes<HTMLBqTabElement>;
             "bq-tab-group": LocalJSX.BqTabGroup & JSXBase.HTMLAttributes<HTMLBqTabGroupElement>;
+            "bq-tag": LocalJSX.BqTag & JSXBase.HTMLAttributes<HTMLBqTagElement>;
             "bq-textarea": LocalJSX.BqTextarea & JSXBase.HTMLAttributes<HTMLBqTextareaElement>;
             "bq-toast": LocalJSX.BqToast & JSXBase.HTMLAttributes<HTMLBqToastElement>;
             "bq-tooltip": LocalJSX.BqTooltip & JSXBase.HTMLAttributes<HTMLBqTooltipElement>;
