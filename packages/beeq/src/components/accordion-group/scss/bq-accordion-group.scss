@@ -1,0 +1,13 @@
+/* -------------------------------------------------------------------------- */
+/*                                Accordion group styles                */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-accordion-group.variables';
+
+:host {
+  @apply block;
+}
+
+.bq-accordion-group {
+  @apply flex flex-col gap-[--bq-accordion-group--gap];
+}

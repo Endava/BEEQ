@@ -5,6 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { TAccordionAppearance, TAccordionSize } from "./components/accordion/bq-accordion.types";
 import { TAlertType } from "./components/alert/bq-alert.types";
 import { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 import { TBadgeSize } from "./components/badge/bq-badge.types";
@@ -27,6 +28,7 @@ import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq
 import { TTabSize } from "./components/tab/bq-tab.types";
 import { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 import { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
+export { TAccordionAppearance, TAccordionSize } from "./components/accordion/bq-accordion.types";
 export { TAlertType } from "./components/alert/bq-alert.types";
 export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 export { TBadgeSize } from "./components/badge/bq-badge.types";
@@ -50,6 +52,38 @@ export { TTabSize } from "./components/tab/bq-tab.types";
 export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 export { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export namespace Components {
+    interface BqAccordion {
+        /**
+          * The appearance style of accordion
+         */
+        "appearance": TAccordionAppearance;
+        /**
+          * If true accordion is disabled
+         */
+        "disabled": boolean;
+        /**
+          * If true accordion is expanded
+         */
+        "expanded": boolean;
+        /**
+          * If true accordion expand icon is rotate 180deg when expanded
+         */
+        "rotate": boolean;
+        /**
+          * The size of accordion
+         */
+        "size": TAccordionSize;
+    }
+    interface BqAccordionGroup {
+        /**
+          * If true all accordions are expanded
+         */
+        "expandAll": boolean;
+        /**
+          * If true multiple accordions can be expanded at the same time
+         */
+        "multiple": boolean;
+    }
     interface BqAlert {
         /**
           * If true, the alert will automatically hide after the specified amount of time
@@ -1108,6 +1142,10 @@ export namespace Components {
         "visible"?: boolean;
     }
 }
+export interface BqAccordionCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqAccordionElement;
+}
 export interface BqAlertCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqAlertElement;
@@ -1205,6 +1243,31 @@ export interface BqToastCustomEvent<T> extends CustomEvent<T> {
     target: HTMLBqToastElement;
 }
 declare global {
+    interface HTMLBqAccordionElementEventMap {
+        "bqClick": HTMLBqAccordionElement;
+        "bqFocus": HTMLBqAccordionElement;
+        "bqBlur": HTMLBqAccordionElement;
+    }
+    interface HTMLBqAccordionElement extends Components.BqAccordion, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqAccordionElementEventMap>(type: K, listener: (this: HTMLBqAccordionElement, ev: BqAccordionCustomEvent<HTMLBqAccordionElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqAccordionElementEventMap>(type: K, listener: (this: HTMLBqAccordionElement, ev: BqAccordionCustomEvent<HTMLBqAccordionElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLBqAccordionElement: {
+        prototype: HTMLBqAccordionElement;
+        new (): HTMLBqAccordionElement;
+    };
+    interface HTMLBqAccordionGroupElement extends Components.BqAccordionGroup, HTMLStencilElement {
+    }
+    var HTMLBqAccordionGroupElement: {
+        prototype: HTMLBqAccordionGroupElement;
+        new (): HTMLBqAccordionGroupElement;
+    };
     interface HTMLBqAlertElementEventMap {
         "bqHide": any;
         "bqShow": any;
@@ -1729,6 +1792,8 @@ declare global {
         new (): HTMLBqTooltipElement;
     };
     interface HTMLElementTagNameMap {
+        "bq-accordion": HTMLBqAccordionElement;
+        "bq-accordion-group": HTMLBqAccordionGroupElement;
         "bq-alert": HTMLBqAlertElement;
         "bq-avatar": HTMLBqAvatarElement;
         "bq-badge": HTMLBqBadgeElement;
@@ -1766,6 +1831,50 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface BqAccordion {
+        /**
+          * The appearance style of accordion
+         */
+        "appearance"?: TAccordionAppearance;
+        /**
+          * If true accordion is disabled
+         */
+        "disabled"?: boolean;
+        /**
+          * If true accordion is expanded
+         */
+        "expanded"?: boolean;
+        /**
+          * Handler to be called when the accordion loses focus
+         */
+        "onBqBlur"?: (event: BqAccordionCustomEvent<HTMLBqAccordionElement>) => void;
+        /**
+          * Handler to be called when the accordion is clicked
+         */
+        "onBqClick"?: (event: BqAccordionCustomEvent<HTMLBqAccordionElement>) => void;
+        /**
+          * Handler to be called when the accordion gets focus
+         */
+        "onBqFocus"?: (event: BqAccordionCustomEvent<HTMLBqAccordionElement>) => void;
+        /**
+          * If true accordion expand icon is rotate 180deg when expanded
+         */
+        "rotate"?: boolean;
+        /**
+          * The size of accordion
+         */
+        "size"?: TAccordionSize;
+    }
+    interface BqAccordionGroup {
+        /**
+          * If true all accordions are expanded
+         */
+        "expandAll"?: boolean;
+        /**
+          * If true multiple accordions can be expanded at the same time
+         */
+        "multiple"?: boolean;
+    }
     interface BqAlert {
         /**
           * If true, the alert will automatically hide after the specified amount of time
@@ -2977,6 +3086,8 @@ declare namespace LocalJSX {
         "visible"?: boolean;
     }
     interface IntrinsicElements {
+        "bq-accordion": BqAccordion;
+        "bq-accordion-group": BqAccordionGroup;
         "bq-alert": BqAlert;
         "bq-avatar": BqAvatar;
         "bq-badge": BqBadge;
@@ -3017,6 +3128,8 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "bq-accordion": LocalJSX.BqAccordion & JSXBase.HTMLAttributes<HTMLBqAccordionElement>;
+            "bq-accordion-group": LocalJSX.BqAccordionGroup & JSXBase.HTMLAttributes<HTMLBqAccordionGroupElement>;
             "bq-alert": LocalJSX.BqAlert & JSXBase.HTMLAttributes<HTMLBqAlertElement>;
             "bq-avatar": LocalJSX.BqAvatar & JSXBase.HTMLAttributes<HTMLBqAvatarElement>;
             "bq-badge": LocalJSX.BqBadge & JSXBase.HTMLAttributes<HTMLBqBadgeElement>;
