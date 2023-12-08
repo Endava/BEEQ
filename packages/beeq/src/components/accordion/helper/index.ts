@@ -12,8 +12,8 @@ export class Accordion {
 
   constructor(el: HTMLDetailsElement) {
     this.el = el;
-    this.header = el.querySelector('summary') as HTMLElement;
-    this.body = el.querySelector('.bq-accordion__body') as HTMLElement;
+    this.header = el.querySelector('summary');
+    this.body = el.querySelector('.bq-accordion__body');
 
     this.animation = null;
     this.isClosing = false;
