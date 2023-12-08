@@ -1,11 +1,17 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
 
+import mdx from '../../accordion/_storybook/bq-accordion.mdx';
 import { ACCORDION_APPEARANCE, ACCORDION_SIZE } from '../../accordion/bq-accordion.types';
 
 const meta: Meta = {
   title: 'Components/Accordion',
   component: 'bq-accordion-group',
+  parameters: {
+    docs: {
+      page: mdx,
+    },
+  },
   argTypes: {
     appearance: { control: 'select', options: [...ACCORDION_APPEARANCE] },
     'expand-all': { control: 'boolean' },
