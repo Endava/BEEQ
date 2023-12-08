@@ -12,19 +12,24 @@ const meta: Meta = {
     },
   },
   argTypes: {
-    text: { control: 'text', table: { disable: true } },
+    'is-removable': { control: 'boolean' },
   },
   args: {
-    text: 'text',
+    'is-removable': false,
   },
 };
 export default meta;
 
 type Story = StoryObj;
 
-const Template = (args: Args) => html`<bq-tag>${args.text}</bq-tag>`;
+const Template = (args: Args) =>
+  html`<bq-tag ?is-removable=${args['is-removable']}>
+    <span slot="tag"> My Tag </span>
+  </bq-tag>`;
 
 export const Default: Story = {
   render: Template,
-  args: {},
+  args: {
+    'is-removable': true,
+  },
 };

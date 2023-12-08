@@ -5,5 +5,17 @@
 @import './bq-tag.variables';
 
 :host {
-  @apply block;
+  @apply relative block;
+}
+
+.bq-tag {
+  @apply inline-flex flex-row items-center justify-center rounded-s;
+}
+
+.bq-tag__icon {
+  @apply inline-flex;
+}
+
+.bq-tag__close::part(button) {
+  @apply h-fit rounded-s border-0 p-0;
 }

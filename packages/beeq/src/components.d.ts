@@ -1002,6 +1002,14 @@ export namespace Components {
         "value": string;
     }
     interface BqTag {
+        /**
+          * If true, the tag component has an icon
+         */
+        "hasIcon": boolean;
+        /**
+          * If true, the tag component can be closed
+         */
+        "isRemovable": boolean;
     }
     interface BqTextarea {
         /**
@@ -2951,6 +2959,14 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface BqTag {
+        /**
+          * If true, the tag component has an icon
+         */
+        "hasIcon"?: boolean;
+        /**
+          * If true, the tag component can be closed
+         */
+        "isRemovable"?: boolean;
     }
     interface BqTextarea {
         /**

@@ -1,4 +1,4 @@
-import { Component, h } from '@stencil/core';
+import { Component, h, Host, Prop } from '@stencil/core';
 
 @Component({
   tag: 'bq-tag',
@@ -18,6 +18,12 @@ export class BqTag {
 
   // Public Property API
   // ========================
+
+  /** If true, the tag component has an icon */
+  @Prop({ reflect: true }) hasIcon: boolean;
+
+  /** If true, the tag component can be closed */
+  @Prop({ reflect: true }) isRemovable: boolean;
 
   // Prop lifecycle events
   // =======================
@@ -51,9 +57,23 @@ export class BqTag {
 
   render() {
     return (
-      <p class="m-[--bq-tag--margin]">
-        My name is Stencil <slot />
-      </p>
+      <Host>
+        <div class="bq-tag gap-2 px-s py-xs2 text-m font-medium leading-regular" part="wrapper">
+          <div class="bq-tag__icon">
+            <slot name="icon">
+              <bq-icon name="star" part="icon" exportparts="base,svg" />
+            </slot>
+          </div>
+          <div class="bq-tag__label">
+            <slot name="tag" />
+          </div>
+          {this.isRemovable && (
+            <bq-button class="bq-tag__close" appearance="text" size="small" part="btn-close">
+              <bq-icon name="x-circle" />
+            </bq-button>
+          )}
+        </div>
+      </Host>
     );
   }
 }
