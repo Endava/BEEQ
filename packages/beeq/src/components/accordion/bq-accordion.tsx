@@ -184,7 +184,7 @@ export class BqAccordion {
           </div>
           <div
             class={{
-              'flex items-center justify-center': true,
+              'flex items-center justify-center transition-transform duration-300 ease-in-out': true,
               '!hidden': this.open && !this.rotate,
               'rotate-180': this.rotate && this.open,
             }}

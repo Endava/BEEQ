@@ -1,11 +1,12 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
-import { html } from 'lit-html';
+import { html, nothing } from 'lit-html';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import mdx from './bq-accordion.mdx';
 import { ACCORDION_APPEARANCE, ACCORDION_SIZE } from '../bq-accordion.types';
 
 const meta: Meta = {
-  title: 'Components/Accordions/Accordion',
+  title: 'Components/Accordion',
   component: 'bq-accordion',
   parameters: {
     docs: {
@@ -19,11 +20,11 @@ const meta: Meta = {
     appearance: { control: 'select', options: [...ACCORDION_APPEARANCE] },
     size: { control: 'select', options: [...ACCORDION_SIZE] },
     // Event handlers
-    bqBlur: { action: 'bqBlur' },
     bqFocus: { action: 'bqFocus' },
-    bqChange: { action: 'bqChange' },
+    bqClick: { action: 'bqClick' },
+    bqBlur: { action: 'bqBlur' },
     // Not part of the component
-    text: { control: 'text', table: { disable: true } },
+    header: { control: 'text', table: { disable: true } },
   },
   args: {
     expanded: false,
@@ -31,15 +32,15 @@ const meta: Meta = {
     rotate: false,
     appearance: 'filled',
     size: 'medium',
-    text: 'text',
+    header: 'Header',
   },
 };
 export default meta;
 
 type Story = StoryObj;
 
-const Template = (args: Args) =>
-  html` <bq-accordion
+const Template = (args: Args) => html`
+  <bq-accordion
     size=${args.size}
     appearance=${args.appearance}
     .expanded=${args.expanded}
@@ -49,90 +50,81 @@ const Template = (args: Args) =>
     @bqClick=${args.bqClick}
     @bqBlur=${args.bqBlur}
   >
-    <span slot="header">${args.text}</span>
-    <div>hello world</div>
-  </bq-accordion>`;
+    ${ifDefined(args.prefix) ? args.prefix : nothing}
+    <span slot="header">${args.header}</span>
+    <div>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque magnam corporis perferendis, architecto vel ullam
+      officia officiis necessitatibus optio nam soluta labore libero debitis? Delectus enim quaerat laboriosam
+      consequatur ea.
+    </div>
+    ${ifDefined(args.suffix) ? args.suffix : nothing}
+    <!-- Custom collapse/expand icon -->
+    ${ifDefined(args.collapse) ? args.collapse : nothing}
+  </bq-accordion>
+`;
 
 export const Default: Story = {
   render: Template,
-  args: {},
 };
 
-const IconTemplate = (args: Args) =>
-  html` <bq-accordion
-    size=${args.size}
-    appearance=${args.appearance}
-    .expanded=${args.expanded}
-    .disabled=${args.disabled}
-    .rotate=${args.rotate}
-    @bqFocus=${args.bqFocus}
-    @bqClick=${args.bqClick}
-    @bqBlur=${args.bqBlur}
-  >
-    <bq-icon name=${args['icon-name']} slot="prefix"></bq-icon>
-    <span slot="header">${args.text}</span>
-    <div>hello world</div>
-  </bq-accordion>`;
+export const Expanded: Story = {
+  render: Template,
+  args: {
+    expanded: true,
+  },
+};
 
-export const Icon: Story = {
-  render: IconTemplate,
+export const Ghost: Story = {
+  render: Template,
+  args: {
+    appearance: 'ghost',
+    expanded: true,
+  },
+};
+
+export const Prefix: Story = {
+  render: Template,
   argTypes: {
-    'icon-name': { control: 'text' },
+    prefix: { control: 'text', table: { disable: true } },
   },
   args: {
-    'icon-name': 'heart',
+    prefix: html`<bq-icon name="heart" slot="prefix"></bq-icon>`,
   },
 };
 
-const AvatarTemplate = (args: Args) =>
-  html` <bq-accordion
-    size=${args.size}
-    appearance=${args.appearance}
-    .expanded=${args.expanded}
-    .disabled=${args.disabled}
-    .rotate=${args.rotate}
-    @bqFocus=${args.bqFocus}
-    @bqClick=${args.bqClick}
-    @bqBlur=${args.bqBlur}
-  >
-    <bq-avatar
-      size="xsmall"
-      image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
-      slot="prefix"
-    ></bq-avatar>
-    <span slot="header">${args.text}</span>
-    <div>hello world</div>
-  </bq-accordion>`;
-
 export const Avatar: Story = {
-  render: AvatarTemplate,
-  argTypes: {},
-  args: {},
+  render: Template,
+  argTypes: {
+    prefix: { control: 'text', table: { disable: true } },
+  },
+  args: {
+    prefix: html`
+      <bq-avatar
+        size="xsmall"
+        image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
+        slot="prefix"
+      ></bq-avatar>
+    `,
+  },
 };
 
-const MoreTemplate = (args: Args) => {
-  const handleClick = (event) => {
-    event.preventDefault();
-  };
-
-  return html` <bq-accordion
-    size=${args.size}
-    appearance=${args.appearance}
-    .expanded=${args.expanded}
-    .disabled=${args.disabled}
-    .rotate=${args.rotate}
-    @bqFocus=${args.bqFocus}
-    @bqClick=${args.bqClick}
-    @bqBlur=${args.bqBlur}
-  >
-    <span slot="header">${args.text}</span>
-    <bq-icon name="gear" @onClick=${handleClick} slot="suffix"></bq-icon>
-    <div>hello world</div>
-  </bq-accordion>`;
+export const Suffix: Story = {
+  render: Template,
+  argTypes: {
+    suffix: { control: 'text', table: { disable: true } },
+  },
+  args: {
+    suffix: html`<bq-icon name="gear" slot="suffix"></bq-icon>`,
+  },
 };
 
-export const More: Story = {
-  render: MoreTemplate,
-  argTypes: {},
-  args: {},
+export const CustomCollapseExpand: Story = {
+  render: Template,
+  argTypes: {
+    collapse: { control: 'text', table: { disable: true } },
+  },
+  args: {
+    collapse: html`<bq-icon name="caret-up" slot="expand"></bq-icon>`,
+    rotate: true,
+  },
 };
