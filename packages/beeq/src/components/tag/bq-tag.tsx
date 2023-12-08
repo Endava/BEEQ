@@ -1,5 +1,7 @@
-import { Component, h, Host, Prop } from '@stencil/core';
+import { Component, Element, h, Host, Prop, Watch } from '@stencil/core';
 
+import { SIZE_TO_VALUE_MAP, TAG_SIZE, TTagSize } from './bq-tag.types';
+import { validatePropValue } from '../../shared/utils';
 @Component({
   tag: 'bq-tag',
   styleUrl: './scss/bq-tag.scss',
@@ -12,12 +14,17 @@ export class BqTag {
   // Reference to host HTML element
   // ===================================
 
+  @Element() el!: HTMLBqTagElement;
+
   // State() variables
   // Inlined decorator, alphabetical order
   // =======================================
 
   // Public Property API
   // ========================
+
+  /** The type of the tag component */
+  @Prop({ reflect: true }) size: TTagSize = 'small';
 
   /** If true, the tag component has an icon */
   @Prop({ reflect: true }) hasIcon: boolean;
@@ -28,6 +35,11 @@ export class BqTag {
   // Prop lifecycle events
   // =======================
 
+  @Watch('size')
+  checkPropValues() {
+    validatePropValue(TAG_SIZE, 'small', this.el, 'size');
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
@@ -35,6 +47,10 @@ export class BqTag {
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
+
+  componentWillLoad() {
+    this.checkPropValues();
+  }
 
   // Listeners
   // ==============
@@ -55,21 +71,31 @@ export class BqTag {
   // Always the last one in the class.
   // ===================================
 
+  private get iconSize(): number {
+    return SIZE_TO_VALUE_MAP[this.size] || SIZE_TO_VALUE_MAP.small;
+  }
+
   render() {
     return (
       <Host>
-        <div class="bq-tag gap-2 px-s py-xs2 text-m font-medium leading-regular" part="wrapper">
+        <div class={{ [`bq-tag bq-tag__wrapper--${this.size} font-medium leading-regular`]: true }} part="wrapper">
           <div class="bq-tag__icon">
             <slot name="icon">
-              <bq-icon name="star" part="icon" exportparts="base,svg" />
+              <bq-icon size={this.iconSize} name="star" part="icon" exportparts="base,svg" />
             </slot>
           </div>
-          <div class="bq-tag__label">
+          <div
+            class={{
+              'text-xs': this.size === 'extra_small',
+              'text-s': this.size === 'small',
+              'text-m': this.size === 'medium',
+            }}
+          >
             <slot name="tag" />
           </div>
           {this.isRemovable && (
             <bq-button class="bq-tag__close" appearance="text" size="small" part="btn-close">
-              <bq-icon name="x-circle" />
+              <bq-icon size={this.iconSize} name="x-circle" />
             </bq-button>
           )}
         </div>

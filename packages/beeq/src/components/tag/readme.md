@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property      | Attribute      | Description                              | Type      | Default     |
-| ------------- | -------------- | ---------------------------------------- | --------- | ----------- |
-| `hasIcon`     | `has-icon`     | If true, the tag component has an icon   | `boolean` | `undefined` |
-| `isRemovable` | `is-removable` | If true, the tag component can be closed | `boolean` | `undefined` |
+| Property      | Attribute      | Description                              | Type                                   | Default     |
+| ------------- | -------------- | ---------------------------------------- | -------------------------------------- | ----------- |
+| `hasIcon`     | `has-icon`     | If true, the tag component has an icon   | `boolean`                              | `undefined` |
+| `isRemovable` | `is-removable` | If true, the tag component can be closed | `boolean`                              | `undefined` |
+| `size`        | `size`         | The type of the tag component            | `"extra_small" \| "medium" \| "small"` | `'small'`   |
 
 
 ## Shadow Parts

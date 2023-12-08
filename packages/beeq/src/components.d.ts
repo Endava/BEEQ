@@ -26,6 +26,7 @@ import { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
 import { TStepItemStatus } from "./components/step-item/bq-step-item.types";
 import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-switch.types";
 import { TTabSize } from "./components/tab/bq-tab.types";
+import { TTagSize } from "./components/tag/bq-tag.types";
 import { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 import { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export { TAccordionAppearance, TAccordionSize } from "./components/accordion/bq-accordion.types";
@@ -49,6 +50,7 @@ export { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
 export { TStepItemStatus } from "./components/step-item/bq-step-item.types";
 export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-switch.types";
 export { TTabSize } from "./components/tab/bq-tab.types";
+export { TTagSize } from "./components/tag/bq-tag.types";
 export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 export { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export namespace Components {
@@ -1010,6 +1012,10 @@ export namespace Components {
           * If true, the tag component can be closed
          */
         "isRemovable": boolean;
+        /**
+          * The type of the tag component
+         */
+        "size": TTagSize;
     }
     interface BqTextarea {
         /**
@@ -2967,6 +2973,10 @@ declare namespace LocalJSX {
           * If true, the tag component can be closed
          */
         "isRemovable"?: boolean;
+        /**
+          * The type of the tag component
+         */
+        "size"?: TTagSize;
     }
     interface BqTextarea {
         /**

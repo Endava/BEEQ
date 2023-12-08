@@ -9,7 +9,21 @@
 }
 
 .bq-tag {
-  @apply inline-flex flex-row items-center justify-center rounded-s;
+  @apply inline-flex flex-row items-center justify-center;
+}
+
+.bq-tag__wrapper {
+  &--extra_small {
+    @apply gap-xs2 rounded-xs px-xs py-xs3;
+  }
+
+  &--small {
+    @apply gap-xs2 rounded-xs px-xs py-xs3;
+  }
+
+  &--medium {
+    @apply gap-xs rounded-s px-s py-xs2;
+  }
 }
 
 .bq-tag__icon {
@@ -17,5 +31,5 @@
 }
 
 .bq-tag__close::part(button) {
-  @apply h-fit rounded-s border-0 p-0;
+  @apply h-fit border-0 p-0;
 }
