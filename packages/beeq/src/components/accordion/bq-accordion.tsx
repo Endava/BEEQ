@@ -137,20 +137,20 @@ export class BqAccordion {
         onClick={this.handleClick}
         part="base"
       >
-        <summary class="bq-accordion__summary" part="header" onFocus={this.handleFocus} onBlur={this.handleBlur}>
+        <summary class="bq-accordion__header" part="header" onFocus={this.handleFocus} onBlur={this.handleBlur}>
           <div
             ref={(element) => (this.prefixElem = element)}
-            class={{ 'bq-accordion__summary-prefix': true, '!hidden': !this.hasPrefix }}
+            class={{ 'bq-accordion__header--prefix': true, '!hidden': !this.hasPrefix }}
             part="prefix"
           >
             <slot name="prefix" onSlotchange={this.handlePrefixSlotChange} />
           </div>
-          <div class="bq-accordion__summary-text" part="text">
+          <div class="bq-accordion__header--text" part="text">
             <slot name="header" />
           </div>
           <div
             ref={(element) => (this.suffixElem = element)}
-            class={{ 'bq-accordion__summary-suffix': true, '!hidden': !this.hasSuffix }}
+            class={{ 'bq-accordion__header--suffix': true, '!hidden': !this.hasSuffix }}
             part="suffix"
           >
             <slot name="suffix" onSlotchange={this.handleSuffixSlotChange} />
@@ -174,7 +174,7 @@ export class BqAccordion {
             </slot>
           </div>
         </summary>
-        <div class="bq-accordion__panel overflow-hidden" part="panel">
+        <div class="bq-accordion__body" part="panel">
           <slot />
         </div>
       </details>
