@@ -20,8 +20,8 @@ export class BqAccordion {
   // Own Properties
   // ====================
 
-  prefixElem: HTMLDivElement;
-  suffixElem: HTMLDivElement;
+  private prefixElem: HTMLDivElement;
+  private suffixElem: HTMLDivElement;
 
   // Reference to host HTML element
   // ===================================
@@ -100,6 +100,7 @@ export class BqAccordion {
 
   private handleClick = (event: MouseEvent) => {
     event.preventDefault();
+
     this.expanded = !this.expanded;
     this.bqClick.emit(this.el);
   };

@@ -125,7 +125,8 @@
 
   border-style: var(--bq-accordion--collapsed-border-style);
 
-  &::marker {
+  &::marker,
+  &::-webkit-details-marker {
     @apply hidden;
   }
 }
