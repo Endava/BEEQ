@@ -1,6 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
 import { ACCORDION_APPEARANCE, ACCORDION_SIZE, TAccordionAppearance, TAccordionSize } from './bq-accordion.types';
+import { Accordion } from './helper';
 import { hasSlotContent, validatePropValue } from '../../shared/utils';
 
 /**
@@ -20,8 +21,11 @@ export class BqAccordion {
   // Own Properties
   // ====================
 
+  private accordion: Accordion;
+  private accordionBody: HTMLDivElement;
   private prefixElem: HTMLDivElement;
   private suffixElem: HTMLDivElement;
+  private detailsElem: HTMLDetailsElement;
 
   // Reference to host HTML element
   // ===================================
@@ -62,6 +66,20 @@ export class BqAccordion {
     validatePropValue(ACCORDION_APPEARANCE, 'filled', this.el, 'appearance');
   }
 
+  @Watch('expanded')
+  handleExpandedChange() {
+    // Animate the opacity of the body so it doesn't overflow while the height is being animated
+    this.accordionBody.animate(
+      {
+        opacity: this.expanded ? [0, 1] : [1, 0],
+      },
+      {
+        duration: 300,
+        easing: 'ease-in-out',
+      },
+    );
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
@@ -81,6 +99,14 @@ export class BqAccordion {
 
   componentWillLoad() {
     this.checkPropValues();
+  }
+
+  componentDidLoad() {
+    this.accordion = new Accordion(this.detailsElem);
+  }
+
+  disconnectedCallback() {
+    this.accordion.destroy();
   }
 
   // Listeners
@@ -135,6 +161,7 @@ export class BqAccordion {
         class={{ [`bq-accordion ${this.size} ${this.appearance}`]: true, disabled: this.disabled }}
         open={this.open}
         onClick={this.handleClick}
+        ref={(detailsElem: HTMLDetailsElement) => (this.detailsElem = detailsElem)}
         part="base"
       >
         <summary class="bq-accordion__header" part="header" onFocus={this.handleFocus} onBlur={this.handleBlur}>
@@ -174,7 +201,7 @@ export class BqAccordion {
             </slot>
           </div>
         </summary>
-        <div class="bq-accordion__body" part="panel">
+        <div class="bq-accordion__body overflow-hidden" part="panel" ref={(div) => (this.accordionBody = div)}>
           <slot />
         </div>
       </details>
