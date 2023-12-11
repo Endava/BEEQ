@@ -26,7 +26,7 @@ import { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
 import { TStepItemStatus } from "./components/step-item/bq-step-item.types";
 import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-switch.types";
 import { TTabSize } from "./components/tab/bq-tab.types";
-import { TTagSize } from "./components/tag/bq-tag.types";
+import { TTagSize, TTagType, TTagVariant } from "./components/tag/bq-tag.types";
 import { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 import { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export { TAccordionAppearance, TAccordionSize } from "./components/accordion/bq-accordion.types";
@@ -50,7 +50,7 @@ export { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
 export { TStepItemStatus } from "./components/step-item/bq-step-item.types";
 export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-switch.types";
 export { TTabSize } from "./components/tab/bq-tab.types";
-export { TTagSize } from "./components/tag/bq-tag.types";
+export { TTagSize, TTagType, TTagVariant } from "./components/tag/bq-tag.types";
 export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 export { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export namespace Components {
@@ -1005,17 +1005,41 @@ export namespace Components {
     }
     interface BqTag {
         /**
+          * If true, the tag component has color style
+         */
+        "hasColor": boolean;
+        /**
           * If true, the tag component has an icon
          */
         "hasIcon": boolean;
         /**
-          * If true, the tag component can be closed
+          * Method to be called to remove the tag component
+         */
+        "hide": () => Promise<void>;
+        /**
+          * If true, the tag component can be removed
          */
         "isRemovable": boolean;
+        /**
+          * If true, the tag component will be shown
+         */
+        "open": boolean;
+        /**
+          * Method to be called to show the alert component
+         */
+        "show": () => Promise<void>;
         /**
           * The type of the tag component
          */
         "size": TTagSize;
+        /**
+          * The default type of the tag component
+         */
+        "type": TTagType;
+        /**
+          * The variant of tag to apply on top of the variant
+         */
+        "variant": TTagVariant;
     }
     interface BqTextarea {
         /**
@@ -1253,6 +1277,10 @@ export interface BqTabCustomEvent<T> extends CustomEvent<T> {
 export interface BqTabGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqTabGroupElement;
+}
+export interface BqTagCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqTagElement;
 }
 export interface BqTextareaCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1766,7 +1794,19 @@ declare global {
         prototype: HTMLBqTabGroupElement;
         new (): HTMLBqTabGroupElement;
     };
+    interface HTMLBqTagElementEventMap {
+        "bqHide": any;
+        "bqShow": any;
+    }
     interface HTMLBqTagElement extends Components.BqTag, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqTagElementEventMap>(type: K, listener: (this: HTMLBqTagElement, ev: BqTagCustomEvent<HTMLBqTagElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqTagElementEventMap>(type: K, listener: (this: HTMLBqTagElement, ev: BqTagCustomEvent<HTMLBqTagElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqTagElement: {
         prototype: HTMLBqTagElement;
@@ -2966,17 +3006,41 @@ declare namespace LocalJSX {
     }
     interface BqTag {
         /**
+          * If true, the tag component has color style
+         */
+        "hasColor"?: boolean;
+        /**
           * If true, the tag component has an icon
          */
         "hasIcon"?: boolean;
         /**
-          * If true, the tag component can be closed
+          * If true, the tag component can be removed
          */
         "isRemovable"?: boolean;
+        /**
+          * Callback handler to be called when the tag is removable
+         */
+        "onBqHide"?: (event: BqTagCustomEvent<any>) => void;
+        /**
+          * Callback handler to be called when the tag is not removable
+         */
+        "onBqShow"?: (event: BqTagCustomEvent<any>) => void;
+        /**
+          * If true, the tag component will be shown
+         */
+        "open"?: boolean;
         /**
           * The type of the tag component
          */
         "size"?: TTagSize;
+        /**
+          * The default type of the tag component
+         */
+        "type"?: TTagType;
+        /**
+          * The variant of tag to apply on top of the variant
+         */
+        "variant"?: TTagVariant;
     }
     interface BqTextarea {
         /**

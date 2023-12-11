@@ -1,6 +1,6 @@
-import { Component, Element, h, Host, Prop, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, Watch } from '@stencil/core';
 
-import { SIZE_TO_VALUE_MAP, TAG_SIZE, TTagSize } from './bq-tag.types';
+import { SIZE_TO_VALUE_MAP, TAG_SIZE, TAG_TYPE, TAG_VARIANT, TTagSize, TTagType, TTagVariant } from './bq-tag.types';
 import { validatePropValue } from '../../shared/utils';
 @Component({
   tag: 'bq-tag',
@@ -29,20 +29,42 @@ export class BqTag {
   /** If true, the tag component has an icon */
   @Prop({ reflect: true }) hasIcon: boolean;
 
-  /** If true, the tag component can be closed */
+  /** If true, the tag component has color style */
+  @Prop({ reflect: true }) hasColor: boolean;
+
+  /** If true, the tag component can be removed */
   @Prop({ reflect: true }) isRemovable: boolean;
+
+  /** If true, the tag component will be shown */
+  @Prop({ reflect: true, mutable: true }) open: boolean;
+
+  /** The default type of the tag component */
+  @Prop({ reflect: true }) type: TTagType = 'default';
+
+  /** The variant of tag to apply on top of the variant */
+  @Prop({ reflect: true }) variant: TTagVariant = 'default';
 
   // Prop lifecycle events
   // =======================
 
   @Watch('size')
+  @Watch('type')
+  @Watch('variant')
   checkPropValues() {
     validatePropValue(TAG_SIZE, 'small', this.el, 'size');
+    validatePropValue(TAG_TYPE, 'default', this.el, 'type');
+    validatePropValue(TAG_VARIANT, 'default', this.el, 'variant');
   }
 
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
+
+  /** Callback handler to be called when the tag is removable  */
+  @Event() bqHide: EventEmitter;
+
+  /** Callback handler to be called when the tag is not removable */
+  @Event() bqShow: EventEmitter;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -62,6 +84,18 @@ export class BqTag {
   // Requires JSDocs for public API documentation.
   // ===============================================
 
+  /** Method to be called to remove the tag component */
+  @Method()
+  async hide(): Promise<void> {
+    this.handleHide();
+  }
+
+  /** Method to be called to show the alert component */
+  @Method()
+  async show(): Promise<void> {
+    this.handleShow();
+  }
+
   // Local methods
   // Internal business logic.
   // These methods cannot be called from the host element.
@@ -71,15 +105,39 @@ export class BqTag {
   // Always the last one in the class.
   // ===================================
 
+  private handleHide = () => {
+    const ev = this.bqHide.emit(this.el);
+    if (!ev.defaultPrevented) {
+      this.open = false;
+    }
+  };
+
+  private handleShow = () => {
+    const ev = this.bqShow.emit(this.el);
+    if (!ev.defaultPrevented) {
+      this.open = true;
+    }
+  };
+
   private get iconSize(): number {
     return SIZE_TO_VALUE_MAP[this.size] || SIZE_TO_VALUE_MAP.small;
   }
 
   render() {
     return (
-      <Host>
-        <div class={{ [`bq-tag bq-tag__wrapper--${this.size} font-medium leading-regular`]: true }} part="wrapper">
-          <div class="bq-tag__icon">
+      <Host
+        class={{ 'is-hidden': !this.open }}
+        aria-hidden={!this.open ? 'true' : 'false'}
+        hidden={!this.open ? 'true' : 'false'}
+      >
+        <div
+          class={{
+            [`bq-tag bq-tag__wrapper--${this.size} font-medium leading-regular`]: true,
+            [`bq-tag__${this.type}__${this.variant}`]: this.hasColor,
+          }}
+          part="wrapper"
+        >
+          <div class={{ 'bq-tag__icon': true, '!hidden': !this.hasIcon }}>
             <slot name="icon">
               <bq-icon size={this.iconSize} name="star" part="icon" exportparts="base,svg" />
             </slot>
@@ -94,7 +152,13 @@ export class BqTag {
             <slot name="tag" />
           </div>
           {this.isRemovable && (
-            <bq-button class="bq-tag__close" appearance="text" size="small" part="btn-close">
+            <bq-button
+              class="bq-tag__close"
+              appearance="text"
+              size="small"
+              onClick={() => this.hide()}
+              part="btn-close"
+            >
               <bq-icon size={this.iconSize} name="x-circle" />
             </bq-button>
           )}
