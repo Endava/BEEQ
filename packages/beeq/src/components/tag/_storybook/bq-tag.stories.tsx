@@ -17,6 +17,7 @@ const meta: Meta = {
     open: { control: 'boolean' },
     type: { control: 'select', options: [...TAG_TYPE] },
     variant: { control: 'select', options: [...TAG_VARIANT] },
+    disabled: { control: 'boolean' },
     'is-removable': { control: 'boolean' },
     'has-icon': { control: 'boolean' },
     'has-color': { control: 'boolean' },
@@ -26,6 +27,7 @@ const meta: Meta = {
     open: false,
     type: 'default',
     variant: 'default',
+    disabled: false,
     'is-removable': false,
     'has-icon': false,
     'has-color': false,
@@ -44,6 +46,7 @@ const Template = (args: Args) =>
     variant=${args.variant}
     ?has-icon=${args['has-icon']}
     ?has-color=${args['has-color']}
+    ?disabled=${args.disabled}
   >
     <span slot="tag">Tag</span>
   </bq-tag>`;

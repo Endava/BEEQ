@@ -7,15 +7,16 @@
 
 ## Properties
 
-| Property      | Attribute      | Description                                       | Type                                                       | Default     |
-| ------------- | -------------- | ------------------------------------------------- | ---------------------------------------------------------- | ----------- |
-| `hasColor`    | `has-color`    | If true, the tag component has color style        | `boolean`                                                  | `undefined` |
-| `hasIcon`     | `has-icon`     | If true, the tag component has an icon            | `boolean`                                                  | `undefined` |
-| `isRemovable` | `is-removable` | If true, the tag component can be removed         | `boolean`                                                  | `undefined` |
-| `open`        | `open`         | If true, the tag component will be shown          | `boolean`                                                  | `undefined` |
-| `size`        | `size`         | The type of the tag component                     | `"extra_small" \| "medium" \| "small"`                     | `'small'`   |
-| `type`        | `type`         | The default type of the tag component             | `"default" \| "error" \| "info" \| "success" \| "warning"` | `'default'` |
-| `variant`     | `variant`      | The variant of tag to apply on top of the variant | `string`                                                   | `'default'` |
+| Property      | Attribute      | Description                                                   | Type                                                       | Default     |
+| ------------- | -------------- | ------------------------------------------------------------- | ---------------------------------------------------------- | ----------- |
+| `disabled`    | `disabled`     | If true, the button will be disabled (no interaction allowed) | `boolean`                                                  | `false`     |
+| `hasColor`    | `has-color`    | If true, the tag component has color style                    | `boolean`                                                  | `undefined` |
+| `hasIcon`     | `has-icon`     | If true, the tag component has an icon                        | `boolean`                                                  | `undefined` |
+| `isRemovable` | `is-removable` | If true, the tag component can be removed                     | `boolean`                                                  | `undefined` |
+| `open`        | `open`         | If true, the tag component will be shown                      | `boolean`                                                  | `undefined` |
+| `size`        | `size`         | The type of the tag component                                 | `"extra_small" \| "medium" \| "small"`                     | `'small'`   |
+| `type`        | `type`         | The default type of the tag component                         | `"default" \| "error" \| "info" \| "success" \| "warning"` | `'default'` |
+| `variant`     | `variant`      | The variant of tag to apply on top of the variant             | `string`                                                   | `'default'` |
 
 
 ## Events

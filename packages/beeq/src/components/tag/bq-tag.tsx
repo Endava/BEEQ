@@ -44,6 +44,9 @@ export class BqTag {
   /** The variant of tag to apply on top of the variant */
   @Prop({ reflect: true }) variant: TTagVariant = 'default';
 
+  /** If true, the button will be disabled (no interaction allowed) */
+  @Prop({ reflect: true }) disabled?: boolean = false;
+
   // Prop lifecycle events
   // =======================
 
@@ -101,10 +104,6 @@ export class BqTag {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  // render() function
-  // Always the last one in the class.
-  // ===================================
-
   private handleHide = () => {
     const ev = this.bqHide.emit(this.el);
     if (!ev.defaultPrevented) {
@@ -122,6 +121,9 @@ export class BqTag {
   private get iconSize(): number {
     return SIZE_TO_VALUE_MAP[this.size] || SIZE_TO_VALUE_MAP.small;
   }
+  // render() function
+  // Always the last one in the class.
+  // ===================================
 
   render() {
     return (
@@ -132,9 +134,12 @@ export class BqTag {
       >
         <div
           class={{
-            [`bq-tag bq-tag__wrapper--${this.size} font-medium leading-regular`]: true,
+            'bq-tag': true,
+            disabled: this.disabled && !this.hasColor,
+            [`bq-tag__wrapper--${this.size} font-medium leading-regular`]: true,
             [`bq-tag__${this.type}__${this.variant}`]: this.hasColor,
           }}
+          aria-disabled={this.disabled}
           part="wrapper"
         >
           <div class={{ 'bq-tag__icon': true, '!hidden': !this.hasIcon }}>

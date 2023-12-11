@@ -1005,6 +1005,10 @@ export namespace Components {
     }
     interface BqTag {
         /**
+          * If true, the button will be disabled (no interaction allowed)
+         */
+        "disabled"?: boolean;
+        /**
           * If true, the tag component has color style
          */
         "hasColor": boolean;
@@ -3005,6 +3009,10 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface BqTag {
+        /**
+          * If true, the button will be disabled (no interaction allowed)
+         */
+        "disabled"?: boolean;
         /**
           * If true, the tag component has color style
          */

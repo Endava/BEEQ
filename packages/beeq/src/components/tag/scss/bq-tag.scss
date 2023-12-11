@@ -14,6 +14,9 @@
 
 .bq-tag {
   @apply inline-flex flex-row items-center justify-center bg-ui-secondary;
+
+  // Disabled
+  @apply [&.disabled]:cursor-not-allowed [&.disabled]:bg-ui-secondary-disabled [&.disabled]:text-text-primary-disabled;
 }
 
 .bq-tag__wrapper {
@@ -30,7 +33,9 @@
   }
 }
 
-/** Combinatii speciale de stiluri */
+/** 
+  * Set the tag color based on the type and variant value selected
+*/
 
 .bq-tag__default {
   &__default {
