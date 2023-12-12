@@ -39,14 +39,14 @@ type Story = StoryObj;
 
 const Template = (args: Args) =>
   html`<bq-tag
-    ?is-removable=${args['is-removable']}
-    size=${args.size}
     ?open=${args.open}
+    size=${args.size}
     type=${args.type}
     variant=${args.variant}
+    ?disabled=${args.disabled}
     ?has-icon=${args['has-icon']}
     ?has-color=${args['has-color']}
-    ?disabled=${args.disabled}
+    ?is-removable=${args['is-removable']}
   >
     <span slot="tag">Tag</span>
   </bq-tag>`;
@@ -55,7 +55,146 @@ export const Default: Story = {
   render: Template,
   args: {
     open: true,
-    'is-removable': true,
+  },
+};
+
+export const Color: Story = {
+  render: (args: Args) => html`
+    <div class="flex flex-col gap-4">
+      <div class="flex flex-row gap-14">
+        <bq-tag
+          ?open=${args.open}
+          size=${args.size}
+          type="success"
+          variant="default"
+          ?disabled=${args.disabled}
+          ?has-icon=${args['has-icon']}
+          ?has-color=${args['has-color']}
+          ?is-removable=${args['is-removable']}
+        >
+          <span slot="tag">Tag</span>
+        </bq-tag>
+        <bq-tag
+          ?open=${args.open}
+          size=${args.size}
+          type="success"
+          variant="filled"
+          ?disabled=${args.disabled}
+          ?has-icon=${args['has-icon']}
+          ?has-color=${args['has-color']}
+          ?is-removable=${args['is-removable']}
+        >
+          <span slot="tag">Tag</span>
+        </bq-tag>
+      </div>
+      <div class="flex flex-row gap-14">
+        <bq-tag
+          ?open=${args.open}
+          size=${args.size}
+          type="warning"
+          variant="default"
+          ?disabled=${args.disabled}
+          ?has-icon=${args['has-icon']}
+          ?has-color=${args['has-color']}
+          ?is-removable=${args['is-removable']}
+        >
+          <span slot="tag">Tag</span>
+        </bq-tag>
+        <bq-tag
+          ?open=${args.open}
+          size=${args.size}
+          type="warning"
+          variant="filled"
+          ?disabled=${args.disabled}
+          ?has-icon=${args['has-icon']}
+          ?has-color=${args['has-color']}
+          ?is-removable=${args['is-removable']}
+        >
+          <span slot="tag">Tag</span>
+        </bq-tag>
+      </div>
+      <div class="flex flex-row gap-14">
+        <bq-tag
+          ?open=${args.open}
+          size=${args.size}
+          type="error"
+          variant="default"
+          ?disabled=${args.disabled}
+          ?has-icon=${args['has-icon']}
+          ?has-color=${args['has-color']}
+          ?is-removable=${args['is-removable']}
+        >
+          <span slot="tag">Tag</span>
+        </bq-tag>
+        <bq-tag
+          ?open=${args.open}
+          size=${args.size}
+          type="error"
+          variant="filled"
+          ?disabled=${args.disabled}
+          ?has-icon=${args['has-icon']}
+          ?has-color=${args['has-color']}
+          ?is-removable=${args['is-removable']}
+        >
+          <span slot="tag">Tag</span>
+        </bq-tag>
+      </div>
+      <div class="flex flex-row gap-14">
+        <bq-tag
+          ?open=${args.open}
+          size=${args.size}
+          type="info"
+          variant="default"
+          ?disabled=${args.disabled}
+          ?has-icon=${args['has-icon']}
+          ?has-color=${args['has-color']}
+          ?is-removable=${args['is-removable']}
+        >
+          <span slot="tag">Tag</span>
+        </bq-tag>
+        <bq-tag
+          ?open=${args.open}
+          size=${args.size}
+          type="info"
+          variant="filled"
+          ?disabled=${args.disabled}
+          ?has-icon=${args['has-icon']}
+          ?has-color=${args['has-color']}
+          ?is-removable=${args['is-removable']}
+        >
+          <span slot="tag">Tag</span>
+        </bq-tag>
+      </div>
+      <div class="flex flex-row gap-14">
+        <bq-tag
+          ?open=${args.open}
+          size=${args.size}
+          type="default"
+          variant="default"
+          ?disabled=${args.disabled}
+          ?has-icon=${args['has-icon']}
+          ?has-color=${args['has-color']}
+          ?is-removable=${args['is-removable']}
+        >
+          <span slot="tag">Tag</span>
+        </bq-tag>
+        <bq-tag
+          ?open=${args.open}
+          size=${args.size}
+          type="default"
+          variant="filled"
+          ?disabled=${args.disabled}
+          ?has-icon=${args['has-icon']}
+          ?has-color=${args['has-color']}
+          ?is-removable=${args['is-removable']}
+        >
+          <span slot="tag">Tag</span>
+        </bq-tag>
+      </div>
+    </div>
+  `,
+  args: {
+    open: true,
     'has-color': true,
   },
 };
