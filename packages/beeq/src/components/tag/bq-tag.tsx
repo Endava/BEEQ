@@ -135,7 +135,7 @@ export class BqTag {
         <div
           class={{
             'bq-tag': true,
-            disabled: this.disabled && !this.hasColor,
+            disabled: this.disabled,
             [`bq-tag__wrapper--${this.size} font-medium leading-regular`]: true,
             [`bq-tag__${this.type}__${this.variant}`]: this.hasColor,
           }}
@@ -156,7 +156,7 @@ export class BqTag {
           >
             <slot name="tag" />
           </div>
-          {this.isRemovable && (
+          {this.isRemovable && !this.hasColor && !this.disabled && (
             <bq-button
               class="bq-tag__close"
               appearance="text"
