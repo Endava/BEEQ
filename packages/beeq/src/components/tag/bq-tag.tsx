@@ -24,7 +24,7 @@ export class BqTag {
   // ========================
 
   /** The type of the tag component */
-  @Prop({ reflect: true }) size: TTagSize = 'small';
+  @Prop({ reflect: true }) size: TTagSize = 'medium';
 
   /** If true, the tag component has an icon */
   @Prop({ reflect: true }) hasIcon: boolean;
@@ -54,7 +54,7 @@ export class BqTag {
   @Watch('type')
   @Watch('variant')
   checkPropValues() {
-    validatePropValue(TAG_SIZE, 'small', this.el, 'size');
+    validatePropValue(TAG_SIZE, 'medium', this.el, 'size');
     validatePropValue(TAG_TYPE, 'default', this.el, 'type');
     validatePropValue(TAG_VARIANT, 'default', this.el, 'variant');
   }
@@ -119,7 +119,7 @@ export class BqTag {
   };
 
   private get iconSize(): number {
-    return SIZE_TO_VALUE_MAP[this.size] || SIZE_TO_VALUE_MAP.small;
+    return SIZE_TO_VALUE_MAP[this.size] || SIZE_TO_VALUE_MAP.medium;
   }
   // render() function
   // Always the last one in the class.

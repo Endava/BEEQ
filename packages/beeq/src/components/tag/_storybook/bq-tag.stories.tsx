@@ -23,7 +23,7 @@ const meta: Meta = {
     'has-color': { control: 'boolean' },
   },
   args: {
-    size: 'small',
+    size: 'medium',
     open: false,
     type: 'default',
     variant: 'default',
@@ -37,24 +37,58 @@ export default meta;
 
 type Story = StoryObj;
 
-const Template = (args: Args) =>
-  html`<bq-tag
-    ?open=${args.open}
-    size=${args.size}
-    type=${args.type}
-    variant=${args.variant}
-    ?disabled=${args.disabled}
-    ?has-icon=${args['has-icon']}
-    ?has-color=${args['has-color']}
-    ?is-removable=${args['is-removable']}
-  >
-    <span slot="tag">Tag</span>
-  </bq-tag>`;
-
-export const Default: Story = {
-  render: Template,
+export const Clickable: Story = {
+  render: (args: Args) => html`
+    <bq-tag
+      ?open=${args.open}
+      size=${args.size}
+      type=${args.type}
+      variant=${args.variant}
+      ?disabled=${args.disabled}
+      ?has-icon=${args['has-icon']}
+      ?has-color=${args['has-color']}
+      ?is-removable=${args['is-removable']}
+    >
+      <span slot="tag">Tag</span>
+    </bq-tag>
+  `,
   args: {
     open: true,
+  },
+};
+
+export const Removable: Story = {
+  render: (args: Args) => html`
+    <div class="flex flex-col gap-8">
+      <bq-tag
+        ?open=${args.open}
+        size=${args.size}
+        type=${args.type}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?has-icon=${false}
+        ?has-color=${args['has-color']}
+        ?is-removable=${args['is-removable']}
+      >
+        <span slot="tag">Tag</span>
+      </bq-tag>
+      <bq-tag
+        ?open=${args.open}
+        size=${args.size}
+        type=${args.type}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?has-icon=${true}
+        ?has-color=${args['has-color']}
+        ?is-removable=${args['is-removable']}
+      >
+        <span slot="tag">Tag</span>
+      </bq-tag>
+    </div>
+  `,
+  args: {
+    open: true,
+    'is-removable': true,
   },
 };
 

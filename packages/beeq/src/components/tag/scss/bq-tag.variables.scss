@@ -3,12 +3,5 @@
 /* -------------------------------------------------------------------------- */
 
 :host {
-  /**
-   * @prop --bq-tag--margin - Tag margin
-   */
-  --bq-tag--margin: theme('spacing.m');
-
-  --bq-tag--border-success: theme('colors.stroke.success');
-  --bq-tag--background-success: theme('colors.ui.success-alt');
   --bq-tag--border-width: 1px;
 }
