@@ -1805,7 +1805,8 @@ declare global {
     interface HTMLBqTagElementEventMap {
         "bqHide": any;
         "bqShow": any;
-        "bqClick": HTMLBqOptionElement;
+        "bqClick": HTMLBqTagElement;
+        "bqFocus": HTMLBqTagElement;
     }
     interface HTMLBqTagElement extends Components.BqTag, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqTagElementEventMap>(type: K, listener: (this: HTMLBqTagElement, ev: BqTagCustomEvent<HTMLBqTagElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -3033,7 +3034,11 @@ declare namespace LocalJSX {
         /**
           * Handler to be called when tag is clicked
          */
-        "onBqClick"?: (event: BqTagCustomEvent<HTMLBqOptionElement>) => void;
+        "onBqClick"?: (event: BqTagCustomEvent<HTMLBqTagElement>) => void;
+        /**
+          * Handler to be called when tag is focused
+         */
+        "onBqFocus"?: (event: BqTagCustomEvent<HTMLBqTagElement>) => void;
         /**
           * Callback handler to be called when the tag is removable
          */

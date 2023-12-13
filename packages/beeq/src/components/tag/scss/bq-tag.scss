@@ -15,6 +15,9 @@
 .bq-tag {
   @apply inline-flex cursor-pointer flex-row items-center justify-center bg-ui-secondary;
 
+  // Focus
+  @apply [&:not(.disabled)]:focus-visible:focus;
+
   // Hover
   @apply [&:not(.disabled)]:hover:bg-ui-secondary-hover;
 

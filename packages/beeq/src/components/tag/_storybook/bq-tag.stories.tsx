@@ -22,8 +22,9 @@ const meta: Meta = {
     'is-removable': { control: 'boolean' },
     'has-icon': { control: 'boolean' },
     'has-color': { control: 'boolean' },
-    // Event handler
+    // Event handlers
     bqClick: { action: 'bqClick' },
+    bqFocus: { action: 'bqFocus' },
   },
   args: {
     size: 'medium',
@@ -55,6 +56,7 @@ export const Clickable: Story = {
         ?has-color=${args['has-color']}
         ?is-removable=${args['is-removable']}
         @bqClick=${args.bqClick}
+        @bqFocus=${args.bqFocus}
       >
         <span slot="tag">Tag</span>
       </bq-tag>

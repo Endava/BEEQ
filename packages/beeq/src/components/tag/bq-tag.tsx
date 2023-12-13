@@ -73,7 +73,10 @@ export class BqTag {
   @Event() bqShow: EventEmitter;
 
   /** Handler to be called when tag is clicked */
-  @Event() bqClick: EventEmitter<HTMLBqOptionElement>;
+  @Event() bqClick: EventEmitter<HTMLBqTagElement>;
+
+  /** Handler to be called when tag is focused */
+  @Event() bqFocus: EventEmitter<HTMLBqTagElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -137,6 +140,16 @@ export class BqTag {
     }
   };
 
+  private handleFocus = (event: Event) => {
+    if (this.disabled) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+
+    this.bqFocus.emit(this.el);
+  };
+
   private get iconSize(): number {
     return SIZE_TO_VALUE_MAP[this.size] || SIZE_TO_VALUE_MAP.medium;
   }
@@ -162,6 +175,7 @@ export class BqTag {
           aria-selected={this.selected}
           aria-disabled={this.disabled}
           onClick={this.handleClick}
+          onFocus={this.handleFocus}
           role="tab"
           part="wrapper"
         >
