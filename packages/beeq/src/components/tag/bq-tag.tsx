@@ -162,7 +162,7 @@ export class BqTag {
           aria-selected={this.selected}
           aria-disabled={this.disabled}
           onClick={this.handleClick}
-          role="button"
+          role="tab"
           part="wrapper"
         >
           <div class={{ 'bq-tag__icon': true, '!hidden': !this.hasIcon }}>
