@@ -78,6 +78,9 @@ export class BqTag {
   /** Handler to be called when tag is focused */
   @Event() bqFocus: EventEmitter<HTMLBqTagElement>;
 
+  /** Handler to be called when the tag key is pressed */
+  @Event() bqKeyDown: EventEmitter<KeyboardEvent>;
+
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
@@ -153,6 +156,11 @@ export class BqTag {
   private get iconSize(): number {
     return SIZE_TO_VALUE_MAP[this.size] || SIZE_TO_VALUE_MAP.medium;
   }
+
+  private handleOnKeyDown = (event: KeyboardEvent) => {
+    this.bqKeyDown.emit(event);
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -176,8 +184,10 @@ export class BqTag {
           aria-disabled={this.disabled}
           onClick={this.handleClick}
           onFocus={this.handleFocus}
+          onKeyDown={this.handleOnKeyDown}
           role="tab"
           part="wrapper"
+          tabindex={this.disabled ? '-1' : '0'}
         >
           <div class={{ 'bq-tag__icon': true, '!hidden': !this.hasIcon }}>
             <slot name="icon">
