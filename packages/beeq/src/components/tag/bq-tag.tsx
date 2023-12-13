@@ -47,6 +47,9 @@ export class BqTag {
   /** If true, the button will be disabled (no interaction allowed) */
   @Prop({ reflect: true }) disabled?: boolean = false;
 
+  /** If true, the option is selected and active */
+  @Prop({ reflect: true }) selected: boolean = false;
+
   // Prop lifecycle events
   // =======================
 
@@ -68,6 +71,9 @@ export class BqTag {
 
   /** Callback handler to be called when the tag is not removable */
   @Event() bqShow: EventEmitter;
+
+  /** Handler to be called when tag is clicked */
+  @Event() bqClick: EventEmitter<HTMLBqOptionElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -118,6 +124,19 @@ export class BqTag {
     }
   };
 
+  private handleClick = (event: Event) => {
+    if (this.disabled) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+
+    const ev = this.bqClick.emit(this.el);
+    if (!ev.defaultPrevented) {
+      this.selected = !this.selected;
+    }
+  };
+
   private get iconSize(): number {
     return SIZE_TO_VALUE_MAP[this.size] || SIZE_TO_VALUE_MAP.medium;
   }
@@ -136,10 +155,13 @@ export class BqTag {
           class={{
             'bq-tag': true,
             disabled: this.disabled,
+            active: !this.disabled && this.selected,
             [`bq-tag__wrapper--${this.size} font-medium leading-regular`]: true,
             [`bq-tag__${this.type}__${this.variant}`]: this.hasColor,
           }}
+          aria-selected={this.selected}
           aria-disabled={this.disabled}
+          onClick={this.handleClick}
           part="wrapper"
         >
           <div class={{ 'bq-tag__icon': true, '!hidden': !this.hasIcon }}>

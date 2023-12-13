@@ -13,10 +13,13 @@
 }
 
 .bq-tag {
-  @apply inline-flex flex-row items-center justify-center bg-ui-secondary;
+  @apply inline-flex cursor-pointer flex-row items-center justify-center bg-ui-secondary;
 
   // Hover
   @apply [&:not(.disabled)]:hover:bg-ui-secondary-hover;
+
+  // Active
+  @apply [&.active:not(.disabled)]:bg-ui-brand [&.active:not(.disabled)]:text-text-primary-alt;
 
   // Disabled
   @apply [&.disabled]:cursor-not-allowed [&.disabled]:border-none [&.disabled]:bg-ui-secondary-disabled [&.disabled]:text-text-primary-disabled;

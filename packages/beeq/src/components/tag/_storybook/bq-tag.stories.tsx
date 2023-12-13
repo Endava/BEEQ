@@ -18,9 +18,12 @@ const meta: Meta = {
     type: { control: 'select', options: [...TAG_TYPE] },
     variant: { control: 'select', options: [...TAG_VARIANT] },
     disabled: { control: 'boolean' },
+    selected: { control: 'boolean' },
     'is-removable': { control: 'boolean' },
     'has-icon': { control: 'boolean' },
     'has-color': { control: 'boolean' },
+    // Event handler
+    bqClick: { action: 'bqClick' },
   },
   args: {
     size: 'medium',
@@ -28,6 +31,7 @@ const meta: Meta = {
     type: 'default',
     variant: 'default',
     disabled: false,
+    selected: false,
     'is-removable': false,
     'has-icon': false,
     'has-color': false,
@@ -39,18 +43,36 @@ type Story = StoryObj;
 
 export const Clickable: Story = {
   render: (args: Args) => html`
-    <bq-tag
-      ?open=${args.open}
-      size=${args.size}
-      type=${args.type}
-      variant=${args.variant}
-      ?disabled=${args.disabled}
-      ?has-icon=${args['has-icon']}
-      ?has-color=${args['has-color']}
-      ?is-removable=${args['is-removable']}
-    >
-      <span slot="tag">Tag</span>
-    </bq-tag>
+    <div class="flex flex-row gap-14">
+      <bq-tag
+        ?open=${args.open}
+        size=${args.size}
+        type=${args.type}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?selected=${args.selected}
+        ?has-icon=${args['has-icon']}
+        ?has-color=${args['has-color']}
+        ?is-removable=${args['is-removable']}
+        @bqClick=${args.bqClick}
+      >
+        <span slot="tag">Tag</span>
+      </bq-tag>
+      <bq-tag
+        ?open=${args.open}
+        size=${args.size}
+        type=${args.type}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?selected=${true}
+        ?has-icon=${args['has-icon']}
+        ?has-color=${args['has-color']}
+        ?is-removable=${args['is-removable']}
+        @bqClick=${args.bqClick}
+      >
+        <span slot="tag">Tag</span>
+      </bq-tag>
+    </div>
   `,
   args: {
     open: true,

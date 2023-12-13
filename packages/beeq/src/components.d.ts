@@ -1029,6 +1029,10 @@ export namespace Components {
          */
         "open": boolean;
         /**
+          * If true, the option is selected and active
+         */
+        "selected": boolean;
+        /**
           * Method to be called to show the alert component
          */
         "show": () => Promise<void>;
@@ -1801,6 +1805,7 @@ declare global {
     interface HTMLBqTagElementEventMap {
         "bqHide": any;
         "bqShow": any;
+        "bqClick": HTMLBqOptionElement;
     }
     interface HTMLBqTagElement extends Components.BqTag, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqTagElementEventMap>(type: K, listener: (this: HTMLBqTagElement, ev: BqTagCustomEvent<HTMLBqTagElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -3026,6 +3031,10 @@ declare namespace LocalJSX {
          */
         "isRemovable"?: boolean;
         /**
+          * Handler to be called when tag is clicked
+         */
+        "onBqClick"?: (event: BqTagCustomEvent<HTMLBqOptionElement>) => void;
+        /**
           * Callback handler to be called when the tag is removable
          */
         "onBqHide"?: (event: BqTagCustomEvent<any>) => void;
@@ -3037,6 +3046,10 @@ declare namespace LocalJSX {
           * If true, the tag component will be shown
          */
         "open"?: boolean;
+        /**
+          * If true, the option is selected and active
+         */
+        "selected"?: boolean;
         /**
           * The type of the tag component
          */
