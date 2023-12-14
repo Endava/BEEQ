@@ -19,7 +19,7 @@ const meta: Meta = {
     variant: { control: 'select', options: [...TAG_VARIANT] },
     disabled: { control: 'boolean' },
     selected: { control: 'boolean' },
-    'is-removable': { control: 'boolean' },
+    removable: { control: 'boolean' },
     'has-color': { control: 'boolean' },
     // Event handlers
     bqHide: { action: 'bqHide' },
@@ -35,7 +35,7 @@ const meta: Meta = {
     variant: 'default',
     disabled: false,
     selected: false,
-    'is-removable': false,
+    removable: false,
     'has-color': false,
   },
 };
@@ -55,7 +55,7 @@ export const Clickable: Story = {
           ?disabled=${args.disabled}
           ?selected=${args.selected}
           ?has-color=${args['has-color']}
-          ?is-removable=${args['is-removable']}
+          ?removable=${args.removable}
           @bqClick=${args.bqClick}
           @bqFocus=${args.bqFocus}
           @bqKeyDown=${args.bqKeyDown}
@@ -70,7 +70,7 @@ export const Clickable: Story = {
           ?disabled=${args.disabled}
           ?selected=${true}
           ?has-color=${args['has-color']}
-          ?is-removable=${args['is-removable']}
+          ?removable=${args.removable}
           @bqClick=${args.bqClick}
           @bqFocus=${args.bqFocus}
           @bqKeyDown=${args.bqKeyDown}
@@ -87,7 +87,7 @@ export const Clickable: Story = {
           ?disabled=${args.disabled}
           ?selected=${args.selected}
           ?has-color=${args['has-color']}
-          ?is-removable=${args['is-removable']}
+          ?removable=${args.removable}
           @bqClick=${args.bqClick}
           @bqFocus=${args.bqFocus}
           @bqKeyDown=${args.bqKeyDown}
@@ -109,7 +109,7 @@ export const Clickable: Story = {
           ?disabled=${args.disabled}
           ?selected=${true}
           ?has-color=${args['has-color']}
-          ?is-removable=${args['is-removable']}
+          ?removable=${args.removable}
           @bqClick=${args.bqClick}
           @bqFocus=${args.bqFocus}
           @bqKeyDown=${args.bqKeyDown}
@@ -141,7 +141,7 @@ export const Removable: Story = {
         variant=${args.variant}
         ?disabled=${args.disabled}
         ?has-color=${args['has-color']}
-        ?is-removable=${args['is-removable']}
+        ?removable=${args.removable}
       >
         Tag
       </bq-tag>
@@ -152,7 +152,7 @@ export const Removable: Story = {
         variant=${args.variant}
         ?disabled=${args.disabled}
         ?has-color=${args['has-color']}
-        ?is-removable=${args['is-removable']}
+        ?removable=${args.removable}
       >
         <bq-icon
           size=${SIZE_TO_VALUE_MAP[args.size]}
@@ -167,7 +167,7 @@ export const Removable: Story = {
   `,
   args: {
     open: true,
-    'is-removable': true,
+    removable: true,
   },
 };
 
@@ -181,7 +181,7 @@ export const Outline: Story = {
         variant="default"
         ?disabled=${args.disabled}
         ?has-color=${args['has-color']}
-        ?is-removable=${args['is-removable']}
+        ?removable=${args.removable}
       >
         Tag
       </bq-tag>
@@ -192,7 +192,7 @@ export const Outline: Story = {
         variant="default"
         ?disabled=${args.disabled}
         ?has-color=${args['has-color']}
-        ?is-removable=${args['is-removable']}
+        ?removable=${args.removable}
       >
         Tag
       </bq-tag>
@@ -203,7 +203,7 @@ export const Outline: Story = {
         variant="default"
         ?disabled=${args.disabled}
         ?has-color=${args['has-color']}
-        ?is-removable=${args['is-removable']}
+        ?removable=${args.removable}
       >
         Tag
       </bq-tag>
@@ -214,7 +214,7 @@ export const Outline: Story = {
         variant="default"
         ?disabled=${args.disabled}
         ?has-color=${args['has-color']}
-        ?is-removable=${args['is-removable']}
+        ?removable=${args.removable}
       >
         Tag
       </bq-tag>
@@ -225,7 +225,7 @@ export const Outline: Story = {
         variant="default"
         ?disabled=${args.disabled}
         ?has-color=${args['has-color']}
-        ?is-removable=${args['is-removable']}
+        ?removable=${args.removable}
       >
         Tag
       </bq-tag>
@@ -247,7 +247,7 @@ export const Filled: Story = {
         variant="filled"
         ?disabled=${args.disabled}
         ?has-color=${args['has-color']}
-        ?is-removable=${args['is-removable']}
+        ?removable=${args.removable}
       >
         Tag
       </bq-tag>
@@ -258,7 +258,7 @@ export const Filled: Story = {
         variant="filled"
         ?disabled=${args.disabled}
         ?has-color=${args['has-color']}
-        ?is-removable=${args['is-removable']}
+        ?removable=${args.removable}
       >
         Tag
       </bq-tag>
@@ -269,7 +269,7 @@ export const Filled: Story = {
         variant="filled"
         ?disabled=${args.disabled}
         ?has-color=${args['has-color']}
-        ?is-removable=${args['is-removable']}
+        ?removable=${args.removable}
       >
         Tag
       </bq-tag>
@@ -280,7 +280,7 @@ export const Filled: Story = {
         variant="filled"
         ?disabled=${args.disabled}
         ?has-color=${args['has-color']}
-        ?is-removable=${args['is-removable']}
+        ?removable=${args.removable}
       >
         Tag
       </bq-tag>
@@ -291,7 +291,7 @@ export const Filled: Story = {
         variant="filled"
         ?disabled=${args.disabled}
         ?has-color=${args['has-color']}
-        ?is-removable=${args['is-removable']}
+        ?removable=${args.removable}
       >
         Tag
       </bq-tag>

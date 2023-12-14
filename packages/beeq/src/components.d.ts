@@ -1017,13 +1017,13 @@ export namespace Components {
          */
         "hide": () => Promise<void>;
         /**
-          * If true, the tag component can be removed
-         */
-        "isRemovable": boolean;
-        /**
           * If true, the tag component will be shown
          */
         "open": boolean;
+        /**
+          * If true, the tag component can be removed
+         */
+        "removable": boolean;
         /**
           * If true, the option is selected and active
          */
@@ -3021,10 +3021,6 @@ declare namespace LocalJSX {
          */
         "hasColor"?: boolean;
         /**
-          * If true, the tag component can be removed
-         */
-        "isRemovable"?: boolean;
-        /**
           * Handler to be called when tag is clicked
          */
         "onBqClick"?: (event: BqTagCustomEvent<HTMLBqTagElement>) => void;
@@ -3048,6 +3044,10 @@ declare namespace LocalJSX {
           * If true, the tag component will be shown
          */
         "open"?: boolean;
+        /**
+          * If true, the tag component can be removed
+         */
+        "removable"?: boolean;
         /**
           * If true, the option is selected and active
          */

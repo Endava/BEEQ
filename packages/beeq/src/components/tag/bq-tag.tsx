@@ -40,7 +40,7 @@ export class BqTag {
   @Prop({ reflect: true }) hasColor: boolean;
 
   /** If true, the tag component can be removed */
-  @Prop({ reflect: true }) isRemovable: boolean;
+  @Prop({ reflect: true }) removable: boolean;
 
   /** If true, the tag component will be shown */
   @Prop({ reflect: true, mutable: true }) open: boolean;
@@ -138,11 +138,7 @@ export class BqTag {
   };
 
   private handleClick = (event: Event) => {
-    if (this.disabled) {
-      event.preventDefault();
-      event.stopPropagation();
-      return;
-    }
+    if (this.removable) return;
 
     const ev = this.bqClick.emit(this.el);
     if (!ev.defaultPrevented) {
@@ -213,7 +209,7 @@ export class BqTag {
           >
             <slot />
           </div>
-          {this.isRemovable && !this.hasColor && !this.disabled && (
+          {this.removable && !this.hasColor && !this.disabled && (
             <bq-button class="bq-tag__close" appearance="text" size="small" onClick={this.handleHide} part="btn-close">
               <bq-icon size={this.iconSize} name="x-circle" />
             </bq-button>
