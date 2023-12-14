@@ -1013,10 +1013,6 @@ export namespace Components {
          */
         "hasColor": boolean;
         /**
-          * If true, the tag component has an icon
-         */
-        "hasIcon": boolean;
-        /**
           * Method to be called to remove the tag component
          */
         "hide": () => Promise<void>;
@@ -3024,10 +3020,6 @@ declare namespace LocalJSX {
           * If true, the tag component has color style
          */
         "hasColor"?: boolean;
-        /**
-          * If true, the tag component has an icon
-         */
-        "hasIcon"?: boolean;
         /**
           * If true, the tag component can be removed
          */

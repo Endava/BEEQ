@@ -96,10 +96,6 @@
   }
 }
 
-.bq-tag__icon {
-  @apply inline-flex;
-}
-
 .bq-tag__close::part(button) {
   @apply pointer-events-none h-fit border-0 p-0;
 }

@@ -1,7 +1,13 @@
-import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State, Watch } from '@stencil/core';
 
 import { SIZE_TO_VALUE_MAP, TAG_SIZE, TAG_TYPE, TAG_VARIANT, TTagSize, TTagType, TTagVariant } from './bq-tag.types';
-import { validatePropValue } from '../../shared/utils';
+import { hasSlotContent, validatePropValue } from '../../shared/utils';
+
+/**
+ * @part wrapper - The wrapper container `<div>` of the element inside the shadow DOM.
+ * @part prefix - The `<span>` tag element that acts as prefix container (when icon exists in front of tag).
+ * @part text - The `<div>` element containing the text of the tag component.
+ */
 @Component({
   tag: 'bq-tag',
   styleUrl: './scss/bq-tag.scss',
@@ -10,6 +16,8 @@ import { validatePropValue } from '../../shared/utils';
 export class BqTag {
   // Own Properties
   // ====================
+
+  private prefixElem: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -20,14 +28,13 @@ export class BqTag {
   // Inlined decorator, alphabetical order
   // =======================================
 
+  @State() private hasPrefix = false;
+
   // Public Property API
   // ========================
 
   /** The type of the tag component */
   @Prop({ reflect: true }) size: TTagSize = 'medium';
-
-  /** If true, the tag component has an icon */
-  @Prop({ reflect: true }) hasIcon: boolean;
 
   /** If true, the tag component has color style */
   @Prop({ reflect: true }) hasColor: boolean;
@@ -161,6 +168,10 @@ export class BqTag {
     this.bqKeyDown.emit(event);
   };
 
+  private handleSlotChange = () => {
+    this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -180,28 +191,29 @@ export class BqTag {
             [`bq-tag__wrapper--${this.size} font-medium leading-regular`]: true,
             [`bq-tag__${this.type}__${this.variant}`]: this.hasColor,
           }}
-          aria-selected={this.selected}
-          aria-disabled={this.disabled}
           onClick={this.handleClick}
           onFocus={this.handleFocus}
           onKeyDown={this.handleOnKeyDown}
-          role="tab"
+          role="button"
           part="wrapper"
           tabindex={this.disabled ? '-1' : '0'}
         >
-          <div class={{ 'bq-tag__icon': true, '!hidden': !this.hasIcon }}>
-            <slot name="icon">
-              <bq-icon size={this.iconSize} name="star" part="icon" exportparts="base,svg" />
-            </slot>
-          </div>
+          <span
+            class={{ 'inline-flex': true, '!hidden': !this.hasPrefix }}
+            ref={(spanElem) => (this.prefixElem = spanElem)}
+            part="prefix"
+          >
+            <slot name="prefix" onSlotchange={this.handleSlotChange} />
+          </span>
           <div
             class={{
               'text-xs': this.size === 'extra_small',
               'text-s': this.size === 'small',
               'text-m': this.size === 'medium',
             }}
+            part="text"
           >
-            <slot name="tag" />
+            <slot />
           </div>
           {this.isRemovable && !this.hasColor && !this.disabled && (
             <bq-button
