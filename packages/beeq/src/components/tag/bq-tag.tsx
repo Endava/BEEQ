@@ -137,7 +137,7 @@ export class BqTag {
     }
   };
 
-  private handleClick = (event: Event) => {
+  private handleClick = () => {
     if (this.removable) return;
 
     const ev = this.bqClick.emit(this.el);
@@ -183,10 +183,10 @@ export class BqTag {
           class={{
             'bq-tag gap-xs rounded-s px-s py-xs2 font-medium leading-regular': true,
             active: !this.disabled && this.selected,
-            disabled: this.disabled,
             'gap-xs2 rounded-xs px-xs py-xs3': this.size !== 'medium',
             [`bq-tag__${this.type}__${this.variant}`]: this.hasColor,
           }}
+          disabled={this.disabled}
           onClick={this.handleClick}
           onFocus={this.handleFocus}
           onKeyDown={this.handleOnKeyDown}

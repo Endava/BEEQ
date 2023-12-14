@@ -3,5 +3,6 @@
 /* -------------------------------------------------------------------------- */
 
 :host {
+  --bq-tag--background-color: theme('colors.ui.secondary');
   --bq-tag--border-width: 1px;
 }

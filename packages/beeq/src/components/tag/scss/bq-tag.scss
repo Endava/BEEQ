@@ -13,19 +13,15 @@
 }
 
 .bq-tag {
-  @apply inline-flex cursor-pointer flex-row items-center justify-center border-0 bg-ui-secondary;
-
+  @apply inline-flex cursor-pointer flex-row items-center justify-center border-0 bg-[--bq-tag--background-color] transition-colors duration-300 ease-in-out;
   // Focus
-  @apply [&:not(.disabled)]:focus-visible:focus;
-
+  @apply focus-within:focus focus-visible:focus;
   // Hover
-  @apply [&:not(.disabled)]:hover:bg-ui-secondary-hover;
-
-  // Active / Selected
-  @apply [&.active:not(.disabled)]:bg-ui-brand [&.active:not(.disabled)]:text-text-primary-alt;
-
+  @apply hover:enabled:bg-[color-mix(in_srgb,_var(--bq-tag--background-color),_white_20%)];
+  // Active/Selected
+  @apply [&.active]:text-text-primary-alt [&.active]:[--bq-tag--background-color:--bq-ui--brand];
   // Disabled
-  @apply [&.disabled]:cursor-not-allowed [&.disabled]:border-none [&.disabled]:bg-ui-secondary-disabled [&.disabled]:text-text-primary-disabled;
+  @apply disabled:cursor-not-allowed disabled:border-none disabled:bg-ui-secondary-disabled disabled:text-text-primary-disabled;
 }
 
 /** 
