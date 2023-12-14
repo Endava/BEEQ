@@ -13,7 +13,7 @@
 }
 
 .bq-tag {
-  @apply inline-flex cursor-pointer flex-row items-center justify-center bg-ui-secondary;
+  @apply inline-flex cursor-pointer flex-row items-center justify-center border-0 bg-ui-secondary;
 
   // Focus
   @apply [&:not(.disabled)]:focus-visible:focus;
@@ -21,25 +21,11 @@
   // Hover
   @apply [&:not(.disabled)]:hover:bg-ui-secondary-hover;
 
-  // Active
+  // Active / Selected
   @apply [&.active:not(.disabled)]:bg-ui-brand [&.active:not(.disabled)]:text-text-primary-alt;
 
   // Disabled
   @apply [&.disabled]:cursor-not-allowed [&.disabled]:border-none [&.disabled]:bg-ui-secondary-disabled [&.disabled]:text-text-primary-disabled;
-}
-
-.bq-tag__wrapper {
-  &--extra_small {
-    @apply gap-xs2 rounded-xs px-xs py-xs3;
-  }
-
-  &--small {
-    @apply gap-xs2 rounded-xs px-xs py-xs3;
-  }
-
-  &--medium {
-    @apply gap-xs rounded-s px-s py-xs2;
-  }
 }
 
 /** 

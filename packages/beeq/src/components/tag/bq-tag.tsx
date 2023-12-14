@@ -183,20 +183,18 @@ export class BqTag {
         aria-hidden={!this.open ? 'true' : 'false'}
         hidden={!this.open ? 'true' : 'false'}
       >
-        <div
+        <button
           class={{
-            'bq-tag': true,
-            disabled: this.disabled,
+            'bq-tag gap-xs rounded-s px-s py-xs2 font-medium leading-regular': true,
             active: !this.disabled && this.selected,
-            [`bq-tag__wrapper--${this.size} font-medium leading-regular`]: true,
+            disabled: this.disabled,
+            'gap-xs2 rounded-xs px-xs py-xs3': this.size !== 'medium',
             [`bq-tag__${this.type}__${this.variant}`]: this.hasColor,
           }}
           onClick={this.handleClick}
           onFocus={this.handleFocus}
           onKeyDown={this.handleOnKeyDown}
-          role="button"
           part="wrapper"
-          tabindex={this.disabled ? '-1' : '0'}
         >
           <span
             class={{ 'inline-flex': true, '!hidden': !this.hasPrefix }}
@@ -216,17 +214,11 @@ export class BqTag {
             <slot />
           </div>
           {this.isRemovable && !this.hasColor && !this.disabled && (
-            <bq-button
-              class="bq-tag__close"
-              appearance="text"
-              size="small"
-              onClick={() => this.hide()}
-              part="btn-close"
-            >
+            <bq-button class="bq-tag__close" appearance="text" size="small" onClick={this.handleHide} part="btn-close">
               <bq-icon size={this.iconSize} name="x-circle" />
             </bq-button>
           )}
-        </div>
+        </button>
       </Host>
     );
   }
