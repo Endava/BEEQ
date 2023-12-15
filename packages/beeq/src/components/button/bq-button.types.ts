@@ -9,3 +9,6 @@ export type TButtonAppearance = (typeof BUTTON_APPEARANCE)[number];
 
 export const BUTTON_VARIANT = ['standard', 'ghost', 'danger'] as const;
 export type TButtonVariant = (typeof BUTTON_VARIANT)[number];
+
+export const BUTTON_BORDER_RADIUS = ['none', 'xs2', 'xs', 's', 'm', 'l', 'full'] as const;
+export type TButtonBorderRadius = (typeof BUTTON_BORDER_RADIUS)[number];
