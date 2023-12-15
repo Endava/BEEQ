@@ -4,6 +4,14 @@ import { TTextareaAutoCapitalize, TTextareaWrap } from './bq-textarea.types';
 import { debounce, hasSlotContent, isHTMLElement, TDebounce } from '../../shared/utils';
 import { TInputValidation } from '../input/bq-input.types';
 
+/**
+ * @part base - The component's base wrapper.
+ * @part input - The textarea element.
+ * @part label - The textarea label.
+ * @part helper-info - The helper info container.
+ * @part helper-text - The helper text.
+ * @part helper-counter - The helper counter.
+ */
 @Component({
   tag: 'bq-textarea',
   styleUrl: './scss/bq-textarea.scss',
@@ -248,11 +256,12 @@ export class BqTextarea {
 
   render() {
     return (
-      <div class="bq-textarea flex flex-auto flex-col">
+      <div class="bq-textarea flex flex-auto flex-col" part="base">
         <label
           class={{ 'bq-textarea__label': true, '!hidden': !this.hasLabel }}
           htmlFor={this.name ?? this.fallbackId}
           ref={(label: HTMLLabelElement) => (this.labelElem = label)}
+          part="label"
         >
           <slot name="label" onSlotchange={this.handleLabelSlotChange} />
         </label>
@@ -282,6 +291,7 @@ export class BqTextarea {
           onChange={this.handleChange}
           onFocus={this.handleFocus}
           onInput={this.handleInput}
+          part="input"
         >
           {this.value}
         </textarea>
@@ -291,11 +301,16 @@ export class BqTextarea {
             [`validation-${this.validationStatus}`]: true,
             '!hidden': !this.hasHelperText && !this.maxlength,
           }}
+          part="helper-info"
         >
-          <span class="bq-textarea__helper--text" ref={(span: HTMLElement) => (this.helperTextElem = span)}>
+          <span
+            class="bq-textarea__helper--text"
+            ref={(span: HTMLElement) => (this.helperTextElem = span)}
+            part="helper-text"
+          >
             <slot name="helper-text" onSlotchange={this.handleHelperTextSlotChange} />
           </span>
-          <span class={{ 'bq-textarea__helper--counter': true, '!hidden': !this.maxlength }}>
+          <span class={{ 'bq-textarea__helper--counter': true, '!hidden': !this.maxlength }} part="helper-counter">
             {this.numberOfCharacters}/{this.maxlength}
           </span>
         </div>

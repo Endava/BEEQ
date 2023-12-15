@@ -41,6 +41,18 @@
 | `bqInput`  | Callback handler emitted when the textarea value changes. This handler is called whenever the user types or pastes text into the textarea field.                                                                                           | `CustomEvent<{ value: string; el: HTMLBqTextareaElement; }>` |
 
 
+## Shadow Parts
+
+| Part               | Description                   |
+| ------------------ | ----------------------------- |
+| `"base"`           | The component's base wrapper. |
+| `"helper-counter"` | The helper counter.           |
+| `"helper-info"`    | The helper info container.    |
+| `"helper-text"`    | The helper text.              |
+| `"input"`          | The textarea element.         |
+| `"label"`          | The textarea label.           |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
