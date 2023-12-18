@@ -38,6 +38,7 @@ jobs:
       - name: 🚚 Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.5.0
         with:
+          branch: storybook
           folder: ./dist/storybook/beeq
           clean: true
           token: ${{ secrets.GITHUB_TOKEN }}
