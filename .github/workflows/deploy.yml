@@ -1,0 +1,43 @@
+name: Deploy Storybook to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+
+jobs:
+  main:
+    name: 📘 Deploy Storybook to GitHub Pages
+    runs-on: ubuntu-latest
+    env:
+      NX_BRANCH: ${{ github.head_ref || github.ref_name }}
+    steps:
+      - name: 🛎 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🔍 Check GH_TOKEN
+        uses: ./.github/actions/check-token
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🛠 Setup Volta
+        uses: volta-cli/action@v4
+
+      - name: 💫 Load and cache dependencies
+        uses: ./.github/actions/cache-deps
+
+      - name: ⏳ Build
+        run: npm run build
+        shell: bash
+
+      - name: 🚚 Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4.5.0
+        with:
+          folder: ./dist/storybook/beeq
+          clean: true
+          token: ${{ secrets.GITHUB_TOKEN }}
