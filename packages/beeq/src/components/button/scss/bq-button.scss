@@ -85,7 +85,7 @@
 /* -------------------------------------------------------------------------- */
 
 .small {
-  @apply h-[var(--bq-button--small-height)] px-[var(--bq-button--small-paddingX)] py-[var(--bq-button--small-paddingY)];
+  @apply h-[var(--bq-button--small-height)] px-[var(--bq-button--small-paddingX)] py-[var(--bq-button--small-paddingY)] text-[length:--bq-button--small-font-size];
 }
 
 .medium {
