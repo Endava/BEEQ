@@ -1,11 +1,11 @@
 import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State, Watch } from '@stencil/core';
 
 import {
-  getTagColor,
   SIZE_TO_VALUE_MAP,
   TAG_SIZE,
   TAG_TYPE,
   TAG_VARIANT,
+  tagColors,
   TTagSize,
   TTagType,
   TTagVariant,
@@ -169,6 +169,10 @@ export class BqTag {
     return SIZE_TO_VALUE_MAP[this.size] || SIZE_TO_VALUE_MAP.medium;
   }
 
+  private get tagColor(): (type: TTagType, variant: TTagVariant) => string {
+    return (type, variant) => tagColors[type][variant];
+  }
+
   private handleOnKeyDown = (event: KeyboardEvent) => {
     this.bqKeyDown.emit(event);
   };
@@ -223,7 +227,7 @@ export class BqTag {
               <bq-icon
                 size={this.iconSize}
                 name="x-circle"
-                color={this.hasColor ? getTagColor(this.type, this.variant) : undefined}
+                color={this.hasColor ? this.tagColor(this.type, this.variant) : undefined}
               />
             </bq-button>
           )}

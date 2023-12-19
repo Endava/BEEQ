@@ -14,7 +14,7 @@ export const SIZE_TO_VALUE_MAP: Record<TTagSize, number> = {
 };
 
 // the definition of colors associated with each type and variant of the label
-const tagColors = {
+export const tagColors = {
   default: {
     default: 'text--primary',
     filled: 'text--primary-alt',
@@ -36,6 +36,3 @@ const tagColors = {
     filled: 'text--primary-alt',
   },
 } as const;
-
-// the function that returns the color based on the type and variant
-export const getTagColor = (type: TTagType, variant: TTagVariant): string => tagColors[type][variant];
