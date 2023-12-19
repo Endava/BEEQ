@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Prop, State, Watch } from '@stencil/core';
 
 import {
   BUTTON_APPEARANCE,
@@ -6,6 +6,7 @@ import {
   BUTTON_TYPE,
   BUTTON_VARIANT,
   TButtonAppearance,
+  TButtonBorderRadius,
   TButtonSize,
   TButtonType,
   TButtonVariant,
@@ -15,9 +16,9 @@ import { hasSlotContent, isDefined, isNil, validatePropValue } from '../../share
 /**
  * Buttons are designed for users to take action on a page or a screen.
  *
- * @part button - The HTML button used under the hood.
+ * @part button - The `<a>` or `<button>` HTML element used under the hood.
  * @part prefix - The `<span>` tag element that acts as prefix container.
- * @part label - The `<span>` tag element that renderd the text of the button.
+ * @part label - The `<span>` tag element that renders the text of the button.
  * @part suffix - The `<span>` tag element that acts as suffix container.
  */
 @Component({
@@ -52,6 +53,9 @@ export class BqButton {
 
   /** If `true`, it will make the button fit to its parent width. */
   @Prop({ reflect: true }) block: boolean = false;
+
+  /** The corner radius of the button */
+  @Prop({ reflect: true }) border: TButtonBorderRadius = 'm';
 
   /** If true, the button will be disabled (no interaction allowed) */
   @Prop() disabled = false;
@@ -179,47 +183,57 @@ export class BqButton {
   render() {
     const isLink = isDefined(this.href);
     const TagElem = isLink ? 'a' : 'button';
+    const style = {
+      ...(this.border && { '--bq-button--border-radius': `var(--bq-radius--${this.border})` }),
+    };
 
     return (
-      <TagElem
-        class={{
-          'bq-button': true,
-          [`bq-button--${this.appearance}`]: true,
-          [`content-${this.justifyContent}`]: true,
-          [`${this.variant}`]: true,
-          [`${this.size}`]: true,
-          block: this.block,
-          disabled: this.disabled,
-          'has-prefix': this.hasPrefix,
-          'has-suffix': this.hasSuffix,
-          loading: this.loading,
-        }}
-        aria-disabled={this.disabled ? 'true' : 'false'}
-        disabled={this.disabled}
-        download={isLink ? this.download : undefined}
-        href={isLink ? this.href : undefined}
-        part="button"
-        rel={isLink && this.target ? 'noreferrer noopener' : undefined}
-        target={isLink ? this.target : undefined}
-        type={this.type}
-        tabIndex={this.disabled ? -1 : 0}
-        onBlur={this.handleBlur}
-        onFocus={this.handleFocus}
-        onClick={this.handleClick}
-      >
-        <span class="bq-button__prefix" ref={(spanElem) => (this.prefixElem = spanElem)} part="prefix">
-          <slot name="prefix" onSlotchange={this.handleSlotChange} />
-        </span>
-        <span class="bq-button__label" part="label">
-          <slot />
-        </span>
-        <span class="bq-button__suffix" ref={(spanElem) => (this.suffixElem = spanElem)} part="suffix">
-          <slot name="suffix" onSlotchange={this.handleSlotChange} />
-        </span>
-        {this.loading && (
-          <bq-icon class="bq-button__loader" name="spinner-gap" role="img" title={`${this.appearance} button loader`} />
-        )}
-      </TagElem>
+      <Host style={style}>
+        <TagElem
+          class={{
+            'bq-button': true,
+            [`bq-button--${this.appearance}`]: true,
+            [`content-${this.justifyContent}`]: true,
+            [`${this.variant}`]: true,
+            [`${this.size}`]: true,
+            block: this.block,
+            disabled: this.disabled,
+            'has-prefix': this.hasPrefix,
+            'has-suffix': this.hasSuffix,
+            loading: this.loading,
+          }}
+          aria-disabled={this.disabled ? 'true' : 'false'}
+          disabled={this.disabled}
+          download={isLink ? this.download : undefined}
+          href={isLink ? this.href : undefined}
+          part="button"
+          rel={isLink && this.target ? 'noreferrer noopener' : undefined}
+          target={isLink ? this.target : undefined}
+          type={this.type}
+          tabIndex={this.disabled ? -1 : 0}
+          onBlur={this.handleBlur}
+          onFocus={this.handleFocus}
+          onClick={this.handleClick}
+        >
+          <span class="bq-button__prefix" ref={(spanElem) => (this.prefixElem = spanElem)} part="prefix">
+            <slot name="prefix" onSlotchange={this.handleSlotChange} />
+          </span>
+          <span class="bq-button__label" part="label">
+            <slot />
+          </span>
+          <span class="bq-button__suffix" ref={(spanElem) => (this.suffixElem = spanElem)} part="suffix">
+            <slot name="suffix" onSlotchange={this.handleSlotChange} />
+          </span>
+          {this.loading && (
+            <bq-icon
+              class="bq-button__loader"
+              name="spinner-gap"
+              role="img"
+              title={`${this.appearance} button loader`}
+            />
+          )}
+        </TagElem>
+      </Host>
     );
   }
 }
