@@ -9,7 +9,7 @@ import { TAccordionAppearance, TAccordionSize } from "./components/accordion/bq-
 import { TAlertType } from "./components/alert/bq-alert.types";
 import { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 import { TBadgeSize } from "./components/badge/bq-badge.types";
-import { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
+import { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 import { TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 import { FloatingUIPlacement } from "./services/interfaces";
@@ -32,7 +32,7 @@ export { TAccordionAppearance, TAccordionSize } from "./components/accordion/bq-
 export { TAlertType } from "./components/alert/bq-alert.types";
 export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 export { TBadgeSize } from "./components/badge/bq-badge.types";
-export { TButtonAppearance, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
+export { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 export { TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 export { FloatingUIPlacement } from "./services/interfaces";
@@ -202,6 +202,10 @@ export namespace Components {
           * If `true`, it will make the button fit to its parent width.
          */
         "block": boolean;
+        /**
+          * The corner radius of the button
+         */
+        "border": TButtonBorderRadius;
         /**
           * If true, the button will be disabled (no interaction allowed)
          */
@@ -2017,6 +2021,10 @@ declare namespace LocalJSX {
           * If `true`, it will make the button fit to its parent width.
          */
         "block"?: boolean;
+        /**
+          * The corner radius of the button
+         */
+        "border"?: TButtonBorderRadius;
         /**
           * If true, the button will be disabled (no interaction allowed)
          */
