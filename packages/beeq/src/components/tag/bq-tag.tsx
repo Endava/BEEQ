@@ -2,10 +2,10 @@ import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State, 
 
 import {
   SIZE_TO_VALUE_MAP,
+  TAG_COLORS,
   TAG_SIZE,
   TAG_TYPE,
   TAG_VARIANT,
-  tagColors,
   TTagSize,
   TTagType,
   TTagVariant,
@@ -170,7 +170,7 @@ export class BqTag {
   }
 
   private get tagColor(): (type: TTagType, variant: TTagVariant) => string {
-    return (type, variant) => tagColors[type][variant];
+    return (type, variant) => TAG_COLORS[type][variant];
   }
 
   private handleOnKeyDown = (event: KeyboardEvent) => {

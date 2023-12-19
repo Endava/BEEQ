@@ -4,7 +4,7 @@ export type TTagSize = (typeof TAG_SIZE)[number];
 export const TAG_TYPE = ['default', 'success', 'warning', 'error', 'info'] as const;
 export type TTagType = (typeof TAG_TYPE)[number];
 
-export const TAG_VARIANT = ['default', 'filled'];
+export const TAG_VARIANT = ['default', 'filled'] as const;
 export type TTagVariant = (typeof TAG_VARIANT)[number];
 
 export const SIZE_TO_VALUE_MAP: Record<TTagSize, number> = {
@@ -14,7 +14,7 @@ export const SIZE_TO_VALUE_MAP: Record<TTagSize, number> = {
 };
 
 // the definition of colors associated with each type and variant of the label
-export const tagColors = {
+export const TAG_COLORS = {
   default: {
     default: 'text--primary',
     filled: 'text--primary-alt',
