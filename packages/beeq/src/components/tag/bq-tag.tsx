@@ -1,6 +1,15 @@
 import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State, Watch } from '@stencil/core';
 
-import { SIZE_TO_VALUE_MAP, TAG_SIZE, TAG_TYPE, TAG_VARIANT, TTagSize, TTagType, TTagVariant } from './bq-tag.types';
+import {
+  getTagColor,
+  SIZE_TO_VALUE_MAP,
+  TAG_SIZE,
+  TAG_TYPE,
+  TAG_VARIANT,
+  TTagSize,
+  TTagType,
+  TTagVariant,
+} from './bq-tag.types';
 import { hasSlotContent, validatePropValue } from '../../shared/utils';
 
 /**
@@ -209,9 +218,13 @@ export class BqTag {
           >
             <slot />
           </div>
-          {this.removable && !this.hasColor && !this.disabled && (
+          {this.removable && !this.disabled && (
             <bq-button class="bq-tag__close" appearance="text" size="small" onClick={this.handleHide} part="btn-close">
-              <bq-icon size={this.iconSize} name="x-circle" />
+              <bq-icon
+                size={this.iconSize}
+                name="x-circle"
+                color={this.hasColor ? getTagColor(this.type, this.variant) : undefined}
+              />
             </bq-button>
           )}
         </button>
