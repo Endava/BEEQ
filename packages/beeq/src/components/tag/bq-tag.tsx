@@ -195,7 +195,7 @@ export class BqTag {
         <button
           class={{
             'bq-tag gap-xs rounded-s px-s py-xs2 font-medium leading-regular': true,
-            active: !this.disabled && this.clickable && !this.hasColor,
+            active: !this.disabled && this.clickable && !this.hasColor && !this.removable,
             'gap-xs2 rounded-xs px-xs py-xs3': this.size !== 'medium',
             [`bq-tag__${this.type}__${this.variant}`]: this.hasColor,
           }}
