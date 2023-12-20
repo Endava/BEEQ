@@ -12,7 +12,9 @@ import { hasSlotContent, validatePropValue } from '../../shared/utils';
 @Component({
   tag: 'bq-tag',
   styleUrl: './scss/bq-tag.scss',
-  shadow: true,
+  shadow: {
+    delegatesFocus: true,
+  },
 })
 export class BqTag {
   // Own Properties
@@ -62,12 +64,10 @@ export class BqTag {
   // =======================
 
   @Watch('size')
-  @Watch('type')
   @Watch('variant')
   checkPropValues() {
     validatePropValue(TAG_SIZE, 'medium', this.el, 'size');
-    validatePropValue(TAG_TYPE, 'default', this.el, 'type');
-    validatePropValue(TAG_VARIANT, 'default', this.el, 'variant');
+    validatePropValue(TAG_VARIANT, 'filled', this.el, 'variant');
   }
 
   // Events section
@@ -85,9 +85,6 @@ export class BqTag {
 
   /** Handler to be called when tag is focused */
   @Event() bqFocus: EventEmitter<HTMLBqTagElement>;
-
-  /** Handler to be called when the tag key is pressed */
-  @Event() bqKeyDown: EventEmitter<KeyboardEvent>;
 
   // Component lifecycle events
   // Ordered by their natural call order
