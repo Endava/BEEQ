@@ -1,4 +1,4 @@
-export const TAG_SIZE = ['extra_small', 'small', 'medium'] as const;
+export const TAG_SIZE = ['xsmall', 'small', 'medium'] as const;
 export type TTagSize = (typeof TAG_SIZE)[number];
 
 export const TAG_COLOR = ['error', 'gray', 'info', 'success', 'warning'] as const;

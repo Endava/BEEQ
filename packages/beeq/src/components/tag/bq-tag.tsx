@@ -206,7 +206,7 @@ export class BqTag {
           </span>
           <div
             class={{
-              'text-xs': this.size === 'extra_small',
+              'text-xs': this.size === 'xsmall',
               'text-s': this.size === 'small',
               'text-m': this.size === 'medium',
             }}
