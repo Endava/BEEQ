@@ -181,6 +181,18 @@ export class BqTag {
     this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
   };
 
+  private get isClickable(): boolean {
+    return this.clickable && !this.color && !this.removable;
+  }
+
+  private get isRemovable(): boolean {
+    return this.removable && !this.isClickable;
+  }
+
+  private get isHidden(): boolean {
+    return this.isRemovable && this.hidden;
+  }
+
   // render() function
   // Always the last one in the class.
   // ===================================
