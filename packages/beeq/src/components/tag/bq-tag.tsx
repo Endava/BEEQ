@@ -1,15 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State, Watch } from '@stencil/core';
 
-import {
-  SIZE_TO_VALUE_MAP,
-  TAG_COLORS,
-  TAG_SIZE,
-  TAG_TYPE,
-  TAG_VARIANT,
-  TTagSize,
-  TTagType,
-  TTagVariant,
-} from './bq-tag.types';
+import { TAG_SIZE, TAG_VARIANT, TTagColor, TTagSize, TTagVariant } from './bq-tag.types';
+import { iconSize, textColor } from './helper';
 import { hasSlotContent, validatePropValue } from '../../shared/utils';
 
 /**
@@ -42,29 +34,29 @@ export class BqTag {
   // Public Property API
   // ========================
 
-  /** The type of the tag component */
+  /** The color style of the Tag */
+  @Prop({ reflect: true }) color: TTagColor;
+
+  /** The size of the Tag component */
   @Prop({ reflect: true }) size: TTagSize = 'medium';
 
-  /** If true, the tag component has color style */
-  @Prop({ reflect: true }) hasColor: boolean;
-
-  /** If true, the tag component can be removed */
+  /** If true, the Tag component can be removed */
   @Prop({ reflect: true }) removable: boolean = false;
 
-  /** If true, the tag component will be shown */
-  @Prop({ reflect: true, mutable: true }) open: boolean;
+  /** If true, the Tag component will hidden (only if removable = `true`) */
+  @Prop({ reflect: true, mutable: true }) hidden: boolean;
 
-  /** The default type of the tag component */
-  @Prop({ reflect: true }) type: TTagType = 'default';
+  /** The variant of Tag to apply on top of the variant */
+  @Prop({ reflect: true }) variant: TTagVariant = 'filled';
 
-  /** The variant of tag to apply on top of the variant */
-  @Prop({ reflect: true }) variant: TTagVariant = 'default';
-
-  /** If true, the button will be disabled (no interaction allowed) */
+  /** If true, the Tag will be disabled (only if clickable = `true`, no interaction allowed) */
   @Prop({ reflect: true }) disabled?: boolean = false;
 
-  /** If true, the Tag is clickable and active */
+  /** If true, the Tag can be clickable */
   @Prop({ reflect: true }) clickable: boolean = false;
+
+  /** If true, the Tag is selected (only if clickable = `true`) */
+  @Prop({ reflect: true, mutable: true }) selected: boolean = false;
 
   // Prop lifecycle events
   // =======================
@@ -165,18 +157,6 @@ export class BqTag {
     this.bqFocus.emit(this.el);
   };
 
-  private get iconSize(): number {
-    return SIZE_TO_VALUE_MAP[this.size] || SIZE_TO_VALUE_MAP.medium;
-  }
-
-  private get tagColor(): (type: TTagType, variant: TTagVariant) => string {
-    return (type, variant) => TAG_COLORS[type][variant];
-  }
-
-  private handleOnKeyDown = (event: KeyboardEvent) => {
-    this.bqKeyDown.emit(event);
-  };
-
   private handleSlotChange = () => {
     this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
   };
@@ -199,22 +179,22 @@ export class BqTag {
 
   render() {
     return (
-      <Host
-        class={{ 'is-hidden': !this.open }}
-        aria-hidden={!this.open ? 'true' : 'false'}
-        hidden={!this.open ? 'true' : 'false'}
-      >
+      <Host aria-hidden={this.isHidden ? 'true' : 'false'} hidden={this.isHidden ? 'true' : 'false'}>
         <button
           class={{
             'bq-tag gap-xs rounded-s px-s py-xs2 font-medium leading-regular': true,
-            active: !this.disabled && this.clickable && !this.hasColor && !this.removable,
+            [`bq-tag__${this.color || 'default'} bq-tag__${this.variant}`]: true,
+            'is-clickable': this.isClickable,
+            'is-removable': this.removable,
+            // Active/Selected state when clickable
+            active: this.isClickable && this.selected,
+            // Size
             'gap-xs2 rounded-xs px-xs py-xs3': this.size !== 'medium',
-            [`bq-tag__${this.type}__${this.variant}`]: this.hasColor,
           }}
           disabled={this.disabled}
           onClick={this.handleClick}
           onFocus={this.handleFocus}
-          onKeyDown={this.handleOnKeyDown}
+          tabindex={this.isClickable ? 0 : -1}
           part="wrapper"
         >
           <span
@@ -234,12 +214,12 @@ export class BqTag {
           >
             <slot />
           </div>
-          {this.removable && !this.disabled && (
+          {this.isRemovable && !this.disabled && (
             <bq-button class="bq-tag__close" appearance="text" size="small" onClick={this.handleHide} part="btn-close">
               <bq-icon
-                size={this.iconSize}
+                size={iconSize(this.size)}
                 name="x-circle"
-                color={this.hasColor ? this.tagColor(this.type, this.variant) : undefined}
+                color={this.color ? textColor(this.color)[this.variant] : 'text--primary'}
               />
             </bq-button>
           )}
