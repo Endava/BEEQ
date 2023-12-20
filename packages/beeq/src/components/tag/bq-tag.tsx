@@ -125,34 +125,37 @@ export class BqTag {
   // =======================================================
 
   private handleHide = () => {
+    if (!this.isRemovable) return;
+
     const ev = this.bqHide.emit(this.el);
     if (!ev.defaultPrevented) {
-      this.open = false;
+      this.hidden = true;
     }
   };
 
   private handleShow = () => {
+    if (!this.isRemovable) return;
+
     const ev = this.bqShow.emit(this.el);
     if (!ev.defaultPrevented) {
-      this.open = true;
+      this.hidden = false;
     }
   };
 
   private handleClick = () => {
-    if (!this.removable && !this.hasColor) {
-      const ev = this.bqClick.emit(this.el);
-      if (!ev.defaultPrevented) {
-        this.clickable = !this.clickable;
-      }
+    // If the tag is not clickable or the tag is disabled, we don't want to handle the click
+    if (!this.isClickable || this.disabled) return;
+
+    // Emit a click event on the element
+    const ev = this.bqClick.emit(this.el);
+    // If the event was not prevented, toggle the clickable state
+    if (!ev.defaultPrevented) {
+      this.selected = !this.selected;
     }
   };
 
-  private handleFocus = (event: Event) => {
-    if (this.disabled) {
-      event.preventDefault();
-      event.stopPropagation();
-      return;
-    }
+  private handleFocus = () => {
+    if (!this.isClickable) return;
 
     this.bqFocus.emit(this.el);
   };
