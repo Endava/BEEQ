@@ -23,27 +23,25 @@ describe('bq-tag', () => {
 
   it('should render as hidden', async () => {
     const page = await newE2EPage({
-      html: `<bq-tag></bq-tag>`,
+      html: `<bq-tag removable hidden></bq-tag>`,
     });
 
     const element = await page.find('bq-tag');
     expect(element).toEqualAttribute('aria-hidden', 'true');
-    expect(element).toHaveClass('is-hidden');
   });
 
-  it('should render as hidden with `open="false"`', async () => {
+  it('should render as hidden with `hidden="true"`', async () => {
     const page = await newE2EPage({
-      html: `<bq-tag open="false"></bq-tag>`,
+      html: `<bq-tag removable hidden="true"></bq-tag>`,
     });
 
     const element = await page.find('bq-tag');
     expect(element).toEqualAttribute('aria-hidden', 'true');
-    expect(element).toHaveClass('is-hidden');
   });
 
   it('should render as open', async () => {
     const page = await newE2EPage({
-      html: `<bq-tag open></bq-tag>`,
+      html: `<bq-tag></bq-tag>`,
     });
 
     const element = await page.find('bq-tag');
@@ -51,9 +49,9 @@ describe('bq-tag', () => {
     expect(element).not.toHaveClass('is-hidden');
   });
 
-  it('should render as open with `open="true"`', async () => {
+  it('should render as open with `hidden="false"`', async () => {
     const page = await newE2EPage({
-      html: `<bq-tag open="true"></bq-tag>`,
+      html: `<bq-tag hidden="false"></bq-tag>`,
     });
 
     const element = await page.find('bq-tag');
@@ -99,7 +97,7 @@ describe('bq-tag', () => {
   it('should respect design style', async () => {
     const page = await newE2EPage({
       html: `
-        <bq-tag size="extra_small">Tag</tag>
+        <bq-tag size="xsmall">Tag</tag>
         <bq-tag size="small">Tag</tag>
         <bq-tag size="medium">Tag</tag>
       `,
@@ -107,7 +105,7 @@ describe('bq-tag', () => {
 
     const styleProps = ['padding'] as const;
 
-    const extra_smallStyle = await computedStyle(page, 'bq-tag[size="extra_small"] >>> [part="wrapper"]', styleProps);
+    const extra_smallStyle = await computedStyle(page, 'bq-tag[size="xsmall"] >>> [part="wrapper"]', styleProps);
     const smallStyle = await computedStyle(page, 'bq-tag[size="small"] >>> [part="wrapper"]', styleProps);
     const mediumStyle = await computedStyle(page, 'bq-tag[size="medium"] >>> [part="wrapper"]', styleProps);
 
