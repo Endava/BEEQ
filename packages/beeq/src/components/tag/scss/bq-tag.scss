@@ -15,7 +15,7 @@
 .bq-tag {
   @apply inline-flex cursor-pointer flex-row items-center justify-center border-0 bg-[--bq-tag--background-color] transition-colors duration-300 ease-in-out;
   // Focus
-  @apply focus-within:focus focus-visible:focus;
+  @apply [&.active]:focus-within:focus [&.active]:focus-visible:focus;
   // Hover
   @apply hover:enabled:bg-[color-mix(in_srgb,_var(--bq-tag--background-color),_white_20%)];
   // Active/Selected

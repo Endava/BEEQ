@@ -1005,6 +1005,10 @@ export namespace Components {
     }
     interface BqTag {
         /**
+          * If true, the Tag is clickable and active
+         */
+        "clickable": boolean;
+        /**
           * If true, the button will be disabled (no interaction allowed)
          */
         "disabled"?: boolean;
@@ -1024,10 +1028,6 @@ export namespace Components {
           * If true, the tag component can be removed
          */
         "removable": boolean;
-        /**
-          * If true, the option is selected and active
-         */
-        "selected": boolean;
         /**
           * Method to be called to show the alert component
          */
@@ -3013,6 +3013,10 @@ declare namespace LocalJSX {
     }
     interface BqTag {
         /**
+          * If true, the Tag is clickable and active
+         */
+        "clickable"?: boolean;
+        /**
           * If true, the button will be disabled (no interaction allowed)
          */
         "disabled"?: boolean;
@@ -3048,10 +3052,6 @@ declare namespace LocalJSX {
           * If true, the tag component can be removed
          */
         "removable"?: boolean;
-        /**
-          * If true, the option is selected and active
-         */
-        "selected"?: boolean;
         /**
           * The type of the tag component
          */

@@ -18,7 +18,7 @@ const meta: Meta = {
     type: { control: 'select', options: [...TAG_TYPE] },
     variant: { control: 'select', options: [...TAG_VARIANT] },
     disabled: { control: 'boolean' },
-    selected: { control: 'boolean' },
+    clickable: { control: 'boolean' },
     removable: { control: 'boolean' },
     'has-color': { control: 'boolean' },
     // Event handlers
@@ -34,7 +34,7 @@ const meta: Meta = {
     type: 'default',
     variant: 'default',
     disabled: false,
-    selected: false,
+    clickable: false,
     removable: false,
     'has-color': false,
   },
@@ -53,7 +53,7 @@ export const Clickable: Story = {
           type=${args.type}
           variant=${args.variant}
           ?disabled=${args.disabled}
-          ?selected=${args.selected}
+          ?clickable=${args.clickable}
           ?has-color=${args['has-color']}
           ?removable=${args.removable}
           @bqClick=${args.bqClick}
@@ -68,7 +68,7 @@ export const Clickable: Story = {
           type=${args.type}
           variant=${args.variant}
           ?disabled=${args.disabled}
-          ?selected=${true}
+          ?clickable=${true}
           ?has-color=${args['has-color']}
           ?removable=${args.removable}
           @bqClick=${args.bqClick}
@@ -85,7 +85,7 @@ export const Clickable: Story = {
           type=${args.type}
           variant=${args.variant}
           ?disabled=${args.disabled}
-          ?selected=${args.selected}
+          ?clickable=${args.clickable}
           ?has-color=${args['has-color']}
           ?removable=${args.removable}
           @bqClick=${args.bqClick}
@@ -107,7 +107,7 @@ export const Clickable: Story = {
           type=${args.type}
           variant=${args.variant}
           ?disabled=${args.disabled}
-          ?selected=${true}
+          ?clickable=${true}
           ?has-color=${args['has-color']}
           ?removable=${args.removable}
           @bqClick=${args.bqClick}
@@ -140,6 +140,7 @@ export const Removable: Story = {
         type=${args.type}
         variant=${args.variant}
         ?disabled=${args.disabled}
+        ?clickable=${args.clickable}
         ?has-color=${args['has-color']}
         ?removable=${args.removable}
       >
@@ -151,6 +152,7 @@ export const Removable: Story = {
         type=${args.type}
         variant=${args.variant}
         ?disabled=${args.disabled}
+        ?clickable=${args.clickable}
         ?has-color=${args['has-color']}
         ?removable=${args.removable}
       >
@@ -180,6 +182,7 @@ export const Outline: Story = {
         type="success"
         variant="default"
         ?disabled=${args.disabled}
+        ?clickable=${args.clickable}
         ?has-color=${args['has-color']}
         ?removable=${args.removable}
       >
@@ -191,6 +194,7 @@ export const Outline: Story = {
         type="warning"
         variant="default"
         ?disabled=${args.disabled}
+        ?clickable=${args.clickable}
         ?has-color=${args['has-color']}
         ?removable=${args.removable}
       >
@@ -202,6 +206,7 @@ export const Outline: Story = {
         type="error"
         variant="default"
         ?disabled=${args.disabled}
+        ?clickable=${args.clickable}
         ?has-color=${args['has-color']}
         ?removable=${args.removable}
       >
@@ -213,6 +218,7 @@ export const Outline: Story = {
         type="info"
         variant="default"
         ?disabled=${args.disabled}
+        ?clickable=${args.clickable}
         ?has-color=${args['has-color']}
         ?removable=${args.removable}
       >
@@ -224,6 +230,7 @@ export const Outline: Story = {
         type="default"
         variant="default"
         ?disabled=${args.disabled}
+        ?clickable=${args.clickable}
         ?has-color=${args['has-color']}
         ?removable=${args.removable}
       >
@@ -246,6 +253,7 @@ export const Filled: Story = {
         type="success"
         variant="filled"
         ?disabled=${args.disabled}
+        ?clickable=${args.clickable}
         ?has-color=${args['has-color']}
         ?removable=${args.removable}
       >
@@ -257,6 +265,7 @@ export const Filled: Story = {
         type="warning"
         variant="filled"
         ?disabled=${args.disabled}
+        ?clickable=${args.clickable}
         ?has-color=${args['has-color']}
         ?removable=${args.removable}
       >
@@ -268,6 +277,7 @@ export const Filled: Story = {
         type="error"
         variant="filled"
         ?disabled=${args.disabled}
+        ?clickable=${args.clickable}
         ?has-color=${args['has-color']}
         ?removable=${args.removable}
       >
@@ -279,6 +289,7 @@ export const Filled: Story = {
         type="info"
         variant="filled"
         ?disabled=${args.disabled}
+        ?clickable=${args.clickable}
         ?has-color=${args['has-color']}
         ?removable=${args.removable}
       >
@@ -290,6 +301,7 @@ export const Filled: Story = {
         type="default"
         variant="filled"
         ?disabled=${args.disabled}
+        ?clickable=${args.clickable}
         ?has-color=${args['has-color']}
         ?removable=${args.removable}
       >

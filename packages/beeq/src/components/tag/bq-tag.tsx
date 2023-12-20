@@ -49,7 +49,7 @@ export class BqTag {
   @Prop({ reflect: true }) hasColor: boolean;
 
   /** If true, the tag component can be removed */
-  @Prop({ reflect: true }) removable: boolean;
+  @Prop({ reflect: true }) removable: boolean = false;
 
   /** If true, the tag component will be shown */
   @Prop({ reflect: true, mutable: true }) open: boolean;
@@ -63,8 +63,8 @@ export class BqTag {
   /** If true, the button will be disabled (no interaction allowed) */
   @Prop({ reflect: true }) disabled?: boolean = false;
 
-  /** If true, the option is selected and active */
-  @Prop({ reflect: true }) selected: boolean = false;
+  /** If true, the Tag is clickable and active */
+  @Prop({ reflect: true }) clickable: boolean = false;
 
   // Prop lifecycle events
   // =======================
@@ -147,11 +147,11 @@ export class BqTag {
   };
 
   private handleClick = () => {
-    if (this.removable) return;
-
-    const ev = this.bqClick.emit(this.el);
-    if (!ev.defaultPrevented) {
-      this.selected = !this.selected;
+    if (!this.removable && !this.hasColor) {
+      const ev = this.bqClick.emit(this.el);
+      if (!ev.defaultPrevented) {
+        this.clickable = !this.clickable;
+      }
     }
   };
 
@@ -195,7 +195,7 @@ export class BqTag {
         <button
           class={{
             'bq-tag gap-xs rounded-s px-s py-xs2 font-medium leading-regular': true,
-            active: !this.disabled && this.selected,
+            active: !this.disabled && this.clickable && !this.hasColor,
             'gap-xs2 rounded-xs px-xs py-xs3': this.size !== 'medium',
             [`bq-tag__${this.type}__${this.variant}`]: this.hasColor,
           }}
