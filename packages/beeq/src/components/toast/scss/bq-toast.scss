@@ -14,7 +14,6 @@
 
 .bq-toast {
   @include animation-slide-in;
-
   @apply flex items-center gap-[var(--bq-toast--gap)] px-[var(--bq-toast--padding-x)] py-[var(--bq-toast--padding-y)];
   @apply rounded-[var(--bq-toast--border-radius)] bg-[var(--bq-toast--background)] shadow-[shadow:var(--bq-toast--box-shadow)];
   @apply border-[length:var(--bq-toast--border-width)] border-[color:var(--bq-toast--border-color)];

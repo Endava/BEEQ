@@ -61,11 +61,10 @@ h6,
 caption,
 .caption,
 .overline {
-  /* stylelint-disable-next-line selector-no-qualifying-type */
   &.semibold {
     @apply font-semibold;
   }
-  /* stylelint-disable-next-line selector-no-qualifying-type */
+
   &.bold {
     @apply font-bold;
   }
