@@ -15,7 +15,7 @@
 | `hidden`    | `hidden`    | If true, the Tag component will hidden (only if removable = `true`)                    | `boolean`                                               | `undefined` |
 | `removable` | `removable` | If true, the Tag component can be removed                                              | `boolean`                                               | `false`     |
 | `selected`  | `selected`  | If true, the Tag is selected (only if clickable = `true`)                              | `boolean`                                               | `false`     |
-| `size`      | `size`      | The type of the Tag component                                                          | `"extra_small" \| "medium" \| "small"`                  | `'medium'`  |
+| `size`      | `size`      | The size of the Tag component                                                          | `"medium" \| "small" \| "xsmall"`                       | `'medium'`  |
 | `variant`   | `variant`   | The variant of Tag to apply on top of the variant                                      | `"filled" \| "outline"`                                 | `'filled'`  |
 
 

@@ -1,8 +1,9 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import mdx from './bq-tag.mdx';
-import { SIZE_TO_VALUE_MAP, TAG_SIZE, TAG_TYPE, TAG_VARIANT } from '../bq-tag.types';
+import { TAG_COLOR, TAG_SIZE, TAG_VARIANT } from '../bq-tag.types';
 
 const meta: Meta = {
   title: 'Components/Tag',
@@ -13,304 +14,171 @@ const meta: Meta = {
     },
   },
   argTypes: {
-    size: { control: 'select', options: [...TAG_SIZE] },
-    open: { control: 'boolean' },
-    type: { control: 'select', options: [...TAG_TYPE] },
-    variant: { control: 'select', options: [...TAG_VARIANT] },
-    disabled: { control: 'boolean' },
     clickable: { control: 'boolean' },
+    color: { control: 'select', options: [...TAG_COLOR] },
+    disabled: { control: 'boolean' },
+    hidden: { control: 'boolean' },
     removable: { control: 'boolean' },
-    'has-color': { control: 'boolean' },
+    selected: { control: 'boolean' },
+    size: { control: 'select', options: [...TAG_SIZE] },
+    variant: { control: 'select', options: [...TAG_VARIANT] },
     // Event handlers
     bqHide: { action: 'bqHide' },
     bqShow: { action: 'bqShow' },
     bqClick: { action: 'bqClick' },
     bqFocus: { action: 'bqFocus' },
-    bqKeyDown: { action: 'bqKeyDown' },
+    // Not part of the component API, but used for the story
+    text: { control: 'text', table: { disable: true } },
   },
   args: {
-    size: 'medium',
-    open: false,
-    type: 'default',
-    variant: 'default',
-    disabled: false,
     clickable: false,
+    color: undefined,
+    disabled: false,
+    hidden: false,
     removable: false,
-    'has-color': false,
+    selected: false,
+    size: 'medium',
+    variant: 'filled',
   },
 };
 export default meta;
 
 type Story = StoryObj;
 
-export const Clickable: Story = {
-  render: (args: Args) => html`
-    <div class="flex flex-col gap-8">
-      <div class="flex flex-row gap-14">
-        <bq-tag
-          ?open=${args.open}
-          size=${args.size}
-          type=${args.type}
-          variant=${args.variant}
-          ?disabled=${args.disabled}
-          ?clickable=${args.clickable}
-          ?has-color=${args['has-color']}
-          ?removable=${args.removable}
-          @bqClick=${args.bqClick}
-          @bqFocus=${args.bqFocus}
-          @bqKeyDown=${args.bqKeyDown}
-        >
-          Tag
-        </bq-tag>
-        <bq-tag
-          ?open=${args.open}
-          size=${args.size}
-          type=${args.type}
-          variant=${args.variant}
-          ?disabled=${args.disabled}
-          ?clickable=${true}
-          ?has-color=${args['has-color']}
-          ?removable=${args.removable}
-          @bqClick=${args.bqClick}
-          @bqFocus=${args.bqFocus}
-          @bqKeyDown=${args.bqKeyDown}
-        >
-          Tag
-        </bq-tag>
-      </div>
-      <div class="flex flex-row gap-14">
-        <bq-tag
-          ?open=${args.open}
-          size=${args.size}
-          type=${args.type}
-          variant=${args.variant}
-          ?disabled=${args.disabled}
-          ?clickable=${args.clickable}
-          ?has-color=${args['has-color']}
-          ?removable=${args.removable}
-          @bqClick=${args.bqClick}
-          @bqFocus=${args.bqFocus}
-          @bqKeyDown=${args.bqKeyDown}
-        >
-          <bq-icon
-            size=${SIZE_TO_VALUE_MAP[args.size]}
-            slot="prefix"
-            name="star"
-            part="icon"
-            exportparts="base,svg"
-          ></bq-icon>
-          Tag
-        </bq-tag>
-        <bq-tag
-          ?open=${args.open}
-          size=${args.size}
-          type=${args.type}
-          variant=${args.variant}
-          ?disabled=${args.disabled}
-          ?clickable=${true}
-          ?has-color=${args['has-color']}
-          ?removable=${args.removable}
-          @bqClick=${args.bqClick}
-          @bqFocus=${args.bqFocus}
-          @bqKeyDown=${args.bqKeyDown}
-        >
-          <bq-icon
-            size=${SIZE_TO_VALUE_MAP[args.size]}
-            slot="prefix"
-            name="star"
-            part="icon"
-            exportparts="base,svg"
-          ></bq-icon>
-          Tag
-        </bq-tag>
-      </div>
-    </div>
-  `,
+const Template = (args: Args) => html`
+  <bq-tag
+    ?clickable=${args.clickable}
+    color=${ifDefined(args.color)}
+    ?disabled=${args.disabled}
+    ?hidden=${args.hidden}
+    ?removable=${args.removable}
+    ?selected=${args.selected}
+    size=${ifDefined(args.size)}
+    variant=${ifDefined(args.variant)}
+    @bqClick=${args.bqClick}
+    @bqFocus=${args.bqFocus}
+  >
+    ${args.text}
+  </bq-tag>
+`;
+
+export const Default: Story = {
+  render: Template,
   args: {
-    open: true,
+    text: 'Tag',
   },
 };
 
-export const Removable: Story = {
+export const Size: Story = {
   render: (args: Args) => html`
-    <div class="flex flex-col gap-8">
-      <bq-tag
-        ?open=${args.open}
-        size=${args.size}
-        type=${args.type}
-        variant=${args.variant}
-        ?disabled=${args.disabled}
-        ?clickable=${args.clickable}
-        ?has-color=${args['has-color']}
-        ?removable=${args.removable}
-      >
-        Tag
-      </bq-tag>
-      <bq-tag
-        ?open=${args.open}
-        size=${args.size}
-        type=${args.type}
-        variant=${args.variant}
-        ?disabled=${args.disabled}
-        ?clickable=${args.clickable}
-        ?has-color=${args['has-color']}
-        ?removable=${args.removable}
-      >
-        <bq-icon
-          size=${SIZE_TO_VALUE_MAP[args.size]}
-          slot="prefix"
-          name="star"
-          part="icon"
-          exportparts="base,svg"
-        ></bq-icon>
-        Tag
-      </bq-tag>
+    <div class="flex gap-s">
+      <!-- Extra small -->
+      ${Template({ ...args, size: 'xsmall', text: 'Extra small' })}
+      <!-- Small -->
+      ${Template({ ...args, size: 'small', text: 'Small' })}
+      <!-- Medium -->
+      ${Template({ ...args, size: 'medium', text: 'Medium' })}
+    </div>
+  `,
+};
+
+export const Clickable: Story = {
+  render: (args: Args) => html`
+    <div class="flex gap-s">
+      <!-- Default -->
+      ${Template({ ...args })}
+      <!-- Active/Selected -->
+      ${Template({ ...args, selected: true })}
     </div>
   `,
   args: {
-    open: true,
+    text: 'Tag',
+    clickable: true,
+  },
+};
+
+export const ColorFilled: Story = {
+  name: 'Color - filled',
+  render: (args: Args) => html`
+    <div class="flex gap-s">
+      <!-- Success -->
+      ${Template({ ...args, color: 'success', text: 'Success' })}
+      <!-- Info -->
+      ${Template({ ...args, color: 'info', text: 'Info' })}
+      <!-- Error -->
+      ${Template({ ...args, color: 'error', text: 'Error' })}
+      <!-- Warning -->
+      ${Template({ ...args, color: 'warning', text: 'Warning' })}
+      <!-- Gray -->
+      ${Template({ ...args, color: 'gray', text: 'Gray' })}
+    </div>
+  `,
+};
+
+export const ColorOutline: Story = {
+  name: 'Color - outline',
+  render: (args: Args) => html`
+    <div class="flex gap-s">
+      <!-- Success -->
+      ${Template({ ...args, color: 'success', text: 'Success' })}
+      <!-- Info -->
+      ${Template({ ...args, color: 'info', text: 'Info' })}
+      <!-- Error -->
+      ${Template({ ...args, color: 'error', text: 'Error' })}
+      <!-- Warning -->
+      ${Template({ ...args, color: 'warning', text: 'Warning' })}
+      <!-- Gray -->
+      ${Template({ ...args, color: 'gray', text: 'Gray' })}
+    </div>
+  `,
+  args: {
+    variant: 'outline',
+  },
+};
+
+export const RemovableFilled: Story = {
+  name: 'Removable - filled',
+  render: (args: Args) => html`
+    <div class="flex gap-s">
+      <!-- Default -->
+      ${Template({ ...args, text: 'Default' })}
+      <!-- Success -->
+      ${Template({ ...args, color: 'success', text: 'Success' })}
+      <!-- Info -->
+      ${Template({ ...args, color: 'info', text: 'Info' })}
+      <!-- Error -->
+      ${Template({ ...args, color: 'error', text: 'Error' })}
+      <!-- Warning -->
+      ${Template({ ...args, color: 'warning', text: 'Warning' })}
+      <!-- Gray -->
+      ${Template({ ...args, color: 'gray', text: 'Gray' })}
+    </div>
+  `,
+  args: {
     removable: true,
   },
 };
 
-export const Outline: Story = {
+export const RemovableOutline: Story = {
+  name: 'Removable - outline',
   render: (args: Args) => html`
-    <div class="flex flex-col gap-4">
-      <bq-tag
-        ?open=${args.open}
-        size=${args.size}
-        type="success"
-        variant="default"
-        ?disabled=${args.disabled}
-        ?clickable=${args.clickable}
-        ?has-color=${args['has-color']}
-        ?removable=${args.removable}
-      >
-        Tag
-      </bq-tag>
-      <bq-tag
-        ?open=${args.open}
-        size=${args.size}
-        type="warning"
-        variant="default"
-        ?disabled=${args.disabled}
-        ?clickable=${args.clickable}
-        ?has-color=${args['has-color']}
-        ?removable=${args.removable}
-      >
-        Tag
-      </bq-tag>
-      <bq-tag
-        ?open=${args.open}
-        size=${args.size}
-        type="error"
-        variant="default"
-        ?disabled=${args.disabled}
-        ?clickable=${args.clickable}
-        ?has-color=${args['has-color']}
-        ?removable=${args.removable}
-      >
-        Tag
-      </bq-tag>
-      <bq-tag
-        ?open=${args.open}
-        size=${args.size}
-        type="info"
-        variant="default"
-        ?disabled=${args.disabled}
-        ?clickable=${args.clickable}
-        ?has-color=${args['has-color']}
-        ?removable=${args.removable}
-      >
-        Tag
-      </bq-tag>
-      <bq-tag
-        ?open=${args.open}
-        size=${args.size}
-        type="default"
-        variant="default"
-        ?disabled=${args.disabled}
-        ?clickable=${args.clickable}
-        ?has-color=${args['has-color']}
-        ?removable=${args.removable}
-      >
-        Tag
-      </bq-tag>
+    <div class="flex gap-s">
+      <!-- Default -->
+      ${Template({ ...args, text: 'Default' })}
+      <!-- Success -->
+      ${Template({ ...args, color: 'success', text: 'Success' })}
+      <!-- Info -->
+      ${Template({ ...args, color: 'info', text: 'Info' })}
+      <!-- Error -->
+      ${Template({ ...args, color: 'error', text: 'Error' })}
+      <!-- Warning -->
+      ${Template({ ...args, color: 'warning', text: 'Warning' })}
+      <!-- Gray -->
+      ${Template({ ...args, color: 'gray', text: 'Gray' })}
     </div>
   `,
   args: {
-    open: true,
-    'has-color': true,
-  },
-};
-
-export const Filled: Story = {
-  render: (args: Args) => html`
-    <div class="flex flex-col gap-4">
-      <bq-tag
-        ?open=${args.open}
-        size=${args.size}
-        type="success"
-        variant="filled"
-        ?disabled=${args.disabled}
-        ?clickable=${args.clickable}
-        ?has-color=${args['has-color']}
-        ?removable=${args.removable}
-      >
-        Tag
-      </bq-tag>
-      <bq-tag
-        ?open=${args.open}
-        size=${args.size}
-        type="warning"
-        variant="filled"
-        ?disabled=${args.disabled}
-        ?clickable=${args.clickable}
-        ?has-color=${args['has-color']}
-        ?removable=${args.removable}
-      >
-        Tag
-      </bq-tag>
-      <bq-tag
-        ?open=${args.open}
-        size=${args.size}
-        type="error"
-        variant="filled"
-        ?disabled=${args.disabled}
-        ?clickable=${args.clickable}
-        ?has-color=${args['has-color']}
-        ?removable=${args.removable}
-      >
-        Tag
-      </bq-tag>
-      <bq-tag
-        ?open=${args.open}
-        size=${args.size}
-        type="info"
-        variant="filled"
-        ?disabled=${args.disabled}
-        ?clickable=${args.clickable}
-        ?has-color=${args['has-color']}
-        ?removable=${args.removable}
-      >
-        Tag
-      </bq-tag>
-      <bq-tag
-        ?open=${args.open}
-        size=${args.size}
-        type="default"
-        variant="filled"
-        ?disabled=${args.disabled}
-        ?clickable=${args.clickable}
-        ?has-color=${args['has-color']}
-        ?removable=${args.removable}
-      >
-        Tag
-      </bq-tag>
-    </div>
-  `,
-  args: {
-    open: true,
-    'has-color': true,
+    removable: true,
+    variant: 'outline',
   },
 };
