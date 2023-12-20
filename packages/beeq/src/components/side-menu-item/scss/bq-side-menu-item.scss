@@ -20,7 +20,7 @@
   // Hover state
   @apply [&:not(.disabled)]:hover:cursor-pointer;
 
-  &:not(.disabled):not(.active):hover {
+  &:not(.disabled, .active):hover {
     @apply hover:bg-[var(--bq-side-menu-item--bg-hover)] hover:text-m hover:text-[color:var(--bq-side-menu-item--text-hover)];
   }
 }

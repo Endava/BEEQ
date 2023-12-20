@@ -14,6 +14,7 @@
 
 .bq-switch {
   @apply flex cursor-pointer select-none items-center rounded-s p-2 transition-colors duration-300;
+
   justify-content: var(--bq-switch--justify-content);
 
   // Display background on hover (if enabled)

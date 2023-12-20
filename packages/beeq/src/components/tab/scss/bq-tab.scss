@@ -37,6 +37,7 @@
 
     ::slotted(bq-icon) {
       --bq-icon--size: var(--bq-tab--icon-size-small) #{!important};
+
       @apply mr-xs2;
     }
   }
@@ -46,6 +47,7 @@
 
     ::slotted(bq-icon) {
       --bq-icon--size: var(--bq-tab--icon-size-medium) #{!important};
+
       @apply mr-xs;
     }
   }
@@ -55,6 +57,7 @@
 
     ::slotted(bq-icon) {
       --bq-icon--size: var(--bq-tab--icon-size-large) #{!important};
+
       @apply mr-xs;
     }
   }
