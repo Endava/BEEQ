@@ -8,14 +8,18 @@
   @apply relative block;
 }
 
-:host(.is-hidden) {
+:host([removable][hidden]) {
   @apply hidden;
 }
 
 .bq-tag {
-  @apply inline-flex cursor-pointer flex-row items-center justify-center border-0 bg-[--bq-tag--background-color] transition-colors duration-300 ease-in-out;
+  @apply box-border inline-flex select-none flex-row items-center justify-center border-[length:--bq-tag--border-width] border-solid border-transparent bg-[--bq-tag--background-color] text-text-primary transition-colors duration-300 ease-in-out;
+}
+
+.bq-tag__default.is-clickable {
+  @apply cursor-pointer;
   // Focus
-  @apply [&.active]:focus-within:focus [&.active]:focus-visible:focus;
+  @apply focus-visible:focus;
   // Hover
   @apply hover:enabled:bg-[color-mix(in_srgb,_var(--bq-tag--background-color),_white_20%)];
   // Active/Selected
@@ -24,59 +28,59 @@
   @apply disabled:cursor-not-allowed disabled:border-none disabled:bg-ui-secondary-disabled disabled:text-text-primary-disabled;
 }
 
-/** 
-  * Set the tag color based on the type and variant value selected
-*/
-
-.bq-tag__default {
-  &__default {
-    @apply border-[length:--bq-tag--border-width] border-solid border-[color:var(--bq-stroke--tertiary)] bg-[color:var(--bq-stroke--primary-alt)] text-[color:var(--bq-text--primary)];
-  }
-
-  &__filled {
-    @apply bg-[color:var(--bq-stroke--secondary)] text-[color:var(--bq-text--primary-alt)];
-  }
-}
-
-.bq-tag__success {
-  &__default {
-    @apply border-[length:--bq-tag--border-width] border-solid  border-[color:--bq-tag--border-success] bg-[color:var(--bq-ui--success-alt)] text-[color:var(--bq-text--success)];
-  }
-
-  &__filled {
-    @apply bg-[color:var(--bq-ui--success)] text-[color:var(--bq-text--primary-alt)];
-  }
-}
-
-.bq-tag__warning {
-  &__default {
-    @apply border-[length:--bq-tag--border-width] border-solid border-[color:var(--bq-stroke--warning)] bg-[color:var(--bq-ui--warning-alt)] text-[color:var(--bq-text--warning)];
-  }
-
-  &__filled {
-    @apply bg-[color:var(--bq-ui--warning)] text-[color:var(--bq-text--primary-alt)];
-  }
-}
+/* ------------------------------ Color styles ------------------------------ */
 
 .bq-tag__error {
-  &__default {
-    @apply border-[length:--bq-tag--border-width] border-solid border-[color:var(--bq-stroke--danger)] bg-[color:var(--bq-ui--danger-alt)] text-[color:var(--bq-text--danger)];
+  &.bq-tag__filled {
+    @apply bg-[color:var(--bq-ui--danger)] text-[color:var(--bq-text--primary-alt)];
   }
 
-  &__filled {
-    @apply bg-[color:var(--bq-ui--danger)] text-[color:var(--bq-text--primary-alt)];
+  &.bq-tag__outline {
+    @apply border-[length:--bq-tag--border-width] border-[color:var(--bq-stroke--danger)] bg-[color:var(--bq-ui--danger-alt)] text-[color:var(--bq-text--danger)];
+  }
+}
+
+.bq-tag__gray {
+  &.bq-tag__filled {
+    @apply bg-[color:var(--bq-stroke--secondary)] text-[color:var(--bq-text--primary-alt)];
+  }
+
+  &.bq-tag__outline {
+    @apply border-[color:var(--bq-stroke--tertiary)] bg-[color:var(--bq-stroke--primary-alt)] text-[color:var(--bq-text--primary)];
   }
 }
 
 .bq-tag__info {
-  &__default {
-    @apply border-[length:--bq-tag--border-width] border-solid border-[color:var(--bq-stroke--brand)] bg-[color:var(--bq-ui--brand-alt)] text-[color:var(--bq-text--brand)];
-  }
-
-  &__filled {
+  &.bq-tag__filled {
     @apply bg-[color:var(--bq-ui--brand)] text-[color:var(--bq-text--primary-alt)];
   }
+
+  &.bq-tag__outline {
+    @apply border-[color:var(--bq-stroke--brand)] bg-[color:var(--bq-ui--brand-alt)] text-[color:var(--bq-text--brand)];
+  }
 }
+
+.bq-tag__success {
+  &.bq-tag__filled {
+    @apply bg-[color:var(--bq-ui--success)] text-[color:var(--bq-text--primary-alt)];
+  }
+
+  &.bq-tag__outline {
+    @apply border-[color:--bq-tag--border-success] bg-[color:var(--bq-ui--success-alt)] text-[color:var(--bq-text--success)];
+  }
+}
+
+.bq-tag__warning {
+  &.bq-tag__filled {
+    @apply bg-[color:var(--bq-ui--warning)] text-[color:var(--bq-text--primary-alt)];
+  }
+
+  &.bq-tag__outline {
+    @apply border-[color:var(--bq-stroke--warning)] bg-[color:var(--bq-ui--warning-alt)] text-[color:var(--bq-text--warning)];
+  }
+}
+
+/* ------------------------------ Close button ------------------------------ */
 
 .bq-tag__close::part(button) {
   @apply pointer-events-none h-fit border-0 p-0;
