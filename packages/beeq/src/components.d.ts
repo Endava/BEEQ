@@ -26,7 +26,7 @@ import { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
 import { TStepItemStatus } from "./components/step-item/bq-step-item.types";
 import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-switch.types";
 import { TTabSize } from "./components/tab/bq-tab.types";
-import { TTagSize, TTagType, TTagVariant } from "./components/tag/bq-tag.types";
+import { TTagColor, TTagSize, TTagVariant } from "./components/tag/bq-tag.types";
 import { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 import { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export { TAccordionAppearance, TAccordionSize } from "./components/accordion/bq-accordion.types";
@@ -50,7 +50,7 @@ export { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
 export { TStepItemStatus } from "./components/step-item/bq-step-item.types";
 export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-switch.types";
 export { TTabSize } from "./components/tab/bq-tab.types";
-export { TTagSize, TTagType, TTagVariant } from "./components/tag/bq-tag.types";
+export { TTagColor, TTagSize, TTagVariant } from "./components/tag/bq-tag.types";
 export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 export { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export namespace Components {
@@ -1005,43 +1005,43 @@ export namespace Components {
     }
     interface BqTag {
         /**
-          * If true, the Tag is clickable and active
+          * If true, the Tag can be clickable
          */
         "clickable": boolean;
         /**
-          * If true, the button will be disabled (no interaction allowed)
+          * The color style of the Tag
+         */
+        "color": TTagColor;
+        /**
+          * If true, the Tag will be disabled (only if clickable = `true`, no interaction allowed)
          */
         "disabled"?: boolean;
         /**
-          * If true, the tag component has color style
+          * If true, the Tag component will hidden (only if removable = `true`)
          */
-        "hasColor": boolean;
+        "hidden": boolean;
         /**
           * Method to be called to remove the tag component
          */
         "hide": () => Promise<void>;
         /**
-          * If true, the tag component will be shown
-         */
-        "open": boolean;
-        /**
-          * If true, the tag component can be removed
+          * If true, the Tag component can be removed
          */
         "removable": boolean;
+        /**
+          * If true, the Tag is selected (only if clickable = `true`)
+         */
+        "selected": boolean;
         /**
           * Method to be called to show the alert component
          */
         "show": () => Promise<void>;
         /**
-          * The type of the tag component
+          * The size of the Tag component
          */
         "size": TTagSize;
         /**
-          * The default type of the tag component
-         */
-        "type": TTagType;
-        /**
-          * The variant of tag to apply on top of the variant
+          * The variant of Tag to apply on top of the variant
          */
         "variant": TTagVariant;
     }
@@ -1803,7 +1803,6 @@ declare global {
         "bqShow": any;
         "bqClick": HTMLBqTagElement;
         "bqFocus": HTMLBqTagElement;
-        "bqKeyDown": KeyboardEvent;
     }
     interface HTMLBqTagElement extends Components.BqTag, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqTagElementEventMap>(type: K, listener: (this: HTMLBqTagElement, ev: BqTagCustomEvent<HTMLBqTagElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -3013,17 +3012,21 @@ declare namespace LocalJSX {
     }
     interface BqTag {
         /**
-          * If true, the Tag is clickable and active
+          * If true, the Tag can be clickable
          */
         "clickable"?: boolean;
         /**
-          * If true, the button will be disabled (no interaction allowed)
+          * The color style of the Tag
+         */
+        "color"?: TTagColor;
+        /**
+          * If true, the Tag will be disabled (only if clickable = `true`, no interaction allowed)
          */
         "disabled"?: boolean;
         /**
-          * If true, the tag component has color style
+          * If true, the Tag component will hidden (only if removable = `true`)
          */
-        "hasColor"?: boolean;
+        "hidden"?: boolean;
         /**
           * Handler to be called when tag is clicked
          */
@@ -3037,31 +3040,23 @@ declare namespace LocalJSX {
          */
         "onBqHide"?: (event: BqTagCustomEvent<any>) => void;
         /**
-          * Handler to be called when the tag key is pressed
-         */
-        "onBqKeyDown"?: (event: BqTagCustomEvent<KeyboardEvent>) => void;
-        /**
           * Callback handler to be called when the tag is not removable
          */
         "onBqShow"?: (event: BqTagCustomEvent<any>) => void;
         /**
-          * If true, the tag component will be shown
-         */
-        "open"?: boolean;
-        /**
-          * If true, the tag component can be removed
+          * If true, the Tag component can be removed
          */
         "removable"?: boolean;
         /**
-          * The type of the tag component
+          * If true, the Tag is selected (only if clickable = `true`)
+         */
+        "selected"?: boolean;
+        /**
+          * The size of the Tag component
          */
         "size"?: TTagSize;
         /**
-          * The default type of the tag component
-         */
-        "type"?: TTagType;
-        /**
-          * The variant of tag to apply on top of the variant
+          * The variant of Tag to apply on top of the variant
          */
         "variant"?: TTagVariant;
     }
