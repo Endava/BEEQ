@@ -79,6 +79,7 @@
 
   &:not(.disabled):focus-within {
     --bq-ring-color-focus: theme('colors.stroke.danger-active');
+
     @apply border-stroke-danger-active;
   }
 }
@@ -88,6 +89,7 @@
 
   &:not(.disabled):focus-within {
     --bq-ring-color-focus: theme('colors.stroke.success-active');
+
     @apply border-stroke-success-active;
   }
 }
@@ -97,6 +99,7 @@
 
   &:not(.disabled):focus-within {
     --bq-ring-color-focus: theme('colors.stroke.warning-active');
+
     @apply border-stroke-warning-active;
   }
 }
