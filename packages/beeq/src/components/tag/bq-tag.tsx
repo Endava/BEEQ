@@ -157,12 +157,8 @@ export class BqTag {
     }
   };
 
-  private handleBlur = (event: Event) => {
-    if (!this.isClickable) {
-      event.preventDefault();
-      event.stopPropagation();
-      return;
-    }
+  private handleBlur = () => {
+    if (!this.isClickable) return;
 
     this.bqBlur.emit(this.el);
   };

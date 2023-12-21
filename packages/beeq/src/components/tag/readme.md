@@ -24,6 +24,7 @@
 
 | Event     | Description                                                  | Type                            |
 | --------- | ------------------------------------------------------------ | ------------------------------- |
+| `bqBlur`  | Handler to be called when tag loses focus                    | `CustomEvent<HTMLBqTagElement>` |
 | `bqClick` | Handler to be called when tag is clicked                     | `CustomEvent<HTMLBqTagElement>` |
 | `bqClose` | Callback handler to be called when the tag is close/hidden   | `CustomEvent<any>`              |
 | `bqFocus` | Handler to be called when tag is focused                     | `CustomEvent<HTMLBqTagElement>` |
