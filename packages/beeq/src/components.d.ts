@@ -1801,6 +1801,7 @@ declare global {
     interface HTMLBqTagElementEventMap {
         "bqClose": any;
         "bqOpen": any;
+        "bqBlur": HTMLBqTagElement;
         "bqClick": HTMLBqTagElement;
         "bqFocus": HTMLBqTagElement;
     }
@@ -3027,6 +3028,10 @@ declare namespace LocalJSX {
           * If true, the Tag component will hidden (only if removable = `true`)
          */
         "hidden"?: boolean;
+        /**
+          * Handler to be called when tag loses focus
+         */
+        "onBqBlur"?: (event: BqTagCustomEvent<HTMLBqTagElement>) => void;
         /**
           * Handler to be called when tag is clicked
          */

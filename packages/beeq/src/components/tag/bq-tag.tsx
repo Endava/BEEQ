@@ -80,6 +80,9 @@ export class BqTag {
   /** Callback handler to be called when the tag is not open/shown */
   @Event() bqOpen: EventEmitter;
 
+  /** Handler to be called when tag loses focus */
+  @Event() bqBlur: EventEmitter<HTMLBqTagElement>;
+
   /** Handler to be called when tag is clicked */
   @Event() bqClick: EventEmitter<HTMLBqTagElement>;
 
@@ -151,6 +154,16 @@ export class BqTag {
     }
   };
 
+  private handleBlur = (event: Event) => {
+    if (!this.isClickable) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+
+    this.bqBlur.emit(this.el);
+  };
+
   private handleFocus = () => {
     if (!this.isClickable) return;
 
@@ -192,6 +205,7 @@ export class BqTag {
             'gap-xs2 rounded-xs px-xs py-xs3': this.size !== 'medium',
           }}
           disabled={this.disabled}
+          onBlur={this.handleBlur}
           onClick={this.handleClick}
           onFocus={this.handleFocus}
           tabindex={this.isClickable ? 0 : -1}

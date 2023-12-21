@@ -26,6 +26,7 @@ const meta: Meta = {
     bqClose: { action: 'bqClose' },
     bqOpen: { action: 'bqOpen' },
     bqClick: { action: 'bqClick' },
+    bqBlur: { action: 'bqBlur' },
     bqFocus: { action: 'bqFocus' },
     // Not part of the component API, but used for the story
     text: { control: 'text', table: { disable: true } },
@@ -57,6 +58,7 @@ const Template = (args: Args) => html`
     variant=${ifDefined(args.variant)}
     @bqClick=${args.bqClick}
     @bqFocus=${args.bqFocus}
+    @bqBlur=${args.bqBlur}
   >
     ${args.text}
   </bq-tag>
