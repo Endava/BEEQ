@@ -60,6 +60,8 @@ const Template = (args: Args) => html`
     ?selected=${args.selected}
     size=${ifDefined(args.size)}
     variant=${ifDefined(args.variant)}
+    @bqOpen=${args.bqOpen}
+    @bqClose=${args.bqClose}
     @bqClick=${args.bqClick}
     @bqFocus=${args.bqFocus}
     @bqBlur=${args.bqBlur}
