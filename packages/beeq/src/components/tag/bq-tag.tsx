@@ -195,6 +195,7 @@ export class BqTag {
 
   render() {
     const style = {
+      '--bq-tag--icon-prefix-size': `${iconSize(this.size)}px`,
       ...(this.border && { '--bq-tag--border-radius': `var(--bq-radius--${this.border})` }),
     };
 
@@ -218,7 +219,7 @@ export class BqTag {
           part="wrapper"
         >
           <span
-            class={{ 'inline-flex': true, '!hidden': !this.hasPrefix }}
+            class={{ 'bq-tag__prefix inline-flex': true, '!hidden': !this.hasPrefix }}
             ref={(spanElem) => (this.prefixElem = spanElem)}
             part="prefix"
           >
