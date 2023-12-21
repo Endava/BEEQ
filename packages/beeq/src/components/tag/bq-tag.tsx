@@ -36,29 +36,29 @@ export class BqTag {
   // Public Property API
   // ========================
 
+  /** If true, the Tag can be clickable */
+  @Prop({ reflect: true }) clickable: boolean = false;
+
   /** The color style of the Tag */
   @Prop({ reflect: true }) color: TTagColor;
-
-  /** The size of the Tag component */
-  @Prop({ reflect: true }) size: TTagSize = 'medium';
-
-  /** If true, the Tag component can be removed */
-  @Prop({ reflect: true }) removable: boolean = false;
-
-  /** If true, the Tag component will hidden (only if removable = `true`) */
-  @Prop({ reflect: true, mutable: true }) hidden: boolean;
-
-  /** The variant of Tag to apply on top of the variant */
-  @Prop({ reflect: true }) variant: TTagVariant = 'filled';
 
   /** If true, the Tag will be disabled (only if clickable = `true`, no interaction allowed) */
   @Prop({ reflect: true }) disabled?: boolean = false;
 
-  /** If true, the Tag can be clickable */
-  @Prop({ reflect: true }) clickable: boolean = false;
+  /** If true, the Tag component will hidden (only if removable = `true`) */
+  @Prop({ reflect: true, mutable: true }) hidden: boolean;
+
+  /** If true, the Tag component can be removed */
+  @Prop({ reflect: true }) removable: boolean = false;
 
   /** If true, the Tag is selected (only if clickable = `true`) */
   @Prop({ reflect: true, mutable: true }) selected: boolean = false;
+
+  /** The size of the Tag component */
+  @Prop({ reflect: true }) size: TTagSize = 'medium';
+
+  /** The variant of Tag to apply on top of the variant */
+  @Prop({ reflect: true }) variant: TTagVariant = 'filled';
 
   // Prop lifecycle events
   // =======================
