@@ -5,7 +5,7 @@
 @import './bq-tag.variables';
 
 :host {
-  @apply relative block;
+  @apply relative inline-block;
 }
 
 :host([removable][hidden]) {
