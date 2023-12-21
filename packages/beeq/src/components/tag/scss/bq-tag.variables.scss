@@ -1,0 +1,21 @@
+/* -------------------------------------------------------------------------- */
+/*                   Tag custom properties                  */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  --bq-tag--background-color: theme('colors.ui.secondary');
+
+  --bq-tag--border-color: theme('colors.transparent');
+  --bq-tag--border-radius: theme('borderRadius.s');
+  --bq-tag--border-style: solid;
+  --bq-tag--border-width: 1px;
+
+  --bq-tag--small-border-radius: theme('borderRadius.xs');
+  --bq-tag--small-gap: theme('spacing.xs2');
+  --bq-tag--small-padding-x: theme('spacing.xs');
+  --bq-tag--small-padding-y: theme('spacing.xs3');
+
+  --bq-tag--medium-gap: theme('spacing.xs');
+  --bq-tag--medium-padding-x: theme('spacing.s');
+  --bq-tag--medium-padding-y: theme('spacing.xs2');
+}
