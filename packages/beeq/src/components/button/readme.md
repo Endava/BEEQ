@@ -55,6 +55,7 @@ Buttons are designed for users to take action on a page or a screen.
  - [bq-input](../input)
  - [bq-notification](../notification)
  - [bq-select](../select)
+ - [bq-tag](../tag)
 
 ### Depends on
 
@@ -69,6 +70,7 @@ graph TD;
   bq-input --> bq-button
   bq-notification --> bq-button
   bq-select --> bq-button
+  bq-tag --> bq-button
   style bq-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -26,6 +26,7 @@ import { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
 import { TStepItemStatus } from "./components/step-item/bq-step-item.types";
 import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-switch.types";
 import { TTabSize } from "./components/tab/bq-tab.types";
+import { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from "./components/tag/bq-tag.types";
 import { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 import { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export { TAccordionAppearance, TAccordionSize } from "./components/accordion/bq-accordion.types";
@@ -49,6 +50,7 @@ export { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
 export { TStepItemStatus } from "./components/step-item/bq-step-item.types";
 export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-switch.types";
 export { TTabSize } from "./components/tab/bq-tab.types";
+export { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from "./components/tag/bq-tag.types";
 export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 export { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export namespace Components {
@@ -1001,6 +1003,52 @@ export namespace Components {
          */
         "value": string;
     }
+    interface BqTag {
+        /**
+          * The corner radius of the Tag (will override size's predefined border)
+         */
+        "border": TTagBorderRadius;
+        /**
+          * If true, the Tag can be clickable
+         */
+        "clickable": boolean;
+        /**
+          * The color style of the Tag
+         */
+        "color": TTagColor;
+        /**
+          * If true, the Tag will be disabled (only if clickable = `true`, no interaction allowed)
+         */
+        "disabled"?: boolean;
+        /**
+          * If true, the Tag component will hidden (only if removable = `true`)
+         */
+        "hidden": boolean;
+        /**
+          * Method to be called to remove the tag component
+         */
+        "hide": () => Promise<void>;
+        /**
+          * If true, the Tag component can be removed
+         */
+        "removable": boolean;
+        /**
+          * If true, the Tag is selected (only if clickable = `true`)
+         */
+        "selected": boolean;
+        /**
+          * Method to be called to show the tag component
+         */
+        "show": () => Promise<void>;
+        /**
+          * The size of the Tag component
+         */
+        "size": TTagSize;
+        /**
+          * The variant of Tag to apply on top of the variant
+         */
+        "variant": TTagVariant;
+    }
     interface BqTextarea {
         /**
           * If `true`, the textarea will automatically grow and shrink to fit its contents. If `false`, the textarea will have a fixed height specified by the `rows` property.
@@ -1237,6 +1285,10 @@ export interface BqTabCustomEvent<T> extends CustomEvent<T> {
 export interface BqTabGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqTabGroupElement;
+}
+export interface BqTagCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqTagElement;
 }
 export interface BqTextareaCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1750,6 +1802,27 @@ declare global {
         prototype: HTMLBqTabGroupElement;
         new (): HTMLBqTabGroupElement;
     };
+    interface HTMLBqTagElementEventMap {
+        "bqClose": any;
+        "bqOpen": any;
+        "bqBlur": HTMLBqTagElement;
+        "bqClick": HTMLBqTagElement;
+        "bqFocus": HTMLBqTagElement;
+    }
+    interface HTMLBqTagElement extends Components.BqTag, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqTagElementEventMap>(type: K, listener: (this: HTMLBqTagElement, ev: BqTagCustomEvent<HTMLBqTagElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqTagElementEventMap>(type: K, listener: (this: HTMLBqTagElement, ev: BqTagCustomEvent<HTMLBqTagElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLBqTagElement: {
+        prototype: HTMLBqTagElement;
+        new (): HTMLBqTagElement;
+    };
     interface HTMLBqTextareaElementEventMap {
         "bqBlur": HTMLBqTextareaElement;
         "bqChange": { value: string; el: HTMLBqTextareaElement };
@@ -1829,6 +1902,7 @@ declare global {
         "bq-switch": HTMLBqSwitchElement;
         "bq-tab": HTMLBqTabElement;
         "bq-tab-group": HTMLBqTabGroupElement;
+        "bq-tag": HTMLBqTagElement;
         "bq-textarea": HTMLBqTextareaElement;
         "bq-toast": HTMLBqToastElement;
         "bq-tooltip": HTMLBqTooltipElement;
@@ -2941,6 +3015,64 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface BqTag {
+        /**
+          * The corner radius of the Tag (will override size's predefined border)
+         */
+        "border"?: TTagBorderRadius;
+        /**
+          * If true, the Tag can be clickable
+         */
+        "clickable"?: boolean;
+        /**
+          * The color style of the Tag
+         */
+        "color"?: TTagColor;
+        /**
+          * If true, the Tag will be disabled (only if clickable = `true`, no interaction allowed)
+         */
+        "disabled"?: boolean;
+        /**
+          * If true, the Tag component will hidden (only if removable = `true`)
+         */
+        "hidden"?: boolean;
+        /**
+          * Handler to be called when tag loses focus
+         */
+        "onBqBlur"?: (event: BqTagCustomEvent<HTMLBqTagElement>) => void;
+        /**
+          * Handler to be called when tag is clicked
+         */
+        "onBqClick"?: (event: BqTagCustomEvent<HTMLBqTagElement>) => void;
+        /**
+          * Callback handler to be called when the tag is close/hidden
+         */
+        "onBqClose"?: (event: BqTagCustomEvent<any>) => void;
+        /**
+          * Handler to be called when tag is focused
+         */
+        "onBqFocus"?: (event: BqTagCustomEvent<HTMLBqTagElement>) => void;
+        /**
+          * Callback handler to be called when the tag is not open/shown
+         */
+        "onBqOpen"?: (event: BqTagCustomEvent<any>) => void;
+        /**
+          * If true, the Tag component can be removed
+         */
+        "removable"?: boolean;
+        /**
+          * If true, the Tag is selected (only if clickable = `true`)
+         */
+        "selected"?: boolean;
+        /**
+          * The size of the Tag component
+         */
+        "size"?: TTagSize;
+        /**
+          * The variant of Tag to apply on top of the variant
+         */
+        "variant"?: TTagVariant;
+    }
     interface BqTextarea {
         /**
           * If `true`, the textarea will automatically grow and shrink to fit its contents. If `false`, the textarea will have a fixed height specified by the `rows` property.
@@ -3127,6 +3259,7 @@ declare namespace LocalJSX {
         "bq-switch": BqSwitch;
         "bq-tab": BqTab;
         "bq-tab-group": BqTabGroup;
+        "bq-tag": BqTag;
         "bq-textarea": BqTextarea;
         "bq-toast": BqToast;
         "bq-tooltip": BqTooltip;
@@ -3182,6 +3315,7 @@ declare module "@stencil/core" {
             "bq-switch": LocalJSX.BqSwitch & JSXBase.HTMLAttributes<HTMLBqSwitchElement>;
             "bq-tab": LocalJSX.BqTab & JSXBase.HTMLAttributes<HTMLBqTabElement>;
             "bq-tab-group": LocalJSX.BqTabGroup & JSXBase.HTMLAttributes<HTMLBqTabGroupElement>;
+            "bq-tag": LocalJSX.BqTag & JSXBase.HTMLAttributes<HTMLBqTagElement>;
             "bq-textarea": LocalJSX.BqTextarea & JSXBase.HTMLAttributes<HTMLBqTextareaElement>;
             "bq-toast": LocalJSX.BqToast & JSXBase.HTMLAttributes<HTMLBqToastElement>;
             "bq-tooltip": LocalJSX.BqTooltip & JSXBase.HTMLAttributes<HTMLBqTooltipElement>;
