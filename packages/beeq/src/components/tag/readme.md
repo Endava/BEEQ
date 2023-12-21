@@ -21,12 +21,12 @@
 
 ## Events
 
-| Event     | Description                                                 | Type                            |
-| --------- | ----------------------------------------------------------- | ------------------------------- |
-| `bqClick` | Handler to be called when tag is clicked                    | `CustomEvent<HTMLBqTagElement>` |
-| `bqFocus` | Handler to be called when tag is focused                    | `CustomEvent<HTMLBqTagElement>` |
-| `bqHide`  | Callback handler to be called when the tag is removable     | `CustomEvent<any>`              |
-| `bqShow`  | Callback handler to be called when the tag is not removable | `CustomEvent<any>`              |
+| Event     | Description                                                  | Type                            |
+| --------- | ------------------------------------------------------------ | ------------------------------- |
+| `bqClick` | Handler to be called when tag is clicked                     | `CustomEvent<HTMLBqTagElement>` |
+| `bqClose` | Callback handler to be called when the tag is close/hidden   | `CustomEvent<any>`              |
+| `bqFocus` | Handler to be called when tag is focused                     | `CustomEvent<HTMLBqTagElement>` |
+| `bqOpen`  | Callback handler to be called when the tag is not open/shown | `CustomEvent<any>`              |
 
 
 ## Methods
@@ -43,7 +43,7 @@ Type: `Promise<void>`
 
 ### `show() => Promise<void>`
 
-Method to be called to show the alert component
+Method to be called to show the tag component
 
 #### Returns
 
