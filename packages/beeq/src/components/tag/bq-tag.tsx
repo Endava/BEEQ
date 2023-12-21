@@ -86,6 +86,12 @@ export class BqTag {
   /** Handler to be called when tag is focused */
   @Event() bqFocus: EventEmitter<HTMLBqTagElement>;
 
+  /** Handler to be called when tag is hidden */
+  @Event() bqClose: EventEmitter;
+
+  /** Handler to be called when tag is shown */
+  @Event() bqOpen: EventEmitter;
+
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
@@ -110,7 +116,7 @@ export class BqTag {
     this.handleHide();
   }
 
-  /** Method to be called to show the alert component */
+  /** Method to be called to show the tag component */
   @Method()
   async show(): Promise<void> {
     this.handleShow();
@@ -127,6 +133,7 @@ export class BqTag {
     const ev = this.bqHide.emit(this.el);
     if (!ev.defaultPrevented) {
       this.hidden = true;
+      this.bqClose.emit();
     }
   };
 
@@ -136,6 +143,7 @@ export class BqTag {
     const ev = this.bqShow.emit(this.el);
     if (!ev.defaultPrevented) {
       this.hidden = false;
+      this.bqOpen.emit();
     }
   };
 
