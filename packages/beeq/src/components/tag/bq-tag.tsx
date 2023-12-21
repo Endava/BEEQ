@@ -36,7 +36,7 @@ export class BqTag {
   // Public Property API
   // ========================
 
-  /** The corner radius of the button (will override size's predefined border) */
+  /** The corner radius of the Tag (will override size's predefined border) */
   @Prop({ reflect: true }) border: TTagBorderRadius;
 
   /** If true, the Tag can be clickable */

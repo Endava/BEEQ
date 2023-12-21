@@ -1005,7 +1005,7 @@ export namespace Components {
     }
     interface BqTag {
         /**
-          * The corner radius of the button (will override size's predefined border)
+          * The corner radius of the Tag (will override size's predefined border)
          */
         "border": TTagBorderRadius;
         /**
@@ -3017,7 +3017,7 @@ declare namespace LocalJSX {
     }
     interface BqTag {
         /**
-          * The corner radius of the button (will override size's predefined border)
+          * The corner radius of the Tag (will override size's predefined border)
          */
         "border"?: TTagBorderRadius;
         /**

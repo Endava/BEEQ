@@ -9,7 +9,7 @@
 
 | Property    | Attribute   | Description                                                                            | Type                                                     | Default     |
 | ----------- | ----------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------- | ----------- |
-| `border`    | `border`    | The corner radius of the button (will override size's predefined border)               | `"full" \| "l" \| "m" \| "none" \| "s" \| "xs" \| "xs2"` | `undefined` |
+| `border`    | `border`    | The corner radius of the Tag (will override size's predefined border)                  | `"full" \| "l" \| "m" \| "none" \| "s" \| "xs" \| "xs2"` | `undefined` |
 | `clickable` | `clickable` | If true, the Tag can be clickable                                                      | `boolean`                                                | `false`     |
 | `color`     | `color`     | The color style of the Tag                                                             | `"error" \| "gray" \| "info" \| "success" \| "warning"`  | `undefined` |
 | `disabled`  | `disabled`  | If true, the Tag will be disabled (only if clickable = `true`, no interaction allowed) | `boolean`                                                | `false`     |
