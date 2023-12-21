@@ -195,14 +195,11 @@ export class BqTag {
       <Host aria-hidden={this.isHidden ? 'true' : 'false'} hidden={this.isHidden ? 'true' : 'false'}>
         <button
           class={{
-            'bq-tag gap-xs rounded-s px-s py-xs2 font-medium leading-regular': true,
-            [`bq-tag__${this.color || 'default'} bq-tag__${this.variant}`]: true,
+            [`bq-tag bq-tag__${this.size} bq-tag__${this.color || 'default'} bq-tag__${this.variant}`]: true,
             'is-clickable': this.isClickable,
             'is-removable': this.removable,
             // Active/Selected state when clickable
             active: this.isClickable && this.selected,
-            // Size
-            'gap-xs2 rounded-xs px-xs py-xs3': this.size !== 'medium',
           }}
           disabled={this.disabled}
           onBlur={this.handleBlur}
