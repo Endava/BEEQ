@@ -74,23 +74,17 @@ export class BqTag {
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Callback handler to be called when the tag is removable  */
-  @Event() bqHide: EventEmitter;
+  /** Callback handler to be called when the tag is close/hidden  */
+  @Event() bqClose: EventEmitter;
 
-  /** Callback handler to be called when the tag is not removable */
-  @Event() bqShow: EventEmitter;
+  /** Callback handler to be called when the tag is not open/shown */
+  @Event() bqOpen: EventEmitter;
 
   /** Handler to be called when tag is clicked */
   @Event() bqClick: EventEmitter<HTMLBqTagElement>;
 
   /** Handler to be called when tag is focused */
   @Event() bqFocus: EventEmitter<HTMLBqTagElement>;
-
-  /** Handler to be called when tag is hidden */
-  @Event() bqClose: EventEmitter;
-
-  /** Handler to be called when tag is shown */
-  @Event() bqOpen: EventEmitter;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -130,20 +124,18 @@ export class BqTag {
   private handleHide = () => {
     if (!this.isRemovable) return;
 
-    const ev = this.bqHide.emit(this.el);
+    const ev = this.bqClose.emit(this.el);
     if (!ev.defaultPrevented) {
       this.hidden = true;
-      this.bqClose.emit();
     }
   };
 
   private handleShow = () => {
     if (!this.isRemovable) return;
 
-    const ev = this.bqShow.emit(this.el);
+    const ev = this.bqOpen.emit(this.el);
     if (!ev.defaultPrevented) {
       this.hidden = false;
-      this.bqOpen.emit();
     }
   };
 

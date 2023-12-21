@@ -23,12 +23,10 @@ const meta: Meta = {
     size: { control: 'select', options: [...TAG_SIZE] },
     variant: { control: 'select', options: [...TAG_VARIANT] },
     // Event handlers
-    bqHide: { action: 'bqHide' },
-    bqShow: { action: 'bqShow' },
-    bqClick: { action: 'bqClick' },
-    bqFocus: { action: 'bqFocus' },
     bqClose: { action: 'bqClose' },
     bqOpen: { action: 'bqOpen' },
+    bqClick: { action: 'bqClick' },
+    bqFocus: { action: 'bqFocus' },
     // Not part of the component API, but used for the story
     text: { control: 'text', table: { disable: true } },
   },
