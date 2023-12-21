@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State, Watch } from '@stencil/core';
 
-import { TAG_SIZE, TAG_VARIANT, TTagColor, TTagSize, TTagVariant } from './bq-tag.types';
+import { TAG_SIZE, TAG_VARIANT, TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from './bq-tag.types';
 import { iconSize, textColor } from './helper';
 import { hasSlotContent, validatePropValue } from '../../shared/utils';
 
@@ -35,6 +35,9 @@ export class BqTag {
 
   // Public Property API
   // ========================
+
+  /** The corner radius of the button (will override size's predefined border) */
+  @Prop({ reflect: true }) border: TTagBorderRadius;
 
   /** If true, the Tag can be clickable */
   @Prop({ reflect: true }) clickable: boolean = false;
@@ -191,8 +194,12 @@ export class BqTag {
   // ===================================
 
   render() {
+    const style = {
+      ...(this.border && { '--bq-tag--border-radius': `var(--bq-radius--${this.border})` }),
+    };
+
     return (
-      <Host aria-hidden={this.isHidden ? 'true' : 'false'} hidden={this.isHidden ? 'true' : 'false'}>
+      <Host style={style} aria-hidden={this.isHidden ? 'true' : 'false'} hidden={this.isHidden ? 'true' : 'false'}>
         <button
           class={{
             [`bq-tag bq-tag__${this.size} bq-tag__${this.color || 'default'} bq-tag__${this.variant}`]: true,
@@ -200,6 +207,8 @@ export class BqTag {
             'is-removable': this.removable,
             // Active/Selected state when clickable
             active: this.isClickable && this.selected,
+            // Fixed border radius
+            'has-border': !!this.border,
           }}
           disabled={this.disabled}
           onBlur={this.handleBlur}

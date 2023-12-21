@@ -25,7 +25,12 @@
 
 .bq-tag__xsmall,
 .bq-tag__small {
-  @apply gap-xs2 rounded-[--bq-tag--small-border-radius] px-[--bq-tag--small-padding-x] py-[--bq-tag--small-padding-y];
+  @apply gap-xs2 px-[--bq-tag--small-padding-x] py-[--bq-tag--small-padding-y];
+
+  /* Apply predefined border radius only if the border property have NO VALUE */
+  &:not(.has-border) {
+    @apply rounded-[--bq-tag--small-border-radius];
+  }
 }
 
 /* --------------------------------- Action --------------------------------- */
