@@ -1799,12 +1799,10 @@ declare global {
         new (): HTMLBqTabGroupElement;
     };
     interface HTMLBqTagElementEventMap {
-        "bqHide": any;
-        "bqShow": any;
-        "bqClick": HTMLBqTagElement;
-        "bqFocus": HTMLBqTagElement;
         "bqClose": any;
         "bqOpen": any;
+        "bqClick": HTMLBqTagElement;
+        "bqFocus": HTMLBqTagElement;
     }
     interface HTMLBqTagElement extends Components.BqTag, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqTagElementEventMap>(type: K, listener: (this: HTMLBqTagElement, ev: BqTagCustomEvent<HTMLBqTagElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -3034,7 +3032,7 @@ declare namespace LocalJSX {
          */
         "onBqClick"?: (event: BqTagCustomEvent<HTMLBqTagElement>) => void;
         /**
-          * Handler to be called when tag is hidden
+          * Callback handler to be called when the tag is close/hidden
          */
         "onBqClose"?: (event: BqTagCustomEvent<any>) => void;
         /**
@@ -3042,17 +3040,9 @@ declare namespace LocalJSX {
          */
         "onBqFocus"?: (event: BqTagCustomEvent<HTMLBqTagElement>) => void;
         /**
-          * Callback handler to be called when the tag is removable
-         */
-        "onBqHide"?: (event: BqTagCustomEvent<any>) => void;
-        /**
-          * Handler to be called when tag is shown
+          * Callback handler to be called when the tag is not open/shown
          */
         "onBqOpen"?: (event: BqTagCustomEvent<any>) => void;
-        /**
-          * Callback handler to be called when the tag is not removable
-         */
-        "onBqShow"?: (event: BqTagCustomEvent<any>) => void;
         /**
           * If true, the Tag component can be removed
          */
