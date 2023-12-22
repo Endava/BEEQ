@@ -45,6 +45,9 @@ export class BqTag {
   /** The color style of the Tag */
   @Prop({ reflect: true }) color: TTagColor;
 
+  /** The custom style color of the Tag */
+  @Prop({ reflect: true }) customColor?: string;
+
   /** If true, the Tag will be disabled (only if clickable = `true`, no interaction allowed) */
   @Prop({ reflect: true }) disabled?: boolean = false;
 
@@ -193,13 +196,17 @@ export class BqTag {
     const style = {
       '--bq-tag--icon-prefix-size': `${iconSize(this.size)}px`,
       ...(this.border && { '--bq-tag--border-radius': `var(--bq-radius--${this.border})` }),
+      ...(this.customColor && { '--bq-tag--background-color': this.customColor }),
+      ...(this.customColor && { '--bq-text--primary': `var(--bq-text--primary-alt)` }),
+      ...(this.customColor && { '--bq-icon--color': `var(--bq-text--primary-alt)` }),
     };
 
     return (
       <Host style={style} aria-hidden={this.isHidden ? 'true' : 'false'} hidden={this.isHidden ? 'true' : 'false'}>
         <button
           class={{
-            [`bq-tag bq-tag__${this.size} bq-tag__${this.color || 'default'} bq-tag__${this.variant}`]: true,
+            [`bq-tag bq-tag__${this.size}`]: true,
+            [`bq-tag__${this.color || 'default'} bq-tag__${this.variant}`]: !this.customColor,
             'is-clickable': this.isClickable,
             'is-removable': this.removable,
             // Active/Selected state when clickable

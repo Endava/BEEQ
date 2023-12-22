@@ -1021,6 +1021,10 @@ export namespace Components {
          */
         "color": TTagColor;
         /**
+          * The custom style color of the Tag
+         */
+        "customColor"?: string;
+        /**
           * If true, the Tag will be disabled (only if clickable = `true`, no interaction allowed)
          */
         "disabled"?: boolean;
@@ -3036,6 +3040,10 @@ declare namespace LocalJSX {
           * The color style of the Tag
          */
         "color"?: TTagColor;
+        /**
+          * The custom style color of the Tag
+         */
+        "customColor"?: string;
         /**
           * If true, the Tag will be disabled (only if clickable = `true`, no interaction allowed)
          */

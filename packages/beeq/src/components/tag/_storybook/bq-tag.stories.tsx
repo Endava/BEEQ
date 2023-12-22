@@ -20,6 +20,7 @@ const meta: Meta = {
     disabled: { control: 'boolean' },
     hidden: { control: 'boolean' },
     removable: { control: 'boolean' },
+    'custom-color': { control: 'text' },
     selected: { control: 'boolean' },
     size: { control: 'select', options: [...TAG_SIZE] },
     variant: { control: 'select', options: [...TAG_VARIANT] },
@@ -37,6 +38,7 @@ const meta: Meta = {
     border: undefined,
     clickable: false,
     color: undefined,
+    'custom-color': undefined,
     disabled: false,
     hidden: false,
     removable: false,
@@ -54,6 +56,7 @@ const Template = (args: Args) => html`
     border=${ifDefined(args.border)}
     ?clickable=${args.clickable}
     color=${ifDefined(args.color)}
+    custom-color=${ifDefined(args['custom-color'])}
     ?disabled=${args.disabled}
     ?hidden=${args.hidden}
     ?removable=${args.removable}
