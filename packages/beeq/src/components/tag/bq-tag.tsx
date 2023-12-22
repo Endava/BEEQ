@@ -177,7 +177,7 @@ export class BqTag {
   };
 
   private get isClickable(): boolean {
-    return this.clickable && !this.color && !this.removable;
+    return this.clickable && !this.color && !this.customColor && !this.removable;
   }
 
   private get isRemovable(): boolean {
@@ -186,6 +186,10 @@ export class BqTag {
 
   private get isHidden(): boolean {
     return this.isRemovable && this.hidden;
+  }
+
+  private get hasCustomColor(): boolean {
+    return !!this.customColor;
   }
 
   // render() function
@@ -198,7 +202,6 @@ export class BqTag {
       ...(this.border && { '--bq-tag--border-radius': `var(--bq-radius--${this.border})` }),
       ...(this.customColor && { '--bq-tag--background-color': this.customColor }),
       ...(this.customColor && { '--bq-text--primary': `var(--bq-text--primary-alt)` }),
-      ...(this.customColor && { '--bq-icon--color': `var(--bq-text--primary-alt)` }),
     };
 
     return (
@@ -243,7 +246,7 @@ export class BqTag {
               <bq-icon
                 size={iconSize(this.size)}
                 name="x-circle"
-                color={this.color ? textColor(this.color)[this.variant] : 'text--primary'}
+                color={this.color && !this.hasCustomColor ? textColor(this.color)[this.variant] : 'text--primary'}
               />
             </bq-button>
           )}
