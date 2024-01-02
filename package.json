@@ -151,7 +151,7 @@
     "typescript": "5.2.2",
     "vite": "5.0.10",
     "vite-plugin-turbosnap": "1.0.3",
-    "vite-tsconfig-paths": "4.2.2",
+    "vite-tsconfig-paths": "4.2.3",
     "vue": "3.3.13"
   },
   "overrides": {
