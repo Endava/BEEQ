@@ -42,20 +42,20 @@ export class BqAccordion {
   // Public Property API
   // ========================
 
-  /** If true accordion is expanded */
-  @Prop({ reflect: true, mutable: true }) expanded: boolean = false;
+  /** The appearance style of accordion */
+  @Prop({ reflect: true, mutable: true }) appearance: TAccordionAppearance = 'filled';
 
   /** If true accordion is disabled */
   @Prop({ reflect: true }) disabled: boolean = false;
+
+  /** If true accordion is expanded */
+  @Prop({ reflect: true, mutable: true }) expanded: boolean = false;
 
   /** If true accordion expand icon is rotate 180deg when expanded */
   @Prop({ reflect: true }) rotate: boolean = false;
 
   /** The size of accordion */
   @Prop({ reflect: true, mutable: true }) size: TAccordionSize = 'medium';
-
-  /** The appearance style of accordion */
-  @Prop({ reflect: true, mutable: true }) appearance: TAccordionAppearance = 'filled';
 
   // Prop lifecycle events
   // =======================
