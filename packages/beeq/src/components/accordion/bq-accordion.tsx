@@ -125,6 +125,8 @@ export class BqAccordion {
   // =======================================================
 
   private handleClick = (event: MouseEvent) => {
+    if (this.disabled) return;
+
     event.preventDefault();
 
     this.expanded = !this.expanded;
@@ -132,6 +134,8 @@ export class BqAccordion {
   };
 
   private handleFocus = () => {
+    if (this.disabled) return;
+
     this.bqFocus.emit(this.el);
   };
 
@@ -164,7 +168,15 @@ export class BqAccordion {
         ref={(detailsElem: HTMLDetailsElement) => (this.detailsElem = detailsElem)}
         part="base"
       >
-        <summary class="bq-accordion__header" part="header" onFocus={this.handleFocus} onBlur={this.handleBlur}>
+        <summary
+          class="bq-accordion__header"
+          onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
+          aria-expanded={this.open}
+          aria-disabled={this.disabled}
+          tabindex={this.disabled ? -1 : 0}
+          part="header"
+        >
           <div
             ref={(element) => (this.prefixElem = element)}
             class={{ 'bq-accordion__header--prefix': true, '!hidden': !this.hasPrefix }}
