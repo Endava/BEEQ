@@ -36,6 +36,14 @@
           "packages/beeq-tailwindcss/project.json"
         ]
       }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public",
+        "noBuild": true,
+        "tag": "latest"
+      }
     }
   }
 }
