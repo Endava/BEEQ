@@ -2,6 +2,9 @@ import { Component, Element, h, Listen, Prop, Watch } from '@stencil/core';
 
 import { isNil } from '../../shared/utils';
 
+/**
+ * @part base - The component's base wrapper.
+ */
 @Component({
   tag: 'bq-accordion-group',
   styleUrl: './scss/bq-accordion-group.scss',
@@ -90,7 +93,7 @@ export class BqAccordionGroup {
 
   render() {
     return (
-      <div class="bq-accordion-group flex flex-col gap-[--bq-accordion-group--gap]">
+      <div class="flex flex-col gap-[--bq-accordion-group--gap]" part="base">
         <slot />
       </div>
     );
