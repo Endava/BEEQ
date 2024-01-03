@@ -42,20 +42,20 @@ export class BqAccordion {
   // Public Property API
   // ========================
 
-  /** If true accordion is expanded */
-  @Prop({ reflect: true, mutable: true }) expanded: boolean = false;
+  /** The appearance style of accordion */
+  @Prop({ reflect: true, mutable: true }) appearance: TAccordionAppearance = 'filled';
 
   /** If true accordion is disabled */
   @Prop({ reflect: true }) disabled: boolean = false;
+
+  /** If true accordion is expanded */
+  @Prop({ reflect: true, mutable: true }) expanded: boolean = false;
 
   /** If true accordion expand icon is rotate 180deg when expanded */
   @Prop({ reflect: true }) rotate: boolean = false;
 
   /** The size of accordion */
   @Prop({ reflect: true, mutable: true }) size: TAccordionSize = 'medium';
-
-  /** The appearance style of accordion */
-  @Prop({ reflect: true, mutable: true }) appearance: TAccordionAppearance = 'filled';
 
   // Prop lifecycle events
   // =======================
@@ -125,6 +125,8 @@ export class BqAccordion {
   // =======================================================
 
   private handleClick = (event: MouseEvent) => {
+    if (this.disabled) return;
+
     event.preventDefault();
 
     this.expanded = !this.expanded;
@@ -132,6 +134,8 @@ export class BqAccordion {
   };
 
   private handleFocus = () => {
+    if (this.disabled) return;
+
     this.bqFocus.emit(this.el);
   };
 
@@ -164,7 +168,15 @@ export class BqAccordion {
         ref={(detailsElem: HTMLDetailsElement) => (this.detailsElem = detailsElem)}
         part="base"
       >
-        <summary class="bq-accordion__header" part="header" onFocus={this.handleFocus} onBlur={this.handleBlur}>
+        <summary
+          class="bq-accordion__header"
+          onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
+          aria-expanded={this.open}
+          aria-disabled={this.disabled}
+          tabindex={this.disabled ? -1 : 0}
+          part="header"
+        >
           <div
             ref={(element) => (this.prefixElem = element)}
             class={{ 'bq-accordion__header--prefix': true, '!hidden': !this.hasPrefix }}
