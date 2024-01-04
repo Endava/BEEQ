@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, getAssetPath, h, Host, Prop, State, Watch } from '@stencil/core';
+import { Component, Env, Event, EventEmitter, getAssetPath, h, Host, Prop, State, Watch } from '@stencil/core';
 
 import { TIconWeight } from './bq-icon.types';
 import { getSvgContent, iconContent } from './helper/request';
@@ -40,6 +40,9 @@ export class BqIcon {
 
   /** Set the size of the SVG */
   @Prop({ reflect: true }) size?: string | number = 24;
+
+  /** Set the source of the SVG. If the source is set, the name property will be ignored */
+  @Prop({ reflect: true }) src?: string;
 
   /** It set the icon weight/style */
   @Prop({ reflect: true }) weight?: TIconWeight = 'regular';
@@ -85,12 +88,24 @@ export class BqIcon {
   // These methods cannot be called from the host element.
   // =======================================================
 
+  private getIconSource = () => {
+    if (!this.name && !this.src) return;
+    // Return the src if it is set
+    if (this.src) return this.src;
+
+    const svgPath = Env.ICONS_SVG_PATH;
+    let iconName = this.weight !== 'regular' ? `${this.name}-${this.weight}.svg` : `${this.name}.svg`;
+    let path = `./svg/${this.weight}/${iconName}`;
+
+    if (svgPath) {
+      iconName = `${this.name}.svg`;
+      path = `${svgPath}/${iconName}`;
+    }
+    return getAssetPath(path);
+  };
+
   private loadIcon = () => {
-    if (!this.name) return;
-
-    const iconName = this.weight !== 'regular' ? `${this.name}-${this.weight}.svg` : `${this.name}.svg`;
-    const url = getAssetPath(`./svg/${this.weight}/${iconName}`);
-
+    const url = this.getIconSource();
     getSvgContent(url, true).then(() => {
       this._svgContent = iconContent.get(url);
       this.svgLoaded.emit(this._svgContent);
