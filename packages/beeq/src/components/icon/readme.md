@@ -14,6 +14,7 @@ Icons are simplified images that graphically explain the meaning of an object on
 | `color`             | `color`   | Set the stroke color of the SVG. The value should be a valid value of the palette color | `string`                                                          | `undefined` |
 | `name` _(required)_ | `name`    | Icon name to load. Please check all available icons [here](https://phosphoricons.com/)  | `string`                                                          | `undefined` |
 | `size`              | `size`    | Set the size of the SVG                                                                 | `number \| string`                                                | `24`        |
+| `src`               | `src`     | Set the source of the SVG. If the source is set, the name property will be ignored      | `string`                                                          | `undefined` |
 | `weight`            | `weight`  | It set the icon weight/style                                                            | `"bold" \| "duotone" \| "fill" \| "light" \| "regular" \| "thin"` | `'regular'` |
 
 
