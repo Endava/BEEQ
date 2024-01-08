@@ -29,7 +29,7 @@ commands:
       - run:
           name: 📚 Publish to Chromatic
           command: |
-            npx chromatic --project-token=${CHROMATIC_PROJECT_TOKEN} -d dist/storybook/beeq --untraced "package.json" --untraced "package-lock.json" --auto-accept-changes --ci --exit-once-uploaded --only-changed --zip
+            npx chromatic --project-token=${CHROMATIC_PROJECT_TOKEN} --ci --debug
 
 # ---------------------------------------------------------------------------- #
 #                         Jobs are collections of steps                        #

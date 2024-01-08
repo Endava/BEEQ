@@ -1,0 +1,9 @@
+{
+  "autoAcceptChanges": "main",
+  "exitOnceUploaded": true,
+  "onlyChanged": true,
+  "storybookConfigDir": "packages/beeq/.storybook",
+  "storybookBuildDir": "dist/storybook/beeq",
+  "untraced": ["package.json", "package-lock.json"],
+  "zip": true
+}

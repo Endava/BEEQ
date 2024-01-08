@@ -5,6 +5,7 @@
 /dist
 /out-tsc
 /tmp/**
+chromatic-diagnostics.json
 
 # source files to ignore
 .angular
