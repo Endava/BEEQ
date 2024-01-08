@@ -20,6 +20,9 @@ export const config: Config = {
   namespace: 'bee-q',
   taskQueue: 'async',
   globalStyle: resolve(__dirname, './src/global/styles/default.scss').replace(/\\/g, '/'),
+  env: {
+    ICONS_SVG_PATH: process.env.ICONS_SVG_PATH,
+  },
   plugins: [
     sass({
       includePaths: [

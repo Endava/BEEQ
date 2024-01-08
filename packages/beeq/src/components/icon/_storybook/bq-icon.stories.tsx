@@ -1,5 +1,6 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { repeat } from 'lit-html/directives/repeat.js';
 
 import mdx from './bq-icon.mdx';
@@ -21,11 +22,13 @@ const meta: Meta = {
     color: { control: 'text' },
     name: { control: 'select', options: [...ICONS_SET] },
     size: { control: 'number' },
+    src: { control: 'text' },
     weight: { control: 'select', options: [...ICON_WEIGHT] },
   },
   args: {
     color: 'text--brand',
     size: 24,
+    src: undefined,
     weight: 'regular',
   },
 };
@@ -34,13 +37,28 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
-  <bq-icon color=${args.color} name=${args.name} size=${args.size} weight=${args.weight}></bq-icon>
+  <bq-icon
+    color=${ifDefined(args.color)}
+    name=${ifDefined(args.name)}
+    size=${ifDefined(args.size)}
+    src=${ifDefined(args.src)}
+    weight=${ifDefined(args.weight)}
+  ></bq-icon>
 `;
 
 export const Default: Story = {
   render: Template,
   args: {
     name: 'bell-ringing',
+  },
+};
+
+export const Custom: Story = {
+  name: 'Custom icon',
+  render: Template,
+  args: {
+    size: 256,
+    src: './assets/wallet.svg',
   },
 };
 
@@ -76,14 +94,14 @@ export const ExploreIcons: Story = {
       Explore all the icons available
       <bq-icon class="ml-4" name="caret-right" weight="regular" slot="suffix"></bq-icon>
     </bq-button>
-    <div class="icon-grid mx-auto my-0 grid grid-cols-[repeat(auto-fill,_minmax(75px,_1fr))] gap-6 gap-x-4">
+    <div class="icon-grid mx-auto my-0 grid grid-cols-[repeat(auto-fill,_minmax(75px,_1fr))] gap-l gap-x-m">
       ${repeat(
         getRandomFromArray(args.icons, 36),
         (icon) => icon,
         (icon) => html`
           <div class="group flex flex-col items-stretch text-center outline-0" role="button" tabindex="0">
             <div
-              class="mb-2 flex w-full justify-center rounded-m border border-solid border-stroke-secondary px-0 py-4 transition-shadow group-hover:shadow-m"
+              class="mb-s flex w-full justify-center rounded-m border border-solid border-stroke-primary px-0 py-m transition-[shadow,transform] group-hover:scale-125 group-hover:shadow-l"
             >
               ${Template({ ...args, name: icon })}
             </div>

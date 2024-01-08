@@ -7,7 +7,7 @@
   "module": "./index.esm.js",
   "types": "./src/index.d.ts",
   "peerDependencies": {
-    "tailwindcss": "^3.3.7",
+    "tailwindcss": "^3.4.1",
     "tailwindcss-theme-swapper": "^0.10.0"
   },
   "repository": {

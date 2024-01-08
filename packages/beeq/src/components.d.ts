@@ -432,6 +432,10 @@ export namespace Components {
          */
         "size"?: string | number;
         /**
+          * Set the source of the SVG. If the source is set, the name property will be ignored
+         */
+        "src"?: string;
+        /**
           * It set the icon weight/style
          */
         "weight"?: TIconWeight;
@@ -2350,6 +2354,10 @@ declare namespace LocalJSX {
           * Set the size of the SVG
          */
         "size"?: string | number;
+        /**
+          * Set the source of the SVG. If the source is set, the name property will be ignored
+         */
+        "src"?: string;
         /**
           * It set the icon weight/style
          */
