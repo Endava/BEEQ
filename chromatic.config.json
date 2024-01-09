@@ -1,9 +1,11 @@
 {
   "autoAcceptChanges": "main",
   "exitOnceUploaded": true,
+  "exitZeroOnChanges": true,
   "onlyChanged": true,
-  "storybookConfigDir": "packages/beeq/.storybook",
+  "projectId": "Project:6408a8161bf55e5999ae828b",
   "storybookBuildDir": "dist/storybook/beeq",
+  "storybookConfigDir": "packages/beeq/.storybook",
   "untraced": ["package.json", "package-lock.json"],
   "zip": true
 }
