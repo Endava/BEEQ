@@ -147,6 +147,23 @@ export const ColorOutline: Story = {
   },
 };
 
+export const CustomColor: Story = {
+  name: 'Color - custom',
+  render: (args: Args) => html`
+    <div class="flex gap-s">
+      <!-- Hex custom color -->
+      ${Template({ ...args, color: '#FF5733', text: 'HEX', icon: 'yin-yang' })}
+      <!-- Rgba custom color -->
+      ${Template({ ...args, color: 'rgba(255, 87, 51, 0.7)', text: 'RGBA', icon: 'rss' })}
+      <!-- Theme custom color palette -->
+      ${Template({ ...args, color: 'data--sky', text: 'Theme Palette', icon: 'palette' })}
+    </div>
+  `,
+  args: {
+    variant: 'outline',
+  },
+};
+
 export const RemovableFilled: Story = {
   name: 'Removable - filled',
   render: (args: Args) => html`
