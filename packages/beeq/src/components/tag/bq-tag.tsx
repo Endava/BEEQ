@@ -1,8 +1,8 @@
 import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State, Watch } from '@stencil/core';
 
-import { TAG_SIZE, TAG_VARIANT, TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from './bq-tag.types';
+import { TAG_COLOR, TAG_SIZE, TAG_VARIANT, TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from './bq-tag.types';
 import { iconSize, textColor } from './helper';
-import { hasSlotContent, validatePropValue } from '../../shared/utils';
+import { getColorCSSVariable, hasSlotContent, validatePropValue } from '../../shared/utils';
 
 /**
  * @part wrapper - The wrapper container `<div>` of the element inside the shadow DOM.
@@ -174,7 +174,7 @@ export class BqTag {
   };
 
   private get isClickable(): boolean {
-    return this.clickable && !this.color && !this.removable;
+    return this.clickable && !this.color && !this.hasCustomColor && !this.removable;
   }
 
   private get isRemovable(): boolean {
@@ -185,6 +185,10 @@ export class BqTag {
     return this.isRemovable && this.hidden;
   }
 
+  private get hasCustomColor(): boolean {
+    return this.color !== undefined ? !TAG_COLOR.includes(this.color) : false;
+  }
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -193,13 +197,16 @@ export class BqTag {
     const style = {
       '--bq-tag--icon-prefix-size': `${iconSize(this.size)}px`,
       ...(this.border && { '--bq-tag--border-radius': `var(--bq-radius--${this.border})` }),
+      ...(this.color && { '--bq-tag--background-color': getColorCSSVariable(this.color) ?? this.color }),
+      ...(this.hasCustomColor && { '--bq-text--primary': `var(--bq-text--primary-alt)` }),
     };
 
     return (
       <Host style={style} aria-hidden={this.isHidden ? 'true' : 'false'} hidden={this.isHidden ? 'true' : 'false'}>
         <button
           class={{
-            [`bq-tag bq-tag__${this.size} bq-tag__${this.color || 'default'} bq-tag__${this.variant}`]: true,
+            [`bq-tag bq-tag__${this.size}`]: true,
+            [`bq-tag__${this.color || 'default'} bq-tag__${this.variant}`]: !this.hasCustomColor,
             'is-clickable': this.isClickable,
             'is-removable': this.removable,
             // Active/Selected state when clickable
@@ -236,7 +243,7 @@ export class BqTag {
               <bq-icon
                 size={iconSize(this.size)}
                 name="x-circle"
-                color={this.color ? textColor(this.color)[this.variant] : 'text--primary'}
+                color={this.color && !this.hasCustomColor ? textColor(this.color)[this.variant] : 'text--primary'}
               />
             </bq-button>
           )}
