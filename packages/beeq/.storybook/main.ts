@@ -31,7 +31,8 @@ export default {
   framework: '@storybook/web-components-vite',
   stories: ['../src/_storybook/**/*.mdx', '../src/**/*.stories.@(mdx|ts|tsx)'],
   staticDirs: [
-    '../../../dist/beeq/www',
+    { from: '../../../dist/beeq/www/assets', to: '/assets' },
+    { from: '../../../dist/beeq/www/scripts', to: '/scripts' },
     { from: '../../../dist/beeq/dist/bee-q', to: '/beeq' },
     { from: './assets/css', to: '/css' },
   ],
