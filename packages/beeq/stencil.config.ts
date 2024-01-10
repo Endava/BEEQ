@@ -23,6 +23,7 @@ export const config: Config = {
   env: {
     ICONS_SVG_PATH: process.env.ICONS_SVG_PATH,
   },
+  buildDist: true,
   plugins: [
     sass({
       includePaths: [

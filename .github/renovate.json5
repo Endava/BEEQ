@@ -1,27 +1,31 @@
 {
   $schema: 'https: //docs.renovatebot.com/renovate-schema.json',
   /**
-   * Determine assignees based on configured code owners and changes in PR.
+   * Determine assignees based on configured code owners and changes in PR
    */
   assigneesFromCodeOwners: true,
   /**
-   * Prefix to use for all branch names made by Renovate.
+   * Renovate will use `main` as thePull Request target
+   */
+  baseBranches: ['main'],
+  /**
+   * Prefix to use for all branch names made by Renovate
    */
   branchPrefix: 'chore/',
   /**
    * Configuring dependencyDashboard to true will lead
-   * to the creation of a "Dependency Dashboard" issue within the repository.
-   * This issue has a list of all PRs pending, open, closed (unmerged) or in error.
-   * The goal of this issue is to give visibility into all updates that Renovate is managing.
+   * to the creation of a "Dependency Dashboard" issue within the repository
+   * This issue has a list of all PRs pending, open, closed (unmerged) or in error
+   * The goal of this issue is to give visibility into all updates that Renovate is managing
    */
   dependencyDashboard: true,
   /**
    * The ignoreDeps configuration field allows you to define a list of dependency names to be ignored by Renovate.
-   * Currently it supports only "exact match" dependency names.
+   * Currently it supports only "exact match" dependency names
    */
   ignoreDeps: [],
   /**
-   * Skip any package file whose path matches one of these.
+   * Skip any package file whose path matches one of these
    */
   ignorePaths: ['packages/**/package.json', 'tools/package.json'],
   /**
@@ -29,12 +33,12 @@
    */
   labels: ['chore ⚙️', 'dependencies 📦'],
   /**
-   * Time required before a new release is considered stable.
+   * Time required before a new release is considered stable
    */
   minimumReleaseAge: '1 days',
   /**
    * Package rules lets you apply rules to individual packages
-   * or to groups of packages using regex pattern matching.
+   * or to groups of packages using regex pattern matching
    */
   packageRules: [
     {
@@ -103,7 +107,7 @@
       allowedVersions: '<0.14.0',
     },
     /**
-     * Do not renovate peerDependencies versions/ranges.
+     * Do not renovate peerDependencies versions/ranges
      */
     {
       enabled: false,
@@ -116,16 +120,24 @@
    */
   rangeStrategy: 'pin',
   /**
-   * Controls when Renovate rebases an existing branch.
+   * Controls when Renovate recreates a PR
    */
-  rebaseWhen: 'never',
+  recreateWhen: 'never',
   /**
-   * Run every Monday between 00 and 12 (UTC time)
+   * Controls when Renovate rebases an existing branch
+   */
+  rebaseWhen: 'conflicted',
+  /**
+   * Run every Monday between 00 and 12
    * {@see https://crontab.guru} for debugging cron schedules
    */
   schedule: ['* 00-12 * * 1'],
   /**
-   * Enable Semantic Commit prefixes for commits and PR titles.
+   * Enable Semantic Commit prefixes for commits and PR titles
    */
   semanticCommits: true,
+  /**
+   * Schedule PRs to be created using EET timezone
+   */
+  timezone: 'Europe/Bucharest',
 }
