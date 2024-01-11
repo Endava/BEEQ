@@ -2,19 +2,25 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { html, nothing } from 'lit-html';
 
-import meta from './bq-input.stories';
+import { default as metaInput } from './bq-input.stories';
 import mdxSearch from './bq-search.mdx';
 
-const metaSearch: Meta = {
-  ...meta,
+const meta: Meta = {
+  ...metaInput,
   title: 'Components/Search',
   parameters: {
     docs: {
       page: mdxSearch,
     },
   },
+  args: {
+    ...metaInput.args,
+    placeholder: 'Search...',
+    prefix: true,
+    type: 'search',
+  },
 };
-export default metaSearch;
+export default meta;
 
 type Story = StoryObj;
 
@@ -57,20 +63,12 @@ const Template = (args: Args) => {
 
 export const Default: Story = {
   render: Template,
-  args: {
-    prefix: true,
-    placeholder: 'Search...',
-    type: 'search',
-  },
 };
 
 export const Value: Story = {
   render: Template,
   args: {
-    prefix: true,
-    placeholder: 'Search...',
-    value: 'value',
-    type: 'search',
+    value: 'Value to search',
   },
 };
 
@@ -78,8 +76,5 @@ export const Disabled: Story = {
   render: Template,
   args: {
     disabled: true,
-    prefix: true,
-    placeholder: 'Search...',
-    type: 'search',
   },
 };
