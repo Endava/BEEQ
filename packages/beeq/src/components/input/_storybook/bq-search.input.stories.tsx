@@ -3,25 +3,23 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { html, nothing } from 'lit-html';
 
 import meta from './bq-input.stories';
+import mdxSearch from './bq-search.mdx';
 
-const metaSearch: Meta = { ...meta, title: 'Components/Search' };
+const metaSearch: Meta = {
+  ...meta,
+  title: 'Components/Search',
+  parameters: {
+    docs: {
+      page: mdxSearch,
+    },
+  },
+};
 export default metaSearch;
 
 type Story = StoryObj;
 
 const Template = (args: Args) => {
-  const style = args.hasLabelTooltip
-    ? html`
-        <style>
-          bq-input {
-            width: 75vw;
-          }
-        </style>
-      `
-    : nothing;
-
   return html`
-    ${style}
     <bq-input
       autocapitalize=${ifDefined(args.autocapitalize)}
       autocomplete=${ifDefined(args.autocomplete)}
