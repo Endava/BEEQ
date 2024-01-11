@@ -1,4 +1,5 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { enter, leave } from 'el-transition';
 
 import { DIALOG_FOOTER_APPEARANCE, DIALOG_SIZE, TDialogFooterAppearance, TDialogSize } from './bq-dialog.types';
 import { hasSlotContent, validatePropValue } from '../../shared/utils';
@@ -51,7 +52,7 @@ export class BqDialog {
   @Prop({ reflect: true }) disableCloseClickOutside = false;
 
   /** The appearance of footer */
-  @Prop({ reflect: true }) footerApperance: TDialogFooterAppearance = 'standard';
+  @Prop({ reflect: true }) footerAppearance: TDialogFooterAppearance = 'standard';
 
   /** If true, it hides the close button */
   @Prop({ reflect: true }) hideCloseButton = false;
@@ -64,23 +65,21 @@ export class BqDialog {
 
   // Prop lifecycle events
   // =======================
-  @Watch('footerApperance')
+  @Watch('footerAppearance')
   @Watch('size')
   checkPropValues() {
     validatePropValue(DIALOG_SIZE, 'large', this.el, 'size');
-    validatePropValue(DIALOG_FOOTER_APPEARANCE, 'standard', this.el, 'footerApperance');
+    validatePropValue(DIALOG_FOOTER_APPEARANCE, 'standard', this.el, 'footerAppearance');
   }
 
   @Watch('open')
-  handleOpenChange() {
+  async handleOpenChange() {
     if (this.open) {
-      this.el.classList.add(this.OPEN_CSS_CLASS);
-      this.removeInertAttribute();
-      !this.disableBackdrop ? this.dialogElem.showModal() : this.dialogElem.show();
-    } else {
-      this.dialogElem.close();
-      this.setInertAttribute();
+      await this.handleOpen();
+      return;
     }
+
+    await this.handleClose();
   }
 
   // Events section
@@ -112,20 +111,13 @@ export class BqDialog {
 
   componentDidLoad() {
     this.handleOpenChange();
-    this.dialogElem.addEventListener('cancel', this.handleEscDown);
-    this.dialogElem.addEventListener('transitionend', this.handleTransitionEnd);
-  }
-
-  disconnectedCallback() {
-    this.dialogElem?.removeEventListener('cancel', this.handleEscDown);
-    this.dialogElem?.removeEventListener('transitionend', this.handleTransitionEnd);
   }
 
   // Listeners
   // ==============
 
   @Listen('mousedown', { target: 'window', capture: true })
-  handleMouseClick(event: MouseEvent) {
+  async handleMouseClick(event: MouseEvent) {
     if (!this.open) return;
     if (!this.dialogElem || this.disableCloseClickOutside) return;
     // Skip if the mouse button is not the main button
@@ -138,8 +130,15 @@ export class BqDialog {
       event.clientX < rect.left ||
       event.clientX > rect.right
     ) {
-      this.handleCancel();
+      await this.cancel();
     }
+  }
+
+  @Listen('keydown', { target: 'window', capture: true })
+  async handleKeyDown(event: KeyboardEvent) {
+    if (!this.open || !this.dialogElem || !(event.key === 'Escape' || event.key === 'Esc')) return;
+
+    await this.cancel();
   }
 
   // Public methods API
@@ -152,19 +151,28 @@ export class BqDialog {
   /** Open the dialog */
   @Method()
   async show() {
-    this.handleOpen();
+    const ev = this.bqOpen.emit();
+    if (ev.defaultPrevented) return;
+
+    this.open = true;
   }
 
   /** Closes the dialog */
   @Method()
   async hide() {
-    this.handleClose();
+    const ev = this.bqClose.emit();
+    if (ev.defaultPrevented) return;
+
+    this.open = false;
   }
 
   /** Dismiss or cancel the dialog */
   @Method()
   async cancel() {
-    this.handleCancel();
+    const ev = this.bqCancel.emit();
+    if (ev.defaultPrevented) return;
+
+    this.open = false;
   }
 
   // Local methods
@@ -182,28 +190,28 @@ export class BqDialog {
     this.dialogElem.removeAttribute('inert');
   }
 
-  private handleClose = () => {
+  private handleClose = async () => {
     if (!this.dialogElem) return;
 
-    const ev = this.bqClose.emit();
-    if (ev.defaultPrevented) return;
-    this.open = false;
+    this.dialogElem.close();
+    await leave(this.dialogElem);
+    // Emit bqAfterClose event after the dialog is closed
+    this.handleTransitionEnd();
+    // Set the inert attribute to the dialog element
+    this.setInertAttribute();
   };
 
-  private handleOpen = () => {
+  private handleOpen = async () => {
     if (!this.dialogElem) return;
 
-    const ev = this.bqOpen.emit();
-    if (ev.defaultPrevented) return;
-
-    this.open = true;
-  };
-
-  private handleCancel = () => {
-    const ev = this.bqCancel.emit();
-    if (ev.defaultPrevented) return;
-
-    this.open = false;
+    this.el.classList.add(this.OPEN_CSS_CLASS);
+    // Remove the inert attribute from the dialog element
+    this.removeInertAttribute();
+    // Show the dialog
+    this.disableBackdrop ? this.dialogElem.show() : this.dialogElem.showModal();
+    await enter(this.dialogElem);
+    // Emit bqAfterOpen event after the dialog is opened
+    this.handleTransitionEnd();
   };
 
   private handleTransitionEnd = () => {
@@ -214,15 +222,6 @@ export class BqDialog {
 
     this.bqAfterClose.emit();
     this.el.classList.remove(this.OPEN_CSS_CLASS);
-  };
-
-  private handleEscDown = (event: KeyboardEvent) => {
-    if (this.disableCloseEscKeydown) {
-      event.preventDefault();
-      return;
-    }
-
-    this.handleCancel();
   };
 
   private handleContentSlotChange = () => {
@@ -239,13 +238,24 @@ export class BqDialog {
 
   render() {
     return (
-      <dialog class={`bq-dialog ${this.size}`} ref={(dialogElem) => (this.dialogElem = dialogElem)} part="dialog">
+      <dialog
+        part="dialog"
+        inert={this.open ? undefined : true}
+        class={{ [`bq-dialog ${this.size}`]: true }}
+        ref={(dialogElem) => (this.dialogElem = dialogElem)}
+        data-transition-enter="transition ease-out duration-200"
+        data-transition-enter-start="transform opacity-0 scale-75"
+        data-transition-enter-end="transform opacity-100 scale-100"
+        data-transition-leave="transition ease-in duration-100"
+        data-transition-leave-start="transform opacity-100 scale-100"
+        data-transition-leave-end="transform opacity-0 scale-75"
+      >
         <main class="flex flex-col gap-[var(--bq-dialog--title-body-gap)] overflow-hidden" part="content">
           <header class="bq-dialog--header" part="header">
             <div class="bq-dialog--title flex flex-1 items-center justify-between" part="title">
               <slot name="title" />
             </div>
-            <div class="flex" onClick={this.handleCancel} part="button-close">
+            <div class="flex" onClick={() => this.hide()} role="button" part="button-close">
               <slot name="button-close">
                 {!this.hideCloseButton && (
                   <bq-button class="bq-dialog--close" appearance="text" size="small" slot="button-close">
@@ -271,7 +281,7 @@ export class BqDialog {
           class={{
             '!hidden': !this.hasFooter,
             'bq-dialog--footer': this.hasFooter,
-            'bg-ui-primary-alt !py-s': this.footerApperance === 'highlight',
+            'bg-ui-primary-alt !py-s': this.footerAppearance === 'highlight',
           }}
           ref={(footerElem) => (this.footerElem = footerElem)}
           part="footer"

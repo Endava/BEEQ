@@ -311,7 +311,7 @@ export namespace Components {
         /**
           * The appearance of footer
          */
-        "footerApperance": TDialogFooterAppearance;
+        "footerAppearance": TDialogFooterAppearance;
         /**
           * Closes the dialog
          */
@@ -2214,7 +2214,7 @@ declare namespace LocalJSX {
         /**
           * The appearance of footer
          */
-        "footerApperance"?: TDialogFooterAppearance;
+        "footerAppearance"?: TDialogFooterAppearance;
         /**
           * If true, it hides the close button
          */

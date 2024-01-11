@@ -23,8 +23,8 @@ export const validatePropValue = <T extends E[keyof E], E extends Element>(
   element[propertyName as string] = fallbackValue;
   // Notify developer in the browser console
   console.warn(
-    `[${element.tagName.toUpperCase()}] Please notice that "${propertyName}" should be one of ${ACCEPTED_VALUES.join(
-      '|',
-    )}`,
+    `[${element.tagName.toUpperCase()}] Please notice that "${String(
+      propertyName,
+    )}" should be one of ${ACCEPTED_VALUES.join('|')}`,
   );
 };
