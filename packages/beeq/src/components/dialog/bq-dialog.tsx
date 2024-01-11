@@ -151,8 +151,6 @@ export class BqDialog {
   /** Open the dialog */
   @Method()
   async show() {
-    if (!this.dialogElem) return;
-
     const ev = this.bqOpen.emit();
     if (ev.defaultPrevented) return;
 
@@ -162,8 +160,6 @@ export class BqDialog {
   /** Closes the dialog */
   @Method()
   async hide() {
-    if (!this.dialogElem) return;
-
     const ev = this.bqClose.emit();
     if (ev.defaultPrevented) return;
 
@@ -195,6 +191,8 @@ export class BqDialog {
   }
 
   private handleClose = async () => {
+    if (!this.dialogElem) return;
+
     this.dialogElem.close();
     await leave(this.dialogElem);
     // Emit bqAfterClose event after the dialog is closed
@@ -204,6 +202,8 @@ export class BqDialog {
   };
 
   private handleOpen = async () => {
+    if (!this.dialogElem) return;
+
     this.el.classList.add(this.OPEN_CSS_CLASS);
     // Remove the inert attribute from the dialog element
     this.removeInertAttribute();
