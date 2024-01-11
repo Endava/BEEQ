@@ -1,4 +1,5 @@
 import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { enter, leave } from 'el-transition';
 
 import { NOTIFICATION_TYPE, TNotificationType } from './bq-notification.types';
 import { debounce, hasSlotContent, TDebounce, validatePropValue } from '../../shared/utils';
@@ -7,15 +8,15 @@ const notificationPortal = Object.assign(document.createElement('div'), { classN
 
 /**
  * @part base - The `<div>` container of the predefined bq-icon component.
- * @part body - The conatiner `<div>` that wraps the notification description content
+ * @part body - The container `<div>` that wraps the notification description content
  * @part btn-close - The `bq-button` used to close the notification
- * @part content - The conatiner `<div>` that wraps all the notification content (title, description, footer)
- * @part footer - The conatiner `<div>` that wraps the notification footer content
+ * @part content - The container `<div>` that wraps all the notification content (title, description, footer)
+ * @part footer - The container `<div>` that wraps the notification footer content
  * @part icon - The `<bq-icon>` element used to render a predefined icon based on the notification type
- * @part icon-outline - The conatiner `<div>` that wraps the icon element
- * @part main - The conatiner `<div>` that wraps the notification main content (title, description)
+ * @part icon-outline - The container `<div>` that wraps the icon element
+ * @part main - The container `<div>` that wraps the notification main content (title, description)
  * @part svg - The `<svg>` element of the predefined bq-icon component.
- * @part title - The conatiner `<div>` that wraps the notification title content
+ * @part title - The container `<div>` that wraps the notification title content
  * @part wrapper - The wrapper container `<div>` of the element inside the shadow DOM
  */
 
@@ -31,6 +32,7 @@ export class BqNotification {
   private autoDismissDebounce: TDebounce<void>;
   private bodyElem: HTMLDivElement;
   private footerElem: HTMLDivElement;
+  private notificationElem: HTMLDivElement;
 
   // Reference to host HTML element
   // ===================================
@@ -143,13 +145,13 @@ export class BqNotification {
   /** Method to be called to hide the notification component */
   @Method()
   async hide(): Promise<void> {
-    this.handleHide();
+    await this.handleHide();
   }
 
   /** Method to be called to show the notification component */
   @Method()
   async show(): Promise<void> {
-    this.handleShow();
+    await this.handleShow();
   }
 
   /** This method can be used to display notifications in a fixed-position element that allows for stacking multiple notifications vertically */
@@ -170,17 +172,19 @@ export class BqNotification {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private handleHide = () => {
+  private handleHide = async () => {
     const ev = this.bqHide.emit(this.el);
     if (!ev.defaultPrevented) {
+      await leave(this.notificationElem);
       this.open = false;
     }
   };
 
-  private handleShow = () => {
+  private handleShow = async () => {
     const ev = this.bqShow.emit(this.el);
     if (!ev.defaultPrevented) {
       this.open = true;
+      await enter(this.notificationElem);
     }
   };
 
@@ -217,7 +221,17 @@ export class BqNotification {
         hidden={!this.open ? 'true' : 'false'}
         role="alert"
       >
-        <div class="bq-notification" part="wrapper">
+        <div
+          class="bq-notification"
+          data-transition-enter="transform ease-out duration-300 transition"
+          data-transition-enter-start="translate-y-xs opacity-0 sm:translate-y-0 sm:translate-x-xs"
+          data-transition-enter-end="translate-y-0 opacity-100 sm:translate-x-0"
+          data-transition-leave="transition ease-in duration-100"
+          data-transition-leave-start="opacity-100"
+          data-transition-leave-end="opacity-0"
+          ref={(div) => (this.notificationElem = div)}
+          part="wrapper"
+        >
           {/* CLOSE BUTTON */}
           {!this.disableClose && (
             <bq-button
