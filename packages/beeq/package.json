@@ -16,7 +16,8 @@
   ],
   "dependencies": {
     "@floating-ui/core": "^1.5.3",
-    "@floating-ui/dom": "^1.5.4"
+    "@floating-ui/dom": "^1.5.4",
+    "el-transition": "^0.0.7"
   },
   "browserslist": [
     "> 1%",
