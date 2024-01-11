@@ -124,7 +124,7 @@
     "jsdom": "23.2.0",
     "jsonc-eslint-parser": "2.4.0",
     "lint-staged": "15.2.0",
-    "lit-html": "3.1.0",
+    "lit-html": "3.1.1",
     "nanospinner": "1.1.0",
     "ng-packagr": "17.0.3",
     "ngx-deploy-npm": "7.1.0",
