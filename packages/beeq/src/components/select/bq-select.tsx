@@ -82,7 +82,7 @@ export class BqSelect {
   @Prop({ reflect: true }) name!: string;
 
   /** If true, the Select panel will be visible. */
-  @Prop({ reflect: true }) open?: boolean = false;
+  @Prop({ reflect: true, mutable: true }) open?: boolean = false;
 
   /** When set, it will override the height of the Select panel. */
   @Prop({ reflect: true }) panelHeight?: string;

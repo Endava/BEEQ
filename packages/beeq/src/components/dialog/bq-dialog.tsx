@@ -58,7 +58,7 @@ export class BqDialog {
   @Prop({ reflect: true }) hideCloseButton = false;
 
   /** If true, the dialog will be shown as open */
-  @Prop({ reflect: true }) open: boolean = false;
+  @Prop({ reflect: true, mutable: true }) open: boolean = false;
 
   /** The size of the dialog */
   @Prop({ reflect: true, mutable: true }) size: TDialogSize = 'medium';
@@ -239,16 +239,16 @@ export class BqDialog {
   render() {
     return (
       <dialog
-        part="dialog"
-        inert={this.open ? undefined : true}
         class={{ [`bq-dialog ${this.size}`]: true }}
-        ref={(dialogElem) => (this.dialogElem = dialogElem)}
         data-transition-enter="transition ease-out duration-200"
         data-transition-enter-start="transform opacity-0 scale-75"
         data-transition-enter-end="transform opacity-100 scale-100"
         data-transition-leave="transition ease-in duration-100"
         data-transition-leave-start="transform opacity-100 scale-100"
         data-transition-leave-end="transform opacity-0 scale-75"
+        inert={this.open ? undefined : true}
+        ref={(dialogElem) => (this.dialogElem = dialogElem)}
+        part="dialog"
       >
         <main class="flex flex-col gap-[var(--bq-dialog--title-body-gap)] overflow-hidden" part="content">
           <header class="bq-dialog--header" part="header">

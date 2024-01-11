@@ -47,7 +47,7 @@ export class BqDropdown {
   @Prop({ reflect: true }) placement?: FloatingUIPlacement = 'bottom-start';
 
   /** If true, the panel will be visible. */
-  @Prop({ reflect: true }) open?: boolean = false;
+  @Prop({ reflect: true, mutable: true }) open?: boolean = false;
 
   /** When set, it will override the height of the dropdown panel */
   @Prop({ reflect: true }) panelHeight?: string;
