@@ -51,7 +51,7 @@ export class BqDialog {
   @Prop({ reflect: true }) disableCloseClickOutside = false;
 
   /** The appearance of footer */
-  @Prop({ reflect: true }) footerApperance: TDialogFooterAppearance = 'standard';
+  @Prop({ reflect: true }) footerAppearance: TDialogFooterAppearance = 'standard';
 
   /** If true, it hides the close button */
   @Prop({ reflect: true }) hideCloseButton = false;
@@ -64,11 +64,11 @@ export class BqDialog {
 
   // Prop lifecycle events
   // =======================
-  @Watch('footerApperance')
+  @Watch('footerAppearance')
   @Watch('size')
   checkPropValues() {
     validatePropValue(DIALOG_SIZE, 'large', this.el, 'size');
-    validatePropValue(DIALOG_FOOTER_APPEARANCE, 'standard', this.el, 'footerApperance');
+    validatePropValue(DIALOG_FOOTER_APPEARANCE, 'standard', this.el, 'footerAppearance');
   }
 
   @Watch('open')
@@ -271,7 +271,7 @@ export class BqDialog {
           class={{
             '!hidden': !this.hasFooter,
             'bq-dialog--footer': this.hasFooter,
-            'bg-ui-primary-alt !py-s': this.footerApperance === 'highlight',
+            'bg-ui-primary-alt !py-s': this.footerAppearance === 'highlight',
           }}
           ref={(footerElem) => (this.footerElem = footerElem)}
           part="footer"
