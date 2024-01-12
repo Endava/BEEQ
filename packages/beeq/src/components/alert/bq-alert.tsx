@@ -1,4 +1,5 @@
 import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State, Watch } from '@stencil/core';
+import { enter, leave } from 'el-transition';
 
 import { ALERT_TYPE, TAlertType } from './bq-alert.types';
 import { debounce, hasSlotContent, TDebounce, validatePropValue } from '../../shared/utils';
@@ -29,6 +30,7 @@ export class BqAlert {
   private autoDismissDebounce: TDebounce<void>;
   private bodyElem: HTMLDivElement;
   private footerElem: HTMLDivElement;
+  private alertElement: HTMLDivElement;
 
   // Reference to host HTML element
   // ===================================
@@ -125,12 +127,12 @@ export class BqAlert {
   /** Method to be called to hide the alert component */
   @Method()
   async hide(): Promise<void> {
-    this.handleHide();
+    await this.handleHide();
   }
   /** Method to be called to show the alert component */
   @Method()
   async show(): Promise<void> {
-    this.handleShow();
+    await this.handleShow();
   }
 
   // Local methods
@@ -138,17 +140,19 @@ export class BqAlert {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private handleHide = () => {
+  private handleHide = async () => {
     const ev = this.bqHide.emit(this.el);
     if (!ev.defaultPrevented) {
+      await leave(this.alertElement);
       this.open = false;
     }
   };
 
-  private handleShow = () => {
+  private handleShow = async () => {
     const ev = this.bqShow.emit(this.el);
     if (!ev.defaultPrevented) {
       this.open = true;
+      await enter(this.alertElement);
     }
   };
 
@@ -190,6 +194,13 @@ export class BqAlert {
             [`bq-alert bq-alert__${this.type}`]: true,
             'is-sticky': this.sticky,
           }}
+          data-transition-enter="transform ease-out duration-300 transition"
+          data-transition-enter-start="translate-y-xs opacity-0 sm:translate-y-0 sm:translate-x-xs"
+          data-transition-enter-end="translate-y-0 opacity-100 sm:translate-x-0"
+          data-transition-leave="transition ease-in duration-100"
+          data-transition-leave-start="opacity-100"
+          data-transition-leave-end="opacity-0"
+          ref={(div) => (this.alertElement = div)}
           part="wrapper"
         >
           {/* CLOSE BUTTON */}
