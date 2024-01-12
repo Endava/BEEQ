@@ -100,10 +100,16 @@ export class BqNotification {
   // ==============================================
 
   /** Callback handler to be called when the notification is hidden */
-  @Event() bqHide: EventEmitter;
+  @Event() bqHide!: EventEmitter;
 
   /** Callback handler to be called when the notification is shown */
-  @Event() bqShow: EventEmitter;
+  @Event() bqShow!: EventEmitter;
+
+  /** Callback handler to be called after the notification has been opened */
+  @Event() bqAfterOpen!: EventEmitter;
+
+  /** Callback handler to be called after the notification has been closed */
+  @Event() bqAfterClose!: EventEmitter;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -117,8 +123,8 @@ export class BqNotification {
   // Listeners
   // ==============
 
-  @Listen('bqHide')
-  onNotificationHide() {
+  @Listen('bqAfterClose')
+  afterNotificationClose() {
     try {
       notificationPortal.removeChild(this.el);
       // Remove the notification portal from the DOM when there are no more notifications
@@ -177,6 +183,7 @@ export class BqNotification {
     if (!ev.defaultPrevented) {
       await leave(this.notificationElem);
       this.open = false;
+      this.handleTransitionEnd();
     }
   };
 
@@ -185,7 +192,17 @@ export class BqNotification {
     if (!ev.defaultPrevented) {
       this.open = true;
       await enter(this.notificationElem);
+      this.handleTransitionEnd();
     }
+  };
+
+  private handleTransitionEnd = () => {
+    if (this.open) {
+      this.bqAfterOpen.emit();
+      return;
+    }
+
+    this.bqAfterClose.emit();
   };
 
   private handleContentSlotChange = () => {
@@ -223,12 +240,12 @@ export class BqNotification {
       >
         <div
           class="bq-notification"
-          data-transition-enter="transform ease-out duration-300 transition"
-          data-transition-enter-start="translate-y-xs opacity-0 sm:translate-y-0 sm:translate-x-xs"
+          data-transition-enter="transform transition ease-out duration-300"
+          data-transition-enter-start="translate-y-xs opacity-0 sm:translate-y-0 sm:translate-x-s"
           data-transition-enter-end="translate-y-0 opacity-100 sm:translate-x-0"
-          data-transition-leave="transition ease-in duration-100"
-          data-transition-leave-start="opacity-100"
-          data-transition-leave-end="opacity-0"
+          data-transition-leave="transform transition ease-in duration-100"
+          data-transition-leave-start="translate-y-0 opacity-100 sm:translate-x-0"
+          data-transition-leave-end="-translate-y-xs opacity-0 sm:translate-y-0 sm:translate-x-s"
           ref={(div) => (this.notificationElem = div)}
           part="wrapper"
         >
