@@ -19,10 +19,12 @@
 
 ## Events
 
-| Event    | Description                                                   | Type               |
-| -------- | ------------------------------------------------------------- | ------------------ |
-| `bqHide` | Callback handler to be called when the notification is hidden | `CustomEvent<any>` |
-| `bqShow` | Callback handler to be called when the notification is shown  | `CustomEvent<any>` |
+| Event          | Description                                                          | Type               |
+| -------------- | -------------------------------------------------------------------- | ------------------ |
+| `bqAfterClose` | Callback handler to be called after the notification has been closed | `CustomEvent<any>` |
+| `bqAfterOpen`  | Callback handler to be called after the notification has been opened | `CustomEvent<any>` |
+| `bqHide`       | Callback handler to be called when the notification is hidden        | `CustomEvent<any>` |
+| `bqShow`       | Callback handler to be called when the notification is shown         | `CustomEvent<any>` |
 
 
 ## Methods
@@ -63,15 +65,15 @@ Type: `Promise<void>`
 | Part             | Description                                                                                |
 | ---------------- | ------------------------------------------------------------------------------------------ |
 | `"base"`         | The `<div>` container of the predefined bq-icon component.                                 |
-| `"body"`         | The conatiner `<div>` that wraps the notification description content                      |
+| `"body"`         | The container `<div>` that wraps the notification description content                      |
 | `"btn-close"`    | The `bq-button` used to close the notification                                             |
-| `"content"`      | The conatiner `<div>` that wraps all the notification content (title, description, footer) |
-| `"footer"`       | The conatiner `<div>` that wraps the notification footer content                           |
+| `"content"`      | The container `<div>` that wraps all the notification content (title, description, footer) |
+| `"footer"`       | The container `<div>` that wraps the notification footer content                           |
 | `"icon"`         | The `<bq-icon>` element used to render a predefined icon based on the notification type    |
-| `"icon-outline"` | The conatiner `<div>` that wraps the icon element                                          |
-| `"main"`         | The conatiner `<div>` that wraps the notification main content (title, description)        |
+| `"icon-outline"` | The container `<div>` that wraps the icon element                                          |
+| `"main"`         | The container `<div>` that wraps the notification main content (title, description)        |
 | `"svg"`          | The `<svg>` element of the predefined bq-icon component.                                   |
-| `"title"`        | The conatiner `<div>` that wraps the notification title content                            |
+| `"title"`        | The container `<div>` that wraps the notification title content                            |
 | `"wrapper"`      | The wrapper container `<div>` of the element inside the shadow DOM                         |
 
 

@@ -39,7 +39,7 @@ export class BqPanel {
   @Prop({ reflect: true }) placement?: FloatingUIPlacement = 'bottom-start';
 
   /** If true, the panel will be visible. */
-  @Prop({ reflect: true }) open?: boolean = false;
+  @Prop({ reflect: true, mutable: true }) open?: boolean = false;
 
   /** Whether the panel should have the same width as the trigger element */
   @Prop({ reflect: true }) sameWidth?: boolean = false;

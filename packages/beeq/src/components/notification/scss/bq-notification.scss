@@ -13,8 +13,7 @@
 }
 
 .bq-notification {
-  @include animation-slide-in;
-  @apply relative flex  min-w-[var(--bq-notification--min-width)] p-[var(--bq-notification--padding)];
+  @apply relative flex  min-w-[var(--bq-notification--min-width)] p-[var(--bq-notification--padding)] transition-all;
   @apply rounded-[var(--bq-notification--border-radius)] bg-[var(--bq-notification--background)] shadow-[shadow:var(--bq-notification--box-shadow)];
 }
 
