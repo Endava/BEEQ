@@ -87,8 +87,16 @@ export class BqAlert {
   handleOpenChange() {
     this.autoDismissDebounce?.cancel();
 
-    if (!(this.autoDismiss && this.open)) return;
-    this.autoDismissDebounce();
+    if (!this.open) {
+      this.handleHide();
+      return;
+    }
+
+    this.handleShow();
+
+    if (this.autoDismiss) {
+      this.autoDismissDebounce();
+    }
   }
 
   @Watch('type')
@@ -150,8 +158,9 @@ export class BqAlert {
     const ev = this.bqHide.emit(this.el);
     if (!ev.defaultPrevented) {
       await leave(this.alertElement);
-      this.open = false;
+      this.el.classList.add('is-hidden');
       this.handleTransitionEnd();
+      this.open = false;
     }
   };
 
@@ -159,6 +168,7 @@ export class BqAlert {
     const ev = this.bqShow.emit(this.el);
     if (!ev.defaultPrevented) {
       this.open = true;
+      this.el.classList.remove('is-hidden');
       await enter(this.alertElement);
       this.handleTransitionEnd();
     }
@@ -201,7 +211,7 @@ export class BqAlert {
   render() {
     return (
       <Host
-        class={{ 'is-hidden': !this.open, 'is-sticky': this.sticky }}
+        class={{ 'is-sticky': this.sticky }}
         aria-hidden={!this.open ? 'true' : 'false'}
         hidden={!this.open ? 'true' : 'false'}
         role="alert"
@@ -211,12 +221,12 @@ export class BqAlert {
             [`bq-alert bq-alert__${this.type}`]: true,
             'is-sticky': this.sticky,
           }}
-          data-transition-enter="transform transition ease-out duration-300"
-          data-transition-enter-start="translate-y-xs opacity-0 sm:translate-y-0 sm:translate-x-s"
-          data-transition-enter-end="translate-y-0 opacity-100 sm:translate-x-0"
-          data-transition-leave="transform transition ease-in duration-100"
-          data-transition-leave-start="translate-y-0 opacity-100 sm:translate-x-0"
-          data-transition-leave-end="-translate-y-xs opacity-0 sm:translate-y-0 sm:translate-x-s"
+          data-transition-enter="transition ease-out duration-300"
+          data-transition-enter-start="opacity-0"
+          data-transition-enter-end="opacity-100"
+          data-transition-leave="transition ease-in duration-200"
+          data-transition-leave-start="opacity-100"
+          data-transition-leave-end="opacity-0"
           ref={(div) => (this.alertElement = div)}
           part="wrapper"
         >
