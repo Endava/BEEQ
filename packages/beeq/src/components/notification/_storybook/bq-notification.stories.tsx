@@ -20,6 +20,11 @@ const meta: Meta = {
     open: { control: 'boolean' },
     time: { control: 'number' },
     type: { control: 'select', options: [...NOTIFICATION_TYPE] },
+    // Events
+    bqShow: { action: 'bqOpen' },
+    bqHide: { action: 'bqClose' },
+    bqAfterOpen: { action: 'bqAfterOpen' },
+    bqAfterClose: { action: 'bqAfterClose' },
     // Not part of the component API, but used for the story
     customIcon: { control: 'boolean', table: { disable: true } },
   },
@@ -47,6 +52,10 @@ const Template = (args: Args) => html`
       ?open=${args.open}
       time=${args.time}
       type=${args.type}
+      @bqShow=${args.bqShow}
+      @bqHide=${args.bqHide}
+      @bqAfterOpen=${args.bqAfterOpen}
+      @bqAfterClose=${args.bqAfterClose}
     >
       ${args.customIcon ? html`<bq-icon name="thumbs-up" slot="icon"></bq-icon>` : nothing} Title
     </bq-notification>
@@ -58,6 +67,10 @@ const Template = (args: Args) => html`
       ?open=${args.open}
       time=${args.time}
       type=${args.type}
+      @bqShow=${args.bqShow}
+      @bqHide=${args.bqHide}
+      @bqAfterOpen=${args.bqAfterOpen}
+      @bqAfterClose=${args.bqAfterClose}
     >
       ${args.customIcon ? html`<bq-icon name="thumbs-up" slot="icon"></bq-icon>` : nothing} Title
       <span slot="body">
@@ -73,6 +86,10 @@ const Template = (args: Args) => html`
       ?open=${args.open}
       time=${args.time}
       type=${args.type}
+      @bqShow=${args.bqShow}
+      @bqHide=${args.bqHide}
+      @bqAfterOpen=${args.bqAfterOpen}
+      @bqAfterClose=${args.bqAfterClose}
     >
       ${args.customIcon ? html`<bq-icon name="thumbs-up" slot="icon"></bq-icon>` : nothing} Title
       <span slot="body">
@@ -95,7 +112,6 @@ export const Default: Story = {
 };
 
 export const ErrorType: Story = {
-  // Avoid sonarlint warning: 'Do not use "Error" to declare a variable - use another name'
   name: 'Error',
   render: Template,
   args: {
@@ -155,6 +171,11 @@ export const Stacked: Story = {
         `,
       });
 
+      notification.addEventListener('bqShow', args.bqShow);
+      notification.addEventListener('bqHide', args.bqHide);
+      notification.addEventListener('bqAfterOpen', args.bqAfterOpen);
+      notification.addEventListener('bqAfterClose', args.bqAfterClose);
+
       document.body.append(notification);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return (notification as any).toast();
@@ -162,7 +183,7 @@ export const Stacked: Story = {
 
     return html`
       <p class="mb-0">
-        The nofitication component creates and manages the notification portal, a fixed-position element that allows for
+        The notification component creates and manages the notification portal, a fixed-position element that allows for
         stacking multiple notifications vertically.
       </p>
       <p class="mb-6">
