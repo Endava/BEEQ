@@ -40,6 +40,19 @@
 | `bqSelect` | Callback handler emitted when the selected value has changed      | `CustomEvent<{ value: string \| number \| string[]; item: HTMLBqOptionElement; }>` |
 
 
+## Methods
+
+### `clear() => Promise<void>`
+
+Clears the selected value.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+
 ## Shadow Parts
 
 | Part            | Description                                                     |
