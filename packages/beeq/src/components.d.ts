@@ -1337,6 +1337,8 @@ declare global {
     interface HTMLBqAlertElementEventMap {
         "bqHide": any;
         "bqShow": any;
+        "bqAfterOpen": any;
+        "bqAfterClose": any;
     }
     interface HTMLBqAlertElement extends Components.BqAlert, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqAlertElementEventMap>(type: K, listener: (this: HTMLBqAlertElement, ev: BqAlertCustomEvent<HTMLBqAlertElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1979,11 +1981,19 @@ declare namespace LocalJSX {
          */
         "hideIcon"?: boolean;
         /**
-          * Callback handler to be called when the notification is hidden
+          * Callback handler to be called after the alert has been closed
+         */
+        "onBqAfterClose"?: (event: BqAlertCustomEvent<any>) => void;
+        /**
+          * Callback handler to be called after the alert has been opened
+         */
+        "onBqAfterOpen"?: (event: BqAlertCustomEvent<any>) => void;
+        /**
+          * Callback handler to be called when the alert is hidden
          */
         "onBqHide"?: (event: BqAlertCustomEvent<any>) => void;
         /**
-          * Callback handler to be called when the notification is shown
+          * Callback handler to be called when the alert is shown
          */
         "onBqShow"?: (event: BqAlertCustomEvent<any>) => void;
         /**

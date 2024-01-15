@@ -1,4 +1,5 @@
 import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State, Watch } from '@stencil/core';
+import { enter, leave } from 'el-transition';
 
 import { ALERT_TYPE, TAlertType } from './bq-alert.types';
 import { debounce, hasSlotContent, TDebounce, validatePropValue } from '../../shared/utils';
@@ -29,6 +30,7 @@ export class BqAlert {
   private autoDismissDebounce: TDebounce<void>;
   private bodyElem: HTMLDivElement;
   private footerElem: HTMLDivElement;
+  private alertElement: HTMLDivElement;
 
   // Reference to host HTML element
   // ===================================
@@ -85,8 +87,16 @@ export class BqAlert {
   handleOpenChange() {
     this.autoDismissDebounce?.cancel();
 
-    if (!(this.autoDismiss && this.open)) return;
-    this.autoDismissDebounce();
+    if (!this.open) {
+      this.handleHide();
+      return;
+    }
+
+    this.handleShow();
+
+    if (this.autoDismiss) {
+      this.autoDismissDebounce();
+    }
   }
 
   @Watch('type')
@@ -98,11 +108,17 @@ export class BqAlert {
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Callback handler to be called when the notification is hidden */
-  @Event() bqHide: EventEmitter;
+  /** Callback handler to be called when the alert is hidden */
+  @Event() bqHide!: EventEmitter;
 
-  /** Callback handler to be called when the notification is shown */
-  @Event() bqShow: EventEmitter;
+  /** Callback handler to be called when the alert is shown */
+  @Event() bqShow!: EventEmitter;
+
+  /** Callback handler to be called after the alert has been opened */
+  @Event() bqAfterOpen!: EventEmitter;
+
+  /** Callback handler to be called after the alert has been closed */
+  @Event() bqAfterClose!: EventEmitter;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -112,6 +128,13 @@ export class BqAlert {
     this.checkPropValues();
     this.handleTimeout();
   }
+
+  componentDidLoad() {
+    if (!this.open) {
+      this.el.classList.add('is-hidden');
+    }
+  }
+
   // Listeners
   // ==============
 
@@ -125,12 +148,12 @@ export class BqAlert {
   /** Method to be called to hide the alert component */
   @Method()
   async hide(): Promise<void> {
-    this.handleHide();
+    await this.handleHide();
   }
   /** Method to be called to show the alert component */
   @Method()
   async show(): Promise<void> {
-    this.handleShow();
+    await this.handleShow();
   }
 
   // Local methods
@@ -138,18 +161,33 @@ export class BqAlert {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private handleHide = () => {
+  private handleHide = async () => {
     const ev = this.bqHide.emit(this.el);
     if (!ev.defaultPrevented) {
+      await leave(this.alertElement);
+      this.el.classList.add('is-hidden');
+      this.handleTransitionEnd();
       this.open = false;
     }
   };
 
-  private handleShow = () => {
+  private handleShow = async () => {
     const ev = this.bqShow.emit(this.el);
     if (!ev.defaultPrevented) {
       this.open = true;
+      this.el.classList.remove('is-hidden');
+      await enter(this.alertElement);
+      this.handleTransitionEnd();
     }
+  };
+
+  private handleTransitionEnd = () => {
+    if (this.open) {
+      this.bqAfterOpen.emit();
+      return;
+    }
+
+    this.bqAfterClose.emit();
   };
 
   private handleContentSlotChange = () => {
@@ -180,7 +218,7 @@ export class BqAlert {
   render() {
     return (
       <Host
-        class={{ 'is-hidden': !this.open, 'is-sticky': this.sticky }}
+        class={{ 'is-sticky': this.sticky }}
         aria-hidden={!this.open ? 'true' : 'false'}
         hidden={!this.open ? 'true' : 'false'}
         role="alert"
@@ -190,6 +228,13 @@ export class BqAlert {
             [`bq-alert bq-alert__${this.type}`]: true,
             'is-sticky': this.sticky,
           }}
+          data-transition-enter="transition ease-out duration-300"
+          data-transition-enter-start="opacity-0"
+          data-transition-enter-end="opacity-100"
+          data-transition-leave="transition ease-in duration-200"
+          data-transition-leave-start="opacity-100"
+          data-transition-leave-end="opacity-0"
+          ref={(div) => (this.alertElement = div)}
           part="wrapper"
         >
           {/* CLOSE BUTTON */}
