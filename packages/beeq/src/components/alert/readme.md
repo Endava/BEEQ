@@ -20,10 +20,12 @@
 
 ## Events
 
-| Event    | Description                                                   | Type               |
-| -------- | ------------------------------------------------------------- | ------------------ |
-| `bqHide` | Callback handler to be called when the notification is hidden | `CustomEvent<any>` |
-| `bqShow` | Callback handler to be called when the notification is shown  | `CustomEvent<any>` |
+| Event          | Description                                                   | Type               |
+| -------------- | ------------------------------------------------------------- | ------------------ |
+| `bqAfterClose` | Callback handler to be called after the alert has been closed | `CustomEvent<any>` |
+| `bqAfterOpen`  | Callback handler to be called after the alert has been opened | `CustomEvent<any>` |
+| `bqHide`       | Callback handler to be called when the alert is hidden        | `CustomEvent<any>` |
+| `bqShow`       | Callback handler to be called when the alert is shown         | `CustomEvent<any>` |
 
 
 ## Methods
