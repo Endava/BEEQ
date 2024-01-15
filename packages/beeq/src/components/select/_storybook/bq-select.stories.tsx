@@ -55,12 +55,12 @@ const meta: Meta = {
     bqFocus: { action: 'bqFocus' },
     bqSelect: { action: 'bqSelect' },
     // Not part of the public API, so we don't want to expose it in the docs
-    noLabel: { control: 'bolean', table: { disable: true } },
-    hasLabelTooltip: { control: 'bolean', table: { disable: true } },
-    noHelperText: { control: 'bolean', table: { disable: true } },
-    optionalLabel: { control: 'bolean', table: { disable: true } },
-    prefix: { control: 'bolean', table: { disable: true } },
-    suffix: { control: 'bolean', table: { disable: true } },
+    noLabel: { control: 'boolean', table: { disable: true } },
+    hasLabelTooltip: { control: 'boolean', table: { disable: true } },
+    noHelperText: { control: 'boolean', table: { disable: true } },
+    optionalLabel: { control: 'boolean', table: { disable: true } },
+    prefix: { control: 'boolean', table: { disable: true } },
+    suffix: { control: 'boolean', table: { disable: true } },
     options: { control: 'text', table: { disable: true } },
   },
   args: {

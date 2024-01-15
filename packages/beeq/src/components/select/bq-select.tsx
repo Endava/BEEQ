@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Listen, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
 import { FloatingUIPlacement } from '../../services/interfaces';
 import { getTextContent, hasSlotContent, isDefined, isHTMLElement } from '../../shared/utils';
@@ -188,6 +188,22 @@ export class BqSelect {
   // Requires JSDocs for public API documentation.
   // ===============================================
 
+  /**
+   * Clears the selected value.
+   *
+   * @return {Promise<void>}
+   * @memberof BqSelect
+   */
+  @Method()
+  async clear(): Promise<void> {
+    if (this.disabled) return;
+
+    this.value = undefined;
+    this.displayValue = undefined;
+
+    this.bqClear.emit(this.el);
+  }
+
   // Local methods
   // Internal business logic.
   // These methods cannot be called from the host element.
@@ -213,12 +229,9 @@ export class BqSelect {
   };
 
   private handleClearClick = (ev: CustomEvent) => {
-    if (this.disabled) return;
-
-    this.value = '';
-    this.displayValue = '';
-
-    this.bqClear.emit(this.el);
+    (async () => {
+      await this.clear();
+    })();
     this.inputElem.focus();
 
     ev.stopPropagation();

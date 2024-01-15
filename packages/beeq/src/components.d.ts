@@ -699,6 +699,12 @@ export namespace Components {
          */
         "autofocus": boolean;
         /**
+          * Clears the selected value.
+          * @return 
+          * @memberof BqSelect
+         */
+        "clear": () => Promise<void>;
+        /**
           * The clear button aria label
          */
         "clearButtonLabel"?: string;
