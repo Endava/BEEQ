@@ -128,6 +128,13 @@ export class BqAlert {
     this.checkPropValues();
     this.handleTimeout();
   }
+
+  componentDidLoad() {
+    if (!this.open) {
+      this.el.classList.add('is-hidden');
+    }
+  }
+
   // Listeners
   // ==============
 

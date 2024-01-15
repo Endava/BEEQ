@@ -26,7 +26,7 @@ describe('bq-alert', () => {
 
     const element = await page.find('bq-alert');
     expect(element).toEqualAttribute('aria-hidden', 'true');
-    expect(element).not.toHaveClass('is-hidden');
+    expect(element).toHaveClass('is-hidden');
   });
 
   it('should render as hidden with `open="false"`', async () => {
@@ -36,7 +36,7 @@ describe('bq-alert', () => {
 
     const element = await page.find('bq-alert');
     expect(element).toEqualAttribute('aria-hidden', 'true');
-    expect(element).not.toHaveClass('is-hidden');
+    expect(element).toHaveClass('is-hidden');
   });
 
   it('should render as open', async () => {
