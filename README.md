@@ -94,8 +94,8 @@ To develop/extend components on the BEEQ Design System, please fork this repo in
 
 ```bash
 git clone https://github.com/<YOUR_GITHUB_USERNAME>/BEEQ.git BEEQ-Design-System
-git checkout develop
 cd BEEQ-Design-System
+git checkout main
 ```
 
 ### Installation ⚙️
