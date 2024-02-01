@@ -27,7 +27,7 @@
       "executor": "ngx-deploy-npm:deploy",
       "options": {
         "access": "public",
-        "noBuild": true,
+        "distFolderPath": "dist/beeq-vue",
         "tag": "latest"
       }
     },
@@ -35,6 +35,7 @@
       "executor": "ngx-deploy-npm:deploy",
       "options": {
         "access": "public",
+        "distFolderPath": "dist/beeq-vue",
         "tag": "beta"
       }
     }
