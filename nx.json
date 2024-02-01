@@ -40,10 +40,6 @@
     "lint": {
       "cache": true
     },
-    "beeq-tailwindcss": {
-      "cache": true,
-      "outputs": ["{workspaceRoot}/dist/beeq-tailwindcss"]
-    },
     "storybook-build": {
       "cache": true
     },
@@ -52,6 +48,10 @@
     },
     "stylelint": {
       "cache": true
+    },
+    "@nx/eslint:lint": {
+      "cache": true,
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json", "{workspaceRoot}/tools/eslint-rules/**/*"]
     }
   },
   "nxCloudAccessToken": "ZTI2Yzg0YzktODZiMi00Yjg2LTlhMmMtYWI3NDhkODkzZjlmfHJlYWQtb25seQ==",

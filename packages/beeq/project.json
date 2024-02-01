@@ -62,7 +62,15 @@
       }
     },
     "build": {
-      "dependsOn": [{ "target": "icons" }, { "projects": ["beeq-tailwindcss"], "target": "build" }],
+      "dependsOn": [
+        {
+          "target": "icons"
+        },
+        {
+          "projects": ["beeq-tailwindcss"],
+          "target": "build"
+        }
+      ],
       "executor": "@nxext/stencil:build",
       "outputs": [
         "{options.outputPath}",
@@ -152,17 +160,20 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "dependsOn": [{ "target": "stylelint" }],
-      "outputs": ["{options.outputFile}"],
+      "dependsOn": [
+        {
+          "target": "stylelint"
+        }
+      ],
       "options": {
-        "lintFilePatterns": ["packages/beeq/**/*.{ts,tsx}", "packages/beeq/package.json", "packages/beeq/project.json"]
+        "lintFilePatterns": ["{projectRoot}/**/*.{ts,tsx}", "{projectRoot}/package.json", "{projectRoot}/project.json"]
       }
     },
     "stylelint": {
       "executor": "nx-stylelint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/beeq/**/*.css", "packages/beeq/**/*.scss"],
+        "lintFilePatterns": ["{projectRoot}/**/*.css", "{projectRoot}/**/*.scss"],
         "configFile": "packages/beeq/.stylelintrc.json"
       }
     },

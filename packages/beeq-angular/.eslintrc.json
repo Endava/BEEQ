@@ -27,7 +27,7 @@
         "@nx/dependency-checks": [
           "error",
           {
-            "ignoredDependencies": ["@bee-q/core"],
+            "ignoredDependencies": ["@bee-q/core", "tslib"],
             "ignoredFiles": ["{projectRoot}/esbuild.config.{js,ts,mjs,mts}"]
           }
         ]
