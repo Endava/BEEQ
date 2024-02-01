@@ -19,13 +19,8 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "packages/beeq-react/**/*.ts",
-          "packages/beeq-react/package.json",
-          "packages/beeq-react/project.json"
-        ]
+        "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/package.json", "{projectRoot}/project.json"]
       }
     },
     "publish": {

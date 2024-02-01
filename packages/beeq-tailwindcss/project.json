@@ -28,13 +28,8 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "packages/beeq-tailwindcss/**/*.ts",
-          "packages/beeq-tailwindcss/package.json",
-          "packages/beeq-tailwindcss/project.json"
-        ]
+        "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/package.json", "{projectRoot}/project.json"]
       }
     },
     "publish": {
