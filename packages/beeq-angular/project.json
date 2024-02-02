@@ -33,7 +33,7 @@
       "executor": "ngx-deploy-npm:deploy",
       "options": {
         "access": "public",
-        "noBuild": true,
+        "distFolderPath": "dist/beeq-angular",
         "tag": "latest"
       }
     },
@@ -41,6 +41,7 @@
       "executor": "ngx-deploy-npm:deploy",
       "options": {
         "access": "public",
+        "distFolderPath": "dist/beeq-angular",
         "tag": "beta"
       }
     }

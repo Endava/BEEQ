@@ -36,7 +36,7 @@
       "executor": "ngx-deploy-npm:deploy",
       "options": {
         "access": "public",
-        "noBuild": true,
+        "distFolderPath": "dist/beeq-tailwindcss",
         "tag": "latest"
       }
     }
