@@ -245,6 +245,8 @@ export namespace Components {
          */
         "variant": TButtonVariant;
     }
+    interface BqCard {
+    }
     interface BqCheckbox {
         /**
           * If true checkbox displays background on hover
@@ -1426,6 +1428,12 @@ declare global {
         prototype: HTMLBqButtonElement;
         new (): HTMLBqButtonElement;
     };
+    interface HTMLBqCardElement extends Components.BqCard, HTMLStencilElement {
+    }
+    var HTMLBqCardElement: {
+        prototype: HTMLBqCardElement;
+        new (): HTMLBqCardElement;
+    };
     interface HTMLBqCheckboxElementEventMap {
         "bqChange": { checked: boolean };
         "bqFocus": HTMLBqCheckboxElement;
@@ -1891,6 +1899,7 @@ declare global {
         "bq-breadcrumb": HTMLBqBreadcrumbElement;
         "bq-breadcrumb-item": HTMLBqBreadcrumbItemElement;
         "bq-button": HTMLBqButtonElement;
+        "bq-card": HTMLBqCardElement;
         "bq-checkbox": HTMLBqCheckboxElement;
         "bq-dialog": HTMLBqDialogElement;
         "bq-divider": HTMLBqDividerElement;
@@ -2169,6 +2178,8 @@ declare namespace LocalJSX {
           * The variant of button to apply on top of the appearance (applicable only to `appearance="primary"`)
          */
         "variant"?: TButtonVariant;
+    }
+    interface BqCard {
     }
     interface BqCheckbox {
         /**
@@ -3268,6 +3279,7 @@ declare namespace LocalJSX {
         "bq-breadcrumb": BqBreadcrumb;
         "bq-breadcrumb-item": BqBreadcrumbItem;
         "bq-button": BqButton;
+        "bq-card": BqCard;
         "bq-checkbox": BqCheckbox;
         "bq-dialog": BqDialog;
         "bq-divider": BqDivider;
@@ -3314,6 +3326,7 @@ declare module "@stencil/core" {
              * Buttons are designed for users to take action on a page or a screen.
              */
             "bq-button": LocalJSX.BqButton & JSXBase.HTMLAttributes<HTMLBqButtonElement>;
+            "bq-card": LocalJSX.BqCard & JSXBase.HTMLAttributes<HTMLBqCardElement>;
             "bq-checkbox": LocalJSX.BqCheckbox & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
             "bq-dialog": LocalJSX.BqDialog & JSXBase.HTMLAttributes<HTMLBqDialogElement>;
             "bq-divider": LocalJSX.BqDivider & JSXBase.HTMLAttributes<HTMLBqDividerElement>;
