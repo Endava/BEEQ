@@ -2,6 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
 
 import mdx from './bq-card.mdx';
+import { CARD_TYPE } from '../bq-card.types';
 
 const meta: Meta = {
   title: 'Components/Card',
@@ -12,18 +13,86 @@ const meta: Meta = {
     },
   },
   argTypes: {
-    text: { control: 'text', table: { disable: true } },
+    type: { control: 'select', options: [...CARD_TYPE] },
   },
   args: {
-    text: 'text',
+    type: 'default',
   },
 };
 export default meta;
 
 type Story = StoryObj;
 
-const Template = (args: Args) => html`<bq-card>${args.text}</bq-card>`;
-
+const Template = (args: Args) => html`
+  <div class="flex flex-row gap-m items-end">
+    <bq-card type=${args.type}>
+      <div class="flex flex-col gap-6">
+        <div>
+          <div class="flex flex-row items-center gap-xs2">
+            <span class="text-text-secondary">Title</span> <bq-icon color="text--brand" size="16" name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
+          </div>
+          <h4>194</h4>
+        </div>
+        <div class="flex flex-col">
+          <p><span class="font-bold">120</span> days</p>
+          <p class="text-text-secondary">avg resolution</p>
+        </div>
+        <div class="flex flex-col">
+          <p><span class="font-bold">120</span> days</p>
+          <p class="text-text-secondary">avg resolution</p>
+        </div>
+      </div>
+    </bq-card>
+    <bq-card type=${args.type}>
+      <div class="flex flex-col font-medium gap-m">
+          <h6 class="font-bold">Title</h6>
+          <div class="flex flex-col gap-s">
+            <div class="flex flex-row items-center gap-xs">
+              <bq-icon name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
+              Lorem Ipsum is simply dummy text 
+            </div>
+            <div class="flex flex-row items-center gap-xs">
+              <bq-icon name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
+              Lorem Ipsum is simply dummy text 
+            </div>
+            <div class="flex flex-row items-center gap-xs">
+              <bq-icon name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
+              Lorem Ipsum is simply dummy text 
+            </div>
+            <div class="flex flex-row items-center gap-xs">
+              <bq-icon name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
+              Lorem Ipsum is simply dummy text 
+            </div>
+          </div>
+        </div>
+    </bq-card>
+    <bq-card type=${args.type}>
+      <div class="flex flex-row gap-m">
+          <bq-icon color="text--brand" size="56" name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
+          <div>
+            <div class="flex flex-row items-center gap-xs2">
+              <span class="text-text-secondary">Title</span> <bq-icon color="text--brand" size="16" name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
+            </div>
+            <div class="flex items-end gap-xs">
+              <h4>194</h4>
+              <span class="text-text-success">+24%</span>
+              <span class="text-text-secondary">than last mo.</span>
+            </div>
+          </div>
+      </div>
+    </bq-card>
+    <bq-card type=${args.type}>
+      <div class="flex flex-col items-start gap-m">
+        <bq-icon color="text--brand" size="56" name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
+        <div class="flex flex-col gap-xs2 max-w-sm">
+          <h6 class="font-bold">Title</h6>
+          <p class="text-text-secondary items-stretch">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+        </div>
+        <bq-button appearance="link">Button</bq-button>
+      </div>
+    </bq-card>
+  </div>
+`;
 export const Default: Story = {
   render: Template,
   args: {},

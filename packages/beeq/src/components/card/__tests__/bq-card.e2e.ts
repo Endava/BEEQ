@@ -18,13 +18,4 @@ describe('bq-card', () => {
 
     expect(element.shadowRoot).not.toBeNull();
   });
-
-  it('should display text', async () => {
-    const page = await newE2EPage({
-      html: '<bq-card></bq-card>',
-    });
-    const element = await page.find('bq-card >>> p');
-
-    expect(element).toEqualText('My name is Stencil');
-  });
 });

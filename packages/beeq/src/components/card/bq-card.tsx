@@ -1,5 +1,11 @@
-import { Component, h } from '@stencil/core';
+import { Component, Element, h, Host, Prop, Watch } from '@stencil/core';
 
+import { CARD_TYPE, TCardType } from './bq-card.types';
+import { validatePropValue } from '../../shared/utils';
+
+/**
+ *  @part wrapper - The wrapper container `<div>` of the element inside the shadow DOM
+ */
 @Component({
   tag: 'bq-card',
   styleUrl: './scss/bq-card.scss',
@@ -12,6 +18,8 @@ export class BqCard {
   // Reference to host HTML element
   // ===================================
 
+  @Element() el!: HTMLBqCardElement;
+
   // State() variables
   // Inlined decorator, alphabetical order
   // =======================================
@@ -19,8 +27,16 @@ export class BqCard {
   // Public Property API
   // ========================
 
+  /** Type of card component */
+  @Prop({ reflect: true }) type: TCardType = 'default';
+
   // Prop lifecycle events
   // =======================
+
+  @Watch('type')
+  checkPropValue() {
+    validatePropValue(CARD_TYPE, 'default', this.el, 'type');
+  }
 
   // Events section
   // Requires JSDocs for public API documentation
@@ -29,6 +45,10 @@ export class BqCard {
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
+
+  componentWillLoad() {
+    this.checkPropValue();
+  }
 
   // Listeners
   // ==============
@@ -51,9 +71,16 @@ export class BqCard {
 
   render() {
     return (
-      <p class="m-[--bq-card--margin]">
-        My name is Stencil <slot />
-      </p>
+      <Host>
+        <div
+          class={{
+            [`bq-card bq-card__${this.type}`]: true,
+          }}
+          part="wrapper"
+        >
+          <slot />
+        </div>
+      </Host>
     );
   }
 }

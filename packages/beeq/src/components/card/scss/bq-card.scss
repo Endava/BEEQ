@@ -7,3 +7,19 @@
 :host {
   @apply block;
 }
+
+.bq-card {
+  @apply relative flex min-w-[var(--bq-card--min-width)] rounded-[--bq-card--border-radius] bg-[--bq-card--background];
+}
+
+/** 
+ * Set the padding based on the type selected
+*/
+
+.bq-card__default {
+  @apply p-[--bq-card--padding];
+}
+
+.bq-card__minimal {
+  @apply p-0;
+}
