@@ -156,13 +156,8 @@
     "vue": "3.4.15"
   },
   "overrides": {
-    "@typescript-eslint/eslint-plugin": "$@typescript-eslint/eslint-plugin",
-    "@typescript-eslint/parser": "$@typescript-eslint/parser",
     "react": "$react",
-    "react-dom": "$react-dom",
-    "ts-jest": {
-      "typescript": "$typescript"
-    }
+    "react-dom": "$react-dom"
   },
   "volta": {
     "node": "20.11.0",
