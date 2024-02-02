@@ -69,7 +69,6 @@
     {
       groupName: 'Eslint',
       matchPackagePrefixes: ['eslint'],
-      schedule: ['before 11am on monday'],
     },
     {
       groupName: 'Floating-UI',
@@ -91,12 +90,11 @@
     {
       groupName: 'Typescript',
       matchPackagePrefixes: ['typescript'],
-      allowedVersions: '<5.2.0',
+      allowedVersions: '<5.3.0',
     },
     {
       groupName: 'Typescript-Eslint',
       matchPackagePrefixes: ['@typescript-eslint'],
-      schedule: ['before 11am on monday'],
     },
     {
       groupName: 'Types React',
@@ -104,8 +102,14 @@
     },
     {
       matchPackageNames: ['zone.js'],
-      allowedVersions: '<0.14.0',
+      allowedVersions: '<0.15.0',
     },
+    // Block any version of vite-tsconfig-paths that is greater than 4.3.0
+    // until this issue is resolved: https://github.com/aleclarson/vite-tsconfig-paths/issues/137
+    {
+      matchPackageNames: ['vite-tsconfig-paths'],
+      allowedVersions: '<4.3.0',
+    }
     /**
      * Do not renovate peerDependencies versions/ranges
      */
