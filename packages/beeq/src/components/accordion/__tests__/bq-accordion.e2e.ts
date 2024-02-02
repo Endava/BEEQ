@@ -2,6 +2,8 @@ import { newE2EPage } from '@stencil/core/testing';
 
 import { computedStyle } from '../../../shared/test-utils';
 
+const HEADER_TEXT = 'Test text';
+
 describe('bq-accordion', () => {
   it('should render', async () => {
     const page = await newE2EPage({
@@ -23,20 +25,20 @@ describe('bq-accordion', () => {
 
   it('should display header text', async () => {
     const page = await newE2EPage({
-      html: `<bq-accordion><span slot="header">Test text</span></bq-accordion>`,
+      html: `<bq-accordion><span slot="header">${HEADER_TEXT}</span></bq-accordion>`,
     });
 
     const headerText = await page.$eval('bq-accordion >>> slot[name="header"]', (element) => {
       return element.assignedElements({ flatten: true })[0].textContent;
     });
 
-    expect(headerText).toEqualText('Test text');
+    expect(headerText).toEqualText(HEADER_TEXT);
     expect(headerText).not.toBeNull();
   });
 
   it('should render prefix', async () => {
     const page = await newE2EPage({
-      html: `<bq-accordion><span slot="header">Test text</span> <span slot="prefix">Test prefix</span></bq-accordion>`,
+      html: `<bq-accordion><span slot="header">${HEADER_TEXT}</span> <span slot="prefix">Test prefix</span></bq-accordion>`,
     });
 
     const headerText = await page.$eval('bq-accordion >>> slot[name="prefix"]', (element) => {
@@ -49,7 +51,7 @@ describe('bq-accordion', () => {
 
   it('should render suffix', async () => {
     const page = await newE2EPage({
-      html: `<bq-accordion><span slot="header">Test text</span> <span slot="suffix">Test suffix</span></bq-accordion>`,
+      html: `<bq-accordion><span slot="header">${HEADER_TEXT}</span> <span slot="suffix">Test suffix</span></bq-accordion>`,
     });
 
     const headerText = await page.$eval('bq-accordion >>> slot[name="suffix"]', (element) => {
@@ -62,7 +64,7 @@ describe('bq-accordion', () => {
 
   it('should be open if expanded prop is provided', async () => {
     const page = await newE2EPage({
-      html: `<bq-accordion expanded><span slot="header">Test text</span></bq-accordion>`,
+      html: `<bq-accordion expanded><span slot="header">${HEADER_TEXT}</span></bq-accordion>`,
     });
 
     const details = await page.find('bq-accordion >>> [part="base"]');
@@ -72,7 +74,7 @@ describe('bq-accordion', () => {
 
   it('should be collapsed when disabled', async () => {
     const page = await newE2EPage({
-      html: `<bq-accordion expanded disabled><span slot="header">Test text</span></bq-accordion>`,
+      html: `<bq-accordion expanded disabled><span slot="header">${HEADER_TEXT}</span></bq-accordion>`,
     });
 
     const details = await page.find('bq-accordion >>> [part="base"]');
@@ -83,8 +85,8 @@ describe('bq-accordion', () => {
   it('should respect design style', async () => {
     const page = await newE2EPage({
       html: `
-      <bq-accordion size="small"><span slot="header">Test text</span></bq-accordion>
-      <bq-accordion size="medium"><span slot="header">Test text</span></bq-accordion>
+      <bq-accordion size="small"><span slot="header">${HEADER_TEXT}</span></bq-accordion>
+      <bq-accordion size="medium"><span slot="header">${HEADER_TEXT}</span></bq-accordion>
       `,
     });
 
