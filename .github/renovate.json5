@@ -104,12 +104,14 @@
       matchPackageNames: ['zone.js'],
       allowedVersions: '<0.15.0',
     },
-    // Block any version of vite-tsconfig-paths that is greater than 4.3.0
-    // until this issue is resolved: https://github.com/aleclarson/vite-tsconfig-paths/issues/137
+    /**
+     * Block any version of vite-tsconfig-paths that is equal or greater than 4.3.0
+     * until this issue is resolved: https://github.com/aleclarson/vite-tsconfig-paths/issues/137
+     */
     {
       matchPackageNames: ['vite-tsconfig-paths'],
       allowedVersions: '<4.3.0',
-    }
+    },
     /**
      * Do not renovate peerDependencies versions/ranges
      */
