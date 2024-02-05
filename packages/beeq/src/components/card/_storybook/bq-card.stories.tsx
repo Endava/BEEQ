@@ -128,16 +128,16 @@ export const MiniCard: Story = {
   render: Template,
   args: {
     content: html`
-      <div class="flex items-center gap-m">
-        <div class="p-[--bq-card--padding] bg-[--bq-text--brand] rounded-tl-[--bq-card--border-radius] rounded-bl-[--bq-card--border-radius]">
+      <div class="flex">
+        <div class="flex p-[--bq-card--padding] bg-[--bq-text--brand] rounded-tl-[--bq-card--border-radius] rounded-bl-[--bq-card--border-radius]">
           <bq-icon color="text--primary-alt" size="24" name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
         </div>
-        <div class="flex items-center">
-          <div class="flex flex-col gap-xs2">
+        <div class="flex items-center p-[--bq-mini-card--padding] justify-between">
+          <div class="flex flex-col">
             <h6 class="font-bold">Title</h6>
             <p class="text-text-secondary">description</p>
           </div>
-          <div class="p-[--bq-card--padding]">
+          <div class="p-[--bq-mini-card--padding]">
             <bq-icon color="text--brand" size="24" name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
           </div>
         </div>
