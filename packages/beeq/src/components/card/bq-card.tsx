@@ -74,7 +74,7 @@ export class BqCard {
 
   render() {
     const style = {
-      ...(this.border && { '--bq-card--border--radius': `var(--bq-radius--${this.border})` }),
+      ...(this.border && { '--bq-card--borderRadius': `var(--bq-radius--${this.border})` }),
     };
     return (
       <Host style={style}>

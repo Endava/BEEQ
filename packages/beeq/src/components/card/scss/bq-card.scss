@@ -9,7 +9,7 @@
 }
 
 .bq-card {
-  @apply relative flex rounded-[--bq-card--border-radius] border-[length:--bq-card--border-width] border-[color:--bq-card--border-color] bg-[--bq-card--background];
+  @apply relative flex rounded-[--bq-card--borderRadius] border-[length:--bq-card--borderWidth] border-[color:--bq-card--borderColor] bg-[--bq-card--background];
 }
 
 /** 
