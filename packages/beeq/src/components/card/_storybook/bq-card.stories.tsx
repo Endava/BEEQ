@@ -15,8 +15,9 @@ const meta: Meta = {
   },
   argTypes: {
     border: { control: 'select', options: [...CARD_BORDER_RADIUS] },
-    content: { control: 'text', table: { disable: true } },
     type: { control: 'select', options: [...CARD_TYPE] },
+    // This control is not part of the component
+    content: { control: 'text', table: { disable: true } },
   },
   args: {
     border: 'm',
