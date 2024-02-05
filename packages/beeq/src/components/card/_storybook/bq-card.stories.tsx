@@ -63,7 +63,7 @@ export const FeatureHighlights: Story = {
   args: {
     content: html`
       <div class="flex flex-col font-medium gap-m">
-        <h6 class="font-bold">Title</h6>
+        <h6 class="text-m font-medium">Title</h6>
         <div class="flex flex-col gap-s">
           <div class="flex flex-row items-center gap-xs">
             <bq-icon name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
@@ -115,7 +115,7 @@ export const DetailedContent: Story = {
       <div class="flex flex-col items-start gap-m">
         <bq-icon color="text--brand" size="56" name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
         <div class="flex flex-col gap-xs2">
-          <h6 class="font-bold">Title</h6>
+          <h6 class="text-m font-medium">Title</h6>
           <p class="text-text-secondary items-stretch">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
         </div>
         <bq-button appearance="link">Button</bq-button>
@@ -128,16 +128,16 @@ export const MiniCard: Story = {
   render: Template,
   args: {
     content: html`
-      <div class="flex">
-        <div class="flex p-[--bq-card--padding] bg-[--bq-text--brand] rounded-tl-[--bq-card--borderRadius] rounded-bl-[--bq-card--borderRadius]">
+      <div class="flex w-full">
+        <div class="flex p-l bg-bg-brand rounded-tl-[--bq-card--borderRadius] rounded-bl-[--bq-card--borderRadius]">
           <bq-icon color="text--primary-alt" size="24" name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
         </div>
-        <div class="flex items-center p-[--bq-mini-card--padding] justify-between">
+        <div class="flex items-center p-[--bq-card--paddingMinimal] justify-between w-full">
           <div class="flex flex-col">
-            <h6 class="font-bold">Title</h6>
+            <h6 class="text-m font-medium">Title</h6>
             <p class="text-text-secondary">description</p>
           </div>
-          <div class="p-[--bq-mini-card--padding]">
+          <div class="p-[--bq-card--paddingMinimal]">
             <bq-icon color="text--brand" size="24" name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
           </div>
         </div>
