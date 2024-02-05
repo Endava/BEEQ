@@ -9,7 +9,7 @@
 }
 
 .bq-card {
-  @apply relative flex min-w-[var(--bq-card--min-width)] rounded-[--bq-card--border-radius] bg-[--bq-card--background];
+  @apply relative flex rounded-[--bq-card--border-radius] bg-[--bq-card--background];
 }
 
 /** 

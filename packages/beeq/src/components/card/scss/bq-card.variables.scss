@@ -7,10 +7,8 @@
    * @prop --bq-card--padding - Card padding
    * @prop --bq-card--background - Card background
    * @prop --bq-card--border-radius - Card border radius
-   * @prop --bq-card--min-width - Card - min width of component 
    */
   --bq-card--padding: theme('spacing.l');
   --bq-card--background: theme('colors.bg.secondary');
   --bq-card--border-radius: theme('borderRadius.m');
-  --bq-card--min-width: 400px;
 }
