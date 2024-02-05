@@ -3,7 +3,7 @@ import { html } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import mdx from './bq-card.mdx';
-import { CARD_TYPE } from '../bq-card.types';
+import { CARD_BORDER_RADIUS, CARD_TYPE } from '../bq-card.types';
 
 const meta: Meta = {
   title: 'Components/Card',
@@ -14,10 +14,12 @@ const meta: Meta = {
     },
   },
   argTypes: {
-    type: { control: 'select', options: [...CARD_TYPE] },
+    border: { control: 'select', options: [...CARD_BORDER_RADIUS] },
     content: { control: 'text', table: { disable: true } },
+    type: { control: 'select', options: [...CARD_TYPE] },
   },
   args: {
+    border: 'm',
     type: 'default',
   },
 };
@@ -26,7 +28,9 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
-  <div class="max-w-sm"><bq-card type=${ifDefined(args.type)}>${ifDefined(args.content)}</bq-card></div>
+  <div class="max-w-sm">
+    <bq-card border=${args.border} type=${ifDefined(args.type)}>${ifDefined(args.content)}</bq-card>
+  </div>
 `;
 
 export const Default: Story = {
@@ -53,7 +57,7 @@ export const Default: Story = {
   },
 };
 
-export const Feature_Highlights: Story = {
+export const FeatureHighlights: Story = {
   render: Template,
   args: {
     content: html`
@@ -82,7 +86,7 @@ export const Feature_Highlights: Story = {
   },
 };
 
-export const Performance_Overview: Story = {
+export const PerformanceOverview: Story = {
   render: Template,
   args: {
     content: html`
@@ -103,7 +107,7 @@ export const Performance_Overview: Story = {
   },
 };
 
-export const Detailed_Content: Story = {
+export const DetailedContent: Story = {
   render: Template,
   args: {
     content: html`
@@ -116,5 +120,28 @@ export const Detailed_Content: Story = {
         <bq-button appearance="link">Button</bq-button>
       </div>
     `,
+  },
+};
+
+export const MiniCard: Story = {
+  render: Template,
+  args: {
+    content: html`
+      <div class="flex items-center gap-m">
+        <div class="p-[--bq-card--padding] bg-[--bq-text--brand] rounded-tl-[--bq-card--border-radius] rounded-bl-[--bq-card--border-radius]">
+          <bq-icon color="text--primary-alt" size="24" name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
+        </div>
+        <div class="flex items-center">
+          <div class="flex flex-col gap-xs2">
+            <h6 class="font-bold">Title</h6>
+            <p class="text-text-secondary">description</p>
+          </div>
+          <div class="p-[--bq-card--padding]">
+            <bq-icon color="text--brand" size="24" name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
+          </div>
+        </div>
+      </div>
+    `,
+    type: 'minimal',
   },
 };

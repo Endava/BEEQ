@@ -10,7 +10,7 @@ import { TAlertType } from "./components/alert/bq-alert.types";
 import { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 import { TBadgeSize } from "./components/badge/bq-badge.types";
 import { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
-import { TCardType } from "./components/card/bq-card.types";
+import { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
 import { TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 import { FloatingUIPlacement } from "./services/interfaces";
@@ -35,7 +35,7 @@ export { TAlertType } from "./components/alert/bq-alert.types";
 export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 export { TBadgeSize } from "./components/badge/bq-badge.types";
 export { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
-export { TCardType } from "./components/card/bq-card.types";
+export { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
 export { TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 export { FloatingUIPlacement } from "./services/interfaces";
@@ -248,6 +248,10 @@ export namespace Components {
         "variant": TButtonVariant;
     }
     interface BqCard {
+        /**
+          * The corner radius of the card component
+         */
+        "border": TCardBorderRadius;
         /**
           * Type of card component
          */
@@ -2186,6 +2190,10 @@ declare namespace LocalJSX {
         "variant"?: TButtonVariant;
     }
     interface BqCard {
+        /**
+          * The corner radius of the card component
+         */
+        "border"?: TCardBorderRadius;
         /**
           * Type of card component
          */

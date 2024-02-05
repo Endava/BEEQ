@@ -1,6 +1,6 @@
 import { Component, Element, h, Host, Prop, Watch } from '@stencil/core';
 
-import { CARD_TYPE, TCardType } from './bq-card.types';
+import { CARD_TYPE, TCardBorderRadius, TCardType } from './bq-card.types';
 import { validatePropValue } from '../../shared/utils';
 
 /**
@@ -29,6 +29,9 @@ export class BqCard {
 
   /** Type of card component */
   @Prop({ reflect: true }) type: TCardType = 'default';
+
+  /** The corner radius of the card component */
+  @Prop({ reflect: true }) border: TCardBorderRadius = 'm';
 
   // Prop lifecycle events
   // =======================
@@ -70,8 +73,11 @@ export class BqCard {
   // ===================================
 
   render() {
+    const style = {
+      ...(this.border && { '--bq-card--border--radius': `var(--bq-radius--${this.border})` }),
+    };
     return (
-      <Host>
+      <Host style={style}>
         <div
           class={{
             [`bq-card bq-card__${this.type}`]: true,
