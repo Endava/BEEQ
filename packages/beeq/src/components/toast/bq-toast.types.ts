@@ -10,3 +10,6 @@ export const TOAST_PLACEMENT = [
   'top-left',
 ] as const;
 export type TToastPlacement = (typeof TOAST_PLACEMENT)[number];
+
+export const TOAST_BORDER_RADIUS = ['none', 'xs2', 'xs', 's', 'm', 'l', 'full'] as const;
+export type TToastBorderRadius = (typeof TOAST_BORDER_RADIUS)[number];

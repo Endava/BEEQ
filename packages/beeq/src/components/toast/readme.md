@@ -9,6 +9,7 @@
 
 | Property    | Attribute   | Description                                                                  | Type                                                                                              | Default           |
 | ----------- | ----------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ----------------- |
+| `border`    | `border`    | The corder radius of the toast component                                     | `"full" \| "l" \| "m" \| "none" \| "s" \| "xs" \| "xs2"`                                          | `'s'`             |
 | `hideIcon`  | `hide-icon` | If true will hide toast icon                                                 | `boolean`                                                                                         | `false`           |
 | `open`      | `open`      | If true, the toast will be shown                                             | `boolean`                                                                                         | `undefined`       |
 | `placement` | `placement` | Placement of toast                                                           | `"bottom-center" \| "bottom-left" \| "bottom-right" \| "top-center" \| "top-left" \| "top-right"` | `'bottom-center'` |

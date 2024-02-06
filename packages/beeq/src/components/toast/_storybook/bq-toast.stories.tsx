@@ -3,7 +3,7 @@ import { html } from 'lit-html';
 
 import mdx from './bq-toast.mdx';
 import { getRandomFromArray } from '../../../shared/utils';
-import { TOAST_PLACEMENT, TOAST_TYPE } from '../bq-toast.types';
+import { TOAST_BORDER_RADIUS, TOAST_PLACEMENT, TOAST_TYPE } from '../bq-toast.types';
 
 const meta: Meta = {
   title: 'Components/Toast',
@@ -14,6 +14,7 @@ const meta: Meta = {
     },
   },
   argTypes: {
+    border: { control: 'select', options: [...TOAST_BORDER_RADIUS] },
     type: { control: 'select', options: [...TOAST_TYPE] },
     placement: { control: 'select', options: [...TOAST_PLACEMENT] },
     'hide-icon': { control: 'boolean' },
@@ -25,6 +26,7 @@ const meta: Meta = {
     bqHide: { action: 'bqHide' },
   },
   args: {
+    border: 's',
     type: 'info',
     placement: 'bottom-center',
     'hide-icon': false,
@@ -47,6 +49,7 @@ const Template = (args: Args) => {
     (type) => html`
       <div class="mb-xs2">
         <bq-toast
+          border=${args.border}
           type=${type}
           hide-icon=${args['hide-icon']}
           open=${args.open}
@@ -83,6 +86,7 @@ const CustomIconTemplate = (args: Args) => {
 
   return html`
     <bq-toast
+      border=${args.border}
       type=${args.type}
       hide-icon=${args['hide-icon']}
       open=${args.open}
@@ -112,6 +116,7 @@ const StackableTemplate = (args: Args) => {
     const [type] = getRandomFromArray(TOAST_TYPE as unknown as unknown[], 1);
 
     Object.assign(toast, {
+      border: args.border,
       type: type,
       hideIcon: args['hide-icon'],
       time: args.time,

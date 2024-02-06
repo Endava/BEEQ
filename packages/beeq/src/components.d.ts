@@ -29,7 +29,7 @@ import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq
 import { TTabSize } from "./components/tab/bq-tab.types";
 import { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from "./components/tag/bq-tag.types";
 import { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
-import { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
+import { TToastBorderRadius, TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export { TAccordionAppearance, TAccordionSize } from "./components/accordion/bq-accordion.types";
 export { TAlertType } from "./components/alert/bq-alert.types";
 export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
@@ -54,7 +54,7 @@ export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq
 export { TTabSize } from "./components/tab/bq-tab.types";
 export { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from "./components/tag/bq-tag.types";
 export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
-export { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
+export { TToastBorderRadius, TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export namespace Components {
     interface BqAccordion {
         /**
@@ -1151,6 +1151,10 @@ export namespace Components {
         "wrap": TTextareaWrap;
     }
     interface BqToast {
+        /**
+          * The corder radius of the toast component
+         */
+        "border": TToastBorderRadius;
         /**
           * Method to be called to hide the toast component
          */
@@ -3236,6 +3240,10 @@ declare namespace LocalJSX {
         "wrap"?: TTextareaWrap;
     }
     interface BqToast {
+        /**
+          * The corder radius of the toast component
+         */
+        "border"?: TToastBorderRadius;
         /**
           * If true will hide toast icon
          */
