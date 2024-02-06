@@ -222,6 +222,7 @@ export class BqAlert {
     const style = {
       ...(this.border && { '--bq-alert--border-radius': `var(--bq-radius--${this.border})` }),
     };
+
     return (
       <Host
         style={style}
