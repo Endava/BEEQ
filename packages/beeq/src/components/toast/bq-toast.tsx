@@ -213,6 +213,7 @@ export class BqToast {
     const style = {
       ...(this.border && { '--bq-toast--border-radius': `var(--bq-radius--${this.border})` }),
     };
+
     return (
       <Host
         style={style}
