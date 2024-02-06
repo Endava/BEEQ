@@ -237,6 +237,7 @@ export class BqNotification {
     const style = {
       ...(this.border && { '--bq-notification--border-radius': `var(--bq-radius--${this.border})` }),
     };
+
     return (
       <Host
         style={style}
