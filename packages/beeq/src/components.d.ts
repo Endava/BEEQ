@@ -10,6 +10,7 @@ import { TAlertType } from "./components/alert/bq-alert.types";
 import { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 import { TBadgeSize } from "./components/badge/bq-badge.types";
 import { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
+import { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
 import { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 import { FloatingUIPlacement } from "./services/interfaces";
@@ -34,6 +35,7 @@ export { TAlertType } from "./components/alert/bq-alert.types";
 export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 export { TBadgeSize } from "./components/badge/bq-badge.types";
 export { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
+export { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
 export { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 export { FloatingUIPlacement } from "./services/interfaces";
@@ -244,6 +246,16 @@ export namespace Components {
           * The variant of button to apply on top of the appearance (applicable only to `appearance="primary"`)
          */
         "variant": TButtonVariant;
+    }
+    interface BqCard {
+        /**
+          * The corner radius of the card component
+         */
+        "border": TCardBorderRadius;
+        /**
+          * Type of card component
+         */
+        "type": TCardType;
     }
     interface BqCheckbox {
         /**
@@ -1430,6 +1442,12 @@ declare global {
         prototype: HTMLBqButtonElement;
         new (): HTMLBqButtonElement;
     };
+    interface HTMLBqCardElement extends Components.BqCard, HTMLStencilElement {
+    }
+    var HTMLBqCardElement: {
+        prototype: HTMLBqCardElement;
+        new (): HTMLBqCardElement;
+    };
     interface HTMLBqCheckboxElementEventMap {
         "bqChange": { checked: boolean };
         "bqFocus": HTMLBqCheckboxElement;
@@ -1895,6 +1913,7 @@ declare global {
         "bq-breadcrumb": HTMLBqBreadcrumbElement;
         "bq-breadcrumb-item": HTMLBqBreadcrumbItemElement;
         "bq-button": HTMLBqButtonElement;
+        "bq-card": HTMLBqCardElement;
         "bq-checkbox": HTMLBqCheckboxElement;
         "bq-dialog": HTMLBqDialogElement;
         "bq-divider": HTMLBqDividerElement;
@@ -2173,6 +2192,16 @@ declare namespace LocalJSX {
           * The variant of button to apply on top of the appearance (applicable only to `appearance="primary"`)
          */
         "variant"?: TButtonVariant;
+    }
+    interface BqCard {
+        /**
+          * The corner radius of the card component
+         */
+        "border"?: TCardBorderRadius;
+        /**
+          * Type of card component
+         */
+        "type"?: TCardType;
     }
     interface BqCheckbox {
         /**
@@ -3276,6 +3305,7 @@ declare namespace LocalJSX {
         "bq-breadcrumb": BqBreadcrumb;
         "bq-breadcrumb-item": BqBreadcrumbItem;
         "bq-button": BqButton;
+        "bq-card": BqCard;
         "bq-checkbox": BqCheckbox;
         "bq-dialog": BqDialog;
         "bq-divider": BqDivider;
@@ -3322,6 +3352,7 @@ declare module "@stencil/core" {
              * Buttons are designed for users to take action on a page or a screen.
              */
             "bq-button": LocalJSX.BqButton & JSXBase.HTMLAttributes<HTMLBqButtonElement>;
+            "bq-card": LocalJSX.BqCard & JSXBase.HTMLAttributes<HTMLBqCardElement>;
             "bq-checkbox": LocalJSX.BqCheckbox & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
             "bq-dialog": LocalJSX.BqDialog & JSXBase.HTMLAttributes<HTMLBqDialogElement>;
             "bq-divider": LocalJSX.BqDivider & JSXBase.HTMLAttributes<HTMLBqDividerElement>;
