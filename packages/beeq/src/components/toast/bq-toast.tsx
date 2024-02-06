@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, Watch } from '@stencil/core';
 
-import { TOAST_PLACEMENT, TOAST_TYPE, TToastPlacement, TToastType } from './bq-toast.types';
+import { TOAST_PLACEMENT, TOAST_TYPE, TToastBorderRadius, TToastPlacement, TToastType } from './bq-toast.types';
 import { debounce, TDebounce, validatePropValue } from '../../shared/utils';
 
 const toastPortal = Object.assign(document.createElement('div'), { className: 'bq-toast-portal' });
@@ -33,6 +33,9 @@ export class BqToast {
 
   // Public Property API
   // ========================
+
+  /** The corder radius of the toast component */
+  @Prop({ reflect: true }) border: TToastBorderRadius = 's';
 
   /** Type of toast */
   @Prop({ reflect: true, mutable: true }) type: TToastType = 'info';
@@ -207,8 +210,13 @@ export class BqToast {
   // ===================================
 
   render() {
+    const style = {
+      ...(this.border && { '--bq-toast--border-radius': `var(--bq-radius--${this.border})` }),
+    };
+
     return (
       <Host
+        style={style}
         class={{ 'is-hidden': !this.open }}
         aria-hidden={!this.open ? 'true' : 'false'}
         hidden={!this.open ? 'true' : 'false'}
