@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import { enter, leave } from 'el-transition';
 
-import { NOTIFICATION_TYPE, TNotificationType } from './bq-notification.types';
+import { NOTIFICATION_TYPE, TNotificationBorderRadius, TNotificationType } from './bq-notification.types';
 import { debounce, hasSlotContent, TDebounce, validatePropValue } from '../../shared/utils';
 
 const notificationPortal = Object.assign(document.createElement('div'), { className: 'bq-notification-portal' });
@@ -51,6 +51,9 @@ export class BqNotification {
 
   /** If true, the notification will automatically hide after the specified amount of time */
   @Prop({ reflect: true }) autoDismiss: boolean;
+
+  /** The corder radius of the notification component */
+  @Prop({ reflect: true }) border: TNotificationBorderRadius = 's';
 
   /** If true, the close button at the top right of the notification won't be shown */
   @Prop({ reflect: true }) disableClose: boolean;
@@ -231,8 +234,13 @@ export class BqNotification {
   // ===================================
 
   render() {
+    const style = {
+      ...(this.border && { '--bq-notification--border-radius': `var(--bq-radius--${this.border})` }),
+    };
+
     return (
       <Host
+        style={style}
         class={{ 'is-hidden': !this.open }}
         aria-hidden={!this.open ? 'true' : 'false'}
         hidden={!this.open ? 'true' : 'false'}

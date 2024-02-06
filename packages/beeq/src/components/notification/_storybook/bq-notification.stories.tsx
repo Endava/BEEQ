@@ -3,7 +3,7 @@ import { html, nothing } from 'lit-html';
 
 import mdx from './bq-notification.mdx';
 import { getRandomFromArray } from '../../../shared/utils';
-import { NOTIFICATION_TYPE } from '../bq-notification.types';
+import { NOTIFICATION_BORDER_RADIUS, NOTIFICATION_TYPE } from '../bq-notification.types';
 
 const meta: Meta = {
   title: 'Components/Notification',
@@ -17,6 +17,7 @@ const meta: Meta = {
     'auto-dismiss': { control: 'boolean' },
     'disable-close': { control: 'boolean' },
     'hide-icon': { control: 'boolean' },
+    border: { control: 'select', options: [...NOTIFICATION_BORDER_RADIUS] },
     open: { control: 'boolean' },
     time: { control: 'number' },
     type: { control: 'select', options: [...NOTIFICATION_TYPE] },
@@ -32,6 +33,7 @@ const meta: Meta = {
     'auto-dismiss': false,
     'disable-close': false,
     'hide-icon': false,
+    border: 's',
     open: false,
     time: 3000,
     type: 'info',
@@ -49,6 +51,7 @@ const Template = (args: Args) => html`
       ?auto-dismiss=${args['auto-dismiss']}
       ?disable-close=${args['disable-close']}
       ?hide-icon=${args['hide-icon']}
+      border=${args.border}
       ?open=${args.open}
       time=${args.time}
       type=${args.type}
@@ -64,6 +67,7 @@ const Template = (args: Args) => html`
       ?auto-dismiss=${args['auto-dismiss']}
       ?disable-close=${args['disable-close']}
       ?hide-icon=${args['hide-icon']}
+      border=${args.border}
       ?open=${args.open}
       time=${args.time}
       type=${args.type}
@@ -83,6 +87,7 @@ const Template = (args: Args) => html`
       ?auto-dismiss=${args['auto-dismiss']}
       ?disable-close=${args['disable-close']}
       ?hide-icon=${args['hide-icon']}
+      border=${args.border}
       ?open=${args.open}
       time=${args.time}
       type=${args.type}
@@ -161,6 +166,7 @@ export const Stacked: Story = {
         autoDismiss: args['auto-dismiss'],
         disableClose: args['disable-close'],
         hideIcon: args['hide-icon'],
+        border: args.border,
         time: args.time,
         innerHTML: `
           Title

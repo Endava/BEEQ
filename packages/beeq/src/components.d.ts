@@ -17,7 +17,7 @@ import { FloatingUIPlacement } from "./services/interfaces";
 import { TEmptyStateSize } from "./components/empty-state/bq-empty-state.types";
 import { TIconWeight } from "./components/icon/bq-icon.types";
 import { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
-import { TNotificationType } from "./components/notification/bq-notification.types";
+import { TNotificationBorderRadius, TNotificationType } from "./components/notification/bq-notification.types";
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 import { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
 import { TSliderType } from "./components/slider/bq-slider.types";
@@ -42,7 +42,7 @@ export { FloatingUIPlacement } from "./services/interfaces";
 export { TEmptyStateSize } from "./components/empty-state/bq-empty-state.types";
 export { TIconWeight } from "./components/icon/bq-icon.types";
 export { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
-export { TNotificationType } from "./components/notification/bq-notification.types";
+export { TNotificationBorderRadius, TNotificationType } from "./components/notification/bq-notification.types";
 export { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 export { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
 export { TSliderType } from "./components/slider/bq-slider.types";
@@ -560,6 +560,10 @@ export namespace Components {
           * If true, the notification will automatically hide after the specified amount of time
          */
         "autoDismiss": boolean;
+        /**
+          * The corder radius of the notification component
+         */
+        "border": TNotificationBorderRadius;
         /**
           * If true, the close button at the top right of the notification won't be shown
          */
@@ -2546,6 +2550,10 @@ declare namespace LocalJSX {
           * If true, the notification will automatically hide after the specified amount of time
          */
         "autoDismiss"?: boolean;
+        /**
+          * The corder radius of the notification component
+         */
+        "border"?: TNotificationBorderRadius;
         /**
           * If true, the close button at the top right of the notification won't be shown
          */
