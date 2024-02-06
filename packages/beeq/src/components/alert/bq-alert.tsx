@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State, Watch } from '@stencil/core';
 import { enter, leave } from 'el-transition';
 
-import { ALERT_TYPE, TAlertType } from './bq-alert.types';
+import { ALERT_TYPE, TAlertBorderRadius, TAlertType } from './bq-alert.types';
 import { debounce, hasSlotContent, TDebounce, validatePropValue } from '../../shared/utils';
 
 /**
@@ -49,6 +49,9 @@ export class BqAlert {
 
   /** If true, the alert will automatically hide after the specified amount of time */
   @Prop({ reflect: true }) autoDismiss: boolean;
+
+  /** The corner radius of the alert component */
+  @Prop({ reflect: true }) border: TAlertBorderRadius = 's';
 
   /** If true, the close button at the top right of the alert won't be shown */
   @Prop({ reflect: true }) disableClose: boolean;
@@ -216,8 +219,12 @@ export class BqAlert {
   // ===================================
 
   render() {
+    const style = {
+      ...(this.border && { '--bq-alert--border-radius': `var(--bq-radius--${this.border})` }),
+    };
     return (
       <Host
+        style={style}
         class={{ 'is-sticky': this.sticky }}
         aria-hidden={!this.open ? 'true' : 'false'}
         hidden={!this.open ? 'true' : 'false'}
