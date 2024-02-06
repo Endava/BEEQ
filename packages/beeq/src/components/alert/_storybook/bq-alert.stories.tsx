@@ -2,7 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html, nothing } from 'lit-html';
 
 import mdx from './bq-alert.mdx';
-import { ALERT_TYPE } from '../bq-alert.types';
+import { ALERT_BORDER_RADIUS, ALERT_TYPE } from '../bq-alert.types';
 
 const meta: Meta = {
   title: 'Components/Alert',
@@ -16,6 +16,7 @@ const meta: Meta = {
     'auto-dismiss': { control: 'boolean' },
     'disable-close': { control: 'boolean' },
     'hide-icon': { control: 'boolean' },
+    border: { control: 'select', options: [...ALERT_BORDER_RADIUS] },
     sticky: { control: 'boolean' },
     open: { control: 'boolean' },
     time: { control: 'number' },
@@ -25,6 +26,7 @@ const meta: Meta = {
     'auto-dismiss': false,
     'disable-close': false,
     'hide-icon': false,
+    border: 's',
     sticky: false,
     open: false,
     time: 3000,
@@ -41,6 +43,7 @@ const Template = (args: Args) => html`
       ?auto-dismiss=${args['auto-dismiss']}
       ?disable-close=${args['disable-close']}
       ?hide-icon=${args['hide-icon']}
+      border=${args.border}
       ?open=${args.open}
       time=${args.time}
       type=${args.type}
@@ -52,6 +55,7 @@ const Template = (args: Args) => html`
       ?auto-dismiss=${args['auto-dismiss']}
       ?disable-close=${args['disable-close']}
       ?hide-icon=${args['hide-icon']}
+      border=${args.border}
       ?open=${args.open}
       time=${args.time}
       type=${args.type}
@@ -67,6 +71,7 @@ const Template = (args: Args) => html`
       ?auto-dismiss=${args['auto-dismiss']}
       ?disable-close=${args['disable-close']}
       ?hide-icon=${args['hide-icon']}
+      border=${args.border}
       ?open=${args.open}
       time=${args.time}
       type=${args.type}
@@ -94,6 +99,7 @@ const TemplateSticky = (args: Args) => html`
     ?disable-close=${args['disable-close']}
     ?hide-icon=${args['hide-icon']}
     ?sticky=${args['sticky']}
+    border=${args.border}
     ?open=${args.open}
     time=${args.time}
     type=${args.type}

@@ -6,7 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { TAccordionAppearance, TAccordionSize } from "./components/accordion/bq-accordion.types";
-import { TAlertType } from "./components/alert/bq-alert.types";
+import { TAlertBorderRadius, TAlertType } from "./components/alert/bq-alert.types";
 import { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 import { TBadgeSize } from "./components/badge/bq-badge.types";
 import { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
@@ -31,7 +31,7 @@ import { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from "./components
 import { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 import { TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export { TAccordionAppearance, TAccordionSize } from "./components/accordion/bq-accordion.types";
-export { TAlertType } from "./components/alert/bq-alert.types";
+export { TAlertBorderRadius, TAlertType } from "./components/alert/bq-alert.types";
 export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 export { TBadgeSize } from "./components/badge/bq-badge.types";
 export { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
@@ -93,6 +93,10 @@ export namespace Components {
           * If true, the alert will automatically hide after the specified amount of time
          */
         "autoDismiss": boolean;
+        /**
+          * The corner radius of the alert component
+         */
+        "border": TAlertBorderRadius;
         /**
           * If true, the close button at the top right of the alert won't be shown
          */
@@ -1991,6 +1995,10 @@ declare namespace LocalJSX {
           * If true, the alert will automatically hide after the specified amount of time
          */
         "autoDismiss"?: boolean;
+        /**
+          * The corner radius of the alert component
+         */
+        "border"?: TAlertBorderRadius;
         /**
           * If true, the close button at the top right of the alert won't be shown
          */
