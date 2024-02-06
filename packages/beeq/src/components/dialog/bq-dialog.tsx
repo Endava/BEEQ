@@ -249,6 +249,7 @@ export class BqDialog {
     const style = {
       ...(this.border && { '--bq-dialog--border-radius': `var(--bq-radius--${this.border})` }),
     };
+
     return (
       <dialog
         style={style}
