@@ -1,7 +1,13 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import { enter, leave } from 'el-transition';
 
-import { DIALOG_FOOTER_APPEARANCE, DIALOG_SIZE, TDialogFooterAppearance, TDialogSize } from './bq-dialog.types';
+import {
+  DIALOG_FOOTER_APPEARANCE,
+  DIALOG_SIZE,
+  TDialogBorderRadius,
+  TDialogFooterAppearance,
+  TDialogSize,
+} from './bq-dialog.types';
 import { hasSlotContent, validatePropValue } from '../../shared/utils';
 
 /**
@@ -41,6 +47,9 @@ export class BqDialog {
 
   // Public Property API
   // ========================
+
+  /** Corder radius of the dialog component */
+  @Prop({ reflect: true }) border: TDialogBorderRadius = 'm';
 
   /** If true, the backdrop overlay won't be shown when the dialog opens */
   @Prop({ reflect: true }) disableBackdrop = false;
@@ -237,8 +246,13 @@ export class BqDialog {
   // ===================================
 
   render() {
+    const style = {
+      ...(this.border && { '--bq-dialog--border-radius': `var(--bq-radius--${this.border})` }),
+    };
+
     return (
       <dialog
+        style={style}
         class={{ [`bq-dialog ${this.size}`]: true }}
         data-transition-enter="transition ease-out duration-200"
         data-transition-enter-start="transform opacity-0 scale-75"

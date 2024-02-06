@@ -11,7 +11,7 @@ import { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 import { TBadgeSize } from "./components/badge/bq-badge.types";
 import { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 import { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
-import { TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
+import { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 import { FloatingUIPlacement } from "./services/interfaces";
 import { TEmptyStateSize } from "./components/empty-state/bq-empty-state.types";
@@ -36,7 +36,7 @@ export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 export { TBadgeSize } from "./components/badge/bq-badge.types";
 export { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 export { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
-export { TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
+export { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 export { FloatingUIPlacement } from "./services/interfaces";
 export { TEmptyStateSize } from "./components/empty-state/bq-empty-state.types";
@@ -308,6 +308,10 @@ export namespace Components {
         "value": string;
     }
     interface BqDialog {
+        /**
+          * Corder radius of the dialog component
+         */
+        "border": TDialogBorderRadius;
         /**
           * Dismiss or cancel the dialog
          */
@@ -2254,6 +2258,10 @@ declare namespace LocalJSX {
         "value": string;
     }
     interface BqDialog {
+        /**
+          * Corder radius of the dialog component
+         */
+        "border"?: TDialogBorderRadius;
         /**
           * If true, the backdrop overlay won't be shown when the dialog opens
          */

@@ -2,7 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html, nothing } from 'lit-html';
 
 import mdx from './bq-dialog.mdx';
-import { DIALOG_FOOTER_APPEARANCE, DIALOG_SIZE } from '../bq-dialog.types';
+import { DIALOG_BORDER_RADIUS, DIALOG_FOOTER_APPEARANCE, DIALOG_SIZE } from '../bq-dialog.types';
 
 const meta: Meta = {
   title: 'Components/Dialog',
@@ -18,6 +18,7 @@ const meta: Meta = {
     'disable-close-esc-keydown': { control: 'boolean' },
     'footer-apperance': { control: 'select', options: [...DIALOG_FOOTER_APPEARANCE] },
     'hide-close-button': { control: 'boolean' },
+    border: { control: 'select', options: [...DIALOG_BORDER_RADIUS] },
     open: { control: 'boolean' },
     size: { control: 'select', options: [...DIALOG_SIZE] },
     // Events
@@ -36,6 +37,7 @@ const meta: Meta = {
     'disable-close-esc-keydown': false,
     'hide-close-button': false,
     'footer-apperance': 'standard',
+    border: 'm',
     open: false,
     size: 'medium',
     // Not part of the public API
@@ -62,6 +64,7 @@ const Template = (args: Args) => {
       ?disable-close-click-outside=${args['disable-close-click-outside']}
       footer-apperance=${args['footer-apperance']}
       ?hide-close-button=${args['hide-close-button']}
+      border=${args.border}
       ?open=${args.open}
       size=${args.size}
       @bqCancel=${args.bqCancel}
@@ -152,6 +155,7 @@ const ConfirmTemplate = (args: Args) => {
       ?disable-close-click-outside=${args['disable-close-click-outside']}
       footer-apperance=${args['footer-apperance']}
       ?hide-close-button=${args['hide-close-button']}
+      border=${args.border}
       ?open=${args.open}
       size=${args.size}
       @bqCancel=${args.bqCancel}
