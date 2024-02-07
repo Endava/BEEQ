@@ -10,7 +10,7 @@ export default {
     '@storybook/addon-essentials',
     '@bee-q/storybook-addon-html',
     '@storybook/addon-a11y',
-    '@chromaui/addon-visual-tests',
+    '@chromatic-com/storybook',
   ],
   core: {
     builder: {
