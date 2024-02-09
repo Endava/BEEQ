@@ -3,6 +3,16 @@
 /* -------------------------------------------------------------------------- */
 
 :host {
+  /**
+   * @prop --bq-spinner--color: Spinner color
+   * @prop --bq-spinner--size-large: Spinner large size
+   * @prop --bq-spinner--size-medium: Spinner medium size
+   * @prop --bq-spinner--size-small: Spinner small size
+   * @prop --bq-spinner--large-text-fontSize: Spinner large text font size
+   * @prop --bq-spinner--medium-text-fontSize: Spinner medium text font size
+   * @prop --bq-spinner--small-text-fontSize: Spinner small text font size
+   * @prop --bq-spinner--text-lineHeight: Spinner text line height
+   */
   --bq-spinner--color: theme('colors.ui.brand');
   --bq-spinner--size-large: 56px;
   --bq-spinner--size-medium: 48px;
