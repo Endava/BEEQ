@@ -19,11 +19,12 @@ const tailwindOpts: PluginConfigOpts = {
 export const config: Config = {
   namespace: 'bee-q',
   taskQueue: 'async',
-  globalStyle: resolve(__dirname, './src/global/styles/default.scss').replace(/\\/g, '/'),
+  buildDist: true,
+  enableCache: true,
   env: {
     ICONS_SVG_PATH: process.env.ICONS_SVG_PATH,
   },
-  buildDist: true,
+  globalStyle: resolve(__dirname, './src/global/styles/default.scss').replace(/\\/g, '/'),
   plugins: [
     sass({
       includePaths: [
@@ -76,17 +77,19 @@ export const config: Config = {
     }),
   ],
   extras: {
-    experimentalImportInjection: true,
     /**
      * Details:
-     * https://stenciljs.com/docs/config-extras#experimentalslotfixes
-     * https://discord.com/channels/520266681499779082/1108109881870925875/1143196247730176040
+     * https://stenciljs.com/docs/config-extras
      */
+    enableImportInjection: true,
+    experimentalScopedSlotChanges: true,
     experimentalSlotFixes: true,
   },
+  preamble: 'Built by Endavans\n© https://beeq.design - Apache 2 License.',
   watchIgnoredRegex: /(custom-elements\.)((d\.ts)|(json))$/g,
   devServer: {
     openBrowser: false,
     port: 8001,
+    reloadStrategy: 'pageReload',
   },
 };
