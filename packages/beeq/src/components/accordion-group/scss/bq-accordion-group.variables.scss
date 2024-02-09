@@ -3,5 +3,8 @@
 /* -------------------------------------------------------------------------- */
 
 :host {
+  /**
+   * @prop --bq-accordion-group--gap: Accordion group distance between elements
+  */
   --bq-accordion-group--gap: theme('spacing.xs');
 }
