@@ -3,6 +3,12 @@
 /* -------------------------------------------------------------------------- */
 
 :host {
+  /**
+   * @prop --switch--height: Switch height
+   * @prop --switch--justify-content: Switch justify content
+   * @prop --switch--width: Switch width
+   * @prop --switch--dot-size: Switch dot size
+   */
   --switch--height: var(--bq-switch--size, 24px);
   --switch--justify-content: var(--bq--switch--justify-content, 'start');
   --switch--width: var(--bq-switch--width, 44px);

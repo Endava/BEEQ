@@ -3,6 +3,10 @@
 /* -------------------------------------------------------------------------- */
 
 :host {
+  /**
+   * @prop --bq-divider--color: Divider color
+   * @prop --bq-divider--title-marginX: Divider space between title and delimiters
+   */
   --bq-divider--color: theme('colors.stroke.secondary');
   --bq-divider--title-marginX: theme('spacing.m');
 }

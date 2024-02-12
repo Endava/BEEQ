@@ -2,7 +2,7 @@
 /*                                Switch styles                */
 /* -------------------------------------------------------------------------- */
 
-@import './bq-switch-variables';
+@import './bq-switch.variables';
 
 :host {
   @apply inline-block;
@@ -15,7 +15,7 @@
 .bq-switch {
   @apply flex cursor-pointer select-none items-center rounded-s p-2 transition-colors duration-300;
 
-  justify-content: var(--bq-switch--justify-content);
+  justify-content: var(--switch--justify-content);
 
   // Display background on hover (if enabled)
   &.has-background:not(.is-disabled):hover {
