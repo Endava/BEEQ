@@ -36,14 +36,14 @@ describe('bq-spinner', () => {
       html: '<bq-spinner></bq-spinner>',
     });
 
-    const element = await page.find('bq-spinner >>> .bq-spinner');
-    expect(element).toHaveClass('medium');
+    const shadowDOMElem = 'bq-spinner >>> .bq-spinner--loader';
+    expect(await page.find(shadowDOMElem)).toHaveClass('medium');
 
     await setProperties(page, 'bq-spinner', { size: 'large' });
-    expect(element).toHaveClass('large');
+    expect(await page.find(shadowDOMElem)).toHaveClass('large');
 
     await setProperties(page, 'bq-spinner', { size: 'small' });
-    expect(element).toHaveClass('small');
+    expect(await page.find(shadowDOMElem)).toHaveClass('small');
   });
 
   it('should handle `text-position` property', async () => {
@@ -51,23 +51,23 @@ describe('bq-spinner', () => {
       html: '<bq-spinner text-position="above"></bq-spinner>',
     });
 
-    const element = await page.find('bq-spinner >>> .bq-spinner');
-    expect(element).toHaveClass('text-above');
+    const shadowDOMElem = 'bq-spinner >>> .bq-spinner';
+    expect(await page.find(shadowDOMElem)).toHaveClass('text-above');
 
     await setProperties(page, 'bq-spinner', { textPosition: 'bellow' });
-    expect(element).toHaveClass('text-bellow');
+    expect(await page.find(shadowDOMElem)).toHaveClass('text-bellow');
 
     await setProperties(page, 'bq-spinner', { textPosition: 'left' });
-    expect(element).toHaveClass('text-left');
+    expect(await page.find(shadowDOMElem)).toHaveClass('text-left');
 
     await setProperties(page, 'bq-spinner', { textPosition: 'right' });
-    expect(element).toHaveClass('text-right');
+    expect(await page.find(shadowDOMElem)).toHaveClass('text-right');
 
     await setProperties(page, 'bq-spinner', { textPosition: 'none' });
 
     const spinnerText = await page.find('bq-spinner >>> .bq-spinner--text');
     expect(spinnerText).toHaveClass('!hidden');
-    expect(element).toHaveClass('text-none');
+    expect(await page.find(shadowDOMElem)).toHaveClass('text-none');
   });
 
   it('should render icon slot element', async () => {
@@ -103,11 +103,11 @@ describe('bq-spinner', () => {
 
     expect(console).toHaveBeenCalledTimes(2);
     expect(console).toHaveBeenCalledWith(
-      'warning',
+      'warn',
       '[BQ-SPINNER] Please notice that "size" should be one of small|medium|large',
     );
     expect(console).toHaveBeenCalledWith(
-      'warning',
+      'warn',
       '[BQ-SPINNER] Please notice that "textPosition" should be one of none|left|right|above|bellow',
     );
   });
