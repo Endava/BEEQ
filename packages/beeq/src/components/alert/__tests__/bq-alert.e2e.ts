@@ -95,7 +95,7 @@ describe('bq-alert', () => {
     const page = await newE2EPage({
       html: `
         <bq-alert>
-          Alert title 
+          Alert title
           <div slot="footer">
             <bq-button appearance="primary" type="button" variant="standard">Button</bq-button>
             <bq-button appearance="secondary" variant="standard">Button</bq-button>
@@ -118,18 +118,22 @@ describe('bq-alert', () => {
       `,
     });
 
-    const element = await page.find('bq-alert');
-
-    await element.callMethod('show');
+    await page.$eval('bq-alert', async (elem: HTMLBqAlertElement) => {
+      await elem.show();
+    });
     await page.waitForChanges();
 
-    expect(element).toEqualAttribute('aria-hidden', 'false');
-    expect(element).toEqualAttribute('hidden', 'false');
+    const visibleAlert = await page.find('bq-alert');
+    expect(visibleAlert).toEqualAttribute('aria-hidden', 'false');
+    expect(visibleAlert).toEqualAttribute('hidden', 'false');
 
-    await element.callMethod('hide');
+    await page.$eval('bq-alert', async (elem: HTMLBqAlertElement) => {
+      await elem.hide();
+    });
     await page.waitForChanges();
 
-    expect(element).toEqualAttribute('aria-hidden', 'true');
-    expect(element).toEqualAttribute('hidden', 'true');
+    const hiddenAlert = await page.find('bq-alert');
+    expect(hiddenAlert).toEqualAttribute('aria-hidden', 'true');
+    expect(hiddenAlert).toEqualAttribute('hidden', 'true');
   });
 });
