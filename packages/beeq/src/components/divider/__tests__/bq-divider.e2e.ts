@@ -61,15 +61,15 @@ describe('bq-divider', () => {
 
     expect(console).toHaveBeenCalledTimes(3);
     expect(console).toHaveBeenCalledWith(
-      'warning',
+      'warn',
       '[BQ-DIVIDER] Please notice that "orientation" should be one of horizontal|vertical',
     );
     expect(console).toHaveBeenCalledWith(
-      'warning',
+      'warn',
       '[BQ-DIVIDER] Please notice that "titleAlignment" should be one of start|middle|end',
     );
     expect(console).toHaveBeenCalledWith(
-      'warning',
+      'warn',
       '[BQ-DIVIDER] Please notice that "strokeLinecap" should be one of square|round|butt',
     );
   });
