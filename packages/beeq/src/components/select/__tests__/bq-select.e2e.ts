@@ -76,9 +76,9 @@ describe('bq-select', () => {
         </bq-select>
       `,
     });
-    const optionElems = await page.findAll('bq-select > bq-option');
+    const options = await page.findAll('bq-select > bq-option');
 
-    expect(optionElems.length).toEqual(3);
+    expect(options.length).toEqual(3);
   });
 
   it('should render with panel options opened', async () => {
@@ -123,19 +123,26 @@ describe('bq-select', () => {
         </bq-select>
       `,
     });
+    const optionSelector = `bq-select > bq-option[value="${value}"]`;
     const eventEmitter = await page.spyOnEvent('bqSelect');
 
     const selectElem = await page.find('bq-select');
     await selectElem.click();
+
+    // Make sure the dropdown is open
+    expect(await page.find('bq-select >>> bq-dropdown')).toHaveAttribute('open');
+
+    // Make sure the option is not selected
+    const optionElem = await page.find(optionSelector);
+    expect(optionElem).not.toHaveAttribute('selected');
+
+    await optionElem.click();
     await page.waitForChanges();
 
-    const selectOptionElem = await page.find(`bq-option[value="${value}"]`);
-    expect(selectOptionElem).not.toHaveAttribute('selected');
-
-    await selectOptionElem.click();
-    await page.waitForChanges();
-
-    expect(selectOptionElem).toHaveAttribute('selected');
+    // Make sure the dropdown is close
+    expect(await page.find('bq-select >>> bq-dropdown')).not.toHaveAttribute('open');
+    // Check that the option is selected
+    expect(await page.find(optionSelector)).toHaveAttribute('selected');
     expect(eventEmitter).toHaveReceivedEventTimes(1);
   });
 });
