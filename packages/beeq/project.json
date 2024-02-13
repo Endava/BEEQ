@@ -155,6 +155,8 @@
         "tsConfig": "packages/beeq/tsconfig.lib.json",
         "configPath": "packages/beeq/stencil.config.ts",
         "outputPath": "dist/beeq",
+        "runInBand": true,
+        "maxWorkers": 1,
         "noBuild": true
       }
     },
