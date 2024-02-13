@@ -116,21 +116,26 @@ describe('bq-toast', () => {
   });
 
   it('should call methods', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-toast>Test</bq-toast>');
+    const page = await newE2EPage({
+      html: '<bq-toast></bq-toast>',
+    });
 
-    const element = await page.find('bq-toast');
-
-    await element.callMethod('show');
+    await page.$eval('bq-toast', async (elem: HTMLBqToastElement) => {
+      await elem.show();
+    });
     await page.waitForChanges();
 
-    expect(element).toEqualAttribute('aria-hidden', 'false');
-    expect(element).toEqualAttribute('hidden', 'false');
+    const visibleToast = await page.find('bq-toast');
+    expect(visibleToast).toEqualAttribute('aria-hidden', 'false');
+    expect(visibleToast).toEqualAttribute('hidden', 'false');
 
-    await element.callMethod('hide');
+    await page.$eval('bq-toast', async (elem: HTMLBqToastElement) => {
+      await elem.hide();
+    });
     await page.waitForChanges();
 
-    expect(element).toEqualAttribute('aria-hidden', 'true');
-    expect(element).toEqualAttribute('hidden', 'true');
+    const hiddenToast = await page.find('bq-toast');
+    expect(hiddenToast).toEqualAttribute('aria-hidden', 'true');
+    expect(hiddenToast).toEqualAttribute('hidden', 'true');
   });
 });
