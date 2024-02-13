@@ -29,18 +29,22 @@ describe('bq-side-menu', () => {
   });
 
   it('should collapse and expand', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-side-menu></bq-side-menu>');
+    const page = await newE2EPage({
+      html: '<bq-side-menu></bq-side-menu>',
+    });
+    const sideMenuSelector = 'bq-side-menu';
 
-    const sideMenuElem = await page.find('bq-side-menu');
-
-    await sideMenuElem.callMethod('toggleCollapse');
+    page.$eval(sideMenuSelector, async (sideMenu: HTMLBqSideMenuElement) => {
+      await sideMenu.toggleCollapse();
+    });
     await page.waitForChanges();
-    expect(sideMenuElem).toHaveAttribute('collapse');
+    expect(await page.find(sideMenuSelector)).toHaveAttribute('collapse');
 
-    await sideMenuElem.callMethod('toggleCollapse');
+    page.$eval(sideMenuSelector, async (sideMenu: HTMLBqSideMenuElement) => {
+      await sideMenu.toggleCollapse();
+    });
     await page.waitForChanges();
-    expect(sideMenuElem).not.toHaveAttribute('collapse');
+    expect(await page.find(sideMenuSelector)).not.toHaveAttribute('collapse');
   });
 
   it('should render navigation menu items', async () => {
