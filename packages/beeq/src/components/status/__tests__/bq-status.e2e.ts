@@ -51,7 +51,7 @@ describe('bq-status', () => {
     expect(await page.find('bq-status >>> [part="circle"]')).toHaveClass('neutral');
     expect(console).toHaveBeenCalledTimes(1);
     expect(console).toHaveBeenCalledWith(
-      'warning',
+      'warn',
       `[BQ-STATUS] Please notice that "type" should be one of ${STATUS_TYPE.join('|')}`,
     );
   });
