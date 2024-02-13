@@ -59,14 +59,14 @@ describe('bq-dropdown', () => {
         </bq-dropdown>
       `,
     });
-    const dropdownPanel = await page.find('bq-dropdown >>> .bq-dropdown__panel');
 
-    expect(dropdownPanel).toHaveAttribute('open');
+    const dropdownPanelSelector = 'bq-dropdown >>> .bq-dropdown__panel';
+    expect(await page.find(dropdownPanelSelector)).toHaveAttribute('open');
 
     await page.keyboard.press('Escape');
     await page.waitForChanges();
 
-    expect(dropdownPanel).not.toHaveAttribute('open');
+    expect(await page.find(dropdownPanelSelector)).not.toHaveAttribute('open');
   });
 
   it('should change placement value', async () => {
