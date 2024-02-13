@@ -123,7 +123,7 @@ const Template = (args: Args) => {
       ?disable-clear=${args['disable-clear']}
       ?disabled=${args.disabled}
       form=${ifDefined(args.form)}
-      iputmode=${args.inputmode}
+      inputmode=${args.inputmode}
       max=${ifDefined(args.max)}
       maxlength=${ifDefined(args.maxlength)}
       min=${ifDefined(args.min)}
