@@ -28,12 +28,13 @@ describe('bq-tooltip', () => {
       </bq-tooltip>
     `);
 
-    const tooltipPanel = await page.find('bq-tooltip >>> [part="panel"]');
-    expect(tooltipPanel).toHaveAttribute('aria-hidden');
+    const tooltipPanelSelector = 'bq-tooltip >>> [part="panel"]';
+    expect(await page.find(tooltipPanelSelector)).toHaveAttribute('aria-hidden');
 
     const button = await page.find('bq-button');
     await button.hover();
-    expect(tooltipPanel).not.toHaveAttribute('aria-hidden');
+
+    expect(await page.find(tooltipPanelSelector)).not.toHaveAttribute('aria-hidden');
   });
 
   it('should hide on mouse out', async () => {
@@ -45,13 +46,13 @@ describe('bq-tooltip', () => {
       </bq-tooltip>
     `);
 
-    const tooltipPanel = await page.find('bq-tooltip >>> [part="panel"]');
-    expect(tooltipPanel).not.toHaveAttribute('aria-hidden');
+    const tooltipPanelSelector = 'bq-tooltip >>> [part="panel"]';
+    expect(await page.find(tooltipPanelSelector)).not.toHaveAttribute('aria-hidden');
 
     await page.click('body');
     await page.waitForChanges();
 
-    expect(tooltipPanel).toHaveAttribute('aria-hidden');
+    expect(await page.find(tooltipPanelSelector)).toHaveAttribute('aria-hidden');
   });
 
   it('should be visible only on click if specified', async () => {
@@ -63,15 +64,15 @@ describe('bq-tooltip', () => {
       </bq-tooltip>
     `);
 
-    const tooltipPanel = await page.find('bq-tooltip >>> [part="panel"]');
-    expect(tooltipPanel).toHaveAttribute('aria-hidden');
+    const tooltipPanelSelector = 'bq-tooltip >>> [part="panel"]';
+    expect(await page.find(tooltipPanelSelector)).toHaveAttribute('aria-hidden');
 
     const button = await page.find('bq-button');
     await button.hover();
-    expect(tooltipPanel).toHaveAttribute('aria-hidden');
+    expect(await page.find(tooltipPanelSelector)).toHaveAttribute('aria-hidden');
 
     await button.click();
-    expect(tooltipPanel).not.toHaveAttribute('aria-hidden');
+    expect(await page.find(tooltipPanelSelector)).not.toHaveAttribute('aria-hidden');
   });
 
   it('should show in specified position', async () => {
