@@ -74,11 +74,8 @@ describe('bq-button', () => {
     const bqClick = await page.spyOnEvent('bqClick');
     const bqBlur = await page.spyOnEvent('bqBlur');
 
-    const element = await page.find('bq-button >>> [part="button"]');
-
-    element.click();
-
-    await page.waitForChanges();
+    const element = await page.waitForSelector('bq-button');
+    await element.click();
 
     expect(bqFocus).toHaveReceivedEventTimes(0);
     expect(bqClick).toHaveReceivedEventTimes(0);
@@ -169,19 +166,19 @@ describe('bq-button', () => {
     });
     expect(console).toHaveBeenCalledTimes(4);
     expect(console).toHaveBeenCalledWith(
-      'warning',
+      'warn',
       '[BQ-BUTTON] Please notice that "appearance" should be one of primary|secondary|link|text',
     );
     expect(console).toHaveBeenCalledWith(
-      'warning',
+      'warn',
       '[BQ-BUTTON] Please notice that "type" should be one of button|submit|reset',
     );
     expect(console).toHaveBeenCalledWith(
-      'warning',
+      'warn',
       '[BQ-BUTTON] Please notice that "size" should be one of small|medium|large',
     );
     expect(console).toHaveBeenCalledWith(
-      'warning',
+      'warn',
       '[BQ-BUTTON] Please notice that "variant" should be one of standard|ghost|danger',
     );
   });

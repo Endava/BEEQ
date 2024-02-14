@@ -26,7 +26,7 @@ describe('bq-switch', () => {
   });
 
   it('should display label text', async () => {
-    const label = 'Toogle me!';
+    const label = 'Toggle me!';
     const page = await newE2EPage();
     await page.setContent(`<bq-switch>${label}</bq-switch>`);
 
@@ -37,8 +37,9 @@ describe('bq-switch', () => {
   });
 
   it('should toggle on click', async () => {
-    const page = await newE2EPage();
-    await page.setContent(`<bq-switch></bq-switch>`);
+    const page = await newE2EPage({
+      html: '<bq-switch></bq-switch>',
+    });
 
     const bqChange = await page.spyOnEvent('bqChange');
 
@@ -46,8 +47,9 @@ describe('bq-switch', () => {
     expect(element).not.toHaveAttribute('checked');
 
     await element.click();
+
+    expect(await page.find('bq-switch')).toHaveAttribute('checked');
     expect(bqChange).toHaveReceivedEventTimes(1);
-    expect(element).toHaveAttribute('checked');
   });
 
   it('should do nothing if disabled', async () => {
