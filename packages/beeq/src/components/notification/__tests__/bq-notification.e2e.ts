@@ -116,21 +116,26 @@ describe('bq-notification', () => {
   });
 
   it('should call methods', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-notification></bq-notification>');
+    const page = await newE2EPage({
+      html: '<bq-notification></bq-notification>',
+    });
 
-    const element = await page.find('bq-notification');
-
-    await element.callMethod('show');
+    await page.$eval('bq-notification', async (elem: HTMLBqNotificationElement) => {
+      await elem.show();
+    });
     await page.waitForChanges();
 
-    expect(element).toEqualAttribute('aria-hidden', 'false');
-    expect(element).toEqualAttribute('hidden', 'false');
+    const visibleNotification = await page.find('bq-notification');
+    expect(visibleNotification).toEqualAttribute('aria-hidden', 'false');
+    expect(visibleNotification).toEqualAttribute('hidden', 'false');
 
-    await element.callMethod('hide');
+    await page.$eval('bq-notification', async (elem: HTMLBqNotificationElement) => {
+      await elem.hide();
+    });
     await page.waitForChanges();
 
-    expect(element).toEqualAttribute('aria-hidden', 'true');
-    expect(element).toEqualAttribute('hidden', 'true');
+    const hiddenNotification = await page.find('bq-notification');
+    expect(hiddenNotification).toEqualAttribute('aria-hidden', 'true');
+    expect(hiddenNotification).toEqualAttribute('hidden', 'true');
   });
 });

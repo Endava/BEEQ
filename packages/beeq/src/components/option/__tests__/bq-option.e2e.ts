@@ -68,7 +68,7 @@ describe('bq-option', () => {
 
     const bqFocus = await page.spyOnEvent('bqFocus');
     const bqBlur = await page.spyOnEvent('bqBlur');
-    const bqClick = await page.spyOnEvent('bqlick');
+    const bqClick = await page.spyOnEvent('bqClick');
     const bqEnter = await page.spyOnEvent('bqEnter');
 
     await page.keyboard.press('Tab');
@@ -88,9 +88,11 @@ describe('bq-option', () => {
     const bqBlur = await page.spyOnEvent('bqBlur');
     const bqClick = await page.spyOnEvent('bqClick');
 
-    const element = await page.find('bq-option');
-    element.click();
-
+    await page.$eval('bq-option', async (elem: HTMLBqOptionElement) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore: Property 'click' does not exist on type 'Element'.
+      elem.shadowRoot.querySelector('div[part="base"]').click();
+    });
     await page.waitForChanges();
 
     expect(bqFocus).toHaveReceivedEventTimes(0);

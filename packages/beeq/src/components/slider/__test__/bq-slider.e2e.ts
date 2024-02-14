@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-import { computedStyle, sleep } from '../../../shared/test-utils';
+import { computedStyle, setProperties, sleep } from '../../../shared/test-utils';
 
 describe('bq-slider', () => {
   it('should render', async () => {
@@ -79,18 +79,14 @@ describe('bq-slider', () => {
     const page = await newE2EPage();
     await page.setContent('<bq-slider type="single"></bq-slider>');
 
-    const getInputsLength = (element) => {
-      const inputs = element.shadowRoot.querySelectorAll('.bq-slider__input');
-      return inputs.length;
-    };
     const element = await page.find('bq-slider');
+    expect(element.shadowRoot.querySelectorAll('.bq-slider__input').length).toBe(1);
 
-    expect(getInputsLength(element)).toBe(1);
-
-    element.setAttribute('type', 'range');
+    await setProperties(page, 'bq-slider', { type: 'range' });
     await page.waitForChanges();
 
-    expect(getInputsLength(element)).toBe(2);
+    const inputs = (await page.find('bq-slider')).shadowRoot.querySelectorAll('.bq-slider__input');
+    expect(inputs.length).toBe(2);
   });
 
   it('should handle `value` property', async () => {
@@ -135,8 +131,7 @@ describe('bq-slider', () => {
     const element = await page.find('bq-slider');
     const elementValue = element.getAttribute('value');
 
-    element.setAttribute('value', (elementValue + 1).toString());
-
+    await setProperties(page, 'bq-slider', { value: parseInt(elementValue) + 1 });
     await page.waitForChanges();
     await sleep(250);
 
