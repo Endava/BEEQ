@@ -6,6 +6,53 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+## [0.13.0](https://github.com/Endava/BEEQ/compare/v0.12.0...v0.13.0) (2024-02-14)
+
+
+### Features ⚡️
+
+* **Alert:** add `border` property to facilitate dynamic border-radius changes ([#817](https://github.com/Endava/BEEQ/issues/817)) ([7a23cc0](https://github.com/Endava/BEEQ/commit/7a23cc009cac02f157629984ebcc7946272ac34d))
+* **Card:** add new `bq-card` component ([#806](https://github.com/Endava/BEEQ/issues/806)) ([8e437ce](https://github.com/Endava/BEEQ/commit/8e437ce0b1e38347276cc25224ab9e963d2a0687))
+* **Dialog:** add `border` property to facilitate dynamic border-radius changes ([#818](https://github.com/Endava/BEEQ/issues/818)) ([02586cc](https://github.com/Endava/BEEQ/commit/02586cc011dcb8f37bee72b44435a903026b5720))
+* **Notification:** add `border` property to facilitate dynamic border-radius changes ([#819](https://github.com/Endava/BEEQ/issues/819)) ([5bd2446](https://github.com/Endava/BEEQ/commit/5bd2446b4472840576e79dec270b1b8e2cff8acf))
+* **Toast:** add `border` property to facilitate dynamic border-radius changes ([#820](https://github.com/Endava/BEEQ/issues/820)) ([e7a76fb](https://github.com/Endava/BEEQ/commit/e7a76fbface23835920e1b12616266246d96482a))
+
+
+### Test 🧪
+
+* **Accordion:** add e2e tests for accordion-group ([#828](https://github.com/Endava/BEEQ/issues/828)) ([eff4597](https://github.com/Endava/BEEQ/commit/eff4597e292e5bd4907cb08ba3f03c0ace10f195))
+
+
+### Documentation 📚
+
+* update missing scss variables description ([#829](https://github.com/Endava/BEEQ/issues/829)) ([2ffe09e](https://github.com/Endava/BEEQ/commit/2ffe09e7a47adc823e637e7611fae37b69912f8e))
+
+
+### Chore ⚙️
+
+* **deps:** fix renovate configuration ([c3fdd40](https://github.com/Endava/BEEQ/commit/c3fdd4028a81b41d5c824171eaee05258d526d6e))
+* **deps:** update actions/cache action to v4 ([#810](https://github.com/Endava/BEEQ/issues/810)) ([d4fe03b](https://github.com/Endava/BEEQ/commit/d4fe03b3981bf1f3bbf3bc6ede5446a0a5ea80a5))
+* **deps:** update angular to v17.1.3 ([#827](https://github.com/Endava/BEEQ/issues/827)) ([aaa3448](https://github.com/Endava/BEEQ/commit/aaa3448d59450331adc8b0d1f0ee7590a73c92d3))
+* **deps:** update dependency @jscutlery/semver to v5.1.0 ([#811](https://github.com/Endava/BEEQ/issues/811)) ([801161c](https://github.com/Endava/BEEQ/commit/801161cceb099d272c006dd6d41b873137d9cbef))
+* **deps:** update dependency @jscutlery/semver to v5.1.1 ([#826](https://github.com/Endava/BEEQ/issues/826)) ([17c2bc6](https://github.com/Endava/BEEQ/commit/17c2bc64458407efbc85d98370b356db53cc737f))
+* **deps:** update dependency @types/react to v18.2.52 ([#812](https://github.com/Endava/BEEQ/issues/812)) ([42aa5ee](https://github.com/Endava/BEEQ/commit/42aa5ee8eee75783bcce3acf523ba836a184faba))
+* **deps:** update dependency @types/react to v18.2.53 ([#815](https://github.com/Endava/BEEQ/issues/815)) ([496c43b](https://github.com/Endava/BEEQ/commit/496c43b76d595287a4b1f7ded216bbd5fac23461))
+* **deps:** update dependency npm to v10.4.0 ([#813](https://github.com/Endava/BEEQ/issues/813)) ([9016058](https://github.com/Endava/BEEQ/commit/90160585abc7e62c4a003737284e83ffb2e3c27b))
+* **deps:** update dependency prettier to v3.2.5 ([#808](https://github.com/Endava/BEEQ/issues/808)) ([3abce55](https://github.com/Endava/BEEQ/commit/3abce55059a73c69b4fe0ef1d056ac10c7db91a6))
+* **deps:** update dependency puppeteer to v22 ([#824](https://github.com/Endava/BEEQ/issues/824)) ([46e0f6d](https://github.com/Endava/BEEQ/commit/46e0f6de88aeafa7ca72e5f90e74b0938a659cbb))
+* **deps:** update dependency vite to v5.1.1 ([#833](https://github.com/Endava/BEEQ/issues/833)) ([b43f495](https://github.com/Endava/BEEQ/commit/b43f4955d9b7bd52a2b5eed658251a287c498d58))
+* **deps:** update dependency vue to v3.4.18 ([#830](https://github.com/Endava/BEEQ/issues/830)) ([5fc87df](https://github.com/Endava/BEEQ/commit/5fc87dfcc361df391ae903af6177635a05799700))
+* **deps:** update NPM dependencies ([#807](https://github.com/Endava/BEEQ/issues/807)) ([38ae611](https://github.com/Endava/BEEQ/commit/38ae611a4e27cd9bc74c264aeed518fd4e4b1b20))
+* **deps:** update nx to v18 (major) ([#814](https://github.com/Endava/BEEQ/issues/814)) ([6b2c814](https://github.com/Endava/BEEQ/commit/6b2c814e8ed8322ef6907489251b3934d3d32ed5))
+* **deps:** update nx to v18.0.1 ([#809](https://github.com/Endava/BEEQ/issues/809)) ([9f2f4c9](https://github.com/Endava/BEEQ/commit/9f2f4c93e22099f41fc2e3b80620d23e6632a2ae))
+* **deps:** update nx to v18.0.2 ([#822](https://github.com/Endava/BEEQ/issues/822)) ([14b6eb4](https://github.com/Endava/BEEQ/commit/14b6eb47ad1e92c9c4e038f241c8174860b40ff9))
+* **deps:** update nx to v18.0.3 ([#825](https://github.com/Endava/BEEQ/issues/825)) ([5c3e8ff](https://github.com/Endava/BEEQ/commit/5c3e8ffa1ddc434d62b6beac0879a4a9d2cffb36))
+* **deps:** update nx to v18.0.4 ([#831](https://github.com/Endava/BEEQ/issues/831)) ([550a3d9](https://github.com/Endava/BEEQ/commit/550a3d921e8de2ccfe0701d7351def2431f35eb4))
+* **deps:** update storybook to v7.6.13 ([#823](https://github.com/Endava/BEEQ/issues/823)) ([ff68ec8](https://github.com/Endava/BEEQ/commit/ff68ec8b638a36a4ea73e1f3e4fad3816da0cfbe))
+* **deps:** update storybook to v7.6.14 ([#832](https://github.com/Endava/BEEQ/issues/832)) ([fb3321f](https://github.com/Endava/BEEQ/commit/fb3321f0ebf99980313b73979be1ee1126e320cd))
+* **deps:** update swc ([#816](https://github.com/Endava/BEEQ/issues/816)) ([444f3a5](https://github.com/Endava/BEEQ/commit/444f3a55b1ab62debf2c6e1e2d994aab5077585b))
+* **deps:** use `@chromatic-com/storybook` for visual tests ([#821](https://github.com/Endava/BEEQ/issues/821)) ([2688e11](https://github.com/Endava/BEEQ/commit/2688e11240aa44628e1326906dce84ae0679f45e))
+
 ## [0.12.0](https://github.com/Endava/BEEQ/compare/v0.11.0...v0.12.0) (2024-02-02)
 
 
