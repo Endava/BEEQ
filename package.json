@@ -150,7 +150,7 @@
     "ts-jest": "29.1.2",
     "ts-node": "10.9.2",
     "typescript": "5.2.2",
-    "vite": "5.1.1",
+    "vite": "5.1.2",
     "vite-plugin-turbosnap": "1.0.3",
     "vite-tsconfig-paths": "4.2.3",
     "vue": "3.4.19"
