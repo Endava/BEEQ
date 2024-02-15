@@ -12,6 +12,7 @@ export const DefaultLightTheme = {
   /* -------------------------------------------------------------------------- */
   /*                                 Data colors                                */
   /* -------------------------------------------------------------------------- */
+  // probably will be removed from here and added to the root file
   'bq-data--blue': 'var(--bq-data-09)',
   'bq-data--brand': 'var(--bq-brand)',
   'bq-data--corai': 'var(--bq-corai-600)', // not found in root
