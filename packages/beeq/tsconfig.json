@@ -4,13 +4,5 @@
     "declaration": true,
     "jsx": "react",
     "jsxFactory": "h"
-  },
-  "references": [
-    {
-      "path": "./tsconfig.lib.json"
-    },
-    {
-      "path": "./tsconfig.storybook.json"
-    }
-  ]
+  }
 }
