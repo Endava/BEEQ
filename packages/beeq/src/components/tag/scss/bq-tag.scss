@@ -61,11 +61,11 @@
 
 .bq-tag__gray {
   &.bq-tag__filled {
-    @apply bg-[color:--bq-stroke--secondary] text-[color:--bq-text--primary-alt];
+    @apply bg-[color:--bq-ui--tertiary] text-[color:--bq-text--primary-alt];
   }
 
   &.bq-tag__outline {
-    @apply bg-[color:--bq-stroke--primary-alt] text-[color:--bq-text--primary] [--bq-tag--border-color:--bq-stroke--tertiary];
+    @apply bg-[color:--bq-ui--primary] text-[color:--bq-text--primary] [--bq-tag--border-color:--bq-stroke--tertiary];
   }
 }
 

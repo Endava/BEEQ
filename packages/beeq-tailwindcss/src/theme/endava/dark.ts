@@ -45,7 +45,7 @@ export const EndavaDarkTheme = {
   'bq-stroke--primary-hover': 'var(--bq-neutral-950)',
   'bq-stroke--primary-active': 'var(--bq-neutral-700)',
   'bq-stroke--primary-disabled': 'var(--bq-neutral-800)',
-  'bq-stroke--primary-alt': 'var(--bq-neutral-1000)',
+  'bq-stroke--alt': 'var(--bq-neutral-1000)',
   /** Secondary */
   'bq-stroke--secondary': 'var(--bq-neutral-700)',
   'bq-stroke--secondary-hover': 'var(--bq-neutral-600)',

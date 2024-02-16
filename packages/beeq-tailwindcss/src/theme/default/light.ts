@@ -45,7 +45,7 @@ export const DefaultLightTheme = {
   'bq-stroke--primary-hover': 'var(--bq-neutral-100)',
   'bq-stroke--primary-active': 'var(--bq-neutral-300)',
   'bq-stroke--primary-disabled': 'var(--bq-neutral-100)',
-  'bq-stroke--primary-alt': 'var(--bq-neutral-50)',
+  'bq-stroke--alt': 'var(--bq-neutral-50)',
   /** Secondary */
   'bq-stroke--secondary': 'var(--bq-neutral-600)',
   'bq-stroke--secondary-hover': 'var(--bq-neutral-500)',
