@@ -123,7 +123,7 @@ export const DefaultDarkTheme = {
   'bq-ui--primary-hover': 'var(--bq-neutral-950)',
   'bq-ui--primary-active': 'var(--bq-neutral-800)',
   'bq-ui--primary-disabled': 'var(--bq-neutral-950)',
-  'bq-ui--primary-alt': 'var(--bq-neutral-950)',
+  'bq-ui--alt': 'var(--bq-neutral-950)',
   /** Secondary */
   'bq-ui--secondary': 'var(--bq-neutral-800)',
   'bq-ui--secondary-hover': 'var(--bq-neutral-700)',

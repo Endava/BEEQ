@@ -120,7 +120,7 @@ export const DECLARATIVE_COLORS = {
     'primary-hover': 'var(--bq-ui--primary-hover)',
     'primary-active': 'var(--bq-ui--primary-active)',
     'primary-disabled': 'var(--bq-ui--primary-disabled)',
-    'primary-alt': 'var(--bq-ui--primary-alt)',
+    alt: 'var(--bq-ui--alt)',
     secondary: 'var(--bq-ui--secondary)',
     'secondary-hover': 'var(--bq-ui--secondary-hover)',
     'secondary-active': 'var(--bq-ui--secondary-active)',

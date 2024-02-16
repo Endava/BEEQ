@@ -76,7 +76,7 @@
 
   ::slotted(bq-side-menu-item) {
     --bq-side-menu-item--bg-hover: theme('backgroundColor.ui.inverse-hover');
-    --bq-side-menu-item--bg-active: theme('backgroundColor.ui.primary-alt');
+    --bq-side-menu-item--bg-active: theme('backgroundColor.ui.alt');
 
     --bq-side-menu-item--text-default: theme('textColor.text.inverse');
     --bq-side-menu-item--text-hover: theme('textColor.text.inverse');

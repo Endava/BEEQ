@@ -123,7 +123,7 @@ export const DefaultLightTheme = {
   'bq-ui--primary-hover': 'var(--bq-neutral-100)',
   'bq-ui--primary-active': 'var(--bq-neutral-300)',
   'bq-ui--primary-disabled': 'var(--bq-neutral-50)',
-  'bq-ui--primary-alt': 'var(--bq-neutral-50)',
+  'bq-ui--alt': 'var(--bq-neutral-50)',
   /** Secondary */
   'bq-ui--secondary': 'var(--bq-neutral-200)',
   'bq-ui--secondary-hover': 'var(--bq-neutral-300)',
