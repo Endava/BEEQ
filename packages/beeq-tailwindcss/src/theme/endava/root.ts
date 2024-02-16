@@ -53,6 +53,6 @@ export const EndavaRootTheme = {
   'bq-data-08': 'var(--bq-red-600)',
   'bq-data-09': 'var(--bq-purple-600)',
   'bq-data-10': '#394b56',
-  'bq-data-11': 'var(bq-black)',
-  'bq-data-12': 'var(bq-white)',
+  'bq-data-11': 'var(--bq-black)',
+  'bq-data-12': 'var(--bq-white)',
 };

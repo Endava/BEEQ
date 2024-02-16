@@ -51,8 +51,8 @@ export const DefaultRootTheme = {
   'bq-data-08': 'var(--bq-red-600)',
   'bq-data-09': 'var(--bq-blue-600)',
   'bq-data-10': 'var(--bq-grey-600)',
-  'bq-data-11': 'var(bq-black)',
-  'bq-data-12': 'var(bq-white)',
+  'bq-data-11': 'var(--bq-black)',
+  'bq-data-12': 'var(--bq-white)',
   // Border Radius
   'bq-radius--none': '0', // 0px
   'bq-radius--xs2': '0.125rem', // 2px
