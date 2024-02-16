@@ -29,7 +29,7 @@ commands:
       - run:
           name: 📚 Publish to Chromatic
           command: |
-            npx chromatic --project-token=${CHROMATIC_PROJECT_TOKEN} --ci --debug
+            npx chromatic --project-token=${CHROMATIC_PROJECT_TOKEN} --ci --debug --no-file-hashing
 
 # ---------------------------------------------------------------------------- #
 #                         Jobs are collections of steps                        #
