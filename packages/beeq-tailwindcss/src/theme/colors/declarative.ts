@@ -50,6 +50,10 @@ export const DECLARATIVE_COLORS = {
     warning: 'var(--bq-icon--warning)',
     danger: 'var(--bq-icon--danger)',
   },
+  state: {
+    hover: 'var(--bq-state--hover)',
+    active: 'var(--bq-state--active)',
+  },
   stroke: {
     primary: 'var(--bq-stroke--primary)',
     'primary-hover': 'var(--bq-stroke--primary-hover)',

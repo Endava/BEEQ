@@ -168,4 +168,10 @@ export const DefaultLightTheme = {
   'bq-ui--info-active': 'var(--bq-blue-700)', // not found in root
   'bq-ui--info-disabled': 'var(--bq-blue-400)', // not found in root
   'bq-ui--info-alt': 'var(--bq-brand-light)',
+  /* -------------------------------------------------------------------------- */
+  /*                                   States:                                  */
+  /* -------------------------------------------------------------------------- */
+  // !Note: these tokens are only used as base to create the states colors
+  'bq-hover': '#bcbfc5',
+  'bq-active': '#444546',
 };

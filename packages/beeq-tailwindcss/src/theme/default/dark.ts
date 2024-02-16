@@ -168,4 +168,10 @@ export const DefaultDarkTheme = {
   'bq-ui--info-active': 'var(--bq-blue-800)', // not found in root
   'bq-ui--info-disabled': 'var(--bq-blue-900)', // not found in root
   'bq-ui--info-alt': 'var(--bq-brand-dark)',
+  /* -------------------------------------------------------------------------- */
+  /*                                   States:                                  */
+  /* -------------------------------------------------------------------------- */
+  // !Note: these tokens are only used as base to create the states colors
+  'bq-hover': '#444546',
+  'bq-active': '#1F2026',
 };
