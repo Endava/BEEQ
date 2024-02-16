@@ -10,25 +10,6 @@ export const DefaultLightTheme = {
   'bq-background--brand': 'var(--bq-brand)',
   'bq-background--overlay': 'var(--bq-neutral-900)', // with opacity: 60%
   /* -------------------------------------------------------------------------- */
-  /*                                 Data colors                                */
-  /* -------------------------------------------------------------------------- */
-  // probably will be removed from here and added to the root file
-  'bq-data--blue': 'var(--bq-data-09)',
-  'bq-data--brand': 'var(--bq-brand)',
-  'bq-data--corai': 'var(--bq-corai-600)', // not found in root
-  'bq-data--cyan': 'var(--bq-data-04)',
-  'bq-data--green': 'var(--bq-green-600)', // not found in root
-  'bq-data--grey': 'var(--bq-data-10)',
-  'bq-data--inverse': 'var(--bq-neutral-950)',
-  'bq-data--lime': 'var(--bq-lime-600)',
-  'bq-data--magenta': 'var(--bq-data-03)',
-  'bq-data--orange': 'var(--bq-data-06)',
-  'bq-data--purple': 'var(--bq-accent)',
-  'bq-data--red': 'var(--bq-danger)',
-  'bq-data--sky': 'var(--bq-sky-600)', // not found in root
-  'bq-data--teal': 'var(--bq-data-05)',
-  'bq-data--yellow': 'var(--bq-data-07)',
-  /* -------------------------------------------------------------------------- */
   /*                                Icons colors                                */
   /* -------------------------------------------------------------------------- */
   /** Primary */

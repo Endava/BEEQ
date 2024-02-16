@@ -10,25 +10,6 @@ export const EndavaLightTheme = {
   'bq-background--brand': 'var(--bq-brand)',
   'bq-background--overlay': 'var(--bq-neutral-900)', // with opacity: 60%
   /* -------------------------------------------------------------------------- */
-  /*                                 Data colors                                */
-  /* -------------------------------------------------------------------------- */
-  // probably will be removed from here and added to the root file
-  'bq-data--blue': 'var(--bq-blue-600)',
-  'bq-data--brand': 'var(--bq-endava-orange-600)',
-  'bq-data--corai': 'var(--bq-corai-600)',
-  'bq-data--cyan': 'var(--bq-cyan-600)',
-  'bq-data--green': 'var(--bq-green-600)',
-  'bq-data--grey': 'var(--bq-grey-600)',
-  'bq-data--inverse': 'var(--bq-grey-950)',
-  'bq-data--lime': 'var(--bq-lime-600)',
-  'bq-data--magenta': 'var(--bq-magenta-600)',
-  'bq-data--orange': 'var(--bq-orange-600)',
-  'bq-data--purple': 'var(--bq-purple-600)',
-  'bq-data--red': 'var(--bq-red-600)',
-  'bq-data--sky': 'var(--bq-sky-600)',
-  'bq-data--teal': 'var(--bq-teal-600)',
-  'bq-data--yellow': 'var(--bq-yellow-600)',
-  /* -------------------------------------------------------------------------- */
   /*                                Icons colors                                */
   /* -------------------------------------------------------------------------- */
   /** Primary */
