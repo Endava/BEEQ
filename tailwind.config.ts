@@ -6,6 +6,13 @@ import type { Config } from 'tailwindcss';
 export default {
   content: ['packages/beeq/src/**/*.{html,mdx,tsx,ts}'],
   presets: [beeqPreset],
+  variants: {
+    extend: {
+      backgroundColor: ['active', 'disabled'],
+      borderColor: ['active', 'disabled'],
+      textColor: ['active', 'disabled'],
+    },
+  },
   corePlugins: {
     preflight: false,
   },

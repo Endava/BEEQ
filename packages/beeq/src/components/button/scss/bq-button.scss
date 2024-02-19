@@ -31,11 +31,11 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-button--primary {
-  @apply bg-ui-brand text-text-primary-alt;
+  @apply bg-ui-brand text-text-alt;
   // Primary `HOVER` state
   @apply hover:enabled:bg-[color-mix(in_srgb,_var(--bq-ui--brand),_var(--bq-hover)_20%)];
   // Primary `ACTIVE` state
-  @apply active:enabled:bg-[color-mix(in_srgb,_var(--bq-ui--brand),_var(--bq-active)_30%)] active:enabled:hover:bg-[color-mix(in_srgb,_var(--bq-ui--brand),_var(--bq-active)_30%)];
+  @apply active:enabled:bg-[color-mix(in_srgb,_var(--bq-ui--brand),_var(--bq-active)_20%)] active:enabled:hover:bg-[color-mix(in_srgb,_var(--bq-ui--brand),_var(--bq-active)_20%)];
 }
 
 .bq-button--primary.ghost {
@@ -43,11 +43,11 @@
   // Primary `HOVER` state
   @apply hover:enabled:bg-[color-mix(in_srgb,_var(--bq-ui--primary),_var(--bq-hover)_20%)];
   // Primary `ACTIVE` state
-  @apply active:enabled:bg-[color-mix(in_srgb,_var(--bq-ui--primary),_var(--bq-active)_30%)] active:enabled:hover:bg-[color-mix(in_srgb,_var(--bq-ui--primary),_var(--bq-active)_30%)];
+  @apply active:enabled:bg-[color-mix(in_srgb,_var(--bq-ui--primary),_var(--bq-active)_20%)] active:enabled:hover:bg-[color-mix(in_srgb,_var(--bq-ui--primary),_var(--bq-active)_30%)];
 }
 
 .bq-button--primary.danger {
-  @apply bg-ui-danger text-text-primary-alt;
+  @apply bg-ui-danger text-text-alt;
   // Primary `HOVER` state
   @apply hover:enabled:bg-[color-mix(in_srgb,_var(--bq-ui--danger),_var(--bq-hover)_20%)];
   // Primary `ACTIVE` state
@@ -59,7 +59,7 @@
   // Primary `HOVER` state
   @apply hover:enabled:bg-[color-mix(in_srgb,_var(--bq-ui--secondary),_var(--bq-hover)_20%)];
   // Primary `ACTIVE` state
-  @apply active:enabled:bg-[color-mix(in_srgb,_var(--bq-ui--secondary),_var(--bq-active)_30%)] active:enabled:hover:bg-[color-mix(in_srgb,_var(--bq-ui--secondary),_var(--bq-active)_30%)];
+  @apply active:enabled:bg-[color-mix(in_srgb,_var(--bq-ui--secondary),_var(--bq-active)_20%)] active:enabled:hover:bg-[color-mix(in_srgb,_var(--bq-ui--secondary),_var(--bq-active)_20%)];
 }
 
 .bq-button--link {
@@ -67,7 +67,7 @@
   // Primary `HOVER` state
   @apply [&:not(.disabled)]:hover:bg-[color-mix(in_srgb,_var(--bq-ui--secondary),_var(--bq-hover)_20%)];
   // Primary `ACTIVE` state
-  @apply [&:not(.disabled)]:active:bg-[color-mix(in_srgb,_var(--bq-ui--secondary),_var(--bq-active)_30%)] [&:not(.disabled)]:active:hover:bg-[color-mix(in_srgb,_var(--bq-ui--secondary),_var(--bq-active)_30%)];
+  @apply [&:not(.disabled)]:active:bg-[color-mix(in_srgb,_var(--bq-ui--secondary),_var(--bq-active)_20%)] [&:not(.disabled)]:active:hover:bg-[color-mix(in_srgb,_var(--bq-ui--secondary),_var(--bq-active)_20%)];
   // HTML `<a>` elements does not have a `disabled` state so we need to handle it manually
   &.disabled {
     @apply cursor-not-allowed opacity-60;
@@ -79,7 +79,7 @@
   // Primary `HOVER` state
   @apply hover:enabled:bg-[color-mix(in_srgb,_var(--bq-ui--secondary),_var(--bq-hover)_20%)];
   // Primary `ACTIVE` state
-  @apply active:enabled:bg-[color-mix(in_srgb,_var(--bq-ui--secondary),_var(--bq-active)_30%)] active:enabled:hover:bg-[color-mix(in_srgb,_var(--bq-ui--secondary),_var(--bq-active)_30%)];
+  @apply active:enabled:bg-[color-mix(in_srgb,_var(--bq-ui--secondary),_var(--bq-active)_20%)] active:enabled:hover:bg-[color-mix(in_srgb,_var(--bq-ui--secondary),_var(--bq-active)_20%)];
 }
 
 /* -------------------------------------------------------------------------- */
