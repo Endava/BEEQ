@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { default as flattenColorPalette } from 'tailwindcss/lib/util/flattenColorPalette';
 /* eslint-disable import/no-unresolved */
 import plugin from 'tailwindcss/plugin';
 import { Config } from 'tailwindcss/types/config';
@@ -18,6 +21,10 @@ import {
   reset,
   TYPOGRAPHY_DEFAULT,
 } from './theme';
+
+const blendColor = (color: string, base: string, percentage: number) => ({
+  'background-color': `color-mix(in srgb, ${color}, ${base} ${percentage}%)`,
+});
 
 export default {
   theme: {
@@ -102,7 +109,7 @@ export default {
     },
   },
   plugins: [
-    plugin(function ({ addBase, addComponents, theme }) {
+    plugin(function ({ addBase, addComponents, matchUtilities, theme }) {
       addBase({
         // CSS variables
         ':root, ::backdrop': { ...CSS_COLORS },
@@ -127,6 +134,26 @@ export default {
           outlineOffset: 'var(--bq-ring-offset-width, 1px)',
         },
       });
+      matchUtilities(
+        {
+          // Background `hover` state blend color
+          'bg-hover': (value) => blendColor(value, 'var(--bq-hover)', 20),
+          // Background `active` state blend color
+          'bg-active': (value) => blendColor(value, 'var(--bq-active)', 20),
+          // Border `hover` state blend color
+          'border-hover': (value) => blendColor(value, 'var(--bq-hover)', 20),
+          // Border `active` state blend color
+          'border-active': (value) => blendColor(value, 'var(--bq-active)', 20),
+          // Text `hover` state blend color
+          'text-hover': (value) => blendColor(value, 'var(--bq-hover)', 20),
+          // Text `active` state blend color
+          'text-active': (value) => blendColor(value, 'var(--bq-active)', 20),
+        },
+        {
+          values: flattenColorPalette(theme('colors')),
+          type: 'color',
+        },
+      );
     }),
     ThemeSwapper({
       themes: [
