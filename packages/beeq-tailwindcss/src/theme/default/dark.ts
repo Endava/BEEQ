@@ -17,8 +17,8 @@ export const DefaultDarkTheme = {
   'bq-icon--primary-hover': 'var(--bq-neutral-200)',
   'bq-icon--primary-active': 'var(--bq-neutral-50)',
   'bq-icon--primary-disabled': 'var(--bq-neutral-500)',
-  'bq-icon--primary-alt': 'var(--bq-white)',
-  'bq-icon--primary-alt-disabled': 'var(--bq-neutral-200)',
+  'bq-icon--alt': 'var(--bq-white)',
+  'bq-icon--alt-disabled': 'var(--bq-neutral-200)',
   /** Secondary */
   'bq-icon--secondary': 'var(--bq-neutral-400)',
   'bq-icon--secondary-hover': 'var(--bq-neutral-500)',

@@ -224,7 +224,7 @@ export class BqSwitch {
               <bq-icon
                 class="bq-switch--control__icon on"
                 name="check"
-                color={!this.disabled ? 'icon--primary-alt' : 'icon--primary-alt-disabled'}
+                color={!this.disabled ? 'icon--alt' : 'icon--alt-disabled'}
                 role="img"
                 title="On"
                 part="icon-on"
