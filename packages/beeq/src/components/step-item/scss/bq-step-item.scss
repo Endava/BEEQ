@@ -53,7 +53,7 @@
   // Status
 
   &.current {
-    @apply bg-[var(--bq-step-item--prefix-color-current)] text-text-primary-alt;
+    @apply bg-[var(--bq-step-item--prefix-color-current)] text-[--bq-text--alt];
   }
 
   &.completed {

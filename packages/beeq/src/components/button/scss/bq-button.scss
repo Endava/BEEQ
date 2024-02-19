@@ -29,11 +29,11 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-button--primary {
-  @apply bg-ui-brand text-text-primary-alt;
+  @apply bg-ui-brand text-[--bq-text--alt];
   // Primary `HOVER` and `ACTIVE` state
   @apply active:bg-ui-brand-active hover:enabled:bg-ui-brand-hover;
   // Primary `DISABLED` state
-  @apply disabled:border-stroke-brand-disabled disabled:bg-ui-brand-disabled disabled:text-text-primary-alt-disabled;
+  @apply disabled:border-stroke-brand-disabled disabled:bg-ui-brand-disabled disabled:text-[--bq-text--alt-disabled];
 }
 
 .bq-button--primary.ghost {
@@ -47,11 +47,11 @@
 }
 
 .bq-button--primary.danger {
-  @apply bg-ui-danger text-text-primary-alt;
+  @apply bg-ui-danger text-[--bq-text--alt];
   // Primary danger `HOVER` and `ACTIVE` state
   @apply active:bg-ui-danger-active hover:enabled:bg-ui-danger-hover;
   // Primary danger `DISABLED` state
-  @apply disabled:border-stroke-danger-disabled disabled:bg-ui-danger-disabled disabled:text-text-primary-alt-disabled;
+  @apply disabled:border-stroke-danger-disabled disabled:bg-ui-danger-disabled disabled:text-[--bq-text--alt-disabled];
 }
 
 .bq-button--secondary {

@@ -73,7 +73,7 @@
 
 .docblock-argstable .docblock-argstable-body > tr > td[colspan='1'],
 .docblock-argstable .docblock-argstable-body > tr > td[colspan='2'] {
-  background-color: var(--bq-ui--primary-alt) !important;
+  background-color: var(--bq-ui--alt) !important;
 }
 
 .docs-story > div:first-child {

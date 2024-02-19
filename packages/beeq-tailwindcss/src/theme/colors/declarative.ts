@@ -33,7 +33,6 @@ export const DECLARATIVE_COLORS = {
     'primary-active': 'var(--bq-icon--primary-active)',
     'primary-disabled': 'var(--bq-icon--primary-disabled)',
     alt: 'var(--bq-icon--alt)',
-    'alt-disabled': 'var(--bq-icon--alt-disabled)',
     secondary: 'var(--bq-icon--secondary)',
     'secondary-hover': 'var(--bq-icon--secondary-hover)',
     'secondary-active': 'var(--bq-icon--secondary-active)',
@@ -93,8 +92,8 @@ export const DECLARATIVE_COLORS = {
     'primary-hover': 'var(--bq-text--primary-hover)',
     'primary-active': 'var(--bq-text--primary-active)',
     'primary-disabled': 'var(--bq-text--primary-disabled)',
-    'primary-alt': 'var(--bq-text--primary-alt)',
-    'primary-alt-disabled': 'var(--bq-text--primary-alt-disabled)',
+    alt: 'var(--bq-text--alt)',
+    'alt-disabled': 'var(--bq-text--alt-disabled)',
     /** Secondary */
     secondary: 'var(--bq-text--secondary)',
     'secondary-hover': 'var(--bq-text--secondary-hover)',

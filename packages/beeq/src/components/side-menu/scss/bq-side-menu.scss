@@ -57,8 +57,8 @@
   ::slotted(bq-side-menu-item) {
     --bq-side-menu-item--bg-hover: theme('backgroundColor.ui.brand-hover');
 
-    --bq-side-menu-item--text-default: theme('textColor.text.primary-alt');
-    --bq-side-menu-item--text-hover: theme('textColor.text.primary-alt');
+    --bq-side-menu-item--text-default: theme('textColor.text.alt');
+    --bq-side-menu-item--text-hover: theme('textColor.text.alt');
     --bq-side-menu-item--text-disabled: theme('textColor.text.secondary-disabled');
   }
 

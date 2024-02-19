@@ -18,7 +18,6 @@ export const EndavaLightTheme = {
   'bq-icon--primary-active': 'var(--bq-neutral-900)',
   'bq-icon--primary-disabled': 'var(--bq-neutral-500)',
   'bq-icon--alt': 'var(--bq-white)',
-  'bq-icon--alt-disabled': 'var(--bq-neutral-200)',
   /** Secondary */
   'bq-icon--secondary': 'var(--bq-neutral-600)',
   'bq-icon--secondary-hover': 'var(--bq-neutral-500)',
@@ -95,8 +94,8 @@ export const EndavaLightTheme = {
   'bq-text--primary-hover': 'var(--bq-neutral-700)',
   'bq-text--primary-active': 'var(--bq-neutral-900)',
   'bq-text--primary-disabled': 'var(--bq-neutral-500)',
-  'bq-text--primary-alt': 'var(--bq-white)',
-  'bq-text--primary-alt-disabled': 'var(--bq-neutral-200)',
+  'bq-text--alt': 'var(--bq-white)',
+  'bq-text--alt-disabled': 'var(--bq-neutral-200)',
   /** Secondary */
   'bq-text--secondary': 'var(--bq-neutral-600)',
   'bq-text--secondary-hover': 'var(--bq-neutral-500)',

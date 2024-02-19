@@ -198,9 +198,10 @@ export class BqTag {
       '--bq-tag--icon-prefix-size': `${iconSize(this.size)}px`,
       ...(this.border && { '--bq-tag--border-radius': `var(--bq-radius--${this.border})` }),
       ...(this.color && { '--bq-tag--background-color': getColorCSSVariable(this.color) ?? this.color }),
-      ...(this.hasCustomColor && { '--bq-text--primary': `var(--bq-text--primary-alt)` }),
+      ...(this.hasCustomColor && { '--bq-text--primary': `var(--bq-text--alt)` }),
     };
 
+    console.log('this', this.color);
     return (
       <Host style={style} aria-hidden={this.isHidden ? 'true' : 'false'} hidden={this.isHidden ? 'true' : 'false'}>
         <button
