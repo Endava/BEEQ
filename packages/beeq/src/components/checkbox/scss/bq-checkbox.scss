@@ -15,20 +15,20 @@
   &:not(.is-checked),
   &:not(.is-indeterminate) {
     &:not(.is-disabled):hover .bq-checkbox__checkbox {
-      @apply border-icon-brand-hover;
+      @apply border-hover-icon-brand;
     }
   }
 
   // Display background on hover (if enabled)
   &.has-background:not(.is-disabled):hover {
-    @apply bg-ui-primary-hover;
+    @apply bg-hover-ui-primary;
   }
 
   // Checked/Indeterminate hover state
   &.is-checked,
   &.is-indeterminate {
     &:not(.is-disabled):hover .bq-checkbox__checkbox {
-      @apply border-icon-brand-hover bg-ui-brand-hover;
+      @apply bg-hover-ui-brand border-hover-icon-brand;
     }
   }
 }
@@ -53,13 +53,13 @@
   &:checked:disabled,
   &:indeterminate:disabled {
     ~ .bq-checkbox__checkbox {
-      @apply border-icon-brand-disabled bg-ui-brand-disabled;
+      @apply opacity-60;
     }
   }
 
   &:disabled {
     ~ .bq-checkbox__checkbox {
-      @apply border-icon-primary-disabled;
+      @apply opacity-60;
     }
   }
 }
