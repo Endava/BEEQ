@@ -8,6 +8,7 @@ import { Config } from 'tailwindcss/types/config';
 // @ts-ignore
 import ThemeSwapper from 'tailwindcss-theme-swapper';
 
+import { blendColor } from './helpers';
 import {
   CSS_COLORS,
   DECLARATIVE_COLORS,
@@ -21,10 +22,6 @@ import {
   reset,
   TYPOGRAPHY_DEFAULT,
 } from './theme';
-
-const blendColor = (color: string, base: string, percentage: number) => ({
-  'background-color': `color-mix(in srgb, ${color}, ${base} ${percentage}%)`,
-});
 
 export default {
   theme: {
@@ -137,17 +134,17 @@ export default {
       matchUtilities(
         {
           // Background `hover` state blend color
-          'bg-hover': (value) => blendColor(value, 'var(--bq-hover)', 20),
+          'bg-hover': (value) => blendColor({ color: value, base: 'var(--bq-hover)' }),
           // Background `active` state blend color
-          'bg-active': (value) => blendColor(value, 'var(--bq-active)', 20),
+          'bg-active': (value) => blendColor({ color: value, base: 'var(--bq-active)' }),
           // Border `hover` state blend color
-          'border-hover': (value) => blendColor(value, 'var(--bq-hover)', 20),
+          'border-hover': (value) => blendColor({ color: value, base: 'var(--bq-hover)', property: 'border-color' }),
           // Border `active` state blend color
-          'border-active': (value) => blendColor(value, 'var(--bq-active)', 20),
+          'border-active': (value) => blendColor({ color: value, base: 'var(--bq-active)', property: 'border-color' }),
           // Text `hover` state blend color
-          'text-hover': (value) => blendColor(value, 'var(--bq-hover)', 20),
+          'text-hover': (value) => blendColor({ color: value, base: 'var(--bq-hover)', property: 'color' }),
           // Text `active` state blend color
-          'text-active': (value) => blendColor(value, 'var(--bq-active)', 20),
+          'text-active': (value) => blendColor({ color: value, base: 'var(--bq-active)', property: 'color' }),
         },
         {
           values: flattenColorPalette(theme('colors')),
