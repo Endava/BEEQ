@@ -72,7 +72,7 @@
   &:not(.disabled):focus-within {
     --bq-ring-color-focus: theme('colors.stroke.warning');
 
-    @apply border-active-stroke-warning-active;
+    @apply border-active-stroke-warning;
   }
 }
 
