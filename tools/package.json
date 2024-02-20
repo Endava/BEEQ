@@ -1,7 +1,7 @@
 {
   "name": "@bee-q/tools",
   "private": true,
-  "version": "0.13.0",
+  "version": "1.0.0",
   "type": "commonjs",
   "main": "./src/index.js",
   "typings": "./src/index.d.ts",
