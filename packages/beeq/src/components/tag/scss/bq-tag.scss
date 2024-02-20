@@ -44,7 +44,7 @@
   // Active/Selected
   @apply [&.active]:text-[--bq-text--alt] [&.active]:[--bq-tag--background-color:--bq-ui--brand];
   // Disabled
-  @apply disabled:cursor-not-allowed disabled:border-none disabled:bg-ui-secondary-disabled disabled:text-text-primary-disabled;
+  @apply disabled:cursor-not-allowed disabled:border-none disabled:opacity-60;
 }
 
 /* ------------------------------ Color styles ------------------------------ */
