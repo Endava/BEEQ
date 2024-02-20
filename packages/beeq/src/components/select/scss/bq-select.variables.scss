@@ -6,7 +6,6 @@
   /**
    * @prop --bq-select--background-color - Select background color
    * @prop --bq-select--border-color - Select border color
-   * @prop --bq-select--border-color-hover - Select border color on hover
    * @prop --bq-select--border-color-focus - Select border color on focus
    * @prop --bq-select--border-color-disabled - Select border color when disabled
    * @prop --bq-select--border-radius - Select border radius
@@ -30,9 +29,7 @@
   --bq-select--background-color: theme('colors.ui.primary');
 
   --bq-select--border-color: theme('colors.stroke.tertiary');
-  --bq-select--border-color-hover: theme('colors.stroke.brand-hover');
   --bq-select--border-color-focus: theme('colors.stroke.brand');
-  --bq-select--border-color-disabled: theme('colors.stroke.tertiary-disabled');
   --bq-select--border-radius: theme('borderRadius.s');
   --bq-select--border-width: 1px;
   --bq-select--border-style: solid;
@@ -55,5 +52,5 @@
 
   --bq-select--text-color: theme('colors.text.primary');
   --bq-select--text-size: theme('fontSize.m');
-  --bq-select--text-placeholder-color: theme('colors.text.secondary-disabled');
+  --bq-select--text-placeholder-color: theme('colors.text.secondary');
 }

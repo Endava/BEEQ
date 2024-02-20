@@ -224,7 +224,7 @@ export class BqSwitch {
               <bq-icon
                 class="bq-switch--control__icon on"
                 name="check"
-                color={!this.disabled ? 'icon--primary-alt' : 'icon--primary-alt-disabled'}
+                color="icon--alt"
                 role="img"
                 title="On"
                 part="icon-on"
@@ -236,7 +236,7 @@ export class BqSwitch {
               <bq-icon
                 class="bq-switch--control__icon off"
                 name="x"
-                color={!this.disabled ? 'icon--inverse' : 'icon--inverse-disabled'}
+                color="icon--inverse"
                 role="img"
                 title="Off"
                 part="icon-off"

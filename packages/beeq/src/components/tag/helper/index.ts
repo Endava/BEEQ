@@ -39,23 +39,23 @@ export const textColor = (color: TTagColor): Partial<{ [K in TTagVariant]: strin
   const COLORS = {
     [typeError]: {
       [variantOutline]: 'text--danger',
-      [variantFilled]: 'text--primary-alt',
+      [variantFilled]: 'text--alt',
     },
     [typeGray]: {
       [variantOutline]: 'text--primary',
-      [variantFilled]: 'text--primary-alt',
+      [variantFilled]: 'text--alt',
     },
     [typeInfo]: {
       [variantOutline]: 'text--brand',
-      [variantFilled]: 'text--primary-alt',
+      [variantFilled]: 'text--alt',
     },
     [typeSuccess]: {
       [variantOutline]: 'text--success',
-      [variantFilled]: 'text--primary-alt',
+      [variantFilled]: 'text--alt',
     },
     [typeWarning]: {
       [variantOutline]: 'text--warning',
-      [variantFilled]: 'text--primary-alt',
+      [variantFilled]: 'text--alt',
     },
   };
 

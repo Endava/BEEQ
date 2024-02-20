@@ -130,7 +130,7 @@ export const MiniCard: Story = {
     content: html`
       <div class="flex w-full">
         <div class="flex p-l bg-bg-brand rounded-tl-[--bq-card--borderRadius] rounded-bl-[--bq-card--borderRadius]">
-          <bq-icon color="text--primary-alt" size="24" name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
+          <bq-icon color="text--alt" size="24" name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
         </div>
         <div class="flex items-center p-[--bq-card--paddingMinimal] justify-between w-full">
           <div class="flex flex-col pl-2">

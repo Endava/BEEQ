@@ -10,7 +10,7 @@
 
 .bq-accordion {
   &.disabled {
-    @apply pointer-events-none cursor-not-allowed;
+    @apply pointer-events-none cursor-not-allowed opacity-60;
   }
 
   &.small .bq-accordion__header {
@@ -40,7 +40,7 @@
 
   &.filled {
     .bq-accordion__header {
-      @apply bg-[--bq-accordion--filled-collapsed-background] hover:bg-[--bq-accordion--filled-collapsed-hover];
+      @apply bg-[--bq-accordion--filled-collapsed-background] hover:bg-hover-ui-secondary;
     }
 
     .bq-accordion__header--text {
@@ -54,25 +54,17 @@
     }
 
     &[open] .bq-accordion__header {
-      @apply bg-[--bq-accordion--filled-expanded-background] hover:bg-[--bq-accordion--filled-collapsed-hover];
+      @apply bg-[--bq-accordion--filled-expanded-background] hover:bg-hover-ui-secondary;
     }
 
     &[open] .bq-accordion__header--text {
       @apply text-[--bq-accordion--filled-expanded-text-color];
     }
-
-    &.disabled .bq-accordion__header--text {
-      @apply text-[--bq-accordion--filled-collapsed-disabled-text-color];
-    }
-
-    &[open].disabled .bq-accordion__header--text {
-      @apply text-[--bq-accordion--filled-expanded-disabled-text-color];
-    }
   }
 
   &.ghost {
     .bq-accordion__header {
-      @apply bg-[--bq-accordion--ghost-collapsed-background] hover:bg-[--bq-accordion--ghost-collapsed-hover];
+      @apply bg-[--bq-accordion--ghost-collapsed-background] hover:bg-hover-ui-secondary;
     }
 
     .bq-accordion__header--text {
@@ -86,19 +78,11 @@
     }
 
     &[open] .bq-accordion__header {
-      @apply bg-[--bq-accordion--ghost-expanded-background] hover:bg-[--bq-accordion--ghost-expanded-hover];
+      @apply bg-[--bq-accordion--ghost-expanded-background] hover:bg-hover-ui-secondary;
     }
 
     &[open] .bq-accordion__header--text {
       @apply text-[--bq-accordion--ghost-expanded-text-color];
-    }
-
-    &.disabled .bq-accordion__header--text {
-      @apply text-[--bq-accordion--ghost-collapsed-disabled-text-color];
-    }
-
-    &[open].disabled .bq-accordion__header--text {
-      @apply text-[--bq-accordion--ghost-expanded-disabled-text-color];
     }
   }
 

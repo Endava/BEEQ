@@ -46,7 +46,7 @@
   // Text
   @apply text-[length:--bq-input--text-size] text-[color:--bq-input--text-color] placeholder:text-[color:--bq-input--text-placeholder-color];
   // Hover
-  @apply [&:not(.disabled):not(:focus-within)]:hover:border-[color:--bq-input--border-color-hover];
+  @apply [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-brand;
 
   border-style: var(--bq-input--border-style);
 
@@ -69,38 +69,38 @@
 }
 
 .bq-input--control.disabled {
-  @apply cursor-not-allowed border-[color:--bq-stroke--tertiary-disabled] bg-ui-secondary-disabled;
+  @apply cursor-not-allowed opacity-60;
 }
 
 /* ------------------------------- Validation ------------------------------- */
 
 .bq-input--control.validation-error {
-  @apply border-stroke-danger [&:not(.disabled):not(:focus-within)]:hover:border-stroke-danger-hover;
+  @apply border-stroke-danger [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-danger;
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme('colors.stroke.danger-active');
+    --bq-ring-color-focus: theme('colors.stroke.danger');
 
-    @apply border-stroke-danger-active;
+    @apply border-active-stroke-danger;
   }
 }
 
 .bq-input--control.validation-success {
-  @apply border-stroke-success [&:not(.disabled):not(:focus-within)]:hover:border-stroke-success-hover;
+  @apply border-stroke-success [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-success;
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme('colors.stroke.success-active');
+    --bq-ring-color-focus: theme('colors.stroke.success');
 
-    @apply border-stroke-success-active;
+    @apply border-active-stroke-success;
   }
 }
 
 .bq-input--control.validation-warning {
-  @apply border-stroke-warning [&:not(.disabled):not(:focus-within)]:hover:border-stroke-warning-hover;
+  @apply border-stroke-warning [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-warning;
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme('colors.stroke.warning-active');
+    --bq-ring-color-focus: theme('colors.stroke.warning');
 
-    @apply border-stroke-warning-active;
+    @apply border-active-stroke-warning;
   }
 }
 

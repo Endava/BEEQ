@@ -108,7 +108,7 @@ export class BqStepItem {
         class={{
           'bq-step-item flex gap-s': true,
           [`bq-step-item--${this.status}`]: true,
-          'pointer-events-none': this.isDisabled,
+          'pointer-events-none opacity-60': this.isDisabled,
         }}
         part="base"
       >
@@ -120,7 +120,7 @@ export class BqStepItem {
           <div
             class={{
               'bq-step-item__content--title pr-xs3 text-m leading-regular text-text-primary': true,
-              'pointer-events-none text-text-secondary-disabled': this.isDisabled,
+              'pointer-events-none': this.isDisabled,
               'text-text-brand': this.isCurrent,
             }}
             part="title"
@@ -130,8 +130,8 @@ export class BqStepItem {
           {/* DESCRIPTION */}
           <div
             class={{
-              'bq-step-item__content--description text-s leading-regular text-text-primary-disabled': true,
-              'text-text-secondary-disabled': this.isDisabled,
+              'bq-step-item__content--description text-s leading-regular opacity-60': true,
+              'opacity-60': this.isDisabled,
             }}
             part="description"
           >

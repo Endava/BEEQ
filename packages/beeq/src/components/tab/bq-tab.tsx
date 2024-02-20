@@ -170,8 +170,8 @@ export class BqTab {
         ref={(el) => (this.buttonElement = el)}
         class={{
           [`bq-tab bq-tab--${this.size}`]: true,
-          'text-text-brand disabled:text-text-brand-disabled': this.active,
-          'text-text-primary disabled:text-text-primary-disabled': !this.active,
+          'text-text-brand': this.active,
+          'text-text-primary': !this.active,
         }}
         id={this.tabId}
         onBlur={this.handleOnBlur}

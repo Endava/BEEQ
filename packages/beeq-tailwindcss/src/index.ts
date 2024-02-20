@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { default as flattenColorPalette } from 'tailwindcss/lib/util/flattenColorPalette';
 /* eslint-disable import/no-unresolved */
 import plugin from 'tailwindcss/plugin';
 import { Config } from 'tailwindcss/types/config';
@@ -5,6 +8,7 @@ import { Config } from 'tailwindcss/types/config';
 // @ts-ignore
 import ThemeSwapper from 'tailwindcss-theme-swapper';
 
+import { blendColor } from './helpers';
 import {
   CSS_COLORS,
   DECLARATIVE_COLORS,
@@ -102,7 +106,7 @@ export default {
     },
   },
   plugins: [
-    plugin(function ({ addBase, addComponents, theme }) {
+    plugin(function ({ addBase, addComponents, matchUtilities, theme }) {
       addBase({
         // CSS variables
         ':root, ::backdrop': { ...CSS_COLORS },
@@ -127,6 +131,26 @@ export default {
           outlineOffset: 'var(--bq-ring-offset-width, 1px)',
         },
       });
+      matchUtilities(
+        {
+          // Background `hover` state blend color
+          'bg-hover': (value) => blendColor({ color: value, base: 'var(--bq-hover)' }),
+          // Background `active` state blend color
+          'bg-active': (value) => blendColor({ color: value, base: 'var(--bq-active)' }),
+          // Border `hover` state blend color
+          'border-hover': (value) => blendColor({ color: value, base: 'var(--bq-hover)', property: 'border-color' }),
+          // Border `active` state blend color
+          'border-active': (value) => blendColor({ color: value, base: 'var(--bq-active)', property: 'border-color' }),
+          // Text `hover` state blend color
+          'text-hover': (value) => blendColor({ color: value, base: 'var(--bq-hover)', property: 'color' }),
+          // Text `active` state blend color
+          'text-active': (value) => blendColor({ color: value, base: 'var(--bq-active)', property: 'color' }),
+        },
+        {
+          values: flattenColorPalette(theme('colors')),
+          type: 'color',
+        },
+      );
     }),
     ThemeSwapper({
       themes: [

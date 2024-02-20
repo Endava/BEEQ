@@ -25,22 +25,16 @@
    * @prop --bq-accordion--expanded-border-width: Accordion expanded border width
    *
    * @prop --bq-accordion--filled-collapsed-background: Accordion filled collapsed header background
-   * @prop --bq-accordion--filled-collapsed-hover: Accordion filled collapsed header color on hover 
    * @prop --bq-accordion--filled-collapsed-text-color: Accordion filled collapsed header text color
-   * @prop --bq-accordion--filled-collapsed-disabled-text-color: Accordion filled collapsed header disabled text color
    * @prop --bq-accordion--filled-expanded-background: Accordion filled expanded header background
    * @prop --bq-accordion--filled-expanded-collapsed-hover: Accordion filled expanded header color on hover
    * @prop --bq-accordion--filled-expanded-text-color: Accordion filled expanded header text color
-   * @prop --bq-accordion--filled-expanded-disabled-text-color: Accordion filled expanded header disabled text color
    *
    * @prop --bq-accordion--ghost-collapsed-background: Accordion ghost collapsed header background
-   * @prop --bq-accordion--ghost-collapsed-hover: Accordion ghost collapsed header color on hover 
    * @prop --bq-accordion--ghost-collapsed-text-color: Accordion ghost collapsed header text color
-   * @prop --bq-accordion--ghost-collapsed-disabled-text-color: Accordion ghost collapsed header disabled text color
    * @prop --bq-accordion--ghost-expanded-background: Accordion ghost expanded header background
    * @prop --bq-accordion--ghost-expanded-collapsed-hover: Accordion ghost expanded header color on hover
    * @prop --bq-accordion--ghost-expanded-text-color: Accordion ghost expanded header text color
-   * @prop --bq-accordion--ghost-expanded-disabled-text-color: Accordion ghost expanded header disabled text color
    *
    * @prop --bq-accordion--panel-filled-border-color: Accordion filled panel border color
    * @prop --bq-accordion--panel-filled-border-style: Accordion filled panel border style
@@ -82,23 +76,15 @@
   --bq-accordion--expanded-border-style: none;
   --bq-accordion--expanded-border-width: unset;
 
-  --bq-accordion--filled-collapsed-background: theme('colors.ui.primary-alt');
-  --bq-accordion--filled-collapsed-hover: theme('colors.ui.secondary-hover');
+  --bq-accordion--filled-collapsed-background: theme('colors.ui.secondary');
   --bq-accordion--filled-collapsed-text-color: theme('colors.text.primary');
-  --bq-accordion--filled-collapsed-disabled-text-color: theme('colors.text.primary-disabled');
   --bq-accordion--filled-expanded-background: theme('colors.ui.brand-alt');
-  --bq-accordion--filled-expanded-collapsed-hover: theme('colors.ui.secondary-hover');
-  --bq-accordion--filled-expanded-text-color: theme('colors.text.primary-active');
-  --bq-accordion--filled-expanded-disabled-text-color: theme('colors.text.primary-disabled');
+  --bq-accordion--filled-expanded-text-color: theme('colors.text.primary');
 
   --bq-accordion--ghost-collapsed-background: theme('colors.transparent');
-  --bq-accordion--ghost-collapsed-hover: theme('colors.ui.secondary');
   --bq-accordion--ghost-collapsed-text-color: theme('colors.text.primary');
-  --bq-accordion--ghost-collapsed-disabled-text-color: theme('colors.text.primary-disabled');
   --bq-accordion--ghost-expanded-background: theme('colors.transparent');
-  --bq-accordion--ghost-expanded-hover: theme('colors.ui.secondary');
   --bq-accordion--ghost-expanded-text-color: theme('colors.text.brand');
-  --bq-accordion--ghost-expanded-disabled-text-color: theme('colors.text.brand-disabled');
 
   --bq-accordion--panel-filled-border-color: theme('colors.stroke.primary');
   --bq-accordion--panel-filled-border-style: solid;

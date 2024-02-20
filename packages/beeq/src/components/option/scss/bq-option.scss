@@ -18,11 +18,11 @@
   // Focus
   @apply [&:not(.disabled)]:focus-visible:focus;
   // Hover
-  @apply [&:not(.disabled)]:hover:bg-ui-secondary-hover;
+  @apply [&:not(.disabled)]:hover:bg-hover-ui-secondary;
   // Active
   @apply [&.active:not(.disabled)]:bg-ui-brand-alt [&.active:not(.disabled)]:text-text-brand;
   // Disabled
-  @apply [&.disabled]:cursor-not-allowed [&.disabled]:text-text-primary-disabled;
+  @apply [&.disabled]:cursor-not-allowed [&.disabled]:opacity-60;
 
   border-style: var(--bq-option--border-style);
 }

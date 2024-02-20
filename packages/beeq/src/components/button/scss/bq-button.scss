@@ -10,7 +10,9 @@
     @apply box-border flex cursor-[inherit] items-center justify-center font-medium leading-regular;
     @apply rounded-[--bq-button--border-radius] border-[length:--bq-button--border-width] border-[color:--bq-button--border-color];
     @apply transition-[background-color,border-color,color] duration-300 ease-in-out;
-    @apply disabled:cursor-not-allowed;
+    // `DISABLED` state
+    @apply disabled:cursor-not-allowed disabled:opacity-60;
+    // `FOCUS` state
     @apply focus-visible:focus;
   }
 }
@@ -29,55 +31,55 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-button--primary {
-  @apply bg-ui-brand text-text-primary-alt;
-  // Primary `HOVER` and `ACTIVE` state
-  @apply active:bg-ui-brand-active hover:enabled:bg-ui-brand-hover;
-  // Primary `DISABLED` state
-  @apply disabled:border-stroke-brand-disabled disabled:bg-ui-brand-disabled disabled:text-text-primary-alt-disabled;
+  @apply bg-ui-brand text-text-alt;
+  // Primary `HOVER` state
+  @apply hover:enabled:bg-hover-ui-brand;
+  // Primary `ACTIVE` state
+  @apply active:enabled:bg-active-ui-brand active:enabled:hover:bg-active-ui-brand;
 }
 
 .bq-button--primary.ghost {
   @apply border-2 border-solid border-stroke-brand bg-transparent text-text-brand;
-  // Primary ghost `HOVER` state
-  @apply hover:text-text-brand-hover hover:enabled:border-stroke-brand-hover hover:enabled:bg-ui-primary-hover;
-  // Primary ghost `ACTIVE` state
-  @apply active:border-stroke-brand-active active:text-text-brand-active;
-  // Primary ghost `DISABLED` state
-  @apply disabled:border-stroke-brand-disabled disabled:bg-transparent disabled:text-text-brand-disabled;
+  // Primary `HOVER` state
+  @apply hover:enabled:bg-hover-ui-primary;
+  // Primary `ACTIVE` state
+  @apply active:enabled:bg-active-ui-primary active:enabled:hover:bg-active-ui-primary;
 }
 
 .bq-button--primary.danger {
-  @apply bg-ui-danger text-text-primary-alt;
-  // Primary danger `HOVER` and `ACTIVE` state
-  @apply active:bg-ui-danger-active hover:enabled:bg-ui-danger-hover;
-  // Primary danger `DISABLED` state
-  @apply disabled:border-stroke-danger-disabled disabled:bg-ui-danger-disabled disabled:text-text-primary-alt-disabled;
+  @apply bg-ui-danger text-text-alt;
+  // Primary `HOVER` state
+  @apply hover:enabled:bg-hover-ui-danger;
+  // Primary `ACTIVE` state
+  @apply active:enabled:bg-active-ui-danger active:enabled:hover:bg-active-ui-danger;
 }
 
 .bq-button--secondary {
   @apply bg-ui-secondary text-text-primary;
-  // Secondary `HOVER` and `ACTIVE` state
-  @apply active:bg-ui-secondary-active hover:enabled:bg-ui-secondary-hover;
-  // Secondary `DISABLED` state
-  @apply disabled:border-stroke-secondary-disabled disabled:bg-ui-secondary-disabled disabled:text-text-primary-disabled;
+  // Primary `HOVER` state
+  @apply hover:enabled:bg-hover-ui-secondary;
+  // Primary `ACTIVE` state
+  @apply active:enabled:bg-active-ui-secondary active:enabled:hover:bg-active-ui-secondary;
 }
 
 .bq-button--link {
   @apply bg-transparent text-text-brand no-underline;
-  // Link `HOVER` state
-  @apply hover:bg-ui-secondary-hover hover:text-text-brand-hover;
-  // Link `ACTIVE` state
-  @apply active:bg-ui-secondary-active active:text-text-brand-active;
-
+  // Primary `HOVER` state
+  @apply [&:not(.disabled)]:hover:bg-hover-ui-secondary;
+  // Primary `ACTIVE` state
+  @apply [&:not(.disabled)]:active:bg-active-ui-secondary [&:not(.disabled)]:active:hover:bg-active-ui-secondary;
+  // HTML `<a>` elements does not have a `disabled` state so we need to handle it manually
   &.disabled {
-    @apply cursor-not-allowed bg-transparent text-text-brand-disabled;
+    @apply cursor-not-allowed opacity-60;
   }
 }
 
 .bq-button--text {
-  @apply bg-transparent text-text-primary hover:bg-ui-secondary-hover active:bg-ui-secondary-active;
-  // Text `HOVER` state
-  @apply disabled:bg-transparent disabled:text-text-primary-disabled;
+  @apply bg-transparent text-text-primary;
+  // Primary `HOVER` state
+  @apply hover:enabled:bg-hover-ui-secondary;
+  // Primary `ACTIVE` state
+  @apply active:enabled:bg-active-ui-secondary active:enabled:hover:bg-active-ui-secondary;
 }
 
 /* -------------------------------------------------------------------------- */

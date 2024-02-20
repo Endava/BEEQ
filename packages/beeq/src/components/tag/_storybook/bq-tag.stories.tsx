@@ -153,7 +153,7 @@ export const CustomColor: Story = {
       <!-- Rgba custom color -->
       ${Template({ ...args, color: 'rgba(255, 87, 51, 0.7)', text: 'RGBA', icon: 'rss' })}
       <!-- Theme custom color palette -->
-      ${Template({ ...args, color: 'data--sky', text: 'Theme Palette', icon: 'palette' })}
+      ${Template({ ...args, color: 'sky-600', text: 'Theme Palette', icon: 'palette' })}
     </div>
   `,
   args: {

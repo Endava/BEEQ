@@ -36,7 +36,7 @@
 
   &.disabled {
     ::slotted(bq-icon) {
-      --bq-icon--color: var(--bq-step-item--prefix-color-disabled);
+      opacity: 0.6;
     }
   }
 }
@@ -53,7 +53,7 @@
   // Status
 
   &.current {
-    @apply bg-[var(--bq-step-item--prefix-color-current)] text-text-primary-alt;
+    @apply bg-[var(--bq-step-item--prefix-color-current)] text-[--bq-text--alt];
   }
 
   &.completed {
@@ -65,10 +65,10 @@
   }
 
   &.disabled {
-    @apply bg-ui-secondary-disabled text-text-primary-disabled;
+    @apply opacity-60;
   }
 }
 
 .bq-step-item__content--description::slotted(*) {
-  @apply text-s leading-regular text-text-primary-disabled;
+  @apply text-s leading-regular opacity-60;
 }

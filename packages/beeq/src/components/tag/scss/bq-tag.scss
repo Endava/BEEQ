@@ -42,16 +42,16 @@
   // Hover
   @apply hover:enabled:bg-[color-mix(in_srgb,_var(--bq-tag--background-color),_white_20%)];
   // Active/Selected
-  @apply [&.active]:text-text-primary-alt [&.active]:[--bq-tag--background-color:--bq-ui--brand];
+  @apply [&.active]:text-[--bq-text--alt] [&.active]:[--bq-tag--background-color:--bq-ui--brand];
   // Disabled
-  @apply disabled:cursor-not-allowed disabled:border-none disabled:bg-ui-secondary-disabled disabled:text-text-primary-disabled;
+  @apply disabled:cursor-not-allowed disabled:border-none disabled:opacity-60;
 }
 
 /* ------------------------------ Color styles ------------------------------ */
 
 .bq-tag__error {
   &.bq-tag__filled {
-    @apply bg-[color:--bq-ui--danger] text-[color:--bq-text--primary-alt];
+    @apply bg-[color:--bq-ui--danger] text-[color:--bq-text--alt];
   }
 
   &.bq-tag__outline {
@@ -61,17 +61,17 @@
 
 .bq-tag__gray {
   &.bq-tag__filled {
-    @apply bg-[color:--bq-stroke--secondary] text-[color:--bq-text--primary-alt];
+    @apply bg-[color:--bq-ui--tertiary] text-[color:--bq-text--alt];
   }
 
   &.bq-tag__outline {
-    @apply bg-[color:--bq-stroke--primary-alt] text-[color:--bq-text--primary] [--bq-tag--border-color:--bq-stroke--tertiary];
+    @apply bg-[color:--bq-ui--primary] text-[color:--bq-text--primary] [--bq-tag--border-color:--bq-stroke--tertiary];
   }
 }
 
 .bq-tag__info {
   &.bq-tag__filled {
-    @apply bg-[color:--bq-ui--brand] text-[color:--bq-text--primary-alt];
+    @apply bg-[color:--bq-ui--brand] text-[color:--bq-text--alt];
   }
 
   &.bq-tag__outline {
@@ -81,7 +81,7 @@
 
 .bq-tag__success {
   &.bq-tag__filled {
-    @apply bg-[color:--bq-ui--success] text-[color:--bq-text--primary-alt];
+    @apply bg-[color:--bq-ui--success] text-[color:--bq-text--alt];
   }
 
   &.bq-tag__outline {
@@ -91,7 +91,7 @@
 
 .bq-tag__warning {
   &.bq-tag__filled {
-    @apply bg-[color:--bq-ui--warning] text-[color:--bq-text--primary-alt];
+    @apply bg-[color:--bq-ui--warning] text-[color:--bq-text--alt];
   }
 
   &.bq-tag__outline {

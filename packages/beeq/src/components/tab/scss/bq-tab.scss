@@ -9,8 +9,8 @@
 }
 
 .bq-tab {
-  @apply relative flex cursor-pointer items-center justify-center rounded-s disabled:cursor-not-allowed;
-  @apply text-[length:--bq-tab--font-size] font-[--bq-tab--font-weight] leading-[--bq-tab--line-height] [&:not([disabled])]:hover:bg-ui-primary-hover [&:not([disabled])]:hover:text-text-brand-hover;
+  @apply relative flex cursor-pointer items-center justify-center rounded-s disabled:cursor-not-allowed disabled:opacity-60;
+  @apply text-[length:--bq-tab--font-size] font-[--bq-tab--font-weight] leading-[--bq-tab--line-height] [&:not([disabled])]:hover:bg-hover-ui-primary [&:not([disabled])]:hover:text-hover-text-brand;
   @apply border-0 bg-transparent focus-visible:focus;
   @apply transition-[color,background-color,border-color,box-shadow] duration-300;
 
@@ -26,10 +26,6 @@
 
   &[aria-selected='true']::after {
     @apply opacity-100;
-  }
-
-  &[disabled]::after {
-    @apply bg-stroke-brand-disabled;
   }
 
   &--small {
