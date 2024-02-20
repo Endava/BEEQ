@@ -11,11 +11,11 @@
   }
 
   .thumb-hover {
-    @apply border-2 border-stroke-brand-hover bg-ui-primary;
+    @apply border-2 bg-ui-primary border-hover-stroke-brand;
   }
 
   .thumb-active {
-    @apply border-2 border-stroke-brand-active bg-ui-brand-active;
+    @apply border-2 bg-active-ui-brand border-active-stroke-brand;
   }
 
   .thumb-disabled {
@@ -97,10 +97,10 @@
   }
 
   .bq-slider__label {
-    @apply text-text-primary-disabled;
+    @apply opacity-60;
   }
 
   .bq-slider__container .progress {
-    @apply bg-stroke-brand-disabled;
+    @apply opacity-60;
   }
 }
