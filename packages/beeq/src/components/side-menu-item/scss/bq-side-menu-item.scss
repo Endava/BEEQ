@@ -21,17 +21,17 @@
   @apply [&:not(.disabled)]:hover:cursor-pointer;
 
   &:not(.disabled, .active):hover {
-    @apply hover:bg-[var(--bq-side-menu-item--bg-hover)] hover:text-m hover:text-[color:var(--bq-side-menu-item--text-hover)];
+    @apply hover:text-m hover:bg-hover-ui-secondary hover:text-hover-text-primary;
   }
 }
 
 .bq-side-menu__item.active {
   // Active state
-  @apply bg-[var(--bq-side-menu-item--bg-active)] text-m text-[color:var(--bq-side-menu-item--text-active)];
+  @apply text-m bg-active-ui-brand-alt text-active-text-brand;
 }
 
 .bq-side-menu__item.disabled {
-  @apply text-[color:var(--bq-side-menu-item--text-disabled)] hover:cursor-not-allowed;
+  @apply opacity-60 hover:cursor-not-allowed;
 }
 
 .bq-side-menu__item.is-collapsed {
