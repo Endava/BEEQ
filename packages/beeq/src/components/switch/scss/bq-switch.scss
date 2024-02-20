@@ -19,23 +19,11 @@
 
   // Display background on hover (if enabled)
   &.has-background:not(.is-disabled):hover {
-    @apply bg-ui-primary-hover;
+    @apply bg-hover-ui-primary;
   }
 
   &.is-disabled {
-    @apply cursor-not-allowed;
-  }
-}
-
-.bq-switch--input:checked:disabled {
-  ~ .bq-switch--control {
-    @apply bg-ui-brand-disabled;
-  }
-}
-
-.bq-switch--input:not(:checked):disabled {
-  ~ .bq-switch--control {
-    @apply bg-ui-tertiary-disabled;
+    @apply cursor-not-allowed opacity-60;
   }
 }
 
@@ -57,7 +45,7 @@
 
 .bq-switch--control__dot {
   @apply absolute h-[var(--switch--dot-size)] w-[var(--switch--dot-size)] justify-end rounded-full;
-  @apply bg-icon-inverse group-[&.is-checked]:bg-[--bq-icon--alt] group-[&.is-disabled]:bg-icon-inverse-disabled;
+  @apply bg-icon-inverse group-[&.is-checked]:bg-[--bq-icon--alt];
   @apply transition duration-300;
 }
 
@@ -70,5 +58,5 @@
 }
 
 .bq-switch--label {
-  @apply text-m font-medium leading-regular text-text-primary transition-colors duration-300 group-[&.is-disabled]:text-text-primary-disabled;
+  @apply text-m font-medium leading-regular text-text-primary transition-colors duration-300;
 }

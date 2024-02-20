@@ -236,7 +236,7 @@ export class BqSwitch {
               <bq-icon
                 class="bq-switch--control__icon off"
                 name="x"
-                color={!this.disabled ? 'icon--inverse' : 'icon--inverse-disabled'}
+                color="icon--inverse"
                 role="img"
                 title="Off"
                 part="icon-off"
