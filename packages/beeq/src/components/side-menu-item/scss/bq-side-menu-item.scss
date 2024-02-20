@@ -21,13 +21,13 @@
   @apply [&:not(.disabled)]:hover:cursor-pointer;
 
   &:not(.disabled, .active):hover {
-    @apply hover:text-m hover:bg-hover-ui-secondary hover:text-hover-text-primary;
+    @apply hover:bg-[var(--bq-side-menu-item--bg-hover)] hover:text-m hover:text-[color:var(--bq-side-menu-item--text-hover)];
   }
 }
 
 .bq-side-menu__item.active {
   // Active state
-  @apply text-m bg-active-ui-brand-alt text-active-text-brand;
+  @apply bg-[var(--bq-side-menu-item--bg-active)] text-m text-[color:var(--bq-side-menu-item--text-active)];
 }
 
 .bq-side-menu__item.disabled {
