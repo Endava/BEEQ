@@ -14,20 +14,20 @@
 
   &.is-disabled {
     .bq-radio__circle {
-      @apply border-icon-primary-disabled;
+      @apply opacity-60;
     }
 
     &.is-checked .bq-radio__circle {
-      @apply border-stroke-brand-disabled;
+      @apply border-stroke-brand;
     }
 
     &.is-checked .bq-radio__checked {
-      @apply bg-icon-brand-disabled;
+      @apply bg-icon-brand;
     }
   }
 
   &.has-background:not(.is-disabled):hover {
-    @apply bg-ui-primary-hover;
+    @apply bg-hover-ui-primary;
   }
 
   &.is-checked:not(.is-disabled) {
@@ -41,13 +41,13 @@
   }
 
   &:not(.is-disabled):hover .bq-radio__circle {
-    @apply border-ui-brand-hover;
+    @apply border-hover-ui-brand;
   }
 
   &.is-checked:not(.is-disabled):hover {
     .bq-radio__checked,
     .bq-radio__circle {
-      @apply border-icon-brand-hover;
+      @apply border-hover-icon-brand;
     }
   }
 }
@@ -67,7 +67,7 @@
 }
 
 .bq-radio__circle {
-  @apply relative box-border flex h-full w-full items-center justify-center rounded-full border-[length:var(--bq-radio--border-width)] border-solid border-icon-primary-hover p-[3px];
+  @apply relative box-border flex h-full w-full items-center justify-center rounded-full border-[length:var(--bq-radio--border-width)] border-solid p-[3px] border-hover-icon-primary;
 }
 
 .bq-radio__checked {
