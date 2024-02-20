@@ -31,9 +31,9 @@
   // Transition
   @apply transition-colors ease-in-out;
   // Hover
-  @apply [&:not([disabled]):not(:focus-within)]:hover:border-stroke-brand-hover;
+  @apply [&:not([disabled]):not(:focus-within)]:hover:border-hover-stroke-brand;
   // Disabled
-  @apply disabled:cursor-not-allowed disabled:border-[color:--bq-input--border-color-disabled] disabled:bg-[--bq-textarea--background-color-disabled];
+  @apply disabled:cursor-not-allowed disabled:opacity-60;
   // Focus
   &:not([disabled]):focus-within {
     --bq-ring-width: 1px;
@@ -47,32 +47,32 @@
 /* ------------------------------- Validations ------------------------------- */
 
 .bq-textarea__input.validation-error {
-  @apply border-stroke-danger [&:not(.disabled):not(:focus-within)]:hover:border-stroke-danger-hover;
+  @apply border-stroke-danger [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-danger;
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme('colors.stroke.danger-active');
+    --bq-ring-color-focus: theme('colors.stroke.danger');
 
-    @apply border-stroke-danger-active;
+    @apply border-active-stroke-danger;
   }
 }
 
 .bq-textarea__input.validation-success {
-  @apply border-stroke-success [&:not(.disabled):not(:focus-within)]:hover:border-stroke-success-hover;
+  @apply border-stroke-success [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-success;
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme('colors.stroke.success-active');
+    --bq-ring-color-focus: theme('colors.stroke.success');
 
-    @apply border-stroke-success-active;
+    @apply border-active-stroke-success;
   }
 }
 
 .bq-textarea__input.validation-warning {
-  @apply border-stroke-warning [&:not(.disabled):not(:focus-within)]:hover:border-stroke-warning-hover;
+  @apply border-stroke-warning [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-warning;
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme('colors.stroke.warning-active');
+    --bq-ring-color-focus: theme('colors.stroke.warning');
 
-    @apply border-stroke-warning-active;
+    @apply border-active-stroke-warning-active;
   }
 }
 
@@ -103,6 +103,6 @@
 /** Apply a disabled text color style to the textarea counter when the validation is none. */
 .bq-textarea__helper[class~='validation-none'] {
   .bq-textarea__helper--counter {
-    @apply text-text-secondary-disabled;
+    @apply opacity-60;
   }
 }
