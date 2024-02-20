@@ -6,9 +6,7 @@
   /**
    * @prop --bq-input--background-color - Input background color
    * @prop --bq-input--border-color - Input border color
-   * @prop --bq-input--border-color-hover - Input border color on hover
    * @prop --bq-input--border-color-focus - Input border color on focus
-   * @prop --bq-input--border-color-disabled - Input border color when disabled
    * @prop --bq-input--border-radius - Input border radius
    * @prop --bq-input--border-width - Input border width
    * @prop --bq-input--border-style - Input border style
@@ -30,9 +28,7 @@
   --bq-input--background-color: theme('colors.ui.primary');
 
   --bq-input--border-color: theme('colors.stroke.tertiary');
-  --bq-input--border-color-hover: theme('colors.stroke.brand-hover');
   --bq-input--border-color-focus: theme('colors.stroke.brand');
-  --bq-input--border-color-disabled: theme('colors.stroke.tertiary-disabled');
   --bq-input--border-radius: theme('borderRadius.s');
   --bq-input--border-width: 1px;
   --bq-input--border-style: solid;
@@ -55,5 +51,5 @@
 
   --bq-input--text-color: theme('colors.text.primary');
   --bq-input--text-size: theme('fontSize.m');
-  --bq-input--text-placeholder-color: theme('colors.text.secondary-disabled');
+  --bq-input--text-placeholder-color: theme('colors.text.secondary');
 }
