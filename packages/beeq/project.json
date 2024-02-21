@@ -77,7 +77,7 @@
         "{projectRoot}/custom-elements.json",
         "{workspaceRoot}/packages/beeq-angular/src/directives",
         "{workspaceRoot}/packages/beeq-react/src/react-component-lib",
-        "{workspaceRoot}/packages/beeq-react/src/components.ts"
+        "{workspaceRoot}/packages/beeq-vue/src/components.ts"
       ],
       "options": {
         "projectType": "library",

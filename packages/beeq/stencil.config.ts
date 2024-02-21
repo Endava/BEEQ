@@ -17,7 +17,7 @@ const tailwindOpts: PluginConfigOpts = {
 };
 
 export const config: Config = {
-  namespace: 'bee-q',
+  namespace: 'beeq',
   taskQueue: 'async',
   buildDist: true,
   enableCache: true,
