@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { APP_INITIALIZER, ModuleWithProviders, NgModule, NgZone } from '@angular/core';
 import { defineCustomElements } from '@beeq/core/dist/loader';
 
 import { DIRECTIVES } from './directives';
@@ -11,9 +11,16 @@ import { DIRECTIVES } from './directives';
 })
 export class BeeQModule {
   static forRoot(): ModuleWithProviders<BeeQModule> {
-    defineCustomElements();
     return {
       ngModule: BeeQModule,
+      providers: [
+        {
+          provide: APP_INITIALIZER,
+          useFactory: () => defineCustomElements,
+          multi: true,
+          deps: [NgZone],
+        },
+      ],
     };
   }
 }
