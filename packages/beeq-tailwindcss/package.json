@@ -1,5 +1,5 @@
 {
-  "name": "@bee-q/tailwindcss",
+  "name": "@beeq/tailwindcss",
   "version": "1.0.0",
   "license": "Apache-2.0",
   "description": "BEEQ's opinionated TailwindCSS configuration",

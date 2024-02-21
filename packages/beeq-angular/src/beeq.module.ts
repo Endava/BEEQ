@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { defineCustomElements } from '@bee-q/core/dist/loader';
+import { defineCustomElements } from '@beeq/core/dist/loader';
 
 import { DIRECTIVES } from './directives';
 

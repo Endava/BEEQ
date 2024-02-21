@@ -16,6 +16,8 @@ const tailwindOpts: PluginConfigOpts = {
   stripComments: true,
 };
 
+const componentCorePackage = '@beeq/core';
+
 export const config: Config = {
   namespace: 'beeq',
   taskQueue: 'async',
@@ -60,18 +62,18 @@ export const config: Config = {
       serviceWorker: null, // disable service workers
     },
     angular({
-      componentCorePackage: '@bee-q/core',
+      componentCorePackage,
       directivesProxyFile: resolve(__dirname, '../beeq-angular/src/directives/components.ts').replace(/\\/g, '/'),
       directivesArrayFile: resolve(__dirname, '../beeq-angular/src/directives/index.ts').replace(/\\/g, '/'),
       valueAccessorConfigs: angularValueAccessorBindings,
     }),
     react({
-      componentCorePackage: '@bee-q/core',
+      componentCorePackage,
       proxiesFile: resolve(__dirname, '../beeq-react/src/components.ts').replace(/\\/g, '/'),
       includeDefineCustomElements: true,
     }),
     vue({
-      componentCorePackage: '@bee-q/core',
+      componentCorePackage,
       proxiesFile: resolve(__dirname, '../beeq-vue/src/components.ts').replace(/\\/g, '/'),
       componentModels: vueComponentModels,
     }),

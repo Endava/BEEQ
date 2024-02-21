@@ -1,5 +1,5 @@
 {
-  "name": "@bee-q/react",
+  "name": "@beeq/react",
   "version": "1.0.0",
   "license": "Apache-2.0",
   "description": "React specific wrapper for BEEQ Design System components",
@@ -7,7 +7,7 @@
   "module": "./src/index.js",
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@bee-q/core": "*"
+    "@beeq/core": "*"
   },
   "peerDependencies": {
     "react": ">=18.0.0",

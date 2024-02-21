@@ -19,13 +19,13 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "paths": {
-      "@bee-q/angular": ["dist/beeq-angular"],
-      "@bee-q/core": ["dist/beeq"],
-      "@bee-q/core/*": ["dist/beeq/*"],
-      "@bee-q/react": ["dist/beeq-react"],
-      "@bee-q/tailwindcss": ["dist/beeq-tailwindcss"],
-      "@bee-q/tools": ["tools/src/index.ts"],
-      "@bee-q/vue": ["dist/beeq-vue"]
+      "@beeq/angular": ["dist/beeq-angular"],
+      "@beeq/core": ["dist/beeq"],
+      "@beeq/core/*": ["dist/beeq/*"],
+      "@beeq/react": ["dist/beeq-react"],
+      "@beeq/tailwindcss": ["dist/beeq-tailwindcss"],
+      "@beeq/tools": ["tools/src/index.ts"],
+      "@beeq/vue": ["dist/beeq-vue"]
     }
   },
   "exclude": ["./node_modules", "./tmp"]

@@ -27,7 +27,7 @@
         "@nx/dependency-checks": [
           "error",
           {
-            "ignoredDependencies": ["@bee-q/core", "react", "react-dom"],
+            "ignoredDependencies": ["@beeq/core", "react", "react-dom"],
             "ignoredFiles": ["{projectRoot}/esbuild.config.{js,ts,mjs,mts}"]
           }
         ]
