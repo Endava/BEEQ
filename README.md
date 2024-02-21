@@ -20,11 +20,11 @@
 
 | Package                                                          | Version                                                                                                            | Documentation                            |
 | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
-| [`@bee-q/core`](https://www.npmjs.com/package/@bee-q/core)       | [![version](https://img.shields.io/npm/v/@bee-q/core/latest.svg)](https://www.npmjs.com/package/@bee-q/core)       | [README](./packages/beeq/README.md)         |
-| [`@bee-q/angular`](https://www.npmjs.com/package/@bee-q/angular) | [![version](https://img.shields.io/npm/v/@bee-q/angular/latest.svg)](https://www.npmjs.com/package/@bee-q/angular) | [README](./packages/beeq-angular/README.md) |
-| [`@bee-q/react`](https://www.npmjs.com/package/@bee-q/react)     | [![version](https://img.shields.io/npm/v/@bee-q/react/latest.svg)](https://www.npmjs.com/package/@bee-q/react)     | [README](./packages/beeq-react/README.md)   |
-| [`@bee-q/vue`](https://www.npmjs.com/package/@bee-q/vue)     | [![version](https://img.shields.io/npm/v/@bee-q/vue/latest.svg)](https://www.npmjs.com/package/@bee-q/vue)     | [README](./packages/beeq-vue/README.md)   |
-| [`@bee-q/tailwindcss`](https://www.npmjs.com/package/@bee-q/tailwindcss)     | [![version](https://img.shields.io/npm/v/@bee-q/tailwindcss/latest.svg)](https://www.npmjs.com/package/@bee-q/tailwindcss)     | [README](./packages/beeq-tailwindcss/README.md)   |
+| [`@beeq/core`](https://www.npmjs.com/package/@beeq/core)       | [![version](https://img.shields.io/npm/v/@beeq/core/latest.svg)](https://www.npmjs.com/package/@beeq/core)       | [README](./packages/beeq/README.md)         |
+| [`@beeq/angular`](https://www.npmjs.com/package/@beeq/angular) | [![version](https://img.shields.io/npm/v/@beeq/angular/latest.svg)](https://www.npmjs.com/package/@beeq/angular) | [README](./packages/beeq-angular/README.md) |
+| [`@beeq/react`](https://www.npmjs.com/package/@beeq/react)     | [![version](https://img.shields.io/npm/v/@beeq/react/latest.svg)](https://www.npmjs.com/package/@beeq/react)     | [README](./packages/beeq-react/README.md)   |
+| [`@beeq/vue`](https://www.npmjs.com/package/@beeq/vue)     | [![version](https://img.shields.io/npm/v/@beeq/vue/latest.svg)](https://www.npmjs.com/package/@beeq/vue)     | [README](./packages/beeq-vue/README.md)   |
+| [`@beeq/tailwindcss`](https://www.npmjs.com/package/@beeq/tailwindcss)     | [![version](https://img.shields.io/npm/v/@beeq/tailwindcss/latest.svg)](https://www.npmjs.com/package/@beeq/tailwindcss)     | [README](./packages/beeq-tailwindcss/README.md)   |
 
 </div>
 
@@ -66,25 +66,25 @@ Once you have Volta installed, whenever you change to the BEEQ folder locally, i
 
 ```json
   "volta": {
-    "node": "20.9.0",
-    "npm": "10.2.1"
+    "node": "20.11.1",
+    "npm": "10.4.0"
   }
 ```
 
 Volta is not mandatory, you can still use any Node/NPM setup that fits you most, just keep in mind that you'll need:
 
-- [`NodeJS`](https://nodejs.org/en/download/) v16.x or higher
+- [`NodeJS`](https://nodejs.org/en/download/) v18.x or higher
 - [NPM](https://nodejs.org/en/knowledge/getting-started/npm/what-is-npm/) v8 or higher
 
 ## Usage
 
-The BEEQ components are published to the NPM package manager registry. You can use the `@bee-q/core` or any of the framework-specific wrappers (`@bee-q/angular`, `@bee-q/react`) depending on the technology stack of your project. Make sure the follow the usage instructions for each package:
+The BEEQ components are published to the NPM package manager registry. You can use the `@beeq/core` or any of the framework-specific wrappers (`@beeq/angular`, `@beeq/react`) depending on the technology stack of your project. Make sure the follow the usage instructions for each package:
 
-- 📘 [How to use the `@bee-q/core` package](packages/beeq/README.md)
-- 📗 [How to use the `@bee-q/angular` package](packages/beeq-angular/README.md)
-- 📕 [How to use the `@bee-q/react` package](packages/beeq-react/README.md)
-- 📙 [How to use the `@bee-q/vue` package](packages/beeq-vue/README.md)
-- 📓 [How to use the `@bee-q/tailwindcss` preset](packages/beeq-tailwindcss/README.md)
+- 📘 [How to use the `@beeq/core` package](packages/beeq/README.md)
+- 📗 [How to use the `@beeq/angular` package](packages/beeq-angular/README.md)
+- 📕 [How to use the `@beeq/react` package](packages/beeq-react/README.md)
+- 📙 [How to use the `@beeq/vue` package](packages/beeq-vue/README.md)
+- 📓 [How to use the `@beeq/tailwindcss` preset](packages/beeq-tailwindcss/README.md)
 
 Feel free to [check our Storybook](https://storybook.beeq.design/) to see all the BEEQ components released. There you can find all the component's APIs (properties, events, and methods exposed) along with the variations that each component allows.
 
