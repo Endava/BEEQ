@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'bee-q-react',
+  displayName: 'beeq-react',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -11,5 +11,5 @@ export default {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/packages/bee-q-react',
+  coverageDirectory: '../../coverage/packages/beeq-react',
 };

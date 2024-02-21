@@ -9,24 +9,24 @@ BEEQ elements, components, patterns, utilities, etc., are available as an npm pa
 ### For `stable` releases
 
 ```bash
-$ npm i @bee-q/core
+$ npm i @beeq/core
 ```
 
 ### For `beta` releases
 
 ```bash
-$ npm i @bee-q/core@beta
+$ npm i @beeq/core@beta
 ```
 
 ## Usage
 
-Bee-Q components are regular HTML elements, or custom elements (often referred to as "web components"). If you're using a simple HTML page, you can use them like any other element.
+BEEQ components are regular HTML elements, or custom elements (often referred to as "web components"). If you're using a simple HTML page, you can use them like any other element.
 
 ```html
 <html>
   <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@bee-q/core/dist/bee-q/bee-q.css" />
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@bee-q/core/dist/bee-q/bee-q.esm.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/beeq.css" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/beeq.esm.js"></script>
   </head>
   <body>
     <bq-button>Click me!</bq-button>
@@ -34,7 +34,7 @@ Bee-Q components are regular HTML elements, or custom elements (often referred t
 </html>
 ```
 
-> ❗️The icons SVG are shipped in a separate folder. Projects will need to include `node_modules/@bee-q/core/dist/bee-q/svg` in their build and try to make it in a certain way that it respond to: `http://<domain>/svg`
+> ❗️The icons SVG are shipped in a separate folder. Projects will need to include `node_modules/@beeq/core/dist/beeq/svg` in their build and try to make it in a certain way that it respond to: `http://<domain>/svg`
 
 ### Events
 

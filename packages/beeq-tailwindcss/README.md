@@ -19,13 +19,13 @@ Make sure that Tailwind CSS directives are added to your main CSS file:
 ## Installation 📦
 
 ```bash
-npm i -D @bee-q/tailwindcss
+npm i -D @beeq/tailwindcss
 ```
 
 ## Usage 🚀
 
 ```js
-const beeqPreset = require('@bee-q/tailwindcss');
+const beeqPreset = require('@beeq/tailwindcss');
 
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
@@ -37,7 +37,7 @@ module.exports = {
 or with TypeScript:
 
 ```ts
-import { default as beeqPreset } from '@bee-q/tailwindcss';
+import { default as beeqPreset } from '@beeq/tailwindcss';
 
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
@@ -75,12 +75,12 @@ The preset does not include the fonts by default, but you can add them in your C
 The preset includes a typography plugin that adds a set of default typography styles to your application. It is not enabled by default, so you need to add it to your `tailwind.config.js` file:
 
 ```js
-const beeqPreset = require('@bee-q/tailwindcss');
-const { TYPOGRAPHY_DEFAULT } = require('@bee-q/tailwindcss');
+const beeqPreset = require('@beeq/tailwindcss');
+const { TYPOGRAPHY_DEFAULT } = require('@beeq/tailwindcss');
 
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
-  presets: [require('@bee-q/tailwindcss')],
+  presets: [require('@beeq/tailwindcss')],
   ...
   plugins: [
     plugin(function ({ addBase }) {
@@ -95,7 +95,7 @@ or via TypeScript:
 
 ```ts
 import plugin from "tailwindcss/plugin";
-import { default as beeqPreset, TYPOGRAPHY_DEFAULT } from "@bee-q/tailwindcss";
+import { default as beeqPreset, TYPOGRAPHY_DEFAULT } from "@beeq/tailwindcss";
 import type { Config } from "tailwindcss";
 
 export default {

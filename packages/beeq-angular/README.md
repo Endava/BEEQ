@@ -7,31 +7,31 @@ An Angular-specific wrapper on top of BEEQ web components that enables NG_VALUE_
 - install the package
 
 ```
-npm install @bee-q/angular
+npm install @beeq/angular
 ```
 
 - update the package
 
 ```
-npm install @bee-q/angular@latest
+npm install @beeq/angular@latest
 ```
 
-if the `@bee-q/core` package is added to your `package.json` should update both
+if the `@beeq/core` package is added to your `package.json` should update both
 
 ```
-npm install @bee-q/{core,angular}
+npm install @beeq/{core,angular}
 ```
 
 ## Setup
 
 ### Call `defineCustomElements`
 
-The BEEQ core package includes the main function that is used to load the components in the collection and makes Angular aware of the custom tags of the web components. That function is called `defineCustomElements()` and it is handled by the `@bee-q/angular` wrapper itself. Yet, **if you need to support older versions of Microsoft Edge and Internet Explorer, you can apply the polyfills as follow**:
+The BEEQ core package includes the main function that is used to load the components in the collection and makes Angular aware of the custom tags of the web components. That function is called `defineCustomElements()` and it is handled by the `@beeq/angular` wrapper itself. Yet, **if you need to support older versions of Microsoft Edge and Internet Explorer, you can apply the polyfills as follow**:
 
 ```ts
 // main.ts
 
-import { applyPolyfills, defineCustomElements } from '@bee-q/core/dist/loader';
+import { applyPolyfills, defineCustomElements } from '@beeq/core/dist/loader';
 
 ...
 
@@ -43,7 +43,7 @@ applyPolyfills().then(() => {
 
 ### Add BEEQ styles and assets
 
-> ❗️The icons SVG are shipped in a separate folder. Projects will need to include `node_modules/@bee-q/core/dist/bee-q/svg` in their build and try to make it in a certain way that it respond to: `http://<domain>/svg`
+> ❗️The icons SVG are shipped in a separate folder. Projects will need to include `node_modules/@beeq/core/dist/beeq/svg` in their build and try to make it in a certain way that it respond to: `http://<domain>/svg`
 
 ```json
 /** angular.json */
@@ -64,13 +64,13 @@ applyPolyfills().then(() => {
               "src/assets",
               {
                 "glob": "**/*",
-                "input": "node_modules/@bee-q/core/dist/bee-q/svg",
+                "input": "node_modules/@beeq/core/dist/beeq/svg",
                 "output": "/svg/"
               }
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/@bee-q/core/dist/bee-q/bee-q.css"
+              "node_modules/@beeq/core/dist/beeq/beeq.css"
             ],
             ...
           }
@@ -84,17 +84,17 @@ applyPolyfills().then(() => {
 BEEQ styles can be also imported into your application's main style file:
 
 ```css
-@import '~@bee-q/core/dist/bee-q/bee-q.css';
+@import '~@beeq/core/dist/beeq/beeq.css';
 ```
 
 ### Add the BEEQ Angular module to your application module
 
-You will be able to add BEEQ web components to your app by adding the `BeeQModule` exported by `@bee-q/angular`:
+You will be able to add BEEQ web components to your app by adding the `BeeQModule` exported by `@beeq/angular`:
 
 ```ts
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { BeeQModule } from '@bee-q/angular';
+import { BeeQModule } from '@beeq/angular';
 
 import { AppComponent } from './app.component';
 
@@ -118,7 +118,7 @@ To enable two-way binding and the use of [ngModel] within BEEQ form components, 
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { BeeQModule, BooleanValueAccessor, TextValueAccessor } from '@bee-q/angular';
+import { BeeQModule, BooleanValueAccessor, TextValueAccessor } from '@beeq/angular';
 
 import { AppComponent } from './app.component';
 

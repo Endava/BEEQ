@@ -33,7 +33,7 @@ const meta: Meta = {
     checked: false,
     disabled: false,
     indeterminate: false,
-    name: 'bee-q-checkbox',
+    name: 'bq-checkbox',
     required: false,
     value: 'checkbox-value',
     // Not part of the component
