@@ -1,10 +1,18 @@
-# Changelog
+# CHANGELOG
 
 All notable changes to this project will be documented in this file.
 
 The format is based on [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
+
+## [1.0.1](https://github.com/Endava/BEEQ/compare/v1.0.0...v1.0.1) (2024-02-21)
+
+
+### Chore ⚙️
+
+* **deps:** update dependency @stencil/core to v4.12.3 ([#862](https://github.com/Endava/BEEQ/issues/862)) ([584c786](https://github.com/Endava/BEEQ/commit/584c78680ae32573750e0e90e46e7bc9cb5383ad))
+* update packages scope from `[@bee-q](https://github.com/bee-q)` to `[@beeq](https://github.com/beeq)` ([#863](https://github.com/Endava/BEEQ/issues/863)) ([f74ac29](https://github.com/Endava/BEEQ/commit/f74ac2908c54919b60d7edc58ac75b00d64b2325))
 
 ## [1.0.0](https://github.com/Endava/BEEQ/compare/v0.13.0...v1.0.0) (2024-02-20)
 
