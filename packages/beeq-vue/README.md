@@ -7,19 +7,19 @@ A lightweight utility that wraps BEEQ custom elements ("web components") so they
 - install the package
 
 ```
-npm install @bee-q/vue
+npm install @beeq/vue
 ```
 
 - update the package
 
 ```
-npm install @bee-q/vue@latest
+npm install @beeq/vue@latest
 ```
 
-if `@bee-q/core` package is installed you should update both
+if `@beeq/core` package is installed you should update both
 
 ```
-npm install @bee-q/{core,vue}
+npm install @beeq/{core,vue}
 ```
 
 ### Add BEEQ styles and assets
@@ -27,10 +27,10 @@ npm install @bee-q/{core,vue}
 Make sure that BEEQ main style is imported into your application's main style file:
 
 ```css
-@import "@bee-q/core/dist/bee-q/bee-q";
+@import "@beeq/core/dist/beeq/beeq";
 ```
 
-> ❗️The icons SVG are shipped in a separate folder. Depending on your stack, your project will need to include `node_modules/@bee-q/core/dist/bee-q/svg` in the build in such a way that it respond to: `http://<domain>/svg`
+> ❗️The icons SVG are shipped in a separate folder. Depending on your stack, your project will need to include `node_modules/@beeq/core/dist/beeq/svg` in the build in such a way that it respond to: `http://<domain>/svg`
 
 ## Usage
 

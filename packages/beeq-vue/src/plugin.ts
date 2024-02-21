@@ -1,5 +1,5 @@
 import { Plugin } from 'vue';
-import { applyPolyfills, defineCustomElements } from '@bee-q/core/dist/loader';
+import { applyPolyfills, defineCustomElements } from '@beeq/core/dist/loader';
 
 export const BeeqVue: Plugin = {
   async install() {

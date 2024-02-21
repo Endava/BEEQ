@@ -33,7 +33,7 @@ export default {
   staticDirs: [
     { from: '../../../dist/beeq/www/assets', to: '/assets' },
     { from: '../../../dist/beeq/www/scripts', to: '/scripts' },
-    { from: '../../../dist/beeq/dist/bee-q', to: '/beeq' },
+    { from: '../../../dist/beeq/dist/beeq', to: '/beeq' },
     { from: './assets/css', to: '/css' },
   ],
   viteFinal: async (config: InlineConfig, { configType }) => {
@@ -54,8 +54,8 @@ export default {
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="stylesheet" type="text/css" href="css/font.css" />
     <link rel="stylesheet" type="text/css" href="css/preview.css" />
-    <link rel="stylesheet" type="text/css" href="beeq/bee-q.css" />
-    <script type="module" src="beeq/bee-q.esm.js"></script>
+    <link rel="stylesheet" type="text/css" href="beeq/beeq.css" />
+    <script type="module" src="beeq/beeq.esm.js"></script>
     <script type="text/javascript">
       document.addEventListener('touchstart', function () {}, false);
     </script>

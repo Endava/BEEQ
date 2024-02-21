@@ -9,7 +9,7 @@ const theme = create({
 
   // BRAND
   brandTarget: '_self',
-  brandTitle: 'Bee-Q Design System',
+  brandTitle: 'BEEQ Design System',
   brandImage: './assets/beeq-logo.svg',
 
   // UI

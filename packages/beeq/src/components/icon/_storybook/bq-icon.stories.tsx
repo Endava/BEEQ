@@ -72,7 +72,7 @@ export const ExploreIcons: Story = {
     <div class="mb-8 text-text-primary">
       <h1 class="text-xl font-bold">We didn't reinvent the wheel</h1>
       <p class="mt-2">
-        Bee-Q icons are based on
+        BEEQ icons are based on
         <a
           class="bq-link"
           href="https://phosphoricons.com/"

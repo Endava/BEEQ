@@ -32,7 +32,7 @@ const meta: Meta = {
     orientation: 'vertical',
     value: 'option1',
     disabled: false,
-    name: 'bee-q-radio',
+    name: 'bq-radio',
     fieldset: false,
     'debounce-time': 0,
   },

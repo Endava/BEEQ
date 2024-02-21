@@ -1,5 +1,5 @@
 {
-  "name": "@bee-q/angular",
+  "name": "@beeq/angular",
   "version": "1.0.0",
   "license": "Apache-2.0",
   "description": "Angular specific wrapper for BEEQ Design System components",
@@ -7,7 +7,7 @@
   "module": "dist/esm2015/index.js",
   "types": "index.d.ts",
   "dependencies": {
-    "@bee-q/core": "*",
+    "@beeq/core": "*",
     "tslib": "^2.6.2"
   },
   "peerDependencies": {
