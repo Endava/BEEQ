@@ -72,6 +72,17 @@ export const config: Config = {
       valueAccessorConfigs: angularValueAccessorBindings,
       customElementsDir,
     }),
+    angular({
+      componentCorePackage,
+      outputType: 'standalone', // Generate a component with the standalone flag set to true.
+      directivesProxyFile: resolve(__dirname, '../beeq-angular/standalone/src/directives/components.ts').replace(
+        /\\/g,
+        '/',
+      ),
+      directivesArrayFile: resolve(__dirname, '../beeq-angular/standalone/src/directives/index.ts').replace(/\\/g, '/'),
+      valueAccessorConfigs: angularValueAccessorBindings,
+      customElementsDir,
+    }),
     react({
       componentCorePackage,
       proxiesFile: resolve(__dirname, '../beeq-react/src/components.ts').replace(/\\/g, '/'),
