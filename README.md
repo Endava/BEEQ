@@ -160,3 +160,17 @@ Need help? Check out the Stenciljs docs here (https://stenciljs.com/).
 ### Tailwind CSS
 
 We use Tailwind CSS for the style of the components, please take a look at their documentation here: (https://tailwindcss.com/docs/)
+
+## Thanks 🙏
+
+<a href="https://www.chromatic.com/">
+  <img src="https://user-images.githubusercontent.com/321738/84662277-e3db4f80-af1b-11ea-88f5-91d67a5e59f6.png" width="153" height="30" alt="Chromatic" />
+</a>
+
+We would like to express our sincere gratitude to [Chromatic](https://www.chromatic.com/) for providing the visual testing platform that enables us to review UI changes and identify visual regressions.
+
+<a href="https://nx.dev/">
+  <img src="https://github.com/Endava/BEEQ/assets/328492/7007eff3-3af7-4396-81e7-d8c10176f53a" width="48" alt="Nx.dev" />
+</a>
+
+Thank you to the [Nx](https://nx.dev/) team for helping us streamline our CI process and efficiently manage our Monorepo.
