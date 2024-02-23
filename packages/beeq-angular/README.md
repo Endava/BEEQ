@@ -118,19 +118,31 @@ To enable two-way binding and the use of [ngModel] within BEEQ form components, 
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { BeeQModule, BooleanValueAccessor, TextValueAccessor } from '@beeq/angular';
 
 import { AppComponent } from './app.component';
 
-/** 💡 More Value Accessors will be exported later and should be included as well */
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BeeQModule.forRoot(), BrowserModule, FormsModule],
+  providers: [],
+  bootstrap: [AppComponent],
+  schemas: [],
+})
+export class AppModule {}
+```
+
+> 🙋🏼‍♂️ If you are using `@beeq/angular` v1.0.1 or below, **you also need to import the values accessors**, as shown below:
+
+```ts
+...
+import { BeeQModule, BooleanValueAccessor, TextValueAccessor } from '@beeq/angular';
+...
 const VALUE_ACCESSORS = [BooleanValueAccessor, TextValueAccessor];
 
 @NgModule({
   declarations: [AppComponent, ...VALUE_ACCESSORS],
   imports: [BeeQModule.forRoot(), BrowserModule, FormsModule],
-  providers: [],
-  bootstrap: [AppComponent],
-  schemas: [],
+  ...
 })
 export class AppModule {}
 ```
