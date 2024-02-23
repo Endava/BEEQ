@@ -188,3 +188,36 @@ export class AppComponent {
   }
 }
 ```
+
+### Using BEEQ components in Angular standalone
+
+You can also use BEEQ components in Angular standalone. To do so, you will need to import the components from `@beeq/angular/standalone` and use them as you would use any other Angular component.
+
+```ts
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { BqButton, BqCard, BqInput } from '@beeq/angular/standalone';
+
+@Component({
+  selector: 'app-component',
+  standalone: true,
+  imports: [BqButton, BqCard, BqInput],
+  template: `
+    <bq-card>
+      <bq-input name="email" [value]="emailValue" (bqChange)="onInputChange($event)">
+        <label slot="label">Your email</label>
+      </bq-input>
+      <bq-button>Subscribe me!</bq-button>
+    </bq-card>
+  `,
+  styles: [],
+  schemas: [],
+})
+export class AppComponent2 {
+  emailValue = 'BEEQ Design System';
+
+  onInputChange(event: CustomEvent<{ value: string }>) {
+    console.log('emailValue', event.detail.value);
+  }
+}
+```
