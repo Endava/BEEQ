@@ -246,7 +246,7 @@ export class BqInput {
     this.debounceBqInput?.cancel();
 
     if (!isHTMLElement(ev.target, 'input')) return;
-    this.value = ev.target.value;
+    this.value = this.type === 'number' ? Number(ev.target.value) : ev.target.value;
 
     this.debounceBqInput = debounce(() => {
       this.bqInput.emit({ value: this.value, el: this.el });
@@ -258,7 +258,7 @@ export class BqInput {
     if (this.disabled) return;
 
     if (!isHTMLElement(ev.target, 'input')) return;
-    this.value = ev.target.value;
+    this.value = this.type === 'number' ? Number(ev.target.value) : ev.target.value;
 
     this.bqChange.emit({ value: this.value, el: this.el });
   };

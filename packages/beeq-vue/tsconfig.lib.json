@@ -2,6 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
+    "removeComments": false,
     "types": ["node"]
   },
   "include": ["src/**/*.ts"],

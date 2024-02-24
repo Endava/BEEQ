@@ -118,19 +118,31 @@ To enable two-way binding and the use of [ngModel] within BEEQ form components, 
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { BeeQModule, BooleanValueAccessor, TextValueAccessor } from '@beeq/angular';
 
 import { AppComponent } from './app.component';
 
-/** 💡 More Value Accessors will be exported later and should be included as well */
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BeeQModule.forRoot(), BrowserModule, FormsModule],
+  providers: [],
+  bootstrap: [AppComponent],
+  schemas: [],
+})
+export class AppModule {}
+```
+
+> 🙋🏼‍♂️ If you are using `@beeq/angular` v1.0.1 or below, **you also need to import the values accessors**, as shown below:
+
+```ts
+...
+import { BeeQModule, BooleanValueAccessor, TextValueAccessor } from '@beeq/angular';
+...
 const VALUE_ACCESSORS = [BooleanValueAccessor, TextValueAccessor];
 
 @NgModule({
   declarations: [AppComponent, ...VALUE_ACCESSORS],
   imports: [BeeQModule.forRoot(), BrowserModule, FormsModule],
-  providers: [],
-  bootstrap: [AppComponent],
-  schemas: [],
+  ...
 })
 export class AppModule {}
 ```
@@ -173,6 +185,39 @@ export class AppComponent {
 
   onSliderChange() {
     console.log('Slider value changed!', this.sliderValue);
+  }
+}
+```
+
+### Using BEEQ components in Angular standalone
+
+You can also use BEEQ components in Angular standalone. To do so, you will need to import the components from `@beeq/angular/standalone` and use them as you would use any other Angular component.
+
+```ts
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { BqButton, BqCard, BqInput } from '@beeq/angular/standalone';
+
+@Component({
+  selector: 'app-component',
+  standalone: true,
+  imports: [BqButton, BqCard, BqInput],
+  template: `
+    <bq-card>
+      <bq-input name="email" [value]="emailValue" (bqChange)="onInputChange($event)">
+        <label slot="label">Your email</label>
+      </bq-input>
+      <bq-button>Subscribe me!</bq-button>
+    </bq-card>
+  `,
+  styles: [],
+  schemas: [],
+})
+export class AppComponent2 {
+  emailValue = 'BEEQ Design System';
+
+  onInputChange(event: CustomEvent<{ value: string }>) {
+    console.log('emailValue', event.detail.value);
   }
 }
 ```

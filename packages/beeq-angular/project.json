@@ -11,14 +11,14 @@
       "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/beeq-angular"],
       "options": {
-        "project": "packages/beeq-angular/ng-package.json"
+        "project": "{projectRoot}/ng-package.json"
       },
       "configurations": {
         "production": {
-          "tsConfig": "packages/beeq-angular/tsconfig.lib.prod.json"
+          "tsConfig": "{projectRoot}/tsconfig.lib.prod.json"
         },
         "development": {
-          "tsConfig": "packages/beeq-angular/tsconfig.lib.json"
+          "tsConfig": "{projectRoot}/tsconfig.lib.json"
         }
       },
       "defaultConfiguration": "production"

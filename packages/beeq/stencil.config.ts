@@ -16,10 +16,12 @@ const tailwindOpts: PluginConfigOpts = {
   stripComments: true,
 };
 
-const componentCorePackage = '@beeq/core';
+const namespace = 'beeq';
+const componentCorePackage = `@${namespace}/core`;
+const customElementsDir = 'dist/components';
 
 export const config: Config = {
-  namespace: 'beeq',
+  namespace,
   taskQueue: 'async',
   buildDist: true,
   enableCache: true,
@@ -50,7 +52,8 @@ export const config: Config = {
     { type: 'dist-hydrate-script', dir: 'dist/hydrate' },
     {
       type: 'dist-custom-elements',
-      customElementsExportBehavior: 'auto-define-custom-elements',
+      customElementsExportBehavior: 'single-export-module',
+      dir: customElementsDir,
       minify: true,
     },
     {
@@ -63,19 +66,35 @@ export const config: Config = {
     },
     angular({
       componentCorePackage,
+      outputType: 'component', // Generate many component wrappers tied to a single Angular module (lazy/hydrated approach)
       directivesProxyFile: resolve(__dirname, '../beeq-angular/src/directives/components.ts').replace(/\\/g, '/'),
       directivesArrayFile: resolve(__dirname, '../beeq-angular/src/directives/index.ts').replace(/\\/g, '/'),
       valueAccessorConfigs: angularValueAccessorBindings,
+      customElementsDir,
+    }),
+    angular({
+      componentCorePackage,
+      outputType: 'standalone', // Generate a component with the standalone flag set to true.
+      directivesProxyFile: resolve(__dirname, '../beeq-angular/standalone/src/directives/components.ts').replace(
+        /\\/g,
+        '/',
+      ),
+      directivesArrayFile: resolve(__dirname, '../beeq-angular/standalone/src/directives/index.ts').replace(/\\/g, '/'),
+      valueAccessorConfigs: angularValueAccessorBindings,
+      customElementsDir,
     }),
     react({
       componentCorePackage,
       proxiesFile: resolve(__dirname, '../beeq-react/src/components.ts').replace(/\\/g, '/'),
-      includeDefineCustomElements: true,
+      includeImportCustomElements: true,
+      customElementsDir,
     }),
     vue({
       componentCorePackage,
       proxiesFile: resolve(__dirname, '../beeq-vue/src/components.ts').replace(/\\/g, '/'),
       componentModels: vueComponentModels,
+      includeImportCustomElements: true,
+      customElementsDir,
     }),
   ],
   extras: {
