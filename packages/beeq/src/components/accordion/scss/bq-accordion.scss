@@ -10,7 +10,11 @@
 
 .bq-accordion {
   &.disabled {
-    @apply pointer-events-none cursor-not-allowed opacity-60;
+    @apply cursor-not-allowed opacity-60;
+
+    .bq-accordion__header {
+      @apply pointer-events-none;
+    }
   }
 
   &.small .bq-accordion__header {
