@@ -78,7 +78,8 @@
         "{workspaceRoot}/packages/beeq-angular/src/directives",
         "{workspaceRoot}/packages/beeq-angular/standalone/src/directives",
         "{workspaceRoot}/packages/beeq-react/src/react-component-lib",
-        "{workspaceRoot}/packages/beeq-vue/src/components.ts"
+        "{workspaceRoot}/packages/beeq-vue/src/components.ts",
+        "{workspaceRoot}/packages/beeq-vue/src/vue-component-lib"
       ],
       "options": {
         "projectType": "library",
