@@ -95,7 +95,7 @@
       }
     },
     "storybook-build": {
-      "dependsOn": ["storybook-build-css"],
+      "dependsOn": ["build", "storybook-build-css"],
       "executor": "@nx/storybook:build",
       "outputs": ["{options.outputDir}", "{options.config.configDir}"],
       "options": {

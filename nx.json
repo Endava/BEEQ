@@ -41,7 +41,6 @@
       "cache": true
     },
     "storybook-build": {
-      "dependsOn": ["^build"],
       "cache": true
     },
     "storybook-build-css": {
