@@ -70,11 +70,11 @@ export class BqDropdown {
   }
 
   @Watch('disabled')
-  handleDisabledChange(newValue: boolean) {
-    const bqButton = document.querySelector('bq-button');
-    if (!bqButton) return;
+  handleDisabledChange() {
+    if (!this.triggerElem) return;
 
-    bqButton.disabled = newValue;
+    // set 'disabled' attribute based on 'this.disabled' value, ensuring consistent state handling
+    this.disabled ? this.triggerElem?.setAttribute('disabled', 'true') : this.triggerElem?.removeAttribute('disabled');
   }
 
   // Events section
@@ -90,7 +90,7 @@ export class BqDropdown {
 
   componentDidLoad() {
     this.triggerElem = this.el.querySelector('[slot="trigger"]');
-    this.handleDisabledChange(this.disabled);
+    this.handleDisabledChange();
   }
 
   // Listeners
