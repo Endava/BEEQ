@@ -81,17 +81,17 @@ jobs:
       - run:
           name: 🩺 Run Linters
           command: |
-            npx nx affected -t lint --exclude='*,!tag:publishable' --output-style=stream-without-prefixes --base=$NX_BASE --head=$NX_HEAD -- --ci --code-coverage --runInBand --verbose
+            npx nx affected -t lint --exclude='*,!tag:publishable' --output-style=stream-without-prefixes --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 🧰 Run Unit Tests
           command: |
-            npx nx affected -t test --exclude='*,!tag:publishable' --output-style=stream-without-prefixes --base=$NX_BASE --head=$NX_HEAD -- --ci --code-coverage --runInBand --verbose
+            npx nx affected -t test --exclude='*,!tag:publishable' --output-style=stream-without-prefixes --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: ⏳ Build
           command: npm run build
       - run:
           name: 🧪 Run E2E Tests
-          command: npx nx affected -t e2e --exclude='*,!tag:core' --output-style=stream-without-prefixes --base=$NX_BASE --head=$NX_HEAD -- --ci --code-coverage --runInBand --verbose
+          command: npx nx affected -t e2e --exclude='*,!tag:core' --output-style=stream-without-prefixes --base=$NX_BASE --head=$NX_HEAD --ci --code-coverage --runInBand --verbose
       - store_test_results:
           name: 📥 Store test results
           # Special step used to upload and store test results for a build (when available)
