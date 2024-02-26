@@ -1,6 +1,6 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
-import { ifDefined } from 'lit/directives/if-defined.js';
 import { html, nothing } from 'lit-html';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import { default as metaInput } from './bq-input.stories';
 import mdxSearch from './bq-search.mdx';
