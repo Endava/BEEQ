@@ -171,7 +171,7 @@
     "stylelint": {
       "executor": "nx-stylelint:lint",
       "outputs": ["{options.outputFile}"],
-      "dependsOn": [{ "target": "beeq-tailwindcss:build" }],
+      "dependsOn": [{ "target": "build", "projects": "beeq-tailwindcss" }],
       "options": {
         "lintFilePatterns": ["{projectRoot}/**/*.css", "{projectRoot}/**/*.scss"],
         "configFile": "packages/beeq/.stylelintrc.json"
