@@ -28,7 +28,7 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "dependsOn": ["^build"],
+      "dependsOn": ["build"],
       "options": {
         "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/package.json", "{projectRoot}/project.json"]
       }

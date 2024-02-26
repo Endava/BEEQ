@@ -163,14 +163,7 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "dependsOn": [
-        {
-          "target": "beeq-tailwindcss:build"
-        },
-        {
-          "target": "stylelint"
-        }
-      ],
+      "dependsOn": [{ "target": "stylelint" }],
       "options": {
         "lintFilePatterns": ["{projectRoot}/**/*.{ts,tsx}", "{projectRoot}/package.json", "{projectRoot}/project.json"]
       }
@@ -178,6 +171,7 @@
     "stylelint": {
       "executor": "nx-stylelint:lint",
       "outputs": ["{options.outputFile}"],
+      "dependsOn": [{ "target": "beeq-tailwindcss:build" }],
       "options": {
         "lintFilePatterns": ["{projectRoot}/**/*.css", "{projectRoot}/**/*.scss"],
         "configFile": "packages/beeq/.stylelintrc.json"
