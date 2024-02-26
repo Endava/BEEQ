@@ -69,6 +69,14 @@ export class BqDropdown {
     this.bqOpen.emit({ open: this.open });
   }
 
+  @Watch('disabled')
+  handleDisabledChange(newValue: boolean) {
+    const bqButton = document.querySelector('bq-button');
+    if (!bqButton) return;
+
+    bqButton.disabled = newValue;
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
@@ -82,6 +90,7 @@ export class BqDropdown {
 
   componentDidLoad() {
     this.triggerElem = this.el.querySelector('[slot="trigger"]');
+    this.handleDisabledChange(this.disabled);
   }
 
   // Listeners
