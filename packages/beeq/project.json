@@ -165,6 +165,9 @@
       "executor": "@nx/eslint:lint",
       "dependsOn": [
         {
+          "target": "beeq-tailwindcss:build"
+        },
+        {
           "target": "stylelint"
         }
       ],

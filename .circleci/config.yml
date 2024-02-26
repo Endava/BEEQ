@@ -49,6 +49,9 @@ jobs:
       # Checkout the code as the first step.
       - checkout
       - setup-node
+      - run:
+          name: 👮‍♂️ Start Nx Cloud Agents
+          command: npx nx-cloud start-ci-run --distribute-on="5 linux-medium-js" --stop-agents-after="e2e"
       - restore_cache:
           name: 💫 Restore Cache dependencies
           # CircleCI will first try to load a cache associated with the current version of package-lock.json.
