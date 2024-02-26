@@ -8,8 +8,8 @@
   "executors": "./executors.json",
   "dependencies": {
     "nanospinner": "^1.1.0",
-    "fs-extra": "11.1.1",
-    "prettier": "^3.0.3",
+    "fs-extra": "^11.2.0",
+    "prettier": "^3.2.5",
     "decompress": "^4.2.1"
   }
 }
