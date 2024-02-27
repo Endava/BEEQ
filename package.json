@@ -139,6 +139,7 @@
     "prettier": "3.2.5",
     "prettier-plugin-tailwindcss": "0.5.11",
     "puppeteer": "22.2.0",
+    "react-syntax-highlighter": "15.5.0",
     "rimraf": "5.0.5",
     "stencil-tailwind-plugin": "1.8.0",
     "storybook": "7.6.17",
