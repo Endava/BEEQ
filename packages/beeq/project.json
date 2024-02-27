@@ -78,7 +78,8 @@
         "{workspaceRoot}/packages/beeq-angular/src/directives",
         "{workspaceRoot}/packages/beeq-angular/standalone/src/directives",
         "{workspaceRoot}/packages/beeq-react/src/react-component-lib",
-        "{workspaceRoot}/packages/beeq-vue/src/components.ts"
+        "{workspaceRoot}/packages/beeq-vue/src/components.ts",
+        "{workspaceRoot}/packages/beeq-vue/src/vue-component-lib"
       ],
       "options": {
         "projectType": "library",
@@ -95,7 +96,7 @@
       }
     },
     "storybook-build": {
-      "dependsOn": ["storybook-build-css"],
+      "dependsOn": ["build", "storybook-build-css"],
       "executor": "@nx/storybook:build",
       "outputs": ["{options.outputDir}", "{options.config.configDir}"],
       "options": {
@@ -163,11 +164,7 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "dependsOn": [
-        {
-          "target": "stylelint"
-        }
-      ],
+      "dependsOn": [{ "target": "stylelint" }],
       "options": {
         "lintFilePatterns": ["{projectRoot}/**/*.{ts,tsx}", "{projectRoot}/package.json", "{projectRoot}/project.json"]
       }
@@ -175,6 +172,7 @@
     "stylelint": {
       "executor": "nx-stylelint:lint",
       "outputs": ["{options.outputFile}"],
+      "dependsOn": [{ "target": "build", "projects": "beeq-tailwindcss" }],
       "options": {
         "lintFilePatterns": ["{projectRoot}/**/*.css", "{projectRoot}/**/*.scss"],
         "configFile": "packages/beeq/.stylelintrc.json"

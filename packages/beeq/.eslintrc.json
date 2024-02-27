@@ -14,7 +14,7 @@
       "version": "detect"
     }
   },
-  "ignorePatterns": ["**/*.spec.ts", "**/*.spec.tsx"],
+  "ignorePatterns": ["**/*.e2e.ts", "**/*.spec.ts", "**/*.spec.tsx"],
   "overrides": [
     {
       "parserOptions": {

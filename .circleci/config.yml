@@ -27,9 +27,8 @@ commands:
     description: Publish changes to Chromatic storybook
     steps:
       - run:
-          name: 📚 Publish to Chromatic
-          command: |
-            npx chromatic --project-token=${CHROMATIC_PROJECT_TOKEN} --ci --debug --no-file-hashing
+          name: 🚀 Publish to Chromatic
+          command: npx chromatic --project-token=${CHROMATIC_PROJECT_TOKEN} --ci --debug --no-file-hashing
 
 # ---------------------------------------------------------------------------- #
 #                         Jobs are collections of steps                        #
@@ -48,6 +47,9 @@ jobs:
     steps:
       # Checkout the code as the first step.
       - checkout
+      - run:
+          name: 👮‍♂️ Start Nx Cloud Agents
+          command: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="storybook-build"
       - setup-node
       - restore_cache:
           name: 💫 Restore Cache dependencies
@@ -76,26 +78,24 @@ jobs:
       - nx/set-shas
           # Derives SHAs for base and head for use in `nx affected` commands in CI
       - run:
-          name: 🎨 Build BEEQ Tailwind CSS preset
-          command: npx nx run beeq-tailwindcss:build --base=$NX_BASE --head=$NX_HEAD --output-style=stream-without-prefixes
-      - run:
           name: 🩺 Run Linters
-          command: |
-            npx nx affected -t lint --exclude='*,!tag:publishable' --output-style=stream-without-prefixes --base=$NX_BASE --head=$NX_HEAD -- --ci --code-coverage --runInBand
+          command: npx nx affected -t lint --exclude='*,!tag:publishable' --parallel=3 --output-style=stream-without-prefixes --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 🧰 Run Unit Tests
-          command: |
-            npx nx affected -t test --exclude='*,!tag:publishable' --output-style=stream-without-prefixes --base=$NX_BASE --head=$NX_HEAD -- --ci --code-coverage --runInBand
+          command: npx nx affected -t test --exclude='*,!tag:publishable' --parallel=1 --output-style=stream-without-prefixes --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
-          name: ⏳ Build
-          command: npm run build
+          name: ⏳ Build Libraries
+          command: npx nx affected -t build --exclude='*,!tag:publishable' --parallel=3 --output-style=stream-without-prefixes --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 🧪 Run E2E Tests
-          command: npx nx affected -t e2e --exclude='*,!tag:core' --output-style=stream-without-prefixes --base=$NX_BASE --head=$NX_HEAD -- --ci --code-coverage --runInBand
+          command: npx nx affected -t e2e --exclude='*,!tag:core' --parallel=1 --output-style=stream-without-prefixes --base=$NX_BASE --head=$NX_HEAD --ci --code-coverage --runInBand --verbose
       - store_test_results:
           name: 📥 Store test results
           # Special step used to upload and store test results for a build (when available)
           path: test-results
+      - run:
+          name: 📚 Build Storybook
+          command: npx nx affected -t storybook-build --parallel=1 --output-style=stream-without-prefixes --base=$NX_BASE --head=$NX_HEAD --verbose
       - chromatic-deployment
 
 # ---------------------------------------------------------------------------- #

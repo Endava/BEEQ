@@ -15,7 +15,8 @@
         "outputPath": "dist/beeq-react",
         "project": "packages/beeq-react/package.json",
         "tsConfig": "packages/beeq-react/tsconfig.lib.json"
-      }
+      },
+      "dependsOn": [{ "target": "build", "projects": "beeq" }]
     },
     "lint": {
       "executor": "@nx/eslint:lint",
