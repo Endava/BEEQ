@@ -69,6 +69,14 @@ export class BqDropdown {
     this.bqOpen.emit({ open: this.open });
   }
 
+  @Watch('disabled')
+  handleDisabledChange() {
+    if (!this.triggerElem) return;
+
+    // set 'disabled' attribute based on 'this.disabled' value, ensuring consistent state handling
+    this.disabled ? this.triggerElem?.setAttribute('disabled', 'true') : this.triggerElem?.removeAttribute('disabled');
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
@@ -82,6 +90,7 @@ export class BqDropdown {
 
   componentDidLoad() {
     this.triggerElem = this.el.querySelector('[slot="trigger"]');
+    this.handleDisabledChange();
   }
 
   // Listeners
