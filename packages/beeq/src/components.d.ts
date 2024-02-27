@@ -440,6 +440,10 @@ export namespace Components {
      */
     interface BqIcon {
         /**
+          * The icon aria-label
+         */
+        "ariaLabel"?: string;
+        /**
           * Set the stroke color of the SVG. The value should be a valid value of the palette color
          */
         "color"?: string;
@@ -2409,6 +2413,10 @@ declare namespace LocalJSX {
      * Icons are simplified images that graphically explain the meaning of an object on the screen.
      */
     interface BqIcon {
+        /**
+          * The icon aria-label
+         */
+        "ariaLabel"?: string;
         /**
           * Set the stroke color of the SVG. The value should be a valid value of the palette color
          */
