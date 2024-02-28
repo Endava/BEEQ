@@ -1,7 +1,14 @@
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 
 import { SPINNER_SIZE, SPINNER_TEXT_POSITION, TSpinnerSize, TSpinnerTextPosition } from './bq-spinner.types';
-import { getCSSVariableValue, getTextContent, hasSlotContent, isNil, validatePropValue } from '../../shared/utils';
+import {
+  getCSSVariableValue,
+  getTextContent,
+  hasSlotContent,
+  isHTMLElement,
+  isNil,
+  validatePropValue,
+} from '../../shared/utils';
 
 /**
  * Spinners are designed for users to display data loading.
@@ -145,13 +152,13 @@ export class BqSpinner {
     this.bqIcon.size = parseInt(getCSSVariableValue(`bq-spinner--size-${this.size}`, this.el)).toString();
   }
 
-  private get bqIcon(): HTMLBqIconElement | undefined {
-    if (!this.hasIconSlot) return;
+  private get bqIcon(): HTMLBqIconElement | null {
+    if (!this.hasIconSlot) return null;
 
     const slot = this.iconSlotElem.querySelector('slot');
 
-    return [...slot.assignedElements({ flatten: true })].filter(
-      (el: Element) => el.tagName.toLocaleLowerCase() === 'bq-icon',
+    return [...slot.assignedElements({ flatten: true })].filter((el: Element) =>
+      isHTMLElement(el, 'bq-icon'),
     )[0] as HTMLBqIconElement;
   }
 
