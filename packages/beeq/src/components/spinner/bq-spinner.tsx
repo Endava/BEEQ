@@ -140,16 +140,19 @@ export class BqSpinner {
   }
 
   private setIconSize(): void {
+    if (!this.hasIconSlot || !this.bqIcon) return;
+
+    this.bqIcon.size = parseInt(getCSSVariableValue(`bq-spinner--size-${this.size}`, this.el)).toString();
+  }
+
+  private get bqIcon(): HTMLBqIconElement | undefined {
     if (!this.hasIconSlot) return;
 
-    const iconElements = this.iconSlotElem
-      .querySelector<HTMLSlotElement>(`slot[name="icon"]`)
-      ?.assignedElements({ flatten: true })
-      .filter((element) => element.nodeName === 'BQ-ICON');
+    const slot = this.iconSlotElem.querySelector('slot');
 
-    iconElements.forEach((element: HTMLBqIconElement) => {
-      element.size = parseInt(getCSSVariableValue(`bq-spinner--size-${this.size}`, this.el)).toString();
-    });
+    return [...slot.assignedElements({ flatten: true })].filter(
+      (el: Element) => el.tagName.toLocaleLowerCase() === 'bq-icon',
+    )[0] as HTMLBqIconElement;
   }
 
   // render() function

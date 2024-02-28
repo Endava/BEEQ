@@ -19,16 +19,16 @@ const meta: Meta = {
   },
   argTypes: {
     icons: { table: { disable: true } },
-    'aria-label': { control: 'text' },
     color: { control: 'text' },
+    label: { control: 'text' },
     name: { control: 'select', options: [...ICONS_SET] },
     size: { control: 'number' },
     src: { control: 'text' },
     weight: { control: 'select', options: [...ICON_WEIGHT] },
   },
   args: {
-    'aria-label': undefined,
     color: 'text--brand',
+    label: undefined,
     size: 24,
     src: undefined,
     weight: 'regular',
@@ -40,8 +40,8 @@ type Story = StoryObj;
 
 const Template = (args: Args) => html`
   <bq-icon
-    ariaLabel=${ifDefined(args['aria-label'])}
     color=${ifDefined(args.color)}
+    label=${ifDefined(args.label)}
     name=${ifDefined(args.name)}
     size=${ifDefined(args.size)}
     src=${ifDefined(args.src)}

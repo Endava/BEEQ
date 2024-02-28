@@ -440,13 +440,13 @@ export namespace Components {
      */
     interface BqIcon {
         /**
-          * The icon aria-label, used for accessibility
-         */
-        "ariaLabel"?: string;
-        /**
           * Set the stroke color of the SVG. The value should be a valid value of the palette color
          */
         "color"?: string;
+        /**
+          * Label for the icon, used for accessibility
+         */
+        "label"?: string;
         /**
           * Icon name to load. Please check all available icons [here](https://phosphoricons.com/)
          */
@@ -2414,13 +2414,13 @@ declare namespace LocalJSX {
      */
     interface BqIcon {
         /**
-          * The icon aria-label, used for accessibility
-         */
-        "ariaLabel"?: string;
-        /**
           * Set the stroke color of the SVG. The value should be a valid value of the palette color
          */
         "color"?: string;
+        /**
+          * Label for the icon, used for accessibility
+         */
+        "label"?: string;
         /**
           * Icon name to load. Please check all available icons [here](https://phosphoricons.com/)
          */
