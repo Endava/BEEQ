@@ -48,8 +48,8 @@ jobs:
       # Checkout the code as the first step.
       - checkout
       - run:
-          name: 👮‍♂️ Start Nx Cloud Agents
-          command: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="storybook-build"
+          name: ▶️ Start Nx Cloud Agents
+          command: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js"
       - setup-node
       - restore_cache:
           name: 💫 Restore Cache dependencies
@@ -71,10 +71,6 @@ jobs:
           key: node-deps-{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-{{checksum "package-lock.json"}}
           paths:
             - node_modules
-      - run:
-          name: 🗂️ Create `test-results` directory
-          # Use to store the test results
-          command: mkdir -p ./test-results
       - nx/set-shas
           # Derives SHAs for base and head for use in `nx affected` commands in CI
       - run:
@@ -89,13 +85,12 @@ jobs:
       - run:
           name: 🧪 Run E2E Tests
           command: npx nx affected -t e2e --exclude='*,!tag:core' --parallel=1 --output-style=stream-without-prefixes --base=$NX_BASE --head=$NX_HEAD --ci --code-coverage --runInBand --verbose
-      - store_test_results:
-          name: 📥 Store test results
-          # Special step used to upload and store test results for a build (when available)
-          path: test-results
       - run:
           name: 📚 Build Storybook
           command: npx nx affected -t storybook-build --parallel=1 --output-style=stream-without-prefixes --base=$NX_BASE --head=$NX_HEAD --verbose
+      - run:
+          name: ⏹️ Stop Nx Cloud Agents
+          command: npx nx-cloud stop-all-agents
       - chromatic-deployment
 
 # ---------------------------------------------------------------------------- #
