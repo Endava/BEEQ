@@ -32,6 +32,9 @@ export class BqIcon {
   // Public Property API
   // ========================
 
+  /** Label for the icon, used for accessibility */
+  @Prop({ reflect: true }) label?: string;
+
   /** Set the stroke color of the SVG. The value should be a valid value of the palette color */
   @Prop({ reflect: true }) color?: string;
 
@@ -125,11 +128,11 @@ export class BqIcon {
     return (
       <Host style={styles}>
         <div
+          aria-label={this.label ?? `${this.name} icon`}
           class="flex h-[var(--bq-icon--size)] w-[var(--bq-icon--size)] text-[color:var(--bq-icon--color)]"
           innerHTML={this._svgContent}
           part="base"
           role="img"
-          title={`${this.name} icon`}
         />
       </Host>
     );

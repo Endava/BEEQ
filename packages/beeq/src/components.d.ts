@@ -444,6 +444,10 @@ export namespace Components {
          */
         "color"?: string;
         /**
+          * Label for the icon, used for accessibility
+         */
+        "label"?: string;
+        /**
           * Icon name to load. Please check all available icons [here](https://phosphoricons.com/)
          */
         "name": string;
@@ -2413,6 +2417,10 @@ declare namespace LocalJSX {
           * Set the stroke color of the SVG. The value should be a valid value of the palette color
          */
         "color"?: string;
+        /**
+          * Label for the icon, used for accessibility
+         */
+        "label"?: string;
         /**
           * Icon name to load. Please check all available icons [here](https://phosphoricons.com/)
          */
