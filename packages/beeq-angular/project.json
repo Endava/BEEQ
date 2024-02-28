@@ -21,7 +21,8 @@
           "tsConfig": "{projectRoot}/tsconfig.lib.json"
         }
       },
-      "defaultConfiguration": "production"
+      "defaultConfiguration": "production",
+      "dependsOn": [{ "target": "build", "projects": "beeq" }]
     },
     "lint": {
       "executor": "@nx/eslint:lint",

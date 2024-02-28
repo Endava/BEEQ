@@ -31,6 +31,7 @@
       "cache": true
     },
     "e2e": {
+      "dependsOn": [{ "target": "build", "projects": "beeq" }],
       "inputs": ["default", "^production"],
       "cache": true
     },
