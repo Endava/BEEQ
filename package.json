@@ -154,7 +154,7 @@
     "vite": "5.1.4",
     "vite-plugin-turbosnap": "1.0.3",
     "vite-tsconfig-paths": "4.2.3",
-    "vue": "3.4.19"
+    "vue": "3.4.20"
   },
   "overrides": {
     "@nxext/stencil": {
