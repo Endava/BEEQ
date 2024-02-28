@@ -440,7 +440,7 @@ export namespace Components {
      */
     interface BqIcon {
         /**
-          * The icon aria-label
+          * The icon aria-label, used for accessibility
          */
         "ariaLabel"?: string;
         /**
@@ -2414,7 +2414,7 @@ declare namespace LocalJSX {
      */
     interface BqIcon {
         /**
-          * The icon aria-label
+          * The icon aria-label, used for accessibility
          */
         "ariaLabel"?: string;
         /**
