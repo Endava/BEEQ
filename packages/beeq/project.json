@@ -62,15 +62,7 @@
       }
     },
     "build": {
-      "dependsOn": [
-        {
-          "target": "icons"
-        },
-        {
-          "projects": ["beeq-tailwindcss"],
-          "target": "build"
-        }
-      ],
+      "dependsOn": [{ "target": "icons" }, { "target": "build", "projects": "beeq-tailwindcss" }],
       "executor": "@nxext/stencil:build",
       "outputs": [
         "{options.outputPath}",
@@ -96,7 +88,6 @@
       }
     },
     "storybook-build": {
-      "dependsOn": ["build", "storybook-build-css"],
       "executor": "@nx/storybook:build",
       "outputs": ["{options.outputDir}", "{options.config.configDir}"],
       "options": {
@@ -146,7 +137,8 @@
         "projectType": "library",
         "tsConfig": "packages/beeq/tsconfig.lib.json",
         "configPath": "packages/beeq/stencil.config.ts",
-        "outputPath": "dist/beeq"
+        "outputPath": "dist/beeq",
+        "runInBand": true
       }
     },
     "e2e": {

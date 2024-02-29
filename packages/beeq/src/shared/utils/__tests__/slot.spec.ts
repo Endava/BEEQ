@@ -33,7 +33,7 @@ describe('slot', () => {
     });
 
     it('should return slot innerHTML', () => {
-      slot.assignedNodes.mockImplementationOnce((options) => [document.createElement('div')]);
+      slot.assignedNodes.mockImplementationOnce(() => [document.createElement('div')]);
       expect(getInnerHTML(slot)).toEqual('<div></div>');
     });
 
