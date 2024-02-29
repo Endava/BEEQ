@@ -1,6 +1,6 @@
 export const EndavaRootTheme = {
   // Fonts
-  'bq-font-family': "'Roboto', sans-serif",
+  'bq-font-family': "'Poppins', sans-serif",
   'bq-white': '#fafbfb',
   'bq-black': '#030406',
   // Neutrals
