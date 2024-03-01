@@ -4,6 +4,7 @@ version: 2.1
 
 orbs:
   nx: nrwl/nx@1.6.2
+  sonarcloud: sonarsource/sonarcloud@2.0.0
 
 # ---------------------------------------------------------------------------- #
 #              Sequence of steps as a map to be executed in a job              #
@@ -34,6 +35,12 @@ commands:
 #                         Jobs are collections of steps                        #
 # ---------------------------------------------------------------------------- #
 jobs:
+  sonarcloud-scan:
+      docker:
+        - image: sonarsource/sonarcloud-scan:latest
+      steps:
+        - checkout
+        - sonarcloud/scan
   build-and-test:
     # You can specify an image from DockerHub or use one of our Convenience/Machine Images from CircleCI's Developer Hub.
     # A list of available CircleCI Docker Machine Images are available here: https://circleci.com/developer/images?imageType=machine
@@ -99,4 +106,5 @@ jobs:
 workflows:
   ⏳ Build and Test:
     jobs:
+      - sonarcloud-scan
       - build-and-test
