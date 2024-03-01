@@ -32,6 +32,7 @@ import { DocsContainer, Meta, Source, Typeset } from '@storybook/blocks';
       };
 
       const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+      const fontUrl = `https://fonts.google.com/specimen/${globals.theme.toLowerCase() === 'beeq' ? 'Outfit' : 'Poppins'}`
 
       return (
         <DocsContainer context={context}>
@@ -44,7 +45,12 @@ import { DocsContainer, Meta, Source, Typeset } from '@storybook/blocks';
                 BEEQ uses the Outfit font, a versatile and modern typeface that caters to a wide range of typographical needs.
               </p>
 
-              <p><strong>Font:</strong> <a className="bq-link text-text-brand" href="https://fonts.google.com/specimen/Outfit">Outfit</a></p>
+              <p>
+                <strong>Font:</strong>{' '}
+                <a className="bq-link text-text-brand" href={fontUrl}>
+                  {globals.theme.toLowerCase() === 'beeq' ? 'Outfit' : 'Poppins'}
+                </a>
+              </p>
 
               <p>The Outfit font is carefully selected for its excellent legibility, adaptability, and aesthetic appeal, ensuring a cohesive and visually pleasing user experience.</p>
 
