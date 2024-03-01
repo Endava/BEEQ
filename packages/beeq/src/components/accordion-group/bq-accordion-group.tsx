@@ -1,6 +1,7 @@
 import { Component, Element, h, Listen, Prop, Watch } from '@stencil/core';
 
 import { isNil } from '../../shared/utils';
+import { TAccordionAppearance, TAccordionSize } from '../accordion/bq-accordion.types';
 
 /**
  * @part base - The component's base wrapper.
@@ -32,16 +33,26 @@ export class BqAccordionGroup {
   /** If true multiple accordions can be expanded at the same time */
   @Prop({ reflect: true }) multiple: boolean = false;
 
+  /** The appearance style of accordion to be applied to all accordions */
+  @Prop({ reflect: true, mutable: true }) appearance: TAccordionAppearance = 'filled';
+
+  /** The size of accordion to be applied to all accordions */
+  @Prop({ reflect: true, mutable: true }) size: TAccordionSize = 'medium';
+
   // Prop lifecycle events
   // =======================
 
   @Watch('expandAll')
+  @Watch('appearance')
+  @Watch('size')
   checkPropValues() {
     this.bqAccordionElements.forEach((bqAccordionElement) => {
       // NOTE: if expandAll is nil we will keep accordion default state
       if (!isNil(this.expandAll)) {
         bqAccordionElement.expanded = this.expandAll;
       }
+      bqAccordionElement.appearance = this.appearance;
+      bqAccordionElement.size = this.size;
     });
   }
 

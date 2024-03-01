@@ -33,8 +33,13 @@ type Story = StoryObj;
 
 export const Group: Story = {
   render: (args: Args) => html`
-    <bq-accordion-group ?expand-all=${args['expand-all']} ?multiple=${args.multiple}>
-      <bq-accordion size=${args.size} appearance=${args.appearance}>
+    <bq-accordion-group
+      ?expand-all=${args['expand-all']}
+      ?multiple=${args.multiple}
+      size=${args.size}
+      appearance=${args.appearance}
+    >
+      <bq-accordion size=${args.size}>
         <span slot="header">${args.text}</span>
         <div>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque magnam corporis perferendis, architecto vel
@@ -42,7 +47,7 @@ export const Group: Story = {
           consequatur ea.
         </div>
       </bq-accordion>
-      <bq-accordion size=${args.size} appearance=${args.appearance} expanded>
+      <bq-accordion expanded>
         <span slot="header">${args.text}</span>
         <div>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque magnam corporis perferendis, architecto vel
@@ -50,7 +55,7 @@ export const Group: Story = {
           consequatur ea.
         </div>
       </bq-accordion>
-      <bq-accordion size=${args.size} appearance=${args.appearance} disabled>
+      <bq-accordion disabled>
         <span slot="header">${args.text}</span>
         <div>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque magnam corporis perferendis, architecto vel
@@ -58,7 +63,7 @@ export const Group: Story = {
           consequatur ea.
         </div>
       </bq-accordion>
-      <bq-accordion size=${args.size} appearance=${args.appearance}>
+      <bq-accordion>
         <span slot="header">${args.text}</span>
         <div>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque magnam corporis perferendis, architecto vel
