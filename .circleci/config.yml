@@ -74,11 +74,11 @@ jobs:
       - nx/set-shas
           # Derives SHAs for base and head for use in `nx affected` commands in CI
       - run:
-          name: 🩺 Run Linters
-          command: npx nx affected -t lint --exclude='*,!tag:publishable' --parallel=3 --base=$NX_BASE --head=$NX_HEAD
-      - run:
           name: ⏳ Build Libraries
           command: npx nx affected -t build --exclude='*,!tag:publishable' --parallel=3 --base=$NX_BASE --head=$NX_HEAD
+      - run:
+          name: 🩺 Run Linters
+          command: npx nx affected -t lint --exclude='*,!tag:publishable' --parallel=3 --base=$NX_BASE --head=$NX_HEAD
       - run:
           name: 🧰 Run Unit Tests
           command: npx nx affected -t test --exclude='*,!tag:core' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --ci --runInBand
