@@ -127,7 +127,7 @@
     "lit": "3.1.2",
     "lit-html": "3.1.2",
     "nanospinner": "1.1.0",
-    "ng-packagr": "17.2.0",
+    "ng-packagr": "17.2.1",
     "ngx-deploy-npm": "8.0.1",
     "npm-run-all": "4.1.5",
     "nx": "18.0.7",
