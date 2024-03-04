@@ -9,7 +9,6 @@
 Fixes #ISSUE_NUMBER
 
 ## Documentation
-
 <!-- If this PR includes changes to the documentation, please describe the changes here. -->
 
 ## Screenshots (if applicable)

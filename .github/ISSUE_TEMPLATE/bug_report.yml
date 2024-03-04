@@ -62,5 +62,4 @@ body:
       description: List any other information that is relevant to your issue. Stack traces, related issues, suggestions on how to fix, Stack Overflow links, forum links, etc.
   - type: markdown
     attributes:
-      value: |
-        - Thank you for reporting this issue! We will review it and get back to you as soon as possible.
+      value: Thank you for reporting this issue! We will review it and get back to you as soon as possible.
