@@ -18,11 +18,12 @@ Fixes #ISSUE_NUMBER
 ## Checklist
 <!-- Please review the following checklist and make sure all of the items are addressed. -->
 
-- [ ] I have followed the coding guidelines.
+- [ ] I have read the [CONTRIBUTING](https://github.com/Endava/BEEQ/blob/main/CONTRIBUTING.md) document.
+- [ ] I have read the [CODE OF CONDUCT](https://github.com/Endava/BEEQ/blob/main/CODE_OF_CONDUCT.md) document.
 - [ ] I have reviewed my own code.
 - [ ] I have tested the changes locally.
 - [ ] I have updated the documentation (if applicable).
-- [ ] I have added unit tests (if applicable).
+- [ ] I have added unit tests and e2e tests (if applicable).
 - [ ] I have requested reviews from relevant team members.
 
 ## Additional Notes

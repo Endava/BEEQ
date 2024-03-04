@@ -33,6 +33,4 @@ body:
       description: List any other information that is relevant to your request. Stack traces, related issues, suggestions on how to fix, Stack Overflow links, forum links, etc.
   - type: markdown
     attributes:
-      value: |
-        - [ ] I have read the [CONTRIBUTING](https://github.com/Endava/BEEQ/blob/main/CONTRIBUTING.md) document.
-        - [ ] I have read the [CODE OF CONDUCT](https://github.com/Endava/BEEQ/blob/main/CODE_OF_CONDUCT.md) document.
+      value: Thank you for taking the time to suggest a feature for this project 🎉. We appreciate your feedback and will review your request as soon as we can.
