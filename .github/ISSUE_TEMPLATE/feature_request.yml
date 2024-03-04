@@ -1,0 +1,38 @@
+name: 💡 Feature Request
+description: Suggest an idea for this project
+title: 'Feat: [FEATURE]'
+labels:
+  - feature 🛠️
+body:
+  - type: textarea
+    attributes:
+      label: Describe the feature
+      description: A clear and concise description of what the feature does.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Describe the use case for this feature
+      description: A clear and concise description of the use case for this feature, what problem it solves, and how it will benefit the project.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Describe the solution you'd like
+      description: A clear and concise description of what you want to happen, how you want this feature to be implemented.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Related Code
+      description: |
+        If you have an idea of how this feature could be implemented, please provide a code example or a link to a repository.
+  - type: textarea
+    attributes:
+      label: Additional Information
+      description: List any other information that is relevant to your request. Stack traces, related issues, suggestions on how to fix, Stack Overflow links, forum links, etc.
+  - type: markdown
+    attributes:
+      value: |
+        - [ ] I have read the [CONTRIBUTING](https://github.com/Endava/BEEQ/blob/main/CONTRIBUTING.md) document.
+        - [ ] I have read the [CODE OF CONDUCT](https://github.com/Endava/BEEQ/blob/main/CODE_OF_CONDUCT.md) document.
