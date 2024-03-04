@@ -54,7 +54,7 @@
     "@angular/cli": "17.2.2",
     "@angular/compiler-cli": "17.2.3",
     "@angular/language-service": "17.2.3",
-    "@babel/core": "7.23.9",
+    "@babel/core": "7.24.0",
     "@babel/preset-react": "7.23.3",
     "@bee-q/storybook-addon-html": "5.1.7",
     "@chromatic-com/storybook": "1.2.1",
