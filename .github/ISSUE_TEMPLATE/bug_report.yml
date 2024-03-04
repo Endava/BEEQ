@@ -1,0 +1,66 @@
+name: 🐛 Bug Report
+description: Create a report to help us improve BEEQ
+title: 'Bug: [BUG]'
+labels:
+  - bug 🐛
+body:
+  - type: dropdown
+    attributes:
+      label: BEEQ package
+      description: Please select the package that your project is using and where the issue is reflected.
+      options:
+        - beeq/core
+        - beeq/angular
+        - beeq/react
+        - beeq/vue
+    validations:
+        required: true
+  - type: input
+    attributes:
+      label: BEEQ version
+      description: The version number of BEEQ where the issue is occurring.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Current Behavior
+      description: A clear and concise description of the issue and how it manifests.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: A clear and concise description of what you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to Reproduce
+      description: Provide a link to a live example, or an unambiguous set of steps to reproduce this bug. Include code to reproduce, if relevant.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Code Reproduction URL
+      description: |
+        Please reproduce this issue in a CodeSandbox or similar and provide the URL here.
+      placeholder: https://codesandbox.io/s/...
+  - type: textarea
+    attributes:
+      label: Your Environment
+      description: |
+        Include as many relevant details about the environment you experienced the bug in:
+      render: shell
+      placeholder: |
+        - OS: [e.g. Windows, macOS, Linux]
+        - Browser [e.g. Chrome, Safari]
+        - Version [e.g. 22]
+        - Additional context
+  - type: textarea
+    attributes:
+      label: Additional Information
+      description: List any other information that is relevant to your issue. Stack traces, related issues, suggestions on how to fix, Stack Overflow links, forum links, etc.
+  - type: markdown
+    attributes:
+      value: |
+        - Thank you for reporting this issue! We will review it and get back to you as soon as possible.
