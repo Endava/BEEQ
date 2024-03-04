@@ -67,6 +67,46 @@ describe('bq-accordion-group', () => {
     expect(elements).toHaveLength(0);
   });
 
+  it('should change appearance to all accordions', async () => {
+    const page = await newE2EPage({
+      html: `
+      <bq-accordion-group>
+        <bq-accordion></bq-accordion>
+        <bq-accordion></bq-accordion>
+        <bq-accordion></bq-accordion>
+      </bq-accordion-group>
+      `,
+    });
+
+    expect(await page.findAll('bq-accordion[appearance="ghost"]')).toHaveLength(0);
+
+    const element = await page.find('bq-accordion-group');
+    element.setProperty('appearance', 'ghost');
+    await page.waitForChanges();
+
+    expect(await page.findAll('bq-accordion[appearance="ghost"]')).toHaveLength(3);
+  });
+
+  it('should change size to all accordions', async () => {
+    const page = await newE2EPage({
+      html: `
+      <bq-accordion-group>
+        <bq-accordion></bq-accordion>
+        <bq-accordion></bq-accordion>
+        <bq-accordion></bq-accordion>
+      </bq-accordion-group>
+      `,
+    });
+
+    expect(await page.findAll('bq-accordion[size="small"]')).toHaveLength(0);
+
+    const element = await page.find('bq-accordion-group');
+    element.setProperty('size', 'small');
+    await page.waitForChanges();
+
+    expect(await page.findAll('bq-accordion[size="small"]')).toHaveLength(3);
+  });
+
   it('should emit bqClick on accordion click', async () => {
     const page = await newE2EPage({
       html: `

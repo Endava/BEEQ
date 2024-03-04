@@ -80,6 +80,10 @@ export namespace Components {
     }
     interface BqAccordionGroup {
         /**
+          * The appearance style of accordion to be applied to all accordions
+         */
+        "appearance": TAccordionAppearance;
+        /**
           * If true all accordions are expanded
          */
         "expandAll": boolean;
@@ -87,6 +91,10 @@ export namespace Components {
           * If true multiple accordions can be expanded at the same time
          */
         "multiple": boolean;
+        /**
+          * The size of accordion to be applied to all accordions
+         */
+        "size": TAccordionSize;
     }
     interface BqAlert {
         /**
@@ -1998,6 +2006,10 @@ declare namespace LocalJSX {
     }
     interface BqAccordionGroup {
         /**
+          * The appearance style of accordion to be applied to all accordions
+         */
+        "appearance"?: TAccordionAppearance;
+        /**
           * If true all accordions are expanded
          */
         "expandAll"?: boolean;
@@ -2005,6 +2017,10 @@ declare namespace LocalJSX {
           * If true multiple accordions can be expanded at the same time
          */
         "multiple"?: boolean;
+        /**
+          * The size of accordion to be applied to all accordions
+         */
+        "size"?: TAccordionSize;
     }
     interface BqAlert {
         /**
