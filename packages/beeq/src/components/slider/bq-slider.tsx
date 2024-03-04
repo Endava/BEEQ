@@ -290,7 +290,7 @@ export class BqSlider {
       <div
         class={{
           [`bq-slider ${this.type}`]: true,
-          'opacity-60': this.disabled,
+          'cursor-not-allowed opacity-60': this.disabled,
         }}
         part="base"
         aria-disabled={this.disabled ? 'true' : 'false'}

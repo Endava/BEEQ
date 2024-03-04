@@ -67,6 +67,14 @@
   @apply thumb-active;
 }
 
+.bq-slider__input[disabled]::-webkit-slider-thumb {
+  @apply cursor-not-allowed;
+}
+
+.bq-slider__input[disabled]::-moz-range-thumb {
+  @apply cursor-not-allowed;
+}
+
 .progress {
   @apply absolute z-[var(--bq-slider--z-index-progress)] h-[var(--bq-slider--size)] rounded-[var(--bq-slider--border-radius)] bg-[var(--bq-slider--progress-color)];
 }
