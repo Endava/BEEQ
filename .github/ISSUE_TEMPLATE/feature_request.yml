@@ -2,7 +2,7 @@ name: 💡 Feature Request
 description: Suggest an idea for this project
 title: 'Feat: [FEATURE]'
 labels:
-  - feature 🛠️
+  - feature 🛠
 body:
   - type: textarea
     attributes:
