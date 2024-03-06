@@ -217,7 +217,7 @@ export class BqSwitch {
           />
           {/* Control */}
           <div
-            class="bq-switch--control relative box-border flex h-[var(--switch--height)] w-[var(--switch--width)] justify-between rounded-full bg-ui-tertiary p-xs2 transition duration-300"
+            class="bq-switch--control relative box-border flex h-[--bq-switch--height] w-[--bq-switch--width] justify-between rounded-full bg-ui-tertiary p-xs2 transition duration-300"
             part="control"
           >
             {this.innerLabel === 'icon' && (

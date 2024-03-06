@@ -1,18 +1,4 @@
 {
   "extends": ["../../.stylelintrc.json"],
-  "rules": {
-    "at-rule-no-unknown": [
-      true,
-      {
-        "ignoreAtRules": ["apply", "include", "mixin", "responsive", "screen", "tailwind", "variants"]
-      }
-    ],
-    "comment-empty-line-before": null,
-    "custom-property-empty-line-before": null,
-    "custom-property-pattern": null,
-    "no-descending-specificity": null,
-    "no-invalid-position-at-import-rule": null,
-    "scss/double-slash-comment-empty-line-before": null,
-    "scss/operator-no-unspaced": null
-  }
+  "rules": {}
 }

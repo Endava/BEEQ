@@ -4,13 +4,13 @@
 
 :host {
   /**
-   * @prop --switch--height: Switch height
-   * @prop --switch--justify-content: Switch justify content
-   * @prop --switch--width: Switch width
-   * @prop --switch--dot-size: Switch dot size
+   * @prop --bq-switch--height: Switch height
+   * @prop --bq-switch--justify-content: Switch justify content
+   * @prop --bq-switch--width: Switch width
+   * @prop --bq-switch--dot-size: Switch dot size
    */
-  --switch--height: var(--bq-switch--size, 24px);
-  --switch--justify-content: var(--bq--switch--justify-content, 'start');
-  --switch--width: var(--bq-switch--width, 44px);
-  --switch--dot-size: calc(var(--switch--height) - (theme('spacing.xs2') * 2));
+  --bq-switch--height: 24px;
+  --bq-switch--justify-content: 'start';
+  --bq-switch--width: 44px;
+  --bq-switch--dot-size: calc(var(--bq-switch--height) - (theme('spacing.xs2') * 2));
 }
