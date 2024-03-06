@@ -1,12 +1,10 @@
-/*
+/**
  * This file contains components custom properties that needs to be set in the root scope.
  * In order to reduce the likelihood of conflicts, all CSS properties within the file must be prefixed with "--bq".
  */
 
 :root {
-  /* -------------------------------------------------------------------------- */
-  /*                                  Side menu                                 */
-  /* -------------------------------------------------------------------------- */
+  /* -------------------------------- Side menu ------------------------------- */
   --bq-side-menu--width: 256px;
   --bq-side-menu--width-collapse: 72px;
 }

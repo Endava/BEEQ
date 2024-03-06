@@ -15,7 +15,7 @@
 .bq-switch {
   @apply flex cursor-pointer select-none items-center rounded-s p-2 transition-colors duration-300;
 
-  justify-content: var(--switch--justify-content);
+  justify-content: var(--bq-switch--justify-content);
 
   // Display background on hover (if enabled)
   &.has-background:not(.is-disabled):hover {
@@ -38,19 +38,19 @@
     @apply bg-ui-brand;
 
     .bq-switch--control__dot {
-      @apply translate-x-[calc(var(--switch--width)_-_var(--switch--dot-size)_-_8px)];
+      @apply translate-x-[calc(var(--bq-switch--width)_-_var(--bq-switch--dot-size)_-_8px)];
     }
   }
 }
 
 .bq-switch--control__dot {
-  @apply absolute h-[var(--switch--dot-size)] w-[var(--switch--dot-size)] justify-end rounded-full;
+  @apply absolute h-[--bq-switch--dot-size] w-[--bq-switch--dot-size] justify-end rounded-full;
   @apply bg-icon-inverse group-[&.is-checked]:bg-[--bq-icon--alt];
   @apply transition duration-300;
 }
 
 .bq-switch--control__icon {
-  --bq-icon--size: var(--switch--dot-size) !important;
+  --bq-icon--size: var(--bq-switch--dot-size) !important;
 
   &::part(base) {
     @apply flex;
