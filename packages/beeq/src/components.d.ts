@@ -399,6 +399,8 @@ export namespace Components {
          */
         "titleAlignment"?: TDividerTitleAlignment;
     }
+    interface BqDrawer {
+    }
     interface BqDropdown {
         /**
           * If true, the dropdown panel will be visible and won't be shown.
@@ -1518,6 +1520,12 @@ declare global {
         prototype: HTMLBqDividerElement;
         new (): HTMLBqDividerElement;
     };
+    interface HTMLBqDrawerElement extends Components.BqDrawer, HTMLStencilElement {
+    }
+    var HTMLBqDrawerElement: {
+        prototype: HTMLBqDrawerElement;
+        new (): HTMLBqDrawerElement;
+    };
     interface HTMLBqDropdownElementEventMap {
         "bqOpen": { open: boolean };
     }
@@ -1941,6 +1949,7 @@ declare global {
         "bq-checkbox": HTMLBqCheckboxElement;
         "bq-dialog": HTMLBqDialogElement;
         "bq-divider": HTMLBqDividerElement;
+        "bq-drawer": HTMLBqDrawerElement;
         "bq-dropdown": HTMLBqDropdownElement;
         "bq-empty-state": HTMLBqEmptyStateElement;
         "bq-icon": HTMLBqIconElement;
@@ -2376,6 +2385,8 @@ declare namespace LocalJSX {
           * Set the alignment of the title on the main axis of the divider (horizontal / vertical)
          */
         "titleAlignment"?: TDividerTitleAlignment;
+    }
+    interface BqDrawer {
     }
     interface BqDropdown {
         /**
@@ -3357,6 +3368,7 @@ declare namespace LocalJSX {
         "bq-checkbox": BqCheckbox;
         "bq-dialog": BqDialog;
         "bq-divider": BqDivider;
+        "bq-drawer": BqDrawer;
         "bq-dropdown": BqDropdown;
         "bq-empty-state": BqEmptyState;
         "bq-icon": BqIcon;
@@ -3404,6 +3416,7 @@ declare module "@stencil/core" {
             "bq-checkbox": LocalJSX.BqCheckbox & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
             "bq-dialog": LocalJSX.BqDialog & JSXBase.HTMLAttributes<HTMLBqDialogElement>;
             "bq-divider": LocalJSX.BqDivider & JSXBase.HTMLAttributes<HTMLBqDividerElement>;
+            "bq-drawer": LocalJSX.BqDrawer & JSXBase.HTMLAttributes<HTMLBqDrawerElement>;
             "bq-dropdown": LocalJSX.BqDropdown & JSXBase.HTMLAttributes<HTMLBqDropdownElement>;
             "bq-empty-state": LocalJSX.BqEmptyState & JSXBase.HTMLAttributes<HTMLBqEmptyStateElement>;
             /**
