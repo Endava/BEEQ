@@ -7,3 +7,18 @@
 :host {
   @apply block;
 }
+
+:host(.is-hidden) {
+  @apply hidden;
+}
+
+.bq-drawer {
+  @apply relative w-auto transition-all;
+}
+
+/**
+ * Tweak the close bq-buton styles so it remain small wihout extra padding
+ */
+.bq-drawer__close::part(button) {
+  @apply h-fit rounded-s border-0 p-0;
+}

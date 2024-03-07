@@ -12,19 +12,29 @@ const meta: Meta = {
     },
   },
   argTypes: {
-    text: { control: 'text', table: { disable: true } },
+    open: { control: 'boolean' },
+    // Events
+    bqShow: { action: 'bqOpen' },
+    bqHide: { action: 'bqClose' },
+    bqAfterOpen: { action: 'bqAfterOpen' },
+    bqAfterClose: { action: 'bqAfterClose' },
   },
   args: {
-    text: 'text',
+    open: false,
   },
 };
 export default meta;
 
 type Story = StoryObj;
 
-const Template = (args: Args) => html`<bq-drawer>${args.text}</bq-drawer>`;
+const Template = (args: Args) =>
+  html`<div class="w-80">
+    <bq-drawer ?open=${args.open}>Title</bq-drawer>
+  </div>`;
 
 export const Default: Story = {
   render: Template,
-  args: {},
+  args: {
+    open: true,
+  },
 };

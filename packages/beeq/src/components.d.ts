@@ -400,6 +400,18 @@ export namespace Components {
         "titleAlignment"?: TDividerTitleAlignment;
     }
     interface BqDrawer {
+        /**
+          * Method to be called to hide the notification component
+         */
+        "hide": () => Promise<void>;
+        /**
+          * If true, the drawer component will be shown
+         */
+        "open": boolean;
+        /**
+          * Method to be called to show the notification component
+         */
+        "show": () => Promise<void>;
     }
     interface BqDropdown {
         /**
@@ -1274,6 +1286,10 @@ export interface BqDialogCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqDialogElement;
 }
+export interface BqDrawerCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqDrawerElement;
+}
 export interface BqDropdownCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqDropdownElement;
@@ -1520,7 +1536,21 @@ declare global {
         prototype: HTMLBqDividerElement;
         new (): HTMLBqDividerElement;
     };
+    interface HTMLBqDrawerElementEventMap {
+        "bqHide": any;
+        "bqShow": any;
+        "bqAfterOpen": any;
+        "bqAfterClose": any;
+    }
     interface HTMLBqDrawerElement extends Components.BqDrawer, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqDrawerElementEventMap>(type: K, listener: (this: HTMLBqDrawerElement, ev: BqDrawerCustomEvent<HTMLBqDrawerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqDrawerElementEventMap>(type: K, listener: (this: HTMLBqDrawerElement, ev: BqDrawerCustomEvent<HTMLBqDrawerElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqDrawerElement: {
         prototype: HTMLBqDrawerElement;
@@ -2387,6 +2417,26 @@ declare namespace LocalJSX {
         "titleAlignment"?: TDividerTitleAlignment;
     }
     interface BqDrawer {
+        /**
+          * Callback handler to be called after the notification has been closed
+         */
+        "onBqAfterClose"?: (event: BqDrawerCustomEvent<any>) => void;
+        /**
+          * Callback handler to be called after the notification has been opened
+         */
+        "onBqAfterOpen"?: (event: BqDrawerCustomEvent<any>) => void;
+        /**
+          * Callback handler to be called when the notification is hidden
+         */
+        "onBqHide"?: (event: BqDrawerCustomEvent<any>) => void;
+        /**
+          * Callback handler to be called when the notification is shown
+         */
+        "onBqShow"?: (event: BqDrawerCustomEvent<any>) => void;
+        /**
+          * If true, the drawer component will be shown
+         */
+        "open"?: boolean;
     }
     interface BqDropdown {
         /**

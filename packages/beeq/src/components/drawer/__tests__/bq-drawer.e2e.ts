@@ -18,13 +18,4 @@ describe('bq-drawer', () => {
 
     expect(element.shadowRoot).not.toBeNull();
   });
-
-  it('should display text', async () => {
-    const page = await newE2EPage({
-      html: '<bq-drawer></bq-drawer>',
-    });
-    const element = await page.find('bq-drawer >>> p');
-
-    expect(element).toEqualText('My name is Stencil');
-  });
 });
