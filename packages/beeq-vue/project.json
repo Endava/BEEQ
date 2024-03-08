@@ -16,7 +16,7 @@
         "tsConfig": "packages/beeq-vue/tsconfig.lib.json",
         "assets": ["packages/beeq-vue/README.md"]
       },
-      "dependsOn": [{ "target": "build", "projects": "beeq" }]
+      "dependsOn": [{ "dependencies": true, "target": "build" }]
     },
     "lint": {
       "executor": "@nx/eslint:lint",

@@ -16,7 +16,7 @@
         "project": "packages/beeq-react/package.json",
         "tsConfig": "packages/beeq-react/tsconfig.lib.json"
       },
-      "dependsOn": [{ "target": "build", "projects": "beeq" }]
+      "dependsOn": [{ "dependencies": true, "target": "build" }]
     },
     "lint": {
       "executor": "@nx/eslint:lint",
