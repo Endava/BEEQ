@@ -1,5 +1,6 @@
 {
   "autoAcceptChanges": "main",
+  "buildScriptName": "npx nx run beeq:storybook-build --output-style=stream-without-prefixes --verbose",
   "exitOnceUploaded": true,
   "exitZeroOnChanges": true,
   "onlyChanged": true,
