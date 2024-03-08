@@ -51,7 +51,7 @@ jobs:
         run: npx nx run-many -t publish -p tag:publishable --parallel=1 --output-style=stream-without-prefixes
 
       - name: 🚚 Deploy BEEQ Storybook to GitHub Pages
-        uses: bitovi/github-actions-storybook-to-github-pages@v1.0.2
+        uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
         with:
           build_command: npm run build
           checkout: false
