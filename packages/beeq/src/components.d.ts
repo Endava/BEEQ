@@ -2418,19 +2418,19 @@ declare namespace LocalJSX {
     }
     interface BqDrawer {
         /**
-          * Callback handler to be called after the notification has been closed
+          * Callback handler to be called after the drawer has been closed
          */
         "onBqAfterClose"?: (event: BqDrawerCustomEvent<any>) => void;
         /**
-          * Callback handler to be called after the notification has been opened
+          * Callback handler to be called after the drawer has been opened
          */
         "onBqAfterOpen"?: (event: BqDrawerCustomEvent<any>) => void;
         /**
-          * Callback handler to be called when the notification is hidden
+          * Callback handler to be called when the drawer is hidden
          */
         "onBqHide"?: (event: BqDrawerCustomEvent<any>) => void;
         /**
-          * Callback handler to be called when the notification is shown
+          * Callback handler to be called when the drawer is shown
          */
         "onBqShow"?: (event: BqDrawerCustomEvent<any>) => void;
         /**

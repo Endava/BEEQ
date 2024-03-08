@@ -13,7 +13,7 @@
 }
 
 .bq-drawer {
-  @apply relative w-auto transition-all;
+  @apply relative flex w-auto flex-col gap-[var(--bq-drawer--title-body-gap)] px-[var(--bq-drawer--wrapper-X-padding)] py-[var(--bq-drawer--wrapper-Y-padding)] transition-all;
 }
 
 /**
@@ -21,4 +21,8 @@
  */
 .bq-drawer__close::part(button) {
   @apply h-fit rounded-s border-0 p-0;
+}
+
+.bq-drawer__body {
+  @apply h-auto p-[var(--bq-drawer--body-padding)];
 }

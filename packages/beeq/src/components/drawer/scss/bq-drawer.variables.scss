@@ -4,6 +4,11 @@
 
 :host {
   /**
-   * @prop --bq-drawer--min-width - Drawer default width
+   * @prop --bq-drawer--title-body-gap - Drawer default gap between title and body
+   * @prop ---bq-drawer--body-padding - Drawer default padding for body slot
    */
+  --bq-drawer--title-body-gap: theme('spacing.l');
+  --bq-drawer--wrapper-X-padding: theme('spacing.m');
+  --bq-drawer--wrapper-Y-padding: theme('spacing.l');
+  --bq-drawer--body-padding: theme('spacing.xs');
 }

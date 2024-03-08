@@ -1,5 +1,7 @@
-import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State, Watch } from '@stencil/core';
 import { enter, leave } from 'el-transition';
+
+import { hasSlotContent } from '../../shared/utils';
 
 @Component({
   tag: 'bq-drawer',
@@ -11,6 +13,8 @@ export class BqDrawer {
   // ====================
 
   private drawerElem: HTMLDivElement;
+  private footerElem: HTMLDivElement;
+  private iconElement: HTMLSpanElement;
 
   // Reference to host HTML element
   // ===================================
@@ -20,6 +24,9 @@ export class BqDrawer {
   // State() variables
   // Inlined decorator, alphabetical order
   // =======================================
+
+  @State() private hasFooter = false;
+  @State() hasIcon: boolean = false;
 
   // Public Property API
   // ========================
@@ -44,16 +51,16 @@ export class BqDrawer {
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Callback handler to be called when the notification is hidden */
+  /** Callback handler to be called when the drawer is hidden */
   @Event() bqHide!: EventEmitter;
 
-  /** Callback handler to be called when the notification is shown */
+  /** Callback handler to be called when the drawer is shown */
   @Event() bqShow!: EventEmitter;
 
-  /** Callback handler to be called after the notification has been opened */
+  /** Callback handler to be called after the drawer has been opened */
   @Event() bqAfterOpen!: EventEmitter;
 
-  /** Callback handler to be called after the notification has been closed */
+  /** Callback handler to be called after the drawer has been closed */
   @Event() bqAfterClose!: EventEmitter;
 
   // Component lifecycle events
@@ -93,6 +100,10 @@ export class BqDrawer {
   // These methods cannot be called from the host element.
   // =======================================================
 
+  private handleFooterSlotChange = () => {
+    this.hasFooter = hasSlotContent(this.footerElem, 'footer');
+  };
+
   private handleHide = async () => {
     const ev = this.bqHide.emit(this.el);
     if (!ev.defaultPrevented) {
@@ -120,6 +131,10 @@ export class BqDrawer {
     this.bqAfterClose.emit();
   };
 
+  private handleIconSlotChange = () => {
+    this.hasIcon = hasSlotContent(this.iconElement, 'icon');
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -132,24 +147,40 @@ export class BqDrawer {
         hidden={!this.open ? 'true' : 'false'}
       >
         <div class="bq-drawer" ref={(div) => (this.drawerElem = div)} part="wrapper">
-          {/* CLOSE BUTTON */}
-          <bq-button
-            class="bq-drawer__close absolute right-5 focus-visible:focus"
-            appearance="text"
-            size="small"
-            onClick={() => this.hide()}
-            part="btn-close"
-          >
-            <bq-icon name="x" />
-          </bq-button>
-          {/* Header */}
-          <div class="title-font font-semibold leading-regular text-text-primary" part="header">
-            <slot />
+          <div class="flex items-center justify-between">
+            {/* Header */}
+            <div class="title-font flex items-center gap-2 font-bold leading-regular text-text-primary" part="header">
+              <div class="flex" ref={(span: HTMLSpanElement) => (this.iconElement = span)} part="icon">
+                <slot name="icon" onSlotchange={this.handleIconSlotChange} />
+              </div>
+              <div part="title">
+                <slot />
+              </div>
+            </div>
+            {/* CLOSE BUTTON */}
+            <bq-button
+              class="bq-drawer__close focus-visible:focus"
+              appearance="text"
+              size="small"
+              onClick={() => this.hide()}
+              part="btn-close"
+            >
+              <bq-icon weight="bold" name="x" />
+            </bq-button>
           </div>
           {/* Body */}
-          <div>Body</div>
+          <div class="bq-drawer__body" part="body">
+            <slot name="body" />
+          </div>
+          {this.hasFooter && <bq-divider dashed stroke-color="ui--secondary"></bq-divider>}
           {/* Footer */}
-          <div>Footer</div>
+          <div
+            class={{ 'flex items-start gap-xs': true, '!hidden': !this.hasFooter }}
+            ref={(div) => (this.footerElem = div)}
+            part="footer"
+          >
+            <slot name="footer" onSlotchange={this.handleFooterSlotChange} />
+          </div>
         </div>
       </Host>
     );
