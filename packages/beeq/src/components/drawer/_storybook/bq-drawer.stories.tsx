@@ -2,6 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
 
 import mdx from './bq-drawer.mdx';
+import { DRAWER_PLACEMENT } from '../bq-drawer.types';
 
 const meta: Meta = {
   title: 'Components/Drawer',
@@ -13,6 +14,7 @@ const meta: Meta = {
   },
   argTypes: {
     open: { control: 'boolean' },
+    placement: { control: 'select', options: [...DRAWER_PLACEMENT] },
     // Events
     bqShow: { action: 'bqOpen' },
     bqHide: { action: 'bqClose' },
@@ -21,19 +23,37 @@ const meta: Meta = {
   },
   args: {
     open: false,
+    placement: 'left',
   },
 };
 export default meta;
 
 type Story = StoryObj;
 
-const Template = (args: Args) => html`
-  <div class="flex gap-xl">
+const Template = (args: Args) => {
+  const handleOpenDrawer = async () => {
+    const dialogElem = document.querySelector('bq-drawer');
+    await dialogElem.show();
+  };
+
+  return html`
+    <bq-button @bqClick=${handleOpenDrawer}>Open Drawer</bq-button>
     <div class="w-80">
-      <bq-drawer ?open=${args.open}
-        >Title
+      <bq-drawer
+        ?open=${args.open}
+        placement=${args.placement}
+        @bqCancel=${args.bqCancel}
+        @bqClose=${args.bqClose}
+        @bqOpen=${args.bqOpen}
+        @bqAfterOpen=${args.bqAfterOpen}
+        @bqAfterClose=${args.bqAfterClose}
+      >
+        <div class="flex gap-xs" slot="title">
+          <bq-icon name="user-circle" weight="bold" role="img" title="Info"></bq-icon>
+          Title
+        </div>
         <div
-          class="flex h-60 items-center justify-center border-[0.2px] border-dashed border-stroke-brand bg-[var(--bq-danger-light)]"
+          class="flex h-full items-center justify-center rounded-xs border border-dashed border-stroke-brand bg-red-100"
           slot="body"
         >
           Slot
@@ -41,26 +61,16 @@ const Template = (args: Args) => html`
         <div class="flex flex-1 justify-center gap-xs" slot="footer">
           <bq-button appearance="primary" block size="small"> Button </bq-button>
           <bq-button appearance="link" block size="small"> Button </bq-button>
-        </div></bq-drawer
-      >
-    </div>
-    <div class="w-80">
-      <bq-drawer ?open=${args.open}
-        ><bq-icon name="user-circle" weight="bold" slot="icon"></bq-icon>Title
-        <div
-          class="flex h-60 items-center justify-center border-[0.2px] border-dashed border-stroke-brand bg-[var(--bq-danger-light)]"
-          slot="body"
-        >
-          Slot
         </div>
       </bq-drawer>
     </div>
-  </div>
-`;
+  `;
+};
 
 export const Default: Story = {
   render: Template,
   args: {
-    open: true,
+    open: false,
+    placement: 'left',
   },
 };

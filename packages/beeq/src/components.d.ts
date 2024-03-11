@@ -13,6 +13,7 @@ import { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButt
 import { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
 import { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
+import { TDrawerPlacement } from "./components/drawer/bq-drawer.types";
 import { FloatingUIPlacement } from "./services/interfaces";
 import { TEmptyStateSize } from "./components/empty-state/bq-empty-state.types";
 import { TIconWeight } from "./components/icon/bq-icon.types";
@@ -38,6 +39,7 @@ export { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButt
 export { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
 export { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
+export { TDrawerPlacement } from "./components/drawer/bq-drawer.types";
 export { FloatingUIPlacement } from "./services/interfaces";
 export { TEmptyStateSize } from "./components/empty-state/bq-empty-state.types";
 export { TIconWeight } from "./components/icon/bq-icon.types";
@@ -408,6 +410,7 @@ export namespace Components {
           * If true, the drawer component will be shown
          */
         "open": boolean;
+        "placement"?: TDrawerPlacement;
         /**
           * Method to be called to show the notification component
          */
@@ -2437,6 +2440,7 @@ declare namespace LocalJSX {
           * If true, the drawer component will be shown
          */
         "open"?: boolean;
+        "placement"?: TDrawerPlacement;
     }
     interface BqDropdown {
         /**

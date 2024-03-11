@@ -13,7 +13,24 @@
 }
 
 .bq-drawer {
-  @apply relative flex w-auto flex-col gap-[var(--bq-drawer--title-body-gap)] px-[var(--bq-drawer--wrapper-X-padding)] py-[var(--bq-drawer--wrapper-Y-padding)] transition-all;
+  @apply absolute z-20 flex h-screen w-80 flex-col overflow-auto bg-bg-primary px-[var(--bq-drawer--wrapper-X-padding)] py-[var(--bq-drawer--wrapper-Y-padding)] transition-all;
+
+  &.left {
+    @apply left-0 top-0;
+  }
+
+  &.right {
+    @apply right-0 top-0;
+  }
+}
+
+/* Styling for the backdrop */
+.bq-drawer-backdrop {
+  @apply fixed inset-0 z-10 bg-bg-alt opacity-50;
+}
+
+.bq-drawer-backdrop.open {
+  display: block;
 }
 
 /**
@@ -23,6 +40,22 @@
   @apply h-fit rounded-s border-0 p-0;
 }
 
+.bq-drawer__content {
+  @apply flex flex-1 flex-col gap-[var(--bq-drawer--title-body-gap)];
+}
+
+.bq-drawer__header {
+  @apply flex items-center;
+}
+
+.bq-drawer__title {
+  @apply flex flex-1 items-center justify-between font-bold leading-regular text-text-primary;
+}
+
+.bq-drawer__footer {
+  @apply flex items-start gap-xs pt-[var(--bq-drawer--footer-top-padding)];
+}
+
 .bq-drawer__body {
-  @apply h-auto p-[var(--bq-drawer--body-padding)];
+  @apply flex-1;
 }

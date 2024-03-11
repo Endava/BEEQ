@@ -1,6 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State, Watch } from '@stencil/core';
 import { enter, leave } from 'el-transition';
 
+import { TDrawerPlacement } from './bq-drawer.types';
 import { hasSlotContent } from '../../shared/utils';
 
 @Component({
@@ -13,8 +14,7 @@ export class BqDrawer {
   // ====================
 
   private drawerElem: HTMLDivElement;
-  private footerElem: HTMLDivElement;
-  private iconElement: HTMLSpanElement;
+  private footerElem: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -33,6 +33,9 @@ export class BqDrawer {
 
   /** If true, the drawer component will be shown */
   @Prop({ reflect: true, mutable: true }) open: boolean;
+
+  /* Defines the position of the drawer */
+  @Prop({ reflect: true, mutable: true }) placement?: TDrawerPlacement = 'left';
 
   // Prop lifecycle events
   // =======================
@@ -131,10 +134,6 @@ export class BqDrawer {
     this.bqAfterClose.emit();
   };
 
-  private handleIconSlotChange = () => {
-    this.hasIcon = hasSlotContent(this.iconElement, 'icon');
-  };
-
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -145,42 +144,45 @@ export class BqDrawer {
         class={{ 'is-hidden': !this.open }}
         aria-hidden={!this.open ? 'true' : 'false'}
         hidden={!this.open ? 'true' : 'false'}
+        role="dialog"
       >
-        <div class="bq-drawer" ref={(div) => (this.drawerElem = div)} part="wrapper">
-          <div class="flex items-center justify-between">
-            {/* Header */}
-            <div class="title-font flex items-center gap-2 font-bold leading-regular text-text-primary" part="header">
-              <div class="flex" ref={(span: HTMLSpanElement) => (this.iconElement = span)} part="icon">
-                <slot name="icon" onSlotchange={this.handleIconSlotChange} />
+        {/* Backdrop */}
+        <div class={`bq-drawer-backdrop ${this.open ? 'open' : ''}`} onClick={() => this.hide()}></div>
+        <div class={{ [`bq-drawer ${this.placement}`]: true }} ref={(div) => (this.drawerElem = div)} part="wrapper">
+          <main class="bq-drawer__content" part="content">
+            <header class="bq-drawer__header" part="header">
+              <div class="bq-drawer__title" part="title">
+                <slot name="title" />
               </div>
-              <div part="title">
-                <slot />
+              <div class="flex" role="button" part="button-close">
+                <slot name="button-close">
+                  <bq-button
+                    class="bq-drawer__close focus-visible:focus"
+                    appearance="text"
+                    size="small"
+                    slot="button-close"
+                    onClick={() => this.hide()}
+                  >
+                    <bq-icon weight="bold" name="x" role="img" title="Close" />
+                  </bq-button>
+                </slot>
               </div>
+            </header>
+            <div class="bq-drawer__body" part="body">
+              <slot name="body" />
             </div>
-            {/* CLOSE BUTTON */}
-            <bq-button
-              class="bq-drawer__close focus-visible:focus"
-              appearance="text"
-              size="small"
-              onClick={() => this.hide()}
-              part="btn-close"
-            >
-              <bq-icon weight="bold" name="x" />
-            </bq-button>
-          </div>
-          {/* Body */}
-          <div class="bq-drawer__body" part="body">
-            <slot name="body" />
-          </div>
-          {this.hasFooter && <bq-divider dashed stroke-color="ui--secondary"></bq-divider>}
-          {/* Footer */}
-          <div
-            class={{ 'flex items-start gap-xs': true, '!hidden': !this.hasFooter }}
-            ref={(div) => (this.footerElem = div)}
+            {this.hasFooter && <bq-divider dashed stroke-color="ui--secondary"></bq-divider>}
+          </main>
+          <footer
+            class={{
+              'bq-drawer__footer': true,
+              '!hidden': !this.hasFooter,
+            }}
+            ref={(footerElem) => (this.footerElem = footerElem)}
             part="footer"
           >
             <slot name="footer" onSlotchange={this.handleFooterSlotChange} />
-          </div>
+          </footer>
         </div>
       </Host>
     );
