@@ -130,7 +130,6 @@ export class BqDrawer {
       this.bqAfterOpen.emit();
       return;
     }
-
     this.bqAfterClose.emit();
   };
 
@@ -148,7 +147,17 @@ export class BqDrawer {
       >
         {/* Backdrop */}
         <div class={`bq-drawer-backdrop ${this.open ? 'open' : ''}`} onClick={() => this.hide()}></div>
-        <div class={{ [`bq-drawer ${this.placement}`]: true }} ref={(div) => (this.drawerElem = div)} part="wrapper">
+        <div
+          class={{ [`bq-drawer ${this.placement}`]: true }}
+          data-transition-enter="transition-all ease-in-out duration-500"
+          data-transition-enter-start={`opacity-0 ${this.placement === 'left' ? '-translate-x-full' : 'translate-x-full'}`}
+          data-transition-enter-end="opacity-100"
+          data-transition-leave="transition-all ease-in-out duration-500"
+          data-transition-leave-start="opacity-100"
+          data-transition-leave-end={`opacity-0 ${this.placement === 'left' ? '-translate-x-full' : 'translate-x-full'}`}
+          ref={(div) => (this.drawerElem = div)}
+          part="wrapper"
+        >
           <main class="bq-drawer__content" part="content">
             <header class="bq-drawer__header" part="header">
               <div class="bq-drawer__title" part="title">

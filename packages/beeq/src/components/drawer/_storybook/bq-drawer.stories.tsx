@@ -38,32 +38,30 @@ const Template = (args: Args) => {
 
   return html`
     <bq-button @bqClick=${handleOpenDrawer}>Open Drawer</bq-button>
-    <div class="w-80">
-      <bq-drawer
-        ?open=${args.open}
-        placement=${args.placement}
-        @bqCancel=${args.bqCancel}
-        @bqClose=${args.bqClose}
-        @bqOpen=${args.bqOpen}
-        @bqAfterOpen=${args.bqAfterOpen}
-        @bqAfterClose=${args.bqAfterClose}
+    <bq-drawer
+      ?open=${args.open}
+      placement=${args.placement}
+      @bqCancel=${args.bqCancel}
+      @bqClose=${args.bqClose}
+      @bqOpen=${args.bqOpen}
+      @bqAfterOpen=${args.bqAfterOpen}
+      @bqAfterClose=${args.bqAfterClose}
+    >
+      <div class="flex gap-xs" slot="title">
+        <bq-icon name="user-circle" weight="bold" role="img" title="Info"></bq-icon>
+        Title
+      </div>
+      <div
+        class="flex h-full items-center justify-center rounded-xs border border-dashed border-stroke-brand bg-red-100"
+        slot="body"
       >
-        <div class="flex gap-xs" slot="title">
-          <bq-icon name="user-circle" weight="bold" role="img" title="Info"></bq-icon>
-          Title
-        </div>
-        <div
-          class="flex h-full items-center justify-center rounded-xs border border-dashed border-stroke-brand bg-red-100"
-          slot="body"
-        >
-          Slot
-        </div>
-        <div class="flex flex-1 justify-center gap-xs" slot="footer">
-          <bq-button appearance="primary" block size="small"> Button </bq-button>
-          <bq-button appearance="link" block size="small"> Button </bq-button>
-        </div>
-      </bq-drawer>
-    </div>
+        Slot
+      </div>
+      <div class="flex flex-1 justify-center gap-xs" slot="footer">
+        <bq-button appearance="primary" block size="small"> Button </bq-button>
+        <bq-button appearance="link" block size="small"> Button </bq-button>
+      </div>
+    </bq-drawer>
   `;
 };
 

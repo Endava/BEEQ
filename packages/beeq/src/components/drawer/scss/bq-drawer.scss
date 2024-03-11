@@ -13,7 +13,7 @@
 }
 
 .bq-drawer {
-  @apply absolute z-20 flex h-screen w-80 flex-col overflow-auto bg-bg-primary px-[var(--bq-drawer--wrapper-X-padding)] py-[var(--bq-drawer--wrapper-Y-padding)] transition-all;
+  @apply absolute z-20 flex h-screen flex-col overflow-auto bg-bg-primary px-[var(--bq-drawer--wrapper-X-padding)] py-[var(--bq-drawer--wrapper-Y-padding)] shadow-m transition-all;
 
   &.left {
     @apply left-0 top-0;
@@ -30,7 +30,7 @@
 }
 
 .bq-drawer-backdrop.open {
-  display: block;
+  @apply block;
 }
 
 /**
