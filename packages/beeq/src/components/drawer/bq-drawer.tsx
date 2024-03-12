@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import { enter, leave } from 'el-transition';
 
 import { TDrawerPlacement } from './bq-drawer.types';
@@ -37,6 +37,9 @@ export class BqDrawer {
   /* Defines the position of the drawer */
   @Prop({ reflect: true, mutable: true }) placement?: TDrawerPlacement = 'left';
 
+  /** If true, the drawer will not close when clicking on the backdrop overlay */
+  @Prop({ reflect: true }) disableCloseClickOutside = true;
+
   // Prop lifecycle events
   // =======================
 
@@ -53,6 +56,9 @@ export class BqDrawer {
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
+
+  /** Callback handler emitted when the drawer has been canceled or dismissed */
+  @Event() bqCancel!: EventEmitter<void>;
 
   /** Callback handler to be called when the drawer is closed */
   @Event() bqClose!: EventEmitter;
@@ -79,6 +85,19 @@ export class BqDrawer {
   // Listeners
   // ==============
 
+  @Listen('mousedown', { target: 'window', capture: true })
+  async handleMouseClick(event: MouseEvent) {
+    if (!this.open) return;
+    if (!this.drawerElem || this.disableCloseClickOutside) return;
+    // Skip if the mouse button is not the main button
+    if (event.button !== 0) return;
+
+    const rect = this.drawerElem.getBoundingClientRect();
+    if (event.clientX < rect.left || event.clientX > rect.right) {
+      await this.cancel();
+    }
+  }
+
   // Public methods API
   // These methods are exposed on the host element.
   // Always use two lines.
@@ -96,6 +115,15 @@ export class BqDrawer {
   @Method()
   async show(): Promise<void> {
     await this.handleShow();
+  }
+
+  /** Methos to be called to dismiss or cancel the drawer */
+  @Method()
+  async cancel() {
+    const ev = this.bqCancel.emit();
+    if (ev.defaultPrevented) return;
+
+    this.open = false;
   }
 
   // Local methods

@@ -403,6 +403,14 @@ export namespace Components {
     }
     interface BqDrawer {
         /**
+          * Methos to be called to dismiss or cancel the drawer
+         */
+        "cancel": () => Promise<void>;
+        /**
+          * If true, the drawer will not close when clicking on the backdrop overlay
+         */
+        "disableCloseClickOutside": boolean;
+        /**
           * Method to be called to hide the drawer component
          */
         "hide": () => Promise<void>;
@@ -1540,6 +1548,7 @@ declare global {
         new (): HTMLBqDividerElement;
     };
     interface HTMLBqDrawerElementEventMap {
+        "bqCancel": void;
         "bqClose": any;
         "bqOpen": any;
         "bqAfterOpen": any;
@@ -2421,6 +2430,10 @@ declare namespace LocalJSX {
     }
     interface BqDrawer {
         /**
+          * If true, the drawer will not close when clicking on the backdrop overlay
+         */
+        "disableCloseClickOutside"?: boolean;
+        /**
           * Callback handler to be called after the drawer has been closed
          */
         "onBqAfterClose"?: (event: BqDrawerCustomEvent<any>) => void;
@@ -2428,6 +2441,10 @@ declare namespace LocalJSX {
           * Callback handler to be called after the drawer has been opened
          */
         "onBqAfterOpen"?: (event: BqDrawerCustomEvent<any>) => void;
+        /**
+          * Callback handler emitted when the drawer has been canceled or dismissed
+         */
+        "onBqCancel"?: (event: BqDrawerCustomEvent<void>) => void;
         /**
           * Callback handler to be called when the drawer is closed
          */
