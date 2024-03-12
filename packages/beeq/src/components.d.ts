@@ -403,7 +403,7 @@ export namespace Components {
     }
     interface BqDrawer {
         /**
-          * Method to be called to hide the notification component
+          * Method to be called to hide the drawer component
          */
         "hide": () => Promise<void>;
         /**
@@ -412,7 +412,7 @@ export namespace Components {
         "open": boolean;
         "placement"?: TDrawerPlacement;
         /**
-          * Method to be called to show the notification component
+          * Method to be called to show the drawer component
          */
         "show": () => Promise<void>;
     }
@@ -1540,8 +1540,8 @@ declare global {
         new (): HTMLBqDividerElement;
     };
     interface HTMLBqDrawerElementEventMap {
-        "bqHide": any;
-        "bqShow": any;
+        "bqClose": any;
+        "bqOpen": any;
         "bqAfterOpen": any;
         "bqAfterClose": any;
     }
@@ -2429,13 +2429,13 @@ declare namespace LocalJSX {
          */
         "onBqAfterOpen"?: (event: BqDrawerCustomEvent<any>) => void;
         /**
-          * Callback handler to be called when the drawer is hidden
+          * Callback handler to be called when the drawer is closed
          */
-        "onBqHide"?: (event: BqDrawerCustomEvent<any>) => void;
+        "onBqClose"?: (event: BqDrawerCustomEvent<any>) => void;
         /**
-          * Callback handler to be called when the drawer is shown
+          * Callback handler to be called when the drawer is opened
          */
-        "onBqShow"?: (event: BqDrawerCustomEvent<any>) => void;
+        "onBqOpen"?: (event: BqDrawerCustomEvent<any>) => void;
         /**
           * If true, the drawer component will be shown
          */

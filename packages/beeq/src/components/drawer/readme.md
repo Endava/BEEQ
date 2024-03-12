@@ -19,15 +19,15 @@
 | -------------- | -------------------------------------------------------------- | ------------------ |
 | `bqAfterClose` | Callback handler to be called after the drawer has been closed | `CustomEvent<any>` |
 | `bqAfterOpen`  | Callback handler to be called after the drawer has been opened | `CustomEvent<any>` |
-| `bqHide`       | Callback handler to be called when the drawer is hidden        | `CustomEvent<any>` |
-| `bqShow`       | Callback handler to be called when the drawer is shown         | `CustomEvent<any>` |
+| `bqClose`      | Callback handler to be called when the drawer is closed        | `CustomEvent<any>` |
+| `bqOpen`       | Callback handler to be called when the drawer is opened        | `CustomEvent<any>` |
 
 
 ## Methods
 
 ### `hide() => Promise<void>`
 
-Method to be called to hide the notification component
+Method to be called to hide the drawer component
 
 #### Returns
 
@@ -37,7 +37,7 @@ Type: `Promise<void>`
 
 ### `show() => Promise<void>`
 
-Method to be called to show the notification component
+Method to be called to show the drawer component
 
 #### Returns
 

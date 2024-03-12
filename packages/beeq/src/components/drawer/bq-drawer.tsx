@@ -54,11 +54,11 @@ export class BqDrawer {
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Callback handler to be called when the drawer is hidden */
-  @Event() bqHide!: EventEmitter;
+  /** Callback handler to be called when the drawer is closed */
+  @Event() bqClose!: EventEmitter;
 
-  /** Callback handler to be called when the drawer is shown */
-  @Event() bqShow!: EventEmitter;
+  /** Callback handler to be called when the drawer is opened */
+  @Event() bqOpen!: EventEmitter;
 
   /** Callback handler to be called after the drawer has been opened */
   @Event() bqAfterOpen!: EventEmitter;
@@ -86,13 +86,13 @@ export class BqDrawer {
   // Requires JSDocs for public API documentation.
   // ===============================================
 
-  /** Method to be called to hide the notification component */
+  /** Method to be called to hide the drawer component */
   @Method()
   async hide(): Promise<void> {
     await this.handleHide();
   }
 
-  /** Method to be called to show the notification component */
+  /** Method to be called to show the drawer component */
   @Method()
   async show(): Promise<void> {
     await this.handleShow();
@@ -108,7 +108,7 @@ export class BqDrawer {
   };
 
   private handleHide = async () => {
-    const ev = this.bqHide.emit(this.el);
+    const ev = this.bqClose.emit(this.el);
     if (!ev.defaultPrevented) {
       await leave(this.drawerElem);
       this.open = false;
@@ -117,7 +117,7 @@ export class BqDrawer {
   };
 
   private handleShow = async () => {
-    const ev = this.bqShow.emit(this.el);
+    const ev = this.bqOpen.emit(this.el);
     if (!ev.defaultPrevented) {
       this.open = true;
       await enter(this.drawerElem);
