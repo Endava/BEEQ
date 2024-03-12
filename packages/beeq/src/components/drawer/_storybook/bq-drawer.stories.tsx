@@ -16,6 +16,8 @@ const meta: Meta = {
     open: { control: 'boolean' },
     placement: { control: 'select', options: [...DRAWER_PLACEMENT] },
     'disable-close-click-outside': { control: 'boolean' },
+    'disable-close-esc-keydown': { control: 'boolean' },
+    'enable-backdrop': { control: 'boolean' },
     // Events
     bqShow: { action: 'bqOpen' },
     bqHide: { action: 'bqClose' },
@@ -25,7 +27,9 @@ const meta: Meta = {
   args: {
     open: false,
     placement: 'left',
-    'disable-close-click-outside': false,
+    'disable-close-click-outside': true,
+    'disable-close-esc-keydown': true,
+    'enable-backdrop': false,
   },
 };
 export default meta;
@@ -43,7 +47,9 @@ const Template = (args: Args) => {
     <bq-drawer
       ?open=${args.open}
       placement=${args.placement}
-      ?disable-close-click-outside=${args['disable-close-click-outside']}
+      disable-close-click-outside=${args['disable-close-click-outside']}
+      disable-close-esc-keydown=${args['disable-close-esc-keydown']}
+      enable-backdrop=${args['enable-backdrop']}
       @bqCancel=${args.bqCancel}
       @bqClose=${args.bqClose}
       @bqOpen=${args.bqOpen}
@@ -73,6 +79,5 @@ export const Default: Story = {
   args: {
     open: false,
     placement: 'left',
-    'disable-close-click-outside': true,
   },
 };

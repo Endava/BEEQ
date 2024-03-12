@@ -411,6 +411,14 @@ export namespace Components {
          */
         "disableCloseClickOutside": boolean;
         /**
+          * If true, the dialog will not close when the [Esc] key is press
+         */
+        "disableCloseEscKeydown": boolean;
+        /**
+          * If true, the backdrop overlay will be shown when the drawer opens
+         */
+        "enableBackdrop": boolean;
+        /**
           * Method to be called to hide the drawer component
          */
         "hide": () => Promise<void>;
@@ -418,6 +426,9 @@ export namespace Components {
           * If true, the drawer component will be shown
          */
         "open": boolean;
+        /**
+          * Defines the position of the drawer
+         */
         "placement"?: TDrawerPlacement;
         /**
           * Method to be called to show the drawer component
@@ -2434,6 +2445,14 @@ declare namespace LocalJSX {
          */
         "disableCloseClickOutside"?: boolean;
         /**
+          * If true, the dialog will not close when the [Esc] key is press
+         */
+        "disableCloseEscKeydown"?: boolean;
+        /**
+          * If true, the backdrop overlay will be shown when the drawer opens
+         */
+        "enableBackdrop"?: boolean;
+        /**
           * Callback handler to be called after the drawer has been closed
          */
         "onBqAfterClose"?: (event: BqDrawerCustomEvent<any>) => void;
@@ -2457,6 +2476,9 @@ declare namespace LocalJSX {
           * If true, the drawer component will be shown
          */
         "open"?: boolean;
+        /**
+          * Defines the position of the drawer
+         */
         "placement"?: TDrawerPlacement;
     }
     interface BqDropdown {

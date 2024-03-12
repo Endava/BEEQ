@@ -34,8 +34,14 @@ export class BqDrawer {
   /** If true, the drawer component will be shown */
   @Prop({ reflect: true, mutable: true }) open: boolean;
 
-  /* Defines the position of the drawer */
+  /** Defines the position of the drawer */
   @Prop({ reflect: true, mutable: true }) placement?: TDrawerPlacement = 'left';
+
+  /** If true, the backdrop overlay will be shown when the drawer opens */
+  @Prop({ reflect: true }) enableBackdrop = false;
+
+  /** If true, the dialog will not close when the [Esc] key is press */
+  @Prop({ reflect: true }) disableCloseEscKeydown = true;
 
   /** If true, the drawer will not close when clicking on the backdrop overlay */
   @Prop({ reflect: true }) disableCloseClickOutside = true;
@@ -80,6 +86,7 @@ export class BqDrawer {
     if (!this.open) {
       this.el.classList.add('is-hidden');
     }
+    this.handleOpenChange();
   }
 
   // Listeners
@@ -96,6 +103,14 @@ export class BqDrawer {
     if (event.clientX < rect.left || event.clientX > rect.right) {
       await this.cancel();
     }
+  }
+
+  @Listen('keydown', { target: 'window', capture: true })
+  async handleKeyDown(event: KeyboardEvent) {
+    if (!this.open) return;
+    if (!this.drawerElem || this.disableCloseEscKeydown || !(event.key === 'Escape' || event.key === 'Esc')) return;
+
+    await this.cancel();
   }
 
   // Public methods API
@@ -166,6 +181,9 @@ export class BqDrawer {
   // ===================================
 
   render() {
+    console.log('enableBackdrop', this.enableBackdrop);
+    console.log('disableCloseEscKeydown', this.disableCloseEscKeydown);
+    console.log('disableCloseClickOutside', this.disableCloseClickOutside);
     return (
       <Host
         class={{ 'is-hidden': !this.open }}
@@ -173,8 +191,7 @@ export class BqDrawer {
         hidden={!this.open ? 'true' : 'false'}
         role="dialog"
       >
-        {/* Backdrop */}
-        <div class={`bq-drawer-backdrop ${this.open ? 'open' : ''}`}></div>
+        <div class={{ 'bq-drawer-backdrop': this.enableBackdrop }}></div>
         <div
           class={{ [`bq-drawer ${this.placement}`]: true }}
           data-transition-enter="transition-all ease-in-out duration-500"
