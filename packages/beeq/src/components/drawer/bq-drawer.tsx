@@ -146,7 +146,7 @@ export class BqDrawer {
         role="dialog"
       >
         {/* Backdrop */}
-        <div class={`bq-drawer-backdrop ${this.open ? 'open' : ''}`} onClick={() => this.hide()}></div>
+        <div class={`bq-drawer-backdrop ${this.open ? 'open' : ''}`}></div>
         <div
           class={{ [`bq-drawer ${this.placement}`]: true }}
           data-transition-enter="transition-all ease-in-out duration-500"
