@@ -78,6 +78,6 @@ export const Default: Story = {
   render: Template,
   args: {
     open: false,
-    placement: 'left',
+    placement: 'right',
   },
 };

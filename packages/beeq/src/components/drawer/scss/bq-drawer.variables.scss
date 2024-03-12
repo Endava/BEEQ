@@ -5,11 +5,16 @@
 :host {
   /**
    * @prop --bq-drawer--title-body-gap - Drawer default gap between title and body
+   * @prop --bq-drawer--wrapper-X-padding - Padding on the X-axis for the drawer wrapper
+   * @prop --bq-drawer--wrapper-Y-padding - Padding on the Y-axis for the drawer wrapper
+   * @prop --bq-drawer--footer-top-padding - Padding at the top of the drawer footer
    * @prop ---bq-drawer--body-padding - Drawer default padding for body slot
+   * @prop --bq-drawer--background-backdrop: Drawer backdrop background color
    */
   --bq-drawer--title-body-gap: theme('spacing.l');
   --bq-drawer--wrapper-X-padding: theme('spacing.l');
   --bq-drawer--wrapper-Y-padding: theme('spacing.m');
   --bq-drawer--footer-top-padding: theme('spacing.m');
   --bq-drawer--body-padding: theme('spacing.xs');
+  --bq-drawer--background-backdrop: theme('colors.grey.900');
 }

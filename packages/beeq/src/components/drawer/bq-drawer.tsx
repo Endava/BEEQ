@@ -63,9 +63,6 @@ export class BqDrawer {
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Callback handler emitted when the drawer has been canceled or dismissed */
-  @Event() bqCancel!: EventEmitter<void>;
-
   /** Callback handler to be called when the drawer is closed */
   @Event() bqClose!: EventEmitter;
 
@@ -101,7 +98,7 @@ export class BqDrawer {
 
     const rect = this.drawerElem.getBoundingClientRect();
     if (event.clientX < rect.left || event.clientX > rect.right) {
-      await this.cancel();
+      await this.handleHide();
     }
   }
 
@@ -110,7 +107,7 @@ export class BqDrawer {
     if (!this.open) return;
     if (!this.drawerElem || this.disableCloseEscKeydown || !(event.key === 'Escape' || event.key === 'Esc')) return;
 
-    await this.cancel();
+    await this.handleHide();
   }
 
   // Public methods API
@@ -130,15 +127,6 @@ export class BqDrawer {
   @Method()
   async show(): Promise<void> {
     await this.handleShow();
-  }
-
-  /** Methos to be called to dismiss or cancel the drawer */
-  @Method()
-  async cancel() {
-    const ev = this.bqCancel.emit();
-    if (ev.defaultPrevented) return;
-
-    this.open = false;
   }
 
   // Local methods
@@ -181,9 +169,6 @@ export class BqDrawer {
   // ===================================
 
   render() {
-    console.log('enableBackdrop', this.enableBackdrop);
-    console.log('disableCloseEscKeydown', this.disableCloseEscKeydown);
-    console.log('disableCloseClickOutside', this.disableCloseClickOutside);
     return (
       <Host
         class={{ 'is-hidden': !this.open }}
