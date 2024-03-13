@@ -172,6 +172,7 @@ export class BqDrawer {
         return `-translate-x-full`;
     }
   };
+
   // render() function
   // Always the last one in the class.
   // ===================================
