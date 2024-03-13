@@ -4,6 +4,7 @@
 
 :host {
   /**
+   * @prop --bq-drawer-width - Default drawer width
    * @prop --bq-drawer--title-body-gap - Drawer default gap between title and body
    * @prop --bq-drawer--wrapper-X-padding - Padding on the X-axis for the drawer wrapper
    * @prop --bq-drawer--wrapper-Y-padding - Padding on the Y-axis for the drawer wrapper
@@ -11,6 +12,7 @@
    * @prop ---bq-drawer--body-padding - Drawer default padding for body slot
    * @prop --bq-drawer--background-backdrop: Drawer backdrop background color
    */
+  --bq-drawer-width: 320px;
   --bq-drawer--title-body-gap: theme('spacing.l');
   --bq-drawer--wrapper-X-padding: theme('spacing.l');
   --bq-drawer--wrapper-Y-padding: theme('spacing.m');

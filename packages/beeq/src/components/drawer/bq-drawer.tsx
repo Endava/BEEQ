@@ -187,10 +187,10 @@ export class BqDrawer {
         <div class={{ 'bq-drawer-backdrop': this.enableBackdrop }}></div>
         <div
           class={{ [`bq-drawer ${this.placement}`]: true }}
-          data-transition-enter="transition-all ease-in-out duration-300"
+          data-transition-enter="transition-all ease-out duration-300"
           data-transition-enter-start={`opacity-0 ${this.getMoveTranslate()}`}
           data-transition-enter-end="opacity-100"
-          data-transition-leave="transition-all ease-in-out duration-300"
+          data-transition-leave="transition-all ease-in duration-300"
           data-transition-leave-start="opacity-100"
           data-transition-leave-end={`opacity-0 ${this.getMoveTranslate()}`}
           ref={(div) => (this.drawerElem = div)}
