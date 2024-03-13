@@ -164,6 +164,14 @@ export class BqDrawer {
     this.bqAfterClose.emit();
   };
 
+  private getMoveTranslate = (): string => {
+    switch (this.placement) {
+      case 'right':
+        return `translate-x-full`;
+      default: // placement default is left
+        return `-translate-x-full`;
+    }
+  };
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -179,12 +187,12 @@ export class BqDrawer {
         <div class={{ 'bq-drawer-backdrop': this.enableBackdrop }}></div>
         <div
           class={{ [`bq-drawer ${this.placement}`]: true }}
-          data-transition-enter="transition-all ease-in-out duration-500"
-          data-transition-enter-start={`opacity-0 ${this.placement === 'left' ? '-translate-x-full' : 'translate-x-full'}`}
+          data-transition-enter="transition-all ease-in-out duration-300"
+          data-transition-enter-start={`opacity-0 ${this.getMoveTranslate()}`}
           data-transition-enter-end="opacity-100"
-          data-transition-leave="transition-all ease-in-out duration-500"
+          data-transition-leave="transition-all ease-in-out duration-300"
           data-transition-leave-start="opacity-100"
-          data-transition-leave-end={`opacity-0 ${this.placement === 'left' ? '-translate-x-full' : 'translate-x-full'}`}
+          data-transition-leave-end={`opacity-0 ${this.getMoveTranslate()}`}
           ref={(div) => (this.drawerElem = div)}
           part="wrapper"
         >
