@@ -80,4 +80,17 @@ describe('bq-drawer', () => {
     const description = await page.find('bq-drawer >>> slot[name="body"]');
     expect(description).not.toBeNull();
   });
+
+  it('should render footer drawer slot', async () => {
+    const page = await newE2EPage({
+      html: `
+        <bq-drawer>
+          <div slot="footer">Footer slot</div>
+        </bq-drawer>
+      `,
+    });
+
+    const description = await page.find('bq-drawer >>> slot[name="footer"]');
+    expect(description).not.toBeNull();
+  });
 });
