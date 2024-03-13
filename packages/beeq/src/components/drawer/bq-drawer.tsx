@@ -4,6 +4,16 @@ import { enter, leave } from 'el-transition';
 import { TDrawerPlacement } from './bq-drawer.types';
 import { hasSlotContent } from '../../shared/utils';
 
+/**
+ * @part body - The `<main>` that holds the drawer body content
+ * @part button-close - The button that close the dialog on click
+ * @part content - The `<div>` container that holds the drawer title and body content
+ * @part wrapper - The `<div>` wrapper container inside the shadow DOM
+ * @part footer - The `<footer>` that holds footer content
+ * @part header - The `<header>` that holds the icon, title, and close button
+ * @part title - The `<div>` that holds the title content
+ */
+
 @Component({
   tag: 'bq-drawer',
   styleUrl: './scss/bq-drawer.scss',

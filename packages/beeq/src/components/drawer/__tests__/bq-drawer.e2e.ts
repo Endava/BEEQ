@@ -61,7 +61,7 @@ describe('bq-drawer', () => {
 
   it('should display drawer title', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-drawer><slot="title">Drawer Title</bq-drawer>');
+    await page.setContent('<bq-drawer><div slot="title">Drawer Title</div></bq-drawer>');
 
     const element = await page.find('bq-drawer');
 
