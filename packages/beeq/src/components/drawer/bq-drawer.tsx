@@ -178,8 +178,10 @@ export class BqDrawer {
     switch (this.placement) {
       case 'right':
         return `translate-x-full`;
-      default: // placement default is left
+      case 'left':
         return `-translate-x-full`;
+      default:
+        return '';
     }
   };
 
