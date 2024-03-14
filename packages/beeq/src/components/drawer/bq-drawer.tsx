@@ -50,11 +50,11 @@ export class BqDrawer {
   /** If true, the backdrop overlay will be shown when the drawer opens */
   @Prop({ reflect: true }) enableBackdrop = false;
 
-  /** If true, the dialog will not close when the [Esc] key is press */
-  @Prop({ reflect: true }) disableCloseEscKeydown = true;
+  /** If true, the dialog will not close when the [Esc] key is pressed */
+  @Prop({ reflect: true }) closeOnEsc = false;
 
-  /** If true, the drawer will not close when clicking on the backdrop overlay */
-  @Prop({ reflect: true }) disableCloseClickOutside = true;
+  /** If true, the drawer will not close when clicking outside the panel */
+  @Prop({ reflect: true }) closeOnClickOutside = false;
 
   // Prop lifecycle events
   // =======================
@@ -107,7 +107,7 @@ export class BqDrawer {
   @Listen('mousedown', { target: 'window', capture: true })
   async handleMouseClick(event: MouseEvent) {
     if (!this.open) return;
-    if (!this.drawerElem || this.disableCloseClickOutside) return;
+    if (!this.drawerElem || this.closeOnClickOutside) return;
     // Skip if the mouse button is not the main button
     if (event.button !== 0) return;
 
@@ -120,7 +120,7 @@ export class BqDrawer {
   @Listen('keydown', { target: 'window', capture: true })
   async handleKeyDown(event: KeyboardEvent) {
     if (!this.open) return;
-    if (!this.drawerElem || this.disableCloseEscKeydown || !(event.key === 'Escape' || event.key === 'Esc')) return;
+    if (!this.drawerElem || this.closeOnEsc || !(event.key === 'Escape' || event.key === 'Esc')) return;
 
     await this.handleHide();
   }
@@ -202,61 +202,49 @@ export class BqDrawer {
         hidden={!this.open ? 'true' : 'false'}
         role="dialog"
       >
-        <div class={{ 'bq-drawer-backdrop': this.enableBackdrop }}></div>
+        {this.enableBackdrop && <div class="fixed inset-0 bg-[--bq-drawer--backgroundBackdrop] opacity-60" />}
         <div
           class={{ [`bq-drawer ${this.placement}`]: true }}
           data-transition-enter="transition-all ease-out duration-300"
-          data-transition-enter-start={`opacity-0 ${this.getMoveTranslate()}`}
+          data-transition-enter-start={this.getMoveTranslate()}
           data-transition-enter-end="opacity-100"
           data-transition-leave="transition-all ease-in duration-300"
           data-transition-leave-start="opacity-100"
-          data-transition-leave-end={`opacity-0 ${this.getMoveTranslate()}`}
+          data-transition-leave-end={this.getMoveTranslate()}
           ref={(div) => (this.drawerElem = div)}
           part="wrapper"
         >
-          <header class="mb-[--bq-drawer--header-margin-bottom] flex items-center" part="header">
-            <div
-              class="flex flex-1 items-center justify-between font-bold leading-regular text-text-primary"
-              part="title"
-            >
-              <slot name="title"></slot>
-            </div>
+          <header class="flex" part="header">
+            <h2 class="flex-1 items-center justify-between font-bold leading-regular text-text-primary" part="title">
+              <slot name="title" />
+            </h2>
             <div class="flex" role="button" part="button-close">
               <slot name="button-close">
                 <bq-button
-                  class="bq-drawer__close focus-visible:focus"
+                  class="[&::part(button)]:h-fit [&::part(button)]:rounded-s [&::part(button)]:border-0 [&::part(button)]:p-0"
                   appearance="text"
                   size="small"
                   slot="button-close"
                   onClick={() => this.hide()}
                 >
-                  <bq-icon weight="bold" name="x" role="img" title="Close"></bq-icon>
+                  <bq-icon weight="bold" name="x" role="img" title="Close" />
                 </bq-button>
               </slot>
             </div>
           </header>
-
-          <main class="flex flex-1 flex-col" part="content">
-            <div class="flex-1" part="body">
-              <slot />
-            </div>
+          <main class="block flex-auto overflow-hidden" part="body">
+            <slot />
           </main>
-
-          {this.hasFooter && (
-            <div class="mb-[--bq-drawer--divider-margin-bottom] mt-[--bq-drawer--divider-margin-top]">
-              <bq-divider dashed stroke-color="ui--secondary"></bq-divider>
-            </div>
-          )}
-
           <footer
             class={{
-              'flex items-start gap-xs': true,
+              block: true,
               '!hidden': !this.hasFooter,
             }}
             ref={(footerElem) => (this.footerElem = footerElem)}
             part="footer"
           >
-            <slot name="footer" onSlotchange={this.handleFooterSlotChange}></slot>
+            <bq-divider class="mb-m block" stroke-color="ui--secondary" dashed />
+            <slot name="footer" onSlotchange={this.handleFooterSlotChange} />
           </footer>
         </div>
       </Host>

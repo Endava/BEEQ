@@ -15,20 +15,20 @@ const meta: Meta = {
   argTypes: {
     open: { control: 'boolean' },
     placement: { control: 'select', options: [...DRAWER_PLACEMENT] },
-    'disable-close-click-outside': { control: 'boolean' },
-    'disable-close-esc-keydown': { control: 'boolean' },
+    'close-on-click-outside': { control: 'boolean' },
+    'close-on-esc': { control: 'boolean' },
     'enable-backdrop': { control: 'boolean' },
     // Events
-    bqShow: { action: 'bqOpen' },
-    bqHide: { action: 'bqClose' },
+    bqOpen: { action: 'bqOpen' },
+    bqClose: { action: 'bqClose' },
     bqAfterOpen: { action: 'bqAfterOpen' },
     bqAfterClose: { action: 'bqAfterClose' },
   },
   args: {
     open: false,
     placement: 'left',
-    'disable-close-click-outside': true,
-    'disable-close-esc-keydown': true,
+    'close-on-click-outside': false,
+    'close-on-esc': false,
     'enable-backdrop': false,
   },
 };
@@ -47,10 +47,9 @@ const Template = (args: Args) => {
     <bq-drawer
       ?open=${args.open}
       placement=${args.placement}
-      disable-close-click-outside=${args['disable-close-click-outside']}
-      disable-close-esc-keydown=${args['disable-close-esc-keydown']}
+      close-on-click-outside=${args['close-on-click-outside']}
+      close-on-esc=${args['close-on-esc']}
       enable-backdrop=${args['enable-backdrop']}
-      @bqCancel=${args.bqCancel}
       @bqClose=${args.bqClose}
       @bqOpen=${args.bqOpen}
       @bqAfterOpen=${args.bqAfterOpen}

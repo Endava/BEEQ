@@ -403,13 +403,13 @@ export namespace Components {
     }
     interface BqDrawer {
         /**
-          * If true, the drawer will not close when clicking on the backdrop overlay
+          * If true, the drawer will not close when clicking outside the panel
          */
-        "disableCloseClickOutside": boolean;
+        "closeOnClickOutside": boolean;
         /**
-          * If true, the dialog will not close when the [Esc] key is press
+          * If true, the dialog will not close when the [Esc] key is pressed
          */
-        "disableCloseEscKeydown": boolean;
+        "closeOnEsc": boolean;
         /**
           * If true, the backdrop overlay will be shown when the drawer opens
          */
@@ -2436,13 +2436,13 @@ declare namespace LocalJSX {
     }
     interface BqDrawer {
         /**
-          * If true, the drawer will not close when clicking on the backdrop overlay
+          * If true, the drawer will not close when clicking outside the panel
          */
-        "disableCloseClickOutside"?: boolean;
+        "closeOnClickOutside"?: boolean;
         /**
-          * If true, the dialog will not close when the [Esc] key is press
+          * If true, the dialog will not close when the [Esc] key is pressed
          */
-        "disableCloseEscKeydown"?: boolean;
+        "closeOnEsc"?: boolean;
         /**
           * If true, the backdrop overlay will be shown when the drawer opens
          */
