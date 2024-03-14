@@ -72,12 +72,12 @@ describe('bq-drawer', () => {
     const page = await newE2EPage({
       html: `
         <bq-drawer>
-          <div slot="body">Slot</div>
+          <div slot>Slot</div>
         </bq-drawer>
       `,
     });
 
-    const description = await page.find('bq-drawer >>> slot[name="body"]');
+    const description = await page.find('bq-drawer >>> slot');
     expect(description).not.toBeNull();
   });
 

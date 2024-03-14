@@ -7,10 +7,13 @@
 
 ## Properties
 
-| Property    | Attribute   | Description                                 | Type                | Default     |
-| ----------- | ----------- | ------------------------------------------- | ------------------- | ----------- |
-| `open`      | `open`      | If true, the drawer component will be shown | `boolean`           | `undefined` |
-| `placement` | `placement` |                                             | `"left" \| "right"` | `'left'`    |
+| Property                   | Attribute                     | Description                                                              | Type                | Default     |
+| -------------------------- | ----------------------------- | ------------------------------------------------------------------------ | ------------------- | ----------- |
+| `disableCloseClickOutside` | `disable-close-click-outside` | If true, the drawer will not close when clicking on the backdrop overlay | `boolean`           | `true`      |
+| `disableCloseEscKeydown`   | `disable-close-esc-keydown`   | If true, the dialog will not close when the [Esc] key is press           | `boolean`           | `true`      |
+| `enableBackdrop`           | `enable-backdrop`             | If true, the backdrop overlay will be shown when the drawer opens        | `boolean`           | `false`     |
+| `open`                     | `open`                        | If true, the drawer component will be shown                              | `boolean`           | `undefined` |
+| `placement`                | `placement`                   | Defines the position of the drawer                                       | `"left" \| "right"` | `'left'`    |
 
 
 ## Events
@@ -48,15 +51,15 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part             | Description |
-| ---------------- | ----------- |
-| `"body"`         |             |
-| `"button-close"` |             |
-| `"content"`      |             |
-| `"footer"`       |             |
-| `"header"`       |             |
-| `"title"`        |             |
-| `"wrapper"`      |             |
+| Part             | Description                                                        |
+| ---------------- | ------------------------------------------------------------------ |
+| `"body"`         | The `<main>` that holds the drawer body content                    |
+| `"button-close"` | The button that close the dialog on click                          |
+| `"content"`      | The `<div>` container that holds the drawer title and body content |
+| `"footer"`       | The `<footer>` that holds footer content                           |
+| `"header"`       | The `<header>` that holds the icon, title, and close button        |
+| `"title"`        | The `<div>` that holds the title content                           |
+| `"wrapper"`      | The `<div>` wrapper container inside the shadow DOM                |
 
 
 ## Dependencies

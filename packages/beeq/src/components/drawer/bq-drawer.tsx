@@ -1,8 +1,8 @@
 import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import { enter, leave } from 'el-transition';
 
-import { TDrawerPlacement } from './bq-drawer.types';
-import { hasSlotContent } from '../../shared/utils';
+import { DRAWER_PLACEMENT, TDrawerPlacement } from './bq-drawer.types';
+import { hasSlotContent, validatePropValue } from '../../shared/utils';
 
 /**
  * @part body - The `<main>` that holds the drawer body content
@@ -45,7 +45,7 @@ export class BqDrawer {
   @Prop({ reflect: true, mutable: true }) open: boolean;
 
   /** Defines the position of the drawer */
-  @Prop({ reflect: true, mutable: true }) placement?: TDrawerPlacement = 'left';
+  @Prop({ reflect: true, mutable: true }) placement: TDrawerPlacement = 'left';
 
   /** If true, the backdrop overlay will be shown when the drawer opens */
   @Prop({ reflect: true }) enableBackdrop = false;
@@ -67,6 +67,11 @@ export class BqDrawer {
     }
 
     this.handleShow();
+  }
+
+  @Watch('placement')
+  checkPropValues() {
+    validatePropValue(DRAWER_PLACEMENT, 'left', this.el, 'placement');
   }
 
   // Events section
@@ -209,39 +214,49 @@ export class BqDrawer {
           ref={(div) => (this.drawerElem = div)}
           part="wrapper"
         >
-          <main class="bq-drawer__content" part="content">
-            <header class="bq-drawer__header" part="header">
-              <div class="bq-drawer__title" part="title">
-                <slot name="title" />
-              </div>
-              <div class="flex" role="button" part="button-close">
-                <slot name="button-close">
-                  <bq-button
-                    class="bq-drawer__close focus-visible:focus"
-                    appearance="text"
-                    size="small"
-                    slot="button-close"
-                    onClick={() => this.hide()}
-                  >
-                    <bq-icon weight="bold" name="x" role="img" title="Close" />
-                  </bq-button>
-                </slot>
-              </div>
-            </header>
-            <div class="bq-drawer__body" part="body">
-              <slot name="body" />
+          <header class="mb-[--bq-drawer--header-margin-bottom] flex items-center" part="header">
+            <div
+              class="flex flex-1 items-center justify-between font-bold leading-regular text-text-primary"
+              part="title"
+            >
+              <slot name="title"></slot>
             </div>
-            {this.hasFooter && <bq-divider dashed stroke-color="ui--secondary"></bq-divider>}
+            <div class="flex" role="button" part="button-close">
+              <slot name="button-close">
+                <bq-button
+                  class="bq-drawer__close focus-visible:focus"
+                  appearance="text"
+                  size="small"
+                  slot="button-close"
+                  onClick={() => this.hide()}
+                >
+                  <bq-icon weight="bold" name="x" role="img" title="Close"></bq-icon>
+                </bq-button>
+              </slot>
+            </div>
+          </header>
+
+          <main class="flex flex-1 flex-col" part="content">
+            <div class="flex-1" part="body">
+              <slot />
+            </div>
           </main>
+
+          {this.hasFooter && (
+            <div class="mb-[--bq-drawer--divider-margin-bottom] mt-[--bq-drawer--divider-margin-top]">
+              <bq-divider dashed stroke-color="ui--secondary"></bq-divider>
+            </div>
+          )}
+
           <footer
             class={{
-              'bq-drawer__footer': true,
+              'flex items-start gap-xs': true,
               '!hidden': !this.hasFooter,
             }}
             ref={(footerElem) => (this.footerElem = footerElem)}
             part="footer"
           >
-            <slot name="footer" onSlotchange={this.handleFooterSlotChange} />
+            <slot name="footer" onSlotchange={this.handleFooterSlotChange}></slot>
           </footer>
         </div>
       </Host>

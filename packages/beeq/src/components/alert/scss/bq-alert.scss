@@ -77,7 +77,7 @@
 }
 
 /**
- * Tweak the close bq-buton styles so it remain small wihout extra padding
+ * Tweak the close bq-button styles so it remain small without extra padding
  */
 .bq-alert__close::part(button) {
   @apply h-fit rounded-s border-0 p-0;

@@ -425,7 +425,7 @@ export namespace Components {
         /**
           * Defines the position of the drawer
          */
-        "placement"?: TDrawerPlacement;
+        "placement": TDrawerPlacement;
         /**
           * Method to be called to show the drawer component
          */

@@ -13,7 +13,7 @@
 }
 
 .bq-drawer {
-  @apply absolute z-20 flex w-[--bq-drawer-width] flex-col overflow-auto bg-bg-primary px-[--bq-drawer--wrapper-X-padding] py-[--bq-drawer--wrapper-Y-padding] shadow-m;
+  @apply absolute z-[--bq-drawer--z-index] flex w-[--bq-drawer--width] flex-col overflow-auto bg-bg-primary px-[--bq-drawer--wrapper-X-padding] py-[--bq-drawer--wrapper-Y-padding] shadow-m;
 
   &.left {
     @apply inset-y-0 left-0;
@@ -26,32 +26,12 @@
 
 /* Styling for the backdrop */
 .bq-drawer-backdrop {
-  @apply fixed inset-0 z-10 bg-[--bq-drawer--background-backdrop] opacity-60;
+  @apply fixed inset-0 bg-[--bq-drawer--background-backdrop] opacity-60;
 }
 
 /**
- * Tweak the close bq-buton styles so it remain small wihout extra padding
+ * Tweak the close bq-button styles so it remain small without extra padding
  */
 .bq-drawer__close::part(button) {
   @apply h-fit rounded-s border-0 p-0;
-}
-
-.bq-drawer__content {
-  @apply flex flex-1 flex-col gap-[--bq-drawer--title-body-gap];
-}
-
-.bq-drawer__header {
-  @apply flex items-center;
-}
-
-.bq-drawer__title {
-  @apply flex flex-1 items-center justify-between font-bold leading-regular text-text-primary;
-}
-
-.bq-drawer__footer {
-  @apply flex items-start gap-xs pt-[--bq-drawer--footer-top-padding];
-}
-
-.bq-drawer__body {
-  @apply flex-1;
 }

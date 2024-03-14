@@ -62,7 +62,6 @@ const Template = (args: Args) => {
       </div>
       <div
         class="flex h-full items-center justify-center rounded-xs border border-dashed border-stroke-brand bg-red-100"
-        slot="body"
       >
         Slot
       </div>
