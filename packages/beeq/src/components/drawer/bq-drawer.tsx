@@ -231,7 +231,7 @@ export class BqDrawer {
               </slot>
             </div>
           </header>
-          <main class="block flex-auto overflow-hidden" part="body">
+          <main class="block flex-auto overflow-auto" part="body">
             <slot />
           </main>
           <footer
