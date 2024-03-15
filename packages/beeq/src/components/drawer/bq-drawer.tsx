@@ -200,6 +200,7 @@ export class BqDrawer {
         class={{ 'is-hidden': !this.open }}
         aria-hidden={!this.open ? 'true' : 'false'}
         hidden={!this.open ? 'true' : 'false'}
+        role="presentation"
       >
         {this.enableBackdrop && <div class="fixed inset-0 bg-[--bq-drawer--backgroundBackdrop] opacity-60" />}
         <div
