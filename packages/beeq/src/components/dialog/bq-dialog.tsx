@@ -1,5 +1,4 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
-import { enter, leave } from 'el-transition';
 
 import {
   DIALOG_FOOTER_APPEARANCE,
@@ -8,7 +7,7 @@ import {
   TDialogFooterAppearance,
   TDialogSize,
 } from './bq-dialog.types';
-import { hasSlotContent, validatePropValue } from '../../shared/utils';
+import { enter, hasSlotContent, leave, validatePropValue } from '../../shared/utils';
 
 /**
  * @part body - The `<main>` that holds the dialog body content
@@ -189,16 +188,6 @@ export class BqDialog {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private setInertAttribute() {
-    if (!this.dialogElem) return;
-    this.dialogElem.setAttribute('inert', 'true');
-  }
-
-  private removeInertAttribute() {
-    if (!this.dialogElem) return;
-    this.dialogElem.removeAttribute('inert');
-  }
-
   private handleClose = async () => {
     if (!this.dialogElem) return;
 
@@ -206,16 +195,12 @@ export class BqDialog {
     await leave(this.dialogElem);
     // Emit bqAfterClose event after the dialog is closed
     this.handleTransitionEnd();
-    // Set the inert attribute to the dialog element
-    this.setInertAttribute();
   };
 
   private handleOpen = async () => {
     if (!this.dialogElem) return;
 
     this.el.classList.add(this.OPEN_CSS_CLASS);
-    // Remove the inert attribute from the dialog element
-    this.removeInertAttribute();
     // Show the dialog
     this.disableBackdrop ? this.dialogElem.show() : this.dialogElem.showModal();
     await enter(this.dialogElem);
@@ -253,13 +238,13 @@ export class BqDialog {
     return (
       <dialog
         style={style}
-        class={{ [`bq-dialog ${this.size}`]: true }}
-        data-transition-enter="transition ease-out duration-200"
-        data-transition-enter-start="transform opacity-0 scale-75"
-        data-transition-enter-end="transform opacity-100 scale-100"
-        data-transition-leave="transition ease-in duration-100"
-        data-transition-leave-start="transform opacity-100 scale-100"
-        data-transition-leave-end="transform opacity-0 scale-75"
+        class={`bq-dialog hidden ${this.size}`}
+        data-transition-enter="transition ease-in duration-300"
+        data-transition-enter-start="opacity-0 scale-75"
+        data-transition-enter-end="opacity-100 scale-100"
+        data-transition-leave="transition ease-out duration-300"
+        data-transition-leave-start="opacity-100 scale-100"
+        data-transition-leave-end="opacity-0 scale-75"
         inert={this.open ? undefined : true}
         ref={(dialogElem) => (this.dialogElem = dialogElem)}
         part="dialog"

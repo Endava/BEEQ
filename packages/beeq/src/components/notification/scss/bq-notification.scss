@@ -13,12 +13,12 @@
 }
 
 .bq-notification {
-  @apply relative flex  min-w-[var(--bq-notification--min-width)] p-[var(--bq-notification--padding)] transition-all;
+  @apply relative flex min-w-[var(--bq-notification--min-width)] p-[var(--bq-notification--padding)] transition-all;
   @apply rounded-[var(--bq-notification--border-radius)] bg-[var(--bq-notification--background)] shadow-[shadow:var(--bq-notification--box-shadow)];
 }
 
 /**
- * Set the nocitication icon color based on the type value selected
+ * Set the notification icon color based on the type value selected
  */
 .notification--icon.color {
   &-error {
@@ -43,7 +43,7 @@
 }
 
 /**
- * Tweak the close bq-buton styles so it remain small wihout extra padding
+ * Tweak the close bq-button styles so it remain small without extra padding
  */
 .notification--close::part(button) {
   @apply h-fit rounded-s border-0 p-0;

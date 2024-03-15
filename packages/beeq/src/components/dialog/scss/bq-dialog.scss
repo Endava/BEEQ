@@ -15,9 +15,13 @@
 /* --------------------------------- Dialog --------------------------------- */
 
 .bq-dialog {
-  @apply absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform flex-col gap-[var(--bq-dialog--content-footer-gap)] p-0;
+  @apply absolute left-1/2 top-1/2 flex;
+  @apply flex-col gap-[var(--bq-dialog--content-footer-gap)] p-0;
   @apply bg-[--bq-dialog--background] text-[--bq-dialog--text-color] shadow-[shadow:--bq-dialog--box-shadow];
   @apply rounded-[var(--bq-dialog--border-radius)] border-[length:--bq-dialog--border-width] border-[color:--bq-dialog--border-color];
+  // After setting `optimizeUniversalDefaults` to `true` in `tailwind.config.js`,
+  // `!important` is required to avoid default --tw-* variables to override custom transform values
+  @apply -translate-x-1/2 -translate-y-1/2 #{!important};
   // If mobile resolution, dialog will be full width
   @apply w-[90vw];
 

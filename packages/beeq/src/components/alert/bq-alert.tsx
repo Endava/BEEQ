@@ -1,8 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State, Watch } from '@stencil/core';
-import { enter, leave } from 'el-transition';
 
 import { ALERT_TYPE, TAlertBorderRadius, TAlertType } from './bq-alert.types';
-import { debounce, hasSlotContent, TDebounce, validatePropValue } from '../../shared/utils';
+import { debounce, enter, hasSlotContent, leave, TDebounce, validatePropValue } from '../../shared/utils';
 
 /**
  * @part base - The `<div>` container of the predefined bq-icon component
