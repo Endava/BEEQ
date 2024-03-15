@@ -56,23 +56,41 @@ export const toggle = async (element: HTMLElement, transitionName: string | null
  * @internal
  */
 const transition = async (direction: string, element: HTMLElement, animation: string | null): Promise<void> => {
-  const dataset = element.dataset;
+  const { dataset } = element;
   const animationClass = animation ? `${animation}-${direction}` : direction;
-  const transition = `transition${direction.charAt(0).toUpperCase() + direction.slice(1)}`;
-  const genesis = dataset[transition] ? dataset[transition].split(' ') : [animationClass];
-  const start = dataset[`${transition}Start`] ? dataset[`${transition}Start`].split(' ') : [`${animationClass}-start`];
-  const end = dataset[`${transition}End`] ? dataset[`${transition}End`].split(' ') : [`${animationClass}-end`];
+  const transitionKey = `transition${direction.charAt(0).toUpperCase() + direction.slice(1)}`;
 
-  addClasses(element, genesis);
-  addClasses(element, start);
+  // Get the genesis, start, and end classes
+  const genesisClasses = getDatasetValueOrDefault(dataset, transitionKey, animationClass);
+  const startClasses = getDatasetValueOrDefault(dataset, `${transitionKey}Start`, `${animationClass}-start`);
+  const endClasses = getDatasetValueOrDefault(dataset, `${transitionKey}End`, `${animationClass}-end`);
+
+  // Add genesis and start classes, then wait for the next frame
+  addClasses(element, genesisClasses);
+  addClasses(element, startClasses);
   await nextFrame();
 
-  removeClasses(element, start);
-  addClasses(element, end);
+  // Replace start classes with end classes, then wait for the transition to finish
+  removeClasses(element, startClasses);
+  addClasses(element, endClasses);
   await afterTransition(element as HTMLElementWithAnimations);
 
-  removeClasses(element, end);
-  removeClasses(element, genesis);
+  // Remove end and genesis classes
+  removeClasses(element, endClasses);
+  removeClasses(element, genesisClasses);
+};
+
+/**
+ * Get the value of a dataset key or a default value
+ *
+ * @param dataset The dataset to get the value from
+ * @param key The key to get the value for
+ * @param defaultValue The default value to return if the key is not found
+ * @returns The value of the dataset key or the default value
+ * @internal
+ */
+const getDatasetValueOrDefault = (dataset: DOMStringMap, key: string, defaultValue: string): string[] => {
+  return dataset[key] ? dataset[key].split(' ') : [defaultValue];
 };
 
 /**
@@ -80,6 +98,7 @@ const transition = async (direction: string, element: HTMLElement, animation: st
  *
  * @param element The element to add the CSS classes to
  * @param classes The classes to add
+ * @internal
  */
 const addClasses = (element: HTMLElement, classes: string[]): void => {
   element.classList.add(...classes);
@@ -90,6 +109,7 @@ const addClasses = (element: HTMLElement, classes: string[]): void => {
  *
  * @param element The element to remove the CSS classes from
  * @param classes The classes to remove
+ * @internal
  */
 const removeClasses = (element: HTMLElement, classes: string[]): void => {
   element.classList.remove(...classes);
