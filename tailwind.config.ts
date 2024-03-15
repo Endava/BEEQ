@@ -29,14 +29,14 @@ export default {
     'focus',
     'focus-visible',
     'active',
-    'disabled'
+    'disabled',
   ],
   corePlugins: {
     preflight: false,
     // Disables usage of rgb/opacity
     textOpacity: false,
     backgroundOpacity: false,
-    borderOpacity: false
+    borderOpacity: false,
   },
   experimental: {
     // Prevents Tailwind from generating that wall of empty custom properties
