@@ -238,7 +238,7 @@ export class BqDialog {
     return (
       <dialog
         style={style}
-        class={`bq-dialog hidden  ${this.size}`}
+        class={`bq-dialog hidden ${this.size}`}
         data-transition-enter="transition ease-in duration-300"
         data-transition-enter-start="opacity-0 scale-75"
         data-transition-enter-end="opacity-100 scale-100"
