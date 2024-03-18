@@ -1,5 +1,5 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
-import { html } from 'lit-html';
+import { html, nothing } from 'lit-html';
 
 import mdx from './bq-drawer.mdx';
 import { DRAWER_PLACEMENT } from '../bq-drawer.types';
@@ -23,6 +23,8 @@ const meta: Meta = {
     bqClose: { action: 'bqClose' },
     bqAfterOpen: { action: 'bqAfterOpen' },
     bqAfterClose: { action: 'bqAfterClose' },
+    // Not part of the component API
+    noFooter: { control: 'boolean', table: { disable: true } },
   },
   args: {
     open: false,
@@ -64,10 +66,14 @@ const Template = (args: Args) => {
       >
         Slot
       </div>
-      <div class="flex flex-1 justify-center gap-xs" slot="footer">
-        <bq-button appearance="primary" block size="small"> Button </bq-button>
-        <bq-button appearance="link" block size="small"> Button </bq-button>
-      </div>
+      ${!args.noFooter
+        ? html`
+            <div class="flex flex-1 justify-center gap-xs" slot="footer">
+              <bq-button appearance="primary" block size="small"> Button </bq-button>
+              <bq-button appearance="link" block size="small"> Button </bq-button>
+            </div>
+          `
+        : nothing}
     </bq-drawer>
   `;
 };
@@ -77,5 +83,31 @@ export const Default: Story = {
   args: {
     open: false,
     placement: 'right',
+  },
+};
+
+export const NoFooter: Story = {
+  render: Template,
+  args: {
+    open: false,
+    placement: 'right',
+    noFooter: true,
+  },
+};
+
+export const Placement: Story = {
+  render: Template,
+  args: {
+    open: false,
+    placement: 'left',
+  },
+};
+
+export const WithBackdrop: Story = {
+  render: Template,
+  args: {
+    open: false,
+    placement: 'right',
+    'enable-backdrop': true,
   },
 };
