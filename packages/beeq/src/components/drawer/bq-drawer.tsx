@@ -94,10 +94,11 @@ export class BqDrawer {
   // Ordered by their natural call order
   // =====================================
 
+  componentWillLoad() {
+    this.checkPropValues();
+  }
+
   componentDidLoad() {
-    if (!this.open) {
-      this.el.classList.add('is-hidden');
-    }
     this.handleOpenChange();
   }
 
