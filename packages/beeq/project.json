@@ -93,6 +93,7 @@
       "options": {
         "outputDir": "dist/storybook/beeq",
         "configDir": "packages/beeq/.storybook",
+        "statsJson": true,
         "ci": true
       },
       "configurations": {

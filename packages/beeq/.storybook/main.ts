@@ -1,46 +1,23 @@
-import { join } from 'path';
-import { mergeConfig } from 'vite';
-import turbosnap from 'vite-plugin-turbosnap';
-
 import type { StorybookConfig } from '@storybook/web-components-vite';
-import type { InlineConfig } from 'vite';
 
 export default {
+  framework: '@storybook/web-components-vite',
+  stories: ['../src/**/*.stories.@(ts|tsx)'],
   addons: [
     '@storybook/addon-essentials',
-    '@bee-q/storybook-addon-html',
     '@storybook/addon-a11y',
+    '@beeq/storybook-addon-html',
     '@chromatic-com/storybook',
   ],
-  core: {
-    builder: {
-      name: '@storybook/builder-vite',
-      options: {
-        viteConfigPath: join(__dirname, '../vite.config.ts').replace(/\\/g, '/'),
-      },
-    },
-  },
-  docs: {
-    autodocs: true,
-    defaultName: 'Overview',
-  },
-  features: {
-    // @see https://github.com/storybookjs/storybook/blob/main/docs/configure/overview.md#feature-flags
-    buildStoriesJson: true,
-  },
-  framework: '@storybook/web-components-vite',
-  stories: ['../src/_storybook/**/*.mdx', '../src/**/*.stories.@(mdx|ts|tsx)'],
   staticDirs: [
     { from: '../../../dist/beeq/www/assets', to: '/assets' },
     { from: '../../../dist/beeq/www/scripts', to: '/scripts' },
     { from: '../../../dist/beeq/dist/beeq', to: '/beeq' },
     { from: './assets/css', to: '/css' },
   ],
-  viteFinal: async (config: InlineConfig, { configType }) => {
-    // Add your own config tweaks if needed and return the modified config
-    return mergeConfig(config, {
-      plugins: [configType === 'PRODUCTION' && turbosnap({ rootDir: config.root ?? process.cwd() })].filter(Boolean),
-    });
+  docs: {
+    autodocs: true,
+    defaultName: 'Overview',
   },
   managerHead: (head) => `
     ${head}

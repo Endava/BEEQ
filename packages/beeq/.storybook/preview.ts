@@ -15,8 +15,8 @@ const withThemeProvider: DecoratorFunction<WebComponentsRenderer, { [x: string]:
   const body = document.querySelector('body.sb-show-main');
   if (!(body instanceof HTMLElement)) return storyFn();
 
-  body.setAttribute('bq-theme', (theme || 'BEEQ').toLowerCase());
-  body.setAttribute('bq-mode', (mode || 'Light').toLowerCase());
+  body.setAttribute('bq-theme', theme || 'beeq');
+  body.setAttribute('bq-mode', mode || 'light');
   return storyFn();
 };
 
@@ -26,20 +26,26 @@ const preview: Preview = {
     theme: {
       name: 'Theme',
       description: 'Theme for BEEQ components',
-      defaultValue: 'BEEQ',
+      defaultValue: 'beeq',
       toolbar: {
         icon: 'globe',
-        items: ['BEEQ', 'Endava'],
+        items: [
+          { value: 'beeq', title: 'BEEQ' },
+          { value: 'endava', title: 'Endava' },
+        ],
         dynamicTitle: true,
       },
     },
     mode: {
       name: 'Mode',
       description: 'Theme mode for BEEQ components',
-      defaultValue: 'Light',
+      defaultValue: 'light',
       toolbar: {
         icon: 'mirror',
-        items: ['Dark', 'Light'],
+        items: [
+          { value: 'light', title: '☀️ Light' },
+          { value: 'dark', title: '🌘 Dark' },
+        ],
         dynamicTitle: true,
       },
     },

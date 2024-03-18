@@ -16,7 +16,7 @@ const meta: Meta = {
     'disable-backdrop': { control: 'boolean' },
     'disable-close-click-outside': { control: 'boolean' },
     'disable-close-esc-keydown': { control: 'boolean' },
-    'footer-apperance': { control: 'select', options: [...DIALOG_FOOTER_APPEARANCE] },
+    'footer-appearance': { control: 'inline-radio', options: [...DIALOG_FOOTER_APPEARANCE] },
     'hide-close-button': { control: 'boolean' },
     border: { control: 'select', options: [...DIALOG_BORDER_RADIUS] },
     open: { control: 'boolean' },
@@ -36,7 +36,7 @@ const meta: Meta = {
     'disable-close-click-outside': false,
     'disable-close-esc-keydown': false,
     'hide-close-button': false,
-    'footer-apperance': 'standard',
+    'footer-appearance': 'standard',
     border: 'm',
     open: false,
     size: 'medium',
@@ -62,7 +62,7 @@ const Template = (args: Args) => {
       ?disable-backdrop=${args['disable-backdrop']}
       ?disable-close-esc-keydown=${args['disable-close-esc-keydown']}
       ?disable-close-click-outside=${args['disable-close-click-outside']}
-      footer-apperance=${args['footer-apperance']}
+      footer-appearance=${args['footer-appearance']}
       ?hide-close-button=${args['hide-close-button']}
       border=${args.border}
       ?open=${args.open}
@@ -110,7 +110,7 @@ export const HighlightFooter: Story = {
   render: Template,
   args: {
     open: true,
-    'footer-apperance': 'highlight',
+    'footer-appearance': 'highlight',
   },
 };
 
@@ -153,7 +153,7 @@ const ConfirmTemplate = (args: Args) => {
       ?disable-backdrop=${args['disable-backdrop']}
       ?disable-close-esc-keydown=${args['disable-close-esc-keydown']}
       ?disable-close-click-outside=${args['disable-close-click-outside']}
-      footer-apperance=${args['footer-apperance']}
+      footer-appearance=${args['footer-appearance']}
       ?hide-close-button=${args['hide-close-button']}
       border=${args.border}
       ?open=${args.open}
@@ -172,7 +172,7 @@ const ConfirmTemplate = (args: Args) => {
       <span class="text-s text-text-secondary"> This action cannot be undone </span>
       <div class="flex gap-xs" slot="footer">
         <bq-button appearance="secondary" @bqClick=${handleDialogCancel}> Cancel </bq-button>
-        <bq-button variant="danger" @bqClick=${handleDialogConfirm}> Yes, deactive </bq-button>
+        <bq-button variant="danger" @bqClick=${handleDialogConfirm}> Yes, deactivate </bq-button>
       </div>
     </bq-dialog>
   `;

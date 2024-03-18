@@ -10,5 +10,5 @@ export default defineConfig({
     },
   },
   cacheDir: join(__dirname, '../../node_modules/.cache/.vite-storybook').replace(/\\/g, '/'),
-  plugins: [tsconfigPaths({ root: './' })],
+  plugins: [tsconfigPaths({ root: __dirname })],
 });

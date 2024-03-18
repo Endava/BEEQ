@@ -280,7 +280,7 @@ export class BqDialog {
           class={{
             '!hidden': !this.hasFooter,
             'bq-dialog--footer': this.hasFooter,
-            'bg-ui--alt !py-s': this.footerAppearance === 'highlight',
+            'bg-ui-alt !py-s': this.footerAppearance === 'highlight',
           }}
           ref={(footerElem) => (this.footerElem = footerElem)}
           part="footer"
