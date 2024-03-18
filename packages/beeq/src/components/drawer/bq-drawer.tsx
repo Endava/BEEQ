@@ -179,14 +179,12 @@ export class BqDrawer {
   };
 
   private getMoveTranslate = (): string => {
-    switch (this.placement) {
-      case 'right':
-        return `translate-x-full`;
-      case 'left':
-        return `-translate-x-full`;
-      default:
-        return '';
-    }
+    const placementMap = {
+      right: 'translate-x-full',
+      left: '-translate-x-full',
+    };
+
+    return placementMap[this.placement] || '';
   };
 
   // render() function
