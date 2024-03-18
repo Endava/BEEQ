@@ -45,11 +45,11 @@ const Template = (args: Args) => {
   return html`
     <bq-button @bqClick=${handleOpenDrawer}>Open Drawer</bq-button>
     <bq-drawer
-      ?open=${args.open}
       placement=${args.placement}
-      close-on-click-outside=${args['close-on-click-outside']}
-      close-on-esc=${args['close-on-esc']}
-      enable-backdrop=${args['enable-backdrop']}
+      ?open=${args.open}
+      ?close-on-click-outside=${args['close-on-click-outside']}
+      ?close-on-esc=${args['close-on-esc']}
+      ?enable-backdrop=${args['enable-backdrop']}
       @bqClose=${args.bqClose}
       @bqOpen=${args.bqOpen}
       @bqAfterOpen=${args.bqAfterOpen}
