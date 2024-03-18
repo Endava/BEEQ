@@ -22,8 +22,9 @@ export class BqDrawer {
   // Own Properties
   // ====================
 
-  private drawerElem: HTMLDivElement;
   private footerElem: HTMLElement;
+  private drawerElem: HTMLDivElement;
+  private OPEN_CSS_CLASS = 'bq-drawer--open';
 
   // Reference to host HTML element
   // ===================================
@@ -168,6 +169,7 @@ export class BqDrawer {
     const ev = this.bqOpen.emit();
     if (ev.defaultPrevented) return;
 
+    this.el.classList.add(this.OPEN_CSS_CLASS);
     await enter(this.drawerElem);
     this.handleTransitionEnd();
   };
@@ -177,7 +179,9 @@ export class BqDrawer {
       this.bqAfterOpen.emit();
       return;
     }
+
     this.bqAfterClose.emit();
+    this.el.classList.remove(this.OPEN_CSS_CLASS);
   };
 
   private getMoveTranslate = (): string => {

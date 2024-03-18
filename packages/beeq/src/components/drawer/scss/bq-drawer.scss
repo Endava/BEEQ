@@ -5,11 +5,11 @@
 @import './bq-drawer.variables';
 
 :host {
-  @apply contents;
+  @apply invisible #{!important};
 }
 
-:host(.is-hidden) {
-  @apply hidden;
+:host(.bq-drawer--open) {
+  @apply visible #{!important};
 }
 
 .bq-drawer {
