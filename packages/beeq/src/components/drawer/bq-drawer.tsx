@@ -60,13 +60,13 @@ export class BqDrawer {
   // =======================
 
   @Watch('open')
-  handleOpenChange() {
+  async handleOpenChange() {
     if (!this.open) {
-      this.handleHide();
+      await this.handleHide();
       return;
     }
 
-    this.handleShow();
+    await this.handleShow();
   }
 
   @Watch('placement')
