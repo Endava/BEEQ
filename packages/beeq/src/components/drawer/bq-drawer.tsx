@@ -4,13 +4,14 @@ import { DRAWER_PLACEMENT, TDrawerPlacement } from './bq-drawer.types';
 import { enter, hasSlotContent, leave, validatePropValue } from '../../shared/utils';
 
 /**
- * @part body - The `<main>` that holds the drawer body content
- * @part button-close - The button that close the dialog on click
- * @part content - The `<div>` container that holds the drawer title and body content
  * @part wrapper - The `<div>` wrapper container inside the shadow DOM
- * @part footer - The `<footer>` that holds footer content
+ * @part backdrop - The `<div>` that holds the backdrop overlay
+ * @part button-close - The button that close the dialog on click
+ * @part panel - The `<div>` that holds the drawer entire content
  * @part header - The `<header>` that holds the icon, title, and close button
  * @part title - The `<div>` that holds the title content
+ * @part body - The `<main>` that holds the drawer body content
+ * @part footer - The `<footer>` that holds footer content
  */
 
 @Component({
