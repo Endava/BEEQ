@@ -7,13 +7,13 @@
 
 ## Properties
 
-| Property                   | Attribute                     | Description                                                              | Type                | Default     |
-| -------------------------- | ----------------------------- | ------------------------------------------------------------------------ | ------------------- | ----------- |
-| `disableCloseClickOutside` | `disable-close-click-outside` | If true, the drawer will not close when clicking on the backdrop overlay | `boolean`           | `true`      |
-| `disableCloseEscKeydown`   | `disable-close-esc-keydown`   | If true, the dialog will not close when the [Esc] key is press           | `boolean`           | `true`      |
-| `enableBackdrop`           | `enable-backdrop`             | If true, the backdrop overlay will be shown when the drawer opens        | `boolean`           | `false`     |
-| `open`                     | `open`                        | If true, the drawer component will be shown                              | `boolean`           | `undefined` |
-| `placement`                | `placement`                   | Defines the position of the drawer                                       | `"left" \| "right"` | `'left'`    |
+| Property              | Attribute                | Description                                                        | Type                | Default     |
+| --------------------- | ------------------------ | ------------------------------------------------------------------ | ------------------- | ----------- |
+| `closeOnClickOutside` | `close-on-click-outside` | If true, the drawer will not close when clicking outside the panel | `boolean`           | `false`     |
+| `closeOnEsc`          | `close-on-esc`           | If true, the dialog will not close when the [Esc] key is pressed   | `boolean`           | `false`     |
+| `enableBackdrop`      | `enable-backdrop`        | If true, the backdrop overlay will be shown when the drawer opens  | `boolean`           | `false`     |
+| `open`                | `open`                   | If true, the drawer component will be shown                        | `boolean`           | `undefined` |
+| `placement`           | `placement`              | Defines the position of the drawer                                 | `"left" \| "right"` | `'left'`    |
 
 
 ## Events
@@ -51,15 +51,16 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part             | Description                                                        |
-| ---------------- | ------------------------------------------------------------------ |
-| `"body"`         | The `<main>` that holds the drawer body content                    |
-| `"button-close"` | The button that close the dialog on click                          |
-| `"content"`      | The `<div>` container that holds the drawer title and body content |
-| `"footer"`       | The `<footer>` that holds footer content                           |
-| `"header"`       | The `<header>` that holds the icon, title, and close button        |
-| `"title"`        | The `<div>` that holds the title content                           |
-| `"wrapper"`      | The `<div>` wrapper container inside the shadow DOM                |
+| Part             | Description                                                 |
+| ---------------- | ----------------------------------------------------------- |
+| `"backdrop"`     | The `<div>` that holds the backdrop overlay                 |
+| `"body"`         | The `<main>` that holds the drawer body content             |
+| `"button-close"` | The button that close the dialog on click                   |
+| `"footer"`       | The `<footer>` that holds footer content                    |
+| `"header"`       | The `<header>` that holds the icon, title, and close button |
+| `"panel"`        | The `<div>` that holds the drawer entire content            |
+| `"title"`        | The `<div>` that holds the title content                    |
+| `"wrapper"`      | The `<div>` wrapper container inside the shadow DOM         |
 
 
 ## Dependencies
