@@ -1,8 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, State, Watch } from '@stencil/core';
-import { enter, leave } from 'el-transition';
 
 import { DRAWER_PLACEMENT, TDrawerPlacement } from './bq-drawer.types';
-import { hasSlotContent, validatePropValue } from '../../shared/utils';
+import { enter, hasSlotContent, leave, validatePropValue } from '../../shared/utils';
 
 /**
  * @part body - The `<main>` that holds the drawer body content
