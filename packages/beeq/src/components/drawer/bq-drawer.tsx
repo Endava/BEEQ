@@ -114,7 +114,7 @@ export class BqDrawer {
 
     const rect = this.drawerElem.getBoundingClientRect();
     if (event.clientX < rect.left || event.clientX > rect.right) {
-      await this.handleHide();
+      await this.hide();
     }
   }
 
@@ -123,7 +123,7 @@ export class BqDrawer {
     if (!this.open) return;
     if (!this.drawerElem || this.closeOnEsc || !(event.key === 'Escape' || event.key === 'Esc')) return;
 
-    await this.handleHide();
+    await this.hide();
   }
 
   // Public methods API
