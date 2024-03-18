@@ -1,10 +1,9 @@
-import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
 import { DRAWER_PLACEMENT, TDrawerPlacement } from './bq-drawer.types';
 import { enter, hasSlotContent, leave, validatePropValue } from '../../shared/utils';
 
 /**
- * @part wrapper - The `<div>` wrapper container inside the shadow DOM
  * @part backdrop - The `<div>` that holds the backdrop overlay
  * @part button-close - The button that close the dialog on click
  * @part panel - The `<div>` that holds the drawer entire content
@@ -201,13 +200,8 @@ export class BqDrawer {
 
   render() {
     return (
-      <div
-        class={{
-          'fixed start-0 top-0 z-[--bq-drawer--zIndex] h-full w-full overflow-hidden': true,
-          'pointer-events-none': !this.open,
-        }}
-        part="wrapper"
-      >
+      <Host>
+        {/* BACKDROP */}
         {this.enableBackdrop && (
           <div
             class={{
@@ -216,9 +210,11 @@ export class BqDrawer {
               'pointer-events-none': !this.open,
               'opacity-60': this.open,
             }}
+            tabIndex={-1}
             part="backdrop"
           />
         )}
+        {/* DRAWER PANEL */}
         <div
           class={{
             [`bq-drawer ${this.placement}`]: true,
@@ -232,16 +228,22 @@ export class BqDrawer {
           data-transition-leave-start="opacity-100"
           data-transition-leave-end={this.getMoveTranslate()}
           ref={(div) => (this.drawerElem = div)}
+          aria-hidden={!this.open ? 'true' : 'false'}
+          aria-labelledby="bq-drawer__title"
           aria-modal="true"
           hidden={!this.open}
-          role="dialog"
           part="panel"
+          role="dialog"
         >
           <header class="flex" part="header">
-            <h2 class="flex-1 items-center justify-between font-bold leading-regular text-text-primary" part="title">
+            <h2
+              class="flex-1 items-center justify-between font-bold leading-regular text-text-primary"
+              id="bq-drawer__title"
+              part="title"
+            >
               <slot name="title" />
             </h2>
-            <div class="flex" role="button" part="button-close">
+            <div class="flex" part="button-close">
               <slot name="button-close">
                 <bq-button
                   class="[&::part(button)]:h-fit [&::part(button)]:rounded-s [&::part(button)]:border-0 [&::part(button)]:p-0"
@@ -270,7 +272,7 @@ export class BqDrawer {
             <slot name="footer" onSlotchange={this.handleFooterSlotChange} />
           </footer>
         </div>
-      </div>
+      </Host>
     );
   }
 }

@@ -60,7 +60,6 @@ Type: `Promise<void>`
 | `"header"`       | The `<header>` that holds the icon, title, and close button |
 | `"panel"`        | The `<div>` that holds the drawer entire content            |
 | `"title"`        | The `<div>` that holds the title content                    |
-| `"wrapper"`      | The `<div>` wrapper container inside the shadow DOM         |
 
 
 ## Dependencies
