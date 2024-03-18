@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
 import { DRAWER_PLACEMENT, TDrawerPlacement } from './bq-drawer.types';
 import { enter, hasSlotContent, leave, validatePropValue } from '../../shared/utils';
@@ -193,23 +193,41 @@ export class BqDrawer {
 
   render() {
     return (
-      <Host
-        class={{ 'is-hidden': !this.open }}
-        aria-hidden={!this.open ? 'true' : 'false'}
-        hidden={!this.open ? 'true' : 'false'}
-        role="presentation"
+      <div
+        class={{
+          'fixed start-0 top-0 z-[--bq-drawer--zIndex] h-full w-full overflow-hidden': true,
+          'pointer-events-none': !this.open,
+        }}
+        part="wrapper"
       >
-        {this.enableBackdrop && <div class="fixed inset-0 bg-[--bq-drawer--backgroundBackdrop] opacity-60" />}
+        {this.enableBackdrop && (
+          <div
+            class={{
+              'fixed inset-0 block bg-[--bq-drawer--backgroundBackdrop] opacity-0 transition-opacity duration-300 ':
+                true,
+              'pointer-events-none': !this.open,
+              'opacity-60': this.open,
+            }}
+            part="backdrop"
+          />
+        )}
         <div
-          class={{ [`bq-drawer ${this.placement}`]: true }}
-          data-transition-enter="transition-all ease-out duration-300"
+          class={{
+            [`bq-drawer ${this.placement}`]: true,
+            'left-0': this.placement === 'left',
+            'right-0': this.placement === 'right',
+          }}
+          data-transition-enter="transition-transform ease-in duration-300"
           data-transition-enter-start={this.getMoveTranslate()}
           data-transition-enter-end="opacity-100"
-          data-transition-leave="transition-all ease-in duration-300"
+          data-transition-leave="transition-transform ease-in duration-300"
           data-transition-leave-start="opacity-100"
           data-transition-leave-end={this.getMoveTranslate()}
           ref={(div) => (this.drawerElem = div)}
-          part="wrapper"
+          aria-modal="true"
+          hidden={!this.open}
+          role="dialog"
+          part="panel"
         >
           <header class="flex" part="header">
             <h2 class="flex-1 items-center justify-between font-bold leading-regular text-text-primary" part="title">
@@ -244,7 +262,7 @@ export class BqDrawer {
             <slot name="footer" onSlotchange={this.handleFooterSlotChange} />
           </footer>
         </div>
-      </Host>
+      </div>
     );
   }
 }
