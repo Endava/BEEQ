@@ -17,7 +17,6 @@ const withThemeProvider: DecoratorFunction<WebComponentsRenderer, { [x: string]:
 
   body.setAttribute('bq-theme', (theme || 'BEEQ').toLowerCase());
   body.setAttribute('bq-mode', (mode || 'Light').toLowerCase());
-  body.style.overflow = 'hidden';
   return storyFn();
 };
 

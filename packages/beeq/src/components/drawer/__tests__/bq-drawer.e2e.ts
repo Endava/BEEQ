@@ -24,9 +24,8 @@ describe('bq-drawer', () => {
       html: `<bq-drawer></bq-drawer>`,
     });
 
-    const element = await page.find('bq-drawer');
+    const element = await page.find('bq-drawer >>> [part="panel"]');
     expect(element).toEqualAttribute('aria-hidden', 'true');
-    expect(element).toHaveClass('is-hidden');
   });
 
   it('should render as hidden with `open="false"`', async () => {
@@ -34,9 +33,8 @@ describe('bq-drawer', () => {
       html: `<bq-drawer open="false"></bq-drawer>`,
     });
 
-    const element = await page.find('bq-drawer');
+    const element = await page.find('bq-drawer >>> [part="panel"]');
     expect(element).toEqualAttribute('aria-hidden', 'true');
-    expect(element).toHaveClass('is-hidden');
   });
 
   it('should render as open', async () => {
@@ -44,9 +42,9 @@ describe('bq-drawer', () => {
       html: `<bq-drawer open></bq-drawer>`,
     });
 
-    const element = await page.find('bq-drawer');
-    expect(element).not.toEqualAttribute('aria-hidden', 'true');
-    expect(element).not.toHaveClass('is-hidden');
+    const element = await page.find('bq-drawer >>> [part="panel"]');
+    expect(element).toEqualAttribute('aria-hidden', 'false');
+    expect(element).not.toHaveClass('hidden');
   });
 
   it('should render as open with `open="true"`', async () => {
@@ -54,17 +52,21 @@ describe('bq-drawer', () => {
       html: `<bq-drawer open="true"></bq-drawer>`,
     });
 
-    const element = await page.find('bq-drawer');
-    expect(element).not.toEqualAttribute('aria-hidden', 'true');
-    expect(element).not.toHaveClass('is-hidden');
+    const element = await page.find('bq-drawer >>> [part="panel"]');
+    expect(element).toEqualAttribute('aria-hidden', 'false');
+    expect(element).not.toHaveClass('hidden');
   });
 
   it('should display drawer title', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-drawer><div slot="title">Drawer Title</div></bq-drawer>');
+    const page = await newE2EPage({
+      html: `
+        <bq-drawer>
+          <div slot="title">Drawer Title</div>
+        </bq-drawer>
+      `,
+    });
 
     const element = await page.find('bq-drawer');
-
     expect(element).toEqualText('Drawer Title');
   });
 
@@ -92,5 +94,51 @@ describe('bq-drawer', () => {
 
     const description = await page.find('bq-drawer >>> slot[name="footer"]');
     expect(description).not.toBeNull();
+  });
+
+  it('should call `show` method', async () => {
+    const page = await newE2EPage({
+      html: `
+        <bq-drawer>
+          <div slot="title">Drawer Title</div>
+        </bq-drawer>
+      `,
+    });
+
+    const closedDrawer = await page.find('bq-drawer >>> [part="panel"]');
+    expect(closedDrawer.getAttribute('aria-hidden')).toBe('true');
+    expect(closedDrawer).toHaveAttribute('hidden');
+
+    await page.$eval('bq-drawer', async (elem: HTMLBqDrawerElement) => {
+      await elem.show();
+    });
+    await page.waitForChanges();
+
+    const openDrawer = await page.find('bq-drawer >>> [part="panel"]');
+    expect(openDrawer.getAttribute('aria-hidden')).toBe('false');
+    expect(openDrawer).not.toHaveAttribute('hidden');
+  });
+
+  it('should call `hide` method', async () => {
+    const page = await newE2EPage({
+      html: `
+        <bq-drawer open>
+          <div slot="title">Drawer Title</div>
+        </bq-drawer>
+      `,
+    });
+
+    const openDrawer = await page.find('bq-drawer >>> [part="panel"]');
+    expect(openDrawer.getAttribute('aria-hidden')).toBe('false');
+    expect(openDrawer).not.toHaveAttribute('hidden');
+
+    await page.$eval('bq-drawer', async (elem: HTMLBqDrawerElement) => {
+      await elem.hide();
+    });
+    await page.waitForChanges();
+
+    const closedDrawer = await page.find('bq-drawer >>> [part="panel"]');
+    expect(closedDrawer.getAttribute('aria-hidden')).toBe('true');
+    expect(closedDrawer).toHaveAttribute('hidden');
   });
 });
