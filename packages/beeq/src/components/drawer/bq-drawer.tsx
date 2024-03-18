@@ -134,13 +134,13 @@ export class BqDrawer {
   /** Method to be called to hide the drawer component */
   @Method()
   async hide(): Promise<void> {
-    await this.handleHide();
+    this.open = false;
   }
 
   /** Method to be called to show the drawer component */
   @Method()
   async show(): Promise<void> {
-    await this.handleShow();
+    this.open = true;
   }
 
   // Local methods
@@ -153,21 +153,23 @@ export class BqDrawer {
   };
 
   private handleHide = async () => {
-    const ev = this.bqClose.emit(this.el);
-    if (!ev.defaultPrevented) {
-      await leave(this.drawerElem);
-      this.open = false;
-      this.handleTransitionEnd();
-    }
+    if (!this.drawerElem) return;
+
+    const ev = this.bqClose.emit();
+    if (ev.defaultPrevented) return;
+
+    await leave(this.drawerElem);
+    this.handleTransitionEnd();
   };
 
   private handleShow = async () => {
-    const ev = this.bqOpen.emit(this.el);
-    if (!ev.defaultPrevented) {
-      this.open = true;
-      await enter(this.drawerElem);
-      this.handleTransitionEnd();
-    }
+    if (!this.drawerElem) return;
+
+    const ev = this.bqOpen.emit();
+    if (ev.defaultPrevented) return;
+
+    await enter(this.drawerElem);
+    this.handleTransitionEnd();
   };
 
   private handleTransitionEnd = () => {
