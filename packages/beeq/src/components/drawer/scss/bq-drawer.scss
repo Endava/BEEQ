@@ -13,13 +13,5 @@
 }
 
 .bq-drawer {
-  @apply absolute z-[--bq-drawer--zIndex] flex w-[--bq-drawer--width] flex-col gap-[--bq-drawer--gap] bg-bg-primary bg-bg-primary px-[--bq-drawer--paddingX] py-[--bq-drawer--paddingY] shadow-m;
-
-  &.left {
-    @apply inset-y-0 left-0;
-  }
-
-  &.right {
-    @apply inset-y-0 right-0;
-  }
+  @apply absolute inset-y-0 z-10 flex w-[--bq-drawer--width] max-w-full flex-col gap-[--bq-drawer--gap] bg-bg-primary px-[--bq-drawer--paddingX] py-[--bq-drawer--paddingY] shadow-m;
 }
