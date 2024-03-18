@@ -13,5 +13,5 @@
 }
 
 .bq-drawer {
-  @apply absolute inset-y-0 z-10 flex w-[--bq-drawer--width] max-w-full flex-col gap-[--bq-drawer--gap] bg-bg-primary px-[--bq-drawer--paddingX] py-[--bq-drawer--paddingY] shadow-m;
+  @apply fixed inset-y-0 z-10 flex w-[--bq-drawer--width] max-w-full flex-col gap-[--bq-drawer--gap] bg-bg-primary px-[--bq-drawer--paddingX] py-[--bq-drawer--paddingY] shadow-m;
 }
