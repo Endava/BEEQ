@@ -689,6 +689,8 @@ export namespace Components {
          */
         "strategy"?: 'fixed' | 'absolute';
     }
+    interface BqProgress {
+    }
     interface BqRadio {
         /**
           * If true radio displays background on hover
@@ -1715,6 +1717,12 @@ declare global {
         prototype: HTMLBqPanelElement;
         new (): HTMLBqPanelElement;
     };
+    interface HTMLBqProgressElement extends Components.BqProgress, HTMLStencilElement {
+    }
+    var HTMLBqProgressElement: {
+        prototype: HTMLBqProgressElement;
+        new (): HTMLBqProgressElement;
+    };
     interface HTMLBqRadioElementEventMap {
         "bqClick": HTMLBqRadioElement;
         "bqFocus": HTMLBqRadioElement;
@@ -2015,6 +2023,7 @@ declare global {
         "bq-option-group": HTMLBqOptionGroupElement;
         "bq-option-list": HTMLBqOptionListElement;
         "bq-panel": HTMLBqPanelElement;
+        "bq-progress": HTMLBqProgressElement;
         "bq-radio": HTMLBqRadioElement;
         "bq-radio-group": HTMLBqRadioGroupElement;
         "bq-select": HTMLBqSelectElement;
@@ -2803,6 +2812,8 @@ declare namespace LocalJSX {
          */
         "strategy"?: 'fixed' | 'absolute';
     }
+    interface BqProgress {
+    }
     interface BqRadio {
         /**
           * If true radio displays background on hover
@@ -3487,6 +3498,7 @@ declare namespace LocalJSX {
         "bq-option-group": BqOptionGroup;
         "bq-option-list": BqOptionList;
         "bq-panel": BqPanel;
+        "bq-progress": BqProgress;
         "bq-radio": BqRadio;
         "bq-radio-group": BqRadioGroup;
         "bq-select": BqSelect;
@@ -3538,6 +3550,7 @@ declare module "@stencil/core" {
             "bq-option-group": LocalJSX.BqOptionGroup & JSXBase.HTMLAttributes<HTMLBqOptionGroupElement>;
             "bq-option-list": LocalJSX.BqOptionList & JSXBase.HTMLAttributes<HTMLBqOptionListElement>;
             "bq-panel": LocalJSX.BqPanel & JSXBase.HTMLAttributes<HTMLBqPanelElement>;
+            "bq-progress": LocalJSX.BqProgress & JSXBase.HTMLAttributes<HTMLBqProgressElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
             "bq-select": LocalJSX.BqSelect & JSXBase.HTMLAttributes<HTMLBqSelectElement>;

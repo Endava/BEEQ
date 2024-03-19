@@ -1,0 +1,10 @@
+/* -------------------------------------------------------------------------- */
+/*                   Progress custom properties                  */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  /**
+   * @prop --bq-progress--margin - Progress margin
+   */
+  --bq-progress--margin: theme('spacing.m');
+}
