@@ -4,7 +4,7 @@
   "exitZeroOnChanges": true,
   "onlyChanged": true,
   "projectId": "Project:6408a8161bf55e5999ae828b",
-  "storybookBaseDir": "./packages/beeq",
+  "storybookBaseDir": "./",
   "storybookBuildDir": "./dist/storybook/beeq",
   "storybookConfigDir": "./packages/beeq/.storybook",
   "untraced": ["package.json", "package-lock.json"],
