@@ -13,6 +13,7 @@ import { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButt
 import { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
 import { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
+import { TDrawerPlacement } from "./components/drawer/bq-drawer.types";
 import { FloatingUIPlacement } from "./services/interfaces";
 import { TEmptyStateSize } from "./components/empty-state/bq-empty-state.types";
 import { TIconWeight } from "./components/icon/bq-icon.types";
@@ -38,6 +39,7 @@ export { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButt
 export { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
 export { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
+export { TDrawerPlacement } from "./components/drawer/bq-drawer.types";
 export { FloatingUIPlacement } from "./services/interfaces";
 export { TEmptyStateSize } from "./components/empty-state/bq-empty-state.types";
 export { TIconWeight } from "./components/icon/bq-icon.types";
@@ -398,6 +400,36 @@ export namespace Components {
           * Set the alignment of the title on the main axis of the divider (horizontal / vertical)
          */
         "titleAlignment"?: TDividerTitleAlignment;
+    }
+    interface BqDrawer {
+        /**
+          * If true, the drawer will not close when clicking outside the panel
+         */
+        "closeOnClickOutside": boolean;
+        /**
+          * If true, the dialog will not close when the [Esc] key is pressed
+         */
+        "closeOnEsc": boolean;
+        /**
+          * If true, the backdrop overlay will be shown when the drawer opens
+         */
+        "enableBackdrop": boolean;
+        /**
+          * Method to be called to hide the drawer component
+         */
+        "hide": () => Promise<void>;
+        /**
+          * If true, the drawer component will be shown
+         */
+        "open": boolean;
+        /**
+          * Defines the position of the drawer
+         */
+        "placement": TDrawerPlacement;
+        /**
+          * Method to be called to show the drawer component
+         */
+        "show": () => Promise<void>;
     }
     interface BqDropdown {
         /**
@@ -1272,6 +1304,10 @@ export interface BqDialogCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqDialogElement;
 }
+export interface BqDrawerCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqDrawerElement;
+}
 export interface BqDropdownCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqDropdownElement;
@@ -1517,6 +1553,26 @@ declare global {
     var HTMLBqDividerElement: {
         prototype: HTMLBqDividerElement;
         new (): HTMLBqDividerElement;
+    };
+    interface HTMLBqDrawerElementEventMap {
+        "bqClose": any;
+        "bqOpen": any;
+        "bqAfterOpen": any;
+        "bqAfterClose": any;
+    }
+    interface HTMLBqDrawerElement extends Components.BqDrawer, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqDrawerElementEventMap>(type: K, listener: (this: HTMLBqDrawerElement, ev: BqDrawerCustomEvent<HTMLBqDrawerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqDrawerElementEventMap>(type: K, listener: (this: HTMLBqDrawerElement, ev: BqDrawerCustomEvent<HTMLBqDrawerElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLBqDrawerElement: {
+        prototype: HTMLBqDrawerElement;
+        new (): HTMLBqDrawerElement;
     };
     interface HTMLBqDropdownElementEventMap {
         "bqOpen": { open: boolean };
@@ -1941,6 +1997,7 @@ declare global {
         "bq-checkbox": HTMLBqCheckboxElement;
         "bq-dialog": HTMLBqDialogElement;
         "bq-divider": HTMLBqDividerElement;
+        "bq-drawer": HTMLBqDrawerElement;
         "bq-dropdown": HTMLBqDropdownElement;
         "bq-empty-state": HTMLBqEmptyStateElement;
         "bq-icon": HTMLBqIconElement;
@@ -2376,6 +2433,44 @@ declare namespace LocalJSX {
           * Set the alignment of the title on the main axis of the divider (horizontal / vertical)
          */
         "titleAlignment"?: TDividerTitleAlignment;
+    }
+    interface BqDrawer {
+        /**
+          * If true, the drawer will not close when clicking outside the panel
+         */
+        "closeOnClickOutside"?: boolean;
+        /**
+          * If true, the dialog will not close when the [Esc] key is pressed
+         */
+        "closeOnEsc"?: boolean;
+        /**
+          * If true, the backdrop overlay will be shown when the drawer opens
+         */
+        "enableBackdrop"?: boolean;
+        /**
+          * Callback handler to be called after the drawer has been closed
+         */
+        "onBqAfterClose"?: (event: BqDrawerCustomEvent<any>) => void;
+        /**
+          * Callback handler to be called after the drawer has been opened
+         */
+        "onBqAfterOpen"?: (event: BqDrawerCustomEvent<any>) => void;
+        /**
+          * Callback handler to be called when the drawer is closed
+         */
+        "onBqClose"?: (event: BqDrawerCustomEvent<any>) => void;
+        /**
+          * Callback handler to be called when the drawer is opened
+         */
+        "onBqOpen"?: (event: BqDrawerCustomEvent<any>) => void;
+        /**
+          * If true, the drawer component will be shown
+         */
+        "open"?: boolean;
+        /**
+          * Defines the position of the drawer
+         */
+        "placement"?: TDrawerPlacement;
     }
     interface BqDropdown {
         /**
@@ -3357,6 +3452,7 @@ declare namespace LocalJSX {
         "bq-checkbox": BqCheckbox;
         "bq-dialog": BqDialog;
         "bq-divider": BqDivider;
+        "bq-drawer": BqDrawer;
         "bq-dropdown": BqDropdown;
         "bq-empty-state": BqEmptyState;
         "bq-icon": BqIcon;
@@ -3404,6 +3500,7 @@ declare module "@stencil/core" {
             "bq-checkbox": LocalJSX.BqCheckbox & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
             "bq-dialog": LocalJSX.BqDialog & JSXBase.HTMLAttributes<HTMLBqDialogElement>;
             "bq-divider": LocalJSX.BqDivider & JSXBase.HTMLAttributes<HTMLBqDividerElement>;
+            "bq-drawer": LocalJSX.BqDrawer & JSXBase.HTMLAttributes<HTMLBqDrawerElement>;
             "bq-dropdown": LocalJSX.BqDropdown & JSXBase.HTMLAttributes<HTMLBqDropdownElement>;
             "bq-empty-state": LocalJSX.BqEmptyState & JSXBase.HTMLAttributes<HTMLBqEmptyStateElement>;
             /**

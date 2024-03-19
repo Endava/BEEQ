@@ -1,0 +1,17 @@
+/* -------------------------------------------------------------------------- */
+/*                        Drawer styles                        */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-drawer.variables';
+
+:host {
+  @apply invisible #{!important};
+}
+
+:host(.bq-drawer--open) {
+  @apply visible #{!important};
+}
+
+.bq-drawer {
+  @apply fixed inset-y-0 z-10 flex w-[--bq-drawer--width] max-w-full flex-col gap-[--bq-drawer--gap] bg-bg-primary px-[--bq-drawer--paddingX] py-[--bq-drawer--paddingY] shadow-m;
+}

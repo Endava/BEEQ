@@ -1,0 +1,21 @@
+/* -------------------------------------------------------------------------- */
+/*                   Drawer custom properties                  */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  /**
+   * @prop --bq-drawer--backgroundBackdrop - Background color of the backdrop
+   * @prop --bq-drawer--gap - Gap between the drawer and the viewport
+   * @prop --bq-drawer--width - Width of the drawer
+   * @prop --bq-drawer--paddingX - Padding left and right of the drawer
+   * @prop --bq-drawer--paddingY - Padding top and bottom of the drawer
+   * @prop --bq-drawer--zIndex - Z-index of the drawer component
+   */
+
+  --bq-drawer--backgroundBackdrop: theme('colors.grey.900');
+  --bq-drawer--gap: theme('spacing.l');
+  --bq-drawer--width: 320px;
+  --bq-drawer--paddingX: theme('spacing.l');
+  --bq-drawer--paddingY: theme('spacing.m');
+  --bq-drawer--zIndex: 9999;
+}

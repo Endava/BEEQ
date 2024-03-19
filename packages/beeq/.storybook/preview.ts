@@ -13,7 +13,7 @@ const withThemeProvider: DecoratorFunction<WebComponentsRenderer, { [x: string]:
     globals: { theme, mode },
   } = context;
   const body = document.querySelector('body.sb-show-main');
-  if (!body) return storyFn();
+  if (!(body instanceof HTMLElement)) return storyFn();
 
   body.setAttribute('bq-theme', (theme || 'BEEQ').toLowerCase());
   body.setAttribute('bq-mode', (mode || 'Light').toLowerCase());
