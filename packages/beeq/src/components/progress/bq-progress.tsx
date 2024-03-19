@@ -1,4 +1,7 @@
-import { Component, h } from '@stencil/core';
+import { Component, Element, h, Prop, Watch } from '@stencil/core';
+
+import { PROGRESS_MODE, TProgressMode } from './bq-progress.types';
+import { validatePropValue } from '../../shared/utils';
 
 @Component({
   tag: 'bq-progress',
@@ -12,6 +15,8 @@ export class BqProgress {
   // Reference to host HTML element
   // ===================================
 
+  @Element() el!: HTMLBqProgressElement;
+
   // State() variables
   // Inlined decorator, alphabetical order
   // =======================================
@@ -19,8 +24,18 @@ export class BqProgress {
   // Public Property API
   // ========================
 
+  /** It defines the mode of progress bar to display */
+  @Prop({ reflect: true }) mode: TProgressMode = 'determinated';
+
+  /** A number representing the current value of the progress bar */
+  @Prop({ reflect: true }) value = 0;
+
   // Prop lifecycle events
   // =======================
+  @Watch('mode')
+  handleTypePropChange() {
+    validatePropValue(PROGRESS_MODE, 'determinated', this.el, 'mode');
+  }
 
   // Events section
   // Requires JSDocs for public API documentation
@@ -51,9 +66,16 @@ export class BqProgress {
 
   render() {
     return (
-      <p class="m-[--bq-progress--margin]">
-        My name is Stencil <slot />
-      </p>
+      <div
+        class={{
+          [`bq-progress ${this.mode}`]: true,
+        }}
+        part="base"
+      >
+        <div class="bq-progress__container">
+          <progress value={this.value} max="100"></progress>
+        </div>
+      </div>
     );
   }
 }

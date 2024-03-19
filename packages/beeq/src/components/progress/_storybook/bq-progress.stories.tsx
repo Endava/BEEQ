@@ -12,19 +12,21 @@ const meta: Meta = {
     },
   },
   argTypes: {
-    text: { control: 'text', table: { disable: true } },
+    value: { control: 'number' },
   },
   args: {
-    text: 'text',
+    value: 0,
   },
 };
 export default meta;
 
 type Story = StoryObj;
 
-const Template = (args: Args) => html`<bq-progress>${args.text}</bq-progress>`;
+const Template = (args: Args) => html`<bq-progress .value=${args.value}></bq-progress>`;
 
 export const Default: Story = {
   render: Template,
-  args: {},
+  args: {
+    value: 50,
+  },
 };
