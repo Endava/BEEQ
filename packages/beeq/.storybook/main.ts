@@ -1,3 +1,4 @@
+import { join } from 'path';
 import type { StorybookConfig } from '@storybook/web-components-vite';
 
 export default {
@@ -9,6 +10,14 @@ export default {
     '@beeq/storybook-addon-html',
     '@chromatic-com/storybook',
   ],
+  core: {
+    builder: {
+      name: '@storybook/builder-vite',
+      options: {
+        viteConfigPath: join(__dirname, '../vite.config.mts').replace(/\\/g, '/'),
+      },
+    },
+  },
   staticDirs: [
     { from: '../../../dist/beeq/www/assets', to: '/assets' },
     { from: '../../../dist/beeq/www/scripts', to: '/scripts' },

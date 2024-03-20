@@ -57,7 +57,7 @@
     "@babel/core": "7.24.0",
     "@babel/preset-react": "7.23.3",
     "@beeq/storybook-addon-html": "6.0.0",
-    "@chromatic-com/storybook": "1.2.22",
+    "@chromatic-com/storybook": "1.2.23",
     "@commitlint/cli": "19.2.0",
     "@commitlint/config-angular": "19.1.0",
     "@commitlint/config-conventional": "19.1.0",
