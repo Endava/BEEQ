@@ -22,7 +22,6 @@ export class BqAccordion {
   // ====================
 
   private accordion: Accordion;
-  private accordionBody: HTMLDivElement;
   private prefixElem: HTMLDivElement;
   private suffixElem: HTMLDivElement;
   private detailsElem: HTMLDetailsElement;
@@ -68,16 +67,14 @@ export class BqAccordion {
 
   @Watch('expanded')
   handleExpandedChange() {
-    // Animate the opacity of the body so it doesn't overflow while the height is being animated
-    this.accordionBody.animate(
-      {
-        opacity: this.expanded ? [0, 1] : [1, 0],
-      },
-      {
-        duration: 300,
-        easing: 'ease-in-out',
-      },
-    );
+    if (!this.accordion) return;
+
+    if (this.expanded) {
+      this.accordion.open();
+      return; // We don't want to shrink the accordion if it's already expanded
+    }
+
+    this.accordion.close();
   }
 
   // Events section
@@ -103,10 +100,7 @@ export class BqAccordion {
 
   componentDidLoad() {
     this.accordion = new Accordion(this.detailsElem);
-  }
-
-  disconnectedCallback() {
-    this.accordion.destroy();
+    this.handleExpandedChange();
   }
 
   // Listeners
@@ -125,9 +119,9 @@ export class BqAccordion {
   // =======================================================
 
   private handleClick = (event: MouseEvent) => {
-    if (this.disabled) return;
-
     event.preventDefault();
+
+    if (this.disabled) return;
 
     this.expanded = !this.expanded;
     this.bqClick.emit(this.el);
@@ -162,14 +156,13 @@ export class BqAccordion {
   render() {
     return (
       <details
-        class={{ [`bq-accordion ${this.size} ${this.appearance}`]: true, disabled: this.disabled }}
-        open={this.open}
-        onClick={this.handleClick}
+        class={{ [`bq-accordion overflow-hidden ${this.size} ${this.appearance}`]: true, disabled: this.disabled }}
         ref={(detailsElem: HTMLDetailsElement) => (this.detailsElem = detailsElem)}
         part="base"
       >
         <summary
           class="bq-accordion__header"
+          onClick={this.handleClick}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
           aria-expanded={this.open}
@@ -213,7 +206,7 @@ export class BqAccordion {
             </slot>
           </div>
         </summary>
-        <div class="bq-accordion__body overflow-hidden" part="panel" ref={(div) => (this.accordionBody = div)}>
+        <div class="bq-accordion__body overflow-hidden" part="panel">
           <slot />
         </div>
       </details>
