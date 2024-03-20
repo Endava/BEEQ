@@ -117,7 +117,6 @@ export class BqProgress {
   // ===================================
 
   render() {
-    console.log('this.value', this.value);
     return (
       <div class="flex items-center gap-xs">
         <progress
