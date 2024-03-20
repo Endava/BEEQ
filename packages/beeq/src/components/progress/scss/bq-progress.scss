@@ -16,10 +16,6 @@
   @apply bg-ui-secondary;
 }
 
-.progress-bar::-moz-progress-bar {
-  @apply bg-ui-brand;
-}
-
 .progress-bar__error::-webkit-progress-value {
   @apply bg-text-danger;
 }

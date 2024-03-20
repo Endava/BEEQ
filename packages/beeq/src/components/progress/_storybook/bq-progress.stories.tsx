@@ -18,6 +18,7 @@ const meta: Meta = {
     thickness: { control: 'select', options: [...PROGRESS_TICKNESS] },
     type: { control: 'select', options: [...PROGRESS_TYPE] },
     level: { control: 'boolean' },
+    percentage: { control: 'boolean' },
   },
   args: {
     value: 0,
@@ -25,6 +26,7 @@ const meta: Meta = {
     thickness: 'medium',
     type: 'default',
     level: false,
+    percentage: false,
   },
 };
 export default meta;
@@ -38,6 +40,7 @@ const Template = (args: Args) =>
     thickness=${args.thickness}
     type=${args.type}
     ?level=${args.level}
+    ?percentage=${args.percentage}
   ></bq-progress>`;
 
 export const Default: Story = {
@@ -48,5 +51,6 @@ export const Default: Story = {
     thickness: 'large',
     type: 'error',
     level: true,
+    percentage: true,
   },
 };

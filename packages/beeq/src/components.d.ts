@@ -701,6 +701,10 @@ export namespace Components {
          */
         "mode": TProgressMode;
         /**
+          * It `true`, the progress bar will be displayed with percentage value
+         */
+        "percentage": boolean;
+        /**
           * Progress bar thickness
          */
         "thickness": TProgressTickness;
@@ -2843,6 +2847,10 @@ declare namespace LocalJSX {
           * It defines the mode of progress bar to display
          */
         "mode"?: TProgressMode;
+        /**
+          * It `true`, the progress bar will be displayed with percentage value
+         */
+        "percentage"?: boolean;
         /**
           * Progress bar thickness
          */

@@ -46,6 +46,9 @@ export class BqProgress {
   /** If `true`, the progress bar will be displayed without border radius */
   @Prop({ reflect: true }) level: boolean = false;
 
+  /** It `true`, the progress bar will be displayed with percentage value */
+  @Prop({ reflect: true }) percentage: boolean = false;
+
   // Prop lifecycle events
   // =======================
   @Watch('mode')
@@ -114,21 +117,23 @@ export class BqProgress {
   // ===================================
 
   render() {
+    console.log('this.value', this.value);
     return (
-      <progress
-        class={{
-          [`progress-bar ${this.thickness} progress-bar__${this.type}`]: true,
-          'h-1': this.thickness === 'medium',
-          'h-2': this.thickness === 'large',
-          'progress-bar__level': !this.level,
-          isIndeterminate: this.mode === 'indeterminated',
-          onlyOnFirefox: !this.level && this.isFirefox(),
-        }}
-        value={this.value}
-        max="100"
-      >
-        {this.value}
-      </progress>
+      <div class="flex items-center gap-xs">
+        <progress
+          class={{
+            [`progress-bar ${this.thickness} progress-bar__${this.type}`]: true,
+            'h-1': this.thickness === 'medium',
+            'h-2': this.thickness === 'large',
+            'progress-bar__level': !this.level,
+            isIndeterminate: this.mode === 'indeterminated',
+            onlyOnFirefox: !this.level && this.isFirefox(),
+          }}
+          value={this.value}
+          max="100"
+        ></progress>
+        {this.percentage && <div class="font-medium leading-regular text-text-primary">{this.value}%</div>}
+      </div>
     );
   }
 }
