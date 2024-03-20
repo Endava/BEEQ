@@ -108,6 +108,10 @@
 }
 
 .bq-accordion__header {
+  // Since there's an overflow on the <summary> element, the focus outline is not visible,
+  // so we force it to be inset to avoid the overflow hidden.
+  --bq-ring-offset-width: -2px;
+
   @apply flex cursor-pointer select-none list-none items-center transition-colors duration-300 ease-in-out focus-visible:focus;
   @apply border-[length:--bq-accordion--collapsed-border-width] border-[color:--bq-accordion--collapsed-border-color];
 
