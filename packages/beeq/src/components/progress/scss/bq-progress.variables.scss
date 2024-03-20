@@ -4,7 +4,8 @@
 
 :host {
   /**
-   * @prop --bq-progress--margin - Progress margin
+   * @prop --bq-progress--width - Width of the progress
    */
-  --bq-progress--margin: theme('spacing.m');
+
+  --bq-progress--width: 250px;
 }

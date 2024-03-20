@@ -7,3 +7,32 @@
 :host {
   @apply block w-full;
 }
+
+.progress-bar {
+  @apply w-[--bq-progress--width] max-w-full appearance-none;
+}
+
+.progress-bar::-webkit-progress-bar {
+  @apply bg-ui-secondary;
+}
+
+.progress-bar::-moz-progress-bar {
+  @apply bg-ui-brand;
+}
+
+.progress-bar__error::-webkit-progress-value {
+  @apply bg-text-danger;
+}
+
+.progress-bar__default::-webkit-progress-value {
+  @apply bg-ui-brand;
+}
+
+.progress-bar__level::-webkit-progress-value,
+.progress-bar__level::-webkit-progress-bar {
+  @apply rounded-[--bq-radius--xs];
+}
+
+.onlyOnFirefox::-moz-progress-bar {
+  @apply rounded-[--bq-radius--xs];
+}

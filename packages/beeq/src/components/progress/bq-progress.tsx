@@ -1,6 +1,13 @@
 import { Component, Element, h, Prop, Watch } from '@stencil/core';
 
-import { PROGRESS_MODE, TProgressMode } from './bq-progress.types';
+import {
+  PROGRESS_MODE,
+  PROGRESS_TICKNESS,
+  PROGRESS_TYPE,
+  TProgressMode,
+  TProgressTickness,
+  TProgressType,
+} from './bq-progress.types';
 import { validatePropValue } from '../../shared/utils';
 
 @Component({
@@ -30,11 +37,24 @@ export class BqProgress {
   /** A number representing the current value of the progress bar */
   @Prop({ reflect: true }) value = 0;
 
+  /** Progress bar thickness */
+  @Prop({ reflect: true }) thickness: TProgressTickness = 'medium';
+
+  /** Progress type */
+  @Prop({ reflect: true }) type: TProgressType = 'default';
+
+  /** If `true`, the progress bar will be displayed without border radius */
+  @Prop({ reflect: true }) level: boolean = false;
+
   // Prop lifecycle events
   // =======================
   @Watch('mode')
+  @Watch('thickness')
+  @Watch('type')
   handleTypePropChange() {
     validatePropValue(PROGRESS_MODE, 'determinated', this.el, 'mode');
+    validatePropValue(PROGRESS_TICKNESS, 'medium', this.el, 'thickness');
+    validatePropValue(PROGRESS_TYPE, 'default', this.el, 'type');
   }
 
   // Events section
@@ -44,6 +64,14 @@ export class BqProgress {
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
+
+  componentWillLoad() {
+    this.handleTypePropChange();
+  }
+
+  componentDidUpdate() {
+    this.setProgressIndeterminate();
+  }
 
   // Listeners
   // ==============
@@ -60,22 +88,47 @@ export class BqProgress {
   // These methods cannot be called from the host element.
   // =======================================================
 
+  private previousValue: number | null = null;
+
+  private setProgressIndeterminate = () => {
+    if (this.mode === 'indeterminated') {
+      // Remove the value only if it hasn't been removed already
+      if (this.el.hasAttribute('value')) {
+        this.previousValue = this.value;
+        this.el.removeAttribute('value');
+      }
+    } else {
+      // Restore the previous value only if it's available
+      if (this.previousValue !== null) {
+        this.el.setAttribute('value', `${this.previousValue}`);
+      }
+    }
+  };
+
+  private isFirefox = () => {
+    return navigator.userAgent.indexOf('Firefox') !== -1;
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
 
   render() {
     return (
-      <div
+      <progress
         class={{
-          [`bq-progress ${this.mode}`]: true,
+          [`progress-bar ${this.thickness} progress-bar__${this.type}`]: true,
+          'h-1': this.thickness === 'medium',
+          'h-2': this.thickness === 'large',
+          'progress-bar__level': !this.level,
+          isIndeterminate: this.mode === 'indeterminated',
+          onlyOnFirefox: !this.level && this.isFirefox(),
         }}
-        part="base"
+        value={this.value}
+        max="100"
       >
-        <div class="bq-progress__container">
-          <progress value={this.value} max="100"></progress>
-        </div>
-      </div>
+        {this.value}
+      </progress>
     );
   }
 }
