@@ -99,5 +99,8 @@ export class Accordion {
     this.isExpanding = false;
     // Remove the overflow hidden and the fixed height
     this.el.removeAttribute('style');
+    // Dispatch a custom event based on the open parameter
+    const endEvent = new Event('accordionTransitionEnd', { bubbles: false, composed: true });
+    this.el.dispatchEvent(endEvent);
   }
 }
