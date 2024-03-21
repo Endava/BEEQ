@@ -1,6 +1,6 @@
 import { Component, Element, h, Listen, Prop, Watch } from '@stencil/core';
 
-import { isNil } from '../../shared/utils';
+import { isHTMLElement, isNil } from '../../shared/utils';
 import { TAccordionAppearance, TAccordionSize } from '../accordion/bq-accordion.types';
 
 /**
@@ -62,6 +62,9 @@ export class BqAccordionGroup {
 
   @Listen('bqClick', { passive: true })
   onBqClick(event: CustomEvent<HTMLBqAccordionElement>) {
+    const { detail: bqElem } = event;
+    // Make sure the event is coming from a bq-accordion element and its a child of the bq-accordion-group
+    if (!isHTMLElement(bqElem, 'bq-accordion') || !this.el.contains(bqElem)) return;
     // We keep default behavior if multiple accordion can be expanded
     if (this.multiple) return;
 
