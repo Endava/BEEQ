@@ -21,8 +21,9 @@
 | Event     | Description                                         | Type                                  |
 | --------- | --------------------------------------------------- | ------------------------------------- |
 | `bqBlur`  | Handler to be called when the accordion loses focus | `CustomEvent<HTMLBqAccordionElement>` |
-| `bqClick` | Handler to be called when the accordion is clicked  | `CustomEvent<HTMLBqAccordionElement>` |
+| `bqClose` | Handler to be called when the accordion is closed   | `CustomEvent<HTMLBqAccordionElement>` |
 | `bqFocus` | Handler to be called when the accordion gets focus  | `CustomEvent<HTMLBqAccordionElement>` |
+| `bqOpen`  | Handler to be called when the accordion is opened   | `CustomEvent<HTMLBqAccordionElement>` |
 
 
 ## Shadow Parts

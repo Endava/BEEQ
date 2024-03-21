@@ -69,26 +69,33 @@ export class BqAccordion {
   handleExpandedChange() {
     if (!this.accordion) return;
 
-    if (this.expanded) {
-      this.accordion.open();
-      return; // We don't want to shrink the accordion if it's already expanded
+    const event = this.expanded ? this.bqOpen.emit(this.el) : this.bqClose.emit(this.el);
+    if (event.defaultPrevented) {
+      this.expanded = !this.expanded;
+      return;
     }
 
-    this.accordion.close();
+    this.expanded ? this.accordion.open() : this.accordion.close();
   }
 
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Handler to be called when the accordion is clicked */
-  @Event() bqClick: EventEmitter<HTMLBqAccordionElement>;
+  /** Handler to be called when the accordion loses focus */
+  @Event() bqBlur: EventEmitter<HTMLBqAccordionElement>;
 
   /** Handler to be called when the accordion gets focus */
   @Event() bqFocus: EventEmitter<HTMLBqAccordionElement>;
 
-  /** Handler to be called when the accordion loses focus */
-  @Event() bqBlur: EventEmitter<HTMLBqAccordionElement>;
+  /** Handler to be called when the accordion is opened */
+  @Event() bqOpen: EventEmitter<HTMLBqAccordionElement>;
+
+  /** Handler to be called when the accordion is closed */
+  @Event() bqClose: EventEmitter<HTMLBqAccordionElement>;
+
+  /** @internal Handler to be called when the accordion is clicked */
+  @Event() bqClick: EventEmitter<HTMLBqAccordionElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
