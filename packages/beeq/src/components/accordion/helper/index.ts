@@ -1,99 +1,106 @@
-/* -------------------------------------------------------------------------- */
-/*   💡 Credits: https://css-tricks.com/how-to-animate-the-details-element/   */
-/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------------- */
+/*   💡 Credits: https://css-tricks.com/how-to-animate-the-details-element-using-waapi    */
+/* -------------------------------------------------------------------------------------- */
 
 export class Accordion {
   private el: HTMLDetailsElement;
   private header: HTMLElement;
-  private body: HTMLElement;
+  private panel: HTMLElement;
   private animation: Animation | null;
   private isClosing: boolean;
   private isExpanding: boolean;
+  private animationOptions = {
+    duration: 300,
+    easing: 'ease-in-out',
+  };
 
   constructor(el: HTMLDetailsElement) {
+    // Store the <details> element
     this.el = el;
+    // Store the <summary> header element
     this.header = el.querySelector('summary');
-    this.body = el.querySelector('.bq-accordion__body');
-
+    // Store the <div class="content"> element
+    this.panel = el.querySelector('.bq-accordion__body');
+    // Store the animation object (so we can cancel it, if needed)
     this.animation = null;
+    // Store if the element is closing
     this.isClosing = false;
+    // Store if the element is expanding
     this.isExpanding = false;
-
-    this.header.addEventListener('click', (e) => this.onClick(e));
   }
 
-  destroy(): void {
-    this.header.removeEventListener('click', (e) => this.onClick(e));
-  }
-
-  private onClick(e: MouseEvent): void {
-    e.preventDefault();
-
-    if (this.isClosing || !this.el.open) {
-      this.open();
-    } else if (this.isExpanding || this.el.open) {
-      this.collapse();
-    }
-  }
-
-  private open(): void {
+  public open() {
+    // Check if the element is being closed or is already closed
+    if (!this.isClosing && this.el.open) return;
+    // Apply a fixed height on the element
     this.el.style.height = `${this.el.offsetHeight}px`;
+    // Force the [open] attribute on the details element
     this.el.open = true;
+    // Wait for the next frame to call the expand function
     window.requestAnimationFrame(() => this.expand());
   }
 
-  private expand(): void {
-    this.isExpanding = true;
-    const startHeight = `${this.el.offsetHeight}px`;
-    const endHeight = `${this.header.offsetHeight + this.body.offsetHeight}px`;
-
-    if (this.animation) {
-      this.animation.cancel();
-    }
-
-    this.animation = this.el.animate(
-      {
-        height: [startHeight, endHeight],
-      },
-      {
-        duration: 300,
-        easing: 'ease-in-out',
-      },
-    );
-
-    this.animation.onfinish = () => this.onAnimationFinish(true);
-    this.animation.oncancel = () => (this.isExpanding = false);
-  }
-
-  private collapse(): void {
+  public close() {
+    // Check if the element is being opened or is already open
+    if (!this.isExpanding && !this.el.open) return;
+    // Set the element as "being closed"
     this.isClosing = true;
 
+    // Store the current height of the element
     const startHeight = `${this.el.offsetHeight}px`;
+    // Calculate the height of the <summary> header
     const endHeight = `${this.header.offsetHeight}px`;
 
+    // If there is already an animation running
     if (this.animation) {
+      // Cancel the current animation
       this.animation.cancel();
     }
 
-    this.animation = this.el.animate(
-      {
-        height: [startHeight, endHeight],
-      },
-      {
-        duration: 300,
-        easing: 'ease-out',
-      },
-    );
-
+    // Start a WAAPI animation
+    this.animation = this.el.animate({ height: [startHeight, endHeight] }, this.animationOptions);
+    // When the animation is complete, call onAnimationFinish()
     this.animation.onfinish = () => this.onAnimationFinish(false);
+    // If the animation is cancelled, isClosing variable is set to false
     this.animation.oncancel = () => (this.isClosing = false);
   }
 
-  private onAnimationFinish(open: boolean): void {
+  // Expands the accordion
+  private expand() {
+    // Set the element as "being expanding"
+    this.isExpanding = true;
+    // Get the current fixed height of the element
+    const startHeight = `${this.el.offsetHeight}px`;
+    // Calculate the open height of the element (summary header height + panel body height)
+    const endHeight = `${this.header.offsetHeight + this.panel.offsetHeight}px`;
+
+    // If there is already an animation running
+    if (this.animation) {
+      // Cancel the current animation
+      this.animation.cancel();
+    }
+
+    // Start a WAAPI animation
+    this.animation = this.el.animate({ height: [startHeight, endHeight] }, this.animationOptions);
+    // When the animation is complete, call onAnimationFinish()
+    this.animation.onfinish = () => this.onAnimationFinish(true);
+    // If the animation is cancelled, isExpanding variable is set to false
+    this.animation.oncancel = () => (this.isExpanding = false);
+  }
+
+  // Handles the end of the animation
+  private onAnimationFinish(open: boolean) {
+    // Set the open attribute based on the parameter
     this.el.open = open;
+    // Clear the stored animation
     this.animation = null;
+    // Reset isClosing & isExpanding
     this.isClosing = false;
     this.isExpanding = false;
-    this.el.style.height = this.el.style.overflow = '';
+    // Remove the overflow hidden and the fixed height
+    this.el.removeAttribute('style');
+    // Dispatch a custom event based on the open parameter
+    const endEvent = new Event('accordionTransitionEnd', { bubbles: false, composed: true });
+    this.el.dispatchEvent(endEvent);
   }
 }

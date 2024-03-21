@@ -14,24 +14,28 @@ const meta: Meta = {
     },
   },
   argTypes: {
-    expanded: { control: 'boolean' },
-    disabled: { control: 'boolean' },
-    rotate: { control: 'boolean' },
     appearance: { control: 'select', options: [...ACCORDION_APPEARANCE] },
+    disabled: { control: 'boolean' },
+    expanded: { control: 'boolean' },
+    rotate: { control: 'boolean' },
     size: { control: 'select', options: [...ACCORDION_SIZE] },
     // Event handlers
-    bqFocus: { action: 'bqFocus' },
-    bqClick: { action: 'bqClick' },
     bqBlur: { action: 'bqBlur' },
+    bqFocus: { action: 'bqFocus' },
+    bqOpen: { action: 'bqOpen' },
+    bqAfterOpen: { action: 'bqAfterOpen' },
+    bqClose: { action: 'bqClose' },
+    bqAfterClose: { action: 'bqAfterClose' },
     // Not part of the component
     header: { control: 'text', table: { disable: true } },
   },
   args: {
-    expanded: false,
-    disabled: false,
-    rotate: false,
     appearance: 'filled',
+    disabled: false,
+    expanded: false,
+    rotate: false,
     size: 'medium',
+    // Not part of the component
     header: 'Header',
   },
 };
@@ -41,14 +45,17 @@ type Story = StoryObj;
 
 const Template = (args: Args) => html`
   <bq-accordion
-    size=${args.size}
     appearance=${args.appearance}
-    .expanded=${args.expanded}
-    .disabled=${args.disabled}
-    .rotate=${args.rotate}
-    @bqFocus=${args.bqFocus}
-    @bqClick=${args.bqClick}
+    ?disabled=${args.disabled}
+    ?expanded=${args.expanded}
+    ?rotate=${args.rotate}
+    size=${args.size}
     @bqBlur=${args.bqBlur}
+    @bqFocus=${args.bqFocus}
+    @bqOpen=${args.bqOpen}
+    @bqAfterOpen=${args.bqAfterOpen}
+    @bqClose=${args.bqClose}
+    @bqAfterClose=${args.bqAfterClose}
   >
     ${ifDefined(args.prefix) ? args.prefix : nothing}
     <span slot="header">${args.header}</span>

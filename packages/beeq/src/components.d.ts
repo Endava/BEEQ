@@ -1386,9 +1386,13 @@ export interface BqToastCustomEvent<T> extends CustomEvent<T> {
 }
 declare global {
     interface HTMLBqAccordionElementEventMap {
-        "bqClick": HTMLBqAccordionElement;
-        "bqFocus": HTMLBqAccordionElement;
         "bqBlur": HTMLBqAccordionElement;
+        "bqFocus": HTMLBqAccordionElement;
+        "bqOpen": HTMLBqAccordionElement;
+        "bqAfterOpen": HTMLBqAccordionElement;
+        "bqClose": HTMLBqAccordionElement;
+        "bqAfterClose": HTMLBqAccordionElement;
+        "bqClick": HTMLBqAccordionElement;
     }
     interface HTMLBqAccordionElement extends Components.BqAccordion, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqAccordionElementEventMap>(type: K, listener: (this: HTMLBqAccordionElement, ev: BqAccordionCustomEvent<HTMLBqAccordionElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2041,17 +2045,30 @@ declare namespace LocalJSX {
          */
         "expanded"?: boolean;
         /**
+          * Handler to be called after the accordion is closed
+         */
+        "onBqAfterClose"?: (event: BqAccordionCustomEvent<HTMLBqAccordionElement>) => void;
+        /**
+          * Handler to be called after the accordion is opened
+         */
+        "onBqAfterOpen"?: (event: BqAccordionCustomEvent<HTMLBqAccordionElement>) => void;
+        /**
           * Handler to be called when the accordion loses focus
          */
         "onBqBlur"?: (event: BqAccordionCustomEvent<HTMLBqAccordionElement>) => void;
-        /**
-          * Handler to be called when the accordion is clicked
-         */
         "onBqClick"?: (event: BqAccordionCustomEvent<HTMLBqAccordionElement>) => void;
+        /**
+          * Handler to be called when the accordion is closed
+         */
+        "onBqClose"?: (event: BqAccordionCustomEvent<HTMLBqAccordionElement>) => void;
         /**
           * Handler to be called when the accordion gets focus
          */
         "onBqFocus"?: (event: BqAccordionCustomEvent<HTMLBqAccordionElement>) => void;
+        /**
+          * Handler to be called when the accordion is opened
+         */
+        "onBqOpen"?: (event: BqAccordionCustomEvent<HTMLBqAccordionElement>) => void;
         /**
           * If true accordion expand icon is rotate 180deg when expanded
          */

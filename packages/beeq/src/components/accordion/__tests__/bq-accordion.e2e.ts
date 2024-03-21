@@ -68,25 +68,30 @@ describe('bq-accordion', () => {
     });
 
     const details = await page.find('bq-accordion >>> [part="base"]');
+    expect(details).toHaveAttribute('open');
 
-    expect(await details.getProperty('open')).toBe(true);
+    const header = await details.find('.bq-accordion__header');
+    expect(header).toHaveAttribute('aria-expanded');
   });
 
   it('should be collapsed when disabled', async () => {
     const page = await newE2EPage({
-      html: `<bq-accordion expanded disabled><span slot="header">${HEADER_TEXT}</span></bq-accordion>`,
+      html: `<bq-accordion expanded><span slot="header">${HEADER_TEXT}</span></bq-accordion>`,
     });
 
-    const details = await page.find('bq-accordion >>> [part="base"]');
+    const accordion = await page.find('bq-accordion');
+    accordion.setProperty('disabled', true);
+    await page.waitForChanges();
 
-    expect(await details.getProperty('open')).toBe(false);
+    const summary = await page.find('bq-accordion >>> [part="base"] summary');
+    expect(summary.getAttribute('aria-expanded')).toBeFalsy();
   });
 
   it('should respect design style', async () => {
     const page = await newE2EPage({
       html: `
-      <bq-accordion size="small"><span slot="header">${HEADER_TEXT}</span></bq-accordion>
-      <bq-accordion size="medium"><span slot="header">${HEADER_TEXT}</span></bq-accordion>
+        <bq-accordion size="small"><span slot="header">${HEADER_TEXT}</span></bq-accordion>
+        <bq-accordion size="medium"><span slot="header">${HEADER_TEXT}</span></bq-accordion>
       `,
     });
 

@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Listen, Prop, State, Watch } from '@stencil/core';
 
 import { ACCORDION_APPEARANCE, ACCORDION_SIZE, TAccordionAppearance, TAccordionSize } from './bq-accordion.types';
 import { Accordion } from './helper';
@@ -22,7 +22,6 @@ export class BqAccordion {
   // ====================
 
   private accordion: Accordion;
-  private accordionBody: HTMLDivElement;
   private prefixElem: HTMLDivElement;
   private suffixElem: HTMLDivElement;
   private detailsElem: HTMLDetailsElement;
@@ -68,30 +67,48 @@ export class BqAccordion {
 
   @Watch('expanded')
   handleExpandedChange() {
-    // Animate the opacity of the body so it doesn't overflow while the height is being animated
-    this.accordionBody.animate(
-      {
-        opacity: this.expanded ? [0, 1] : [1, 0],
-      },
-      {
-        duration: 300,
-        easing: 'ease-in-out',
-      },
-    );
+    if (!this.accordion) return;
+
+    const event = this.expanded ? this.bqOpen.emit(this.el) : this.bqClose.emit(this.el);
+    if (event.defaultPrevented) {
+      this.expanded = !this.expanded;
+      return;
+    }
+
+    this.expanded ? this.accordion.open() : this.accordion.close();
+  }
+
+  @Watch('disabled')
+  handleDisabledChange() {
+    if (!this.disabled) return;
+
+    this.expanded = false;
   }
 
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Handler to be called when the accordion is clicked */
-  @Event() bqClick: EventEmitter<HTMLBqAccordionElement>;
+  /** Handler to be called when the accordion loses focus */
+  @Event() bqBlur: EventEmitter<HTMLBqAccordionElement>;
 
   /** Handler to be called when the accordion gets focus */
   @Event() bqFocus: EventEmitter<HTMLBqAccordionElement>;
 
-  /** Handler to be called when the accordion loses focus */
-  @Event() bqBlur: EventEmitter<HTMLBqAccordionElement>;
+  /** Handler to be called when the accordion is opened */
+  @Event() bqOpen: EventEmitter<HTMLBqAccordionElement>;
+
+  /** Handler to be called after the accordion is opened */
+  @Event() bqAfterOpen: EventEmitter<HTMLBqAccordionElement>;
+
+  /** Handler to be called when the accordion is closed */
+  @Event() bqClose: EventEmitter<HTMLBqAccordionElement>;
+
+  /** Handler to be called after the accordion is closed */
+  @Event() bqAfterClose: EventEmitter<HTMLBqAccordionElement>;
+
+  /** @internal Handler to be called when the accordion is clicked */
+  @Event() bqClick: EventEmitter<HTMLBqAccordionElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -103,14 +120,18 @@ export class BqAccordion {
 
   componentDidLoad() {
     this.accordion = new Accordion(this.detailsElem);
-  }
-
-  disconnectedCallback() {
-    this.accordion.destroy();
+    this.handleExpandedChange();
   }
 
   // Listeners
   // ==============
+
+  @Listen('accordionTransitionEnd')
+  onAccordionTransitionEnd(event: CustomEvent) {
+    if (event.target !== this.el) return;
+
+    this.expanded ? this.bqAfterOpen.emit(this.el) : this.bqAfterClose.emit(this.el);
+  }
 
   // Public methods API
   // These methods are exposed on the host element.
@@ -123,11 +144,10 @@ export class BqAccordion {
   // Internal business logic.
   // These methods cannot be called from the host element.
   // =======================================================
-
   private handleClick = (event: MouseEvent) => {
-    if (this.disabled) return;
-
     event.preventDefault();
+
+    if (this.disabled) return;
 
     this.expanded = !this.expanded;
     this.bqClick.emit(this.el);
@@ -162,14 +182,13 @@ export class BqAccordion {
   render() {
     return (
       <details
-        class={{ [`bq-accordion ${this.size} ${this.appearance}`]: true, disabled: this.disabled }}
-        open={this.open}
-        onClick={this.handleClick}
+        class={{ [`bq-accordion overflow-hidden ${this.size} ${this.appearance}`]: true, disabled: this.disabled }}
         ref={(detailsElem: HTMLDetailsElement) => (this.detailsElem = detailsElem)}
         part="base"
       >
         <summary
           class="bq-accordion__header"
+          onClick={this.handleClick}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
           aria-expanded={this.open}
@@ -213,7 +232,7 @@ export class BqAccordion {
             </slot>
           </div>
         </summary>
-        <div class="bq-accordion__body overflow-hidden" part="panel" ref={(div) => (this.accordionBody = div)}>
+        <div class="bq-accordion__body overflow-hidden" part="panel">
           <slot />
         </div>
       </details>
