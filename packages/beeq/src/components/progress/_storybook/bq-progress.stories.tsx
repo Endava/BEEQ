@@ -19,6 +19,7 @@ const meta: Meta = {
     type: { control: 'select', options: [...PROGRESS_TYPE] },
     level: { control: 'boolean' },
     percentage: { control: 'boolean' },
+    tooltip: { control: 'boolean' },
   },
   args: {
     value: 0,
@@ -27,6 +28,7 @@ const meta: Meta = {
     type: 'default',
     level: false,
     percentage: false,
+    tooltip: false,
   },
 };
 export default meta;
@@ -41,6 +43,7 @@ const Template = (args: Args) =>
     type=${args.type}
     ?level=${args.level}
     ?percentage=${args.percentage}
+    ?tooltip=${args.tooltip}
   ></bq-progress>`;
 
 export const Default: Story = {
@@ -52,5 +55,6 @@ export const Default: Story = {
     type: 'error',
     level: true,
     percentage: true,
+    tooltip: true,
   },
 };

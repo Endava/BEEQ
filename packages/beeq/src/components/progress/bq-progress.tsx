@@ -46,8 +46,11 @@ export class BqProgress {
   /** If `true`, the progress bar will be displayed without border radius */
   @Prop({ reflect: true }) level: boolean = false;
 
-  /** It `true`, the progress bar will be displayed with percentage value */
+  /** It `true`, the progress bar will be displayed with percentage text */
   @Prop({ reflect: true }) percentage: boolean = false;
+
+  /** It `true`, the progress bar will be displayed with percentage tooltip */
+  @Prop({ reflect: true }) tooltip: boolean = false;
 
   // Prop lifecycle events
   // =======================
@@ -117,24 +120,24 @@ export class BqProgress {
   // ===================================
 
   render() {
+    const progressClasses = {
+      [`progress-bar ${this.thickness} progress-bar__${this.type}`]: true,
+      'h-1': this.thickness === 'medium',
+      'h-2': this.thickness === 'large',
+      'progress-bar__level': !this.level,
+      isIndeterminate: this.mode === 'indeterminated',
+      onlyOnFirefox: !this.level && this.isFirefox(),
+    };
+
     return (
       <div class="flex items-center gap-xs">
-        <bq-tooltip>
-          <progress
-            class={{
-              [`progress-bar ${this.thickness} progress-bar__${this.type}`]: true,
-              'h-1': this.thickness === 'medium',
-              'h-2': this.thickness === 'large',
-              'progress-bar__level': !this.level,
-              isIndeterminate: this.mode === 'indeterminated',
-              onlyOnFirefox: !this.level && this.isFirefox(),
-            }}
-            value={this.value}
-            max="100"
-            slot="trigger"
-          ></progress>
-          <span class="font-medium leading-regular text-text-inverse">{this.value}</span>
-        </bq-tooltip>
+        {this.tooltip && (
+          <bq-tooltip>
+            <progress class={progressClasses} value={this.value} max="100" slot="trigger"></progress>
+            <span class="font-medium leading-regular text-text-inverse">{this.value}</span>
+          </bq-tooltip>
+        )}
+        {!this.tooltip && <progress class={progressClasses} value={this.value} max="100" slot="trigger"></progress>}
         {this.percentage && <div class="font-medium leading-regular text-text-primary">{this.value}%</div>}
       </div>
     );
