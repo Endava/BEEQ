@@ -185,7 +185,7 @@ export class BqTooltip {
       <div class="bq-tooltip relative" part="base">
         {/* TRIGGER */}
         <div
-          class="bq-tooltip--trigger block"
+          class="bq-tooltip--trigger flex"
           onMouseOver={this.handleTriggerMouseOver}
           onMouseLeave={this.handleTriggerMouseLeave}
           onClick={this.handleTriggerOnClick}
