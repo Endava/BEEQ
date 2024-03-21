@@ -119,18 +119,22 @@ export class BqProgress {
   render() {
     return (
       <div class="flex items-center gap-xs">
-        <progress
-          class={{
-            [`progress-bar ${this.thickness} progress-bar__${this.type}`]: true,
-            'h-1': this.thickness === 'medium',
-            'h-2': this.thickness === 'large',
-            'progress-bar__level': !this.level,
-            isIndeterminate: this.mode === 'indeterminated',
-            onlyOnFirefox: !this.level && this.isFirefox(),
-          }}
-          value={this.value}
-          max="100"
-        ></progress>
+        <bq-tooltip>
+          <progress
+            class={{
+              [`progress-bar ${this.thickness} progress-bar__${this.type}`]: true,
+              'h-1': this.thickness === 'medium',
+              'h-2': this.thickness === 'large',
+              'progress-bar__level': !this.level,
+              isIndeterminate: this.mode === 'indeterminated',
+              onlyOnFirefox: !this.level && this.isFirefox(),
+            }}
+            value={this.value}
+            max="100"
+            slot="trigger"
+          ></progress>
+          <span class="font-medium leading-regular text-text-inverse">{this.value}</span>
+        </bq-tooltip>
         {this.percentage && <div class="font-medium leading-regular text-text-primary">{this.value}%</div>}
       </div>
     );

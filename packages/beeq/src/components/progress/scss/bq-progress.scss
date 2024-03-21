@@ -5,7 +5,7 @@
 @import './bq-progress.variables';
 
 :host {
-  @apply block w-full;
+  @apply flex w-full;
 }
 
 .progress-bar {
