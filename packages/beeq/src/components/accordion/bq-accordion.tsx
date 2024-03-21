@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Listen, Prop, State, Watch } from '@stencil/core';
 
 import { ACCORDION_APPEARANCE, ACCORDION_SIZE, TAccordionAppearance, TAccordionSize } from './bq-accordion.types';
 import { Accordion } from './helper';
@@ -78,6 +78,13 @@ export class BqAccordion {
     this.expanded ? this.accordion.open() : this.accordion.close();
   }
 
+  @Watch('disabled')
+  handleDisabledChange() {
+    if (!this.disabled) return;
+
+    this.expanded = false;
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
@@ -91,8 +98,14 @@ export class BqAccordion {
   /** Handler to be called when the accordion is opened */
   @Event() bqOpen: EventEmitter<HTMLBqAccordionElement>;
 
+  /** Handler to be called after the accordion is opened */
+  @Event() bqAfterOpen: EventEmitter<HTMLBqAccordionElement>;
+
   /** Handler to be called when the accordion is closed */
   @Event() bqClose: EventEmitter<HTMLBqAccordionElement>;
+
+  /** Handler to be called after the accordion is closed */
+  @Event() bqAfterClose: EventEmitter<HTMLBqAccordionElement>;
 
   /** @internal Handler to be called when the accordion is clicked */
   @Event() bqClick: EventEmitter<HTMLBqAccordionElement>;
@@ -113,6 +126,13 @@ export class BqAccordion {
   // Listeners
   // ==============
 
+  @Listen('accordionTransitionEnd')
+  onAccordionTransitionEnd(event: CustomEvent) {
+    if (event.target !== this.el) return;
+
+    this.expanded ? this.bqAfterOpen.emit(this.el) : this.bqAfterClose.emit(this.el);
+  }
+
   // Public methods API
   // These methods are exposed on the host element.
   // Always use two lines.
@@ -124,7 +144,6 @@ export class BqAccordion {
   // Internal business logic.
   // These methods cannot be called from the host element.
   // =======================================================
-
   private handleClick = (event: MouseEvent) => {
     event.preventDefault();
 

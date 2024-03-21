@@ -18,12 +18,14 @@
 
 ## Events
 
-| Event     | Description                                         | Type                                  |
-| --------- | --------------------------------------------------- | ------------------------------------- |
-| `bqBlur`  | Handler to be called when the accordion loses focus | `CustomEvent<HTMLBqAccordionElement>` |
-| `bqClose` | Handler to be called when the accordion is closed   | `CustomEvent<HTMLBqAccordionElement>` |
-| `bqFocus` | Handler to be called when the accordion gets focus  | `CustomEvent<HTMLBqAccordionElement>` |
-| `bqOpen`  | Handler to be called when the accordion is opened   | `CustomEvent<HTMLBqAccordionElement>` |
+| Event          | Description                                         | Type                                  |
+| -------------- | --------------------------------------------------- | ------------------------------------- |
+| `bqAfterClose` | Handler to be called after the accordion is closed  | `CustomEvent<HTMLBqAccordionElement>` |
+| `bqAfterOpen`  | Handler to be called after the accordion is opened  | `CustomEvent<HTMLBqAccordionElement>` |
+| `bqBlur`       | Handler to be called when the accordion loses focus | `CustomEvent<HTMLBqAccordionElement>` |
+| `bqClose`      | Handler to be called when the accordion is closed   | `CustomEvent<HTMLBqAccordionElement>` |
+| `bqFocus`      | Handler to be called when the accordion gets focus  | `CustomEvent<HTMLBqAccordionElement>` |
+| `bqOpen`       | Handler to be called when the accordion is opened   | `CustomEvent<HTMLBqAccordionElement>` |
 
 
 ## Shadow Parts

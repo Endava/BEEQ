@@ -1389,7 +1389,9 @@ declare global {
         "bqBlur": HTMLBqAccordionElement;
         "bqFocus": HTMLBqAccordionElement;
         "bqOpen": HTMLBqAccordionElement;
+        "bqAfterOpen": HTMLBqAccordionElement;
         "bqClose": HTMLBqAccordionElement;
+        "bqAfterClose": HTMLBqAccordionElement;
         "bqClick": HTMLBqAccordionElement;
     }
     interface HTMLBqAccordionElement extends Components.BqAccordion, HTMLStencilElement {
@@ -2042,6 +2044,14 @@ declare namespace LocalJSX {
           * If true accordion is expanded
          */
         "expanded"?: boolean;
+        /**
+          * Handler to be called after the accordion is closed
+         */
+        "onBqAfterClose"?: (event: BqAccordionCustomEvent<HTMLBqAccordionElement>) => void;
+        /**
+          * Handler to be called after the accordion is opened
+         */
+        "onBqAfterOpen"?: (event: BqAccordionCustomEvent<HTMLBqAccordionElement>) => void;
         /**
           * Handler to be called when the accordion loses focus
          */
