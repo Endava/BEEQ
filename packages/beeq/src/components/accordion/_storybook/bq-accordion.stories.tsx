@@ -20,9 +20,10 @@ const meta: Meta = {
     appearance: { control: 'select', options: [...ACCORDION_APPEARANCE] },
     size: { control: 'select', options: [...ACCORDION_SIZE] },
     // Event handlers
-    bqFocus: { action: 'bqFocus' },
-    bqClick: { action: 'bqClick' },
     bqBlur: { action: 'bqBlur' },
+    bqClose: { action: 'bqClose' },
+    bqFocus: { action: 'bqFocus' },
+    bqOpen: { action: 'bqOpen' },
     // Not part of the component
     header: { control: 'text', table: { disable: true } },
   },
@@ -46,9 +47,10 @@ const Template = (args: Args) => html`
     .expanded=${args.expanded}
     .disabled=${args.disabled}
     .rotate=${args.rotate}
-    @bqFocus=${args.bqFocus}
-    @bqClick=${args.bqClick}
     @bqBlur=${args.bqBlur}
+    @bqFocus=${args.bqFocus}
+    @bqClose=${args.bqClose}
+    @bqOpen=${args.bqOpen}
   >
     ${ifDefined(args.prefix) ? args.prefix : nothing}
     <span slot="header">${args.header}</span>
