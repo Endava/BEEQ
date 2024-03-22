@@ -87,7 +87,7 @@ jobs:
           command: npx nx affected -t e2e --exclude='*,!tag:core' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --ci --code-coverage --runInBand
       - run:
           name: 📚 Build Storybook
-          command: npx nx affected -t storybook-build --exclude='*,!tag:core' --parallel=1 --base=$NX_BASE --head=$NX_HEAD
+          command: npx nx affected -t storybook-build --exclude='*,!tag:core' --parallel=3 --base=$NX_BASE --head=$NX_HEAD
       - run:
           name: ⏹️ Stop Nx Cloud Agents
           command: npx nx-cloud stop-all-agents
