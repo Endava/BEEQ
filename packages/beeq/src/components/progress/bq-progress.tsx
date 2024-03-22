@@ -62,6 +62,13 @@ export class BqProgress {
     validatePropValue(PROGRESS_TICKNESS, 'medium', this.el, 'thickness');
     validatePropValue(PROGRESS_TYPE, 'default', this.el, 'type');
   }
+  @Watch('value')
+  validateValue(newValue: number) {
+    const clampedValue = Math.max(0, Math.min(100, newValue)); // Value must be between 0 and 100
+    if (newValue !== clampedValue) {
+      this.value = clampedValue;
+    }
+  }
 
   // Events section
   // Requires JSDocs for public API documentation
