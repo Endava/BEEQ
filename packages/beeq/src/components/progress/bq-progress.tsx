@@ -77,6 +77,7 @@ export class BqProgress {
 
   componentDidUpdate() {
     this.setProgressIndeterminate();
+    this.checkIsIndeterminated();
   }
 
   // Listeners
@@ -115,6 +116,15 @@ export class BqProgress {
     return navigator.userAgent.indexOf('Firefox') !== -1;
   };
 
+  private checkIsIndeterminated() {
+    const isIndeterminated = this.mode === 'indeterminated';
+    if (isIndeterminated) {
+      this.tooltip = false;
+      this.percentage = false;
+    }
+    return isIndeterminated;
+  }
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -125,7 +135,6 @@ export class BqProgress {
       'h-1': this.thickness === 'medium',
       'h-2': this.thickness === 'large',
       'progress-bar__level': !this.level,
-      isIndeterminate: this.mode === 'indeterminated',
       onlyOnFirefox: !this.level && this.isFirefox(),
     };
 
