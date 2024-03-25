@@ -23,7 +23,7 @@ const meta: Meta = {
   },
   args: {
     value: 0,
-    mode: 'determinated',
+    mode: 'determinate',
     thickness: 'medium',
     type: 'default',
     level: false,
@@ -51,7 +51,7 @@ export const Default: Story = {
   render: Template,
   args: {
     value: 50,
-    mode: 'determinated',
+    mode: 'determinate',
     thickness: 'large',
     type: 'error',
     level: true,
