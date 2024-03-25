@@ -5,42 +5,34 @@
 @import './bq-progress.variables';
 
 .progress-bar {
-  @apply relative w-[--bq-progress--width] appearance-none;
+  @apply relative w-[--bq-progress--width];
 }
 
-.progress-bar__tooltip::before {
-  @apply absolute -top-10 left-[--bq-progress-left-offset-position] rounded-s bg-ui-inverse px-xs py-xs2 text-text-inverse;
-
-  content: attr(value);
-}
-
-.progress-bar__tooltip::before,
-.progress-bar__tooltip::after {
-  @apply hidden;
-}
-
-.progress-bar__tooltip:hover::before,
-.progress-bar__tooltip:hover::after {
-  @apply block;
+.progress-bar:not(:indeterminate) {
+  @apply appearance-none;
 }
 
 .progress-bar::-webkit-progress-bar {
   @apply bg-ui-secondary;
 }
 
-.progress-bar__error::-webkit-progress-value {
-  @apply bg-text-danger;
+.progress-bar.progress-bar__level::-webkit-progress-value,
+.progress-bar.progress-bar__level::-webkit-progress-bar {
+  @apply rounded-[--bq-radius--xs];
 }
 
-.progress-bar__default::-webkit-progress-value {
+.progress-bar.progress-bar__error::-webkit-progress-value {
+  @apply bg-ui-danger;
+}
+
+.progress-bar.progress-bar__error::-moz-progress-bar {
+  @apply bg-ui-danger;
+}
+
+.progress-bar.progress-bar__default::-webkit-progress-value {
   @apply bg-ui-brand;
 }
 
-.progress-bar__level::-webkit-progress-value,
-.progress-bar__level::-webkit-progress-bar {
-  @apply rounded-[--bq-radius--xs];
-}
-
-.onlyOnFirefox::-moz-progress-bar {
-  @apply rounded-[--bq-radius--xs];
+.progress-bar.progress-bar__default::-moz-progress-bar {
+  @apply bg-ui-brand;
 }

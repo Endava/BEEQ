@@ -1,11 +1,11 @@
-import { Component, Element, h, Listen, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, h, Prop, Watch } from '@stencil/core';
 
 import {
   PROGRESS_MODE,
-  PROGRESS_TICKNESS,
+  PROGRESS_THICKNESS,
   PROGRESS_TYPE,
   TProgressMode,
-  TProgressTickness,
+  TProgressThickness,
   TProgressType,
 } from './bq-progress.types';
 import { validatePropValue } from '../../shared/utils';
@@ -18,8 +18,6 @@ import { validatePropValue } from '../../shared/utils';
 export class BqProgress {
   // Own Properties
   // ====================
-
-  private progressBar: HTMLProgressElement;
 
   // Reference to host HTML element
   // ===================================
@@ -34,13 +32,13 @@ export class BqProgress {
   // ========================
 
   /** It defines the mode of progress bar to display */
-  @Prop({ reflect: true }) mode: TProgressMode = 'determinated';
+  @Prop({ reflect: true }) mode: TProgressMode = 'determinate';
 
   /** A number representing the current value of the progress bar */
   @Prop({ reflect: true }) value = 0;
 
   /** Progress bar thickness */
-  @Prop({ reflect: true }) thickness: TProgressTickness = 'medium';
+  @Prop({ reflect: true }) thickness: TProgressThickness = 'medium';
 
   /** Progress type */
   @Prop({ reflect: true }) type: TProgressType = 'default';
@@ -54,8 +52,6 @@ export class BqProgress {
   /** It `true`, the progress bar will be displayed with percentage tooltip */
   @Prop({ reflect: true }) tooltip: boolean = false;
 
-  @State() rect: DOMRect | null = null;
-
   // Prop lifecycle events
   // =======================
   @Watch('mode')
@@ -63,8 +59,13 @@ export class BqProgress {
   @Watch('type')
   handleTypePropChange() {
     validatePropValue(PROGRESS_MODE, 'determinated', this.el, 'mode');
-    validatePropValue(PROGRESS_TICKNESS, 'medium', this.el, 'thickness');
+    validatePropValue(PROGRESS_THICKNESS, 'medium', this.el, 'thickness');
     validatePropValue(PROGRESS_TYPE, 'default', this.el, 'type');
+  }
+
+  @Watch('value')
+  handleValuePropChange(newValue: number) {
+    this.validateValue(newValue);
   }
 
   // Events section
@@ -77,7 +78,7 @@ export class BqProgress {
 
   componentWillLoad() {
     this.handleTypePropChange();
-    this.validateValue(this.value);
+    this.handleValuePropChange(this.value);
   }
 
   componentDidUpdate() {
@@ -87,14 +88,6 @@ export class BqProgress {
 
   // Listeners
   // ==============
-
-  @Listen('mouseover', { target: 'window', capture: true })
-  async handleMouseOver() {
-    this.rect = this.progressBar?.getBoundingClientRect();
-    if (this.calculateOffsetValue()) {
-      this.progressBar.style.setProperty('--bq-progress-left-offset-position', `${this.calculateOffsetValue()}px`);
-    }
-  }
 
   // Public methods API
   // These methods are exposed on the host element.
@@ -111,26 +104,22 @@ export class BqProgress {
   private previousValue: number | null = null;
 
   private setProgressIndeterminate = () => {
-    if (this.mode === 'indeterminated') {
-      // Remove the value only if it hasn't been removed already
-      if (this.el.hasAttribute('value')) {
-        this.previousValue = this.value;
-        this.el.removeAttribute('value');
-      }
-    } else {
-      // Restore the previous value only if it's available
-      if (this.previousValue !== null) {
-        this.el.setAttribute('value', `${this.previousValue}`);
-      }
+    const hasValueAttribute = this.el.hasAttribute('value');
+    const hasPreviousValue = this.previousValue !== null;
+
+    if (this.mode === 'indeterminate' && hasValueAttribute) {
+      this.previousValue = this.value;
+      this.el.removeAttribute('value');
+      return;
+    }
+
+    if (this.mode !== 'indeterminate' && hasPreviousValue) {
+      this.el.setAttribute('value', `${this.previousValue}`);
     }
   };
 
-  private isFirefox = () => {
-    return navigator.userAgent.indexOf('Firefox') !== -1;
-  };
-
   private checkIsIndeterminated() {
-    const isIndeterminated = this.mode === 'indeterminated';
+    const isIndeterminated = this.mode === 'indeterminate';
     if (isIndeterminated) {
       this.tooltip = false;
       this.percentage = false;
@@ -148,40 +137,36 @@ export class BqProgress {
     return this.value;
   }
 
-  private calculateOffsetValue = () => {
-    if (this.rect) {
-      return Math.round(this.rect?.width * this.validateValue(this.value)) / 100;
-    }
-    return null;
-  };
-
   // render() function
   // Always the last one in the class.
   // ===================================
 
   render() {
     const progressClasses = {
-      [`progress-bar ${this.thickness} progress-bar__${this.type}`]: true,
+      [`progress-bar progress-bar__${this.type} ${this.thickness}`]: true,
+      'progress-bar__level rounded-full': !this.level,
       'h-1': this.thickness === 'medium',
       'h-2': this.thickness === 'large',
-      'progress-bar__level': !this.level,
-      'progress-bar__tooltip': this.tooltip,
-      indeterminated: this.checkIsIndeterminated(),
-      onlyOnFirefox: !this.level && this.isFirefox(),
+      indeterminate: this.checkIsIndeterminated(),
     };
 
     return (
       <div class="flex items-center gap-xs">
-        {this.tooltip && <progress class={progressClasses} value={this.value} max="100" slot="trigger"></progress>}
-        {!this.tooltip && (
-          <progress
-            ref={(div) => (this.progressBar = div)}
-            class={progressClasses}
-            value={this.value}
-            max="100"
-            slot="trigger"
-          ></progress>
-        )}
+        <div class="relative flex items-center">
+          <progress class={progressClasses} value={this.value} max="100" slot="triger"></progress>
+          {this.tooltip && (
+            <bq-tooltip
+              class="absolute"
+              exportparts="base,trigger,panel"
+              always-visible
+              distance={16}
+              style={{ left: `${this.value}%` }}
+            >
+              <div class="absolute h-1 w-1" slot="trigger"></div>
+              {this.value}
+            </bq-tooltip>
+          )}
+        </div>
         {this.percentage && <div class="font-medium leading-regular text-text-primary">{this.value}%</div>}
       </div>
     );
