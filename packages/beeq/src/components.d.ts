@@ -1246,6 +1246,10 @@ export namespace Components {
     }
     interface BqTooltip {
         /**
+          * If true, the tooltip will always be visible
+         */
+        "alwaysVisible"?: boolean;
+        /**
           * Set the action when the tooltip should be displayed, on hover (default) or click
          */
         "displayOn": 'click' | 'hover';
@@ -1271,7 +1275,7 @@ export namespace Components {
          */
         "show": () => Promise<void>;
         /**
-          * Indicates whether or not the tooltip is visible
+          * Indicates whether or not the tooltip is visible when the component is first rendered, and when interacting with the trigger
          */
         "visible"?: boolean;
     }
@@ -3435,6 +3439,10 @@ declare namespace LocalJSX {
     }
     interface BqTooltip {
         /**
+          * If true, the tooltip will always be visible
+         */
+        "alwaysVisible"?: boolean;
+        /**
           * Set the action when the tooltip should be displayed, on hover (default) or click
          */
         "displayOn"?: 'click' | 'hover';
@@ -3452,7 +3460,7 @@ declare namespace LocalJSX {
          */
         "sameWidth"?: boolean;
         /**
-          * Indicates whether or not the tooltip is visible
+          * Indicates whether or not the tooltip is visible when the component is first rendered, and when interacting with the trigger
          */
         "visible"?: boolean;
     }

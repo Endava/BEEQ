@@ -32,6 +32,9 @@ export class BqTooltip {
   // Public Property API
   // ========================
 
+  /** If true, the tooltip will always be visible */
+  @Prop() alwaysVisible?: boolean = false;
+
   /** Distance between trigger element and tooltip */
   @Prop({ reflect: true }) distance?: number = 10;
 
@@ -48,7 +51,10 @@ export class BqTooltip {
   /** Set the action when the tooltip should be displayed, on hover (default) or click */
   @Prop({ reflect: true }) displayOn: 'click' | 'hover' = 'hover';
 
-  /** Indicates whether or not the tooltip is visible */
+  /**
+   * Indicates whether or not the tooltip is visible when the component is first rendered,
+   * and when interacting with the trigger
+   */
   @Prop({ reflect: true, mutable: true }) visible? = false;
 
   // Prop lifecycle events
@@ -56,7 +62,7 @@ export class BqTooltip {
 
   @Watch('visible')
   async handleVisibleChange() {
-    if (!this.visible) {
+    if (!this.visible && !this.alwaysVisible) {
       return await this.hide();
     }
 
@@ -124,6 +130,8 @@ export class BqTooltip {
   /** Hides the tooltip */
   @Method()
   async hide() {
+    if (this.alwaysVisible) return;
+
     this.visible = false;
     this.hideTooltip();
   }
@@ -164,6 +172,10 @@ export class BqTooltip {
     this.visible = false;
   };
 
+  private get isHidden() {
+    return !this.visible && !this.alwaysVisible;
+  }
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -185,8 +197,8 @@ export class BqTooltip {
         {/* PANEL */}
         <div
           class="bq-tooltip--panel"
-          aria-hidden={!this.visible}
-          hidden={!this.visible}
+          aria-hidden={this.isHidden}
+          hidden={this.isHidden}
           role="tooltip"
           ref={(el) => (this.panel = el)}
           part="panel"
