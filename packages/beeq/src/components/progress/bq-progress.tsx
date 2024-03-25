@@ -167,7 +167,13 @@ export class BqProgress {
             </bq-tooltip>
           )}
         </div>
-        {this.percentage && <div class="font-medium leading-regular text-text-primary">{this.value}%</div>}
+        {this.percentage && (
+          <div
+            class={{ 'font-medium leading-regular text-text-primary': true, 'text-ui-danger': this.type === 'error' }}
+          >
+            {this.value}%
+          </div>
+        )}
       </div>
     );
   }
