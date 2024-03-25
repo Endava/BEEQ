@@ -14,6 +14,7 @@ const meta: Meta = {
     layout: 'centered',
   },
   argTypes: {
+    'always-visible': { control: 'boolean' },
     distance: { control: 'number' },
     'display-on': { control: 'inline-radio', options: ['click', 'hover'] },
     'hide-arrow': { control: 'boolean' },
@@ -24,6 +25,7 @@ const meta: Meta = {
     text: { control: 'text', table: { disable: true } },
   },
   args: {
+    'always-visible': false,
     distance: 10,
     'display-on': 'hover',
     'hide-arrow': false,
@@ -38,6 +40,7 @@ type Story = StoryObj;
 
 const Template = (args: Args) => html`
   <bq-tooltip
+    always-visible=${args['always-visible']}
     distance=${args.distance}
     display-on=${args['display-on']}
     ?hide-arrow=${args['hide-arrow']}
@@ -52,7 +55,6 @@ const Template = (args: Args) => html`
 
 export const Default: Story = {
   render: Template,
-
   args: {
     text: "Yuhu! I'm a tooltip 🙃",
     visible: true,
@@ -61,7 +63,6 @@ export const Default: Story = {
 
 export const Bottom: Story = {
   render: Template,
-
   args: {
     text: "Yuhu! I'm a tooltip 🙃",
     placement: 'bottom',
@@ -71,7 +72,6 @@ export const Bottom: Story = {
 
 export const Right: Story = {
   render: Template,
-
   args: {
     text: "Yuhu! I'm a tooltip 🙃",
     placement: 'right',
@@ -81,7 +81,6 @@ export const Right: Story = {
 
 export const Left: Story = {
   render: Template,
-
   args: {
     text: "Yuhu! I'm a tooltip 🙃",
     placement: 'left',
@@ -91,7 +90,6 @@ export const Left: Story = {
 
 export const NoArrow: Story = {
   render: Template,
-
   args: {
     text: "Yuhu! I'm a tooltip 🙃",
     'hide-arrow': true,
@@ -101,7 +99,6 @@ export const NoArrow: Story = {
 
 export const SameWidth: Story = {
   render: Template,
-
   args: {
     text: 'Tooltip',
     'same-width': true,
@@ -111,10 +108,17 @@ export const SameWidth: Story = {
 
 export const LongContent: Story = {
   render: Template,
-
   args: {
     text: "Yuhu! I'm a tooltip 🙃, and I'm a long text that probably shouldn't be shown here but 'ce sa fac'",
     visible: true,
+  },
+};
+
+export const AlwaysVisible: Story = {
+  render: Template,
+  args: {
+    text: "Yuhu! I'm a tooltip 🙃, and I'm a long text that probably shouldn't be shown here but 'ce sa fac'",
+    'always-visible': true,
   },
 };
 
@@ -135,7 +139,6 @@ export const DisplayOnClick: Story = {
       </bq-button>
     </bq-tooltip>
   `,
-
   args: {
     'display-on': 'click',
     text: "Yuhu! I'm a tooltip 🙃",
