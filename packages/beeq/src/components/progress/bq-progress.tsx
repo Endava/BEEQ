@@ -1,4 +1,4 @@
-import { Component, Element, h, Prop, Watch } from '@stencil/core';
+import { Component, Element, h, Listen, Prop, State, Watch } from '@stencil/core';
 
 import {
   PROGRESS_MODE,
@@ -18,6 +18,8 @@ import { validatePropValue } from '../../shared/utils';
 export class BqProgress {
   // Own Properties
   // ====================
+
+  private progressBar: HTMLProgressElement;
 
   // Reference to host HTML element
   // ===================================
@@ -52,6 +54,8 @@ export class BqProgress {
   /** It `true`, the progress bar will be displayed with percentage tooltip */
   @Prop({ reflect: true }) tooltip: boolean = false;
 
+  @State() rect: DOMRect | null = null;
+
   // Prop lifecycle events
   // =======================
   @Watch('mode')
@@ -73,16 +77,24 @@ export class BqProgress {
 
   componentWillLoad() {
     this.handleTypePropChange();
+    this.validateValue(this.value);
   }
 
   componentDidUpdate() {
     this.checkIsIndeterminated();
     this.setProgressIndeterminate();
-    this.validateValue(this.value);
   }
 
   // Listeners
   // ==============
+
+  @Listen('mouseover', { target: 'window', capture: true })
+  async handleMouseOver() {
+    this.rect = this.progressBar?.getBoundingClientRect();
+    if (this.calculateOffsetValue()) {
+      this.progressBar.style.setProperty('--bq-progress-left-offset-position', `${this.calculateOffsetValue()}px`);
+    }
+  }
 
   // Public methods API
   // These methods are exposed on the host element.
@@ -128,12 +140,20 @@ export class BqProgress {
 
   private validateValue(newValue: number) {
     if (this.value) {
-      const clampedValue = Math.max(0, Math.min(100, newValue)); // Valoarea trebuie să fie între 0 și 100
+      const clampedValue = Math.max(0, Math.min(100, newValue));
       if (newValue !== clampedValue) {
         this.value = clampedValue;
       }
     }
+    return this.value;
   }
+
+  private calculateOffsetValue = () => {
+    if (this.rect) {
+      return Math.round(this.rect?.width * this.validateValue(this.value)) / 100;
+    }
+    return null;
+  };
 
   // render() function
   // Always the last one in the class.
@@ -145,18 +165,23 @@ export class BqProgress {
       'h-1': this.thickness === 'medium',
       'h-2': this.thickness === 'large',
       'progress-bar__level': !this.level,
+      'progress-bar__tooltip': this.tooltip,
+      indeterminated: this.checkIsIndeterminated(),
       onlyOnFirefox: !this.level && this.isFirefox(),
     };
 
     return (
       <div class="flex items-center gap-xs">
-        {this.tooltip && (
-          <bq-tooltip>
-            <progress class={progressClasses} value={this.value} max="100" slot="trigger"></progress>
-            <span class="font-medium leading-regular text-text-inverse">{this.value}</span>
-          </bq-tooltip>
+        {this.tooltip && <progress class={progressClasses} value={this.value} max="100" slot="trigger"></progress>}
+        {!this.tooltip && (
+          <progress
+            ref={(div) => (this.progressBar = div)}
+            class={progressClasses}
+            value={this.value}
+            max="100"
+            slot="trigger"
+          ></progress>
         )}
-        {!this.tooltip && <progress class={progressClasses} value={this.value} max="100" slot="trigger"></progress>}
         {this.percentage && <div class="font-medium leading-regular text-text-primary">{this.value}%</div>}
       </div>
     );

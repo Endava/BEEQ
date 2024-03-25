@@ -35,16 +35,19 @@ export default meta;
 
 type Story = StoryObj;
 
-const Template = (args: Args) =>
-  html`<bq-progress
-    value=${args.value}
-    mode=${args.mode}
-    thickness=${args.thickness}
-    type=${args.type}
-    ?level=${args.level}
-    ?percentage=${args.percentage}
-    ?tooltip=${args.tooltip}
-  ></bq-progress>`;
+const Template = (args: Args) => html`
+  <div class="flex h-screen items-center justify-center">
+    <bq-progress
+      value=${args.value}
+      mode=${args.mode}
+      thickness=${args.thickness}
+      type=${args.type}
+      ?level=${args.level}
+      ?percentage=${args.percentage}
+      ?tooltip=${args.tooltip}
+    ></bq-progress>
+  </div>
+`;
 
 export const Default: Story = {
   render: Template,
@@ -55,6 +58,5 @@ export const Default: Story = {
     type: 'error',
     level: true,
     percentage: true,
-    tooltip: true,
   },
 };

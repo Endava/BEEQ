@@ -4,12 +4,24 @@
 
 @import './bq-progress.variables';
 
-:host {
-  @apply flex w-full;
+.progress-bar {
+  @apply relative w-[--bq-progress--width] appearance-none;
 }
 
-.progress-bar {
-  @apply w-[--bq-progress--width] max-w-full appearance-none;
+.progress-bar__tooltip::before {
+  @apply absolute -top-10 left-[--bq-progress-left-offset-position] rounded-s bg-ui-inverse px-xs py-xs2 text-text-inverse;
+
+  content: attr(value);
+}
+
+.progress-bar__tooltip::before,
+.progress-bar__tooltip::after {
+  @apply hidden;
+}
+
+.progress-bar__tooltip:hover::before,
+.progress-bar__tooltip:hover::after {
+  @apply block;
 }
 
 .progress-bar::-webkit-progress-bar {
