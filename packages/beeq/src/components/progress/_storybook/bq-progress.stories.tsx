@@ -62,7 +62,8 @@ export const MediumThickness: Story = {
   },
 };
 
-export const Error: Story = {
+export const ErrorState: Story = {
+  name: 'Error',
   render: Template,
   args: {
     value: 40,
