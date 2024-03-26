@@ -2,11 +2,9 @@ import { Component, Element, h, Prop, Watch } from '@stencil/core';
 
 import {
   PROGRESS_BORDER_SHAPE,
-  PROGRESS_MODE,
   PROGRESS_THICKNESS,
   PROGRESS_TYPE,
   TProgressBorderShape,
-  TProgressMode,
   TProgressThickness,
   TProgressType,
 } from './bq-progress.types';
@@ -21,8 +19,6 @@ export class BqProgress {
   // Own Properties
   // ====================
 
-  private previousValue: number | null = null;
-
   // Reference to host HTML element
   // ===================================
 
@@ -35,8 +31,8 @@ export class BqProgress {
   // Public Property API
   // ========================
 
-  /** It defines the mode of progress bar to display */
-  @Prop({ reflect: true }) mode: TProgressMode = 'determinate';
+  /** If `true` the indeterminate state of progress bar is enabled */
+  @Prop({ reflect: true }) indeterminate: boolean = false;
 
   /** A number representing the current value of the progress bar */
   @Prop({ reflect: true }) value = 0;
@@ -58,12 +54,11 @@ export class BqProgress {
 
   // Prop lifecycle events
   // =======================
-  @Watch('mode')
+  // @Watch('mode')
   @Watch('thickness')
   @Watch('type')
   @Watch('borderShape')
   handleTypePropChange() {
-    validatePropValue(PROGRESS_MODE, 'determinate', this.el, 'mode');
     validatePropValue(PROGRESS_THICKNESS, 'medium', this.el, 'thickness');
     validatePropValue(PROGRESS_TYPE, 'default', this.el, 'type');
     validatePropValue(PROGRESS_BORDER_SHAPE, 'rounded', this.el, 'borderShape');
@@ -87,11 +82,6 @@ export class BqProgress {
     this.handleValuePropChange(this.value);
   }
 
-  componentDidUpdate() {
-    this.checkIsIndeterminated();
-    this.setProgressIndeterminate();
-  }
-
   // Listeners
   // ==============
 
@@ -106,30 +96,6 @@ export class BqProgress {
   // Internal business logic.
   // These methods cannot be called from the host element.
   // =======================================================
-
-  private setProgressIndeterminate = () => {
-    const hasValueAttribute = this.el.hasAttribute('value');
-    const hasPreviousValue = this.previousValue !== null;
-
-    if (this.mode === 'indeterminate' && hasValueAttribute) {
-      this.previousValue = this.value;
-      this.el.removeAttribute('value');
-      return;
-    }
-
-    if (this.mode !== 'indeterminate' && hasPreviousValue) {
-      this.el.setAttribute('value', `${this.previousValue}`);
-    }
-  };
-
-  private checkIsIndeterminated() {
-    const isIndeterminated = this.mode === 'indeterminate';
-    if (isIndeterminated) {
-      this.enableTooltip = false;
-      this.label = false;
-    }
-    return isIndeterminated;
-  }
 
   private validateValue(newValue: number) {
     if (this.value) {
@@ -151,14 +117,13 @@ export class BqProgress {
       'progress-bar__border-shape rounded-full': this.borderShape === 'rounded',
       'h-1': this.thickness === 'medium',
       'h-2': this.thickness === 'large',
-      indeterminate: this.checkIsIndeterminated(),
     };
 
     return (
       <div class="flex items-center gap-xs">
         <div class="relative flex w-full items-center">
-          <progress class={progressClasses} value={this.value} max="100"></progress>
-          {this.enableTooltip && (
+          <progress class={progressClasses} value={this.indeterminate ? undefined : this.value} max="100"></progress>
+          {this.enableTooltip && !this.indeterminate && (
             <bq-tooltip
               class="absolute"
               exportparts="base,trigger,panel"
@@ -175,8 +140,9 @@ export class BqProgress {
           <div
             style={{ fontVariant: 'tabular-nums' }}
             class={{
-              ' font-medium tabular-nums leading-regular text-text-primary': true,
+              'font-medium leading-regular text-text-primary': true,
               'text-ui-danger': this.type === 'error',
+              hidden: !this.label || this.indeterminate,
             }}
           >
             {this.value}%

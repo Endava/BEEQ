@@ -19,7 +19,7 @@ import { TEmptyStateSize } from "./components/empty-state/bq-empty-state.types";
 import { TIconWeight } from "./components/icon/bq-icon.types";
 import { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
 import { TNotificationBorderRadius, TNotificationType } from "./components/notification/bq-notification.types";
-import { TProgressBorderShape, TProgressMode, TProgressThickness, TProgressType } from "./components/progress/bq-progress.types";
+import { TProgressBorderShape, TProgressThickness, TProgressType } from "./components/progress/bq-progress.types";
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 import { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
 import { TSliderType } from "./components/slider/bq-slider.types";
@@ -46,7 +46,7 @@ export { TEmptyStateSize } from "./components/empty-state/bq-empty-state.types";
 export { TIconWeight } from "./components/icon/bq-icon.types";
 export { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
 export { TNotificationBorderRadius, TNotificationType } from "./components/notification/bq-notification.types";
-export { TProgressBorderShape, TProgressMode, TProgressThickness, TProgressType } from "./components/progress/bq-progress.types";
+export { TProgressBorderShape, TProgressThickness, TProgressType } from "./components/progress/bq-progress.types";
 export { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 export { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
 export { TSliderType } from "./components/slider/bq-slider.types";
@@ -701,13 +701,13 @@ export namespace Components {
          */
         "enableTooltip": boolean;
         /**
+          * If `true` the indeterminate state of progress bar is enabled
+         */
+        "indeterminate": boolean;
+        /**
           * It `true`, the progress bar will be displayed with percentage text
          */
         "label": boolean;
-        /**
-          * It defines the mode of progress bar to display
-         */
-        "mode": TProgressMode;
         /**
           * Progress bar thickness
          */
@@ -2852,13 +2852,13 @@ declare namespace LocalJSX {
          */
         "enableTooltip"?: boolean;
         /**
+          * If `true` the indeterminate state of progress bar is enabled
+         */
+        "indeterminate"?: boolean;
+        /**
           * It `true`, the progress bar will be displayed with percentage text
          */
         "label"?: boolean;
-        /**
-          * It defines the mode of progress bar to display
-         */
-        "mode"?: TProgressMode;
         /**
           * Progress bar thickness
          */

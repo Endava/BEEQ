@@ -2,7 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
 
 import mdx from './bq-progress.mdx';
-import { PROGRESS_BORDER_SHAPE, PROGRESS_MODE, PROGRESS_THICKNESS, PROGRESS_TYPE } from '../bq-progress.types';
+import { PROGRESS_BORDER_SHAPE, PROGRESS_THICKNESS, PROGRESS_TYPE } from '../bq-progress.types';
 
 const meta: Meta = {
   title: 'Components/Progress',
@@ -14,7 +14,7 @@ const meta: Meta = {
   },
   argTypes: {
     value: { control: 'number' },
-    mode: { control: 'select', options: [...PROGRESS_MODE] },
+    indeterminate: { control: 'boolean' },
     thickness: { control: 'select', options: [...PROGRESS_THICKNESS] },
     type: { control: 'select', options: [...PROGRESS_TYPE] },
     'border-shape': { control: 'select', options: [...PROGRESS_BORDER_SHAPE] },
@@ -23,7 +23,7 @@ const meta: Meta = {
   },
   args: {
     value: 0,
-    mode: 'determinate',
+    indeterminate: false,
     thickness: 'medium',
     type: 'default',
     'border-shape': 'rounded',
@@ -39,7 +39,7 @@ const Template = (args: Args) => html`
   <div class="w-64">
     <bq-progress
       value=${args.value}
-      mode=${args.mode}
+      indeterminate=${args.indeterminate}
       thickness=${args.thickness}
       type=${args.type}
       border-shape=${args['border-shape']}
