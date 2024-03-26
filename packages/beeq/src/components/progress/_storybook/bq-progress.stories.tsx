@@ -2,7 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
 
 import mdx from './bq-progress.mdx';
-import { PROGRESS_MODE, PROGRESS_THICKNESS, PROGRESS_TYPE } from '../bq-progress.types';
+import { PROGRESS_BORDER_SHAPE, PROGRESS_MODE, PROGRESS_THICKNESS, PROGRESS_TYPE } from '../bq-progress.types';
 
 const meta: Meta = {
   title: 'Components/Progress',
@@ -17,7 +17,7 @@ const meta: Meta = {
     mode: { control: 'select', options: [...PROGRESS_MODE] },
     thickness: { control: 'select', options: [...PROGRESS_THICKNESS] },
     type: { control: 'select', options: [...PROGRESS_TYPE] },
-    'border-shape': { control: 'boolean' },
+    'border-shape': { control: 'select', options: [...PROGRESS_BORDER_SHAPE] },
     label: { control: 'boolean' },
     'enable-tooltip': { control: 'boolean' },
   },
@@ -26,7 +26,7 @@ const meta: Meta = {
     mode: 'determinate',
     thickness: 'medium',
     type: 'default',
-    'border-shape': false,
+    'border-shape': 'rounded',
     label: false,
     'enable-tooltip': false,
   },
@@ -41,7 +41,7 @@ const Template = (args: Args) => html`
     mode=${args.mode}
     thickness=${args.thickness}
     type=${args.type}
-    ?border-shape=${args['border-shape']}
+    border-shape=${args['border-shape']}
     ?label=${args.label}
     ?enable-tooltip=${args['enable-tooltip']}
   ></bq-progress>
@@ -84,5 +84,6 @@ export const WithTooltip: Story = {
   args: {
     value: 80,
     'enable-tooltip': true,
+    'border-shape': 'square',
   },
 };

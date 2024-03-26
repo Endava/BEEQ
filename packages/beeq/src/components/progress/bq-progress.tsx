@@ -1,9 +1,11 @@
 import { Component, Element, h, Prop, Watch } from '@stencil/core';
 
 import {
+  PROGRESS_BORDER_SHAPE,
   PROGRESS_MODE,
   PROGRESS_THICKNESS,
   PROGRESS_TYPE,
+  TProgressBorderShape,
   TProgressMode,
   TProgressThickness,
   TProgressType,
@@ -45,8 +47,8 @@ export class BqProgress {
   /** Progress type */
   @Prop({ reflect: true }) type: TProgressType = 'default';
 
-  /** If `true`, the progress bar will be displayed without border radius */
-  @Prop({ reflect: true }) borderShape: boolean = false;
+  /** If `rounded`, the progress bar will be displayed without border radius */
+  @Prop({ reflect: true }) borderShape: TProgressBorderShape = 'rounded';
 
   /** It `true`, the progress bar will be displayed with percentage text */
   @Prop({ reflect: true }) label: boolean = false;
@@ -59,10 +61,12 @@ export class BqProgress {
   @Watch('mode')
   @Watch('thickness')
   @Watch('type')
+  @Watch('borderShape')
   handleTypePropChange() {
-    validatePropValue(PROGRESS_MODE, 'determinated', this.el, 'mode');
+    validatePropValue(PROGRESS_MODE, 'determinate', this.el, 'mode');
     validatePropValue(PROGRESS_THICKNESS, 'medium', this.el, 'thickness');
     validatePropValue(PROGRESS_TYPE, 'default', this.el, 'type');
+    validatePropValue(PROGRESS_BORDER_SHAPE, 'rounded', this.el, 'borderShape');
   }
 
   @Watch('value')
@@ -144,7 +148,7 @@ export class BqProgress {
   render() {
     const progressClasses = {
       [`progress-bar progress-bar__${this.type} ${this.thickness}`]: true,
-      'progress-bar__border-shape rounded-full': !this.borderShape,
+      'progress-bar__border-shape rounded-full': this.borderShape === 'rounded',
       'h-1': this.thickness === 'medium',
       'h-2': this.thickness === 'large',
       indeterminate: this.checkIsIndeterminated(),
