@@ -50,11 +50,38 @@ const Template = (args: Args) => html`
 export const Default: Story = {
   render: Template,
   args: {
-    value: 50,
-    mode: 'determinate',
+    value: 10,
+  },
+};
+
+export const MediumThickness: Story = {
+  render: Template,
+  args: {
+    value: 20,
     thickness: 'large',
+  },
+};
+
+export const Error: Story = {
+  render: Template,
+  args: {
+    value: 40,
     type: 'error',
-    'border-shape': true,
+  },
+};
+
+export const WithLabel: Story = {
+  render: Template,
+  args: {
+    value: 60,
     label: true,
+  },
+};
+
+export const WithTooltip: Story = {
+  render: Template,
+  args: {
+    value: 80,
+    'enable-tooltip': true,
   },
 };

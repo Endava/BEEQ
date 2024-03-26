@@ -153,7 +153,7 @@ export class BqProgress {
     return (
       <div class="flex items-center gap-xs">
         <div class="relative flex items-center">
-          <progress class={progressClasses} value={this.value} max="100" slot="triger"></progress>
+          <progress class={progressClasses} value={this.value} max="100"></progress>
           {this.enableTooltip && (
             <bq-tooltip
               class="absolute"
