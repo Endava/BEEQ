@@ -36,15 +36,17 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
-  <bq-progress
-    value=${args.value}
-    mode=${args.mode}
-    thickness=${args.thickness}
-    type=${args.type}
-    border-shape=${args['border-shape']}
-    ?label=${args.label}
-    ?enable-tooltip=${args['enable-tooltip']}
-  ></bq-progress>
+  <div class="w-64">
+    <bq-progress
+      value=${args.value}
+      mode=${args.mode}
+      thickness=${args.thickness}
+      type=${args.type}
+      border-shape=${args['border-shape']}
+      ?label=${args.label}
+      ?enable-tooltip=${args['enable-tooltip']}
+    ></bq-progress>
+  </div>
 `;
 
 export const Default: Story = {

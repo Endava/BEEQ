@@ -5,7 +5,7 @@
 @import './bq-progress.variables';
 
 .progress-bar {
-  @apply relative w-[--bq-progress--width];
+  @apply relative w-full;
 }
 
 .progress-bar:not(:indeterminate) {
