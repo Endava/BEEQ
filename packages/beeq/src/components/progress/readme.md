@@ -7,15 +7,15 @@
 
 ## Properties
 
-| Property     | Attribute    | Description                                                           | Type                               | Default         |
-| ------------ | ------------ | --------------------------------------------------------------------- | ---------------------------------- | --------------- |
-| `level`      | `level`      | If `true`, the progress bar will be displayed without border radius   | `boolean`                          | `false`         |
-| `mode`       | `mode`       | It defines the mode of progress bar to display                        | `"determinate" \| "indeterminate"` | `'determinate'` |
-| `percentage` | `percentage` | It `true`, the progress bar will be displayed with percentage text    | `boolean`                          | `false`         |
-| `thickness`  | `thickness`  | Progress bar thickness                                                | `"large" \| "medium"`              | `'medium'`      |
-| `tooltip`    | `tooltip`    | It `true`, the progress bar will be displayed with percentage tooltip | `boolean`                          | `false`         |
-| `type`       | `type`       | Progress type                                                         | `"default" \| "error"`             | `'default'`     |
-| `value`      | `value`      | A number representing the current value of the progress bar           | `number`                           | `0`             |
+| Property        | Attribute        | Description                                                           | Type                               | Default         |
+| --------------- | ---------------- | --------------------------------------------------------------------- | ---------------------------------- | --------------- |
+| `borderShape`   | `border-shape`   | If `true`, the progress bar will be displayed without border radius   | `boolean`                          | `false`         |
+| `enableTooltip` | `enable-tooltip` | It `true`, the progress bar will be displayed with percentage tooltip | `boolean`                          | `false`         |
+| `label`         | `label`          | It `true`, the progress bar will be displayed with percentage text    | `boolean`                          | `false`         |
+| `mode`          | `mode`           | It defines the mode of progress bar to display                        | `"determinate" \| "indeterminate"` | `'determinate'` |
+| `thickness`     | `thickness`      | Progress bar thickness                                                | `"large" \| "medium"`              | `'medium'`      |
+| `type`          | `type`           | Progress type                                                         | `"default" \| "error"`             | `'default'`     |
+| `value`         | `value`          | A number representing the current value of the progress bar           | `number`                           | `0`             |
 
 
 ## Dependencies
