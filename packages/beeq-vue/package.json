@@ -4,10 +4,9 @@
   "license": "Apache-2.0",
   "description": "Vue specific wrapper for BEEQ Design System components",
   "main": "./src/index.js",
-  "module": "./src/index.js",
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@beeq/core": "^1.0.1",
+    "@beeq/core": "^1.1.0",
     "tslib": "^2.3.0"
   },
   "peerDependencies": {

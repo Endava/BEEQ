@@ -7,7 +7,7 @@
   "module": "dist/esm2015/index.js",
   "types": "index.d.ts",
   "dependencies": {
-    "@beeq/core": "^1.0.1",
+    "@beeq/core": "^1.1.0",
     "tslib": "^2.6.2"
   },
   "peerDependencies": {
@@ -20,7 +20,6 @@
   },
   "publishConfig": {
     "access": "public",
-    "provenance": true,
     "registry": "https://registry.npmjs.org"
   }
 }
