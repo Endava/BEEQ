@@ -695,23 +695,23 @@ export namespace Components {
         /**
           * If `true`, the progress bar will be displayed without border radius
          */
-        "level": boolean;
+        "borderShape": boolean;
+        /**
+          * It `true`, the progress bar will be displayed with percentage tooltip
+         */
+        "enableTooltip": boolean;
+        /**
+          * It `true`, the progress bar will be displayed with percentage text
+         */
+        "label": boolean;
         /**
           * It defines the mode of progress bar to display
          */
         "mode": TProgressMode;
         /**
-          * It `true`, the progress bar will be displayed with percentage text
-         */
-        "percentage": boolean;
-        /**
           * Progress bar thickness
          */
         "thickness": TProgressThickness;
-        /**
-          * It `true`, the progress bar will be displayed with percentage tooltip
-         */
-        "tooltip": boolean;
         /**
           * Progress type
          */
@@ -2846,23 +2846,23 @@ declare namespace LocalJSX {
         /**
           * If `true`, the progress bar will be displayed without border radius
          */
-        "level"?: boolean;
+        "borderShape"?: boolean;
+        /**
+          * It `true`, the progress bar will be displayed with percentage tooltip
+         */
+        "enableTooltip"?: boolean;
+        /**
+          * It `true`, the progress bar will be displayed with percentage text
+         */
+        "label"?: boolean;
         /**
           * It defines the mode of progress bar to display
          */
         "mode"?: TProgressMode;
         /**
-          * It `true`, the progress bar will be displayed with percentage text
-         */
-        "percentage"?: boolean;
-        /**
           * Progress bar thickness
          */
         "thickness"?: TProgressThickness;
-        /**
-          * It `true`, the progress bar will be displayed with percentage tooltip
-         */
-        "tooltip"?: boolean;
         /**
           * Progress type
          */

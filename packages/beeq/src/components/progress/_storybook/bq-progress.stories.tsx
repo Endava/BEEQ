@@ -17,18 +17,18 @@ const meta: Meta = {
     mode: { control: 'select', options: [...PROGRESS_MODE] },
     thickness: { control: 'select', options: [...PROGRESS_THICKNESS] },
     type: { control: 'select', options: [...PROGRESS_TYPE] },
-    level: { control: 'boolean' },
-    percentage: { control: 'boolean' },
-    tooltip: { control: 'boolean' },
+    'border-shape': { control: 'boolean' },
+    label: { control: 'boolean' },
+    'enable-tooltip': { control: 'boolean' },
   },
   args: {
     value: 0,
     mode: 'determinate',
     thickness: 'medium',
     type: 'default',
-    level: false,
-    percentage: false,
-    tooltip: false,
+    'border-shape': false,
+    label: false,
+    'enable-tooltip': false,
   },
 };
 export default meta;
@@ -41,9 +41,9 @@ const Template = (args: Args) => html`
     mode=${args.mode}
     thickness=${args.thickness}
     type=${args.type}
-    ?level=${args.level}
-    ?percentage=${args.percentage}
-    ?tooltip=${args.tooltip}
+    ?border-shape=${args['border-shape']}
+    ?label=${args.label}
+    ?enable-tooltip=${args['enable-tooltip']}
   ></bq-progress>
 `;
 
@@ -54,7 +54,7 @@ export const Default: Story = {
     mode: 'determinate',
     thickness: 'large',
     type: 'error',
-    level: true,
-    percentage: true,
+    'border-shape': true,
+    label: true,
   },
 };

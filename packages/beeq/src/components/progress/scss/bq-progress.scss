@@ -16,8 +16,8 @@
   @apply bg-ui-secondary;
 }
 
-.progress-bar.progress-bar__level::-webkit-progress-value,
-.progress-bar.progress-bar__level::-webkit-progress-bar {
+.progress-bar.progress-bar__border-shape::-webkit-progress-value,
+.progress-bar.progress-bar__border-shape::-webkit-progress-bar {
   @apply rounded-[--bq-radius--xs];
 }
 

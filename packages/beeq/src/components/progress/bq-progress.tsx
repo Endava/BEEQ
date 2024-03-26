@@ -19,6 +19,8 @@ export class BqProgress {
   // Own Properties
   // ====================
 
+  private previousValue: number | null = null;
+
   // Reference to host HTML element
   // ===================================
 
@@ -44,13 +46,13 @@ export class BqProgress {
   @Prop({ reflect: true }) type: TProgressType = 'default';
 
   /** If `true`, the progress bar will be displayed without border radius */
-  @Prop({ reflect: true }) level: boolean = false;
+  @Prop({ reflect: true }) borderShape: boolean = false;
 
   /** It `true`, the progress bar will be displayed with percentage text */
-  @Prop({ reflect: true }) percentage: boolean = false;
+  @Prop({ reflect: true }) label: boolean = false;
 
   /** It `true`, the progress bar will be displayed with percentage tooltip */
-  @Prop({ reflect: true }) tooltip: boolean = false;
+  @Prop({ reflect: true }) enableTooltip: boolean = false;
 
   // Prop lifecycle events
   // =======================
@@ -101,8 +103,6 @@ export class BqProgress {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private previousValue: number | null = null;
-
   private setProgressIndeterminate = () => {
     const hasValueAttribute = this.el.hasAttribute('value');
     const hasPreviousValue = this.previousValue !== null;
@@ -121,8 +121,8 @@ export class BqProgress {
   private checkIsIndeterminated() {
     const isIndeterminated = this.mode === 'indeterminate';
     if (isIndeterminated) {
-      this.tooltip = false;
-      this.percentage = false;
+      this.enableTooltip = false;
+      this.label = false;
     }
     return isIndeterminated;
   }
@@ -144,7 +144,7 @@ export class BqProgress {
   render() {
     const progressClasses = {
       [`progress-bar progress-bar__${this.type} ${this.thickness}`]: true,
-      'progress-bar__level rounded-full': !this.level,
+      'progress-bar__border-shape rounded-full': !this.borderShape,
       'h-1': this.thickness === 'medium',
       'h-2': this.thickness === 'large',
       indeterminate: this.checkIsIndeterminated(),
@@ -154,22 +154,26 @@ export class BqProgress {
       <div class="flex items-center gap-xs">
         <div class="relative flex items-center">
           <progress class={progressClasses} value={this.value} max="100" slot="triger"></progress>
-          {this.tooltip && (
+          {this.enableTooltip && (
             <bq-tooltip
               class="absolute"
               exportparts="base,trigger,panel"
-              always-visible
+              alwaysVisible={true}
               distance={16}
-              style={{ left: `${this.value}%` }}
+              style={{ left: `${this.value}%`, fontVariant: 'tabular-nums' }}
             >
               <div class="absolute h-1 w-1" slot="trigger"></div>
               {this.value}
             </bq-tooltip>
           )}
         </div>
-        {this.percentage && (
+        {this.label && (
           <div
-            class={{ 'font-medium leading-regular text-text-primary': true, 'text-ui-danger': this.type === 'error' }}
+            style={{ fontVariant: 'tabular-nums' }}
+            class={{
+              ' font-medium tabular-nums leading-regular text-text-primary': true,
+              'text-ui-danger': this.type === 'error',
+            }}
           >
             {this.value}%
           </div>
