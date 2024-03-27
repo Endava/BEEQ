@@ -1,4 +1,4 @@
-import { Component, Element, h, Prop, Watch } from '@stencil/core';
+import { Component, Element, h, Host, Prop, Watch } from '@stencil/core';
 
 import {
   PROGRESS_BORDER_SHAPE,
@@ -115,40 +115,44 @@ export class BqProgress {
     const progressClasses = {
       [`progress-bar progress-bar__${this.type} ${this.thickness}`]: true,
       'progress-bar__border-shape rounded-full': this.borderShape === 'rounded',
-      'h-1': this.thickness === 'medium',
-      'h-2': this.thickness === 'large',
+    };
+    const style = {
+      ...(this.thickness === 'large' && { '--bq-progress-bar--height': '8px' }),
+      ...(this.type === 'error' && { '--bq-progress-bar--indicatorColor': 'var(--bq-ui--danger)' }),
     };
 
     return (
-      <div class="flex items-center gap-xs">
-        <div class="relative flex w-full items-center">
-          <progress class={progressClasses} value={this.indeterminate ? undefined : this.value} max="100"></progress>
-          {this.enableTooltip && !this.indeterminate && (
-            <bq-tooltip
-              class="absolute"
-              exportparts="base,trigger,panel"
-              alwaysVisible={true}
-              distance={16}
-              style={{ left: `${this.value}%`, fontVariant: 'tabular-nums' }}
+      <Host style={style}>
+        <div class="flex items-center gap-xs">
+          <div class="relative flex w-full items-center">
+            <progress class={progressClasses} value={this.indeterminate ? undefined : this.value} max="100"></progress>
+            {this.enableTooltip && !this.indeterminate && (
+              <bq-tooltip
+                class="absolute"
+                exportparts="base,trigger,panel"
+                alwaysVisible={true}
+                distance={16}
+                style={{ left: `${this.value}%`, fontVariant: 'tabular-nums' }}
+              >
+                <div class="absolute h-1 w-1" slot="trigger"></div>
+                {this.value}
+              </bq-tooltip>
+            )}
+          </div>
+          {this.label && (
+            <div
+              style={{ fontVariant: 'tabular-nums' }}
+              class={{
+                'font-medium leading-regular text-text-primary': true,
+                'text-ui-danger': this.type === 'error',
+                hidden: !this.label || this.indeterminate,
+              }}
             >
-              <div class="absolute h-1 w-1" slot="trigger"></div>
-              {this.value}
-            </bq-tooltip>
+              {this.value}%
+            </div>
           )}
         </div>
-        {this.label && (
-          <div
-            style={{ fontVariant: 'tabular-nums' }}
-            class={{
-              'font-medium leading-regular text-text-primary': true,
-              'text-ui-danger': this.type === 'error',
-              hidden: !this.label || this.indeterminate,
-            }}
-          >
-            {this.value}%
-          </div>
-        )}
-      </div>
+      </Host>
     );
   }
 }

@@ -4,5 +4,12 @@
 
 :host {
   /**
+    * @prop --bq-progress-bar--height: The progress bar's height
+    * @prop --bq-progress-bar--trackColor: The progress bar track area (the gery one)
+    * @prop --bq-progress-bar--indicatorColor: The progress bar color (inside the track area)
    */
+
+  --bq-progress-bar--height: theme('height.1');
+  --bq-progress-bar--trackColor: theme('colors.ui.secondary');
+  --bq-progress-bar--indicatorColor: theme('colors.ui.brand');
 }
