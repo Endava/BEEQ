@@ -201,7 +201,6 @@ export class BqTag {
       ...(this.hasCustomColor && { '--bq-text--primary': `var(--bq-text--alt)` }),
     };
 
-    console.log('this', this.color);
     return (
       <Host style={style} aria-hidden={this.isHidden ? 'true' : 'false'} hidden={this.isHidden ? 'true' : 'false'}>
         <button

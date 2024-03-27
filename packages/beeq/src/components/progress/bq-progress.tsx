@@ -10,6 +10,16 @@ import {
 } from './bq-progress.types';
 import { validatePropValue } from '../../shared/utils';
 
+/**
+ * @part wrapper - The component wrapper container inside the shadow DOM
+ * @part progress - The `<div>` container that holds the native progress element
+ * @part label - The `<div>` container that holds the label value (in percentage)
+ 
+ * @part base - The base container for the tooltip component inside the shadow DOM when hovering over the progress bar
+ * @part trigger - The container holding the element that triggers the tooltip display when hovering over the progress bar
+ * @part panel - The container holding the content of the tooltip when hovering over the progress bar
+ */
+
 @Component({
   tag: 'bq-progress',
   styleUrl: './scss/bq-progress.scss',
@@ -117,8 +127,8 @@ export class BqProgress {
 
     return (
       <Host style={style}>
-        <div class="flex items-center gap-xs">
-          <div class="relative flex w-full items-center">
+        <div class="flex items-center gap-xs" part="wrapper">
+          <div class="relative flex w-full items-center" part="progress">
             <progress
               class={{
                 [`progress-bar progress-bar__${this.type} ${this.thickness}`]: true,
@@ -126,7 +136,7 @@ export class BqProgress {
               }}
               value={this.indeterminate ? undefined : this.value}
               max="100"
-            ></progress>
+            />
             {this.enableTooltip && !this.indeterminate && (
               <bq-tooltip
                 class="absolute"
@@ -147,6 +157,7 @@ export class BqProgress {
               'text-ui-danger': this.type === 'error',
               hidden: !this.label || this.indeterminate,
             }}
+            part="label"
           >
             <span>{this.value}%</span>
           </div>
