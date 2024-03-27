@@ -46,22 +46,22 @@ export class BqProgress {
   /** If `rounded`, the progress bar will be displayed without border radius */
   @Prop({ reflect: true }) borderShape: TProgressBorderShape = 'rounded';
 
-  /** It `true`, the progress bar will be displayed with percentage text */
+  /** If `true`, the progress bar will be displayed with percentage text */
   @Prop({ reflect: true }) label: boolean = false;
 
-  /** It `true`, the progress bar will be displayed with percentage tooltip */
+  /** If `true`, the progress bar will be displayed with percentage tooltip */
   @Prop({ reflect: true }) enableTooltip: boolean = false;
 
   // Prop lifecycle events
   // =======================
-  // @Watch('mode')
+
+  @Watch('borderShape')
   @Watch('thickness')
   @Watch('type')
-  @Watch('borderShape')
   handleTypePropChange() {
+    validatePropValue(PROGRESS_BORDER_SHAPE, 'rounded', this.el, 'borderShape');
     validatePropValue(PROGRESS_THICKNESS, 'medium', this.el, 'thickness');
     validatePropValue(PROGRESS_TYPE, 'default', this.el, 'type');
-    validatePropValue(PROGRESS_BORDER_SHAPE, 'rounded', this.el, 'borderShape');
   }
 
   @Watch('value')

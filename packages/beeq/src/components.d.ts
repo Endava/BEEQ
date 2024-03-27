@@ -697,7 +697,7 @@ export namespace Components {
          */
         "borderShape": TProgressBorderShape;
         /**
-          * It `true`, the progress bar will be displayed with percentage tooltip
+          * If `true`, the progress bar will be displayed with percentage tooltip
          */
         "enableTooltip": boolean;
         /**
@@ -705,7 +705,7 @@ export namespace Components {
          */
         "indeterminate": boolean;
         /**
-          * It `true`, the progress bar will be displayed with percentage text
+          * If `true`, the progress bar will be displayed with percentage text
          */
         "label": boolean;
         /**
@@ -2848,7 +2848,7 @@ declare namespace LocalJSX {
          */
         "borderShape"?: TProgressBorderShape;
         /**
-          * It `true`, the progress bar will be displayed with percentage tooltip
+          * If `true`, the progress bar will be displayed with percentage tooltip
          */
         "enableTooltip"?: boolean;
         /**
@@ -2856,7 +2856,7 @@ declare namespace LocalJSX {
          */
         "indeterminate"?: boolean;
         /**
-          * It `true`, the progress bar will be displayed with percentage text
+          * If `true`, the progress bar will be displayed with percentage text
          */
         "label"?: boolean;
         /**
