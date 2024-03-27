@@ -61,7 +61,7 @@ describe('bq-progress', () => {
 
   it('should render the progress bar with error type', async () => {
     const page = await newE2EPage({
-      html: '<bq-progress value="60" type="error"></progress>',
+      html: `<bq-progress value="60" type="error"></progress>`,
     });
 
     const progressElem = await page.find('bq-progress >>> [part="progress"]');
@@ -76,5 +76,15 @@ describe('bq-progress', () => {
       ),
     );
     expect(indicatorColor).toEqual(uiErrorColor);
+  });
+
+  it('should render the progress bar in indeterminate mode', async () => {
+    const value = 80;
+    const page = await newE2EPage({
+      html: `<bq-progress value="${value}" indeterminate></progress>`,
+    });
+
+    const element = await page.find('bq-progress >>> [part="progress"]');
+    expect(element).not.toHaveAttribute('value');
   });
 });
