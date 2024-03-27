@@ -61,17 +61,17 @@ describe('bq-progress', () => {
 
   it('should render the progress bar with error type', async () => {
     const page = await newE2EPage({
-      html: `<bq-progress value="60" type="error"></progress>`,
+      html: '<bq-progress value="60" type="error"></progress>',
     });
 
-    const progressElem = await page.find('bq-progress >>> [part="progress"]');
+    const progressElem = await page.find('bq-progress >>> [part="progress-bar"]');
     expect(progressElem).toHaveClass('progress-bar__error');
 
     const uiErrorColor = await page.evaluate(() =>
       getComputedStyle(document.documentElement).getPropertyValue('--bq-ui--danger'),
     );
     const indicatorColor = await page.$eval('bq-progress', (elm: any) =>
-      getComputedStyle(elm.shadowRoot.querySelector('[part="progress"]')).getPropertyValue(
+      getComputedStyle(elm.shadowRoot.querySelector('[part="progress-bar"]')).getPropertyValue(
         '--bq-progress-bar--indicatorColor',
       ),
     );

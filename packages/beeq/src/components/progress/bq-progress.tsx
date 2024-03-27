@@ -13,6 +13,7 @@ import { validatePropValue } from '../../shared/utils';
 /**
  * @part wrapper - The component wrapper container inside the shadow DOM
  * @part progress - The `<div>` container that holds the native progress element
+ * @part progress-bar - The native html for progress element
  * @part label - The `<div>` container that holds the label value (in percentage)
  
  * @part base - The base container for the tooltip component inside the shadow DOM when hovering over the progress bar
@@ -136,6 +137,7 @@ export class BqProgress {
               }}
               value={this.indeterminate ? undefined : this.value}
               max="100"
+              part="progress-bar"
             />
             {this.enableTooltip && !this.indeterminate && (
               <bq-tooltip
