@@ -56,7 +56,7 @@ export const Default: Story = {
   },
 };
 
-export const MediumThickness: Story = {
+export const LargeThickness: Story = {
   render: Template,
   args: {
     value: 20,
