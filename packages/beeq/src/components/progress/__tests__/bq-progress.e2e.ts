@@ -32,7 +32,7 @@ describe('bq-progress', () => {
 
   it('should render the progress bar without label', async () => {
     const page = await newE2EPage({
-      html: '<bq-progress label="false"></progress>',
+      html: '<bq-progress value="60" label="false"></progress>',
     });
 
     const element = await page.find('bq-progress >>> [part="label"]');
@@ -52,7 +52,7 @@ describe('bq-progress', () => {
 
   it('should render the progress bar without tooltip', async () => {
     const page = await newE2EPage({
-      html: '<bq-progress enable-tooltip="false"></progress>',
+      html: '<bq-progress value="60" enable-tooltip="false"></progress>',
     });
 
     const element = await page.find('bq-progress >>> bq-tooltip');
@@ -79,9 +79,8 @@ describe('bq-progress', () => {
   });
 
   it('should render the progress bar in indeterminate mode', async () => {
-    const value = 80;
     const page = await newE2EPage({
-      html: `<bq-progress value="${value}" indeterminate></progress>`,
+      html: '<bq-progress value="60" indeterminate></progress>',
     });
 
     const element = await page.find('bq-progress >>> [part="progress"]');
