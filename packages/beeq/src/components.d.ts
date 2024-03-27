@@ -693,11 +693,11 @@ export namespace Components {
     }
     interface BqProgress {
         /**
-          * If `rounded`, the progress bar will be displayed without border radius
+          * It will set the border style of the progress bar
          */
         "borderShape": TProgressBorderShape;
         /**
-          * If `true`, the progress bar will be displayed with percentage tooltip
+          * If `true`, a tooltip will be shown displaying the progress value
          */
         "enableTooltip": boolean;
         /**
@@ -705,7 +705,7 @@ export namespace Components {
          */
         "indeterminate": boolean;
         /**
-          * If `true`, the progress bar will be displayed with percentage text
+          * If `true`, a label text showing the value (in percentage) will be shown
          */
         "label": boolean;
         /**
@@ -2844,11 +2844,11 @@ declare namespace LocalJSX {
     }
     interface BqProgress {
         /**
-          * If `rounded`, the progress bar will be displayed without border radius
+          * It will set the border style of the progress bar
          */
         "borderShape"?: TProgressBorderShape;
         /**
-          * If `true`, the progress bar will be displayed with percentage tooltip
+          * If `true`, a tooltip will be shown displaying the progress value
          */
         "enableTooltip"?: boolean;
         /**
@@ -2856,7 +2856,7 @@ declare namespace LocalJSX {
          */
         "indeterminate"?: boolean;
         /**
-          * If `true`, the progress bar will be displayed with percentage text
+          * If `true`, a label text showing the value (in percentage) will be shown
          */
         "label"?: boolean;
         /**

@@ -35,7 +35,7 @@ export class BqProgress {
   @Prop({ reflect: true }) indeterminate: boolean = false;
 
   /** A number representing the current value of the progress bar */
-  @Prop({ reflect: true }) value = 0;
+  @Prop({ reflect: true, mutable: true }) value = 0;
 
   /** Progress bar thickness */
   @Prop({ reflect: true }) thickness: TProgressThickness = 'medium';
@@ -43,13 +43,13 @@ export class BqProgress {
   /** Progress type */
   @Prop({ reflect: true }) type: TProgressType = 'default';
 
-  /** If `rounded`, the progress bar will be displayed without border radius */
+  /** It will set the border style of the progress bar */
   @Prop({ reflect: true }) borderShape: TProgressBorderShape = 'rounded';
 
-  /** If `true`, the progress bar will be displayed with percentage text */
+  /** If `true`, a label text showing the value (in percentage) will be shown */
   @Prop({ reflect: true }) label: boolean = false;
 
-  /** If `true`, the progress bar will be displayed with percentage tooltip */
+  /** If `true`, a tooltip will be shown displaying the progress value */
   @Prop({ reflect: true }) enableTooltip: boolean = false;
 
   // Prop lifecycle events
@@ -98,11 +98,9 @@ export class BqProgress {
   // =======================================================
 
   private validateValue(newValue: number) {
-    if (this.value) {
-      const clampedValue = Math.max(0, Math.min(100, newValue));
-      if (newValue !== clampedValue) {
-        this.value = clampedValue;
-      }
+    const clampedValue = Math.max(0, Math.min(100, newValue));
+    if (newValue !== clampedValue) {
+      this.value = clampedValue;
     }
     return this.value;
   }
@@ -112,10 +110,6 @@ export class BqProgress {
   // ===================================
 
   render() {
-    const progressClasses = {
-      [`progress-bar progress-bar__${this.type} ${this.thickness}`]: true,
-      'progress-bar__border-shape rounded-full': this.borderShape === 'rounded',
-    };
     const style = {
       ...(this.thickness === 'large' && { '--bq-progress-bar--height': '8px' }),
       ...(this.type === 'error' && { '--bq-progress-bar--indicatorColor': 'var(--bq-ui--danger)' }),
@@ -125,7 +119,14 @@ export class BqProgress {
       <Host style={style}>
         <div class="flex items-center gap-xs">
           <div class="relative flex w-full items-center">
-            <progress class={progressClasses} value={this.indeterminate ? undefined : this.value} max="100"></progress>
+            <progress
+              class={{
+                [`progress-bar progress-bar__${this.type} ${this.thickness}`]: true,
+                'progress-bar__border-shape rounded-full': this.borderShape === 'rounded',
+              }}
+              value={this.indeterminate ? undefined : this.value}
+              max="100"
+            ></progress>
             {this.enableTooltip && !this.indeterminate && (
               <bq-tooltip
                 class="absolute"
@@ -139,18 +140,16 @@ export class BqProgress {
               </bq-tooltip>
             )}
           </div>
-          {this.label && (
-            <div
-              style={{ fontVariant: 'tabular-nums' }}
-              class={{
-                'font-medium leading-regular text-text-primary': true,
-                'text-ui-danger': this.type === 'error',
-                hidden: !this.label || this.indeterminate,
-              }}
-            >
-              {this.value}%
-            </div>
-          )}
+          <div
+            style={{ fontVariant: 'tabular-nums' }}
+            class={{
+              'font-medium leading-regular text-text-primary': true,
+              'text-ui-danger': this.type === 'error',
+              hidden: !this.label || this.indeterminate,
+            }}
+          >
+            <span>{this.value}%</span>
+          </div>
         </div>
       </Host>
     );
