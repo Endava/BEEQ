@@ -122,7 +122,7 @@ export class BqProgress {
 
   render() {
     const style = {
-      ...(this.thickness === 'large' && { '--bq-progress-bar--height': '8px' }),
+      ...(this.thickness === 'large' && { '--bq-progress-bar--height': 'var(--bq-spacing-xs)' }),
       ...(this.type === 'error' && { '--bq-progress-bar--indicatorColor': 'var(--bq-ui--danger)' }),
     };
 

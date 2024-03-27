@@ -77,7 +77,6 @@ export const BorderShape: Story = {
   render: Template,
   args: {
     value: 80,
-    'enable-tooltip': true,
     'border-shape': 'square',
   },
 };

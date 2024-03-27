@@ -70,7 +70,7 @@ describe('bq-progress', () => {
     const labelElem = await page.find('bq-progress >>> [part="label"]');
     expect(labelElem).toHaveClass('text-ui-danger');
 
-    const uiErrorColor = await page.evaluate(() =>
+    const uiDangerToken = await page.evaluate(() =>
       getComputedStyle(document.documentElement).getPropertyValue('--bq-ui--danger'),
     );
     const indicatorColor = await page.$eval('bq-progress', (elm: any) =>
@@ -78,7 +78,23 @@ describe('bq-progress', () => {
         '--bq-progress-bar--indicatorColor',
       ),
     );
-    expect(indicatorColor).toEqual(uiErrorColor);
+    expect(indicatorColor).toEqual(uiDangerToken);
+  });
+
+  it('should render the progress bar with large thickness', async () => {
+    const page = await newE2EPage({
+      html: '<bq-progress value="60" thickness="large"></progress>',
+    });
+
+    const uiLargeThicknessToken = await page.evaluate(() =>
+      getComputedStyle(document.documentElement).getPropertyValue('--bq-spacing-xs'),
+    );
+    const indicatorThickness = await page.$eval('bq-progress', (elm: any) =>
+      getComputedStyle(elm.shadowRoot.querySelector('[part="progress-bar"]')).getPropertyValue(
+        '--bq-progress-bar--height',
+      ),
+    );
+    expect(indicatorThickness).toEqual(uiLargeThicknessToken);
   });
 
   it('should render the progress bar in indeterminate mode', async () => {
@@ -88,5 +104,23 @@ describe('bq-progress', () => {
 
     const element = await page.find('bq-progress >>> [part="progress"]');
     expect(element).not.toHaveAttribute('value');
+  });
+
+  it('should render the progress bar with border shape as rounded', async () => {
+    const page = await newE2EPage({
+      html: '<bq-progress value="60" border-shape="rounded"></progress>',
+    });
+
+    const progressElem = await page.find('bq-progress >>> [part="progress-bar"]');
+    expect(progressElem).toHaveClass('progress-bar__border-shape');
+  });
+
+  it('should render the progress bar with border shape as square', async () => {
+    const page = await newE2EPage({
+      html: '<bq-progress value="60" border-shape="square"></progress>',
+    });
+
+    const progressElem = await page.find('bq-progress >>> [part="progress-bar"]');
+    expect(progressElem).not.toHaveClass('progress-bar__border-shape');
   });
 });
