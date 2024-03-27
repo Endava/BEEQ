@@ -73,6 +73,15 @@ export const ErrorState: Story = {
   },
 };
 
+export const BorderShape: Story = {
+  render: Template,
+  args: {
+    value: 80,
+    'enable-tooltip': true,
+    'border-shape': 'square',
+  },
+};
+
 export const WithLabel: Story = {
   render: Template,
   args: {
@@ -86,6 +95,5 @@ export const WithTooltip: Story = {
   args: {
     value: 80,
     'enable-tooltip': true,
-    'border-shape': 'square',
   },
 };
