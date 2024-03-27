@@ -67,6 +67,9 @@ describe('bq-progress', () => {
     const progressElem = await page.find('bq-progress >>> [part="progress-bar"]');
     expect(progressElem).toHaveClass('progress-bar__error');
 
+    const labelElem = await page.find('bq-progress >>> [part="label"]');
+    expect(labelElem).toHaveClass('text-ui-danger');
+
     const uiErrorColor = await page.evaluate(() =>
       getComputedStyle(document.documentElement).getPropertyValue('--bq-ui--danger'),
     );
