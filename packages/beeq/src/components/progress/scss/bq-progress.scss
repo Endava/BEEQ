@@ -18,6 +18,8 @@
 
 .progress-bar::-moz-progress-bar {
   @apply bg-[--bq-progress-bar--indicatorColor];
+  @apply w-[0.1px];
+  @include animation-indeterminate;
 }
 
 .progress-bar.progress-bar__border-shape::-webkit-progress-value,
@@ -26,5 +28,10 @@
 }
 
 .progress-bar__indeterminate {
+  @include animation-indeterminate;
+}
+
+.progress-bar.progress-bar__border-shape::-moz-progress-bar {
+  @apply w-[0.1px] rounded-full;
   @include animation-indeterminate;
 }

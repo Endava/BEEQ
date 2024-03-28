@@ -143,7 +143,7 @@ export class BqProgress {
             <progress
               class={{
                 [`progress-bar progress-bar__${this.type} ${this.thickness}`]: true,
-                'progress-bar__border-shape': this.borderShape === 'rounded',
+                'progress-bar__border-shape rounded-full': this.borderShape === 'rounded',
               }}
               value={this.indeterminate ? undefined : this.value}
               max="100"
