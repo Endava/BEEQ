@@ -130,6 +130,16 @@ export class BqProgress {
       <Host style={style}>
         <div class="flex items-center gap-xs" part="wrapper">
           <div class="relative flex w-full items-center" part="progress">
+            {this.indeterminate && (
+              <div
+                class={{
+                  [`progress-bar__indeterminate h-[--bq-progress-bar--height] bg-[--bq-progress-bar--indicatorColor]`]:
+                    true,
+                  'rounded-full': this.borderShape === 'rounded',
+                  'absolute z-10 w-20': true,
+                }}
+              />
+            )}
             <progress
               class={{
                 [`progress-bar progress-bar__${this.type} ${this.thickness}`]: true,
