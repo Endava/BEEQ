@@ -5,11 +5,7 @@
 @import './bq-progress.variables';
 
 .progress-bar {
-  @apply relative h-[--bq-progress-bar--height] w-full;
-}
-
-.progress-bar:not(:indeterminate) {
-  @apply appearance-none;
+  @apply relative h-[--bq-progress-bar--height] w-full appearance-none;
 }
 
 .progress-bar::-webkit-progress-bar {
@@ -27,4 +23,8 @@
 .progress-bar.progress-bar__border-shape::-webkit-progress-value,
 .progress-bar.progress-bar__border-shape::-webkit-progress-bar {
   @apply rounded-full;
+}
+
+.progress-bar__indeterminate {
+  @include animation-indeterminate;
 }
