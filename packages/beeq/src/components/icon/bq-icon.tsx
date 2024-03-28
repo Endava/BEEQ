@@ -1,8 +1,8 @@
-import { Component, Env, Event, EventEmitter, getAssetPath, h, Host, Prop, State, Watch } from '@stencil/core';
+import { Component, Env, Event, EventEmitter, h, Host, Prop, State, Watch } from '@stencil/core';
 
 import { TIconWeight } from './bq-icon.types';
 import { getSvgContent, iconContent } from './helper/request';
-import { getColorCSSVariable } from '../../shared/utils';
+import { getBasePath, getColorCSSVariable } from '../../shared/utils';
 
 /**
  * Icons are simplified images that graphically explain the meaning of an object on the screen.
@@ -104,7 +104,8 @@ export class BqIcon {
       iconName = `${this.name}.svg`;
       path = `${svgPath}/${iconName}`;
     }
-    return getAssetPath(path);
+
+    return getBasePath(path);
   };
 
   private loadIcon = () => {
