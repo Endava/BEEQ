@@ -16,7 +16,8 @@
   ],
   "dependencies": {
     "@floating-ui/core": "^1.6.0",
-    "@floating-ui/dom": "^1.6.3"
+    "@floating-ui/dom": "^1.6.3",
+    "@stencil/core": "^4.13.0"
   },
   "repository": {
     "type": "git",
@@ -24,7 +25,6 @@
   },
   "publishConfig": {
     "access": "public",
-    "provenance": true,
     "registry": "https://registry.npmjs.org"
   }
 }

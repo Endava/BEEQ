@@ -93,7 +93,6 @@
           "error",
           {
             "ignoredDependencies": [
-              "@stencil/core",
               "@stencil/angular-output-target",
               "@stencil/react-output-target",
               "@stencil/vue-output-target",

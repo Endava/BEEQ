@@ -1,10 +1,9 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
-    "removeComments": false,
-    "types": ["node"]
+    "outDir": "../../dist/beeq-vue",
+    "removeComments": false
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
+  "include": ["src"],
+  "exclude": ["node_modules"]
 }
