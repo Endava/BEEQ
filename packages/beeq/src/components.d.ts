@@ -19,6 +19,7 @@ import { TEmptyStateSize } from "./components/empty-state/bq-empty-state.types";
 import { TIconWeight } from "./components/icon/bq-icon.types";
 import { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
 import { TNotificationBorderRadius, TNotificationType } from "./components/notification/bq-notification.types";
+import { TProgressBorderShape, TProgressThickness, TProgressType } from "./components/progress/bq-progress.types";
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 import { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
 import { TSliderType } from "./components/slider/bq-slider.types";
@@ -45,6 +46,7 @@ export { TEmptyStateSize } from "./components/empty-state/bq-empty-state.types";
 export { TIconWeight } from "./components/icon/bq-icon.types";
 export { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
 export { TNotificationBorderRadius, TNotificationType } from "./components/notification/bq-notification.types";
+export { TProgressBorderShape, TProgressThickness, TProgressType } from "./components/progress/bq-progress.types";
 export { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 export { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
 export { TSliderType } from "./components/slider/bq-slider.types";
@@ -688,6 +690,36 @@ export namespace Components {
           * Defines the strategy to position the panel
          */
         "strategy"?: 'fixed' | 'absolute';
+    }
+    interface BqProgress {
+        /**
+          * It will set the border style of the progress bar
+         */
+        "borderShape": TProgressBorderShape;
+        /**
+          * If `true`, a tooltip will be shown displaying the progress value
+         */
+        "enableTooltip": boolean;
+        /**
+          * If `true` the indeterminate state of progress bar is enabled
+         */
+        "indeterminate": boolean;
+        /**
+          * If `true`, a label text showing the value (in percentage) will be shown
+         */
+        "label": boolean;
+        /**
+          * Progress bar thickness
+         */
+        "thickness": TProgressThickness;
+        /**
+          * Progress type
+         */
+        "type": TProgressType;
+        /**
+          * A number representing the current value of the progress bar
+         */
+        "value": number;
     }
     interface BqRadio {
         /**
@@ -1715,6 +1747,12 @@ declare global {
         prototype: HTMLBqPanelElement;
         new (): HTMLBqPanelElement;
     };
+    interface HTMLBqProgressElement extends Components.BqProgress, HTMLStencilElement {
+    }
+    var HTMLBqProgressElement: {
+        prototype: HTMLBqProgressElement;
+        new (): HTMLBqProgressElement;
+    };
     interface HTMLBqRadioElementEventMap {
         "bqClick": HTMLBqRadioElement;
         "bqFocus": HTMLBqRadioElement;
@@ -2015,6 +2053,7 @@ declare global {
         "bq-option-group": HTMLBqOptionGroupElement;
         "bq-option-list": HTMLBqOptionListElement;
         "bq-panel": HTMLBqPanelElement;
+        "bq-progress": HTMLBqProgressElement;
         "bq-radio": HTMLBqRadioElement;
         "bq-radio-group": HTMLBqRadioGroupElement;
         "bq-select": HTMLBqSelectElement;
@@ -2803,6 +2842,36 @@ declare namespace LocalJSX {
          */
         "strategy"?: 'fixed' | 'absolute';
     }
+    interface BqProgress {
+        /**
+          * It will set the border style of the progress bar
+         */
+        "borderShape"?: TProgressBorderShape;
+        /**
+          * If `true`, a tooltip will be shown displaying the progress value
+         */
+        "enableTooltip"?: boolean;
+        /**
+          * If `true` the indeterminate state of progress bar is enabled
+         */
+        "indeterminate"?: boolean;
+        /**
+          * If `true`, a label text showing the value (in percentage) will be shown
+         */
+        "label"?: boolean;
+        /**
+          * Progress bar thickness
+         */
+        "thickness"?: TProgressThickness;
+        /**
+          * Progress type
+         */
+        "type"?: TProgressType;
+        /**
+          * A number representing the current value of the progress bar
+         */
+        "value"?: number;
+    }
     interface BqRadio {
         /**
           * If true radio displays background on hover
@@ -3487,6 +3556,7 @@ declare namespace LocalJSX {
         "bq-option-group": BqOptionGroup;
         "bq-option-list": BqOptionList;
         "bq-panel": BqPanel;
+        "bq-progress": BqProgress;
         "bq-radio": BqRadio;
         "bq-radio-group": BqRadioGroup;
         "bq-select": BqSelect;
@@ -3538,6 +3608,7 @@ declare module "@stencil/core" {
             "bq-option-group": LocalJSX.BqOptionGroup & JSXBase.HTMLAttributes<HTMLBqOptionGroupElement>;
             "bq-option-list": LocalJSX.BqOptionList & JSXBase.HTMLAttributes<HTMLBqOptionListElement>;
             "bq-panel": LocalJSX.BqPanel & JSXBase.HTMLAttributes<HTMLBqPanelElement>;
+            "bq-progress": LocalJSX.BqProgress & JSXBase.HTMLAttributes<HTMLBqProgressElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
             "bq-select": LocalJSX.BqSelect & JSXBase.HTMLAttributes<HTMLBqSelectElement>;

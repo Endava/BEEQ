@@ -54,11 +54,13 @@ Type: `Promise<void>`
 
 ### Used by
 
+ - [bq-progress](../progress)
  - [bq-side-menu-item](../side-menu-item)
 
 ### Graph
 ```mermaid
 graph TD;
+  bq-progress --> bq-tooltip
   bq-side-menu-item --> bq-tooltip
   style bq-tooltip fill:#f9f,stroke:#333,stroke-width:4px
 ```
