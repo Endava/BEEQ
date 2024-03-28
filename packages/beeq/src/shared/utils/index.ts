@@ -1,3 +1,4 @@
+export * from './assetsPath';
 export * from './cssVariables';
 export * from './debounce';
 export * from './getNextElement';
