@@ -14,6 +14,10 @@
       left: calc(100% - 80px);
     }
   }
+
+  .animate-indeterminate {
+    animation: move-indeterminate 1s linear 0s infinite alternate-reverse;
+  }
 }
 
 .progress-bar {
@@ -29,9 +33,7 @@
 }
 
 .progress-bar::-moz-progress-bar {
-  @apply bg-[--bq-progress-bar--indicatorColor];
-
-  animation: move-indeterminate 1s linear 0s infinite alternate-reverse;
+  @apply animate-indeterminate bg-[--bq-progress-bar--indicatorColor];
 }
 
 .progress-bar:indeterminate::-moz-progress-bar {
@@ -44,11 +46,9 @@
 }
 
 .progress-bar__indeterminate {
-  animation: move-indeterminate 1s linear 0s infinite alternate-reverse;
+  @apply animate-indeterminate;
 }
 
 .progress-bar.progress-bar__border-shape::-moz-progress-bar {
-  @apply rounded-full;
-
-  animation: move-indeterminate 1s linear 0s infinite alternate-reverse;
+  @apply animate-indeterminate rounded-full;
 }
