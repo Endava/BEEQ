@@ -1,8 +1,8 @@
-import { Component, Env, Event, EventEmitter, getAssetPath, h, Host, Prop, State, Watch } from '@stencil/core';
+import { Component, Env, Event, EventEmitter, h, Host, Prop, State, Watch } from '@stencil/core';
 
 import { TIconWeight } from './bq-icon.types';
 import { getSvgContent, iconContent } from './helper/request';
-import { getColorCSSVariable } from '../../shared/utils';
+import { getBasePath, getColorCSSVariable } from '../../shared/utils';
 
 /**
  * Icons are simplified images that graphically explain the meaning of an object on the screen.
@@ -96,15 +96,8 @@ export class BqIcon {
     // Return the src if it is set
     if (this.src) return this.src;
 
-    const svgPath = Env.ICONS_SVG_PATH;
-    let iconName = this.weight !== 'regular' ? `${this.name}-${this.weight}.svg` : `${this.name}.svg`;
-    let path = `./svg/${this.weight}/${iconName}`;
-
-    if (svgPath) {
-      iconName = `${this.name}.svg`;
-      path = `${svgPath}/${iconName}`;
-    }
-    return getAssetPath(path);
+    const { iconPath } = this.getIconDetails();
+    return getBasePath(iconPath);
   };
 
   private loadIcon = () => {
@@ -113,6 +106,33 @@ export class BqIcon {
       this._svgContent = iconContent.get(url);
       this.svgLoaded.emit(this._svgContent);
     });
+  };
+
+  private getIconDetails = (): { iconName: string; iconPath: string } => {
+    const REGULAR = 'regular';
+    const SVG_EXTENSION = '.svg';
+    const LOCAL_SVG_PATH = './svg/';
+    const ENV_SVG_PATH = Env.ICONS_SVG_PATH;
+
+    // Check if the icon is weighted. An icon is considered weighted if its weight is not 'regular' and ENV_SVG_PATH is not set.
+    // Eg: if the weight is 'bold' and ENV_SVG_PATH is not set, isWeightedIcon will be true.
+    const isWeightedIcon = this.weight !== REGULAR && !ENV_SVG_PATH;
+
+    // If the icon is weighted, append the weight to the icon name. Otherwise, append nothing.
+    // Eg: if isWeightedIcon is true and the weight is 'bold', weightSuffix will be '-bold'.
+    const weightSuffix = isWeightedIcon ? `-${this.weight}` : '';
+
+    // Construct the icon name by appending the weight suffix (if any) and the file extension.
+    // Eg: if the name is 'my-icon' and weightSuffix is '-bold', iconName will be 'my-icon-bold.svg'.
+    const iconName = `${this.name}${weightSuffix}${SVG_EXTENSION}`;
+
+    // Construct the path to the icon file.
+    // Eg: if iconName is 'my-icon-bold.svg', iconPath will be './svg/my-icon-bold.svg'.
+    // Eg: if iconName is 'my-icon-bold.svg' and ENV_SVG_PATH is 'https://mycdn.com/icons', iconPath will be 'https://mycdn.com/icons/my-icon-bold.svg'.
+    const iconPath = !ENV_SVG_PATH ? `${LOCAL_SVG_PATH}${iconName}` : `${ENV_SVG_PATH}/${iconName}`;
+
+    // Return the icon name and path.
+    return { iconName, iconPath };
   };
 
   // render() function
