@@ -24,16 +24,6 @@
   }
 }
 
-@keyframes move-indeterminate {
-  0% {
-    left: 0;
-  }
-
-  100% {
-    left: calc(100% - 80px);
-  }
-}
-
 @mixin animation-fade-in($duration: 0.3s, $delay: 0s, $timing-function: ease) {
   animation: fade-in $duration $timing-function $delay;
 }
@@ -46,8 +36,4 @@
 
 @mixin animation-spin($duration: 1s, $delay: 0s, $timing-function: linear) {
   animation: spin $duration $timing-function $delay infinite;
-}
-
-@mixin animation-indeterminate($duration: 1s, $delay: 0s, $timing-function: linear) {
-  animation: move-indeterminate $duration $timing-function $delay infinite alternate-reverse;
 }

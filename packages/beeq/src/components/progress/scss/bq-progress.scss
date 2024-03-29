@@ -4,6 +4,18 @@
 
 @import './bq-progress.variables';
 
+@layer component {
+  @keyframes move-indeterminate {
+    0% {
+      left: 0;
+    }
+
+    100% {
+      left: calc(100% - 80px);
+    }
+  }
+}
+
 .progress-bar {
   @apply relative h-[--bq-progress-bar--height] w-full appearance-none;
 }
@@ -18,7 +30,8 @@
 
 .progress-bar::-moz-progress-bar {
   @apply bg-[--bq-progress-bar--indicatorColor];
-  @include animation-indeterminate;
+
+  animation: move-indeterminate 1s linear 0s infinite alternate-reverse;
 }
 
 .progress-bar:indeterminate::-moz-progress-bar {
@@ -31,10 +44,11 @@
 }
 
 .progress-bar__indeterminate {
-  @include animation-indeterminate;
+  animation: move-indeterminate 1s linear 0s infinite alternate-reverse;
 }
 
 .progress-bar.progress-bar__border-shape::-moz-progress-bar {
   @apply rounded-full;
-  @include animation-indeterminate;
+
+  animation: move-indeterminate 1s linear 0s infinite alternate-reverse;
 }
