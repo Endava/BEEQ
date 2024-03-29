@@ -1,6 +1,6 @@
-import * as fs from 'fs-extra';
-import * as path from 'path';
 import * as decompress from 'decompress';
+import { copy, remove } from 'fs-extra';
+import { join, basename } from 'node:path';
 
 interface IExtractIcons {
   assetsFolder: string;
@@ -18,15 +18,17 @@ export const extractIcons = async ({
   svgFolder,
 }: IExtractIcons) => {
   try {
-    const files = await decompress(path.join(downloadPath, fileName), downloadPath);
+    const files = await decompress(join(downloadPath, fileName), downloadPath);
     // Remove all existing files under the `/svg/` folder (if there's any) to create a clean copy
-    await fs.remove(extractToPath);
-    // Move the SVG assets to the icon component `/svg/` folder in a flat structure
+    await remove(extractToPath);
+    // Copy the SVG assets to the extractToPath (eg: `packages/beeq/src/components/icon/svg/`) folder.
+    // We copy the icons in a flat structure, the Phosphor icons are under the `/assets/` folder,
+    // and subfolders (bold, duotone, fill, light, regular) are not needed.
     for (const file of files) {
-      if (file.type === 'file' && (file.path as string).includes(path.join(svgFolder, assetsFolder))) {
-        const oldPath = path.join(downloadPath, file.path);
-        const newPath = path.join(extractToPath, path.basename(file.path));
-        await fs.copy(oldPath, newPath, { overwrite: true });
+      if (file.type === 'file' && (file.path as string).includes(join(svgFolder, assetsFolder))) {
+        const oldPath = join(downloadPath, file.path);
+        const newPath = join(extractToPath, basename(file.path));
+        await copy(oldPath, newPath, { overwrite: true });
       }
     }
     Promise.resolve();
