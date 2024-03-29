@@ -96,3 +96,10 @@ export const WithTooltip: Story = {
     'enable-tooltip': true,
   },
 };
+
+export const Indeterminate: Story = {
+  render: Template,
+  args: {
+    indeterminate: true,
+  },
+};
