@@ -98,7 +98,7 @@
     "@testing-library/react": "14.2.2",
     "@types/jest": "29.5.12",
     "@types/mdx": "2.0.12",
-    "@types/node": "20.11.30",
+    "@types/node": "20.12.2",
     "@types/react": "18.2.73",
     "@types/react-dom": "18.2.23",
     "@typescript-eslint/eslint-plugin": "7.4.0",
@@ -158,7 +158,7 @@
     "vue": "3.4.21"
   },
   "volta": {
-    "node": "20.11.1",
+    "node": "20.12.0",
     "npm": "10.5.0"
   }
 }
