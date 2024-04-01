@@ -143,8 +143,14 @@ export class BqDialog {
   }
 
   @Listen('keydown', { target: 'window', capture: true })
-  async handleKeyDown(event: KeyboardEvent) {
-    if (!this.open || !this.dialogElem || !(event.key === 'Escape' || event.key === 'Esc')) return;
+  async handleKeyDown(ev: KeyboardEvent) {
+    const isEscapeKey = ev.key === 'Escape' || ev.key === 'Esc';
+    if (!this.open || !this.dialogElem || !isEscapeKey) return;
+
+    if (this.disableCloseEscKeydown) {
+      ev.preventDefault();
+      return;
+    }
 
     await this.cancel();
   }
@@ -238,7 +244,7 @@ export class BqDialog {
     return (
       <dialog
         style={style}
-        class={`bq-dialog hidden ${this.size}`}
+        class={`bq-dialog hidden ${this.size} focus-visible:outline-none`}
         data-transition-enter="transition ease-in duration-300"
         data-transition-enter-start="opacity-0 scale-75"
         data-transition-enter-end="opacity-100 scale-100"
