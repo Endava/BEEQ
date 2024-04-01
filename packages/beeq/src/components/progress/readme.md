@@ -20,15 +20,16 @@
 
 ## Shadow Parts
 
-| Part             | Description                                                                                             |
-| ---------------- | ------------------------------------------------------------------------------------------------------- |
-| `"base"`         | The base container for the tooltip component inside the shadow DOM when hovering over the progress bar  |
-| `"label"`        | The `<div>` container that holds the label value (in percentage)                                        |
-| `"panel"`        | The container holding the content of the tooltip when hovering over the progress bar                    |
-| `"progress"`     | The `<div>` container that holds the native progress element                                            |
-| `"progress-bar"` | The native html for progress element                                                                    |
-| `"trigger"`      | The container holding the element that triggers the tooltip display when hovering over the progress bar |
-| `"wrapper"`      | The component wrapper container inside the shadow DOM                                                   |
+| Part              | Description                                                                                             |
+| ----------------- | ------------------------------------------------------------------------------------------------------- |
+| `"base"`          | The base container for the tooltip component inside the shadow DOM when hovering over the progress bar  |
+| `"indeterminate"` | The `<div>` container that holds the indeterminate progress bar                                         |
+| `"label"`         | The `<div>` container that holds the label value (in percentage)                                        |
+| `"panel"`         | The container holding the content of the tooltip when hovering over the progress bar                    |
+| `"progress"`      | The `<div>` container that holds the native progress element                                            |
+| `"progress-bar"`  | The native html for progress element                                                                    |
+| `"trigger"`       | The container holding the element that triggers the tooltip display when hovering over the progress bar |
+| `"wrapper"`       | The component wrapper container inside the shadow DOM                                                   |
 
 
 ## Dependencies

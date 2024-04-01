@@ -4,12 +4,24 @@
 
 @import './bq-progress.variables';
 
-.progress-bar {
-  @apply relative h-[--bq-progress-bar--height] w-full;
+@layer component {
+  @keyframes move-indeterminate {
+    0% {
+      left: 0;
+    }
+
+    100% {
+      left: calc(100% - var(--bq-progress-bar--indeterminateWidth));
+    }
+  }
+
+  .animate-indeterminate {
+    animation: move-indeterminate 1s linear 0s infinite alternate-reverse;
+  }
 }
 
-.progress-bar:not(:indeterminate) {
-  @apply appearance-none;
+.progress-bar {
+  @apply relative h-[--bq-progress-bar--height] w-full appearance-none;
 }
 
 .progress-bar::-webkit-progress-bar {
@@ -21,10 +33,22 @@
 }
 
 .progress-bar::-moz-progress-bar {
-  @apply bg-[--bq-progress-bar--indicatorColor];
+  @apply animate-indeterminate bg-[--bq-progress-bar--indicatorColor];
+}
+
+.progress-bar:indeterminate::-moz-progress-bar {
+  @apply bg-[--bq-progress-bar--trackColor];
 }
 
 .progress-bar.progress-bar__border-shape::-webkit-progress-value,
 .progress-bar.progress-bar__border-shape::-webkit-progress-bar {
   @apply rounded-full;
+}
+
+.progress-bar__indeterminate {
+  @apply animate-indeterminate;
+}
+
+.progress-bar.progress-bar__border-shape::-moz-progress-bar {
+  @apply animate-indeterminate rounded-full;
 }
