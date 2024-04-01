@@ -15,7 +15,8 @@ import { validatePropValue } from '../../shared/utils';
  * @part progress - The `<div>` container that holds the native progress element
  * @part progress-bar - The native html for progress element
  * @part label - The `<div>` container that holds the label value (in percentage)
- 
+ * @part indeterminate - The `<div>` container that holds the indeterminate progress bar
+ *
  * @part base - The base container for the tooltip component inside the shadow DOM when hovering over the progress bar
  * @part trigger - The container holding the element that triggers the tooltip display when hovering over the progress bar
  * @part panel - The container holding the content of the tooltip when hovering over the progress bar
@@ -128,18 +129,8 @@ export class BqProgress {
 
     return (
       <Host style={style}>
-        <div class="flex items-center gap-xs" part="wrapper">
+        <div class="flex items-center" part="wrapper">
           <div class="relative flex w-full items-center" part="progress">
-            {this.indeterminate && (
-              <div
-                class={{
-                  [`progress-bar__indeterminate h-[--bq-progress-bar--height] bg-[--bq-progress-bar--indicatorColor]`]:
-                    true,
-                  'rounded-full': this.borderShape === 'rounded',
-                  'absolute z-10 w-20': true,
-                }}
-              />
-            )}
             <progress
               class={{
                 [`progress-bar progress-bar__${this.type} ${this.thickness}`]: true,
@@ -161,13 +152,23 @@ export class BqProgress {
                 {this.value}
               </bq-tooltip>
             )}
+            {this.indeterminate && (
+              <div
+                class={{
+                  'progress-bar__indeterminate absolute h-[--bq-progress-bar--height] w-[5%] bg-[--bq-progress-bar--indicatorColor]':
+                    true,
+                  'rounded-full': this.borderShape === 'rounded',
+                }}
+                part="indeterminate"
+              />
+            )}
           </div>
           <div
             style={{ fontVariant: 'tabular-nums' }}
             class={{
-              'font-medium leading-regular text-text-primary': true,
+              'ms-xs font-medium leading-regular text-text-primary': true,
               'text-ui-danger': this.type === 'error',
-              hidden: !this.label || this.indeterminate,
+              'invisible w-0': !this.label || this.indeterminate,
             }}
             part="label"
           >
