@@ -6,6 +6,69 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+## [1.2.0](https://github.com/Endava/BEEQ/compare/v1.1.0...v1.2.0) (2024-04-01)
+
+
+### Features ⚡️
+
+* **Drawer:** add new `bq-drawer` component ([#918](https://github.com/Endava/BEEQ/issues/918)) ([f8cbe76](https://github.com/Endava/BEEQ/commit/f8cbe764c3ad1e2de0cf1559d12c0709ac1f5d3a))
+* **Progress:** add new `bq-progress` component ([#946](https://github.com/Endava/BEEQ/issues/946)) ([a99d737](https://github.com/Endava/BEEQ/commit/a99d7376216f178b20fe8a8c7af4b4b1822ebf9d))
+* **Progress:** add style and animation for indeterminate status ([#967](https://github.com/Endava/BEEQ/issues/967)) ([ad67c51](https://github.com/Endava/BEEQ/commit/ad67c512922f1c7247a3dd79c1486c35a00aa8bd))
+* **Tooltip:** allow the component to be always visible ([#959](https://github.com/Endava/BEEQ/issues/959)) ([c5ac27e](https://github.com/Endava/BEEQ/commit/c5ac27e637ee297168bbcb615be6a3bb25e47cff))
+
+
+### Bug Fixes 🐞
+
+* **Accordion:** improve open/close animations and handle `bqAfterOpen` and `bqAfterClose` events ([#951](https://github.com/Endava/BEEQ/issues/951)) ([4ce31c9](https://github.com/Endava/BEEQ/commit/4ce31c9e2494e51b6bd2cd0e7a9dc864771462ac))
+* **Dialog:** dialog closes on Esc down if `disable-close-esc-keydown` is enabled ([#979](https://github.com/Endava/BEEQ/issues/979)) ([721672d](https://github.com/Endava/BEEQ/commit/721672d0cefab389c1fcdd8e2756ecb82d417efd))
+* **Dialog:** wrong position on entry/leave transition ([#929](https://github.com/Endava/BEEQ/issues/929)) ([9cf08d6](https://github.com/Endava/BEEQ/commit/9cf08d62f9d413f708f108b47804cdc99f1a393e))
+
+
+### Chore ⚙️
+
+* **deps:** update angular to v17.3.0 ([#942](https://github.com/Endava/BEEQ/issues/942)) ([f0f5dba](https://github.com/Endava/BEEQ/commit/f0f5dba6501740f15dce56d12894d39d4bfd9e8d))
+* **deps:** update angular to v17.3.1 ([#952](https://github.com/Endava/BEEQ/issues/952)) ([39536ee](https://github.com/Endava/BEEQ/commit/39536ee030bdd348e25119a662026760eb73ffc9))
+* **deps:** update angular to v17.3.2 ([#964](https://github.com/Endava/BEEQ/issues/964)) ([9d590d7](https://github.com/Endava/BEEQ/commit/9d590d7a6b7c58e40cbeaf04eefb0d9b38831441))
+* **deps:** update angular to v17.3.2 ([#974](https://github.com/Endava/BEEQ/issues/974)) ([83a58d9](https://github.com/Endava/BEEQ/commit/83a58d962132fbed56135c55f980a7cd3739de91))
+* **deps:** update commitlint ([#939](https://github.com/Endava/BEEQ/issues/939)) ([41678ac](https://github.com/Endava/BEEQ/commit/41678accf11008dbe859bd1f5fbc1dde7cfbb1c7))
+* **deps:** update dependency @chromatic-com/storybook to v1.2.22 ([#930](https://github.com/Endava/BEEQ/issues/930)) ([249b3d0](https://github.com/Endava/BEEQ/commit/249b3d06a49c3411e7b0f933c763c491aecab011))
+* **deps:** update dependency @chromatic-com/storybook to v1.2.23 ([#947](https://github.com/Endava/BEEQ/issues/947)) ([a4a9107](https://github.com/Endava/BEEQ/commit/a4a9107e8c9ee3ff1a090860f8ea69962361e4d1))
+* **deps:** update dependency @jscutlery/semver to v5.2.2 ([#957](https://github.com/Endava/BEEQ/issues/957)) ([63be839](https://github.com/Endava/BEEQ/commit/63be8398f58b9f4b9ef63965d3ec88e38e4ec3b9))
+* **deps:** update dependency @nxext/stencil to v18 ([#949](https://github.com/Endava/BEEQ/issues/949)) ([f30c1cc](https://github.com/Endava/BEEQ/commit/f30c1cc029500ee9f0ee857bbe7efcbb1edd58ab))
+* **deps:** update dependency @stencil/core to v4.12.6 ([#931](https://github.com/Endava/BEEQ/issues/931)) ([993837b](https://github.com/Endava/BEEQ/commit/993837ba5d861308354269648ddcf91dfa520487))
+* **deps:** update dependency @stencil/core to v4.13.0 ([#950](https://github.com/Endava/BEEQ/issues/950)) ([0f41f06](https://github.com/Endava/BEEQ/commit/0f41f067840a7f0d837adb171b2782be27b072e2))
+* **deps:** update dependency @stencil/sass to v3.0.11 ([#960](https://github.com/Endava/BEEQ/issues/960)) ([74a7db7](https://github.com/Endava/BEEQ/commit/74a7db71fef6cda17ef3db232857429757d5ad6e))
+* **deps:** update dependency @stencil/vue-output-target to v0.8.8 ([#966](https://github.com/Endava/BEEQ/issues/966)) ([71cb353](https://github.com/Endava/BEEQ/commit/71cb35303594d021e3c1aa550c350a6511e69f85))
+* **deps:** update dependency @swc/cli to v0.3.12 ([#976](https://github.com/Endava/BEEQ/issues/976)) ([7190bbb](https://github.com/Endava/BEEQ/commit/7190bbb120bd1626dea26287907f346e1aeeb7e3))
+* **deps:** update dependency @swc/core to v1.4.8 ([#932](https://github.com/Endava/BEEQ/issues/932)) ([221cbe2](https://github.com/Endava/BEEQ/commit/221cbe2fc913220b0e96f363a1c6695fed70a9df))
+* **deps:** update dependency @types/node to v20.11.28 ([#933](https://github.com/Endava/BEEQ/issues/933)) ([dbaf1c2](https://github.com/Endava/BEEQ/commit/dbaf1c20310dac9ecf0b7b5b37dbdb6d87141641))
+* **deps:** update dependency @types/react to v18.2.69 ([#954](https://github.com/Endava/BEEQ/issues/954)) ([b8fdfe4](https://github.com/Endava/BEEQ/commit/b8fdfe480e8b651c47050ebee12f490a3aa1be34))
+* **deps:** update dependency @types/react to v18.2.70 ([#961](https://github.com/Endava/BEEQ/issues/961)) ([91d9a83](https://github.com/Endava/BEEQ/commit/91d9a8328da2ac4b6a6c726b66cac0628aab0359))
+* **deps:** update dependency chromatic to v11.0.8 ([#934](https://github.com/Endava/BEEQ/issues/934)) ([eb7cd3a](https://github.com/Endava/BEEQ/commit/eb7cd3ae42307778a692f3faba1a786df701dae5))
+* **deps:** update dependency chromatic to v11.1.0 ([#948](https://github.com/Endava/BEEQ/issues/948)) ([5bdd6c3](https://github.com/Endava/BEEQ/commit/5bdd6c350143c380f6ff5d05c7fab7a6a0c369c1))
+* **deps:** update dependency chromatic to v11.3.0 ([#973](https://github.com/Endava/BEEQ/issues/973)) ([45d5a2f](https://github.com/Endava/BEEQ/commit/45d5a2f1326bbf1151205f80645d14640652a4a6))
+* **deps:** update dependency eslint-plugin-react to v7.34.1 ([#935](https://github.com/Endava/BEEQ/issues/935)) ([4e68480](https://github.com/Endava/BEEQ/commit/4e6848023b3d7eb925844360c548e25b91b35e25))
+* **deps:** update dependency postcss-preset-env to v9.5.2 ([#936](https://github.com/Endava/BEEQ/issues/936)) ([9460a30](https://github.com/Endava/BEEQ/commit/9460a30bda01dd11f805510e52f6387ccfc7ec39))
+* **deps:** update dependency postcss-preset-env to v9.5.3 ([#977](https://github.com/Endava/BEEQ/issues/977)) ([091fdb1](https://github.com/Endava/BEEQ/commit/091fdb19865bbe3239ab5cd96ad88ba5441b0e69))
+* **deps:** update dependency prettier-plugin-tailwindcss to v0.5.13 ([#969](https://github.com/Endava/BEEQ/issues/969)) ([d1a0f33](https://github.com/Endava/BEEQ/commit/d1a0f33fdd19097bb034ac7fd23e997f8a4c76b3))
+* **deps:** update dependency puppeteer to v22.5.0 ([#940](https://github.com/Endava/BEEQ/issues/940)) ([25f2675](https://github.com/Endava/BEEQ/commit/25f26753a00549e9fe9953a02d8e1ea3e347abcb))
+* **deps:** update dependency puppeteer to v22.6.1 ([#962](https://github.com/Endava/BEEQ/issues/962)) ([467d649](https://github.com/Endava/BEEQ/commit/467d6498be755ee030c44229c5a2264964e39f5f))
+* **deps:** update dependency stylelint to v16.3.0 ([#956](https://github.com/Endava/BEEQ/issues/956)) ([8146de8](https://github.com/Endava/BEEQ/commit/8146de8a1cc89c206a65e5e855f1077dabfd9618))
+* **deps:** update dependency tailwindcss to v3.4.3 ([#970](https://github.com/Endava/BEEQ/issues/970)) ([1d763cb](https://github.com/Endava/BEEQ/commit/1d763cb9c45ea8219b4bc8a18040eeca1c01ccdf))
+* **deps:** update dependency vite to v5.1.6 ([#937](https://github.com/Endava/BEEQ/issues/937)) ([e489a4a](https://github.com/Endava/BEEQ/commit/e489a4a43ad5449375462db0ef5be6e2a558b234))
+* **deps:** update dependency vite to v5.2.4 ([#955](https://github.com/Endava/BEEQ/issues/955)) ([856c1e0](https://github.com/Endava/BEEQ/commit/856c1e0b37ff7eea0dee4b474f7dadf8ed8042de))
+* **deps:** update dependency vite to v5.2.6 ([#958](https://github.com/Endava/BEEQ/issues/958)) ([b53c13c](https://github.com/Endava/BEEQ/commit/b53c13ca3b59bd9514b8e4eee9f274c668ded9a8))
+* **deps:** update node.js to v20.12.0 ([#975](https://github.com/Endava/BEEQ/issues/975)) ([c39b670](https://github.com/Endava/BEEQ/commit/c39b67055d7e852b21a5928c30bd7357ca23a7dd))
+* **deps:** update nx to v18.1.2 ([531ded2](https://github.com/Endava/BEEQ/commit/531ded2a63e1ebd14b7216c04ace30079f4a9928))
+* **deps:** update nx to v18.1.3 ([#965](https://github.com/Endava/BEEQ/issues/965)) ([a8efe1c](https://github.com/Endava/BEEQ/commit/a8efe1cb71eefc5d806cbea36e9e67d6f6d9adc0))
+* **deps:** update nx to v18.2.1 ([#972](https://github.com/Endava/BEEQ/issues/972)) ([9f619ec](https://github.com/Endava/BEEQ/commit/9f619ece3706ce47484b9b5f8411eea63fe3cfe4))
+* **deps:** update storybook to v8 ([4025f35](https://github.com/Endava/BEEQ/commit/4025f356cd0b42144f2c686aa24eef4112a81dc9))
+* **deps:** update storybook to v8.0.4 ([#953](https://github.com/Endava/BEEQ/issues/953)) ([c461a5c](https://github.com/Endava/BEEQ/commit/c461a5ce29dc040a452fea8bf9d44af43c51f0a8))
+* **deps:** update storybook to v8.0.5 ([#971](https://github.com/Endava/BEEQ/issues/971)) ([f198c3c](https://github.com/Endava/BEEQ/commit/f198c3c34e14457aa16bcbbf061d83cba9bb5b98))
+* **deps:** update types react ([#938](https://github.com/Endava/BEEQ/issues/938)) ([fdefa4b](https://github.com/Endava/BEEQ/commit/fdefa4bd8b833ec9e34a18674739b281feae3694))
+* **deps:** update typescript-eslint to v7.2.0 ([#941](https://github.com/Endava/BEEQ/issues/941)) ([c5ef51c](https://github.com/Endava/BEEQ/commit/c5ef51c4804a4067a23ac5eeaffa93ed6d11c445))
+* **deps:** update typescript-eslint to v7.4.0 ([#963](https://github.com/Endava/BEEQ/issues/963)) ([c56953a](https://github.com/Endava/BEEQ/commit/c56953aadb7fc51eb7a61a488ad0740a73583ee6))
+
 ## [1.1.0](https://github.com/Endava/BEEQ/compare/v1.0.1...v1.1.0) (2024-03-11)
 
 
