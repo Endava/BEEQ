@@ -164,12 +164,13 @@ export class BqProgress {
             )}
           </div>
           <div
-            style={{ fontVariant: 'tabular-nums' }}
+            aria-hidden={!this.label || this.indeterminate ? 'true' : 'false'}
             class={{
               'ms-xs font-medium leading-regular text-text-primary': true,
               'text-ui-danger': this.type === 'error',
-              'invisible w-0': !this.label || this.indeterminate,
+              'invisible ms-0 w-0': !this.label || this.indeterminate,
             }}
+            style={{ fontVariant: 'tabular-nums' }}
             part="label"
           >
             <span>{this.value}%</span>

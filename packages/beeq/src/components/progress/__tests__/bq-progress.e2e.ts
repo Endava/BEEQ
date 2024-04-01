@@ -36,7 +36,7 @@ describe('bq-progress', () => {
     });
 
     const element = await page.find('bq-progress >>> [part="label"]');
-    expect(element).toHaveClass('hidden');
+    expect(element).toEqualAttribute('aria-hidden', 'true');
   });
 
   it('should render the progress bar with tooltip', async () => {
