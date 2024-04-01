@@ -11,7 +11,7 @@
     }
 
     100% {
-      left: calc(100% - 80px);
+      left: calc(100% - var(--bq-progress-bar--indeterminateWidth));
     }
   }
 
