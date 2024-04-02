@@ -55,7 +55,9 @@ describe('bq-progress', () => {
       html: '<bq-progress value="60" enable-tooltip="false"></progress>',
     });
 
-    const element = await page.find('bq-progress >>> bq-tooltip');
+    // We are querying a web component inside the shadow DOM element,
+    // hence the use of page.$ with the `>>>` combinator
+    const element = await page.$('bq-progress >>> bq-tooltip');
     expect(element).toBeNull();
   });
 
