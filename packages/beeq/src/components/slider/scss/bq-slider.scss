@@ -24,7 +24,7 @@
 }
 
 .bq-slider {
-  @apply flex h-[calc(var(--bq-slider--thumb-size)_+_var(--bq-slider--size))] w-full items-center text-start;
+  @apply relative flex h-[calc(var(--bq-slider--thumb-size)_+_var(--bq-slider--size))] w-full items-center text-start;
 }
 
 .bq-slider__container {

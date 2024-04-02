@@ -23,6 +23,8 @@ const meta: Meta = {
     type: { control: 'select', options: [...SLIDER_TYPE] },
     value: { control: 'object' },
     'value-indicator': { control: 'boolean' },
+    'enable-tooltip': { control: 'boolean' },
+    'tooltip-always-visible': { control: 'boolean' },
     bqBlur: { action: 'bqBlur' },
     bqChange: { action: 'bqChange' },
     bqFocus: { action: 'bqFocus' },
@@ -36,6 +38,8 @@ const meta: Meta = {
     step: 1,
     type: 'single',
     'value-indicator': false,
+    'enable-tooltip': false,
+    'tooltip-always-visible': false,
   },
 };
 export default meta;
@@ -54,6 +58,8 @@ const Template = (args: Args) => html`
       type=${args.type}
       .value=${args.value}
       ?value-indicator=${args['value-indicator']}
+      ?enable-tooltip=${args['enable-tooltip']}
+      ?tooltip-always-visible=${args['tooltip-always-visible']}
       @bqBlur=${args.bqBlur}
       @bqChange=${args.bqChange}
       @bqFocus=${args.bqFocus}

@@ -58,6 +58,15 @@ export class BqSlider {
   /** A number representing the value of the slider. */
   @Prop({ reflect: true, mutable: true }) value: number | Array<number> | string;
 
+  /** If `true`, a tooltip will be shown displaying the progress value */
+  @Prop({ reflect: true }) enableTooltip: boolean = false;
+
+  /**
+   * If `true`, a tooltip will always display the progress value.
+   * It relies on enableTooltip and if enableTooltip is false, tooltipAlwaysVisible cannot be true.
+   */
+  @Prop({ reflect: true }) tooltipAlwaysVisible: boolean = false;
+
   // Prop lifecycle events
   // =======================
   @Watch('type')
@@ -281,6 +290,10 @@ export class BqSlider {
     this.bqChangeDebounced();
   };
 
+  private get isTooltipAlwaysVisible(): boolean {
+    return this.tooltipAlwaysVisible && this.enableTooltip;
+  }
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -320,7 +333,6 @@ export class BqSlider {
             onFocus={this.handleRangeInputFocus}
             aria-label="Min Range"
           />
-
           {!this.isSingleSlider && (
             <input
               class="bq-slider__input"
@@ -338,6 +350,19 @@ export class BqSlider {
             />
           )}
           <div class="progress" ref={(div: HTMLDivElement) => (this.progressDivElement = div)}></div>
+          {this.enableTooltip && (
+            <bq-tooltip
+              class="absolute"
+              exportparts="base,trigger,panel"
+              alwaysVisible={this.isTooltipAlwaysVisible}
+              visible
+              distance={16}
+              style={{ left: `${this.getMinRangeValue()}%`, fontVariant: 'tabular-nums' }}
+            >
+              <div class="absolute z-50 h-1 w-1" slot="trigger" />
+              {this.getMinRangeValue()}
+            </bq-tooltip>
+          )}
         </div>
         {!this.isSingleSlider && (
           <span
@@ -348,6 +373,19 @@ export class BqSlider {
           >
             {this.maxRangeValue.toFixed(this.stepDecimalNumber)}
           </span>
+        )}
+        {!this.isSingleSlider && this.enableTooltip && (
+          <bq-tooltip
+            class="absolute"
+            exportparts="base,trigger,panel"
+            alwaysVisible={this.isTooltipAlwaysVisible}
+            visible
+            distance={16}
+            style={{ left: `${this.getMaxRangeValue()}%`, fontVariant: 'tabular-nums' }}
+          >
+            <div class="absolute z-50 h-1 w-1" slot="trigger" />
+            {this.getMaxRangeValue()}
+          </bq-tooltip>
         )}
         {this.isSingleSlider && (
           <span

@@ -920,6 +920,10 @@ export namespace Components {
          */
         "disabled"?: boolean;
         /**
+          * If `true`, a tooltip will be shown displaying the progress value
+         */
+        "enableTooltip": boolean;
+        /**
           * A number representing the minimum value between the min and max range selected.
          */
         "gap": number;
@@ -935,6 +939,10 @@ export namespace Components {
           * A number representing the step of the slider.
          */
         "step": number;
+        /**
+          * If `true`, a tooltip will always display the progress value. It relies on enableTooltip and if enableTooltip is false, tooltipAlwaysVisible cannot be true.
+         */
+        "tooltipAlwaysVisible": boolean;
         /**
           * It defines the type of slider to display
          */
@@ -3105,6 +3113,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * If `true`, a tooltip will be shown displaying the progress value
+         */
+        "enableTooltip"?: boolean;
+        /**
           * A number representing the minimum value between the min and max range selected.
          */
         "gap"?: number;
@@ -3132,6 +3144,10 @@ declare namespace LocalJSX {
           * A number representing the step of the slider.
          */
         "step"?: number;
+        /**
+          * If `true`, a tooltip will always display the progress value. It relies on enableTooltip and if enableTooltip is false, tooltipAlwaysVisible cannot be true.
+         */
+        "tooltipAlwaysVisible"?: boolean;
         /**
           * It defines the type of slider to display
          */
