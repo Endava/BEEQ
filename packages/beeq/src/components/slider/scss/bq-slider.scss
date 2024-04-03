@@ -43,6 +43,14 @@
   @apply thumb;
 }
 
+.bq-slider__input::-webkit-slider-runnable-track {
+  @apply transition-all duration-300 ease-in;
+}
+
+.bq-slider__input::-moz-range-track {
+  @apply transition-all duration-300 ease-in;
+}
+
 .bq-slider__input:focus-visible::-webkit-slider-thumb {
   @apply thumb-focus;
 }

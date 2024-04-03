@@ -195,19 +195,18 @@ export class BqSlider {
     this.handleRangeInputChange();
   };
 
+  private calculatePercent = (value: string): number => ((parseFloat(value) - this.min) / (this.max - this.min)) * 100;
+
   private updateProgressSize = (): void => {
-    let leftPercent = 0 + '%';
-    let rightPercent =
-      100 - ((parseFloat(this.minRangeInputElement.value) - this.min) / (this.max - this.min)) * 100 + '%';
+    if (!this.progressDivElement) return;
 
-    if (!this.isSingleSlider) {
-      leftPercent = ((parseFloat(this.minRangeInputElement.value) - this.min) / (this.max - this.min)) * 100 + '%';
-      rightPercent =
-        100 - ((parseFloat(this.maxRangeInputElement.value) - this.min) / (this.max - this.min)) * 100 + '%';
-    }
+    const left = this.isSingleSlider ? '0%' : `${this.calculatePercent(this.minRangeInputElement.value)}%`;
+    const width = this.isSingleSlider
+      ? `${this.getMinRangeValue()}%`
+      : `${Number(this.getMaxRangeValue()) - Number(this.getMinRangeValue())}%`;
 
-    this.progressDivElement.style.left = leftPercent;
-    this.progressDivElement.style.right = rightPercent;
+    this.progressDivElement.style.left = left;
+    this.progressDivElement.style.width = width;
   };
 
   private sanitizeArrayValue = (defaultValue): void => {

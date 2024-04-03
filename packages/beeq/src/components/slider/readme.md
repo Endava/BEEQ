@@ -7,17 +7,19 @@
 
 ## Properties
 
-| Property         | Attribute         | Description                                                                     | Type                           | Default     |
-| ---------------- | ----------------- | ------------------------------------------------------------------------------- | ------------------------------ | ----------- |
-| `debounceTime`   | `debounce-time`   | A number representing the delay value applied to bqChange event handler         | `number`                       | `0`         |
-| `disabled`       | `disabled`        | If `true` slider is disabled                                                    | `boolean`                      | `false`     |
-| `gap`            | `gap`             | A number representing the minimum value between the min and max range selected. | `number`                       | `0`         |
-| `max`            | `max`             | A number representing the max value of the slider.                              | `number`                       | `0`         |
-| `min`            | `min`             | A number representing the min value of the slider.                              | `number`                       | `0`         |
-| `step`           | `step`            | A number representing the step of the slider.                                   | `number`                       | `1`         |
-| `type`           | `type`            | It defines the type of slider to display                                        | `"range" \| "single"`          | `'single'`  |
-| `value`          | `value`           | A number representing the value of the slider.                                  | `number \| number[] \| string` | `undefined` |
-| `valueIndicator` | `value-indicator` | If `true` it will display the min and max values                                | `boolean`                      | `false`     |
+| Property               | Attribute                | Description                                                                                                                                                 | Type                           | Default     |
+| ---------------------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ | ----------- |
+| `debounceTime`         | `debounce-time`          | A number representing the delay value applied to bqChange event handler                                                                                     | `number`                       | `0`         |
+| `disabled`             | `disabled`               | If `true` slider is disabled                                                                                                                                | `boolean`                      | `false`     |
+| `enableTooltip`        | `enable-tooltip`         | If `true`, a tooltip will be shown displaying the progress value                                                                                            | `boolean`                      | `false`     |
+| `gap`                  | `gap`                    | A number representing the minimum value between the min and max range selected.                                                                             | `number`                       | `0`         |
+| `max`                  | `max`                    | A number representing the max value of the slider.                                                                                                          | `number`                       | `0`         |
+| `min`                  | `min`                    | A number representing the min value of the slider.                                                                                                          | `number`                       | `0`         |
+| `step`                 | `step`                   | A number representing the step of the slider.                                                                                                               | `number`                       | `1`         |
+| `tooltipAlwaysVisible` | `tooltip-always-visible` | If `true`, a tooltip will always display the progress value. It relies on enableTooltip and if enableTooltip is false, tooltipAlwaysVisible cannot be true. | `boolean`                      | `false`     |
+| `type`                 | `type`                   | It defines the type of slider to display                                                                                                                    | `"range" \| "single"`          | `'single'`  |
+| `value`                | `value`                  | A number representing the value of the slider.                                                                                                              | `number \| number[] \| string` | `undefined` |
+| `valueIndicator`       | `value-indicator`        | If `true` it will display the min and max values                                                                                                            | `boolean`                      | `false`     |
 
 
 ## Events
@@ -35,6 +37,19 @@
 | -------- | ----------- |
 | `"base"` |             |
 
+
+## Dependencies
+
+### Depends on
+
+- [bq-tooltip](../tooltip)
+
+### Graph
+```mermaid
+graph TD;
+  bq-slider --> bq-tooltip
+  style bq-slider fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 
