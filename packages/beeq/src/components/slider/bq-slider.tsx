@@ -294,6 +294,47 @@ export class BqSlider {
     return this.tooltipAlwaysVisible && this.enableTooltip;
   }
 
+  private renderInput = ({
+    value,
+    onInputCallback,
+    ref,
+    ariaLabel,
+  }: {
+    value: number;
+    onInputCallback: () => void;
+    ref: (input: HTMLInputElement) => void;
+    ariaLabel: string;
+  }): HTMLInputElement => (
+    <input
+      class="bq-slider__input"
+      type="range"
+      min={this.min}
+      max={this.max}
+      step={this.step}
+      value={String(value)}
+      disabled={this.disabled}
+      ref={ref}
+      onInput={onInputCallback}
+      onBlur={this.handleRangeInputBlur}
+      onFocus={this.handleRangeInputFocus}
+      aria-label={ariaLabel}
+    />
+  );
+
+  private renderTooltip = (value: number): HTMLBqTooltipElement => (
+    <bq-tooltip
+      class="absolute"
+      exportparts="base,trigger,panel"
+      alwaysVisible={this.isTooltipAlwaysVisible}
+      visible
+      distance={16}
+      style={{ left: `${value}%`, fontVariant: 'tabular-nums' }}
+    >
+      <div class="absolute z-50 h-1 w-1" slot="trigger" />
+      {value}
+    </bq-tooltip>
+  );
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -319,50 +360,24 @@ export class BqSlider {
           </span>
         )}
         <div class="bq-slider__container">
-          <input
-            class="bq-slider__input"
-            type="range"
-            min={this.min}
-            max={this.max}
-            step={this.step}
-            value={String(this.getMinRangeValue())}
-            disabled={this.disabled}
-            ref={(input: HTMLInputElement) => (this.minRangeInputElement = input)}
-            onInput={this.handleMinRangeInput}
-            onBlur={this.handleRangeInputBlur}
-            onFocus={this.handleRangeInputFocus}
-            aria-label="Min Range"
-          />
-          {!this.isSingleSlider && (
-            <input
-              class="bq-slider__input"
-              type="range"
-              min={this.min}
-              max={this.max}
-              step={this.step}
-              value={String(this.getMaxRangeValue())}
-              disabled={this.disabled}
-              ref={(input: HTMLInputElement) => (this.maxRangeInputElement = input)}
-              onInput={this.handleMaxRangeInput}
-              onBlur={this.handleRangeInputBlur}
-              onFocus={this.handleRangeInputFocus}
-              aria-label="Max Range"
-            />
-          )}
-          <div class="progress" ref={(div: HTMLDivElement) => (this.progressDivElement = div)}></div>
-          {this.enableTooltip && (
-            <bq-tooltip
-              class="absolute"
-              exportparts="base,trigger,panel"
-              alwaysVisible={this.isTooltipAlwaysVisible}
-              visible
-              distance={16}
-              style={{ left: `${this.getMinRangeValue()}%`, fontVariant: 'tabular-nums' }}
-            >
-              <div class="absolute z-50 h-1 w-1" slot="trigger" />
-              {this.getMinRangeValue()}
-            </bq-tooltip>
-          )}
+          {/* SINGLE */}
+          {this.renderInput({
+            value: Number(this.getMinRangeValue()),
+            onInputCallback: this.handleMinRangeInput,
+            ref: (input: HTMLInputElement) => (this.minRangeInputElement = input),
+            ariaLabel: 'Min Range',
+          })}
+          {this.enableTooltip && this.renderTooltip(Number(this.getMinRangeValue()))}
+          {/* RANGE */}
+          {!this.isSingleSlider &&
+            this.renderInput({
+              value: Number(this.getMaxRangeValue()),
+              onInputCallback: this.handleMaxRangeInput,
+              ref: (input: HTMLInputElement) => (this.maxRangeInputElement = input),
+              ariaLabel: 'Max Range',
+            })}
+          {!this.isSingleSlider && this.enableTooltip && this.renderTooltip(Number(this.getMaxRangeValue()))}
+          <div class="progress" ref={(div: HTMLDivElement) => (this.progressDivElement = div)} />
         </div>
         {!this.isSingleSlider && (
           <span
@@ -373,19 +388,6 @@ export class BqSlider {
           >
             {this.maxRangeValue.toFixed(this.stepDecimalNumber)}
           </span>
-        )}
-        {!this.isSingleSlider && this.enableTooltip && (
-          <bq-tooltip
-            class="absolute"
-            exportparts="base,trigger,panel"
-            alwaysVisible={this.isTooltipAlwaysVisible}
-            visible
-            distance={16}
-            style={{ left: `${this.getMaxRangeValue()}%`, fontVariant: 'tabular-nums' }}
-          >
-            <div class="absolute z-50 h-1 w-1" slot="trigger" />
-            {this.getMaxRangeValue()}
-          </bq-tooltip>
         )}
         {this.isSingleSlider && (
           <span
