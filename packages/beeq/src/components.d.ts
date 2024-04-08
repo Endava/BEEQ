@@ -948,6 +948,28 @@ export namespace Components {
          */
         "valueIndicator"?: boolean;
     }
+    interface BqSlider2 {
+        /**
+          * A number representing the max value of the slider.
+         */
+        "max": number;
+        /**
+          * A number representing the min value of the slider.
+         */
+        "min": number;
+        /**
+          * A number representing the step of the slider.
+         */
+        "step": number;
+        /**
+          * It defines the type of slider to display
+         */
+        "type": 'single' | 'range';
+        /**
+          * A number representing the value of the slider.
+         */
+        "value": string | number | number[];
+    }
     /**
      * Spinners are designed for users to display data loading.
      */
@@ -1866,6 +1888,12 @@ declare global {
         prototype: HTMLBqSliderElement;
         new (): HTMLBqSliderElement;
     };
+    interface HTMLBqSlider2Element extends Components.BqSlider2, HTMLStencilElement {
+    }
+    var HTMLBqSlider2Element: {
+        prototype: HTMLBqSlider2Element;
+        new (): HTMLBqSlider2Element;
+    };
     /**
      * Spinners are designed for users to display data loading.
      */
@@ -2060,6 +2088,7 @@ declare global {
         "bq-side-menu": HTMLBqSideMenuElement;
         "bq-side-menu-item": HTMLBqSideMenuItemElement;
         "bq-slider": HTMLBqSliderElement;
+        "bq-slider2": HTMLBqSlider2Element;
         "bq-spinner": HTMLBqSpinnerElement;
         "bq-status": HTMLBqStatusElement;
         "bq-step-item": HTMLBqStepItemElement;
@@ -3145,6 +3174,28 @@ declare namespace LocalJSX {
          */
         "valueIndicator"?: boolean;
     }
+    interface BqSlider2 {
+        /**
+          * A number representing the max value of the slider.
+         */
+        "max"?: number;
+        /**
+          * A number representing the min value of the slider.
+         */
+        "min"?: number;
+        /**
+          * A number representing the step of the slider.
+         */
+        "step"?: number;
+        /**
+          * It defines the type of slider to display
+         */
+        "type"?: 'single' | 'range';
+        /**
+          * A number representing the value of the slider.
+         */
+        "value"?: string | number | number[];
+    }
     /**
      * Spinners are designed for users to display data loading.
      */
@@ -3563,6 +3614,7 @@ declare namespace LocalJSX {
         "bq-side-menu": BqSideMenu;
         "bq-side-menu-item": BqSideMenuItem;
         "bq-slider": BqSlider;
+        "bq-slider2": BqSlider2;
         "bq-spinner": BqSpinner;
         "bq-status": BqStatus;
         "bq-step-item": BqStepItem;
@@ -3615,6 +3667,7 @@ declare module "@stencil/core" {
             "bq-side-menu": LocalJSX.BqSideMenu & JSXBase.HTMLAttributes<HTMLBqSideMenuElement>;
             "bq-side-menu-item": LocalJSX.BqSideMenuItem & JSXBase.HTMLAttributes<HTMLBqSideMenuItemElement>;
             "bq-slider": LocalJSX.BqSlider & JSXBase.HTMLAttributes<HTMLBqSliderElement>;
+            "bq-slider2": LocalJSX.BqSlider2 & JSXBase.HTMLAttributes<HTMLBqSlider2Element>;
             /**
              * Spinners are designed for users to display data loading.
              */

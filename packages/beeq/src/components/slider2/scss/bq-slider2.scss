@@ -1,0 +1,80 @@
+/* -------------------------------------------------------------------------- */
+/*                        Slider2 styles                        */
+/* -------------------------------------------------------------------------- */
+
+@import './bq-slider2.variables';
+
+@layer components {
+  .thumb {
+    @apply pointer-events-auto box-content h-[var(--bq-slider--thumb-size)] w-[var(--bq-slider--thumb-size)] cursor-pointer appearance-none rounded-full border-2 border-solid border-stroke-brand bg-ui-primary;
+    @apply transition-[background-color,border-color,box-shadow] duration-300;
+  }
+
+  .thumb-focus {
+    @apply focus;
+  }
+
+  .thumb-hover {
+    @apply border-hover-stroke-brand;
+  }
+
+  .thumb-active {
+    @apply bg-active-ui-brand border-active-stroke-brand;
+  }
+}
+
+:host {
+  @apply block;
+}
+
+/* ---------------------- Webkit (Chrome, Safari, Edge) --------------------- */
+
+input[type='range']::-webkit-slider-thumb {
+  @apply thumb;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+  @apply transition-all duration-300 ease-in;
+}
+
+input[type='range']:focus-visible::-webkit-slider-thumb {
+  @apply thumb-focus;
+}
+
+input[type='range']:hover::-webkit-slider-thumb {
+  @apply thumb-hover;
+}
+
+input[type='range']:active::-webkit-slider-thumb {
+  @apply thumb-active;
+}
+
+input[type='range'][disabled]::-webkit-slider-thumb {
+  @apply cursor-not-allowed;
+}
+
+/* ---------------------------- Mozilla (Firefox) --------------------------- */
+
+input[type='range']::-moz-range-thumb {
+  @apply thumb;
+}
+
+input[type='range']::-moz-range-track {
+  @apply transition-all duration-300 ease-in;
+}
+
+input[type='range']:focus-visible::-moz-range-thumb {
+  @apply thumb-focus;
+}
+
+input[type='range']:hover::-moz-range-thumb {
+  @apply thumb-hover;
+}
+
+input[type='range']:active::-moz-range-thumb {
+  @apply thumb-active;
+}
+
+input[type='range'][disabled]::-moz-range-thumb {
+  @apply cursor-not-allowed;
+}
