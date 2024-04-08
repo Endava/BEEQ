@@ -16,6 +16,7 @@ export class BqSlider {
   private minRangeInputElement: HTMLInputElement;
   private maxRangeInputElement: HTMLInputElement;
   private bqChangeDebounced: TDebounce<void>;
+  private inputDivElement: HTMLDivElement;
 
   // Reference to host HTML element
   // ===================================
@@ -197,6 +198,35 @@ export class BqSlider {
 
   private calculatePercent = (value: string): number => ((parseFloat(value) - this.min) / (this.max - this.min)) * 100;
 
+  // The below calculations are used to "guess" where the thumb is located. Since we're using the native range control
+  // under the hood, we don't have access to the thumb's true coordinates. These measurements can be a pixel or two
+  // off depending on the size of the control, thumb, and tooltip dimensions.
+
+  private calculateThumbPosition = () => {
+    if (!this.progressDivElement || !this.inputDivElement) return;
+
+    const inputWidth = this.inputDivElement.getBoundingClientRect().width;
+    const thumbSize = parseInt(
+      getComputedStyle(this.progressDivElement).getPropertyValue('--bq-slider--thumb-size'),
+      10,
+    );
+
+    const leftRangePercent = this.calculatePercent(this.minRangeInputElement.value) / 100;
+    const leftRangeWidth = inputWidth * leftRangePercent;
+    const leftThumb = leftRangeWidth - leftRangePercent * thumbSize;
+    const leftThumbPosition = leftThumb + thumbSize / 2;
+
+    let rightThumbPosition: number;
+    if (!this.isSingleSlider) {
+      const rightRangePercent = this.calculatePercent(this.maxRangeInputElement.value) / 100;
+      const rightRangeWidth = inputWidth * rightRangePercent;
+      const rightThumb = rightRangeWidth - rightRangePercent * thumbSize;
+      rightThumbPosition = rightThumb + thumbSize / 2;
+    }
+
+    return { leftThumbPosition, rightThumbPosition };
+  };
+
   private updateProgressSize = (): void => {
     if (!this.progressDivElement) return;
 
@@ -320,14 +350,14 @@ export class BqSlider {
     />
   );
 
-  private renderTooltip = (value: number): HTMLBqTooltipElement => (
+  private renderTooltip = (value: number, thumbPosition: number): HTMLBqTooltipElement => (
     <bq-tooltip
       class="absolute"
       exportparts="base,trigger,panel"
       alwaysVisible={this.isTooltipAlwaysVisible}
       visible
       distance={16}
-      style={{ left: `${value}%`, fontVariant: 'tabular-nums' }}
+      style={{ left: `${thumbPosition}px`, fontVariant: 'tabular-nums' }}
     >
       <div class="absolute z-50 h-1 w-1" slot="trigger" />
       {value}
@@ -366,7 +396,8 @@ export class BqSlider {
             ref: (input: HTMLInputElement) => (this.minRangeInputElement = input),
             ariaLabel: 'Min Range',
           })}
-          {this.enableTooltip && this.renderTooltip(Number(this.getMinRangeValue()))}
+          {this.enableTooltip &&
+            this.renderTooltip(Number(this.getMinRangeValue()), this.calculateThumbPosition()?.leftThumbPosition)}
           {/* RANGE */}
           {!this.isSingleSlider &&
             this.renderInput({
@@ -375,8 +406,12 @@ export class BqSlider {
               ref: (input: HTMLInputElement) => (this.maxRangeInputElement = input),
               ariaLabel: 'Max Range',
             })}
-          {!this.isSingleSlider && this.enableTooltip && this.renderTooltip(Number(this.getMaxRangeValue()))}
-          <div class="progress" ref={(div: HTMLDivElement) => (this.progressDivElement = div)} />
+          {!this.isSingleSlider &&
+            this.enableTooltip &&
+            this.renderTooltip(Number(this.getMaxRangeValue()), this.calculateThumbPosition()?.rightThumbPosition)}
+          <div ref={(div: HTMLDivElement) => (this.inputDivElement = div)}>
+            <div class="progress" ref={(div: HTMLDivElement) => (this.progressDivElement = div)} />
+          </div>
         </div>
         {!this.isSingleSlider && (
           <span
