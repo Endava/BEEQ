@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 
 @Component({
   tag: 'bq-slider2',
@@ -14,6 +14,8 @@ export class BqSlider2 {
   // Reference to host HTML element
   // ===================================
 
+  @Element() el!: HTMLBqSlider2Element;
+
   // State() variables
   // Inlined decorator, alphabetical order
   // =======================================
@@ -25,7 +27,7 @@ export class BqSlider2 {
   // ========================
 
   /** A number representing the max value of the slider. */
-  @Prop({ reflect: true }) max = 0;
+  @Prop({ reflect: true }) max = 100;
 
   /** A number representing the min value of the slider. */
   @Prop({ reflect: true }) min = 0;
@@ -113,8 +115,10 @@ export class BqSlider2 {
   render() {
     return (
       <div class="flex w-full">
-        {/* LABEL (left) */}
-        <span class="me-m block w-7 text-end text-s font-medium leading-regular text-text-primary"></span>
+        {/* LABEL (start) */}
+        <span class="me-xs box-content block w-8 text-end text-s font-medium leading-regular text-text-primary [font-variant:tabular-nums]">
+          {this.minValue}
+        </span>
         {/* SLIDER */}
         <div class="relative w-full">
           {/* TRACK AREA */}
@@ -135,10 +139,8 @@ export class BqSlider2 {
             value={this.minValue}
           />
         </div>
-        {/* LABEL (right) */}
-        <span class="ms-m block w-7 text-start text-s font-medium leading-regular text-text-primary">
-          {this.minValue}
-        </span>
+        {/* LABEL (end) */}
+        <span class="ms-xs box-content block w-8 text-start text-s font-medium leading-regular text-text-primary [font-variant:tabular-nums]"></span>
       </div>
     );
   }
