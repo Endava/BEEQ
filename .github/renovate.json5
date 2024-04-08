@@ -42,63 +42,46 @@
    */
   packageRules: [
     {
+      groupName: 'all dependencies',
+      matchPackagePrefixes: ['*'],
+      excludePackagePrefixes: [
+        '@angular',
+        '@schematics',
+        'ng-packagr',
+        '@nx',
+        'nx',
+        '@stencil',
+        '@storybook',
+        'storybook',
+        '@floating-ui',
+        'typescript',
+      ],
+      excludePackageNames: ['zone.js', 'vite-tsconfig-paths'],
+    },
+    {
       groupName: 'Angular',
       matchPackagePrefixes: ['@angular', '@schematics', 'ng-packagr'],
     },
     {
-      groupName: 'Commitlint',
-      matchPackagePrefixes: ['@commitlint/'],
-    },
-    {
       groupName: 'Nx',
       matchPackagePrefixes: ['@nx', 'nx'],
-      excludePackageNames: ['nx-cloud', 'nx-stylelint'],
     },
     {
       groupName: 'Stencil',
-      matchPackagePrefixes: ['@stencil/'],
+      matchPackagePrefixes: ['@stencil'],
     },
     {
       groupName: 'Storybook',
-      matchPackagePrefixes: ['@storybook/', 'storybook'],
-    },
-    {
-      groupName: 'Swc',
-      matchPackagePrefixes: ['@swc'],
-    },
-    {
-      groupName: 'Eslint',
-      matchPackagePrefixes: ['eslint'],
+      matchPackagePrefixes: ['@storybook', 'storybook'],
     },
     {
       groupName: 'Floating-UI',
       matchPackagePrefixes: ['@floating-ui'],
     },
     {
-      groupName: 'PostCSS',
-      matchPackagePrefixes: ['postcss'],
-    },
-    {
-      groupName: 'Prettier',
-      matchPackagePrefixes: ['prettier'],
-      excludePackageNames: ['prettier', 'eslint-plugin-prettier'],
-    },
-    {
-      groupName: 'Stylelint',
-      matchPackagePrefixes: ['stylelint'],
-    },
-    {
       groupName: 'Typescript',
       matchPackagePrefixes: ['typescript'],
       allowedVersions: '<5.4.0',
-    },
-    {
-      groupName: 'Typescript-Eslint',
-      matchPackagePrefixes: ['@typescript-eslint'],
-    },
-    {
-      groupName: 'Types React',
-      matchPackagePrefixes: ['@types/react'],
     },
     {
       matchPackageNames: ['zone.js'],
