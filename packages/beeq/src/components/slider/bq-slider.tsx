@@ -202,29 +202,32 @@ export class BqSlider {
   // under the hood, we don't have access to the thumb's true coordinates. These measurements can be a pixel or two
   // off depending on the size of the control, thumb, and tooltip dimensions.
 
-  private calculateThumbPosition = () => {
-    if (!this.progressDivElement || !this.inputDivElement) return;
+  private calculateThumbPosition = (): { leftThumbPosition: number; rightThumbPosition?: number } => {
+    if (!this.progressDivElement || !this.inputDivElement) return { leftThumbPosition: 0 };
 
+    // Get the width of the input container and the size of the slider thumb
     const inputWidth = this.inputDivElement.getBoundingClientRect().width;
     const thumbSize = parseInt(
       getComputedStyle(this.progressDivElement).getPropertyValue('--bq-slider--thumb-size'),
       10,
     );
+    const { value, min, max } = this;
+    const totalInputWidth = inputWidth - thumbSize;
 
-    const leftRangePercent = this.calculatePercent(this.minRangeInputElement.value) / 100;
-    const leftRangeWidth = inputWidth * leftRangePercent;
-    const leftThumb = leftRangeWidth - leftRangePercent * thumbSize;
-    const leftThumbPosition = leftThumb + thumbSize / 2;
+    // Function to calculate the thumb position based on the value
+    const calculatePosition = (val: number): number => ((val - min) / (max - min)) * totalInputWidth + thumbSize / 2;
 
-    let rightThumbPosition: number;
-    if (!this.isSingleSlider) {
-      const rightRangePercent = this.calculatePercent(this.maxRangeInputElement.value) / 100;
-      const rightRangeWidth = inputWidth * rightRangePercent;
-      const rightThumb = rightRangeWidth - rightRangePercent * thumbSize;
-      rightThumbPosition = rightThumb + thumbSize / 2;
+    if (this.isSingleSlider) {
+      // Return the position for a single thumb slider
+      return { leftThumbPosition: calculatePosition(Number(value)) };
+    } else {
+      const [leftValue, rightValue] = value as [number, number];
+      // Return the positions for a range slider with two thumbs
+      return {
+        leftThumbPosition: calculatePosition(leftValue),
+        rightThumbPosition: calculatePosition(rightValue),
+      };
     }
-
-    return { leftThumbPosition, rightThumbPosition };
   };
 
   private updateProgressSize = (): void => {
