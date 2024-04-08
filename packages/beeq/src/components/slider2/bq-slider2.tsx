@@ -1,5 +1,7 @@
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 
+import { isString } from '../../shared/utils';
+
 @Component({
   tag: 'bq-slider2',
   styleUrl: './scss/bq-slider2.scss',
@@ -20,7 +22,12 @@ export class BqSlider2 {
   // Inlined decorator, alphabetical order
   // =======================================
 
+  /**
+   * The `minValue` state is the only value when the slider type is `single`
+   * and the minimum value when the slider type is `range`.
+   */
   @State() minValue: number = 0;
+  /** The `maxValue` state is only used when the slider type is `range`. */
   @State() maxValue: number = 100;
 
   // Public Property API
@@ -45,9 +52,12 @@ export class BqSlider2 {
   // =======================
 
   @Watch('value')
-  valueChanged(newValue: string | number | number[]) {
-    const value = Array.isArray(newValue) ? newValue[0] : newValue;
-    this.minValue = parseInt(value as string, 10);
+  handleValuePropChange(newValue: string | number | number[]) {
+    const isRangeType = this.isRangeType;
+    const value = this.parseValue(newValue);
+
+    this.minValue = isRangeType ? value[0] : value;
+    this.maxValue = isRangeType ? value[1] : this.minValue;
 
     this.updateProgressTrack();
   }
@@ -61,7 +71,7 @@ export class BqSlider2 {
   // =====================================
 
   componentWillLoad() {
-    this.valueChanged(this.value);
+    this.handleValuePropChange(this.value);
   }
 
   componentDidLoad() {
@@ -83,9 +93,19 @@ export class BqSlider2 {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private onInputChange = (event: InputEvent) => {
+  private parseValue = (value: string | number | number[]) => {
+    return isString(value) ? JSON.parse(value) : value;
+  };
+
+  private handleInputChange = (type: 'min' | 'max', event: InputEvent) => {
     const target = event.target as HTMLInputElement;
-    this.minValue = parseInt(target.value, 10);
+    const value = parseInt(target.value, 10);
+
+    if (type === 'min') {
+      this.minValue = value;
+    } else if (type === 'max') {
+      this.maxValue = value;
+    }
 
     this.updateProgressTrack();
   };
@@ -128,19 +148,43 @@ export class BqSlider2 {
             class="absolute top-1/2 h-1 w-1/2 -translate-y-1/2 rounded-xs bg-ui-brand"
             ref={(elem) => (this.progressElem = elem)}
           />
-          {/* INPUT (Min) */}
+          {/* INPUT (Min), used on single type */}
           <input
             type="range"
-            class="absolute top-1/2 w-full -translate-y-1/2 cursor-pointer appearance-none bg-transparent outline-none disabled:cursor-not-allowed"
-            min="0"
-            max="100"
-            step="1"
-            onInput={this.onInputChange}
+            class={{
+              'absolute top-1/2 w-full -translate-y-1/2 cursor-pointer appearance-none bg-transparent outline-none disabled:cursor-not-allowed':
+                true,
+              'pointer-events-none': this.isRangeType,
+            }}
+            min={this.min}
+            max={this.max}
+            step={this.step}
+            onInput={(ev) => this.handleInputChange('min', ev)}
             value={this.minValue}
           />
+          {/* INPUT (Max) */}
+          {this.isRangeType && (
+            <input
+              type="range"
+              class="pointer-events-none absolute top-1/2 w-full -translate-y-1/2 cursor-pointer appearance-none bg-transparent outline-none disabled:cursor-not-allowed"
+              min={this.min}
+              max={this.max}
+              step={this.step}
+              onInput={(ev) => this.handleInputChange('max', ev)}
+              value={this.maxValue}
+            />
+          )}
         </div>
         {/* LABEL (end) */}
-        <span class="ms-xs box-content block w-8 text-start text-s font-medium leading-regular text-text-primary [font-variant:tabular-nums]"></span>
+        <span
+          class={{
+            'ms-xs box-content block w-8 text-start text-s font-medium leading-regular text-text-primary [font-variant:tabular-nums]':
+              true,
+            hidden: !this.isRangeType,
+          }}
+        >
+          {this.maxValue}
+        </span>
       </div>
     );
   }
