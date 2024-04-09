@@ -38,6 +38,9 @@ export class BqSlider2 {
   /** The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change. */
   @Prop({ reflect: true }) debounceTime = 0;
 
+  /** A number representing the amount to remain between the minimum and maximum values (only for range type). */
+  @Prop({ reflect: true }) gap = 0;
+
   /** A number representing the max value of the slider. */
   @Prop({ reflect: true }) max = 100;
 
@@ -126,9 +129,9 @@ export class BqSlider2 {
     const value = parseFloat(target.value);
 
     if (type === 'min') {
-      this.minValue = this.isRangeType && value >= this.maxValue ? this.maxValue : value;
+      this.minValue = this.isRangeType ? Math.min(value, this.maxValue - this.gap) : value;
     } else if (type === 'max') {
-      this.maxValue = this.isRangeType && value <= this.minValue ? this.minValue : value;
+      this.maxValue = this.isRangeType ? Math.max(value, this.minValue + this.gap) : value;
     }
 
     // Update the input value to reflect the clamped value
@@ -182,7 +185,7 @@ export class BqSlider2 {
     return (
       <div class="flex w-full">
         {/* LABEL (start) */}
-        <span class="me-xs box-content block w-8 text-end text-s font-medium leading-regular text-text-primary [font-variant:tabular-nums]">
+        <span class="me-xs box-content block w-fit min-w-8 text-end text-s font-medium leading-regular text-text-primary [font-variant:tabular-nums]">
           {this.minValue.toFixed(this.decimalCount)}
         </span>
         {/* SLIDER */}
@@ -224,7 +227,7 @@ export class BqSlider2 {
         {/* LABEL (end) */}
         <span
           class={{
-            'ms-xs box-content block w-8 text-start text-s font-medium leading-regular text-text-primary [font-variant:tabular-nums]':
+            'ms-xs box-content block w-fit min-w-8 text-start text-s font-medium leading-regular text-text-primary [font-variant:tabular-nums]':
               true,
             hidden: !this.isRangeType,
           }}
