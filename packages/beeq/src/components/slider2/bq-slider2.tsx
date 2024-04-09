@@ -125,10 +125,13 @@ export class BqSlider2 {
     const value = parseInt(target.value, 10);
 
     if (type === 'min') {
-      this.minValue = value;
+      this.minValue = this.isRangeType && value >= this.maxValue ? this.maxValue : value;
     } else if (type === 'max') {
-      this.maxValue = value;
+      this.maxValue = this.isRangeType && value <= this.minValue ? this.minValue : value;
     }
+
+    // Update the input value to reflect the clamped value
+    target.value = (type === 'min' ? this.minValue : this.maxValue).toString();
 
     this.updateProgressTrack();
     this.emitBqChange();
