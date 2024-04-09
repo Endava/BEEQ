@@ -970,7 +970,7 @@ export namespace Components {
          */
         "type": 'single' | 'range';
         /**
-          * A number representing the value of the slider.
+          * The value of the slider. - If the slider type is `single`, the value is a number. - If the slider type is `range`, the value is an array of two numbers (the first number represents the `min` value and the second number represents the `max` value).
          */
         "value": string | number | number[];
     }
@@ -3219,7 +3219,7 @@ declare namespace LocalJSX {
          */
         "type"?: 'single' | 'range';
         /**
-          * A number representing the value of the slider.
+          * The value of the slider. - If the slider type is `single`, the value is a number. - If the slider type is `range`, the value is an array of two numbers (the first number represents the `min` value and the second number represents the `max` value).
          */
         "value"?: string | number | number[];
     }

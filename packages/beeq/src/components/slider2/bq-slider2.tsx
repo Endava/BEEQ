@@ -49,7 +49,11 @@ export class BqSlider2 {
   /** It defines the type of slider to display  */
   @Prop({ reflect: true }) type: 'single' | 'range' = 'single';
 
-  /** A number representing the value of the slider. */
+  /**
+   * The value of the slider.
+   * - If the slider type is `single`, the value is a number.
+   * - If the slider type is `range`, the value is an array of two numbers (the first number represents the `min` value and the second number represents the `max` value).
+   */
   @Prop({ reflect: true, mutable: true }) value: string | number | number[];
 
   // Prop lifecycle events

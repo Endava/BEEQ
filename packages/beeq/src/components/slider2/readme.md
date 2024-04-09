@@ -7,14 +7,14 @@
 
 ## Properties
 
-| Property       | Attribute       | Description                                                                                           | Type                           | Default     |
-| -------------- | --------------- | ----------------------------------------------------------------------------------------------------- | ------------------------------ | ----------- |
-| `debounceTime` | `debounce-time` | The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change. | `number`                       | `0`         |
-| `max`          | `max`           | A number representing the max value of the slider.                                                    | `number`                       | `100`       |
-| `min`          | `min`           | A number representing the min value of the slider.                                                    | `number`                       | `0`         |
-| `step`         | `step`          | A number representing the step of the slider.                                                         | `number`                       | `1`         |
-| `type`         | `type`          | It defines the type of slider to display                                                              | `"range" \| "single"`          | `'single'`  |
-| `value`        | `value`         | A number representing the value of the slider.                                                        | `number \| number[] \| string` | `undefined` |
+| Property       | Attribute       | Description                                                                                                                                                                                                                                             | Type                           | Default     |
+| -------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ | ----------- |
+| `debounceTime` | `debounce-time` | The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change.                                                                                                                                                   | `number`                       | `0`         |
+| `max`          | `max`           | A number representing the max value of the slider.                                                                                                                                                                                                      | `number`                       | `100`       |
+| `min`          | `min`           | A number representing the min value of the slider.                                                                                                                                                                                                      | `number`                       | `0`         |
+| `step`         | `step`          | A number representing the step of the slider.                                                                                                                                                                                                           | `number`                       | `1`         |
+| `type`         | `type`          | It defines the type of slider to display                                                                                                                                                                                                                | `"range" \| "single"`          | `'single'`  |
+| `value`        | `value`         | The value of the slider. - If the slider type is `single`, the value is a number. - If the slider type is `range`, the value is an array of two numbers (the first number represents the `min` value and the second number represents the `max` value). | `number \| number[] \| string` | `undefined` |
 
 
 ## Events
