@@ -1,6 +1,6 @@
-import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
-import { isString } from '../../shared/utils';
+import { debounce, isString, TDebounce } from '../../shared/utils';
 
 @Component({
   tag: 'bq-slider2',
@@ -12,6 +12,7 @@ export class BqSlider2 {
   // ====================
 
   private progressElem: HTMLSpanElement;
+  private debounceBqChange: TDebounce<void>;
 
   // Reference to host HTML element
   // ===================================
@@ -32,6 +33,9 @@ export class BqSlider2 {
 
   // Public Property API
   // ========================
+
+  /** The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change. */
+  @Prop({ reflect: true }) debounceTime = 0;
 
   /** A number representing the max value of the slider. */
   @Prop({ reflect: true }) max = 100;
@@ -65,6 +69,9 @@ export class BqSlider2 {
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
+
+  /** Handler to be called when change the value on range inputs */
+  @Event() bqChange: EventEmitter<{ value: number | Array<number> | string; el: HTMLBqSlider2Element }>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -108,6 +115,7 @@ export class BqSlider2 {
     }
 
     this.updateProgressTrack();
+    this.emitBqChange();
   };
 
   private calculatePercent = (value: number): number => ((value - this.min) / (this.max - this.min)) * 100;
@@ -122,6 +130,15 @@ export class BqSlider2 {
 
     this.progressElem.style.left = `${left}%`;
     this.progressElem.style.width = `${width}%`;
+  };
+
+  private emitBqChange = () => {
+    this.debounceBqChange?.cancel();
+
+    const value = this.isRangeType ? [this.minValue, this.maxValue] : this.minValue;
+    this.debounceBqChange = debounce(() => this.bqChange.emit({ value, el: this.el }), this.debounceTime);
+
+    this.debounceBqChange();
   };
 
   private get isRangeType() {

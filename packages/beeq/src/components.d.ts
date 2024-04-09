@@ -950,6 +950,10 @@ export namespace Components {
     }
     interface BqSlider2 {
         /**
+          * The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change.
+         */
+        "debounceTime": number;
+        /**
           * A number representing the max value of the slider.
          */
         "max": number;
@@ -1413,6 +1417,10 @@ export interface BqSideMenuItemCustomEvent<T> extends CustomEvent<T> {
 export interface BqSliderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqSliderElement;
+}
+export interface BqSlider2CustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqSlider2Element;
 }
 export interface BqStepItemCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1888,7 +1896,18 @@ declare global {
         prototype: HTMLBqSliderElement;
         new (): HTMLBqSliderElement;
     };
+    interface HTMLBqSlider2ElementEventMap {
+        "bqChange": { value: number | Array<number> | string; el: HTMLBqSlider2Element };
+    }
     interface HTMLBqSlider2Element extends Components.BqSlider2, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqSlider2ElementEventMap>(type: K, listener: (this: HTMLBqSlider2Element, ev: BqSlider2CustomEvent<HTMLBqSlider2ElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqSlider2ElementEventMap>(type: K, listener: (this: HTMLBqSlider2Element, ev: BqSlider2CustomEvent<HTMLBqSlider2ElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqSlider2Element: {
         prototype: HTMLBqSlider2Element;
@@ -3176,6 +3195,10 @@ declare namespace LocalJSX {
     }
     interface BqSlider2 {
         /**
+          * The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change.
+         */
+        "debounceTime"?: number;
+        /**
           * A number representing the max value of the slider.
          */
         "max"?: number;
@@ -3183,6 +3206,10 @@ declare namespace LocalJSX {
           * A number representing the min value of the slider.
          */
         "min"?: number;
+        /**
+          * Handler to be called when change the value on range inputs
+         */
+        "onBqChange"?: (event: BqSlider2CustomEvent<{ value: number | Array<number> | string; el: HTMLBqSlider2Element }>) => void;
         /**
           * A number representing the step of the slider.
          */
