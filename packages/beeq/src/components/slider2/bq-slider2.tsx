@@ -1,5 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
+import { TSliderType, TSliderValue } from './bq-slider.types';
 import { debounce, isString, TDebounce } from '../../shared/utils';
 
 @Component({
@@ -47,20 +48,20 @@ export class BqSlider2 {
   @Prop({ reflect: true }) step = 1;
 
   /** It defines the type of slider to display  */
-  @Prop({ reflect: true }) type: 'single' | 'range' = 'single';
+  @Prop({ reflect: true }) type: TSliderType = 'single';
 
   /**
    * The value of the slider.
    * - If the slider type is `single`, the value is a number.
    * - If the slider type is `range`, the value is an array of two numbers (the first number represents the `min` value and the second number represents the `max` value).
    */
-  @Prop({ reflect: true, mutable: true }) value: string | number | number[];
+  @Prop({ reflect: true, mutable: true }) value: TSliderValue;
 
   // Prop lifecycle events
   // =======================
 
   @Watch('value')
-  handleValuePropChange(newValue: string | number | number[]) {
+  handleValuePropChange(newValue: TSliderValue) {
     const isRangeType = this.isRangeType;
     const value = this.parseValue(newValue);
 
@@ -104,7 +105,7 @@ export class BqSlider2 {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private parseValue = (value: string | number | number[]) => {
+  private parseValue = (value: TSliderValue) => {
     return isString(value) ? JSON.parse(value) : value;
   };
 

@@ -23,6 +23,7 @@ import { TProgressBorderShape, TProgressThickness, TProgressType } from "./compo
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 import { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
 import { TSliderType } from "./components/slider/bq-slider.types";
+import { TSliderType as TSliderType1, TSliderValue } from "./components/slider2/bq-slider.types";
 import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 import { TStatusType } from "./components/status/bq-status.types";
 import { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
@@ -50,6 +51,7 @@ export { TProgressBorderShape, TProgressThickness, TProgressType } from "./compo
 export { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 export { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
 export { TSliderType } from "./components/slider/bq-slider.types";
+export { TSliderType as TSliderType1, TSliderValue } from "./components/slider2/bq-slider.types";
 export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 export { TStatusType } from "./components/status/bq-status.types";
 export { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
@@ -968,11 +970,11 @@ export namespace Components {
         /**
           * It defines the type of slider to display
          */
-        "type": 'single' | 'range';
+        "type": TSliderType1;
         /**
           * The value of the slider. - If the slider type is `single`, the value is a number. - If the slider type is `range`, the value is an array of two numbers (the first number represents the `min` value and the second number represents the `max` value).
          */
-        "value": string | number | number[];
+        "value": TSliderValue;
     }
     /**
      * Spinners are designed for users to display data loading.
@@ -3217,11 +3219,11 @@ declare namespace LocalJSX {
         /**
           * It defines the type of slider to display
          */
-        "type"?: 'single' | 'range';
+        "type"?: TSliderType1;
         /**
           * The value of the slider. - If the slider type is `single`, the value is a number. - If the slider type is `range`, the value is an array of two numbers (the first number represents the `min` value and the second number represents the `max` value).
          */
-        "value"?: string | number | number[];
+        "value"?: TSliderValue;
     }
     /**
      * Spinners are designed for users to display data loading.
