@@ -38,6 +38,9 @@ export class BqSlider2 {
   /** The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change. */
   @Prop({ reflect: true }) debounceTime = 0;
 
+  /** If `true` the slider is disabled. */
+  @Prop({ reflect: true }) disabled? = false;
+
   /** A number representing the amount to remain between the minimum and maximum values (only for range type). */
   @Prop({ reflect: true }) gap = 0;
 
@@ -183,7 +186,10 @@ export class BqSlider2 {
 
   render() {
     return (
-      <div class="flex w-full">
+      <div
+        aria-disabled={this.disabled ? 'true' : 'false'}
+        class={{ 'flex w-full': true, 'cursor-not-allowed opacity-60': this.disabled }}
+      >
         {/* LABEL (start) */}
         <span class="me-xs box-content block w-fit min-w-8 text-end text-s font-medium leading-regular text-text-primary [font-variant:tabular-nums]">
           {this.minValue.toFixed(this.decimalCount)}
@@ -205,6 +211,7 @@ export class BqSlider2 {
                 true,
               'pointer-events-none': this.isRangeType,
             }}
+            disabled={this.disabled}
             min={this.min}
             max={this.max}
             step={this.step}
@@ -216,6 +223,7 @@ export class BqSlider2 {
             <input
               type="range"
               class="pointer-events-none absolute top-1/2 w-full -translate-y-1/2 cursor-pointer appearance-none bg-transparent outline-none disabled:cursor-not-allowed"
+              disabled={this.disabled}
               min={this.min}
               max={this.max}
               step={this.step}

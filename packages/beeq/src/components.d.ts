@@ -956,6 +956,10 @@ export namespace Components {
          */
         "debounceTime": number;
         /**
+          * If `true` the slider is disabled.
+         */
+        "disabled"?: boolean;
+        /**
           * A number representing the amount to remain between the minimum and maximum values (only for range type).
          */
         "gap": number;
@@ -3204,6 +3208,10 @@ declare namespace LocalJSX {
           * The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change.
          */
         "debounceTime"?: number;
+        /**
+          * If `true` the slider is disabled.
+         */
+        "disabled"?: boolean;
         /**
           * A number representing the amount to remain between the minimum and maximum values (only for range type).
          */
