@@ -964,7 +964,7 @@ export namespace Components {
          */
         "min": number;
         /**
-          * A number representing the step of the slider.
+          * A number representing the step of the slider. ⚠️ Please notice that the value (or list of values if the slider type is `range`) will be rounded to the nearest multiple of `step`.
          */
         "step": number;
         /**
@@ -3213,7 +3213,7 @@ declare namespace LocalJSX {
          */
         "onBqChange"?: (event: BqSlider2CustomEvent<{ value: number | Array<number> | string; el: HTMLBqSlider2Element }>) => void;
         /**
-          * A number representing the step of the slider.
+          * A number representing the step of the slider. ⚠️ Please notice that the value (or list of values if the slider type is `range`) will be rounded to the nearest multiple of `step`.
          */
         "step"?: number;
         /**

@@ -44,7 +44,10 @@ export class BqSlider2 {
   /** A number representing the min value of the slider. */
   @Prop({ reflect: true }) min = 0;
 
-  /** A number representing the step of the slider. */
+  /**
+   * A number representing the step of the slider.
+   * ⚠️ Please notice that the value (or list of values if the slider type is `range`) will be rounded to the nearest multiple of `step`.
+   */
   @Prop({ reflect: true }) step = 1;
 
   /** It defines the type of slider to display  */
@@ -67,6 +70,14 @@ export class BqSlider2 {
 
     this.minValue = isRangeType ? value[0] : value;
     this.maxValue = isRangeType ? value[1] : this.minValue;
+
+    this.updateProgressTrack();
+  }
+
+  @Watch('step')
+  handleStepPropChange() {
+    this.minValue = Math.round(this.minValue / this.step) * this.step;
+    this.maxValue = Math.round(this.maxValue / this.step) * this.step;
 
     this.updateProgressTrack();
   }
