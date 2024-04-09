@@ -19,7 +19,7 @@
   }
 
   .thumb-active {
-    @apply bg-active-ui-brand border-active-stroke-brand;
+    @apply cursor-grabbing bg-active-ui-brand border-active-stroke-brand;
   }
 }
 

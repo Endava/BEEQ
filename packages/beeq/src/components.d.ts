@@ -960,6 +960,10 @@ export namespace Components {
          */
         "disabled"?: boolean;
         /**
+          * If `true` it will show the value label on a side of the slider track area
+         */
+        "enableValueIndicator"?: boolean;
+        /**
           * A number representing the amount to remain between the minimum and maximum values (only for range type).
          */
         "gap": number;
@@ -3212,6 +3216,10 @@ declare namespace LocalJSX {
           * If `true` the slider is disabled.
          */
         "disabled"?: boolean;
+        /**
+          * If `true` it will show the value label on a side of the slider track area
+         */
+        "enableValueIndicator"?: boolean;
         /**
           * A number representing the amount to remain between the minimum and maximum values (only for range type).
          */

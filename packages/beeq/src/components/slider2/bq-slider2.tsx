@@ -41,6 +41,9 @@ export class BqSlider2 {
   /** If `true` the slider is disabled. */
   @Prop({ reflect: true }) disabled? = false;
 
+  /** If `true` it will show the value label on a side of the slider track area */
+  @Prop({ reflect: true }) enableValueIndicator? = false;
+
   /** A number representing the amount to remain between the minimum and maximum values (only for range type). */
   @Prop({ reflect: true }) gap = 0;
 
@@ -191,7 +194,13 @@ export class BqSlider2 {
         class={{ 'flex w-full': true, 'cursor-not-allowed opacity-60': this.disabled }}
       >
         {/* LABEL (start) */}
-        <span class="me-xs box-content block w-fit min-w-8 text-end text-s font-medium leading-regular text-text-primary [font-variant:tabular-nums]">
+        <span
+          class={{
+            'me-xs box-content block w-fit min-w-8 text-end text-s font-medium leading-regular text-text-primary [font-variant:tabular-nums]':
+              true,
+            hidden: !this.enableValueIndicator,
+          }}
+        >
           {this.minValue.toFixed(this.decimalCount)}
         </span>
         {/* SLIDER */}
@@ -237,7 +246,7 @@ export class BqSlider2 {
           class={{
             'ms-xs box-content block w-fit min-w-8 text-start text-s font-medium leading-regular text-text-primary [font-variant:tabular-nums]':
               true,
-            hidden: !this.isRangeType,
+            hidden: !this.enableValueIndicator || !this.isRangeType,
           }}
         >
           {this.maxValue.toFixed(this.decimalCount)}
