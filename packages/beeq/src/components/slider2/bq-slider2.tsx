@@ -6,7 +6,9 @@ import { debounce, isString, TDebounce } from '../../shared/utils';
 @Component({
   tag: 'bq-slider2',
   styleUrl: './scss/bq-slider2.scss',
-  shadow: true,
+  shadow: {
+    delegatesFocus: true,
+  },
 })
 export class BqSlider2 {
   // Own Properties
@@ -92,7 +94,13 @@ export class BqSlider2 {
   // ==============================================
 
   /** Handler to be called when change the value on range inputs */
-  @Event() bqChange: EventEmitter<{ value: number | Array<number> | string; el: HTMLBqSlider2Element }>;
+  @Event() bqChange: EventEmitter<{ value: Exclude<TSliderValue, string>; el: HTMLBqSlider2Element }>;
+
+  /** Handler to be called when the slider loses focus */
+  @Event() bqBlur: EventEmitter<HTMLBqSlider2Element>;
+
+  /** Handler to be called when the slider gets focused */
+  @Event() bqFocus: EventEmitter<HTMLBqSlider2Element>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -168,10 +176,18 @@ export class BqSlider2 {
   private emitBqChange = () => {
     this.debounceBqChange?.cancel();
 
-    const value = this.isRangeType ? [this.minValue, this.maxValue] : this.minValue;
+    const value: Exclude<TSliderValue, string> = this.isRangeType ? [this.minValue, this.maxValue] : this.minValue;
     this.debounceBqChange = debounce(() => this.bqChange.emit({ value, el: this.el }), this.debounceTime);
 
     this.debounceBqChange();
+  };
+
+  private handleBlur = () => {
+    this.bqBlur.emit(this.el);
+  };
+
+  private handleFocus = () => {
+    this.bqFocus.emit(this.el);
   };
 
   private get decimalCount(): number {
@@ -225,6 +241,8 @@ export class BqSlider2 {
             max={this.max}
             step={this.step}
             onInput={(ev) => this.handleInputChange('min', ev)}
+            onBlur={this.handleBlur}
+            onFocus={this.handleFocus}
             value={this.minValue}
           />
           {/* INPUT (Max) */}
@@ -237,6 +255,8 @@ export class BqSlider2 {
               max={this.max}
               step={this.step}
               onInput={(ev) => this.handleInputChange('max', ev)}
+              onBlur={this.handleBlur}
+              onFocus={this.handleFocus}
               value={this.maxValue}
             />
           )}

@@ -22,9 +22,11 @@
 
 ## Events
 
-| Event      | Description                                                | Type                                                                              |
-| ---------- | ---------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| `bqChange` | Handler to be called when change the value on range inputs | `CustomEvent<{ value: string \| number \| number[]; el: HTMLBqSlider2Element; }>` |
+| Event      | Description                                                | Type                                                                            |
+| ---------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `bqBlur`   | Handler to be called when the slider loses focus           | `CustomEvent<HTMLBqSlider2Element>`                                             |
+| `bqChange` | Handler to be called when change the value on range inputs | `CustomEvent<{ value: number \| [number, number]; el: HTMLBqSlider2Element; }>` |
+| `bqFocus`  | Handler to be called when the slider gets focused          | `CustomEvent<HTMLBqSlider2Element>`                                             |
 
 
 ----------------------------------------------

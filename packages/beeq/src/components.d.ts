@@ -1911,7 +1911,9 @@ declare global {
         new (): HTMLBqSliderElement;
     };
     interface HTMLBqSlider2ElementEventMap {
-        "bqChange": { value: number | Array<number> | string; el: HTMLBqSlider2Element };
+        "bqChange": { value: Exclude<TSliderValue, string>; el: HTMLBqSlider2Element };
+        "bqBlur": HTMLBqSlider2Element;
+        "bqFocus": HTMLBqSlider2Element;
     }
     interface HTMLBqSlider2Element extends Components.BqSlider2, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqSlider2ElementEventMap>(type: K, listener: (this: HTMLBqSlider2Element, ev: BqSlider2CustomEvent<HTMLBqSlider2ElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -3233,9 +3235,17 @@ declare namespace LocalJSX {
          */
         "min"?: number;
         /**
+          * Handler to be called when the slider loses focus
+         */
+        "onBqBlur"?: (event: BqSlider2CustomEvent<HTMLBqSlider2Element>) => void;
+        /**
           * Handler to be called when change the value on range inputs
          */
-        "onBqChange"?: (event: BqSlider2CustomEvent<{ value: number | Array<number> | string; el: HTMLBqSlider2Element }>) => void;
+        "onBqChange"?: (event: BqSlider2CustomEvent<{ value: Exclude<TSliderValue, string>; el: HTMLBqSlider2Element }>) => void;
+        /**
+          * Handler to be called when the slider gets focused
+         */
+        "onBqFocus"?: (event: BqSlider2CustomEvent<HTMLBqSlider2Element>) => void;
         /**
           * A number representing the step of the slider. ⚠️ Please notice that the value (or list of values if the slider type is `range`) will be rounded to the nearest multiple of `step`.
          */
