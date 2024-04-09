@@ -70,16 +70,12 @@ export class BqSlider2 {
 
     this.minValue = isRangeType ? value[0] : value;
     this.maxValue = isRangeType ? value[1] : this.minValue;
-
-    this.updateProgressTrack();
   }
 
   @Watch('step')
   handleStepPropChange() {
     this.minValue = Math.round(this.minValue / this.step) * this.step;
     this.maxValue = Math.round(this.maxValue / this.step) * this.step;
-
-    this.updateProgressTrack();
   }
 
   // Events section
@@ -95,9 +91,14 @@ export class BqSlider2 {
 
   componentWillLoad() {
     this.handleValuePropChange(this.value);
+    this.handleStepPropChange();
   }
 
   componentDidLoad() {
+    this.updateProgressTrack();
+  }
+
+  componentDidUpdate() {
     this.updateProgressTrack();
   }
 
@@ -122,7 +123,7 @@ export class BqSlider2 {
 
   private handleInputChange = (type: 'min' | 'max', event: InputEvent) => {
     const target = event.target as HTMLInputElement;
-    const value = parseInt(target.value, 10);
+    const value = parseFloat(target.value);
 
     if (type === 'min') {
       this.minValue = this.isRangeType && value >= this.maxValue ? this.maxValue : value;
@@ -133,11 +134,13 @@ export class BqSlider2 {
     // Update the input value to reflect the clamped value
     target.value = (type === 'min' ? this.minValue : this.maxValue).toString();
 
-    this.updateProgressTrack();
     this.emitBqChange();
   };
 
-  private calculatePercent = (value: number): number => ((value - this.min) / (this.max - this.min)) * 100;
+  private calculatePercent = (value: number) => {
+    const totalRange = Number(this.max) - Number(this.min);
+    return (value / totalRange) * 100;
+  };
 
   private updateProgressTrack = () => {
     if (!this.progressElem) return;
@@ -145,7 +148,9 @@ export class BqSlider2 {
     // For range type, left starts from the `min` value and width is the difference between `max` and `min`.
     // For non-range type, left starts from 0 and width is the `min` value.
     const left = this.isRangeType ? this.calculatePercent(this.minValue) : 0;
-    const width = this.isRangeType ? Number(this.maxValue) - Number(this.minValue) : this.minValue;
+    const width = this.isRangeType
+      ? this.calculatePercent(Number(this.maxValue) - Number(this.minValue))
+      : this.calculatePercent(this.minValue);
 
     this.progressElem.style.left = `${left}%`;
     this.progressElem.style.width = `${width}%`;
@@ -160,6 +165,11 @@ export class BqSlider2 {
     this.debounceBqChange();
   };
 
+  private get decimalCount(): number {
+    // Return the length of the decimal part of the step value.
+    return (this.step % 1).toFixed(10).split('.')[1].replace(/0+$/, '').length;
+  }
+
   private get isRangeType() {
     return this.type === 'range';
   }
@@ -173,7 +183,7 @@ export class BqSlider2 {
       <div class="flex w-full">
         {/* LABEL (start) */}
         <span class="me-xs box-content block w-8 text-end text-s font-medium leading-regular text-text-primary [font-variant:tabular-nums]">
-          {this.minValue}
+          {this.minValue.toFixed(this.decimalCount)}
         </span>
         {/* SLIDER */}
         <div class="relative w-full">
@@ -219,7 +229,7 @@ export class BqSlider2 {
             hidden: !this.isRangeType,
           }}
         >
-          {this.maxValue}
+          {this.maxValue.toFixed(this.decimalCount)}
         </span>
       </div>
     );
