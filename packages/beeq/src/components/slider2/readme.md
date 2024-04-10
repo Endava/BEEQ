@@ -29,6 +29,20 @@
 | `bqFocus`  | Handler to be called when the slider gets focused          | `CustomEvent<HTMLBqSlider2Element>`                                             |
 
 
+## Shadow Parts
+
+| Part              | Description                                                                                                            |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `"base"`          | The component's base wrapper.                                                                                          |
+| `"container"`     | The container of the slider.                                                                                           |
+| `"input-max"`     | The input element for the maximum value.                                                                               |
+| `"input-min"`     | The input element for the value when the slider type is `single` or the minimum value when the slider type is `range`. |
+| `"label-end"`     | The label for maximum value when the slider type is `range`.                                                           |
+| `"label-start"`   | The label for the value when the slider type is `single` or the minimum value when the slider type is `range`.         |
+| `"progress-area"` | The progress area of the slider.                                                                                       |
+| `"track-area"`    | The track area of the slider.                                                                                          |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

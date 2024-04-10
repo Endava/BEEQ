@@ -3,6 +3,16 @@ import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '
 import { TSliderType, TSliderValue } from './bq-slider.types';
 import { debounce, isString, TDebounce } from '../../shared/utils';
 
+/**
+ * @part base - The component's base wrapper.
+ * @part container - The container of the slider.
+ * @part track-area - The track area of the slider.
+ * @part progress-area - The progress area of the slider.
+ * @part input-min - The input element for the value when the slider type is `single` or the minimum value when the slider type is `range`.
+ * @part input-max - The input element for the maximum value.
+ * @part label-start - The label for the value when the slider type is `single` or the minimum value when the slider type is `range`.
+ * @part label-end - The label for maximum value when the slider type is `range`.
+ */
 @Component({
   tag: 'bq-slider2',
   styleUrl: './scss/bq-slider2.scss',
@@ -208,6 +218,7 @@ export class BqSlider2 {
       <div
         aria-disabled={this.disabled ? 'true' : 'false'}
         class={{ 'flex w-full': true, 'cursor-not-allowed opacity-60': this.disabled }}
+        part="base"
       >
         {/* LABEL (start) */}
         <span
@@ -216,17 +227,19 @@ export class BqSlider2 {
               true,
             hidden: !this.enableValueIndicator,
           }}
+          part="label-start"
         >
           {this.minValue.toFixed(this.decimalCount)}
         </span>
         {/* SLIDER */}
-        <div class="relative w-full">
+        <div class="relative w-full" part="container">
           {/* TRACK AREA */}
-          <span class="absolute top-1/2 h-1 w-full -translate-y-1/2 rounded-xs bg-ui-secondary" />
+          <span class="absolute top-1/2 h-1 w-full -translate-y-1/2 rounded-xs bg-ui-secondary" part="track-area" />
           {/* PROGRESS AREA */}
           <span
             class="absolute top-1/2 h-1 w-1/2 -translate-y-1/2 rounded-xs bg-ui-brand"
             ref={(elem) => (this.progressElem = elem)}
+            part="progress-area"
           />
           {/* INPUT (Min), used on single type */}
           <input
@@ -244,6 +257,7 @@ export class BqSlider2 {
             onBlur={this.handleBlur}
             onFocus={this.handleFocus}
             value={this.minValue}
+            part="input-min"
           />
           {/* INPUT (Max) */}
           {this.isRangeType && (
@@ -258,6 +272,7 @@ export class BqSlider2 {
               onBlur={this.handleBlur}
               onFocus={this.handleFocus}
               value={this.maxValue}
+              part="input-max"
             />
           )}
         </div>
@@ -268,6 +283,7 @@ export class BqSlider2 {
               true,
             hidden: !this.enableValueIndicator || !this.isRangeType,
           }}
+          part="label-end"
         >
           {this.maxValue.toFixed(this.decimalCount)}
         </span>
