@@ -5,7 +5,7 @@ import { computedStyle, setProperties, sleep } from '../../../shared/test-utils'
 describe('bq-slider', () => {
   it('should render', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-slider></bq-slider>');
+    await page.setContent('<bq-slider value="30"></bq-slider>');
 
     const element = await page.find('bq-slider');
 
@@ -14,7 +14,7 @@ describe('bq-slider', () => {
 
   it('should have shadow root', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-slider></bq-slider>');
+    await page.setContent('<bq-slider value="30"></bq-slider>');
 
     const element = await page.find('bq-slider');
 
@@ -23,14 +23,14 @@ describe('bq-slider', () => {
 
   it('should handle `disabled` property', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-slider type="range" disabled></bq-slider>');
+    await page.setContent('<bq-slider type="range" value="[30,70]" disabled></bq-slider>');
 
     const bqFocus = await page.spyOnEvent('bqFocus');
     const bqBlur = await page.spyOnEvent('bqBlur');
     const bqChange = await page.spyOnEvent('bqChange');
 
     const element = await page.find('bq-slider');
-    const inputs = await page.findAll('bq-slider >>> .bq-slider__input');
+    const inputs = await page.findAll('bq-slider >>> input[type="range"]');
 
     for (const input of inputs) {
       input.focus();
@@ -47,107 +47,96 @@ describe('bq-slider', () => {
 
   it('should handle `value-indicator` property', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-slider type="range" value="[30, 70]"></bq-slider>');
+    await page.setContent('<bq-slider type="range" value="[30,70]"></bq-slider>');
 
     await page.$eval('bq-slider', (elem: HTMLBqSliderElement) => {
-      elem.valueIndicator = true;
+      elem.enableValueIndicator = true;
     });
     await page.waitForChanges();
 
-    const leftLabel = await page.find('bq-slider >>> span.bq-slider__label.mr-m');
-    const rightLabel = await page.find('bq-slider >>> span.bq-slider__label.ml-m');
+    const leftLabel = await page.find('bq-slider >>> span[part="label-start"]');
+    const rightLabel = await page.find('bq-slider >>> span[part="label-end"]');
 
-    expect(leftLabel).not.toHaveClass('is-hidden');
-    expect(rightLabel).not.toHaveClass('is-hidden');
+    expect(leftLabel).not.toHaveClass('hidden');
+    expect(rightLabel).not.toHaveClass('hidden');
   });
 
   it('should handle `gap` property', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-slider type="range" min="0" max="100" value="[50, 55]" gap="10"></bq-slider>');
+    const gap = 10;
+    const page = await newE2EPage({
+      html: `<bq-slider type="range" value="[30, 70]" gap="${gap}"></bq-slider>`,
+    });
 
-    const minRangeInput = await page.find('bq-slider >>> .bq-slider__input[aria-label="Min Range"]');
-    const maxRangeInput = await page.find('bq-slider >>> .bq-slider__input[aria-label="Max Range"]');
+    await setProperties(page, 'bq-slider', { value: [55, 60] });
+
+    const minRangeInput = await page.find('bq-slider >>> input[part="input-min"]');
+    const maxRangeInput = await page.find('bq-slider >>> input[part="input-max"]');
 
     const difference = Math.abs(
       parseInt(maxRangeInput.getAttribute('value')) - parseInt(minRangeInput.getAttribute('value')),
     );
 
-    expect(difference).toEqual(10);
+    expect(difference).toEqual(gap);
   });
 
   it('should handle `type` property', async () => {
     const page = await newE2EPage();
-    await page.setContent('<bq-slider type="single"></bq-slider>');
+    await page.setContent('<bq-slider type="single" value="30"></bq-slider>');
 
     const element = await page.find('bq-slider');
-    expect(element.shadowRoot.querySelectorAll('.bq-slider__input').length).toBe(1);
+    expect(element.shadowRoot.querySelectorAll('input').length).toBe(1);
 
     await setProperties(page, 'bq-slider', { type: 'range' });
     await page.waitForChanges();
 
-    const inputs = (await page.find('bq-slider')).shadowRoot.querySelectorAll('.bq-slider__input');
+    const inputs = (await page.find('bq-slider')).shadowRoot.querySelectorAll('input');
     expect(inputs.length).toBe(2);
   });
 
-  it('should handle `value` property', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-slider type="single"></bq-slider>');
-
-    const element = await page.find('bq-slider');
-    let propValue = await element.getProperty('value');
-
-    expect(typeof propValue).toBe('number');
-    expect(propValue).toBe(0);
-
-    element.setAttribute('type', 'range');
-    await page.waitForChanges();
-
-    propValue = await element.getProperty('value');
-
-    expect(Array.isArray(propValue)).toBe(true);
-    expect(propValue).toHaveLength(2);
-  });
-
   it('should trigger bqChange', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-slider min="0" max="100" value="30"></bq-slider>');
+    const value = 30;
+    const page = await newE2EPage({
+      html: `<bq-slider value="${value}"></bq-slider>`,
+    });
 
     const bqChange = await page.spyOnEvent('bqChange');
-    const element = await page.find('bq-slider');
-    const elementValue = element.getAttribute('value');
 
-    element.setAttribute('value', (elementValue + 1).toString());
-
+    await setProperties(page, 'bq-slider', { value: value + 20 });
     await page.waitForChanges();
 
-    expect(bqChange).not.toHaveReceivedEventTimes(0);
+    expect(bqChange).toHaveReceivedEvent();
   });
 
   it('should trigger bqChange with `debounce-time`', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-slider min="0" max="100" value="30" debounce-time="250"></bq-slider>');
+    const value = 30;
+    const page = await newE2EPage({
+      html: `<bq-slider value="${value}" debounce-time="250"></bq-slider>`,
+    });
 
     const bqChange = await page.spyOnEvent('bqChange');
-    const element = await page.find('bq-slider');
-    const elementValue = element.getAttribute('value');
 
-    await setProperties(page, 'bq-slider', { value: parseInt(elementValue) + 1 });
+    await setProperties(page, 'bq-slider', { value: value + 20 });
     await page.waitForChanges();
     await sleep(250);
 
-    expect(bqChange).not.toHaveReceivedEventTimes(0);
+    expect(bqChange).toHaveReceivedEventTimes(1);
   });
 
   it('should respect design style', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-slider value-indicator></bq-slider>');
+    const page = await newE2EPage({
+      html: '<bq-slider value="30"></bq-slider>',
+    });
 
-    const input = await computedStyle(page, 'bq-slider >>> .bq-slider__input', ['borderRadius', 'height']);
-    const label = await computedStyle(page, 'bq-slider >>> .bq-slider__label', ['fontSize', 'fontWeight', 'height']);
-    const progress = await computedStyle(page, 'bq-slider >>> .progress', ['borderRadius', 'height']);
+    const label = await computedStyle(page, 'bq-slider >>> span[part="label-start"]', [
+      'fontSize',
+      'fontWeight',
+      'marginInlineEnd',
+    ]);
+    const track = await computedStyle(page, 'bq-slider >>> span[part="track-area"]', ['borderRadius', 'height']);
+    const progress = await computedStyle(page, 'bq-slider >>> span[part="progress-area"]', ['borderRadius', 'height']);
 
-    expect(input).toEqual({ borderRadius: '4px', height: '4px' });
-    expect(label).toEqual({ fontSize: '14px', fontWeight: '500', height: '21px' });
+    expect(label).toEqual({ fontSize: '14px', fontWeight: '500', marginInlineEnd: '8px' });
+    expect(track).toEqual({ borderRadius: '4px', height: '4px' });
     expect(progress).toEqual({ borderRadius: '4px', height: '4px' });
   });
 });
