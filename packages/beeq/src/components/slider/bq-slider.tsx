@@ -1,21 +1,31 @@
 import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
-import { SLIDER_TYPE, TSliderType } from './bq-slider.types';
-import { debounce, isString, TDebounce, validatePropValue } from '../../shared/utils';
+import { TSliderType, TSliderValue } from './bq-slider.types';
+import { debounce, isString, TDebounce } from '../../shared/utils';
 
+/**
+ * @part base - The component's base wrapper.
+ * @part container - The container of the slider.
+ * @part track-area - The track area of the slider.
+ * @part progress-area - The progress area of the slider.
+ * @part input-min - The input element for the value when the slider type is `single` or the minimum value when the slider type is `range`.
+ * @part input-max - The input element for the maximum value.
+ * @part label-start - The label for the value when the slider type is `single` or the minimum value when the slider type is `range`.
+ * @part label-end - The label for maximum value when the slider type is `range`.
+ */
 @Component({
   tag: 'bq-slider',
   styleUrl: './scss/bq-slider.scss',
-  shadow: true,
+  shadow: {
+    delegatesFocus: true,
+  },
 })
-export class BqSlider {
+export class BqSlider2 {
   // Own Properties
   // ====================
 
-  private progressDivElement: HTMLDivElement;
-  private minRangeInputElement: HTMLInputElement;
-  private maxRangeInputElement: HTMLInputElement;
-  private bqChangeDebounced: TDebounce<void>;
+  private progressElem: HTMLSpanElement;
+  private debounceBqChange: TDebounce<void>;
 
   // Reference to host HTML element
   // ===================================
@@ -25,49 +35,68 @@ export class BqSlider {
   // State() variables
   // Inlined decorator, alphabetical order
   // =======================================
-  @State() private minRangeValue = 0;
-  @State() private maxRangeValue = 0;
+
+  /**
+   * The `minValue` state is the only value when the slider type is `single`
+   * and the minimum value when the slider type is `range`.
+   */
+  @State() minValue: number = 0;
+  /** The `maxValue` state is only used when the slider type is `range`. */
+  @State() maxValue: number = 100;
 
   // Public Property API
   // ========================
 
-  /** If `true` slider is disabled */
-  @Prop({ reflect: true }) disabled? = false;
-
-  /** A number representing the delay value applied to bqChange event handler */
+  /** The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change. */
   @Prop({ reflect: true }) debounceTime = 0;
 
-  /** A number representing the minimum value between the min and max range selected. */
+  /** If `true` the slider is disabled. */
+  @Prop({ reflect: true }) disabled? = false;
+
+  /** If `true` it will show the value label on a side of the slider track area */
+  @Prop({ reflect: true }) enableValueIndicator? = false;
+
+  /** A number representing the amount to remain between the minimum and maximum values (only for range type). */
   @Prop({ reflect: true }) gap = 0;
+
+  /** A number representing the max value of the slider. */
+  @Prop({ reflect: true }) max = 100;
 
   /** A number representing the min value of the slider. */
   @Prop({ reflect: true }) min = 0;
 
-  /** A number representing the max value of the slider. */
-  @Prop({ reflect: true }) max = 0;
-
-  /** A number representing the step of the slider. */
+  /**
+   * A number representing the step of the slider.
+   * ⚠️ Please notice that the value (or list of values if the slider type is `range`) will be rounded to the nearest multiple of `step`.
+   */
   @Prop({ reflect: true }) step = 1;
 
   /** It defines the type of slider to display  */
   @Prop({ reflect: true }) type: TSliderType = 'single';
 
-  /** If `true` it will display the min and max values */
-  @Prop({ reflect: true }) valueIndicator? = false;
-
-  /** A number representing the value of the slider. */
-  @Prop({ reflect: true, mutable: true }) value: number | Array<number> | string;
+  /**
+   * The value of the slider.
+   * - If the slider type is `single`, the value is a number.
+   * - If the slider type is `range`, the value is an array of two numbers (the first number represents the `min` value and the second number represents the `max` value).
+   */
+  @Prop({ reflect: true, mutable: true }) value: TSliderValue;
 
   // Prop lifecycle events
   // =======================
-  @Watch('type')
-  handleTypePropChange() {
-    validatePropValue(SLIDER_TYPE, 'single', this.el, 'type');
-  }
 
   @Watch('value')
-  handleValuePropChange() {
-    this.handleRangeInputChange();
+  handleValuePropChange(newValue: TSliderValue) {
+    const isRangeType = this.isRangeType;
+    const value = this.parseValue(newValue);
+
+    this.minValue = isRangeType ? value[0] : value;
+    this.maxValue = isRangeType ? value[1] : this.minValue;
+  }
+
+  @Watch('step')
+  handleStepPropChange() {
+    this.minValue = Math.round(this.minValue / this.step) * this.step;
+    this.maxValue = Math.round(this.maxValue / this.step) * this.step;
   }
 
   // Events section
@@ -75,7 +104,7 @@ export class BqSlider {
   // ==============================================
 
   /** Handler to be called when change the value on range inputs */
-  @Event() bqChange: EventEmitter<{ value: number | Array<number> | string; el: HTMLBqSliderElement }>;
+  @Event() bqChange: EventEmitter<{ value: Exclude<TSliderValue, string>; el: HTMLBqSliderElement }>;
 
   /** Handler to be called when the slider loses focus */
   @Event() bqBlur: EventEmitter<HTMLBqSliderElement>;
@@ -88,17 +117,16 @@ export class BqSlider {
   // =====================================
 
   componentWillLoad() {
-    this.handleTypePropChange();
+    this.handleValuePropChange(this.value);
+    this.handleStepPropChange();
   }
 
   componentDidLoad() {
-    this.sanitizePropValue();
-    this.updateProgressSize();
+    this.updateProgressTrack();
   }
 
   componentDidUpdate() {
-    this.sanitizePropValue();
-    this.updateProgressSize();
+    this.updateProgressTrack();
   }
 
   // Listeners
@@ -116,170 +144,70 @@ export class BqSlider {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private get isSingleSlider(): boolean {
-    return this.type === 'single';
-  }
-
-  private get stepDecimalNumber(): number {
-    if (this.step % 1 != 0) return this.step.toString().split('.')[1].length;
-    return 0;
-  }
-
-  private setPropValue = (value?: { min?: number; max?: number }): void => {
-    if (!value) return;
-
-    if (value.hasOwnProperty('min') && value.min) {
-      if (this.isSingleSlider) {
-        this.value = value.min;
-        this.minRangeValue = value.min;
-        this.setElementValue(String(value.min), this.minRangeInputElement);
-        return;
-      }
-
-      if (this.gap && value.hasOwnProperty('max')) {
-        value.min = Math.min(value.min, value.max - this.gap);
-      }
-
-      this.value[0] = value.min;
-      this.minRangeValue = value.min;
-      this.setElementValue(String(value.min), this.minRangeInputElement);
-    }
-
-    if (value.hasOwnProperty('max') && value.max) {
-      if (this.gap && value.hasOwnProperty('min')) {
-        value.max = Math.max(value.max, value.min + this.gap);
-      }
-
-      this.value[1] = value.max;
-      this.maxRangeValue = value.max;
-      this.setElementValue(String(value.max), this.maxRangeInputElement);
-    }
+  private parseValue = (value: TSliderValue) => {
+    return isString(value) ? JSON.parse(value) : value;
   };
 
-  private handleMinRangeInput = (): void => {
-    if (!this.isSingleSlider) {
-      const minRangeValue = Math.min(
-        parseFloat(this.minRangeInputElement.value),
-        parseFloat(this.maxRangeInputElement.value) - this.gap,
-      );
+  private handleInputChange = (type: 'min' | 'max', event: InputEvent) => {
+    const target = event.target as HTMLInputElement;
+    const value = parseFloat(target.value);
 
-      this.setPropValue({ min: minRangeValue });
+    if (type === 'min') {
+      this.minValue = this.isRangeType ? Math.min(value, this.maxValue - this.gap) : value;
+    } else if (type === 'max') {
+      this.maxValue = this.isRangeType ? Math.max(value, this.minValue + this.gap) : value;
     }
 
-    this.setPropValue({ min: parseFloat(this.minRangeInputElement.value) });
-    this.updateProgressSize();
-    this.handleRangeInputChange();
+    // Update the input value to reflect the clamped value
+    target.value = (type === 'min' ? this.minValue : this.maxValue).toString();
+
+    this.emitBqChange();
   };
 
-  private handleMaxRangeInput = (): void => {
-    if (!this.isSingleSlider) {
-      const maxRangeValue = Math.max(
-        parseFloat(this.maxRangeInputElement.value),
-        parseFloat(this.minRangeInputElement.value) + this.gap,
-      );
-
-      this.setPropValue({ max: maxRangeValue });
-    }
-
-    this.setPropValue({ max: parseFloat(this.maxRangeInputElement.value) });
-    this.updateProgressSize();
-    this.handleRangeInputChange();
+  private calculatePercent = (value: number) => {
+    const totalRange = Number(this.max) - Number(this.min);
+    return (value / totalRange) * 100;
   };
 
-  private updateProgressSize = (): void => {
-    let leftPercent = 0 + '%';
-    let rightPercent =
-      100 - ((parseFloat(this.minRangeInputElement.value) - this.min) / (this.max - this.min)) * 100 + '%';
+  private updateProgressTrack = () => {
+    if (!this.progressElem) return;
 
-    if (!this.isSingleSlider) {
-      leftPercent = ((parseFloat(this.minRangeInputElement.value) - this.min) / (this.max - this.min)) * 100 + '%';
-      rightPercent =
-        100 - ((parseFloat(this.maxRangeInputElement.value) - this.min) / (this.max - this.min)) * 100 + '%';
-    }
+    // For range type, left starts from the `min` value and width is the difference between `max` and `min`.
+    // For non-range type, left starts from 0 and width is the `min` value.
+    const left = this.isRangeType ? this.calculatePercent(this.minValue) : 0;
+    const width = this.isRangeType
+      ? this.calculatePercent(Number(this.maxValue) - Number(this.minValue))
+      : this.calculatePercent(this.minValue);
 
-    this.progressDivElement.style.left = leftPercent;
-    this.progressDivElement.style.right = rightPercent;
+    this.progressElem.style.left = `${left}%`;
+    this.progressElem.style.width = `${width}%`;
   };
 
-  private sanitizeArrayValue = (defaultValue): void => {
-    if (!Array.isArray(this.value)) return;
+  private emitBqChange = () => {
+    this.debounceBqChange?.cancel();
 
-    if (!this.value.length) {
-      this.value = defaultValue;
-      return;
-    }
+    const value: Exclude<TSliderValue, string> = this.isRangeType ? [this.minValue, this.maxValue] : this.minValue;
+    this.debounceBqChange = debounce(() => this.bqChange.emit({ value, el: this.el }), this.debounceTime);
 
-    if (this.isSingleSlider) {
-      this.value = this.value[0];
-      return;
-    }
-
-    if (this.value.length === 1) {
-      this.value[1] = this.value[0];
-    }
-
-    if (this.value.length > 1) {
-      this.value[0] = Math.min(this.value[0], this.value[1]);
-      this.value[1] = Math.max(this.value[0], this.value[1]);
-    }
+    this.debounceBqChange();
   };
 
-  private sanitizePropValue = (): void => {
-    const defaultValue = !this.isSingleSlider ? [0, 0] : 0;
-
-    if (!this.value) {
-      this.value = defaultValue;
-    }
-
-    this.value = isString(this.value) ? JSON.parse(this.value) : this.value;
-
-    if (Array.isArray(this.value)) {
-      this.sanitizeArrayValue(defaultValue);
-    }
-
-    if (typeof this.value === 'object' && !Array.isArray(this.value)) {
-      this.value = defaultValue;
-    }
-
-    if (typeof this.value === 'number' && !this.isSingleSlider && !Array.isArray(this.value)) {
-      this.value = [this.value, this.value];
-    }
-
-    this.setPropValue(this.isSingleSlider ? { min: Number(this.value) } : { min: this.value[0], max: this.value[1] });
-  };
-
-  private setElementValue = (value: string, element: Element): void => {
-    if (!element || !(element instanceof HTMLInputElement)) return;
-
-    element.value = value;
-    element.setAttribute('value', value);
-  };
-
-  private getMinRangeValue = () => {
-    if (!this.value) return 0;
-    return !Array.isArray(this.value) ? this.value : this.value[0];
-  };
-
-  private getMaxRangeValue = () => {
-    if (!this.value) return 0;
-
-    return this.value[1];
-  };
-
-  private handleRangeInputBlur = () => {
+  private handleBlur = () => {
     this.bqBlur.emit(this.el);
   };
 
-  private handleRangeInputFocus = () => {
+  private handleFocus = () => {
     this.bqFocus.emit(this.el);
   };
 
-  private handleRangeInputChange = () => {
-    this.bqChangeDebounced?.cancel();
+  private get decimalCount(): number {
+    // Return the length of the decimal part of the step value.
+    return (this.step % 1).toFixed(10).split('.')[1].replace(/0+$/, '').length;
+  }
 
-    this.bqChangeDebounced = debounce(() => this.bqChange.emit({ value: this.value, el: this.el }), this.debounceTime);
-    this.bqChangeDebounced();
-  };
+  private get isRangeType() {
+    return this.type === 'range';
+  }
 
   // render() function
   // Always the last one in the class.
@@ -288,77 +216,77 @@ export class BqSlider {
   render() {
     return (
       <div
-        class={{
-          [`bq-slider ${this.type}`]: true,
-          'cursor-not-allowed opacity-60': this.disabled,
-        }}
-        part="base"
         aria-disabled={this.disabled ? 'true' : 'false'}
+        class={{ 'flex w-full': true, 'cursor-not-allowed opacity-60': this.disabled }}
+        part="base"
       >
-        {!this.isSingleSlider && (
+        {/* LABEL (start) */}
+        <span
+          class={{
+            'me-xs box-content block w-fit min-w-8 text-end text-s font-medium leading-regular text-text-primary [font-variant:tabular-nums]':
+              true,
+            hidden: !this.enableValueIndicator,
+          }}
+          part="label-start"
+        >
+          {this.minValue.toFixed(this.decimalCount)}
+        </span>
+        {/* SLIDER */}
+        <div class="relative w-full" part="container">
+          {/* TRACK AREA */}
+          <span class="absolute top-1/2 h-1 w-full -translate-y-1/2 rounded-xs bg-ui-secondary" part="track-area" />
+          {/* PROGRESS AREA */}
           <span
-            class={{
-              'is-hidden': !this.valueIndicator,
-              'bq-slider__label mr-m': true,
-            }}
-          >
-            {this.minRangeValue.toFixed(this.stepDecimalNumber)}
-          </span>
-        )}
-        <div class="bq-slider__container">
+            class="absolute top-1/2 h-1 w-1/2 -translate-y-1/2 rounded-xs bg-ui-brand"
+            ref={(elem) => (this.progressElem = elem)}
+            part="progress-area"
+          />
+          {/* INPUT (Min), used on single type */}
           <input
-            class="bq-slider__input"
             type="range"
+            class={{
+              'absolute top-1/2 w-full -translate-y-1/2 cursor-pointer appearance-none bg-transparent outline-none disabled:cursor-not-allowed':
+                true,
+              'pointer-events-none': this.isRangeType,
+            }}
+            disabled={this.disabled}
             min={this.min}
             max={this.max}
             step={this.step}
-            value={String(this.getMinRangeValue())}
-            disabled={this.disabled}
-            ref={(input: HTMLInputElement) => (this.minRangeInputElement = input)}
-            onInput={this.handleMinRangeInput}
-            onBlur={this.handleRangeInputBlur}
-            onFocus={this.handleRangeInputFocus}
-            aria-label="Min Range"
+            onInput={(ev) => this.handleInputChange('min', ev)}
+            onBlur={this.handleBlur}
+            onFocus={this.handleFocus}
+            value={this.minValue}
+            part="input-min"
           />
-
-          {!this.isSingleSlider && (
+          {/* INPUT (Max) */}
+          {this.isRangeType && (
             <input
-              class="bq-slider__input"
               type="range"
+              class="pointer-events-none absolute top-1/2 w-full -translate-y-1/2 cursor-pointer appearance-none bg-transparent outline-none disabled:cursor-not-allowed"
+              disabled={this.disabled}
               min={this.min}
               max={this.max}
               step={this.step}
-              value={String(this.getMaxRangeValue())}
-              disabled={this.disabled}
-              ref={(input: HTMLInputElement) => (this.maxRangeInputElement = input)}
-              onInput={this.handleMaxRangeInput}
-              onBlur={this.handleRangeInputBlur}
-              onFocus={this.handleRangeInputFocus}
-              aria-label="Max Range"
+              onInput={(ev) => this.handleInputChange('max', ev)}
+              onBlur={this.handleBlur}
+              onFocus={this.handleFocus}
+              value={this.maxValue}
+              part="input-max"
             />
           )}
-          <div class="progress" ref={(div: HTMLDivElement) => (this.progressDivElement = div)}></div>
         </div>
-        {!this.isSingleSlider && (
-          <span
-            class={{
-              'is-hidden': !this.valueIndicator,
-              'bq-slider__label ml-m': true,
-            }}
-          >
-            {this.maxRangeValue.toFixed(this.stepDecimalNumber)}
-          </span>
-        )}
-        {this.isSingleSlider && (
-          <span
-            class={{
-              'is-hidden': !this.valueIndicator,
-              'bq-slider__label ml-m': true,
-            }}
-          >
-            {this.minRangeValue.toFixed(this.stepDecimalNumber)}
-          </span>
-        )}
+        {/* LABEL (end) */}
+        <span
+          class={{
+            'ms-xs box-content block w-fit min-w-8 text-start text-s font-medium leading-regular text-text-primary [font-variant:tabular-nums]':
+              true,
+            hidden: !this.enableValueIndicator || !this.isRangeType,
+          }}
+          part="label-end"
+        >
+          {this.maxValue.toFixed(this.decimalCount)}
+        </span>
       </div>
     );
   }
