@@ -24,6 +24,8 @@ export class BqSlider2 {
   // Own Properties
   // ====================
 
+  private inputMinElem: HTMLInputElement;
+  private inputMaxElem: HTMLInputElement;
   private progressElem: HTMLSpanElement;
   private debounceBqChange: TDebounce<void>;
 
@@ -86,11 +88,8 @@ export class BqSlider2 {
 
   @Watch('value')
   handleValuePropChange(newValue: TSliderValue) {
-    const isRangeType = this.isRangeType;
-    const value = this.parseValue(newValue);
-
-    this.minValue = isRangeType ? value[0] : value;
-    this.maxValue = isRangeType ? value[1] : this.minValue;
+    this.setState(newValue);
+    this.emitBqChange();
   }
 
   @Watch('step')
@@ -116,17 +115,19 @@ export class BqSlider2 {
   // Ordered by their natural call order
   // =====================================
 
-  componentWillLoad() {
-    this.handleValuePropChange(this.value);
+  connectedCallback() {
+    this.setState(this.value);
     this.handleStepPropChange();
   }
 
   componentDidLoad() {
     this.updateProgressTrack();
+    this.syncInputsValue();
   }
 
   componentDidUpdate() {
     this.updateProgressTrack();
+    this.syncInputsValue();
   }
 
   // Listeners
@@ -144,9 +145,20 @@ export class BqSlider2 {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private parseValue = (value: TSliderValue) => {
-    return isString(value) ? JSON.parse(value) : value;
+  private setState = (newValue: TSliderValue) => {
+    const isRangeType = this.isRangeType;
+    const value = this.stringToObject(newValue);
+
+    this.minValue = isRangeType ? value[0] : value;
+    this.maxValue = isRangeType ? Math.max(value[1], this.minValue + this.gap) : this.minValue;
   };
+
+  private syncInputsValue = () => {
+    this.inputMinElem?.setAttribute('value', this.minValue.toString());
+    this.inputMaxElem?.setAttribute('value', this.maxValue.toString());
+  };
+
+  private stringToObject = (value: TSliderValue) => (isString(value) ? JSON.parse(value) : value);
 
   private handleInputChange = (type: 'min' | 'max', event: InputEvent) => {
     const target = event.target as HTMLInputElement;
@@ -159,7 +171,9 @@ export class BqSlider2 {
     }
 
     // Update the input value to reflect the clamped value
-    target.value = (type === 'min' ? this.minValue : this.maxValue).toString();
+    const reflectedValue = (type === 'min' ? this.minValue : this.maxValue).toString();
+    target.value = reflectedValue;
+    target.setAttribute('value', reflectedValue);
 
     this.emitBqChange();
   };
@@ -253,6 +267,7 @@ export class BqSlider2 {
             min={this.min}
             max={this.max}
             step={this.step}
+            ref={(input) => (this.inputMinElem = input)}
             onInput={(ev) => this.handleInputChange('min', ev)}
             onBlur={this.handleBlur}
             onFocus={this.handleFocus}
@@ -268,6 +283,7 @@ export class BqSlider2 {
               min={this.min}
               max={this.max}
               step={this.step}
+              ref={(input) => (this.inputMaxElem = input)}
               onInput={(ev) => this.handleInputChange('max', ev)}
               onBlur={this.handleBlur}
               onFocus={this.handleFocus}
