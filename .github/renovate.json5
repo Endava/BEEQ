@@ -53,10 +53,10 @@
    */
   packageRules: [
     {
-      groupName: 'all NPM dependencies',
+      groupName: 'NPM dependencies',
       groupSlug: 'npmDependencies',
       matchDepPatterns: ['*'],
-      excludeDepPatterns: [
+      excludePackagePrefixes: [
         '@angular',
         '@schematics',
         'ng-packagr',
@@ -65,30 +65,29 @@
         '@stencil',
         '@storybook',
         'storybook',
-        '@floating-ui',
-        'typescript',
+        '@floating-ui'
       ],
-      excludePackageNames: ['zone.js', 'vite-tsconfig-paths'],
+      excludePackageNames: ['typescript', 'zone.js', 'vite-tsconfig-paths'],
     },
     {
       groupName: 'Angular',
-      matchDepPatterns: ['@angular', '@schematics', 'ng-packagr'],
+      matchPackagePrefixes: ['@angular', '@schematics', 'ng-packagr'],
     },
     {
       groupName: 'Nx',
-      matchDepPatterns: ['@nx', 'nx'],
+      matchPackagePrefixes: ['@nx', 'nx'],
     },
     {
       groupName: 'Stencil',
-      matchDepPatterns: ['@stencil'],
+      matchPackagePrefixes: ['@stencil'],
     },
     {
       groupName: 'Storybook',
-      matchDepPatterns: ['@storybook', 'storybook'],
+      matchPackagePrefixes: ['@storybook', 'storybook'],
     },
     {
       groupName: 'Floating-UI',
-      matchDepPatterns: ['@floating-ui'],
+      matchPackagePrefixes: ['@floating-ui'],
     },
     {
       groupName: 'Typescript',
