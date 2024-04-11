@@ -277,10 +277,13 @@ export class BqSlider2 {
         {/* SLIDER */}
         <div class="relative w-full" part="container">
           {/* TRACK AREA */}
-          <span class="absolute top-1/2 h-1 w-full -translate-y-1/2 rounded-xs bg-ui-secondary" part="track-area" />
+          <span
+            class="absolute top-1/2 h-1 w-full -translate-y-1/2 rounded-xs bg-[--bq-slider--trackarea-color]"
+            part="track-area"
+          />
           {/* PROGRESS AREA */}
           <span
-            class="absolute top-1/2 h-1 w-1/2 -translate-y-1/2 rounded-xs bg-ui-brand"
+            class="absolute top-1/2 h-1 w-1/2 -translate-y-1/2 rounded-xs bg-[--bq-slider--progress-color]"
             ref={(elem) => (this.progressElem = elem)}
             part="progress-area"
           />
