@@ -43,6 +43,7 @@
         "configPath": "packages/beeq/stencil.config.ts",
         "outputPath": "dist/beeq",
         "watch": true,
+        "docs": true,
         "dev": true
       }
     },
