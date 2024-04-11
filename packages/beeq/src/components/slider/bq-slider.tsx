@@ -20,7 +20,7 @@ import { debounce, isString, TDebounce } from '../../shared/utils';
     delegatesFocus: true,
   },
 })
-export class BqSlider2 {
+export class BqSlider {
   // Own Properties
   // ====================
 
