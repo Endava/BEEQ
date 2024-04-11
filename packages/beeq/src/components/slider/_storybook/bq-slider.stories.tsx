@@ -105,7 +105,6 @@ export const MinMaxStep: Story = {
     'enable-value-indicator': true,
     max: 10,
     min: 0,
-    step: 1,
     value: 3,
   },
 };
@@ -114,11 +113,10 @@ export const Gap: Story = {
   render: Template,
   args: {
     'enable-value-indicator': true,
-    gap: 2,
+    gap: 4,
     max: 10,
     min: 0,
     type: 'range',
-    step: 1,
     value: [2, 8],
   },
 };
