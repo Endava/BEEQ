@@ -1,8 +1,8 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import mdx from './bq-slider.mdx';
-import { SLIDER_TYPE } from '../bq-slider.types';
 
 const meta: Meta = {
   title: 'Components/Slider',
@@ -14,28 +14,30 @@ const meta: Meta = {
     layout: 'centered',
   },
   argTypes: {
-    disabled: { control: 'boolean' },
     'debounce-time': { control: 'number' },
+    disabled: { control: 'boolean' },
+    'enable-value-indicator': { control: 'boolean' },
     gap: { control: 'number' },
-    min: { control: 'number' },
     max: { control: 'number' },
+    min: { control: 'number' },
     step: { control: 'number' },
-    type: { control: 'select', options: [...SLIDER_TYPE] },
+    type: { control: 'inline-radio', options: ['single', 'range'] },
     value: { control: 'object' },
-    'value-indicator': { control: 'boolean' },
+    // Events
     bqBlur: { action: 'bqBlur' },
     bqChange: { action: 'bqChange' },
     bqFocus: { action: 'bqFocus' },
   },
   args: {
-    disabled: false,
     'debounce-time': 0,
+    disabled: false,
+    'enable-value-indicator': false,
     gap: 0,
-    min: 0,
     max: 100,
+    min: 0,
     step: 1,
     type: 'single',
-    'value-indicator': false,
+    value: undefined,
   },
 };
 export default meta;
@@ -43,28 +45,29 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
-  <div class="h-auto w-[450px]">
+  <div class="w-96">
     <bq-slider
+      debounce-time=${ifDefined(args['debounce-time'])}
       ?disabled=${args.disabled}
-      debounce-time=${args['debounce-time']}
-      gap=${args.gap}
-      .min=${args.min}
-      .max=${args.max}
-      .step=${args.step}
-      type=${args.type}
-      .value=${args.value}
-      ?value-indicator=${args['value-indicator']}
+      ?enable-value-indicator=${args['enable-value-indicator']}
+      gap=${ifDefined(args.gap)}
+      max=${ifDefined(args.max)}
+      min=${ifDefined(args.min)}
+      step=${ifDefined(args.step)}
+      type=${ifDefined(args.type)}
+      value=${ifDefined(JSON.stringify(args.value))}
       @bqBlur=${args.bqBlur}
       @bqChange=${args.bqChange}
       @bqFocus=${args.bqFocus}
-    ></bq-slider>
+    >
+      ${args.text}
+    </bq-slider>
   </div>
 `;
 
-export const Single: Story = {
+export const Default: Story = {
   render: Template,
   args: {
-    type: 'single',
     value: 30,
   },
 };
@@ -72,7 +75,60 @@ export const Single: Story = {
 export const Range: Story = {
   render: Template,
   args: {
-    type: 'range',
     value: [30, 70],
+    type: 'range',
+  },
+};
+
+export const Disabled: Story = {
+  render: Template,
+  args: {
+    disabled: true,
+    value: [30, 70],
+    type: 'range',
+  },
+};
+
+export const ValueIndicator: Story = {
+  render: Template,
+  args: {
+    'enable-value-indicator': true,
+    value: [30, 70],
+    type: 'range',
+  },
+};
+
+export const MinMaxStep: Story = {
+  name: 'Min, Max, Step',
+  render: Template,
+  args: {
+    'enable-value-indicator': true,
+    max: 10,
+    min: 0,
+    value: 3,
+  },
+};
+
+export const Gap: Story = {
+  render: Template,
+  args: {
+    'enable-value-indicator': true,
+    gap: 4,
+    max: 10,
+    min: 0,
+    type: 'range',
+    value: [2, 8],
+  },
+};
+
+export const DecimalValues: Story = {
+  render: Template,
+  args: {
+    'enable-value-indicator': true,
+    max: 1,
+    min: 0,
+    type: 'range',
+    step: 0.05,
+    value: [0.3, 0.7],
   },
 };

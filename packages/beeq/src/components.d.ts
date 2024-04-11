@@ -22,7 +22,7 @@ import { TNotificationBorderRadius, TNotificationType } from "./components/notif
 import { TProgressBorderShape, TProgressThickness, TProgressType } from "./components/progress/bq-progress.types";
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 import { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
-import { TSliderType } from "./components/slider/bq-slider.types";
+import { TSliderType, TSliderValue } from "./components/slider/bq-slider.types";
 import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 import { TStatusType } from "./components/status/bq-status.types";
 import { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
@@ -49,7 +49,7 @@ export { TNotificationBorderRadius, TNotificationType } from "./components/notif
 export { TProgressBorderShape, TProgressThickness, TProgressType } from "./components/progress/bq-progress.types";
 export { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 export { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
-export { TSliderType } from "./components/slider/bq-slider.types";
+export { TSliderType, TSliderValue } from "./components/slider/bq-slider.types";
 export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 export { TStatusType } from "./components/status/bq-status.types";
 export { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
@@ -912,15 +912,19 @@ export namespace Components {
     }
     interface BqSlider {
         /**
-          * A number representing the delay value applied to bqChange event handler
+          * The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change.
          */
         "debounceTime": number;
         /**
-          * If `true` slider is disabled
+          * If `true` the slider is disabled.
          */
         "disabled"?: boolean;
         /**
-          * A number representing the minimum value between the min and max range selected.
+          * If `true` it will show the value label on a side of the slider track area
+         */
+        "enableValueIndicator"?: boolean;
+        /**
+          * A number representing the amount to remain between the minimum and maximum values (only for range type).
          */
         "gap": number;
         /**
@@ -932,7 +936,7 @@ export namespace Components {
          */
         "min": number;
         /**
-          * A number representing the step of the slider.
+          * A number representing the step of the slider. ⚠️ Please notice that the value (or list of values if the slider type is `range`) will be rounded to the nearest multiple of `step`.
          */
         "step": number;
         /**
@@ -940,13 +944,9 @@ export namespace Components {
          */
         "type": TSliderType;
         /**
-          * A number representing the value of the slider.
+          * The value of the slider. - If the slider type is `single`, the value is a number. - If the slider type is `range`, the value is an array of two numbers (the first number represents the `min` value and the second number represents the `max` value).
          */
-        "value": number | Array<number> | string;
-        /**
-          * If `true` it will display the min and max values
-         */
-        "valueIndicator"?: boolean;
+        "value": TSliderValue;
     }
     /**
      * Spinners are designed for users to display data loading.
@@ -1848,7 +1848,7 @@ declare global {
         new (): HTMLBqSideMenuItemElement;
     };
     interface HTMLBqSliderElementEventMap {
-        "bqChange": { value: number | Array<number> | string; el: HTMLBqSliderElement };
+        "bqChange": { value: Exclude<TSliderValue, string>; el: HTMLBqSliderElement };
         "bqBlur": HTMLBqSliderElement;
         "bqFocus": HTMLBqSliderElement;
     }
@@ -3097,15 +3097,19 @@ declare namespace LocalJSX {
     }
     interface BqSlider {
         /**
-          * A number representing the delay value applied to bqChange event handler
+          * The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change.
          */
         "debounceTime"?: number;
         /**
-          * If `true` slider is disabled
+          * If `true` the slider is disabled.
          */
         "disabled"?: boolean;
         /**
-          * A number representing the minimum value between the min and max range selected.
+          * If `true` it will show the value label on a side of the slider track area
+         */
+        "enableValueIndicator"?: boolean;
+        /**
+          * A number representing the amount to remain between the minimum and maximum values (only for range type).
          */
         "gap"?: number;
         /**
@@ -3123,13 +3127,13 @@ declare namespace LocalJSX {
         /**
           * Handler to be called when change the value on range inputs
          */
-        "onBqChange"?: (event: BqSliderCustomEvent<{ value: number | Array<number> | string; el: HTMLBqSliderElement }>) => void;
+        "onBqChange"?: (event: BqSliderCustomEvent<{ value: Exclude<TSliderValue, string>; el: HTMLBqSliderElement }>) => void;
         /**
           * Handler to be called when the slider gets focused
          */
         "onBqFocus"?: (event: BqSliderCustomEvent<HTMLBqSliderElement>) => void;
         /**
-          * A number representing the step of the slider.
+          * A number representing the step of the slider. ⚠️ Please notice that the value (or list of values if the slider type is `range`) will be rounded to the nearest multiple of `step`.
          */
         "step"?: number;
         /**
@@ -3137,13 +3141,9 @@ declare namespace LocalJSX {
          */
         "type"?: TSliderType;
         /**
-          * A number representing the value of the slider.
+          * The value of the slider. - If the slider type is `single`, the value is a number. - If the slider type is `range`, the value is an array of two numbers (the first number represents the `min` value and the second number represents the `max` value).
          */
-        "value"?: number | Array<number> | string;
-        /**
-          * If `true` it will display the min and max values
-         */
-        "valueIndicator"?: boolean;
+        "value"?: TSliderValue;
     }
     /**
      * Spinners are designed for users to display data loading.
