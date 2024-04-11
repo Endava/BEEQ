@@ -62,12 +62,12 @@ describe('bq-slider', () => {
   });
 
   it('should handle `gap` property', async () => {
-    const gap = 10;
+    const gap = 4;
     const page = await newE2EPage({
-      html: `<bq-slider type="range" value="[30, 70]" gap="${gap}"></bq-slider>`,
+      html: `<bq-slider type="range" min="0" max="10" value="[2, 8]" gap="${gap}"></bq-slider>`,
     });
 
-    await setProperties(page, 'bq-slider', { value: [55, 60] });
+    await setProperties(page, 'bq-slider', { value: [5, 7] });
 
     const minRangeInput = await page.find('bq-slider >>> input[part="input-min"]');
     const maxRangeInput = await page.find('bq-slider >>> input[part="input-max"]');
