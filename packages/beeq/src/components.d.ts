@@ -920,6 +920,10 @@ export namespace Components {
          */
         "disabled"?: boolean;
         /**
+          * If `true`, a tooltip will be shown displaying the progress value
+         */
+        "enableTooltip": boolean;
+        /**
           * If `true` it will show the value label on a side of the slider track area
          */
         "enableValueIndicator"?: boolean;
@@ -939,6 +943,10 @@ export namespace Components {
           * A number representing the step of the slider. ⚠️ Please notice that the value (or list of values if the slider type is `range`) will be rounded to the nearest multiple of `step`.
          */
         "step": number;
+        /**
+          * If `true`, a tooltip will always display the progress value. It relies on enableTooltip and if enableTooltip is false, tooltipAlwaysVisible cannot be true.
+         */
+        "tooltipAlwaysVisible": boolean;
         /**
           * It defines the type of slider to display
          */
@@ -3105,6 +3113,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * If `true`, a tooltip will be shown displaying the progress value
+         */
+        "enableTooltip"?: boolean;
+        /**
           * If `true` it will show the value label on a side of the slider track area
          */
         "enableValueIndicator"?: boolean;
@@ -3136,6 +3148,10 @@ declare namespace LocalJSX {
           * A number representing the step of the slider. ⚠️ Please notice that the value (or list of values if the slider type is `range`) will be rounded to the nearest multiple of `step`.
          */
         "step"?: number;
+        /**
+          * If `true`, a tooltip will always display the progress value. It relies on enableTooltip and if enableTooltip is false, tooltipAlwaysVisible cannot be true.
+         */
+        "tooltipAlwaysVisible"?: boolean;
         /**
           * It defines the type of slider to display
          */
