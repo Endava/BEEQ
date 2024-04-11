@@ -223,6 +223,44 @@ export class BqSlider2 {
     return this.type === 'range';
   }
 
+  private renderLabel = (value: number, position: 'start' | 'end', css?: string) => {
+    return (
+      <span
+        class={{
+          [`${css} box-content block w-fit min-w-8 text-s font-medium leading-regular text-text-primary [font-variant:tabular-nums]`]:
+            true,
+          hidden: position === 'start' ? !this.enableValueIndicator : !this.enableValueIndicator || !this.isRangeType,
+        }}
+        part={`label-${position}`}
+      >
+        {value.toFixed(this.decimalCount)}
+      </span>
+    );
+  };
+
+  private renderInput = (type: 'max' | 'min', value: number, refCallback: (input: HTMLInputElement) => void) => {
+    return (
+      <input
+        type="range"
+        class={{
+          'absolute top-1/2 w-full -translate-y-1/2 cursor-pointer appearance-none bg-transparent outline-none disabled:cursor-not-allowed':
+            true,
+          'pointer-events-none': this.isRangeType,
+        }}
+        disabled={this.disabled}
+        min={this.min}
+        max={this.max}
+        step={this.step}
+        ref={refCallback}
+        onInput={(ev) => this.handleInputChange(type, ev)}
+        onBlur={this.handleBlur}
+        onFocus={this.handleFocus}
+        value={value}
+        part={`input-${type}`}
+      />
+    );
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -235,16 +273,7 @@ export class BqSlider2 {
         part="base"
       >
         {/* LABEL (start) */}
-        <span
-          class={{
-            'me-xs box-content block w-fit min-w-8 text-end text-s font-medium leading-regular text-text-primary [font-variant:tabular-nums]':
-              true,
-            hidden: !this.enableValueIndicator,
-          }}
-          part="label-start"
-        >
-          {this.minValue.toFixed(this.decimalCount)}
-        </span>
+        {this.renderLabel(this.minValue, 'start', 'me-xs text-end')}
         {/* SLIDER */}
         <div class="relative w-full" part="container">
           {/* TRACK AREA */}
@@ -256,53 +285,12 @@ export class BqSlider2 {
             part="progress-area"
           />
           {/* INPUT (Min), used on single type */}
-          <input
-            type="range"
-            class={{
-              'absolute top-1/2 w-full -translate-y-1/2 cursor-pointer appearance-none bg-transparent outline-none disabled:cursor-not-allowed':
-                true,
-              'pointer-events-none': this.isRangeType,
-            }}
-            disabled={this.disabled}
-            min={this.min}
-            max={this.max}
-            step={this.step}
-            ref={(input) => (this.inputMinElem = input)}
-            onInput={(ev) => this.handleInputChange('min', ev)}
-            onBlur={this.handleBlur}
-            onFocus={this.handleFocus}
-            value={this.minValue}
-            part="input-min"
-          />
+          {this.renderInput('min', this.minValue, (input) => (this.inputMinElem = input))}
           {/* INPUT (Max) */}
-          {this.isRangeType && (
-            <input
-              type="range"
-              class="pointer-events-none absolute top-1/2 w-full -translate-y-1/2 cursor-pointer appearance-none bg-transparent outline-none disabled:cursor-not-allowed"
-              disabled={this.disabled}
-              min={this.min}
-              max={this.max}
-              step={this.step}
-              ref={(input) => (this.inputMaxElem = input)}
-              onInput={(ev) => this.handleInputChange('max', ev)}
-              onBlur={this.handleBlur}
-              onFocus={this.handleFocus}
-              value={this.maxValue}
-              part="input-max"
-            />
-          )}
+          {this.isRangeType && this.renderInput('max', this.maxValue, (input) => (this.inputMaxElem = input))}
         </div>
         {/* LABEL (end) */}
-        <span
-          class={{
-            'ms-xs box-content block w-fit min-w-8 text-start text-s font-medium leading-regular text-text-primary [font-variant:tabular-nums]':
-              true,
-            hidden: !this.enableValueIndicator || !this.isRangeType,
-          }}
-          part="label-end"
-        >
-          {this.maxValue.toFixed(this.decimalCount)}
-        </span>
+        {this.renderLabel(this.maxValue, 'end', 'ms-xs text-start')}
       </div>
     );
   }
