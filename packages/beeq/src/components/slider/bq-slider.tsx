@@ -59,7 +59,7 @@ export class BqSlider2 {
   @Prop({ reflect: true }) enableValueIndicator? = false;
 
   /** A number representing the amount to remain between the minimum and maximum values (only for range type). */
-  @Prop({ reflect: true }) gap = 0;
+  @Prop({ reflect: true, mutable: true }) gap = 0;
 
   /** A number representing the max value of the slider. */
   @Prop({ reflect: true }) max = 100;
@@ -98,6 +98,16 @@ export class BqSlider2 {
     this.maxValue = Math.round(this.maxValue / this.step) * this.step;
   }
 
+  @Watch('gap')
+  handleGapChange(newValue: number) {
+    if (!this.isRangeType) return;
+    // Use the this.value prop value when the component is initialized
+    // Otherwise, use the current this.min and this.max state values
+    const value = this.min && this.max ? [this.min, this.max] : this.stringToObject(this.value);
+    // If the gap is less than the min or greater than the max, set it to 0
+    this.gap = newValue <= value[0] || newValue >= value[1] ? 0 : newValue;
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
@@ -116,6 +126,7 @@ export class BqSlider2 {
   // =====================================
 
   connectedCallback() {
+    this.handleGapChange(this.gap);
     this.setState(this.value);
     this.handleStepPropChange();
   }
