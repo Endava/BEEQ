@@ -20,6 +20,17 @@
    */
   dependencyDashboard: true,
   /**
+   * Configuration presets to use or extend from.
+   */
+  extends: ['group:all'],
+  /**
+   * Slug to use for group (e.g. in branch name).
+   * By default, Renovate will "slugify" the groupName to determine the branch name.
+   * For example if you named your group "devDependencies (non-major)"
+   * then the branchName would be renovate/devdependencies-non-major
+   */
+  groupSlug: 'npm',
+  /**
    * The ignoreDeps configuration field allows you to define a list of dependency names to be ignored by Renovate.
    * Currently it supports only "exact match" dependency names
    */
@@ -42,9 +53,10 @@
    */
   packageRules: [
     {
-      groupName: 'all dependencies',
-      matchPackagePrefixes: ['*'],
-      excludePackagePrefixes: [
+      groupName: 'all NPM dependencies',
+      groupSlug: 'npmDependencies',
+      matchDepPatterns: ['*'],
+      excludeDepPatterns: [
         '@angular',
         '@schematics',
         'ng-packagr',
@@ -60,27 +72,27 @@
     },
     {
       groupName: 'Angular',
-      matchPackagePrefixes: ['@angular', '@schematics', 'ng-packagr'],
+      matchDepPatterns: ['@angular', '@schematics', 'ng-packagr'],
     },
     {
       groupName: 'Nx',
-      matchPackagePrefixes: ['@nx', 'nx'],
+      matchDepPatterns: ['@nx', 'nx'],
     },
     {
       groupName: 'Stencil',
-      matchPackagePrefixes: ['@stencil'],
+      matchDepPatterns: ['@stencil'],
     },
     {
       groupName: 'Storybook',
-      matchPackagePrefixes: ['@storybook', 'storybook'],
+      matchDepPatterns: ['@storybook', 'storybook'],
     },
     {
       groupName: 'Floating-UI',
-      matchPackagePrefixes: ['@floating-ui'],
+      matchDepPatterns: ['@floating-ui'],
     },
     {
       groupName: 'Typescript',
-      matchPackagePrefixes: ['typescript'],
+      matchPackageNames: ['typescript'],
       allowedVersions: '<5.4.0',
     },
     {
