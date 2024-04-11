@@ -105,7 +105,7 @@ export class BqSlider2 {
     // Otherwise, use the current this.min and this.max state values
     const value = this.min && this.max ? [this.min, this.max] : this.stringToObject(this.value);
     // If the gap is less than the min or greater than the max, set it to 0
-    this.gap = newValue <= value[0] || newValue >= value[1] ? 0 : newValue;
+    this.gap = newValue < value[0] || newValue > value[1] ? 0 : newValue;
   }
 
   // Events section
@@ -156,12 +156,21 @@ export class BqSlider2 {
   // These methods cannot be called from the host element.
   // =======================================================
 
+  private calculateMinValue = (value: TSliderValue) => {
+    const isMaxValue = (this.maxValue ?? value[1]) === this.max;
+    const isGapExceeded = value[0] + this.gap > this.max;
+    // Make sure that the min value gets adjusted according to the gap value
+    return isMaxValue || isGapExceeded ? this.max - this.gap : value[0];
+  };
+
+  private calculateMaxValue = (value: TSliderValue, minValue: number) => Math.max(value[1], minValue + this.gap);
+
   private setState = (newValue: TSliderValue) => {
     const isRangeType = this.isRangeType;
     const value = this.stringToObject(newValue);
 
-    this.minValue = isRangeType ? value[0] : value;
-    this.maxValue = isRangeType ? Math.max(value[1], this.minValue + this.gap) : this.minValue;
+    this.minValue = isRangeType ? this.calculateMinValue(value) : value;
+    this.maxValue = isRangeType ? this.calculateMaxValue(value, this.minValue) : this.minValue;
   };
 
   private syncInputsValue = () => {
