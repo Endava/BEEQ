@@ -334,7 +334,7 @@ export class BqSlider {
       exportparts="base,trigger,panel"
       alwaysVisible={this.isTooltipAlwaysVisible}
       visible
-      distance={16}
+      distance={this.enableValueIndicator ? 6 : 16}
       style={{ left: `${thumbPosition}px`, fontVariant: 'tabular-nums' }}
     >
       <div class={{ 'absolute h-1 w-1': true, '-z-[1]': this.tooltipAlwaysVisible }} slot="trigger" />
