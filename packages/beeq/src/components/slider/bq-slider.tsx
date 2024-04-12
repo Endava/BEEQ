@@ -337,7 +337,7 @@ export class BqSlider {
       distance={16}
       style={{ left: `${thumbPosition}px`, fontVariant: 'tabular-nums' }}
     >
-      <div class={{ 'absolute h-1 w-1': true, 'z-50': this.tooltipAlwaysVisible }} slot="trigger" />
+      <div class={{ 'absolute h-1 w-1': true, '-z-[1]': this.tooltipAlwaysVisible }} slot="trigger" />
       {value}
     </bq-tooltip>
   );
