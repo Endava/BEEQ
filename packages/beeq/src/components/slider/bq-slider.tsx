@@ -46,6 +46,8 @@ export class BqSlider {
   @State() minValue: number = 0;
   /** The `maxValue` state is only used when the slider type is `range`. */
   @State() maxValue: number = 100;
+  @State() calculatedLeftThumbPosition: number;
+  @State() calculatedRightThumbPosition: number;
 
   // Public Property API
   // ========================
@@ -144,11 +146,20 @@ export class BqSlider {
   componentDidLoad() {
     this.updateProgressTrack();
     this.syncInputsValue();
+    if (this.enableTooltip) {
+      this.calculatedLeftThumbPosition = this.calculateThumbPosition()?.leftThumbPosition;
+      this.calculatedRightThumbPosition = this.calculateThumbPosition()?.rightThumbPosition;
+    }
   }
 
   componentDidUpdate() {
     this.updateProgressTrack();
     this.syncInputsValue();
+    this.calculateThumbPosition();
+    if (this.enableTooltip) {
+      this.calculatedLeftThumbPosition = this.calculateThumbPosition()?.leftThumbPosition;
+      this.calculatedRightThumbPosition = this.calculateThumbPosition()?.rightThumbPosition;
+    }
   }
 
   // Listeners
@@ -361,12 +372,12 @@ export class BqSlider {
           </div>
           {/* INPUT (Min), used on single type */}
           {this.renderInput('min', this.minValue, (input) => (this.inputMinElem = input))}
-          {this.enableTooltip && this.renderTooltip(this.minValue, this.calculateThumbPosition()?.leftThumbPosition)}
+          {this.enableTooltip && this.renderTooltip(this.minValue, this.calculatedLeftThumbPosition)}
           {/* INPUT (Max) */}
           {this.isRangeType && this.renderInput('max', this.maxValue, (input) => (this.inputMaxElem = input))}
           {this.enableTooltip &&
             this.isRangeType &&
-            this.renderTooltip(this.maxValue, this.calculateThumbPosition()?.rightThumbPosition)}
+            this.renderTooltip(this.maxValue, this.calculatedRightThumbPosition)}
         </div>
         {/* LABEL (end) */}
         {this.renderLabel(this.maxValue, 'end', 'ms-xs text-start')}
