@@ -78,11 +78,30 @@ export const Default: Story = {
   },
 };
 
+export const DefaultWithTooltip: Story = {
+  render: Template,
+  args: {
+    value: 65,
+    'enable-tooltip': true,
+    'tooltip-always-visible': true,
+  },
+};
+
 export const Range: Story = {
   render: Template,
   args: {
     value: [30, 70],
     type: 'range',
+  },
+};
+
+export const RangeWithTooltip: Story = {
+  render: Template,
+  args: {
+    value: [25, 75],
+    type: 'range',
+    'enable-tooltip': true,
+    'tooltip-always-visible': true,
   },
 };
 
