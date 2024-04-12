@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
 import { TSliderType, TSliderValue } from './bq-slider.types';
-import { debounce, isString, TDebounce } from '../../shared/utils';
+import { debounce, isNil, isString, TDebounce } from '../../shared/utils';
 
 /**
  * @part base - The component's base wrapper.
@@ -43,9 +43,9 @@ export class BqSlider {
    * The `minValue` state is the only value when the slider type is `single`
    * and the minimum value when the slider type is `range`.
    */
-  @State() minValue: number = 0;
+  @State() minValue: number;
   /** The `maxValue` state is only used when the slider type is `range`. */
-  @State() maxValue: number = 100;
+  @State() maxValue: number;
   @State() calculatedLeftThumbPosition: number;
   @State() calculatedRightThumbPosition: number;
 
@@ -115,7 +115,7 @@ export class BqSlider {
     if (!this.isRangeType) return;
     // Use the this.value prop value when the component is initialized
     // Otherwise, use the current this.min and this.max state values
-    const value = this.min && this.max ? [this.min, this.max] : this.stringToObject(this.value);
+    const value = !isNil(this.min) && !isNil(this.max) ? [this.min, this.max] : this.stringToObject(this.value);
     // If the gap is less than the min or greater than the max, set it to 0
     this.gap = newValue < value[0] || newValue > value[1] ? 0 : newValue;
   }
