@@ -247,12 +247,14 @@ export class BqSlider {
   private calculateThumbPosition = (value: number): number => {
     if (!this.progressElem) return;
 
-    // Get the width of the input container and the size of the slider thumb
-    const inputWidth = this.trackElem.getBoundingClientRect().width;
-    const thumbSize = parseInt(getComputedStyle(this.el).getPropertyValue('--bq-slider--thumb-size'), 10);
-    const totalInputWidth = inputWidth - thumbSize;
+    // Get the width of the track area and the size of the input range thumb
+    const trackAreaWidth = this.trackElem.getBoundingClientRect().width;
+    // We need to also add 4px to the thumb size,
+    // this is because the thumb is 2px border (`border-2`)
+    const inputThumbSize = parseInt(getComputedStyle(this.el).getPropertyValue('--bq-slider--thumb-size'), 10) + 4;
+    const totalWidth = trackAreaWidth - inputThumbSize;
 
-    return ((value - this.min) / (this.max - this.min)) * totalInputWidth + thumbSize / 2;
+    return ((value - this.min) / (this.max - this.min)) * totalWidth + inputThumbSize / 2;
   };
 
   private thumbPosition = (): { minThumbPosition: number; maxThumbPosition?: number } => {
