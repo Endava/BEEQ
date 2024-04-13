@@ -78,30 +78,11 @@ export const Default: Story = {
   },
 };
 
-export const DefaultWithTooltip: Story = {
-  render: Template,
-  args: {
-    value: 65,
-    'enable-tooltip': true,
-    'tooltip-always-visible': true,
-  },
-};
-
 export const Range: Story = {
   render: Template,
   args: {
     value: [30, 70],
     type: 'range',
-  },
-};
-
-export const RangeWithTooltip: Story = {
-  render: Template,
-  args: {
-    value: [25, 75],
-    type: 'range',
-    'enable-tooltip': true,
-    'tooltip-always-visible': true,
   },
 };
 
@@ -157,5 +138,18 @@ export const DecimalValues: Story = {
     type: 'range',
     step: 0.05,
     value: [0.3, 0.7],
+  },
+};
+
+export const WithTooltip: Story = {
+  render: Template,
+  args: {
+    'enable-tooltip': true,
+    gap: 10,
+    max: 100,
+    min: 0,
+    step: 1,
+    type: 'range',
+    value: [30, 70],
   },
 };
