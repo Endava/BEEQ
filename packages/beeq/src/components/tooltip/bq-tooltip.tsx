@@ -76,6 +76,8 @@ export class BqTooltip {
   handleFloatingUIOptionsChange() {
     this.floatingUI.init({
       placement: this.placement,
+      distance: this.distance,
+      sameWidth: this.sameWidth,
       strategy: 'fixed',
     });
   }
