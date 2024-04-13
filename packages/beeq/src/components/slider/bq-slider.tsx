@@ -26,7 +26,10 @@ export class BqSlider {
 
   private inputMinElem: HTMLInputElement;
   private inputMaxElem: HTMLInputElement;
+  private minTooltipElem: HTMLBqTooltipElement;
+  private maxTooltipElem: HTMLBqTooltipElement;
   private progressElem: HTMLSpanElement;
+  private trackElem: HTMLSpanElement;
   private debounceBqChange: TDebounce<void>;
 
   // Reference to host HTML element
@@ -45,6 +48,10 @@ export class BqSlider {
   @State() minValue: number;
   /** The `maxValue` state is only used when the slider type is `range`. */
   @State() maxValue: number;
+  /** It hold the left position of the Thumb for the value or the minimum value (if the slider type is `range`) */
+  @State() minThumbPosition: number;
+  /** It hold the left position of the Thumb for the maximum value (if the slider type is `range`) */
+  @State() maxThumbPosition: number;
 
   // Public Property API
   // ========================
@@ -82,6 +89,15 @@ export class BqSlider {
    * - If the slider type is `range`, the value is an array of two numbers (the first number represents the `min` value and the second number represents the `max` value).
    */
   @Prop({ reflect: true, mutable: true }) value: TSliderValue;
+
+  /** If `true`, a tooltip will be shown displaying the progress value */
+  @Prop({ reflect: true }) enableTooltip: boolean = false;
+
+  /**
+   * If `true`, a tooltip will always display the progress value.
+   * It relies on enableTooltip and if enableTooltip is false, tooltipAlwaysVisible cannot be true.
+   */
+  @Prop({ reflect: true }) tooltipAlwaysVisible: boolean = false;
 
   // Prop lifecycle events
   // =======================
@@ -132,13 +148,11 @@ export class BqSlider {
   }
 
   componentDidLoad() {
-    this.updateProgressTrack();
-    this.syncInputsValue();
+    this.runUpdates();
   }
 
   componentDidUpdate() {
-    this.updateProgressTrack();
-    this.syncInputsValue();
+    this.runUpdates();
   }
 
   // Listeners
@@ -156,6 +170,12 @@ export class BqSlider {
   // These methods cannot be called from the host element.
   // =======================================================
 
+  private runUpdates = () => {
+    this.updateProgressTrack();
+    this.syncInputsValue();
+    this.setThumbPosition();
+  };
+
   private calculateMinValue = (value: TSliderValue) => {
     const isMaxValue = (this.maxValue ?? value[1]) === this.max;
     const isGapExceeded = value[0] + this.gap > this.max;
@@ -171,6 +191,13 @@ export class BqSlider {
 
     this.minValue = isRangeType ? this.calculateMinValue(value) : value;
     this.maxValue = isRangeType ? this.calculateMaxValue(value, this.minValue) : this.minValue;
+  };
+
+  private setThumbPosition = () => {
+    if (!this.enableTooltip) return;
+
+    // Destructure the returned object from this.thumbPosition() and assign the properties to this.minThumbPosition and this.maxThumbPosition
+    ({ minThumbPosition: this.minThumbPosition, maxThumbPosition: this.maxThumbPosition } = this.thumbPosition());
   };
 
   private syncInputsValue = () => {
@@ -217,6 +244,26 @@ export class BqSlider {
     this.progressElem.style.width = `${width}%`;
   };
 
+  private calculateThumbPosition = (value: number): number => {
+    if (!this.progressElem) return;
+
+    // Get the width of the track area and the size of the input range thumb
+    const trackAreaWidth = this.trackElem.getBoundingClientRect().width;
+    // We need to also add 4px to the thumb size,
+    // this is because the thumb is 2px border (`border-2`)
+    const inputThumbSize = parseInt(getComputedStyle(this.el).getPropertyValue('--bq-slider--thumb-size'), 10) + 4;
+    const totalWidth = trackAreaWidth - inputThumbSize;
+
+    return ((value - this.min) / (this.max - this.min)) * totalWidth + inputThumbSize / 2;
+  };
+
+  private thumbPosition = (): { minThumbPosition: number; maxThumbPosition?: number } => {
+    const minThumbPosition = this.calculateThumbPosition(this.minValue);
+    const maxThumbPosition = this.isRangeType ? this.calculateThumbPosition(this.maxValue) : undefined;
+
+    return { minThumbPosition, maxThumbPosition };
+  };
+
   private emitBqChange = () => {
     this.debounceBqChange?.cancel();
 
@@ -234,6 +281,22 @@ export class BqSlider {
     this.bqFocus.emit(this.el);
   };
 
+  private handleMouseDown = (event: MouseEvent) => {
+    this.handleTooltipVisibility(event, 'remove');
+  };
+
+  private handleMouseUp = (event: MouseEvent) => {
+    this.handleTooltipVisibility(event, 'add');
+  };
+
+  private handleTooltipVisibility = (event: MouseEvent, action: 'add' | 'remove') => {
+    if (!this.enableTooltip || this.tooltipAlwaysVisible) return;
+
+    const target = event.target as HTMLElement;
+    const tooltipElem = target === this.inputMinElem ? this.minTooltipElem : this.maxTooltipElem;
+    tooltipElem.classList[action]('hidden');
+  };
+
   private get decimalCount(): number {
     // Return the length of the decimal part of the step value.
     return (this.step % 1).toFixed(10).split('.')[1].replace(/0+$/, '').length;
@@ -241,6 +304,10 @@ export class BqSlider {
 
   private get isRangeType() {
     return this.type === 'range';
+  }
+
+  private get isTooltipAlwaysVisible(): boolean {
+    return this.tooltipAlwaysVisible && this.enableTooltip;
   }
 
   private renderLabel = (value: number, position: 'start' | 'end', css?: string) => {
@@ -275,11 +342,31 @@ export class BqSlider {
         onInput={(ev) => this.handleInputChange(type, ev)}
         onBlur={this.handleBlur}
         onFocus={this.handleFocus}
+        onMouseDown={this.handleMouseDown}
+        onMouseUp={this.handleMouseUp}
         value={value}
         part={`input-${type}`}
       />
     );
   };
+
+  private renderTooltip = (
+    value: number,
+    thumbPosition: number,
+    refCallback: (elem: HTMLBqTooltipElement) => void,
+  ): HTMLBqTooltipElement => (
+    <bq-tooltip
+      class={{ absolute: true, hidden: !this.isTooltipAlwaysVisible }}
+      exportparts="base,trigger,panel"
+      alwaysVisible={true}
+      distance={this.enableValueIndicator ? 6 : 16}
+      style={{ left: `${thumbPosition}px`, fontVariant: 'tabular-nums' }}
+      ref={refCallback}
+    >
+      <div class="absolute size-1" slot="trigger" />
+      {value.toFixed(this.decimalCount)}
+    </bq-tooltip>
+  );
 
   // render() function
   // Always the last one in the class.
@@ -299,6 +386,7 @@ export class BqSlider {
           {/* TRACK AREA */}
           <span
             class="absolute top-1/2 h-1 w-full -translate-y-1/2 rounded-xs bg-[--bq-slider--trackarea-color]"
+            ref={(elem) => (this.trackElem = elem)}
             part="track-area"
           />
           {/* PROGRESS AREA */}
@@ -307,8 +395,15 @@ export class BqSlider {
             ref={(elem) => (this.progressElem = elem)}
             part="progress-area"
           />
+          {/* TOOLTIP on top of the value or min value (if the slider type is `range`) */}
+          {this.enableTooltip &&
+            this.renderTooltip(this.minValue, this.minThumbPosition, (elem) => (this.minTooltipElem = elem))}
           {/* INPUT (Min), used on single type */}
           {this.renderInput('min', this.minValue, (input) => (this.inputMinElem = input))}
+          {/* TOOLTIP on top of the max value (if the slider type is `range`) */}
+          {this.enableTooltip &&
+            this.isRangeType &&
+            this.renderTooltip(this.maxValue, this.maxThumbPosition, (elem) => (this.maxTooltipElem = elem))}
           {/* INPUT (Max) */}
           {this.isRangeType && this.renderInput('max', this.maxValue, (input) => (this.inputMaxElem = input))}
         </div>

@@ -56,12 +56,14 @@ Type: `Promise<void>`
 
  - [bq-progress](../progress)
  - [bq-side-menu-item](../side-menu-item)
+ - [bq-slider](../slider)
 
 ### Graph
 ```mermaid
 graph TD;
   bq-progress --> bq-tooltip
   bq-side-menu-item --> bq-tooltip
+  bq-slider --> bq-tooltip
   style bq-tooltip fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -17,6 +17,8 @@ const meta: Meta = {
     'debounce-time': { control: 'number' },
     disabled: { control: 'boolean' },
     'enable-value-indicator': { control: 'boolean' },
+    'enable-tooltip': { control: 'boolean' },
+    'tooltip-always-visible': { control: 'boolean' },
     gap: { control: 'number' },
     max: { control: 'number' },
     min: { control: 'number' },
@@ -32,6 +34,8 @@ const meta: Meta = {
     'debounce-time': 0,
     disabled: false,
     'enable-value-indicator': false,
+    'enable-tooltip': false,
+    'tooltip-always-visible': false,
     gap: 0,
     max: 100,
     min: 0,
@@ -50,6 +54,8 @@ const Template = (args: Args) => html`
       debounce-time=${ifDefined(args['debounce-time'])}
       ?disabled=${args.disabled}
       ?enable-value-indicator=${args['enable-value-indicator']}
+      ?enable-tooltip=${args['enable-tooltip']}
+      ?tooltip-always-visible=${args['tooltip-always-visible']}
       gap=${ifDefined(args.gap)}
       max=${ifDefined(args.max)}
       min=${ifDefined(args.min)}
@@ -132,5 +138,18 @@ export const DecimalValues: Story = {
     type: 'range',
     step: 0.05,
     value: [0.3, 0.7],
+  },
+};
+
+export const WithTooltip: Story = {
+  render: Template,
+  args: {
+    'enable-tooltip': true,
+    gap: 10,
+    max: 100,
+    min: 0,
+    step: 1,
+    type: 'range',
+    value: [30, 70],
   },
 };
