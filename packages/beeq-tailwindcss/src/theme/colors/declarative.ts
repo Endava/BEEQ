@@ -48,6 +48,7 @@ export const DECLARATIVE_COLORS = {
     tertiary: 'var(--bq-stroke--tertiary)',
     inverse: 'var(--bq-stroke--inverse)',
     brand: 'var(--bq-stroke--brand)',
+    alt: 'var(--bq-stroke--alt)',
     success: 'var(--bq-stroke--success)',
     warning: 'var(--bq-stroke--warning)',
     danger: 'var(--bq-stroke--danger)',

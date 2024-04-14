@@ -14,13 +14,14 @@ export const DefaultDarkTheme = {
   /* -------------------------------------------------------------------------- */
   /** Primary */
   'bq-icon--primary': 'var(--bq-neutral-100)',
-  'bq-icon--alt': 'var(--bq-white)',
   /** Secondary */
   'bq-icon--secondary': 'var(--bq-neutral-400)',
   /** Inverse */
   'bq-icon--inverse': 'var(--bq-neutral-800)',
   /** Brand */
   'bq-icon--brand': 'var(--bq-brand)',
+  /** Alternative */
+  'bq-icon--alt': 'var(--bq-white)',
   /** Feedback */
   'bq-icon--info': 'var(--bq-brand)',
   'bq-icon--success': 'var(--bq-success)',
@@ -31,7 +32,6 @@ export const DefaultDarkTheme = {
   /* -------------------------------------------------------------------------- */
   /** Primary */
   'bq-stroke--primary': 'var(--bq-neutral-900)',
-  'bq-stroke--alt': 'var(--bq-neutral-1000)',
   /** Secondary */
   'bq-stroke--secondary': 'var(--bq-neutral-700)',
   /** Tertiary */
@@ -40,6 +40,8 @@ export const DefaultDarkTheme = {
   'bq-stroke--inverse': 'var(--bq-neutral-950)',
   /** Brand */
   'bq-stroke--brand': 'var(--bq-brand)',
+  /** Alternative */
+  'bq-stroke--alt': 'var(--bq-neutral-1000)',
   /** Success */
   'bq-stroke--success': 'var(--bq-success)',
   /** Warning */
@@ -53,13 +55,14 @@ export const DefaultDarkTheme = {
   /* -------------------------------------------------------------------------- */
   /** Primary */
   'bq-text--primary': 'var(--bq-neutral-100)',
-  'bq-text--alt': 'var(--bq-white)',
   /** Secondary */
   'bq-text--secondary': 'var(--bq-neutral-400)',
   /** Inverse */
   'bq-text--inverse': 'var(--bq-neutral-800)',
   /** Brand */
   'bq-text--brand': 'var(--bq-brand)',
+  /** Alternative */
+  'bq-text--alt': 'var(--bq-white)',
   /** Feedback */
   'bq-text--info': 'var(--bq-brand)',
   'bq-text--success': 'var(--bq-success)',
@@ -70,7 +73,6 @@ export const DefaultDarkTheme = {
   /* -------------------------------------------------------------------------- */
   /** Primary */
   'bq-ui--primary': 'var(--bq-neutral-900)',
-  'bq-ui--alt': 'var(--bq-neutral-950)',
   /** Secondary */
   'bq-ui--secondary': 'var(--bq-neutral-800)',
   /** Tertiary */
@@ -80,6 +82,8 @@ export const DefaultDarkTheme = {
   /** Brand */
   'bq-ui--brand': 'var(--bq-brand)',
   'bq-ui--brand-alt': 'var(--bq-brand-dark)',
+  /** Alternative */
+  'bq-ui--alt': 'var(--bq-neutral-950)',
   /** Success */
   'bq-ui--success': 'var(--bq-success)',
   'bq-ui--success-alt': 'var(--bq-success-dark)',
