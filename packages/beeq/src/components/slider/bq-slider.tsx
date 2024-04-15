@@ -356,7 +356,10 @@ export class BqSlider {
     refCallback: (elem: HTMLBqTooltipElement) => void,
   ): HTMLBqTooltipElement => (
     <bq-tooltip
-      class={{ absolute: true, hidden: !this.isTooltipAlwaysVisible }}
+      class={{
+        'absolute [&::part(panel)]:absolute': true,
+        hidden: !this.isTooltipAlwaysVisible,
+      }}
       exportparts="base,trigger,panel"
       alwaysVisible={true}
       distance={this.enableValueIndicator ? 6 : 16}

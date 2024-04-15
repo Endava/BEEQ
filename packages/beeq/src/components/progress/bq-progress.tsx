@@ -142,7 +142,7 @@ export class BqProgress {
             />
             {this.enableTooltip && !this.indeterminate && (
               <bq-tooltip
-                class="absolute"
+                class="absolute [&::part(panel)]:absolute"
                 exportparts="base,trigger,panel"
                 alwaysVisible={true}
                 distance={16}
