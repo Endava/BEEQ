@@ -14,13 +14,14 @@ export const EndavaLightTheme = {
   /* -------------------------------------------------------------------------- */
   /** Primary */
   'bq-icon--primary': 'var(--bq-neutral-800)',
-  'bq-icon--alt': 'var(--bq-white)',
   /** Secondary */
   'bq-icon--secondary': 'var(--bq-neutral-600)',
   /** Inverse */
   'bq-icon--inverse': 'var(--bq-neutral-50)',
   /** Brand */
   'bq-icon--brand': 'var(--bq-brand)',
+  /** Alternative */
+  'bq-icon--alt': 'var(--bq-white)',
   /** Feedback */
   'bq-icon--info': 'var(--bq-info)',
   'bq-icon--success': 'var(--bq-success)',
@@ -31,7 +32,6 @@ export const EndavaLightTheme = {
   /* -------------------------------------------------------------------------- */
   /** Primary */
   'bq-stroke--primary': 'var(--bq-neutral-200)',
-  'bq-stroke--alt': 'var(--bq-neutral-50)',
   /** Secondary */
   'bq-stroke--secondary': 'var(--bq-neutral-600)',
   /** Tertiary */
@@ -40,6 +40,8 @@ export const EndavaLightTheme = {
   'bq-stroke--inverse': 'var(--bq-white)',
   /** Brand */
   'bq-stroke--brand': 'var(--bq-brand)',
+  /** Alternative */
+  'bq-stroke--alt': 'var(--bq-neutral-50)',
   'bq-stroke--brand-alt': 'var(--bq-brand-light)',
   /** Success */
   'bq-stroke--success': 'var(--bq-success)',
@@ -54,13 +56,14 @@ export const EndavaLightTheme = {
   /* -------------------------------------------------------------------------- */
   /** Primary */
   'bq-text--primary': 'var(--bq-neutral-800)',
-  'bq-text--alt': 'var(--bq-white)',
   /** Secondary */
   'bq-text--secondary': 'var(--bq-neutral-600)',
   /** Inverse */
   'bq-text--inverse': 'var(--bq-neutral-50)',
   /** Brand */
   'bq-text--brand': 'var(--bq-brand)',
+  /** Alternative */
+  'bq-text--alt': 'var(--bq-white)',
   /** Feedback */
   'bq-text--info': 'var(--bq-info)',
   'bq-text--success': 'var(--bq-success)',
@@ -71,7 +74,6 @@ export const EndavaLightTheme = {
   /* -------------------------------------------------------------------------- */
   /** Primary */
   'bq-ui--primary': 'var(--bq-white)',
-  'bq-ui--alt': 'var(--bq-neutral-50)',
   /** Secondary */
   'bq-ui--secondary': 'var(--bq-neutral-200)',
   /** Tertiary */
@@ -79,8 +81,10 @@ export const EndavaLightTheme = {
   /** Inverse */
   'bq-ui--inverse': 'var(--bq-neutral-900)',
   /** Brand */
-  'bq-ui--brand': 'var(--bq-brand)',
+  'bq-ui--alt': 'var(--bq-neutral-50)',
   'bq-ui--brand-alt': 'var(--bq-brand-light)',
+  /** Alternative */
+  'bq-ui--brand': 'var(--bq-brand)',
   /** Success */
   'bq-ui--success': 'var(--bq-success)',
   'bq-ui--success-alt': 'var(--bq-success-light)',

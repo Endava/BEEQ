@@ -13,13 +13,14 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-side-menu {
-  @apply fixed left-0 top-0 flex h-dynamic-vh w-[var(--bq-side-menu--width)] grow flex-col bg-[var(--bq-side-menu--bg-color)];
+  @apply fixed left-0 top-0 flex h-dynamic-vh w-[--bq-side-menu--width] grow flex-col bg-[--bq-side-menu--bg-color];
+  @apply border-0 border-e border-solid border-[color:--bq-side-menu--border-color];
   @apply transition-[background-color,width] duration-150;
   @include hide-scrollbar;
 }
 
 .bq-side-menu.is-collapsed {
-  @apply w-[var(--bq-side-menu--width-collapse)];
+  @apply w-[--bq-side-menu--width-collapse];
 }
 
 /* -------------------------------------------------------------------------- */
@@ -28,7 +29,7 @@
 
 .bq-side-menu--logo {
   @apply sticky top-0 z-[1] p-xs;
-  @apply box-content flex items-center bg-[var(--bq-side-menu--bg-color)] text-[color:var(--bq-side-menu--brand-color)];
+  @apply box-content flex items-center bg-[--bq-side-menu--bg-color] text-[color:--bq-side-menu--brand-color];
 }
 
 /* -------------------------------------------------------------------------- */
@@ -47,38 +48,40 @@
 }
 
 :host([appearance='brand']) {
-  --bq-focus: #f6f6f8;
-  --bq-side-menu--bg-color: theme('colors.ui.brand');
-  --bq-side-menu--brand-color: theme('colors.stroke.inverse');
+  --bq-focus: theme(colors.stroke.alt);
+  --bq-side-menu--bg-color: theme(colors.ui.brand);
+  --bq-side-menu--brand-color: theme(colors.stroke.inverse);
+  --bq-side-menu--border-color: theme(colors.ui.brand);
 
   ::slotted(bq-side-menu-item) {
     --bq-side-menu-item--bg-hover: color-mix(in srgb, var(--bq-ui--brand), var(--bq-hover) 20%);
 
-    --bq-side-menu-item--text-default: theme('textColor.text.alt');
-    --bq-side-menu-item--text-hover: theme('textColor.text.alt');
+    --bq-side-menu-item--text-default: theme(textColor.text.alt);
+    --bq-side-menu-item--text-hover: theme(textColor.text.alt);
   }
 
   .bq-side-menu--footer ::slotted([slot='footer']) {
-    --bq-ui--secondary: theme('colors.transparent');
-    --bq-text--primary: theme('textColor.text.inverse');
+    --bq-ui--secondary: theme(colors.transparent);
+    --bq-text--primary: theme(textColor.text.inverse);
   }
 }
 
 :host([appearance='inverse']) {
-  --bq-side-menu--bg-color: theme('colors.ui.inverse');
-  --bq-side-menu--brand-color: theme('colors.stroke.inverse');
+  --bq-side-menu--bg-color: theme(colors.ui.inverse);
+  --bq-side-menu--brand-color: theme(colors.stroke.inverse);
+  --bq-side-menu--border-color: theme(colors.ui.inverse);
 
   ::slotted(bq-side-menu-item) {
     --bq-side-menu-item--bg-hover: color-mix(in srgb, var(--bq-ui--inverse), var(--bq-hover) 20%);
     --bq-side-menu-item--bg-active: color-mix(in srgb, var(--bq-ui--alt), var(--bq-active) 20%);
 
-    --bq-side-menu-item--text-default: theme('textColor.text.inverse');
-    --bq-side-menu-item--text-hover: theme('textColor.text.inverse');
-    --bq-side-menu-item--text-active: theme('textColor.text.primary');
+    --bq-side-menu-item--text-default: theme(textColor.text.inverse);
+    --bq-side-menu-item--text-hover: theme(textColor.text.inverse);
+    --bq-side-menu-item--text-active: theme(textColor.text.primary);
   }
 
   .bq-side-menu--footer ::slotted([slot='footer']) {
-    --bq-ui--secondary: theme('colors.transparent');
-    --bq-text--primary: theme('textColor.text.inverse');
+    --bq-ui--secondary: theme(colors.transparent);
+    --bq-text--primary: theme(textColor.text.inverse);
   }
 }

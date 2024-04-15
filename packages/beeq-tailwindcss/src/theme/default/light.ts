@@ -31,7 +31,6 @@ export const DefaultLightTheme = {
   /* -------------------------------------------------------------------------- */
   /** Primary */
   'bq-stroke--primary': 'var(--bq-neutral-200)',
-  'bq-stroke--alt': 'var(--bq-neutral-50)',
   /** Secondary */
   'bq-stroke--secondary': 'var(--bq-neutral-600)',
   /** Tertiary */
@@ -40,6 +39,8 @@ export const DefaultLightTheme = {
   'bq-stroke--inverse': 'var(--bq-white)',
   /** Brand */
   'bq-stroke--brand': 'var(--bq-brand)',
+  /** Alternative */
+  'bq-stroke--alt': 'var(--bq-neutral-50)',
   /** Success */
   'bq-stroke--success': 'var(--bq-success)',
   /** Warning */
@@ -53,13 +54,14 @@ export const DefaultLightTheme = {
   /* -------------------------------------------------------------------------- */
   /** Primary */
   'bq-text--primary': 'var(--bq-neutral-800)',
-  'bq-text--alt': 'var(--bq-white)',
   /** Secondary */
   'bq-text--secondary': 'var(--bq-neutral-600)',
   /** Inverse */
   'bq-text--inverse': 'var(--bq-neutral-50)',
   /** Brand */
   'bq-text--brand': 'var(--bq-brand)',
+  /** Alternative */
+  'bq-text--alt': 'var(--bq-white)',
   /** Feedback */
   'bq-text--info': 'var(--bq-brand)',
   'bq-text--success': 'var(--bq-success)',
@@ -70,7 +72,6 @@ export const DefaultLightTheme = {
   /* -------------------------------------------------------------------------- */
   /** Primary */
   'bq-ui--primary': 'var(--bq-white)',
-  'bq-ui--alt': 'var(--bq-neutral-50)',
   /** Secondary */
   'bq-ui--secondary': 'var(--bq-neutral-200)',
   /** Tertiary */
@@ -80,6 +81,8 @@ export const DefaultLightTheme = {
   /** Brand */
   'bq-ui--brand': 'var(--bq-brand)',
   'bq-ui--brand-alt': 'var(--bq-brand-light)',
+  /** Alternative */
+  'bq-ui--alt': 'var(--bq-neutral-50)',
   /** Success */
   'bq-ui--success': 'var(--bq-success)',
   'bq-ui--success-alt': 'var(--bq-success-light)',
