@@ -22,7 +22,8 @@
           }
         ],
         "scss/double-slash-comment-empty-line-before": null,
-        "scss/operator-no-unspaced": null
+        "scss/operator-no-unspaced": null,
+        "value-keyword-case": null
       }
     }
   ],
