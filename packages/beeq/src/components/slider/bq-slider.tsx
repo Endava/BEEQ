@@ -171,9 +171,11 @@ export class BqSlider {
   // =======================================================
 
   private runUpdates = () => {
-    this.updateProgressTrack();
-    this.syncInputsValue();
-    this.setThumbPosition();
+    requestAnimationFrame(() => {
+      this.updateProgressTrack();
+      this.syncInputsValue();
+      this.setThumbPosition();
+    });
   };
 
   private calculateMinValue = (value: TSliderValue) => {
