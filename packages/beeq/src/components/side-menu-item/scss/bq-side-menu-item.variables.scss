@@ -17,7 +17,7 @@
    * @prop --bq-side-menu-item--paddingY: Side menu item horizontal padding
    */
   --bq-side-menu-item--bg-default: theme('backgroundColor.transparent');
-  --bq-side-menu-item--bg-hover: color-mix(in srgb, var(--bq-ui--secondary), var(--bq-hover) 20%);
+  --bq-side-menu-item--bg-hover: color-mix(in srgb, var(--bq-ui--alt), var(--bq-hover) 20%);
   --bq-side-menu-item--bg-active: theme('backgroundColor.ui.brand-alt');
 
   --bq-side-menu-item--text-default: theme('textColor.text.primary');
