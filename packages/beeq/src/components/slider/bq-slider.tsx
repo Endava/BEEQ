@@ -173,6 +173,7 @@ export class BqSlider {
   private runUpdates = () => {
     this.updateProgressTrack();
     this.syncInputsValue();
+
     requestAnimationFrame(() => {
       this.setThumbPosition();
     });
