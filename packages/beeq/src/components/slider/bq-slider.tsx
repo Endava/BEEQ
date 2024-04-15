@@ -171,9 +171,9 @@ export class BqSlider {
   // =======================================================
 
   private runUpdates = () => {
+    this.updateProgressTrack();
+    this.syncInputsValue();
     requestAnimationFrame(() => {
-      this.updateProgressTrack();
-      this.syncInputsValue();
       this.setThumbPosition();
     });
   };
