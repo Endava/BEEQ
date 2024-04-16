@@ -1,0 +1,10 @@
+/* -------------------------------------------------------------------------- */
+/*                   Date picker custom properties                  */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  /**
+   * @prop --bq-date-picker--margin - Date picker margin
+   */
+  --bq-date-picker--margin: theme('spacing.m');
+}

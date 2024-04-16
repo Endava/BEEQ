@@ -28,6 +28,7 @@ export const config: Config = {
   env: {
     ICONS_SVG_PATH: process.env.ICONS_SVG_PATH,
   },
+  globalScript: resolve(__dirname, './src/global/scripts/global.ts').replace(/\\/g, '/'),
   globalStyle: resolve(__dirname, './src/global/styles/default.scss').replace(/\\/g, '/'),
   plugins: [
     sass({

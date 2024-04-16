@@ -319,6 +319,8 @@ export namespace Components {
          */
         "value": string;
     }
+    interface BqDatePicker {
+    }
     interface BqDialog {
         /**
           * Corder radius of the dialog component
@@ -1575,6 +1577,12 @@ declare global {
         prototype: HTMLBqCheckboxElement;
         new (): HTMLBqCheckboxElement;
     };
+    interface HTMLBqDatePickerElement extends Components.BqDatePicker, HTMLStencilElement {
+    }
+    var HTMLBqDatePickerElement: {
+        prototype: HTMLBqDatePickerElement;
+        new (): HTMLBqDatePickerElement;
+    };
     interface HTMLBqDialogElementEventMap {
         "bqCancel": void;
         "bqClose": void;
@@ -2049,6 +2057,7 @@ declare global {
         "bq-button": HTMLBqButtonElement;
         "bq-card": HTMLBqCardElement;
         "bq-checkbox": HTMLBqCheckboxElement;
+        "bq-date-picker": HTMLBqDatePickerElement;
         "bq-dialog": HTMLBqDialogElement;
         "bq-divider": HTMLBqDividerElement;
         "bq-drawer": HTMLBqDrawerElement;
@@ -2409,6 +2418,8 @@ declare namespace LocalJSX {
           * A string representing the value of the checkbox. Primarily used to differentiate a list of related checkboxes that have the same name.
          */
         "value": string;
+    }
+    interface BqDatePicker {
     }
     interface BqDialog {
         /**
@@ -3560,6 +3571,7 @@ declare namespace LocalJSX {
         "bq-button": BqButton;
         "bq-card": BqCard;
         "bq-checkbox": BqCheckbox;
+        "bq-date-picker": BqDatePicker;
         "bq-dialog": BqDialog;
         "bq-divider": BqDivider;
         "bq-drawer": BqDrawer;
@@ -3609,6 +3621,7 @@ declare module "@stencil/core" {
             "bq-button": LocalJSX.BqButton & JSXBase.HTMLAttributes<HTMLBqButtonElement>;
             "bq-card": LocalJSX.BqCard & JSXBase.HTMLAttributes<HTMLBqCardElement>;
             "bq-checkbox": LocalJSX.BqCheckbox & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
+            "bq-date-picker": LocalJSX.BqDatePicker & JSXBase.HTMLAttributes<HTMLBqDatePickerElement>;
             "bq-dialog": LocalJSX.BqDialog & JSXBase.HTMLAttributes<HTMLBqDialogElement>;
             "bq-divider": LocalJSX.BqDivider & JSXBase.HTMLAttributes<HTMLBqDividerElement>;
             "bq-drawer": LocalJSX.BqDrawer & JSXBase.HTMLAttributes<HTMLBqDrawerElement>;
