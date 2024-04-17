@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Listen, Prop, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop, State } from '@stencil/core';
 
 import { hasSlotContent } from '../../shared/utils';
 
@@ -139,46 +139,49 @@ export class BqOption {
 
   render() {
     return (
-      <div
-        class={{
-          'bq-option': true,
-          disabled: this.disabled,
-          active: !this.disabled && this.selected,
-        }}
-        role="option"
+      <Host
         aria-disabled={this.isDisabledOrHidden ? 'true' : 'false'}
         aria-hidden={this.hidden ? 'true' : 'false'}
         aria-selected={this.selected ? 'true' : 'false'}
+        role="option"
         tabindex={this.isDisabledOrHidden ? '-1' : '0'}
-        onBlur={this.onBlur}
-        onFocus={this.onFocus}
-        onClick={this.onClick}
-        part="base"
       >
-        <span
+        <div
           class={{
-            'bq-option__prefix me-[--bq-option--gap-start] flex items-center': true,
-            '!hidden': !this.hasPrefix,
+            'bq-option': true,
+            disabled: this.disabled,
+            active: !this.disabled && this.selected,
           }}
-          ref={(elem) => (this.prefixElem = elem)}
-          part="prefix"
+          onBlur={this.onBlur}
+          onFocus={this.onFocus}
+          onClick={this.onClick}
+          part="base"
         >
-          <slot name="prefix" onSlotchange={this.onSlotChange} />
-        </span>
-        <span class="bq-option__label" part="label">
-          <slot />
-        </span>
-        <span
-          class={{
-            'bq-option__suffix ml-auto ms-[--bq-option--gap-end] flex items-center': true,
-            '!hidden': !this.hasSuffix,
-          }}
-          ref={(elem) => (this.suffixElem = elem)}
-          part="suffix"
-        >
-          <slot name="suffix" onSlotchange={this.handleSuffixSlotChange} />
-        </span>
-      </div>
+          <span
+            class={{
+              'bq-option__prefix me-[--bq-option--gap-start] flex items-center': true,
+              '!hidden': !this.hasPrefix,
+            }}
+            ref={(elem) => (this.prefixElem = elem)}
+            part="prefix"
+          >
+            <slot name="prefix" onSlotchange={this.onSlotChange} />
+          </span>
+          <span class="bq-option__label" part="label">
+            <slot />
+          </span>
+          <span
+            class={{
+              'bq-option__suffix ml-auto ms-[--bq-option--gap-end] flex items-center': true,
+              '!hidden': !this.hasSuffix,
+            }}
+            ref={(elem) => (this.suffixElem = elem)}
+            part="suffix"
+          >
+            <slot name="suffix" onSlotchange={this.handleSuffixSlotChange} />
+          </span>
+        </div>
+      </Host>
     );
   }
 }
