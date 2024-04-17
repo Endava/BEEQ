@@ -4,7 +4,53 @@
 
 :host {
   /**
-   * @prop --bq-date-picker--margin - Date picker margin
+   * @prop --bq-date-picker--background-color - Date picker background color
+   * @prop --bq-date-picker--border-color - Date picker border color
+   * @prop --bq-date-picker--border-color-focus - Date picker border color on focus
+   * @prop --bq-date-picker--border-color-disabled - Date picker border color when disabled
+   * @prop --bq-date-picker--border-radius - Date picker border radius
+   * @prop --bq-date-picker--border-width - Date picker border width
+   * @prop --bq-date-picker--border-style - Date picker border style
+   * @prop --bq-date-picker--gap - Gap between Date picker content and prefix/suffix
+   * @prop --bq-date-picker--helper-margin-top - Helper text margin top
+   * @prop --bq-date-picker--helper-text-color - Helper text color
+   * @prop --bq-date-picker--helper-text-size - Helper text size
+   * @prop --bq-date-picker--icon-size - Icon size to use in prefix/suffix and clear button
+   * @prop --bq-date-picker--label-margin-bottom - Date picker label margin bottom
+   * @prop --bq-date-picker--label-text-color - Date picker label text color
+   * @prop --bq-date-picker--label-text-size - Date picker label text size
+   * @prop --bq-date-picker--pading-start - Date picker padding start
+   * @prop --bq-date-picker--pading-end - Date picker padding end
+   * @prop --bq-date-picker--paddingY - Date picker padding top and bottom
+   * @prop --bq-date-picker--text-color - Date picker text color
+   * @prop --bq-date-picker--text-size - Date picker text size
+   * @prop --bq-date-picker--text-placeholder-color - Date picker placeholder text color
    */
-  --bq-date-picker--margin: theme('spacing.m');
+  --bq-date-picker--background-color: theme('colors.ui.primary');
+
+  --bq-date-picker--border-color: theme('colors.stroke.tertiary');
+  --bq-date-picker--border-color-focus: theme('colors.stroke.brand');
+  --bq-date-picker--border-radius: theme('borderRadius.s');
+  --bq-date-picker--border-width: 1px;
+  --bq-date-picker--border-style: solid;
+
+  --bq-date-picker--gap: theme('spacing.xs');
+
+  --bq-date-picker--helper-margin-top: theme('spacing.xs');
+  --bq-date-picker--helper-text-size: theme('fontSize.s');
+  --bq-date-picker--helper-text-color: theme('colors.text.primary');
+
+  --bq-date-picker--icon-size: 24px;
+
+  --bq-date-picker--label-margin-bottom: theme('spacing.xs');
+  --bq-date-picker--label-text-size: theme('fontSize.s');
+  --bq-date-picker--label-text-color: theme('colors.text.primary');
+
+  --bq-date-picker--pading-start: theme('spacing.m');
+  --bq-date-picker--pading-end: theme('spacing.m');
+  --bq-date-picker--paddingY: theme('spacing.s');
+
+  --bq-date-picker--text-color: theme('colors.text.primary');
+  --bq-date-picker--text-size: theme('fontSize.m');
+  --bq-date-picker--text-placeholder-color: theme('colors.text.secondary');
 }

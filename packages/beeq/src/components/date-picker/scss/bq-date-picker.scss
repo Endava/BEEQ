@@ -1,9 +1,141 @@
 /* -------------------------------------------------------------------------- */
-/*                        Date picker styles                        */
+/*                        Date picker styles                                  */
 /* -------------------------------------------------------------------------- */
 
 @import './bq-date-picker.variables';
 
 :host {
-  @apply block;
+  @apply block w-full;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                    Label                                   */
+/* -------------------------------------------------------------------------- */
+
+.bq-date-picker__label {
+  @apply mb-[--bq-date-picker--label-margin-bottom] flex flex-grow items-center gap-[--bq-date-picker--gap];
+  @apply text-[length:--bq-date-picker--label-text-size] text-[color:--bq-date-picker--label-text-color];
+}
+
+/* -------------------------------------------------------------------------- */
+/*                         Date picker input group control                    */
+/* -------------------------------------------------------------------------- */
+
+.bq-date-picker__control {
+  @apply flex w-full items-center transition-[border-color,box-shadow];
+  // Border
+  @apply rounded-[--bq-date-picker--border-radius] border-[length:--bq-date-picker--border-width] border-[color:--bq-date-picker--border-color];
+  // Padding
+  @apply py-[--bq-date-picker--paddingY] pe-[--bq-date-picker--pading-end] ps-[--bq-date-picker--pading-start];
+  // Text
+  @apply select-none text-[length:--bq-date-picker--text-size] text-[color:--bq-date-picker--text-color] placeholder:text-[color:--bq-date-picker--text-placeholder-color];
+  // Hover
+  @apply [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-brand;
+
+  border-style: var(--bq-date-picker--border-style);
+
+  // Focus
+  &:not(.disabled):focus-within {
+    --bq-ring-width: 1px;
+    --bq-ring-offset-width: 0;
+    --bq-ring-color-focus: var(--bq-date-picker--border-color-focus);
+
+    @apply focus border-[color:--bq-date-picker--border-color-focus];
+  }
+
+  // Enable clear button whenever the input group control is hovered or has focus
+  &:not(.disabled):hover,
+  &:not(.disabled):focus-within {
+    .bq-date-picker__control--clear {
+      @apply inline-block;
+    }
+  }
+}
+
+.bq-date-picker__control.disabled {
+  @apply cursor-not-allowed opacity-60;
+}
+
+/* ------------------------------- Validation ------------------------------- */
+
+.bq-date-picker__control.validation-error {
+  @apply border-stroke-danger [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-danger;
+
+  &:not(.disabled):focus-within {
+    --bq-ring-color-focus: theme('colors.stroke.danger');
+
+    @apply border-active-stroke-danger;
+  }
+}
+
+.bq-date-picker__control.validation-success {
+  @apply border-stroke-success [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-success;
+
+  &:not(.disabled):focus-within {
+    --bq-ring-color-focus: theme('colors.stroke.success');
+
+    @apply border-active-stroke-success;
+  }
+}
+
+.bq-date-picker__control.validation-warning {
+  @apply border-stroke-warning [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-warning;
+
+  &:not(.disabled):focus-within {
+    --bq-ring-color-focus: theme('colors.stroke.warning');
+
+    @apply border-active-stroke-warning;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                              Native HTML Input                             */
+/* -------------------------------------------------------------------------- */
+
+.bq-date-picker__control--input {
+  @apply flex-auto cursor-[inherit] select-none appearance-none bg-[inherit] font-[inherit] text-[length:inherit] text-[color:inherit];
+  @apply m-0 min-h-[--bq-date-picker--icon-size] min-w-[0] border-none p-0 focus:outline-none focus-visible:outline-none;
+
+  box-shadow: none;
+  font-weight: inherit;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                Clear button                                */
+/* -------------------------------------------------------------------------- */
+
+.bq-date-picker__control--clear::part(button) {
+  // Since the clear button is inside the input group control,
+  // we need to reset the focus ring styles
+  --bq-ring-width: initial;
+  --bq-ring-offset-width: initial;
+  --bq-ring-color-focus: initial;
+
+  @apply h-auto rounded-xs border-none p-0;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                              Prefix and suffix                             */
+/* -------------------------------------------------------------------------- */
+
+.bq-date-picker__control--prefix,
+.bq-date-picker__control--suffix {
+  @apply pointer-events-none flex items-center text-[color:var(--bq-date-picker--text-color)];
+}
+
+.bq-date-picker__control--prefix {
+  @apply me-[--bq-date-picker--gap];
+}
+
+.bq-date-picker__control--suffix {
+  @apply ms-[--bq-date-picker--gap];
+}
+
+/* -------------------------------------------------------------------------- */
+/*                         Slotted and internal icons                         */
+/* -------------------------------------------------------------------------- */
+
+bq-icon,
+::slotted(bq-icon) {
+  --bq-icon--size: var(--bq-date-picker--icon-size) !important;
 }

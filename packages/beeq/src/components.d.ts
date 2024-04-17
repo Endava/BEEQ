@@ -11,13 +11,13 @@ import { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 import { TBadgeSize } from "./components/badge/bq-badge.types";
 import { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 import { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
+import { FloatingUIPlacement } from "./services/interfaces";
+import { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
 import { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 import { TDrawerPlacement } from "./components/drawer/bq-drawer.types";
-import { FloatingUIPlacement } from "./services/interfaces";
 import { TEmptyStateSize } from "./components/empty-state/bq-empty-state.types";
 import { TIconWeight } from "./components/icon/bq-icon.types";
-import { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
 import { TNotificationBorderRadius, TNotificationType } from "./components/notification/bq-notification.types";
 import { TProgressBorderShape, TProgressThickness, TProgressType } from "./components/progress/bq-progress.types";
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
@@ -38,13 +38,13 @@ export { TAvatarShape, TAvatarSize } from "./components/avatar/bq-avatar.types";
 export { TBadgeSize } from "./components/badge/bq-badge.types";
 export { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 export { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
+export { FloatingUIPlacement } from "./services/interfaces";
+export { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
 export { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 export { TDrawerPlacement } from "./components/drawer/bq-drawer.types";
-export { FloatingUIPlacement } from "./services/interfaces";
 export { TEmptyStateSize } from "./components/empty-state/bq-empty-state.types";
 export { TIconWeight } from "./components/icon/bq-icon.types";
-export { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
 export { TNotificationBorderRadius, TNotificationType } from "./components/notification/bq-notification.types";
 export { TProgressBorderShape, TProgressThickness, TProgressType } from "./components/progress/bq-progress.types";
 export { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
@@ -320,6 +320,81 @@ export namespace Components {
         "value": string;
     }
     interface BqDatePicker {
+        /**
+          * If true, the Date picker input will be focused on component render
+         */
+        "autofocus": boolean;
+        /**
+          * Clears the selected value.
+          * @return 
+          * @memberof BqInput
+         */
+        "clear": () => Promise<void>;
+        /**
+          * The clear button aria label
+         */
+        "clearButtonLabel"?: string;
+        /**
+          * If true, the clear button won't be displayed
+         */
+        "disableClear"?: boolean;
+        /**
+          * Indicates whether the Date picker input is disabled or not. If `true`, the Date picker is disabled and cannot be interacted with.
+         */
+        "disabled"?: boolean;
+        /**
+          * Represents the distance (gutter or margin) between the Date picker panel and the input element.
+         */
+        "distance"?: number;
+        /**
+          * The ID of the form that the Date picker input belongs to.
+         */
+        "form"?: string;
+        /**
+          * If true, the Date picker panel will remain open after a selection date is made.
+         */
+        "keepOpenOnSelect"?: boolean;
+        /**
+          * The Date picker input name.
+         */
+        "name": string;
+        /**
+          * If true, the Date picker panel will be visible.
+         */
+        "open"?: boolean;
+        /**
+          * When set, it will override the height of the Date picker panel.
+         */
+        "panelHeight"?: string;
+        /**
+          * The Date picker input placeholder text value
+         */
+        "placeholder"?: string;
+        /**
+          * Position of the Date picker panel
+         */
+        "placement"?: FloatingUIPlacement;
+        /**
+          * Indicates whether or not the Date picker input is required to be filled out before submitting the form.
+         */
+        "required"?: boolean;
+        /**
+          * Represents the skidding between the Date picker panel and the input element.
+         */
+        "skidding"?: number;
+        /**
+          * Defines the strategy to position the Date picker panel
+         */
+        "strategy"?: 'fixed' | 'absolute';
+        /**
+          * The validation status of the Select input.
+          * @remarks This property is used to indicate the validation status of the select input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
+         */
+        "validationStatus": TInputValidation;
+        /**
+          * The select input value, it can be used to reset the field to a previous value
+         */
+        "value": TInputValue;
     }
     interface BqDialog {
         /**
@@ -1346,6 +1421,10 @@ export interface BqCheckboxCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqCheckboxElement;
 }
+export interface BqDatePickerCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqDatePickerElement;
+}
 export interface BqDialogCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqDialogElement;
@@ -1577,7 +1656,22 @@ declare global {
         prototype: HTMLBqCheckboxElement;
         new (): HTMLBqCheckboxElement;
     };
+    interface HTMLBqDatePickerElementEventMap {
+        "bqBlur": HTMLBqInputElement;
+        "bqChange": { value: string | number | string[]; el: HTMLBqInputElement };
+        "bqClear": HTMLBqInputElement;
+        "bqFocus": HTMLBqInputElement;
+        "bqInput": { value: string | number | string[]; el: HTMLBqInputElement };
+    }
     interface HTMLBqDatePickerElement extends Components.BqDatePicker, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqDatePickerElementEventMap>(type: K, listener: (this: HTMLBqDatePickerElement, ev: BqDatePickerCustomEvent<HTMLBqDatePickerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqDatePickerElementEventMap>(type: K, listener: (this: HTMLBqDatePickerElement, ev: BqDatePickerCustomEvent<HTMLBqDatePickerElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqDatePickerElement: {
         prototype: HTMLBqDatePickerElement;
@@ -2420,6 +2514,95 @@ declare namespace LocalJSX {
         "value": string;
     }
     interface BqDatePicker {
+        /**
+          * If true, the Date picker input will be focused on component render
+         */
+        "autofocus"?: boolean;
+        /**
+          * The clear button aria label
+         */
+        "clearButtonLabel"?: string;
+        /**
+          * If true, the clear button won't be displayed
+         */
+        "disableClear"?: boolean;
+        /**
+          * Indicates whether the Date picker input is disabled or not. If `true`, the Date picker is disabled and cannot be interacted with.
+         */
+        "disabled"?: boolean;
+        /**
+          * Represents the distance (gutter or margin) between the Date picker panel and the input element.
+         */
+        "distance"?: number;
+        /**
+          * The ID of the form that the Date picker input belongs to.
+         */
+        "form"?: string;
+        /**
+          * If true, the Date picker panel will remain open after a selection date is made.
+         */
+        "keepOpenOnSelect"?: boolean;
+        /**
+          * The Date picker input name.
+         */
+        "name": string;
+        /**
+          * Callback handler emitted when the input loses focus
+         */
+        "onBqBlur"?: (event: BqDatePickerCustomEvent<HTMLBqInputElement>) => void;
+        /**
+          * Callback handler emitted when the input value has changed and the input loses focus. This handler is called whenever the user finishes typing or pasting text into the input field and then clicks outside of the input field.
+         */
+        "onBqChange"?: (event: BqDatePickerCustomEvent<{ value: string | number | string[]; el: HTMLBqInputElement }>) => void;
+        /**
+          * Callback handler emitted when the input value has been cleared
+         */
+        "onBqClear"?: (event: BqDatePickerCustomEvent<HTMLBqInputElement>) => void;
+        /**
+          * Callback handler emitted when the input has received focus
+         */
+        "onBqFocus"?: (event: BqDatePickerCustomEvent<HTMLBqInputElement>) => void;
+        /**
+          * Callback handler emitted when the input value changes. This handler is called whenever the user types or pastes text into the input field.
+         */
+        "onBqInput"?: (event: BqDatePickerCustomEvent<{ value: string | number | string[]; el: HTMLBqInputElement }>) => void;
+        /**
+          * If true, the Date picker panel will be visible.
+         */
+        "open"?: boolean;
+        /**
+          * When set, it will override the height of the Date picker panel.
+         */
+        "panelHeight"?: string;
+        /**
+          * The Date picker input placeholder text value
+         */
+        "placeholder"?: string;
+        /**
+          * Position of the Date picker panel
+         */
+        "placement"?: FloatingUIPlacement;
+        /**
+          * Indicates whether or not the Date picker input is required to be filled out before submitting the form.
+         */
+        "required"?: boolean;
+        /**
+          * Represents the skidding between the Date picker panel and the input element.
+         */
+        "skidding"?: number;
+        /**
+          * Defines the strategy to position the Date picker panel
+         */
+        "strategy"?: 'fixed' | 'absolute';
+        /**
+          * The validation status of the Select input.
+          * @remarks This property is used to indicate the validation status of the select input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
+         */
+        "validationStatus"?: TInputValidation;
+        /**
+          * The select input value, it can be used to reset the field to a previous value
+         */
+        "value"?: TInputValue;
     }
     interface BqDialog {
         /**
