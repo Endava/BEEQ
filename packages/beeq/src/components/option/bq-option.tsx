@@ -144,7 +144,6 @@ export class BqOption {
         aria-hidden={this.hidden ? 'true' : 'false'}
         aria-selected={this.selected ? 'true' : 'false'}
         role="option"
-        tabindex={this.isDisabledOrHidden ? '-1' : '0'}
       >
         <div
           class={{
@@ -155,6 +154,8 @@ export class BqOption {
           onBlur={this.onBlur}
           onFocus={this.onFocus}
           onClick={this.onClick}
+          tabindex={this.isDisabledOrHidden ? '-1' : '0'}
+          role="button"
           part="base"
         >
           <span

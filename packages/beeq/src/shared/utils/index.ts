@@ -1,6 +1,7 @@
 export * from './assetsPath';
 export * from './cssVariables';
 export * from './debounce';
+export * from './event';
 export * from './getNextElement';
 export * from './getRandom';
 export * from './isDefined';
