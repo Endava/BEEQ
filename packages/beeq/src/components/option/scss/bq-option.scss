@@ -8,6 +8,10 @@
   @apply block;
 }
 
+:host([hidden]) {
+  @apply hidden;
+}
+
 .bq-option {
   @apply flex w-full cursor-pointer items-center text-[length:--bq-option--font-size];
   @apply py-[--bq-option--paddingY] pe-[--bq-option--padding-end] ps-[--bq-option--padding-start];

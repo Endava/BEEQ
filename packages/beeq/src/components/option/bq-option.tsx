@@ -35,6 +35,9 @@ export class BqOption {
   // Public Property API
   // ========================
 
+  /** If true, the option is hidden. */
+  @Prop({ reflect: true }) hidden: boolean = false;
+
   /** If true, the option is disabled. */
   @Prop({ reflect: true }) disabled?: boolean = false;
 
@@ -89,7 +92,7 @@ export class BqOption {
   // =======================================================
 
   private onBlur = (event: Event) => {
-    if (this.disabled) {
+    if (this.isDisabledOrHidden) {
       event.preventDefault();
       event.stopPropagation();
       return;
@@ -99,7 +102,7 @@ export class BqOption {
   };
 
   private onFocus = (event: Event) => {
-    if (this.disabled) {
+    if (this.isDisabledOrHidden) {
       event.preventDefault();
       event.stopPropagation();
       return;
@@ -109,7 +112,7 @@ export class BqOption {
   };
 
   private onClick = (event: Event) => {
-    if (this.disabled) {
+    if (this.isDisabledOrHidden) {
       event.preventDefault();
       event.stopPropagation();
       return;
@@ -126,6 +129,10 @@ export class BqOption {
     this.hasSuffix = hasSlotContent(this.suffixElem, 'suffix');
   };
 
+  private get isDisabledOrHidden() {
+    return this.disabled || this.hidden;
+  }
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -139,9 +146,10 @@ export class BqOption {
           active: !this.disabled && this.selected,
         }}
         role="option"
-        aria-selected={this.selected}
-        aria-disabled={this.disabled}
-        tabindex={this.disabled ? '-1' : '0'}
+        aria-disabled={this.isDisabledOrHidden ? 'true' : 'false'}
+        aria-hidden={this.hidden ? 'true' : 'false'}
+        aria-selected={this.selected ? 'true' : 'false'}
+        tabindex={this.isDisabledOrHidden ? '-1' : '0'}
         onBlur={this.onBlur}
         onFocus={this.onFocus}
         onClick={this.onClick}

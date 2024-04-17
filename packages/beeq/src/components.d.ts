@@ -649,6 +649,10 @@ export namespace Components {
          */
         "disabled"?: boolean;
         /**
+          * If true, the option is hidden.
+         */
+        "hidden": boolean;
+        /**
           * If true, the option is selected and active.
          */
         "selected": boolean;
@@ -2787,6 +2791,10 @@ declare namespace LocalJSX {
           * If true, the option is disabled.
          */
         "disabled"?: boolean;
+        /**
+          * If true, the option is hidden.
+         */
+        "hidden"?: boolean;
         /**
           * Handler to be called when item loses focus
          */
