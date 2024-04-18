@@ -162,6 +162,10 @@ export class BqSelect {
     this.handleValueChange();
   }
 
+  componentDidRender() {
+    this.syncItemsFromValue();
+  }
+
   // Listeners
   // ==============
 
@@ -262,6 +266,7 @@ export class BqSelect {
     // Sync display label
     const checkedItem = items.filter((item) => item.value === this.value)[0];
     this.displayValue = checkedItem ? this.getOptionLabel(checkedItem) : '';
+    this.inputElem.value = this.displayValue;
   };
 
   private getOptionLabel = (item: HTMLBqOptionElement) => {
