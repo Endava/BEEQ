@@ -140,6 +140,10 @@ bq-icon,
   --bq-icon--size: var(--bq-date-picker--icon-size) !important;
 }
 
+/* -------------------------------------------------------------------------- */
+/*                         Customize Cally date picker                         */
+/* -------------------------------------------------------------------------- */
+
 calendar-date,
 calendar-range {
   &::part(header) {
@@ -151,8 +155,35 @@ calendar-range {
   }
 
   &::part(button) {
+    @apply border-0 p-[--bq-spacing-xs];
+
     background-color: theme('colors.transparent');
-    border: none;
-    padding: theme('spacing.xs2');
+  }
+}
+
+calendar-month {
+  /* stylelint-disable-next-line custom-property-pattern */
+  --color-accent: var(--bq-stroke--brand);
+
+  &::part(button) {
+    @apply h-8 w-8 p-1 font-[--bq-font-family] text-[--bq-text--primary];
+  }
+
+  &::part(selected) {
+    @apply rounded-[--bq-radius--s] text-[color:var(--bq-text--inverse)];
+  }
+
+  &::part(range-inner) {
+    @apply rounded-none;
+  }
+
+  &::part(range-start) {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+  }
+
+  &::part(range-end) {
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
   }
 }
