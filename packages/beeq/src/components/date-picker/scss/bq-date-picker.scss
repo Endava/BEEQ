@@ -139,3 +139,20 @@ bq-icon,
 ::slotted(bq-icon) {
   --bq-icon--size: var(--bq-date-picker--icon-size) !important;
 }
+
+calendar-date,
+calendar-range {
+  &::part(header) {
+    @apply justify-center gap-[--bq-spacing-xs];
+  }
+
+  &::part(heading) {
+    @apply px-[--bq-spacing-xs] py-[--bq-spacing-xs2];
+  }
+
+  &::part(button) {
+    background-color: theme('colors.transparent');
+    border: none;
+    padding: theme('spacing.xs2');
+  }
+}

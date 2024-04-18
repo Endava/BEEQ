@@ -46,6 +46,8 @@ const meta: Meta = {
     skidding: { control: 'number' },
     strategy: { control: 'select', options: ['fixed', 'absolute'] },
     'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
+    range: { control: 'boolean' },
+    month: { control: 'number' },
     value: { control: 'text' },
     // Events
     bqBlur: { action: 'bqBlur' },
@@ -68,13 +70,15 @@ const meta: Meta = {
     'keep-open-on-select': false,
     name: 'bq-date-picker',
     open: false,
-    'panel-height': undefined,
+    'panel-height': 'auto',
     placement: 'bottom-start',
     placeholder: 'Enter your date',
     skidding: 0,
     strategy: 'absolute',
     required: false,
     'validation-status': 'none',
+    range: false,
+    month: 1,
     value: undefined,
   },
 };
@@ -114,6 +118,8 @@ const Template = (args: Args) => {
         skidding=${args.skidding}
         strategy=${args.strategy}
         validation-status=${args['validation-status']}
+        range=${args.range}
+        months=${args.months}
         value=${ifDefined(args.value)}
         @bqBlur=${args.bqBlur}
         @bqChange=${args.bqChange}
@@ -131,4 +137,12 @@ const Template = (args: Args) => {
 
 export const Default: Story = {
   render: Template,
+};
+
+export const Range: Story = {
+  render: Template,
+  args: {
+    range: true,
+    months: 2,
+  },
 };
