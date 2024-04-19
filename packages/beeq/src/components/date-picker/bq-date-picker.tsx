@@ -133,7 +133,7 @@ export class BqDatePicker {
   @Prop({ reflect: true }) max?: string;
 
   /** The locale for formatting dates. If not set, will use the browser's locale */
-  @Prop({ reflect: true }) locale?: string | undefined = undefined;
+  @Prop({ reflect: true }) locale: string | undefined = undefined;
 
   // Prop lifecycle events
   // =======================
