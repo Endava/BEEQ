@@ -400,7 +400,7 @@ export namespace Components {
          */
         "validationStatus": TInputValidation;
         /**
-          * The select input value, it can be used to reset the field to a previous value
+          * The select input value represents the currently selected date or range and can be used to reset the field to a previous value. All dates are expected in ISO-8601 format (YYYY-MM-DD).
          */
         "value": TInputValue;
     }
@@ -2616,7 +2616,7 @@ declare namespace LocalJSX {
          */
         "validationStatus"?: TInputValidation;
         /**
-          * The select input value, it can be used to reset the field to a previous value
+          * The select input value represents the currently selected date or range and can be used to reset the field to a previous value. All dates are expected in ISO-8601 format (YYYY-MM-DD).
          */
         "value"?: TInputValue;
     }
