@@ -110,7 +110,7 @@ const Template = (args: Args) => {
       `;
 
   return html`
-    <div class="w-80">
+    <div class="w-[280px]">
       <bq-date-picker
         ?autofocus=${args.autofocus}
         clear-button-label=${args['clear-button-label']}

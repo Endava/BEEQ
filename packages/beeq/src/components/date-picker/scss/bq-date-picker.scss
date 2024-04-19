@@ -159,6 +159,10 @@ calendar-range {
 
     background-color: theme('colors.transparent');
   }
+
+  &::part(container) {
+    @apply px-5 py-2;
+  }
 }
 
 calendar-month {
