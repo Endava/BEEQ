@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
 import { FloatingUIPlacement } from '../../services/interfaces';
-import { getTextContent, hasSlotContent, isDefined, isHTMLElement } from '../../shared/utils';
+import { debounce, getTextContent, hasSlotContent, isDefined, isHTMLElement, TDebounce } from '../../shared/utils';
 import { TInputValidation, TInputValue } from '../input/bq-input.types';
 
 /**
@@ -33,6 +33,8 @@ export class BqSelect {
   private prefixElem?: HTMLElement;
   private suffixElem?: HTMLElement;
 
+  private debounceQuery: TDebounce<void>;
+
   private fallbackInputId = 'select';
 
   // Reference to host HTML element
@@ -59,6 +61,12 @@ export class BqSelect {
 
   /** The clear button aria label */
   @Prop({ reflect: true }) clearButtonLabel? = 'Clear value';
+
+  /**
+   * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
+   * A value of 0 means no debouncing will occur.
+   */
+  @Prop({ reflect: true, mutable: true }) debounceTime? = 0;
 
   /**
    * Indicates whether the Select input is disabled or not.
@@ -93,7 +101,7 @@ export class BqSelect {
   /** Position of the Select panel */
   @Prop({ reflect: true }) placement?: FloatingUIPlacement = 'bottom';
 
-  /** If true, the Select input cannot be modified. */
+  /** If true, the list of options cannot be filtered (searching won't be available) */
   @Prop({ reflect: true }) readonly?: boolean;
 
   /** Indicates whether or not the Select input is required to be filled out before submitting the form. */
@@ -204,7 +212,9 @@ export class BqSelect {
 
     this.value = undefined;
     this.displayValue = undefined;
+    this.inputElem.value = undefined;
 
+    this.resetOptionsVisibility();
     this.bqClear.emit(this.el);
   }
 
@@ -229,7 +239,34 @@ export class BqSelect {
     if (this.disabled) return;
 
     this.value = ev.detail.value;
+    this.resetOptionsVisibility();
+    // Move the focus back to the input once an option is selected and the panel is closed
     this.inputElem.focus();
+  };
+
+  private handleInput = (ev: Event) => {
+    if (this.disabled) return;
+
+    this.debounceQuery?.cancel();
+
+    const query = (ev.target as HTMLInputElement).value?.toLowerCase().trim();
+
+    if (!isDefined(query)) {
+      this.clear();
+    } else {
+      this.debounceQuery = debounce(() => {
+        this.options.forEach((item: HTMLBqOptionElement) => {
+          const itemLabel = this.getOptionLabel(item).toLowerCase();
+          item.hidden = !itemLabel.includes(query);
+        });
+      }, this.debounceTime);
+
+      this.debounceQuery();
+    }
+
+    // The panel will close once a selection is made
+    // so we need to make sure it's open when the user is typing and the query is not empty
+    this.open = true;
   };
 
   private handleClearClick = (ev: CustomEvent) => {
@@ -255,6 +292,10 @@ export class BqSelect {
 
   private handleHelperTextSlotChange = () => {
     this.hasHelperText = hasSlotContent(this.helperTextElem);
+  };
+
+  private resetOptionsVisibility = () => {
+    this.options.forEach((item: HTMLBqOptionElement) => (item.hidden = false));
   };
 
   private syncItemsFromValue = () => {
@@ -286,6 +327,7 @@ export class BqSelect {
 
   render() {
     const labelId = `bq-select__label-${this.name || this.fallbackInputId}`;
+    const hasClearIcon = !this.disableClear && !this.disabled && isDefined(this.displayValue);
 
     return (
       <div class="bq-select" part="base">
@@ -340,15 +382,16 @@ export class BqSelect {
               autoFocus={this.autofocus}
               aria-disabled={this.disabled ? 'true' : 'false'}
               aria-controls={`bq-options-${this.name}`}
-              aria-expanded={this.open}
+              aria-expanded={this.open ? 'true' : 'false'}
               aria-haspopup="listbox"
               disabled={this.disabled}
               form={this.form}
               name={this.name}
               placeholder={this.placeholder}
               ref={(inputElem: HTMLInputElement) => (this.inputElem = inputElem)}
-              readOnly={true}
+              readOnly={this.readonly}
               required={this.required}
+              role="combobox"
               spellcheck={false}
               type="text"
               value={this.displayValue}
@@ -356,19 +399,21 @@ export class BqSelect {
               // Events
               onBlur={this.handleBlur}
               onFocus={this.handleFocus}
+              onInput={this.handleInput}
             />
             {/* Clear Button */}
-            {this.hasValue && !this.disabled && !this.disableClear && (
+            {hasClearIcon && (
               // The clear button will be visible as long as the input has a value
               // and the parent group is hovered or has focus-within
               <bq-button
-                class="bq-select__control--clear ms-[--bq-select--gap] hidden"
+                class="bq-select__control--clear ms-[--bq-select--gap]"
                 appearance="text"
                 aria-label={this.clearButtonLabel}
                 size="small"
                 onBqClick={this.handleClearClick}
                 part="clear-btn"
                 exportparts="button"
+                tabIndex={-1}
               >
                 <slot name="clear-icon">
                   <bq-icon name="x-circle" class="flex" />
@@ -386,7 +431,12 @@ export class BqSelect {
               </slot>
             </span>
           </div>
-          <bq-option-list id={`bq-options-${this.name}`} onBqSelect={this.handleSelect}>
+          <bq-option-list
+            id={`bq-options-${this.name}`}
+            onBqSelect={this.handleSelect}
+            aria-expanded={this.open ? 'true' : 'false'}
+            role="listbox"
+          >
             <slot />
           </bq-option-list>
         </bq-dropdown>
