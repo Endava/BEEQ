@@ -21,6 +21,7 @@ const meta: Meta = {
     disabled: { control: 'boolean' },
     form: { control: 'text' },
     'keep-open-on-select': { control: 'boolean' },
+    'show-outside-days': { control: 'boolean' },
     name: { control: 'text' },
     open: { control: 'boolean' },
     'panel-height': { control: 'text' },
@@ -68,6 +69,7 @@ const meta: Meta = {
     disabled: false,
     form: undefined,
     'keep-open-on-select': false,
+    'show-outside-days': false,
     name: 'bq-date-picker',
     open: false,
     'panel-height': 'auto',
@@ -109,6 +111,7 @@ const Template = (args: Args) => {
         ?disabled=${args.disabled}
         form=${ifDefined(args.form)}
         ?keep-open-on-select=${args['keep-open-on-select']}
+        ?show-outside-days=${args['show-outside-days']}
         name=${ifDefined(args.name)}
         ?open=${args.open}
         panel-height=${args['panel-height']}

@@ -387,6 +387,10 @@ export namespace Components {
          */
         "required"?: boolean;
         /**
+          * Whether to show days outside the month
+         */
+        "showOutsideDays": boolean;
+        /**
           * Represents the skidding between the Date picker panel and the input element.
          */
         "skidding"?: number;
@@ -2602,6 +2606,10 @@ declare namespace LocalJSX {
           * Indicates whether or not the Date picker input is required to be filled out before submitting the form.
          */
         "required"?: boolean;
+        /**
+          * Whether to show days outside the month
+         */
+        "showOutsideDays"?: boolean;
         /**
           * Represents the skidding between the Date picker panel and the input element.
          */

@@ -120,6 +120,9 @@ export class BqDatePicker {
    * All dates are expected in ISO-8601 format (YYYY-MM-DD). */
   @Prop({ reflect: true, mutable: true }) value: TInputValue;
 
+  /** Whether to show days outside the month */
+  @Prop({ reflect: true }) showOutsideDays: boolean = false;
+
   // Prop lifecycle events
   // =======================
 
@@ -385,6 +388,8 @@ export class BqDatePicker {
           <div class="flex items-center justify-center">
             <CalendarComponentType
               value={this.value}
+              focusedDate={this.value}
+              showOutsideDays={this.showOutsideDays}
               onChange={(ev: { target: { value: string } }) => {
                 this.value = ev.target.value;
               }}
