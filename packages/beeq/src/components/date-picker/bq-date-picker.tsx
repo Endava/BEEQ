@@ -123,6 +123,9 @@ export class BqDatePicker {
   /** Whether to show days outside the month */
   @Prop({ reflect: true }) showOutsideDays: boolean = false;
 
+  /** The first day of the week, where Sunday is 0, Monday is 1, etc */
+  @Prop({ reflect: true }) firstDayOfWeek?: number = 1;
+
   // Prop lifecycle events
   // =======================
 
@@ -389,6 +392,7 @@ export class BqDatePicker {
             <CalendarComponentType
               value={this.value}
               focusedDate={this.value}
+              firstDayOfWeek={this.firstDayOfWeek}
               showOutsideDays={this.showOutsideDays}
               onChange={(ev: { target: { value: string } }) => {
                 this.value = ev.target.value;

@@ -347,6 +347,10 @@ export namespace Components {
          */
         "distance"?: number;
         /**
+          * The first day of the week, where Sunday is 0, Monday is 1, etc
+         */
+        "firstDayOfWeek"?: number;
+        /**
           * The ID of the form that the Date picker input belongs to.
          */
         "form"?: string;
@@ -2546,6 +2550,10 @@ declare namespace LocalJSX {
           * Represents the distance (gutter or margin) between the Date picker panel and the input element.
          */
         "distance"?: number;
+        /**
+          * The first day of the week, where Sunday is 0, Monday is 1, etc
+         */
+        "firstDayOfWeek"?: number;
         /**
           * The ID of the form that the Date picker input belongs to.
          */
