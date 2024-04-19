@@ -16,6 +16,7 @@ const meta: Meta = {
   argTypes: {
     autofocus: { control: 'boolean' },
     'clear-button-label': { control: 'text' },
+    'debounce-time': { control: 'number' },
     'disable-clear': { control: 'boolean' },
     distance: { control: 'number' },
     disabled: { control: 'boolean' },
@@ -66,6 +67,7 @@ const meta: Meta = {
   args: {
     autofocus: false,
     'clear-button-label': 'Clear value',
+    'debounce-time': 0,
     'disable-clear': false,
     distance: 8,
     disabled: false,
@@ -85,11 +87,45 @@ const meta: Meta = {
     value: undefined,
     // Not part of the public API, so we don't want to expose it in the docs
     options: html`
-      <bq-option value="1">Option 1</bq-option>
-      <bq-option value="2">Option 2</bq-option>
-      <bq-option value="3">Option 3</bq-option>
-      <bq-option value="4">Option 4</bq-option>
-      <bq-option value="5">Option 5</bq-option>
+      <bq-option value="running">
+        <bq-icon slot="prefix" name="sneaker-move"></bq-icon>
+        Running
+      </bq-option>
+
+      <bq-option value="hiking">
+        <bq-icon slot="prefix" name="boot"></bq-icon>
+        Hiking
+      </bq-option>
+
+      <bq-option value="biking">
+        <bq-icon slot="prefix" name="person-simple-bike"></bq-icon>
+        Biking
+      </bq-option>
+
+      <bq-option value="swimming">
+        <bq-icon slot="prefix" name="swimming-pool"></bq-icon>
+        Swimming
+      </bq-option>
+
+      <bq-option value="pizza">
+        <bq-icon slot="prefix" name="pizza"></bq-icon>
+        Pizza
+      </bq-option>
+
+      <bq-option value="hamburger">
+        <bq-icon slot="prefix" name="hamburger"></bq-icon>
+        Hamburger
+      </bq-option>
+
+      <bq-option value="cookie">
+        <bq-icon slot="prefix" name="cookie"></bq-icon>
+        Cookie
+      </bq-option>
+
+      <bq-option value="ice-cream">
+        <bq-icon slot="prefix" name="ice-cream"></bq-icon>
+        Ice-cream
+      </bq-option>
     `,
   },
 };
@@ -135,6 +171,7 @@ const Template = (args: Args) => {
       ?autofocus=${args.autofocus}
       clear-button-label=${args['clear-button-label']}
       distance=${args.distance}
+      debounce-time=${args['debounce-time']}
       ?disable-clear=${args['disable-clear']}
       ?disabled=${args.disabled}
       form=${ifDefined(args.form)}
@@ -187,7 +224,14 @@ export const Open: Story = {
 export const InitialValue: Story = {
   render: Template,
   args: {
-    value: '2',
+    value: 'swimming',
+  },
+};
+
+export const ReadOnly: Story = {
+  render: Template,
+  args: {
+    readonly: true,
   },
 };
 

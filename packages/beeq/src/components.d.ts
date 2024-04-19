@@ -754,6 +754,10 @@ export namespace Components {
          */
         "disabled"?: boolean;
         /**
+          * If true, the option is hidden.
+         */
+        "hidden": boolean;
+        /**
           * If true, the option is selected and active.
          */
         "selected": boolean;
@@ -914,6 +918,10 @@ export namespace Components {
          */
         "clearButtonLabel"?: string;
         /**
+          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur.
+         */
+        "debounceTime"?: number;
+        /**
           * If true, the clear button won't be displayed
          */
         "disableClear"?: boolean;
@@ -954,7 +962,7 @@ export namespace Components {
          */
         "placement"?: FloatingUIPlacement;
         /**
-          * If true, the Select input cannot be modified.
+          * If true, the list of options cannot be filtered (searching won't be available)
          */
         "readonly"?: boolean;
         /**
@@ -3038,6 +3046,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * If true, the option is hidden.
+         */
+        "hidden"?: boolean;
+        /**
           * Handler to be called when item loses focus
          */
         "onBqBlur"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
@@ -3220,6 +3232,10 @@ declare namespace LocalJSX {
          */
         "clearButtonLabel"?: string;
         /**
+          * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur.
+         */
+        "debounceTime"?: number;
+        /**
           * If true, the clear button won't be displayed
          */
         "disableClear"?: boolean;
@@ -3276,7 +3292,7 @@ declare namespace LocalJSX {
          */
         "placement"?: FloatingUIPlacement;
         /**
-          * If true, the Select input cannot be modified.
+          * If true, the list of options cannot be filtered (searching won't be available)
          */
         "readonly"?: boolean;
         /**
