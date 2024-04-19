@@ -132,7 +132,7 @@
    * Run every Monday between 00 and 12
    * {@see https://crontab.guru} for debugging cron schedules
    */
-  schedule: ['* 00-12 * * 1'],
+  schedule: ['* 00-12 15 * *'],
   /**
    * Enable Semantic Commit prefixes for commits and PR titles
    */

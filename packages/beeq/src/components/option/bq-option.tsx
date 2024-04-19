@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Listen, Prop, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop, State } from '@stencil/core';
 
 import { hasSlotContent } from '../../shared/utils';
 
@@ -34,6 +34,9 @@ export class BqOption {
 
   // Public Property API
   // ========================
+
+  /** If true, the option is hidden. */
+  @Prop({ reflect: true }) hidden: boolean = false;
 
   /** If true, the option is disabled. */
   @Prop({ reflect: true }) disabled?: boolean = false;
@@ -89,7 +92,7 @@ export class BqOption {
   // =======================================================
 
   private onBlur = (event: Event) => {
-    if (this.disabled) {
+    if (this.isDisabledOrHidden) {
       event.preventDefault();
       event.stopPropagation();
       return;
@@ -99,7 +102,7 @@ export class BqOption {
   };
 
   private onFocus = (event: Event) => {
-    if (this.disabled) {
+    if (this.isDisabledOrHidden) {
       event.preventDefault();
       event.stopPropagation();
       return;
@@ -109,7 +112,7 @@ export class BqOption {
   };
 
   private onClick = (event: Event) => {
-    if (this.disabled) {
+    if (this.isDisabledOrHidden) {
       event.preventDefault();
       event.stopPropagation();
       return;
@@ -126,51 +129,60 @@ export class BqOption {
     this.hasSuffix = hasSlotContent(this.suffixElem, 'suffix');
   };
 
+  private get isDisabledOrHidden() {
+    return this.disabled || this.hidden;
+  }
+
   // render() function
   // Always the last one in the class.
   // ===================================
 
   render() {
     return (
-      <div
-        class={{
-          'bq-option': true,
-          disabled: this.disabled,
-          active: !this.disabled && this.selected,
-        }}
+      <Host
+        aria-disabled={this.isDisabledOrHidden ? 'true' : 'false'}
+        aria-hidden={this.hidden ? 'true' : 'false'}
+        aria-selected={this.selected ? 'true' : 'false'}
         role="option"
-        aria-selected={this.selected}
-        aria-disabled={this.disabled}
-        tabindex={this.disabled ? '-1' : '0'}
-        onBlur={this.onBlur}
-        onFocus={this.onFocus}
-        onClick={this.onClick}
-        part="base"
       >
-        <span
+        <div
           class={{
-            'bq-option__prefix me-[--bq-option--gap-start] flex items-center': true,
-            '!hidden': !this.hasPrefix,
+            'bq-option': true,
+            disabled: this.disabled,
+            active: !this.disabled && this.selected,
           }}
-          ref={(elem) => (this.prefixElem = elem)}
-          part="prefix"
+          onBlur={this.onBlur}
+          onFocus={this.onFocus}
+          onClick={this.onClick}
+          tabindex={this.isDisabledOrHidden ? '-1' : '0'}
+          role="button"
+          part="base"
         >
-          <slot name="prefix" onSlotchange={this.onSlotChange} />
-        </span>
-        <span class="bq-option__label" part="label">
-          <slot />
-        </span>
-        <span
-          class={{
-            'bq-option__suffix ml-auto ms-[--bq-option--gap-end] flex items-center': true,
-            '!hidden': !this.hasSuffix,
-          }}
-          ref={(elem) => (this.suffixElem = elem)}
-          part="suffix"
-        >
-          <slot name="suffix" onSlotchange={this.handleSuffixSlotChange} />
-        </span>
-      </div>
+          <span
+            class={{
+              'bq-option__prefix me-[--bq-option--gap-start] flex items-center': true,
+              '!hidden': !this.hasPrefix,
+            }}
+            ref={(elem) => (this.prefixElem = elem)}
+            part="prefix"
+          >
+            <slot name="prefix" onSlotchange={this.onSlotChange} />
+          </span>
+          <span class="bq-option__label" part="label">
+            <slot />
+          </span>
+          <span
+            class={{
+              'bq-option__suffix ml-auto ms-[--bq-option--gap-end] flex items-center': true,
+              '!hidden': !this.hasSuffix,
+            }}
+            ref={(elem) => (this.suffixElem = elem)}
+            part="suffix"
+          >
+            <slot name="suffix" onSlotchange={this.handleSuffixSlotChange} />
+          </span>
+        </div>
+      </Host>
     );
   }
 }

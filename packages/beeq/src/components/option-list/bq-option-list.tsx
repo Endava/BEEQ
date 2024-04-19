@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Prop } from '@stencil/core';
 
-import { isHTMLElement } from '../../shared/utils';
+import { isEventTargetChildOfElement, isHTMLElement } from '../../shared/utils';
 
 /**
  * @part base - The component's internal wrapper.
@@ -54,10 +54,9 @@ export class BqOptionList {
   @Listen('bqEnter', { passive: true })
   onBqSelect(event: CustomEvent<HTMLElement>) {
     const { target: item } = event;
+    if (!isHTMLElement(item, 'bq-option') || !isEventTargetChildOfElement(event, this.el)) return;
 
-    if (isHTMLElement(item, 'bq-option')) {
-      this.bqSelect.emit({ item, value: item.value });
-    }
+    this.bqSelect.emit({ item, value: item.value });
   }
 
   // Public methods API
@@ -78,12 +77,7 @@ export class BqOptionList {
 
   render() {
     return (
-      <div
-        class="bq-option__list flex flex-col gap-y-[--bq-option-group--gapY-list]"
-        part="base"
-        role="group"
-        aria-label={this.ariaLabel}
-      >
+      <div class="bq-option__list flex flex-col gap-y-[--bq-option-group--gapY-list]" part="base">
         <slot />
       </div>
     );

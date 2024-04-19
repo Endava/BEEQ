@@ -14,6 +14,7 @@ const meta: Meta = {
   },
   argTypes: {
     disabled: { control: 'boolean' },
+    hidden: { control: 'boolean' },
     selected: { control: 'boolean' },
     // Event handlers
     bqBlur: { action: 'bqBlur' },
@@ -29,6 +30,7 @@ const meta: Meta = {
   },
   args: {
     disabled: false,
+    hidden: false,
     selected: false,
     iconPrefix: undefined,
     iconSuffix: undefined,
@@ -49,6 +51,7 @@ const Template = (args: Args) => {
   return html`
     <bq-option
       ?disabled=${args.disabled}
+      ?hidden=${args.hidden}
       ?selected=${args.selected}
       value=${ifDefined(args.value)}
       @bqBlur=${args.bqBlur}

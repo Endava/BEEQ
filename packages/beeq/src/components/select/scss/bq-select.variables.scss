@@ -19,8 +19,8 @@
    * @prop --bq-select--label-margin-bottom - Select label margin bottom
    * @prop --bq-select--label-text-color - Select label text color
    * @prop --bq-select--label-text-size - Select label text size
-   * @prop --bq-select--pading-start - Select padding start
-   * @prop --bq-select--pading-end - Select padding end
+   * @prop --bq-select--padding-start - Select padding start
+   * @prop --bq-select--padding-end - Select padding end
    * @prop --bq-select--paddingY - Select padding top and bottom
    * @prop --bq-select--text-color - Select text color
    * @prop --bq-select--text-size - Select text size
@@ -46,8 +46,8 @@
   --bq-select--label-text-size: theme('fontSize.s');
   --bq-select--label-text-color: theme('colors.text.primary');
 
-  --bq-select--pading-start: theme('spacing.m');
-  --bq-select--pading-end: theme('spacing.m');
+  --bq-select--padding-start: theme('spacing.m');
+  --bq-select--padding-end: theme('spacing.m');
   --bq-select--paddingY: theme('spacing.s');
 
   --bq-select--text-color: theme('colors.text.primary');
