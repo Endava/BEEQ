@@ -37,27 +37,30 @@
 /*                         Select input group control                         */
 /* -------------------------------------------------------------------------- */
 
-.bq-select__control {
-  @apply flex w-full items-center transition-[border-color,box-shadow];
-  // Border
-  @apply rounded-[--bq-select--border-radius] border-[length:--bq-select--border-width] border-[color:--bq-select--border-color];
-  // Padding
-  @apply py-[--bq-select--paddingY] pe-[--bq-select--pading-end] ps-[--bq-select--pading-start];
-  // Text
-  @apply select-none text-[length:--bq-select--text-size] text-[color:--bq-select--text-color] placeholder:text-[color:--bq-select--text-placeholder-color];
-  // Hover
-  @apply [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-brand;
-
-  border-style: var(--bq-select--border-style);
-
-  // Focus
-  &:not(.disabled):focus-within {
+.bq-select__dropdown:has(:focus-within, :focus-visible) {
+  // The focus state will be controlled by the dropdown element
+  // if any of its children has focus, the dropdown will set the focus state to the .bq-select__control
+  .bq-select__control {
     --bq-ring-width: 1px;
     --bq-ring-offset-width: 0;
     --bq-ring-color-focus: var(--bq-select--border-color-focus);
 
     @apply focus border-[color:--bq-select--border-color-focus];
   }
+}
+
+.bq-select__control {
+  @apply flex w-full items-center transition-[border-color,box-shadow];
+  // Border
+  @apply rounded-[--bq-select--border-radius] border-[length:--bq-select--border-width] border-[color:--bq-select--border-color];
+  // Padding
+  @apply py-[--bq-select--paddingY] pe-[--bq-select--padding-end] ps-[--bq-select--padding-start];
+  // Text
+  @apply select-none text-[length:--bq-select--text-size] text-[color:--bq-select--text-color] placeholder:text-[color:--bq-select--text-placeholder-color];
+  // Hover
+  @apply [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-brand;
+
+  border-style: var(--bq-select--border-style);
 
   // Enable clear button whenever the input group control is hovered or has focus
   &:not(.disabled):hover,
