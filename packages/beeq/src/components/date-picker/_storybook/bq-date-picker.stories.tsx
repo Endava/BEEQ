@@ -20,6 +20,8 @@ const meta: Meta = {
     distance: { control: 'number' },
     disabled: { control: 'boolean' },
     form: { control: 'text' },
+    min: { control: 'text' },
+    max: { control: 'text' },
     'keep-open-on-select': { control: 'boolean' },
     'show-outside-days': { control: 'boolean' },
     'first-day-of-week': { control: 'number' },
@@ -69,6 +71,8 @@ const meta: Meta = {
     distance: 8,
     disabled: false,
     form: undefined,
+    min: undefined,
+    max: undefined,
     'keep-open-on-select': false,
     'show-outside-days': false,
     'first-day-of-week': 1,
@@ -112,6 +116,8 @@ const Template = (args: Args) => {
         ?disable-clear=${args['disable-clear']}
         ?disabled=${args.disabled}
         form=${ifDefined(args.form)}
+        min=${ifDefined(args.min)}
+        max=${ifDefined(args.max)}
         ?keep-open-on-select=${args['keep-open-on-select']}
         ?show-outside-days=${args['show-outside-days']}
         first-day-of-week=${args['first-day-of-week']}

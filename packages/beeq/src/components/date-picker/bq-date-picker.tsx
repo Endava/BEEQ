@@ -126,6 +126,12 @@ export class BqDatePicker {
   /** The first day of the week, where Sunday is 0, Monday is 1, etc */
   @Prop({ reflect: true }) firstDayOfWeek?: number = 1;
 
+  /** The earliest date that can be selected */
+  @Prop({ reflect: true }) min?: string;
+
+  /** The latest date that can be selected */
+  @Prop({ reflect: true }) max?: string;
+
   // Prop lifecycle events
   // =======================
 
@@ -391,6 +397,8 @@ export class BqDatePicker {
           <div class="flex items-center justify-center">
             <CalendarComponentType
               value={this.value}
+              min={this.min}
+              max={this.max}
               focusedDate={this.value}
               firstDayOfWeek={this.firstDayOfWeek}
               showOutsideDays={this.showOutsideDays}
