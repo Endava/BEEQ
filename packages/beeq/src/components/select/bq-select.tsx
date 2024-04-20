@@ -48,6 +48,8 @@ export class BqSelect {
 
   @State() displayValue?: string;
   @State() hasHelperText = false;
+  @State() selectedOptions: HTMLBqOptionElement[] = [];
+
   @State() hasLabel = false;
   @State() hasPrefix = false;
   @State() hasSuffix = false;
@@ -239,12 +241,35 @@ export class BqSelect {
   };
 
   private handleSelect = (ev: CustomEvent<{ value: TInputValue; item: HTMLBqOptionElement }>) => {
+    ev.stopPropagation();
     if (this.disabled) return;
 
-    this.value = ev.detail.value;
+    const { value, item } = ev.detail;
+
+    if (this.multiple) {
+      this.handleMultipleSelection(item);
+    } else {
+      this.value = value;
+    }
+
+    this.bqSelect.emit({ value: this.value, item });
+
     this.resetOptionsVisibility();
-    // Move the focus back to the input once an option is selected and the panel is closed
     this.inputElem.focus();
+  };
+
+  private handleMultipleSelection = (item: HTMLBqOptionElement) => {
+    // Set has O(1) complexity for insertion, deletion, and search operations, compared to an Array's O(n)
+    const selectedOptionsSet = new Set(this.selectedOptions);
+
+    if (selectedOptionsSet.has(item)) {
+      selectedOptionsSet.delete(item);
+    } else {
+      selectedOptionsSet.add(item);
+    }
+
+    this.selectedOptions = Array.from(selectedOptionsSet);
+    this.value = this.selectedOptions.map((item) => item.value);
   };
 
   private handleInput = (ev: Event) => {
@@ -305,8 +330,14 @@ export class BqSelect {
     const items = this.options;
     if (!items.length) return;
 
-    // Sync selected state
-    this.options.forEach((item: HTMLBqOptionElement) => (item.selected = item.value === this.value));
+    // Sync selected state of the BqOption elements
+    this.options.forEach((option: HTMLBqOptionElement) => {
+      if (this.multiple && Array.isArray(this.value)) {
+        option.selected = this.value.includes(option.value);
+      } else {
+        option.selected = option.value === this.value;
+      }
+    });
     // Sync display label
     const checkedItem = items.filter((item) => item.value === this.value)[0];
     this.displayValue = checkedItem ? this.getOptionLabel(checkedItem) : '';
@@ -349,7 +380,7 @@ export class BqSelect {
           class="bq-select__dropdown w-full"
           disabled={this.disabled}
           distance={this.distance}
-          keepOpenOnSelect={this.keepOpenOnSelect}
+          keepOpenOnSelect={this.keepOpenOnSelect || this.multiple}
           open={this.open}
           panelHeight={this.panelHeight}
           placement={this.placement}
