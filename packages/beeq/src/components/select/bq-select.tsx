@@ -355,6 +355,19 @@ export class BqSelect {
     return Array.from(this.el.querySelectorAll('bq-option'));
   }
 
+  private get displayPlaceholder() {
+    // Hide the placeholder when multiple selection is enabled and there are selected items
+    return this.multiple && this.selectedOptions.length !== 0 ? undefined : this.placeholder;
+  }
+
+  private get displayTags() {
+    return this.selectedOptions.map((item) => (
+      <bq-tag key={item.value} size="xsmall" variant="filled" removable>
+        {this.getOptionLabel(item)}
+      </bq-tag>
+    ));
+  }
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -407,10 +420,19 @@ export class BqSelect {
             >
               <slot name="prefix" onSlotchange={this.handlePrefixSlotChange} />
             </span>
+            {/* Display selected values using BqTags for multiple selection */}
+            {this.multiple && (
+              <span
+                class="me-xs2 flex flex-1 gap-xs2 [&>bq-tag::part(text)]:text-nowrap [&>bq-tag::part(text)]:leading-small [&>bq-tag]:inline-flex"
+                part="tags"
+              >
+                {this.displayTags}
+              </span>
+            )}
             {/* HTML Input */}
             <input
               id={this.name || this.fallbackInputId}
-              class="bq-select__control--input"
+              class="bq-select__control--input w-full flex-grow"
               autoComplete="off"
               autoCapitalize="off"
               autoFocus={this.autofocus}
@@ -421,7 +443,7 @@ export class BqSelect {
               disabled={this.disabled}
               form={this.form}
               name={this.name}
-              placeholder={this.placeholder}
+              placeholder={this.displayPlaceholder}
               ref={(inputElem: HTMLInputElement) => (this.inputElem = inputElem)}
               readOnly={this.readonly}
               required={this.required}
