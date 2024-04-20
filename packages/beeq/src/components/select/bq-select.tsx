@@ -2,7 +2,9 @@ import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State
 
 import { FloatingUIPlacement } from '../../services/interfaces';
 import { debounce, getTextContent, hasSlotContent, isDefined, isHTMLElement, TDebounce } from '../../shared/utils';
-import { TInputValidation, TInputValue } from '../input/bq-input.types';
+import { TInputValidation } from '../input/bq-input.types';
+
+export type TSelectValue = string | string[];
 
 /**
  * @part base - The component's base wrapper.
@@ -141,7 +143,7 @@ export class BqSelect {
   @Prop({ reflect: true }) validationStatus: TInputValidation = 'none';
 
   /** The select input value, it can be used to reset the field to a previous value */
-  @Prop({ reflect: true, mutable: true }) value: TInputValue;
+  @Prop({ reflect: true, mutable: true }) value: TSelectValue;
 
   // Prop lifecycle events
   // =======================
@@ -149,13 +151,6 @@ export class BqSelect {
   @Watch('value')
   handleValueChange() {
     this.syncItemsFromValue();
-
-    if (Array.isArray(this.value)) {
-      this.hasValue = this.value.some((val) => val.length > 0);
-      return;
-    }
-
-    this.hasValue = isDefined(this.value);
   }
 
   // Events section
@@ -178,7 +173,17 @@ export class BqSelect {
   // Ordered by their natural call order
   // =====================================
 
+  connectedCallback() {
+    if (this.multiple) {
+      this.value = Array.isArray(this.value) ? this.value : Array.from(JSON.parse(String(this.value)));
+    }
+  }
+
   componentDidLoad() {
+    if (this.multiple && Array.isArray(this.value)) {
+      this.selectedOptions = this.options.filter((item) => this.value.includes(item.value));
+    }
+
     this.handleValueChange();
   }
 
@@ -223,8 +228,11 @@ export class BqSelect {
     if (this.disabled) return;
 
     this.value = undefined;
-    this.displayValue = undefined;
-    this.inputElem.value = undefined;
+    this.selectedOptions = [];
+    if (!this.multiple) {
+      this.displayValue = undefined;
+      this.inputElem.value = undefined;
+    }
 
     this.resetOptionsVisibility();
     this.bqClear.emit(this.el);
@@ -247,19 +255,25 @@ export class BqSelect {
     this.bqFocus.emit(this.el);
   };
 
-  private handleSelect = (ev: CustomEvent<{ value: TInputValue; item: HTMLBqOptionElement }>) => {
-    ev.stopPropagation();
+  private handleSelect = (ev: CustomEvent<{ value: TSelectValue; item: HTMLBqOptionElement }>) => {
     if (this.disabled) return;
+
+    if (this.multiple) {
+      ev.stopPropagation();
+    }
 
     const { value, item } = ev.detail;
 
     if (this.multiple) {
       this.handleMultipleSelection(item);
+      // Clear the input value after selecting an item
+      this.inputElem.value = '';
+      // If multiple selection is enabled, emit the selected items array instead of relying on
+      // the option list to emit the value of the selected item
+      this.bqSelect.emit({ value: this.value, item });
     } else {
       this.value = value;
     }
-
-    this.bqSelect.emit({ value: this.value, item });
 
     this.resetOptionsVisibility();
     this.inputElem.focus();
@@ -349,13 +363,16 @@ export class BqSelect {
       if (this.multiple && Array.isArray(this.value)) {
         option.selected = this.value.includes(option.value);
       } else {
-        option.selected = option.value === this.value;
+        option.selected = option.value.toLowerCase() === String(this.value).toLowerCase();
       }
     });
-    // Sync display label
-    const checkedItem = items.filter((item) => item.value === this.value)[0];
-    this.displayValue = checkedItem ? this.getOptionLabel(checkedItem) : '';
-    this.inputElem.value = this.displayValue;
+
+    if (!this.multiple) {
+      // Sync display label
+      const checkedItem = items.filter((item) => item.value === this.value)[0];
+      this.displayValue = checkedItem ? this.getOptionLabel(checkedItem) : '';
+      this.inputElem.value = this.displayValue ?? '';
+    }
   };
 
   private getOptionLabel = (item: HTMLBqOptionElement) => {
@@ -392,13 +409,24 @@ export class BqSelect {
     ));
   }
 
+  private get hasClearIcon() {
+    if (this.disableClear || this.disabled) {
+      return false;
+    }
+
+    if (this.multiple) {
+      return this.selectedOptions.length > 0;
+    }
+
+    return isDefined(this.displayValue);
+  }
+
   // render() function
   // Always the last one in the class.
   // ===================================
 
   render() {
     const labelId = `bq-select__label-${this.name || this.fallbackInputId}`;
-    const hasClearIcon = !this.disableClear && !this.disabled && isDefined(this.displayValue);
 
     return (
       <div class="bq-select" part="base">
@@ -482,7 +510,7 @@ export class BqSelect {
               onInput={this.handleSearchFilter}
             />
             {/* Clear Button */}
-            {hasClearIcon && (
+            {this.hasClearIcon && (
               // The clear button will be visible as long as the input has a value
               // and the parent group is hovered or has focus-within
               <bq-button
