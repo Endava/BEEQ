@@ -50,7 +50,7 @@ const meta: Meta = {
     skidding: { control: 'number' },
     strategy: { control: 'select', options: ['fixed', 'absolute'] },
     'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
-    value: { control: 'text' },
+    value: { control: 'object' },
     // Events
     bqBlur: { action: 'bqBlur' },
     bqClear: { action: 'bqClear' },
@@ -190,7 +190,7 @@ const Template = (args: Args) => {
       skidding=${args.skidding}
       strategy=${args.strategy}
       validation-status=${args['validation-status']}
-      value=${ifDefined(args.value)}
+      value=${args.multiple ? ifDefined(JSON.stringify(args.value)) : args.value}
       @bqBlur=${args.bqBlur}
       @bqSelect=${args.bqSelect}
       @bqClear=${args.bqClear}
@@ -250,6 +250,7 @@ export const Multiple: Story = {
   args: {
     'keep-open-on-select': true,
     multiple: true,
+    value: ['running', 'biking'],
   },
 };
 
