@@ -306,6 +306,13 @@ export class BqSelect {
     ev.stopPropagation();
   };
 
+  private handleTagRemove = (item: HTMLBqOptionElement) => {
+    if (this.disabled) return;
+
+    this.handleMultipleSelection(item);
+    this.bqSelect.emit({ value: this.value, item });
+  };
+
   private handleLabelSlotChange = () => {
     this.hasLabel = hasSlotContent(this.labelElem);
   };
@@ -362,7 +369,15 @@ export class BqSelect {
 
   private get displayTags() {
     return this.selectedOptions.map((item) => (
-      <bq-tag key={item.value} size="xsmall" variant="filled" removable>
+      <bq-tag
+        key={item.value}
+        removable
+        size="xsmall"
+        variant="filled"
+        onBqClose={() => this.handleTagRemove(item)}
+        // Prevent the tag from closing the panel when clicked
+        onClick={(ev: MouseEvent) => ev.stopPropagation()}
+      >
         {this.getOptionLabel(item)}
       </bq-tag>
     ));
@@ -393,7 +408,7 @@ export class BqSelect {
           class="bq-select__dropdown w-full"
           disabled={this.disabled}
           distance={this.distance}
-          keepOpenOnSelect={this.keepOpenOnSelect || this.multiple}
+          keepOpenOnSelect={this.keepOpenOnSelect}
           open={this.open}
           panelHeight={this.panelHeight}
           placement={this.placement}
