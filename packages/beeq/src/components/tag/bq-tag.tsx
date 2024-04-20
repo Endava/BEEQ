@@ -8,6 +8,7 @@ import { getColorCSSVariable, hasSlotContent, validatePropValue } from '../../sh
  * @part wrapper - The wrapper container `<div>` of the element inside the shadow DOM.
  * @part prefix - The `<span>` tag element that acts as prefix container (when icon exists in front of tag).
  * @part text - The `<div>` element containing the text of the tag component.
+ * @part btn-close - The close button element to remove the tag component.
  */
 @Component({
   tag: 'bq-tag',
