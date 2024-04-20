@@ -23,6 +23,7 @@ const meta: Meta = {
     form: { control: 'text' },
     'keep-open-on-select': { control: 'boolean' },
     name: { control: 'text' },
+    multiple: { control: 'boolean' },
     open: { control: 'boolean' },
     'panel-height': { control: 'text' },
     placement: {
@@ -74,6 +75,7 @@ const meta: Meta = {
     form: undefined,
     'keep-open-on-select': false,
     name: 'bq-select',
+    multiple: false,
     open: false,
     'panel-height': undefined,
     placement: 'bottom',
@@ -177,6 +179,7 @@ const Template = (args: Args) => {
       form=${ifDefined(args.form)}
       ?keep-open-on-select=${args['keep-open-on-select']}
       name=${ifDefined(args.name)}
+      ?multiple=${args.multiple}
       ?open=${args.open}
       panel-height=${args['panel-height']}
       placeholder=${args.placeholder}
@@ -239,6 +242,14 @@ export const Disabled: Story = {
   render: Template,
   args: {
     disabled: true,
+  },
+};
+
+export const Multiple: Story = {
+  render: Template,
+  args: {
+    'keep-open-on-select': true,
+    multiple: true,
   },
 };
 
