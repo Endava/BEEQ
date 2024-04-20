@@ -89,6 +89,9 @@ export class BqSelect {
   /** The Select input name. */
   @Prop({ reflect: true }) name!: string;
 
+  /** If true, the Select input will allow multiple selections. */
+  @Prop({ reflect: true }) multiple?: boolean = false;
+
   /** If true, the Select panel will be visible. */
   @Prop({ reflect: true, mutable: true }) open?: boolean = false;
 

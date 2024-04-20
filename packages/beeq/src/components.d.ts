@@ -837,6 +837,10 @@ export namespace Components {
          */
         "keepOpenOnSelect"?: boolean;
         /**
+          * If true, the Select input will allow multiple selections.
+         */
+        "multiple"?: boolean;
+        /**
           * The Select input name.
          */
         "name": string;
@@ -3005,6 +3009,10 @@ declare namespace LocalJSX {
           * If true, the Select panel will remain open after a selection is made.
          */
         "keepOpenOnSelect"?: boolean;
+        /**
+          * If true, the Select input will allow multiple selections.
+         */
+        "multiple"?: boolean;
         /**
           * The Select input name.
          */
