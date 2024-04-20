@@ -272,7 +272,7 @@ export class BqSelect {
     this.value = this.selectedOptions.map((item) => item.value);
   };
 
-  private handleInput = (ev: Event) => {
+  private handleSearchFilter = (ev: Event) => {
     if (this.disabled) return;
 
     this.debounceQuery?.cancel();
@@ -470,7 +470,7 @@ export class BqSelect {
               // Events
               onBlur={this.handleBlur}
               onFocus={this.handleFocus}
-              onInput={this.handleInput}
+              onInput={this.handleSearchFilter}
             />
             {/* Clear Button */}
             {hasClearIcon && (
