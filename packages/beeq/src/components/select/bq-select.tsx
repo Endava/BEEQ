@@ -15,6 +15,13 @@ import { TInputValidation, TInputValue } from '../input/bq-input.types';
  * @part panel - The select panel container
  * @part prefix - The prefix slot container.
  * @part suffix - The suffix slot container.
+ * @part tags - The tags container of the BqTags for multiple selection.
+ * @part tag - The tag container of the BqTag for multiple selection.
+ * @part tag__base - The base wrapper of the BqTag for multiple selection.
+ * @part tag__prefix - The prefix slot container of the BqTag for multiple selection.
+ * @part tag__text - The text slot container of the BqTag for multiple selection.
+ * @part tag__btn-close - The close button of the BqTag for multiple selection.
+ * @part option-list - The option list container.
  */
 @Component({
   tag: 'bq-select',
@@ -377,6 +384,8 @@ export class BqSelect {
         onBqClose={() => this.handleTagRemove(item)}
         // Prevent the tag from closing the panel when clicked
         onClick={(ev: MouseEvent) => ev.stopPropagation()}
+        exportparts="wrapper:tag__base,prefix:tag__prefix,text:tag__text,btn-close:tag__btn-close"
+        part="tag"
       >
         {this.getOptionLabel(item)}
       </bq-tag>
@@ -506,6 +515,7 @@ export class BqSelect {
             id={`bq-options-${this.name}`}
             onBqSelect={this.handleSelect}
             aria-expanded={this.open ? 'true' : 'false'}
+            exportparts="base:option-list"
             role="listbox"
           >
             <slot />
