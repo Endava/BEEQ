@@ -100,6 +100,9 @@ export class BqSelect {
   /** The Select input name. */
   @Prop({ reflect: true }) name!: string;
 
+  /** The maximum number of tags to display when multiple selection is enabled */
+  @Prop({ mutable: true }) maxTagsVisible: number = 2;
+
   /** If true, the Select input will allow multiple selections. */
   @Prop({ reflect: true }) multiple?: boolean = false;
 
@@ -392,21 +395,39 @@ export class BqSelect {
   }
 
   private get displayTags() {
-    return this.selectedOptions.map((item) => (
-      <bq-tag
-        key={item.value}
-        removable
-        size="xsmall"
-        variant="filled"
-        onBqClose={() => this.handleTagRemove(item)}
-        // Prevent the tag from closing the panel when clicked
-        onClick={(ev: MouseEvent) => ev.stopPropagation()}
-        exportparts="wrapper:tag__base,prefix:tag__prefix,text:tag__text,btn-close:tag__btn-close"
-        part="tag"
-      >
-        {this.getOptionLabel(item)}
-      </bq-tag>
-    ));
+    return this.selectedOptions.map((item, index) => {
+      if (index < this.maxTagsVisible || this.maxTagsVisible < 0) {
+        return (
+          <bq-tag
+            key={item.value}
+            removable
+            size="xsmall"
+            variant="filled"
+            onBqClose={() => this.handleTagRemove(item)}
+            // Prevent the tag from closing the panel when clicked
+            onClick={(ev: MouseEvent) => ev.stopPropagation()}
+            exportparts="wrapper:tag__base,prefix:tag__prefix,text:tag__text,btn-close:tag__btn-close"
+            part="tag"
+          >
+            {this.getOptionLabel(item)}
+          </bq-tag>
+        );
+      } else if (index === this.maxTagsVisible) {
+        return (
+          <bq-tag
+            key="more"
+            size="xsmall"
+            variant="filled"
+            exportparts="wrapper:tag__base,prefix:tag__prefix,text:tag__text,btn-close:tag__btn-close"
+            part="tag"
+          >
+            +{this.selectedOptions.length - index}
+          </bq-tag>
+        );
+      }
+
+      return null;
+    });
   }
 
   private get hasClearIcon() {
@@ -472,43 +493,45 @@ export class BqSelect {
             >
               <slot name="prefix" onSlotchange={this.handlePrefixSlotChange} />
             </span>
-            {/* Display selected values using BqTags for multiple selection */}
-            {this.multiple && (
-              <span
-                class="me-xs2 flex flex-1 gap-xs2 [&>bq-tag::part(text)]:text-nowrap [&>bq-tag::part(text)]:leading-small [&>bq-tag]:inline-flex"
-                part="tags"
-              >
-                {this.displayTags}
-              </span>
-            )}
-            {/* HTML Input */}
-            <input
-              id={this.name || this.fallbackInputId}
-              class="bq-select__control--input w-full flex-grow"
-              autoComplete="off"
-              autoCapitalize="off"
-              autoFocus={this.autofocus}
-              aria-disabled={this.disabled ? 'true' : 'false'}
-              aria-controls={`bq-options-${this.name}`}
-              aria-expanded={this.open ? 'true' : 'false'}
-              aria-haspopup="listbox"
-              disabled={this.disabled}
-              form={this.form}
-              name={this.name}
-              placeholder={this.displayPlaceholder}
-              ref={(inputElem: HTMLInputElement) => (this.inputElem = inputElem)}
-              readOnly={this.readonly}
-              required={this.required}
-              role="combobox"
-              spellcheck={false}
-              type="text"
-              value={this.displayValue}
-              part="input"
-              // Events
-              onBlur={this.handleBlur}
-              onFocus={this.handleFocus}
-              onInput={this.handleSearchFilter}
-            />
+            <div class="flex flex-1 overflow-x-auto">
+              {/* Display selected values using BqTags for multiple selection */}
+              {this.multiple && (
+                <span
+                  class="me-xs2 flex flex-1 gap-xs2 [&>bq-tag::part(text)]:text-nowrap [&>bq-tag::part(text)]:leading-small [&>bq-tag]:inline-flex"
+                  part="tags"
+                >
+                  {this.displayTags}
+                </span>
+              )}
+              {/* HTML Input */}
+              <input
+                id={this.name || this.fallbackInputId}
+                class="bq-select__control--input w-full flex-grow"
+                autoComplete="off"
+                autoCapitalize="off"
+                autoFocus={this.autofocus}
+                aria-disabled={this.disabled ? 'true' : 'false'}
+                aria-controls={`bq-options-${this.name}`}
+                aria-expanded={this.open ? 'true' : 'false'}
+                aria-haspopup="listbox"
+                disabled={this.disabled}
+                form={this.form}
+                name={this.name}
+                placeholder={this.displayPlaceholder}
+                ref={(inputElem: HTMLInputElement) => (this.inputElem = inputElem)}
+                readOnly={this.readonly}
+                required={this.required}
+                role="combobox"
+                spellcheck={false}
+                type="text"
+                value={this.displayValue}
+                part="input"
+                // Events
+                onBlur={this.handleBlur}
+                onFocus={this.handleFocus}
+                onInput={this.handleSearchFilter}
+              />
+            </div>
             {/* Clear Button */}
             {this.hasClearIcon && (
               // The clear button will be visible as long as the input has a value

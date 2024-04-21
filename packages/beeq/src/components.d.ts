@@ -839,6 +839,10 @@ export namespace Components {
          */
         "keepOpenOnSelect"?: boolean;
         /**
+          * The maximum number of tags to display when multiple selection is enabled
+         */
+        "maxTagsVisible": number;
+        /**
           * If true, the Select input will allow multiple selections.
          */
         "multiple"?: boolean;
@@ -3011,6 +3015,10 @@ declare namespace LocalJSX {
           * If true, the Select panel will remain open after a selection is made.
          */
         "keepOpenOnSelect"?: boolean;
+        /**
+          * The maximum number of tags to display when multiple selection is enabled
+         */
+        "maxTagsVisible"?: number;
         /**
           * If true, the Select input will allow multiple selections.
          */
