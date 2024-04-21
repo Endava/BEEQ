@@ -58,13 +58,17 @@ Type: `Promise<void>`
 
 | Part          | Description                                                                                |
 | ------------- | ------------------------------------------------------------------------------------------ |
-| `"btn-close"` |                                                                                            |
+| `"btn-close"` | The close button element to remove the tag component.                                      |
 | `"prefix"`    | The `<span>` tag element that acts as prefix container (when icon exists in front of tag). |
 | `"text"`      | The `<div>` element containing the text of the tag component.                              |
 | `"wrapper"`   | The wrapper container `<div>` of the element inside the shadow DOM.                        |
 
 
 ## Dependencies
+
+### Used by
+
+ - [bq-select](../select)
 
 ### Depends on
 
@@ -77,6 +81,7 @@ graph TD;
   bq-tag --> bq-button
   bq-tag --> bq-icon
   bq-button --> bq-icon
+  bq-select --> bq-tag
   style bq-tag fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

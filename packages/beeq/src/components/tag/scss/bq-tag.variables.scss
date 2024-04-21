@@ -29,10 +29,10 @@
 
   --bq-tag--small-border-radius: theme('borderRadius.xs');
   --bq-tag--small-gap: theme('spacing.xs2');
-  --bq-tag--small-padding-x: theme('spacing.xs');
-  --bq-tag--small-padding-y: theme('spacing.xs3');
+  --bq-tag--small-padding-x: calc(#{theme('spacing.xs')} - var(--bq-tag--border-width));
+  --bq-tag--small-padding-y: calc(#{theme('spacing.xs3')} - var(--bq-tag--border-width));
 
   --bq-tag--medium-gap: theme('spacing.xs');
-  --bq-tag--medium-padding-x: theme('spacing.s');
-  --bq-tag--medium-padding-y: theme('spacing.xs2');
+  --bq-tag--medium-padding-x: calc(#{theme('spacing.s')} - var(--bq-tag--border-width));
+  --bq-tag--medium-padding-y: calc(#{theme('spacing.xs2')} - var(--bq-tag--border-width));
 }

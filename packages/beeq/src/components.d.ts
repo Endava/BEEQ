@@ -21,6 +21,7 @@ import { TIconWeight } from "./components/icon/bq-icon.types";
 import { TNotificationBorderRadius, TNotificationType } from "./components/notification/bq-notification.types";
 import { TProgressBorderShape, TProgressThickness, TProgressType } from "./components/progress/bq-progress.types";
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
+import { TSelectValue } from "./components/select/bq-select";
 import { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
 import { TSliderType, TSliderValue } from "./components/slider/bq-slider.types";
 import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
@@ -48,6 +49,7 @@ export { TIconWeight } from "./components/icon/bq-icon.types";
 export { TNotificationBorderRadius, TNotificationType } from "./components/notification/bq-notification.types";
 export { TProgressBorderShape, TProgressThickness, TProgressType } from "./components/progress/bq-progress.types";
 export { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
+export { TSelectValue } from "./components/select/bq-select";
 export { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
 export { TSliderType, TSliderValue } from "./components/slider/bq-slider.types";
 export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
@@ -942,6 +944,14 @@ export namespace Components {
          */
         "keepOpenOnSelect"?: boolean;
         /**
+          * The maximum number of tags to display when multiple selection is enabled
+         */
+        "maxTagsVisible": number;
+        /**
+          * If true, the Select input will allow multiple selections.
+         */
+        "multiple"?: boolean;
+        /**
           * The Select input name.
          */
         "name": string;
@@ -989,7 +999,7 @@ export namespace Components {
         /**
           * The select input value, it can be used to reset the field to a previous value
          */
-        "value": TInputValue;
+        "value": TSelectValue;
     }
     interface BqSideMenu {
         /**
@@ -3256,6 +3266,14 @@ declare namespace LocalJSX {
          */
         "keepOpenOnSelect"?: boolean;
         /**
+          * The maximum number of tags to display when multiple selection is enabled
+         */
+        "maxTagsVisible"?: number;
+        /**
+          * If true, the Select input will allow multiple selections.
+         */
+        "multiple"?: boolean;
+        /**
           * The Select input name.
          */
         "name": string;
@@ -3319,7 +3337,7 @@ declare namespace LocalJSX {
         /**
           * The select input value, it can be used to reset the field to a previous value
          */
-        "value"?: TInputValue;
+        "value"?: TSelectValue;
     }
     interface BqSideMenu {
         /**
