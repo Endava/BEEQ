@@ -11,6 +11,7 @@ export type TSelectValue = string | string[];
  * @part button - The native HTML button used under the hood in the clear button.
  * @part clear-btn - The clear button.
  * @part control - The input control wrapper.
+ * @part input-outline - The input outline wrapper that holds the tags container and the native HTML input used under the hood.
  * @part helper-text - The helper text slot container.
  * @part input - The native HTML input element used under the hood.
  * @part label - The label slot container.
@@ -493,7 +494,7 @@ export class BqSelect {
             >
               <slot name="prefix" onSlotchange={this.handlePrefixSlotChange} />
             </span>
-            <div class="flex flex-1 overflow-x-auto">
+            <div class="flex flex-1 overflow-x-auto" part="input-outline">
               {/* Display selected values using BqTags for multiple selection */}
               {this.multiple && (
                 <span

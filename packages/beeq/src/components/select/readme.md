@@ -58,25 +58,26 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part               | Description                                                     |
-| ------------------ | --------------------------------------------------------------- |
-| `"base"`           | The component's base wrapper.                                   |
-| `"button"`         | The native HTML button used under the hood in the clear button. |
-| `"clear-btn"`      | The clear button.                                               |
-| `"control"`        | The input control wrapper.                                      |
-| `"helper-text"`    | The helper text slot container.                                 |
-| `"input"`          | The native HTML input element used under the hood.              |
-| `"label"`          | The label slot container.                                       |
-| `"option-list"`    | The option list container.                                      |
-| `"panel"`          | The select panel container                                      |
-| `"prefix"`         | The prefix slot container.                                      |
-| `"suffix"`         | The suffix slot container.                                      |
-| `"tag"`            | The tag container of the BqTag for multiple selection.          |
-| `"tag__base"`      | The base wrapper of the BqTag for multiple selection.           |
-| `"tag__btn-close"` | The close button of the BqTag for multiple selection.           |
-| `"tag__prefix"`    | The prefix slot container of the BqTag for multiple selection.  |
-| `"tag__text"`      | The text slot container of the BqTag for multiple selection.    |
-| `"tags"`           | The tags container of the BqTags for multiple selection.        |
+| Part               | Description                                                                                            |
+| ------------------ | ------------------------------------------------------------------------------------------------------ |
+| `"base"`           | The component's base wrapper.                                                                          |
+| `"button"`         | The native HTML button used under the hood in the clear button.                                        |
+| `"clear-btn"`      | The clear button.                                                                                      |
+| `"control"`        | The input control wrapper.                                                                             |
+| `"helper-text"`    | The helper text slot container.                                                                        |
+| `"input"`          | The native HTML input element used under the hood.                                                     |
+| `"input-outline"`  | The input outline wrapper that holds the tags container and the native HTML input used under the hood. |
+| `"label"`          | The label slot container.                                                                              |
+| `"option-list"`    | The option list container.                                                                             |
+| `"panel"`          | The select panel container                                                                             |
+| `"prefix"`         | The prefix slot container.                                                                             |
+| `"suffix"`         | The suffix slot container.                                                                             |
+| `"tag"`            | The tag container of the BqTag for multiple selection.                                                 |
+| `"tag__base"`      | The base wrapper of the BqTag for multiple selection.                                                  |
+| `"tag__btn-close"` | The close button of the BqTag for multiple selection.                                                  |
+| `"tag__prefix"`    | The prefix slot container of the BqTag for multiple selection.                                         |
+| `"tag__text"`      | The text slot container of the BqTag for multiple selection.                                           |
+| `"tags"`           | The tags container of the BqTags for multiple selection.                                               |
 
 
 ## Dependencies
