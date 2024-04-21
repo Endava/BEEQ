@@ -2,19 +2,29 @@ import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State
 
 import { FloatingUIPlacement } from '../../services/interfaces';
 import { debounce, getTextContent, hasSlotContent, isDefined, isHTMLElement, TDebounce } from '../../shared/utils';
-import { TInputValidation, TInputValue } from '../input/bq-input.types';
+import { TInputValidation } from '../input/bq-input.types';
+
+export type TSelectValue = string | string[];
 
 /**
  * @part base - The component's base wrapper.
  * @part button - The native HTML button used under the hood in the clear button.
  * @part clear-btn - The clear button.
  * @part control - The input control wrapper.
+ * @part input-outline - The input outline wrapper that holds the tags container and the native HTML input used under the hood.
  * @part helper-text - The helper text slot container.
  * @part input - The native HTML input element used under the hood.
  * @part label - The label slot container.
  * @part panel - The select panel container
  * @part prefix - The prefix slot container.
  * @part suffix - The suffix slot container.
+ * @part tags - The tags container of the BqTags for multiple selection.
+ * @part tag - The tag container of the BqTag for multiple selection.
+ * @part tag__base - The base wrapper of the BqTag for multiple selection.
+ * @part tag__prefix - The prefix slot container of the BqTag for multiple selection.
+ * @part tag__text - The text slot container of the BqTag for multiple selection.
+ * @part tag__btn-close - The close button of the BqTag for multiple selection.
+ * @part option-list - The option list container.
  */
 @Component({
   tag: 'bq-select',
@@ -48,6 +58,8 @@ export class BqSelect {
 
   @State() displayValue?: string;
   @State() hasHelperText = false;
+  @State() selectedOptions: HTMLBqOptionElement[] = [];
+
   @State() hasLabel = false;
   @State() hasPrefix = false;
   @State() hasSuffix = false;
@@ -89,6 +101,12 @@ export class BqSelect {
   /** The Select input name. */
   @Prop({ reflect: true }) name!: string;
 
+  /** The maximum number of tags to display when multiple selection is enabled */
+  @Prop({ mutable: true }) maxTagsVisible: number = 2;
+
+  /** If true, the Select input will allow multiple selections. */
+  @Prop({ reflect: true }) multiple?: boolean = false;
+
   /** If true, the Select panel will be visible. */
   @Prop({ reflect: true, mutable: true }) open?: boolean = false;
 
@@ -129,7 +147,7 @@ export class BqSelect {
   @Prop({ reflect: true }) validationStatus: TInputValidation = 'none';
 
   /** The select input value, it can be used to reset the field to a previous value */
-  @Prop({ reflect: true, mutable: true }) value: TInputValue;
+  @Prop({ reflect: true, mutable: true }) value: TSelectValue;
 
   // Prop lifecycle events
   // =======================
@@ -137,13 +155,6 @@ export class BqSelect {
   @Watch('value')
   handleValueChange() {
     this.syncItemsFromValue();
-
-    if (Array.isArray(this.value)) {
-      this.hasValue = this.value.some((val) => val.length > 0);
-      return;
-    }
-
-    this.hasValue = isDefined(this.value);
   }
 
   // Events section
@@ -166,7 +177,17 @@ export class BqSelect {
   // Ordered by their natural call order
   // =====================================
 
+  connectedCallback() {
+    if (this.multiple) {
+      this.value = Array.isArray(this.value) ? this.value : Array.from(JSON.parse(String(this.value)));
+    }
+  }
+
   componentDidLoad() {
+    if (this.multiple && Array.isArray(this.value)) {
+      this.selectedOptions = this.options.filter((item) => this.value.includes(item.value));
+    }
+
     this.handleValueChange();
   }
 
@@ -211,8 +232,11 @@ export class BqSelect {
     if (this.disabled) return;
 
     this.value = undefined;
-    this.displayValue = undefined;
-    this.inputElem.value = undefined;
+    this.selectedOptions = [];
+    if (!this.multiple) {
+      this.displayValue = undefined;
+      this.inputElem.value = undefined;
+    }
 
     this.resetOptionsVisibility();
     this.bqClear.emit(this.el);
@@ -235,16 +259,45 @@ export class BqSelect {
     this.bqFocus.emit(this.el);
   };
 
-  private handleSelect = (ev: CustomEvent<{ value: TInputValue; item: HTMLBqOptionElement }>) => {
+  private handleSelect = (ev: CustomEvent<{ value: TSelectValue; item: HTMLBqOptionElement }>) => {
     if (this.disabled) return;
 
-    this.value = ev.detail.value;
+    if (this.multiple) {
+      ev.stopPropagation();
+    }
+
+    const { value, item } = ev.detail;
+
+    if (this.multiple) {
+      this.handleMultipleSelection(item);
+      // Clear the input value after selecting an item
+      this.inputElem.value = '';
+      // If multiple selection is enabled, emit the selected items array instead of relying on
+      // the option list to emit the value of the selected item
+      this.bqSelect.emit({ value: this.value, item });
+    } else {
+      this.value = value;
+    }
+
     this.resetOptionsVisibility();
-    // Move the focus back to the input once an option is selected and the panel is closed
     this.inputElem.focus();
   };
 
-  private handleInput = (ev: Event) => {
+  private handleMultipleSelection = (item: HTMLBqOptionElement) => {
+    // Set has O(1) complexity for insertion, deletion, and search operations, compared to an Array's O(n)
+    const selectedOptionsSet = new Set(this.selectedOptions);
+
+    if (selectedOptionsSet.has(item)) {
+      selectedOptionsSet.delete(item);
+    } else {
+      selectedOptionsSet.add(item);
+    }
+
+    this.selectedOptions = Array.from(selectedOptionsSet);
+    this.value = this.selectedOptions.map((item) => item.value);
+  };
+
+  private handleSearchFilter = (ev: Event) => {
     if (this.disabled) return;
 
     this.debounceQuery?.cancel();
@@ -278,6 +331,13 @@ export class BqSelect {
     ev.stopPropagation();
   };
 
+  private handleTagRemove = (item: HTMLBqOptionElement) => {
+    if (this.disabled) return;
+
+    this.handleMultipleSelection(item);
+    this.bqSelect.emit({ value: this.value, item });
+  };
+
   private handleLabelSlotChange = () => {
     this.hasLabel = hasSlotContent(this.labelElem);
   };
@@ -302,12 +362,21 @@ export class BqSelect {
     const items = this.options;
     if (!items.length) return;
 
-    // Sync selected state
-    this.options.forEach((item: HTMLBqOptionElement) => (item.selected = item.value === this.value));
-    // Sync display label
-    const checkedItem = items.filter((item) => item.value === this.value)[0];
-    this.displayValue = checkedItem ? this.getOptionLabel(checkedItem) : '';
-    this.inputElem.value = this.displayValue;
+    // Sync selected state of the BqOption elements
+    this.options.forEach((option: HTMLBqOptionElement) => {
+      if (this.multiple && Array.isArray(this.value)) {
+        option.selected = this.value.includes(option.value);
+      } else {
+        option.selected = option.value.toLowerCase() === String(this.value).toLowerCase();
+      }
+    });
+
+    if (!this.multiple) {
+      // Sync display label
+      const checkedItem = items.filter((item) => item.value === this.value)[0];
+      this.displayValue = checkedItem ? this.getOptionLabel(checkedItem) : '';
+      this.inputElem.value = this.displayValue ?? '';
+    }
   };
 
   private getOptionLabel = (item: HTMLBqOptionElement) => {
@@ -321,13 +390,65 @@ export class BqSelect {
     return Array.from(this.el.querySelectorAll('bq-option'));
   }
 
+  private get displayPlaceholder() {
+    // Hide the placeholder when multiple selection is enabled and there are selected items
+    return this.multiple && this.selectedOptions.length !== 0 ? undefined : this.placeholder;
+  }
+
+  private get displayTags() {
+    return this.selectedOptions.map((item, index) => {
+      if (index < this.maxTagsVisible || this.maxTagsVisible < 0) {
+        return (
+          <bq-tag
+            key={item.value}
+            removable
+            size="xsmall"
+            variant="filled"
+            onBqClose={() => this.handleTagRemove(item)}
+            // Prevent the tag from closing the panel when clicked
+            onClick={(ev: MouseEvent) => ev.stopPropagation()}
+            exportparts="wrapper:tag__base,prefix:tag__prefix,text:tag__text,btn-close:tag__btn-close"
+            part="tag"
+          >
+            {this.getOptionLabel(item)}
+          </bq-tag>
+        );
+      } else if (index === this.maxTagsVisible) {
+        return (
+          <bq-tag
+            key="more"
+            size="xsmall"
+            variant="filled"
+            exportparts="wrapper:tag__base,prefix:tag__prefix,text:tag__text,btn-close:tag__btn-close"
+            part="tag"
+          >
+            +{this.selectedOptions.length - index}
+          </bq-tag>
+        );
+      }
+
+      return null;
+    });
+  }
+
+  private get hasClearIcon() {
+    if (this.disableClear || this.disabled) {
+      return false;
+    }
+
+    if (this.multiple) {
+      return this.selectedOptions.length > 0;
+    }
+
+    return isDefined(this.displayValue);
+  }
+
   // render() function
   // Always the last one in the class.
   // ===================================
 
   render() {
     const labelId = `bq-select__label-${this.name || this.fallbackInputId}`;
-    const hasClearIcon = !this.disableClear && !this.disabled && isDefined(this.displayValue);
 
     return (
       <div class="bq-select" part="base">
@@ -373,36 +494,47 @@ export class BqSelect {
             >
               <slot name="prefix" onSlotchange={this.handlePrefixSlotChange} />
             </span>
-            {/* HTML Input */}
-            <input
-              id={this.name || this.fallbackInputId}
-              class="bq-select__control--input"
-              autoComplete="off"
-              autoCapitalize="off"
-              autoFocus={this.autofocus}
-              aria-disabled={this.disabled ? 'true' : 'false'}
-              aria-controls={`bq-options-${this.name}`}
-              aria-expanded={this.open ? 'true' : 'false'}
-              aria-haspopup="listbox"
-              disabled={this.disabled}
-              form={this.form}
-              name={this.name}
-              placeholder={this.placeholder}
-              ref={(inputElem: HTMLInputElement) => (this.inputElem = inputElem)}
-              readOnly={this.readonly}
-              required={this.required}
-              role="combobox"
-              spellcheck={false}
-              type="text"
-              value={this.displayValue}
-              part="input"
-              // Events
-              onBlur={this.handleBlur}
-              onFocus={this.handleFocus}
-              onInput={this.handleInput}
-            />
+            <div class="flex flex-1 overflow-x-auto" part="input-outline">
+              {/* Display selected values using BqTags for multiple selection */}
+              {this.multiple && (
+                <span
+                  class="me-xs2 flex flex-1 gap-xs2 [&>bq-tag::part(text)]:text-nowrap [&>bq-tag::part(text)]:leading-small [&>bq-tag]:inline-flex"
+                  part="tags"
+                >
+                  {this.displayTags}
+                </span>
+              )}
+              {/* HTML Input */}
+              <input
+                id={this.name || this.fallbackInputId}
+                class="bq-select__control--input w-full flex-grow"
+                autoComplete="off"
+                autoCapitalize="off"
+                autoFocus={this.autofocus}
+                aria-disabled={this.disabled ? 'true' : 'false'}
+                aria-controls={`bq-options-${this.name}`}
+                aria-expanded={this.open ? 'true' : 'false'}
+                aria-haspopup="listbox"
+                disabled={this.disabled}
+                form={this.form}
+                name={this.name}
+                placeholder={this.displayPlaceholder}
+                ref={(inputElem: HTMLInputElement) => (this.inputElem = inputElem)}
+                readOnly={this.readonly}
+                required={this.required}
+                role="combobox"
+                spellcheck={false}
+                type="text"
+                value={this.displayValue}
+                part="input"
+                // Events
+                onBlur={this.handleBlur}
+                onFocus={this.handleFocus}
+                onInput={this.handleSearchFilter}
+              />
+            </div>
             {/* Clear Button */}
-            {hasClearIcon && (
+            {this.hasClearIcon && (
               // The clear button will be visible as long as the input has a value
               // and the parent group is hovered or has focus-within
               <bq-button
@@ -435,6 +567,7 @@ export class BqSelect {
             id={`bq-options-${this.name}`}
             onBqSelect={this.handleSelect}
             aria-expanded={this.open ? 'true' : 'false'}
+            exportparts="base:option-list"
             role="listbox"
           >
             <slot />

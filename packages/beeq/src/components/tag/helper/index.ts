@@ -12,7 +12,7 @@ export const iconSize = (size: TTagSize): number => {
   const medium = TAG_SIZE[2];
 
   const SIZE = {
-    [xsmall]: 20,
+    [xsmall]: 16,
     [small]: 20,
     [medium]: 24,
   };

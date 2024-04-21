@@ -23,6 +23,8 @@ const meta: Meta = {
     form: { control: 'text' },
     'keep-open-on-select': { control: 'boolean' },
     name: { control: 'text' },
+    'max-tags-visible': { control: 'number' },
+    multiple: { control: 'boolean' },
     open: { control: 'boolean' },
     'panel-height': { control: 'text' },
     placement: {
@@ -49,7 +51,7 @@ const meta: Meta = {
     skidding: { control: 'number' },
     strategy: { control: 'select', options: ['fixed', 'absolute'] },
     'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
-    value: { control: 'text' },
+    value: { control: 'object' },
     // Events
     bqBlur: { action: 'bqBlur' },
     bqClear: { action: 'bqClear' },
@@ -74,6 +76,8 @@ const meta: Meta = {
     form: undefined,
     'keep-open-on-select': false,
     name: 'bq-select',
+    'max-tags-visible': 2,
+    multiple: false,
     open: false,
     'panel-height': undefined,
     placement: 'bottom',
@@ -177,6 +181,8 @@ const Template = (args: Args) => {
       form=${ifDefined(args.form)}
       ?keep-open-on-select=${args['keep-open-on-select']}
       name=${ifDefined(args.name)}
+      max-tags-visible=${args['max-tags-visible']}
+      ?multiple=${args.multiple}
       ?open=${args.open}
       panel-height=${args['panel-height']}
       placeholder=${args.placeholder}
@@ -187,7 +193,7 @@ const Template = (args: Args) => {
       skidding=${args.skidding}
       strategy=${args.strategy}
       validation-status=${args['validation-status']}
-      value=${ifDefined(args.value)}
+      value=${args.multiple ? ifDefined(JSON.stringify(args.value)) : args.value}
       @bqBlur=${args.bqBlur}
       @bqSelect=${args.bqSelect}
       @bqClear=${args.bqClear}
@@ -239,6 +245,15 @@ export const Disabled: Story = {
   render: Template,
   args: {
     disabled: true,
+  },
+};
+
+export const Multiple: Story = {
+  render: Template,
+  args: {
+    'keep-open-on-select': true,
+    multiple: true,
+    value: ['running', 'biking', 'pizza'],
   },
 };
 

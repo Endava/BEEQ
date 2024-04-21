@@ -105,12 +105,17 @@ describe('bq-tag', () => {
 
     const styleProps = ['padding'] as const;
 
-    const extra_smallStyle = await computedStyle(page, 'bq-tag[size="xsmall"] >>> [part="wrapper"]', styleProps);
+    const xsmallStyle = await computedStyle(page, 'bq-tag[size="xsmall"] >>> [part="wrapper"]', styleProps);
     const smallStyle = await computedStyle(page, 'bq-tag[size="small"] >>> [part="wrapper"]', styleProps);
     const mediumStyle = await computedStyle(page, 'bq-tag[size="medium"] >>> [part="wrapper"]', styleProps);
 
-    expect(extra_smallStyle).toEqual({ padding: '2px 8px' });
-    expect(smallStyle).toEqual({ padding: '2px 8px' });
-    expect(mediumStyle).toEqual({ padding: '4px 12px' });
+    // We need to subtract 1px from the padding because of the border
+    // that is added to the tag component, in design the paddings are as follows:
+    // - xsmall: 2px 8px
+    // - small: 2px 8px
+    // - medium: 4px 12px
+    expect(xsmallStyle).toEqual({ padding: '1px 7px' });
+    expect(smallStyle).toEqual({ padding: '1px 7px' });
+    expect(mediumStyle).toEqual({ padding: '3px 11px' });
   });
 });
