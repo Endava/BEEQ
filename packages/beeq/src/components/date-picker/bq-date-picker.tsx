@@ -410,8 +410,8 @@ export class BqDatePicker {
                 this.value = ev.target.value;
               }}
             >
-              <bq-icon slot="previous" name="caret-left" label="Previous" />
-              <bq-icon slot="next" name="caret-right" label="Next" />
+              <bq-icon color="text--primary" slot="previous" name="caret-left" label="Previous" />
+              <bq-icon color="text--primary" slot="next" name="caret-right" label="Next" />
 
               <div class="flex flex-wrap justify-center gap-[--bq-spacing-m]">{this.generateCalendarMonths()}</div>
             </CalendarComponentType>
