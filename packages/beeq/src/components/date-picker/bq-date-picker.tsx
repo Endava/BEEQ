@@ -133,7 +133,7 @@ export class BqDatePicker {
   @Prop({ reflect: true }) max?: string;
 
   /** The locale for formatting dates. If not set, will use the browser's locale */
-  @Prop({ reflect: true }) locale?: string | undefined = undefined;
+  @Prop({ reflect: true }) locale: string | undefined = undefined;
 
   // Prop lifecycle events
   // =======================
@@ -312,7 +312,7 @@ export class BqDatePicker {
         </label>
         {/* Select date picker dropdown */}
         <bq-dropdown
-          class="bq-date-picker__dropdown w-full"
+          class="bq-date-picker__dropdown w-full [&::part(panel)]:w-auto"
           disabled={this.disabled}
           distance={this.distance}
           keepOpenOnSelect={this.keepOpenOnSelect}
@@ -413,7 +413,7 @@ export class BqDatePicker {
               <bq-icon slot="previous" name="caret-left" label="Previous" />
               <bq-icon slot="next" name="caret-right" label="Next" />
 
-              {this.generateCalendarMonths()}
+              <div class="flex flex-wrap justify-center gap-[--bq-spacing-m]">{this.generateCalendarMonths()}</div>
             </CalendarComponentType>
           </div>
         </bq-dropdown>

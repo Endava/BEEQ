@@ -159,6 +159,10 @@ calendar-range {
 
     background-color: theme('colors.transparent');
   }
+
+  &::part(container) {
+    @apply px-5 py-2;
+  }
 }
 
 calendar-month {
@@ -166,7 +170,9 @@ calendar-month {
   --color-accent: var(--bq-stroke--brand);
 
   &::part(button) {
-    @apply h-8 w-8 p-1 font-[--bq-font-family] text-[--bq-text--primary];
+    @apply h-8 w-8 p-1 text-[--bq-text--primary];
+
+    font-family: var(--bq-font-family);
   }
 
   &::part(selected) {

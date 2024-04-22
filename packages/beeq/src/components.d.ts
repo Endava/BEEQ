@@ -363,7 +363,7 @@ export namespace Components {
         /**
           * The locale for formatting dates. If not set, will use the browser's locale
          */
-        "locale"?: string | undefined;
+        "locale": string | undefined;
         /**
           * The latest date that can be selected
          */
