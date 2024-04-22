@@ -361,6 +361,14 @@ export namespace Components {
          */
         "keepOpenOnSelect"?: boolean;
         /**
+          * The latest date that can be selected
+         */
+        "max"?: string;
+        /**
+          * The earliest date that can be selected
+         */
+        "min"?: string;
+        /**
           * Number of months to show when range is `true`
          */
         "months": number;
@@ -2580,6 +2588,14 @@ declare namespace LocalJSX {
           * If `true`, the Date picker panel will remain open after a selection date is made.
          */
         "keepOpenOnSelect"?: boolean;
+        /**
+          * The latest date that can be selected
+         */
+        "max"?: string;
+        /**
+          * The earliest date that can be selected
+         */
+        "min"?: string;
         /**
           * Number of months to show when range is `true`
          */
