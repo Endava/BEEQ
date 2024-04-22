@@ -361,6 +361,10 @@ export namespace Components {
          */
         "keepOpenOnSelect"?: boolean;
         /**
+          * The locale for formatting dates. If not set, will use the browser's locale
+         */
+        "locale"?: string | undefined;
+        /**
           * The latest date that can be selected
          */
         "max"?: string;
@@ -2588,6 +2592,10 @@ declare namespace LocalJSX {
           * If `true`, the Date picker panel will remain open after a selection date is made.
          */
         "keepOpenOnSelect"?: boolean;
+        /**
+          * The locale for formatting dates. If not set, will use the browser's locale
+         */
+        "locale"?: string | undefined;
         /**
           * The latest date that can be selected
          */

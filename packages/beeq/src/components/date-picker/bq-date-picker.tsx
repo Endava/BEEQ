@@ -132,6 +132,9 @@ export class BqDatePicker {
   /** The latest date that can be selected */
   @Prop({ reflect: true }) max?: string;
 
+  /** The locale for formatting dates. If not set, will use the browser's locale */
+  @Prop({ reflect: true }) locale?: string | undefined = undefined;
+
   // Prop lifecycle events
   // =======================
 
@@ -396,6 +399,7 @@ export class BqDatePicker {
           </div>
           <div class="flex items-center justify-center">
             <CalendarComponentType
+              locale={this.locale}
               value={this.value}
               min={this.min}
               max={this.max}
