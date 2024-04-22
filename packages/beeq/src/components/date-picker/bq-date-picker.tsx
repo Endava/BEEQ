@@ -116,8 +116,12 @@ export class BqDatePicker {
    */
   @Prop({ reflect: true }) validationStatus: TInputValidation = 'none';
 
-  /** The select input value, it can be used to reset the field to a previous value */
+  /** The select input value represents the currently selected date or range and can be used to reset the field to a previous value.
+   * All dates are expected in ISO-8601 format (YYYY-MM-DD). */
   @Prop({ reflect: true, mutable: true }) value: TInputValue;
+
+  /** Whether to show days outside the month */
+  @Prop({ reflect: true }) showOutsideDays: boolean = false;
 
   // Prop lifecycle events
   // =======================
@@ -384,6 +388,8 @@ export class BqDatePicker {
           <div class="flex items-center justify-center">
             <CalendarComponentType
               value={this.value}
+              focusedDate={this.value}
+              showOutsideDays={this.showOutsideDays}
               onChange={(ev: { target: { value: string } }) => {
                 this.value = ev.target.value;
               }}
