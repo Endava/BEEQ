@@ -50,7 +50,7 @@ export class BqDatePicker {
   // Public Property API
   // ========================
 
-  /** If true, the Date picker input will be focused on component render */
+  /** If `true`, the Date picker input will be focused on component render */
   @Prop({ reflect: true }) autofocus: boolean;
 
   /** The clear button aria label */
@@ -62,7 +62,7 @@ export class BqDatePicker {
    */
   @Prop({ mutable: true }) disabled?: boolean = false;
 
-  /** If true, the clear button won't be displayed */
+  /** If `true`, the clear button won't be displayed */
   @Prop({ reflect: true }) disableClear? = false;
 
   /** Represents the distance (gutter or margin) between the Date picker panel and the input element. */
@@ -71,13 +71,13 @@ export class BqDatePicker {
   /** The ID of the form that the Date picker input belongs to. */
   @Prop({ reflect: true }) form?: string;
 
-  /** If true, the Date picker panel will remain open after a selection date is made. */
+  /** If `true`, the Date picker panel will remain open after a selection date is made. */
   @Prop({ reflect: true }) keepOpenOnSelect?: boolean = false;
 
   /** The Date picker input name. */
   @Prop({ reflect: true }) name!: string;
 
-  /** If true, the Date picker panel will be visible. */
+  /** If `true`, the Date picker panel will be visible. */
   @Prop({ reflect: true, mutable: true }) open?: boolean = false;
 
   /** When set, it will override the height of the Date picker panel. */
@@ -97,6 +97,12 @@ export class BqDatePicker {
 
   /** Defines the strategy to position the Date picker panel */
   @Prop({ reflect: true }) strategy?: 'fixed' | 'absolute' = 'fixed';
+
+  /** If `true`, the Date picker panel will accepts more than 1 month to display */
+  @Prop({ reflect: true }) range: boolean = false;
+
+  /** Number of months to show when range is `true` */
+  @Prop({ reflect: true }) months: number;
 
   /**
    * The validation status of the Select input.
@@ -243,12 +249,38 @@ export class BqDatePicker {
     this.hasSuffix = hasSlotContent(this.suffixElem);
   };
 
+  /**
+   * Generates an array of JSX elements representing calendar months.
+   * If the 'range' property is true and the 'months' property is defined,
+   * it generates multiple calendar months with incremental 'offset' values.
+   * If the 'range' property is false or the 'months' property is undefined,
+   * it generates a single calendar month without an 'offset'.
+   *
+   * @returns An array of JSX elements representing calendar months.
+   */
+  private generateCalendarMonths(): JSX.Element[] {
+    const months: JSX.Element[] = [];
+
+    if (this.range && this.months) {
+      for (let i = 0; i < this.months; i++) {
+        const offset = i > 0 ? i : undefined;
+        months.push(<calendar-month offset={offset} />);
+      }
+    } else {
+      months.push(<calendar-month />);
+    }
+
+    return months;
+  }
+
   // render() function
   // Always the last one in the class.
   // ===================================
 
   render() {
     const labelId = `bq-date-picker__label-${this.name || this.fallbackInputId}`;
+
+    const CalendarComponentType = this.range ? 'calendar-range' : 'calendar-date';
 
     return (
       <div class="bq-date-picker" part="base">
@@ -349,15 +381,18 @@ export class BqDatePicker {
               </slot>
             </span>
           </div>
-          <div class="flex w-auto items-center justify-center">
-            <calendar-date
+          <div class="flex items-center justify-center">
+            <CalendarComponentType
               value={this.value}
               onChange={(ev: { target: { value: string } }) => {
                 this.value = ev.target.value;
               }}
             >
-              <calendar-month />
-            </calendar-date>
+              <bq-icon slot="previous" name="caret-left" label="Previous" />
+              <bq-icon slot="next" name="caret-right" label="Next" />
+
+              {this.generateCalendarMonths()}
+            </CalendarComponentType>
           </div>
         </bq-dropdown>
       </div>

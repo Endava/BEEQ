@@ -323,7 +323,7 @@ export namespace Components {
     }
     interface BqDatePicker {
         /**
-          * If true, the Date picker input will be focused on component render
+          * If `true`, the Date picker input will be focused on component render
          */
         "autofocus": boolean;
         /**
@@ -337,7 +337,7 @@ export namespace Components {
          */
         "clearButtonLabel"?: string;
         /**
-          * If true, the clear button won't be displayed
+          * If `true`, the clear button won't be displayed
          */
         "disableClear"?: boolean;
         /**
@@ -353,15 +353,19 @@ export namespace Components {
          */
         "form"?: string;
         /**
-          * If true, the Date picker panel will remain open after a selection date is made.
+          * If `true`, the Date picker panel will remain open after a selection date is made.
          */
         "keepOpenOnSelect"?: boolean;
+        /**
+          * Number of months to show when range is `true`
+         */
+        "months": number;
         /**
           * The Date picker input name.
          */
         "name": string;
         /**
-          * If true, the Date picker panel will be visible.
+          * If `true`, the Date picker panel will be visible.
          */
         "open"?: boolean;
         /**
@@ -376,6 +380,10 @@ export namespace Components {
           * Position of the Date picker panel
          */
         "placement"?: FloatingUIPlacement;
+        /**
+          * If `true`, the Date picker panel will accepts more than 1 month to display
+         */
+        "range": boolean;
         /**
           * Indicates whether or not the Date picker input is required to be filled out before submitting the form.
          */
@@ -2533,7 +2541,7 @@ declare namespace LocalJSX {
     }
     interface BqDatePicker {
         /**
-          * If true, the Date picker input will be focused on component render
+          * If `true`, the Date picker input will be focused on component render
          */
         "autofocus"?: boolean;
         /**
@@ -2541,7 +2549,7 @@ declare namespace LocalJSX {
          */
         "clearButtonLabel"?: string;
         /**
-          * If true, the clear button won't be displayed
+          * If `true`, the clear button won't be displayed
          */
         "disableClear"?: boolean;
         /**
@@ -2557,9 +2565,13 @@ declare namespace LocalJSX {
          */
         "form"?: string;
         /**
-          * If true, the Date picker panel will remain open after a selection date is made.
+          * If `true`, the Date picker panel will remain open after a selection date is made.
          */
         "keepOpenOnSelect"?: boolean;
+        /**
+          * Number of months to show when range is `true`
+         */
+        "months"?: number;
         /**
           * The Date picker input name.
          */
@@ -2585,7 +2597,7 @@ declare namespace LocalJSX {
          */
         "onBqInput"?: (event: BqDatePickerCustomEvent<{ value: string | number | string[]; el: HTMLBqInputElement }>) => void;
         /**
-          * If true, the Date picker panel will be visible.
+          * If `true`, the Date picker panel will be visible.
          */
         "open"?: boolean;
         /**
@@ -2600,6 +2612,10 @@ declare namespace LocalJSX {
           * Position of the Date picker panel
          */
         "placement"?: FloatingUIPlacement;
+        /**
+          * If `true`, the Date picker panel will accepts more than 1 month to display
+         */
+        "range"?: boolean;
         /**
           * Indicates whether or not the Date picker input is required to be filled out before submitting the form.
          */
