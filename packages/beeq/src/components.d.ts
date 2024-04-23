@@ -357,10 +357,6 @@ export namespace Components {
          */
         "form"?: string;
         /**
-          * If `true`, the Date picker panel will remain open after a selection date is made.
-         */
-        "keepOpenOnSelect"?: boolean;
-        /**
           * The locale for formatting dates. If not set, will use the browser's locale
          */
         "locale": string | undefined;
@@ -2588,10 +2584,6 @@ declare namespace LocalJSX {
           * The ID of the form that the Date picker input belongs to.
          */
         "form"?: string;
-        /**
-          * If `true`, the Date picker panel will remain open after a selection date is made.
-         */
-        "keepOpenOnSelect"?: boolean;
         /**
           * The locale for formatting dates. If not set, will use the browser's locale
          */

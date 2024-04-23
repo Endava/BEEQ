@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
 import { FloatingUIPlacement } from '../../services/interfaces';
 import { hasSlotContent, isDefined, isHTMLElement } from '../../shared/utils';
@@ -70,9 +70,6 @@ export class BqDatePicker {
 
   /** The ID of the form that the Date picker input belongs to. */
   @Prop({ reflect: true }) form?: string;
-
-  /** If `true`, the Date picker panel will remain open after a selection date is made. */
-  @Prop({ reflect: true }) keepOpenOnSelect?: boolean = false;
 
   /** The Date picker input name. */
   @Prop({ reflect: true }) name!: string;
@@ -183,6 +180,13 @@ export class BqDatePicker {
 
   // Listeners
   // ==============
+
+  @Listen('bqOpen', { capture: true })
+  handleOpenChange(ev: CustomEvent<{ open: boolean }>) {
+    if (!ev.composedPath().includes(this.el)) return;
+
+    this.open = ev.detail.open;
+  }
 
   // Public methods API
   // These methods are exposed on the host element.
@@ -312,10 +316,9 @@ export class BqDatePicker {
         </label>
         {/* Select date picker dropdown */}
         <bq-dropdown
-          class="bq-date-picker__dropdown w-full [&::part(panel)]:w-auto"
+          class="bq-date-picker__dropdown [&::part(panel)]:w-auto"
           disabled={this.disabled}
           distance={this.distance}
-          keepOpenOnSelect={this.keepOpenOnSelect}
           open={this.open}
           panelHeight={this.panelHeight}
           placement={this.placement}
@@ -408,6 +411,7 @@ export class BqDatePicker {
               showOutsideDays={this.showOutsideDays}
               onChange={(ev: { target: { value: string } }) => {
                 this.value = ev.target.value;
+                this.open = false;
               }}
             >
               <bq-icon color="text--primary" slot="previous" name="caret-left" label="Previous" />

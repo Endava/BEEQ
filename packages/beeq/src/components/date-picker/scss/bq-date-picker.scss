@@ -175,6 +175,10 @@ calendar-month {
     font-family: var(--bq-font-family);
   }
 
+  &::part(outside) {
+    @apply text-[--bq-text--secondary] opacity-100;
+  }
+
   &::part(selected) {
     @apply rounded-[--bq-radius--s] text-[color:var(--bq-text--inverse)];
   }

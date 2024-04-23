@@ -23,7 +23,6 @@ const meta: Meta = {
     min: { control: 'text' },
     max: { control: 'text' },
     locale: { control: 'text' },
-    'keep-open-on-select': { control: 'boolean' },
     'show-outside-days': { control: 'boolean' },
     'first-day-of-week': { control: 'number' },
     name: { control: 'text' },
@@ -75,7 +74,6 @@ const meta: Meta = {
     min: undefined,
     max: undefined,
     locale: undefined,
-    'keep-open-on-select': false,
     'show-outside-days': false,
     'first-day-of-week': 1,
     name: 'bq-date-picker',
@@ -121,7 +119,6 @@ const Template = (args: Args) => {
         min=${ifDefined(args.min)}
         max=${ifDefined(args.max)}
         locale=${ifDefined(args.locale)}
-        ?keep-open-on-select=${args['keep-open-on-select']}
         ?show-outside-days=${args['show-outside-days']}
         first-day-of-week=${args['first-day-of-week']}
         name=${ifDefined(args.name)}
