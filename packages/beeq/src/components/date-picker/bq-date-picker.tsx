@@ -316,7 +316,7 @@ export class BqDatePicker {
         </label>
         {/* Select date picker dropdown */}
         <bq-dropdown
-          class="bq-date-picker__dropdown [&::part(panel)]:w-auto"
+          class="bq-date-picker__dropdown w-full [&::part(panel)]:w-auto"
           disabled={this.disabled}
           distance={this.distance}
           open={this.open}
