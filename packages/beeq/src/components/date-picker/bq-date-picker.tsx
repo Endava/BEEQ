@@ -284,7 +284,8 @@ export class BqDatePicker {
     if (this.range && this.months) {
       for (let i = 0; i < this.months; i++) {
         const offset = i > 0 ? i : undefined;
-        months.push(<calendar-month offset={offset} />);
+        const className = offset ? 'hidden sm:block' : '';
+        months.push(<calendar-month offset={offset} className={className} />);
       }
     } else {
       months.push(<calendar-month />);
