@@ -170,9 +170,13 @@ calendar-month {
   --color-accent: var(--bq-stroke--brand);
 
   &::part(button) {
-    @apply h-8 w-8 p-1 text-[--bq-text--primary];
+    @apply h-8 w-8 rounded-[--bq-radius--s] p-1 text-[--bq-text--primary];
 
     font-family: var(--bq-font-family);
+
+    &:hover:not([disabled]) {
+      @apply bg-[--bq-ui--secondary];
+    }
   }
 
   &::part(outside) {
