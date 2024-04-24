@@ -177,7 +177,7 @@ export class BqSlider {
   };
 
   private calculateMinValue = (value: TSliderValue) => {
-    const isMaxValue = (this.maxValue ?? value[1]) === this.max;
+    const isMaxValue = (this.minValue ?? value[0]) === this.max;
     const isGapExceeded = value[0] + this.gap > this.max;
     // Make sure that the min value gets adjusted according to the gap value
     return isMaxValue || isGapExceeded ? this.max - this.gap : value[0];
