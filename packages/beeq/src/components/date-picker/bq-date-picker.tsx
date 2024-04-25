@@ -14,6 +14,33 @@ import { TInputValidation, TInputValue } from '../input/bq-input.types';
  * @part panel - The date picker panel container
  * @part prefix - The prefix slot container.
  * @part suffix - The suffix slot container.
+ 
+// Parts from the Cally library for calendar-date and calendar-range components: 
+ * @part container - The container for the entire component.
+ * @part header - The container for heading and button's.
+ * @part button - Any button within the component.
+ * @part previous - The previous page button.
+ * @part next - The next page button.
+ * @part disabled - A button that is disabled due to min/max.
+ * @part heading - The heading containing the month and year.
+ 
+// Parts specific to the calendar-month component:
+ * @part heading - The heading that labels the month.
+ * @part table - The <table> element.
+ * @part tr - Any row within the table.
+ * @part head - The table's header row.
+ * @part week - The table's body rows.
+ * @part th - The table's header cells.
+ * @part td - The table's body cells.
+ * @part button - Any button used in the component.
+ * @part day - The buttons corresponding to each day in the grid.
+ * @part selected - Any days which are selected. 
+ * @part today - Today's day.
+ * @part disallowed - Any daythat has been disallowed via isDateDisallowed.
+ * @part outside - Any days which are outside the current month.
+ * @part range-start - The day at the start of a date range.
+ * @part range-end - The day at the end of a date range.
+ * @part range-inner - Any days between the start and end of a date range. 
  */
 @Component({
   tag: 'bq-date-picker',
@@ -281,14 +308,23 @@ export class BqDatePicker {
   private generateCalendarMonths(): JSX.Element[] {
     const months: JSX.Element[] = [];
 
+    const commonExportParts = 'heading,table,tr,head,week,th,td';
+    const buttonExportParts = 'button,day,selected,today,disallowed,outside,range-start,range-end,range-inner';
+
     if (this.range && this.months) {
       for (let i = 0; i < this.months; i++) {
         const offset = i > 0 ? i : undefined;
         const className = offset ? 'hidden sm:block' : '';
-        months.push(<calendar-month offset={offset} className={className} />);
+        months.push(
+          <calendar-month
+            offset={offset}
+            className={className}
+            exportparts={`${commonExportParts},${buttonExportParts}`}
+          />,
+        );
       }
     } else {
-      months.push(<calendar-month />);
+      months.push(<calendar-month exportparts={`${commonExportParts},${buttonExportParts}`} />);
     }
 
     return months;
@@ -414,6 +450,7 @@ export class BqDatePicker {
                 this.value = ev.target.value;
                 this.open = false;
               }}
+              exportparts="container,header,button,previous,next,disabled,heading"
             >
               <bq-icon color="text--primary" slot="previous" name="caret-left" label="Previous" />
               <bq-icon color="text--primary" slot="next" name="caret-right" label="Next" />

@@ -170,13 +170,13 @@ calendar-month {
   --color-accent: var(--bq-stroke--brand);
 
   &::part(button) {
-    @apply h-8 w-8 rounded-[--bq-radius--s] p-1 text-[--bq-text--primary];
+    @apply h-8 w-8 rounded-[--bq-radius--s] p-1 text-[--bq-text--primary] hover:bg-[--bq-ui--secondary];
 
     font-family: var(--bq-font-family);
+  }
 
-    &:hover:not([disabled]) {
-      @apply bg-[--bq-ui--secondary];
-    }
+  &::part(button day selected) {
+    @apply bg-[--bq-ui--brand] hover:bg-hover-ui-brand;
   }
 
   &::part(outside) {

@@ -60,17 +60,37 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part          | Description                                                     |
-| ------------- | --------------------------------------------------------------- |
-| `"base"`      | The component's base wrapper.                                   |
-| `"button"`    | The native HTML button used under the hood in the clear button. |
-| `"clear-btn"` | The clear button.                                               |
-| `"control"`   | The input control wrapper.                                      |
-| `"input"`     | The native HTML input element used under the hood.              |
-| `"label"`     | The label slot container.                                       |
-| `"panel"`     | The date picker panel container                                 |
-| `"prefix"`    | The prefix slot container.                                      |
-| `"suffix"`    | The suffix slot container.                                      |
+| Part            | Description                                                                                                  |
+| --------------- | ------------------------------------------------------------------------------------------------------------ |
+| `"base"`        | The component's base wrapper.                                                                                |
+| `"button"`      | The native HTML button used under the hood in the clear button.                                              |
+| `"clear-btn"`   | The clear button.                                                                                            |
+| `"container"`   | The container for the entire component.                                                                      |
+| `"control"`     | The input control wrapper.                                                                                   |
+| `"day"`         | The buttons corresponding to each day in the grid.                                                           |
+| `"disabled"`    | A button that is disabled due to min/max.                                                                    |
+| `"disallowed"`  | Any daythat has been disallowed via isDateDisallowed.                                                        |
+| `"head"`        | The table's header row.                                                                                      |
+| `"header"`      | The container for heading and button's.                                                                      |
+| `"heading"`     | The heading containing the month and year.  // Parts specific to the calendar-month component:               |
+| `"input"`       | The native HTML input element used under the hood.                                                           |
+| `"label"`       | The label slot container.                                                                                    |
+| `"next"`        | The next page button.                                                                                        |
+| `"outside"`     | Any days which are outside the current month.                                                                |
+| `"panel"`       | The date picker panel container                                                                              |
+| `"prefix"`      | The prefix slot container.                                                                                   |
+| `"previous"`    | The previous page button.                                                                                    |
+| `"range-end"`   | The day at the end of a date range.                                                                          |
+| `"range-inner"` | Any days between the start and end of a date range.                                                          |
+| `"range-start"` | The day at the start of a date range.                                                                        |
+| `"selected"`    | Any days which are selected.                                                                                 |
+| `"suffix"`      | The suffix slot container.  // Parts from the Cally library for calendar-date and calendar-range components: |
+| `"table"`       | The <table> element.                                                                                         |
+| `"td"`          | The table's body cells.                                                                                      |
+| `"th"`          | The table's header cells.                                                                                    |
+| `"today"`       | Today's day.                                                                                                 |
+| `"tr"`          | Any row within the table.                                                                                    |
+| `"week"`        | The table's body rows.                                                                                       |
 
 
 ## Dependencies
