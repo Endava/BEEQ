@@ -17,3 +17,7 @@
 
   border-style: var(--bq-panel--border-style);
 }
+
+.panel-hidden {
+  @include animation-fade-out;
+}
