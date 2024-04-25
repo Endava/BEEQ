@@ -404,7 +404,11 @@ export class BqSelect {
             removable
             size="xsmall"
             variant="filled"
-            onBqClose={() => this.handleTagRemove(item)}
+            onBqClose={(event) => {
+              // NOTE: prevents triggering bqClose on parent
+              event.stopPropagation();
+              this.handleTagRemove(item);
+            }}
             // Prevent the tag from closing the panel when clicked
             onClick={(ev: MouseEvent) => ev.stopPropagation()}
             exportparts="wrapper:tag__base,prefix:tag__prefix,text:tag__text,btn-close:tag__btn-close"
