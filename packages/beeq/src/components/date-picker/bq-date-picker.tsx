@@ -389,9 +389,9 @@ export class BqDatePicker {
               autoCapitalize="off"
               autoFocus={this.autofocus}
               aria-disabled={this.disabled ? 'true' : 'false'}
-              aria-controls={`bq-options-${this.name}`}
+              aria-controls={`${this.name}`}
               aria-expanded={this.open}
-              aria-haspopup="listbox"
+              aria-haspopup="dialog"
               disabled={this.disabled}
               form={this.form}
               name={this.name}
