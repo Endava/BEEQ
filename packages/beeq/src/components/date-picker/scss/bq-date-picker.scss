@@ -160,14 +160,24 @@ calendar-range {
     background-color: theme('colors.transparent');
   }
 
+  &::part(button):focus-visible {
+    @apply rounded-s bg-[--bq-date-picker--background-color] text-[color:--bq-date-picker--border-color-focus];
+    @apply focus border-[color:--bq-date-picker--border-color-focus];
+  }
+
   &::part(container) {
-    @apply px-5 py-2;
+    @apply bg-[--bq-date-picker--background-color] px-5 py-2;
   }
 }
 
 calendar-month {
   /* stylelint-disable-next-line custom-property-pattern */
   --color-accent: var(--bq-stroke--brand);
+
+  &::part(button):focus-visible {
+    @apply rounded-s bg-[--bq-date-picker--background-color] text-[color:--bq-date-picker--border-color-focus];
+    @apply focus border-[color:--bq-date-picker--border-color-focus];
+  }
 
   &::part(button) {
     @apply h-8 w-8 rounded-[--bq-radius--s] p-1 text-[--bq-text--primary] hover:bg-[--bq-ui--secondary];
