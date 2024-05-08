@@ -51,7 +51,7 @@ const meta: Meta = {
     strategy: { control: 'select', options: ['fixed', 'absolute'] },
     'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
     range: { control: 'boolean' },
-    month: { control: 'number' },
+    months: { control: 'number' },
     value: { control: 'text' },
     // Events
     bqBlur: { action: 'bqBlur' },
@@ -63,6 +63,7 @@ const meta: Meta = {
     noLabel: { control: 'boolean', table: { disable: true } },
     prefix: { control: 'boolean', table: { disable: true } },
     suffix: { control: 'boolean', table: { disable: true } },
+    customDisallowedDate: { control: 'text' },
   },
   args: {
     autofocus: false,
@@ -86,8 +87,10 @@ const meta: Meta = {
     required: false,
     'validation-status': 'none',
     range: false,
-    month: 1,
+    months: 1,
     value: undefined,
+    isDateDisallowed: undefined,
+    customDisallowedDate: undefined,
   },
 };
 export default meta;
@@ -106,6 +109,24 @@ const Template = (args: Args) => {
           <span class="text-text-secondary">Optional</span>
         </div>
       `;
+
+  /**
+   * * Converts a Date object to an ISO 8601 string representation.
+   * This function is used only for demonstration purposes in Storybook.
+   */
+
+  const dateToIsoString = (date: Date): string => {
+    return date.toISOString().split('T')[0];
+  };
+
+  const isDate = (date: Date): boolean => {
+    if (!args.customDisallowedDate) {
+      return false;
+    }
+
+    const dateString = dateToIsoString(date);
+    return args.customDisallowedDate.split(',').some((date: string) => date.trim() === dateString);
+  };
 
   return html`
     <div class="w-[280px]">
@@ -133,6 +154,7 @@ const Template = (args: Args) => {
         range=${args.range}
         months=${args.months}
         value=${ifDefined(args.value)}
+        .isDateDisallowed=${isDate}
         @bqBlur=${args.bqBlur}
         @bqChange=${args.bqChange}
         @bqClear=${args.bqClear}

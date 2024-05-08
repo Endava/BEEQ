@@ -128,6 +128,9 @@ export class BqDatePicker {
   /** Number of months to show when range is `true` */
   @Prop({ reflect: true }) months: number;
 
+  /** A function that takes a date and returns true if the date should not be selectable */
+  @Prop({ reflect: true }) isDateDisallowed?: (date: Date) => boolean;
+
   /**
    * The validation status of the Select input.
    *
@@ -390,7 +393,6 @@ export class BqDatePicker {
               autoFocus={this.autofocus}
               aria-disabled={this.disabled ? 'true' : 'false'}
               aria-controls={`${this.name}`}
-              aria-expanded={this.open}
               aria-haspopup="dialog"
               disabled={this.disabled}
               form={this.form}
@@ -439,6 +441,7 @@ export class BqDatePicker {
           </div>
           <div class="flex items-center justify-center">
             <CalendarComponentType
+              isDateDisallowed={this.isDateDisallowed}
               locale={this.locale}
               value={this.value}
               min={this.min}
