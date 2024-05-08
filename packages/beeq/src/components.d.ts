@@ -295,7 +295,7 @@ export namespace Components {
         /**
           * A state that is neither checked nor unchecked
          */
-        "indeterminate": false;
+        "indeterminate"?: boolean;
         /**
           * Name of the HTML input form control. Submitted with the form as part of a name/value pair.
          */
@@ -2402,7 +2402,7 @@ declare namespace LocalJSX {
         /**
           * A state that is neither checked nor unchecked
          */
-        "indeterminate"?: false;
+        "indeterminate"?: boolean;
         /**
           * Name of the HTML input form control. Submitted with the form as part of a name/value pair.
          */
