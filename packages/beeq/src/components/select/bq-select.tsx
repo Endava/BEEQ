@@ -1,7 +1,15 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
 import { FloatingUIPlacement } from '../../services/interfaces';
-import { debounce, getTextContent, hasSlotContent, isDefined, isHTMLElement, TDebounce } from '../../shared/utils';
+import {
+  debounce,
+  getTextContent,
+  hasSlotContent,
+  isDefined,
+  isHTMLElement,
+  isString,
+  TDebounce,
+} from '../../shared/utils';
 import { TInputValidation } from '../input/bq-input.types';
 
 export type TSelectValue = string | string[];
@@ -154,6 +162,12 @@ export class BqSelect {
 
   @Watch('value')
   handleValueChange() {
+    if (this.multiple && isString(this.value)) {
+      // NOTE: we ensure that value is an array, changing the value will trigger Watch to execute thus the return
+      this.value = Array.from(JSON.parse(String(this.value)));
+      return;
+    }
+
     this.syncItemsFromValue();
   }
 
@@ -189,10 +203,6 @@ export class BqSelect {
     }
 
     this.handleValueChange();
-  }
-
-  componentDidRender() {
-    this.syncItemsFromValue();
   }
 
   // Listeners
@@ -376,6 +386,8 @@ export class BqSelect {
       const checkedItem = items.filter((item) => item.value === this.value)[0];
       this.displayValue = checkedItem ? this.getOptionLabel(checkedItem) : '';
       this.inputElem.value = this.displayValue ?? '';
+    } else {
+      this.selectedOptions = this.options.filter((item) => this.value?.includes(item.value));
     }
   };
 
