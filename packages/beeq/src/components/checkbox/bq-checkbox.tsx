@@ -46,7 +46,7 @@ export class BqCheckbox {
   @Prop({ reflect: true }) disabled? = false;
 
   /** A state that is neither checked nor unchecked */
-  @Prop({ reflect: true, mutable: true }) indeterminate: false;
+  @Prop({ reflect: true, mutable: true }) indeterminate? = false;
 
   /** Name of the HTML input form control. Submitted with the form as part of a name/value pair.  */
   @Prop({ reflect: true }) name!: string;
