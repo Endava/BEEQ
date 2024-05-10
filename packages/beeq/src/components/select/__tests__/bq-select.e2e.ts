@@ -1,4 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
+import { setProperties } from '../../../shared/test-utils';
 
 describe('bq-select', () => {
   it('should render', async () => {
@@ -144,5 +145,51 @@ describe('bq-select', () => {
     // Check that the option is selected
     expect(await page.find(optionSelector)).toHaveAttribute('selected');
     expect(eventEmitter).toHaveReceivedEventTimes(1);
+  });
+
+  it('should render with selected options', async () => {
+    const page = await newE2EPage({
+      html: `
+        <bq-select multiple>
+          <bq-option value="1">Option 1</bq-option>
+          <bq-option value="2">Option 2</bq-option>
+          <bq-option value="3">Option 3</bq-option>
+        </bq-select>
+      `,
+    });
+
+    await setProperties(page, 'bq-select', { value: JSON.stringify(['1', '2']) });
+
+    const selectedValueElements = await page.findAll(`bq-select bq-option[selected]`);
+    const displayTags = await page.findAll('bq-select >>> bq-tag');
+
+    expect(selectedValueElements).toHaveLength(2);
+    expect(displayTags).toHaveLength(2);
+    expect(displayTags[0]).toEqualText('Option 1');
+    expect(displayTags[1]).toEqualText('Option 2');
+  });
+
+  it('should rerender when value is change externally', async () => {
+    const page = await newE2EPage({
+      html: `
+        <bq-select multiple>
+          <bq-option value="1">Option 1</bq-option>
+          <bq-option value="2">Option 2</bq-option>
+          <bq-option value="3">Option 3</bq-option>
+        </bq-select>
+      `,
+    });
+
+    await setProperties(page, 'bq-select', { value: JSON.stringify(['1', '2']) });
+
+    expect(await page.findAll(`bq-select bq-option[selected]`)).toHaveLength(2);
+
+    await setProperties(page, 'bq-select', { value: JSON.stringify(['3']) });
+
+    const displayTags = await page.findAll('bq-select >>> bq-tag');
+
+    expect(await page.findAll(`bq-select bq-option[selected]`)).toHaveLength(1);
+    expect(displayTags).toHaveLength(1);
+    expect(displayTags[0]).toEqualText('Option 3');
   });
 });
