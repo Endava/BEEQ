@@ -187,7 +187,7 @@ calendar-month {
   }
 
   &::part(button day selected) {
-    @apply bg-[--bq-ui--brand] hover:bg-hover-ui-brand;
+    @apply bg-[--bq-date-picker--range-background-color] hover:bg-hover-ui-brand;
   }
 
   &::part(outside) {

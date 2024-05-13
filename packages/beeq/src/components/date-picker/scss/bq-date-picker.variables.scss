@@ -25,6 +25,7 @@
    * @prop --bq-date-picker--text-color - Date picker text color
    * @prop --bq-date-picker--text-size - Date picker text size
    * @prop --bq-date-picker--text-placeholder-color - Date picker placeholder text color
+   * @prop --bq-date-picker--range-background-color - Background color for the selected date range in the date picker
    */
   --bq-date-picker--background-color: theme('colors.ui.primary');
 
@@ -53,4 +54,5 @@
   --bq-date-picker--text-color: theme('colors.text.primary');
   --bq-date-picker--text-size: theme('fontSize.m');
   --bq-date-picker--text-placeholder-color: theme('colors.text.secondary');
+  --bq-date-picker--range-background-color: theme('colors.ui.brand');
 }
