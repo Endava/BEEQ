@@ -52,6 +52,17 @@ describe('bq-date-picker', () => {
     expect(calendarRangeElement).not.toBeNull();
   });
 
+  it('should render multi type of date picker', async () => {
+    const page = await newE2EPage({
+      html: `
+        <bq-date-picker open multi="true" />
+      `,
+    });
+    const calendarMultiElement = await page.find('bq-date-picker >>> calendar-multi');
+
+    expect(calendarMultiElement).not.toBeNull();
+  });
+
   it('should render multile months for range type of date picker', async () => {
     const page = await newE2EPage({
       html: `
