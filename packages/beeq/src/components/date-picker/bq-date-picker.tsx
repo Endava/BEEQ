@@ -456,6 +456,7 @@ export class BqDatePicker {
               value={this.value}
               min={this.min}
               max={this.max}
+              months={this.months}
               focusedDate={this.value}
               firstDayOfWeek={this.firstDayOfWeek}
               showOutsideDays={this.showOutsideDays}
