@@ -349,7 +349,7 @@ export class BqDatePicker {
       default: 'calendar-date',
     };
 
-    const key = this.multi ? 'multi' : this.range ? 'range' : 'default';
+    const key = (this.multi && 'multi') || (this.range && 'range') || 'default';
     const CalendarComponentType = componentTypes[key];
 
     return (
