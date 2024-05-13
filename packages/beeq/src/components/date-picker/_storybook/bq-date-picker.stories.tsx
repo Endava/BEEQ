@@ -51,6 +51,7 @@ const meta: Meta = {
     strategy: { control: 'select', options: ['fixed', 'absolute'] },
     'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
     range: { control: 'boolean' },
+    multi: { control: 'boolean' },
     months: { control: 'number' },
     value: { control: 'text' },
     // Events
@@ -87,6 +88,7 @@ const meta: Meta = {
     required: false,
     'validation-status': 'none',
     range: false,
+    multi: false,
     months: 1,
     value: undefined,
     isDateDisallowed: undefined,
@@ -152,6 +154,7 @@ const Template = (args: Args) => {
         strategy=${args.strategy}
         validation-status=${args['validation-status']}
         range=${args.range}
+        multi=${args.multi}
         months=${args.months}
         value=${ifDefined(args.value)}
         .isDateDisallowed=${isDate}
@@ -177,6 +180,14 @@ export const Range: Story = {
   render: Template,
   args: {
     range: true,
+    months: 2,
+  },
+};
+
+export const Multi: Story = {
+  render: Template,
+  args: {
+    multi: true,
     months: 2,
   },
 };

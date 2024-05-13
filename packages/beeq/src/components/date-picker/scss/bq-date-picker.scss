@@ -145,7 +145,8 @@ bq-icon,
 /* -------------------------------------------------------------------------- */
 
 calendar-date,
-calendar-range {
+calendar-range,
+calendar-multi {
   &::part(header) {
     @apply justify-center gap-[--bq-spacing-xs];
   }
@@ -180,7 +181,7 @@ calendar-month {
   }
 
   &::part(button) {
-    @apply h-8 w-8 rounded-[--bq-radius--s] p-1 text-[--bq-text--primary] hover:bg-[--bq-ui--secondary];
+    @apply h-8 w-8 rounded-[--bq-radius--s] p-1 text-[--bq-text--primary];
 
     font-family: var(--bq-font-family);
   }

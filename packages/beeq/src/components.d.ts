@@ -377,6 +377,10 @@ export namespace Components {
          */
         "months": number;
         /**
+          * If `true`, the Date picker panel will accepts to select multiple individual dates
+         */
+        "multi": boolean;
+        /**
           * The Date picker input name.
          */
         "name": string;
@@ -2608,6 +2612,10 @@ declare namespace LocalJSX {
           * Number of months to show when range is `true`
          */
         "months"?: number;
+        /**
+          * If `true`, the Date picker panel will accepts to select multiple individual dates
+         */
+        "multi"?: boolean;
         /**
           * The Date picker input name.
          */

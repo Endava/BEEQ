@@ -125,6 +125,9 @@ export class BqDatePicker {
   /** If `true`, the Date picker panel will accepts more than 1 month to display */
   @Prop({ reflect: true }) range: boolean = false;
 
+  /** If `true`, the Date picker panel will accepts to select multiple individual dates */
+  @Prop({ reflect: true }) multi: boolean = false;
+
   /** Number of months to show when range is `true` */
   @Prop({ reflect: true }) months: number;
 
@@ -314,7 +317,7 @@ export class BqDatePicker {
     const commonExportParts = 'heading,table,tr,head,week,th,td';
     const buttonExportParts = 'button,day,selected,today,disallowed,outside,range-start,range-end,range-inner';
 
-    if (this.range && this.months) {
+    if (this.range || (this.multi && this.months)) {
       for (let i = 0; i < this.months; i++) {
         const offset = i > 0 ? i : undefined;
         const className = offset ? 'hidden sm:block' : '';
@@ -340,7 +343,14 @@ export class BqDatePicker {
   render() {
     const labelId = `bq-date-picker__label-${this.name || this.fallbackInputId}`;
 
-    const CalendarComponentType = this.range ? 'calendar-range' : 'calendar-date';
+    const componentTypes = {
+      multi: 'calendar-multi',
+      range: 'calendar-range',
+      default: 'calendar-date',
+    };
+
+    const key = this.multi ? 'multi' : this.range ? 'range' : 'default';
+    const CalendarComponentType = componentTypes[key];
 
     return (
       <div class="bq-date-picker" part="base">
@@ -451,7 +461,7 @@ export class BqDatePicker {
               showOutsideDays={this.showOutsideDays}
               onChange={(ev: { target: { value: string } }) => {
                 this.value = ev.target.value;
-                this.open = false;
+                this.open = !!this.multi;
               }}
               exportparts="container,header,button,previous,next,disabled,heading"
             >
