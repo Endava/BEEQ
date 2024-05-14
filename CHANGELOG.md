@@ -21,6 +21,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * **deps:** update development dependencies ([#1038](https://github.com/Endava/BEEQ/issues/1038)) ([1edf44b](https://github.com/Endava/BEEQ/commit/1edf44b2e1d09bfc719cd8d5f38344e9433360f2))
 
+## [1.3.1](https://github.com/Endava/BEEQ/compare/v1.3.0...v1.3.1) (2024-05-14)
+
+
+### Bug Fixes 🐞
+
+* **Checkbox:** bq-checkbox indeterminate property is wrongly typed ([#1036](https://github.com/Endava/BEEQ/issues/1036)) ([396e52b](https://github.com/Endava/BEEQ/commit/396e52b15daaf85a7cc484a5d8ff5d0825f2bbd6))
+* **Select:** prevent bqClose to propagate further ([#1034](https://github.com/Endava/BEEQ/issues/1034)) ([829ef01](https://github.com/Endava/BEEQ/commit/829ef01ad5df4b4f6183f661532b473bcad7a22a))
+* **select:** re-render tags when value change externally ([#1037](https://github.com/Endava/BEEQ/issues/1037)) ([4441346](https://github.com/Endava/BEEQ/commit/4441346c912b2686cba6ee2e6077529b3ffb1797))
+* **Slider:** lower value updated to max value ([#1031](https://github.com/Endava/BEEQ/issues/1031)) ([ee429f0](https://github.com/Endava/BEEQ/commit/ee429f0b15c76d04e774ed10d60ff73b529e4795))
+
+
+### Chore ⚙️
+
+* **deps:** update development dependencies ([#1038](https://github.com/Endava/BEEQ/issues/1038)) ([1edf44b](https://github.com/Endava/BEEQ/commit/1edf44b2e1d09bfc719cd8d5f38344e9433360f2))
+
 ## [1.3.0](https://github.com/Endava/BEEQ/compare/v1.2.0...v1.3.0) (2024-04-21)
 
 
