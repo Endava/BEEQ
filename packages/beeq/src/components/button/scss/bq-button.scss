@@ -65,7 +65,7 @@
 .bq-button--link {
   @apply bg-transparent text-text-brand no-underline;
   // Primary `HOVER` state
-  @apply [&:not(.disabled)]:hover:bg-hover-ui-secondary;
+  @apply [&:not(.disabled)]:hover:bg-hover-ui-primary;
   // Primary `ACTIVE` state
   @apply [&:not(.disabled)]:active:bg-active-ui-secondary [&:not(.disabled)]:active:hover:bg-active-ui-secondary;
   // HTML `<a>` elements does not have a `disabled` state so we need to handle it manually
@@ -77,7 +77,7 @@
 .bq-button--text {
   @apply bg-transparent text-text-primary;
   // Primary `HOVER` state
-  @apply hover:enabled:bg-hover-ui-secondary;
+  @apply hover:enabled:bg-hover-ui-primary;
   // Primary `ACTIVE` state
   @apply active:enabled:bg-active-ui-secondary active:enabled:hover:bg-active-ui-secondary;
 }
