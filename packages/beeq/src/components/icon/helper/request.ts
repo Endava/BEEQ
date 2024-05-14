@@ -2,8 +2,6 @@
 /*                             Icon request helper                            */
 /* -------------------------------------------------------------------------- */
 
-import { Env } from '@stencil/core';
-
 import { isString } from '../../../shared/utils';
 
 const requests = new Map<string, Promise<unknown>>();
@@ -41,7 +39,7 @@ export const getSvgContent = async (url: string, sanitize: boolean) => {
 
 export const validateContent = (svgContent: string): string => {
   const svgTag = 'svg';
-  const iconCssClass = !Env.ICONS_SVG_PATH ? 'bq-icon__svg' : '';
+  const iconCssClass = 'bq-icon__svg';
 
   const div = document.createElement('div');
   div.innerHTML = svgContent;
