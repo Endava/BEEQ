@@ -1,0 +1,16 @@
+diff --git a/node_modules/@nxext/stencil/src/executors/stencil-runtime/stencil-process.js b/node_modules/@nxext/stencil/src/executors/stencil-runtime/stencil-process.js
+index 5ab1a2f..bea5219 100644
+--- a/node_modules/@nxext/stencil/src/executors/stencil-runtime/stencil-process.js
++++ b/node_modules/@nxext/stencil/src/executors/stencil-runtime/stencil-process.js
+@@ -4,7 +4,10 @@ exports.createStencilProcess = exports.loadCoreCompiler = void 0;
+ const tslib_1 = require("tslib");
+ const cli_1 = require("@stencil/core/cli");
+ const loadCoreCompiler = (sys) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+-    yield sys.dynamicImport(sys.getCompilerExecutingPath());
++    const coreCompiler = yield sys.dynamicImport(sys.getCompilerExecutingPath());
++    if (!('stencil' in globalThis)) {
++        globalThis.stencil = coreCompiler;
++    }
+     return globalThis.stencil;
+ });
+ exports.loadCoreCompiler = loadCoreCompiler;

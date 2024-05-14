@@ -29,7 +29,7 @@
     "clean:modules": "rimraf node_modules .nx packages/**/node_modules",
     "pre-commit": "lint-staged --verbose",
     "prepare": "husky",
-    "postinstall": "node node_modules/puppeteer/install.mjs",
+    "postinstall": "patch-package && node node_modules/puppeteer/install.mjs",
     "g": "plop --cwd tools/src/generators/plop"
   },
   "dependencies": {
@@ -78,9 +78,9 @@
     "@rollup/plugin-url": "8.0.2",
     "@schematics/angular": "17.3.7",
     "@stencil/angular-output-target": "0.8.4",
-    "@stencil/core": "4.16.0",
+    "@stencil/core": "4.18.0",
     "@stencil/react-output-target": "0.5.3",
-    "@stencil/sass": "3.0.11",
+    "@stencil/sass": "3.0.12",
     "@stencil/vue-output-target": "0.8.8",
     "@storybook/addon-a11y": "8.0.8",
     "@storybook/addon-actions": "8.0.8",
@@ -132,6 +132,7 @@
     "npm-run-all": "4.1.5",
     "nx": "18.3.3",
     "nx-stylelint": "17.1.4",
+    "patch-package": "8.0.0",
     "plop": "4.0.1",
     "postcss": "8.4.38",
     "postcss-import": "16.1.0",
