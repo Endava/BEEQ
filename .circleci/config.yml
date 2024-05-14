@@ -51,6 +51,9 @@ jobs:
           name: ▶️ Start Nx Cloud Agents
           command: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js"
       - setup-node
+      - run:
+          name: 🩹 Patch-package hash
+          command: md5sum patches/* > patches.hash
       - restore_cache:
           name: 💫 Restore Cache dependencies
           # CircleCI will first try to load a cache associated with the current version of package-lock.json.
@@ -58,7 +61,7 @@ jobs:
           # Next, it will use the static fallback key node-deps-v1-{{ .Branch }}- to load the most recent valid cache
           # with the node-deps-v1-{{ .Branch }}- prefix.
           keys:
-            - node-deps-{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-{{checksum "package-lock.json"}}
+            - node-deps-{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-{{checksum "package-lock.json"}}-{{ checksum "patches.hash" }}
             - node-deps-{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-
       - run:
           name: 📦 Install dependencies
@@ -68,7 +71,7 @@ jobs:
           name: 💾 Save Cache dependencies
           # After all of the project’s dependencies have been loaded,
           # the save_cache step will save the updated dependency tree to a new cache in the node_modules directory.
-          key: node-deps-{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-{{checksum "package-lock.json"}}
+          key: node-deps-{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-{{checksum "package-lock.json"}}-{{ checksum "patches.hash" }}
           paths:
             - node_modules
       - nx/set-shas
