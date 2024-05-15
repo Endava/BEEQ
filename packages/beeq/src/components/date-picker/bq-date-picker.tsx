@@ -337,11 +337,16 @@ export class BqDatePicker {
   }
 
   /**
-   * Processes the focused date value to extract the relevant part, which is essentially the last selected date.
+   * Processes the focused date value to extract the last date portion.
+   *
+   * @param value - The value to be processed, can be a string, number, or string array.
+   * @returns The extracted last date portion of the value.
    */
   private processFocusedDateValue = (value: TInputValue) => {
+    const dateLength = 10; // Length of a standard date in the format YYYY-MM-DD
+
     if (typeof value === 'string') {
-      return value.includes('/') ? value.split('/').pop() : value.split(' ').pop();
+      return value.slice(-dateLength);
     }
     if (typeof value === 'number') {
       return value.toString();
