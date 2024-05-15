@@ -336,6 +336,22 @@ export class BqDatePicker {
     return months;
   }
 
+  /**
+   * Processes the focused date value to extract the relevant part, which is essentially the last selected date.
+   */
+  private processFocusedDateValue = (value: TInputValue) => {
+    if (typeof value === 'string') {
+      return value.includes('/') ? value.split('/').pop() : value.split(' ').pop();
+    }
+    if (typeof value === 'number') {
+      return value.toString();
+    }
+    if (Array.isArray(value)) {
+      return value[value.length - 1];
+    }
+    return null;
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -351,19 +367,6 @@ export class BqDatePicker {
 
     const key = (this.multi && 'multi') || (this.range && 'range') || 'default';
     const CalendarComponentType = componentTypes[key];
-
-    const processFocusedDateValue = (value: TInputValue) => {
-      if (typeof value === 'string') {
-        return value.includes('/') ? value.split('/').pop() : value.split(' ').pop();
-      }
-      if (typeof value === 'number') {
-        return value.toString();
-      }
-      if (Array.isArray(value)) {
-        return value[value.length - 1];
-      }
-      return null;
-    };
 
     return (
       <div class="bq-date-picker" part="base">
@@ -470,7 +473,7 @@ export class BqDatePicker {
               min={this.min}
               max={this.max}
               months={this.months}
-              focusedDate={processFocusedDateValue(this.value)}
+              focusedDate={this.processFocusedDateValue(this.value)}
               firstDayOfWeek={this.firstDayOfWeek}
               showOutsideDays={this.showOutsideDays}
               onChange={(ev: { target: { value: string } }) => {
