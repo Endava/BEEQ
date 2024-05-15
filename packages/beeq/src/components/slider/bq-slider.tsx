@@ -222,7 +222,9 @@ export class BqSlider {
     target.value = reflectedValue;
     target.setAttribute('value', reflectedValue);
 
-    this.emitBqChange();
+    // Sync the prop value.
+    // This will trigger the `@Watch('value')` method and emit the `bqChange` event.
+    this.value = this.isRangeType ? [this.minValue, this.maxValue] : this.minValue;
   };
 
   private calculatePercent = (value: number) => {
@@ -330,7 +332,7 @@ export class BqSlider {
       <input
         type="range"
         class={{
-          'absolute top-1/2 w-full -translate-y-1/2 cursor-pointer appearance-none bg-transparent outline-none disabled:cursor-not-allowed':
+          'absolute start-0 top-1/2 w-full -translate-y-1/2 cursor-pointer appearance-none bg-transparent outline-none disabled:cursor-not-allowed':
             true,
           'pointer-events-none': this.isRangeType,
         }}
@@ -388,7 +390,7 @@ export class BqSlider {
         <div class="relative w-full" part="container">
           {/* TRACK AREA */}
           <span
-            class="absolute top-1/2 h-1 w-full -translate-y-1/2 rounded-xs bg-[--bq-slider--trackarea-color]"
+            class="absolute start-0 top-1/2 h-1 w-full -translate-y-1/2 rounded-xs bg-[--bq-slider--trackarea-color]"
             ref={(elem) => (this.trackElem = elem)}
             part="track-area"
           />
