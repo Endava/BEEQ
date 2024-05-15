@@ -222,7 +222,9 @@ export class BqSlider {
     target.value = reflectedValue;
     target.setAttribute('value', reflectedValue);
 
-    this.emitBqChange();
+    // Sync the prop value.
+    // This will trigger the `@Watch('value')` method and emit the `bqChange` event.
+    this.value = this.isRangeType ? [this.minValue, this.maxValue] : this.minValue;
   };
 
   private calculatePercent = (value: number) => {
