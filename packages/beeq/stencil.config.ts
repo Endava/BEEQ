@@ -25,9 +25,6 @@ export const config: Config = {
   taskQueue: 'async',
   buildDist: true,
   enableCache: true,
-  env: {
-    ICONS_SVG_PATH: process.env.ICONS_SVG_PATH,
-  },
   globalStyle: resolve(__dirname, './src/global/styles/default.scss').replace(/\\/g, '/'),
   plugins: [
     sass({

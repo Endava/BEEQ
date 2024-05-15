@@ -12,8 +12,9 @@ const waitForSvgLoad = async (elem: HTMLBqIconElement) => {
 
 describe('bq-icon', () => {
   it('should render', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-icon></bq-icon>');
+    const page = await newE2EPage({
+      html: '<bq-icon></bq-icon>',
+    });
 
     const element = await page.find('bq-icon');
 
@@ -21,8 +22,9 @@ describe('bq-icon', () => {
   });
 
   it('should have shadow root', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-icon></bq-icon>');
+    const page = await newE2EPage({
+      html: '<bq-icon></bq-icon>',
+    });
 
     const element = await page.find('bq-icon');
 
@@ -30,8 +32,9 @@ describe('bq-icon', () => {
   });
 
   it('should display icon', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-icon name="pulse"></bq-icon>');
+    const page = await newE2EPage({
+      html: '<bq-icon name="pulse"></bq-icon>',
+    });
 
     await page.$eval('bq-icon', waitForSvgLoad);
 
@@ -43,8 +46,9 @@ describe('bq-icon', () => {
   });
 
   it('should handle `name` property change', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-icon name="pulse"></bq-icon>');
+    const page = await newE2EPage({
+      html: '<bq-icon name="pulse"></bq-icon>',
+    });
 
     await setProperties(page, 'bq-icon', { name: 'check' });
     await page.$eval('bq-icon', waitForSvgLoad);
@@ -58,8 +62,9 @@ describe('bq-icon', () => {
   });
 
   it('should respect design style', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-icon name="pulse"></bq-icon>');
+    const page = await newE2EPage({
+      html: '<bq-icon name="pulse"></bq-icon>',
+    });
 
     const style = await computedStyle(page, 'bq-icon >>> [part="base"]', ['height']);
 
@@ -67,8 +72,9 @@ describe('bq-icon', () => {
   });
 
   it('should change size', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-icon size="30"></bq-icon>');
+    const page = await newE2EPage({
+      html: '<bq-icon size="30"></bq-icon>',
+    });
 
     const style = await computedStyle(page, 'bq-icon >>> [part="base"]', ['height']);
 
