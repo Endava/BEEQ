@@ -6,6 +6,32 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+## [1.3.2](https://github.com/Endava/BEEQ/compare/v1.3.1...v1.3.2) (2024-05-15)
+
+
+### Bug Fixes 🐞
+
+* **Slider:** model is not reflecting value changes when using `ngModel` in Angular ([#1051](https://github.com/Endava/BEEQ/issues/1051)) ([73f5f32](https://github.com/Endava/BEEQ/commit/73f5f321ff79d999c037d7d6a940ac54530b0970))
+
+
+### Chore ⚙️
+
+* **deps:** update angular ([#1040](https://github.com/Endava/BEEQ/issues/1040)) ([2bf4042](https://github.com/Endava/BEEQ/commit/2bf4042f7f5b79d5f5fa1a0d430efae43b98dab1))
+* **deps:** update angular to v17.4.1 ([#1052](https://github.com/Endava/BEEQ/issues/1052)) ([2c7780c](https://github.com/Endava/BEEQ/commit/2c7780c11b1e621ef403584bf1a6038cbecdf26c))
+* **deps:** update dependency @stencil/core to v4.18.1 ([#1046](https://github.com/Endava/BEEQ/issues/1046)) ([3a462f2](https://github.com/Endava/BEEQ/commit/3a462f2d2eec49f6f5ac25717a10fb8759ff6138))
+* **deps:** update npm dependencies ([#1047](https://github.com/Endava/BEEQ/issues/1047)) ([5797ed2](https://github.com/Endava/BEEQ/commit/5797ed242aeb62dae20a1e7d7a28d30a4d76543b))
+* **deps:** update npm dependencies ([#1054](https://github.com/Endava/BEEQ/issues/1054)) ([07e5997](https://github.com/Endava/BEEQ/commit/07e599716b331f519a799a5131af9aa62d0ddd4b))
+* **deps:** update stencil ([#1041](https://github.com/Endava/BEEQ/issues/1041)) ([30833c6](https://github.com/Endava/BEEQ/commit/30833c659b33765bfdbff3401d415422707b2a7c))
+* **deps:** update storybook to v8.0.10 ([#1042](https://github.com/Endava/BEEQ/issues/1042)) ([fa09ab0](https://github.com/Endava/BEEQ/commit/fa09ab0b9eccfa9d828a9af7eb0e178b65a6b7d3))
+* **deps:** update storybook to v8.1.0 ([#1048](https://github.com/Endava/BEEQ/issues/1048)) ([2519173](https://github.com/Endava/BEEQ/commit/251917324924b4fd3e5fc5111037dd92bfc9dfcc))
+* **deps:** update storybook to v8.1.1 ([#1053](https://github.com/Endava/BEEQ/issues/1053)) ([38bb49c](https://github.com/Endava/BEEQ/commit/38bb49cf5781d6f74f2a06f5d05d7db2ab887658))
+
+
+### Refactor 🛠️
+
+* **Button:** change hover background color for button link and text ([#1039](https://github.com/Endava/BEEQ/issues/1039)) ([b2be6cc](https://github.com/Endava/BEEQ/commit/b2be6cc9e9eff4b9f08012a2be94544820a9280d))
+* **Icon:** remove usage of `Env` from @stencil/core ([#1045](https://github.com/Endava/BEEQ/issues/1045)) ([d685a6c](https://github.com/Endava/BEEQ/commit/d685a6cd6bc49747b2924afa93296ea4124069b8))
+
 ## [1.3.1](https://github.com/Endava/BEEQ/compare/v1.3.0...v1.3.1) (2024-05-14)
 
 
