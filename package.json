@@ -49,8 +49,8 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "17.3.7",
-    "@angular-eslint/eslint-plugin": "17.4.0",
-    "@angular-eslint/eslint-plugin-template": "17.4.0",
+    "@angular-eslint/eslint-plugin": "17.4.1",
+    "@angular-eslint/eslint-plugin-template": "17.4.1",
     "@angular/cli": "17.3.7",
     "@angular/compiler-cli": "17.3.8",
     "@angular/language-service": "17.3.8",
