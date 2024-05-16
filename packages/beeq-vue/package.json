@@ -6,8 +6,8 @@
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@beeq/core": "^1.1.0",
-    "tslib": "^2.3.0"
+    "@beeq/core": "^1.3.2",
+    "tslib": "^2.6.2"
   },
   "peerDependencies": {
     "vue": ">=3.3.0"
