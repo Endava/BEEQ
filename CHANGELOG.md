@@ -6,6 +6,18 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+## [1.3.3](https://github.com/Endava/BEEQ/compare/v1.3.2...v1.3.3) (2024-05-16)
+
+
+### Bug Fixes 🐞
+
+* **Beeq Vue:** remove `applyPolyfills()` function ([#1055](https://github.com/Endava/BEEQ/issues/1055)) ([ac3e528](https://github.com/Endava/BEEQ/commit/ac3e5289b23fb6d4f8b1430c43a4ca81ac557b87))
+
+
+### Chore ⚙️
+
+* **deps:** update @floating-ui/core to v1.6.2 ([aa43f0d](https://github.com/Endava/BEEQ/commit/aa43f0d79e4a4aa812fc16b314c6ec4fa5338d9d))
+
 ## [1.3.2](https://github.com/Endava/BEEQ/compare/v1.3.1...v1.3.2) (2024-05-15)
 
 
