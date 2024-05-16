@@ -202,6 +202,32 @@ calendar-month {
     @apply rounded-none;
   }
 
+  &::part(today) {
+    @apply rounded-[--bq-radius--s] border-[length:--bq-date-picker--currentDate-border-width] border-[color:--bq-date-picker--currentDate-border-color] text-[color:--bq-date-picker--currentDate-text-color];
+
+    border-style: var(--bq-date-picker--border-style);
+  }
+
+  &::part(today selected) {
+    @apply rounded-none text-[color:var(--bq-text--inverse)];
+  }
+
+  &::part(today range-inner) {
+    @apply rounded-none;
+  }
+
+  &::part(today range-start) {
+    @apply rounded-[--bq-radius--s];
+
+    border-end-start-radius: 0;
+  }
+
+  &::part(today range-end) {
+    @apply rounded-[--bq-radius--s];
+
+    border-end-end-radius: 0;
+  }
+
   &::part(range-start) {
     border-start-end-radius: 0;
     border-end-end-radius: 0;
