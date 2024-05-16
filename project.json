@@ -16,7 +16,7 @@
             { "type": "style", "section": "Style 🎨" },
             { "type": "chore", "section": "Chore ⚙️" },
             { "type": "perf", "section": "Performance ⌛️" },
-            { "type": "refactor", "hidden": true },
+            { "type": "refactor", "section": "Refactor 🛠️" },
             { "type": "release", "hidden": true }
           ]
         },

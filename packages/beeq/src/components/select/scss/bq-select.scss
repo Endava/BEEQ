@@ -13,7 +13,7 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-select__label {
-  @apply mb-[--bq-select--label-margin-bottom] flex flex-grow items-center gap-[--var(--bq-select--gap-label)];
+  @apply mb-[--bq-select--label-margin-bottom] flex items-center;
   @apply text-[length:--bq-select--label-text-size] text-[color:--bq-select--label-text-color];
 }
 
