@@ -25,6 +25,7 @@ export const config: Config = {
   taskQueue: 'async',
   buildDist: true,
   enableCache: true,
+  globalScript: resolve(__dirname, './src/global/scripts/global.ts').replace(/\\/g, '/'),
   globalStyle: resolve(__dirname, './src/global/styles/default.scss').replace(/\\/g, '/'),
   plugins: [
     sass({
