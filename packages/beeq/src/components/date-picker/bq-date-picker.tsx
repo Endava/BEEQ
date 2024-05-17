@@ -382,18 +382,6 @@ export class BqDatePicker {
     return value.slice(-dateLength);
   };
 
-  private get CalendarType() {
-    // Define a lookup object to map properties to component types
-    const componentTypes = {
-      multi: 'calendar-multi',
-      range: 'calendar-range',
-      default: 'calendar-date',
-    } as const; // Make componentTypes a readonly object
-
-    // Return the corresponding component type, or the default type if no truthy property was found
-    return componentTypes[this.type] || componentTypes.default;
-  }
-
   private formatDate = (value: string): string | undefined => {
     if (!value) return;
 
@@ -411,6 +399,17 @@ export class BqDatePicker {
 
     return dateFormatter.format(new Date(value));
   };
+
+  private get CalendarType() {
+    const componentTypes = {
+      single: 'calendar-date',
+      multi: 'calendar-multi',
+      range: 'calendar-range',
+    } as const;
+
+    // Return the corresponding component type, based on the type prop value
+    return componentTypes[this.type] || componentTypes.single;
+  }
 
   // render() function
   // Always the last one in the class.
