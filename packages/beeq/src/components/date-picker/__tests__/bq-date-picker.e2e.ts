@@ -33,7 +33,7 @@ describe('bq-date-picker', () => {
   it('should render single type of date picker', async () => {
     const page = await newE2EPage({
       html: `
-        <bq-date-picker open range="false" />
+        <bq-date-picker open type="single" />
       `,
     });
     const calendarDefaultElement = await page.find('bq-date-picker >>> calendar-date');
@@ -44,7 +44,7 @@ describe('bq-date-picker', () => {
   it('should render range type of date picker', async () => {
     const page = await newE2EPage({
       html: `
-        <bq-date-picker open range="true" />
+        <bq-date-picker open type="range" />
       `,
     });
     const calendarRangeElement = await page.find('bq-date-picker >>> calendar-range');
@@ -55,7 +55,7 @@ describe('bq-date-picker', () => {
   it('should render multi type of date picker', async () => {
     const page = await newE2EPage({
       html: `
-        <bq-date-picker open multi="true" />
+        <bq-date-picker open type="multi" />
       `,
     });
     const calendarMultiElement = await page.find('bq-date-picker >>> calendar-multi');
@@ -63,10 +63,10 @@ describe('bq-date-picker', () => {
     expect(calendarMultiElement).not.toBeNull();
   });
 
-  it('should render multile months for range type of date picker', async () => {
+  it('should render multiple months for range type of date picker', async () => {
     const page = await newE2EPage({
       html: `
-        <bq-date-picker open range months="4" />
+        <bq-date-picker open type="range" months="4" />
       `,
     });
     const calendarMonthElement = await page.findAll('bq-date-picker >>> calendar-month');
