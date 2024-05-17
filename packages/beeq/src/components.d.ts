@@ -12,8 +12,8 @@ import { TBadgeSize } from "./components/badge/bq-badge.types";
 import { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 import { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
 import { FloatingUIPlacement } from "./services/interfaces";
+import { DaysOfWeek, TDatePickerType } from "./components/date-picker/bq-date-picker.types";
 import { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
-import { DaysOfWeek } from "./components/date-picker/bq-date-picker.types";
 import { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 import { TDrawerPlacement } from "./components/drawer/bq-drawer.types";
@@ -41,8 +41,8 @@ export { TBadgeSize } from "./components/badge/bq-badge.types";
 export { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 export { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
 export { FloatingUIPlacement } from "./services/interfaces";
+export { DaysOfWeek, TDatePickerType } from "./components/date-picker/bq-date-picker.types";
 export { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
-export { DaysOfWeek } from "./components/date-picker/bq-date-picker.types";
 export { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 export { TDrawerPlacement } from "./components/drawer/bq-drawer.types";
@@ -383,10 +383,6 @@ export namespace Components {
          */
         "months": number;
         /**
-          * If `true`, the Date picker panel will accepts to select multiple individual dates
-         */
-        "multi": boolean;
-        /**
           * The Date picker input name.
          */
         "name": string;
@@ -407,10 +403,6 @@ export namespace Components {
          */
         "placement"?: FloatingUIPlacement;
         /**
-          * If `true`, the Date picker panel will accepts more than 1 month to display
-         */
-        "range": boolean;
-        /**
           * Indicates whether or not the Date picker input is required to be filled out before submitting the form.
          */
         "required"?: boolean;
@@ -426,6 +418,10 @@ export namespace Components {
           * Defines the strategy to position the Date picker panel
          */
         "strategy"?: 'fixed' | 'absolute';
+        /**
+          * It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection
+         */
+        "type": TDatePickerType;
         /**
           * The validation status of the Select input.
           * @remarks This property is used to indicate the validation status of the select input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
@@ -1713,11 +1709,11 @@ declare global {
         new (): HTMLBqCheckboxElement;
     };
     interface HTMLBqDatePickerElementEventMap {
-        "bqBlur": HTMLBqInputElement;
-        "bqChange": { value: string; el: HTMLBqInputElement };
-        "bqClear": HTMLBqInputElement;
-        "bqFocus": HTMLBqInputElement;
-        "bqInput": { value: string; el: HTMLBqInputElement };
+        "bqBlur": HTMLBqDatePickerElement;
+        "bqChange": { value: string; el: HTMLBqDatePickerElement };
+        "bqClear": HTMLBqDatePickerElement;
+        "bqFocus": HTMLBqDatePickerElement;
+        "bqInput": { value: string; el: HTMLBqDatePickerElement };
     }
     interface HTMLBqDatePickerElement extends Components.BqDatePicker, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqDatePickerElementEventMap>(type: K, listener: (this: HTMLBqDatePickerElement, ev: BqDatePickerCustomEvent<HTMLBqDatePickerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2623,33 +2619,29 @@ declare namespace LocalJSX {
          */
         "months"?: number;
         /**
-          * If `true`, the Date picker panel will accepts to select multiple individual dates
-         */
-        "multi"?: boolean;
-        /**
           * The Date picker input name.
          */
         "name": string;
         /**
           * Callback handler emitted when the input loses focus
          */
-        "onBqBlur"?: (event: BqDatePickerCustomEvent<HTMLBqInputElement>) => void;
+        "onBqBlur"?: (event: BqDatePickerCustomEvent<HTMLBqDatePickerElement>) => void;
         /**
           * Callback handler emitted when the input value has changed and the input loses focus. This handler is called whenever the user finishes typing or pasting text into the input field and then clicks outside of the input field.
          */
-        "onBqChange"?: (event: BqDatePickerCustomEvent<{ value: string; el: HTMLBqInputElement }>) => void;
+        "onBqChange"?: (event: BqDatePickerCustomEvent<{ value: string; el: HTMLBqDatePickerElement }>) => void;
         /**
           * Callback handler emitted when the input value has been cleared
          */
-        "onBqClear"?: (event: BqDatePickerCustomEvent<HTMLBqInputElement>) => void;
+        "onBqClear"?: (event: BqDatePickerCustomEvent<HTMLBqDatePickerElement>) => void;
         /**
           * Callback handler emitted when the input has received focus
          */
-        "onBqFocus"?: (event: BqDatePickerCustomEvent<HTMLBqInputElement>) => void;
+        "onBqFocus"?: (event: BqDatePickerCustomEvent<HTMLBqDatePickerElement>) => void;
         /**
           * Callback handler emitted when the input value changes. This handler is called whenever the user types or pastes text into the input field.
          */
-        "onBqInput"?: (event: BqDatePickerCustomEvent<{ value: string; el: HTMLBqInputElement }>) => void;
+        "onBqInput"?: (event: BqDatePickerCustomEvent<{ value: string; el: HTMLBqDatePickerElement }>) => void;
         /**
           * If `true`, the Date picker panel will be visible.
          */
@@ -2667,10 +2659,6 @@ declare namespace LocalJSX {
          */
         "placement"?: FloatingUIPlacement;
         /**
-          * If `true`, the Date picker panel will accepts more than 1 month to display
-         */
-        "range"?: boolean;
-        /**
           * Indicates whether or not the Date picker input is required to be filled out before submitting the form.
          */
         "required"?: boolean;
@@ -2686,6 +2674,10 @@ declare namespace LocalJSX {
           * Defines the strategy to position the Date picker panel
          */
         "strategy"?: 'fixed' | 'absolute';
+        /**
+          * It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection
+         */
+        "type"?: TDatePickerType;
         /**
           * The validation status of the Select input.
           * @remarks This property is used to indicate the validation status of the select input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.

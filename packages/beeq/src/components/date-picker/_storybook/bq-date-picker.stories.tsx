@@ -4,6 +4,7 @@ import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import mdx from './bq-date-picker.mdx';
 import { INPUT_VALIDATION } from '../../input/bq-input.types';
+import { DATE_PICKER_TYPE } from '../bq-date-picker.types';
 
 const meta: Meta = {
   title: 'Components/Date picker',
@@ -50,8 +51,7 @@ const meta: Meta = {
     skidding: { control: 'number' },
     strategy: { control: 'select', options: ['fixed', 'absolute'] },
     'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
-    range: { control: 'boolean' },
-    multi: { control: 'boolean' },
+    type: { control: 'select', options: [...DATE_PICKER_TYPE] },
     months: { control: 'number' },
     value: { control: 'text' },
     'format-options': { control: 'object' },
@@ -88,8 +88,7 @@ const meta: Meta = {
     strategy: 'absolute',
     required: false,
     'validation-status': 'none',
-    range: false,
-    multi: false,
+    type: 'single',
     months: 1,
     value: undefined,
     'format-options': {
@@ -159,8 +158,7 @@ const Template = (args: Args) => {
         skidding=${args.skidding}
         strategy=${args.strategy}
         validation-status=${args['validation-status']}
-        range=${args.range}
-        multi=${args.multi}
+        type=${args.type}
         months=${args.months}
         value=${ifDefined(args.value)}
         .format-options=${args['format-options']}
@@ -186,7 +184,7 @@ export const Default: Story = {
 export const Range: Story = {
   render: Template,
   args: {
-    range: true,
+    type: 'range',
     months: 2,
   },
 };
@@ -194,7 +192,7 @@ export const Range: Story = {
 export const Multi: Story = {
   render: Template,
   args: {
-    multi: true,
+    type: 'multi',
     months: 2,
   },
 };

@@ -1,8 +1,8 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
-import { DaysOfWeek } from './bq-date-picker.types';
+import { DATE_PICKER_TYPE, DaysOfWeek, TDatePickerType } from './bq-date-picker.types';
 import { FloatingUIPlacement } from '../../services/interfaces';
-import { hasSlotContent, isDefined, isHTMLElement } from '../../shared/utils';
+import { hasSlotContent, isDefined, isHTMLElement, validatePropValue } from '../../shared/utils';
 import { TInputValidation } from '../input/bq-input.types';
 
 /**
@@ -64,7 +64,7 @@ export class BqDatePicker {
   // Reference to host HTML element
   // ===================================
 
-  @Element() el!: HTMLBqInputElement;
+  @Element() el!: HTMLBqDatePickerElement;
 
   // State() variables
   // Inlined decorator, alphabetical order
@@ -123,11 +123,8 @@ export class BqDatePicker {
   /** Defines the strategy to position the Date picker panel */
   @Prop({ reflect: true }) strategy?: 'fixed' | 'absolute' = 'fixed';
 
-  /** If `true`, the Date picker panel will accepts more than 1 month to display */
-  @Prop({ reflect: true }) range: boolean = false;
-
-  /** If `true`, the Date picker panel will accepts to select multiple individual dates */
-  @Prop({ reflect: true }) multi: boolean = false;
+  /** It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection */
+  @Prop({ reflect: true }) type: TDatePickerType = 'single';
 
   /** Number of months to show when range is `true` */
   @Prop({ reflect: true }) months: number;
@@ -192,30 +189,35 @@ export class BqDatePicker {
     this.hasValue = isDefined(this.value);
   }
 
+  @Watch('type')
+  checkPropValues() {
+    validatePropValue(DATE_PICKER_TYPE, 'single', this.el, 'type');
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
 
   /** Callback handler emitted when the input loses focus */
-  @Event() bqBlur!: EventEmitter<HTMLBqInputElement>;
+  @Event() bqBlur!: EventEmitter<HTMLBqDatePickerElement>;
 
   /**
    * Callback handler emitted when the input value has changed and the input loses focus.
    * This handler is called whenever the user finishes typing or pasting text into the input field and then clicks outside of the input field.
    */
-  @Event() bqChange!: EventEmitter<{ value: string; el: HTMLBqInputElement }>;
+  @Event() bqChange!: EventEmitter<{ value: string; el: HTMLBqDatePickerElement }>;
 
   /** Callback handler emitted when the input value has been cleared */
-  @Event() bqClear!: EventEmitter<HTMLBqInputElement>;
+  @Event() bqClear!: EventEmitter<HTMLBqDatePickerElement>;
 
   /** Callback handler emitted when the input has received focus */
-  @Event() bqFocus!: EventEmitter<HTMLBqInputElement>;
+  @Event() bqFocus!: EventEmitter<HTMLBqDatePickerElement>;
 
   /**
    * Callback handler emitted when the input value changes.
    * This handler is called whenever the user types or pastes text into the input field.
    */
-  @Event() bqInput!: EventEmitter<{ value: string; el: HTMLBqInputElement }>;
+  @Event() bqInput!: EventEmitter<{ value: string; el: HTMLBqDatePickerElement }>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -331,7 +333,7 @@ export class BqDatePicker {
     const commonExportParts = 'heading,table,tr,head,week,th,td';
     const buttonExportParts = 'button,day,selected,today,disallowed,outside,range-start,range-end,range-inner';
 
-    if (this.range || (this.multi && this.months)) {
+    if (this.type === 'range' || (this.type === 'multi' && this.months)) {
       for (let i = 0; i < this.months; i++) {
         const offset = i > 0 ? i : undefined;
         const className = offset ? 'hidden sm:block' : '';
@@ -374,13 +376,8 @@ export class BqDatePicker {
       default: 'calendar-date',
     } as const; // Make componentTypes a readonly object
 
-    const types = ['multi', 'range'] as const; // Make types a readonly array
-
-    // Find the first property (multi or range) that is truthy
-    const type = types.find((t) => this[t]);
-
     // Return the corresponding component type, or the default type if no truthy property was found
-    return componentTypes[type] || componentTypes.default;
+    return componentTypes[this.type] || componentTypes.default;
   }
 
   private handleCalendarChange = (ev: Event) => {
@@ -388,9 +385,10 @@ export class BqDatePicker {
 
     this.value = value;
     this.inputElem.value = this.value;
+
     this.bqChange.emit({ value: this.value, el: this.el });
 
-    this.open = !!this.multi;
+    this.open = this.type !== 'single';
   };
 
   private formatDate = (value: string): string | undefined => {
@@ -398,12 +396,12 @@ export class BqDatePicker {
 
     const dateFormatter = new Intl.DateTimeFormat(this.locale, this.formatOptions);
 
-    if (this.range) {
+    if (this.type === 'range') {
       const [start, end] = value.split('/').map((dateStr) => new Date(dateStr));
       return dateFormatter.formatRange(start, end);
     }
 
-    if (this.multi) {
+    if (this.type === 'multi') {
       const dates = value.split(' ').map((dateStr) => new Date(dateStr));
       return dates.map((date) => dateFormatter.format(date)).join(', ');
     }
