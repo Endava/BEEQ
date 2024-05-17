@@ -5,12 +5,21 @@
   "description": "BEEQ, a Design System components ruled by Endavan developers :)",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.js",
-  "es2015": "./dist/esm/index.mjs",
-  "es2017": "./dist/esm/index.mjs",
   "types": "./dist/types/index.d.ts",
   "collection": "./dist/collection/collection-manifest.json",
   "collection:main": "./dist/collection/index.js",
   "unpkg": "./dist/beeq/beeq.esm.js",
+  "exports": {
+    ".": {
+      "import": "./dist/beeq/beeq.esm.js",
+      "require": "./dist/cjs/beeq.cjs.js"
+    },
+    "./loader": {
+      "import": "./dist/loader/index.js",
+      "require": "./dist/loader/index.cjs",
+      "types": "./dist/loader/index.d.ts"
+    }
+  },
   "files": [
     "dist/"
   ],

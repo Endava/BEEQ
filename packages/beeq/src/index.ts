@@ -1,5 +1,3 @@
 // eslint-disable-next-line import/no-unresolved
-export * from './components';
-
-export * from './services/interfaces';
+export type * from './components.d.ts';
 export * from './shared/utils';
