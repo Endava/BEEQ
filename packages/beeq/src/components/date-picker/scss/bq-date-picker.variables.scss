@@ -13,16 +13,13 @@
    * @prop --bq-date-picker--currentDate-border-width - Date picker border width for current date
    * @prop --bq-date-picker--border-style - Date picker border style
    * @prop --bq-date-picker--gap - Gap between Date picker content and prefix/suffix
-   * @prop --bq-date-picker--helper-margin-top - Helper text margin top
-   * @prop --bq-date-picker--helper-text-color - Helper text color
-   * @prop --bq-date-picker--helper-text-size - Helper text size
    * @prop --bq-date-picker--icon-size - Icon size to use in prefix/suffix and clear button
    * @prop --bq-date-picker--label-margin-bottom - Date picker label margin bottom
    * @prop --bq-date-picker--label-text-color - Date picker label text color
    * @prop --bq-date-picker--currentDate-text-color - Date picker label text color for currentDate
    * @prop --bq-date-picker--label-text-size - Date picker label text size
-   * @prop --bq-date-picker--pading-start - Date picker padding start
-   * @prop --bq-date-picker--pading-end - Date picker padding end
+   * @prop --bq-date-picker--padding-start - Date picker padding start
+   * @prop --bq-date-picker--padding-end - Date picker padding end
    * @prop --bq-date-picker--paddingY - Date picker padding top and bottom
    * @prop --bq-date-picker--text-color - Date picker text color
    * @prop --bq-date-picker--text-size - Date picker text size
@@ -41,10 +38,6 @@
 
   --bq-date-picker--gap: theme('spacing.xs');
 
-  --bq-date-picker--helper-margin-top: theme('spacing.xs');
-  --bq-date-picker--helper-text-size: theme('fontSize.s');
-  --bq-date-picker--helper-text-color: theme('colors.text.primary');
-
   --bq-date-picker--icon-size: 24px;
 
   --bq-date-picker--label-margin-bottom: theme('spacing.xs');
@@ -52,8 +45,8 @@
   --bq-date-picker--label-text-color: theme('colors.text.primary');
   --bq-date-picker--currentDate-text-color: theme('colors.text.brand');
 
-  --bq-date-picker--pading-start: theme('spacing.m');
-  --bq-date-picker--pading-end: theme('spacing.m');
+  --bq-date-picker--padding-start: theme('spacing.m');
+  --bq-date-picker--padding-end: theme('spacing.m');
   --bq-date-picker--paddingY: theme('spacing.s');
 
   --bq-date-picker--text-color: theme('colors.text.primary');

@@ -26,7 +26,7 @@
   // Border
   @apply rounded-[--bq-date-picker--border-radius] border-[length:--bq-date-picker--border-width] border-[color:--bq-date-picker--border-color];
   // Padding
-  @apply py-[--bq-date-picker--paddingY] pe-[--bq-date-picker--pading-end] ps-[--bq-date-picker--pading-start];
+  @apply py-[--bq-date-picker--paddingY] pe-[--bq-date-picker--padding-end] ps-[--bq-date-picker--padding-start];
   // Text
   @apply select-none text-[length:--bq-date-picker--text-size] text-[color:--bq-date-picker--text-color] placeholder:text-[color:--bq-date-picker--text-placeholder-color];
   // Hover
