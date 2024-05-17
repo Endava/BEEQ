@@ -36,7 +36,7 @@ import { TInputValidation, TInputValue } from '../input/bq-input.types';
  * @part day - The buttons corresponding to each day in the grid.
  * @part selected - Any days which are selected. 
  * @part today - Today's day.
- * @part disallowed - Any daythat has been disallowed via isDateDisallowed.
+ * @part disallowed - Any day that has been disallowed via isDateDisallowed.
  * @part outside - Any days which are outside the current month.
  * @part range-start - The day at the start of a date range.
  * @part range-end - The day at the end of a date range.
@@ -357,6 +357,23 @@ export class BqDatePicker {
     return null;
   };
 
+  private get CalendarType() {
+    // Define a lookup object to map properties to component types
+    const componentTypes = {
+      multi: 'calendar-multi',
+      range: 'calendar-range',
+      default: 'calendar-date',
+    } as const; // Make componentTypes a readonly object
+
+    const types = ['multi', 'range'] as const; // Make types a readonly array
+
+    // Find the first property (multi or range) that is truthy
+    const type = types.find((t) => this[t]);
+
+    // Return the corresponding component type, or the default type if no truthy property was found
+    return componentTypes[type] || componentTypes.default;
+  }
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -364,14 +381,7 @@ export class BqDatePicker {
   render() {
     const labelId = `bq-date-picker__label-${this.name || this.fallbackInputId}`;
 
-    const componentTypes = {
-      multi: 'calendar-multi',
-      range: 'calendar-range',
-      default: 'calendar-date',
-    };
-
-    const key = (this.multi && 'multi') || (this.range && 'range') || 'default';
-    const CalendarComponentType = componentTypes[key];
+    const CallyCalendar = this.CalendarType;
 
     return (
       <div class="bq-date-picker" part="base">
@@ -471,7 +481,7 @@ export class BqDatePicker {
             </span>
           </div>
           <div class="flex items-center justify-center">
-            <CalendarComponentType
+            <CallyCalendar
               isDateDisallowed={this.isDateDisallowed}
               locale={this.locale}
               value={this.value}
@@ -491,7 +501,7 @@ export class BqDatePicker {
               <bq-icon color="text--primary" slot="next" name="caret-right" label="Next" />
 
               <div class="flex flex-wrap justify-center gap-[--bq-spacing-m]">{this.generateCalendarMonths()}</div>
-            </CalendarComponentType>
+            </CallyCalendar>
           </div>
         </bq-dropdown>
       </div>

@@ -71,7 +71,7 @@ Type: `Promise<void>`
 | `"control"`     | The input control wrapper.                                                                                   |
 | `"day"`         | The buttons corresponding to each day in the grid.                                                           |
 | `"disabled"`    | A button that is disabled due to min/max.                                                                    |
-| `"disallowed"`  | Any daythat has been disallowed via isDateDisallowed.                                                        |
+| `"disallowed"`  | Any day that has been disallowed via isDateDisallowed.                                                       |
 | `"head"`        | The table's header row.                                                                                      |
 | `"header"`      | The container for heading and button's.                                                                      |
 | `"heading"`     | The heading containing the month and year.  // Parts specific to the calendar-month component:               |
