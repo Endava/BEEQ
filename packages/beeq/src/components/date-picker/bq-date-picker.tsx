@@ -290,6 +290,17 @@ export class BqDatePicker {
     this.bqChange.emit({ value: this.value, el: this.el });
   };
 
+  private handleCalendarChange = (ev: Event) => {
+    const { value } = ev.target as unknown as { value: string };
+
+    this.value = value;
+    this.inputElem.value = this.value;
+
+    this.bqChange.emit({ value: this.value, el: this.el });
+
+    this.open = this.type !== 'single';
+  };
+
   private handleClearClick = (ev: CustomEvent) => {
     if (this.disabled) return;
 
@@ -377,17 +388,6 @@ export class BqDatePicker {
     // Return the corresponding component type, or the default type if no truthy property was found
     return componentTypes[this.type] || componentTypes.default;
   }
-
-  private handleCalendarChange = (ev: Event) => {
-    const { value } = ev.target as unknown as { value: string };
-
-    this.value = value;
-    this.inputElem.value = this.value;
-
-    this.bqChange.emit({ value: this.value, el: this.el });
-
-    this.open = this.type !== 'single';
-  };
 
   private formatDate = (value: string): string | undefined => {
     if (!value) return;
