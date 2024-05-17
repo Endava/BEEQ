@@ -60,7 +60,6 @@ const meta: Meta = {
     bqChange: { action: 'bqChange' },
     bqClear: { action: 'bqClear' },
     bqFocus: { action: 'bqFocus' },
-    bqInput: { action: 'bqInput' },
     // Not part of the public API, so we don't want to expose it in the docs
     noLabel: { control: 'boolean', table: { disable: true } },
     prefix: { control: 'boolean', table: { disable: true } },
@@ -167,7 +166,6 @@ const Template = (args: Args) => {
         @bqChange=${args.bqChange}
         @bqClear=${args.bqClear}
         @bqFocus=${args.bqFocus}
-        @bqInput=${args.bqInput}
       >
         ${!args.noLabel ? label : nothing}
         ${args.prefix ? html`<bq-icon name="user-circle" slot="prefix"></bq-icon>` : nothing}

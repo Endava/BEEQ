@@ -216,12 +216,6 @@ export class BqDatePicker {
   /** Callback handler emitted when the input has received focus */
   @Event() bqFocus!: EventEmitter<HTMLBqDatePickerElement>;
 
-  /**
-   * Callback handler emitted when the input value changes.
-   * This handler is called whenever the user types or pastes text into the input field.
-   */
-  @Event() bqInput!: EventEmitter<{ value: string; el: HTMLBqDatePickerElement }>;
-
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
@@ -313,7 +307,6 @@ export class BqDatePicker {
     this.value = this.inputElem.value;
 
     this.bqClear.emit(this.el);
-    this.bqInput.emit({ value: this.value, el: this.el });
     this.bqChange.emit({ value: this.value, el: this.el });
     this.inputElem.focus();
 

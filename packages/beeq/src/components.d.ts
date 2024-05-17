@@ -1713,7 +1713,6 @@ declare global {
         "bqChange": { value: string; el: HTMLBqDatePickerElement };
         "bqClear": HTMLBqDatePickerElement;
         "bqFocus": HTMLBqDatePickerElement;
-        "bqInput": { value: string; el: HTMLBqDatePickerElement };
     }
     interface HTMLBqDatePickerElement extends Components.BqDatePicker, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqDatePickerElementEventMap>(type: K, listener: (this: HTMLBqDatePickerElement, ev: BqDatePickerCustomEvent<HTMLBqDatePickerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2638,10 +2637,6 @@ declare namespace LocalJSX {
           * Callback handler emitted when the input has received focus
          */
         "onBqFocus"?: (event: BqDatePickerCustomEvent<HTMLBqDatePickerElement>) => void;
-        /**
-          * Callback handler emitted when the input value changes. This handler is called whenever the user types or pastes text into the input field.
-         */
-        "onBqInput"?: (event: BqDatePickerCustomEvent<{ value: string; el: HTMLBqDatePickerElement }>) => void;
         /**
           * If `true`, the Date picker panel will be visible.
          */
