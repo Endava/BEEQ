@@ -54,6 +54,7 @@ const meta: Meta = {
     multi: { control: 'boolean' },
     months: { control: 'number' },
     value: { control: 'text' },
+    'format-options': { control: 'object' },
     // Events
     bqBlur: { action: 'bqBlur' },
     bqChange: { action: 'bqChange' },
@@ -91,6 +92,11 @@ const meta: Meta = {
     multi: false,
     months: 1,
     value: undefined,
+    'format-options': {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    },
     isDateDisallowed: undefined,
     customDisallowedDate: undefined,
   },
@@ -157,6 +163,7 @@ const Template = (args: Args) => {
         multi=${args.multi}
         months=${args.months}
         value=${ifDefined(args.value)}
+        .format-options=${args['format-options']}
         .isDateDisallowed=${isDate}
         @bqBlur=${args.bqBlur}
         @bqChange=${args.bqChange}

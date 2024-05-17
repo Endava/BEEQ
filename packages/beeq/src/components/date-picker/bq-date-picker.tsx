@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
-import { DaysOfWeek } from './scss/bq-date-picker.types';
+import { DaysOfWeek } from './bq-date-picker.types';
 import { FloatingUIPlacement } from '../../services/interfaces';
 import { hasSlotContent, isDefined, isHTMLElement } from '../../shared/utils';
 import { TInputValidation } from '../input/bq-input.types';
@@ -168,6 +168,16 @@ export class BqDatePicker {
    * Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
    */
   @Prop({ reflect: true }) locale: Intl.LocalesArgument = 'en-GB';
+
+  /**
+   * The options to use when formatting the displayed value.
+   * Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
+   */
+  @Prop() formatOptions: Intl.DateTimeFormatOptions = {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  };
 
   // Prop lifecycle events
   // =======================
@@ -387,12 +397,7 @@ export class BqDatePicker {
   private formatDate = (value: string): string | undefined => {
     if (!value) return;
 
-    const formatOptions: Intl.DateTimeFormatOptions = {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-    };
-    const dateFormatter = new Intl.DateTimeFormat(this.locale, formatOptions);
+    const dateFormatter = new Intl.DateTimeFormat(this.locale, this.formatOptions);
 
     if (this.range) {
       const [start, end] = value.split('/').map((dateStr) => new Date(dateStr));

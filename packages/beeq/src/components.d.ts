@@ -13,7 +13,7 @@ import { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButt
 import { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
 import { FloatingUIPlacement } from "./services/interfaces";
 import { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
-import { DaysOfWeek } from "./components/date-picker/scss/bq-date-picker.types";
+import { DaysOfWeek } from "./components/date-picker/bq-date-picker.types";
 import { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 import { TDrawerPlacement } from "./components/drawer/bq-drawer.types";
@@ -42,7 +42,7 @@ export { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButt
 export { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
 export { FloatingUIPlacement } from "./services/interfaces";
 export { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
-export { DaysOfWeek } from "./components/date-picker/scss/bq-date-picker.types";
+export { DaysOfWeek } from "./components/date-picker/bq-date-picker.types";
 export { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 export { TDrawerPlacement } from "./components/drawer/bq-drawer.types";
@@ -358,6 +358,10 @@ export namespace Components {
           * The ID of the form that the Date picker input belongs to.
          */
         "form"?: string;
+        /**
+          * The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
+         */
+        "formatOptions": Intl.DateTimeFormatOptions;
         /**
           * A function that takes a date and returns true if the date should not be selectable
          */
@@ -2594,6 +2598,10 @@ declare namespace LocalJSX {
           * The ID of the form that the Date picker input belongs to.
          */
         "form"?: string;
+        /**
+          * The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
+         */
+        "formatOptions"?: Intl.DateTimeFormatOptions;
         /**
           * A function that takes a date and returns true if the date should not be selectable
          */
