@@ -368,19 +368,18 @@ export class BqDatePicker {
   };
 
   /**
-   * Processes the focused date value to extract the last date portion.
+   * Extracts and returns the last date part from a given string.
+   * When the type of the date picker is 'range' or 'multi', the last date part of the value
+   * should be the focused date in the calendar.
    *
    * @param value - The value to be processed, can be a string.
    * @returns The extracted last date portion of the value.
    */
-  private processFocusedDateValue = (value: string) => {
+  private focusedDate = (value: string) => {
+    if (!value) return;
+
     const dateLength = 10; // Length of a standard date in the format YYYY-MM-DD
-
-    if (value) {
-      return value.slice(-dateLength);
-    }
-
-    return null;
+    return value.slice(-dateLength);
   };
 
   private get CalendarType() {
@@ -527,7 +526,7 @@ export class BqDatePicker {
               min={this.min}
               max={this.max}
               months={this.months}
-              focusedDate={this.processFocusedDateValue(this.value)}
+              focusedDate={this.focusedDate(this.value)}
               firstDayOfWeek={this.firstDayOfWeek}
               showOutsideDays={this.showOutsideDays}
               onChange={this.handleCalendarChange}
