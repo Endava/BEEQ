@@ -374,6 +374,16 @@ export class BqDatePicker {
     return componentTypes[type] || componentTypes.default;
   }
 
+  private handleCalendarChange = (ev: { target: { value: string } }) => {
+    const { value } = ev.target;
+
+    this.value = value;
+    this.inputElem.value = this.value;
+    this.bqChange.emit({ value: this.value, el: this.el });
+
+    this.open = !!this.multi;
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -491,10 +501,7 @@ export class BqDatePicker {
               focusedDate={this.processFocusedDateValue(this.value)}
               firstDayOfWeek={this.firstDayOfWeek}
               showOutsideDays={this.showOutsideDays}
-              onChange={(ev: { target: { value: string } }) => {
-                this.value = ev.target.value;
-                this.open = !!this.multi;
-              }}
+              onChange={this.handleCalendarChange}
               exportparts="container,header,button,previous,next,disabled,heading"
             >
               <bq-icon color="text--primary" slot="previous" name="caret-left" label="Previous" />
