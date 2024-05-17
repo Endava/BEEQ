@@ -3,7 +3,7 @@ import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State
 import { DaysOfWeek } from './scss/bq-date-picker.types';
 import { FloatingUIPlacement } from '../../services/interfaces';
 import { hasSlotContent, isDefined, isHTMLElement } from '../../shared/utils';
-import { TInputValidation, TInputValue } from '../input/bq-input.types';
+import { TInputValidation } from '../input/bq-input.types';
 
 /**
  * @part base - The component's base wrapper.
@@ -340,21 +340,16 @@ export class BqDatePicker {
   /**
    * Processes the focused date value to extract the last date portion.
    *
-   * @param value - The value to be processed, can be a string, number, or string array.
+   * @param value - The value to be processed, can be a string.
    * @returns The extracted last date portion of the value.
    */
-  private processFocusedDateValue = (value: TInputValue) => {
+  private processFocusedDateValue = (value: string) => {
     const dateLength = 10; // Length of a standard date in the format YYYY-MM-DD
 
-    if (typeof value === 'string') {
+    if (value) {
       return value.slice(-dateLength);
     }
-    if (typeof value === 'number') {
-      return value.toString();
-    }
-    if (Array.isArray(value)) {
-      return value[value.length - 1];
-    }
+
     return null;
   };
 
@@ -385,6 +380,29 @@ export class BqDatePicker {
     this.open = !!this.multi;
   };
 
+  private formatDate = (value: string): string | undefined => {
+    if (!value) return;
+
+    const formatOptions: Intl.DateTimeFormatOptions = {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    };
+    const dateFormatter = new Intl.DateTimeFormat(this.locale, formatOptions);
+
+    if (this.range) {
+      const [start, end] = value.split('/').map((dateStr) => new Date(dateStr));
+      return dateFormatter.formatRange(start, end);
+    }
+
+    if (this.multi) {
+      const dates = value.split(' ').map((dateStr) => new Date(dateStr));
+      return dates.map((date) => dateFormatter.format(date)).join(', ');
+    }
+
+    return dateFormatter.format(new Date(value));
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -394,6 +412,7 @@ export class BqDatePicker {
 
     const CallyCalendar = this.CalendarType;
 
+    console.log('gggg', this.processFocusedDateValue(this.value));
     return (
       <div class="bq-date-picker" part="base">
         {/* Label */}
@@ -454,7 +473,7 @@ export class BqDatePicker {
               required={this.required}
               spellcheck={false}
               type="text"
-              value={this.value}
+              value={this.formatDate(this.value)}
               part="input"
               // Events
               onBlur={this.handleBlur}
