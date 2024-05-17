@@ -15,8 +15,8 @@ import { TInputValidation } from '../input/bq-input.types';
  * @part panel - The date picker panel container
  * @part prefix - The prefix slot container.
  * @part suffix - The suffix slot container.
- 
-// Parts from the Cally library for calendar-date and calendar-range components: 
+
+// Parts from the Cally library for calendar-date and calendar-range components:
  * @part container - The container for the entire component.
  * @part header - The container for heading and button's.
  * @part button - Any button within the component.
@@ -24,7 +24,7 @@ import { TInputValidation } from '../input/bq-input.types';
  * @part next - The next page button.
  * @part disabled - A button that is disabled due to min/max.
  * @part heading - The heading containing the month and year.
- 
+
 // Parts specific to the calendar-month component:
  * @part heading - The heading that labels the month.
  * @part table - The <table> element.
@@ -35,13 +35,13 @@ import { TInputValidation } from '../input/bq-input.types';
  * @part td - The table's body cells.
  * @part button - Any button used in the component.
  * @part day - The buttons corresponding to each day in the grid.
- * @part selected - Any days which are selected. 
+ * @part selected - Any days which are selected.
  * @part today - Today's day.
  * @part disallowed - Any day that has been disallowed via isDateDisallowed.
  * @part outside - Any days which are outside the current month.
  * @part range-start - The day at the start of a date range.
  * @part range-end - The day at the end of a date range.
- * @part range-inner - Any days between the start and end of a date range. 
+ * @part range-inner - Any days between the start and end of a date range.
  */
 @Component({
   tag: 'bq-date-picker',
@@ -84,20 +84,49 @@ export class BqDatePicker {
   /** The clear button aria label */
   @Prop({ reflect: true }) clearButtonLabel? = 'Clear value';
 
+  /** If `true`, the clear button won't be displayed */
+  @Prop({ reflect: true }) disableClear? = false;
+
   /**
    * Indicates whether the Date picker input is disabled or not.
    * If `true`, the Date picker is disabled and cannot be interacted with.
    */
   @Prop({ mutable: true }) disabled?: boolean = false;
 
-  /** If `true`, the clear button won't be displayed */
-  @Prop({ reflect: true }) disableClear? = false;
-
   /** Represents the distance (gutter or margin) between the Date picker panel and the input element. */
   @Prop({ reflect: true }) distance?: number = 8;
 
+  /** The first day of the week, where Sunday is 0, Monday is 1, etc */
+  @Prop({ reflect: true }) firstDayOfWeek?: DaysOfWeek = 1;
+
+  /** The options to use when formatting the displayed value.
+   * Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
+   */
+  @Prop() formatOptions: Intl.DateTimeFormatOptions = {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  };
+
   /** The ID of the form that the Date picker input belongs to. */
   @Prop({ reflect: true }) form?: string;
+
+  /** A function that takes a date and returns true if the date should not be selectable */
+  @Prop({ reflect: true }) isDateDisallowed?: (date: Date) => boolean;
+
+  /** The locale for formatting dates. If not set, will use the browser's locale.
+   * Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
+   */
+  @Prop({ reflect: true }) locale: Intl.LocalesArgument = 'en-GB';
+
+  /** The latest date that can be selected */
+  @Prop({ reflect: true }) max?: string;
+
+  /** The earliest date that can be selected */
+  @Prop({ reflect: true }) min?: string;
+
+  /** Number of months to show when range is `true` */
+  @Prop({ reflect: true }) months: number;
 
   /** The Date picker input name. */
   @Prop({ reflect: true }) name!: string;
@@ -120,17 +149,14 @@ export class BqDatePicker {
   /** Represents the skidding between the Date picker panel and the input element. */
   @Prop({ reflect: true }) skidding?: number = 0;
 
+  /** Whether to show days outside the month */
+  @Prop({ reflect: true }) showOutsideDays: boolean = false;
+
   /** Defines the strategy to position the Date picker panel */
   @Prop({ reflect: true }) strategy?: 'fixed' | 'absolute' = 'fixed';
 
   /** It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection */
   @Prop({ reflect: true }) type: TDatePickerType = 'single';
-
-  /** Number of months to show when range is `true` */
-  @Prop({ reflect: true }) months: number;
-
-  /** A function that takes a date and returns true if the date should not be selectable */
-  @Prop({ reflect: true }) isDateDisallowed?: (date: Date) => boolean;
 
   /**
    * The validation status of the Select input.
@@ -147,34 +173,6 @@ export class BqDatePicker {
   /** The select input value represents the currently selected date or range and can be used to reset the field to a previous value.
    * All dates are expected in ISO-8601 format (YYYY-MM-DD). */
   @Prop({ reflect: true, mutable: true }) value: string;
-
-  /** Whether to show days outside the month */
-  @Prop({ reflect: true }) showOutsideDays: boolean = false;
-
-  /** The first day of the week, where Sunday is 0, Monday is 1, etc */
-  @Prop({ reflect: true }) firstDayOfWeek?: DaysOfWeek = 1;
-
-  /** The earliest date that can be selected */
-  @Prop({ reflect: true }) min?: string;
-
-  /** The latest date that can be selected */
-  @Prop({ reflect: true }) max?: string;
-
-  /**
-   * The locale for formatting dates. If not set, will use the browser's locale.
-   * Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
-   */
-  @Prop({ reflect: true }) locale: Intl.LocalesArgument = 'en-GB';
-
-  /**
-   * The options to use when formatting the displayed value.
-   * Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
-   */
-  @Prop() formatOptions: Intl.DateTimeFormatOptions = {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  };
 
   // Prop lifecycle events
   // =======================
