@@ -384,8 +384,7 @@ export class BqDatePicker {
   }
 
   private handleCalendarChange = (ev: Event) => {
-    const target = ev.target as HTMLInputElement;
-    const value = target.value;
+    const { value } = ev.target as unknown as { value: string };
 
     this.value = value;
     this.inputElem.value = this.value;
