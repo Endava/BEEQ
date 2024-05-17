@@ -412,7 +412,6 @@ export class BqDatePicker {
 
     const CallyCalendar = this.CalendarType;
 
-    console.log('gggg', this.processFocusedDateValue(this.value));
     return (
       <div class="bq-date-picker" part="base">
         {/* Label */}
