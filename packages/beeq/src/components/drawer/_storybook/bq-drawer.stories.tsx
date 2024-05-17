@@ -45,6 +45,10 @@ const Template = (args: Args) => {
     await drawerElem.show();
   };
 
+  const customFooterDivider = args.customFooterDivider
+    ? html`<bq-divider slot="footer-divider" class="mb-m block" stroke-color="stroke--primary" stroke-thickness="1" />`
+    : nothing;
+
   return html`
     <bq-button @bqClick=${handleOpenDrawer}>Open Drawer</bq-button>
     <bq-drawer
@@ -69,7 +73,7 @@ const Template = (args: Args) => {
       </div>
       ${!args.noFooter
         ? html`
-            ${args.customFooterDivider ? html`<bq-divider slot="footer-divider" class="mb-m block" />` : nothing}
+            ${customFooterDivider}
             <div class="flex flex-1 justify-center gap-xs" slot="footer">
               <bq-button appearance="primary" block size="small"> Button </bq-button>
               <bq-button appearance="link" block size="small"> Button </bq-button>
@@ -114,7 +118,7 @@ export const WithBackdrop: Story = {
   },
 };
 
-export const WithCustomDivider: Story = {
+export const WithCustomFooterDivider: Story = {
   render: Template,
   args: {
     open: false,
