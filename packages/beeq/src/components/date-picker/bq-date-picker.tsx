@@ -521,7 +521,7 @@ export class BqDatePicker {
           <div class="flex items-center justify-center">
             <CallyCalendar
               isDateDisallowed={this.isDateDisallowed}
-              locale={this.locale}
+              locale={this.locale as string}
               value={this.value}
               min={this.min}
               max={this.max}
