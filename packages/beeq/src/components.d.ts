@@ -363,9 +363,9 @@ export namespace Components {
          */
         "isDateDisallowed"?: (date: Date) => boolean;
         /**
-          * The locale for formatting dates. If not set, will use the browser's locale
+          * The locale for formatting dates. If not set, will use the browser's locale. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
          */
-        "locale": string | undefined;
+        "locale": Intl.LocalesArgument;
         /**
           * The latest date that can be selected
          */
@@ -2599,9 +2599,9 @@ declare namespace LocalJSX {
          */
         "isDateDisallowed"?: (date: Date) => boolean;
         /**
-          * The locale for formatting dates. If not set, will use the browser's locale
+          * The locale for formatting dates. If not set, will use the browser's locale. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
          */
-        "locale"?: string | undefined;
+        "locale"?: Intl.LocalesArgument;
         /**
           * The latest date that can be selected
          */

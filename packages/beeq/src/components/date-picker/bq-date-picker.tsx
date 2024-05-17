@@ -163,8 +163,11 @@ export class BqDatePicker {
   /** The latest date that can be selected */
   @Prop({ reflect: true }) max?: string;
 
-  /** The locale for formatting dates. If not set, will use the browser's locale */
-  @Prop({ reflect: true }) locale: string | undefined = undefined;
+  /**
+   * The locale for formatting dates. If not set, will use the browser's locale.
+   * Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
+   */
+  @Prop({ reflect: true }) locale: Intl.LocalesArgument = 'en-GB';
 
   // Prop lifecycle events
   // =======================
