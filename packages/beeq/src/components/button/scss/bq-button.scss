@@ -56,9 +56,17 @@
 
 .bq-button--secondary {
   @apply bg-ui-secondary text-text-primary;
-  // Primary `HOVER` state
+  // Secondary `HOVER` state
   @apply hover:enabled:bg-hover-ui-secondary;
-  // Primary `ACTIVE` state
+  // Secondary `ACTIVE` state
+  @apply active:enabled:bg-active-ui-secondary active:enabled:hover:bg-active-ui-secondary;
+}
+
+.bq-button--secondary.ghost {
+  @apply border-2 border-solid border-stroke-tertiary bg-transparent text-text-primary;
+  // Secondary `HOVER` state
+  @apply hover:enabled:bg-hover-ui-secondary;
+  // Secondary `ACTIVE` state
   @apply active:enabled:bg-active-ui-secondary active:enabled:hover:bg-active-ui-secondary;
 }
 
