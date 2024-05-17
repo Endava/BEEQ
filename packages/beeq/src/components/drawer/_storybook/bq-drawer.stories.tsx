@@ -25,6 +25,7 @@ const meta: Meta = {
     bqAfterClose: { action: 'bqAfterClose' },
     // Not part of the component API
     noFooter: { control: 'boolean', table: { disable: true } },
+    customFooterDivider: { control: 'boolean', table: { disable: true } },
   },
   args: {
     open: false,
@@ -40,9 +41,13 @@ type Story = StoryObj;
 
 const Template = (args: Args) => {
   const handleOpenDrawer = async () => {
-    const dialogElem = document.querySelector('bq-drawer');
-    await dialogElem.show();
+    const drawerElem = document.querySelector('bq-drawer');
+    await drawerElem.show();
   };
+
+  const customFooterDivider = args.customFooterDivider
+    ? html`<bq-divider slot="footer-divider" class="mb-m block" stroke-color="stroke--primary" stroke-thickness="1" />`
+    : nothing;
 
   return html`
     <bq-button @bqClick=${handleOpenDrawer}>Open Drawer</bq-button>
@@ -68,6 +73,7 @@ const Template = (args: Args) => {
       </div>
       ${!args.noFooter
         ? html`
+            ${customFooterDivider}
             <div class="flex flex-1 justify-center gap-xs" slot="footer">
               <bq-button appearance="primary" block size="small"> Button </bq-button>
               <bq-button appearance="link" block size="small"> Button </bq-button>
@@ -109,5 +115,15 @@ export const WithBackdrop: Story = {
     open: false,
     placement: 'right',
     'enable-backdrop': true,
+  },
+};
+
+export const WithCustomFooterDivider: Story = {
+  render: Template,
+  args: {
+    open: false,
+    placement: 'right',
+    'enable-backdrop': true,
+    customFooterDivider: true,
   },
 };
