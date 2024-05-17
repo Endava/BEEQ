@@ -13,6 +13,7 @@ import { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButt
 import { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
 import { FloatingUIPlacement } from "./services/interfaces";
 import { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
+import { DaysOfWeek } from "./components/date-picker/scss/bq-date-picker.types";
 import { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 import { TDrawerPlacement } from "./components/drawer/bq-drawer.types";
@@ -41,6 +42,7 @@ export { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButt
 export { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
 export { FloatingUIPlacement } from "./services/interfaces";
 export { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
+export { DaysOfWeek } from "./components/date-picker/scss/bq-date-picker.types";
 export { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 export { TDrawerPlacement } from "./components/drawer/bq-drawer.types";
@@ -351,7 +353,7 @@ export namespace Components {
         /**
           * The first day of the week, where Sunday is 0, Monday is 1, etc
          */
-        "firstDayOfWeek"?: number;
+        "firstDayOfWeek"?: DaysOfWeek;
         /**
           * The ID of the form that the Date picker input belongs to.
          */
@@ -428,7 +430,7 @@ export namespace Components {
         /**
           * The select input value represents the currently selected date or range and can be used to reset the field to a previous value. All dates are expected in ISO-8601 format (YYYY-MM-DD).
          */
-        "value": TInputValue;
+        "value": string;
     }
     interface BqDialog {
         /**
@@ -1708,10 +1710,10 @@ declare global {
     };
     interface HTMLBqDatePickerElementEventMap {
         "bqBlur": HTMLBqInputElement;
-        "bqChange": { value: string | number | string[]; el: HTMLBqInputElement };
+        "bqChange": { value: string; el: HTMLBqInputElement };
         "bqClear": HTMLBqInputElement;
         "bqFocus": HTMLBqInputElement;
-        "bqInput": { value: string | number | string[]; el: HTMLBqInputElement };
+        "bqInput": { value: string; el: HTMLBqInputElement };
     }
     interface HTMLBqDatePickerElement extends Components.BqDatePicker, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqDatePickerElementEventMap>(type: K, listener: (this: HTMLBqDatePickerElement, ev: BqDatePickerCustomEvent<HTMLBqDatePickerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2587,7 +2589,7 @@ declare namespace LocalJSX {
         /**
           * The first day of the week, where Sunday is 0, Monday is 1, etc
          */
-        "firstDayOfWeek"?: number;
+        "firstDayOfWeek"?: DaysOfWeek;
         /**
           * The ID of the form that the Date picker input belongs to.
          */
@@ -2627,7 +2629,7 @@ declare namespace LocalJSX {
         /**
           * Callback handler emitted when the input value has changed and the input loses focus. This handler is called whenever the user finishes typing or pasting text into the input field and then clicks outside of the input field.
          */
-        "onBqChange"?: (event: BqDatePickerCustomEvent<{ value: string | number | string[]; el: HTMLBqInputElement }>) => void;
+        "onBqChange"?: (event: BqDatePickerCustomEvent<{ value: string; el: HTMLBqInputElement }>) => void;
         /**
           * Callback handler emitted when the input value has been cleared
          */
@@ -2639,7 +2641,7 @@ declare namespace LocalJSX {
         /**
           * Callback handler emitted when the input value changes. This handler is called whenever the user types or pastes text into the input field.
          */
-        "onBqInput"?: (event: BqDatePickerCustomEvent<{ value: string | number | string[]; el: HTMLBqInputElement }>) => void;
+        "onBqInput"?: (event: BqDatePickerCustomEvent<{ value: string; el: HTMLBqInputElement }>) => void;
         /**
           * If `true`, the Date picker panel will be visible.
          */
@@ -2684,7 +2686,7 @@ declare namespace LocalJSX {
         /**
           * The select input value represents the currently selected date or range and can be used to reset the field to a previous value. All dates are expected in ISO-8601 format (YYYY-MM-DD).
          */
-        "value"?: TInputValue;
+        "value"?: string;
     }
     interface BqDialog {
         /**

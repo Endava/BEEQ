@@ -1,5 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
+import { DaysOfWeek } from './scss/bq-date-picker.types';
 import { FloatingUIPlacement } from '../../services/interfaces';
 import { hasSlotContent, isDefined, isHTMLElement } from '../../shared/utils';
 import { TInputValidation, TInputValue } from '../input/bq-input.types';
@@ -148,13 +149,13 @@ export class BqDatePicker {
 
   /** The select input value represents the currently selected date or range and can be used to reset the field to a previous value.
    * All dates are expected in ISO-8601 format (YYYY-MM-DD). */
-  @Prop({ reflect: true, mutable: true }) value: TInputValue;
+  @Prop({ reflect: true, mutable: true }) value: string;
 
   /** Whether to show days outside the month */
   @Prop({ reflect: true }) showOutsideDays: boolean = false;
 
   /** The first day of the week, where Sunday is 0, Monday is 1, etc */
-  @Prop({ reflect: true }) firstDayOfWeek?: number = 1;
+  @Prop({ reflect: true }) firstDayOfWeek?: DaysOfWeek = 1;
 
   /** The earliest date that can be selected */
   @Prop({ reflect: true }) min?: string;
@@ -189,7 +190,7 @@ export class BqDatePicker {
    * Callback handler emitted when the input value has changed and the input loses focus.
    * This handler is called whenever the user finishes typing or pasting text into the input field and then clicks outside of the input field.
    */
-  @Event() bqChange!: EventEmitter<{ value: string | number | string[]; el: HTMLBqInputElement }>;
+  @Event() bqChange!: EventEmitter<{ value: string; el: HTMLBqInputElement }>;
 
   /** Callback handler emitted when the input value has been cleared */
   @Event() bqClear!: EventEmitter<HTMLBqInputElement>;
@@ -201,7 +202,7 @@ export class BqDatePicker {
    * Callback handler emitted when the input value changes.
    * This handler is called whenever the user types or pastes text into the input field.
    */
-  @Event() bqInput!: EventEmitter<{ value: string | number | string[]; el: HTMLBqInputElement }>;
+  @Event() bqInput!: EventEmitter<{ value: string; el: HTMLBqInputElement }>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -324,7 +325,7 @@ export class BqDatePicker {
         months.push(
           <calendar-month
             offset={offset}
-            className={className}
+            class={className}
             exportparts={`${commonExportParts},${buttonExportParts}`}
           />,
         );
