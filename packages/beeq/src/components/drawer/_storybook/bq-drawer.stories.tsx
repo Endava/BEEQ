@@ -41,8 +41,8 @@ type Story = StoryObj;
 
 const Template = (args: Args) => {
   const handleOpenDrawer = async () => {
-    const dialogElem = document.querySelector('bq-drawer');
-    await dialogElem.show();
+    const drawerElem = document.querySelector('bq-drawer');
+    await drawerElem.show();
   };
 
   return html`
