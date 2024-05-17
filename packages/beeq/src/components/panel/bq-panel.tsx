@@ -138,12 +138,10 @@ export class BqPanel {
   render() {
     return (
       <div
-        class={{
-          'bq-panel': true,
-          'panel-hidden': !this.open,
-        }}
+        class="bq-panel"
         ref={(el) => (this.panel = el)}
         aria-hidden={!this.open ? 'true' : 'false'}
+        hidden={!this.open}
         part="panel"
       >
         <slot />

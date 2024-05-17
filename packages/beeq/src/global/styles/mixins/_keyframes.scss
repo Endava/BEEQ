@@ -8,16 +8,6 @@
   }
 }
 
-@keyframes fade-out {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
-
 @keyframes slide-in {
   from {
     transform: translateY(10px);
@@ -36,11 +26,6 @@
 
 @mixin animation-fade-in($duration: 0.3s, $delay: 0s, $timing-function: ease) {
   animation: fade-in $duration $timing-function $delay;
-}
-
-@mixin animation-fade-out($duration: 0.3s, $delay: 0s, $timing-function: ease) {
-  animation: fade-out $duration $timing-function $delay;
-  opacity: 0;
 }
 
 @mixin animation-slide-in($duration: 0.3s, $delay: 0s, $timing-function: ease) {
