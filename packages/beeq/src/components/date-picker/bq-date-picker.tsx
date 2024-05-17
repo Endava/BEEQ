@@ -61,6 +61,11 @@ export class BqDatePicker {
 
   private fallbackInputId = 'date-picker';
 
+  // Export parts of the calendar-month component
+  private readonly COMMON_EXPORT_PARTS = 'heading,table,tr,head,week,th,td';
+  private readonly BUTTON_EXPORT_PARTS =
+    'button,day,selected,today,disallowed,outside,range-start,range-end,range-inner';
+
   // Reference to host HTML element
   // ===================================
 
@@ -327,39 +332,40 @@ export class BqDatePicker {
     this.hasSuffix = hasSlotContent(this.suffixElem);
   };
 
+  private generateCalendarMonth = (offset?: number, className = ''): JSX.Element => {
+    return (
+      <calendar-month
+        offset={offset}
+        class={className}
+        exportparts={`${this.COMMON_EXPORT_PARTS},${this.BUTTON_EXPORT_PARTS}`}
+      />
+    );
+  };
+
   /**
-   * Generates an array of JSX elements representing calendar months.
-   * If the 'range' property is true and the 'months' property is defined,
-   * it generates multiple calendar months with incremental 'offset' values.
-   * If the 'range' property is false or the 'months' property is undefined,
-   * it generates a single calendar month without an 'offset'.
+   * Generates an array of JSX.Element representing calendar months.
    *
-   * @returns An array of JSX elements representing calendar months.
+   * If the type of the date picker is 'range' or 'multi' and the number of months is specified,
+   * it generates an array of calendar months with the specified length. Each month will have an offset
+   * and a class name based on its position in the array. The offset is used to determine the month to display,
+   * and the class name is used for responsive design.
+   *
+   * If the type of the date picker is not 'range' or 'multi', or if the number of months is not specified,
+   * it generates an array with a single calendar month.
+   *
+   * @returns {JSX.Element[]} An array of JSX.Element representing calendar months.
    */
-  private generateCalendarMonths(): JSX.Element[] {
-    const months: JSX.Element[] = [];
-
-    const commonExportParts = 'heading,table,tr,head,week,th,td';
-    const buttonExportParts = 'button,day,selected,today,disallowed,outside,range-start,range-end,range-inner';
-
+  private generateCalendarMonths = (): JSX.Element[] => {
     if (this.type === 'range' || (this.type === 'multi' && this.months)) {
-      for (let i = 0; i < this.months; i++) {
+      return Array.from({ length: this.months }, (_, i) => {
         const offset = i > 0 ? i : undefined;
         const className = offset ? 'hidden sm:block' : '';
-        months.push(
-          <calendar-month
-            offset={offset}
-            class={className}
-            exportparts={`${commonExportParts},${buttonExportParts}`}
-          />,
-        );
-      }
-    } else {
-      months.push(<calendar-month exportparts={`${commonExportParts},${buttonExportParts}`} />);
+        return this.generateCalendarMonth(offset, className);
+      });
     }
 
-    return months;
-  }
+    return [this.generateCalendarMonth()];
+  };
 
   /**
    * Processes the focused date value to extract the last date portion.
