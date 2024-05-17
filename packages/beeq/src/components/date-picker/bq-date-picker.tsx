@@ -303,7 +303,7 @@ export class BqDatePicker {
 
     this.bqChange.emit({ value: this.value, el: this.el });
 
-    this.open = this.type !== 'single';
+    this.open = this.type === 'multi';
   };
 
   private handleClearClick = (ev: CustomEvent) => {
