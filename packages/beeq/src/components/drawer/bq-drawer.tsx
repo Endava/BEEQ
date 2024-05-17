@@ -268,7 +268,9 @@ export class BqDrawer {
             ref={(footerElem) => (this.footerElem = footerElem)}
             part="footer"
           >
-            <bq-divider class="mb-m block" stroke-color="ui--secondary" dashed />
+            <slot name="footer-divider">
+              <bq-divider class="mb-m block" stroke-color="ui--secondary" dashed />
+            </slot>
             <slot name="footer" onSlotchange={this.handleFooterSlotChange} />
           </footer>
         </div>

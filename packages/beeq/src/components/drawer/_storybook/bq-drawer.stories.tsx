@@ -25,6 +25,7 @@ const meta: Meta = {
     bqAfterClose: { action: 'bqAfterClose' },
     // Not part of the component API
     noFooter: { control: 'boolean', table: { disable: true } },
+    customFooterDivider: { control: 'boolean', table: { disable: true } },
   },
   args: {
     open: false,
@@ -68,6 +69,7 @@ const Template = (args: Args) => {
       </div>
       ${!args.noFooter
         ? html`
+            ${args.customFooterDivider ? html`<bq-divider slot="footer-divider" class="mb-m block" />` : nothing}
             <div class="flex flex-1 justify-center gap-xs" slot="footer">
               <bq-button appearance="primary" block size="small"> Button </bq-button>
               <bq-button appearance="link" block size="small"> Button </bq-button>
@@ -109,5 +111,15 @@ export const WithBackdrop: Story = {
     open: false,
     placement: 'right',
     'enable-backdrop': true,
+  },
+};
+
+export const WithCustomDivider: Story = {
+  render: Template,
+  args: {
+    open: false,
+    placement: 'right',
+    'enable-backdrop': true,
+    customFooterDivider: true,
   },
 };
