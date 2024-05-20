@@ -167,7 +167,7 @@ calendar-multi {
   }
 
   &::part(container) {
-    @apply bg-[--bq-date-picker--background-color] px-5 py-2;
+    @apply bg-[--bq-date-picker--background-color] p-0;
   }
 }
 
@@ -195,7 +195,7 @@ calendar-month {
   }
 
   &::part(selected) {
-    @apply rounded-[--bq-radius--s] text-[color:var(--bq-text--inverse)];
+    @apply rounded-[--bq-radius--s] text-[color:var(--bq-text--alt)];
   }
 
   &::part(range-inner) {
@@ -209,7 +209,7 @@ calendar-month {
   }
 
   &::part(today selected) {
-    @apply rounded-none text-[color:var(--bq-text--inverse)];
+    @apply text-[color:var(--bq-text--alt)];
   }
 
   &::part(today range-inner) {

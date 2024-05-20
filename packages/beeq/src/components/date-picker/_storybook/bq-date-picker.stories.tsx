@@ -147,7 +147,8 @@ const Template = (args: Args) => {
   const style = args.hasLabelTooltip
     ? html`
         <style>
-          bq-input {
+          bq-date-picker {
+            margin-top: -10rem;
             width: 75vw;
           }
         </style>
@@ -196,9 +197,6 @@ const Template = (args: Args) => {
 
 export const Default: Story = {
   render: Template,
-  args: {
-    value: '2024-07-08',
-  },
 };
 
 export const Range: Story = {
@@ -206,7 +204,6 @@ export const Range: Story = {
   args: {
     type: 'range',
     months: 2,
-    value: '2024-12-20/2025-01-10',
   },
 };
 
@@ -215,7 +212,6 @@ export const Multi: Story = {
   args: {
     type: 'multi',
     months: 2,
-    value: '2024-05-08 2024-05-22 2024-06-04 2024-06-18 2024-05-16 2024-05-30 2024-06-12 2024-06-26',
   },
 };
 
