@@ -275,13 +275,6 @@ export class BqDatePicker {
     this.bqFocus.emit(this.el);
   };
 
-  private handleInput = (ev: Event) => {
-    if (this.disabled) return;
-
-    if (!isHTMLElement(ev.target, 'input')) return;
-    this.value = ev.target.value;
-  };
-
   private handleChange = (ev: Event) => {
     if (this.disabled) return;
 

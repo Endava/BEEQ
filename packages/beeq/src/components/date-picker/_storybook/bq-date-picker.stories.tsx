@@ -126,16 +126,6 @@ const Template = (args: Args) => {
           <span class="text-text-secondary">Optional</span>
         </div>
       `;
-  const style = args.hasLabelTooltip
-    ? html`
-        <style>
-          bq-input {
-            width: 75vw;
-          }
-        </style>
-      `
-    : nothing;
-
   /**
    * * Converts a Date object to an ISO 8601 string representation.
    * This function is used only for demonstration purposes in Storybook.
@@ -155,7 +145,6 @@ const Template = (args: Args) => {
   };
 
   return html`
-    ${style}
     <div class="w-[280px]">
       <bq-date-picker
         ?autofocus=${args.autofocus}
@@ -284,6 +273,9 @@ export const Tooltip: Story = {
   render: Template,
   args: {
     hasLabelTooltip: true,
+  },
+  parameters: {
+    layout: 'centered',
   },
 };
 
