@@ -479,7 +479,6 @@ export class BqDatePicker {
               // Events
               onBlur={this.handleBlur}
               onFocus={this.handleFocus}
-              onInput={this.handleInput}
               onChange={this.handleChange}
             />
             {/* Clear Button */}
