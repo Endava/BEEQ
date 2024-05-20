@@ -288,6 +288,7 @@ export class BqDatePicker {
 
     const dateValue = new Date(ev.target.value);
     if (!isNaN(dateValue.getTime())) {
+      // We need to force the value to respect the format: yyyy-mm-dd, hence the hardcoded locale
       this.value = new Intl.DateTimeFormat('fr-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(
         dateValue,
       );
@@ -419,6 +420,8 @@ export class BqDatePicker {
   render() {
     const CallyCalendar = this.CalendarType;
     const labelId = `bq-date-picker__label-${this.name || this.fallbackInputId}`;
+
+    console.log('this.locale', this.locale);
 
     return (
       <div class="bq-date-picker" part="base">
