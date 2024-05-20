@@ -3,7 +3,7 @@ import type { StorybookConfig } from '@storybook/web-components-vite';
 
 export default {
   framework: '@storybook/web-components-vite',
-  stories: ['../src/**/*.stories.@(ts|tsx)'],
+  stories: ['../src/**/*.stories.@(ts|tsx)', '../src/_storybook/**/*.mdx'],
   addons: [
     '@storybook/addon-essentials',
     '@storybook/addon-a11y',
