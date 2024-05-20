@@ -62,6 +62,7 @@ const meta: Meta = {
     bqFocus: { action: 'bqFocus' },
     // Not part of the public API, so we don't want to expose it in the docs
     noLabel: { control: 'boolean', table: { disable: true } },
+    hasLabelTooltip: { control: 'boolean', table: { disable: true } },
     prefix: { control: 'boolean', table: { disable: true } },
     suffix: { control: 'boolean', table: { disable: true } },
     customDisallowedDate: { control: 'text' },
@@ -104,8 +105,18 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => {
+  const tooltipTemplate = args.hasLabelTooltip
+    ? html`
+        <bq-tooltip class="ms-xs">
+          <bq-icon name="info" slot="trigger"></bq-icon>
+          You can provide more context detail by adding a tooltip to the label.
+        </bq-tooltip>
+      `
+    : nothing;
   const labelTemplate = html`
-    <label class="flex flex-grow items-center" slot=${ifDefined(!args.optionalLabel ? 'label' : null)}> Label </label>
+    <label class="flex flex-grow items-center" slot=${ifDefined(!args.optionalLabel ? 'label' : null)}>
+      Date picker label ${tooltipTemplate}
+    </label>
   `;
   const label = !args.optionalLabel
     ? labelTemplate
@@ -115,6 +126,15 @@ const Template = (args: Args) => {
           <span class="text-text-secondary">Optional</span>
         </div>
       `;
+  const style = args.hasLabelTooltip
+    ? html`
+        <style>
+          bq-input {
+            width: 75vw;
+          }
+        </style>
+      `
+    : nothing;
 
   /**
    * * Converts a Date object to an ISO 8601 string representation.
@@ -135,6 +155,7 @@ const Template = (args: Args) => {
   };
 
   return html`
+    ${style}
     <div class="w-[280px]">
       <bq-date-picker
         ?autofocus=${args.autofocus}
@@ -175,22 +196,87 @@ const Template = (args: Args) => {
   `;
 };
 
-export const Default: Story = {
-  render: Template,
+export const InitialValue: Story = {
+  render: (args) => html`
+    <div class="flex flex-row gap-4">
+      <!-- Default date picker -->
+      <div class="flex flex-col gap-2">
+        <p>Default date picker</p>
+        ${Template({ ...args, name: 'bq-date-picker-default', noLabel: 'true' })}
+      </div>
+      <!-- Range date picker -->
+      <div class="flex flex-col gap-2">
+        <p>Range date picker</p>
+        ${Template({ ...args, name: 'bq-date-picker-range', type: 'range', months: 2, noLabel: 'true' })}
+      </div>
+      <!-- Multi date picker -->
+      <div class="flex flex-col gap-2">
+        <p>Multi date picker</p>
+        ${Template({ ...args, name: 'bq-date-picker-multi', type: 'multi', months: 2, noLabel: 'true' })}
+      </div>
+    </div>
+  `,
 };
 
-export const Range: Story = {
+export const MixMax: Story = {
+  name: 'Min and Max allowed dates',
   render: Template,
   args: {
-    type: 'range',
-    months: 2,
+    min: '2024-06-06',
+    max: '2024-06-16',
   },
 };
 
-export const Multi: Story = {
+export const Disabled: Story = {
   render: Template,
   args: {
-    type: 'multi',
-    months: 2,
+    disabled: true,
+  },
+};
+
+export const ValidationStatus: Story = {
+  name: 'Validation',
+  render: (args) => html`
+    <div class="flex flex-row gap-4">
+      <!-- Error -->
+      <div class="flex flex-col gap-2">
+        <p>Error date picker</p>
+        ${Template({ ...args, name: 'bq-date-picker-error', 'validation-status': 'error', noLabel: 'true' })}
+      </div>
+      <!-- Success -->
+      <div class="flex flex-col gap-2">
+        <p>Success date picker</p>
+        ${Template({ ...args, name: 'bq-date-picker-success', 'validation-status': 'success', noLabel: 'true' })}
+      </div>
+      <!-- Warning -->
+      <div class="flex flex-col gap-2">
+        <p>Warning date picker</p>
+        ${Template({ ...args, name: 'bq-date-picker-warning', 'validation-status': 'warning', noLabel: 'true' })}
+      </div>
+    </div>
+  `,
+};
+
+export const Optional: Story = {
+  name: 'Label with "Optional"',
+  render: Template,
+  args: {
+    optionalLabel: true,
+  },
+};
+
+export const Tooltip: Story = {
+  name: 'Label with "Info tooltip"',
+  render: Template,
+  args: {
+    hasLabelTooltip: true,
+  },
+};
+
+export const NoLabel: Story = {
+  name: 'With no Label',
+  render: Template,
+  args: {
+    noLabel: true,
   },
 };
