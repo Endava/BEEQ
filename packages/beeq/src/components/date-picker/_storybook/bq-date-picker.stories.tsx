@@ -82,7 +82,7 @@ const meta: Meta = {
     name: 'bq-date-picker',
     open: false,
     'panel-height': 'auto',
-    placement: 'bottom-start',
+    placement: 'bottom-end',
     placeholder: 'Enter your date',
     skidding: 0,
     strategy: 'absolute',
@@ -144,49 +144,61 @@ const Template = (args: Args) => {
     return args.customDisallowedDate.split(',').some((date: string) => date.trim() === dateString);
   };
 
+  const style = args.hasLabelTooltip
+    ? html`
+        <style>
+          bq-input {
+            width: 75vw;
+          }
+        </style>
+      `
+    : nothing;
+
   return html`
-    <div class="w-[280px]">
-      <bq-date-picker
-        ?autofocus=${args.autofocus}
-        clear-button-label=${args['clear-button-label']}
-        distance=${args.distance}
-        ?disable-clear=${args['disable-clear']}
-        ?disabled=${args.disabled}
-        form=${ifDefined(args.form)}
-        min=${ifDefined(args.min)}
-        max=${ifDefined(args.max)}
-        locale=${ifDefined(args.locale)}
-        ?show-outside-days=${args['show-outside-days']}
-        first-day-of-week=${args['first-day-of-week']}
-        name=${ifDefined(args.name)}
-        ?open=${args.open}
-        panel-height=${args['panel-height']}
-        placeholder=${args.placeholder}
-        placement=${args.placement}
-        ?required=${args.required}
-        skidding=${args.skidding}
-        strategy=${args.strategy}
-        validation-status=${args['validation-status']}
-        type=${args.type}
-        months=${args.months}
-        value=${ifDefined(args.value)}
-        .format-options=${args['format-options']}
-        .isDateDisallowed=${isDate}
-        @bqBlur=${args.bqBlur}
-        @bqChange=${args.bqChange}
-        @bqClear=${args.bqClear}
-        @bqFocus=${args.bqFocus}
-      >
-        ${!args.noLabel ? label : nothing}
-        ${args.prefix ? html`<bq-icon name="user-circle" slot="prefix"></bq-icon>` : nothing}
-        ${args.suffix ? html`<bq-icon name="arrow-down" slot="suffix"></bq-icon>` : nothing}
-      </bq-date-picker>
-    </div>
+    ${style}
+    <bq-date-picker
+      ?autofocus=${args.autofocus}
+      clear-button-label=${args['clear-button-label']}
+      distance=${args.distance}
+      ?disable-clear=${args['disable-clear']}
+      ?disabled=${args.disabled}
+      form=${ifDefined(args.form)}
+      min=${ifDefined(args.min)}
+      max=${ifDefined(args.max)}
+      locale=${ifDefined(args.locale)}
+      ?show-outside-days=${args['show-outside-days']}
+      first-day-of-week=${args['first-day-of-week']}
+      name=${ifDefined(args.name)}
+      ?open=${args.open}
+      panel-height=${args['panel-height']}
+      placeholder=${args.placeholder}
+      placement=${args.placement}
+      ?required=${args.required}
+      skidding=${args.skidding}
+      strategy=${args.strategy}
+      validation-status=${args['validation-status']}
+      type=${args.type}
+      months=${args.months}
+      value=${ifDefined(args.value)}
+      .format-options=${args['format-options']}
+      .isDateDisallowed=${isDate}
+      @bqBlur=${args.bqBlur}
+      @bqChange=${args.bqChange}
+      @bqClear=${args.bqClear}
+      @bqFocus=${args.bqFocus}
+    >
+      ${!args.noLabel ? label : nothing}
+      ${args.prefix ? html`<bq-icon name="user-circle" slot="prefix"></bq-icon>` : nothing}
+      ${args.suffix ? html`<bq-icon name="arrow-down" slot="suffix"></bq-icon>` : nothing}
+    </bq-date-picker>
   `;
 };
 
 export const Default: Story = {
   render: Template,
+  args: {
+    value: '2024-07-08',
+  },
 };
 
 export const Range: Story = {
@@ -194,6 +206,7 @@ export const Range: Story = {
   args: {
     type: 'range',
     months: 2,
+    value: '2024-12-20/2025-01-10',
   },
 };
 
@@ -202,12 +215,13 @@ export const Multi: Story = {
   args: {
     type: 'multi',
     months: 2,
+    value: '2024-05-08 2024-05-22 2024-06-04 2024-06-18 2024-05-16 2024-05-30 2024-06-12 2024-06-26',
   },
 };
 
 export const InitialValue: Story = {
   render: (args) => html`
-    <div class="flex flex-row gap-4">
+    <div class="grid grid-cols-1 gap-m sm:grid-cols-3">
       <!-- Default date picker -->
       <div class="flex flex-col gap-2">
         <p>Default date picker</p>
@@ -218,7 +232,7 @@ export const InitialValue: Story = {
         <p>Range date picker</p>
         ${Template({
           ...args,
-          value: '2024-06-04/2024-06-15',
+          value: '2024-12-20/2025-01-10',
           name: 'bq-date-picker-range',
           type: 'range',
           months: 2,
@@ -230,7 +244,7 @@ export const InitialValue: Story = {
         <p>Multi date picker</p>
         ${Template({
           ...args,
-          value: '2024-05-08 2024-05-09 2024-05-10',
+          value: '2024-05-08 2024-05-22 2024-06-04 2024-06-18 2024-05-16 2024-05-30 2024-06-12 2024-06-26',
           name: 'bq-date-picker-multi',
           type: 'multi',
           months: 2,
@@ -247,6 +261,7 @@ export const MixMax: Story = {
   args: {
     min: '2024-06-05',
     max: '2024-06-15',
+    value: '2024-06-10',
   },
 };
 
@@ -261,21 +276,39 @@ export const Disabled: Story = {
 export const ValidationStatus: Story = {
   name: 'Validation',
   render: (args) => html`
-    <div class="flex flex-row gap-4">
+    <div class="grid grid-cols-1 gap-m sm:grid-cols-3">
       <!-- Error -->
       <div class="flex flex-col gap-2">
         <p>Error date picker</p>
-        ${Template({ ...args, name: 'bq-date-picker-error', 'validation-status': 'error', noLabel: 'true' })}
+        ${Template({
+          ...args,
+          value: '2024-05-25',
+          name: 'bq-date-picker-error',
+          'validation-status': 'error',
+          noLabel: 'true',
+        })}
       </div>
       <!-- Success -->
       <div class="flex flex-col gap-2">
         <p>Success date picker</p>
-        ${Template({ ...args, name: 'bq-date-picker-success', 'validation-status': 'success', noLabel: 'true' })}
+        ${Template({
+          ...args,
+          value: '2024-06-25',
+          name: 'bq-date-picker-success',
+          'validation-status': 'success',
+          noLabel: 'true',
+        })}
       </div>
       <!-- Warning -->
       <div class="flex flex-col gap-2">
         <p>Warning date picker</p>
-        ${Template({ ...args, name: 'bq-date-picker-warning', 'validation-status': 'warning', noLabel: 'true' })}
+        ${Template({
+          ...args,
+          value: '2024-07-25',
+          name: 'bq-date-picker-warning',
+          'validation-status': 'warning',
+          noLabel: 'true',
+        })}
       </div>
     </div>
   `,
@@ -286,6 +319,7 @@ export const Optional: Story = {
   render: Template,
   args: {
     optionalLabel: true,
+    value: '2024-10-10',
   },
 };
 
@@ -294,6 +328,7 @@ export const Tooltip: Story = {
   render: Template,
   args: {
     hasLabelTooltip: true,
+    value: '2024-09-11',
   },
   parameters: {
     layout: 'centered',
@@ -305,5 +340,6 @@ export const NoLabel: Story = {
   render: Template,
   args: {
     noLabel: true,
+    value: '2024-10-13',
   },
 };

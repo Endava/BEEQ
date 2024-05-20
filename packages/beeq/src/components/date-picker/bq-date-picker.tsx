@@ -147,7 +147,7 @@ export class BqDatePicker {
   @Prop({ reflect: true }) placeholder?: string;
 
   /** Position of the Date picker panel */
-  @Prop({ reflect: true }) placement?: FloatingUIPlacement = 'bottom-start';
+  @Prop({ reflect: true }) placement?: FloatingUIPlacement = 'bottom-end';
 
   /** Indicates whether or not the Date picker input is required to be filled out before submitting the form. */
   @Prop({ reflect: true }) required?: boolean;
