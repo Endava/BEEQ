@@ -202,17 +202,31 @@ export const InitialValue: Story = {
       <!-- Default date picker -->
       <div class="flex flex-col gap-2">
         <p>Default date picker</p>
-        ${Template({ ...args, name: 'bq-date-picker-default', noLabel: 'true' })}
+        ${Template({ ...args, value: '2024-05-25', name: 'bq-date-picker-default', noLabel: 'true' })}
       </div>
       <!-- Range date picker -->
       <div class="flex flex-col gap-2">
         <p>Range date picker</p>
-        ${Template({ ...args, name: 'bq-date-picker-range', type: 'range', months: 2, noLabel: 'true' })}
+        ${Template({
+          ...args,
+          value: '2024-06-04/2024-06-15',
+          name: 'bq-date-picker-range',
+          type: 'range',
+          months: 2,
+          noLabel: 'true',
+        })}
       </div>
       <!-- Multi date picker -->
       <div class="flex flex-col gap-2">
         <p>Multi date picker</p>
-        ${Template({ ...args, name: 'bq-date-picker-multi', type: 'multi', months: 2, noLabel: 'true' })}
+        ${Template({
+          ...args,
+          value: '2024-05-08 2024-05-09 2024-05-10',
+          name: 'bq-date-picker-multi',
+          type: 'multi',
+          months: 2,
+          noLabel: 'true',
+        })}
       </div>
     </div>
   `,
@@ -222,8 +236,8 @@ export const MixMax: Story = {
   name: 'Min and Max allowed dates',
   render: Template,
   args: {
-    min: '2024-06-06',
-    max: '2024-06-16',
+    min: '2024-06-05',
+    max: '2024-06-15',
   },
 };
 
