@@ -372,8 +372,9 @@ export class BqDatePicker {
   private focusedDate = (value: string) => {
     if (!value) return;
 
-    const dateLength = 10; // Length of a standard date in the format YYYY-MM-DD
-    return value.slice(-dateLength);
+    const dateRegex = /\b\d{4}-\d{2}-\d{2}\b/;
+    const match = dateRegex.exec(value);
+    return match ? match[0] : null;
   };
 
   private formatDate = (value: string): string | undefined => {
