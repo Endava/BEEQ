@@ -365,8 +365,8 @@ export class BqDatePicker {
   };
 
   /**
-   * Extracts and returns the last date part from a given string.
-   * When the type of the date picker is 'range' or 'multi', the last date part of the value
+   * Extracts and returns the first date part from a given string.
+   * When the type of the date picker is 'range' or 'multi', the first or initial date part of the value
    * should be the focused date in the calendar.
    *
    * @param value - The value to be processed, can be a string.
