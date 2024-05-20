@@ -289,9 +289,7 @@ export class BqDatePicker {
     const dateValue = new Date(ev.target.value);
     if (!isNaN(dateValue.getTime())) {
       // We need to force the value to respect the format: yyyy-mm-dd, hence the hardcoded locale
-      this.value = new Intl.DateTimeFormat('fr-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(
-        dateValue,
-      );
+      this.value = dateValue.toLocaleDateString('fr-CA');
       this.formattedDate = this.formatDate(this.value);
       this.bqChange.emit({ value: this.value, el: this.el });
     }
