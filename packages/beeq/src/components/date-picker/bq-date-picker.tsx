@@ -190,6 +190,7 @@ export class BqDatePicker {
       return;
     }
 
+    this.formattedDate = this.formatDate(this.value);
     this.hasValue = isDefined(this.value);
   }
 
