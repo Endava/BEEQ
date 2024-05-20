@@ -75,6 +75,7 @@ export class BqDatePicker {
   // Inlined decorator, alphabetical order
   // =======================================
 
+  @State() formattedDate: string;
   @State() hasLabel = false;
   @State() hasPrefix = false;
   @State() hasSuffix = false;
@@ -284,16 +285,23 @@ export class BqDatePicker {
     if (this.disabled) return;
 
     if (!isHTMLElement(ev.target, 'input')) return;
-    this.value = ev.target.value;
 
-    this.bqChange.emit({ value: this.value, el: this.el });
+    const dateValue = new Date(ev.target.value);
+    if (!isNaN(dateValue.getTime())) {
+      this.value = new Intl.DateTimeFormat('fr-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(
+        dateValue,
+      );
+      this.formattedDate = this.formatDate(this.value);
+      this.bqChange.emit({ value: this.value, el: this.el });
+    }
   };
 
   private handleCalendarChange = (ev: Event) => {
     const { value } = ev.target as unknown as { value: string };
 
     this.value = value;
-    this.inputElem.value = this.value;
+    this.formattedDate = this.formatDate(this.value);
+    this.inputElem.value = this.formattedDate;
 
     this.bqChange.emit({ value: this.value, el: this.el });
 
@@ -468,11 +476,12 @@ export class BqDatePicker {
               form={this.form}
               name={this.name}
               placeholder={this.placeholder}
+              readonly={this.type !== 'single'}
               ref={(inputElem: HTMLInputElement) => (this.inputElem = inputElem)}
               required={this.required}
               spellcheck={false}
               type="text"
-              value={this.formatDate(this.value)}
+              value={this.formattedDate}
               part="input"
               // Events
               onBlur={this.handleBlur}
