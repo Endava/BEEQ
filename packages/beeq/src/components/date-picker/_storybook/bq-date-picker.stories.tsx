@@ -53,6 +53,7 @@ const meta: Meta = {
     'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
     type: { control: 'select', options: [...DATE_PICKER_TYPE] },
     months: { control: 'number' },
+    monthsPerView: { control: 'number' },
     value: { control: 'text' },
     'format-options': { control: 'object' },
     // Events
@@ -90,6 +91,7 @@ const meta: Meta = {
     'validation-status': 'none',
     type: 'single',
     months: 1,
+    monthsPerView: 1,
     value: undefined,
     'format-options': {
       day: 'numeric',
@@ -180,6 +182,7 @@ const Template = (args: Args) => {
       validation-status=${args['validation-status']}
       type=${args.type}
       months=${args.months}
+      .monthsPerView=${args.monthsPerView}
       value=${ifDefined(args.value)}
       .format-options=${args['format-options']}
       .isDateDisallowed=${isDate}

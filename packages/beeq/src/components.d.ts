@@ -383,6 +383,10 @@ export namespace Components {
          */
         "months": number;
         /**
+          * The number of months to display per page when using next/previous buttons.
+         */
+        "monthsPerView": number;
+        /**
           * The Date picker input name.
          */
         "name": string;
@@ -2617,6 +2621,10 @@ declare namespace LocalJSX {
           * Number of months to show when range is `true`
          */
         "months"?: number;
+        /**
+          * The number of months to display per page when using next/previous buttons.
+         */
+        "monthsPerView"?: number;
         /**
           * The Date picker input name.
          */

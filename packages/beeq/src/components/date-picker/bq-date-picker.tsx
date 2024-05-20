@@ -134,6 +134,9 @@ export class BqDatePicker {
   /** Number of months to show when range is `true` */
   @Prop({ reflect: true }) months: number;
 
+  /** The number of months to display per page when using next/previous buttons. */
+  @Prop({ reflect: true }) monthsPerView: number = 1;
+
   /** The Date picker input name. */
   @Prop({ reflect: true }) name!: string;
 
@@ -414,6 +417,8 @@ export class BqDatePicker {
     const CallyCalendar = this.CalendarType;
     const labelId = `bq-date-picker__label-${this.name || this.fallbackInputId}`;
 
+    console.log('monthsPerView', this.monthsPerView);
+    console.log('months', this.months);
     return (
       <div class="bq-date-picker" part="base">
         {/* Label */}
@@ -518,7 +523,7 @@ export class BqDatePicker {
               value={this.value}
               min={this.min}
               max={this.max}
-              months={this.months}
+              months={this.monthsPerView}
               focusedDate={this.focusedDate(this.value)}
               firstDayOfWeek={this.firstDayOfWeek}
               showOutsideDays={this.showOutsideDays}
