@@ -38,9 +38,8 @@
   &:not(.disabled):focus-within {
     --bq-ring-width: 1px;
     --bq-ring-offset-width: 0;
-    --bq-ring-color-focus: var(--bq-date-picker--border-color-focus);
 
-    @apply focus border-[color:--bq-date-picker--border-color-focus];
+    @apply focus border-[color:--bq-focus];
   }
 
   // Enable clear button whenever the input group control is hovered or has focus
@@ -156,14 +155,8 @@ calendar-multi {
   }
 
   &::part(button) {
-    @apply border-0 p-[--bq-spacing-xs];
-
-    background-color: theme('colors.transparent');
-  }
-
-  &::part(button):focus-visible {
-    @apply rounded-s bg-[--bq-date-picker--background-color] text-[color:--bq-date-picker--border-color-focus];
-    @apply focus border-[color:--bq-date-picker--border-color-focus];
+    @apply rounded-s border-0 bg-transparent p-[--bq-spacing-xs];
+    @apply focus-visible:focus focus-visible:border-[color:--bq-focus];
   }
 
   &::part(container) {
@@ -175,15 +168,10 @@ calendar-month {
   /* stylelint-disable-next-line custom-property-pattern */
   --color-accent: var(--bq-stroke--brand);
 
-  &::part(button):focus-visible {
-    @apply rounded-s bg-[--bq-date-picker--background-color] text-[color:--bq-date-picker--border-color-focus];
-    @apply focus border-[color:--bq-date-picker--border-color-focus];
-  }
-
   &::part(button) {
-    @apply h-8 w-8 rounded-[--bq-radius--s] p-1 text-[--bq-text--primary];
-
-    font-family: var(--bq-font-family);
+    @apply h-8 w-8 rounded-[--bq-radius--s] bg-transparent p-xs2 font-default text-[--bq-text--primary] transition-colors duration-200 ease-in-out;
+    @apply hover:bg-hover-bg-secondary;
+    @apply focus-visible:focus focus-visible:border-[color:--bq-focus];
   }
 
   &::part(button day selected) {
