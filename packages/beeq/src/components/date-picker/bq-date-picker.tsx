@@ -417,8 +417,6 @@ export class BqDatePicker {
     const CallyCalendar = this.CalendarType;
     const labelId = `bq-date-picker__label-${this.name || this.fallbackInputId}`;
 
-    console.log('monthsPerView', this.monthsPerView);
-    console.log('months', this.months);
     return (
       <div class="bq-date-picker" part="base">
         {/* Label */}
