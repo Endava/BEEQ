@@ -185,6 +185,26 @@ const Template = (args: Args) => {
   `;
 };
 
+export const Default: Story = {
+  render: Template,
+};
+
+export const Range: Story = {
+  render: Template,
+  args: {
+    type: 'range',
+    months: 2,
+  },
+};
+
+export const Multi: Story = {
+  render: Template,
+  args: {
+    type: 'multi',
+    months: 2,
+  },
+};
+
 export const InitialValue: Story = {
   render: (args) => html`
     <div class="flex flex-row gap-4">
@@ -234,6 +254,7 @@ export const Disabled: Story = {
   render: Template,
   args: {
     disabled: true,
+    value: '2024-06-20',
   },
 };
 
