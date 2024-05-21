@@ -17,7 +17,7 @@
   --bq-card--borderColor: theme('colors.transparent');
   --bq-card--borderRadius: theme('borderRadius.m');
   --bq-card--borderStyle: solid;
-  --bq-card--borderWidth: theme('borderWidth.0');
+  --bq-card--borderWidth: theme('strokeWidth.none');
 
   --bq-card--padding: theme('spacing.l');
   --bq-card--paddingMinimal: theme('spacing.xs');

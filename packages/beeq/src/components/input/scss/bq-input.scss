@@ -42,7 +42,7 @@
   // Border
   @apply rounded-[--bq-input--border-radius] border-[length:--bq-input--border-width] border-[color:--bq-input--border-color];
   // Padding
-  @apply py-[--bq-input--paddingY] pe-[--bq-input--pading-end] ps-[--bq-input--pading-start];
+  @apply py-[--bq-input--paddingY] pe-[--bq-input--padding-end] ps-[--bq-input--padding-start];
   // Text
   @apply text-[length:--bq-input--text-size] text-[color:--bq-input--text-color] placeholder:text-[color:--bq-input--text-placeholder-color];
   // Hover
