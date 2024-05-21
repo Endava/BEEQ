@@ -82,6 +82,12 @@ export default {
       regular: 'var(--bq-font-line-height--regular)',
       large: 'var(--bq-font-line-height--large)',
     },
+    strokeWidth: {
+      none: '0',
+      s: 'var(--bq-stroke-s)',
+      m: 'var(--bq-stroke-m)',
+      l: 'var(--bq-stroke-l)',
+    },
     extend: {
       height: {
         // Details: https://web.dev/viewport-units/#the-need-for-new-viewport-units
