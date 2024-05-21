@@ -42,12 +42,12 @@ const meta: Meta = {
     bqFocus: { action: 'bqFocus' },
     bqInput: { action: 'bqInput' },
     // Not part of the public API, so we don't want to expose it in the docs
-    noLabel: { control: 'bolean', table: { disable: true } },
-    hasLabelTooltip: { control: 'bolean', table: { disable: true } },
-    noHelperText: { control: 'bolean', table: { disable: true } },
-    optionalLabel: { control: 'bolean', table: { disable: true } },
-    prefix: { control: 'bolean', table: { disable: true } },
-    suffix: { control: 'bolean', table: { disable: true } },
+    noLabel: { control: 'boolean', table: { disable: true } },
+    hasLabelTooltip: { control: 'boolean', table: { disable: true } },
+    noHelperText: { control: 'boolean', table: { disable: true } },
+    optionalLabel: { control: 'boolean', table: { disable: true } },
+    prefix: { control: 'boolean', table: { disable: true } },
+    suffix: { control: 'boolean', table: { disable: true } },
   },
   args: {
     autocapitalize: 'off',
@@ -207,7 +207,7 @@ export const ValidationStatus: Story = {
     <div class="flex flex-col gap-l">
       <!-- Error -->
       ${Template({ ...args, name: 'bq-input-error', 'validation-status': 'error' })}
-      <!-- Succes -->
+      <!-- Success -->
       ${Template({ ...args, name: 'bq-input-success', 'validation-status': 'success' })}
       <!-- Warning -->
       ${Template({ ...args, name: 'bq-input-warning', 'validation-status': 'warning' })}

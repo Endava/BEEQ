@@ -41,6 +41,7 @@
 
 ### Used by
 
+ - [bq-date-picker](../date-picker)
  - [bq-select](../select)
 
 ### Depends on
@@ -51,6 +52,7 @@
 ```mermaid
 graph TD;
   bq-dropdown --> bq-panel
+  bq-date-picker --> bq-dropdown
   bq-select --> bq-dropdown
   style bq-dropdown fill:#f9f,stroke:#333,stroke-width:4px
 ```

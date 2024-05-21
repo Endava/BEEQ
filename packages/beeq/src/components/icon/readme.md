@@ -41,6 +41,7 @@ Icons are simplified images that graphically explain the meaning of an object on
  - [bq-accordion](../accordion)
  - [bq-alert](../alert)
  - [bq-button](../button)
+ - [bq-date-picker](../date-picker)
  - [bq-dialog](../dialog)
  - [bq-drawer](../drawer)
  - [bq-empty-state](../empty-state)
@@ -57,6 +58,7 @@ graph TD;
   bq-accordion --> bq-icon
   bq-alert --> bq-icon
   bq-button --> bq-icon
+  bq-date-picker --> bq-icon
   bq-dialog --> bq-icon
   bq-drawer --> bq-icon
   bq-empty-state --> bq-icon
