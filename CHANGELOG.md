@@ -6,6 +6,26 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+## [1.4.0](https://github.com/Endava/BEEQ/compare/v1.3.3...v1.4.0) (2024-05-21)
+
+
+### Features ⚡️
+
+* **Button:** add secondary button ghost variant ([#1058](https://github.com/Endava/BEEQ/issues/1058)) ([64cfe4b](https://github.com/Endava/BEEQ/commit/64cfe4b98edb84b47e60afaab17e46f69ab1e013))
+* **Date Picker:** add new `bq-date-picker` component ([#1029](https://github.com/Endava/BEEQ/issues/1029)) ([a39599a](https://github.com/Endava/BEEQ/commit/a39599a5faf60ae8e2a7a84ab9e63669299e977e))
+* **Drawer:** add support for custom footer divider ([#1060](https://github.com/Endava/BEEQ/issues/1060)) ([4aa853d](https://github.com/Endava/BEEQ/commit/4aa853d02459b4aeadd587c0d874695b4935f5dc))
+
+
+### Chore ⚙️
+
+* **Beeq:** improve ESM exports and types export ([#1059](https://github.com/Endava/BEEQ/issues/1059)) ([2a0f469](https://github.com/Endava/BEEQ/commit/2a0f46979ccc2d698facf973dc9a16735901cce6))
+* **deps:** update dependency @stencil/core to v4.18.2 ([#1063](https://github.com/Endava/BEEQ/issues/1063)) ([7facf46](https://github.com/Endava/BEEQ/commit/7facf46fe4e3167e5c897209c6b9b0b908b03e21))
+
+
+### Refactor 🛠️
+
+* **Select:** remove useless CSS rules ([#1057](https://github.com/Endava/BEEQ/issues/1057)) ([4c4f9ff](https://github.com/Endava/BEEQ/commit/4c4f9ff7f364a15ddd4c38f0bdeb3d0660b000ef))
+
 ## [1.3.3](https://github.com/Endava/BEEQ/compare/v1.3.2...v1.3.3) (2024-05-16)
 
 
