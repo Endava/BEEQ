@@ -298,6 +298,7 @@ export class BqDatePicker {
     this.value = value;
     this.formattedDate = this.formatDate(this.value);
     this.inputElem.value = this.formattedDate;
+    this.inputElem.focus();
 
     this.bqChange.emit({ value: this.value, el: this.el });
 
