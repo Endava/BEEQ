@@ -88,7 +88,7 @@
 
   --bq-accordion--panel-filled-border-color: theme('colors.stroke.primary');
   --bq-accordion--panel-filled-border-style: solid;
-  --bq-accordion--panel-filled-border-width: 1px;
+  --bq-accordion--panel-filled-border-width: theme('strokeWidth.s');
   --bq-accordion--panel-small-filled-padding-y: theme('spacing.s');
   --bq-accordion--panel-small-filled-padding-start: theme('spacing.s');
   --bq-accordion--panel-small-filled-padding-end: theme('spacing.s');
