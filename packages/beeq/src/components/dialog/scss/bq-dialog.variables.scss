@@ -21,20 +21,20 @@
    * @prop --bq-dialog-z-index: Dialog z-index applied when opened
    */
 
-  --bq-dialog--background: theme('colors.ui.primary');
-  --bq-dialog--background-backdrop: theme('colors.grey.900');
-  --bq-dialog--text-color: theme('colors.text.primary');
+  --bq-dialog--background: theme(colors.ui.primary);
+  --bq-dialog--background-backdrop: theme(colors.grey.900);
+  --bq-dialog--text-color: theme(colors.text.primary);
 
-  --bq-dialog--box-shadow: theme('boxShadow.l');
+  --bq-dialog--box-shadow: theme(boxShadow.l);
 
-  --bq-dialog--border-color: theme('colors.transparent');
-  --bq-dialog--border-radius: theme('borderRadius.m');
+  --bq-dialog--border-color: theme(colors.transparent);
+  --bq-dialog--border-radius: theme(borderRadius.m);
   --bq-dialog--border-style: none;
   --bq-dialog--border-width: unset;
 
-  --bq-dialog--padding: theme('spacing.l');
-  --bq-dialog--content-footer-gap: theme('spacing.l');
-  --bq-dialog--title-body-gap: theme('spacing.s');
+  --bq-dialog--padding: theme(spacing.l);
+  --bq-dialog--content-footer-gap: theme(spacing.l);
+  --bq-dialog--title-body-gap: theme(spacing.s);
 
   --bq-dialog--width-small: 320px;
   --bq-dialog--width-medium: 480px;

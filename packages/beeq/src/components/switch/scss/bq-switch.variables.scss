@@ -12,5 +12,5 @@
   --bq-switch--height: 24px;
   --bq-switch--justify-content: 'start';
   --bq-switch--width: 44px;
-  --bq-switch--dot-size: calc(var(--bq-switch--height) - (theme('spacing.xs2') * 2));
+  --bq-switch--dot-size: calc(var(--bq-switch--height) - (theme(spacing.xs2) * 2));
 }

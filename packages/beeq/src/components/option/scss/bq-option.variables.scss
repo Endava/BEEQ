@@ -21,19 +21,19 @@
   * @prop --bq-option--padding-end: option label padding end
   */
 
-  --bq-option--background: theme('colors.ui.primary');
-  --bq-option--font-size: theme('fontSize.m');
+  --bq-option--background: theme(colors.ui.primary);
+  --bq-option--font-size: theme(fontSize.m);
 
-  --bq-option--border-color: theme('colors.transparent');
+  --bq-option--border-color: theme(colors.transparent);
   --bq-option--border-style: none;
   --bq-option--border-width: 0;
-  --bq-option--border-radius: theme('borderRadius.s');
+  --bq-option--border-radius: theme(borderRadius.s);
 
   --bq-option--box-shadow: none;
 
-  --bq-option--gap-start: theme('spacing.s');
-  --bq-option--gap-end: theme('spacing.s');
-  --bq-option--paddingY: theme('spacing.xs');
-  --bq-option--padding-start: theme('spacing.s');
-  --bq-option--padding-end: theme('spacing.s');
+  --bq-option--gap-start: theme(spacing.s);
+  --bq-option--gap-end: theme(spacing.s);
+  --bq-option--paddingY: theme(spacing.xs);
+  --bq-option--padding-start: theme(spacing.s);
+  --bq-option--padding-end: theme(spacing.s);
 }

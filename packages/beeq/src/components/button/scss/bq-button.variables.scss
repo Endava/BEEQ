@@ -21,23 +21,23 @@
    * @prop --bq-button--large-paddingY - Button large padding Y
    * @prop --bq-button--large-font-size - Button large font size
    */
-  --bq-button--border-color: theme('colors.transparent');
-  --bq-button--border-radius: theme('borderRadius.m');
+  --bq-button--border-color: theme(colors.transparent);
+  --bq-button--border-radius: theme(borderRadius.m);
   --bq-button--border-style: solid;
-  --bq-button--border-width: theme('borderWidth.0');
+  --bq-button--border-width: theme(borderWidth.0);
 
   --bq-button--small-height: 32px;
-  --bq-button--small-paddingX: theme('spacing.xs');
-  --bq-button--small-paddingY: theme('spacing.xs2');
-  --bq-button--small-font-size: theme('fontSize.m');
+  --bq-button--small-paddingX: theme(spacing.xs);
+  --bq-button--small-paddingY: theme(spacing.xs2);
+  --bq-button--small-font-size: theme(fontSize.m);
 
   --bq-button--medium-height: 48px;
-  --bq-button--medium-paddingX: theme('spacing.m');
-  --bq-button--medium-paddingY: theme('spacing.s');
-  --bq-button--medium-font-size: theme('fontSize.m');
+  --bq-button--medium-paddingX: theme(spacing.m);
+  --bq-button--medium-paddingY: theme(spacing.s);
+  --bq-button--medium-font-size: theme(fontSize.m);
 
   --bq-button--large-height: 56px;
-  --bq-button--large-paddingX: theme('spacing.l');
-  --bq-button--large-paddingY: theme('spacing.m');
-  --bq-button--large-font-size: theme('fontSize.m');
+  --bq-button--large-paddingX: theme(spacing.l);
+  --bq-button--large-paddingY: theme(spacing.m);
+  --bq-button--large-font-size: theme(fontSize.m);
 }
