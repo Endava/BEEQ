@@ -94,9 +94,6 @@
 .bq-date-picker__control--input {
   @apply flex-auto cursor-[inherit] select-none appearance-none bg-[inherit] font-[inherit] text-[length:inherit] text-[color:inherit];
   @apply m-0 min-h-[--bq-date-picker--icon-size] min-w-[0] border-none p-0 focus:outline-none focus-visible:outline-none;
-
-  box-shadow: none;
-  font-weight: inherit;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -119,7 +116,7 @@
 
 .bq-date-picker__control--prefix,
 .bq-date-picker__control--suffix {
-  @apply pointer-events-none flex items-center text-[color:var(--bq-date-picker--text-color)];
+  @apply pointer-events-none flex items-center text-[color:--bq-date-picker--text-color];
 }
 
 .bq-date-picker__control--prefix {
@@ -147,16 +144,16 @@ calendar-date,
 calendar-range,
 calendar-multi {
   &::part(header) {
-    @apply justify-center gap-[--bq-spacing-xs];
+    @apply justify-center gap-s;
   }
 
   &::part(heading) {
-    @apply px-[--bq-spacing-xs] py-[--bq-spacing-xs2];
+    @apply px-xs py-xs2;
   }
 
   &::part(button) {
-    @apply rounded-s border-0 bg-transparent p-[--bq-spacing-xs];
-    @apply focus-visible:focus focus-visible:border-[color:--bq-focus];
+    @apply rounded-s border-0 bg-transparent p-xs2 transition-colors duration-200;
+    @apply focus-visible:focus hover:bg-hover-ui-primary;
   }
 
   &::part(container) {
@@ -166,12 +163,11 @@ calendar-multi {
 
 calendar-month {
   /* stylelint-disable-next-line custom-property-pattern */
-  --color-accent: var(--bq-stroke--brand);
+  --color-accent: var(--bq-ui--brand);
 
   &::part(button) {
-    @apply h-8 w-8 rounded-[--bq-radius--s] bg-transparent p-xs2 font-default text-[--bq-text--primary] transition-colors duration-200 ease-in-out;
-    @apply hover:bg-hover-bg-secondary;
-    @apply focus-visible:focus focus-visible:border-[color:--bq-focus];
+    @apply flex items-center justify-center rounded-s bg-transparent p-0 font-default text-text-primary transition-colors duration-200 ease-in-out;
+    @apply size-[--bq-date-picker--day-size] focus-visible:focus hover:bg-hover-bg-secondary;
   }
 
   &::part(button day selected) {
@@ -183,7 +179,7 @@ calendar-month {
   }
 
   &::part(selected) {
-    @apply rounded-[--bq-radius--s] text-[color:var(--bq-text--alt)];
+    @apply rounded-s text-[color:var(--bq-text--alt)];
   }
 
   &::part(range-inner) {
@@ -191,7 +187,7 @@ calendar-month {
   }
 
   &::part(today) {
-    @apply rounded-[--bq-radius--s] border-[length:--bq-date-picker--currentDate-border-width] border-[color:--bq-date-picker--currentDate-border-color] text-[color:--bq-date-picker--currentDate-text-color];
+    @apply rounded-s border-[length:--bq-date-picker--currentDate-border-width] border-[color:--bq-date-picker--currentDate-border-color] text-[color:--bq-date-picker--currentDate-text-color];
 
     border-style: var(--bq-date-picker--border-style);
   }
@@ -205,24 +201,22 @@ calendar-month {
   }
 
   &::part(today range-start) {
-    @apply rounded-[--bq-radius--s];
-
-    border-end-start-radius: 0;
+    @apply rounded-s rounded-es-none;
   }
 
   &::part(today range-end) {
-    @apply rounded-[--bq-radius--s];
-
-    border-end-end-radius: 0;
+    @apply rounded-s rounded-ee-none;
   }
 
   &::part(range-start) {
-    border-start-end-radius: 0;
-    border-end-end-radius: 0;
+    @apply rounded-ee-none rounded-se-none;
   }
 
   &::part(range-end) {
-    border-start-start-radius: 0;
-    border-end-start-radius: 0;
+    @apply rounded-es-none rounded-ss-none;
+  }
+
+  &::part(range-start range-end) {
+    @apply rounded-s;
   }
 }
