@@ -32,8 +32,8 @@
 
   --bq-date-picker--border-color: theme(colors.stroke.tertiary);
   --bq-date-picker--border-radius: theme(borderRadius.s);
-  --bq-date-picker--border-width: 1px;
-  --bq-date-picker--currentDate-border-width: 2px;
+  --bq-date-picker--border-width: theme(borderWidth.s);
+  --bq-date-picker--currentDate-border-width: theme(borderWidth.m);
   --bq-date-picker--border-style: solid;
 
   --bq-date-picker--gap: theme(spacing.xs);

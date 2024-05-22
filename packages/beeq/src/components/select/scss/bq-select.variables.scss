@@ -31,7 +31,7 @@
   --bq-select--border-color: theme(colors.stroke.tertiary);
   --bq-select--border-color-focus: theme(colors.stroke.brand);
   --bq-select--border-radius: theme(borderRadius.s);
-  --bq-select--border-width: 1px;
+  --bq-select--border-width: theme(borderWidth.s);
   --bq-select--border-style: solid;
 
   --bq-select--gap: theme(spacing.xs);

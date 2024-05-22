@@ -30,7 +30,7 @@
 
   --bq-avatar--border-color: theme(colors.stroke.tertiary);
   --bq-avatar--border-style: solid;
-  --bq-avatar--border-width: 2px;
+  --bq-avatar--border-width: theme('borderWidth.m');
 
   --bq-avatar--border-radius-circle: theme(borderRadius.full);
   --bq-avatar--border-radius-squareXs: theme(borderRadius.xs);
