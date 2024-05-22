@@ -35,7 +35,7 @@ export const angularValueAccessorBindings: ValueAccessorConfig[] = [
   },
   {
     // Text
-    elementSelectors: ['bq-input:not[type="number"]', 'bq-textarea', 'bq-slider[type="range"'],
+    elementSelectors: ['bq-date-picker', 'bq-input:not[type="number"]', 'bq-slider[type="range"', 'bq-textarea'],
     event: 'bqChange',
     targetAttr: 'value',
     type: 'text',
