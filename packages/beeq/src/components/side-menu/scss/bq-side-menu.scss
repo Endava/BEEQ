@@ -14,7 +14,7 @@
 
 .bq-side-menu {
   @apply fixed left-0 top-0 flex h-dynamic-vh w-[--bq-side-menu--width] grow flex-col bg-[--bq-side-menu--bg-color];
-  @apply border-0 border-e-[length:--bq-stroke-s] border-solid border-[color:--bq-side-menu--border-color];
+  @apply border-0 border-e-s border-solid border-[color:--bq-side-menu--border-color];
   @apply transition-[background-color,width] duration-150;
   @include hide-scrollbar;
 }

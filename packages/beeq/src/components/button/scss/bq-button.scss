@@ -39,7 +39,7 @@
 }
 
 .bq-button--primary.ghost {
-  @apply border-[length:--bq-stroke-m] border-solid border-stroke-brand bg-transparent text-text-brand;
+  @apply border-m border-solid border-stroke-brand bg-transparent text-text-brand;
   // Primary `HOVER` state
   @apply hover:enabled:bg-hover-ui-primary;
   // Primary `ACTIVE` state
@@ -63,7 +63,7 @@
 }
 
 .bq-button--secondary.ghost {
-  @apply border-[length:--bq-stroke-m] border-solid border-stroke-tertiary bg-transparent text-text-primary;
+  @apply border-m border-solid border-stroke-tertiary bg-transparent text-text-primary;
   // Secondary `HOVER` state
   @apply hover:enabled:bg-hover-ui-secondary;
   // Secondary `ACTIVE` state

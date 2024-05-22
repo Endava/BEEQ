@@ -25,7 +25,7 @@
   --bq-tag--border-color: theme('colors.transparent');
   --bq-tag--border-radius: theme('borderRadius.s');
   --bq-tag--border-style: solid;
-  --bq-tag--border-width: 1px;
+  --bq-tag--border-width: theme('borderWidth.s');
 
   --bq-tag--small-border-radius: theme('borderRadius.xs');
   --bq-tag--small-gap: theme('spacing.xs2');
