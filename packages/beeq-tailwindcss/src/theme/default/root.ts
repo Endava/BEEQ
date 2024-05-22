@@ -99,4 +99,8 @@ export const DefaultRootTheme = {
   'bq-spacing-xxl2': '3.5rem', // 56px
   'bq-spacing-xxl3': '4rem', // 64px
   'bq-spacing-xxl4': '4.5rem', // 72px
+  // Stroke width
+  'bq-stroke-s': '1px',
+  'bq-stroke-m': '2px',
+  'bq-stroke-l': '3px',
 };

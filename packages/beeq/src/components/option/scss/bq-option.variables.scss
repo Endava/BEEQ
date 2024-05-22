@@ -26,7 +26,7 @@
 
   --bq-option--border-color: theme('colors.transparent');
   --bq-option--border-style: none;
-  --bq-option--border-width: 0;
+  --bq-option--border-width: theme('borderWidth.0');
   --bq-option--border-radius: theme('borderRadius.s');
 
   --bq-option--box-shadow: none;

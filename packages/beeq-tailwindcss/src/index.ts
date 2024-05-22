@@ -46,6 +46,12 @@ export default {
       l: 'var(--bq-radius--l)',
       full: 'var(--bq-radius--full)',
     },
+    borderWidth: {
+      0: '0',
+      s: 'var(--bq-stroke-s)',
+      m: 'var(--bq-stroke-m)',
+      l: 'var(--bq-stroke-l)',
+    },
     boxShadow: {
       xs: 'var(--bq-box-shadow--xs)',
       s: 'var(--bq-box-shadow--s)',
@@ -81,6 +87,12 @@ export default {
       small: 'var(--bq-font-line-height--small)',
       regular: 'var(--bq-font-line-height--regular)',
       large: 'var(--bq-font-line-height--large)',
+    },
+    strokeWidth: {
+      none: '0',
+      s: 'var(--bq-stroke-s)',
+      m: 'var(--bq-stroke-m)',
+      l: 'var(--bq-stroke-l)',
     },
     extend: {
       height: {

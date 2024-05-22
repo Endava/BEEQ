@@ -26,7 +26,7 @@
 
   --bq-breadcrumb-item--border-color: theme('colors.transparent');
   --bq-breadcrumb-item--border-style: none;
-  --bq-breadcrumb-item--border-width: 0;
+  --bq-breadcrumb-item--border-width: theme('borderWidth.s');
   --bq-breadcrumb-item--border-radius: theme('borderRadius.s');
 
   --bq-breadcrumb-item--line-height: theme('lineHeight.regular');

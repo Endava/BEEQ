@@ -28,7 +28,7 @@
   --bq-textarea--border-color: theme('colors.stroke.tertiary');
   --bq-textarea--border-color-focus: theme('colors.stroke.brand');
   --bq-textarea--border-radius: theme('borderRadius.s');
-  --bq-textarea--border-width: 1px;
+  --bq-textarea--border-width: theme('borderWidth.s');
   --bq-textarea--border-style: solid;
 
   --bq-textarea--helper-margin-top: theme('spacing.xs');

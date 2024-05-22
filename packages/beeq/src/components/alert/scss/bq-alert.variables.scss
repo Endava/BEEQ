@@ -22,8 +22,6 @@
    * @prop --bq-alert--border-success: The alert border color for success type
    * @prop --bq-alert--border-warning: The alert border color for warning type
    * @prop --bq-alert--border-error: The alert border color for error type
-   * @prop --bq-alert--border-width: The alert border width
-   * @prop --bq-alert--border-style: The alert border style
 
    * @prop --bq-alert--icon-color-info: The alert icon color for info type
    * @prop --bq-alert--icon-color-success: The alert icon color for success type
@@ -52,7 +50,7 @@
   --bq-alert--border-warning: theme('colors.stroke.warning');
   --bq-alert--border-error: theme('colors.stroke.danger');
   --bq-alert--border-default: theme('colors.stroke.secondary');
-  --bq-alert--border-width: 1px;
+  --bq-alert--border-width: theme('borderWidth.s');
   --bq-alert--border-style: solid;
 
   --bq-alert--icon-color-info: theme('colors.icon.brand');

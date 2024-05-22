@@ -252,7 +252,7 @@ export class BqSlider {
     // Get the width of the track area and the size of the input range thumb
     const trackAreaWidth = this.trackElem.getBoundingClientRect().width;
     // We need to also add 4px to the thumb size,
-    // this is because the thumb is 2px border (`border-2`)
+    // this is because the thumb is 2px border (`border-m`)
     const inputThumbSize = parseInt(getComputedStyle(this.el).getPropertyValue('--bq-slider--thumb-size'), 10) + 4;
     const totalWidth = trackAreaWidth - inputThumbSize;
 
