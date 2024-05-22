@@ -46,6 +46,12 @@ export default {
       l: 'var(--bq-radius--l)',
       full: 'var(--bq-radius--full)',
     },
+    borderWidth: {
+      0: '0',
+      s: 'var(--bq-stroke-s)',
+      m: 'var(--bq-stroke-m)',
+      l: 'var(--bq-stroke-l)',
+    },
     boxShadow: {
       xs: 'var(--bq-box-shadow--xs)',
       s: 'var(--bq-box-shadow--s)',
@@ -89,12 +95,6 @@ export default {
       l: 'var(--bq-stroke-l)',
     },
     extend: {
-      borderWidth: {
-        0: '0',
-        s: 'var(--bq-stroke-s)',
-        m: 'var(--bq-stroke-m)',
-        l: 'var(--bq-stroke-l)',
-      },
       height: {
         // Details: https://web.dev/viewport-units/#the-need-for-new-viewport-units
         'dynamic-vh': '100dvh',
