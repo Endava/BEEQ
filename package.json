@@ -60,18 +60,18 @@
     "@commitlint/config-angular": "19.3.0",
     "@commitlint/config-conventional": "19.2.2",
     "@jscutlery/semver": "5.2.2",
-    "@nx/angular": "18.3.3",
-    "@nx/devkit": "18.3.3",
-    "@nx/esbuild": "18.3.3",
-    "@nx/eslint": "18.3.3",
-    "@nx/eslint-plugin": "18.3.3",
-    "@nx/jest": "18.3.3",
-    "@nx/js": "18.3.3",
-    "@nx/plugin": "18.3.3",
-    "@nx/react": "18.3.3",
-    "@nx/rollup": "18.3.3",
-    "@nx/storybook": "18.3.3",
-    "@nx/workspace": "18.3.3",
+    "@nx/angular": "19.1.0",
+    "@nx/devkit": "19.1.0",
+    "@nx/esbuild": "19.1.0",
+    "@nx/eslint": "19.1.0",
+    "@nx/eslint-plugin": "19.1.0",
+    "@nx/jest": "19.1.0",
+    "@nx/js": "19.1.0",
+    "@nx/plugin": "19.1.0",
+    "@nx/react": "19.1.0",
+    "@nx/rollup": "19.1.0",
+    "@nx/storybook": "19.1.0",
+    "@nx/workspace": "19.1.0",
     "@nxext/stencil": "18.0.0",
     "@rollup/plugin-url": "8.0.2",
     "@schematics/angular": "18.0.1",
@@ -93,7 +93,7 @@
     "@swc/cli": "0.3.12",
     "@swc/core": "1.5.7",
     "@swc/helpers": "0.5.11",
-    "@testing-library/react": "14.2.2",
+    "@testing-library/react": "15.0.6",
     "@types/jest": "29.5.12",
     "@types/mdx": "2.0.13",
     "@types/node": "20.12.12",
@@ -128,7 +128,7 @@
     "ng-packagr": "18.0.0",
     "ngx-deploy-npm": "8.0.1",
     "npm-run-all": "4.1.5",
-    "nx": "18.3.3",
+    "nx": "19.1.0",
     "nx-stylelint": "17.1.4",
     "patch-package": "8.0.0",
     "plop": "4.0.1",
@@ -157,14 +157,18 @@
     "vue": "3.4.27"
   },
   "overrides": {
-    "@nx/angular": {
-      "@angular-devkit/build-angular": "$@angular-devkit/build-angular",
-      "@angular-devkit/core": "$@angular-devkit/core",
-      "@angular-devkit/schematics": "$@angular-devkit/schematics",
-      "@angular/cli": "$@angular/cli",
-      "@angular/compiler-cli": "$@angular/compiler-cli",
-      "@angular/language-service": "$@angular/language-service",
-      "@schematics/angular": "$@schematics/angular"
+    "@jscutlery/semver": {
+      "@nx/devkit": "$@nx/devkit"
+    },
+    "@nxext/stencil": {
+      "@nx/eslint": "$@nx/eslint",
+      "@nx/jest": "$@nx/jest",
+      "@nx/react": "$@nx/react",
+      "@nx/storybook": "$@nx/storybook",
+      "@stencil/core": "$@stencil/core"
+    },
+    "ngx-deploy-npm": {
+      "@nx/devkit": "$@nx/devkit"
     }
   },
   "volta": {

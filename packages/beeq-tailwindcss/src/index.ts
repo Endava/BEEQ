@@ -1,8 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import { default as flattenColorPalette } from 'tailwindcss/lib/util/flattenColorPalette';
-/* eslint-disable import/no-unresolved */
 import plugin from 'tailwindcss/plugin';
+// eslint-disable-next-line import/no-unresolved
 import { Config } from 'tailwindcss/types/config';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -22,6 +19,10 @@ import {
   reset,
   TYPOGRAPHY_DEFAULT,
 } from './theme';
+
+// NOTE: https://github.com/tailwindlabs/tailwindcss/discussions/6925#discussioncomment-1919382
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { default: flattenColorPalette } = require('tailwindcss/lib/util/flattenColorPalette');
 
 export default {
   theme: {
