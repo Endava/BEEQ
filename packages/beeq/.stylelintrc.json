@@ -1,4 +1,27 @@
 {
   "extends": ["../../.stylelintrc.json"],
-  "rules": {}
+  "overrides": [
+    {
+      "files": ["**/*.scss"],
+      "extends": ["stylelint-config-standard-scss"],
+      "rules": {
+        "comment-empty-line-before": null,
+        "custom-property-empty-line-before": null,
+        "custom-property-pattern": "^bq(?:(-{1,2})[a-zA-Z]+)+$",
+        "no-descending-specificity": null,
+        "no-invalid-position-at-import-rule": null,
+        "max-nesting-depth": 2,
+        "scss/at-rule-no-unknown": [
+          true,
+          {
+            "ignoreAtRules": ["apply", "include", "mixin", "responsive", "screen", "tailwind", "variants"]
+          }
+        ],
+        "scss/double-slash-comment-empty-line-before": null,
+        "scss/operator-no-unspaced": null,
+        "value-keyword-case": null,
+        "selector-class-pattern": null
+      }
+    }
+  ]
 }
