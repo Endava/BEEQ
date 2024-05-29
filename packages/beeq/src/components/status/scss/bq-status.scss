@@ -6,23 +6,23 @@
   }
 
   &.success::part(base) {
-    --bq-badge--background-color: theme('backgroundColor.ui.success');
+    --bq-badge--background-color: theme(backgroundColor.ui.success);
   }
 
   &.danger::part(base) {
-    --bq-badge--background-color: theme('backgroundColor.ui.danger');
+    --bq-badge--background-color: theme(backgroundColor.ui.danger);
   }
 
   &.neutral::part(base) {
-    --bq-badge--background-color: theme('backgroundColor.ui.secondary');
+    --bq-badge--background-color: theme(backgroundColor.ui.secondary);
   }
 
   &.alert::part(base) {
-    --bq-badge--background-color: theme('backgroundColor.ui.warning');
+    --bq-badge--background-color: theme(backgroundColor.ui.warning);
   }
 
   &.info::part(base) {
-    --bq-badge--background-color: theme('backgroundColor.ui.brand');
+    --bq-badge--background-color: theme(backgroundColor.ui.brand);
   }
 }
 

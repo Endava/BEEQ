@@ -18,16 +18,16 @@
   * @prop --bq-option-group--container-padding-start: option group container padding start
   */
 
-  --bq-option-group--background: theme('colors.ui.primary');
-  --bq-option-group--font-size: theme('fontSize.s');
-  --bq-option-group--line-height: theme('lineHeight.regular');
+  --bq-option-group--background: theme(colors.ui.primary);
+  --bq-option-group--font-size: theme(fontSize.s);
+  --bq-option-group--line-height: theme(lineHeight.regular);
 
-  --bq-option-group--label-padding-start: theme('spacing.s');
-  --bq-option-group--label-padding-end: theme('spacing.s');
-  --bq-option-group--label-paddingY: theme('spacing.xs');
+  --bq-option-group--label-padding-start: theme(spacing.s);
+  --bq-option-group--label-padding-end: theme(spacing.s);
+  --bq-option-group--label-paddingY: theme(spacing.xs);
 
-  --bq-option-group--label-text-padding-start: theme('spacing.s');
-  --bq-option-group--label-text-padding-end: theme('spacing.s');
+  --bq-option-group--label-text-padding-start: theme(spacing.s);
+  --bq-option-group--label-text-padding-end: theme(spacing.s);
 
-  --bq-option-group--container-padding-start: theme('spacing.xxl');
+  --bq-option-group--container-padding-start: theme(spacing.xxl);
 }

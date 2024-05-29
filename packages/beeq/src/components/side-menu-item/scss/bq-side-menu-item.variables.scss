@@ -16,14 +16,14 @@
    * @prop --bq-side-menu-item--paddingX: Side menu item vertical padding
    * @prop --bq-side-menu-item--paddingY: Side menu item horizontal padding
    */
-  --bq-side-menu-item--bg-default: theme('backgroundColor.transparent');
+  --bq-side-menu-item--bg-default: theme(backgroundColor.transparent);
   --bq-side-menu-item--bg-hover: color-mix(in srgb, var(--bq-ui--alt), var(--bq-hover) 20%);
-  --bq-side-menu-item--bg-active: theme('backgroundColor.ui.brand-alt');
+  --bq-side-menu-item--bg-active: theme(backgroundColor.ui.brand-alt);
 
-  --bq-side-menu-item--text-default: theme('textColor.text.primary');
-  --bq-side-menu-item--text-hover: theme('textColor.text.primary');
-  --bq-side-menu-item--text-active: theme('textColor.text.brand');
+  --bq-side-menu-item--text-default: theme(textColor.text.primary);
+  --bq-side-menu-item--text-hover: theme(textColor.text.primary);
+  --bq-side-menu-item--text-active: theme(textColor.text.brand);
 
-  --bq-side-menu-item--paddingX: theme('space.l');
-  --bq-side-menu-item--paddingY: theme('space.m');
+  --bq-side-menu-item--paddingX: theme(space.l);
+  --bq-side-menu-item--paddingY: theme(space.m);
 }

@@ -81,7 +81,7 @@
   @apply border-stroke-danger [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-danger;
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme('colors.stroke.danger');
+    --bq-ring-color-focus: theme(colors.stroke.danger);
 
     @apply border-active-stroke-danger;
   }
@@ -91,7 +91,7 @@
   @apply border-stroke-success [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-success;
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme('colors.stroke.success');
+    --bq-ring-color-focus: theme(colors.stroke.success);
 
     @apply border-active-stroke-success;
   }
@@ -101,7 +101,7 @@
   @apply border-stroke-warning [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-warning;
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme('colors.stroke.warning');
+    --bq-ring-color-focus: theme(colors.stroke.warning);
 
     @apply border-active-stroke-warning;
   }

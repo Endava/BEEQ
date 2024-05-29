@@ -18,20 +18,20 @@
    * @prop --bq-tab--icon-size-medium - Icon size for medium tab
    * @prop --bq-tab--icon-size-large - Icon size for large tab
    */
-  --bq-tab--font-size: theme('fontSize.m');
-  --bq-tab--font-weight: theme('fontWeight.medium');
-  --bq-tab--line-height: theme('lineHeight.regular');
+  --bq-tab--font-size: theme(fontSize.m);
+  --bq-tab--font-weight: theme(fontWeight.medium);
+  --bq-tab--line-height: theme(lineHeight.regular);
 
-  --bq-tab--label-icon-gap: theme('spacing.xs');
+  --bq-tab--label-icon-gap: theme(spacing.xs);
 
-  --bq-tab--padding-vertical-small: theme('spacing.xs2');
-  --bq-tab--padding-horizontal-small: theme('spacing.m');
+  --bq-tab--padding-vertical-small: theme(spacing.xs2);
+  --bq-tab--padding-horizontal-small: theme(spacing.m);
 
-  --bq-tab--padding-vertical-medium: theme('spacing.xs');
-  --bq-tab--padding-horizontal-medium: theme('spacing.l');
+  --bq-tab--padding-vertical-medium: theme(spacing.xs);
+  --bq-tab--padding-horizontal-medium: theme(spacing.l);
 
-  --bq-tab--padding-vertical-large: theme('spacing.s');
-  --bq-tab--padding-horizontal-large: theme('spacing.l');
+  --bq-tab--padding-vertical-large: theme(spacing.s);
+  --bq-tab--padding-horizontal-large: theme(spacing.l);
 
   --bq-tab--icon-size-small: 20px;
   --bq-tab--icon-size-medium: 24px;

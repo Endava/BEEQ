@@ -19,17 +19,17 @@
   * @prop --bq-panel-z-index: Panel z-index applied when opened
   */
 
-  --bq-panel--background: theme('colors.ui.primary');
+  --bq-panel--background: theme(colors.ui.primary);
 
-  --bq-panel--border-color: theme('colors.transparent');
-  --bq-panel--border-radius: theme('borderRadius.s');
+  --bq-panel--border-color: theme(colors.transparent);
+  --bq-panel--border-radius: theme(borderRadius.s);
   --bq-panel--border-style: none;
   --bq-panel--border-width: unset;
 
-  --bq-panel--box-shadow: theme('boxShadow.m');
-  --bq-panel--paddingY: theme('spacing.xs');
-  --bq-panel--padding-start: theme('spacing.xs');
-  --bq-panel--padding-end: theme('spacing.xs');
+  --bq-panel--box-shadow: theme(boxShadow.m);
+  --bq-panel--paddingY: theme(spacing.xs);
+  --bq-panel--padding-start: theme(spacing.xs);
+  --bq-panel--padding-end: theme(spacing.xs);
 
   --bq-panel--height: 50vh;
   --bq-panel--width: 320px;

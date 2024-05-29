@@ -21,23 +21,23 @@
   * @prop --bq-breadcrumb-item--padding-end-separator: Padding end of the breadcrumb item separator.
   */
 
-  --bq-breadcrumb-item--background: theme('colors.transparent');
+  --bq-breadcrumb-item--background: theme(colors.transparent);
   --bq-breadcrumb-item--box-shadow: none;
 
-  --bq-breadcrumb-item--border-color: theme('colors.transparent');
+  --bq-breadcrumb-item--border-color: theme(colors.transparent);
   --bq-breadcrumb-item--border-style: none;
-  --bq-breadcrumb-item--border-width: theme('borderWidth.s');
-  --bq-breadcrumb-item--border-radius: theme('borderRadius.s');
+  --bq-breadcrumb-item--border-width: theme(borderWidth.s);
+  --bq-breadcrumb-item--border-radius: theme(borderRadius.s);
 
-  --bq-breadcrumb-item--line-height: theme('lineHeight.regular');
-  --bq-breadcrumb-item--text-color: theme('colors.text.secondary');
-  --bq-breadcrumb-item--text-size: theme('fontSize.s');
-  --bq-breadcrumb-item--text-size-separator: theme('fontSize.xs');
+  --bq-breadcrumb-item--line-height: theme(lineHeight.regular);
+  --bq-breadcrumb-item--text-color: theme(colors.text.secondary);
+  --bq-breadcrumb-item--text-size: theme(fontSize.s);
+  --bq-breadcrumb-item--text-size-separator: theme(fontSize.xs);
 
-  --bq-breadcrumb-item--padding-start: theme('spacing.xs2');
-  --bq-breadcrumb-item--padding-end: theme('spacing.xs2');
-  --bq-breadcrumb-item--paddingY: theme('spacing.xs');
+  --bq-breadcrumb-item--padding-start: theme(spacing.xs2);
+  --bq-breadcrumb-item--padding-end: theme(spacing.xs2);
+  --bq-breadcrumb-item--paddingY: theme(spacing.xs);
 
-  --bq-breadcrumb-item--padding-start-separator: theme('spacing.xs2');
-  --bq-breadcrumb-item--padding-end-separator: theme('spacing.xs2');
+  --bq-breadcrumb-item--padding-start-separator: theme(spacing.xs2);
+  --bq-breadcrumb-item--padding-end-separator: theme(spacing.xs2);
 }

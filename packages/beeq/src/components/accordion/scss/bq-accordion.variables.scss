@@ -56,53 +56,53 @@
    * @prop --bq-accordion--panel-medium-ghost-padding-start: Accordion medium ghost panel start padding
    * @prop --bq-accordion--panel-medium-ghost-padding-end: Accordion medium ghost panel end padding
   */
-  --bq-accordion--small-padding-y: theme('spacing.xs');
-  --bq-accordion--small-padding-start: theme('spacing.s');
-  --bq-accordion--small-padding-end: theme('spacing.s');
-  --bq-accordion--small-gap: theme('spacing.xs');
-  --bq-accordion--small-radius: theme('borderRadius.xs');
+  --bq-accordion--small-padding-y: theme(spacing.xs);
+  --bq-accordion--small-padding-start: theme(spacing.s);
+  --bq-accordion--small-padding-end: theme(spacing.s);
+  --bq-accordion--small-gap: theme(spacing.xs);
+  --bq-accordion--small-radius: theme(borderRadius.xs);
 
-  --bq-accordion--medium-padding-y: theme('spacing.s');
-  --bq-accordion--medium-padding-start: theme('spacing.m');
-  --bq-accordion--medium-padding-end: theme('spacing.m');
-  --bq-accordion--medium-gap: theme('spacing.m');
-  --bq-accordion--medium-radius: theme('borderRadius.xs');
+  --bq-accordion--medium-padding-y: theme(spacing.s);
+  --bq-accordion--medium-padding-start: theme(spacing.m);
+  --bq-accordion--medium-padding-end: theme(spacing.m);
+  --bq-accordion--medium-gap: theme(spacing.m);
+  --bq-accordion--medium-radius: theme(borderRadius.xs);
 
-  --bq-accordion--collapsed-border-color: theme('colors.transparent');
+  --bq-accordion--collapsed-border-color: theme(colors.transparent);
   --bq-accordion--collapsed-border-style: none;
   --bq-accordion--collapsed-border-width: unset;
 
-  --bq-accordion--expanded-border-color: theme('colors.transparent');
+  --bq-accordion--expanded-border-color: theme(colors.transparent);
   --bq-accordion--expanded-border-style: none;
   --bq-accordion--expanded-border-width: unset;
 
-  --bq-accordion--filled-collapsed-background: theme('colors.ui.secondary');
-  --bq-accordion--filled-collapsed-text-color: theme('colors.text.primary');
-  --bq-accordion--filled-expanded-background: theme('colors.ui.brand-alt');
-  --bq-accordion--filled-expanded-text-color: theme('colors.text.primary');
+  --bq-accordion--filled-collapsed-background: theme(colors.ui.secondary);
+  --bq-accordion--filled-collapsed-text-color: theme(colors.text.primary);
+  --bq-accordion--filled-expanded-background: theme(colors.ui.brand-alt);
+  --bq-accordion--filled-expanded-text-color: theme(colors.text.primary);
 
-  --bq-accordion--ghost-collapsed-background: theme('colors.transparent');
-  --bq-accordion--ghost-collapsed-text-color: theme('colors.text.primary');
-  --bq-accordion--ghost-expanded-background: theme('colors.transparent');
-  --bq-accordion--ghost-expanded-text-color: theme('colors.text.brand');
+  --bq-accordion--ghost-collapsed-background: theme(colors.transparent);
+  --bq-accordion--ghost-collapsed-text-color: theme(colors.text.primary);
+  --bq-accordion--ghost-expanded-background: theme(colors.transparent);
+  --bq-accordion--ghost-expanded-text-color: theme(colors.text.brand);
 
-  --bq-accordion--panel-filled-border-color: theme('colors.stroke.primary');
+  --bq-accordion--panel-filled-border-color: theme(colors.stroke.primary);
   --bq-accordion--panel-filled-border-style: solid;
-  --bq-accordion--panel-filled-border-width: theme('borderWidth.s');
-  --bq-accordion--panel-small-filled-padding-y: theme('spacing.s');
-  --bq-accordion--panel-small-filled-padding-start: theme('spacing.s');
-  --bq-accordion--panel-small-filled-padding-end: theme('spacing.s');
-  --bq-accordion--panel-medium-filled-padding-y: theme('spacing.m');
-  --bq-accordion--panel-medium-filled-padding-start: theme('spacing.m');
-  --bq-accordion--panel-medium-filled-padding-end: theme('spacing.m');
+  --bq-accordion--panel-filled-border-width: theme(borderWidth.s);
+  --bq-accordion--panel-small-filled-padding-y: theme(spacing.s);
+  --bq-accordion--panel-small-filled-padding-start: theme(spacing.s);
+  --bq-accordion--panel-small-filled-padding-end: theme(spacing.s);
+  --bq-accordion--panel-medium-filled-padding-y: theme(spacing.m);
+  --bq-accordion--panel-medium-filled-padding-start: theme(spacing.m);
+  --bq-accordion--panel-medium-filled-padding-end: theme(spacing.m);
 
-  --bq-accordion--panel-ghost-border-color: theme('colors.transparent');
+  --bq-accordion--panel-ghost-border-color: theme(colors.transparent);
   --bq-accordion--panel-ghost-border-style: none;
   --bq-accordion--panel-ghost-border-width: unset;
-  --bq-accordion--panel-small-ghost-padding-y: theme('spacing.s');
-  --bq-accordion--panel-small-ghost-padding-start: theme('spacing.l');
-  --bq-accordion--panel-small-ghost-padding-end: theme('spacing.l');
-  --bq-accordion--panel-medium-ghost-padding-y: theme('spacing.m');
-  --bq-accordion--panel-medium-ghost-padding-start: theme('spacing.xl');
-  --bq-accordion--panel-medium-ghost-padding-end: theme('spacing.xl');
+  --bq-accordion--panel-small-ghost-padding-y: theme(spacing.s);
+  --bq-accordion--panel-small-ghost-padding-start: theme(spacing.l);
+  --bq-accordion--panel-small-ghost-padding-end: theme(spacing.l);
+  --bq-accordion--panel-medium-ghost-padding-y: theme(spacing.m);
+  --bq-accordion--panel-medium-ghost-padding-start: theme(spacing.xl);
+  --bq-accordion--panel-medium-ghost-padding-end: theme(spacing.xl);
 }

@@ -5,7 +5,7 @@
 @import './bq-step-item.variables';
 
 :host {
-  --bq-icon--color: theme('colors.icon.primary');
+  --bq-icon--color: theme(colors.icon.primary);
 
   @apply bg-bg-primary;
 }
