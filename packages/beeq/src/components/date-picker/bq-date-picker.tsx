@@ -1,4 +1,16 @@
-import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import {
+  Component,
+  Element,
+  Event,
+  EventEmitter,
+  forceUpdate,
+  h,
+  Listen,
+  Method,
+  Prop,
+  State,
+  Watch,
+} from '@stencil/core';
 
 import { DATE_PICKER_TYPE, DaysOfWeek, TDatePickerType } from './bq-date-picker.types';
 import { FloatingUIPlacement } from '../../services/interfaces';
@@ -58,6 +70,7 @@ export class BqDatePicker {
   private labelElem?: HTMLElement;
   private prefixElem?: HTMLElement;
   private suffixElem?: HTMLElement;
+  private datePickerElement: HTMLDivElement;
 
   private fallbackInputId = 'date-picker';
 
@@ -80,6 +93,7 @@ export class BqDatePicker {
   @State() hasPrefix = false;
   @State() hasSuffix = false;
   @State() hasValue = false;
+  @State() hasRangeEnd = false;
 
   // Public Property API
   // ========================
@@ -239,6 +253,27 @@ export class BqDatePicker {
     this.open = ev.detail.open;
   }
 
+  @Listen('mousedown', { target: 'window', capture: true })
+  async handleMouseClick(event: MouseEvent) {
+    if (!this.open) return;
+    if (!this.datePickerElement || this.type !== 'range') return;
+    // Skip if the mouse button is not the main button
+    if (event.button !== 0) return;
+
+    const rect = this.datePickerElement.getBoundingClientRect();
+
+    if (
+      event.clientY < rect.top ||
+      event.clientY > rect.bottom ||
+      event.clientX < rect.left ||
+      event.clientX > rect.right
+    ) {
+      if (!this.hasRangeEnd) {
+        forceUpdate(this);
+      }
+    }
+  }
+
   // Public methods API
   // These methods are exposed on the host element.
   // Always use two lines.
@@ -305,11 +340,20 @@ export class BqDatePicker {
     this.open = this.type === 'multi';
   };
 
+  private handleCalendarRangeStart = () => {
+    this.hasRangeEnd = false;
+  };
+
+  private handleCalendarRangeEnd = () => {
+    this.hasRangeEnd = true;
+  };
+
   private handleClearClick = (ev: CustomEvent) => {
     if (this.disabled) return;
 
     this.inputElem.value = '';
     this.value = this.inputElem.value;
+    this.hasRangeEnd = false;
 
     this.bqClear.emit(this.el);
     this.bqChange.emit({ value: this.value, el: this.el });
@@ -515,7 +559,10 @@ export class BqDatePicker {
               </slot>
             </span>
           </div>
-          <div class="flex items-center justify-center">
+          <div
+            class="flex items-center justify-center"
+            ref={(datePickerElement) => (this.datePickerElement = datePickerElement)}
+          >
             <CallyCalendar
               isDateDisallowed={this.isDateDisallowed}
               locale={this.locale as string}
@@ -527,6 +574,10 @@ export class BqDatePicker {
               firstDayOfWeek={this.firstDayOfWeek}
               showOutsideDays={this.showOutsideDays}
               onChange={this.handleCalendarChange}
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-expect-error
+              onRangestart={this.handleCalendarRangeStart}
+              onRangeend={this.handleCalendarRangeEnd}
               exportparts="container,header,button,previous,next,disabled,heading"
             >
               <bq-icon color="text--primary" slot="previous" name="caret-left" label="Previous" />
