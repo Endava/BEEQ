@@ -574,8 +574,6 @@ export class BqDatePicker {
               firstDayOfWeek={this.firstDayOfWeek}
               showOutsideDays={this.showOutsideDays}
               onChange={this.handleCalendarChange}
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-expect-error
               onRangestart={this.handleCalendarRangeStart}
               onRangeend={this.handleCalendarRangeEnd}
               exportparts="container,header,button,previous,next,disabled,heading"
