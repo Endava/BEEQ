@@ -328,6 +328,17 @@ export class BqSlider {
   };
 
   private renderInput = (type: 'max' | 'min', value: number, refCallback: (input: HTMLInputElement) => void) => {
+    // Determine the zIndex value based on the type and the current min and max values.
+    const zIndexValue = (type: 'min' | 'max'): string => {
+      const zIndex = {
+        min: this.minValue === this.min && this.maxValue === this.minValue,
+        max: this.maxValue === this.max && this.minValue === this.maxValue,
+      };
+
+      // If the value of both thumbs is the same as the min or max value, set the zIndex to -1
+      return zIndex[type] ? '-1' : '0';
+    };
+
     return (
       <input
         type="range"
@@ -336,6 +347,7 @@ export class BqSlider {
             true,
           'pointer-events-none': this.isRangeType,
         }}
+        style={{ zIndex: zIndexValue(type) }}
         disabled={this.disabled}
         min={this.min}
         max={this.max}
