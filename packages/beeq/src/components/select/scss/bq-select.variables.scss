@@ -46,9 +46,9 @@
   --bq-select--label-text-size: theme(fontSize.s);
   --bq-select--label-text-color: theme(colors.text.primary);
 
-  --bq-select--padding-start: calc(#{theme('spacing.m')} - var(--bq-select--border-width));
-  --bq-select--padding-end: calc(#{theme('spacing.m')} - var(--bq-select--border-width));
-  --bq-select--paddingY: calc(#{theme('spacing.s')} - var(--bq-select--border-width));
+  --bq-select--padding-start: calc(var(--bq-spacing-m) - var(--bq-select--border-width));
+  --bq-select--padding-end: calc(var(--bq-spacing-m) - var(--bq-select--border-width));
+  --bq-select--paddingY: calc(var(--bq-spacing-s) - var(--bq-select--border-width));
 
   --bq-select--text-color: theme(colors.text.primary);
   --bq-select--text-size: theme(fontSize.m);

@@ -1,13 +1,15 @@
 {
   "extends": ["../../.stylelintrc.json"],
+  "plugins": ["./.eslint/tw-no-quotes-theme-function.mjs"],
   "overrides": [
     {
       "files": ["**/*.scss"],
       "extends": ["stylelint-config-standard-scss"],
       "rules": {
+        "@beeq/tailwindcss-no-quotes-in-theme-function": true,
         "comment-empty-line-before": null,
         "custom-property-empty-line-before": null,
-        "custom-property-pattern": "^bq(?:(-{1,2})[a-zA-Z]+)+$",
+        "custom-property-pattern": "^bq(?:(-{1,2})[a-zA-Z0-9]+)+$",
         "no-descending-specificity": null,
         "no-invalid-position-at-import-rule": null,
         "max-nesting-depth": 2,

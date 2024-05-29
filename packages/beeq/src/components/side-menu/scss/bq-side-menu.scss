@@ -43,7 +43,7 @@
 
 :host([size='small']) {
   ::slotted(bq-side-menu-item) {
-    --bq-side-menu-item--paddingY: theme('space.s');
+    --bq-side-menu-item--paddingY: theme(space.s);
   }
 }
 

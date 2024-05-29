@@ -37,7 +37,6 @@
   "html.customData": ["./dist/bee-q/custom-elements.json"],
   "less.validate": false,
   "scss.validate": false,
-  "stylelint.configFile": ".stylelintrc.json",
   "stylelint.validate": [
     "css",
     "less",
