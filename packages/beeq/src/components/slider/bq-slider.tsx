@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
 import { TSliderType, TSliderValue } from './bq-slider.types';
-import { debounce, isNil, isString, TDebounce } from '../../shared/utils';
+import { clamp, debounce, isNil, isString, TDebounce } from '../../shared/utils';
 
 /**
  * @part base - The component's base wrapper.
@@ -176,21 +176,12 @@ export class BqSlider {
     this.setThumbPosition();
   };
 
-  private calculateMinValue = (value: TSliderValue) => {
-    const isMaxValue = (this.minValue ?? value[0]) === this.max;
-    const isGapExceeded = value[0] + this.gap > this.max;
-    // Make sure that the min value gets adjusted according to the gap value
-    return isMaxValue || isGapExceeded ? this.max - this.gap : value[0];
-  };
-
-  private calculateMaxValue = (value: TSliderValue, minValue: number) => Math.max(value[1], minValue + this.gap);
-
   private setState = (newValue: TSliderValue) => {
     const isRangeType = this.isRangeType;
     const value = this.stringToObject(newValue);
 
-    this.minValue = isRangeType ? this.calculateMinValue(value) : value;
-    this.maxValue = isRangeType ? this.calculateMaxValue(value, this.minValue) : this.minValue;
+    this.minValue = isRangeType ? clamp(value[0], this.min, this.max - this.gap) : value;
+    this.maxValue = isRangeType ? clamp(value[1], this.minValue + this.gap, this.max) : this.minValue;
   };
 
   private setThumbPosition = () => {
@@ -347,7 +338,7 @@ export class BqSlider {
             true,
           'pointer-events-none': this.isRangeType,
         }}
-        style={{ zIndex: zIndexValue(type) }}
+        style={this.isRangeType ? { zIndex: zIndexValue(type) } : undefined}
         disabled={this.disabled}
         min={this.min}
         max={this.max}

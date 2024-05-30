@@ -1,4 +1,5 @@
 export * from './assetsPath';
+export * from './clamp';
 export * from './cssVariables';
 export * from './debounce';
 export * from './event';
