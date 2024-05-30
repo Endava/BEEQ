@@ -9,17 +9,6 @@
   "collection": "./dist/collection/collection-manifest.json",
   "collection:main": "./dist/collection/index.js",
   "unpkg": "./dist/beeq/beeq.esm.js",
-  "exports": {
-    ".": {
-      "import": "./dist/beeq/beeq.esm.js",
-      "require": "./dist/cjs/beeq.cjs.js"
-    },
-    "./loader": {
-      "import": "./dist/loader/index.js",
-      "require": "./dist/loader/index.cjs",
-      "types": "./dist/loader/index.d.ts"
-    }
-  },
   "files": [
     "dist/"
   ],
@@ -32,9 +21,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Endava/BEEQ"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org"
   }
 }
