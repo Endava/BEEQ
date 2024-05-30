@@ -12,12 +12,6 @@ BEEQ elements, components, patterns, utilities, etc., are available as an npm pa
 $ npm i @beeq/core
 ```
 
-### For `beta` releases
-
-```bash
-$ npm i @beeq/core@beta
-```
-
 ## Usage
 
 BEEQ components are regular HTML elements, or custom elements (often referred to as "web components"). If you're using a simple HTML page, you can use them like any other element.
