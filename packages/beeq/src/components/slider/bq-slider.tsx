@@ -338,7 +338,7 @@ export class BqSlider {
             true,
           'pointer-events-none': this.isRangeType,
         }}
-        style={{ zIndex: zIndexValue(type) }}
+        style={this.isRangeType ? { zIndex: zIndexValue(type) } : undefined}
         disabled={this.disabled}
         min={this.min}
         max={this.max}
