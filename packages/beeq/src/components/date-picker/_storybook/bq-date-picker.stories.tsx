@@ -20,12 +20,14 @@ const meta: Meta = {
     'disable-clear': { control: 'boolean' },
     distance: { control: 'number' },
     disabled: { control: 'boolean' },
-    form: { control: 'text' },
-    min: { control: 'text' },
-    max: { control: 'text' },
-    locale: { control: 'text' },
-    'show-outside-days': { control: 'boolean' },
     'first-day-of-week': { control: 'number' },
+    formatOptions: { control: 'object' },
+    form: { control: 'text' },
+    locale: { control: 'text' },
+    max: { control: 'text' },
+    min: { control: 'text' },
+    months: { control: 'number' },
+    'months-per-view': { control: 'number' },
     name: { control: 'text' },
     open: { control: 'boolean' },
     'panel-height': { control: 'text' },
@@ -48,14 +50,12 @@ const meta: Meta = {
     },
     placeholder: { control: 'text' },
     required: { control: 'boolean' },
+    'show-outside-days': { control: 'boolean' },
     skidding: { control: 'number' },
     strategy: { control: 'select', options: ['fixed', 'absolute'] },
-    'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
     type: { control: 'select', options: [...DATE_PICKER_TYPE] },
-    months: { control: 'number' },
-    monthsPerView: { control: 'number' },
+    'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
     value: { control: 'text' },
-    'format-options': { control: 'object' },
     // Events
     bqBlur: { action: 'bqBlur' },
     bqChange: { action: 'bqChange' },
@@ -66,7 +66,6 @@ const meta: Meta = {
     hasLabelTooltip: { control: 'boolean', table: { disable: true } },
     prefix: { control: 'boolean', table: { disable: true } },
     suffix: { control: 'boolean', table: { disable: true } },
-    customDisallowedDate: { control: 'text' },
   },
   args: {
     autofocus: false,
@@ -74,32 +73,31 @@ const meta: Meta = {
     'disable-clear': false,
     distance: 8,
     disabled: false,
-    form: undefined,
-    min: undefined,
-    max: undefined,
-    locale: undefined,
-    'show-outside-days': false,
     'first-day-of-week': 1,
+    formatOptions: {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    },
+    form: undefined,
+    isDateDisallowed: undefined,
+    locale: undefined,
+    max: undefined,
+    min: undefined,
+    months: 1,
+    'months-per-view': 1,
     name: 'bq-date-picker',
     open: false,
     'panel-height': 'auto',
     placement: 'bottom-end',
     placeholder: 'Enter your date',
+    required: false,
+    'show-outside-days': false,
     skidding: 0,
     strategy: 'absolute',
-    required: false,
-    'validation-status': 'none',
     type: 'single',
-    months: 1,
-    monthsPerView: 1,
+    'validation-status': 'none',
     value: undefined,
-    'format-options': {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-    },
-    isDateDisallowed: undefined,
-    customDisallowedDate: undefined,
   },
 };
 export default meta;
@@ -133,17 +131,13 @@ const Template = (args: Args) => {
    * This function is used only for demonstration purposes in Storybook.
    */
 
-  const dateToIsoString = (date: Date): string => {
-    return date.toISOString().split('T')[0];
-  };
+  const dateDisallowed = (date: Date): boolean => {
+    if (!args.customDisallowedDate) return false;
 
-  const isDate = (date: Date): boolean => {
-    if (!args.customDisallowedDate) {
-      return false;
-    }
-
-    const dateString = dateToIsoString(date);
-    return args.customDisallowedDate.split(',').some((date: string) => date.trim() === dateString);
+    // Format the date value to YYYY-MM-DD
+    const dateString = date.toLocaleDateString('fr-CA');
+    // Check if the date is in the disallowed dates list
+    return args.customDisallowedDate.replace(/\s+/g, '').split(',').includes(dateString);
   };
 
   const style = args.hasLabelTooltip
@@ -165,27 +159,27 @@ const Template = (args: Args) => {
       distance=${args.distance}
       ?disable-clear=${args['disable-clear']}
       ?disabled=${args.disabled}
-      form=${ifDefined(args.form)}
-      min=${ifDefined(args.min)}
-      max=${ifDefined(args.max)}
-      locale=${ifDefined(args.locale)}
-      ?show-outside-days=${args['show-outside-days']}
       first-day-of-week=${args['first-day-of-week']}
+      form=${ifDefined(args.form)}
+      .formatOptions=${args.formatOptions}
+      .isDateDisallowed=${dateDisallowed}
+      locale=${ifDefined(args.locale)}
+      max=${ifDefined(args.max)}
+      min=${ifDefined(args.min)}
+      months=${args.months}
+      months-per-view=${args['months-per-view']}
       name=${ifDefined(args.name)}
       ?open=${args.open}
       panel-height=${args['panel-height']}
       placeholder=${args.placeholder}
       placement=${args.placement}
       ?required=${args.required}
+      show-outside-days=${args['show-outside-days']}
       skidding=${args.skidding}
       strategy=${args.strategy}
-      validation-status=${args['validation-status']}
       type=${args.type}
-      months=${args.months}
-      .monthsPerView=${args.monthsPerView}
+      validation-status=${args['validation-status']}
       value=${ifDefined(args.value)}
-      .format-options=${args['format-options']}
-      .isDateDisallowed=${isDate}
       @bqBlur=${args.bqBlur}
       @bqChange=${args.bqChange}
       @bqClear=${args.bqClear}
@@ -269,6 +263,18 @@ export const Disabled: Story = {
   args: {
     disabled: true,
     value: '2024-06-20',
+  },
+};
+
+export const DisallowedDates: Story = {
+  name: 'Disallowed dates',
+  render: Template,
+  argTypes: {
+    customDisallowedDate: { control: 'text' },
+  },
+  args: {
+    customDisallowedDate: '2024-12-01, 2024-12-25, 2024-12-26',
+    value: '2024-12-12',
   },
 };
 
