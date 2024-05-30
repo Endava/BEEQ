@@ -9,7 +9,7 @@ describe(clamp.name, () => {
     expect(clamp(10, 20, 30)).toBe(20);
   });
 
-  it('should upper value', () => {
+  it('should return upper value', () => {
     expect(clamp(40, 20, 30)).toBe(30);
   });
 
