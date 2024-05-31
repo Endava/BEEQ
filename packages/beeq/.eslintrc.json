@@ -97,6 +97,7 @@
               "@stencil/react-output-target",
               "@stencil/vue-output-target",
               "@stencil/sass",
+              "cally",
               "stencil-tailwind-plugin",
               "vite",
               "vite-tsconfig-paths"
