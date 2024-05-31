@@ -205,7 +205,7 @@ export class BqDrawer {
         {this.enableBackdrop && (
           <div
             class={{
-              'fixed inset-0 block bg-[--bq-drawer--backgroundBackdrop] opacity-0 transition-opacity duration-300 ':
+              'fixed inset-0 block bg-[--bq-drawer--backgroundBackdrop] opacity-0 transition-opacity duration-300':
                 true,
               'pointer-events-none': !this.open,
               'opacity-60': this.open,
