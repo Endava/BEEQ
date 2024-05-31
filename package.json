@@ -71,7 +71,7 @@
     "@nx/rollup": "19.1.1",
     "@nx/storybook": "19.1.1",
     "@nx/workspace": "19.1.1",
-    "@nxext/stencil": "18.0.0",
+    "@nxext/stencil": "19.0.0",
     "@rollup/plugin-url": "8.0.2",
     "@schematics/angular": "18.0.1",
     "@stencil/angular-output-target": "0.8.4",
@@ -158,13 +158,6 @@
   "overrides": {
     "@jscutlery/semver": {
       "@nx/devkit": "$@nx/devkit"
-    },
-    "@nxext/stencil": {
-      "@nx/eslint": "$@nx/eslint",
-      "@nx/jest": "$@nx/jest",
-      "@nx/react": "$@nx/react",
-      "@nx/storybook": "$@nx/storybook",
-      "@stencil/core": "$@stencil/core"
     },
     "ngx-deploy-npm": {
       "@nx/devkit": "$@nx/devkit"
