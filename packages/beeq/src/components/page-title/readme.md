@@ -7,19 +7,23 @@
 
 ## Properties
 
-| Property       | Attribute        | Description                                     | Type      | Default     |
-| -------------- | ---------------- | ----------------------------------------------- | --------- | ----------- |
-| `showBackIcon` | `show-back-icon` | If true, the page title back icon will be shown | `boolean` | `undefined` |
+| Property          | Attribute           | Description                                        | Type      | Default     |
+| ----------------- | ------------------- | -------------------------------------------------- | --------- | ----------- |
+| `showActionIcons` | `show-action-icons` | If true, the page title back icon will be shown    | `boolean` | `undefined` |
+| `showBackIcon`    | `show-back-icon`    | If true, the page title back icon will be shown    | `boolean` | `undefined` |
+| `showSubTitle`    | `show-sub-title`    | If true, the sub title of page title will be shown | `boolean` | `undefined` |
 
 
 ## Shadow Parts
 
-| Part        | Description |
-| ----------- | ----------- |
-| `"back"`    |             |
-| `"icon"`    |             |
-| `"title"`   |             |
-| `"wrapper"` |             |
+| Part          | Description |
+| ------------- | ----------- |
+| `"actions"`   |             |
+| `"back"`      |             |
+| `"icon"`      |             |
+| `"sub-title"` |             |
+| `"title"`     |             |
+| `"wrapper"`   |             |
 
 
 ## Dependencies

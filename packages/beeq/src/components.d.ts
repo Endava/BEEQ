@@ -794,7 +794,15 @@ export namespace Components {
         /**
           * If true, the page title back icon will be shown
          */
+        "showActionIcons": boolean;
+        /**
+          * If true, the page title back icon will be shown
+         */
         "showBackIcon": boolean;
+        /**
+          * If true, the sub title of page title will be shown
+         */
+        "showSubTitle": boolean;
     }
     interface BqPanel {
         /**
@@ -3134,7 +3142,15 @@ declare namespace LocalJSX {
         /**
           * If true, the page title back icon will be shown
          */
+        "showActionIcons"?: boolean;
+        /**
+          * If true, the page title back icon will be shown
+         */
         "showBackIcon"?: boolean;
+        /**
+          * If true, the sub title of page title will be shown
+         */
+        "showSubTitle"?: boolean;
     }
     interface BqPanel {
         /**

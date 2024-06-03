@@ -25,6 +25,12 @@ export class BqPageTitle {
   /** If true, the page title back icon will be shown */
   @Prop({ reflect: true }) showBackIcon: boolean;
 
+  /** If true, the page title back icon will be shown */
+  @Prop({ reflect: true }) showActionIcons: boolean;
+
+  /** If true, the sub title of page title will be shown */
+  @Prop({ reflect: true }) showSubTitle: boolean;
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
@@ -53,10 +59,11 @@ export class BqPageTitle {
   // ===================================
 
   render() {
+    console.log('tttt', this.showSubTitle);
     return (
-      <div class="flex items-center gap-xs px-xxl4 py-xl" part="wrapper">
+      <div class="flex gap-xs px-xxl4 py-xl" part="wrapper">
         {/* BACK ICON */}
-        <div class={{ 'flex items-center p-s': true, hidden: !this.showBackIcon }} part="back">
+        <div class={{ 'flex p-s': true, hidden: !this.showBackIcon }} part="back">
           <slot name="back">
             <bq-icon
               color="text--primary"
@@ -68,8 +75,43 @@ export class BqPageTitle {
             />
           </slot>
         </div>
-        <div class="title-font text-xxl font-bold leading-regular text-text-primary" part="title">
-          <slot />
+        <div class="flex flex-col gap-xs">
+          <div class="flex items-center gap-xs">
+            <div class="title-font text-xxl font-bold leading-regular text-text-primary" part="title">
+              <slot />
+            </div>
+            {/* ACTION ICONS */}
+            <div class={{ 'flex gap-xs p-xs2': true, hidden: !this.showActionIcons }} part="actions">
+              <slot name="actions">
+                <bq-icon
+                  color="text--brand"
+                  name="pencil-simple"
+                  size="24"
+                  weight="bold"
+                  part="icon"
+                  exportparts="base,svg"
+                />
+                <bq-icon
+                  color="text--brand"
+                  name="download-simple"
+                  size="24"
+                  weight="bold"
+                  part="icon"
+                  exportparts="base,svg"
+                />
+              </slot>
+            </div>
+          </div>
+          {/* SUB-TITLE */}
+          <div
+            class={{
+              'title-font text-l font-medium leading-regular text-text-secondary': true,
+              hidden: !this.showSubTitle,
+            }}
+            part="sub-title"
+          >
+            <slot name="sub-title" />
+          </div>
         </div>
       </div>
     );
