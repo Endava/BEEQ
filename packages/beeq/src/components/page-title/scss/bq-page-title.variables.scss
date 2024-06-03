@@ -1,0 +1,10 @@
+/* -------------------------------------------------------------------------- */
+/*                   Page title custom properties                  */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  /**
+   * @prop --bq-page-title--margin - Page title margin
+   */
+  --bq-page-title--margin: theme(spacing.m);
+}
