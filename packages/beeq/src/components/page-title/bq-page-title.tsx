@@ -51,9 +51,11 @@ export class BqPageTitle {
 
   render() {
     return (
-      <p class="m-[--bq-page-title--margin]">
-        My name is Stencil <slot />
-      </p>
+      <div class="flex items-center px-xxl4 py-xl" part="wrapper">
+        <div class="title-font text-xxl font-bold leading-regular text-text-primary" part="title">
+          <slot />
+        </div>
+      </div>
     );
   }
 }

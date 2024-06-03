@@ -18,13 +18,4 @@ describe('bq-page-title', () => {
 
     expect(element.shadowRoot).not.toBeNull();
   });
-
-  it('should display text', async () => {
-    const page = await newE2EPage({
-      html: '<bq-page-title></bq-page-title>',
-    });
-    const element = await page.find('bq-page-title >>> p');
-
-    expect(element).toEqualText('My name is Stencil');
-  });
 });
