@@ -6,6 +6,46 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+## [1.5.0](https://github.com/Endava/BEEQ/compare/v1.4.0...v1.5.0) (2024-06-03)
+
+
+### Features ⚡️
+
+* **Tokens:** add `--bq-stroke-*` token values for border width ([#1062](https://github.com/Endava/BEEQ/issues/1062)) ([4297c77](https://github.com/Endava/BEEQ/commit/4297c7744e13627c628f1cfe105fab7f1957dc38))
+
+
+### Bug Fixes 🐞
+
+* **Beeq Core:** vite fails to resolve `@beeq/core/dist/*` paths ([#1077](https://github.com/Endava/BEEQ/issues/1077)) ([6dba151](https://github.com/Endava/BEEQ/commit/6dba151db62cdc6306dd7d32d49a0ef8d8ca6f4a))
+* **Date picker:** missing value accessor and model config ([#1066](https://github.com/Endava/BEEQ/issues/1066)) ([de4de39](https://github.com/Endava/BEEQ/commit/de4de3975161aec0c968db4bd55a6ed64931eca7))
+* **Slider:** lower value not updated when is equal to upper value ([#1078](https://github.com/Endava/BEEQ/issues/1078)) ([4652d99](https://github.com/Endava/BEEQ/commit/4652d99781c6857c6b88b9dcc5240d55ba61e5d5))
+* **Slider:** range thumbs being stuck when min/max values overlap ([#1075](https://github.com/Endava/BEEQ/issues/1075)) ([8ac403d](https://github.com/Endava/BEEQ/commit/8ac403d72b63d1b7c46d261a2808e673bf952856))
+
+
+### Documentation 📚
+
+* **Date picker:** add `DisallowedDates` storybook example ([dd4fbe3](https://github.com/Endava/BEEQ/commit/dd4fbe35b6590e47a52e8ce75ebc5bcb19595564))
+
+
+### Style 🎨
+
+* **Tailwind CSS:** remove quotes when using `theme()` function ([#1064](https://github.com/Endava/BEEQ/issues/1064)) ([1c219fd](https://github.com/Endava/BEEQ/commit/1c219fdac2f8c0ef905e62ff3842b230701f3737))
+
+
+### Chore ⚙️
+
+* **deps:** update angular ([#1083](https://github.com/Endava/BEEQ/issues/1083)) ([7fc5be9](https://github.com/Endava/BEEQ/commit/7fc5be98adabad5f38e156bb9e0f93e7e2c8ac36))
+* **deps:** update angular to v17.3.9 ([#1065](https://github.com/Endava/BEEQ/issues/1065)) ([589b790](https://github.com/Endava/BEEQ/commit/589b7902c6269c5cc293973d82d2b3ef48774534))
+* **deps:** update Angular to v18.x (major) ([#1072](https://github.com/Endava/BEEQ/issues/1072)) ([cdb5217](https://github.com/Endava/BEEQ/commit/cdb5217352545ed3be217ecbe55ed052e45827ad))
+* **deps:** update cally to v0.6.1 ([#1079](https://github.com/Endava/BEEQ/issues/1079)) ([6689a00](https://github.com/Endava/BEEQ/commit/6689a00faf7bb47512f010934df169443ac486c7))
+* **deps:** update dependency @nxext/stencil to v19 ([#1082](https://github.com/Endava/BEEQ/issues/1082)) ([7266715](https://github.com/Endava/BEEQ/commit/726671554d5b88a4a2e29e0becf2db5c6eaa9609))
+* **deps:** update dependency @stencil/core to v4.18.3 ([#1076](https://github.com/Endava/BEEQ/issues/1076)) ([177a72a](https://github.com/Endava/BEEQ/commit/177a72a7b420103f1992ca7d625f41eae85cb162))
+* **deps:** update development dependencies ([#1070](https://github.com/Endava/BEEQ/issues/1070)) ([37b7665](https://github.com/Endava/BEEQ/commit/37b76657189b968ac26a98ff89d607454114ccbb))
+* **deps:** update npm dependencies ([#1084](https://github.com/Endava/BEEQ/issues/1084)) ([dda2d78](https://github.com/Endava/BEEQ/commit/dda2d78a7770880bfd71473bd27ed3466f032447))
+* **deps:** update nx to v19 ([#1043](https://github.com/Endava/BEEQ/issues/1043)) ([8761866](https://github.com/Endava/BEEQ/commit/87618665ea659e721dd63e69acb4c674dca83d26))
+* **deps:** update nx to v19.1.1 ([#1080](https://github.com/Endava/BEEQ/issues/1080)) ([6f3d6b4](https://github.com/Endava/BEEQ/commit/6f3d6b4e92c6dc34fa3090eaeb0b3dfea9f6cbb5))
+* **deps:** update storybook to v8.1.5 ([#1081](https://github.com/Endava/BEEQ/issues/1081)) ([ed9040b](https://github.com/Endava/BEEQ/commit/ed9040b535542e7428416829b7f577d4bb292268))
+
 ## [1.4.0](https://github.com/Endava/BEEQ/compare/v1.3.3...v1.4.0) (2024-05-21)
 
 
