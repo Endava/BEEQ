@@ -16,14 +16,14 @@
 
 ## Shadow Parts
 
-| Part          | Description |
-| ------------- | ----------- |
-| `"actions"`   |             |
-| `"back"`      |             |
-| `"icon"`      |             |
-| `"sub-title"` |             |
-| `"title"`     |             |
-| `"wrapper"`   |             |
+| Part          | Description                                                                                                       |
+| ------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `"actions"`   | The container `<div>` element used to render a edit and download icons for page title                             |
+| `"back"`      | The container `<div>` that wraps the page title back icon                                                         |
+| `"icon"`      | The `<bq-icon>` element used to render a predefined icon size based on the page title (back, edit, download icon) |
+| `"sub-title"` | The container `<div>` that wraps the sub-title element                                                            |
+| `"title"`     | The container `<div>` that wraps the pate title content                                                           |
+| `"wrapper"`   | The wrapper container `<div>` of the element inside the shadow DOM                                                |
 
 
 ## Dependencies

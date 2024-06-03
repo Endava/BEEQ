@@ -1,5 +1,13 @@
 import { Component, h, Prop } from '@stencil/core';
 
+/**
+ * @part wrapper - The wrapper container `<div>` of the element inside the shadow DOM
+ * @part back - The container `<div>` that wraps the page title back icon
+ * @part title - The container `<div>` that wraps the pate title content
+ * @part icon - The `<bq-icon>` element used to render a predefined icon size based on the page title (back, edit, download icon)
+ * @part actions - The container `<div>` element used to render a edit and download icons for page title
+ * @part sub-title - The container `<div>` that wraps the sub-title element
+ */
 @Component({
   tag: 'bq-page-title',
   styleUrl: './scss/bq-page-title.scss',
@@ -59,7 +67,6 @@ export class BqPageTitle {
   // ===================================
 
   render() {
-    console.log('tttt', this.showSubTitle);
     return (
       <div class="flex gap-xs px-xxl4 py-xl" part="wrapper">
         {/* BACK ICON */}
