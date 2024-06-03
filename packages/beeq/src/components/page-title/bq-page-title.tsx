@@ -1,4 +1,4 @@
-import { Component, h } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 
 @Component({
   tag: 'bq-page-title',
@@ -21,6 +21,9 @@ export class BqPageTitle {
 
   // Prop lifecycle events
   // =======================
+
+  /** If true, the page title back icon will be shown */
+  @Prop({ reflect: true }) showBackIcon: boolean;
 
   // Events section
   // Requires JSDocs for public API documentation
@@ -51,7 +54,20 @@ export class BqPageTitle {
 
   render() {
     return (
-      <div class="flex items-center px-xxl4 py-xl" part="wrapper">
+      <div class="flex items-center gap-xs px-xxl4 py-xl" part="wrapper">
+        {/* BACK ICON */}
+        <div class={{ 'flex items-center p-s': true, hidden: !this.showBackIcon }} part="back">
+          <slot name="back">
+            <bq-icon
+              color="text--primary"
+              name="arrow-left"
+              size="24"
+              weight="bold"
+              part="icon"
+              exportparts="base,svg"
+            />
+          </slot>
+        </div>
         <div class="title-font text-xxl font-bold leading-regular text-text-primary" part="title">
           <slot />
         </div>

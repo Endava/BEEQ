@@ -791,6 +791,10 @@ export namespace Components {
         "ariaLabel": string;
     }
     interface BqPageTitle {
+        /**
+          * If true, the page title back icon will be shown
+         */
+        "showBackIcon": boolean;
     }
     interface BqPanel {
         /**
@@ -3127,6 +3131,10 @@ declare namespace LocalJSX {
         "onBqSelect"?: (event: BqOptionListCustomEvent<{ value: string; item: HTMLBqOptionElement }>) => void;
     }
     interface BqPageTitle {
+        /**
+          * If true, the page title back icon will be shown
+         */
+        "showBackIcon"?: boolean;
     }
     interface BqPanel {
         /**
