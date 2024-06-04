@@ -52,13 +52,13 @@ export class BqPageTitle {
   // ==============================================
 
   /** Handler to be called when page title navigation button loses focus */
-  @Event() bqBlur: EventEmitter<HTMLBqPageTitleElement>;
+  @Event() bqBackBlur: EventEmitter<HTMLBqPageTitleElement>;
 
   /** Handler to be called when page title navigation button is clicked */
-  @Event() bqClick: EventEmitter<HTMLBqPageTitleElement>;
+  @Event() bqBackClick: EventEmitter<HTMLBqPageTitleElement>;
 
   /** Handler to be called when page title navigation button is focused */
-  @Event() bqFocus: EventEmitter<HTMLBqPageTitleElement>;
+  @Event() bqBackFocus: EventEmitter<HTMLBqPageTitleElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -79,16 +79,19 @@ export class BqPageTitle {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private handleClick = () => {
-    this.bqClick.emit(this.el);
+  private handleClick = (ev: Event) => {
+    ev.stopPropagation();
+    this.bqBackClick.emit(this.el);
   };
 
-  private handleBlur = () => {
-    this.bqBlur.emit(this.el);
+  private handleBlur = (ev: Event) => {
+    ev.stopPropagation();
+    this.bqBackBlur.emit(this.el);
   };
 
-  private handleFocus = () => {
-    this.bqFocus.emit(this.el);
+  private handleFocus = (ev: Event) => {
+    ev.stopPropagation();
+    this.bqBackFocus.emit(this.el);
   };
 
   private handleSlotChange = () => {
@@ -111,9 +114,9 @@ export class BqPageTitle {
               appearance="link"
               part="btn-back"
               exportparts="button"
-              onBlur={this.handleBlur}
-              onClick={this.handleClick}
-              onFocus={this.handleFocus}
+              onBqBlur={this.handleBlur}
+              onBqClick={this.handleClick}
+              onBqFocus={this.handleFocus}
             >
               <bq-icon
                 color="text--primary"

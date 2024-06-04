@@ -1921,9 +1921,9 @@ declare global {
         new (): HTMLBqOptionListElement;
     };
     interface HTMLBqPageTitleElementEventMap {
-        "bqBlur": HTMLBqPageTitleElement;
-        "bqClick": HTMLBqPageTitleElement;
-        "bqFocus": HTMLBqPageTitleElement;
+        "bqBackBlur": HTMLBqPageTitleElement;
+        "bqBackClick": HTMLBqPageTitleElement;
+        "bqBackFocus": HTMLBqPageTitleElement;
     }
     interface HTMLBqPageTitleElement extends Components.BqPageTitle, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqPageTitleElementEventMap>(type: K, listener: (this: HTMLBqPageTitleElement, ev: BqPageTitleCustomEvent<HTMLBqPageTitleElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -3155,15 +3155,15 @@ declare namespace LocalJSX {
         /**
           * Handler to be called when page title navigation button loses focus
          */
-        "onBqBlur"?: (event: BqPageTitleCustomEvent<HTMLBqPageTitleElement>) => void;
+        "onBqBackBlur"?: (event: BqPageTitleCustomEvent<HTMLBqPageTitleElement>) => void;
         /**
           * Handler to be called when page title navigation button is clicked
          */
-        "onBqClick"?: (event: BqPageTitleCustomEvent<HTMLBqPageTitleElement>) => void;
+        "onBqBackClick"?: (event: BqPageTitleCustomEvent<HTMLBqPageTitleElement>) => void;
         /**
           * Handler to be called when page title navigation button is focused
          */
-        "onBqFocus"?: (event: BqPageTitleCustomEvent<HTMLBqPageTitleElement>) => void;
+        "onBqBackFocus"?: (event: BqPageTitleCustomEvent<HTMLBqPageTitleElement>) => void;
     }
     interface BqPanel {
         /**

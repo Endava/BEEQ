@@ -14,11 +14,11 @@
 
 ## Events
 
-| Event     | Description                                                        | Type                                  |
-| --------- | ------------------------------------------------------------------ | ------------------------------------- |
-| `bqBlur`  | Handler to be called when page title navigation button loses focus | `CustomEvent<HTMLBqPageTitleElement>` |
-| `bqClick` | Handler to be called when page title navigation button is clicked  | `CustomEvent<HTMLBqPageTitleElement>` |
-| `bqFocus` | Handler to be called when page title navigation button is focused  | `CustomEvent<HTMLBqPageTitleElement>` |
+| Event         | Description                                                        | Type                                  |
+| ------------- | ------------------------------------------------------------------ | ------------------------------------- |
+| `bqBackBlur`  | Handler to be called when page title navigation button loses focus | `CustomEvent<HTMLBqPageTitleElement>` |
+| `bqBackClick` | Handler to be called when page title navigation button is clicked  | `CustomEvent<HTMLBqPageTitleElement>` |
+| `bqBackFocus` | Handler to be called when page title navigation button is focused  | `CustomEvent<HTMLBqPageTitleElement>` |
 
 
 ## Shadow Parts
