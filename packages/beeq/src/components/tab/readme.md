@@ -7,13 +7,14 @@
 
 ## Properties
 
-| Property                | Attribute  | Description                            | Type                             | Default     |
-| ----------------------- | ---------- | -------------------------------------- | -------------------------------- | ----------- |
-| `active`                | `active`   | If true tab is active                  | `boolean`                        | `undefined` |
-| `controls` _(required)_ | `controls` | The tab panel id that the tab controls | `string`                         | `undefined` |
-| `disabled`              | `disabled` | If true tab is disabled                | `boolean`                        | `false`     |
-| `size`                  | `size`     | The size of the tab                    | `"large" \| "medium" \| "small"` | `'medium'`  |
-| `tabId` _(required)_    | `tab-id`   | The id of the tab                      | `string`                         | `undefined` |
+| Property                | Attribute     | Description                               | Type                                                  | Default        |
+| ----------------------- | ------------- | ----------------------------------------- | ----------------------------------------------------- | -------------- |
+| `active`                | `active`      | If true tab is active                     | `boolean`                                             | `undefined`    |
+| `controls` _(required)_ | `controls`    | The tab panel id that the tab controls    | `string`                                              | `undefined`    |
+| `disabled`              | `disabled`    | If true tab is disabled                   | `boolean`                                             | `false`        |
+| `orientation`           | `orientation` | The direction that table should be render | `"horizontal" \| "vertical-left" \| "vertical-right"` | `'horizontal'` |
+| `size`                  | `size`        | The size of the tab                       | `"large" \| "medium" \| "small"`                      | `'medium'`     |
+| `tabId` _(required)_    | `tab-id`      | The id of the tab                         | `string`                                              | `undefined`    |
 
 
 ## Events

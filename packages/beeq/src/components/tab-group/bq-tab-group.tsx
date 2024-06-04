@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Prop, Watch } from '@stencil/core';
 
 import { debounce, getNextElement, isHTMLElement, isNil, TDebounce, validatePropValue } from '../../shared/utils';
-import { TAB_SIZE, TTabSize } from '../tab/bq-tab.types';
+import { TAB_ORIENTATION, TAB_SIZE, TTabOrientation, TTabSize } from '../tab/bq-tab.types';
 
 /**
  * @part base - The HTML div wrapper inside the shadow DOM.
@@ -36,6 +36,9 @@ export class BqTabGroup {
   /** The size of the tab */
   @Prop({ reflect: true }) size: TTabSize = 'medium';
 
+  /** The direction that table should be render */
+  @Prop({ reflect: true }) orientation?: TTabOrientation = 'horizontal';
+
   /** A number representing the delay value applied to bqChange event handler */
   @Prop({ reflect: true, mutable: true }) debounceTime = 0;
 
@@ -62,11 +65,14 @@ export class BqTabGroup {
 
   @Watch('size')
   @Watch('value')
+  @Watch('orientation')
   checkPropValues() {
     validatePropValue(TAB_SIZE, 'medium', this.el, 'size');
+    validatePropValue(TAB_ORIENTATION, 'horizontal', this.el, 'orientation');
 
     this.bqTabElements.forEach((bqTabElement) => {
       bqTabElement.size = this.size;
+      bqTabElement.orientation = this.orientation;
       bqTabElement.active = !isNil(this.value) ? bqTabElement.tabId === this.value : false;
     });
   }
@@ -209,8 +215,21 @@ export class BqTabGroup {
 
   render() {
     return (
-      <div class={{ 'bq-tab-group flex w-full': true, 'no-divider': this.disableDivider }} part="base">
-        <div class="bq-tab-group--container flex overflow-x-auto" role="tablist" part="tabs">
+      <div
+        class={{
+          [`bq-tab-group bq-tab-group--${this.orientation} flex w-full`]: true,
+          'no-divider': this.disableDivider,
+        }}
+        part="base"
+      >
+        <div
+          class={{
+            'bq-tab-group--container flex overflow-x-auto': true,
+            'flex-col': this.orientation !== 'horizontal',
+          }}
+          role="tablist"
+          part="tabs"
+        >
           <slot />
         </div>
       </div>

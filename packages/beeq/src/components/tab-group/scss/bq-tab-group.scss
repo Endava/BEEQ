@@ -10,7 +10,19 @@
   @apply relative;
 
   &::after {
-    @apply absolute bottom-0 flex w-full border-0 border-b-s border-solid border-bg-tertiary content-empty;
+    @apply absolute flex border-0 border-solid border-bg-tertiary content-empty;
+  }
+
+  &--horizontal::after {
+    @apply bottom-0 w-full border-b-s;
+  }
+
+  &--vertical-left::after {
+    @apply left-0 h-full w-0 border-b-0 border-l-s;
+  }
+
+  &--vertical-right::after {
+    @apply right-0 h-full w-0 border-b-0 border-r-s;
   }
 }
 

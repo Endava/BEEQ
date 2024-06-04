@@ -15,13 +15,24 @@
   @apply transition-[color,background-color,border-color,box-shadow] duration-300;
 
   &::after {
-    @apply absolute -bottom-1 z-[1] block h-[2px]  bg-stroke-brand opacity-0 content-empty;
+    @apply absolute -bottom-1 z-[1] block bg-stroke-brand opacity-0 content-empty;
     @apply transition-opacity duration-300 ease-linear;
+  }
+
+  &--horizontal::after {
     /**
      * This hack will make the underline larger so it fits till the tab bar edges for the first and last tab button,
      * because the parent container applies some padding to not cut the focus outline style.
      */
-    @apply -left-xs3 w-[calc(100%_+_var(--bq-spacing-xs2))];
+    @apply -left-xs3 h-[2px] w-[calc(100%_+_var(--bq-spacing-xs2))];
+  }
+
+  &--vertical-left::after {
+    @apply -left-xs3 h-[calc(100%_+_var(--bq-spacing-xs2))] w-[2px];
+  }
+
+  &--vertical-right::after {
+    @apply -right-xs3 h-[calc(100%_+_var(--bq-spacing-xs2))] w-[2px];
   }
 
   &[aria-selected='true']::after {
