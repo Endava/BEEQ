@@ -6,6 +6,19 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+## [1.5.1](https://github.com/Endava/BEEQ/compare/v1.5.0...v1.5.1) (2024-06-04)
+
+
+### Bug Fixes 🐞
+
+* **Input:** typo in CSS variables for padding start/end ([#1086](https://github.com/Endava/BEEQ/issues/1086)) ([194fe75](https://github.com/Endava/BEEQ/commit/194fe75ad235aff7b2f90ac30bab5ea9c817894f))
+
+
+### Chore ⚙️
+
+* **deps:** update dependency @types/node to v20.14.0 ([#1088](https://github.com/Endava/BEEQ/issues/1088)) ([32c7a92](https://github.com/Endava/BEEQ/commit/32c7a920e15040b4d3d411845811094f05b4db30))
+* **deps:** update nx to v19.1.2 ([#1087](https://github.com/Endava/BEEQ/issues/1087)) ([d0c0815](https://github.com/Endava/BEEQ/commit/d0c08151758799f9551877520e5cf606b9b36e99))
+
 ## [1.5.0](https://github.com/Endava/BEEQ/compare/v1.4.0...v1.5.0) (2024-06-03)
 
 
