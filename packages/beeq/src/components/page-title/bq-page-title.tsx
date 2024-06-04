@@ -1,12 +1,16 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, Element, h, Prop, State } from '@stencil/core';
+
+import { hasSlotContent } from '../../shared/utils';
 
 /**
- * @part wrapper - The wrapper container `<div>` of the element inside the shadow DOM
- * @part back - The container `<div>` that wraps the page title back icon
- * @part title - The container `<div>` that wraps the pate title content
- * @part icon - The `<bq-icon>` element used to render a predefined icon size based on the page title (back, edit, download icon)
- * @part actions - The container `<div>` element used to render a edit and download icons for page title
- * @part sub-title - The container `<div>` that wraps the sub-title element
+ * @part wrapper - The wrapper container `<div>` of the element inside the shadow DOM.
+ * @part back - The container `<div>` that wraps the page title back icon button.
+ * @part btn-back - The back navigation button.
+ * @part title - The container `<div>` that wraps the page title content.
+ * @part icon - The `<bq-icon>` element used to render a predefined back navigation icon for page title.
+ * @part prefix - The `<div>` page title element that acts as prefix slot container.
+ * @part suffix - The `<div>` page title element that acts as suffix slot container.
+ * @part sub-title - The `<div>` page title element that acts as sub-title slot container.
  */
 @Component({
   tag: 'bq-page-title',
@@ -17,12 +21,22 @@ export class BqPageTitle {
   // Own Properties
   // ====================
 
+  private prefixElem: HTMLElement;
+  private suffixElem: HTMLElement;
+  private subTitleElem: HTMLElement;
+
   // Reference to host HTML element
   // ===================================
+
+  @Element() el!: HTMLBqPageTitleElement;
 
   // State() variables
   // Inlined decorator, alphabetical order
   // =======================================
+
+  @State() private hasPrefix = false;
+  @State() private hasSuffix = false;
+  @State() private hasSubTitle = false;
 
   // Public Property API
   // ========================
@@ -30,14 +44,8 @@ export class BqPageTitle {
   // Prop lifecycle events
   // =======================
 
-  /** If true, the page title back icon will be shown */
-  @Prop({ reflect: true }) showBackIcon: boolean;
-
-  /** If true, the page title back icon will be shown */
-  @Prop({ reflect: true }) showActionIcons: boolean;
-
-  /** If true, the sub title of page title will be shown */
-  @Prop({ reflect: true }) showSubTitle: boolean;
+  /** If true, the page title back button will be shown */
+  @Prop({ reflect: true }) haveBackNavigation: boolean;
 
   // Events section
   // Requires JSDocs for public API documentation
@@ -62,62 +70,70 @@ export class BqPageTitle {
   // These methods cannot be called from the host element.
   // =======================================================
 
+  private handleSlotChange = () => {
+    this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
+    this.hasSuffix = hasSlotContent(this.suffixElem, 'suffix');
+    this.hasSubTitle = hasSlotContent(this.subTitleElem, 'sub-title');
+  };
+
   // render() function
   // Always the last one in the class.
   // ===================================
 
   render() {
     return (
-      <div class="flex gap-xs px-xxl4 py-xl" part="wrapper">
-        {/* BACK ICON */}
-        <div class={{ 'flex p-s': true, hidden: !this.showBackIcon }} part="back">
+      <div class="flex gap-xs px-[--bq-page-title--paddingX] py-[--bq-page-title--paddingY]" part="wrapper">
+        {/* Back navigation button */}
+        <div class={{ flex: true, '!hidden': !this.haveBackNavigation }} part="back">
           <slot name="back">
-            <bq-icon
-              color="text--primary"
-              name="arrow-left"
-              size="24"
-              weight="bold"
-              part="icon"
-              exportparts="base,svg"
-            />
+            <bq-button appearance="link" part="btn-back" exportparts="button">
+              <bq-icon
+                color="text--primary"
+                name="arrow-left"
+                size="24"
+                weight="bold"
+                part="icon"
+                exportparts="base,svg"
+              />
+            </bq-button>
           </slot>
         </div>
         <div class="flex flex-col gap-xs">
           <div class="flex items-center gap-xs">
-            <div class="title-font text-xxl font-bold leading-regular text-text-primary" part="title">
+            {/* Prefix */}
+            <div
+              class={{ flex: true, '!hidden': !this.hasPrefix }}
+              ref={(divElem) => (this.prefixElem = divElem)}
+              part="prefix"
+            >
+              <slot name="prefix" onSlotchange={this.handleSlotChange} />
+            </div>
+            <div
+              class="title-font text-[length:--bq-page-title--text-size-title] font-[--bq-page-title--font-weight-title] leading-[--bq-page-title--text-lineHeight] text-[color:--bq-page-title--text-title-color]"
+              part="title"
+            >
               <slot />
             </div>
-            {/* ACTION ICONS */}
-            <div class={{ 'flex gap-xs p-xs2': true, hidden: !this.showActionIcons }} part="actions">
-              <slot name="actions">
-                <bq-icon
-                  color="text--brand"
-                  name="pencil-simple"
-                  size="24"
-                  weight="bold"
-                  part="icon"
-                  exportparts="base,svg"
-                />
-                <bq-icon
-                  color="text--brand"
-                  name="download-simple"
-                  size="24"
-                  weight="bold"
-                  part="icon"
-                  exportparts="base,svg"
-                />
-              </slot>
+            {/* Suffix */}
+            <div
+              class={{ 'flex gap-xs p-xs2': true, '!hidden': !this.hasSuffix }}
+              ref={(divElem) => (this.suffixElem = divElem)}
+              part="suffix"
+            >
+              <slot name="suffix" onSlotchange={this.handleSlotChange} />
             </div>
           </div>
-          {/* SUB-TITLE */}
+          {/* Sub-title */}
           <div
             class={{
-              'title-font text-l font-medium leading-regular text-text-secondary': true,
-              hidden: !this.showSubTitle,
+              'title-font text-[length:--bq-page-title--text-size-subtitle] font-[--bq-page-title--font-weight-subtitle] leading-[--bq-page-title--text-lineHeight] text-[color:--bq-page-title--text-sub-title-color]':
+                true,
+              hidden: !this.hasSubTitle,
             }}
+            ref={(divElem) => (this.subTitleElem = divElem)}
             part="sub-title"
           >
-            <slot name="sub-title" />
+            <slot name="sub-title" onSlotchange={this.handleSlotChange} />
           </div>
         </div>
       </div>
