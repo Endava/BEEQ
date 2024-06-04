@@ -1,4 +1,4 @@
-import { Component, Element, h, Prop, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Prop, State } from '@stencil/core';
 
 import { hasSlotContent } from '../../shared/utils';
 
@@ -51,6 +51,15 @@ export class BqPageTitle {
   // Requires JSDocs for public API documentation
   // ==============================================
 
+  /** Handler to be called when page title navigation button loses focus */
+  @Event() bqBlur: EventEmitter<HTMLBqPageTitleElement>;
+
+  /** Handler to be called when page title navigation button is clicked */
+  @Event() bqClick: EventEmitter<HTMLBqPageTitleElement>;
+
+  /** Handler to be called when page title navigation button is focused */
+  @Event() bqFocus: EventEmitter<HTMLBqPageTitleElement>;
+
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
@@ -70,6 +79,19 @@ export class BqPageTitle {
   // These methods cannot be called from the host element.
   // =======================================================
 
+  private handleClick = () => {
+    console.log('click');
+    this.bqClick.emit(this.el);
+  };
+
+  private handleBlur = () => {
+    this.bqBlur.emit(this.el);
+  };
+
+  private handleFocus = () => {
+    this.bqFocus.emit(this.el);
+  };
+
   private handleSlotChange = () => {
     this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
     this.hasSuffix = hasSlotContent(this.suffixElem, 'suffix');
@@ -86,7 +108,14 @@ export class BqPageTitle {
         {/* Back navigation button */}
         <div class={{ flex: true, '!hidden': !this.haveBackNavigation }} part="back">
           <slot name="back">
-            <bq-button appearance="link" part="btn-back" exportparts="button">
+            <bq-button
+              appearance="link"
+              part="btn-back"
+              exportparts="button"
+              onBlur={this.handleBlur}
+              onClick={this.handleClick}
+              onFocus={this.handleFocus}
+            >
               <bq-icon
                 color="text--primary"
                 name="arrow-left"

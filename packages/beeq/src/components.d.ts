@@ -1523,6 +1523,10 @@ export interface BqOptionListCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqOptionListElement;
 }
+export interface BqPageTitleCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqPageTitleElement;
+}
 export interface BqRadioCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqRadioElement;
@@ -1916,7 +1920,20 @@ declare global {
         prototype: HTMLBqOptionListElement;
         new (): HTMLBqOptionListElement;
     };
+    interface HTMLBqPageTitleElementEventMap {
+        "bqBlur": HTMLBqPageTitleElement;
+        "bqClick": HTMLBqPageTitleElement;
+        "bqFocus": HTMLBqPageTitleElement;
+    }
     interface HTMLBqPageTitleElement extends Components.BqPageTitle, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqPageTitleElementEventMap>(type: K, listener: (this: HTMLBqPageTitleElement, ev: BqPageTitleCustomEvent<HTMLBqPageTitleElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqPageTitleElementEventMap>(type: K, listener: (this: HTMLBqPageTitleElement, ev: BqPageTitleCustomEvent<HTMLBqPageTitleElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqPageTitleElement: {
         prototype: HTMLBqPageTitleElement;
@@ -3135,6 +3152,18 @@ declare namespace LocalJSX {
           * If true, the page title back button will be shown
          */
         "haveBackNavigation"?: boolean;
+        /**
+          * Handler to be called when page title navigation button loses focus
+         */
+        "onBqBlur"?: (event: BqPageTitleCustomEvent<HTMLBqPageTitleElement>) => void;
+        /**
+          * Handler to be called when page title navigation button is clicked
+         */
+        "onBqClick"?: (event: BqPageTitleCustomEvent<HTMLBqPageTitleElement>) => void;
+        /**
+          * Handler to be called when page title navigation button is focused
+         */
+        "onBqFocus"?: (event: BqPageTitleCustomEvent<HTMLBqPageTitleElement>) => void;
     }
     interface BqPanel {
         /**

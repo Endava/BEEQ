@@ -13,6 +13,10 @@ const meta: Meta = {
   },
   argTypes: {
     haveBackNavigation: { control: 'boolean' },
+    // Event handlers
+    bqClick: { action: 'bqClick' },
+    bqBlur: { action: 'bqBlur' },
+    bqFocus: { action: 'bqFocus' },
   },
   args: {
     haveBackNavigation: false,
@@ -23,7 +27,12 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
-  <bq-page-title ?have-back-navigation=${args.haveBackNavigation}>
+  <bq-page-title
+    ?have-back-navigation=${args.haveBackNavigation}
+    @bqClick=${args.bqClick}
+    @bqFocus=${args.bqFocus}
+    @bqBlur=${args.bqBlur}
+  >
     ${args.title} ${args.subTitle ? html`<div slot="sub-title">${args.subTitle}</div>` : ''}
     ${args.actions ? html`<div class="flex gap-xs" slot="suffix">${args.actions}</div>` : ''}
   </bq-page-title>
