@@ -80,7 +80,6 @@ export class BqPageTitle {
   // =======================================================
 
   private handleClick = () => {
-    console.log('click');
     this.bqClick.emit(this.el);
   };
 
