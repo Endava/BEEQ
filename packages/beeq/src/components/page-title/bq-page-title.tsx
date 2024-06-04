@@ -111,6 +111,7 @@ export class BqPageTitle {
         <div class={{ flex: true, '!hidden': !this.haveBackNavigation }} part="back">
           <slot name="back">
             <bq-button
+              class="hover:[&::part(button)]:bg-transparent"
               appearance="link"
               part="btn-back"
               exportparts="button"
