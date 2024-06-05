@@ -790,6 +790,9 @@ export namespace Components {
          */
         "ariaLabel": string;
     }
+    /**
+     * @prop content - Defines the main container of the page title component, which includes the title and subtitle elements.
+     */
     interface BqPageTitle {
         /**
           * If true, the page title back button will be shown
@@ -1925,6 +1928,9 @@ declare global {
         "bqBackClick": HTMLBqPageTitleElement;
         "bqBackFocus": HTMLBqPageTitleElement;
     }
+    /**
+     * @prop content - Defines the main container of the page title component, which includes the title and subtitle elements.
+     */
     interface HTMLBqPageTitleElement extends Components.BqPageTitle, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqPageTitleElementEventMap>(type: K, listener: (this: HTMLBqPageTitleElement, ev: BqPageTitleCustomEvent<HTMLBqPageTitleElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -3147,6 +3153,9 @@ declare namespace LocalJSX {
          */
         "onBqSelect"?: (event: BqOptionListCustomEvent<{ value: string; item: HTMLBqOptionElement }>) => void;
     }
+    /**
+     * @prop content - Defines the main container of the page title component, which includes the title and subtitle elements.
+     */
     interface BqPageTitle {
         /**
           * If true, the page title back button will be shown
@@ -3979,6 +3988,9 @@ declare module "@stencil/core" {
             "bq-option": LocalJSX.BqOption & JSXBase.HTMLAttributes<HTMLBqOptionElement>;
             "bq-option-group": LocalJSX.BqOptionGroup & JSXBase.HTMLAttributes<HTMLBqOptionGroupElement>;
             "bq-option-list": LocalJSX.BqOptionList & JSXBase.HTMLAttributes<HTMLBqOptionListElement>;
+            /**
+             * @prop content - Defines the main container of the page title component, which includes the title and subtitle elements.
+             */
             "bq-page-title": LocalJSX.BqPageTitle & JSXBase.HTMLAttributes<HTMLBqPageTitleElement>;
             "bq-panel": LocalJSX.BqPanel & JSXBase.HTMLAttributes<HTMLBqPanelElement>;
             "bq-progress": LocalJSX.BqProgress & JSXBase.HTMLAttributes<HTMLBqProgressElement>;

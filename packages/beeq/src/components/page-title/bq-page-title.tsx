@@ -4,13 +4,14 @@ import { hasSlotContent } from '../../shared/utils';
 
 /**
  * @part wrapper - The wrapper container `<div>` of the element inside the shadow DOM.
- * @part base - The inner container `<div>`of element that contains the base page title component
- * @part divider - The inner container `<div>` of element that contains the bottom divider section
+ * @part base - The inner container `<div>`of element that contains the base page title component.
+ * @prop content - Defines the main container of the page title component, which includes the title and subtitle elements.
+ * @part title-suffix - Defines the container that holds the title and any suffix content.
+ * @part divider - The inner container `<div>` of element that contains the bottom divider section.
  * @part back - The container `<div>` that wraps the page title back icon button.
  * @part btn-back - The back navigation button.
  * @part title - The container `<div>` that wraps the page title content.
  * @part icon - The `<bq-icon>` element used to render a predefined back navigation icon for page title.
- * @part prefix - The `<div>` page title element that acts as prefix slot container.
  * @part suffix - The `<div>` page title element that acts as suffix slot container.
  * @part sub-title - The `<div>` page title element that acts as sub-title slot container.
  */
@@ -23,7 +24,6 @@ export class BqPageTitle {
   // Own Properties
   // ====================
 
-  private prefixElem: HTMLElement;
   private suffixElem: HTMLElement;
   private subTitleElem: HTMLElement;
 
@@ -36,7 +36,6 @@ export class BqPageTitle {
   // Inlined decorator, alphabetical order
   // =======================================
 
-  @State() private hasPrefix = false;
   @State() private hasSuffix = false;
   @State() private hasSubTitle = false;
 
@@ -97,7 +96,6 @@ export class BqPageTitle {
   };
 
   private handleSlotChange = () => {
-    this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
     this.hasSuffix = hasSlotContent(this.suffixElem, 'suffix');
     this.hasSubTitle = hasSlotContent(this.subTitleElem, 'sub-title');
   };
@@ -109,7 +107,7 @@ export class BqPageTitle {
   render() {
     return (
       <div class="flex flex-col" part="wrapper">
-        <div class="flex gap-xs px-[--bq-page-title--paddingX] py-[--bq-page-title--paddingY]" part="base">
+        <div class="flex gap-xs" part="base">
           {/* Back navigation button */}
           <div class={{ flex: true, '!hidden': !this.haveBackNavigation }} part="back">
             <slot name="back">
@@ -132,16 +130,9 @@ export class BqPageTitle {
               </bq-button>
             </slot>
           </div>
-          <div class="flex flex-col gap-xs">
-            <div class="flex items-center gap-xs">
-              {/* Prefix */}
-              <div
-                class={{ flex: true, '!hidden': !this.hasPrefix }}
-                ref={(divElem) => (this.prefixElem = divElem)}
-                part="prefix"
-              >
-                <slot name="prefix" onSlotchange={this.handleSlotChange} />
-              </div>
+          <div class="flex flex-grow flex-col gap-xs" part="content">
+            <div class="flex items-center gap-xs" part="title-suffix">
+              {/* Title */}
               <div
                 class="title-font text-[length:--bq-page-title--text-size-title] font-[--bq-page-title--font-weight-title] leading-[--bq-page-title--text-lineHeight] text-[color:--bq-page-title--text-title-color]"
                 part="title"
@@ -150,7 +141,7 @@ export class BqPageTitle {
               </div>
               {/* Suffix */}
               <div
-                class={{ 'flex gap-xs p-xs2': true, '!hidden': !this.hasSuffix }}
+                class={{ 'flex flex-grow gap-xs p-xs2': true, '!hidden': !this.hasSuffix }}
                 ref={(divElem) => (this.suffixElem = divElem)}
                 part="suffix"
               >
@@ -174,7 +165,7 @@ export class BqPageTitle {
         {/* Divider */}
         <div part="divider">
           <slot name="divider">
-            <bq-divider class="mb-m block" stroke-color="ui--secondary" stroke-thickness="1"></bq-divider>
+            <bq-divider class="mb-m block" stroke-color="ui--secondary" stroke-thickness="1" />
           </slot>
         </div>
       </div>
