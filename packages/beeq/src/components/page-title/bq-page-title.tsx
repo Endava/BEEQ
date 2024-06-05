@@ -4,6 +4,8 @@ import { hasSlotContent } from '../../shared/utils';
 
 /**
  * @part wrapper - The wrapper container `<div>` of the element inside the shadow DOM.
+ * @part base - The inner container `<div>`of element that contains the base page title component
+ * @part divider - The inner container `<div>` of element that contains the bottom divider section
  * @part back - The container `<div>` that wraps the page title back icon button.
  * @part btn-back - The back navigation button.
  * @part title - The container `<div>` that wraps the page title content.
@@ -24,6 +26,7 @@ export class BqPageTitle {
   private prefixElem: HTMLElement;
   private suffixElem: HTMLElement;
   private subTitleElem: HTMLElement;
+  private dividerElem: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -37,6 +40,7 @@ export class BqPageTitle {
   @State() private hasPrefix = false;
   @State() private hasSuffix = false;
   @State() private hasSubTitle = false;
+  @State() private hasDivider = false;
 
   // Public Property API
   // ========================
@@ -98,6 +102,7 @@ export class BqPageTitle {
     this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
     this.hasSuffix = hasSlotContent(this.suffixElem, 'suffix');
     this.hasSubTitle = hasSlotContent(this.subTitleElem, 'sub-title');
+    this.hasDivider = hasSlotContent(this.dividerElem, 'divider');
   };
 
   // render() function
@@ -106,67 +111,79 @@ export class BqPageTitle {
 
   render() {
     return (
-      <div class="flex gap-xs px-[--bq-page-title--paddingX] py-[--bq-page-title--paddingY]" part="wrapper">
-        {/* Back navigation button */}
-        <div class={{ flex: true, '!hidden': !this.haveBackNavigation }} part="back">
-          <slot name="back">
-            <bq-button
-              class="hover:[&::part(button)]:bg-transparent"
-              appearance="link"
-              part="btn-back"
-              exportparts="button"
-              onBqBlur={this.handleBlur}
-              onBqClick={this.handleClick}
-              onBqFocus={this.handleFocus}
+      <div class="flex flex-col" part="wrapper">
+        <div class="flex gap-xs px-[--bq-page-title--paddingX] py-[--bq-page-title--paddingY]" part="base">
+          {/* Back navigation button */}
+          <div class={{ flex: true, '!hidden': !this.haveBackNavigation }} part="back">
+            <slot name="back">
+              <bq-button
+                appearance="link"
+                part="btn-back"
+                exportparts="button"
+                onBqBlur={this.handleBlur}
+                onBqClick={this.handleClick}
+                onBqFocus={this.handleFocus}
+              >
+                <bq-icon
+                  color="text--primary"
+                  name="arrow-left"
+                  size="24"
+                  weight="bold"
+                  part="icon"
+                  exportparts="base,svg"
+                />
+              </bq-button>
+            </slot>
+          </div>
+          <div class="flex flex-col gap-xs">
+            <div class="flex items-center gap-xs">
+              {/* Prefix */}
+              <div
+                class={{ flex: true, '!hidden': !this.hasPrefix }}
+                ref={(divElem) => (this.prefixElem = divElem)}
+                part="prefix"
+              >
+                <slot name="prefix" onSlotchange={this.handleSlotChange} />
+              </div>
+              <div
+                class="title-font text-[length:--bq-page-title--text-size-title] font-[--bq-page-title--font-weight-title] leading-[--bq-page-title--text-lineHeight] text-[color:--bq-page-title--text-title-color]"
+                part="title"
+              >
+                <slot />
+              </div>
+              {/* Suffix */}
+              <div
+                class={{ 'flex gap-xs p-xs2': true, '!hidden': !this.hasSuffix }}
+                ref={(divElem) => (this.suffixElem = divElem)}
+                part="suffix"
+              >
+                <slot name="suffix" onSlotchange={this.handleSlotChange} />
+              </div>
+            </div>
+            {/* Sub-title */}
+            <div
+              class={{
+                'title-font text-[length:--bq-page-title--text-size-subtitle] font-[--bq-page-title--font-weight-subtitle] leading-[--bq-page-title--text-lineHeight] text-[color:--bq-page-title--text-sub-title-color]':
+                  true,
+                hidden: !this.hasSubTitle,
+              }}
+              ref={(divElem) => (this.subTitleElem = divElem)}
+              part="sub-title"
             >
-              <bq-icon
-                color="text--primary"
-                name="arrow-left"
-                size="24"
-                weight="bold"
-                part="icon"
-                exportparts="base,svg"
-              />
-            </bq-button>
-          </slot>
+              <slot name="sub-title" onSlotchange={this.handleSlotChange} />
+            </div>
+          </div>
         </div>
-        <div class="flex flex-col gap-xs">
-          <div class="flex items-center gap-xs">
-            {/* Prefix */}
-            <div
-              class={{ flex: true, '!hidden': !this.hasPrefix }}
-              ref={(divElem) => (this.prefixElem = divElem)}
-              part="prefix"
-            >
-              <slot name="prefix" onSlotchange={this.handleSlotChange} />
-            </div>
-            <div
-              class="title-font text-[length:--bq-page-title--text-size-title] font-[--bq-page-title--font-weight-title] leading-[--bq-page-title--text-lineHeight] text-[color:--bq-page-title--text-title-color]"
-              part="title"
-            >
-              <slot />
-            </div>
-            {/* Suffix */}
-            <div
-              class={{ 'flex gap-xs p-xs2': true, '!hidden': !this.hasSuffix }}
-              ref={(divElem) => (this.suffixElem = divElem)}
-              part="suffix"
-            >
-              <slot name="suffix" onSlotchange={this.handleSlotChange} />
-            </div>
-          </div>
-          {/* Sub-title */}
-          <div
-            class={{
-              'title-font text-[length:--bq-page-title--text-size-subtitle] font-[--bq-page-title--font-weight-subtitle] leading-[--bq-page-title--text-lineHeight] text-[color:--bq-page-title--text-sub-title-color]':
-                true,
-              hidden: !this.hasSubTitle,
-            }}
-            ref={(divElem) => (this.subTitleElem = divElem)}
-            part="sub-title"
-          >
-            <slot name="sub-title" onSlotchange={this.handleSlotChange} />
-          </div>
+        {/* Divider */}
+        <div
+          class={{
+            block: true,
+            '!hidden': !this.hasDivider,
+          }}
+          ref={(divElem) => (this.dividerElem = divElem)}
+          part="divider"
+        >
+          <slot name="divider" onSlotchange={this.handleSlotChange} />
         </div>
       </div>
     );

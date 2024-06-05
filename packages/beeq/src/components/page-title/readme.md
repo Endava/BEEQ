@@ -26,7 +26,9 @@
 | Part          | Description                                                                              |
 | ------------- | ---------------------------------------------------------------------------------------- |
 | `"back"`      | The container `<div>` that wraps the page title back icon button.                        |
+| `"base"`      | The inner container `<div>`of element that contains the base page title component        |
 | `"btn-back"`  | The back navigation button.                                                              |
+| `"divider"`   | The inner container `<div>` of element that contains the bottom divider section          |
 | `"icon"`      | The `<bq-icon>` element used to render a predefined back navigation icon for page title. |
 | `"prefix"`    | The `<div>` page title element that acts as prefix slot container.                       |
 | `"sub-title"` | The `<div>` page title element that acts as sub-title slot container.                    |
