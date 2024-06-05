@@ -55,7 +55,7 @@ describe('bq-page-title', () => {
     expect(suffixSlot).not.toBeNull();
   });
 
-  it('should render title + sub-title', async () => {
+  it('should render title + sub-title + divider', async () => {
     const page = await newE2EPage({
       html: `
         <bq-page-title>
@@ -63,9 +63,15 @@ describe('bq-page-title', () => {
           <div slot="sub-title">
             Sub-title
           </div>
+          <div slot="divider">
+            <bq-divider />
+          </div>
         </bq-page-title>`,
     });
     const subTitleSlot = await page.find('bq-page-title >>> slot[name="sub-title"]');
     expect(subTitleSlot).not.toBeNull();
+
+    const dividerSlot = await page.find('bq-page-title >>> slot[name="divider"]');
+    expect(dividerSlot).not.toBeNull();
   });
 });
