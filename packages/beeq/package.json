@@ -16,7 +16,7 @@
     "@floating-ui/core": "^1.6.2",
     "@floating-ui/dom": "^1.6.5",
     "@stencil/core": "^4.18.3",
-    "cally": "0.7.0"
+    "cally": "0.7.1"
   },
   "repository": {
     "type": "git",
