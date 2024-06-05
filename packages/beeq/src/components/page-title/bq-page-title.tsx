@@ -26,7 +26,6 @@ export class BqPageTitle {
   private prefixElem: HTMLElement;
   private suffixElem: HTMLElement;
   private subTitleElem: HTMLElement;
-  private dividerElem: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -40,7 +39,6 @@ export class BqPageTitle {
   @State() private hasPrefix = false;
   @State() private hasSuffix = false;
   @State() private hasSubTitle = false;
-  @State() private hasDivider = false;
 
   // Public Property API
   // ========================
@@ -102,7 +100,6 @@ export class BqPageTitle {
     this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
     this.hasSuffix = hasSlotContent(this.suffixElem, 'suffix');
     this.hasSubTitle = hasSlotContent(this.subTitleElem, 'sub-title');
-    this.hasDivider = hasSlotContent(this.dividerElem, 'divider');
   };
 
   // render() function
@@ -175,15 +172,10 @@ export class BqPageTitle {
           </div>
         </div>
         {/* Divider */}
-        <div
-          class={{
-            block: true,
-            '!hidden': !this.hasDivider,
-          }}
-          ref={(divElem) => (this.dividerElem = divElem)}
-          part="divider"
-        >
-          <slot name="divider" onSlotchange={this.handleSlotChange} />
+        <div part="divider">
+          <slot name="divider">
+            <bq-divider class="mb-m block" stroke-color="ui--secondary" stroke-thickness="1"></bq-divider>
+          </slot>
         </div>
       </div>
     );

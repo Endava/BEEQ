@@ -34,12 +34,14 @@
 ### Used by
 
  - [bq-drawer](../drawer)
+ - [bq-page-title](../page-title)
  - [bq-steps](../steps)
 
 ### Graph
 ```mermaid
 graph TD;
   bq-drawer --> bq-divider
+  bq-page-title --> bq-divider
   bq-steps --> bq-divider
   style bq-divider fill:#f9f,stroke:#333,stroke-width:4px
 ```

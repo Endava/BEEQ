@@ -27,8 +27,14 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => {
-  const bottomDivider = args.bottomDivider
-    ? html` <bq-divider slot="divider" class="mb-m block" stroke-color="ui--secondary" stroke-thickness="1" />`
+  const customDivider = args.customDivider
+    ? html`<bq-divider
+        slot="divider"
+        class="mb-m block"
+        stroke-color="stroke--secondary"
+        stroke-thickness="1"
+        dashed
+      />`
     : nothing;
 
   return html`
@@ -39,7 +45,7 @@ const Template = (args: Args) => {
       @bqBackBlur=${args.bqBackBlur}
     >
       ${args.title} ${args.subTitle ? html`<div slot="sub-title">${args.subTitle}</div>` : nothing}
-      ${args.actions ? html`<div class="flex gap-xs" slot="suffix">${args.actions}</div>` : nothing} ${bottomDivider}
+      ${args.actions ? html`<div class="flex gap-xs" slot="suffix">${args.actions}</div>` : nothing} ${customDivider}
     </bq-page-title>
   `;
 };
@@ -47,7 +53,6 @@ const Template = (args: Args) => {
 export const Default: Story = {
   render: Template,
   args: {
-    bottomDivider: true,
     title: 'Title',
   },
 };
@@ -56,7 +61,6 @@ export const TitleBack: Story = {
   name: 'Title + Back',
   render: Template,
   args: {
-    bottomDivider: true,
     haveBackNavigation: true,
     title: 'Title',
   },
@@ -66,7 +70,6 @@ export const TitleBackSubtitle: Story = {
   name: 'Title + Back + Subtitle',
   render: Template,
   args: {
-    bottomDivider: true,
     haveBackNavigation: true,
     title: 'Title',
     subTitle: 'Sub-title',
@@ -77,7 +80,21 @@ export const TitleBackActions: Story = {
   name: 'Title + Back + Subtitle + Actions',
   render: Template,
   args: {
-    bottomDivider: true,
+    haveBackNavigation: true,
+    title: 'Title',
+    subTitle: 'Sub-title',
+    actions: html`
+      <bq-icon class="p-xs2" color="text--brand" name="pencil-simple" size="24" weight="bold"></bq-icon>
+      <bq-icon class="p-xs2" color="text--brand" name="download-simple" size="24" weight="bold"></bq-icon>
+    `,
+  },
+};
+
+export const TitleBackActionsCustom: Story = {
+  name: 'Title + Back + Subtitle + Actions + Custom Divider',
+  render: Template,
+  args: {
+    customDivider: true,
     haveBackNavigation: true,
     title: 'Title',
     subTitle: 'Sub-title',

@@ -43,12 +43,14 @@
 
 - [bq-button](../button)
 - [bq-icon](../icon)
+- [bq-divider](../divider)
 
 ### Graph
 ```mermaid
 graph TD;
   bq-page-title --> bq-button
   bq-page-title --> bq-icon
+  bq-page-title --> bq-divider
   bq-button --> bq-icon
   style bq-page-title fill:#f9f,stroke:#333,stroke-width:4px
 ```
