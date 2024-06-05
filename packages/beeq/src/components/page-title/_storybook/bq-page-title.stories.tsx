@@ -15,7 +15,7 @@ const meta: Meta = {
     'have-back-navigation': { control: 'boolean' },
     customDivider: { control: 'boolean', table: { disable: true } },
     title: { control: 'text', table: { disable: true } },
-    subTitle: { control: 'text', table: { disable: true } },
+    'sub-title': { control: 'text', table: { disable: true } },
     actions: { control: 'text', table: { disable: true } },
     // Event handlers
     bqBackClick: { action: 'bqBackClick' },
@@ -48,7 +48,7 @@ const Template = (args: Args) => {
       @bqBackFocus=${args.bqBackFocus}
       @bqBackBlur=${args.bqBackBlur}
     >
-      ${args.title} ${args.subTitle ? html`<div slot="sub-title">${args.subTitle}</div>` : nothing}
+      ${args.title} ${args['sub-title'] ? html`<div slot="sub-title">${args['sub-title']}</div>` : nothing}
       ${args.actions ? html`<div class="flex gap-xs" slot="suffix">${args.actions}</div>` : nothing} ${customDivider}
     </bq-page-title>
   `;
@@ -76,7 +76,7 @@ export const TitleBackSubtitle: Story = {
   args: {
     'have-back-navigation': true,
     title: 'Title',
-    subTitle: 'Sub-title',
+    'sub-title': 'Sub-title',
   },
 };
 
@@ -86,7 +86,7 @@ export const TitleBackActions: Story = {
   args: {
     'have-back-navigation': true,
     title: 'Title',
-    subTitle: 'Sub-title',
+    'sub-title': 'Sub-title',
     actions: html`
       <bq-icon class="p-xs2" color="text--brand" name="pencil-simple" weight="bold"></bq-icon>
       <bq-icon class="p-xs2" color="text--brand" name="download-simple" weight="bold"></bq-icon>
@@ -101,7 +101,7 @@ export const TitleBackActionsCustom: Story = {
     customDivider: true,
     'have-back-navigation': true,
     title: 'Title',
-    subTitle: 'Sub-title',
+    'sub-title': 'Sub-title',
     actions: html`
       <bq-icon class="p-xs2" color="text--brand" name="pencil-simple" weight="bold"></bq-icon>
       <bq-icon class="p-xs2" color="text--brand" name="download-simple" weight="bold"></bq-icon>
