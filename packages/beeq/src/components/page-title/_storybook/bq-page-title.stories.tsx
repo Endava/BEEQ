@@ -13,14 +13,15 @@ const meta: Meta = {
   },
   argTypes: {
     'have-back-navigation': { control: 'boolean' },
-    customDivider: { control: 'boolean', table: { disable: true } },
-    title: { control: 'text', table: { disable: true } },
-    'sub-title': { control: 'text', table: { disable: true } },
-    actions: { control: 'text', table: { disable: true } },
     // Event handlers
     bqBackClick: { action: 'bqBackClick' },
     bqBackBlur: { action: 'bqBackBlur' },
     bqBackFocus: { action: 'bqBackFocus' },
+    // Not part of the component's API, so we don't want to expose it in the controls panel
+    customDivider: { control: 'boolean', table: { disable: true } },
+    title: { control: 'text', table: { disable: true } },
+    'sub-title': { control: 'text', table: { disable: true } },
+    actions: { control: 'text', table: { disable: true } },
   },
   args: {
     'have-back-navigation': false,
