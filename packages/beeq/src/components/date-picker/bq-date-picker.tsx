@@ -1,16 +1,4 @@
-import {
-  Component,
-  Element,
-  Event,
-  EventEmitter,
-  forceUpdate,
-  h,
-  Listen,
-  Method,
-  Prop,
-  State,
-  Watch,
-} from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
 import { DATE_PICKER_TYPE, DaysOfWeek, TDatePickerType } from './bq-date-picker.types';
 import { FloatingUIPlacement } from '../../services/interfaces';
@@ -94,6 +82,7 @@ export class BqDatePicker {
   @State() hasSuffix = false;
   @State() hasValue = false;
   @State() hasRangeEnd = false;
+  @State() setTentative = null;
 
   // Public Property API
   // ========================
@@ -148,8 +137,12 @@ export class BqDatePicker {
   /** Number of months to show when range is `true` */
   @Prop({ reflect: true }) months: number;
 
-  /** The number of months to display per page when using next/previous buttons. */
-  @Prop({ reflect: true }) monthsPerView: number = 1;
+  /**
+   * Specifies how the next/previous buttons should navigate the calendar.
+   * - single: The buttons will navigate by a single month at a time.
+   * - months: The buttons will navigate by the number of months displayed per view.
+   */
+  @Prop({ reflect: true }) monthsPerView: 'single' | 'months' = 'single';
 
   /** The Date picker input name. */
   @Prop({ reflect: true }) name!: string;
@@ -255,22 +248,17 @@ export class BqDatePicker {
 
   @Listen('mousedown', { target: 'window', capture: true })
   async handleMouseClick(event: MouseEvent) {
-    if (!this.open) return;
-    if (!this.datePickerElement || this.type !== 'range') return;
-    // Skip if the mouse button is not the main button
-    if (event.button !== 0) return;
+    const { open, datePickerElement, type, hasRangeEnd } = this;
 
-    const rect = this.datePickerElement.getBoundingClientRect();
+    if (!open || !datePickerElement || type !== 'range' || event.button !== 0) return;
 
-    if (
-      event.clientY < rect.top ||
-      event.clientY > rect.bottom ||
-      event.clientX < rect.left ||
-      event.clientX > rect.right
-    ) {
-      if (!this.hasRangeEnd) {
-        forceUpdate(this);
-      }
+    const { top, bottom, left, right } = datePickerElement.getBoundingClientRect();
+    const { clientY, clientX } = event;
+
+    const isOutside = clientY < top || clientY > bottom || clientX < left || clientX > right;
+
+    if (isOutside && !hasRangeEnd) {
+      this.setTentative = this.setTentative === undefined ? null : undefined;
     }
   }
 
@@ -569,7 +557,9 @@ export class BqDatePicker {
               value={this.value}
               min={this.min}
               max={this.max}
-              months={this.monthsPerView}
+              months={this.months}
+              tentative={this.setTentative}
+              pageBy={this.monthsPerView}
               focusedDate={this.focusedDate(this.value)}
               firstDayOfWeek={this.firstDayOfWeek}
               showOutsideDays={this.showOutsideDays}

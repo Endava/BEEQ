@@ -383,9 +383,9 @@ export namespace Components {
          */
         "months": number;
         /**
-          * The number of months to display per page when using next/previous buttons.
+          * Specifies how the next/previous buttons should navigate the calendar. - single: The buttons will navigate by a single month at a time. - months: The buttons will navigate by the number of months displayed per view.
          */
-        "monthsPerView": number;
+        "monthsPerView": 'single' | 'months';
         /**
           * The Date picker input name.
          */
@@ -2622,9 +2622,9 @@ declare namespace LocalJSX {
          */
         "months"?: number;
         /**
-          * The number of months to display per page when using next/previous buttons.
+          * Specifies how the next/previous buttons should navigate the calendar. - single: The buttons will navigate by a single month at a time. - months: The buttons will navigate by the number of months displayed per view.
          */
-        "monthsPerView"?: number;
+        "monthsPerView"?: 'single' | 'months';
         /**
           * The Date picker input name.
          */
