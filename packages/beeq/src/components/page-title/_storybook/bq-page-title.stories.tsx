@@ -13,6 +13,10 @@ const meta: Meta = {
   },
   argTypes: {
     'have-back-navigation': { control: 'boolean' },
+    customDivider: { control: 'boolean', table: { disable: true } },
+    title: { control: 'text', table: { disable: true } },
+    subTitle: { control: 'text', table: { disable: true } },
+    actions: { control: 'text', table: { disable: true } },
     // Event handlers
     bqBackClick: { action: 'bqBackClick' },
     bqBackBlur: { action: 'bqBackBlur' },
@@ -79,12 +83,6 @@ export const TitleBackSubtitle: Story = {
 export const TitleBackActions: Story = {
   name: 'Title + Back + Subtitle + Actions',
   render: Template,
-  argTypes: {
-    customDivider: { control: 'boolean', table: { disable: true } },
-    title: { control: 'text', table: { disable: true } },
-    subTitle: { control: 'text', table: { disable: true } },
-    actions: { control: 'text', table: { disable: true } },
-  },
   args: {
     'have-back-navigation': true,
     title: 'Title',
@@ -99,12 +97,6 @@ export const TitleBackActions: Story = {
 export const TitleBackActionsCustom: Story = {
   name: 'Title + Back + Subtitle + Actions + Custom Divider',
   render: Template,
-  argTypes: {
-    customDivider: { control: 'boolean', table: { disable: true } },
-    title: { control: 'text', table: { disable: true } },
-    subTitle: { control: 'text', table: { disable: true } },
-    actions: { control: 'text', table: { disable: true } },
-  },
   args: {
     customDivider: true,
     'have-back-navigation': true,
