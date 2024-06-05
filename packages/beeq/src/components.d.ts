@@ -423,6 +423,10 @@ export namespace Components {
          */
         "strategy"?: 'fixed' | 'absolute';
         /**
+          * The date that is tentatively selected e.g. the start of a range selection
+         */
+        "tentative"?: string;
+        /**
           * It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection
          */
         "type": TDatePickerType;
@@ -2677,6 +2681,10 @@ declare namespace LocalJSX {
           * Defines the strategy to position the Date picker panel
          */
         "strategy"?: 'fixed' | 'absolute';
+        /**
+          * The date that is tentatively selected e.g. the start of a range selection
+         */
+        "tentative"?: string;
         /**
           * It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection
          */

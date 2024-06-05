@@ -2,7 +2,13 @@ import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State
 
 import { DATE_PICKER_TYPE, DaysOfWeek, TDatePickerType } from './bq-date-picker.types';
 import { FloatingUIPlacement } from '../../services/interfaces';
-import { hasSlotContent, isDefined, isHTMLElement, validatePropValue } from '../../shared/utils';
+import {
+  hasSlotContent,
+  isDefined,
+  isEventTargetChildOfElement,
+  isHTMLElement,
+  validatePropValue,
+} from '../../shared/utils';
 import { TInputValidation } from '../input/bq-input.types';
 
 /**
@@ -82,7 +88,6 @@ export class BqDatePicker {
   @State() hasSuffix = false;
   @State() hasValue = false;
   @State() hasRangeEnd = false;
-  @State() setTentative = null;
 
   // Public Property API
   // ========================
@@ -171,6 +176,9 @@ export class BqDatePicker {
   /** Defines the strategy to position the Date picker panel */
   @Prop({ reflect: true }) strategy?: 'fixed' | 'absolute' = 'fixed';
 
+  /** The date that is tentatively selected e.g. the start of a range selection  */
+  @Prop({ reflect: true, mutable: true }) tentative?: string;
+
   /** It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection */
   @Prop({ reflect: true }) type: TDatePickerType = 'single';
 
@@ -232,7 +240,7 @@ export class BqDatePicker {
   // Ordered by their natural call order
   // =====================================
 
-  componentDidLoad() {
+  connectedCallback() {
     this.handleValueChange();
   }
 
@@ -246,19 +254,12 @@ export class BqDatePicker {
     this.open = ev.detail.open;
   }
 
-  @Listen('mousedown', { target: 'window', capture: true })
-  async handleMouseClick(event: MouseEvent) {
+  @Listen('click', { target: 'window', capture: true })
+  handleClickOutside(ev: MouseEvent) {
     const { open, datePickerElement, type, hasRangeEnd } = this;
-
-    if (!open || !datePickerElement || type !== 'range' || event.button !== 0) return;
-
-    const { top, bottom, left, right } = datePickerElement.getBoundingClientRect();
-    const { clientY, clientX } = event;
-
-    const isOutside = clientY < top || clientY > bottom || clientX < left || clientX > right;
-
-    if (isOutside && !hasRangeEnd) {
-      this.setTentative = this.setTentative === undefined ? null : undefined;
+    if (!open || !datePickerElement || type !== 'range' || ev.button !== 0) return;
+    if (!isEventTargetChildOfElement(ev, this.el) && !hasRangeEnd) {
+      this.tentative = undefined;
     }
   }
 
@@ -328,8 +329,9 @@ export class BqDatePicker {
     this.open = this.type === 'multi';
   };
 
-  private handleCalendarRangeStart = () => {
+  private handleCalendarRangeStart = (ev: CustomEvent) => {
     this.hasRangeEnd = false;
+    this.tentative = new Date(ev.detail).toLocaleDateString('fr-CA');
   };
 
   private handleCalendarRangeEnd = () => {
@@ -558,7 +560,7 @@ export class BqDatePicker {
               min={this.min}
               max={this.max}
               months={this.months}
-              tentative={this.setTentative}
+              tentative={this.tentative}
               pageBy={this.monthsPerView}
               focusedDate={this.focusedDate(this.value)}
               firstDayOfWeek={this.firstDayOfWeek}
