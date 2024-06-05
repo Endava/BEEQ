@@ -12,14 +12,14 @@ const meta: Meta = {
     },
   },
   argTypes: {
-    haveBackNavigation: { control: 'boolean' },
+    'have-back-navigation': { control: 'boolean' },
     // Event handlers
     bqBackClick: { action: 'bqBackClick' },
     bqBackBlur: { action: 'bqBackBlur' },
     bqBackFocus: { action: 'bqBackFocus' },
   },
   args: {
-    haveBackNavigation: false,
+    'have-back-navigation': false,
   },
 };
 export default meta;
@@ -39,7 +39,7 @@ const Template = (args: Args) => {
 
   return html`
     <bq-page-title
-      ?have-back-navigation=${args.haveBackNavigation}
+      ?have-back-navigation=${args['have-back-navigation']}
       @bqBackClick=${args.bqBackClick}
       @bqBackFocus=${args.bqBackFocus}
       @bqBackBlur=${args.bqBackBlur}
@@ -61,7 +61,7 @@ export const TitleBack: Story = {
   name: 'Title + Back',
   render: Template,
   args: {
-    haveBackNavigation: true,
+    'have-back-navigation': true,
     title: 'Title',
   },
 };
@@ -70,7 +70,7 @@ export const TitleBackSubtitle: Story = {
   name: 'Title + Back + Subtitle',
   render: Template,
   args: {
-    haveBackNavigation: true,
+    'have-back-navigation': true,
     title: 'Title',
     subTitle: 'Sub-title',
   },
@@ -80,12 +80,12 @@ export const TitleBackActions: Story = {
   name: 'Title + Back + Subtitle + Actions',
   render: Template,
   args: {
-    haveBackNavigation: true,
+    'have-back-navigation': true,
     title: 'Title',
     subTitle: 'Sub-title',
     actions: html`
-      <bq-icon class="p-xs2" color="text--brand" name="pencil-simple" size="24" weight="bold"></bq-icon>
-      <bq-icon class="p-xs2" color="text--brand" name="download-simple" size="24" weight="bold"></bq-icon>
+      <bq-icon class="p-xs2" color="text--brand" name="pencil-simple" weight="bold"></bq-icon>
+      <bq-icon class="p-xs2" color="text--brand" name="download-simple" weight="bold"></bq-icon>
     `,
   },
 };
@@ -93,14 +93,20 @@ export const TitleBackActions: Story = {
 export const TitleBackActionsCustom: Story = {
   name: 'Title + Back + Subtitle + Actions + Custom Divider',
   render: Template,
+  argTypes: {
+    customDivider: { control: 'boolean', table: { disable: true } },
+    title: { control: 'text', table: { disable: true } },
+    subTitle: { control: 'text', table: { disable: true } },
+    actions: { control: 'text', table: { disable: true } },
+  },
   args: {
     customDivider: true,
-    haveBackNavigation: true,
+    'have-back-navigation': true,
     title: 'Title',
     subTitle: 'Sub-title',
     actions: html`
-      <bq-icon class="p-xs2" color="text--brand" name="pencil-simple" size="24" weight="bold"></bq-icon>
-      <bq-icon class="p-xs2" color="text--brand" name="download-simple" size="24" weight="bold"></bq-icon>
+      <bq-icon class="p-xs2" color="text--brand" name="pencil-simple" weight="bold"></bq-icon>
+      <bq-icon class="p-xs2" color="text--brand" name="download-simple" weight="bold"></bq-icon>
     `,
   },
 };
