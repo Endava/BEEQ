@@ -79,6 +79,12 @@ export const TitleBackSubtitle: Story = {
 export const TitleBackActions: Story = {
   name: 'Title + Back + Subtitle + Actions',
   render: Template,
+  argTypes: {
+    customDivider: { control: 'boolean', table: { disable: true } },
+    title: { control: 'text', table: { disable: true } },
+    subTitle: { control: 'text', table: { disable: true } },
+    actions: { control: 'text', table: { disable: true } },
+  },
   args: {
     'have-back-navigation': true,
     title: 'Title',
