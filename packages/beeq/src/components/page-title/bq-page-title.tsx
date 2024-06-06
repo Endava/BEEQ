@@ -5,7 +5,7 @@ import { hasSlotContent } from '../../shared/utils';
 /**
  * @part wrapper - The wrapper container `<div>` of the element inside the shadow DOM.
  * @part base - The inner container `<div>`of element that contains the base page title component.
- * @prop content - Defines the main container of the page title component, which includes the title and subtitle elements.
+ * @part content - Defines the main container of the page title component, which includes the title and subtitle elements.
  * @part title-suffix - Defines the container that holds the title and any suffix content.
  * @part divider - The inner container `<div>` of element that contains the bottom divider section.
  * @part back - The container `<div>` that wraps the page title back icon button.
