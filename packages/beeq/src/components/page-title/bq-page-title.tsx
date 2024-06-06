@@ -107,7 +107,7 @@ export class BqPageTitle {
   render() {
     return (
       <div class="flex flex-col" part="wrapper">
-        <div class="flex gap-xs" part="base">
+        <div class="flex gap-xs [padding-block:var(--bq-page-title--paddingY)]" part="base">
           {/* Back navigation button */}
           <div class={{ flex: true, '!hidden': !this.haveBackNavigation }} part="back">
             <slot name="back">

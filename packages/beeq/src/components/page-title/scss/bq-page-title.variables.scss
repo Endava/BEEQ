@@ -4,6 +4,7 @@
 
 :host {
   /**
+   * @prop --bq-page-title--paddingY - Padding top and bottom of the page title wrapper
    * @prop --bq-page-title--text-title-color - Page title text color
    * @prop --bq-page-title--text-sub-title-color - Page title color for sub-title
    * @prop --bq-page-title--text-lineHeight - Page title text line height
@@ -12,6 +13,7 @@
    * @prop --bq-page-title--font-weight-title - Page title font weight for title
    * @prop --bq-page-title--font-weight-subtitle - Page title font weight for subtitle
    */
+  --bq-page-title--paddingY: theme(spacing.xl);
   --bq-page-title--text-title-color: theme(textColor.text.primary);
   --bq-page-title--text-sub-title-color: theme(textColor.text.secondary);
   --bq-page-title--text-lineHeight: theme(lineHeight.regular);
