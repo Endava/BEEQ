@@ -7,7 +7,7 @@ import { hasSlotContent } from '../../shared/utils';
  * @part base - The inner container `<div>`of element that contains the base page title component.
  * @part content - Defines the main container of the page title component, which includes the title and subtitle elements.
  * @part title-suffix - Defines the container that holds the title and any suffix content.
- * @part divider - The inner container `<div>` of element that contains the bottom divider section.
+ * @part divider - The inner container `<div>` of element that acts as divider slot container.
  * @part back - The container `<div>` that wraps the page title back icon button.
  * @part btn-back - The back navigation button.
  * @part title - The container `<div>` that wraps the page title content.
