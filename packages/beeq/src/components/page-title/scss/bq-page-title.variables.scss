@@ -4,21 +4,23 @@
 
 :host {
   /**
-   * @prop --bq-page-title--paddingY - Padding top and bottom of the page title wrapper
-   * @prop --bq-page-title--text-title-color - Page title text color
-   * @prop --bq-page-title--text-sub-title-color - Page title color for sub-title
-   * @prop --bq-page-title--text-lineHeight - Page title text line height
-   * @prop --bq-page-title--text-size-title - Page title text size for title
-   * @prop --bq-page-title--text-size-subtitle - Page title text size for subtitle
-   * @prop --bq-page-title--font-weight-title - Page title font weight for title
-   * @prop --bq-page-title--font-weight-subtitle - Page title font weight for subtitle
+   * @prop --paddingY - Padding top and bottom of the page title wrapper
+   * @prop --subtitle-fontWeight - Page title font weight for subtitle
+   * @prop --subtitle-textColor - Page title color for sub-title
+   * @prop --subtitle-textSize - Page title text size for subtitle
+   * @prop --title-lineHeight - Page title text line height
+   * @prop --title-fontWeight - Page title font weight for title
+   * @prop --title-textColor - Page title color for title
+   * @prop --title-textSize - Page title text size for title
    */
-  --bq-page-title--paddingY: theme(spacing.xl);
-  --bq-page-title--text-title-color: theme(textColor.text.primary);
-  --bq-page-title--text-sub-title-color: theme(textColor.text.secondary);
-  --bq-page-title--text-lineHeight: theme(lineHeight.regular);
-  --bq-page-title--text-size-title: theme(fontSize.xxl);
-  --bq-page-title--text-size-subtitle: theme(fontSize.l);
-  --bq-page-title--font-weight-title: theme(fontWeight.bold);
-  --bq-page-title--font-weight-subtitle: theme(fontWeight.medium);
+
+  /* stylelint-disable custom-property-pattern */
+  --paddingY: theme(spacing.xl);
+  --subtitle-fontWeight: theme(fontWeight.medium);
+  --subtitle-textColor: theme(textColor.text.secondary);
+  --subtitle-textSize: theme(fontSize.l);
+  --title-lineHeight: theme(lineHeight.regular);
+  --title-fontWeight: theme(fontWeight.bold);
+  --title-textColor: theme(textColor.text.primary);
+  --title-textSize: theme(fontSize.xxl);
 }

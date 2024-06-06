@@ -107,7 +107,7 @@ export class BqPageTitle {
   render() {
     return (
       <div class="flex flex-col" part="wrapper">
-        <div class="flex gap-xs [padding-block:var(--bq-page-title--paddingY)]" part="base">
+        <div class="flex gap-xs [padding-block:--paddingY]" part="base">
           {/* Back navigation button */}
           <div class={{ flex: true, '!hidden': !this.haveBackNavigation }} part="back">
             <slot name="back">
@@ -134,7 +134,7 @@ export class BqPageTitle {
             <div class="flex items-center gap-xs" part="title-suffix">
               {/* Title */}
               <div
-                class="title-font text-[length:--bq-page-title--text-size-title] font-[--bq-page-title--font-weight-title] leading-[--bq-page-title--text-lineHeight] text-[color:--bq-page-title--text-title-color]"
+                class="title-font text-[length:--title-textSize] font-[--title-fontWeight] leading-[--title-lineHeight] text-[color:--title-textColor]"
                 part="title"
               >
                 <slot />
@@ -151,7 +151,7 @@ export class BqPageTitle {
             {/* Sub-title */}
             <div
               class={{
-                'title-font text-[length:--bq-page-title--text-size-subtitle] font-[--bq-page-title--font-weight-subtitle] leading-[--bq-page-title--text-lineHeight] text-[color:--bq-page-title--text-sub-title-color]':
+                'title-font text-[length:--subtitle-textSize] font-[--subtitle-fontWeight] leading-[--title-lineHeight] text-[color:--subtitle-textColor]':
                   true,
                 hidden: !this.hasSubTitle,
               }}
