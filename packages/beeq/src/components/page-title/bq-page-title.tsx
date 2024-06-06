@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Prop, State } from '@stencil/core';
+import { Component, Element, h, State } from '@stencil/core';
 
 import { hasSlotContent } from '../../shared/utils';
 
@@ -8,10 +8,8 @@ import { hasSlotContent } from '../../shared/utils';
  * @part content - Defines the main container of the page title component, which includes the title and subtitle elements.
  * @part title-suffix - Defines the container that holds the title and any suffix content.
  * @part divider - The inner container `<div>` of element that acts as divider slot container.
- * @part back - The container `<div>` that wraps the page title back icon button.
- * @part btn-back - The back navigation button.
+ * @part back - The container `<div>` page title element that acts as back slot container.
  * @part title - The `<h1>` element serves as a container for the page title content, to improve accessibility.
- * @part icon - The `<bq-icon>` element used to render a predefined back navigation icon for page title.
  * @part suffix - The `<div>` page title element that acts as suffix slot container.
  * @part sub-title - The `<div>` page title element that acts as sub-title slot container.
  */
@@ -24,6 +22,7 @@ export class BqPageTitle {
   // Own Properties
   // ====================
 
+  private backNavigationElem: HTMLElement;
   private suffixElem: HTMLElement;
   private subTitleElem: HTMLElement;
 
@@ -36,6 +35,7 @@ export class BqPageTitle {
   // Inlined decorator, alphabetical order
   // =======================================
 
+  @State() private haveBackNavigation = false;
   @State() private hasSuffix = false;
   @State() private hasSubTitle = false;
 
@@ -45,21 +45,9 @@ export class BqPageTitle {
   // Prop lifecycle events
   // =======================
 
-  /** If true, the page title back button will be shown */
-  @Prop({ reflect: true }) haveBackNavigation: boolean;
-
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
-
-  /** Handler to be called when page title navigation button loses focus */
-  @Event() bqBackBlur: EventEmitter<HTMLBqPageTitleElement>;
-
-  /** Handler to be called when page title navigation button is clicked */
-  @Event() bqBackClick: EventEmitter<HTMLBqPageTitleElement>;
-
-  /** Handler to be called when page title navigation button is focused */
-  @Event() bqBackFocus: EventEmitter<HTMLBqPageTitleElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -80,22 +68,8 @@ export class BqPageTitle {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private handleClick = (ev: Event) => {
-    ev.stopPropagation();
-    this.bqBackClick.emit(this.el);
-  };
-
-  private handleBlur = (ev: Event) => {
-    ev.stopPropagation();
-    this.bqBackBlur.emit(this.el);
-  };
-
-  private handleFocus = (ev: Event) => {
-    ev.stopPropagation();
-    this.bqBackFocus.emit(this.el);
-  };
-
   private handleSlotChange = () => {
+    this.haveBackNavigation = hasSlotContent(this.backNavigationElem, 'back');
     this.hasSuffix = hasSlotContent(this.suffixElem, 'suffix');
     this.hasSubTitle = hasSlotContent(this.subTitleElem, 'sub-title');
   };
@@ -109,26 +83,12 @@ export class BqPageTitle {
       <div class="flex flex-col" part="wrapper">
         <div class="flex gap-xs [padding-block:--paddingY]" part="base">
           {/* Back navigation button */}
-          <div class={{ flex: true, '!hidden': !this.haveBackNavigation }} part="back">
-            <slot name="back">
-              <bq-button
-                appearance="link"
-                part="btn-back"
-                exportparts="button"
-                onBqBlur={this.handleBlur}
-                onBqClick={this.handleClick}
-                onBqFocus={this.handleFocus}
-              >
-                <bq-icon
-                  color="text--primary"
-                  name="arrow-left"
-                  size="24"
-                  weight="bold"
-                  part="icon"
-                  exportparts="base,svg"
-                />
-              </bq-button>
-            </slot>
+          <div
+            class={{ flex: true, '!hidden': !this.haveBackNavigation }}
+            ref={(divElem) => (this.backNavigationElem = divElem)}
+            part="back"
+          >
+            <slot name="back" onSlotchange={this.handleSlotChange} />
           </div>
           <div class="flex flex-grow flex-col gap-xs" part="content">
             <div class="flex items-center gap-xs" part="title-suffix">

@@ -12,20 +12,13 @@ const meta: Meta = {
     },
   },
   argTypes: {
-    'have-back-navigation': { control: 'boolean' },
-    // Event handlers
-    bqBackClick: { action: 'bqBackClick' },
-    bqBackBlur: { action: 'bqBackBlur' },
-    bqBackFocus: { action: 'bqBackFocus' },
     // Not part of the component's API, so we don't want to expose it in the controls panel
+    'have-back-navigation': { control: 'boolean', table: { disable: true } },
     customDivider: { control: 'boolean', table: { disable: true } },
     title: { control: 'text', table: { disable: true } },
     'sub-title': { control: 'text', table: { disable: true } },
     actions: { control: 'text', table: { disable: true } },
     'custom-style': { control: 'boolean', table: { disable: true } },
-  },
-  args: {
-    'have-back-navigation': false,
   },
 };
 export default meta;
@@ -46,12 +39,20 @@ const Template = (args: Args) => {
   const actionsSlotClass = args['custom-style'] ? 'flex flex-grow justify-end' : 'flex';
 
   return html`
-    <bq-page-title
-      ?have-back-navigation=${args['have-back-navigation']}
-      @bqBackClick=${args.bqBackClick}
-      @bqBackFocus=${args.bqBackFocus}
-      @bqBackBlur=${args.bqBackBlur}
-    >
+    <bq-page-title>
+      ${args['have-back-navigation']
+        ? html`
+            <bq-button appearance="link" slot="back">
+              <bq-icon
+                color="text--primary"
+                name="arrow-left"
+                weight="bold"
+                role="img"
+                title="Navigate back to the previous page"
+              ></bq-icon>
+            </bq-button>
+          `
+        : nothing}
       ${args.title} ${args['sub-title'] ? html`<div slot="sub-title">${args['sub-title']}</div>` : nothing}
       ${args.actions ? html`<div class="${actionsSlotClass}" slot="suffix">${args.actions}</div>` : nothing}
       ${customDivider}
