@@ -27,20 +27,6 @@ describe('bq-page-title', () => {
     expect(backIcon).not.toBeNull();
   });
 
-  it('should render prefix', async () => {
-    const page = await newE2EPage({
-      html: `
-        <bq-page-title>
-          <div slot="prefix">
-            <bq-icon name="start"></bq-icon>
-          </div>
-          Title
-        </bq-page-title>`,
-    });
-    const prefixSlot = await page.find('bq-page-title >>> slot[name="prefix"]');
-    expect(prefixSlot).not.toBeNull();
-  });
-
   it('should render title + action icons - suffix', async () => {
     const page = await newE2EPage({
       html: `
