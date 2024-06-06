@@ -10,7 +10,7 @@ import { hasSlotContent } from '../../shared/utils';
  * @part divider - The inner container `<div>` of element that acts as divider slot container.
  * @part back - The container `<div>` that wraps the page title back icon button.
  * @part btn-back - The back navigation button.
- * @part title - The container `<div>` that wraps the page title content.
+ * @part title - The `<h1>` element serves as a container for the page title content, to improve accessibility.
  * @part icon - The `<bq-icon>` element used to render a predefined back navigation icon for page title.
  * @part suffix - The `<div>` page title element that acts as suffix slot container.
  * @part sub-title - The `<div>` page title element that acts as sub-title slot container.
@@ -133,12 +133,12 @@ export class BqPageTitle {
           <div class="flex flex-grow flex-col gap-xs" part="content">
             <div class="flex items-center gap-xs" part="title-suffix">
               {/* Title */}
-              <div
+              <h1
                 class="title-font text-[length:--title-textSize] font-[--title-fontWeight] leading-[--title-lineHeight] text-[color:--title-textColor]"
                 part="title"
               >
                 <slot />
-              </div>
+              </h1>
               {/* Suffix */}
               <div
                 class={{ 'flex flex-grow gap-xs p-xs2': true, '!hidden': !this.hasSuffix }}

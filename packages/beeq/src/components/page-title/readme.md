@@ -33,7 +33,7 @@
 | `"icon"`         | The `<bq-icon>` element used to render a predefined back navigation icon for page title.                |
 | `"sub-title"`    | The `<div>` page title element that acts as sub-title slot container.                                   |
 | `"suffix"`       | The `<div>` page title element that acts as suffix slot container.                                      |
-| `"title"`        | The container `<div>` that wraps the page title content.                                                |
+| `"title"`        | The `<h1>` element serves as a container for the page title content, to improve accessibility.          |
 | `"title-suffix"` | Defines the container that holds the title and any suffix content.                                      |
 | `"wrapper"`      | The wrapper container `<div>` of the element inside the shadow DOM.                                     |
 
