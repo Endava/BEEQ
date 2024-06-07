@@ -1,8 +1,15 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { CalendarDate } from 'cally';
 
 import { DATE_PICKER_TYPE, DaysOfWeek, TDatePickerType } from './bq-date-picker.types';
 import { FloatingUIPlacement } from '../../services/interfaces';
-import { hasSlotContent, isDefined, isHTMLElement, validatePropValue } from '../../shared/utils';
+import {
+  hasSlotContent,
+  isDefined,
+  isEventTargetChildOfElement,
+  isHTMLElement,
+  validatePropValue,
+} from '../../shared/utils';
 import { TInputValidation } from '../input/bq-input.types';
 
 /**
@@ -17,31 +24,31 @@ import { TInputValidation } from '../input/bq-input.types';
  * @part suffix - The suffix slot container.
 
 // Parts from the Cally library for calendar-date and calendar-range components:
- * @part container - The container for the entire component.
- * @part header - The container for heading and button's.
- * @part button - Any button within the component.
- * @part previous - The previous page button.
- * @part next - The next page button.
- * @part disabled - A button that is disabled due to min/max.
- * @part heading - The heading containing the month and year.
+ * @part calendar__container - The container for the entire component.
+ * @part calendar__header - The container for heading and button's.
+ * @part calendar__button - Any button within the component.
+ * @part calendar__previous - The previous page button.
+ * @part calendar__next - The next page button.
+ * @part calendar__disabled - A button that is disabled due to min/max.
+ * @part calendar__heading - The heading containing the month and year.
 
 // Parts specific to the calendar-month component:
- * @part heading - The heading that labels the month.
- * @part table - The <table> element.
- * @part tr - Any row within the table.
- * @part head - The table's header row.
- * @part week - The table's body rows.
- * @part th - The table's header cells.
- * @part td - The table's body cells.
- * @part button - Any button used in the component.
- * @part day - The buttons corresponding to each day in the grid.
- * @part selected - Any days which are selected.
- * @part today - Today's day.
- * @part disallowed - Any day that has been disallowed via isDateDisallowed.
- * @part outside - Any days which are outside the current month.
- * @part range-start - The day at the start of a date range.
- * @part range-end - The day at the end of a date range.
- * @part range-inner - Any days between the start and end of a date range.
+ * @part calendar__heading - The heading that labels the month.
+ * @part calendar__table - The <table> element.
+ * @part calendar__tr - Any row within the table.
+ * @part calendar__head - The table's header row.
+ * @part calendar__week - The table's body rows.
+ * @part calendar__th - The table's header cells.
+ * @part calendar__td - The table's body cells.
+ * @part calendar__button - Any button used in the component.
+ * @part calendar__day - The buttons corresponding to each day in the grid.
+ * @part calendar__selected - Any days which are selected.
+ * @part calendar__today - Today's day.
+ * @part calendar__disallowed - Any day that has been disallowed via isDateDisallowed.
+ * @part calendar__outside - Any days which are outside the current month.
+ * @part calendar__range-start - The day at the start of a date range.
+ * @part calendar__range-end - The day at the end of a date range.
+ * @part calendar__range-inner - Any days between the start and end of a date range.
  */
 @Component({
   tag: 'bq-date-picker',
@@ -54,6 +61,7 @@ export class BqDatePicker {
   // Own Properties
   // ====================
 
+  private callyElem?: InstanceType<typeof CalendarDate>;
   private inputElem?: HTMLInputElement;
   private labelElem?: HTMLElement;
   private prefixElem?: HTMLElement;
@@ -62,9 +70,10 @@ export class BqDatePicker {
   private fallbackInputId = 'date-picker';
 
   // Export parts of the calendar-month component
-  private readonly COMMON_EXPORT_PARTS = 'heading,table,tr,head,week,th,td';
+  private readonly COMMON_EXPORT_PARTS =
+    'calendar__heading,calendar__table,calendar__tr,calendar__head,calendar__week,calendar__th,calendar__td';
   private readonly BUTTON_EXPORT_PARTS =
-    'button,day,selected,today,disallowed,outside,range-start,range-end,range-inner';
+    'calendar__button,calendar__day,calendar__selected,calendar__today,calendar__disallowed,calendar__outside,calendar__range-start,calendar__range-end,calendar__range-inner';
 
   // Reference to host HTML element
   // ===================================
@@ -75,9 +84,11 @@ export class BqDatePicker {
   // Inlined decorator, alphabetical order
   // =======================================
 
-  @State() formattedDate: string;
+  @State() focusedDate: string;
+  @State() displayDate: string;
   @State() hasLabel = false;
   @State() hasPrefix = false;
+  @State() hasRangeEnd = false;
   @State() hasSuffix = false;
   @State() hasValue = false;
 
@@ -134,8 +145,12 @@ export class BqDatePicker {
   /** Number of months to show when range is `true` */
   @Prop({ reflect: true }) months: number;
 
-  /** The number of months to display per page when using next/previous buttons. */
-  @Prop({ reflect: true }) monthsPerView: number = 1;
+  /**
+   * Specifies how the next/previous buttons should navigate the calendar.
+   * - single: The buttons will navigate by a single month at a time.
+   * - months: The buttons will navigate by the number of months displayed per view.
+   */
+  @Prop({ reflect: true }) monthsPerView: 'single' | 'months' = 'single';
 
   /** The Date picker input name. */
   @Prop({ reflect: true }) name!: string;
@@ -163,6 +178,9 @@ export class BqDatePicker {
 
   /** Defines the strategy to position the Date picker panel */
   @Prop({ reflect: true }) strategy?: 'fixed' | 'absolute' = 'fixed';
+
+  /** The date that is tentatively selected e.g. the start of a range selection  */
+  @Prop({ reflect: true, mutable: true }) tentative?: string;
 
   /** It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection */
   @Prop({ reflect: true }) type: TDatePickerType = 'single';
@@ -193,8 +211,10 @@ export class BqDatePicker {
       return;
     }
 
-    this.formattedDate = this.formatDate(this.value);
     this.hasValue = isDefined(this.value);
+    this.displayDate = this.formatDisplayValue(this.value);
+
+    this.setFocusedDate();
   }
 
   @Watch('type')
@@ -225,7 +245,7 @@ export class BqDatePicker {
   // Ordered by their natural call order
   // =====================================
 
-  componentDidLoad() {
+  connectedCallback() {
     this.handleValueChange();
   }
 
@@ -237,6 +257,20 @@ export class BqDatePicker {
     if (!ev.composedPath().includes(this.el)) return;
 
     this.open = ev.detail.open;
+    this.setFocusedDate();
+  }
+
+  @Listen('click', { target: 'body', capture: true })
+  handleClickOutside(ev: MouseEvent) {
+    const { open, type, hasRangeEnd } = this;
+    if (!open || type !== 'range' || ev.button !== 0) return;
+    if (isEventTargetChildOfElement(ev, this.el) || hasRangeEnd) return;
+    if (isEventTargetChildOfElement(ev, this.el)) return;
+
+    if (!hasRangeEnd) {
+      this.tentative = undefined;
+      this.hasRangeEnd = false;
+    }
   }
 
   // Public methods API
@@ -278,6 +312,15 @@ export class BqDatePicker {
     this.bqFocus.emit(this.el);
   };
 
+  private setFocusedDate = () => {
+    if (!this.callyElem) return;
+    // We need to set the focused date in the calendar component via a ref
+    // because it doesn't work when passed as a prop (the Cally element does not re-render)
+    this.callyElem.focusedDate = this.value
+      ? this.formatFocusedDate(this.value)
+      : new Date().toLocaleDateString('fr-CA');
+  };
+
   private handleChange = (ev: Event) => {
     if (this.disabled) return;
 
@@ -287,7 +330,7 @@ export class BqDatePicker {
     if (!isNaN(dateValue.getTime())) {
       // We need to force the value to respect the format: yyyy-mm-dd, hence the hardcoded locale
       this.value = dateValue.toLocaleDateString('fr-CA');
-      this.formattedDate = this.formatDate(this.value);
+      this.displayDate = this.formatDisplayValue(this.value);
       this.bqChange.emit({ value: this.value, el: this.el });
     }
   };
@@ -296,8 +339,8 @@ export class BqDatePicker {
     const { value } = ev.target as unknown as { value: string };
 
     this.value = value;
-    this.formattedDate = this.formatDate(this.value);
-    this.inputElem.value = this.formattedDate;
+    this.displayDate = this.formatDisplayValue(this.value);
+    this.inputElem.value = this.displayDate;
     this.inputElem.focus();
 
     this.bqChange.emit({ value: this.value, el: this.el });
@@ -305,11 +348,21 @@ export class BqDatePicker {
     this.open = this.type === 'multi';
   };
 
+  private handleCalendarRangeStart = (ev: CustomEvent) => {
+    this.hasRangeEnd = false;
+    this.tentative = new Date(ev.detail).toLocaleDateString('fr-CA');
+  };
+
+  private handleCalendarRangeEnd = () => {
+    this.hasRangeEnd = true;
+  };
+
   private handleClearClick = (ev: CustomEvent) => {
     if (this.disabled) return;
 
     this.inputElem.value = '';
     this.value = this.inputElem.value;
+    this.hasRangeEnd = false;
 
     this.bqClear.emit(this.el);
     this.bqChange.emit({ value: this.value, el: this.el });
@@ -373,7 +426,7 @@ export class BqDatePicker {
    * @param value - The value to be processed, can be a string.
    * @returns The extracted last date portion of the value.
    */
-  private focusedDate = (value: string) => {
+  private formatFocusedDate = (value: string): string | null => {
     if (!value) return;
 
     const dateRegex = /\b\d{4}-\d{2}-\d{2}\b/;
@@ -381,7 +434,7 @@ export class BqDatePicker {
     return match ? match[0] : null;
   };
 
-  private formatDate = (value: string): string | undefined => {
+  private formatDisplayValue = (value: string): string | undefined => {
     if (!value) return;
 
     const dateFormatter = new Intl.DateTimeFormat(this.locale, this.formatOptions);
@@ -479,7 +532,7 @@ export class BqDatePicker {
               required={this.required}
               spellcheck={false}
               type="text"
-              value={this.formattedDate}
+              value={this.displayDate}
               part="input"
               // Events
               onBlur={this.handleBlur}
@@ -515,26 +568,28 @@ export class BqDatePicker {
               </slot>
             </span>
           </div>
-          <div class="flex items-center justify-center">
-            <CallyCalendar
-              isDateDisallowed={this.isDateDisallowed}
-              locale={this.locale as string}
-              value={this.value}
-              min={this.min}
-              max={this.max}
-              months={this.monthsPerView}
-              focusedDate={this.focusedDate(this.value)}
-              firstDayOfWeek={this.firstDayOfWeek}
-              showOutsideDays={this.showOutsideDays}
-              onChange={this.handleCalendarChange}
-              exportparts="container,header,button,previous,next,disabled,heading"
-            >
-              <bq-icon color="text--primary" slot="previous" name="caret-left" label="Previous" />
-              <bq-icon color="text--primary" slot="next" name="caret-right" label="Next" />
+          <CallyCalendar
+            isDateDisallowed={this.isDateDisallowed}
+            locale={this.locale as string}
+            value={this.value}
+            min={this.min}
+            max={this.max}
+            months={this.months}
+            tentative={this.tentative}
+            pageBy={this.monthsPerView}
+            firstDayOfWeek={this.firstDayOfWeek}
+            showOutsideDays={this.showOutsideDays}
+            onChange={this.handleCalendarChange}
+            onRangestart={this.handleCalendarRangeStart}
+            onRangeend={this.handleCalendarRangeEnd}
+            exportparts="container:calendar__container,header:calendar__header,button:calendar__button,previous:calendar__previous,next:calendar__next,disabled:calendar__disabled,heading:calendar__heading"
+            ref={(elem) => (this.callyElem = elem as InstanceType<typeof CalendarDate>)}
+          >
+            <bq-icon color="text--primary" slot="previous" name="caret-left" label="Previous" />
+            <bq-icon color="text--primary" slot="next" name="caret-right" label="Next" />
 
-              <div class="flex flex-wrap justify-center gap-[--bq-spacing-m]">{this.generateCalendarMonths()}</div>
-            </CallyCalendar>
-          </div>
+            <div class="flex flex-wrap justify-center gap-[--bq-spacing-m]">{this.generateCalendarMonths()}</div>
+          </CallyCalendar>
         </bq-dropdown>
       </div>
     );

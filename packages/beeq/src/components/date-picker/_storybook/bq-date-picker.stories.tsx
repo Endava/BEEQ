@@ -27,7 +27,7 @@ const meta: Meta = {
     max: { control: 'text' },
     min: { control: 'text' },
     months: { control: 'number' },
-    'months-per-view': { control: 'number' },
+    'months-per-view': { control: 'select', options: ['single', 'months'] },
     name: { control: 'text' },
     open: { control: 'boolean' },
     'panel-height': { control: 'text' },
@@ -53,6 +53,7 @@ const meta: Meta = {
     'show-outside-days': { control: 'boolean' },
     skidding: { control: 'number' },
     strategy: { control: 'select', options: ['fixed', 'absolute'] },
+    tentative: { control: 'text' },
     type: { control: 'select', options: [...DATE_PICKER_TYPE] },
     'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
     value: { control: 'text' },
@@ -85,7 +86,7 @@ const meta: Meta = {
     max: undefined,
     min: undefined,
     months: 1,
-    'months-per-view': 1,
+    'months-per-view': 'single',
     name: 'bq-date-picker',
     open: false,
     'panel-height': 'auto',
@@ -95,6 +96,7 @@ const meta: Meta = {
     'show-outside-days': false,
     skidding: 0,
     strategy: 'absolute',
+    tentative: undefined,
     type: 'single',
     'validation-status': 'none',
     value: undefined,
@@ -177,6 +179,7 @@ const Template = (args: Args) => {
       show-outside-days=${args['show-outside-days']}
       skidding=${args.skidding}
       strategy=${args.strategy}
+      tentative=${args.tentative}
       type=${args.type}
       validation-status=${args['validation-status']}
       value=${ifDefined(args.value)}

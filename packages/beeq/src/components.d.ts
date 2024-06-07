@@ -383,9 +383,9 @@ export namespace Components {
          */
         "months": number;
         /**
-          * The number of months to display per page when using next/previous buttons.
+          * Specifies how the next/previous buttons should navigate the calendar. - single: The buttons will navigate by a single month at a time. - months: The buttons will navigate by the number of months displayed per view.
          */
-        "monthsPerView": number;
+        "monthsPerView": 'single' | 'months';
         /**
           * The Date picker input name.
          */
@@ -422,6 +422,10 @@ export namespace Components {
           * Defines the strategy to position the Date picker panel
          */
         "strategy"?: 'fixed' | 'absolute';
+        /**
+          * The date that is tentatively selected e.g. the start of a range selection
+         */
+        "tentative"?: string;
         /**
           * It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection
          */
@@ -2622,9 +2626,9 @@ declare namespace LocalJSX {
          */
         "months"?: number;
         /**
-          * The number of months to display per page when using next/previous buttons.
+          * Specifies how the next/previous buttons should navigate the calendar. - single: The buttons will navigate by a single month at a time. - months: The buttons will navigate by the number of months displayed per view.
          */
-        "monthsPerView"?: number;
+        "monthsPerView"?: 'single' | 'months';
         /**
           * The Date picker input name.
          */
@@ -2677,6 +2681,10 @@ declare namespace LocalJSX {
           * Defines the strategy to position the Date picker panel
          */
         "strategy"?: 'fixed' | 'absolute';
+        /**
+          * The date that is tentatively selected e.g. the start of a range selection
+         */
+        "tentative"?: string;
         /**
           * It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection
          */
