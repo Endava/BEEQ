@@ -218,8 +218,8 @@ export class BqDrawer {
         <div
           class={{
             [`bq-drawer ${this.placement}`]: true,
-            'left-0': this.placement === 'left',
-            'right-0': this.placement === 'right',
+            'start-0': this.placement === 'left',
+            'end-0': this.placement === 'right',
           }}
           data-transition-enter="transition-transform ease-in duration-300"
           data-transition-enter-start={this.getMoveTranslate()}
