@@ -24,31 +24,31 @@ import { TInputValidation } from '../input/bq-input.types';
  * @part suffix - The suffix slot container.
 
 // Parts from the Cally library for calendar-date and calendar-range components:
- * @part container - The container for the entire component.
- * @part header - The container for heading and button's.
- * @part button - Any button within the component.
- * @part previous - The previous page button.
- * @part next - The next page button.
- * @part disabled - A button that is disabled due to min/max.
- * @part heading - The heading containing the month and year.
+ * @part calendar__container - The container for the entire component.
+ * @part calendar__header - The container for heading and button's.
+ * @part calendar__button - Any button within the component.
+ * @part calendar__previous - The previous page button.
+ * @part calendar__next - The next page button.
+ * @part calendar__disabled - A button that is disabled due to min/max.
+ * @part calendar__heading - The heading containing the month and year.
 
 // Parts specific to the calendar-month component:
- * @part heading - The heading that labels the month.
- * @part table - The <table> element.
- * @part tr - Any row within the table.
- * @part head - The table's header row.
- * @part week - The table's body rows.
- * @part th - The table's header cells.
- * @part td - The table's body cells.
- * @part button - Any button used in the component.
- * @part day - The buttons corresponding to each day in the grid.
- * @part selected - Any days which are selected.
- * @part today - Today's day.
- * @part disallowed - Any day that has been disallowed via isDateDisallowed.
- * @part outside - Any days which are outside the current month.
- * @part range-start - The day at the start of a date range.
- * @part range-end - The day at the end of a date range.
- * @part range-inner - Any days between the start and end of a date range.
+ * @part calendar__heading - The heading that labels the month.
+ * @part calendar__table - The <table> element.
+ * @part calendar__tr - Any row within the table.
+ * @part calendar__head - The table's header row.
+ * @part calendar__week - The table's body rows.
+ * @part calendar__th - The table's header cells.
+ * @part calendar__td - The table's body cells.
+ * @part calendar__button - Any button used in the component.
+ * @part calendar__day - The buttons corresponding to each day in the grid.
+ * @part calendar__selected - Any days which are selected.
+ * @part calendar__today - Today's day.
+ * @part calendar__disallowed - Any day that has been disallowed via isDateDisallowed.
+ * @part calendar__outside - Any days which are outside the current month.
+ * @part calendar__range-start - The day at the start of a date range.
+ * @part calendar__range-end - The day at the end of a date range.
+ * @part calendar__range-inner - Any days between the start and end of a date range.
  */
 @Component({
   tag: 'bq-date-picker',
@@ -70,9 +70,10 @@ export class BqDatePicker {
   private fallbackInputId = 'date-picker';
 
   // Export parts of the calendar-month component
-  private readonly COMMON_EXPORT_PARTS = 'heading,table,tr,head,week,th,td';
+  private readonly COMMON_EXPORT_PARTS =
+    'calendar__heading,calendar__table,calendar__tr,calendar__head,calendar__week,calendar__th,calendar__td';
   private readonly BUTTON_EXPORT_PARTS =
-    'button,day,selected,today,disallowed,outside,range-start,range-end,range-inner';
+    'calendar__button,calendar__day,calendar__selected,calendar__today,calendar__disallowed,calendar__outside,calendar__range-start,calendar__range-end,calendar__range-inner';
 
   // Reference to host HTML element
   // ===================================
@@ -581,7 +582,7 @@ export class BqDatePicker {
             onChange={this.handleCalendarChange}
             onRangestart={this.handleCalendarRangeStart}
             onRangeend={this.handleCalendarRangeEnd}
-            exportparts="container,header,button,previous,next,disabled,heading"
+            exportparts="container:calendar__container,header:calendar__header,button:calendar__button,previous:calendar__previous,next:calendar__next,disabled:calendar__disabled,heading:calendar__heading"
             ref={(elem) => (this.callyElem = elem as InstanceType<typeof CalendarDate>)}
           >
             <bq-icon color="text--primary" slot="previous" name="caret-left" label="Previous" />
