@@ -790,6 +790,8 @@ export namespace Components {
          */
         "ariaLabel": string;
     }
+    interface BqPageTitle {
+    }
     interface BqPanel {
         /**
           * Represents the distance (gutter or margin) between the panel and the trigger element.
@@ -1910,6 +1912,12 @@ declare global {
         prototype: HTMLBqOptionListElement;
         new (): HTMLBqOptionListElement;
     };
+    interface HTMLBqPageTitleElement extends Components.BqPageTitle, HTMLStencilElement {
+    }
+    var HTMLBqPageTitleElement: {
+        prototype: HTMLBqPageTitleElement;
+        new (): HTMLBqPageTitleElement;
+    };
     interface HTMLBqPanelElement extends Components.BqPanel, HTMLStencilElement {
     }
     var HTMLBqPanelElement: {
@@ -2222,6 +2230,7 @@ declare global {
         "bq-option": HTMLBqOptionElement;
         "bq-option-group": HTMLBqOptionGroupElement;
         "bq-option-list": HTMLBqOptionListElement;
+        "bq-page-title": HTMLBqPageTitleElement;
         "bq-panel": HTMLBqPanelElement;
         "bq-progress": HTMLBqProgressElement;
         "bq-radio": HTMLBqRadioElement;
@@ -3117,6 +3126,8 @@ declare namespace LocalJSX {
          */
         "onBqSelect"?: (event: BqOptionListCustomEvent<{ value: string; item: HTMLBqOptionElement }>) => void;
     }
+    interface BqPageTitle {
+    }
     interface BqPanel {
         /**
           * Represents the distance (gutter or margin) between the panel and the trigger element.
@@ -3877,6 +3888,7 @@ declare namespace LocalJSX {
         "bq-option": BqOption;
         "bq-option-group": BqOptionGroup;
         "bq-option-list": BqOptionList;
+        "bq-page-title": BqPageTitle;
         "bq-panel": BqPanel;
         "bq-progress": BqProgress;
         "bq-radio": BqRadio;
@@ -3930,6 +3942,7 @@ declare module "@stencil/core" {
             "bq-option": LocalJSX.BqOption & JSXBase.HTMLAttributes<HTMLBqOptionElement>;
             "bq-option-group": LocalJSX.BqOptionGroup & JSXBase.HTMLAttributes<HTMLBqOptionGroupElement>;
             "bq-option-list": LocalJSX.BqOptionList & JSXBase.HTMLAttributes<HTMLBqOptionListElement>;
+            "bq-page-title": LocalJSX.BqPageTitle & JSXBase.HTMLAttributes<HTMLBqPageTitleElement>;
             "bq-panel": LocalJSX.BqPanel & JSXBase.HTMLAttributes<HTMLBqPanelElement>;
             "bq-progress": LocalJSX.BqProgress & JSXBase.HTMLAttributes<HTMLBqProgressElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
