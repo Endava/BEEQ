@@ -123,8 +123,16 @@ export class BqTabGroup {
     if (!isHTMLElement(target, 'bq-tab')) return;
 
     switch (event.detail.key) {
+      case 'ArrowDown': {
+        await this.focusTabSibling(target, 'forward');
+        break;
+      }
       case 'ArrowRight': {
         await this.focusTabSibling(target, 'forward');
+        break;
+      }
+      case 'ArrowUp': {
+        await this.focusTabSibling(target, 'backward');
         break;
       }
       case 'ArrowLeft': {
