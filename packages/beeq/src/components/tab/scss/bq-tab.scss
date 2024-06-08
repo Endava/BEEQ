@@ -31,8 +31,12 @@
     @apply -left-xs3 h-[calc(100%_+_var(--bq-spacing-xs2))] w-[2px];
   }
 
-  &--vertical-right::after {
-    @apply -right-xs3 h-[calc(100%_+_var(--bq-spacing-xs2))] w-[2px];
+  &--vertical-right {
+    @apply w-full justify-start;
+
+    &::after {
+      @apply -right-xs3 h-[calc(100%_+_var(--bq-spacing-xs2))] w-[2px];
+    }
   }
 
   &[aria-selected='true']::after {

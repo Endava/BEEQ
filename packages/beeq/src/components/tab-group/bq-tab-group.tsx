@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Listen, Prop, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop, Watch } from '@stencil/core';
 
 import { debounce, getNextElement, isHTMLElement, isNil, TDebounce, validatePropValue } from '../../shared/utils';
 import { TAB_ORIENTATION, TAB_SIZE, TTabOrientation, TTabSize } from '../tab/bq-tab.types';
@@ -215,24 +215,26 @@ export class BqTabGroup {
 
   render() {
     return (
-      <div
-        class={{
-          [`bq-tab-group bq-tab-group--${this.orientation} flex w-full`]: true,
-          'no-divider': this.disableDivider,
-        }}
-        part="base"
-      >
+      <Host class={{ 'inline-block': this.orientation === 'vertical-right' }}>
         <div
           class={{
-            'bq-tab-group--container flex overflow-x-auto': true,
-            'flex-col': this.orientation !== 'horizontal',
+            [`bq-tab-group bq-tab-group--${this.orientation} flex w-full`]: true,
+            'no-divider': this.disableDivider,
           }}
-          role="tablist"
-          part="tabs"
+          part="base"
         >
-          <slot />
+          <div
+            class={{
+              'bq-tab-group--container flex overflow-x-auto': true,
+              'flex-col': this.orientation !== 'horizontal',
+            }}
+            role="tablist"
+            part="tabs"
+          >
+            <slot />
+          </div>
         </div>
-      </div>
+      </Host>
     );
   }
 }
