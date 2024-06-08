@@ -517,7 +517,7 @@ export class BqSelect {
                   class="me-xs2 flex flex-1 gap-xs2 [&>bq-tag::part(text)]:text-nowrap [&>bq-tag::part(text)]:leading-small [&>bq-tag]:inline-flex"
                   part="tags"
                 >
-                  {this.displayTags}
+                  <slot name="tags">{this.displayTags}</slot>
                 </span>
               )}
               {/* HTML Input */}

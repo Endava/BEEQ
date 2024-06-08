@@ -64,6 +64,7 @@ const meta: Meta = {
     optionalLabel: { control: 'boolean', table: { disable: true } },
     prefix: { control: 'boolean', table: { disable: true } },
     suffix: { control: 'boolean', table: { disable: true } },
+    customTags: { control: 'boolean', table: { disable: true } },
     options: { control: 'text', table: { disable: true } },
   },
   args: {
@@ -88,6 +89,7 @@ const meta: Meta = {
     readonly: false,
     required: false,
     'validation-status': 'none',
+    customTags: false,
     value: undefined,
     // Not part of the public API, so we don't want to expose it in the docs
     options: html`
@@ -199,6 +201,15 @@ const Template = (args: Args) => {
       @bqClear=${args.bqClear}
       @bqFocus=${args.bqFocus}
     >
+      ${args.customTags
+        ? html`${args.value.map(
+            (value) =>
+              html`<bq-tag size="xsmall" variant="filled" slot="tags">
+                <bq-icon name=${value} slot="prefix"></bq-icon>
+                ${value}
+              </bq-tag>`,
+          )}`
+        : nothing}
       ${!args.noLabel ? label : nothing}
       ${args.prefix ? html`<bq-icon name="user-circle" slot="prefix"></bq-icon>` : nothing}
       ${args.suffix ? html`<bq-icon name="arrow-down" slot="suffix"></bq-icon>` : nothing}
@@ -254,6 +265,16 @@ export const Multiple: Story = {
     'keep-open-on-select': true,
     multiple: true,
     value: ['running', 'biking', 'pizza'],
+  },
+};
+
+export const MultipleCustomRender: Story = {
+  render: Template,
+  args: {
+    'keep-open-on-select': true,
+    multiple: true,
+    customTags: true,
+    value: ['pizza', 'hamburger', 'cookie'],
   },
 };
 
