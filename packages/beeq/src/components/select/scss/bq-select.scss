@@ -13,12 +13,12 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-select__label {
-  @apply mb-[--bq-select--label-margin-bottom] flex items-center;
+  @apply flex items-center [margin-block-end:--bq-select--label-margin-bottom];
   @apply text-[length:--bq-select--label-text-size] text-[color:--bq-select--label-text-color];
 }
 
 .bq-select__helper-text {
-  @apply mt-[--bq-select--helper-margin-top] text-[length:--bq-select--helper-text-size] text-[color:--bq-select--helper-text-color];
+  @apply text-[length:--bq-select--helper-text-size] text-[color:--bq-select--helper-text-color] [margin-block-start:--bq-select--helper-margin-top];
 }
 
 .bq-select__helper-text.validation-error {
@@ -50,11 +50,11 @@
 }
 
 .bq-select__control {
-  @apply flex w-full items-center transition-[border-color,box-shadow];
+  @apply flex items-center transition-[border-color,box-shadow] [inline-size:100%];
   // Border
   @apply rounded-[--bq-select--border-radius] border-[length:--bq-select--border-width] border-[color:--bq-select--border-color];
   // Padding
-  @apply py-[--bq-select--paddingY] pe-[--bq-select--padding-end] ps-[--bq-select--padding-start];
+  @apply pe-[--bq-select--padding-end] ps-[--bq-select--padding-start] [padding-block:--bq-select--paddingY];
   // Text
   @apply select-none text-[length:--bq-select--text-size] text-[color:--bq-select--text-color] placeholder:text-[color:--bq-select--text-placeholder-color];
   // Hover
@@ -113,7 +113,7 @@
 
 .bq-select__control--input {
   @apply flex-auto cursor-[inherit] select-none appearance-none bg-[inherit] font-[inherit] text-[length:inherit] text-[color:inherit];
-  @apply m-0 min-h-[--bq-select--icon-size] min-w-[0] border-none p-0 focus:outline-none focus-visible:outline-none;
+  @apply m-0 border-none p-0 [min-block-size:--bq-select--icon-size] [min-inline-size:0px] focus:outline-none focus-visible:outline-none;
 
   box-shadow: none;
   font-weight: inherit;
@@ -130,7 +130,7 @@
   --bq-ring-offset-width: initial;
   --bq-ring-color-focus: initial;
 
-  @apply h-auto rounded-xs border-none p-0;
+  @apply rounded-xs border-none p-0 [block-size:auto];
 }
 
 /* -------------------------------------------------------------------------- */
