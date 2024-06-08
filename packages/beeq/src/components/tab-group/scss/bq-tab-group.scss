@@ -14,15 +14,15 @@
   }
 
   &--horizontal::after {
-    @apply bottom-0 w-full border-b-s;
+    @apply [border-block-end-width:--bq-stroke-s] [inline-size:100%] [inset-block-end:0px];
   }
 
   &--vertical-left::after {
-    @apply left-0 h-full w-0 border-b-0 border-l-s;
+    @apply start-0 [block-size:100%] [border-block-end-width:0px] [border-inline-start-width:--bq-stroke-s] [inline-size:0px];
   }
 
   &--vertical-right::after {
-    @apply right-0 h-full w-0 border-b-0 border-r-s;
+    @apply end-0 [block-size:100%] [border-block-end-width:0px] [border-inline-end-width:--bq-stroke-s] [inline-size:0px];
   }
 }
 
