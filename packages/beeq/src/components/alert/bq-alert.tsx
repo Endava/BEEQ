@@ -247,7 +247,7 @@ export class BqAlert {
           {/* CLOSE BUTTON */}
           {!this.disableClose && (
             <bq-button
-              class="bq-alert__close absolute right-5 focus-visible:focus"
+              class="bq-alert__close absolute end-5 focus-visible:focus"
               appearance="text"
               size="small"
               onClick={() => this.hide()}
@@ -259,7 +259,7 @@ export class BqAlert {
           {/* ICON */}
           <div
             class={{
-              [`bq-alert__icon--${this.type} mr-s flex text-left align-top`]: true,
+              [`bq-alert__icon--${this.type} flex text-left align-top [margin-inline-end:--bq-spacing-s]`]: true,
               '!hidden': this.hideIcon,
             }}
             part="icon-outline"
@@ -269,8 +269,8 @@ export class BqAlert {
             </slot>
           </div>
           {/* MAIN */}
-          <div class="flex flex-col items-start gap-[var(--bq-alert--content-footer-gap)]" part="main">
-            <div class="flex flex-col gap-[var(--bq-alert--title-body-gap)]" part="content">
+          <div class="flex flex-col items-start gap-[--bq-alert--content-footer-gap]" part="main">
+            <div class="flex flex-col gap-[--bq-alert--title-body-gap]" part="content">
               {/* TITLE */}
               <div
                 class={{

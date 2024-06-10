@@ -13,7 +13,7 @@
 }
 
 :host(.is-sticky) {
-  @apply fixed inset-0 top-0 z-[var(--bq-alert--z-index)] w-full;
+  @apply fixed inset-0 z-[var(--bq-alert--z-index)] [inline-size:100%] [inset-block-start:0];
 
   .bq-alert {
     @apply items-center justify-center rounded-none;
@@ -21,7 +21,7 @@
 }
 
 .bq-alert {
-  @apply relative flex min-w-[var(--bq-alert--min-width)] p-[var(--bq-alert--padding)] transition-all;
+  @apply relative flex transition-all [min-inline-size:--bq-alert--min-width] [padding-block:--bq-alert--padding] [padding-inline:--bq-alert--padding];
   @apply rounded-[var(--bq-alert--border-radius)] border-[length:--bq-alert--border-width];
 
   border-style: var(--bq-alert--border-style);
