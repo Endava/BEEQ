@@ -32,6 +32,18 @@ export const LogicalProperties: Partial<Config> = plugin(function ({ matchUtilit
   );
   matchUtilities(
     {
+      // Logical Height and Width properties
+      bs: (value) => ({ 'block-size': value }),
+      'max-bs': (value) => ({ 'max-block-size': value }),
+      'min-bs': (value) => ({ 'min-block-size': value }),
+      is: (value) => ({ 'inline-size': value }),
+      'max-is': (value) => ({ 'max-inline-size': value }),
+      'min-is': (value) => ({ 'min-inline-size': value }),
+    },
+    { values: theme('width') },
+  );
+  matchUtilities(
+    {
       // Logical Border properties
       'border-bl': (value) => ({ 'border-block': value }),
       'border-bs': (value) => ({ 'border-block-start': value }),
@@ -56,13 +68,6 @@ export const LogicalProperties: Partial<Config> = plugin(function ({ matchUtilit
       'p-bs': (value) => ({ 'padding-block-start': value }),
       'p-be': (value) => ({ 'padding-block-end': value }),
       'p-i': (value) => ({ 'padding-inline': value }),
-      // Logical Height and Width properties
-      bs: (value) => ({ 'block-size': value }),
-      'max-bs': (value) => ({ 'max-block-size': value }),
-      'min-bs': (value) => ({ 'min-block-size': value }),
-      is: (value) => ({ 'inline-size': value }),
-      'max-is': (value) => ({ 'max-inline-size': value }),
-      'min-is': (value) => ({ 'min-inline-size': value }),
     },
     {
       values: theme('spacing'),

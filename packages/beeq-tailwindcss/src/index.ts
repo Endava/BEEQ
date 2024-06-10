@@ -110,7 +110,6 @@ export default {
         xxl2: 'var(--bq-spacing-xxl2)',
         xxl3: 'var(--bq-spacing-xxl3)',
         xxl4: 'var(--bq-spacing-xxl4)',
-        full: '100%',
       },
     },
   },
