@@ -1,11 +1,10 @@
+import type { Config } from 'tailwindcss';
 import plugin from 'tailwindcss/plugin';
-// eslint-disable-next-line import/no-unresolved
-import { Config } from 'tailwindcss/types/config';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import ThemeSwapper from 'tailwindcss-theme-swapper';
 
-import { blendColor } from './helpers';
+import { ColorMix, LogicalProperties } from './plugins';
 import {
   CSS_COLORS,
   DECLARATIVE_COLORS,
@@ -19,10 +18,6 @@ import {
   reset,
   TYPOGRAPHY_DEFAULT,
 } from './theme';
-
-// NOTE: https://github.com/tailwindlabs/tailwindcss/discussions/6925#discussioncomment-1919382
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { default: flattenColorPalette } = require('tailwindcss/lib/util/flattenColorPalette');
 
 export default {
   theme: {
@@ -115,11 +110,12 @@ export default {
         xxl2: 'var(--bq-spacing-xxl2)',
         xxl3: 'var(--bq-spacing-xxl3)',
         xxl4: 'var(--bq-spacing-xxl4)',
+        full: '100%',
       },
     },
   },
   plugins: [
-    plugin(function ({ addBase, addComponents, matchUtilities, theme }) {
+    plugin(function ({ addBase, addComponents, theme }) {
       addBase({
         // CSS variables
         ':root, ::backdrop': { ...CSS_COLORS },
@@ -144,27 +140,11 @@ export default {
           outlineOffset: 'var(--bq-ring-offset-width, 1px)',
         },
       });
-      matchUtilities(
-        {
-          // Background `hover` state blend color
-          'bg-hover': (value) => blendColor({ color: value, base: 'var(--bq-hover)' }),
-          // Background `active` state blend color
-          'bg-active': (value) => blendColor({ color: value, base: 'var(--bq-active)' }),
-          // Border `hover` state blend color
-          'border-hover': (value) => blendColor({ color: value, base: 'var(--bq-hover)', property: 'border-color' }),
-          // Border `active` state blend color
-          'border-active': (value) => blendColor({ color: value, base: 'var(--bq-active)', property: 'border-color' }),
-          // Text `hover` state blend color
-          'text-hover': (value) => blendColor({ color: value, base: 'var(--bq-hover)', property: 'color' }),
-          // Text `active` state blend color
-          'text-active': (value) => blendColor({ color: value, base: 'var(--bq-active)', property: 'color' }),
-        },
-        {
-          values: flattenColorPalette(theme('colors')),
-          type: 'color',
-        },
-      );
     }),
+    // Local Custom Plugins
+    ColorMix,
+    LogicalProperties,
+    // Tailwind CSS Theme Swapper
     ThemeSwapper({
       themes: [
         {
