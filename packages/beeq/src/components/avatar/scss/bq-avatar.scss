@@ -17,18 +17,18 @@
 
 .size {
   &--xsmall {
-    @apply h-[var(--bq-avatar--size-xsmall)] w-[var(--bq-avatar--size-xsmall)] text-[length:var(--bq-avatar--font-size-xsmall)];
+    @apply text-[length:var(--bq-avatar--font-size-xsmall)] bs-[--bq-avatar--size-xsmall] is-[--bq-avatar--size-xsmall];
   }
 
   &--small {
-    @apply h-[var(--bq-avatar--size-small)] w-[var(--bq-avatar--size-small)] text-[length:var(--bq-avatar--font-size-small)];
+    @apply text-[length:var(--bq-avatar--font-size-small)] bs-[--bq-avatar--size-small] is-[--bq-avatar--size-small];
   }
 
   &--medium {
-    @apply h-[var(--bq-avatar--size-medium)] w-[var(--bq-avatar--size-medium)] text-[length:var(--bq-avatar--font-size-medium)];
+    @apply text-[length:var(--bq-avatar--font-size-medium)] bs-[--bq-avatar--size-medium] is-[--bq-avatar--size-medium];
   }
 
   &--large {
-    @apply h-[var(--bq-avatar--size-large)] w-[var(--bq-avatar--size-large)] text-[length:var(--bq-avatar--font-size-large)];
+    @apply text-[length:var(--bq-avatar--font-size-large)] bs-[--bq-avatar--size-large] is-[--bq-avatar--size-large];
   }
 }

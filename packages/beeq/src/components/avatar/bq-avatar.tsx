@@ -69,7 +69,7 @@ export class BqAvatar {
 
   @Watch('initials')
   @Watch('size')
-  onInitialsChnage() {
+  onInitialsChange() {
     this.trimInitialsBasedOnSize();
   }
 
@@ -136,10 +136,10 @@ export class BqAvatar {
           class={{
             'bq-avatar': true,
             [`size--${this.size}`]: true,
-            'rounded-[var(--bq-avatar--border-radius-circle)]': this.shape === 'circle',
-            'rounded-[var(--bq-avatar--border-radius-squareXs)]': this.shape === 'square' && this.size === 'xsmall',
-            'rounded-[var(--bq-avatar--border-radius-squareS)]': this.shape === 'square' && this.size === 'small',
-            'rounded-[var(--bq-avatar--border-radius-squareM)]':
+            'rounded-[--bq-avatar--border-radius-circle]': this.shape === 'circle',
+            'rounded-[--bq-avatar--border-radius-squareXs]': this.shape === 'square' && this.size === 'xsmall',
+            'rounded-[--bq-avatar--border-radius-squareS]': this.shape === 'square' && this.size === 'small',
+            'rounded-[--bq-avatar--border-radius-squareM]':
               this.shape === 'square' && (this.size === 'medium' || this.size === 'large'),
           }}
           aria-label={this.label}
@@ -148,7 +148,7 @@ export class BqAvatar {
         >
           {this.initials && (
             <span
-              class="absolute left-0 top-0 inline-flex h-full w-full items-center justify-center font-bold"
+              class="absolute start-0 inline-flex items-center justify-center font-bold bs-full is-full inset-bs-0"
               part="text"
             >
               {this.trimmedInitials}
@@ -156,7 +156,7 @@ export class BqAvatar {
           )}
           {this.image && !this.hasError && (
             <img
-              class="absolute left-0 top-0 h-full w-full object-cover"
+              class="absolute start-0 object-cover bs-full is-full inset-bs-0"
               alt={this.altText ?? undefined}
               src={this.image}
               onError={this.onImageError}
@@ -167,10 +167,8 @@ export class BqAvatar {
         <div
           class={{
             'absolute flex items-center justify-center': true,
-            'start-[var(--bq-avatar--badge-left-square)] top-[var(--bq-avatar--badge-top-square)]':
-              this.shape === 'square',
-            'start-[var(--bq-avatar--badge-left-circle)] top-[var(--bq-avatar--badge-top-circle)]':
-              this.shape === 'circle',
+            'start-[--bq-avatar--badge-left-square] inset-bs-[--bq-avatar--badge-top-square]': this.shape === 'square',
+            'start-[--bq-avatar--badge-left-circle] inset-bs-[--bq-avatar--badge-top-circle]': this.shape === 'circle',
           }}
         >
           <slot name="badge"></slot>
