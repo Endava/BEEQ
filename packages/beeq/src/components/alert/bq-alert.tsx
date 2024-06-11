@@ -259,7 +259,7 @@ export class BqAlert {
           {/* ICON */}
           <div
             class={{
-              [`bq-alert__icon--${this.type} flex text-left align-top [margin-inline-end:--bq-spacing-s]`]: true,
+              [`bq-alert__icon--${this.type} me-s flex text-left align-top`]: true,
               '!hidden': this.hideIcon,
             }}
             part="icon-outline"
