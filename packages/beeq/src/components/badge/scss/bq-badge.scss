@@ -9,8 +9,8 @@
 }
 
 .bq-badge {
-  @apply flex items-center justify-center bg-[color:var(--bq-badge--background-color)] text-[color:var(--bq-badge--text-color)];
-  @apply rounded-[var(--bq-badge--border-radius)] border-[length:var(--bq-badge--border-width)] border-[color:var(--bq-badge--border-color)];
+  @apply flex items-center justify-center bg-[color:--bq-badge--background-color] text-[color:--bq-badge--text-color];
+  @apply rounded-[--bq-badge--border-radius] border-[length:--bq-badge--border-width] border-[color:--bq-badge--border-color];
 
   border-style: var(--bq-badge--border-style);
   box-shadow: var(--bq-badge--box-shadow);
@@ -18,14 +18,14 @@
 
 .size {
   &--small {
-    @apply h-[var(--bq-badge--size-small)] w-[var(--bq-badge--size-small)];
+    @apply bs-[--bq-badge--size-small] is-[--bq-badge--size-small];
   }
 
   &--medium {
-    @apply h-[var(--bq-badge--size-medium)] w-[var(--bq-badge--size-medium)];
+    @apply bs-[--bq-badge--size-medium] is-[--bq-badge--size-medium];
   }
 }
 
 .digit {
-  @apply min-h-[var(--bq-badge--size-large)] min-w-[var(--bq-badge--size-large)];
+  @apply min-bs-[--bq-badge--size-large] min-is-[--bq-badge--size-large];
 }
