@@ -13,5 +13,5 @@
 }
 
 .bq-drawer {
-  @apply fixed z-10 flex flex-col gap-[--bq-drawer--gap] bg-bg-primary shadow-m [inline-size:--bq-drawer--width] [inset-block:0] [max-inline-size:100%] [padding-block:--bq-drawer--paddingY] [padding-inline:--bq-drawer--paddingX];
+  @apply fixed z-10 flex flex-col gap-[--bq-drawer--gap] bg-bg-primary shadow-m is-[--bq-drawer--width] max-is-full inset-b-0 p-b-[--bq-drawer--paddingY] p-i-[--bq-drawer--paddingX];
 }
