@@ -46,7 +46,12 @@ const Template = (args: Args) => {
   };
 
   const customFooterDivider = args.customFooterDivider
-    ? html`<bq-divider slot="footer-divider" class="mb-m block" stroke-color="stroke--primary" stroke-thickness="1" />`
+    ? html`<bq-divider
+        slot="footer-divider"
+        class="block m-be-m"
+        stroke-color="stroke--primary"
+        stroke-thickness="1"
+      />`
     : nothing;
 
   return html`
@@ -67,7 +72,7 @@ const Template = (args: Args) => {
         Title
       </div>
       <div
-        class="flex h-full items-center justify-center rounded-xs border-s border-dashed border-stroke-brand bg-red-100"
+        class="flex items-center justify-center rounded-xs border-s border-dashed border-stroke-brand bg-red-100 bs-full"
       >
         Slot
       </div>
