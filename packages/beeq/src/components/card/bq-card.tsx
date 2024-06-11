@@ -82,9 +82,9 @@ export class BqCard {
           class={{
             'bq-card rounded-[--bq-card--borderRadius] border-[length:--bq-card--borderWidth] border-[color:--bq-card--borderColor] bg-[--bq-card--background]':
               true,
-            'p-[--bq-card--padding]': this.type === 'default',
+            'p-b-[--bq-card--padding] p-i-[--bq-card--padding]': this.type === 'default',
             // Remove padding for minimal card type
-            'p-0': this.type === 'minimal',
+            'p-b-0 p-i-0': this.type === 'minimal',
           }}
           part="wrapper"
         >
