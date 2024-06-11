@@ -18,12 +18,12 @@
 }
 
 :host {
-  @apply relative inline-block w-auto cursor-pointer;
+  @apply relative inline-block cursor-pointer is-auto;
 }
 
 :host([block]),
 .block {
-  @apply w-full;
+  @apply is-full;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -95,15 +95,15 @@
 /* -------------------------------------------------------------------------- */
 
 .small {
-  @apply h-[var(--bq-button--small-height)] px-[var(--bq-button--small-paddingX)] py-[var(--bq-button--small-paddingY)] text-[length:--bq-button--small-font-size];
+  @apply text-[length:--bq-button--small-font-size] bs-[--bq-button--small-height] p-b-[--bq-button--small-paddingY] p-i-[--bq-button--small-paddingX];
 }
 
 .medium {
-  @apply h-[var(--bq-button--medium-height)] px-[var(--bq-button--medium-paddingX)] py-[var(--bq-button--medium-paddingY)] text-[length:--bq-button--medium-font-size];
+  @apply text-[length:--bq-button--medium-font-size] bs-[--bq-button--medium-height] p-b-[--bq-button--medium-paddingY] p-i-[--bq-button--medium-paddingX];
 }
 
 .large {
-  @apply h-[var(--bq-button--large-height)] px-[var(--bq-button--large-paddingX)] py-[var(--bq-button--large-paddingY)] text-[length:--bq-button--large-font-size];
+  @apply text-[length:--bq-button--large-font-size] bs-[--bq-button--large-height] p-b-[--bq-button--large-paddingY] p-i-[--bq-button--large-paddingX];
 }
 
 /* -------------------------------------------------------------------------- */
