@@ -126,7 +126,7 @@ export class BqBadge {
             'bq-badge': true,
             [`size--${this.size}`]: this.contentLength === 0,
             digit: this.contentLength > 0,
-            'px-xs2': this.contentLength > 1,
+            'p-i-xs2': this.contentLength > 1,
           }}
           part="base"
         >
