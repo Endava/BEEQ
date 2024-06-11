@@ -122,7 +122,7 @@ export class BqBreadcrumb {
 
         <span hidden aria-hidden="true" ref={(element) => (this.spanElem = element)}>
           <slot name="separator">
-            <span class="flex w-3 items-center justify-center">/</span>
+            <span class="flex items-center justify-center is-3">/</span>
           </slot>
         </span>
       </Host>
