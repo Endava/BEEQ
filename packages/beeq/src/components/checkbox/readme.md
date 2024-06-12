@@ -24,7 +24,7 @@
 | Event      | Description                                          | Type                                 |
 | ---------- | ---------------------------------------------------- | ------------------------------------ |
 | `bqBlur`   | Handler to be called when the checkbox loses focus   | `CustomEvent<HTMLBqCheckboxElement>` |
-| `bqChange` | Handler to be called when the chebkbox state changes | `CustomEvent<{ checked: boolean; }>` |
+| `bqChange` | Handler to be called when the checkbox state changes | `CustomEvent<{ checked: boolean; }>` |
 | `bqFocus`  | Handler to be called when the checkbox gets focus    | `CustomEvent<HTMLBqCheckboxElement>` |
 
 

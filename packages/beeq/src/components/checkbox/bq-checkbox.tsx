@@ -74,7 +74,7 @@ export class BqCheckbox {
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Handler to be called when the chebkbox state changes */
+  /** Handler to be called when the checkbox state changes */
   @Event() bqChange: EventEmitter<{ checked: boolean }>;
 
   /** Handler to be called when the checkbox gets focus */
@@ -178,12 +178,12 @@ export class BqCheckbox {
         part="base"
       >
         <div
-          class="bq-checkbox__control relative box-border flex h-[var(--bq-checkbox--size)] w-[var(--bq-checkbox--size)] items-center justify-center p-xs3"
+          class="bq-checkbox__control relative box-border flex items-center justify-center bs-[--bq-checkbox--size] is-[--bq-checkbox--size] p-b-xs3 p-i-xs3"
           part="control"
         >
           <input
             type="checkbox"
-            class="bq-checkbox__input pointer-events-none absolute m-0 p-0 opacity-0"
+            class="bq-checkbox__input pointer-events-none absolute opacity-0 m-b-0 m-i-0 p-b-0 p-i-0"
             name={!isNil(this.name) ? this.name : undefined}
             checked={this.checked}
             disabled={this.disabled}
@@ -201,7 +201,7 @@ export class BqCheckbox {
             tabindex="0"
           />
           <span
-            class="bq-checkbox__checkbox relative box-border flex h-full w-[var(--bq-checkbox--size)] items-center justify-center"
+            class="bq-checkbox__checkbox relative box-border flex items-center justify-center bs-full is-[--bq-checkbox--size]"
             part="checkbox"
           >
             {/*
@@ -211,7 +211,7 @@ export class BqCheckbox {
             {this.checked && (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="absolute h-full w-full text-neutral-white"
+                class="absolute text-neutral-white bs-full is-full"
                 viewBox="0 0 256 256"
               >
                 <path fill="none" d="M0 0h256v256H0z" />
@@ -228,7 +228,7 @@ export class BqCheckbox {
             {!this.checked && this.indeterminate && (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="absolute h-full w-full text-neutral-white"
+                class="absolute text-neutral-white bs-full is-full"
                 viewBox="0 0 256 256"
                 fill="currentColor"
               >

@@ -128,7 +128,7 @@ export const Indeterminate: Story = {
           <bq-checkbox value="all" name="all-interests" background-on-hover @bqChange=${allCheckboxChange}>
             Interests
           </bq-checkbox>
-          <div style="display: flex; flex-direction: column; margin-left: 24px;">
+          <div style="display: flex; flex-direction: column; margin-inline-start: 24px;">
             <bq-checkbox value="music" name="interest" background-on-hover @bqChange=${interestCheckboxChange}>
               Music
             </bq-checkbox>
