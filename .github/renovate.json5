@@ -132,7 +132,7 @@
    * Run at 6:00 AM on the 1st and 15th of the month
    * {@see https://crontab.guru} for debugging cron schedules
    */
-  schedule: ['0 6 1,15 * *'],
+  schedule: ['* 6 1,15 * *'],
   /**
    * Enable Semantic Commit prefixes for commits and PR titles
    */
