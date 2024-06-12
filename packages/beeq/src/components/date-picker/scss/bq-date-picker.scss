@@ -5,7 +5,7 @@
 @import './bq-date-picker.variables';
 
 :host {
-  @apply block w-full;
+  @apply block is-full;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -13,7 +13,7 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-date-picker__label {
-  @apply mb-[--bq-date-picker--label-margin-bottom] flex flex-grow items-center gap-[--bq-date-picker--gap];
+  @apply flex flex-grow items-center gap-[--bq-date-picker--gap] m-be-[--bq-date-picker--label-margin-bottom];
   @apply text-[length:--bq-date-picker--label-text-size] text-[color:--bq-date-picker--label-text-color];
 }
 
@@ -22,11 +22,11 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-date-picker__control {
-  @apply flex w-full items-center transition-[border-color,box-shadow];
+  @apply flex items-center transition-[border-color,box-shadow] is-full;
   // Border
   @apply rounded-[--bq-date-picker--border-radius] border-[length:--bq-date-picker--border-width] border-[color:--bq-date-picker--border-color];
   // Padding
-  @apply py-[--bq-date-picker--paddingY] pe-[--bq-date-picker--padding-end] ps-[--bq-date-picker--padding-start];
+  @apply pe-[--bq-date-picker--padding-end] ps-[--bq-date-picker--padding-start] p-b-[--bq-date-picker--paddingY];
   // Text
   @apply select-none text-[length:--bq-date-picker--text-size] text-[color:--bq-date-picker--text-color] placeholder:text-[color:--bq-date-picker--text-placeholder-color];
   // Hover
@@ -93,7 +93,7 @@
 
 .bq-date-picker__control--input {
   @apply flex-auto cursor-[inherit] select-none appearance-none bg-[inherit] font-[inherit] text-[length:inherit] text-[color:inherit];
-  @apply m-0 min-h-[--bq-date-picker--icon-size] min-w-[0] border-none p-0 focus:outline-none focus-visible:outline-none;
+  @apply border-none min-bs-[--bq-date-picker--icon-size] min-is-0 m-b-0 m-i-0 p-b-0 p-i-0 focus:outline-none focus-visible:outline-none;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -107,7 +107,7 @@
   --bq-ring-offset-width: initial;
   --bq-ring-color-focus: initial;
 
-  @apply h-auto rounded-xs border-none p-0;
+  @apply rounded-xs border-none bs-auto p-b-0 p-i-0;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -148,16 +148,16 @@ calendar-multi {
   }
 
   &::part(heading) {
-    @apply px-xs py-xs2;
+    @apply p-b-xs2 p-i-xs;
   }
 
   &::part(button) {
-    @apply rounded-s border-0 bg-transparent p-xs2 transition-colors duration-200;
+    @apply rounded-s border-0 bg-transparent transition-colors duration-200 p-b-xs2 p-i-xs2;
     @apply focus-visible:focus hover:bg-hover-ui-primary;
   }
 
   &::part(container) {
-    @apply bg-[--bq-date-picker--background-color] p-0;
+    @apply bg-[--bq-date-picker--background-color] p-b-0 p-i-0;
   }
 }
 
@@ -166,7 +166,7 @@ calendar-month {
   --color-accent: var(--bq-ui--brand);
 
   &::part(button) {
-    @apply flex items-center justify-center rounded-s bg-transparent p-0 font-default text-text-primary transition-colors duration-200 ease-in-out;
+    @apply flex items-center justify-center rounded-s bg-transparent font-default text-text-primary transition-colors duration-200 ease-in-out p-b-0 p-i-0;
     @apply size-[--bq-date-picker--day-size] focus-visible:focus hover:bg-hover-bg-secondary;
   }
 
@@ -179,7 +179,7 @@ calendar-month {
   }
 
   &::part(selected) {
-    @apply rounded-s text-[color:var(--bq-text--alt)];
+    @apply rounded-s text-[color:--bq-text--alt];
   }
 
   &::part(range-inner) {
@@ -193,7 +193,7 @@ calendar-month {
   }
 
   &::part(today selected) {
-    @apply text-[color:var(--bq-text--alt)];
+    @apply text-[color:--bq-text--alt];
   }
 
   &::part(today range-inner) {
