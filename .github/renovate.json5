@@ -68,7 +68,7 @@
         'storybook',
         '@floating-ui'
       ],
-      excludePackageNames: ['typescript', 'zone.js', 'vite-tsconfig-paths'],
+      excludePackageNames: ['tailwindcss', 'typescript', 'zone.js', 'vite-tsconfig-paths'],
     },
     {
       groupName: 'Angular',
@@ -129,10 +129,10 @@
    */
   rebaseWhen: 'conflicted',
   /**
-   * Run every Monday between 00 and 12
+   * Run at 6:00 AM on the 1st and 15th of the month
    * {@see https://crontab.guru} for debugging cron schedules
    */
-  schedule: ['* 00-12 15 * *'],
+  schedule: ['0 6 1,15 * *'],
   /**
    * Enable Semantic Commit prefixes for commits and PR titles
    */
