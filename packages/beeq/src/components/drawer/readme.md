@@ -7,13 +7,14 @@
 
 ## Properties
 
-| Property              | Attribute                | Description                                                        | Type                | Default     |
-| --------------------- | ------------------------ | ------------------------------------------------------------------ | ------------------- | ----------- |
-| `closeOnClickOutside` | `close-on-click-outside` | If true, the drawer will not close when clicking outside the panel | `boolean`           | `false`     |
-| `closeOnEsc`          | `close-on-esc`           | If true, the dialog will not close when the [Esc] key is pressed   | `boolean`           | `false`     |
-| `enableBackdrop`      | `enable-backdrop`        | If true, the backdrop overlay will be shown when the drawer opens  | `boolean`           | `false`     |
-| `open`                | `open`                   | If true, the drawer component will be shown                        | `boolean`           | `undefined` |
-| `placement`           | `placement`              | Defines the position of the drawer                                 | `"left" \| "right"` | `'right'`   |
+| Property              | Attribute                | Description                                                                                  | Type                | Default     |
+| --------------------- | ------------------------ | -------------------------------------------------------------------------------------------- | ------------------- | ----------- |
+| `closeOnClickOutside` | `close-on-click-outside` | If true, the drawer will not close when clicking outside the panel                           | `boolean`           | `false`     |
+| `closeOnEsc`          | `close-on-esc`           | If true, the dialog will not close when the [Esc] key is pressed                             | `boolean`           | `false`     |
+| `enableBackdrop`      | `enable-backdrop`        | If true, the backdrop overlay will be shown when the drawer opens                            | `boolean`           | `false`     |
+| `open`                | `open`                   | If true, the drawer component will be shown                                                  | `boolean`           | `undefined` |
+| `placement`           | `placement`              | <span style="color:red">**[DEPRECATED]**</span> Defines the position of the drawer<br/><br/> | `"left" \| "right"` | `'right'`   |
+| `position`            | `position`               | Defines the position of the drawer                                                           | `"end" \| "start"`  | `'end'`     |
 
 
 ## Events
