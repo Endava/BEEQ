@@ -13,7 +13,7 @@
 | `closeOnEsc`          | `close-on-esc`           | If true, the dialog will not close when the [Esc] key is pressed   | `boolean`           | `false`     |
 | `enableBackdrop`      | `enable-backdrop`        | If true, the backdrop overlay will be shown when the drawer opens  | `boolean`           | `false`     |
 | `open`                | `open`                   | If true, the drawer component will be shown                        | `boolean`           | `undefined` |
-| `placement`           | `placement`              | Defines the position of the drawer                                 | `"left" \| "right"` | `'left'`    |
+| `placement`           | `placement`              | Defines the position of the drawer                                 | `"left" \| "right"` | `'right'`   |
 
 
 ## Events

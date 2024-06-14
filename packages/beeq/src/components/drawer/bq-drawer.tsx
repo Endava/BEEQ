@@ -45,7 +45,7 @@ export class BqDrawer {
   @Prop({ reflect: true, mutable: true }) open: boolean;
 
   /** Defines the position of the drawer */
-  @Prop({ reflect: true, mutable: true }) placement: TDrawerPlacement = 'left';
+  @Prop({ reflect: true, mutable: true }) placement: TDrawerPlacement = 'right';
 
   /** If true, the backdrop overlay will be shown when the drawer opens */
   @Prop({ reflect: true }) enableBackdrop = false;
