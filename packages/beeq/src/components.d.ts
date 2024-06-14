@@ -16,7 +16,7 @@ import { FloatingUIPlacement } from "./services/interfaces";
 import { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
 import { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
-import { TDrawerPlacement } from "./components/drawer/bq-drawer.types";
+import { TDrawerPlacement, TDrawerPosition } from "./components/drawer/bq-drawer.types";
 import { TEmptyStateSize } from "./components/empty-state/bq-empty-state.types";
 import { TIconWeight } from "./components/icon/bq-icon.types";
 import { TNotificationBorderRadius, TNotificationType } from "./components/notification/bq-notification.types";
@@ -45,7 +45,7 @@ export { FloatingUIPlacement } from "./services/interfaces";
 export { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
 export { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
-export { TDrawerPlacement } from "./components/drawer/bq-drawer.types";
+export { TDrawerPlacement, TDrawerPosition } from "./components/drawer/bq-drawer.types";
 export { TEmptyStateSize } from "./components/empty-state/bq-empty-state.types";
 export { TIconWeight } from "./components/icon/bq-icon.types";
 export { TNotificationBorderRadius, TNotificationType } from "./components/notification/bq-notification.types";
@@ -546,9 +546,13 @@ export namespace Components {
          */
         "open": boolean;
         /**
-          * Defines the position of the drawer
+          * @deprecated Defines the position of the drawer
          */
         "placement": TDrawerPlacement;
+        /**
+          * Defines the position of the drawer
+         */
+        "position": TDrawerPosition;
         /**
           * Method to be called to show the drawer component
          */
@@ -2834,9 +2838,13 @@ declare namespace LocalJSX {
          */
         "open"?: boolean;
         /**
-          * Defines the position of the drawer
+          * @deprecated Defines the position of the drawer
          */
         "placement"?: TDrawerPlacement;
+        /**
+          * Defines the position of the drawer
+         */
+        "position"?: TDrawerPosition;
     }
     interface BqDropdown {
         /**
