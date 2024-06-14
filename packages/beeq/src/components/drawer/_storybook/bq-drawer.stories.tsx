@@ -29,7 +29,7 @@ const meta: Meta = {
   },
   args: {
     open: false,
-    placement: 'left',
+    placement: 'right',
     'close-on-click-outside': false,
     'close-on-esc': false,
     'enable-backdrop': false,
@@ -46,12 +46,14 @@ const Template = (args: Args) => {
   };
 
   const customFooterDivider = args.customFooterDivider
-    ? html`<bq-divider
-        slot="footer-divider"
-        class="block m-be-m"
-        stroke-color="stroke--primary"
-        stroke-thickness="1"
-      />`
+    ? html`
+        <bq-divider
+          slot="footer-divider"
+          class="block m-be-m"
+          stroke-color="stroke--primary"
+          stroke-thickness="1"
+        ></bq-divider>
+      `
     : nothing;
 
   return html`
@@ -91,17 +93,11 @@ const Template = (args: Args) => {
 
 export const Default: Story = {
   render: Template,
-  args: {
-    open: false,
-    placement: 'right',
-  },
 };
 
 export const NoFooter: Story = {
   render: Template,
   args: {
-    open: false,
-    placement: 'right',
     noFooter: true,
   },
 };
@@ -109,16 +105,13 @@ export const NoFooter: Story = {
 export const Placement: Story = {
   render: Template,
   args: {
-    open: false,
-    placement: 'left',
+    placement: 'right',
   },
 };
 
 export const WithBackdrop: Story = {
   render: Template,
   args: {
-    open: false,
-    placement: 'right',
     'enable-backdrop': true,
   },
 };
@@ -126,8 +119,6 @@ export const WithBackdrop: Story = {
 export const WithCustomFooterDivider: Story = {
   render: Template,
   args: {
-    open: false,
-    placement: 'right',
     'enable-backdrop': true,
     customFooterDivider: true,
   },
