@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
-import { DRAWER_PLACEMENT, TDrawerPlacement } from './bq-drawer.types';
-import { enter, hasSlotContent, leave, validatePropValue } from '../../shared/utils';
+import { DRAWER_PLACEMENT, DRAWER_POSITIONS, TDrawerPlacement, TDrawerPosition } from './bq-drawer.types';
+import { enter, hasSlotContent, isNil, leave, validatePropValue } from '../../shared/utils';
 
 /**
  * @part backdrop - The `<div>` that holds the backdrop overlay
@@ -41,20 +41,23 @@ export class BqDrawer {
   // Public Property API
   // ========================
 
-  /** If true, the drawer component will be shown */
-  @Prop({ reflect: true, mutable: true }) open: boolean;
-
-  /** Defines the position of the drawer */
-  @Prop({ reflect: true, mutable: true }) placement: TDrawerPlacement = 'right';
-
   /** If true, the backdrop overlay will be shown when the drawer opens */
   @Prop({ reflect: true }) enableBackdrop = false;
+
+  /** If true, the drawer will not close when clicking outside the panel */
+  @Prop({ reflect: true }) closeOnClickOutside = false;
 
   /** If true, the dialog will not close when the [Esc] key is pressed */
   @Prop({ reflect: true }) closeOnEsc = false;
 
-  /** If true, the drawer will not close when clicking outside the panel */
-  @Prop({ reflect: true }) closeOnClickOutside = false;
+  /** If true, the drawer component will be shown */
+  @Prop({ reflect: true, mutable: true }) open: boolean;
+
+  /** @deprecated Defines the position of the drawer */
+  @Prop({ reflect: true, mutable: true }) placement: TDrawerPlacement = 'right';
+
+  /** Defines the position of the drawer */
+  @Prop({ reflect: true }) position: TDrawerPosition = 'end';
 
   // Prop lifecycle events
   // =======================
@@ -69,9 +72,38 @@ export class BqDrawer {
     await this.handleShow();
   }
 
+  /**
+   * !⚠️ Delete this `@Watch()` once the deprecated `placement` property is removed
+   * We need to maintain retro-compatibility with the deprecated `placement` property
+   */
   @Watch('placement')
-  checkPropValues() {
-    validatePropValue(DRAWER_PLACEMENT, 'left', this.el, 'placement');
+  handlePlacementChange() {
+    if (!isNil(this.placement)) {
+      console.warn(
+        `❗️ [bq-drawer]: the 'placement' prop is deprecated and it will be removed in the future. Please use 'position' instead.`,
+      );
+    }
+    validatePropValue(DRAWER_PLACEMENT, 'right', this.el, 'placement');
+    // Sync 'position' property
+    const synPositionMap = {
+      right: 'end',
+      left: 'start',
+    };
+    this.position = (synPositionMap[this.placement] as TDrawerPosition) || this.position;
+  }
+
+  @Watch('position')
+  handlePositionChange() {
+    validatePropValue(DRAWER_POSITIONS, 'start', this.el, 'position');
+    /**
+     * Sync 'placement' property
+     * !⚠️ Delete the code below once the deprecated `placement` property is removed
+     */
+    const syncPlacementMap = {
+      end: 'right',
+      start: 'left',
+    };
+    this.placement = (syncPlacementMap[this.position] as TDrawerPlacement) || this.placement;
   }
 
   // Events section
@@ -95,7 +127,9 @@ export class BqDrawer {
   // =====================================
 
   componentWillLoad() {
-    this.checkPropValues();
+    this.handlePositionChange();
+    // !⚠️ Delete this once the deprecated `placement` property is removed
+    this.handlePlacementChange();
   }
 
   componentDidLoad() {
@@ -186,12 +220,12 @@ export class BqDrawer {
   };
 
   private getMoveTranslate = (): string => {
-    const placementMap = {
-      right: 'translate-x-full',
-      left: '-translate-x-full',
+    const positionMap = {
+      start: '-translate-x-full',
+      end: 'translate-x-full',
     };
 
-    return placementMap[this.placement] || '';
+    return positionMap[this.position] || '';
   };
 
   // render() function
@@ -217,9 +251,10 @@ export class BqDrawer {
         {/* DRAWER PANEL */}
         <div
           class={{
-            [`bq-drawer ${this.placement}`]: true,
-            'start-0': this.placement === 'left',
-            'end-0': this.placement === 'right',
+            // !⚠️ `placement` is deprecated and will be removed in the future
+            [`bq-drawer ${this.position || this.placement}`]: true,
+            'end-0': this.position === 'end' || this.placement === 'right',
+            'start-0': this.position === 'start' || this.placement === 'left',
           }}
           data-transition-enter="transition-transform ease-in duration-300"
           data-transition-enter-start={this.getMoveTranslate()}

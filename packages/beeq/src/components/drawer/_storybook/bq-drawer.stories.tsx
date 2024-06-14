@@ -2,7 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html, nothing } from 'lit-html';
 
 import mdx from './bq-drawer.mdx';
-import { DRAWER_PLACEMENT } from '../bq-drawer.types';
+import { DRAWER_POSITIONS } from '../bq-drawer.types';
 
 const meta: Meta = {
   title: 'Components/Drawer',
@@ -13,11 +13,11 @@ const meta: Meta = {
     },
   },
   argTypes: {
-    open: { control: 'boolean' },
-    placement: { control: 'select', options: [...DRAWER_PLACEMENT] },
+    'enable-backdrop': { control: 'boolean' },
     'close-on-click-outside': { control: 'boolean' },
     'close-on-esc': { control: 'boolean' },
-    'enable-backdrop': { control: 'boolean' },
+    open: { control: 'boolean' },
+    position: { control: 'select', options: [...DRAWER_POSITIONS] },
     // Events
     bqOpen: { action: 'bqOpen' },
     bqClose: { action: 'bqClose' },
@@ -29,7 +29,7 @@ const meta: Meta = {
   },
   args: {
     open: false,
-    placement: 'right',
+    position: 'end',
     'close-on-click-outside': false,
     'close-on-esc': false,
     'enable-backdrop': false,
@@ -59,11 +59,11 @@ const Template = (args: Args) => {
   return html`
     <bq-button @bqClick=${handleOpenDrawer}>Open Drawer</bq-button>
     <bq-drawer
-      placement=${args.placement}
-      ?open=${args.open}
       ?close-on-click-outside=${args['close-on-click-outside']}
       ?close-on-esc=${args['close-on-esc']}
       ?enable-backdrop=${args['enable-backdrop']}
+      ?open=${args.open}
+      position=${args.position}
       @bqClose=${args.bqClose}
       @bqOpen=${args.bqOpen}
       @bqAfterOpen=${args.bqAfterOpen}
@@ -102,10 +102,11 @@ export const NoFooter: Story = {
   },
 };
 
-export const Placement: Story = {
+export const Position: Story = {
   render: Template,
   args: {
-    placement: 'right',
+    open: false,
+    position: 'start',
   },
 };
 
