@@ -13,8 +13,8 @@
 }
 
 .bq-notification {
-  @apply relative flex min-w-[var(--bq-notification--min-width)] p-[var(--bq-notification--padding)] transition-all;
-  @apply rounded-[var(--bq-notification--border-radius)] bg-[var(--bq-notification--background)] shadow-[shadow:var(--bq-notification--box-shadow)];
+  @apply relative flex transition-all min-is-[--bq-notification--min-width] p-b-[--bq-notification--padding] p-i-[--bq-notification--padding];
+  @apply rounded-[--bq-notification--border-radius] bg-[--bq-notification--background] shadow-[shadow:--bq-notification--box-shadow];
 }
 
 /**
@@ -46,7 +46,7 @@
  * Tweak the close bq-button styles so it remain small without extra padding
  */
 .notification--close::part(button) {
-  @apply h-fit rounded-s border-0 p-0;
+  @apply rounded-s border-0 bs-fit p-b-0 p-i-0;
 }
 
 /**
@@ -60,6 +60,6 @@
 [part='body'],
 [part='footer'] {
   ::slotted(*) {
-    @apply mt-m block;
+    @apply block m-bs-m;
   }
 }

@@ -259,7 +259,7 @@ export class BqNotification {
           {/* CLOSE BUTTON */}
           {!this.disableClose && (
             <bq-button
-              class="notification--close absolute right-5"
+              class="notification--close absolute inset-ie-5"
               appearance="text"
               size="small"
               onClick={() => this.hide()}
@@ -273,7 +273,7 @@ export class BqNotification {
             class={{
               '!hidden': this.hideIcon,
               [`color-${this.type}`]: true, // The icon color will be based on the type (info, success, warning, error)
-              'notification--icon mr-xs flex text-left align-top': true,
+              'notification--icon me-xs flex text-left align-top': true,
             }}
             part="icon-outline"
           >
@@ -282,8 +282,8 @@ export class BqNotification {
             </slot>
           </div>
           {/* MAIN */}
-          <div class="flex flex-col items-start gap-[var(--bq-notification--content-footer-gap)]" part="main">
-            <div class="flex flex-col gap-[var(--bq-notification--title-body-gap)]" part="content">
+          <div class="flex flex-col items-start gap-[--bq-notification--content-footer-gap]" part="main">
+            <div class="flex flex-col gap-[--bq-notification--title-body-gap]" part="content">
               {/* TITLE */}
               <div class="title-font font-semibold leading-regular" part="title">
                 <slot />
