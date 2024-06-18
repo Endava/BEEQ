@@ -14,7 +14,7 @@
 
 .bq-tag {
   @apply box-border inline-flex select-none flex-row items-center justify-center bg-[--bq-tag--background-color];
-  @apply gap-[--bq-tag--medium-gap]  px-[--bq-tag--medium-padding-x] py-[--bq-tag--medium-padding-y] font-medium leading-regular text-text-primary;
+  @apply gap-[--bq-tag--medium-gap] font-medium leading-regular text-text-primary p-b-[--bq-tag--medium-padding-y] p-i-[--bq-tag--medium-padding-x];
   @apply rounded-[--bq-tag--border-radius] border-[length:--bq-tag--border-width] border-[color:--bq-tag--border-color];
   @apply transition-colors duration-300 ease-in-out;
 
@@ -25,7 +25,7 @@
 
 .bq-tag__xsmall,
 .bq-tag__small {
-  @apply gap-[--bq-tag--small-gap] px-[--bq-tag--small-padding-x] py-[--bq-tag--small-padding-y];
+  @apply gap-[--bq-tag--small-gap] p-b-[--bq-tag--small-padding-y] p-i-[--bq-tag--small-padding-x];
 
   /* Apply predefined border radius only if the border property have NO VALUE */
   &:not(.has-border) {
@@ -102,7 +102,7 @@
 /* ------------------------------ Close button ------------------------------ */
 
 .bq-tag__close::part(button) {
-  @apply pointer-events-none h-fit border-0 p-0;
+  @apply pointer-events-none border-0 bs-fit p-b-0 p-i-0;
 }
 
 /* --------------- Apply the right size to the bq-icon prefix --------------- */
