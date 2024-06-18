@@ -6,20 +6,23 @@
 
 .bq-tooltip--panel {
   @include animation-fade-in;
-  @apply pointer-events-none fixed z-[--bq-tooltip--z-index] box-border bg-[var(--bq-tooltip--background-color)];
-  @apply w-[var(--bq-tooltip--width)] max-w-[var(--bq-tooltip--max-width)] px-[var(--bq-tooltip--paddingX)] py-[var(--bq-tooltip--paddingY)];
-  @apply text-[length:var(--bq-tooltip--font-size)] leading-[var(--bq-tooltip--line-height)] text-[color:var(--bq-tooltip--text-color)];
-  @apply rounded-[var(--bq-tooltip--border-radius)] border-[length:var(--bq-tooltip--border-width)] border-[color:var(--bq-tooltip--border-color)];
-  @apply shadow-[shadow:var(--bq-tooltip--box-shadow)];
+  @apply pointer-events-none fixed z-[--bq-tooltip--z-index] box-border bg-[--bq-tooltip--background-color];
+  @apply is-[--bq-tooltip--width] max-is-[--bq-tooltip--max-width] p-b-[--bq-tooltip--paddingY] p-i-[--bq-tooltip--paddingX];
+  @apply text-[length:--bq-tooltip--font-size] leading-[--bq-tooltip--line-height] text-[color:--bq-tooltip--text-color];
+  @apply rounded-[--bq-tooltip--border-radius] border-[length:--bq-tooltip--border-width] border-[color:--bq-tooltip--border-color];
+  @apply shadow-[shadow:--bq-tooltip--box-shadow];
+
+  direction: rtl;
+  // writing-mode: vertical-rl;
 }
 
 .bq-tooltip--arrow {
   &,
   &::before {
-    @apply absolute -z-[1] h-2 w-2;
+    @apply absolute -z-[1] bs-2 is-2;
   }
 
   &::before {
-    @apply left-0 top-0 rotate-45 bg-[var(--bq-tooltip--background-color)] content-empty;
+    @apply start-0 rotate-45 bg-[--bq-tooltip--background-color] content-empty inset-bs-0;
   }
 }
