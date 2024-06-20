@@ -188,11 +188,11 @@ export const Stacked: Story = {
     };
 
     return html`
-      <p class="mb-0">
+      <p class="m-be-0">
         The notification component creates and manages the notification portal, a fixed-position element that allows for
         stacking multiple notifications vertically.
       </p>
-      <p class="mb-6">
+      <p class="m-be-6">
         Only one instance of the notification portal exists and it is added or removed from the DOM as required when
         notifications are displayed.
       </p>
