@@ -281,7 +281,7 @@ export class BqDrawer {
             <div class="flex" part="button-close">
               <slot name="button-close">
                 <bq-button
-                  class="[&::part(button)]:h-fit [&::part(button)]:rounded-s [&::part(button)]:border-0 [&::part(button)]:p-0"
+                  class="[&::part(button)]:rounded-s [&::part(button)]:border-0 [&::part(button)]:bs-fit [&::part(button)]:p-b-0 [&::part(button)]:p-i-0"
                   appearance="text"
                   size="small"
                   slot="button-close"
