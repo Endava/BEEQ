@@ -96,7 +96,7 @@ const Template = (args: Args) => {
   const label = !args.optionalLabel
     ? labelTemplate
     : html`
-        <div slot="label" class="flex flex-1">
+        <div slot="label" class="flex flex-1 items-center">
           ${labelTemplate}
           <span class="text-text-secondary">Optional</span>
         </div>
@@ -105,7 +105,7 @@ const Template = (args: Args) => {
     ? html`
         <style>
           bq-input {
-            width: 75vw;
+            inline-size: 75vw;
           }
         </style>
       `
