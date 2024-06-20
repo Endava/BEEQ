@@ -2569,7 +2569,7 @@ declare namespace LocalJSX {
          */
         "onBqBlur"?: (event: BqCheckboxCustomEvent<HTMLBqCheckboxElement>) => void;
         /**
-          * Handler to be called when the chebkbox state changes
+          * Handler to be called when the checkbox state changes
          */
         "onBqChange"?: (event: BqCheckboxCustomEvent<{ checked: boolean }>) => void;
         /**
