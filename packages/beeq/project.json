@@ -120,15 +120,12 @@
     },
     "icons": {
       "executor": "@beeq/tools:icons",
-      "outputs": ["{options.downloadPath}", "{options.extractToPath}", "{options.outputDir}"],
+      "outputs": ["{options.downloadPath}", "{options.extractToPath}"],
       "options": {
         "assetsFolder": "assets",
         "downloadPath": "tmp",
         "extractToPath": "packages/beeq/src/components/icon/svg",
         "fileName": "main.zip",
-        "helperFile": "icons-set.ts",
-        "outputDir": "packages/beeq/src/components/icon/helper",
-        "sourceDir": "packages/beeq/src/components/icon/svg/regular",
         "svgFolder": "core-main",
         "sourceUrl": "https://github.com/phosphor-icons/core/archive/refs/heads"
       }

@@ -1,5 +1,5 @@
 import { createSpinner } from 'nanospinner';
-import { createIconsSetFile, downloadIcons, extractIcons } from './helpers';
+import { downloadIcons, extractIcons } from './helpers';
 
 import { IconsExecutorSchema } from './schema';
 
@@ -8,9 +8,6 @@ export default async function runExecutor({
   downloadPath,
   extractToPath,
   fileName,
-  helperFile,
-  outputDir,
-  sourceDir,
   sourceUrl,
   svgFolder,
 }: IconsExecutorSchema) {
@@ -26,11 +23,6 @@ export default async function runExecutor({
     // into the `svg` assets of bee-q icon folder
     logSpinner.start({ text: 'Extract and copy all the SVG icon files into the icon component assets folder' });
     await extractIcons({ assetsFolder, downloadPath, extractToPath, fileName, svgFolder });
-    logSpinner.success();
-
-    // At the end, it will generate a file that will list all the icon's names available
-    logSpinner.start({ text: 'Generate the `icons-set.ts` helper file' });
-    await createIconsSetFile({ fileName: helperFile, outputDir, sourceDir });
     logSpinner.success();
   } catch (error) {
     success = false;
