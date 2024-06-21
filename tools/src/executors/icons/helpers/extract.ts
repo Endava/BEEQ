@@ -31,8 +31,7 @@ export const extractIcons = async ({
         await copy(oldPath, newPath, { overwrite: true });
       }
     }
-    Promise.resolve();
   } catch (error) {
-    Promise.reject(error);
+    throw new Error(error);
   }
 };

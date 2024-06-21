@@ -11,7 +11,7 @@ const findConfigScript = () => scripts.find((script) => script.hasAttribute('dat
 
 const findFallbackScript = () => scripts.find((script) => /beeq(\.esm)?\.js($|\?)/.test(script.src));
 
-const getScriptPath = (script: HTMLScriptElement) => script.getAttribute('src')!.split('/').slice(0, -1).join('/');
+const getScriptPath = (script: HTMLScriptElement) => script.getAttribute('src').split('/').slice(0, -1).join('/');
 
 /**
  * Returns the base path for the Assets.
@@ -30,7 +30,7 @@ export const getBasePath = (subpath = '') => {
 
     const script = configScript || fallbackScript;
     if (script) {
-      const path = configScript ? script.getAttribute('data-beeq')! : getScriptPath(script);
+      const path = configScript ? script.getAttribute('data-beeq') : getScriptPath(script);
       setBasePath(path);
     }
   }
