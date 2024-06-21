@@ -36,7 +36,7 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
-  <div class="w-64">
+  <div class="is-64">
     <bq-progress
       value=${args.value}
       indeterminate=${args.indeterminate}

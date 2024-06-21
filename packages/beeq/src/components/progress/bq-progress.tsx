@@ -130,7 +130,7 @@ export class BqProgress {
     return (
       <Host style={style}>
         <div class="flex items-center" part="wrapper">
-          <div class="relative flex w-full items-center" part="progress">
+          <div class="relative flex items-center is-full" part="progress">
             <progress
               class={{
                 [`progress-bar progress-bar__${this.type} ${this.thickness}`]: true,
@@ -146,16 +146,16 @@ export class BqProgress {
                 exportparts="base,trigger,panel"
                 alwaysVisible={true}
                 distance={16}
-                style={{ left: `${this.value}%`, fontVariant: 'tabular-nums' }}
+                style={{ insetInlineStart: `${this.value}%`, fontVariant: 'tabular-nums' }}
               >
-                <div class="absolute h-1 w-1" slot="trigger"></div>
+                <div class="absolute bs-1 is-1" slot="trigger"></div>
                 {this.value}
               </bq-tooltip>
             )}
             {this.indeterminate && (
               <div
                 class={{
-                  'progress-bar__indeterminate absolute h-[--bq-progress-bar--height] w-[--bq-progress-bar--indeterminateWidth] bg-[--bq-progress-bar--indicatorColor]':
+                  'progress-bar__indeterminate absolute bg-[--bq-progress-bar--indicatorColor] bs-[--bq-progress-bar--height] is-[--bq-progress-bar--indeterminateWidth]':
                     true,
                   'rounded-full': this.borderShape === 'rounded',
                 }}
@@ -168,7 +168,7 @@ export class BqProgress {
             class={{
               'ms-xs font-medium leading-regular text-text-primary': true,
               'text-ui-danger': this.type === 'error',
-              'invisible ms-0 w-0': !this.label || this.indeterminate,
+              'invisible ms-0 is-0': !this.label || this.indeterminate,
             }}
             style={{ fontVariant: 'tabular-nums' }}
             part="label"
