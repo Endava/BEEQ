@@ -178,11 +178,11 @@ export class BqSpinner {
       >
         {!this.hasIconSlot && (
           <div
-            class={`bq-spinner--loader ${this.size} relative text-[var(--bq-spinner--color)]`}
+            class={`bq-spinner--loader ${this.size} relative text-[--bq-spinner--color]`}
             aria-label="Loading..."
             role="status"
           >
-            <svg class="h-full w-full" fill="currentColor" viewBox="0 0 48 48">
+            <svg class="bs-full is-full" fill="currentColor" viewBox="0 0 48 48">
               <path
                 fill="currentColor"
                 d="M10.27 7.637c-.937-1.117-.798-2.796.415-3.605a24 24 0 0 1 37.09 23.249c-.2 1.444-1.65 2.301-3.064 1.944-1.414-.356-2.25-1.793-2.096-3.242A18.72 18.72 0 0 0 14.102 8.11c-1.237.77-2.895.643-3.832-.474Z"

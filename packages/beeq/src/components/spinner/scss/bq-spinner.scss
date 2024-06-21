@@ -16,15 +16,15 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-spinner--loader.large {
-  @apply h-[var(--bq-spinner--size-large)] w-[var(--bq-spinner--size-large)];
+  @apply bs-[--bq-spinner--size-large] is-[--bq-spinner--size-large];
 }
 
 .bq-spinner--loader.medium {
-  @apply h-[var(--bq-spinner--size-medium)] w-[var(--bq-spinner--size-medium)];
+  @apply bs-[--bq-spinner--size-medium] is-[--bq-spinner--size-medium];
 }
 
 .bq-spinner--loader.small {
-  @apply h-[var(--bq-spinner--size-small)] w-[var(--bq-spinner--size-small)];
+  @apply bs-[--bq-spinner--size-small] is-[--bq-spinner--size-small];
 }
 
 /* -------------------------------------------------------------------------- */
