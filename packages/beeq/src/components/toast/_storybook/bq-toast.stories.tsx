@@ -47,7 +47,7 @@ const Template = (args: Args) => {
 
   return html`${TOAST_TYPE.map(
     (type) => html`
-      <div class="mb-xs2">
+      <div class="m-be-xs2">
         <bq-toast
           border=${args.border}
           type=${type}
