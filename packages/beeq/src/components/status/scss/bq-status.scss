@@ -27,5 +27,5 @@
 }
 
 .bq-status__text ::slotted(*) {
-  @apply m-0 p-0 text-s font-medium leading-regular text-text-primary;
+  @apply text-s font-medium leading-regular text-text-primary m-b-0 m-i-0 p-b-0 p-i-0;
 }
