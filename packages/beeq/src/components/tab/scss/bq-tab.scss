@@ -15,7 +15,7 @@
   @apply transition-[color,background-color,border-color,box-shadow] duration-300;
 
   &::after {
-    @apply absolute z-[1] block bg-stroke-brand opacity-0 content-empty [inset-block-end:-0.25rem];
+    @apply -inset-be-1 absolute z-[1] block bg-stroke-brand opacity-0 content-empty;
     @apply transition-opacity duration-300 ease-linear;
   }
 
@@ -24,18 +24,18 @@
      * This hack will make the underline larger so it fits till the tab bar edges for the first and last tab button,
      * because the parent container applies some padding to not cut the focus outline style.
      */
-    @apply -start-xs3 [block-size:2px] [inline-size:calc(100%_+_var(--bq-spacing-xs2))];
+    @apply -start-xs3 bs-[2px] is-[calc(100%_+_var(--bq-spacing-xs2))];
   }
 
   &--vertical-left::after {
-    @apply -start-xs2 [block-size:calc(100%_+_var(--bq-spacing-xs2))] [inline-size:2px];
+    @apply -start-xs2 bs-[calc(100%_+_var(--bq-spacing-xs2))] is-[2px];
   }
 
   &--vertical-right {
-    @apply justify-start [inline-size:100%];
+    @apply justify-start is-full;
 
     &::after {
-      @apply -end-xs2 [block-size:calc(100%_+_var(--bq-spacing-xs2))] [inline-size:2px];
+      @apply -end-xs2 bs-[calc(100%_+_var(--bq-spacing-xs2))] is-[2px];
     }
   }
 
@@ -44,7 +44,7 @@
   }
 
   &--small {
-    @apply [padding-block:--bq-tab--padding-vertical-small] [padding-inline:--bq-tab--padding-horizontal-small];
+    @apply p-b-[--bq-tab--padding-vertical-small] p-i-[--bq-tab--padding-horizontal-small];
 
     ::slotted(bq-icon) {
       --bq-icon--size: var(--bq-tab--icon-size-small) #{!important};
@@ -52,7 +52,7 @@
   }
 
   &--medium {
-    @apply [padding-block:--bq-tab--padding-vertical-medium] [padding-inline:--bq-tab--padding-horizontal-medium];
+    @apply p-b-[--bq-tab--padding-vertical-medium] p-i-[--bq-tab--padding-horizontal-medium];
 
     ::slotted(bq-icon) {
       --bq-icon--size: var(--bq-tab--icon-size-medium) #{!important};
@@ -60,7 +60,7 @@
   }
 
   &--large {
-    @apply text-l [padding-block:--bq-tab--padding-vertical-large] [padding-inline:--bq-tab--padding-horizontal-large];
+    @apply text-l p-b-[--bq-tab--padding-vertical-large] p-i-[--bq-tab--padding-horizontal-large];
 
     ::slotted(bq-icon) {
       --bq-icon--size: var(--bq-tab--icon-size-large) #{!important};
