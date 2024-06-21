@@ -18,8 +18,7 @@ export const downloadIcons = async ({ downloadPath, fileName, sourceUrl }: IDown
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     await finished(Readable.fromWeb(response.body).pipe(ws));
-    Promise.resolve();
   } catch (error) {
-    Promise.reject(error);
+    throw new Error(error);
   }
 };
