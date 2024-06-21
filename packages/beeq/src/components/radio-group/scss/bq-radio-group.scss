@@ -7,10 +7,10 @@
 }
 
 .bq-radio-group {
-  @apply m-0;
+  @apply m-b-0 m-i-0;
 
   &:not(.has-fieldset) {
-    @apply m-0 border-0 p-0;
+    @apply border-0 m-b-0 m-i-0 p-b-0 p-i-0;
   }
 
   &--horizontal {

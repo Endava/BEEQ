@@ -10,7 +10,7 @@
 
 .bq-radio {
   @apply box-border inline-flex cursor-pointer items-center justify-center gap-2 transition-[background-color] duration-300;
-  @apply rounded-s p-xs;
+  @apply rounded-s p-b-xs p-i-xs;
 
   &.is-disabled {
     .bq-radio__circle {
@@ -53,7 +53,7 @@
 }
 
 .bq-radio__input {
-  @apply pointer-events-none absolute m-0 p-0 opacity-0;
+  @apply pointer-events-none absolute opacity-0 m-b-0 m-i-0 p-b-0 p-i-0;
 
   &:focus-visible {
     ~ .bq-radio__circle {
@@ -63,15 +63,15 @@
 }
 
 .bq-radio__control {
-  @apply box-border flex h-[var(--bq-radio--size)] w-[var(--bq-radio--size)] items-center justify-center rounded-full p-[2px];
+  @apply box-border flex items-center justify-center rounded-full bs-[--bq-radio--size] is-[--bq-radio--size] p-b-[2px] p-i-[2px];
 }
 
 .bq-radio__circle {
-  @apply relative box-border flex h-full w-full items-center justify-center rounded-full border-[length:var(--bq-radio--border-width)] border-solid p-[3px] border-hover-icon-primary;
+  @apply relative box-border flex items-center justify-center rounded-full border-[length:--bq-radio--border-width] border-solid border-hover-icon-primary bs-full is-full p-b-[3px] p-i-[3px];
 }
 
 .bq-radio__checked {
-  @apply h-full w-full rounded-full;
+  @apply rounded-full bs-full is-full;
 }
 
 .bq-radio__label {
