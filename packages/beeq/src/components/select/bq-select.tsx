@@ -523,7 +523,7 @@ export class BqSelect {
               {/* HTML Input */}
               <input
                 id={this.name || this.fallbackInputId}
-                class="bq-select__control--input w-full flex-grow"
+                class="bq-select__control--input flex-grow is-full"
                 autoComplete="off"
                 autoCapitalize="off"
                 autoFocus={this.autofocus}
