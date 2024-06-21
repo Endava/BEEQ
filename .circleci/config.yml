@@ -49,7 +49,7 @@ jobs:
       - checkout
       - run:
           name: ▶️ Start Nx Cloud Agents
-          command: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js"
+          command: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --with-env-vars="NX_VERBOSE_LOGGING"
       - setup-node
       - restore_cache:
           name: 💫 Restore Cache dependencies
@@ -73,6 +73,9 @@ jobs:
             - node_modules
       - nx/set-shas
           # Derives SHAs for base and head for use in `nx affected` commands in CI
+      - run:
+          name: 🧾 NX report
+          command: npx nx report
       - run:
           name: ⏳ Build Libraries
           command: npx nx affected -t build --exclude='*,!tag:publishable' --parallel=3 --base=$NX_BASE --head=$NX_HEAD
