@@ -513,10 +513,7 @@ export class BqSelect {
             <div class="flex flex-1 overflow-x-auto" part="input-outline">
               {/* Display selected values using BqTags for multiple selection */}
               {this.multiple && (
-                <span
-                  class="me-xs2 flex flex-1 gap-xs2 [&>bq-tag::part(text)]:text-nowrap [&>bq-tag::part(text)]:leading-small [&>bq-tag]:inline-flex"
-                  part="tags"
-                >
+                <span class="bq-select__tags" part="tags">
                   <slot name="tags">{this.displayTags}</slot>
                 </span>
               )}

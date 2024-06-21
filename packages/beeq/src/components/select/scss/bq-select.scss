@@ -150,6 +150,19 @@
   @apply ms-[--bq-select--gap] transition-transform duration-300 ease-in-out;
 }
 
+.bq-select__tags {
+  @apply me-xs2 flex flex-1 gap-xs2;
+
+  bq-tag,
+  ::slotted(bq-tag) {
+    @apply inline-flex;
+  }
+
+  bq-tag::part(text) {
+    @apply text-nowrap leading-small;
+  }
+}
+
 /* -------------------------------------------------------------------------- */
 /*                         Slotted and internal icons                         */
 /* -------------------------------------------------------------------------- */

@@ -204,7 +204,12 @@ const Template = (args: Args) => {
       ${args.customTags
         ? html`${args.value.map(
             (value) =>
-              html`<bq-tag size="xsmall" variant="filled" slot="tags">
+              html`<bq-tag
+                size="xsmall"
+                variant="filled"
+                slot="tags"
+                class="[&::part(text)]:text-nowrap [&::part(text)]:leading-small"
+              >
                 <bq-icon name=${value} slot="prefix"></bq-icon>
                 ${value}
               </bq-tag>`,
@@ -264,7 +269,7 @@ export const Multiple: Story = {
   args: {
     'keep-open-on-select': true,
     multiple: true,
-    value: ['running', 'biking', 'pizza'],
+    value: ['biking', 'ice-cream'],
   },
 };
 
@@ -274,7 +279,7 @@ export const MultipleCustomRender: Story = {
     'keep-open-on-select': true,
     multiple: true,
     customTags: true,
-    value: ['pizza', 'hamburger', 'cookie'],
+    value: ['pizza', 'ice-cream'],
   },
 };
 
