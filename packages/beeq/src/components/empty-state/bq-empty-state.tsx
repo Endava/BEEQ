@@ -98,9 +98,9 @@ export class BqEmptyState {
       <div class="inline-flex flex-col items-center" part="wrapper">
         <div
           class={{
-            'mb-m': this.size === 'small',
-            'mb-xl': this.size === 'medium',
-            'mb-xxl': this.size === 'large',
+            'm-be-m': this.size === 'small',
+            'm-be-xl': this.size === 'medium',
+            'm-be-xxl': this.size === 'large',
           }}
           part="thumbnail"
         >
@@ -114,9 +114,9 @@ export class BqEmptyState {
             'text-m': this.size === 'small',
             'text-l': this.size === 'medium',
             'text-xxl2': this.size === 'large',
-            'mb-xs': this.size === 'small' && this.hasBody,
-            'mb-m': this.size === 'medium' && this.hasBody,
-            'mb-l': this.size === 'large' && this.hasBody,
+            'm-be-xs': this.size === 'small' && this.hasBody,
+            'm-be-m': this.size === 'medium' && this.hasBody,
+            'm-be-l': this.size === 'large' && this.hasBody,
           }}
           part="title"
         >
@@ -128,9 +128,9 @@ export class BqEmptyState {
             'text-s': this.size === 'small',
             'text-m': this.size === 'medium',
             'text-l': this.size === 'large',
-            'mb-m': this.size === 'small' && this.hasFooter,
-            'mb-l': this.size === 'medium' && this.hasFooter,
-            'mb-xl': this.size === 'large' && this.hasFooter,
+            'm-be-m': this.size === 'small' && this.hasFooter,
+            'm-be-l': this.size === 'medium' && this.hasFooter,
+            'm-be-xl': this.size === 'large' && this.hasFooter,
           }}
           ref={(div) => (this.bodyElem = div)}
           part="body"
