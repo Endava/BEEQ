@@ -40,7 +40,7 @@ const meta: Meta = {
     bqFocus: { action: 'bqFocus' },
     bqInput: { action: 'bqInput' },
     // Not part of the public API, so we don't want to expose it in the docs
-    noHelperText: { control: 'bolean', table: { disable: true } },
+    noHelperText: { control: 'boolean', table: { disable: true } },
   },
   args: {
     autocapitalize: 'off',

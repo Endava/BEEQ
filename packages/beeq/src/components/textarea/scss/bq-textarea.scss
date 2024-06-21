@@ -5,7 +5,7 @@
 @import './bq-textarea.variables';
 
 :host {
-  @apply block w-full;
+  @apply block is-full;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -13,7 +13,7 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-textarea__label {
-  @apply mb-[--bq-textarea--label-margin-bottom] text-[length:--bq-textarea--label-text-size] text-[color:--bq-textarea--label-text-color];
+  @apply text-[length:--bq-textarea--label-text-size] text-[color:--bq-textarea--label-text-color] m-be-[--bq-textarea--label-margin-bottom];
 }
 
 /* -------------------------------------------------------------------------- */
@@ -21,11 +21,11 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-textarea__input {
-  @apply h-[inherit] flex-auto resize-y bg-[--bq-textarea--background-color];
+  @apply flex-auto resize-y bg-[--bq-textarea--background-color] bs-[inherit];
   // Border
   @apply rounded-[--bq-textarea--border-radius] border-[length:--bq-textarea--border-width] border-[color:--bq-textarea--border-color];
   // Padding
-  @apply py-[--bq-textarea--paddingY] pe-[--bq-textarea--padding-end] ps-[--bq-textarea--padding-start];
+  @apply pe-[--bq-textarea--padding-end] ps-[--bq-textarea--padding-start] p-b-[--bq-textarea--paddingY];
   // Text
   @apply text-[length:--bq-textarea--text-size] text-[color:--bq-textarea--text-color] placeholder:text-[color:--bq-textarea--text-placeholder-color];
   // Transition
@@ -81,7 +81,7 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-textarea__helper {
-  @apply mt-[--bq-textarea--helper-margin-top] text-[length:--bq-textarea--helper-text-size] text-[color:--bq-textarea--helper-text-color];
+  @apply text-[length:--bq-textarea--helper-text-size] text-[color:--bq-textarea--helper-text-color] m-bs-[--bq-textarea--helper-margin-top];
 }
 
 /* ------------------------------- Validations ------------------------------ */
