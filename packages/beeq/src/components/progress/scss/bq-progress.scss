@@ -7,11 +7,11 @@
 @layer component {
   @keyframes move-indeterminate {
     0% {
-      left: 0;
+      inset-inline-start: 0;
     }
 
     100% {
-      left: calc(100% - var(--bq-progress-bar--indeterminateWidth));
+      inset-inline-start: calc(100% - var(--bq-progress-bar--indeterminateWidth));
     }
   }
 
@@ -21,7 +21,7 @@
 }
 
 .progress-bar {
-  @apply relative h-[--bq-progress-bar--height] w-full appearance-none;
+  @apply relative appearance-none bs-[--bq-progress-bar--height] is-full;
 }
 
 .progress-bar::-webkit-progress-bar {
