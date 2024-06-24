@@ -1,3 +1,4 @@
+import { useArgs } from '@storybook/preview-api';
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
@@ -64,6 +65,7 @@ const meta: Meta = {
     optionalLabel: { control: 'boolean', table: { disable: true } },
     prefix: { control: 'boolean', table: { disable: true } },
     suffix: { control: 'boolean', table: { disable: true } },
+    customTags: { control: 'boolean', table: { disable: true } },
     options: { control: 'text', table: { disable: true } },
   },
   args: {
@@ -88,49 +90,19 @@ const meta: Meta = {
     readonly: false,
     required: false,
     'validation-status': 'none',
+    customTags: false,
     value: undefined,
     // Not part of the public API, so we don't want to expose it in the docs
-    options: html`
-      <bq-option value="running">
-        <bq-icon slot="prefix" name="sneaker-move"></bq-icon>
-        Running
-      </bq-option>
-
-      <bq-option value="hiking">
-        <bq-icon slot="prefix" name="boot"></bq-icon>
-        Hiking
-      </bq-option>
-
-      <bq-option value="biking">
-        <bq-icon slot="prefix" name="person-simple-bike"></bq-icon>
-        Biking
-      </bq-option>
-
-      <bq-option value="swimming">
-        <bq-icon slot="prefix" name="swimming-pool"></bq-icon>
-        Swimming
-      </bq-option>
-
-      <bq-option value="pizza">
-        <bq-icon slot="prefix" name="pizza"></bq-icon>
-        Pizza
-      </bq-option>
-
-      <bq-option value="hamburger">
-        <bq-icon slot="prefix" name="hamburger"></bq-icon>
-        Hamburger
-      </bq-option>
-
-      <bq-option value="cookie">
-        <bq-icon slot="prefix" name="cookie"></bq-icon>
-        Cookie
-      </bq-option>
-
-      <bq-option value="ice-cream">
-        <bq-icon slot="prefix" name="ice-cream"></bq-icon>
-        Ice-cream
-      </bq-option>
-    `,
+    options: [
+      { label: 'Running', value: 'running', icon: 'sneaker-move' },
+      { label: 'Hiking', value: 'hiking', icon: 'boot' },
+      { label: 'Biking', value: 'biking', icon: 'person-simple-bike' },
+      { label: 'Swimming', value: 'swimming', icon: 'swimming-pool' },
+      { label: 'Pizza', value: 'pizza', icon: 'pizza' },
+      { label: 'Hamburger', value: 'hamburger', icon: 'hamburger' },
+      { label: 'Cookie', value: 'cookie', icon: 'cookie' },
+      { label: 'Ice-cream', value: 'ice-cream', icon: 'ice-cream' },
+    ],
   },
 };
 export default meta;
@@ -138,6 +110,18 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => {
+  const [, updateArgs] = useArgs();
+
+  const onSelect = (event) => {
+    updateArgs({ value: event.detail.value });
+    args.bqSelect(event);
+  };
+
+  const onClear = (event) => {
+    updateArgs({ value: [] });
+    args.bqClear(event);
+  };
+
   const tooltipTemplate = args.hasLabelTooltip
     ? html`
         <bq-tooltip class="ms-xs">
@@ -146,11 +130,13 @@ const Template = (args: Args) => {
         </bq-tooltip>
       `
     : nothing;
+
   const labelTemplate = html`
     <label class="flex flex-grow items-center" slot=${ifDefined(!args.optionalLabel ? 'label' : null)}>
       Select label ${tooltipTemplate}
     </label>
   `;
+
   const label = !args.optionalLabel
     ? labelTemplate
     : html`
@@ -159,11 +145,12 @@ const Template = (args: Args) => {
           <span class="text-text-secondary">Optional</span>
         </div>
       `;
+
   const style = args.hasLabelTooltip
     ? html`
         <style>
           bq-select {
-            width: 75vw;
+            inline-size: 75vw;
           }
         </style>
       `
@@ -195,10 +182,41 @@ const Template = (args: Args) => {
       validation-status=${args['validation-status']}
       value=${args.multiple ? ifDefined(JSON.stringify(args.value)) : args.value}
       @bqBlur=${args.bqBlur}
-      @bqSelect=${args.bqSelect}
-      @bqClear=${args.bqClear}
+      @bqSelect=${args.customTags ? onSelect : args.bqSelect}
+      @bqClear=${args.customTags ? onClear : args.bqClear}
       @bqFocus=${args.bqFocus}
     >
+      ${args.customTags
+        ? html`${args.options
+            .filter((option) => args.value.includes(option.value))
+            .map((option, index) => {
+              if (index < args['max-tags-visible'] || args['max-tags-visible'] < 0) {
+                return html`<bq-tag
+                  key=${option.value}
+                  size="xsmall"
+                  variant="filled"
+                  slot="tags"
+                  class="[&::part(text)]:text-nowrap [&::part(text)]:leading-small"
+                >
+                  <bq-icon name=${option.icon} slot="prefix"></bq-icon>
+                  ${option.value}
+                </bq-tag>`;
+              } else if (index === args['max-tags-visible']) {
+                return html`
+                  <bq-tag
+                    key="more"
+                    size="xsmall"
+                    variant="filled"
+                    slot="tags"
+                    class="[&::part(text)]:text-nowrap [&::part(text)]:leading-small"
+                  >
+                    +${args.value.length - index}
+                  </bq-tag>
+                `;
+              }
+              return nothing;
+            })}`
+        : nothing}
       ${!args.noLabel ? label : nothing}
       ${args.prefix ? html`<bq-icon name="user-circle" slot="prefix"></bq-icon>` : nothing}
       ${args.suffix ? html`<bq-icon name="arrow-down" slot="suffix"></bq-icon>` : nothing}
@@ -210,7 +228,13 @@ const Template = (args: Args) => {
             </span>
           `
         : nothing}
-      ${args.options}
+      ${args.options.map(
+        (option) => html`
+          <bq-option value=${option.value}>
+            <bq-icon slot="prefix" name=${option.icon}></bq-icon> ${option.label}
+          </bq-option>
+        `,
+      )}
     </bq-select>
   `;
 };
@@ -253,6 +277,16 @@ export const Multiple: Story = {
   args: {
     'keep-open-on-select': true,
     multiple: true,
+    value: ['running', 'biking', 'pizza'],
+  },
+};
+
+export const MultipleCustomRender: Story = {
+  render: Template,
+  args: {
+    'keep-open-on-select': true,
+    multiple: true,
+    customTags: true,
     value: ['running', 'biking', 'pizza'],
   },
 };
