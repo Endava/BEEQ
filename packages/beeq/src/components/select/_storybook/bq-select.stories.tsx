@@ -117,6 +117,11 @@ const Template = (args: Args) => {
     args.bqSelect(event);
   };
 
+  const onClear = (event) => {
+    updateArgs({ value: [] });
+    args.bqClear(event);
+  };
+
   const tooltipTemplate = args.hasLabelTooltip
     ? html`
         <bq-tooltip class="ms-xs">
@@ -178,7 +183,7 @@ const Template = (args: Args) => {
       value=${args.multiple ? ifDefined(JSON.stringify(args.value)) : args.value}
       @bqBlur=${args.bqBlur}
       @bqSelect=${args.customTags ? onSelect : args.bqSelect}
-      @bqClear=${args.bqClear}
+      @bqClear=${args.customTags ? onClear : args.bqClear}
       @bqFocus=${args.bqFocus}
     >
       ${args.customTags
