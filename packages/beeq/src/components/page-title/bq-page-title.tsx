@@ -81,7 +81,7 @@ export class BqPageTitle {
   render() {
     return (
       <div class="flex flex-col" part="wrapper">
-        <div class="flex gap-xs [padding-block:--paddingY]" part="base">
+        <div class="flex gap-xs p-b-[--paddingY]" part="base">
           {/* Back navigation button */}
           <div
             class={{ flex: true, '!hidden': !this.haveBackNavigation }}
@@ -101,7 +101,7 @@ export class BqPageTitle {
               </h1>
               {/* Suffix */}
               <div
-                class={{ 'flex flex-grow gap-xs p-xs2': true, '!hidden': !this.hasSuffix }}
+                class={{ 'flex flex-grow gap-xs p-b-xs2 p-i-xs2': true, '!hidden': !this.hasSuffix }}
                 ref={(divElem) => (this.suffixElem = divElem)}
                 part="suffix"
               >
@@ -125,7 +125,7 @@ export class BqPageTitle {
         {/* Divider */}
         <div part="divider">
           <slot name="divider">
-            <bq-divider class="mb-m block" stroke-color="ui--secondary" stroke-thickness="1" />
+            <bq-divider class="block m-be-m" stroke-color="ui--secondary" stroke-thickness="1" />
           </slot>
         </div>
       </div>

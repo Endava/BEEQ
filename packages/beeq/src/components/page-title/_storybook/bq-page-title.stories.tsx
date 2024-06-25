@@ -29,7 +29,7 @@ const Template = (args: Args) => {
   const customDivider = args.customDivider
     ? html`<bq-divider
         slot="divider"
-        class="mb-m block"
+        class="block m-be-m"
         stroke-color="stroke--secondary"
         stroke-thickness="1"
         dashed
@@ -94,8 +94,8 @@ export const TitleBackActions: Story = {
     title: 'Title',
     'sub-title': 'Sub-title',
     actions: html`
-      <bq-icon class="p-xs2" color="text--brand" name="pencil-simple" weight="bold"></bq-icon>
-      <bq-icon class="p-xs2" color="text--brand" name="download-simple" weight="bold"></bq-icon>
+      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="pencil-simple" weight="bold"></bq-icon>
+      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="download-simple" weight="bold"></bq-icon>
     `,
     'custom-style': true,
   },
@@ -109,8 +109,8 @@ export const TitleBackActionsCustomDefault: Story = {
     title: 'Title',
     'sub-title': 'Sub-title',
     actions: html`
-      <bq-icon class="p-xs2" color="text--brand" name="pencil-simple" weight="bold"></bq-icon>
-      <bq-icon class="p-xs2" color="text--brand" name="download-simple" weight="bold"></bq-icon>
+      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="pencil-simple" weight="bold"></bq-icon>
+      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="download-simple" weight="bold"></bq-icon>
     `,
   },
 };
@@ -124,8 +124,8 @@ export const TitleBackActionsCustom: Story = {
     title: 'Title',
     'sub-title': 'Sub-title',
     actions: html`
-      <bq-icon class="p-xs2" color="text--brand" name="pencil-simple" weight="bold"></bq-icon>
-      <bq-icon class="p-xs2" color="text--brand" name="download-simple" weight="bold"></bq-icon>
+      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="pencil-simple" weight="bold"></bq-icon>
+      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="download-simple" weight="bold"></bq-icon>
     `,
     'custom-style': true,
   },
