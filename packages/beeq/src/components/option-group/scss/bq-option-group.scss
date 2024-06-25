@@ -11,7 +11,7 @@
 .bq-option-group {
   @apply flex overflow-hidden overflow-ellipsis;
   @apply bg-[--bq-option-group--background] text-[length:--bq-option-group--font-size] leading-[--bq-option-group--line-height];
-  @apply py-[--bq-option-group--label-paddingY] pe-[--bq-option-group--label-padding-end] ps-[--bq-option-group--label-padding-start];
+  @apply pe-[--bq-option-group--label-padding-end] ps-[--bq-option-group--label-padding-start] p-b-[--bq-option-group--label-paddingY] p-i-[--bq-option-group--label-paddingY];
 
   &__child {
     @apply flex items-center;

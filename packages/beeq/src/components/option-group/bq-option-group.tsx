@@ -61,12 +61,12 @@ export class BqOptionGroup {
   render() {
     return (
       <div class="bg-ui-primary">
-        <legend class="bq-option-group mb-[--bq-option-group--gapY-list]" part="label">
+        <legend class="bq-option-group m-be-[--bq-option-group--gapY-list]" part="label">
           <span class="option-group__prefix flex items-center" part="prefix">
             <slot name="header-prefix" />
           </span>
           <span
-            class="bq-option-group__label inline-block w-auto overflow-hidden text-ellipsis whitespace-nowrap"
+            class="bq-option-group__label inline-block overflow-hidden text-ellipsis whitespace-nowrap is-auto"
             part="label"
           >
             <slot name="header-label" />
