@@ -17,13 +17,16 @@
     }
   }
 
+  direction: rtl;
+  writing-mode: vertical-rl;
+
   &.small .bq-accordion__header {
-    @apply gap-[--bq-accordion--small-gap] py-[--bq-accordion--small-padding-y] pe-[--bq-accordion--small-padding-end] ps-[--bq-accordion--small-padding-start];
+    @apply gap-[--bq-accordion--small-gap] pe-[--bq-accordion--small-padding-end] ps-[--bq-accordion--small-padding-start] p-b-[--bq-accordion--small-padding-y];
     @apply rounded-ee-[--bq-accordion--small-radius] rounded-es-[--bq-accordion--small-radius] rounded-se-[--bq-accordion--small-radius] rounded-ss-[--bq-accordion--small-radius];
   }
 
   &.medium .bq-accordion__header {
-    @apply gap-[--bq-accordion--medium-gap] py-[--bq-accordion--medium-padding-y] pe-[--bq-accordion--medium-padding-end] ps-[--bq-accordion--medium-padding-start];
+    @apply gap-[--bq-accordion--medium-gap] pe-[--bq-accordion--medium-padding-end] ps-[--bq-accordion--medium-padding-start] p-b-[--bq-accordion--medium-padding-y];
     @apply rounded-ee-[--bq-accordion--medium-radius] rounded-es-[--bq-accordion--medium-radius] rounded-se-[--bq-accordion--medium-radius] rounded-ss-[--bq-accordion--medium-radius];
   }
 
@@ -91,19 +94,19 @@
   }
 
   &.small.filled .bq-accordion__body {
-    @apply py-[--bq-accordion--panel-small-filled-padding-y] pe-[--bq-accordion--panel-small-filled-padding-end] ps-[--bq-accordion--panel-small-filled-padding-start];
+    @apply pe-[--bq-accordion--panel-small-filled-padding-end] ps-[--bq-accordion--panel-small-filled-padding-start] p-b-[--bq-accordion--panel-small-filled-padding-y];
   }
 
   &.medium.filled .bq-accordion__body {
-    @apply py-[--bq-accordion--panel-medium-filled-padding-y] pe-[--bq-accordion--panel-medium-filled-padding-end] ps-[--bq-accordion--panel-medium-filled-padding-start];
+    @apply pe-[--bq-accordion--panel-medium-filled-padding-end] ps-[--bq-accordion--panel-medium-filled-padding-start] p-b-[--bq-accordion--panel-medium-filled-padding-y];
   }
 
   &.small.ghost .bq-accordion__body {
-    @apply py-[--bq-accordion--panel-small-ghost-padding-y] pe-[--bq-accordion--panel-small-ghost-padding-end] ps-[--bq-accordion--panel-small-ghost-padding-start];
+    @apply pe-[--bq-accordion--panel-small-ghost-padding-end] ps-[--bq-accordion--panel-small-ghost-padding-start] p-b-[--bq-accordion--panel-small-ghost-padding-y];
   }
 
   &.medium.ghost .bq-accordion__body {
-    @apply py-[--bq-accordion--panel-medium-ghost-padding-y] pe-[--bq-accordion--panel-medium-ghost-padding-end] ps-[--bq-accordion--panel-medium-ghost-padding-start];
+    @apply pe-[--bq-accordion--panel-medium-ghost-padding-end] ps-[--bq-accordion--panel-medium-ghost-padding-start] p-b-[--bq-accordion--panel-medium-ghost-padding-y];
   }
 }
 
