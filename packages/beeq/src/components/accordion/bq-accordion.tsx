@@ -232,7 +232,7 @@ export class BqAccordion {
             </slot>
           </div>
         </summary>
-        <div class="bq-accordion__body" part="panel">
+        <div class="bq-accordion__body overflow-hidden" part="panel">
           <slot />
         </div>
       </details>

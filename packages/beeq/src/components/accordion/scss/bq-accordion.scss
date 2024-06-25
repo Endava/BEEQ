@@ -17,9 +17,6 @@
     }
   }
 
-  direction: rtl;
-  writing-mode: vertical-rl;
-
   &.small .bq-accordion__header {
     @apply gap-[--bq-accordion--small-gap] pe-[--bq-accordion--small-padding-end] ps-[--bq-accordion--small-padding-start] p-b-[--bq-accordion--small-padding-y];
     @apply rounded-ee-[--bq-accordion--small-radius] rounded-es-[--bq-accordion--small-radius] rounded-se-[--bq-accordion--small-radius] rounded-ss-[--bq-accordion--small-radius];
