@@ -51,6 +51,18 @@ export const LogicalProperties: Partial<Config> = plugin(function ({ matchUtilit
       'border-i': (value) => ({ 'border-inline': value }),
       'border-is': (value) => ({ 'border-inline-start': value }),
       'border-ie': (value) => ({ 'border-inline-end': value }),
+      // Logical Padding properties (only those not covered by Tailwind CSS)
+      'p-b': (value) => ({ 'padding-block': value }),
+      'p-bs': (value) => ({ 'padding-block-start': value }),
+      'p-be': (value) => ({ 'padding-block-end': value }),
+      'p-i': (value) => ({ 'padding-inline': value }),
+    },
+    {
+      values: theme('spacing'),
+    },
+  );
+  matchUtilities(
+    {
       // Logical Top, Right, Bottom, and Left properties
       'inset-b': (value) => ({ 'inset-block': value }),
       'inset-bs': (value) => ({ 'inset-block-start': value }),
@@ -63,14 +75,10 @@ export const LogicalProperties: Partial<Config> = plugin(function ({ matchUtilit
       'm-bs': (value) => ({ 'margin-block-start': value }),
       'm-be': (value) => ({ 'margin-block-end': value }),
       'm-i': (value) => ({ 'margin-inline': value }),
-      // Logical Padding properties (only those not covered by Tailwind CSS)
-      'p-b': (value) => ({ 'padding-block': value }),
-      'p-bs': (value) => ({ 'padding-block-start': value }),
-      'p-be': (value) => ({ 'padding-block-end': value }),
-      'p-i': (value) => ({ 'padding-inline': value }),
     },
     {
       values: theme('spacing'),
+      supportsNegativeValues: true,
     },
   );
 });
