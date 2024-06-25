@@ -147,7 +147,7 @@ export class BqIcon {
       <Host style={styles}>
         <div
           aria-label={this.label ?? `${this.name} icon`}
-          class="flex h-[var(--bq-icon--size)] w-[var(--bq-icon--size)] text-[color:var(--bq-icon--color)]"
+          class="flex text-[color:--bq-icon--color] bs-[--bq-icon--size] is-[--bq-icon--size]"
           innerHTML={this._svgContent}
           part="base"
           role="img"
