@@ -136,7 +136,7 @@ export const Default: Story = {
 
 export const Placement: Story = {
   render: (args: Args) => html`
-    <div class="mt-xxl3 grid grid-cols-1 place-items-center gap-m sm:grid-cols-2">
+    <div class="grid grid-cols-1 place-items-center gap-m m-bs-xxl3 sm:grid-cols-2">
       <!-- Bottom end -->
       ${Template({
         ...args,
@@ -167,7 +167,7 @@ export const Placement: Story = {
 
 export const CustomTrigger: Story = {
   render: (args: Args) => html`
-    <div class="mt-xxl3 grid grid-cols-1 place-items-center gap-m sm:grid-cols-2">
+    <div class="grid grid-cols-1 place-items-center gap-m m-bs-xxl3 sm:grid-cols-2">
       <!-- Button icon -->
       ${Template({
         ...args,
@@ -201,8 +201,8 @@ export const CustomTrigger: Story = {
 
 export const KeepOpen: Story = {
   render: (args: Args) => html`
-    <div class="mb-l rounded-m border-s border-solid border-stroke-success bg-ui-success-alt p-m">
-      <p class="mb-xs text-m font-bold">💡 NOTE:</p>
+    <div class="rounded-m border-s border-solid border-stroke-success bg-ui-success-alt m-be-l p-b-m p-i-m">
+      <p class="text-m font-bold m-be-xs">💡 NOTE:</p>
       If <code class="text-text-danger">keepOpenOnSelect</code> is set, the dropdown will remain open after a selection
       is made.
     </div>
