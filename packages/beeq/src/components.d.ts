@@ -12,7 +12,7 @@ import { TBadgeSize } from "./components/badge/bq-badge.types";
 import { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 import { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
 import { DaysOfWeek, TDatePickerType } from "./components/date-picker/bq-date-picker.types";
-import { Placement as FloatingUIPlacement } from "./services/interfaces";
+import { Placement } from "./services/interfaces";
 import { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
 import { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
@@ -41,7 +41,7 @@ export { TBadgeSize } from "./components/badge/bq-badge.types";
 export { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButtonVariant } from "./components/button/bq-button.types";
 export { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
 export { DaysOfWeek, TDatePickerType } from "./components/date-picker/bq-date-picker.types";
-export { Placement as FloatingUIPlacement } from "./services/interfaces";
+export { Placement } from "./services/interfaces";
 export { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
 export { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
@@ -405,7 +405,7 @@ export namespace Components {
         /**
           * Position of the Date picker panel
          */
-        "placement"?: FloatingUIPlacement;
+        "placement"?: Placement;
         /**
           * Indicates whether or not the Date picker input is required to be filled out before submitting the form.
          */
@@ -582,7 +582,7 @@ export namespace Components {
         /**
           * Position of the panel
          */
-        "placement"?: FloatingUIPlacement;
+        "placement"?: Placement;
         /**
           * Whether the panel should have the same width as the trigger element
          */
@@ -808,7 +808,7 @@ export namespace Components {
         /**
           * Position of the panel
          */
-        "placement"?: FloatingUIPlacement;
+        "placement"?: Placement;
         /**
           * Whether the panel should have the same width as the trigger element
          */
@@ -990,7 +990,7 @@ export namespace Components {
         /**
           * Position of the Select panel
          */
-        "placement"?: FloatingUIPlacement;
+        "placement"?: Placement;
         /**
           * If true, the list of options cannot be filtered (searching won't be available)
          */
@@ -1448,7 +1448,7 @@ export namespace Components {
           * If true, the arrow on the tooltip content won't be shown
          */
         "hideArrow"?: boolean;
-        "placement"?: FloatingUIPlacement;
+        "placement"?: Placement;
         /**
           * Whether the tooltip should have the same width as the trigger element (applicable only for content shorter than the trigger element)
          */
@@ -2677,7 +2677,7 @@ declare namespace LocalJSX {
         /**
           * Position of the Date picker panel
          */
-        "placement"?: FloatingUIPlacement;
+        "placement"?: Placement;
         /**
           * Indicates whether or not the Date picker input is required to be filled out before submitting the form.
          */
@@ -2874,7 +2874,7 @@ declare namespace LocalJSX {
         /**
           * Position of the panel
          */
-        "placement"?: FloatingUIPlacement;
+        "placement"?: Placement;
         /**
           * Whether the panel should have the same width as the trigger element
          */
@@ -3148,7 +3148,7 @@ declare namespace LocalJSX {
         /**
           * Position of the panel
          */
-        "placement"?: FloatingUIPlacement;
+        "placement"?: Placement;
         /**
           * Whether the panel should have the same width as the trigger element
          */
@@ -3348,7 +3348,7 @@ declare namespace LocalJSX {
         /**
           * Position of the Select panel
          */
-        "placement"?: FloatingUIPlacement;
+        "placement"?: Placement;
         /**
           * If true, the list of options cannot be filtered (searching won't be available)
          */
@@ -3863,7 +3863,7 @@ declare namespace LocalJSX {
           * If true, the arrow on the tooltip content won't be shown
          */
         "hideArrow"?: boolean;
-        "placement"?: FloatingUIPlacement;
+        "placement"?: Placement;
         /**
           * Whether the tooltip should have the same width as the trigger element (applicable only for content shorter than the trigger element)
          */

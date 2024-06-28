@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Prop, Watch } from '@stencil/core';
 
-import { FloatingUIPlacement } from '../../services/interfaces';
+import { Placement } from '../../services/interfaces';
 
 let id = 0;
 
@@ -44,7 +44,7 @@ export class BqDropdown {
   @Prop({ reflect: true }) keepOpenOnSelect?: boolean = false;
 
   /** Position of the panel */
-  @Prop({ reflect: true }) placement?: FloatingUIPlacement = 'bottom-start';
+  @Prop({ reflect: true }) placement?: Placement = 'bottom-start';
 
   /** If true, the panel will be visible. */
   @Prop({ reflect: true, mutable: true }) open?: boolean = false;

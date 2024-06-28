@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
-import { FloatingUIPlacement } from '../../services/interfaces';
+import { Placement } from '../../services/interfaces';
 import {
   debounce,
   getTextContent,
@@ -125,7 +125,7 @@ export class BqSelect {
   @Prop({ reflect: true }) placeholder?: string;
 
   /** Position of the Select panel */
-  @Prop({ reflect: true }) placement?: FloatingUIPlacement = 'bottom';
+  @Prop({ reflect: true }) placement?: Placement = 'bottom';
 
   /** If true, the list of options cannot be filtered (searching won't be available) */
   @Prop({ reflect: true }) readonly?: boolean;
