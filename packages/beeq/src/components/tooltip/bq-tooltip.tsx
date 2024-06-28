@@ -1,6 +1,6 @@
 import { Component, Element, h, Listen, Method, Prop, Watch } from '@stencil/core';
 
-import { FloatingUIPlacement } from '../../services/interfaces';
+import { Placement } from '../../services/interfaces';
 import { FloatingUI } from '../../services/libraries';
 
 /**
@@ -42,7 +42,7 @@ export class BqTooltip {
   @Prop({ reflect: true }) hideArrow?: boolean = false;
 
   /* Defines the position of the tooltip */
-  @Prop({ reflect: true }) placement?: FloatingUIPlacement = 'top';
+  @Prop({ reflect: true }) placement?: Placement = 'top';
 
   /** Whether the tooltip should have the same width as the trigger element
    * (applicable only for content shorter than the trigger element) */

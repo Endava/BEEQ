@@ -1,7 +1,7 @@
 import { ReferenceElement } from '@floating-ui/dom';
 import { Component, Element, h, Prop, Watch } from '@stencil/core';
 
-import { FloatingUIPlacement } from '../../services/interfaces';
+import { Placement } from '../../services/interfaces';
 import { FloatingUI } from '../../services/libraries';
 
 /**
@@ -36,7 +36,7 @@ export class BqPanel {
   @Prop({ reflect: true }) distance?: number = 4;
 
   /** Position of the panel */
-  @Prop({ reflect: true }) placement?: FloatingUIPlacement = 'bottom-start';
+  @Prop({ reflect: true }) placement?: Placement = 'bottom-start';
 
   /** If true, the panel will be visible. */
   @Prop({ reflect: true, mutable: true }) open?: boolean = false;

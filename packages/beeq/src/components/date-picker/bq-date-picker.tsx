@@ -2,7 +2,7 @@ import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State
 import { CalendarDate } from 'cally';
 
 import { DATE_PICKER_TYPE, DaysOfWeek, TDatePickerType } from './bq-date-picker.types';
-import { FloatingUIPlacement } from '../../services/interfaces';
+import { Placement } from '../../services/interfaces';
 import {
   hasSlotContent,
   isDefined,
@@ -165,7 +165,7 @@ export class BqDatePicker {
   @Prop({ reflect: true }) placeholder?: string;
 
   /** Position of the Date picker panel */
-  @Prop({ reflect: true }) placement?: FloatingUIPlacement = 'bottom-end';
+  @Prop({ reflect: true }) placement?: Placement = 'bottom-end';
 
   /** Indicates whether or not the Date picker input is required to be filled out before submitting the form. */
   @Prop({ reflect: true }) required?: boolean;
