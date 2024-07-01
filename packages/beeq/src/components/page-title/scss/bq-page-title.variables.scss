@@ -5,22 +5,24 @@
 :host {
   /**
    * @prop --paddingY - Padding top and bottom of the page title wrapper
+   * @prop --subtitle-borderBlockEnd - Page title border end color
    * @prop --subtitle-fontWeight - Page title font weight for subtitle
    * @prop --subtitle-textColor - Page title color for sub-title
    * @prop --subtitle-textSize - Page title text size for subtitle
-   * @prop --title-lineHeight - Page title text line height
    * @prop --title-fontWeight - Page title font weight for title
+   * @prop --title-lineHeight - Page title text line height
    * @prop --title-textColor - Page title color for title
    * @prop --title-textSize - Page title text size for title
    */
 
   /* stylelint-disable custom-property-pattern */
   --paddingY: theme(spacing.xl);
+  --subtitle-borderBlockEnd: 1px solid theme(colors.stroke.primary);
   --subtitle-fontWeight: theme(fontWeight.medium);
   --subtitle-textColor: theme(textColor.text.secondary);
   --subtitle-textSize: theme(fontSize.l);
-  --title-lineHeight: theme(lineHeight.regular);
   --title-fontWeight: theme(fontWeight.bold);
+  --title-lineHeight: theme(lineHeight.regular);
   --title-textColor: theme(textColor.text.primary);
   --title-textSize: theme(fontSize.xxl);
 }

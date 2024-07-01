@@ -26,16 +26,6 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => {
-  const customDivider = args.customDivider
-    ? html`<bq-divider
-        slot="divider"
-        class="mb-m block"
-        stroke-color="stroke--secondary"
-        stroke-thickness="1"
-        dashed
-      />`
-    : nothing;
-
   const actionsSlotClass = args['custom-style'] ? 'flex flex-grow justify-end' : 'flex';
 
   return html`
@@ -55,7 +45,6 @@ const Template = (args: Args) => {
         : nothing}
       ${args.title} ${args['sub-title'] ? html`<div slot="sub-title">${args['sub-title']}</div>` : nothing}
       ${args.actions ? html`<div class="${actionsSlotClass}" slot="suffix">${args.actions}</div>` : nothing}
-      ${customDivider}
     </bq-page-title>
   `;
 };
@@ -94,8 +83,8 @@ export const TitleBackActions: Story = {
     title: 'Title',
     'sub-title': 'Sub-title',
     actions: html`
-      <bq-icon class="p-xs2" color="text--brand" name="pencil-simple" weight="bold"></bq-icon>
-      <bq-icon class="p-xs2" color="text--brand" name="download-simple" weight="bold"></bq-icon>
+      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="pencil-simple" weight="bold"></bq-icon>
+      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="download-simple" weight="bold"></bq-icon>
     `,
     'custom-style': true,
   },
@@ -109,8 +98,8 @@ export const TitleBackActionsCustomDefault: Story = {
     title: 'Title',
     'sub-title': 'Sub-title',
     actions: html`
-      <bq-icon class="p-xs2" color="text--brand" name="pencil-simple" weight="bold"></bq-icon>
-      <bq-icon class="p-xs2" color="text--brand" name="download-simple" weight="bold"></bq-icon>
+      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="pencil-simple" weight="bold"></bq-icon>
+      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="download-simple" weight="bold"></bq-icon>
     `,
   },
 };
@@ -124,8 +113,8 @@ export const TitleBackActionsCustom: Story = {
     title: 'Title',
     'sub-title': 'Sub-title',
     actions: html`
-      <bq-icon class="p-xs2" color="text--brand" name="pencil-simple" weight="bold"></bq-icon>
-      <bq-icon class="p-xs2" color="text--brand" name="download-simple" weight="bold"></bq-icon>
+      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="pencil-simple" weight="bold"></bq-icon>
+      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="download-simple" weight="bold"></bq-icon>
     `,
     'custom-style': true,
   },
