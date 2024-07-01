@@ -2,7 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
 
 import mdx from './bq-tab-group.mdx';
-import { TAB_SIZE } from '../../tab/bq-tab.types';
+import { TAB_ORIENTATION, TAB_SIZE } from '../../tab/bq-tab.types';
 
 const meta: Meta = {
   title: 'Components/Tabs',
@@ -14,6 +14,7 @@ const meta: Meta = {
   },
   argTypes: {
     size: { control: 'select', options: [...TAB_SIZE] },
+    orientation: { control: 'select', options: [...TAB_ORIENTATION] },
     'disable-divider': { control: 'boolean' },
     // Event handlers
     bqChange: { action: 'bqChange' },
@@ -22,6 +23,7 @@ const meta: Meta = {
   },
   args: {
     size: 'medium',
+    orientation: 'horizontal',
     'disable-divider': false,
   },
 };
@@ -34,6 +36,7 @@ const Template = (args: Args) => {
     <bq-tab-group
       value="5"
       .size=${args.size}
+      .orientation=${args.orientation}
       ?disable-divider=${args['disable-divider']}
       @bqChange=${args.bqChange}
       @bqFocus=${args.bqFocus}
@@ -60,6 +63,7 @@ const IconTemplate = (args: Args) => {
     <bq-tab-group
       value="5"
       .size=${args.size}
+      .orientation=${args.orientation}
       ?disable-divider=${args['disable-divider']}
       @bqChange=${args.bqChange}
       @bqFocus=${args.bqFocus}
