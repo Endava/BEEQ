@@ -104,8 +104,8 @@ export const ReverseOrder: Story = {
 
 export const FullWidth: Story = {
   render: (args) => html`
-    <div class="m-auto max-w-md">
-      <div class="mb-4 text-m font-regular">
+    <div class="max-is-[28rem] m-b-[auto] m-i-[auto]">
+      <div class="text-m font-regular m-be-4">
         Use a combination of <code class="bg-ui-secondary-disabled text-text-primary">full-width</code>,
         <code class="bg-ui-secondary-disabled text-text-primary">justify-content</code> and
         <code class="bg-ui-secondary-disabled text-text-primary">reverse-order</code>
