@@ -49,7 +49,7 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
-  <div class="w-96">
+  <div class="is-96">
     <bq-slider
       debounce-time=${ifDefined(args['debounce-time'])}
       ?disabled=${args.disabled}
