@@ -7,7 +7,6 @@ import { hasSlotContent } from '../../shared/utils';
  * @part base - The inner container `<div>`of element that contains the base page title component.
  * @part content - Defines the main container of the page title component, which includes the title and subtitle elements.
  * @part title-suffix - Defines the container that holds the title and any suffix content.
- * @part divider - The inner container `<div>` of element that acts as divider slot container.
  * @part back - The container `<div>` page title element that acts as back slot container.
  * @part title - The `<h1>` element serves as a container for the page title content, to improve accessibility.
  * @part suffix - The `<div>` page title element that acts as suffix slot container.
@@ -81,7 +80,7 @@ export class BqPageTitle {
   render() {
     return (
       <div class="flex flex-col" part="wrapper">
-        <div class="flex gap-xs p-b-[--paddingY]" part="base">
+        <div class="bq-page-title-base" part="base">
           {/* Back navigation button */}
           <div
             class={{ flex: true, '!hidden': !this.haveBackNavigation }}
@@ -121,12 +120,6 @@ export class BqPageTitle {
               <slot name="sub-title" onSlotchange={this.handleSlotChange} />
             </div>
           </div>
-        </div>
-        {/* Divider */}
-        <div part="divider">
-          <slot name="divider">
-            <bq-divider class="block m-be-m" stroke-color="ui--secondary" stroke-thickness="1" />
-          </slot>
         </div>
       </div>
     );

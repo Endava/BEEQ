@@ -12,6 +12,7 @@
    * @prop --title-fontWeight - Page title font weight for title
    * @prop --title-textColor - Page title color for title
    * @prop --title-textSize - Page title text size for title
+   * @prop --subtitle-borderBlockEnd - Page title border end color
    */
 
   /* stylelint-disable custom-property-pattern */
@@ -23,4 +24,5 @@
   --title-fontWeight: theme(fontWeight.bold);
   --title-textColor: theme(textColor.text.primary);
   --title-textSize: theme(fontSize.xxl);
+  --subtitle-borderBlockEnd: theme(colors.stroke.primary);
 }

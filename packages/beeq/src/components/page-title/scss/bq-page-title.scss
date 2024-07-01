@@ -7,3 +7,10 @@
 :host {
   @apply block;
 }
+
+.bq-page-title-base {
+  @apply flex gap-xs p-b-[--paddingY];
+
+  /* stylelint-disable-next-line custom-property-pattern */
+  border-block-end: 1px solid var(--subtitle-borderBlockEnd);
+}
