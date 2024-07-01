@@ -3,7 +3,6 @@ import { Component, Element, h, State } from '@stencil/core';
 import { hasSlotContent } from '../../shared/utils';
 
 /**
- * @part wrapper - The wrapper container `<div>` of the element inside the shadow DOM.
  * @part base - The inner container `<div>`of element that contains the base page title component.
  * @part content - Defines the main container of the page title component, which includes the title and subtitle elements.
  * @part title-suffix - Defines the container that holds the title and any suffix content.
@@ -79,46 +78,44 @@ export class BqPageTitle {
 
   render() {
     return (
-      <div class="flex flex-col" part="wrapper">
-        <div class="bq-page-title-base" part="base">
-          {/* Back navigation button */}
-          <div
-            class={{ flex: true, '!hidden': !this.haveBackNavigation }}
-            ref={(divElem) => (this.backNavigationElem = divElem)}
-            part="back"
-          >
-            <slot name="back" onSlotchange={this.handleSlotChange} />
-          </div>
-          <div class="flex flex-grow flex-col gap-xs" part="content">
-            <div class="flex items-center gap-xs" part="title-suffix">
-              {/* Title */}
-              <h1
-                class="title-font text-[length:--title-textSize] font-[--title-fontWeight] leading-[--title-lineHeight] text-[color:--title-textColor]"
-                part="title"
-              >
-                <slot />
-              </h1>
-              {/* Suffix */}
-              <div
-                class={{ 'flex flex-grow gap-xs p-b-xs2 p-i-xs2': true, '!hidden': !this.hasSuffix }}
-                ref={(divElem) => (this.suffixElem = divElem)}
-                part="suffix"
-              >
-                <slot name="suffix" onSlotchange={this.handleSlotChange} />
-              </div>
-            </div>
-            {/* Sub-title */}
-            <div
-              class={{
-                'title-font text-[length:--subtitle-textSize] font-[--subtitle-fontWeight] leading-[--title-lineHeight] text-[color:--subtitle-textColor]':
-                  true,
-                hidden: !this.hasSubTitle,
-              }}
-              ref={(divElem) => (this.subTitleElem = divElem)}
-              part="sub-title"
+      <div class="flex gap-xs p-b-[--paddingY] [border-block-end:--subtitle-borderBlockEnd]" part="base">
+        {/* Back navigation button */}
+        <div
+          class={{ flex: true, '!hidden': !this.haveBackNavigation }}
+          ref={(divElem) => (this.backNavigationElem = divElem)}
+          part="back"
+        >
+          <slot name="back" onSlotchange={this.handleSlotChange} />
+        </div>
+        <div class="flex flex-grow flex-col gap-xs" part="content">
+          <div class="flex items-center gap-xs" part="title-suffix">
+            {/* Title */}
+            <h1
+              class="title-font text-[length:--title-textSize] font-[--title-fontWeight] leading-[--title-lineHeight] text-[color:--title-textColor]"
+              part="title"
             >
-              <slot name="sub-title" onSlotchange={this.handleSlotChange} />
+              <slot />
+            </h1>
+            {/* Suffix */}
+            <div
+              class={{ 'flex flex-grow gap-xs p-b-xs2 p-i-xs2': true, '!hidden': !this.hasSuffix }}
+              ref={(divElem) => (this.suffixElem = divElem)}
+              part="suffix"
+            >
+              <slot name="suffix" onSlotchange={this.handleSlotChange} />
             </div>
+          </div>
+          {/* Sub-title */}
+          <div
+            class={{
+              'title-font text-[length:--subtitle-textSize] font-[--subtitle-fontWeight] leading-[--title-lineHeight] text-[color:--subtitle-textColor]':
+                true,
+              hidden: !this.hasSubTitle,
+            }}
+            ref={(divElem) => (this.subTitleElem = divElem)}
+            part="sub-title"
+          >
+            <slot name="sub-title" onSlotchange={this.handleSlotChange} />
           </div>
         </div>
       </div>

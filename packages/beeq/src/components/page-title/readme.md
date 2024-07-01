@@ -16,7 +16,6 @@
 | `"suffix"`       | The `<div>` page title element that acts as suffix slot container.                                      |
 | `"title"`        | The `<h1>` element serves as a container for the page title content, to improve accessibility.          |
 | `"title-suffix"` | Defines the container that holds the title and any suffix content.                                      |
-| `"wrapper"`      | The wrapper container `<div>` of the element inside the shadow DOM.                                     |
 
 
 ----------------------------------------------
