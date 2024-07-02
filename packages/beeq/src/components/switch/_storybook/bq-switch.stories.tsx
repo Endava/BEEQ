@@ -2,7 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
 
 import mdx from './bq-switch.mdx';
-import { SWITCH_INNER_LABEL, SWITCH_JUSTIFY_CONTENT } from '../bq-switch.types';
+import { SWITCH_INNER_LABEL, SWITCH_JUSTIFY_CONTENT, SWITCH_WRITING_MODE } from '../bq-switch.types';
 
 const meta: Meta = {
   title: 'Components/Switch',
@@ -19,6 +19,7 @@ const meta: Meta = {
     'full-width': { control: 'boolean' },
     'inner-label': { control: 'inline-radio', options: [...SWITCH_INNER_LABEL] },
     'justify-content': { control: 'select', options: [...SWITCH_JUSTIFY_CONTENT] },
+    'writing-mode': { control: 'select', options: [...SWITCH_WRITING_MODE] },
     name: { control: 'text' },
     required: { control: 'boolean' },
     'reverse-order': { control: 'boolean' },
@@ -37,6 +38,7 @@ const meta: Meta = {
     'full-width': false,
     'inner-label': 'default',
     'justify-content': 'start',
+    'writing-mode': 'horizontal',
     name: 'bq-switch',
     required: false,
     'reverse-order': false,
@@ -57,6 +59,7 @@ const Template = (args: Args) => html`
     ?full-width=${args['full-width']}
     inner-label=${args['inner-label']}
     justify-content=${args['justify-content']}
+    writing-mode=${args['writing-mode']}
     name=${args.name}
     ?required=${args.required}
     ?reverse-order=${args['reverse-order']}
@@ -71,6 +74,9 @@ const Template = (args: Args) => html`
 
 export const Default: Story = {
   render: Template,
+  args: {
+    'writing-mode': 'vertical',
+  },
 };
 
 export const Checked: Story = {

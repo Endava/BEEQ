@@ -38,7 +38,7 @@
     @apply bg-ui-brand;
 
     .bq-switch--control__dot {
-      @apply translate-x-[calc(var(--bq-switch--width)_-_var(--bq-switch--dot-size)_-_8px)];
+      transform: var(--bq-switch--dot-transform);
     }
   }
 }
