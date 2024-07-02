@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State } from '@stencil/core';
 
-import { TSwitchInnerLabel, TSwitchJustifyContent } from './bq-switch.types';
+import { TSwitchInnerLabel, TSwitchJustifyContent, TSwitchWritingMode } from './bq-switch.types';
 import { getTextContent, isNil } from '../../shared/utils';
 
 /**
@@ -75,6 +75,19 @@ export class BqSwitch {
 
   /** The input control's value, submitted as a name/value pair with form data. */
   @Prop({ reflect: true }) value?: string;
+
+  /**
+   * Defines the writing mode of the switch.
+   *
+   * This prop determines the orientation in which the switch and its label are displayed.
+   * It can be set to either 'horizontal' or 'vertical'.
+   *
+   * - 'horizontal': The switch and its label are displayed in a horizontal layout.
+   * - 'vertical': The switch and its label are displayed in a vertical layout.
+   *
+   * Default is 'horizontal'.
+   */
+  @Prop({ reflect: true }) writingMode?: TSwitchWritingMode = 'horizontal';
 
   // Prop lifecycle events
   // =======================
@@ -183,8 +196,14 @@ export class BqSwitch {
   // ===================================
 
   render() {
+    const transformValue =
+      this.writingMode === 'vertical'
+        ? 'translateY(calc(var(--bq-switch--width) - var(--bq-switch--dot-size) - 8px))'
+        : 'translateX(calc(var(--bq-switch--width) - var(--bq-switch--dot-size) - 8px))';
+
     const hostStyle = {
-      ...(this.justifyContent && { '--bq-switch--justify-content': this.justifyContent }),
+      '--bq-switch--justify-content': this.justifyContent || '',
+      '--bq-switch--dot-transform': transformValue,
     };
 
     const labelCssClasses = {
@@ -217,7 +236,7 @@ export class BqSwitch {
           />
           {/* Control */}
           <div
-            class="bq-switch--control relative box-border flex h-[--bq-switch--height] w-[--bq-switch--width] justify-between rounded-full bg-ui-tertiary p-xs2 transition duration-300"
+            class="bq-switch--control relative box-border flex justify-between rounded-full bg-ui-tertiary transition duration-300 bs-[--bq-switch--height] is-[--bq-switch--width] p-b-xs2 p-i-xs2"
             part="control"
           >
             {this.innerLabel === 'icon' && (

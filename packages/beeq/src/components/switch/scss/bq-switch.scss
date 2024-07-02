@@ -9,11 +9,11 @@
 }
 
 :host(.full-width) {
-  @apply w-full;
+  @apply is-full;
 }
 
 .bq-switch {
-  @apply flex cursor-pointer select-none items-center rounded-s p-2 transition-colors duration-300;
+  @apply flex cursor-pointer select-none items-center rounded-s transition-colors duration-300 p-b-2 p-i-2;
 
   justify-content: var(--bq-switch--justify-content);
 
@@ -38,13 +38,13 @@
     @apply bg-ui-brand;
 
     .bq-switch--control__dot {
-      @apply translate-x-[calc(var(--bq-switch--width)_-_var(--bq-switch--dot-size)_-_8px)];
+      transform: var(--bq-switch--dot-transform);
     }
   }
 }
 
 .bq-switch--control__dot {
-  @apply absolute h-[--bq-switch--dot-size] w-[--bq-switch--dot-size] justify-end rounded-full;
+  @apply absolute justify-end rounded-full bs-[--bq-switch--dot-size] is-[--bq-switch--dot-size];
   @apply bg-icon-inverse group-[&.is-checked]:bg-[--bq-icon--alt];
   @apply transition duration-300;
 }
