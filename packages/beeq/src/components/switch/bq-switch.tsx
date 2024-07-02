@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State } from '@stencil/core';
 
-import { TSwitchInnerLabel, TSwitchJustifyContent } from './bq-switch.types';
+import { TSwitchInnerLabel, TSwitchJustifyContent, TSwitchWritingMode } from './bq-switch.types';
 import { getTextContent, isNil } from '../../shared/utils';
 
 /**
@@ -75,6 +75,19 @@ export class BqSwitch {
 
   /** The input control's value, submitted as a name/value pair with form data. */
   @Prop({ reflect: true }) value?: string;
+
+  /**
+   * Defines the writing mode of the switch.
+   *
+   * This prop determines the orientation in which the switch and its label are displayed.
+   * It can be set to either 'horizontal' or 'vertical'.
+   *
+   * - 'horizontal': The switch and its label are displayed in a horizontal layout.
+   * - 'vertical': The switch and its label are displayed in a vertical layout.
+   *
+   * Default is 'horizontal'.
+   */
+  @Prop({ reflect: true }) writingMode?: TSwitchWritingMode = 'horizontal';
 
   // Prop lifecycle events
   // =======================
@@ -183,8 +196,14 @@ export class BqSwitch {
   // ===================================
 
   render() {
+    const transformValue =
+      this.writingMode === 'vertical'
+        ? 'translateY(calc(var(--bq-switch--width) - var(--bq-switch--dot-size) - 8px))'
+        : 'translateX(calc(var(--bq-switch--width) - var(--bq-switch--dot-size) - 8px))';
+
     const hostStyle = {
-      ...(this.justifyContent && { '--bq-switch--justify-content': this.justifyContent }),
+      '--bq-switch--justify-content': this.justifyContent || '',
+      '--bq-switch--dot-transform': transformValue,
     };
 
     const labelCssClasses = {
