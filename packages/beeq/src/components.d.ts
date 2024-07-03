@@ -29,7 +29,7 @@ import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spin
 import { TStatusType } from "./components/status/bq-status.types";
 import { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
 import { TStepItemStatus } from "./components/step-item/bq-step-item.types";
-import { TSwitchInnerLabel, TSwitchJustifyContent, TSwitchWritingMode } from "./components/switch/bq-switch.types";
+import { TSwitchInnerLabel, TSwitchJustifyContent, TSwitchOrientation } from "./components/switch/bq-switch.types";
 import { TTabSize } from "./components/tab/bq-tab.types";
 import { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from "./components/tag/bq-tag.types";
 import { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
@@ -58,7 +58,7 @@ export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spin
 export { TStatusType } from "./components/status/bq-status.types";
 export { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
 export { TStepItemStatus } from "./components/step-item/bq-step-item.types";
-export { TSwitchInnerLabel, TSwitchJustifyContent, TSwitchWritingMode } from "./components/switch/bq-switch.types";
+export { TSwitchInnerLabel, TSwitchJustifyContent, TSwitchOrientation } from "./components/switch/bq-switch.types";
 export { TTabSize } from "./components/tab/bq-tab.types";
 export { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from "./components/tag/bq-tag.types";
 export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
@@ -1184,6 +1184,10 @@ export namespace Components {
          */
         "name": string;
         /**
+          * This prop defines the CSS support orientation layout direction of the switch component.
+         */
+        "orientation"?: TSwitchOrientation;
+        /**
           * If `true`, it will indicate that the user must switch `ON` the element before the owning form can be submitted
          */
         "required"?: boolean;
@@ -1207,10 +1211,6 @@ export namespace Components {
           * The input control's value, submitted as a name/value pair with form data.
          */
         "value"?: string;
-        /**
-          * Defines the writing mode of the switch.  This prop determines the orientation in which the switch and its label are displayed. It can be set to either 'horizontal' or 'vertical'.  - 'horizontal': The switch and its label are displayed in a horizontal layout. - 'vertical': The switch and its label are displayed in a vertical layout.  Default is 'horizontal'.
-         */
-        "writingMode"?: TSwitchWritingMode;
     }
     interface BqTab {
         /**
@@ -3587,6 +3587,10 @@ declare namespace LocalJSX {
          */
         "onBqFocus"?: (event: BqSwitchCustomEvent<HTMLBqSwitchElement>) => void;
         /**
+          * This prop defines the CSS support orientation layout direction of the switch component.
+         */
+        "orientation"?: TSwitchOrientation;
+        /**
           * If `true`, it will indicate that the user must switch `ON` the element before the owning form can be submitted
          */
         "required"?: boolean;
@@ -3598,10 +3602,6 @@ declare namespace LocalJSX {
           * The input control's value, submitted as a name/value pair with form data.
          */
         "value"?: string;
-        /**
-          * Defines the writing mode of the switch.  This prop determines the orientation in which the switch and its label are displayed. It can be set to either 'horizontal' or 'vertical'.  - 'horizontal': The switch and its label are displayed in a horizontal layout. - 'vertical': The switch and its label are displayed in a vertical layout.  Default is 'horizontal'.
-         */
-        "writingMode"?: TSwitchWritingMode;
     }
     interface BqTab {
         /**

@@ -19,5 +19,5 @@ export const SWITCH_JUSTIFY_CONTENT = [
 ] as const;
 export type TSwitchJustifyContent = (typeof SWITCH_JUSTIFY_CONTENT)[number];
 
-export const SWITCH_WRITING_MODE = ['horizontal', 'vertical'] as const;
-export type TSwitchWritingMode = (typeof SWITCH_WRITING_MODE)[number];
+export const SWITCH_ORIENTATION_MODE = ['horizontal', 'vertical'] as const;
+export type TSwitchOrientation = (typeof SWITCH_ORIENTATION_MODE)[number];
