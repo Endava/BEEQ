@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
-import { TSliderType, TSliderValue } from './bq-slider.types';
+import { TSliderOrientation, TSliderType, TSliderValue } from './bq-slider.types';
 import { clamp, debounce, isNil, isString, TDebounce } from '../../shared/utils';
 
 /**
@@ -73,6 +73,9 @@ export class BqSlider {
 
   /** A number representing the min value of the slider. */
   @Prop({ reflect: true }) min = 0;
+
+  /** This prop defines the CSS support orientation layout direction of the slider component. */
+  @Prop({ reflect: true }) orientation?: TSliderOrientation = 'horizontal';
 
   /**
    * A number representing the step of the slider.
@@ -334,8 +337,9 @@ export class BqSlider {
       <input
         type="range"
         class={{
-          'absolute start-0 -translate-y-1/2 cursor-pointer appearance-none bg-transparent outline-none is-full inset-bs-[50%] disabled:cursor-not-allowed':
+          'absolute start-0 cursor-pointer appearance-none bg-transparent outline-none is-full inset-bs-[50%] disabled:cursor-not-allowed':
             true,
+          [this.orientation === 'vertical' ? 'translate-x-1/2' : '-translate-y-1/2']: true,
           'pointer-events-none': this.isRangeType,
         }}
         style={this.isRangeType ? { zIndex: zIndexValue(type) } : undefined}
@@ -393,13 +397,19 @@ export class BqSlider {
         <div class="relative is-full" part="container">
           {/* TRACK AREA */}
           <span
-            class="absolute start-0 -translate-y-1/2 rounded-xs bg-[--bq-slider--trackarea-color] bs-1 is-full inset-bs-[50%]"
+            class={{
+              'absolute start-0 rounded-xs bg-[--bq-slider--trackarea-color] bs-1 is-full inset-bs-[50%]': true,
+              [this.orientation === 'vertical' ? 'translate-x-1/2' : '-translate-y-1/2']: true,
+            }}
             ref={(elem) => (this.trackElem = elem)}
             part="track-area"
           />
           {/* PROGRESS AREA */}
           <span
-            class="absolute -translate-y-1/2 rounded-xs bg-[--bq-slider--progress-color] bs-1 is-[50%] inset-bs-[50%]"
+            class={{
+              'absolute rounded-xs bg-[--bq-slider--progress-color] bs-1 is-[50%] inset-bs-[50%]': true,
+              [this.orientation === 'vertical' ? 'translate-x-1/2' : '-translate-y-1/2']: true,
+            }}
             ref={(elem) => (this.progressElem = elem)}
             part="progress-area"
           />
