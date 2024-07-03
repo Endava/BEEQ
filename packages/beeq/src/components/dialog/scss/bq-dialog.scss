@@ -15,28 +15,27 @@
 /* --------------------------------- Dialog --------------------------------- */
 
 .bq-dialog {
-  @apply absolute left-1/2 top-1/2 flex;
-  @apply flex-col gap-[var(--bq-dialog--content-footer-gap)] p-0;
+  @apply absolute flex inset-bs-[50%] inset-is-[50%];
+  @apply flex-col gap-[--bq-dialog--content-footer-gap] p-b-0 p-i-0;
   @apply bg-[--bq-dialog--background] text-[--bq-dialog--text-color] shadow-[shadow:--bq-dialog--box-shadow];
-  @apply rounded-[var(--bq-dialog--border-radius)] border-[color:--bq-dialog--border-color] [length:--bq-dialog--border-width];
+  @apply rounded-[--bq-dialog--border-radius] border-[color:--bq-dialog--border-color] [length:--bq-dialog--border-width];
   // After setting `optimizeUniversalDefaults` to `true` in `tailwind.config.js`,
   // `!important` is required to avoid default --tw-* variables to override custom transform values
-  @apply -translate-x-1/2 -translate-y-1/2 #{!important};
   // If mobile resolution, dialog will be full width
-  @apply w-[90vw];
+  @apply is-[90vw];
 
   border-style: var(--bq-dialog--border-style);
 
   &.small {
-    @apply sm:w-[--bq-dialog--width-small];
+    @apply sm:is-[--bq-dialog--width-small];
   }
 
   &.medium {
-    @apply sm:w-[--bq-dialog--width-medium];
+    @apply sm:is-[--bq-dialog--width-medium];
   }
 
   &.large {
-    @apply sm:w-[--bq-dialog--width-large];
+    @apply sm:is-[--bq-dialog--width-large];
   }
 }
 
@@ -53,13 +52,13 @@
 /* ------------------------------ Dialog header ----------------------------- */
 
 .bq-dialog--header {
-  @apply sticky top-0 flex items-center gap-m p-[--bq-dialog--padding] pb-0;
+  @apply sticky flex items-center gap-m inset-bs-0 p-b-[--bq-dialog--padding] p-be-0 p-i-[--bq-dialog--padding];
 }
 
 /* ------------------------------ Dialog footer ----------------------------- */
 
 .bq-dialog--footer {
-  @apply sticky top-full flex w-full items-center justify-end gap-xs p-[--bq-dialog--padding] pt-0;
+  @apply sticky flex items-center justify-end gap-xs is-full inset-bs-[100%] p-b-[--bq-dialog--padding] p-bs-0 p-i-[--bq-dialog--padding];
 }
 
 /* --------------------------- Dialog close button -------------------------- */

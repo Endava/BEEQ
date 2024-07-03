@@ -5,6 +5,7 @@ import {
   DIALOG_SIZE,
   TDialogBorderRadius,
   TDialogFooterAppearance,
+  TDialogOrientation,
   TDialogSize,
 } from './bq-dialog.types';
 import { enter, hasSlotContent, leave, validatePropValue } from '../../shared/utils';
@@ -70,6 +71,9 @@ export class BqDialog {
 
   /** The size of the dialog */
   @Prop({ reflect: true, mutable: true }) size: TDialogSize = 'medium';
+
+  /** This prop defines the CSS support orientation layout direction of the dialog component. */
+  @Prop({ reflect: true }) orientation?: TDialogOrientation = 'horizontal';
 
   // Prop lifecycle events
   // =======================
@@ -244,7 +248,12 @@ export class BqDialog {
     return (
       <dialog
         style={style}
-        class={`bq-dialog hidden ${this.size} focus-visible:outline-none`}
+        class={{
+          'bq-dialog hidden focus-visible:outline-none': true,
+          [this.orientation === 'vertical' ? '-translate-y-1/2 translate-x-1/2' : '-translate-x-1/2 -translate-y-1/2']:
+            true,
+          [this.size]: true,
+        }}
         data-transition-enter="transition ease-in duration-300"
         data-transition-enter-start="opacity-0 scale-75"
         data-transition-enter-end="opacity-100 scale-100"
@@ -255,7 +264,7 @@ export class BqDialog {
         ref={(dialogElem) => (this.dialogElem = dialogElem)}
         part="dialog"
       >
-        <main class="flex flex-col gap-[var(--bq-dialog--title-body-gap)] overflow-hidden" part="content">
+        <main class="flex flex-col gap-[--bq-dialog--title-body-gap] overflow-hidden" part="content">
           <header class="bq-dialog--header" part="header">
             <div class="bq-dialog--title flex flex-1 items-center justify-between" part="title">
               <slot name="title" />
@@ -273,8 +282,8 @@ export class BqDialog {
           <div
             class={{
               '!hidden': !this.hasContent,
-              'overflow-y-auto px-[var(--bq-dialog--padding)]': this.hasContent,
-              '!pb-[var(--bq-dialog--padding)]': !this.hasFooter,
+              'overflow-y-auto p-i-[--bq-dialog--padding]': this.hasContent,
+              '!p-be-[--bq-dialog--padding]': !this.hasFooter,
             }}
             ref={(mainElem) => (this.contentElem = mainElem)}
             part="body"
@@ -286,7 +295,7 @@ export class BqDialog {
           class={{
             '!hidden': !this.hasFooter,
             'bq-dialog--footer': this.hasFooter,
-            'bg-ui-alt !py-s': this.footerAppearance === 'highlight',
+            'bg-ui-alt !p-b-s': this.footerAppearance === 'highlight',
           }}
           ref={(footerElem) => (this.footerElem = footerElem)}
           part="footer"

@@ -2,7 +2,12 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html, nothing } from 'lit-html';
 
 import mdx from './bq-dialog.mdx';
-import { DIALOG_BORDER_RADIUS, DIALOG_FOOTER_APPEARANCE, DIALOG_SIZE } from '../bq-dialog.types';
+import {
+  DIALOG_BORDER_RADIUS,
+  DIALOG_FOOTER_APPEARANCE,
+  DIALOG_ORIENTATION_MODE,
+  DIALOG_SIZE,
+} from '../bq-dialog.types';
 
 const meta: Meta = {
   title: 'Components/Dialog',
@@ -21,6 +26,7 @@ const meta: Meta = {
     border: { control: 'select', options: [...DIALOG_BORDER_RADIUS] },
     open: { control: 'boolean' },
     size: { control: 'select', options: [...DIALOG_SIZE] },
+    orientation: { control: 'select', options: [...DIALOG_ORIENTATION_MODE] },
     // Events
     bqCancel: { action: 'bqCancel' },
     bqClose: { action: 'bqClose' },
@@ -40,6 +46,7 @@ const meta: Meta = {
     border: 'm',
     open: false,
     size: 'medium',
+    orientation: 'horizontal',
     // Not part of the public API
     noContent: false,
     noFooter: false,
@@ -67,6 +74,7 @@ const Template = (args: Args) => {
       border=${args.border}
       ?open=${args.open}
       size=${args.size}
+      orientation=${args.orientation}
       @bqCancel=${args.bqCancel}
       @bqClose=${args.bqClose}
       @bqOpen=${args.bqOpen}
@@ -158,6 +166,7 @@ const ConfirmTemplate = (args: Args) => {
       border=${args.border}
       ?open=${args.open}
       size=${args.size}
+      orientation=${args.orientation}
       @bqCancel=${args.bqCancel}
       @bqClose=${args.bqClose}
       @bqOpen=${args.bqOpen}
