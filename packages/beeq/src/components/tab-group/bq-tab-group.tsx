@@ -226,7 +226,7 @@ export class BqTabGroup {
       <Host class={{ 'inline-block': this.orientation === 'vertical-right' }}>
         <div
           class={{
-            [`bq-tab-group bq-tab-group--${this.orientation} flex w-full`]: true,
+            [`bq-tab-group bq-tab-group--${this.orientation} flex is-full`]: true,
             'no-divider': this.disableDivider,
           }}
           part="base"
