@@ -15,23 +15,26 @@
   @apply transition-[color,background-color,border-color,box-shadow] duration-300;
 
   &::after {
-    @apply -inset-be-1 absolute z-[1] block bg-stroke-brand opacity-0 content-empty;
+    @apply absolute z-[1] block bg-stroke-brand opacity-0 content-empty -inset-be-1;
     @apply transition-opacity duration-300 ease-linear;
   }
 
-  &--horizontal::after {
-    /**
+  &--horizontal-start,
+  &--horizontal-end {
+    &::after {
+      /**
      * This hack will make the underline larger so it fits till the tab bar edges for the first and last tab button,
      * because the parent container applies some padding to not cut the focus outline style.
      */
-    @apply -start-xs3 bs-[2px] is-[calc(100%_+_var(--bq-spacing-xs2))];
+      @apply -start-xs3 bs-[2px] is-[calc(100%_+_var(--bq-spacing-xs2))];
+    }
   }
 
-  &--vertical-left::after {
+  &--vertical-start::after {
     @apply -start-xs2 bs-[calc(100%_+_var(--bq-spacing-xs2))] is-[2px];
   }
 
-  &--vertical-right {
+  &--vertical-end {
     @apply justify-start is-full;
 
     &::after {

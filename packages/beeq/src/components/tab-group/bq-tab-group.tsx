@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop, Watch } from '@stencil/core';
 
 import { debounce, getNextElement, isHTMLElement, isNil, TDebounce, validatePropValue } from '../../shared/utils';
-import { TAB_ORIENTATION, TAB_SIZE, TTabOrientation, TTabSize } from '../tab/bq-tab.types';
+import { TAB_ORIENTATION, TAB_POSITION, TAB_SIZE, TTabOrientation, TTabPosition, TTabSize } from '../tab/bq-tab.types';
 
 /**
  * @part base - The HTML div wrapper inside the shadow DOM.
@@ -36,8 +36,11 @@ export class BqTabGroup {
   /** The size of the tab */
   @Prop({ reflect: true }) size: TTabSize = 'medium';
 
-  /** The direction that table should be render */
+  /** The direction that tab should be render */
   @Prop({ reflect: true }) orientation?: TTabOrientation = 'horizontal';
+
+  /** The position that tab should be render */
+  @Prop({ reflect: true }) position?: TTabPosition = 'start';
 
   /** A number representing the delay value applied to bqChange event handler */
   @Prop({ reflect: true, mutable: true }) debounceTime = 0;
@@ -66,13 +69,16 @@ export class BqTabGroup {
   @Watch('size')
   @Watch('value')
   @Watch('orientation')
+  @Watch('position')
   checkPropValues() {
     validatePropValue(TAB_SIZE, 'medium', this.el, 'size');
     validatePropValue(TAB_ORIENTATION, 'horizontal', this.el, 'orientation');
+    validatePropValue(TAB_POSITION, 'start', this.el, 'position');
 
     this.bqTabElements.forEach((bqTabElement) => {
       bqTabElement.size = this.size;
       bqTabElement.orientation = this.orientation;
+      bqTabElement.position = this.position;
       bqTabElement.active = !isNil(this.value) ? bqTabElement.tabId === this.value : false;
     });
   }
@@ -223,10 +229,10 @@ export class BqTabGroup {
 
   render() {
     return (
-      <Host class={{ 'inline-block': this.orientation === 'vertical-right' }}>
+      <Host class={{ 'inline-block': this.orientation === 'vertical' }}>
         <div
           class={{
-            [`bq-tab-group bq-tab-group--${this.orientation} flex is-full`]: true,
+            [`bq-tab-group bq-tab-group--${this.orientation}-${this.position} flex is-full`]: true,
             'no-divider': this.disableDivider,
           }}
           part="base"

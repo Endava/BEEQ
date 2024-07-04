@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch } from '@stencil/core';
 
-import { TAB_ORIENTATION, TAB_SIZE, TTabOrientation, TTabSize } from './bq-tab.types';
+import { TAB_ORIENTATION, TAB_POSITION, TAB_SIZE, TTabOrientation, TTabPosition, TTabSize } from './bq-tab.types';
 import { hasSlotContent, validatePropValue } from '../../shared/utils';
 
 /**
@@ -46,8 +46,11 @@ export class BqTab {
   /** The size of the tab */
   @Prop({ reflect: true }) size: TTabSize = 'medium';
 
-  /** The direction that table should be render */
+  /** The direction that tab should be render */
   @Prop({ reflect: true }) orientation?: TTabOrientation = 'horizontal';
+
+  /** The position that tab should be render */
+  @Prop({ reflect: true }) position?: TTabPosition = 'start';
 
   /** The id of the tab */
   @Prop({ reflect: true }) tabId!: string;
@@ -60,9 +63,11 @@ export class BqTab {
 
   @Watch('size')
   @Watch('orientation')
+  @Watch('position')
   checkPropValues() {
     validatePropValue(TAB_SIZE, 'medium', this.el, 'size');
     validatePropValue(TAB_ORIENTATION, 'horizontal', this.el, 'orientation');
+    validatePropValue(TAB_POSITION, 'start', this.el, 'position');
   }
 
   // Events section
@@ -174,7 +179,7 @@ export class BqTab {
       <button
         ref={(el) => (this.buttonElement = el)}
         class={{
-          [`bq-tab bq-tab--${this.size} bq-tab--${this.orientation}`]: true,
+          [`bq-tab bq-tab--${this.size} bq-tab--${this.orientation}-${this.position}`]: true,
           'text-text-brand': this.active,
           'text-text-primary': !this.active,
         }}

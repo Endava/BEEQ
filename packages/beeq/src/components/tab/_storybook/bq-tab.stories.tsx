@@ -2,7 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
 
 import mdx from './bq-tab.mdx';
-import { TAB_ORIENTATION, TAB_SIZE } from '../bq-tab.types';
+import { TAB_ORIENTATION, TAB_POSITION, TAB_SIZE } from '../bq-tab.types';
 
 const meta: Meta = {
   title: 'Components/Tabs/Tab',
@@ -17,6 +17,7 @@ const meta: Meta = {
     disabled: { control: 'boolean' },
     size: { control: 'select', options: [...TAB_SIZE] },
     orientation: { control: 'select', options: [...TAB_ORIENTATION] },
+    position: { control: 'select', options: [...TAB_POSITION] },
     // Not part of the component
     text: { control: 'text', table: { disable: true } },
   },
@@ -27,6 +28,7 @@ const meta: Meta = {
     divider: false,
     size: 'medium',
     orientation: 'horizontal',
+    position: 'start',
   },
 };
 export default meta;
@@ -35,7 +37,13 @@ type Story = StoryObj;
 
 const Template = (args: Args) => {
   return html`
-    <bq-tab .size=${args.size} .orientation=${args.orientation} ${args.active} ?disabled=${args.disabled}>
+    <bq-tab
+      .size=${args.size}
+      .orientation=${args.orientation}
+      .position=${args.position}
+      ${args.active}
+      ?disabled=${args.disabled}
+    >
       ${args.text}
     </bq-tab>
   `;
@@ -47,7 +55,13 @@ export const Default: Story = {
 
 export const Icon: Story = {
   render: (args: Args) => html`
-    <bq-tab .size=${args.size} .orientation=${args.orientation} ?active=${args.active} ?disabled=${args.disabled}>
+    <bq-tab
+      .size=${args.size}
+      .orientation=${args.orientation}
+      .position=${args.position}
+      ?active=${args.active}
+      ?disabled=${args.disabled}
+    >
       <bq-icon name="arrow-circle-left" slot="icon"></bq-icon>
       ${args.text}
     </bq-tab>

@@ -2,7 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
 
 import mdx from './bq-tab-group.mdx';
-import { TAB_ORIENTATION, TAB_SIZE } from '../../tab/bq-tab.types';
+import { TAB_ORIENTATION, TAB_POSITION, TAB_SIZE } from '../../tab/bq-tab.types';
 
 const meta: Meta = {
   title: 'Components/Tabs',
@@ -15,6 +15,7 @@ const meta: Meta = {
   argTypes: {
     size: { control: 'select', options: [...TAB_SIZE] },
     orientation: { control: 'select', options: [...TAB_ORIENTATION] },
+    position: { control: 'select', options: [...TAB_POSITION] },
     'disable-divider': { control: 'boolean' },
     // Event handlers
     bqChange: { action: 'bqChange' },
@@ -24,6 +25,7 @@ const meta: Meta = {
   args: {
     size: 'medium',
     orientation: 'horizontal',
+    position: 'start',
     'disable-divider': false,
   },
 };
@@ -37,12 +39,13 @@ const Template = (args: Args) => {
       value="5"
       .size=${args.size}
       .orientation=${args.orientation}
+      .position=${args.position}
       ?disable-divider=${args['disable-divider']}
       @bqChange=${args.bqChange}
       @bqFocus=${args.bqFocus}
       @bqBlur=${args.bqBlur}
     >
-      <bq-tab tab-id="1">Tab</bq-tab>
+      <bq-tab tab-id="1" exportparts="base">Tab</bq-tab>
       <bq-tab tab-id="2">Tab</bq-tab>
       <bq-tab tab-id="3">Long Tab name</bq-tab>
       <bq-tab tab-id="4" disabled>Tab</bq-tab>
@@ -64,6 +67,7 @@ const IconTemplate = (args: Args) => {
       value="5"
       .size=${args.size}
       .orientation=${args.orientation}
+      .position=${args.position}
       ?disable-divider=${args['disable-divider']}
       @bqChange=${args.bqChange}
       @bqFocus=${args.bqFocus}

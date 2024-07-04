@@ -30,7 +30,7 @@ import { TStatusType } from "./components/status/bq-status.types";
 import { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
 import { TStepItemStatus } from "./components/step-item/bq-step-item.types";
 import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-switch.types";
-import { TTabOrientation, TTabSize } from "./components/tab/bq-tab.types";
+import { TTabOrientation, TTabPosition, TTabSize } from "./components/tab/bq-tab.types";
 import { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from "./components/tag/bq-tag.types";
 import { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 import { TToastBorderRadius, TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
@@ -59,7 +59,7 @@ export { TStatusType } from "./components/status/bq-status.types";
 export { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
 export { TStepItemStatus } from "./components/step-item/bq-step-item.types";
 export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-switch.types";
-export { TTabOrientation, TTabSize } from "./components/tab/bq-tab.types";
+export { TTabOrientation, TTabPosition, TTabSize } from "./components/tab/bq-tab.types";
 export { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from "./components/tag/bq-tag.types";
 export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 export { TToastBorderRadius, TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
@@ -1234,9 +1234,13 @@ export namespace Components {
          */
         "enableFocus": (value: boolean) => Promise<void>;
         /**
-          * The direction that table should be render
+          * The direction that tab should be render
          */
         "orientation"?: TTabOrientation;
+        /**
+          * The position that tab should be render
+         */
+        "position"?: TTabPosition;
         /**
           * The size of the tab
          */
@@ -1268,9 +1272,13 @@ export namespace Components {
          */
         "disableDivider": boolean;
         /**
-          * The direction that table should be render
+          * The direction that tab should be render
          */
         "orientation"?: TTabOrientation;
+        /**
+          * The position that tab should be render
+         */
+        "position"?: TTabPosition;
         /**
           * The size of the tab
          */
@@ -3652,9 +3660,13 @@ declare namespace LocalJSX {
          */
         "onBqKeyDown"?: (event: BqTabCustomEvent<KeyboardEvent>) => void;
         /**
-          * The direction that table should be render
+          * The direction that tab should be render
          */
         "orientation"?: TTabOrientation;
+        /**
+          * The position that tab should be render
+         */
+        "position"?: TTabPosition;
         /**
           * The size of the tab
          */
@@ -3678,9 +3690,13 @@ declare namespace LocalJSX {
          */
         "onBqChange"?: (event: BqTabGroupCustomEvent<{ target: HTMLBqTabElement; value: string }>) => void;
         /**
-          * The direction that table should be render
+          * The direction that tab should be render
          */
         "orientation"?: TTabOrientation;
+        /**
+          * The position that tab should be render
+         */
+        "position"?: TTabPosition;
         /**
           * The size of the tab
          */
