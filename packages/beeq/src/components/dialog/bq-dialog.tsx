@@ -248,25 +248,22 @@ export class BqDialog {
     return (
       <dialog
         style={style}
-        class={{
-          'bq-dialog hidden focus-visible:outline-none': true,
-          [this.orientation === 'vertical' ? '-translate-y-1/2 translate-x-1/2' : '-translate-x-1/2 -translate-y-1/2']:
-            true,
-          [this.size]: true,
-        }}
+        class={`bq-dialog hidden ${this.size} m-auto focus-visible:outline-none`}
         data-transition-enter="transition ease-in duration-300"
-        data-transition-enter-start="opacity-0 scale-75"
+        data-transition-enter-start="opacity-0 scale-90"
         data-transition-enter-end="opacity-100 scale-100"
         data-transition-leave="transition ease-out duration-300"
         data-transition-leave-start="opacity-100 scale-100"
-        data-transition-leave-end="opacity-0 scale-75"
+        data-transition-leave-end="opacity-0 scale-90"
         inert={this.open ? undefined : true}
         ref={(dialogElem) => (this.dialogElem = dialogElem)}
+        aria-modal="true"
+        aria-labelledby="bq-dialog--title"
         part="dialog"
       >
         <main class="flex flex-col gap-[--bq-dialog--title-body-gap] overflow-hidden" part="content">
           <header class="bq-dialog--header" part="header">
-            <div class="bq-dialog--title flex flex-1 items-center justify-between" part="title">
+            <div id="bq-dialog--title" class="bq-dialog--title flex flex-1 items-center justify-between" part="title">
               <slot name="title" />
             </div>
             <div class="flex" onClick={() => this.hide()} role="button" part="button-close">
