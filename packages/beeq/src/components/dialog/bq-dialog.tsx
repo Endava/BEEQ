@@ -32,6 +32,7 @@ export class BqDialog {
   private dialogElem: HTMLDialogElement;
   private contentElem: HTMLElement;
   private footerElem: HTMLElement;
+  private closeSlotElem: HTMLElement;
   private OPEN_CSS_CLASS = 'bq-dialog--open';
 
   // Reference to host HTML element
@@ -123,6 +124,12 @@ export class BqDialog {
 
   componentDidLoad() {
     this.handleOpenChange();
+    this.closeSlotElem = this.el.shadowRoot.querySelector('slot[name="button-close"]');
+    this.closeSlotElem?.addEventListener('click', () => this.hide());
+  }
+
+  disconnectedCallback() {
+    this.closeSlotElem?.removeEventListener('click', () => this.hide());
   }
 
   // Listeners
@@ -201,8 +208,8 @@ export class BqDialog {
   private handleClose = async () => {
     if (!this.dialogElem) return;
 
-    this.dialogElem.close();
     await leave(this.dialogElem);
+    this.dialogElem.close();
     // Emit bqAfterClose event after the dialog is closed
     this.handleTransitionEnd();
   };
@@ -266,15 +273,13 @@ export class BqDialog {
             <div id="bq-dialog--title" class="bq-dialog--title flex flex-1 items-center justify-between" part="title">
               <slot name="title" />
             </div>
-            <div class="flex" onClick={() => this.hide()} role="button" part="button-close">
-              <slot name="button-close">
-                {!this.hideCloseButton && (
-                  <bq-button class="bq-dialog--close" appearance="text" size="small" slot="button-close">
-                    <bq-icon class="cursor-pointer" name="x" role="img" title="Close" />
-                  </bq-button>
-                )}
-              </slot>
-            </div>
+            <slot name="button-close">
+              {!this.hideCloseButton && (
+                <bq-button class="bq-dialog--close" appearance="text" size="small">
+                  <bq-icon class="cursor-pointer" name="x" role="img" title="Close" />
+                </bq-button>
+              )}
+            </slot>
           </header>
           <div
             class={{
