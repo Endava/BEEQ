@@ -1,5 +1,6 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html, nothing } from 'lit-html';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import mdx from './bq-dialog.mdx';
 import {
@@ -36,6 +37,7 @@ const meta: Meta = {
     // Not part of the public API
     noContent: { control: 'boolean', table: { disable: true } },
     noFooter: { control: 'boolean', table: { disable: true } },
+    customClose: { control: 'text', table: { disable: true } },
   },
   args: {
     'disable-backdrop': false,
@@ -81,6 +83,7 @@ const Template = (args: Args) => {
       @bqAfterOpen=${args.bqAfterOpen}
       @bqAfterClose=${args.bqAfterClose}
     >
+      ${ifDefined(args.customClose)}
       <h5 class="bold flex items-center gap-s" slot="title">
         <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
         Title
@@ -135,6 +138,29 @@ export const NoBackdrop: Story = {
   args: {
     open: true,
     'disable-backdrop': true,
+  },
+};
+
+export const CustomCloseButton: Story = {
+  render: Template,
+  args: {
+    open: true,
+    customClose: html`
+      <style>
+        bq-button[slot='button-close']::part(button) {
+          border-radius: var(--bq-radius--full);
+          /* Paddings */
+          padding-block: 0;
+          padding-inline: 0;
+          /* Size (width/height) */
+          block-size: var(--bq-spacing-xl);
+          inline-size: var(--bq-spacing-xl);
+        }
+      </style>
+      <bq-button appearance="text" size="small" slot="button-close">
+        <bq-icon class="cursor-pointer" name="x" role="img" title="Close"></bq-icon>
+      </bq-button>
+    `,
   },
 };
 
