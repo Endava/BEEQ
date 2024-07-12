@@ -14,7 +14,7 @@ import { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
 import { DaysOfWeek, TDatePickerType } from "./components/date-picker/bq-date-picker.types";
 import { Placement } from "./services/interfaces";
 import { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
-import { TDialogBorderRadius, TDialogFooterAppearance, TDialogOrientation, TDialogSize } from "./components/dialog/bq-dialog.types";
+import { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 import { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 import { TDrawerPlacement, TDrawerPosition } from "./components/drawer/bq-drawer.types";
 import { TEmptyStateSize } from "./components/empty-state/bq-empty-state.types";
@@ -43,7 +43,7 @@ export { TCardBorderRadius, TCardType } from "./components/card/bq-card.types";
 export { DaysOfWeek, TDatePickerType } from "./components/date-picker/bq-date-picker.types";
 export { Placement } from "./services/interfaces";
 export { TInputType, TInputValidation, TInputValue } from "./components/input/bq-input.types";
-export { TDialogBorderRadius, TDialogFooterAppearance, TDialogOrientation, TDialogSize } from "./components/dialog/bq-dialog.types";
+export { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from "./components/dialog/bq-dialog.types";
 export { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from "./components/divider/bq-divider.types";
 export { TDrawerPlacement, TDrawerPosition } from "./components/drawer/bq-drawer.types";
 export { TEmptyStateSize } from "./components/empty-state/bq-empty-state.types";
@@ -477,10 +477,6 @@ export namespace Components {
           * If true, the dialog will be shown as open
          */
         "open": boolean;
-        /**
-          * This prop defines the CSS support orientation layout direction of the dialog component.
-         */
-        "orientation"?: TDialogOrientation;
         /**
           * Open the dialog
          */
@@ -2765,10 +2761,6 @@ declare namespace LocalJSX {
           * If true, the dialog will be shown as open
          */
         "open"?: boolean;
-        /**
-          * This prop defines the CSS support orientation layout direction of the dialog component.
-         */
-        "orientation"?: TDialogOrientation;
         /**
           * The size of the dialog
          */

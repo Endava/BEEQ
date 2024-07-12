@@ -7,17 +7,16 @@
 
 ## Properties
 
-| Property                   | Attribute                     | Description                                                                             | Type                                                     | Default        |
-| -------------------------- | ----------------------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------------- | -------------- |
-| `border`                   | `border`                      | Corder radius of the dialog component                                                   | `"full" \| "l" \| "m" \| "none" \| "s" \| "xs" \| "xs2"` | `'m'`          |
-| `disableBackdrop`          | `disable-backdrop`            | If true, the backdrop overlay won't be shown when the dialog opens                      | `boolean`                                                | `false`        |
-| `disableCloseClickOutside` | `disable-close-click-outside` | If true, the dialog will not close when clicking on the backdrop overlay                | `boolean`                                                | `false`        |
-| `disableCloseEscKeydown`   | `disable-close-esc-keydown`   | If true, the dialog will not close when the [Esc] key is press                          | `boolean`                                                | `false`        |
-| `footerAppearance`         | `footer-appearance`           | The appearance of footer                                                                | `"highlight" \| "standard"`                              | `'standard'`   |
-| `hideCloseButton`          | `hide-close-button`           | If true, it hides the close button                                                      | `boolean`                                                | `false`        |
-| `open`                     | `open`                        | If true, the dialog will be shown as open                                               | `boolean`                                                | `false`        |
-| `orientation`              | `orientation`                 | This prop defines the CSS support orientation layout direction of the dialog component. | `"horizontal" \| "vertical"`                             | `'horizontal'` |
-| `size`                     | `size`                        | The size of the dialog                                                                  | `"large" \| "medium" \| "small"`                         | `'medium'`     |
+| Property                   | Attribute                     | Description                                                              | Type                                                     | Default      |
+| -------------------------- | ----------------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------- | ------------ |
+| `border`                   | `border`                      | Corder radius of the dialog component                                    | `"full" \| "l" \| "m" \| "none" \| "s" \| "xs" \| "xs2"` | `'m'`        |
+| `disableBackdrop`          | `disable-backdrop`            | If true, the backdrop overlay won't be shown when the dialog opens       | `boolean`                                                | `false`      |
+| `disableCloseClickOutside` | `disable-close-click-outside` | If true, the dialog will not close when clicking on the backdrop overlay | `boolean`                                                | `false`      |
+| `disableCloseEscKeydown`   | `disable-close-esc-keydown`   | If true, the dialog will not close when the [Esc] key is press           | `boolean`                                                | `false`      |
+| `footerAppearance`         | `footer-appearance`           | The appearance of footer                                                 | `"highlight" \| "standard"`                              | `'standard'` |
+| `hideCloseButton`          | `hide-close-button`           | If true, it hides the close button                                       | `boolean`                                                | `false`      |
+| `open`                     | `open`                        | If true, the dialog will be shown as open                                | `boolean`                                                | `false`      |
+| `size`                     | `size`                        | The size of the dialog                                                   | `"large" \| "medium" \| "small"`                         | `'medium'`   |
 
 
 ## Events

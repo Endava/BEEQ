@@ -5,7 +5,6 @@ import {
   DIALOG_SIZE,
   TDialogBorderRadius,
   TDialogFooterAppearance,
-  TDialogOrientation,
   TDialogSize,
 } from './bq-dialog.types';
 import { enter, hasSlotContent, leave, validatePropValue } from '../../shared/utils';
@@ -72,9 +71,6 @@ export class BqDialog {
 
   /** The size of the dialog */
   @Prop({ reflect: true, mutable: true }) size: TDialogSize = 'medium';
-
-  /** This prop defines the CSS support orientation layout direction of the dialog component. */
-  @Prop({ reflect: true }) orientation?: TDialogOrientation = 'horizontal';
 
   // Prop lifecycle events
   // =======================
