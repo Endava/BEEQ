@@ -31,6 +31,7 @@ export class BqDialog {
   private dialogElem: HTMLDialogElement;
   private contentElem: HTMLElement;
   private footerElem: HTMLElement;
+  private closeSlotElem: HTMLElement;
   private OPEN_CSS_CLASS = 'bq-dialog--open';
 
   // Reference to host HTML element
@@ -119,6 +120,12 @@ export class BqDialog {
 
   componentDidLoad() {
     this.handleOpenChange();
+    this.closeSlotElem = this.el.shadowRoot.querySelector('slot[name="button-close"]');
+    this.closeSlotElem?.addEventListener('click', () => this.hide());
+  }
+
+  disconnectedCallback() {
+    this.closeSlotElem?.removeEventListener('click', () => this.hide());
   }
 
   // Listeners
@@ -197,8 +204,8 @@ export class BqDialog {
   private handleClose = async () => {
     if (!this.dialogElem) return;
 
-    this.dialogElem.close();
     await leave(this.dialogElem);
+    this.dialogElem.close();
     // Emit bqAfterClose event after the dialog is closed
     this.handleTransitionEnd();
   };
@@ -244,37 +251,40 @@ export class BqDialog {
     return (
       <dialog
         style={style}
-        class={`bq-dialog hidden ${this.size} focus-visible:outline-none`}
+        class={{
+          [`bq-dialog hidden ${this.size} m-auto focus-visible:outline-none`]: true,
+          'inset-be-[50%] inset-bs-[50%]': this.disableBackdrop,
+        }}
         data-transition-enter="transition ease-in duration-300"
-        data-transition-enter-start="opacity-0 scale-75"
+        data-transition-enter-start="opacity-0 scale-90"
         data-transition-enter-end="opacity-100 scale-100"
         data-transition-leave="transition ease-out duration-300"
         data-transition-leave-start="opacity-100 scale-100"
-        data-transition-leave-end="opacity-0 scale-75"
+        data-transition-leave-end="opacity-0 scale-90"
         inert={this.open ? undefined : true}
         ref={(dialogElem) => (this.dialogElem = dialogElem)}
+        aria-modal="true"
+        aria-labelledby="bq-dialog--title"
         part="dialog"
       >
-        <main class="flex flex-col gap-[var(--bq-dialog--title-body-gap)] overflow-hidden" part="content">
+        <main class="flex flex-col gap-[--bq-dialog--title-body-gap] overflow-hidden" part="content">
           <header class="bq-dialog--header" part="header">
-            <div class="bq-dialog--title flex flex-1 items-center justify-between" part="title">
+            <div id="bq-dialog--title" class="bq-dialog--title flex flex-1 items-center justify-between" part="title">
               <slot name="title" />
             </div>
-            <div class="flex" onClick={() => this.hide()} role="button" part="button-close">
-              <slot name="button-close">
-                {!this.hideCloseButton && (
-                  <bq-button class="bq-dialog--close" appearance="text" size="small" slot="button-close">
-                    <bq-icon class="cursor-pointer" name="x" role="img" title="Close" />
-                  </bq-button>
-                )}
-              </slot>
-            </div>
+            <slot name="button-close">
+              {!this.hideCloseButton && (
+                <bq-button class="bq-dialog--close" appearance="text" size="small">
+                  <bq-icon class="cursor-pointer" name="x" role="img" title="Close" />
+                </bq-button>
+              )}
+            </slot>
           </header>
           <div
             class={{
               '!hidden': !this.hasContent,
-              'overflow-y-auto px-[var(--bq-dialog--padding)]': this.hasContent,
-              '!pb-[var(--bq-dialog--padding)]': !this.hasFooter,
+              'overflow-y-auto p-i-[--bq-dialog--padding]': this.hasContent,
+              '!p-be-[--bq-dialog--padding]': !this.hasFooter,
             }}
             ref={(mainElem) => (this.contentElem = mainElem)}
             part="body"
@@ -286,7 +296,7 @@ export class BqDialog {
           class={{
             '!hidden': !this.hasFooter,
             'bq-dialog--footer': this.hasFooter,
-            'bg-ui-alt !py-s': this.footerAppearance === 'highlight',
+            'bg-ui-alt !p-b-s': this.footerAppearance === 'highlight',
           }}
           ref={(footerElem) => (this.footerElem = footerElem)}
           part="footer"
