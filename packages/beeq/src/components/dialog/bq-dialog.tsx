@@ -251,7 +251,10 @@ export class BqDialog {
     return (
       <dialog
         style={style}
-        class={`bq-dialog hidden ${this.size} m-auto focus-visible:outline-none`}
+        class={{
+          [`bq-dialog hidden ${this.size} m-auto focus-visible:outline-none`]: true,
+          'inset-be-[50%] inset-bs-[50%]': this.disableBackdrop,
+        }}
         data-transition-enter="transition ease-in duration-300"
         data-transition-enter-start="opacity-0 scale-90"
         data-transition-enter-end="opacity-100 scale-100"
