@@ -1,5 +1,6 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import mdx from './bq-switch.mdx';
 import { SWITCH_INNER_LABEL, SWITCH_JUSTIFY_CONTENT } from '../bq-switch.types';
@@ -51,16 +52,16 @@ type Story = StoryObj;
 
 const Template = (args: Args) => html`
   <bq-switch
-    background-on-hover=${args['background-on-hover']}
+    ?background-on-hover=${args['background-on-hover']}
     ?checked=${args.checked}
     ?disabled=${args.disabled}
     ?full-width=${args['full-width']}
-    inner-label=${args['inner-label']}
-    justify-content=${args['justify-content']}
-    name=${args.name}
+    inner-label=${ifDefined(args['inner-label'])}
+    justify-content=${ifDefined(args['justify-content'])}
+    name=${ifDefined(args.name)}
     ?required=${args.required}
     ?reverse-order=${args['reverse-order']}
-    value=${args.value}
+    value=${ifDefined(args.value)}
     @bqFocus=${args.bqFocus}
     @bqBlur=${args.bqBlur}
     @bqChange=${args.bqChange}
@@ -104,8 +105,8 @@ export const ReverseOrder: Story = {
 
 export const FullWidth: Story = {
   render: (args) => html`
-    <div class="m-auto max-w-md">
-      <div class="mb-4 text-m font-regular">
+    <div class="max-is-[28rem] m-b-[auto] m-i-[auto]">
+      <div class="text-m font-regular m-be-4">
         Use a combination of <code class="bg-ui-secondary-disabled text-text-primary">full-width</code>,
         <code class="bg-ui-secondary-disabled text-text-primary">justify-content</code> and
         <code class="bg-ui-secondary-disabled text-text-primary">reverse-order</code>

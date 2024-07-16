@@ -217,7 +217,7 @@ export class BqSwitch {
           />
           {/* Control */}
           <div
-            class="bq-switch--control relative box-border flex h-[--bq-switch--height] w-[--bq-switch--width] justify-between rounded-full bg-ui-tertiary p-xs2 transition duration-300"
+            class="bq-switch--control relative box-border flex justify-between rounded-full bg-ui-tertiary transition duration-300 bs-[--bq-switch--height] is-[--bq-switch--width] p-b-xs2 p-i-xs2 group-[&.is-checked]:bg-ui-brand"
             part="control"
           >
             {this.innerLabel === 'icon' && (
@@ -246,7 +246,8 @@ export class BqSwitch {
           {/* Label */}
           <span
             class={{
-              'bq-switch--label': true,
+              'bq-switch--label text-m font-medium leading-regular text-text-primary transition-colors duration-300':
+                true,
               'ms-s': this.hasLabel && !this.reverseOrder,
               'me-s': this.hasLabel && this.reverseOrder,
             }}
