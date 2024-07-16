@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------- */
-/*                                Switch styles                */
+/*                                Switch styles                               */
 /* -------------------------------------------------------------------------- */
 
 @import './bq-switch.variables';
@@ -33,20 +33,10 @@
   }
 }
 
-.bq-switch--input:checked {
-  ~ .bq-switch--control {
-    @apply bg-ui-brand;
-
-    .bq-switch--control__dot {
-      transform: var(--bq-switch--dot-transform);
-    }
-  }
-}
-
 .bq-switch--control__dot {
-  @apply absolute justify-end rounded-full bs-[--bq-switch--dot-size] is-[--bq-switch--dot-size];
-  @apply bg-icon-inverse group-[&.is-checked]:bg-[--bq-icon--alt];
-  @apply transition duration-300;
+  @apply absolute start-xs2 rounded-full bg-icon-inverse bs-[--bq-switch--dot-size] is-[--bq-switch--dot-size];
+  @apply group-[&.is-checked]:start-[calc(100%_-_var(--bq-switch--dot-size)_-_var(--bq-spacing-xs2))] group-[&.is-checked]:bg-[--bq-icon--alt];
+  @apply transition-all duration-300;
 }
 
 .bq-switch--control__icon {
@@ -55,8 +45,4 @@
   &::part(base) {
     @apply flex;
   }
-}
-
-.bq-switch--label {
-  @apply text-m font-medium leading-regular text-text-primary transition-colors duration-300;
 }

@@ -29,7 +29,7 @@ import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spin
 import { TStatusType } from "./components/status/bq-status.types";
 import { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
 import { TStepItemStatus } from "./components/step-item/bq-step-item.types";
-import { TSwitchInnerLabel, TSwitchJustifyContent, TSwitchOrientation } from "./components/switch/bq-switch.types";
+import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-switch.types";
 import { TTabSize } from "./components/tab/bq-tab.types";
 import { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from "./components/tag/bq-tag.types";
 import { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
@@ -58,7 +58,7 @@ export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spin
 export { TStatusType } from "./components/status/bq-status.types";
 export { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
 export { TStepItemStatus } from "./components/step-item/bq-step-item.types";
-export { TSwitchInnerLabel, TSwitchJustifyContent, TSwitchOrientation } from "./components/switch/bq-switch.types";
+export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-switch.types";
 export { TTabSize } from "./components/tab/bq-tab.types";
 export { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from "./components/tag/bq-tag.types";
 export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
@@ -1183,10 +1183,6 @@ export namespace Components {
           * Name of the form control. Submitted with the form as part of a name/value pair
          */
         "name": string;
-        /**
-          * This prop defines the CSS support orientation layout direction of the switch component.
-         */
-        "orientation"?: TSwitchOrientation;
         /**
           * If `true`, it will indicate that the user must switch `ON` the element before the owning form can be submitted
          */
@@ -3586,10 +3582,6 @@ declare namespace LocalJSX {
           * Handler to be called when the switch gets focus
          */
         "onBqFocus"?: (event: BqSwitchCustomEvent<HTMLBqSwitchElement>) => void;
-        /**
-          * This prop defines the CSS support orientation layout direction of the switch component.
-         */
-        "orientation"?: TSwitchOrientation;
         /**
           * If `true`, it will indicate that the user must switch `ON` the element before the owning form can be submitted
          */

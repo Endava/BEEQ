@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State } from '@stencil/core';
 
-import { TSwitchInnerLabel, TSwitchJustifyContent, TSwitchOrientation } from './bq-switch.types';
+import { TSwitchInnerLabel, TSwitchJustifyContent } from './bq-switch.types';
 import { getTextContent, isNil } from '../../shared/utils';
 
 /**
@@ -75,9 +75,6 @@ export class BqSwitch {
 
   /** The input control's value, submitted as a name/value pair with form data. */
   @Prop({ reflect: true }) value?: string;
-
-  /** This prop defines the CSS support orientation layout direction of the switch component. */
-  @Prop({ reflect: true }) orientation?: TSwitchOrientation = 'horizontal';
 
   // Prop lifecycle events
   // =======================
@@ -186,14 +183,8 @@ export class BqSwitch {
   // ===================================
 
   render() {
-    const transformValue =
-      this.orientation === 'vertical'
-        ? 'translateY(calc(var(--bq-switch--width) - var(--bq-switch--dot-size) - 8px))'
-        : 'translateX(calc(var(--bq-switch--width) - var(--bq-switch--dot-size) - 8px))';
-
     const hostStyle = {
-      '--bq-switch--justify-content': this.justifyContent || '',
-      '--bq-switch--dot-transform': transformValue,
+      ...(this.justifyContent && { '--bq-switch--justify-content': this.justifyContent }),
     };
 
     const labelCssClasses = {
@@ -226,7 +217,7 @@ export class BqSwitch {
           />
           {/* Control */}
           <div
-            class="bq-switch--control relative box-border flex justify-between rounded-full bg-ui-tertiary transition duration-300 bs-[--bq-switch--height] is-[--bq-switch--width] p-b-xs2 p-i-xs2"
+            class="bq-switch--control relative box-border flex justify-between rounded-full bg-ui-tertiary transition duration-300 bs-[--bq-switch--height] is-[--bq-switch--width] p-b-xs2 p-i-xs2 group-[&.is-checked]:bg-ui-brand"
             part="control"
           >
             {this.innerLabel === 'icon' && (
@@ -255,7 +246,8 @@ export class BqSwitch {
           {/* Label */}
           <span
             class={{
-              'bq-switch--label': true,
+              'bq-switch--label text-m font-medium leading-regular text-text-primary transition-colors duration-300':
+                true,
               'ms-s': this.hasLabel && !this.reverseOrder,
               'me-s': this.hasLabel && this.reverseOrder,
             }}
