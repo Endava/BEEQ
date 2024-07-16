@@ -22,6 +22,7 @@ const withThemeProvider: DecoratorFunction<WebComponentsRenderer, { [x: string]:
 
 const preview: Preview = {
   decorators: [withThemeProvider],
+
   globalTypes: {
     theme: {
       name: 'Theme',
@@ -50,6 +51,7 @@ const preview: Preview = {
       },
     },
   },
+
   parameters: {
     controls: { expanded: true, hideNoControlsWarning: true },
     docs: {
@@ -74,6 +76,8 @@ const preview: Preview = {
       root: '#root-inner',
     },
   },
+
+  tags: ['autodocs'],
 };
 
 export default preview;

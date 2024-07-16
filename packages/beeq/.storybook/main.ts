@@ -2,7 +2,14 @@ import { join } from 'path';
 import type { StorybookConfig } from '@storybook/web-components-vite';
 
 export default {
-  framework: '@storybook/web-components-vite',
+  framework: {
+    name: '@storybook/web-components-vite',
+    options: {
+      builder: {
+        viteConfigPath: join(__dirname, '../vite.config.mts').replace(/\\/g, '/'),
+      },
+    },
+  },
   stories: ['../src/**/*.stories.@(ts|tsx)'],
   addons: [
     '@storybook/addon-essentials',
@@ -10,14 +17,6 @@ export default {
     '@beeq/storybook-addon-html',
     '@chromatic-com/storybook',
   ],
-  core: {
-    builder: {
-      name: '@storybook/builder-vite',
-      options: {
-        viteConfigPath: join(__dirname, '../vite.config.mts').replace(/\\/g, '/'),
-      },
-    },
-  },
   staticDirs: [
     { from: '../../../dist/beeq/www/assets', to: '/assets' },
     { from: '../../../dist/beeq/www/scripts', to: '/scripts' },
@@ -25,7 +24,6 @@ export default {
     { from: './assets/css', to: '/css' },
   ],
   docs: {
-    autodocs: true,
     defaultName: 'Overview',
   },
   managerHead: (head) => `
