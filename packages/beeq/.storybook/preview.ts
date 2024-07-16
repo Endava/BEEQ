@@ -1,12 +1,26 @@
 import './assets/css/stories.css';
 
-import type { DecoratorFunction } from '@storybook/types';
+import type { DecoratorFunction } from '@storybook/csf';
 import type { Preview, WebComponentsRenderer } from '@storybook/web-components';
 import { setCustomElementsManifest } from '@storybook/web-components';
 
 import customElements from '../custom-elements.json';
 
 setCustomElementsManifest(customElements);
+
+const contentDirectionProvider: DecoratorFunction<WebComponentsRenderer, { [x: string]: unknown }> = (
+  storyFn,
+  context,
+) => {
+  const {
+    globals: { layout },
+  } = context;
+  const html = document.querySelector('html');
+  if (!(html instanceof HTMLElement)) return storyFn();
+
+  html.setAttribute('dir', layout || 'ltr');
+  return storyFn();
+};
 
 const withThemeProvider: DecoratorFunction<WebComponentsRenderer, { [x: string]: unknown }> = (storyFn, context) => {
   const {
@@ -21,9 +35,22 @@ const withThemeProvider: DecoratorFunction<WebComponentsRenderer, { [x: string]:
 };
 
 const preview: Preview = {
-  decorators: [withThemeProvider],
+  decorators: [contentDirectionProvider, withThemeProvider],
 
   globalTypes: {
+    layout: {
+      name: 'Content direction',
+      description: 'Reading direction for BEEQ components',
+      defaultValue: 'ltr',
+      toolbar: {
+        icon: 'document',
+        items: [
+          { value: 'ltr', title: 'Direction: LTR →' },
+          { value: 'rtl', title: 'Direction: RTL ←' },
+        ],
+        dynamicTitle: true,
+      },
+    },
     theme: {
       name: 'Theme',
       description: 'Theme for BEEQ components',
@@ -31,8 +58,8 @@ const preview: Preview = {
       toolbar: {
         icon: 'globe',
         items: [
-          { value: 'beeq', title: 'BEEQ' },
-          { value: 'endava', title: 'Endava' },
+          { value: 'beeq', title: 'Theme: BEEQ' },
+          { value: 'endava', title: 'Theme: Endava' },
         ],
         dynamicTitle: true,
       },
