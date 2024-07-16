@@ -1,8 +1,9 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import mdx from './bq-switch.mdx';
-import { SWITCH_INNER_LABEL, SWITCH_JUSTIFY_CONTENT, SWITCH_ORIENTATION_MODE } from '../bq-switch.types';
+import { SWITCH_INNER_LABEL, SWITCH_JUSTIFY_CONTENT } from '../bq-switch.types';
 
 const meta: Meta = {
   title: 'Components/Switch',
@@ -19,7 +20,6 @@ const meta: Meta = {
     'full-width': { control: 'boolean' },
     'inner-label': { control: 'inline-radio', options: [...SWITCH_INNER_LABEL] },
     'justify-content': { control: 'select', options: [...SWITCH_JUSTIFY_CONTENT] },
-    orientation: { control: 'select', options: [...SWITCH_ORIENTATION_MODE] },
     name: { control: 'text' },
     required: { control: 'boolean' },
     'reverse-order': { control: 'boolean' },
@@ -38,7 +38,6 @@ const meta: Meta = {
     'full-width': false,
     'inner-label': 'default',
     'justify-content': 'start',
-    orientation: 'horizontal',
     name: 'bq-switch',
     required: false,
     'reverse-order': false,
@@ -53,17 +52,16 @@ type Story = StoryObj;
 
 const Template = (args: Args) => html`
   <bq-switch
-    background-on-hover=${args['background-on-hover']}
+    ?background-on-hover=${args['background-on-hover']}
     ?checked=${args.checked}
     ?disabled=${args.disabled}
     ?full-width=${args['full-width']}
-    inner-label=${args['inner-label']}
-    justify-content=${args['justify-content']}
-    orientation=${args.orientation}
-    name=${args.name}
+    inner-label=${ifDefined(args['inner-label'])}
+    justify-content=${ifDefined(args['justify-content'])}
+    name=${ifDefined(args.name)}
     ?required=${args.required}
     ?reverse-order=${args['reverse-order']}
-    value=${args.value}
+    value=${ifDefined(args.value)}
     @bqFocus=${args.bqFocus}
     @bqBlur=${args.bqBlur}
     @bqChange=${args.bqChange}
