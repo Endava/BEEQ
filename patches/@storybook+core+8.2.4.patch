@@ -1,0 +1,32 @@
+diff --git a/node_modules/@storybook/core/dist/core-server/index.cjs b/node_modules/@storybook/core/dist/core-server/index.cjs
+index fc50f2f..2c00ab2 100644
+--- a/node_modules/@storybook/core/dist/core-server/index.cjs
++++ b/node_modules/@storybook/core/dist/core-server/index.cjs
+@@ -257019,9 +257019,9 @@ s unused")).filter(
+ i(Nae, "buildDevStandalone");
+ 
+ // src/core-server/standalone.ts
+-var $Qe = require("node:path");
++var fdPackJson = require("fd-package-json");
+ async function dWi(e = {}, t = {}) {
+-  let { mode: r = "dev" } = e, n = (0, $Qe.dirname)(require.resolve("@storybook/core/package.json")), s = {
++  let { mode: r = "dev" } = e, n = fdPackJson.findPackageSync(__dirname), s = {
+     ...e,
+     ...t,
+     frameworkPresets: [
+diff --git a/node_modules/@storybook/core/dist/core-server/index.js b/node_modules/@storybook/core/dist/core-server/index.js
+index 691ae6c..1085fbd 100644
+--- a/node_modules/@storybook/core/dist/core-server/index.js
++++ b/node_modules/@storybook/core/dist/core-server/index.js
+@@ -257085,9 +257085,9 @@ s unused")).filter(
+ i(Hze, "buildDevStandalone");
+ 
+ // src/core-server/standalone.ts
+-import { dirname as WWi } from "node:path";
++import { findPackageSync } from 'fd-package-json';
+ async function $Wi(e = {}, t = {}) {
+-  let { mode: r = "dev" } = e, n = WWi(Kt.resolve("@storybook/core/package.json")), s = {
++  let { mode: r = "dev" } = e, n = findPackageSync(__dirname), s = {
+     ...e,
+     ...t,
+     frameworkPresets: [
