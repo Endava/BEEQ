@@ -233,8 +233,8 @@ export class BqSlider {
       ? this.calculatePercent(Number(this.maxValue) - Number(this.minValue))
       : this.calculatePercent(this.minValue);
 
-    this.progressElem.style.left = `${left}%`;
-    this.progressElem.style.width = `${width}%`;
+    this.progressElem.style.insetInlineStart = `${left}%`;
+    this.progressElem.style.inlineSize = `${width}%`;
   };
 
   private calculateThumbPosition = (value: number): number => {
@@ -307,7 +307,7 @@ export class BqSlider {
     return (
       <span
         class={{
-          [`${css} box-content block w-fit min-w-8 text-s font-medium leading-regular text-text-primary [font-variant:tabular-nums]`]:
+          [`${css} box-content block text-s font-medium leading-regular text-text-primary is-fit min-is-8 [font-variant:tabular-nums]`]:
             true,
           hidden: position === 'start' ? !this.enableValueIndicator : !this.enableValueIndicator || !this.isRangeType,
         }}
@@ -334,7 +334,7 @@ export class BqSlider {
       <input
         type="range"
         class={{
-          'absolute start-0 top-1/2 w-full -translate-y-1/2 cursor-pointer appearance-none bg-transparent outline-none disabled:cursor-not-allowed':
+          'absolute start-0 -translate-y-1/2 cursor-pointer appearance-none bg-transparent outline-none is-full inset-bs-[50%] disabled:cursor-not-allowed':
             true,
           'pointer-events-none': this.isRangeType,
         }}
@@ -368,10 +368,10 @@ export class BqSlider {
       exportparts="base,trigger,panel"
       alwaysVisible={true}
       distance={this.enableValueIndicator ? 6 : 16}
-      style={{ left: `${thumbPosition}px`, fontVariant: 'tabular-nums' }}
+      style={{ insetInlineStart: `${thumbPosition}px`, fontVariant: 'tabular-nums' }}
       ref={refCallback}
     >
-      <div class="absolute size-1" slot="trigger" />
+      <div class="absolute bs-1 is-1" slot="trigger" />
       {value.toFixed(this.decimalCount)}
     </bq-tooltip>
   );
@@ -384,22 +384,22 @@ export class BqSlider {
     return (
       <div
         aria-disabled={this.disabled ? 'true' : 'false'}
-        class={{ 'flex w-full': true, 'cursor-not-allowed opacity-60': this.disabled }}
+        class={{ 'flex is-full': true, 'cursor-not-allowed opacity-60': this.disabled }}
         part="base"
       >
         {/* LABEL (start) */}
         {this.renderLabel(this.minValue, 'start', 'me-xs text-end')}
         {/* SLIDER */}
-        <div class="relative w-full" part="container">
+        <div class="relative is-full" part="container">
           {/* TRACK AREA */}
           <span
-            class="absolute start-0 top-1/2 h-1 w-full -translate-y-1/2 rounded-xs bg-[--bq-slider--trackarea-color]"
+            class="absolute start-0 -translate-y-1/2 rounded-xs bg-[--bq-slider--trackarea-color] bs-1 is-full inset-bs-[50%]"
             ref={(elem) => (this.trackElem = elem)}
             part="track-area"
           />
           {/* PROGRESS AREA */}
           <span
-            class="absolute top-1/2 h-1 w-1/2 -translate-y-1/2 rounded-xs bg-[--bq-slider--progress-color]"
+            class="absolute -translate-y-1/2 rounded-xs bg-[--bq-slider--progress-color] bs-1 is-[50%] inset-bs-[50%]"
             ref={(elem) => (this.progressElem = elem)}
             part="progress-area"
           />
