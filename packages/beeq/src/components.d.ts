@@ -24,7 +24,7 @@ import { TProgressBorderShape, TProgressThickness, TProgressType } from "./compo
 import { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 import { TSelectValue } from "./components/select/bq-select";
 import { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
-import { TSliderOrientation, TSliderType, TSliderValue } from "./components/slider/bq-slider.types";
+import { TSliderType, TSliderValue } from "./components/slider/bq-slider.types";
 import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 import { TStatusType } from "./components/status/bq-status.types";
 import { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
@@ -53,7 +53,7 @@ export { TProgressBorderShape, TProgressThickness, TProgressType } from "./compo
 export { TRadioGroupOrientation } from "./components/radio-group/bq-radio-group.types";
 export { TSelectValue } from "./components/select/bq-select";
 export { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-side-menu.types";
-export { TSliderOrientation, TSliderType, TSliderValue } from "./components/slider/bq-slider.types";
+export { TSliderType, TSliderValue } from "./components/slider/bq-slider.types";
 export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 export { TStatusType } from "./components/status/bq-status.types";
 export { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
@@ -1082,10 +1082,6 @@ export namespace Components {
           * A number representing the min value of the slider.
          */
         "min": number;
-        /**
-          * This prop defines the CSS support orientation layout direction of the slider component.
-         */
-        "orientation"?: TSliderOrientation;
         /**
           * A number representing the step of the slider. ⚠️ Please notice that the value (or list of values if the slider type is `range`) will be rounded to the nearest multiple of `step`.
          */
@@ -3472,10 +3468,6 @@ declare namespace LocalJSX {
           * Handler to be called when the slider gets focused
          */
         "onBqFocus"?: (event: BqSliderCustomEvent<HTMLBqSliderElement>) => void;
-        /**
-          * This prop defines the CSS support orientation layout direction of the slider component.
-         */
-        "orientation"?: TSliderOrientation;
         /**
           * A number representing the step of the slider. ⚠️ Please notice that the value (or list of values if the slider type is `range`) will be rounded to the nearest multiple of `step`.
          */

@@ -3,7 +3,6 @@ import { html } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import mdx from './bq-slider.mdx';
-import { SLIDER_ORIENTATION_MODE } from '../bq-slider.types';
 
 const meta: Meta = {
   title: 'Components/Slider',
@@ -20,7 +19,6 @@ const meta: Meta = {
     'enable-value-indicator': { control: 'boolean' },
     'enable-tooltip': { control: 'boolean' },
     'tooltip-always-visible': { control: 'boolean' },
-    orientation: { control: 'select', options: [...SLIDER_ORIENTATION_MODE] },
     gap: { control: 'number' },
     max: { control: 'number' },
     min: { control: 'number' },
@@ -38,7 +36,6 @@ const meta: Meta = {
     'enable-value-indicator': false,
     'enable-tooltip': false,
     'tooltip-always-visible': false,
-    orientation: 'horizontal',
     gap: 0,
     max: 100,
     min: 0,
@@ -59,7 +56,6 @@ const Template = (args: Args) => html`
       ?enable-value-indicator=${args['enable-value-indicator']}
       ?enable-tooltip=${args['enable-tooltip']}
       ?tooltip-always-visible=${args['tooltip-always-visible']}
-      orientation=${args.orientation}
       gap=${ifDefined(args.gap)}
       max=${ifDefined(args.max)}
       min=${ifDefined(args.min)}
