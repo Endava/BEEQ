@@ -97,10 +97,9 @@ export class BqAccordion {
 
     console.warn(
       `[bq-accordion] calc-size() is not supported and animation will be set through JS
-        Consider using the 'noANimation' prop ('no-js-animation' attribute) to disable it`,
+        For vertical layout, consider using the 'noANimation' prop ('no-animation' attribute) to disable it`,
     );
     this.accordion = !this.noAnimation ? new Accordion(this.detailsElem) : null;
-    console.log('this.accordion', this.accordion);
   }
 
   // Events section
@@ -207,7 +206,7 @@ export class BqAccordion {
           disabled: this.disabled,
         }}
         ref={(detailsElem: HTMLDetailsElement) => (this.detailsElem = detailsElem)}
-        open={this.open}
+        open={this.expanded}
         part="base"
       >
         <summary
