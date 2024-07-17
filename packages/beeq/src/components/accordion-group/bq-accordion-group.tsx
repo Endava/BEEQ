@@ -27,14 +27,20 @@ export class BqAccordionGroup {
   // Public Property API
   // ========================
 
+  /** The appearance style of accordion to be applied to all accordions */
+  @Prop({ reflect: true, mutable: true }) appearance: TAccordionAppearance = 'filled';
+
   /** If true all accordions are expanded */
   @Prop({ reflect: true }) expandAll: boolean;
 
+  /**
+   * Animation is set through JS when the browser does not support CSS calc-size()
+   * If true, the accordion animation, will be disabled. No animation will be applied.
+   */
+  @Prop({ reflect: true }) noAnimation: boolean = false;
+
   /** If true multiple accordions can be expanded at the same time */
   @Prop({ reflect: true }) multiple: boolean = false;
-
-  /** The appearance style of accordion to be applied to all accordions */
-  @Prop({ reflect: true, mutable: true }) appearance: TAccordionAppearance = 'filled';
 
   /** The size of accordion to be applied to all accordions */
   @Prop({ reflect: true, mutable: true }) size: TAccordionSize = 'medium';
@@ -42,8 +48,9 @@ export class BqAccordionGroup {
   // Prop lifecycle events
   // =======================
 
-  @Watch('expandAll')
   @Watch('appearance')
+  @Watch('expandAll')
+  @Watch('noAnimation')
   @Watch('size')
   checkPropValues() {
     this.bqAccordionElements.forEach((bqAccordionElement) => {
@@ -52,6 +59,7 @@ export class BqAccordionGroup {
         bqAccordionElement.expanded = this.expandAll;
       }
       bqAccordionElement.appearance = this.appearance;
+      bqAccordionElement.noAnimation = this.noAnimation;
       bqAccordionElement.size = this.size;
     });
   }
