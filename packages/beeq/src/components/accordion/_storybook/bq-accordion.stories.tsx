@@ -17,6 +17,7 @@ const meta: Meta = {
     appearance: { control: 'select', options: [...ACCORDION_APPEARANCE] },
     disabled: { control: 'boolean' },
     expanded: { control: 'boolean' },
+    'no-animation': { control: 'boolean' },
     rotate: { control: 'boolean' },
     size: { control: 'select', options: [...ACCORDION_SIZE] },
     // Event handlers
@@ -33,6 +34,7 @@ const meta: Meta = {
     appearance: 'filled',
     disabled: false,
     expanded: false,
+    'no-animation': false,
     rotate: false,
     size: 'medium',
     // Not part of the component
@@ -48,6 +50,7 @@ const Template = (args: Args) => html`
     appearance=${args.appearance}
     ?disabled=${args.disabled}
     ?expanded=${args.expanded}
+    ?no-animation=${args['no-animation']}
     ?rotate=${args.rotate}
     size=${args.size}
     @bqBlur=${args.bqBlur}

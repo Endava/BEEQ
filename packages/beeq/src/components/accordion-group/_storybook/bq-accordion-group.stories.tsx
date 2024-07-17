@@ -1,5 +1,6 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import mdx from '../../accordion/_storybook/bq-accordion.mdx';
 import { ACCORDION_APPEARANCE, ACCORDION_SIZE } from '../../accordion/bq-accordion.types';
@@ -15,6 +16,7 @@ const meta: Meta = {
   argTypes: {
     appearance: { control: 'select', options: [...ACCORDION_APPEARANCE] },
     'expand-all': { control: 'boolean' },
+    'no-animation': { control: 'boolean' },
     multiple: { control: 'boolean' },
     size: { control: 'select', options: [...ACCORDION_SIZE] },
     text: { control: 'text', table: { disable: true } },
@@ -22,6 +24,7 @@ const meta: Meta = {
   args: {
     appearance: 'filled',
     'expand-all': false,
+    'no-animation': false,
     multiple: false,
     size: 'medium',
     text: 'Header',
@@ -34,10 +37,11 @@ type Story = StoryObj;
 export const Group: Story = {
   render: (args: Args) => html`
     <bq-accordion-group
+      appearance=${ifDefined(args.appearance)}
       ?expand-all=${args['expand-all']}
+      ?no-animation=${args['no-animation']}
       ?multiple=${args.multiple}
-      size=${args.size}
-      appearance=${args.appearance}
+      size=${ifDefined(args.size)}
     >
       <bq-accordion size=${args.size}>
         <span slot="header">${args.text}</span>
