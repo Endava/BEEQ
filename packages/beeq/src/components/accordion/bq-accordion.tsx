@@ -50,6 +50,12 @@ export class BqAccordion {
   /** If true accordion is expanded */
   @Prop({ reflect: true, mutable: true }) expanded: boolean = false;
 
+  /**
+   * Animation is set through JS when the browser does not support CSS calc-size()
+   * If true, the accordion animation, will be disabled. No animation will be applied.
+   */
+  @Prop({ reflect: true }) noAnimation: boolean = false;
+
   /** If true accordion expand icon is rotate 180deg when expanded */
   @Prop({ reflect: true }) rotate: boolean = false;
 
@@ -83,6 +89,18 @@ export class BqAccordion {
     if (!this.disabled) return;
 
     this.expanded = false;
+  }
+
+  @Watch('noAnimation')
+  handleJsAnimation() {
+    if (window.CSS?.supports('(block-size: calc-size(auto))')) return;
+
+    console.warn(
+      `[bq-accordion] calc-size() is not supported and animation will be set through JS
+        Consider using the 'noANimation' prop ('no-js-animation' attribute) to disable it`,
+    );
+    this.accordion = !this.noAnimation ? new Accordion(this.detailsElem) : null;
+    console.log('this.accordion', this.accordion);
   }
 
   // Events section
@@ -119,7 +137,7 @@ export class BqAccordion {
   }
 
   componentDidLoad() {
-    this.accordion = new Accordion(this.detailsElem);
+    this.handleJsAnimation();
     this.handleExpandedChange();
   }
 
@@ -144,6 +162,7 @@ export class BqAccordion {
   // Internal business logic.
   // These methods cannot be called from the host element.
   // =======================================================
+
   private handleClick = (event: MouseEvent) => {
     event.preventDefault();
 
@@ -182,8 +201,13 @@ export class BqAccordion {
   render() {
     return (
       <details
-        class={{ [`bq-accordion overflow-hidden ${this.size} ${this.appearance}`]: true, disabled: this.disabled }}
+        class={{
+          [`bq-accordion overflow-hidden ${this.size} ${this.appearance}`]: true,
+          'no-animation': this.noAnimation,
+          disabled: this.disabled,
+        }}
         ref={(detailsElem: HTMLDetailsElement) => (this.detailsElem = detailsElem)}
+        open={this.open}
         part="base"
       >
         <summary
