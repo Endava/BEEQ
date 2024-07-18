@@ -57,7 +57,7 @@ export class BqDrawer {
   @Prop({ reflect: true, mutable: true }) placement: TDrawerPlacement = 'right';
 
   /** Defines the position of the drawer */
-  @Prop({ reflect: true }) position: TDrawerPosition = 'end';
+  @Prop({ reflect: true, mutable: true }) position: TDrawerPosition = 'end';
 
   // Prop lifecycle events
   // =======================
@@ -65,11 +65,11 @@ export class BqDrawer {
   @Watch('open')
   async handleOpenChange() {
     if (!this.open) {
-      await this.handleHide();
+      await this.handleAfterHide();
       return;
     }
 
-    await this.handleShow();
+    await this.handleAfterShow();
   }
 
   /**
@@ -132,10 +132,6 @@ export class BqDrawer {
     this.handlePlacementChange();
   }
 
-  componentDidLoad() {
-    this.handleOpenChange();
-  }
-
   // Listeners
   // ==============
 
@@ -170,12 +166,18 @@ export class BqDrawer {
   /** Method to be called to hide the drawer component */
   @Method()
   async hide(): Promise<void> {
+    const ev = this.bqClose.emit();
+    if (ev.defaultPrevented) return;
+
     this.open = false;
   }
 
   /** Method to be called to show the drawer component */
   @Method()
   async show(): Promise<void> {
+    const ev = this.bqOpen.emit();
+    if (ev.defaultPrevented) return;
+
     this.open = true;
   }
 
@@ -188,21 +190,15 @@ export class BqDrawer {
     this.hasFooter = hasSlotContent(this.footerElem, 'footer');
   };
 
-  private handleHide = async () => {
+  private handleAfterHide = async () => {
     if (!this.drawerElem) return;
-
-    const ev = this.bqClose.emit();
-    if (ev.defaultPrevented) return;
 
     await leave(this.drawerElem);
     this.handleTransitionEnd();
   };
 
-  private handleShow = async () => {
+  private handleAfterShow = async () => {
     if (!this.drawerElem) return;
-
-    const ev = this.bqOpen.emit();
-    if (ev.defaultPrevented) return;
 
     this.el.classList.add(this.OPEN_CSS_CLASS);
     await enter(this.drawerElem);
