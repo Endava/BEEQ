@@ -17,7 +17,7 @@ const meta: Meta = {
     'close-on-click-outside': { control: 'boolean' },
     'close-on-esc': { control: 'boolean' },
     open: { control: 'boolean' },
-    position: { control: 'select', options: [...DRAWER_POSITIONS] },
+    position: { control: 'inline-radio', options: [...DRAWER_POSITIONS] },
     // Events
     bqOpen: { action: 'bqOpen' },
     bqClose: { action: 'bqClose' },
