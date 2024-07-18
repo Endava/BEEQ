@@ -50,6 +50,12 @@ export class BqAccordion {
   /** If true accordion is expanded */
   @Prop({ reflect: true, mutable: true }) expanded: boolean = false;
 
+  /**
+   * Animation is set through JS when the browser does not support CSS calc-size()
+   * If true, the accordion animation, will be disabled. No animation will be applied.
+   */
+  @Prop({ reflect: true }) noAnimation: boolean = false;
+
   /** If true accordion expand icon is rotate 180deg when expanded */
   @Prop({ reflect: true }) rotate: boolean = false;
 
@@ -67,15 +73,20 @@ export class BqAccordion {
 
   @Watch('expanded')
   handleExpandedChange() {
-    if (!this.accordion) return;
-
     const event = this.expanded ? this.bqOpen.emit(this.el) : this.bqClose.emit(this.el);
     if (event.defaultPrevented) {
       this.expanded = !this.expanded;
       return;
     }
 
-    this.expanded ? this.accordion.open() : this.accordion.close();
+    this.expanded ? this.accordion?.open() : this.accordion?.close();
+    if (!this.isCssCalcSizeSupported) return;
+
+    // NOTE: This is a workaround to trigger the transitionEnd event
+    // when the open/close animation is handled via CSS instead of JS
+    setTimeout(() => {
+      this.el.dispatchEvent(new CustomEvent('accordionTransitionEnd', { bubbles: false, composed: true }));
+    }, 200);
   }
 
   @Watch('disabled')
@@ -83,6 +94,17 @@ export class BqAccordion {
     if (!this.disabled) return;
 
     this.expanded = false;
+  }
+
+  @Watch('noAnimation')
+  handleJsAnimation() {
+    if (this.isCssCalcSizeSupported) return;
+
+    console.warn(
+      `[bq-accordion] calc-size() is not supported and animation will be set through JS
+        For vertical layout, consider using the 'noAnimation' prop ('no-animation' attribute) to disable it`,
+    );
+    this.accordion = !this.noAnimation ? new Accordion(this.detailsElem) : null;
   }
 
   // Events section
@@ -119,7 +141,7 @@ export class BqAccordion {
   }
 
   componentDidLoad() {
-    this.accordion = new Accordion(this.detailsElem);
+    this.handleJsAnimation();
     this.handleExpandedChange();
   }
 
@@ -128,6 +150,7 @@ export class BqAccordion {
 
   @Listen('accordionTransitionEnd')
   onAccordionTransitionEnd(event: CustomEvent) {
+    event.stopPropagation();
     if (event.target !== this.el) return;
 
     this.expanded ? this.bqAfterOpen.emit(this.el) : this.bqAfterClose.emit(this.el);
@@ -144,13 +167,14 @@ export class BqAccordion {
   // Internal business logic.
   // These methods cannot be called from the host element.
   // =======================================================
+
   private handleClick = (event: MouseEvent) => {
     event.preventDefault();
 
     if (this.disabled) return;
 
-    this.expanded = !this.expanded;
     this.bqClick.emit(this.el);
+    this.expanded = !this.expanded;
   };
 
   private handleFocus = () => {
@@ -175,6 +199,10 @@ export class BqAccordion {
     return this.expanded && !this.disabled;
   }
 
+  private get isCssCalcSizeSupported() {
+    return window.CSS?.supports('(block-size: calc-size(auto))');
+  }
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -182,8 +210,13 @@ export class BqAccordion {
   render() {
     return (
       <details
-        class={{ [`bq-accordion overflow-hidden ${this.size} ${this.appearance}`]: true, disabled: this.disabled }}
+        class={{
+          [`bq-accordion overflow-hidden ${this.size} ${this.appearance}`]: true,
+          'no-animation': this.noAnimation,
+          disabled: this.disabled,
+        }}
         ref={(detailsElem: HTMLDetailsElement) => (this.detailsElem = detailsElem)}
+        open={this.open}
         part="base"
       >
         <summary
@@ -191,8 +224,9 @@ export class BqAccordion {
           onClick={this.handleClick}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
-          aria-expanded={this.open}
+          aria-expanded={this.expanded}
           aria-disabled={this.disabled}
+          aria-controls="bq-accordion__body"
           tabindex={this.disabled ? -1 : 0}
           part="header"
         >
@@ -232,7 +266,7 @@ export class BqAccordion {
             </slot>
           </div>
         </summary>
-        <div class="bq-accordion__body overflow-hidden" part="panel">
+        <div id="bq-accordion__body" class="bq-accordion__body overflow-hidden" part="panel">
           <slot />
         </div>
       </details>

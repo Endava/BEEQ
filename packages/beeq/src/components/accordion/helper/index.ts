@@ -10,7 +10,7 @@ export class Accordion {
   private isClosing: boolean;
   private isExpanding: boolean;
   private animationOptions = {
-    duration: 300,
+    duration: 200,
     easing: 'ease-in-out',
   };
 

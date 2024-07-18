@@ -17,11 +17,13 @@ const meta: Meta = {
     appearance: { control: 'select', options: [...ACCORDION_APPEARANCE] },
     disabled: { control: 'boolean' },
     expanded: { control: 'boolean' },
+    'no-animation': { control: 'boolean' },
     rotate: { control: 'boolean' },
     size: { control: 'select', options: [...ACCORDION_SIZE] },
     // Event handlers
     bqBlur: { action: 'bqBlur' },
     bqFocus: { action: 'bqFocus' },
+    bqClick: { action: 'bqClick' },
     bqOpen: { action: 'bqOpen' },
     bqAfterOpen: { action: 'bqAfterOpen' },
     bqClose: { action: 'bqClose' },
@@ -33,6 +35,7 @@ const meta: Meta = {
     appearance: 'filled',
     disabled: false,
     expanded: false,
+    'no-animation': false,
     rotate: false,
     size: 'medium',
     // Not part of the component
@@ -48,10 +51,12 @@ const Template = (args: Args) => html`
     appearance=${args.appearance}
     ?disabled=${args.disabled}
     ?expanded=${args.expanded}
+    ?no-animation=${args['no-animation']}
     ?rotate=${args.rotate}
     size=${args.size}
     @bqBlur=${args.bqBlur}
     @bqFocus=${args.bqFocus}
+    @bqClick=${args.bqClick}
     @bqOpen=${args.bqOpen}
     @bqAfterOpen=${args.bqAfterOpen}
     @bqClose=${args.bqClose}

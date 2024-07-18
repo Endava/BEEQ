@@ -78,6 +78,10 @@ export namespace Components {
          */
         "expanded": boolean;
         /**
+          * Animation is set through JS when the browser does not support CSS calc-size() If true, the accordion animation, will be disabled. No animation will be applied.
+         */
+        "noAnimation": boolean;
+        /**
           * If true accordion expand icon is rotate 180deg when expanded
          */
         "rotate": boolean;
@@ -99,6 +103,10 @@ export namespace Components {
           * If true multiple accordions can be expanded at the same time
          */
         "multiple": boolean;
+        /**
+          * Animation is set through JS when the browser does not support CSS calc-size() If true, the accordion animation, will be disabled. No animation will be applied.
+         */
+        "noAnimation": boolean;
         /**
           * The size of accordion to be applied to all accordions
          */
@@ -2271,6 +2279,10 @@ declare namespace LocalJSX {
          */
         "expanded"?: boolean;
         /**
+          * Animation is set through JS when the browser does not support CSS calc-size() If true, the accordion animation, will be disabled. No animation will be applied.
+         */
+        "noAnimation"?: boolean;
+        /**
           * Handler to be called after the accordion is closed
          */
         "onBqAfterClose"?: (event: BqAccordionCustomEvent<HTMLBqAccordionElement>) => void;
@@ -2317,6 +2329,10 @@ declare namespace LocalJSX {
           * If true multiple accordions can be expanded at the same time
          */
         "multiple"?: boolean;
+        /**
+          * Animation is set through JS when the browser does not support CSS calc-size() If true, the accordion animation, will be disabled. No animation will be applied.
+         */
+        "noAnimation"?: boolean;
         /**
           * The size of accordion to be applied to all accordions
          */

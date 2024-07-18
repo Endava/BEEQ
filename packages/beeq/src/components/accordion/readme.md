@@ -7,13 +7,14 @@
 
 ## Properties
 
-| Property     | Attribute    | Description                                                  | Type                  | Default    |
-| ------------ | ------------ | ------------------------------------------------------------ | --------------------- | ---------- |
-| `appearance` | `appearance` | The appearance style of accordion                            | `"filled" \| "ghost"` | `'filled'` |
-| `disabled`   | `disabled`   | If true accordion is disabled                                | `boolean`             | `false`    |
-| `expanded`   | `expanded`   | If true accordion is expanded                                | `boolean`             | `false`    |
-| `rotate`     | `rotate`     | If true accordion expand icon is rotate 180deg when expanded | `boolean`             | `false`    |
-| `size`       | `size`       | The size of accordion                                        | `"medium" \| "small"` | `'medium'` |
+| Property      | Attribute      | Description                                                                                                                                                     | Type                  | Default    |
+| ------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ---------- |
+| `appearance`  | `appearance`   | The appearance style of accordion                                                                                                                               | `"filled" \| "ghost"` | `'filled'` |
+| `disabled`    | `disabled`     | If true accordion is disabled                                                                                                                                   | `boolean`             | `false`    |
+| `expanded`    | `expanded`     | If true accordion is expanded                                                                                                                                   | `boolean`             | `false`    |
+| `noAnimation` | `no-animation` | Animation is set through JS when the browser does not support CSS calc-size() If true, the accordion animation, will be disabled. No animation will be applied. | `boolean`             | `false`    |
+| `rotate`      | `rotate`       | If true accordion expand icon is rotate 180deg when expanded                                                                                                    | `boolean`             | `false`    |
+| `size`        | `size`         | The size of accordion                                                                                                                                           | `"medium" \| "small"` | `'medium'` |
 
 
 ## Events
