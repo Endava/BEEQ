@@ -57,7 +57,7 @@ export class BqDrawer {
   @Prop({ reflect: true, mutable: true }) placement: TDrawerPlacement = 'right';
 
   /** Defines the position of the drawer */
-  @Prop({ reflect: true }) position: TDrawerPosition = 'end';
+  @Prop({ reflect: true, mutable: true }) position: TDrawerPosition = 'end';
 
   // Prop lifecycle events
   // =======================
@@ -65,11 +65,11 @@ export class BqDrawer {
   @Watch('open')
   async handleOpenChange() {
     if (!this.open) {
-      await this.handleHide();
+      await this.handleAfterHide();
       return;
     }
 
-    await this.handleShow();
+    await this.handleAfterShow();
   }
 
   /**
@@ -132,10 +132,6 @@ export class BqDrawer {
     this.handlePlacementChange();
   }
 
-  componentDidLoad() {
-    this.handleOpenChange();
-  }
-
   // Listeners
   // ==============
 
@@ -170,12 +166,18 @@ export class BqDrawer {
   /** Method to be called to hide the drawer component */
   @Method()
   async hide(): Promise<void> {
+    const ev = this.bqClose.emit();
+    if (ev.defaultPrevented) return;
+
     this.open = false;
   }
 
   /** Method to be called to show the drawer component */
   @Method()
   async show(): Promise<void> {
+    const ev = this.bqOpen.emit();
+    if (ev.defaultPrevented) return;
+
     this.open = true;
   }
 
@@ -188,21 +190,15 @@ export class BqDrawer {
     this.hasFooter = hasSlotContent(this.footerElem, 'footer');
   };
 
-  private handleHide = async () => {
+  private handleAfterHide = async () => {
     if (!this.drawerElem) return;
-
-    const ev = this.bqClose.emit();
-    if (ev.defaultPrevented) return;
 
     await leave(this.drawerElem);
     this.handleTransitionEnd();
   };
 
-  private handleShow = async () => {
+  private handleAfterShow = async () => {
     if (!this.drawerElem) return;
-
-    const ev = this.bqOpen.emit();
-    if (ev.defaultPrevented) return;
 
     this.el.classList.add(this.OPEN_CSS_CLASS);
     await enter(this.drawerElem);
@@ -219,14 +215,15 @@ export class BqDrawer {
     this.el.classList.remove(this.OPEN_CSS_CLASS);
   };
 
-  private getMoveTranslate = (): string => {
-    const positionMap = {
-      start: '-translate-x-full',
-      end: 'translate-x-full',
-    };
+  private get isPositionStart() {
+    // !⚠️ `placement` is deprecated and will be removed in the future
+    return this.position === 'start' || this.placement === 'left';
+  }
 
-    return positionMap[this.position] || '';
-  };
+  private get isPositionEnd() {
+    // !⚠️ `placement` is deprecated and will be removed in the future
+    return this.position === 'end' || this.placement === 'right';
+  }
 
   // render() function
   // Always the last one in the class.
@@ -251,17 +248,12 @@ export class BqDrawer {
         {/* DRAWER PANEL */}
         <div
           class={{
-            // !⚠️ `placement` is deprecated and will be removed in the future
-            [`bq-drawer ${this.position || this.placement}`]: true,
-            'end-0': this.position === 'end' || this.placement === 'right',
-            'start-0': this.position === 'start' || this.placement === 'left',
+            [`bq-drawer transition-all duration-300 ease-in-out ${this.position || this.placement}`]: true,
+            '-start-[--bq-drawer--width]': this.isPositionStart,
+            '-end-[--bq-drawer--width]': this.isPositionEnd,
+            'start-0': this.open && this.isPositionStart,
+            'end-0': this.open && this.isPositionEnd,
           }}
-          data-transition-enter="transition-transform ease-in duration-300"
-          data-transition-enter-start={this.getMoveTranslate()}
-          data-transition-enter-end="opacity-100"
-          data-transition-leave="transition-transform ease-in duration-300"
-          data-transition-leave-start="opacity-100"
-          data-transition-leave-end={this.getMoveTranslate()}
           ref={(div) => (this.drawerElem = div)}
           aria-hidden={!this.open ? 'true' : 'false'}
           aria-labelledby="bq-drawer__title"
