@@ -219,15 +219,6 @@ export class BqDrawer {
     this.el.classList.remove(this.OPEN_CSS_CLASS);
   };
 
-  private getMoveTranslate = (): string => {
-    const positionMap = {
-      start: '-translate-x-full',
-      end: 'translate-x-full',
-    };
-
-    return positionMap[this.position] || '';
-  };
-
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -252,16 +243,12 @@ export class BqDrawer {
         <div
           class={{
             // !⚠️ `placement` is deprecated and will be removed in the future
-            [`bq-drawer ${this.position || this.placement}`]: true,
-            'end-0': this.position === 'end' || this.placement === 'right',
-            'start-0': this.position === 'start' || this.placement === 'left',
+            [`bq-drawer transition-all duration-300 ease-in-out ${this.position || this.placement}`]: true,
+            '-start-[--bq-drawer--width]': this.position === 'start' || this.placement === 'left',
+            '-end-[--bq-drawer--width]': this.position === 'end' || this.placement === 'right',
+            'start-0': this.open && (this.position === 'start' || this.placement === 'left'),
+            'end-0': this.open && (this.position === 'end' || this.placement === 'right'),
           }}
-          data-transition-enter="transition-transform ease-in duration-300"
-          data-transition-enter-start={this.getMoveTranslate()}
-          data-transition-enter-end="opacity-100"
-          data-transition-leave="transition-transform ease-in duration-300"
-          data-transition-leave-start="opacity-100"
-          data-transition-leave-end={this.getMoveTranslate()}
           ref={(div) => (this.drawerElem = div)}
           aria-hidden={!this.open ? 'true' : 'false'}
           aria-labelledby="bq-drawer__title"
