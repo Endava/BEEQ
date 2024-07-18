@@ -219,6 +219,16 @@ export class BqDrawer {
     this.el.classList.remove(this.OPEN_CSS_CLASS);
   };
 
+  private get isPositionStart() {
+    // !⚠️ `placement` is deprecated and will be removed in the future
+    return this.position === 'start' || this.placement === 'left';
+  }
+
+  private get isPositionEnd() {
+    // !⚠️ `placement` is deprecated and will be removed in the future
+    return this.position === 'end' || this.placement === 'right';
+  }
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -242,12 +252,11 @@ export class BqDrawer {
         {/* DRAWER PANEL */}
         <div
           class={{
-            // !⚠️ `placement` is deprecated and will be removed in the future
             [`bq-drawer transition-all duration-300 ease-in-out ${this.position || this.placement}`]: true,
-            '-start-[--bq-drawer--width]': this.position === 'start' || this.placement === 'left',
-            '-end-[--bq-drawer--width]': this.position === 'end' || this.placement === 'right',
-            'start-0': this.open && (this.position === 'start' || this.placement === 'left'),
-            'end-0': this.open && (this.position === 'end' || this.placement === 'right'),
+            '-start-[--bq-drawer--width]': this.isPositionStart,
+            '-end-[--bq-drawer--width]': this.isPositionEnd,
+            'start-0': this.open && this.isPositionStart,
+            'end-0': this.open && this.isPositionEnd,
           }}
           ref={(div) => (this.drawerElem = div)}
           aria-hidden={!this.open ? 'true' : 'false'}
