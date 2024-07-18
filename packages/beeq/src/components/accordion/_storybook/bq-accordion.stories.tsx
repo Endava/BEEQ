@@ -23,6 +23,7 @@ const meta: Meta = {
     // Event handlers
     bqBlur: { action: 'bqBlur' },
     bqFocus: { action: 'bqFocus' },
+    bqClick: { action: 'bqClick' },
     bqOpen: { action: 'bqOpen' },
     bqAfterOpen: { action: 'bqAfterOpen' },
     bqClose: { action: 'bqClose' },
@@ -55,6 +56,7 @@ const Template = (args: Args) => html`
     size=${args.size}
     @bqBlur=${args.bqBlur}
     @bqFocus=${args.bqFocus}
+    @bqClick=${args.bqClick}
     @bqOpen=${args.bqOpen}
     @bqAfterOpen=${args.bqAfterOpen}
     @bqClose=${args.bqClose}
