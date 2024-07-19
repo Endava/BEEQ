@@ -13,5 +13,5 @@
  * See lines 42 and 58 for details.
  */
 .bq-icon__svg {
-  @apply fill-current;
+  @apply scale-x-[--bq-icon--direction] fill-current;
 }
