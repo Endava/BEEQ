@@ -4,7 +4,32 @@
  */
 
 :root {
+  /* ---------------------------------- Icon ---------------------------------- */
+
+  /**
+   * Used to set the icon SVG direction, this is useful for RTL languages.
+   * 1 is default (RTL), -1 is flipped (LTR).
+   *
+   * @prop --bq-icon--direction: Icon direction
+   */
+  --bq-icon--direction: 1;
+
   /* -------------------------------- Side menu ------------------------------- */
+
+  /**
+   * Used to set the side menu width when expanded.
+   *
+   * @prop --bq-side-menu--width: Side menu width
+   * @prop --bq-side-menu--width-collapse: Side menu width when collapsed
+   */
   --bq-side-menu--width: 256px;
   --bq-side-menu--width-collapse: 72px;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                Right to Left                               */
+/* -------------------------------------------------------------------------- */
+
+[dir='rtl'] {
+  --bq-icon--direction: -1;
 }
