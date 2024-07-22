@@ -146,8 +146,8 @@ const Template = (args: Args) => {
     ? html`
         <style>
           bq-date-picker {
-            margin-top: -10rem;
-            width: 75vw;
+            margin-block-start: -10rem;
+            inline-size: 75vw;
           }
         </style>
       `
