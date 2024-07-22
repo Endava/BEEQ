@@ -166,7 +166,7 @@ export class BqSideMenu {
         </nav>
         {/* Footer */}
         <div
-          class="bq-side-menu--footer sticky bottom-0 mt-auto flex justify-center bg-[var(--bq-side-menu--bg-color)] p-xs"
+          class="bq-side-menu--footer sticky flex justify-center bg-[var(--bq-side-menu--bg-color)] p-xs inset-be-0 m-bs-[auto]"
           part="footer"
         >
           <slot name="footer"></slot>

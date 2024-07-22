@@ -13,14 +13,14 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-side-menu {
-  @apply fixed left-0 top-0 flex h-dynamic-vh w-[--bq-side-menu--width] grow flex-col bg-[--bq-side-menu--bg-color];
+  @apply fixed flex h-dynamic-vh grow flex-col bg-[--bq-side-menu--bg-color] is-[--bq-side-menu--width] inset-bs-0 inset-is-0;
   @apply border-0 border-e-s border-solid border-[color:--bq-side-menu--border-color];
   @apply transition-[background-color,width] duration-150;
   @include hide-scrollbar;
 }
 
 .bq-side-menu.is-collapsed {
-  @apply w-[--bq-side-menu--width-collapse];
+  @apply is-[--bq-side-menu--width-collapse];
 }
 
 /* -------------------------------------------------------------------------- */
