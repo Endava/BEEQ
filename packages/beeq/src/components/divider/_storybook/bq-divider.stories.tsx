@@ -1,5 +1,7 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
-import { html } from 'lit-html';
+import { classMap } from 'lit/directives/class-map.js';
+import { html, nothing } from 'lit-html';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import mdx from './bq-divider.mdx';
 import { DIVIDER_ORIENTATION, DIVIDER_STROKE_LINECAP, DIVIDER_TITLE_ALIGNMENT } from '../bq-divider.types';
@@ -43,25 +45,24 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
-  <style>
-    .container {
-      /* width: 40%; */
-      height: ${args.orientation === 'vertical' ? html`70vh` : 'auto'};
-    }
-  </style>
-  <div class="container">
+  <div
+    class=${classMap({
+      'bs-[70dvh]': args.orientation === 'vertical',
+      'is-[70dvw]': args.orientation === 'horizontal',
+    })}
+  >
     <bq-divider
-      orientation=${args.orientation}
+      orientation=${ifDefined(args.orientation)}
       ?dashed=${args.dashed}
-      stroke-color=${args['stroke-color']}
-      stroke-dash-width=${args['stroke-dash-width']}
-      stroke-dash-gap=${args['stroke-dash-gap']}
-      stroke-thickness=${args['stroke-thickness']}
-      stroke-basis=${args['stroke-basis']}
-      stroke-linecap=${args['stroke-linecap']}
-      title-alignment=${args['title-alignment']}
+      stroke-color=${ifDefined(args['stroke-color'])}
+      stroke-dash-width=${ifDefined(args['stroke-dash-width'])}
+      stroke-dash-gap=${ifDefined(args['stroke-dash-gap'])}
+      stroke-thickness=${ifDefined(args['stroke-thickness'])}
+      stroke-basis=${ifDefined(args['stroke-basis'])}
+      stroke-linecap=${ifDefined(args['stroke-linecap'])}
+      title-alignment=${ifDefined(args['title-alignment'])}
     >
-      ${args['title-text'] ? html`<p style="margin: 0; white-space: nowrap;">${args['title-text']}</p>` : null}
+      ${args['title-text'] ? html`<p class="m-0 text-nowrap p-0">${args['title-text']}</p>` : nothing}
     </bq-divider>
   </div>
 `;

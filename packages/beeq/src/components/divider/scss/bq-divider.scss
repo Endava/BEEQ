@@ -4,12 +4,20 @@
 
 @import './bq-divider.variables';
 
+:host {
+  @apply flex is-full;
+}
+
+:host([orientation='vertical']) {
+  @apply bs-full;
+}
+
 .bq-divider {
   @apply flex items-center gap-[var(--bq-divider--title-marginX)];
 }
 
 .bq-divider--stroke {
-  @apply h-[var(--bq-divider--stroke-thickness)] w-full flex-grow stroke-[color:var(--bq-divider--stroke-color)];
+  @apply flex-grow stroke-[color:var(--bq-divider--stroke-color)] bs-[var(--bq-divider--stroke-thickness)] is-full;
 
   &.end {
     @apply rotate-180;
@@ -22,9 +30,9 @@
 }
 
 .bq-divider--vertical {
-  @apply h-full flex-col items-center gap-[var(--bq-divider--title-marginX)];
+  @apply flex-col items-center gap-[var(--bq-divider--title-marginX)] is-full;
 
   .bq-divider--stroke {
-    @apply h-full w-[var(--bq-divider--stroke-thickness)];
+    @apply bs-full is-[var(--bq-divider--stroke-thickness)];
   }
 }

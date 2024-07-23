@@ -11,15 +11,6 @@ import {
 } from './bq-divider.types';
 import { getColorCSSVariable, getTextContent, hasSlotContent, validatePropValue } from '../../shared/utils';
 
-const strokeDrawPositions = {
-  HORIZONTAL: (drawOffset: number) => {
-    return { x1: drawOffset, x2: '100%', y1: drawOffset, y2: drawOffset };
-  },
-  VERTICAL: (drawOffset: number) => {
-    return { x1: drawOffset, x2: drawOffset, y1: drawOffset, y2: '100%' };
-  },
-};
-
 /**
  * @part base - The component's internal wrapper.
  * @part dash-start - The component's internal svg wrapper for the start line of the divider's stroke
@@ -99,7 +90,7 @@ export class BqDivider {
   // Ordered by their natural call order
   // =====================================
 
-  componentWillLoad() {
+  connectedCallback() {
     this.checkPropValues();
   }
 
@@ -122,33 +113,33 @@ export class BqDivider {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private getStrokeDrawPositions = () => {
-    switch (this.orientation) {
-      case DIVIDER_ORIENTATION_ENUM.HORIZONTAL:
-        return strokeDrawPositions.HORIZONTAL(this.strokeThickness / 2);
-      case DIVIDER_ORIENTATION_ENUM.VERTICAL:
-        return strokeDrawPositions.VERTICAL(this.strokeThickness / 2);
-      default:
-        break;
-    }
-  };
-
-  private getStrokeDasharray = () => {
-    return `${this.strokeDashWidth}, ${this.strokeDashGap}`;
-  };
-
-  private getStrokeAttributes = () => {
-    return {
-      ...this.getStrokeDrawPositions(),
-      ...(this.dashed && { 'stroke-dasharray': this.getStrokeDasharray() }),
-      'stroke-linecap': this.strokeLinecap,
-      'stroke-width': this.strokeThickness,
-    };
-  };
-
   private handleSlotChange = () => {
     this.hasTitle = hasSlotContent(this.titleElem) || !!getTextContent(this.titleElem.querySelector('slot'));
   };
+
+  private get strokeAttributes() {
+    return {
+      ...this.strokeDrawPositions,
+      ...(this.dashed && { 'stroke-dasharray': this.strokeDasharray }),
+      'stroke-linecap': this.strokeLinecap,
+      'stroke-width': this.strokeThickness,
+    };
+  }
+
+  private get strokeDrawPositions() {
+    const drawOffset = this.strokeThickness / 2;
+    const strokeDrawPositions = {
+      [DIVIDER_ORIENTATION_ENUM.HORIZONTAL]: { x1: drawOffset, x2: '100%', y1: drawOffset, y2: drawOffset },
+      [DIVIDER_ORIENTATION_ENUM.VERTICAL]: { x1: drawOffset, x2: drawOffset, y1: drawOffset, y2: '100%' },
+    };
+    const orientationMap = new Map(Object.entries(strokeDrawPositions));
+
+    return orientationMap.get(this.orientation);
+  }
+
+  private get strokeDasharray() {
+    return `${this.strokeDashWidth}, ${this.strokeDashGap}`;
+  }
 
   // render() function
   // Always the last one in the class.
@@ -160,8 +151,6 @@ export class BqDivider {
       ...(this.strokeThickness && { '--bq-divider--stroke-thickness': `${this.strokeThickness}px` }),
       ...(this.strokeBasis && { '--bq-divider--stroke-basis': `${this.strokeBasis}px` }),
     };
-
-    const strokeAttributes = this.getStrokeAttributes();
 
     return (
       <Host style={styles}>
@@ -178,11 +167,11 @@ export class BqDivider {
           aria-orientation={this.orientation}
         >
           <svg class="bq-divider--stroke start" part="dash-start">
-            <line {...strokeAttributes} part="dash-start-line" />
+            <line {...this.strokeAttributes} part="dash-start-line" />
           </svg>
           <slot onSlotchange={this.handleSlotChange} />
           <svg class={{ 'bq-divider--stroke end': true, '!hidden': !this.hasTitle }} part="dash-end">
-            <line {...strokeAttributes} part="dash-end-line" />
+            <line {...this.strokeAttributes} part="dash-end-line" />
           </svg>
         </div>
       </Host>
