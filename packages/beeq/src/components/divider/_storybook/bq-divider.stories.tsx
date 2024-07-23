@@ -1,4 +1,5 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
+import { classMap } from 'lit/directives/class-map.js';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
@@ -44,7 +45,12 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
-  <div class="is-[70dvw]">
+  <div
+    class=${classMap({
+      'bs-[70dvh]': args.orientation === 'vertical',
+      'is-[70dvw]': args.orientation === 'horizontal',
+    })}
+  >
     <bq-divider
       orientation=${ifDefined(args.orientation)}
       ?dashed=${args.dashed}

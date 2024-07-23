@@ -4,6 +4,14 @@
 
 @import './bq-divider.variables';
 
+:host {
+  @apply flex is-full;
+}
+
+:host([orientation='vertical']) {
+  @apply bs-full;
+}
+
 .bq-divider {
   @apply flex items-center gap-[var(--bq-divider--title-marginX)];
 }
