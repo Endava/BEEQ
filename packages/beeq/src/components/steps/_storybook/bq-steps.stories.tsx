@@ -21,7 +21,7 @@ const meta: Meta = {
     children: { control: 'text', table: { disable: true } },
   },
   args: {
-    'divider-color': 'ui--secondary',
+    'divider-color': 'stroke--primary',
     size: 'medium',
   },
 };

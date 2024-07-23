@@ -33,7 +33,7 @@ export class BqSteps {
   // ========================
 
   /** The color of the line that connects the steps. It should be a valid declarative color token. */
-  @Prop({ reflect: true }) dividerColor: string = 'ui--secondary';
+  @Prop({ reflect: true }) dividerColor: string = 'stroke--primary';
 
   /** The size of the steps */
   @Prop({ reflect: true }) size: TStepsSize = 'medium';
@@ -115,7 +115,8 @@ export class BqSteps {
         <slot />
         <bq-divider
           class={`absolute -z-10 inset-ie-0 inset-is-0 p-i-s ${dividerPaddingTop}`}
-          stroke-color={this.dividerColor}
+          strokeColor={this.dividerColor}
+          strokeThickness={2}
           exportparts="base:divider-base,dash-start:divider-dash-start,dash-end:divider-dash-end"
         />
       </div>

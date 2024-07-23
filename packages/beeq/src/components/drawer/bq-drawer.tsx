@@ -296,7 +296,7 @@ export class BqDrawer {
             part="footer"
           >
             <slot name="footer-divider">
-              <bq-divider class="mb-m block" stroke-color="ui--secondary" dashed />
+              <bq-divider class="mb-m block" dashed />
             </slot>
             <slot name="footer" onSlotchange={this.handleFooterSlotChange} />
           </footer>
