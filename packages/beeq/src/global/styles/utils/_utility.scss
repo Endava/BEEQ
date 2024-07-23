@@ -1,6 +1,6 @@
 /*
  * This file contains utility classes that cannot be included within a component.
- * These classes must be used in the light DOM and not directly targeted by any rules in the stylesheet.
+ * These classes must be used in the light DOM and not directly targeted by any rules in the stylesheets.
  * In order to reduce the likelihood of conflicts, all classes within the file must begin with ".bq-".
  */
 
@@ -15,15 +15,15 @@
  */
 
 .bq-body--side-menu {
-  @apply relative transition-[padding-left] duration-300;
+  @apply relative transition-[padding-inline-start] duration-300;
 }
 
 .bq-body--side-menu__collapse {
-  @apply pl-[var(--bq-side-menu--width-collapse)] #{!important};
+  @apply ps-[var(--bq-side-menu--width-collapse)] #{!important};
 }
 
 .bq-body--side-menu__expand {
-  @apply pl-[var(--bq-side-menu--width)] #{!important};
+  @apply ps-[var(--bq-side-menu--width)] #{!important};
 }
 
 /**
