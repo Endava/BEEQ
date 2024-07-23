@@ -31,12 +31,12 @@ const meta: Meta = {
   args: {
     orientation: 'horizontal',
     dashed: false,
-    'stroke-color': 'stroke--secondary',
+    'stroke-color': 'stroke--primary',
     'title-alignment': 'middle',
     'stroke-dash-width': 12,
     'stroke-dash-gap': 7,
-    'stroke-thickness': 2,
-    'stroke-basis': 20,
+    'stroke-thickness': 1,
+    'stroke-basis': 0,
     'stroke-linecap': 'butt',
   },
 };
@@ -101,18 +101,48 @@ export const NoTitle: Story = {
 };
 
 export const TextStart: Story = {
-  render: Template,
+  render: (args) => html`
+    <div
+      class="flex-col"
+      class=${classMap({
+        'flex gap-xxl': true,
+        'flex-col': args.orientation === 'horizontal',
+        'flex-row': args.orientation === 'vertical',
+      })}
+    >
+      <!-- Default -->
+      ${Template(args)}
+      <!-- with 'stoke-basis'  -->
+      ${Template({ ...args, 'title-text': 'Text start with stroke basis', 'stroke-basis': 100 })}
+      ${Template({ ...args, 'title-text': 'Text start with stroke basis', 'stroke-basis': 300 })}
+    </div>
+  `,
   args: {
     'title-alignment': 'start',
-    'title-text': 'Text Start',
+    'title-text': 'Text start',
   },
 };
 
 export const TextEnd: Story = {
-  render: Template,
+  render: (args) => html`
+    <div
+      class="flex-col"
+      class=${classMap({
+        'flex gap-xxl': true,
+        'flex-col': args.orientation === 'horizontal',
+        'flex-row': args.orientation === 'vertical',
+      })}
+    >
+      <!-- Default -->
+      ${Template(args)}
+      <!-- with 'stoke-basis'  -->
+      ${Template({ ...args, 'title-text': 'Text end with stroke basis', 'stroke-basis': 100 })}
+      ${Template({ ...args, 'title-text': 'Text end with stroke basis', 'stroke-basis': 300 })}
+    </div>
+  `,
   args: {
     'title-alignment': 'end',
-    'title-text': 'Text End',
+    'title-text': 'Text end',
   },
 };
 
