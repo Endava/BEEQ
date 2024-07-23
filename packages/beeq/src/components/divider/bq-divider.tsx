@@ -9,7 +9,7 @@ import {
   TDividerStrokeLinecap,
   TDividerTitleAlignment,
 } from './bq-divider.types';
-import { getColorCSSVariable, getTextContent, hasSlotContent, validatePropValue } from '../../shared/utils';
+import { getColorCSSVariable, getTextContent, hasSlotContent, isNil, validatePropValue } from '../../shared/utils';
 
 /**
  * @part base - The component's internal wrapper.
@@ -50,7 +50,7 @@ export class BqDivider {
   @Prop({ reflect: true }) orientation: TDividerOrientation = 'horizontal';
 
   /** Set the stroke color of the divider. The value should be a valid value of the palette color */
-  @Prop({ reflect: true }) strokeColor?: string = 'stroke--secondary';
+  @Prop({ reflect: true }) strokeColor?: string = 'stroke--primary';
 
   /** Set the alignment of the title on the main axis of the divider (horizontal / vertical) */
   @Prop({ reflect: true }) titleAlignment?: TDividerTitleAlignment = 'middle';
@@ -62,10 +62,10 @@ export class BqDivider {
   @Prop({ reflect: true }) strokeDashGap?: number = 7;
 
   /** Set the thickness of the divider's stroke. Value expressed in px*/
-  @Prop({ reflect: true }) strokeThickness?: number = 2;
+  @Prop({ reflect: true }) strokeThickness?: number = 1;
 
   /** Set the min width of the divider's stroke when text is not centered. Value expressed in px */
-  @Prop({ reflect: true }) strokeBasis?: number = 20;
+  @Prop({ reflect: true }) strokeBasis?: number = 0;
 
   /** Set the line of the divider's stroke. This is applicable when the stroke is dashed */
   @Prop({ reflect: true }) strokeLinecap?: TDividerStrokeLinecap = 'butt';
@@ -149,7 +149,7 @@ export class BqDivider {
     const styles = {
       ...(this.strokeColor && { '--bq-divider--stroke-color': getColorCSSVariable(this.strokeColor) }),
       ...(this.strokeThickness && { '--bq-divider--stroke-thickness': `${this.strokeThickness}px` }),
-      ...(this.strokeBasis && { '--bq-divider--stroke-basis': `${this.strokeBasis}px` }),
+      ...(!isNil(this.strokeBasis) && { '--bq-divider--stroke-basis': `${this.strokeBasis}px` }),
     };
 
     return (
@@ -166,11 +166,23 @@ export class BqDivider {
           role="separator"
           aria-orientation={this.orientation}
         >
-          <svg class="bq-divider--stroke start" part="dash-start">
+          <svg
+            class={{
+              'bq-divider--stroke start': true,
+              '!hidden': this.strokeBasis === 0 && this.titleAlignment === 'start',
+            }}
+            part="dash-start"
+          >
             <line {...this.strokeAttributes} part="dash-start-line" />
           </svg>
           <slot onSlotchange={this.handleSlotChange} />
-          <svg class={{ 'bq-divider--stroke end': true, '!hidden': !this.hasTitle }} part="dash-end">
+          <svg
+            class={{
+              'bq-divider--stroke end': true,
+              '!hidden': !this.hasTitle || (this.strokeBasis === 0 && this.titleAlignment === 'end'),
+            }}
+            part="dash-end"
+          >
             <line {...this.strokeAttributes} part="dash-end-line" />
           </svg>
         </div>
