@@ -43,7 +43,7 @@
 
 .bq-step-item__prefix.numeric {
   @apply flex items-center justify-center rounded-full;
-  @apply h-[--bq-step-item--prefix-num-size] w-[--bq-step-item--prefix-num-size] bg-[--bq-step-item--prefix-num-bg-color];
+  @apply bg-[--bq-step-item--prefix-num-bg-color] bs-[--bq-step-item--prefix-num-size] is-[--bq-step-item--prefix-num-size];
   @apply text-m font-semibold leading-regular;
 
   &.small {

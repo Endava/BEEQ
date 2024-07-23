@@ -3525,6 +3525,9 @@ declare namespace LocalJSX {
         "type"?: TStatusType;
     }
     interface BqStepItem {
+        /**
+          * Callback handler emitted when the step item is clicked
+         */
         "onBqClick"?: (event: BqStepItemCustomEvent<{ target: HTMLBqStepItemElement; value: string }>) => void;
         /**
           * It defines prefix size

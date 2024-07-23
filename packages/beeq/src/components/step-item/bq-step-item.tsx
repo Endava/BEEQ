@@ -53,18 +53,20 @@ export class BqStepItem {
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
+
+  /** Callback handler emitted when the step item is clicked */
   @Event() bqClick: EventEmitter<{ target: HTMLBqStepItemElement; value: string }>;
 
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
 
-  componentWillLoad() {
+  connectedCallback() {
     this.checkPropValues();
   }
 
   componentDidLoad() {
-    this.checkPropValues();
+    this.handleIconPrefix();
   }
 
   // Listeners
@@ -119,7 +121,7 @@ export class BqStepItem {
           {/* TITLE */}
           <div
             class={{
-              'bq-step-item__content--title pr-xs3 text-m leading-regular text-text-primary': true,
+              'bq-step-item__content--title pe-xs3 text-m leading-regular text-text-primary': true,
               'pointer-events-none': this.isDisabled,
               'text-text-brand': this.isCurrent,
             }}
