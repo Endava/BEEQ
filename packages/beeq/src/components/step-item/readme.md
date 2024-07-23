@@ -16,9 +16,9 @@
 
 ## Events
 
-| Event     | Description | Type                                                             |
-| --------- | ----------- | ---------------------------------------------------------------- |
-| `bqClick` |             | `CustomEvent<{ target: HTMLBqStepItemElement; value: string; }>` |
+| Event     | Description                                            | Type                                                             |
+| --------- | ------------------------------------------------------ | ---------------------------------------------------------------- |
+| `bqClick` | Callback handler emitted when the step item is clicked | `CustomEvent<{ target: HTMLBqStepItemElement; value: string; }>` |
 
 
 ## Shadow Parts

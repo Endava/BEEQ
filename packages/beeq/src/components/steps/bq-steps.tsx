@@ -104,7 +104,7 @@ export class BqSteps {
   // ===================================
 
   render() {
-    const dividerPaddingTop = this.size === 'small' ? 'pt-s' : 'pt-m';
+    const dividerPaddingTop = this.size === 'small' ? 'p-bs-s' : 'p-bs-m';
 
     return (
       <div
@@ -114,9 +114,9 @@ export class BqSteps {
       >
         <slot />
         <bq-divider
-          class={`absolute left-0 right-0 -z-10 px-s ${dividerPaddingTop}`}
+          class={`absolute -z-10 inset-ie-0 inset-is-0 p-i-s ${dividerPaddingTop}`}
           stroke-color={this.dividerColor}
-          exportparts="base: divider-base,dash-start:divider-dash-start,dash-end:divider-dash-end"
+          exportparts="base:divider-base,dash-start:divider-dash-start,dash-end:divider-dash-end"
         />
       </div>
     );
