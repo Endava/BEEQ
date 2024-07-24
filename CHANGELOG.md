@@ -6,6 +6,116 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+## [1.6.0](https://github.com/Endava/BEEQ/compare/v1.5.1...v1.6.0) (2024-07-24)
+
+
+### Features ⚡️
+
+* **Drawer:** deprecate `placement` and add `position` property ([#1110](https://github.com/Endava/BEEQ/issues/1110)) ([33b2214](https://github.com/Endava/BEEQ/commit/33b22141653d0829bf6083eba8d0859743dd3d61))
+* **Icon:** add `--bq-icon--direction` and flip SVG automatically for `dir="rtl"` ([#1156](https://github.com/Endava/BEEQ/issues/1156)) ([d7dd1b1](https://github.com/Endava/BEEQ/commit/d7dd1b1f7127d219b132bf0989671d9c08d8cea3))
+* **Page Title:** add new `bq-page-title` component ([#1085](https://github.com/Endava/BEEQ/issues/1085)) ([cd9d767](https://github.com/Endava/BEEQ/commit/cd9d767b4418910c1d2238958a573e7aeda66516))
+* **Select:** add support for custom tag display on multiple variant ([#1093](https://github.com/Endava/BEEQ/issues/1093)) ([989fc45](https://github.com/Endava/BEEQ/commit/989fc451cb680ff67bf4c1bf6e7b199890ddaeb8))
+
+
+### Bug Fixes 🐞
+
+* **Date Picker:** clear incomplete range selection ([#1074](https://github.com/Endava/BEEQ/issues/1074)) ([2b2b329](https://github.com/Endava/BEEQ/commit/2b2b3290e8b378d1e124563ee66a8fe8b97c736e))
+* **Divider:** default values to be in sync with Figma design ([#1160](https://github.com/Endava/BEEQ/issues/1160)) ([380963d](https://github.com/Endava/BEEQ/commit/380963d0ba495cc11d114405af700ec4abc01628))
+* **Drawer:** open/close animation to be in sync with the content direction ([#1155](https://github.com/Endava/BEEQ/issues/1155)) ([83c374c](https://github.com/Endava/BEEQ/commit/83c374ccf39b439b10be645d988a4aea7b1a64fa))
+
+
+### Documentation 📚
+
+* **Storybook:** add `Direction` toolbar action for content RTL/LTR ([#1153](https://github.com/Endava/BEEQ/issues/1153)) ([5db214c](https://github.com/Endava/BEEQ/commit/5db214cffbc6e1e70d892ca88cc0fbf789852568))
+
+
+### Chore ⚙️
+
+* **CI:** add `NX_VERBOSE_LOGGING` to NX Cloud start ([#1119](https://github.com/Endava/BEEQ/issues/1119)) ([ad46ed0](https://github.com/Endava/BEEQ/commit/ad46ed07d062bdea175f2541e24ac34237db9420))
+* **deps:** update angular ([#1124](https://github.com/Endava/BEEQ/issues/1124)) ([8108b13](https://github.com/Endava/BEEQ/commit/8108b13241435e11a3796777f04d8658f579f12c))
+* **deps:** update angular ([#1142](https://github.com/Endava/BEEQ/issues/1142)) ([2c84f0f](https://github.com/Endava/BEEQ/commit/2c84f0f13a5638df5ea424903f1be48842654ec5))
+* **deps:** update angular to v18.0.3 ([#1097](https://github.com/Endava/BEEQ/issues/1097)) ([caf3171](https://github.com/Endava/BEEQ/commit/caf3171d23b4994795e29b201b2e924030fe86a7))
+* **deps:** update angular to v18.0.4 ([#1131](https://github.com/Endava/BEEQ/issues/1131)) ([c1a4c6b](https://github.com/Endava/BEEQ/commit/c1a4c6b9a39f821afa44c7628ad6f339064ed8a0))
+* **deps:** update angular to v18.1.0 ([#1149](https://github.com/Endava/BEEQ/issues/1149)) ([ab5516a](https://github.com/Endava/BEEQ/commit/ab5516afe73fd8d4723efc9a3d792e6922008a20))
+* **deps:** update angular to v18.1.1 ([#1166](https://github.com/Endava/BEEQ/issues/1166)) ([68bd936](https://github.com/Endava/BEEQ/commit/68bd9369d3a12b0269cf003fa741f1e2ea93a596))
+* **deps:** update angular to v18.1.2 ([#1168](https://github.com/Endava/BEEQ/issues/1168)) ([f6edc45](https://github.com/Endava/BEEQ/commit/f6edc4527097c52b495ddccf35cbf2a96c5be8b0))
+* **deps:** update dependency @stencil/core to v4.19.1 ([#1139](https://github.com/Endava/BEEQ/issues/1139)) ([69a5e5d](https://github.com/Endava/BEEQ/commit/69a5e5df64586691d1103561f10d76a25d45d3b1))
+* **deps:** update dependency @stencil/core to v4.19.2 ([#1147](https://github.com/Endava/BEEQ/issues/1147)) ([81a9765](https://github.com/Endava/BEEQ/commit/81a9765d99b873d18c700b08fbfe201f8f06c713))
+* **deps:** update dependency @types/node to v20.14.9 ([#1138](https://github.com/Endava/BEEQ/issues/1138)) ([7f19bab](https://github.com/Endava/BEEQ/commit/7f19bab1d970fc6d8027ecb9f4ea75d340ea070e))
+* **deps:** update dependency puppeteer to v22.12.1 ([#1143](https://github.com/Endava/BEEQ/issues/1143)) ([ec1905a](https://github.com/Endava/BEEQ/commit/ec1905a411b9403caf24615f731eaddac2f761c7))
+* **deps:** update dependency typescript to v5.5.3 ([#1162](https://github.com/Endava/BEEQ/issues/1162)) ([0c870aa](https://github.com/Endava/BEEQ/commit/0c870aa22f6f2f7f79b79d94b0ddc7f86e5ad2ad))
+* **deps:** update dependency typescript to v5.5.4 ([#1169](https://github.com/Endava/BEEQ/issues/1169)) ([796fa3b](https://github.com/Endava/BEEQ/commit/796fa3bb9ece292663645f06c9a719f1f323f763))
+* **deps:** update dependency vue to v3.4.34 ([#1170](https://github.com/Endava/BEEQ/issues/1170)) ([1b3cf90](https://github.com/Endava/BEEQ/commit/1b3cf9027bb6a8f871252f134307f84ffe1b1abb))
+* **deps:** update node.js to v20.16.0 ([#1171](https://github.com/Endava/BEEQ/issues/1171)) ([3e810f8](https://github.com/Endava/BEEQ/commit/3e810f80944277af63a6a4c1b29e74a64ff47bb6))
+* **deps:** update npm dependencies ([#1108](https://github.com/Endava/BEEQ/issues/1108)) ([a6f864f](https://github.com/Endava/BEEQ/commit/a6f864f094087d72815315812063fcc560ddaeeb))
+* **deps:** update npm dependencies ([#1134](https://github.com/Endava/BEEQ/issues/1134)) ([51fa574](https://github.com/Endava/BEEQ/commit/51fa574c5bfce77bda600b038a0069ddc7da33a2))
+* **deps:** update npm dependencies ([#1144](https://github.com/Endava/BEEQ/issues/1144)) ([e31a68a](https://github.com/Endava/BEEQ/commit/e31a68ac215a593126412c892db88a48dab4aace))
+* **deps:** update npm dependencies ([#1148](https://github.com/Endava/BEEQ/issues/1148)) ([cb59382](https://github.com/Endava/BEEQ/commit/cb59382a0175132bbd7597fde229b30d7f3d889f))
+* **deps:** update nx to v19.2.2 ([#1098](https://github.com/Endava/BEEQ/issues/1098)) ([1d837d5](https://github.com/Endava/BEEQ/commit/1d837d5cbae8bc931c7e4a28a01d947af9d2ee56))
+* **deps:** update nx to v19.2.3 ([#1104](https://github.com/Endava/BEEQ/issues/1104)) ([a608c29](https://github.com/Endava/BEEQ/commit/a608c29adf398e1e85a0187d7224cb0469e8a760))
+* **deps:** update nx to v19.3.0 ([#1120](https://github.com/Endava/BEEQ/issues/1120)) ([33c3e9b](https://github.com/Endava/BEEQ/commit/33c3e9b592297939f295032528680b78e193645d))
+* **deps:** update nx to v19.3.1 ([#1129](https://github.com/Endava/BEEQ/issues/1129)) ([91f2c61](https://github.com/Endava/BEEQ/commit/91f2c614978528256cccf94edc89abf8e25d39c2))
+* **deps:** update nx to v19.3.2 ([#1140](https://github.com/Endava/BEEQ/issues/1140)) ([4a79ae1](https://github.com/Endava/BEEQ/commit/4a79ae152b1cbc7626ce0a60817df96f5623bfd2))
+* **deps:** update nx to v19.4.3 ([#1151](https://github.com/Endava/BEEQ/issues/1151)) ([2b06269](https://github.com/Endava/BEEQ/commit/2b06269abae54045865cd8e9be136efa6a25420f))
+* **deps:** update nx to v19.5.0 ([#1154](https://github.com/Endava/BEEQ/issues/1154)) ([949de8a](https://github.com/Endava/BEEQ/commit/949de8a01677ca536d17e7bf3c60a9787f7816dd))
+* **deps:** update nx to v19.5.1 ([#1165](https://github.com/Endava/BEEQ/issues/1165)) ([2ef0cbb](https://github.com/Endava/BEEQ/commit/2ef0cbb5ae242ddaa0b15d448b67c8d82d7c909c))
+* **deps:** update nx to v19.5.2 ([#1167](https://github.com/Endava/BEEQ/issues/1167)) ([5e0dbc3](https://github.com/Endava/BEEQ/commit/5e0dbc3070d397dc7d9e29290934bdb46be8169c))
+* **deps:** update puppeteer to v22.12.0 ([#1127](https://github.com/Endava/BEEQ/issues/1127)) ([c78f906](https://github.com/Endava/BEEQ/commit/c78f906bc00a10a2de5d9268fb6243fc08e8ebcb))
+* **deps:** update storybook to v8.1.10 ([#1123](https://github.com/Endava/BEEQ/issues/1123)) ([eed4bf9](https://github.com/Endava/BEEQ/commit/eed4bf9305551e926243b681132e845a28b947e5))
+* **deps:** update storybook to v8.1.11 ([#1141](https://github.com/Endava/BEEQ/issues/1141)) ([2ef06ac](https://github.com/Endava/BEEQ/commit/2ef06ac6eae5892e384c2e417a68c9c8fb36cb4e))
+* **deps:** update storybook to v8.1.6 ([#1096](https://github.com/Endava/BEEQ/issues/1096)) ([ce93533](https://github.com/Endava/BEEQ/commit/ce935331afefcc578e63c070de583e5758c67948))
+* **deps:** update storybook to v8.1.7 ([#1109](https://github.com/Endava/BEEQ/issues/1109)) ([448e27e](https://github.com/Endava/BEEQ/commit/448e27e96ad1b95b71ac7a678ec4ecd6dac66e2e))
+* **deps:** update storybook to v8.2.2 ([#1150](https://github.com/Endava/BEEQ/issues/1150)) ([10c2415](https://github.com/Endava/BEEQ/commit/10c241564943f4c66e63fbd0301f9d37367a59f7))
+* **deps:** update storybook to v8.2.3 ([#1152](https://github.com/Endava/BEEQ/issues/1152)) ([309351c](https://github.com/Endava/BEEQ/commit/309351c5eab5a1e56145f89b9c7449a4a53df979))
+* **deps:** update storybook to v8.2.5 ([#1163](https://github.com/Endava/BEEQ/issues/1163)) ([cd566f4](https://github.com/Endava/BEEQ/commit/cd566f477aff8804bf8d181ab9e77f9f8ddbeea0))
+* **deps:** update storybook to v8.2.6 ([#1164](https://github.com/Endava/BEEQ/issues/1164)) ([36d2be5](https://github.com/Endava/BEEQ/commit/36d2be5bd041c15b42dcadd9bf60c00db30a466f))
+* **deps:** update tailwindcss to v3.4.4 ([#1107](https://github.com/Endava/BEEQ/issues/1107)) ([4949f13](https://github.com/Endava/BEEQ/commit/4949f13f95dc7b014db0c088073b49ec3ba67e3a))
+* **deps:** update typescript-eslint dependencies to v7.14.1 ([#1136](https://github.com/Endava/BEEQ/issues/1136)) ([ef57eae](https://github.com/Endava/BEEQ/commit/ef57eae551863823491701ce3331db35fd4940bd))
+* **Generator:** update theme spacing syntax in generator SCSS variables ([#1089](https://github.com/Endava/BEEQ/issues/1089)) ([2d46b9a](https://github.com/Endava/BEEQ/commit/2d46b9add5aabaaf583aaa971ca40cd20d7aa12c))
+* **Icon:** remove the useless `icon-set` file listing all the icons ([#1125](https://github.com/Endava/BEEQ/issues/1125)) ([2162668](https://github.com/Endava/BEEQ/commit/2162668e103df4e170d3ad089352dccc2734ead2))
+* **Project:** enforce branch name policy ([d7a04eb](https://github.com/Endava/BEEQ/commit/d7a04eb60771b8f4a65d7bd7a0d9296ed0bb4598))
+* **renovate:** improve automated dependency updates ([#1161](https://github.com/Endava/BEEQ/issues/1161)) ([0cab63f](https://github.com/Endava/BEEQ/commit/0cab63f17f33f1a72e49ddf32a1fece849d86fee))
+* **Tailwind CSS:** add support for missing CSS logical properties ([#1095](https://github.com/Endava/BEEQ/issues/1095)) ([66e4f03](https://github.com/Endava/BEEQ/commit/66e4f0324b89b04889a0f7d602deaeeaef83154b))
+
+
+### Performance ⌛️
+
+* **Divider:** improve code readability and performance ([#1159](https://github.com/Endava/BEEQ/issues/1159)) ([5ab2149](https://github.com/Endava/BEEQ/commit/5ab2149712b2d4f2f583d578527ad106ffafb04c))
+
+
+### Refactor 🛠️
+
+* **Accordion:** use CSS logical properties instead of physical values ([#1130](https://github.com/Endava/BEEQ/issues/1130)) ([ebc2ad6](https://github.com/Endava/BEEQ/commit/ebc2ad6f64e7b003219cb299817ec3694eb89d52))
+* **Alert:** use CSS logical properties instead of physical values ([#1094](https://github.com/Endava/BEEQ/issues/1094)) ([7839159](https://github.com/Endava/BEEQ/commit/783915960fa3eeed66cc39b94de3b3cc38d6d8ca))
+* **Avatar:** use CSS logical properties instead of physical values ([#1099](https://github.com/Endava/BEEQ/issues/1099)) ([318f759](https://github.com/Endava/BEEQ/commit/318f759641fb55e1ecad91ad3d3ff5cfb997e980))
+* **Badge:** use CSS logical properties instead of physical values ([#1100](https://github.com/Endava/BEEQ/issues/1100)) ([796639a](https://github.com/Endava/BEEQ/commit/796639ab6f121bbc2743b23a5656dada8becb948))
+* **Breadcrumb:** use CSS logical properties instead of physical values ([#1101](https://github.com/Endava/BEEQ/issues/1101)) ([e4b1638](https://github.com/Endava/BEEQ/commit/e4b1638b55b78600fcf9e62222ee73c1db1b8198))
+* **Button:** use CSS logical properties instead of physical values ([#1102](https://github.com/Endava/BEEQ/issues/1102)) ([c0e2eb8](https://github.com/Endava/BEEQ/commit/c0e2eb8e9ae43d54cb8e3693db2046e72dc0ae03))
+* **Card:** use CSS logical properties instead of physical values ([#1103](https://github.com/Endava/BEEQ/issues/1103)) ([84a311a](https://github.com/Endava/BEEQ/commit/84a311a6f4a4f09af8e3e08729eda5272c9cab9b))
+* **Checkbox:** use CSS logical properties instead of physical values ([#1105](https://github.com/Endava/BEEQ/issues/1105)) ([8f6cb3f](https://github.com/Endava/BEEQ/commit/8f6cb3f06ba9e3c8e770c5b970a80ac92e0d3538))
+* **Date Picker:** use CSS logical properties instead of physical values ([#1106](https://github.com/Endava/BEEQ/issues/1106)) ([0c032a0](https://github.com/Endava/BEEQ/commit/0c032a0c7768501b7fb1e1d46b70ed77ded11282))
+* **Dialog:** use CSS logical properties instead of physical values ([#1146](https://github.com/Endava/BEEQ/issues/1146)) ([afc1653](https://github.com/Endava/BEEQ/commit/afc16536aba0f00f76ebf7ea0165a2fe92845127))
+* **Drawer:** use CSS logical properties instead of physical values ([#1090](https://github.com/Endava/BEEQ/issues/1090)) ([e37aeb1](https://github.com/Endava/BEEQ/commit/e37aeb15d5e0fe6a0d22dd10e2303053861796d2))
+* **Dropdown:** use CSS logical properties instead of physical values ([#1132](https://github.com/Endava/BEEQ/issues/1132)) ([6143884](https://github.com/Endava/BEEQ/commit/61438847ba335b63253b9233ac420d1d64d84e68))
+* **Empty State:** use CSS logical properties instead of physical values ([#1112](https://github.com/Endava/BEEQ/issues/1112)) ([9494ecb](https://github.com/Endava/BEEQ/commit/9494ecb8e7d82d560e1e8836dc9de79b3ad4a1f4))
+* **Icon:** use CSS logical properties instead of physical values ([#1133](https://github.com/Endava/BEEQ/issues/1133)) ([c9630c7](https://github.com/Endava/BEEQ/commit/c9630c75caa23af07e1d75f616299516446a91f3))
+* **Input:** use CSS logical properties instead of physical values ([#1118](https://github.com/Endava/BEEQ/issues/1118)) ([71d61bb](https://github.com/Endava/BEEQ/commit/71d61bbd22ae399a72c43c973ca5382908379d30))
+* **Notification:** use CSS logical properties instead of physical values ([#1111](https://github.com/Endava/BEEQ/issues/1111)) ([38e9117](https://github.com/Endava/BEEQ/commit/38e91171e6a5a03ec59f65f7c18baec42f296ca7))
+* **Option:** use CSS logical properties instead of physical values ([#1128](https://github.com/Endava/BEEQ/issues/1128)) ([9f1f8e2](https://github.com/Endava/BEEQ/commit/9f1f8e2551f984cd00f11cb13546afd4b9c0fd8e))
+* **Page Title:** use CSS logical properties instead of physical values ([#1137](https://github.com/Endava/BEEQ/issues/1137)) ([8069d47](https://github.com/Endava/BEEQ/commit/8069d47cb7fe160f6a480d8db8eab9f77225655d))
+* **Progress:** use CSS logical properties instead of physical values ([#1122](https://github.com/Endava/BEEQ/issues/1122)) ([7595618](https://github.com/Endava/BEEQ/commit/7595618b9739909bd2b2c9374896eb431e64d96d))
+* **Radio Group:** use CSS logical properties instead of physical values ([#1126](https://github.com/Endava/BEEQ/issues/1126)) ([ae3d4d2](https://github.com/Endava/BEEQ/commit/ae3d4d2bef9d368aa6ba2baa77232f4d689f4b26))
+* **Side menu:** use CSS logical properties instead of physical values ([#1157](https://github.com/Endava/BEEQ/issues/1157)) ([398d92f](https://github.com/Endava/BEEQ/commit/398d92f243bbfb1f7d4584f62b2c0b7bcde69f9a))
+* **Slider:** use CSS logical properties instead of physical values ([#1135](https://github.com/Endava/BEEQ/issues/1135)) ([024c629](https://github.com/Endava/BEEQ/commit/024c629ed5dd8bcaf2e785280576c1dde729b91a))
+* **Spinner:** use CSS logical properties instead of physical values ([#1117](https://github.com/Endava/BEEQ/issues/1117)) ([1e8878f](https://github.com/Endava/BEEQ/commit/1e8878f8e30790530418ac9d28936ca119e34518))
+* **Status:** use CSS logical properties instead of physical values ([#1116](https://github.com/Endava/BEEQ/issues/1116)) ([dba3858](https://github.com/Endava/BEEQ/commit/dba385870520c6de555944a59c09ceb650863664))
+* **Steps:** use CSS logical properties instead of physical values ([#1158](https://github.com/Endava/BEEQ/issues/1158)) ([a7852b1](https://github.com/Endava/BEEQ/commit/a7852b12145cb6480efdfe5042d31bf13c29e5f6))
+* **Switch:** use CSS logical properties instead of physical values ([#1145](https://github.com/Endava/BEEQ/issues/1145)) ([222c8f5](https://github.com/Endava/BEEQ/commit/222c8f5bd8f27a436db7ed72970c31b0d2d8dcd9))
+* **Tag:** use CSS logical properties instead of physical values ([#1113](https://github.com/Endava/BEEQ/issues/1113)) ([508b442](https://github.com/Endava/BEEQ/commit/508b44230e51d6dac8583046ac4a93dd1e1bdbbf))
+* **Textarea:** use CSS logical properties instead of physical values ([#1121](https://github.com/Endava/BEEQ/issues/1121)) ([8635efd](https://github.com/Endava/BEEQ/commit/8635efd2e177e92516a6229c60ca543606b170ab))
+* **Toast:** use CSS logical properties instead of physical values ([#1114](https://github.com/Endava/BEEQ/issues/1114)) ([b303d2e](https://github.com/Endava/BEEQ/commit/b303d2ee4d95cdf243013a36db73f541f7cdcfdb))
+* **Tooltip:** use CSS logical properties instead of physical values ([#1115](https://github.com/Endava/BEEQ/issues/1115)) ([6531596](https://github.com/Endava/BEEQ/commit/6531596dc14342bcf8ca9e30e3d8e82368724227))
+
 ## [1.5.1](https://github.com/Endava/BEEQ/compare/v1.5.0...v1.5.1) (2024-06-04)
 
 
