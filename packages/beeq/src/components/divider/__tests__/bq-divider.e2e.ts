@@ -80,6 +80,6 @@ describe('bq-divider', () => {
 
     const style = await computedStyle(page, 'bq-divider >>> [part="base"]', ['height']);
 
-    expect(style).toEqual({ height: '2px' });
+    expect(style).toEqual({ height: '1px' });
   });
 });
