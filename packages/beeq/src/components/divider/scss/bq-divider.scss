@@ -5,11 +5,11 @@
 @import './bq-divider.variables';
 
 :host {
-  @apply flex is-full;
+  @apply block is-full;
 }
 
 :host([orientation='vertical']) {
-  @apply bs-full;
+  @apply flex bs-full;
 }
 
 .bq-divider {
