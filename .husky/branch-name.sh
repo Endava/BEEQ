@@ -16,7 +16,7 @@ where prefix is one of:
 ${YELLOW}Please, rename your branch to a valid name and try again.${CLEARCOLOR}\\n"
 
 branch_name_check="^(($allowed_branch_names)\/[a-zA-Z0-9\-]+)$"
-if [[ ! $local_branch_name =~ $branch_name_check ]]; then
+if [[ $local_branch_name != "main" && ! $local_branch_name =~ $branch_name_check ]]; then
     echo "$message"
     exit 1
 fi
