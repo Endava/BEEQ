@@ -94,6 +94,7 @@
           {
             "ignoredDependencies": [
               "@stencil/angular-output-target",
+              "@stencil/core",
               "@stencil/react-output-target",
               "@stencil/vue-output-target",
               "@stencil/sass",
