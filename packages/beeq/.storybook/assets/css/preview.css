@@ -41,9 +41,24 @@
   font-size: var(--bq-font-size--xxl2);
 }
 
-.sbdocs-content h2 {
-  font-size: var(--bq-font-size--xxl);
+.sbdocs-content h2,
+.sbdocs-content h2 a {
   border-bottom: none;
+  font-size: var(--bq-font-size--xxl);
+}
+
+.sbdocs-content h2 a {
+  font-weight: var(--bq-font-weight--bold)
+}
+
+.sbdocs-content h2,
+.sbdocs-content h3 {
+  display: flex;
+  align-items: center;
+}
+
+.sbdocs-content h3 {
+  font-weight: var(--bq-font-weight--semibold);
 }
 
 .docblock-typeset {

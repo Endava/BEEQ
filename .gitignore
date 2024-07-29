@@ -17,6 +17,7 @@ packages/beeq/.storybook/assets/css/stories.css
 packages/beeq/vite.config.*.timestamp-*
 packages/beeq/custom-elements.json
 packages/beeq/src/components/icon/svg/**
+packages/beeq/src/_storybook/CHANGELOG.md
 packages/beeq-angular/**/directives
 packages/beeq-react/src/react-component-lib
 packages/beeq-react/src/components.ts
