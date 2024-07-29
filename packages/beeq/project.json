@@ -50,7 +50,7 @@
     },
     "storybook-start": {
       "executor": "@nx/storybook:storybook",
-      "dependsOn": [{ "target": "prepare" }],
+      "dependsOn": [{ "target": "prepare-storybook" }],
       "options": {
         "loglevel": "silly",
         "configDir": "packages/beeq/.storybook",
@@ -92,7 +92,6 @@
     },
     "storybook-build": {
       "executor": "@nx/storybook:build",
-      "dependsOn": [{ "target": "prepare" }],
       "outputs": ["{options.outputDir}", "{options.config.configDir}"],
       "options": {
         "outputDir": "dist/storybook/beeq",
@@ -172,7 +171,7 @@
         "configFile": "packages/beeq/.stylelintrc.json"
       }
     },
-    "prepare": {
+    "prepare-storybook": {
       "executor": "nx:run-commands",
       "options": {
         "command": "cp CHANGELOG.md {projectRoot}/src/_storybook"

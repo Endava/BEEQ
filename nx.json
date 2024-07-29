@@ -42,8 +42,12 @@
     "lint": {
       "cache": true
     },
+    "prepare-storybook": {
+      "cache": true
+    },
     "storybook-build": {
       "dependsOn": [
+        { "target": "prepare-storybook", "projects": "beeq" },
         { "target": "build", "projects": "beeq" },
         { "target": "storybook-build-css", "projects": "beeq" }
       ],
