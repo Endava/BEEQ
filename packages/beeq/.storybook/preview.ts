@@ -2,6 +2,8 @@ import './assets/css/stories.css';
 
 import type { DecoratorFunction } from '@storybook/csf';
 import type { Preview, WebComponentsRenderer } from '@storybook/web-components';
+import { createElement } from 'react';
+import { DocsContainer } from '@storybook/blocks';
 import { setCustomElementsManifest } from '@storybook/web-components';
 
 import customElements from '../custom-elements.json';
@@ -36,7 +38,6 @@ const withThemeProvider: DecoratorFunction<WebComponentsRenderer, { [x: string]:
 
 const preview: Preview = {
   decorators: [contentDirectionProvider, withThemeProvider],
-
   globalTypes: {
     layout: {
       name: 'Content direction',
@@ -78,13 +79,26 @@ const preview: Preview = {
       },
     },
   },
-
   parameters: {
     controls: { expanded: true, hideNoControlsWarning: true },
     docs: {
       story: {
         inline: true,
         height: '250px',
+      },
+      container: (props: any) => {
+        const {
+          globals: { theme, mode, layout },
+        } = props.context.store.globals;
+
+        const html = document.querySelector('html');
+        html!.setAttribute('dir', layout.toLowerCase() ?? 'ltr');
+
+        const body = document.querySelector('body');
+        body!.setAttribute('bq-theme', theme.toLowerCase() ?? 'beeq');
+        body!.setAttribute('bq-mode', mode.toLowerCase() ?? 'light');
+
+        return createElement(DocsContainer, props);
       },
     },
     html: {
@@ -102,8 +116,12 @@ const preview: Preview = {
       },
       root: '#root-inner',
     },
+    options: {
+      storySort: {
+        order: ['Welcome', 'Foundation', 'Components'],
+      },
+    },
   },
-
   tags: ['autodocs'],
 };
 

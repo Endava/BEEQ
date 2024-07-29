@@ -10,7 +10,7 @@ export default {
       },
     },
   },
-  stories: ['../src/**/*.stories.@(ts|tsx)'],
+  stories: ['../src/_storybook/**/*.mdx', '../src/**/*.stories.@(ts|tsx)'],
   addons: [
     '@storybook/addon-essentials',
     '@storybook/addon-a11y',

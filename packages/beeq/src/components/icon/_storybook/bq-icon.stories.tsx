@@ -149,7 +149,7 @@ export const ExploreIcons: Story = {
           (icon) => html`
             <div class="group flex flex-col items-stretch text-center outline-0" role="button" tabindex="0">
               <div
-                class="border flex w-full justify-center rounded-m border-solid border-stroke-primary transition-[shadow,transform] m-be-s p-b-m p-i-0 group-hover:scale-125 group-hover:shadow-l"
+                class="border flex w-full justify-center rounded-m border-s border-solid border-stroke-primary transition-[shadow,transform] m-be-s p-b-m p-i-0 group-hover:scale-125 group-hover:shadow-l"
               >
                 ${Template({ ...args, name: icon })}
               </div>
