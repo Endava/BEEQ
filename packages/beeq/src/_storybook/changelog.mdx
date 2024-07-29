@@ -1,0 +1,10 @@
+import { Markdown, Meta } from '@storybook/blocks';
+import Changelog from './CHANGELOG.md?raw';
+
+<Meta title="What's new" />
+
+<div className="bq-doc__wrapper">
+  <div className="bq-doc__container" >
+    <Markdown>{Changelog}</Markdown>
+  </div>
+</div>

@@ -118,7 +118,7 @@ const preview: Preview = {
     },
     options: {
       storySort: {
-        order: ['Welcome', 'Foundation', 'Components'],
+        order: ['Welcome', "What's new", 'Foundation', 'Components'],
       },
     },
   },
