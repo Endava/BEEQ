@@ -6,6 +6,19 @@ The format is based on [Conventional Commits 1.0.0](https://www.conventionalcomm
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 
 
+## [1.6.1](https://github.com/Endava/BEEQ/compare/v1.6.0...v1.6.1) (2024-07-29)
+
+
+### Bug Fixes 🐞
+
+* **deps:** missing `@stencil/core` dependency for framework targets ([#1172](https://github.com/Endava/BEEQ/issues/1172)) ([4aaa073](https://github.com/Endava/BEEQ/commit/4aaa07314caf3f346c10030587222554ec54625c))
+
+
+### Documentation 📚
+
+* **Storybook:** add `Welcome` and `Foundation` sections as detached MDX stories ([#1173](https://github.com/Endava/BEEQ/issues/1173)) ([a165fd0](https://github.com/Endava/BEEQ/commit/a165fd08420a5efcf5c251bfe90a392dde3b65e7))
+* **Storybook:** add Changelog page ([#1174](https://github.com/Endava/BEEQ/issues/1174)) ([f06be3f](https://github.com/Endava/BEEQ/commit/f06be3f68d09a555ec3bc1ccebf45f769a61d183))
+
 ## [1.6.0](https://github.com/Endava/BEEQ/compare/v1.5.1...v1.6.0) (2024-07-24)
 
 
