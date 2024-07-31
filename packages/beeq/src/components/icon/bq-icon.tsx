@@ -111,7 +111,6 @@ export class BqIcon {
   private getIconDetails = (): { iconName: string; iconPath: string } => {
     const REGULAR = 'regular';
     const SVG_EXTENSION = '.svg';
-    const LOCAL_SVG_PATH = './svg/';
 
     // Check if the icon is weighted. An icon is considered weighted if its weight is not 'regular' and ENV_SVG_PATH is not set.
     // Eg: if the weight is 'bold' and ENV_SVG_PATH is not set, isWeightedIcon will be true.
@@ -127,7 +126,7 @@ export class BqIcon {
 
     // Construct the path to the icon file.
     // Eg: if iconName is 'my-icon-bold.svg', iconPath will be './svg/my-icon-bold.svg'.
-    const iconPath = `${LOCAL_SVG_PATH}${iconName}`;
+    const iconPath = `${iconName}`;
 
     // Return the icon name and path.
     return { iconName, iconPath };
