@@ -45,7 +45,7 @@ const Template = (args: Args) => {
       @bqFocus=${args.bqFocus}
       @bqBlur=${args.bqBlur}
     >
-      <bq-tab tab-id="1" exportparts="base">Tab</bq-tab>
+      <bq-tab tab-id="1">Tab</bq-tab>
       <bq-tab tab-id="2">Tab</bq-tab>
       <bq-tab tab-id="3">Long Tab name</bq-tab>
       <bq-tab tab-id="4" disabled>Tab</bq-tab>
