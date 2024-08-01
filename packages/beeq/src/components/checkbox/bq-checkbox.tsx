@@ -183,7 +183,7 @@ export class BqCheckbox {
         >
           <input
             type="checkbox"
-            class="bq-checkbox__input pointer-events-none absolute opacity-0 m-b-0 m-i-0 p-b-0 p-i-0"
+            class="bq-checkbox__input pointer-events-none absolute opacity-0 p-b-0 p-i-0 m-b-0 m-i-0"
             name={!isNil(this.name) ? this.name : undefined}
             checked={this.checked}
             disabled={this.disabled}
