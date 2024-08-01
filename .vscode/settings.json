@@ -30,6 +30,14 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "css.validate": false,
+  "commentAnchors.tags.anchors": {
+    "!TO BE REMOVED": {
+      "iconColor": "red",
+      "highlightColor": "#F44336",
+      "scope": "workspace"
+    },
+  },
+  "commentAnchors.workspace.excludeFiles": "**/{node_modules,.cache,.nx,.stencil,.git,.idea,target,out,build,dist,bin,tmp,obj,vendor}/**/*",
   "editor.formatOnSave": true,
   "files.associations": {
     "*.json5": "json5",

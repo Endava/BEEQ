@@ -16,7 +16,7 @@ Icons are simplified images that graphically explain the meaning of an object on
 | `name` _(required)_ | `name`    | Icon name to load. Please check all available icons [here](https://phosphoricons.com/)  | `string`                                                          | `undefined` |
 | `size`              | `size`    | Set the size of the SVG                                                                 | `number \| string`                                                | `24`        |
 | `src`               | `src`     | Set the source of the SVG. If the source is set, the name property will be ignored      | `string`                                                          | `undefined` |
-| `weight`            | `weight`  | It set the icon weight/style                                                            | `"bold" \| "duotone" \| "fill" \| "light" \| "regular" \| "thin"` | `'regular'` |
+| `weight`            | `weight`  | <span style="color:red">**[DEPRECATED]**</span> It set the icon weight/style<br/><br/>  | `"bold" \| "duotone" \| "fill" \| "light" \| "regular" \| "thin"` | `undefined` |
 
 
 ## Events

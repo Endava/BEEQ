@@ -635,7 +635,7 @@ export namespace Components {
          */
         "src"?: string;
         /**
-          * It set the icon weight/style
+          * @deprecated It set the icon weight/style
          */
         "weight"?: TIconWeight;
     }
@@ -2939,7 +2939,7 @@ declare namespace LocalJSX {
          */
         "src"?: string;
         /**
-          * It set the icon weight/style
+          * @deprecated It set the icon weight/style
          */
         "weight"?: TIconWeight;
     }

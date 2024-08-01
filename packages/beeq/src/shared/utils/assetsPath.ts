@@ -31,7 +31,7 @@ export const getBasePath = (subpath = '') => {
     const script = configScript || fallbackScript;
     if (script) {
       const path = configScript ? script.getAttribute('data-beeq') : getScriptPath(script);
-      setBasePath(path);
+      setBasePath(`${path}/svg`);
     }
   }
 

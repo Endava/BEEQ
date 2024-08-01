@@ -73,7 +73,7 @@ export class BqDrawer {
   }
 
   /**
-   * !⚠️ Delete this `@Watch()` once the deprecated `placement` property is removed
+   * !TO BE REMOVED: Delete this `@Watch()` once the deprecated `placement` property is removed
    * We need to maintain retro-compatibility with the deprecated `placement` property
    */
   @Watch('placement')
@@ -97,7 +97,7 @@ export class BqDrawer {
     validatePropValue(DRAWER_POSITIONS, 'start', this.el, 'position');
     /**
      * Sync 'placement' property
-     * !⚠️ Delete the code below once the deprecated `placement` property is removed
+     * !TO BE REMOVED: Delete the code below once the deprecated `placement` property is removed
      */
     const syncPlacementMap = {
       end: 'right',
@@ -128,7 +128,7 @@ export class BqDrawer {
 
   componentWillLoad() {
     this.handlePositionChange();
-    // !⚠️ Delete this once the deprecated `placement` property is removed
+    // !TO BE REMOVED: Delete this once the deprecated `placement` property is removed
     this.handlePlacementChange();
   }
 
@@ -216,12 +216,12 @@ export class BqDrawer {
   };
 
   private get isPositionStart() {
-    // !⚠️ `placement` is deprecated and will be removed in the future
+    // !TO BE REMOVED: `placement` is deprecated and will be removed in the future
     return this.position === 'start' || this.placement === 'left';
   }
 
   private get isPositionEnd() {
-    // !⚠️ `placement` is deprecated and will be removed in the future
+    // !TO BE REMOVED: `placement` is deprecated and will be removed in the future
     return this.position === 'end' || this.placement === 'right';
   }
 

@@ -29,7 +29,7 @@ const meta: Meta = {
     label: undefined,
     size: 24,
     src: undefined,
-    weight: 'regular',
+    weight: undefined,
   },
 };
 export default meta;
