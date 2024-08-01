@@ -39,7 +39,7 @@ export class BqIcon {
   @Prop({ reflect: true }) color?: string;
 
   /** Icon name to load. Please check all available icons [here](https://phosphoricons.com/) */
-  @Prop({ reflect: true, mutable: true }) name!: string;
+  @Prop({ reflect: true }) name!: string;
 
   /** Set the size of the SVG */
   @Prop({ reflect: true }) size?: string | number = 24;
