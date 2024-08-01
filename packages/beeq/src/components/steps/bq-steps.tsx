@@ -114,7 +114,7 @@ export class BqSteps {
       >
         <slot />
         <bq-divider
-          class={`absolute -z-10 inset-ie-0 inset-is-0 p-i-s ${dividerPaddingTop}`}
+          class={`absolute -z-10 p-i-s inset-ie-0 inset-is-0 ${dividerPaddingTop}`}
           strokeColor={this.dividerColor}
           strokeThickness={2}
           exportparts="base:divider-base,dash-start:divider-dash-start,dash-end:divider-dash-end"
