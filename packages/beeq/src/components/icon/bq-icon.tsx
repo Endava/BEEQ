@@ -61,7 +61,7 @@ export class BqIcon {
   }
 
   /**
-   * !⚠️ Delete this `@Watch()` once the deprecated `weight` property is removed
+   * !TO BE REMOVED: Delete this `@Watch()` once the deprecated `weight` property is removed
    * We need to maintain retro-compatibility until the next major release
    */
   @Watch('weight')
@@ -99,7 +99,7 @@ export class BqIcon {
   connectedCallback() {
     this.handlePropsChange();
 
-    // !⚠️ Delete this once the deprecated `weight` property is removed
+    // !TO BE REMOVED: Delete this once the deprecated `weight` property is removed
     if (!isNil(this.weight)) this.handleWeightChange();
   }
 
