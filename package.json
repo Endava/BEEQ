@@ -136,7 +136,7 @@
     "nx-stylelint": "17.1.5",
     "patch-package": "8.0.0",
     "plop": "4.0.1",
-    "postcss": "8.4.39",
+    "postcss": "8.4.40",
     "postcss-import": "16.1.0",
     "postcss-preset-env": "9.6.0",
     "postcss-url": "10.1.3",
