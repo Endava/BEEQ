@@ -1,4 +1,5 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
+import { classMap } from 'lit/directives/class-map.js';
 import { html } from 'lit-html';
 
 import mdx from './bq-tab-group.mdx';
@@ -35,25 +36,35 @@ type Story = StoryObj;
 
 const Template = (args: Args) => {
   return html`
-    <bq-tab-group
-      value="5"
-      .size=${args.size}
-      .orientation=${args.orientation}
-      .position=${args.position}
-      ?disable-divider=${args['disable-divider']}
-      @bqChange=${args.bqChange}
-      @bqFocus=${args.bqFocus}
-      @bqBlur=${args.bqBlur}
+    <main
+      class=${classMap({
+        flex: args.orientation === 'vertical',
+        'flex-row-reverse': args.position === 'end',
+      })}
     >
-      <bq-tab tab-id="1">Tab</bq-tab>
-      <bq-tab tab-id="2">Tab</bq-tab>
-      <bq-tab tab-id="3">Long Tab name</bq-tab>
-      <bq-tab tab-id="4" disabled>Tab</bq-tab>
-      <bq-tab tab-id="5" active>Tab</bq-tab>
-      <bq-tab tab-id="6">Tab</bq-tab>
-      <bq-tab tab-id="7">Tab</bq-tab>
-      <bq-tab tab-id="8">Tab</bq-tab>
-    </bq-tab-group>
+      <bq-tab-group
+        value="5"
+        .size=${args.size}
+        .orientation=${args.orientation}
+        .position=${args.position}
+        ?disable-divider=${args['disable-divider']}
+        @bqChange=${args.bqChange}
+        @bqFocus=${args.bqFocus}
+        @bqBlur=${args.bqBlur}
+      >
+        <bq-tab tab-id="1">Tab</bq-tab>
+        <bq-tab tab-id="2">Tab</bq-tab>
+        <bq-tab tab-id="3">Long Tab name</bq-tab>
+        <bq-tab tab-id="4" disabled>Tab</bq-tab>
+        <bq-tab tab-id="5" active>Tab</bq-tab>
+        <bq-tab tab-id="6">Tab</bq-tab>
+        <bq-tab tab-id="7">Tab</bq-tab>
+        <bq-tab tab-id="8">Tab</bq-tab>
+      </bq-tab-group>
+      <div class="border h-80 w-full flex-1 border-dashed border-stroke-primary bg-[--bq-ui--alt]">
+        <h3 class="m-l">Tab content</h3>
+      </div>
+    </main>
   `;
 };
 
@@ -63,25 +74,35 @@ export const Default: Story = {
 
 const IconTemplate = (args: Args) => {
   return html`
-    <bq-tab-group
-      value="5"
-      .size=${args.size}
-      .orientation=${args.orientation}
-      .position=${args.position}
-      ?disable-divider=${args['disable-divider']}
-      @bqChange=${args.bqChange}
-      @bqFocus=${args.bqFocus}
-      @bqBlur=${args.bqBlur}
+    <main
+      class=${classMap({
+        flex: args.orientation === 'vertical',
+        'flex-row-reverse': args.position === 'end',
+      })}
     >
-      <bq-tab tab-id="1"><bq-icon name="pulse" slot="icon"></bq-icon>Tab</bq-tab>
-      <bq-tab tab-id="2"><bq-icon name="bell" slot="icon"></bq-icon>Tab</bq-tab>
-      <bq-tab tab-id="3"><bq-icon name="airplane-in-flight" slot="icon"></bq-icon>Long Tab name</bq-tab>
-      <bq-tab tab-id="4" disabled><bq-icon name="airplane-tilt" slot="icon"></bq-icon>Tab</bq-tab>
-      <bq-tab tab-id="5" active><bq-icon name="align-right-simple" slot="icon"></bq-icon>Tab</bq-tab>
-      <bq-tab tab-id="6"><bq-icon name="anchor" slot="icon"></bq-icon>Tab</bq-tab>
-      <bq-tab tab-id="7"><bq-icon name="anchor-simple" slot="icon"></bq-icon>Tab</bq-tab>
-      <bq-tab tab-id="8"><bq-icon name="android-logo" slot="icon"></bq-icon>Tab</bq-tab>
-    </bq-tab-group>
+      <bq-tab-group
+        value="5"
+        .size=${args.size}
+        .orientation=${args.orientation}
+        .position=${args.position}
+        ?disable-divider=${args['disable-divider']}
+        @bqChange=${args.bqChange}
+        @bqFocus=${args.bqFocus}
+        @bqBlur=${args.bqBlur}
+      >
+        <bq-tab tab-id="1"><bq-icon name="pulse" slot="icon"></bq-icon>Tab</bq-tab>
+        <bq-tab tab-id="2"><bq-icon name="bell" slot="icon"></bq-icon>Tab</bq-tab>
+        <bq-tab tab-id="3"><bq-icon name="airplane-in-flight" slot="icon"></bq-icon>Long Tab name</bq-tab>
+        <bq-tab tab-id="4" disabled><bq-icon name="airplane-tilt" slot="icon"></bq-icon>Tab</bq-tab>
+        <bq-tab tab-id="5" active><bq-icon name="align-right-simple" slot="icon"></bq-icon>Tab</bq-tab>
+        <bq-tab tab-id="6"><bq-icon name="anchor" slot="icon"></bq-icon>Tab</bq-tab>
+        <bq-tab tab-id="7"><bq-icon name="anchor-simple" slot="icon"></bq-icon>Tab</bq-tab>
+        <bq-tab tab-id="8"><bq-icon name="android-logo" slot="icon"></bq-icon>Tab</bq-tab>
+      </bq-tab-group>
+      <div class="border h-80 w-full flex-1 border-dashed border-stroke-primary bg-[--bq-ui--alt]">
+        <h3 class="m-l">Tab content</h3>
+      </div>
+    </main>
   `;
 };
 
