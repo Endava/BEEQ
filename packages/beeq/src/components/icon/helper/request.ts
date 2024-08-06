@@ -2,38 +2,41 @@
 /*                             Icon request helper                            */
 /* -------------------------------------------------------------------------- */
 
-import { isString } from '../../../shared/utils';
+import { isNil, isString } from '../../../shared/utils';
 
 const requests = new Map<string, Promise<unknown>>();
 
 const fetchSvg = async (url: string, sanitize: boolean): Promise<unknown> => {
-  let req: Promise<unknown>;
+  if (typeof fetch === 'undefined' || typeof document === 'undefined') return;
 
-  if (typeof fetch !== 'undefined' && typeof document !== 'undefined') {
-    const rsp = await fetch(url);
-    if (rsp.ok) {
-      return rsp.text().then((svgContent) => {
-        if (svgContent && sanitize !== false) svgContent = validateContent(svgContent);
-        iconContent.set(url, svgContent || '');
-      });
-    }
+  if (requests.has(url)) return requests.get(url);
+
+  const response = await fetch(url);
+
+  if (!response.ok) {
     iconContent.set(url, '');
-    // cache for the same requests
-    requests.set(url, req);
-    return req;
+    return;
   }
 
-  iconContent.set(url, '');
-  return Promise.resolve();
+  const svgContent = await response.text();
+
+  if (svgContent && sanitize !== false) {
+    iconContent.set(url, validateContent(svgContent));
+  } else {
+    iconContent.set(url, svgContent || '');
+  }
 };
 
 export const iconContent = new Map<string, string>();
 
 export const getSvgContent = async (url: string, sanitize: boolean) => {
-  // see if we already have a request for this SVG file
-  const req = await requests.get(url);
-  if (!req) return fetchSvg(url, sanitize);
+  let req = requests.get(url);
 
+  // NOTE: if the request does not exists we will cache it
+  if (isNil(req)) {
+    req = fetchSvg(url, sanitize);
+    requests.set(url, req);
+  }
   return req;
 };
 
