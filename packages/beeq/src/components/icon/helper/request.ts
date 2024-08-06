@@ -11,19 +11,22 @@ const fetchSvg = async (url: string, sanitize: boolean): Promise<unknown> => {
 
   if (requests.has(url)) return requests.get(url);
 
-  const response = await fetch(url);
+  try {
+    const response = await fetch(url);
 
-  if (!response.ok) {
+    if (!response.ok) {
+      iconContent.set(url, '');
+      return;
+    }
+
+    let svgContent = (await response.text()) || '';
+
+    if (svgContent && sanitize !== false) svgContent = validateContent(svgContent);
+
+    iconContent.set(url, svgContent);
+  } catch (error) {
+    console.error(`[BqIcon] Failed to fetch SVG from ${url}:`, error);
     iconContent.set(url, '');
-    return;
-  }
-
-  const svgContent = await response.text();
-
-  if (svgContent && sanitize !== false) {
-    iconContent.set(url, validateContent(svgContent));
-  } else {
-    iconContent.set(url, svgContent || '');
   }
 };
 
