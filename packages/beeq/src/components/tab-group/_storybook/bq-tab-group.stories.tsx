@@ -106,6 +106,13 @@ const IconTemplate = (args: Args) => {
   `;
 };
 
+export const Vertical: Story = {
+  render: Template,
+  args: {
+    orientation: 'vertical',
+  },
+};
+
 export const Icon: Story = {
   render: IconTemplate,
 };
