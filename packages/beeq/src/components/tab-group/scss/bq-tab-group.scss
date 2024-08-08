@@ -29,11 +29,11 @@
   }
 
   &--vertical-start::after {
-    @apply start-0 bs-full is-0 [border-block-end-width:0px] [border-inline-start-width:--bq-stroke-s];
+    @apply end-0 bs-full is-0 [border-block-end-width:0px] [border-inline-end-width:--bq-stroke-s];
   }
 
   &--vertical-end::after {
-    @apply end-0 bs-full is-0 [border-block-end-width:0px] [border-inline-end-width:--bq-stroke-s];
+    @apply start-0 bs-full is-0 [border-block-end-width:0px] [border-inline-start-width:--bq-stroke-s];
   }
 }
 

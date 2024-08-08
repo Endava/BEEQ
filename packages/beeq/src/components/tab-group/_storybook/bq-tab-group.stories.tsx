@@ -53,6 +53,7 @@ const Template = (args: Args) => {
       class=${classMap({
         flex: args.orientation === 'vertical',
         'flex-row-reverse': args.position === 'end',
+        'gap-1': true,
       })}
     >
       <bq-tab-group

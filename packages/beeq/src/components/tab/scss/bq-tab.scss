@@ -31,18 +31,18 @@
   }
 
   &--vertical-start {
-    @apply justify-start is-full;
-
-    &::after {
-      @apply -start-xs2 bs-[calc(100%_+_var(--bq-spacing-xs2))] is-[2px];
-    }
-  }
-
-  &--vertical-end {
     @apply justify-end is-full;
 
     &::after {
       @apply -end-xs2 bs-[calc(100%_+_var(--bq-spacing-xs2))] is-[2px];
+    }
+  }
+
+  &--vertical-end {
+    @apply justify-start is-full;
+
+    &::after {
+      @apply -start-xs2 bs-[calc(100%_+_var(--bq-spacing-xs2))] is-[2px];
     }
   }
 
