@@ -5,7 +5,9 @@ import { enter, hasSlotContent, isNil, leave, validatePropValue } from '../../sh
 
 /**
  * @part backdrop - The `<div>` that holds the backdrop overlay
- * @part button-close - The button that close the dialog on click
+ * @part button-close - The BqButton that closes the drawer
+ * @part button-close__btn - The native button used under the hood that closes the drawer
+ * @part button-close__label - The text inside the native button that closes the drawer
  * @part panel - The `<div>` that holds the drawer entire content
  * @part header - The `<header>` that holds the icon, title, and close button
  * @part title - The `<div>` that holds the title content
@@ -262,7 +264,7 @@ export class BqDrawer {
           part="panel"
           role="dialog"
         >
-          <header class="flex" part="header">
+          <header class="flex items-center" part="header">
             <h2
               class="flex-1 items-center justify-between font-bold leading-regular text-text-primary"
               id="bq-drawer__title"
@@ -271,17 +273,18 @@ export class BqDrawer {
               <slot name="title" />
             </h2>
             <div class="flex" part="button-close">
-              <slot name="button-close">
-                <bq-button
-                  class="[&::part(button)]:rounded-s [&::part(button)]:border-0 [&::part(button)]:bs-fit [&::part(button)]:p-b-0 [&::part(button)]:p-i-0"
-                  appearance="text"
-                  size="small"
-                  slot="button-close"
-                  onClick={() => this.hide()}
-                >
-                  <bq-icon weight="bold" name="x" role="img" title="Close" />
-                </bq-button>
-              </slot>
+              <bq-button
+                class="[&::part(button)]:rounded-s [&::part(button)]:border-0 [&::part(button)]:bs-fit [&::part(button)]:p-b-0 [&::part(button)]:p-i-0 [&::part(label)]:inline-flex"
+                appearance="text"
+                size="small"
+                slot="button-close"
+                exportparts="button:button-close__btn,label:button-close__label"
+                onClick={this.hide.bind(this)}
+              >
+                <slot name="button-close">
+                  <bq-icon name="x-bold" role="img" title="Close" />
+                </slot>
+              </bq-button>
             </div>
           </header>
           <main class="block flex-auto overflow-auto" part="body">

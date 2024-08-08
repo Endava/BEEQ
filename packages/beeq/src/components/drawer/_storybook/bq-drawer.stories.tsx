@@ -1,5 +1,6 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html, nothing } from 'lit-html';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import mdx from './bq-drawer.mdx';
 import { DRAWER_POSITIONS } from '../bq-drawer.types';
@@ -26,6 +27,7 @@ const meta: Meta = {
     // Not part of the component API
     noFooter: { control: 'boolean', table: { disable: true } },
     customFooterDivider: { control: 'boolean', table: { disable: true } },
+    customCloseIcon: { control: 'text', table: { disable: true } },
   },
   args: {
     open: false,
@@ -69,6 +71,7 @@ const Template = (args: Args) => {
       @bqAfterOpen=${args.bqAfterOpen}
       @bqAfterClose=${args.bqAfterClose}
     >
+      ${ifDefined(args.customCloseIcon) ? args.customCloseIcon : nothing}
       <div class="flex gap-xs" slot="title">
         <bq-icon name="user-circle" weight="bold" role="img" title="Info"></bq-icon>
         Title
@@ -122,5 +125,18 @@ export const WithCustomFooterDivider: Story = {
   args: {
     'enable-backdrop': true,
     customFooterDivider: true,
+  },
+};
+
+export const WithCustomCloseIcon: Story = {
+  render: Template,
+  args: {
+    'enable-backdrop': true,
+    customCloseIcon: html`<bq-icon
+      name="arrow-fat-lines-right"
+      role="img"
+      title="Close"
+      slot="button-close"
+    ></bq-icon>`,
   },
 };
