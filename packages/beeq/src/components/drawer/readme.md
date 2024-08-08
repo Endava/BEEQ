@@ -52,15 +52,17 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part             | Description                                                 |
-| ---------------- | ----------------------------------------------------------- |
-| `"backdrop"`     | The `<div>` that holds the backdrop overlay                 |
-| `"body"`         | The `<main>` that holds the drawer body content             |
-| `"button-close"` | The button that close the dialog on click                   |
-| `"footer"`       | The `<footer>` that holds footer content                    |
-| `"header"`       | The `<header>` that holds the icon, title, and close button |
-| `"panel"`        | The `<div>` that holds the drawer entire content            |
-| `"title"`        | The `<div>` that holds the title content                    |
+| Part                    | Description                                                  |
+| ----------------------- | ------------------------------------------------------------ |
+| `"backdrop"`            | The `<div>` that holds the backdrop overlay                  |
+| `"body"`                | The `<main>` that holds the drawer body content              |
+| `"button-close"`        | The BqButton that closes the drawer                          |
+| `"button-close__btn"`   | The native button used under the hood that closes the drawer |
+| `"button-close__label"` | The text inside the native button that closes the drawer     |
+| `"footer"`              | The `<footer>` that holds footer content                     |
+| `"header"`              | The `<header>` that holds the icon, title, and close button  |
+| `"panel"`               | The `<div>` that holds the drawer entire content             |
+| `"title"`               | The `<div>` that holds the title content                     |
 
 
 ## Dependencies
