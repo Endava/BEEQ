@@ -116,7 +116,7 @@ export namespace Components {
         /**
           * If true, the alert will automatically hide after the specified amount of time
          */
-        "autoDismiss": boolean;
+        "autoDismiss"?: boolean;
         /**
           * The corner radius of the alert component
          */
@@ -144,7 +144,7 @@ export namespace Components {
         /**
           * If true, the alert component will remain fixed at the top of the page, occupying the full viewport
          */
-        "sticky": boolean;
+        "sticky"?: boolean;
         /**
           * The length of time, in milliseconds, after which the alert will close itself. Only valid if `autoDismiss="true"`
          */
@@ -2366,11 +2366,11 @@ declare namespace LocalJSX {
         /**
           * If true, the close button at the top right of the alert won't be shown
          */
-        "disableClose"?: boolean;
+        "disableClose": boolean;
         /**
           * If true, the alert icon won't be shown
          */
-        "hideIcon"?: boolean;
+        "hideIcon": boolean;
         /**
           * Callback handler to be called after the alert has been closed
          */
@@ -2390,7 +2390,7 @@ declare namespace LocalJSX {
         /**
           * If true, the alert will be shown
          */
-        "open"?: boolean;
+        "open": boolean;
         /**
           * If true, the alert component will remain fixed at the top of the page, occupying the full viewport
          */

@@ -26,10 +26,10 @@ export class BqAlert {
   // Own Properties
   // ====================
 
-  private autoDismissDebounce: TDebounce<void>;
-  private bodyElem: HTMLDivElement;
-  private footerElem: HTMLDivElement;
-  private alertElement: HTMLDivElement;
+  private autoDismissDebounce?: TDebounce<void>;
+  private bodyElem?: HTMLDivElement;
+  private footerElem?: HTMLDivElement;
+  private alertElement?: HTMLDivElement;
 
   // Reference to host HTML element
   // ===================================
@@ -47,19 +47,19 @@ export class BqAlert {
   // ========================
 
   /** If true, the alert will automatically hide after the specified amount of time */
-  @Prop({ reflect: true }) autoDismiss: boolean;
+  @Prop({ reflect: true }) autoDismiss?: boolean;
 
   /** The corner radius of the alert component */
   @Prop({ reflect: true }) border: TAlertBorderRadius = 's';
 
   /** If true, the close button at the top right of the alert won't be shown */
-  @Prop({ reflect: true }) disableClose: boolean;
+  @Prop({ reflect: true }) disableClose!: boolean;
 
   /** If true, the alert icon won't be shown */
-  @Prop({ reflect: true }) hideIcon: boolean;
+  @Prop({ reflect: true }) hideIcon!: boolean;
 
   /** If true, the alert will be shown */
-  @Prop({ reflect: true, mutable: true }) open: boolean;
+  @Prop({ reflect: true, mutable: true }) open!: boolean;
 
   /** The length of time, in milliseconds, after which the alert will close itself. Only valid if `autoDismiss="true"` */
   @Prop({ reflect: true }) time: number = 3000;
@@ -68,7 +68,7 @@ export class BqAlert {
   @Prop({ reflect: true }) type: TAlertType = 'default';
 
   /** If true, the alert component will remain fixed at the top of the page, occupying the full viewport */
-  @Prop({ reflect: true }) sticky: boolean;
+  @Prop({ reflect: true }) sticky?: boolean;
 
   // Prop lifecycle events
   // =======================
@@ -97,7 +97,7 @@ export class BqAlert {
     this.handleShow();
 
     if (this.autoDismiss) {
-      this.autoDismissDebounce();
+      this.autoDismissDebounce?.();
     }
   }
 
@@ -166,7 +166,7 @@ export class BqAlert {
   private handleHide = async () => {
     const ev = this.bqHide.emit(this.el);
     if (!ev.defaultPrevented) {
-      await leave(this.alertElement);
+      await leave(this.alertElement!);
       this.el.classList.add('is-hidden');
       this.handleTransitionEnd();
       this.open = false;
@@ -178,7 +178,7 @@ export class BqAlert {
     if (!ev.defaultPrevented) {
       this.open = true;
       this.el.classList.remove('is-hidden');
-      await enter(this.alertElement);
+      await enter(this.alertElement!);
       this.handleTransitionEnd();
     }
   };
@@ -193,11 +193,11 @@ export class BqAlert {
   };
 
   private handleContentSlotChange = () => {
-    this.hasContent = hasSlotContent(this.bodyElem, 'body');
+    this.hasContent = hasSlotContent(this.bodyElem!, 'body');
   };
 
   private handleFooterSlotChange = () => {
-    this.hasFooter = hasSlotContent(this.footerElem, 'footer');
+    this.hasFooter = hasSlotContent(this.footerElem!, 'footer');
   };
 
   private get iconName(): string {
@@ -225,7 +225,7 @@ export class BqAlert {
     return (
       <Host
         style={style}
-        class={{ 'is-sticky': this.sticky }}
+        class={{ 'is-sticky': !!this.sticky }}
         aria-hidden={!this.open ? 'true' : 'false'}
         hidden={!this.open ? 'true' : 'false'}
         role="alert"
@@ -233,7 +233,7 @@ export class BqAlert {
         <div
           class={{
             [`bq-alert bq-alert__${this.type}`]: true,
-            'is-sticky': this.sticky,
+            'is-sticky': !!this.sticky,
           }}
           data-transition-enter="transition ease-out duration-300"
           data-transition-enter-start="opacity-0"
@@ -275,7 +275,7 @@ export class BqAlert {
               <div
                 class={{
                   'title-font font-semibold leading-regular text-text-primary': true,
-                  'flex items-center': this.sticky,
+                  'flex items-center': !!this.sticky,
                 }}
                 part="title"
               >
