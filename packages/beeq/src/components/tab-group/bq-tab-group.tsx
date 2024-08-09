@@ -23,7 +23,7 @@ export class BqTabGroup {
   // Own Properties
   // ====================
 
-  private debouncedBqChange: TDebounce<{ value: string; target: HTMLBqTabElement }>;
+  private debouncedBqChange?: TDebounce<{ value: string; target: HTMLBqTabElement }>;
 
   // Reference to host HTML element
   // ===================================
@@ -38,7 +38,7 @@ export class BqTabGroup {
   // ========================
 
   /** A string representing the id of the selected tab. */
-  @Prop({ reflect: true, mutable: true }) value: string;
+  @Prop({ reflect: true, mutable: true }) value?: string;
 
   /** The size of the tab */
   @Prop({ reflect: true }) size: TTabSize = 'medium';
@@ -68,7 +68,7 @@ export class BqTabGroup {
       this.debouncedBqChange.cancel();
     }
 
-    this.debouncedBqChange = debounce((event: Parameters<typeof this.debouncedBqChange>[0]) => {
+    this.debouncedBqChange = debounce((event: Parameters<NonNullable<typeof this.debouncedBqChange>>[0]) => {
       this.bqChange.emit(event);
     }, this.debounceTime);
   }
@@ -95,7 +95,7 @@ export class BqTabGroup {
   // ==============================================
 
   /** Handler to be called when the tab value changes */
-  @Event() bqChange: EventEmitter<{ target: HTMLBqTabElement; value: string }>;
+  @Event() bqChange!: EventEmitter<{ target: HTMLBqTabElement; value: string }>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -125,7 +125,7 @@ export class BqTabGroup {
   onBqClick(event: CustomEvent<HTMLBqTabElement>) {
     const { detail: target } = event;
     this.bqTabElements.forEach((bqTabElement) => (bqTabElement.active = bqTabElement === target));
-    this.debouncedBqChange({ value: target.tabId, target });
+    this.debouncedBqChange?.({ value: target.tabId, target });
     this.selectTab(target);
   }
 
@@ -182,9 +182,9 @@ export class BqTabGroup {
       }
     });
 
-    if (target) {
-      await target.vFocus();
-      this.selectTab(target);
+    if (!target) {
+      await (target as unknown as HTMLBqTabElement).vFocus();
+      this.selectTab(target as unknown as HTMLBqTabElement);
     }
   };
 
@@ -222,7 +222,7 @@ export class BqTabGroup {
     const { tabId } = target;
     target.active = true;
     this.value = tabId;
-    this.debouncedBqChange({ value: tabId, target });
+    this.debouncedBqChange?.({ value: tabId, target });
   };
 
   // render() function

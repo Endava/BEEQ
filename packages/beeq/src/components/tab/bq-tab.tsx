@@ -19,8 +19,8 @@ export class BqTab {
   // Own Properties
   // ====================
 
-  private buttonElement: HTMLButtonElement;
-  private iconElement: HTMLSpanElement;
+  private buttonElement?: HTMLButtonElement;
+  private iconElement?: HTMLSpanElement;
 
   // Reference to host HTML element
   // ===================================
@@ -75,16 +75,16 @@ export class BqTab {
   // ==============================================
 
   /** Handler to be called when the tab state changes */
-  @Event() bqClick: EventEmitter<HTMLBqTabElement>;
+  @Event() bqClick!: EventEmitter<HTMLBqTabElement>;
 
   /** Handler to be called when the tab gets focus */
-  @Event() bqFocus: EventEmitter<HTMLBqTabElement>;
+  @Event() bqFocus!: EventEmitter<HTMLBqTabElement>;
 
   /** Handler to be called when the tab loses focus */
-  @Event() bqBlur: EventEmitter<HTMLBqTabElement>;
+  @Event() bqBlur!: EventEmitter<HTMLBqTabElement>;
 
   /** Handler to be called when the tab key is pressed */
-  @Event() bqKeyDown: EventEmitter<KeyboardEvent>;
+  @Event() bqKeyDown!: EventEmitter<KeyboardEvent>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -162,7 +162,7 @@ export class BqTab {
   };
 
   private handleIconSlotChange = () => {
-    this.hasIcon = hasSlotContent(this.iconElement, 'icon');
+    this.hasIcon = hasSlotContent(this.iconElement!, 'icon');
   };
 
   private get tabindex(): string {
@@ -180,7 +180,7 @@ export class BqTab {
         ref={(el) => (this.buttonElement = el)}
         class={{
           [`bq-tab bq-tab--${this.size} bq-tab--${this.orientation}-${this.placement}`]: true,
-          'text-text-brand': this.active,
+          'text-text-brand': this.active!,
           'text-text-primary': !this.active,
         }}
         id={this.tabId}
@@ -197,7 +197,7 @@ export class BqTab {
         part="base"
       >
         <div class="flex items-center justify-center" part="content">
-          <div class="flex" ref={(span: HTMLSpanElement) => (this.iconElement = span)} part="icon">
+          <div class="flex" ref={(span) => (this.iconElement = span)} part="icon">
             <slot name="icon" onSlotchange={this.handleIconSlotChange} />
           </div>
           <div class={{ 'line-clamp-1': true, 'ms-[--bq-tab--label-icon-gap]': this.hasIcon }} part="text">

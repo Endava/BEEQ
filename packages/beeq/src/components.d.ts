@@ -1286,13 +1286,13 @@ export namespace Components {
         /**
           * A string representing the id of the selected tab.
          */
-        "value": string;
+        "value"?: string;
     }
     interface BqTag {
         /**
           * The corner radius of the Tag (will override size's predefined border)
          */
-        "border": TTagBorderRadius;
+        "border"?: TTagBorderRadius;
         /**
           * If true, the Tag can be clickable
          */
