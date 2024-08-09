@@ -27,11 +27,11 @@ export class BqSpinner {
   // Own Properties
   // ====================
 
-  private iconSlotElem: HTMLElement;
-  private slotElem: HTMLElement;
+  private iconSlotElem?: HTMLElement;
+  private slotElem?: HTMLElement;
   private observer: MutationObserver = new MutationObserver((mutations) => {
     const [mutation] = mutations;
-    this.slotContentLength = mutation.target.textContent.length;
+    this.slotContentLength = mutation.target.textContent!.length ?? 0;
   });
 
   // Reference to host HTML element
@@ -134,7 +134,7 @@ export class BqSpinner {
   };
 
   private handleIconSlotChange = (): void => {
-    this.hasIconSlot = hasSlotContent(this.iconSlotElem, 'icon');
+    this.hasIconSlot = hasSlotContent(this.iconSlotElem!, 'icon');
   };
 
   private checkPropValues = (): void => {
@@ -155,7 +155,7 @@ export class BqSpinner {
   private get bqIcon(): HTMLBqIconElement | null {
     if (!this.hasIconSlot) return null;
 
-    const slot = this.iconSlotElem.querySelector('slot');
+    const slot = this.iconSlotElem!.querySelector('slot')!;
 
     return [...slot.assignedElements({ flatten: true })].filter((el: Element) =>
       isHTMLElement(el, 'bq-icon'),
@@ -171,7 +171,7 @@ export class BqSpinner {
       <div
         class={{
           [`bq-spinner ${this.size} text-${this.textPosition}`]: true,
-          'is-animated': this.animation,
+          'is-animated': this.animation!,
           'has-text': !!this.slotContentLength,
         }}
         part="base"
