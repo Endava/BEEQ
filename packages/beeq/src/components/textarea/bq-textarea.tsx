@@ -23,12 +23,12 @@ export class BqTextarea {
   // Own Properties
   // ====================
 
-  private debounceBqInput: TDebounce<void>;
+  private debounceBqInput?: TDebounce<void>;
   private fallbackId = 'textarea';
 
   private helperTextElem?: HTMLElement;
   private labelElem?: HTMLLabelElement;
-  private textarea: HTMLTextAreaElement;
+  private textarea?: HTMLTextAreaElement;
 
   // Reference to host HTML element
   // ===================================
@@ -65,7 +65,7 @@ export class BqTextarea {
   @Prop({ reflect: true }) autocorrect: 'on' | 'off' = 'off';
 
   /** If true, the textarea will be focused on component render */
-  @Prop({ reflect: true }) autofocus: boolean;
+  @Prop({ reflect: true }) autofocus: boolean = false;
 
   /**
    * If `true`, the textarea will automatically grow and shrink to fit its contents.
@@ -92,7 +92,7 @@ export class BqTextarea {
    * The maximum number of characters that can be entered into the textarea (`0`: no limit).
    * When enabled, a character counter will be shown underneath the textarea.
    */
-  @Prop({ reflect: true }) maxlength: number;
+  @Prop({ reflect: true }) maxlength?: number;
 
   /** The name of the textarea element. */
   @Prop({ reflect: true }) name!: string;
@@ -124,7 +124,7 @@ export class BqTextarea {
   @Prop({ reflect: true }) validationStatus: TInputValidation = 'none';
 
   /** The value of the textarea. It can be used to reset the textarea to a previous value. */
-  @Prop({ mutable: true }) value: string;
+  @Prop({ mutable: true }) value: string = '';
 
   /** Specifies how the text in a text area is to be wrapped when submitted in a form */
   @Prop({ reflect: true }) wrap: TTextareaWrap = 'soft';
@@ -243,11 +243,11 @@ export class BqTextarea {
   };
 
   private handleLabelSlotChange = () => {
-    this.hasLabel = hasSlotContent(this.labelElem);
+    this.hasLabel = hasSlotContent(this.labelElem!);
   };
 
   private handleHelperTextSlotChange = () => {
-    this.hasHelperText = hasSlotContent(this.helperTextElem);
+    this.hasHelperText = hasSlotContent(this.helperTextElem!);
   };
 
   // render() function
@@ -260,7 +260,7 @@ export class BqTextarea {
         <label
           class={{ 'bq-textarea__label': true, '!hidden': !this.hasLabel }}
           htmlFor={this.name ?? this.fallbackId}
-          ref={(label: HTMLLabelElement) => (this.labelElem = label)}
+          ref={(label) => (this.labelElem = label)}
           part="label"
         >
           <slot name="label" onSlotchange={this.handleLabelSlotChange} />
@@ -269,7 +269,7 @@ export class BqTextarea {
           id={this.name ?? this.fallbackId}
           class={{
             'bq-textarea__input': true,
-            'resize-none': this.disableResize,
+            'resize-none': this.disableResize!,
             [`validation-${this.validationStatus}`]: true,
           }}
           autocapitalize={this.autocapitalize}
@@ -278,7 +278,7 @@ export class BqTextarea {
           autofocus={this.autofocus}
           disabled={this.disabled}
           form={this.form}
-          maxLength={this.maxlength > 0 ? this.maxlength : undefined}
+          maxLength={this.maxlength! > 0 ? this.maxlength : undefined}
           name={this.name}
           placeholder={this.placeholder}
           readOnly={this.readonly}
@@ -286,7 +286,7 @@ export class BqTextarea {
           rows={this.rows}
           spellcheck={this.spellcheck}
           wrap={this.wrap}
-          ref={(elem: HTMLTextAreaElement) => (this.textarea = elem)}
+          ref={(elem) => (this.textarea = elem)}
           onBlur={this.handleBlur}
           onChange={this.handleChange}
           onFocus={this.handleFocus}
@@ -303,11 +303,7 @@ export class BqTextarea {
           }}
           part="helper-info"
         >
-          <span
-            class="bq-textarea__helper--text"
-            ref={(span: HTMLElement) => (this.helperTextElem = span)}
-            part="helper-text"
-          >
+          <span class="bq-textarea__helper--text" ref={(span) => (this.helperTextElem = span)} part="helper-text">
             <slot name="helper-text" onSlotchange={this.handleHelperTextSlotChange} />
           </span>
           <span class={{ 'bq-textarea__helper--counter': true, '!hidden': !this.maxlength }} part="helper-counter">

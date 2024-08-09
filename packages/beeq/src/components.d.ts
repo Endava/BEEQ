@@ -1374,7 +1374,7 @@ export namespace Components {
         /**
           * The maximum number of characters that can be entered into the textarea (`0`: no limit). When enabled, a character counter will be shown underneath the textarea.
          */
-        "maxlength": number;
+        "maxlength"?: number;
         /**
           * The name of the textarea element.
          */
