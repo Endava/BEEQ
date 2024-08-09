@@ -25,9 +25,9 @@ export class BqSwitch {
   // Own Properties
   // ====================
 
-  private labelElem: HTMLSpanElement;
-  private inputElem: HTMLInputElement;
-  private prevCheckedValue: boolean;
+  private labelElem?: HTMLSpanElement;
+  private inputElem?: HTMLInputElement;
+  private prevCheckedValue?: boolean;
 
   // Reference to host HTML element
   // ===================================
@@ -84,13 +84,13 @@ export class BqSwitch {
   // ==============================================
 
   /** Handler to be called when the switch state changes */
-  @Event() bqChange: EventEmitter<{ checked: boolean }>;
+  @Event() bqChange!: EventEmitter<{ checked: boolean }>;
 
   /** Handler to be called when the switch gets focus */
-  @Event() bqFocus: EventEmitter<HTMLBqSwitchElement>;
+  @Event() bqFocus!: EventEmitter<HTMLBqSwitchElement>;
 
   /** Handler to be called when the switch loses focus */
-  @Event() bqBlur: EventEmitter<HTMLBqSwitchElement>;
+  @Event() bqBlur!: EventEmitter<HTMLBqSwitchElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -111,7 +111,7 @@ export class BqSwitch {
      * between the event emits and when the checked attribute value gets reflected in the element host.
      */
     if (this.checked !== this.prevCheckedValue) {
-      this.bqChange.emit({ checked: this.checked });
+      this.bqChange.emit({ checked: this.checked! });
       this.prevCheckedValue = this.checked;
     }
   }
@@ -160,7 +160,7 @@ export class BqSwitch {
 
   private handleChange = () => {
     this.checked = !this.checked;
-    this.inputElem.setAttribute('checked', `${this.checked}`);
+    this.inputElem!.setAttribute('checked', `${this.checked}`);
   };
 
   private handleOnFocus = () => {
@@ -188,14 +188,14 @@ export class BqSwitch {
     };
 
     const labelCssClasses = {
-      'has-background': this.backgroundOnHover,
-      'is-checked': this.checked,
-      'is-disabled': this.disabled,
-      'flex-row-reverse': this.reverseOrder,
+      'has-background': this.backgroundOnHover!,
+      'is-checked': this.checked!,
+      'is-disabled': this.disabled!,
+      'flex-row-reverse': this.reverseOrder!,
     };
 
     return (
-      <Host class={{ 'full-width': this.fullWidth }} style={hostStyle}>
+      <Host class={{ 'full-width': this.fullWidth! }} style={hostStyle}>
         <label class={{ 'bq-switch group': true, ...labelCssClasses }} part="base">
           {/* Hidden native HTML input */}
           <input
@@ -249,7 +249,7 @@ export class BqSwitch {
               'bq-switch--label text-m font-medium leading-regular text-text-primary transition-colors duration-300':
                 true,
               'ms-s': this.hasLabel && !this.reverseOrder,
-              'me-s': this.hasLabel && this.reverseOrder,
+              'me-s': this.hasLabel && this.reverseOrder!,
             }}
             ref={(span) => (this.labelElem = span)}
             part="label"
