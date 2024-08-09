@@ -27,7 +27,7 @@ export class BqDivider {
   // Own Properties
   // ====================
 
-  private titleElem: HTMLDivElement;
+  private titleElem?: HTMLDivElement;
 
   // Reference to host HTML element
   // ===================================
@@ -38,7 +38,7 @@ export class BqDivider {
   // Inlined decorator, alphabetical order
   // =======================================
 
-  @State() private hasTitle: boolean;
+  @State() private hasTitle: boolean = false;
 
   // Public Property API
   // ========================
@@ -114,7 +114,7 @@ export class BqDivider {
   // =======================================================
 
   private handleSlotChange = () => {
-    this.hasTitle = hasSlotContent(this.titleElem) || !!getTextContent(this.titleElem.querySelector('slot'));
+    this.hasTitle = hasSlotContent(this.titleElem!) || !!getTextContent(this.titleElem!.querySelector('slot')!);
   };
 
   private get strokeAttributes() {
@@ -127,7 +127,7 @@ export class BqDivider {
   }
 
   private get strokeDrawPositions() {
-    const drawOffset = this.strokeThickness / 2;
+    const drawOffset = (this.strokeThickness ?? 0) / 2;
     const strokeDrawPositions = {
       [DIVIDER_ORIENTATION_ENUM.HORIZONTAL]: { x1: drawOffset, x2: '100%', y1: drawOffset, y2: drawOffset },
       [DIVIDER_ORIENTATION_ENUM.VERTICAL]: { x1: drawOffset, x2: drawOffset, y1: drawOffset, y2: '100%' },
