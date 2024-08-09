@@ -55,7 +55,7 @@ export class BqStepItem {
   // ==============================================
 
   /** Callback handler emitted when the step item is clicked */
-  @Event() bqClick: EventEmitter<{ target: HTMLBqStepItemElement; value: string }>;
+  @Event() bqClick!: EventEmitter<{ target: HTMLBqStepItemElement; value: string }>;
 
   // Component lifecycle events
   // Ordered by their natural call order

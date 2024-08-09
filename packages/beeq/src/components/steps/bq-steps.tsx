@@ -18,7 +18,7 @@ export class BqSteps {
   // Own Properties
   // ====================
 
-  private stepElem: HTMLElement;
+  private stepElem?: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -39,7 +39,7 @@ export class BqSteps {
   @Prop({ reflect: true }) size: TStepsSize = 'medium';
 
   /** The type of prefix element to use on the step items */
-  @Prop({ reflect: true }) type: TStepsType;
+  @Prop({ reflect: true }) type?: TStepsType;
 
   // Prop lifecycle events
   // =======================
@@ -82,9 +82,9 @@ export class BqSteps {
   private get bqSteps(): HTMLBqStepItemElement[] {
     if (!this.stepElem) return [];
 
-    const slot = this.stepElem.querySelector('slot');
+    const slot = this.stepElem.querySelector('slot')!;
     return [...slot.assignedElements({ flatten: true })].filter(
-      (el: HTMLBqSideMenuItemElement) => el.tagName.toLowerCase() === 'bq-step-item',
+      (el) => el.tagName.toLowerCase() === 'bq-step-item',
     ) as [HTMLBqSideMenuItemElement];
   }
 

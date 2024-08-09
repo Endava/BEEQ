@@ -1156,7 +1156,7 @@ export namespace Components {
         /**
           * The type of prefix element to use on the step items
          */
-        "type": TStepsType;
+        "type"?: TStepsType;
     }
     /**
      * Toggle switches are digital on/off switches.
