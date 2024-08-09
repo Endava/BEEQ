@@ -7,15 +7,15 @@
 
 ## Properties
 
-| Property             | Attribute             | Description                                                                                                          | Type      | Default     |
-| -------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------- | --------- | ----------- |
-| `backgroundOnHover`  | `background-on-hover` | If true radio displays background on hover                                                                           | `boolean` | `false`     |
-| `checked`            | `checked`             | If true radio input is checked                                                                                       | `boolean` | `undefined` |
-| `disabled`           | `disabled`            | If true radio input is disabled                                                                                      | `boolean` | `false`     |
-| `formId`             | `form-id`             | The form ID that the radio input is associated with                                                                  | `string`  | `undefined` |
-| `name` _(required)_  | `name`                | Name of the HTML input form control. Submitted with the form as part of a name/value pair.                           | `string`  | `undefined` |
-| `required`           | `required`            | If `true`, it will indicate that the user must specify a value for the radio before the owning form can be submitted | `boolean` | `undefined` |
-| `value` _(required)_ | `value`               | A string representing the value of the radio.                                                                        | `string`  | `undefined` |
+| Property             | Attribute             | Description                                                                                                          | Type                   | Default     |
+| -------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------- | ---------------------- | ----------- |
+| `backgroundOnHover`  | `background-on-hover` | If true radio displays background on hover                                                                           | `boolean \| undefined` | `false`     |
+| `checked`            | `checked`             | If true radio input is checked                                                                                       | `boolean \| undefined` | `undefined` |
+| `disabled`           | `disabled`            | If true radio input is disabled                                                                                      | `boolean \| undefined` | `false`     |
+| `formId`             | `form-id`             | The form ID that the radio input is associated with                                                                  | `string \| undefined`  | `undefined` |
+| `name` _(required)_  | `name`                | Name of the HTML input form control. Submitted with the form as part of a name/value pair.                           | `string`               | `undefined` |
+| `required`           | `required`            | If `true`, it will indicate that the user must specify a value for the radio before the owning form can be submitted | `boolean \| undefined` | `undefined` |
+| `value` _(required)_ | `value`               | A string representing the value of the radio.                                                                        | `string`               | `undefined` |
 
 
 ## Events

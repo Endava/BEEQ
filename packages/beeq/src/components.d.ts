@@ -184,7 +184,7 @@ export namespace Components {
         /**
           * Badge background color. The value should be a valid value of the palette color
          */
-        "backgroundColor"?: string;
+        "backgroundColor"?: string | undefined;
         /**
           * The size of the badge. Relevant if badge has no content.
          */
@@ -192,7 +192,7 @@ export namespace Components {
         /**
           * Badge number color. The value should be a valid value of the palette color
          */
-        "textColor"?: string;
+        "textColor"?: string | undefined;
     }
     interface BqBreadcrumb {
         /**
@@ -289,7 +289,7 @@ export namespace Components {
         /**
           * If true checkbox displays background on hover
          */
-        "backgroundOnHover"?: boolean;
+        "backgroundOnHover"?: boolean | undefined;
         /**
           * If true checkbox is checked
          */
@@ -297,7 +297,7 @@ export namespace Components {
         /**
           * If true checkbox is disabled
          */
-        "disabled"?: boolean;
+        "disabled"?: boolean | undefined;
         /**
           * The form ID that the checkbox is associated with
          */
@@ -305,7 +305,7 @@ export namespace Components {
         /**
           * A state that is neither checked nor unchecked
          */
-        "indeterminate"?: boolean;
+        "indeterminate"?: boolean | undefined;
         /**
           * Name of the HTML input form control. Submitted with the form as part of a name/value pair.
          */
@@ -345,11 +345,11 @@ export namespace Components {
         /**
           * The clear button aria label
          */
-        "clearButtonLabel"?: string;
+        "clearButtonLabel"?: string | undefined;
         /**
           * If `true`, the clear button won't be displayed
          */
-        "disableClear"?: boolean;
+        "disableClear"?: boolean | undefined;
         /**
           * Indicates whether the Date picker input is disabled or not. If `true`, the Date picker is disabled and cannot be interacted with.
          */
@@ -659,15 +659,15 @@ export namespace Components {
         /**
           * The clear button aria label
          */
-        "clearButtonLabel"?: string;
+        "clearButtonLabel"?: string | undefined;
         /**
           * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur.
          */
-        "debounceTime"?: number;
+        "debounceTime"?: number | undefined;
         /**
           * If true, the clear button won't be displayed
          */
-        "disableClear"?: boolean;
+        "disableClear"?: boolean | undefined;
         /**
           * Indicates whether the input is disabled or not. If `true`, the input is disabled and cannot be interacted with.
          */
@@ -864,7 +864,7 @@ export namespace Components {
         /**
           * If true radio displays background on hover
          */
-        "backgroundOnHover"?: boolean;
+        "backgroundOnHover"?: boolean | undefined;
         /**
           * If true radio input is checked
          */
@@ -872,7 +872,7 @@ export namespace Components {
         /**
           * If true radio input is disabled
          */
-        "disabled"?: boolean;
+        "disabled"?: boolean | undefined;
         /**
           * The form ID that the radio input is associated with
          */
@@ -906,7 +906,7 @@ export namespace Components {
         /**
           * If true, all radio inputs in the group will display a background on hover
          */
-        "backgroundOnHover"?: boolean;
+        "backgroundOnHover"?: boolean | undefined;
         /**
           * A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change
          */
@@ -914,11 +914,11 @@ export namespace Components {
         /**
           * If true radio inputs are disabled
          */
-        "disabled"?: boolean;
+        "disabled"?: boolean | undefined;
         /**
           * If true displays fieldset
          */
-        "fieldset"?: boolean;
+        "fieldset"?: boolean | undefined;
         /**
           * Name of the HTML input form control. Submitted with the form as part of a name/value pair.
          */
@@ -946,15 +946,15 @@ export namespace Components {
         /**
           * The clear button aria label
          */
-        "clearButtonLabel"?: string;
+        "clearButtonLabel"?: string | undefined;
         /**
           * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur.
          */
-        "debounceTime"?: number;
+        "debounceTime"?: number | undefined;
         /**
           * If true, the clear button won't be displayed
          */
-        "disableClear"?: boolean;
+        "disableClear"?: boolean | undefined;
         /**
           * Indicates whether the Select input is disabled or not. If `true`, the Select is disabled and cannot be interacted with.
          */
@@ -1069,7 +1069,7 @@ export namespace Components {
         /**
           * If `true` the slider is disabled.
          */
-        "disabled"?: boolean;
+        "disabled"?: boolean | undefined;
         /**
           * If `true`, a tooltip will be shown displaying the progress value
          */
@@ -1077,7 +1077,7 @@ export namespace Components {
         /**
           * If `true` it will show the value label on a side of the slider track area
          */
-        "enableValueIndicator"?: boolean;
+        "enableValueIndicator"?: boolean | undefined;
         /**
           * A number representing the amount to remain between the minimum and maximum values (only for range type).
          */
@@ -1114,7 +1114,7 @@ export namespace Components {
         /**
           * If `false`, the animation on the icon element will be stopped
          */
-        "animation"?: boolean;
+        "animation"?: boolean | undefined;
         /**
           * It defines the size of the icon element displayed
          */
@@ -1358,7 +1358,7 @@ export namespace Components {
         /**
           * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes. A value of 0 means no debouncing will occur.
          */
-        "debounceTime"?: number;
+        "debounceTime"?: number | undefined;
         /**
           * If `true`, it will block the user's ability to resize the textarea.
          */
@@ -1484,7 +1484,7 @@ export namespace Components {
         /**
           * Indicates whether or not the tooltip is visible when the component is first rendered, and when interacting with the trigger
          */
-        "visible"?: boolean;
+        "visible"?: boolean | undefined;
     }
 }
 export interface BqAccordionCustomEvent<T> extends CustomEvent<T> {
@@ -2434,7 +2434,7 @@ declare namespace LocalJSX {
         /**
           * Badge background color. The value should be a valid value of the palette color
          */
-        "backgroundColor"?: string;
+        "backgroundColor"?: string | undefined;
         /**
           * The size of the badge. Relevant if badge has no content.
          */
@@ -2442,7 +2442,7 @@ declare namespace LocalJSX {
         /**
           * Badge number color. The value should be a valid value of the palette color
          */
-        "textColor"?: string;
+        "textColor"?: string | undefined;
     }
     interface BqBreadcrumb {
         /**
@@ -2575,7 +2575,7 @@ declare namespace LocalJSX {
         /**
           * If true checkbox displays background on hover
          */
-        "backgroundOnHover"?: boolean;
+        "backgroundOnHover"?: boolean | undefined;
         /**
           * If true checkbox is checked
          */
@@ -2583,7 +2583,7 @@ declare namespace LocalJSX {
         /**
           * If true checkbox is disabled
          */
-        "disabled"?: boolean;
+        "disabled"?: boolean | undefined;
         /**
           * The form ID that the checkbox is associated with
          */
@@ -2591,7 +2591,7 @@ declare namespace LocalJSX {
         /**
           * A state that is neither checked nor unchecked
          */
-        "indeterminate"?: boolean;
+        "indeterminate"?: boolean | undefined;
         /**
           * Name of the HTML input form control. Submitted with the form as part of a name/value pair.
          */
@@ -2625,11 +2625,11 @@ declare namespace LocalJSX {
         /**
           * The clear button aria label
          */
-        "clearButtonLabel"?: string;
+        "clearButtonLabel"?: string | undefined;
         /**
           * If `true`, the clear button won't be displayed
          */
-        "disableClear"?: boolean;
+        "disableClear"?: boolean | undefined;
         /**
           * Indicates whether the Date picker input is disabled or not. If `true`, the Date picker is disabled and cannot be interacted with.
          */
@@ -2979,15 +2979,15 @@ declare namespace LocalJSX {
         /**
           * The clear button aria label
          */
-        "clearButtonLabel"?: string;
+        "clearButtonLabel"?: string | undefined;
         /**
           * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur.
          */
-        "debounceTime"?: number;
+        "debounceTime"?: number | undefined;
         /**
           * If true, the clear button won't be displayed
          */
-        "disableClear"?: boolean;
+        "disableClear"?: boolean | undefined;
         /**
           * Indicates whether the input is disabled or not. If `true`, the input is disabled and cannot be interacted with.
          */
@@ -3228,7 +3228,7 @@ declare namespace LocalJSX {
         /**
           * If true radio displays background on hover
          */
-        "backgroundOnHover"?: boolean;
+        "backgroundOnHover"?: boolean | undefined;
         /**
           * If true radio input is checked
          */
@@ -3236,7 +3236,7 @@ declare namespace LocalJSX {
         /**
           * If true radio input is disabled
          */
-        "disabled"?: boolean;
+        "disabled"?: boolean | undefined;
         /**
           * The form ID that the radio input is associated with
          */
@@ -3274,7 +3274,7 @@ declare namespace LocalJSX {
         /**
           * If true, all radio inputs in the group will display a background on hover
          */
-        "backgroundOnHover"?: boolean;
+        "backgroundOnHover"?: boolean | undefined;
         /**
           * A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change
          */
@@ -3282,11 +3282,11 @@ declare namespace LocalJSX {
         /**
           * If true radio inputs are disabled
          */
-        "disabled"?: boolean;
+        "disabled"?: boolean | undefined;
         /**
           * If true displays fieldset
          */
-        "fieldset"?: boolean;
+        "fieldset"?: boolean | undefined;
         /**
           * Name of the HTML input form control. Submitted with the form as part of a name/value pair.
          */
@@ -3312,15 +3312,15 @@ declare namespace LocalJSX {
         /**
           * The clear button aria label
          */
-        "clearButtonLabel"?: string;
+        "clearButtonLabel"?: string | undefined;
         /**
           * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur.
          */
-        "debounceTime"?: number;
+        "debounceTime"?: number | undefined;
         /**
           * If true, the clear button won't be displayed
          */
-        "disableClear"?: boolean;
+        "disableClear"?: boolean | undefined;
         /**
           * Indicates whether the Select input is disabled or not. If `true`, the Select is disabled and cannot be interacted with.
          */
@@ -3467,7 +3467,7 @@ declare namespace LocalJSX {
         /**
           * If `true` the slider is disabled.
          */
-        "disabled"?: boolean;
+        "disabled"?: boolean | undefined;
         /**
           * If `true`, a tooltip will be shown displaying the progress value
          */
@@ -3475,7 +3475,7 @@ declare namespace LocalJSX {
         /**
           * If `true` it will show the value label on a side of the slider track area
          */
-        "enableValueIndicator"?: boolean;
+        "enableValueIndicator"?: boolean | undefined;
         /**
           * A number representing the amount to remain between the minimum and maximum values (only for range type).
          */
@@ -3524,7 +3524,7 @@ declare namespace LocalJSX {
         /**
           * If `false`, the animation on the icon element will be stopped
          */
-        "animation"?: boolean;
+        "animation"?: boolean | undefined;
         /**
           * It defines the size of the icon element displayed
          */
@@ -3788,7 +3788,7 @@ declare namespace LocalJSX {
         /**
           * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes. A value of 0 means no debouncing will occur.
          */
-        "debounceTime"?: number;
+        "debounceTime"?: number | undefined;
         /**
           * If `true`, it will block the user's ability to resize the textarea.
          */
@@ -3922,7 +3922,7 @@ declare namespace LocalJSX {
         /**
           * Indicates whether or not the tooltip is visible when the component is first rendered, and when interacting with the trigger
          */
-        "visible"?: boolean;
+        "visible"?: boolean | undefined;
     }
     interface IntrinsicElements {
         "bq-accordion": BqAccordion;

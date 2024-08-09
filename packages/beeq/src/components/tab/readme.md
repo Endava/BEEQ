@@ -7,15 +7,15 @@
 
 ## Properties
 
-| Property                | Attribute     | Description                             | Type                             | Default        |
-| ----------------------- | ------------- | --------------------------------------- | -------------------------------- | -------------- |
-| `active`                | `active`      | If true tab is active                   | `boolean`                        | `undefined`    |
-| `controls` _(required)_ | `controls`    | The tab panel id that the tab controls  | `string`                         | `undefined`    |
-| `disabled`              | `disabled`    | If true tab is disabled                 | `boolean`                        | `false`        |
-| `orientation`           | `orientation` | The direction that tab should be render | `"horizontal" \| "vertical"`     | `'horizontal'` |
-| `placement`             | `placement`   | The placement that tab should be render | `"end" \| "start"`               | `'start'`      |
-| `size`                  | `size`        | The size of the tab                     | `"large" \| "medium" \| "small"` | `'medium'`     |
-| `tabId` _(required)_    | `tab-id`      | The id of the tab                       | `string`                         | `undefined`    |
+| Property                | Attribute     | Description                             | Type                                      | Default        |
+| ----------------------- | ------------- | --------------------------------------- | ----------------------------------------- | -------------- |
+| `active`                | `active`      | If true tab is active                   | `boolean \| undefined`                    | `undefined`    |
+| `controls` _(required)_ | `controls`    | The tab panel id that the tab controls  | `string`                                  | `undefined`    |
+| `disabled`              | `disabled`    | If true tab is disabled                 | `boolean`                                 | `false`        |
+| `orientation`           | `orientation` | The direction that tab should be render | `"horizontal" \| "vertical" \| undefined` | `'horizontal'` |
+| `placement`             | `placement`   | The placement that tab should be render | `"end" \| "start" \| undefined`           | `'start'`      |
+| `size`                  | `size`        | The size of the tab                     | `"large" \| "medium" \| "small"`          | `'medium'`     |
+| `tabId` _(required)_    | `tab-id`      | The id of the tab                       | `string`                                  | `undefined`    |
 
 
 ## Events

@@ -7,16 +7,16 @@
 
 ## Properties
 
-| Property             | Attribute             | Description                                                                                                                            | Type      | Default     |
-| -------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | --------- | ----------- |
-| `backgroundOnHover`  | `background-on-hover` | If true checkbox displays background on hover                                                                                          | `boolean` | `false`     |
-| `checked`            | `checked`             | If true checkbox is checked                                                                                                            | `boolean` | `undefined` |
-| `disabled`           | `disabled`            | If true checkbox is disabled                                                                                                           | `boolean` | `false`     |
-| `formId`             | `form-id`             | The form ID that the checkbox is associated with                                                                                       | `string`  | `undefined` |
-| `indeterminate`      | `indeterminate`       | A state that is neither checked nor unchecked                                                                                          | `boolean` | `false`     |
-| `name` _(required)_  | `name`                | Name of the HTML input form control. Submitted with the form as part of a name/value pair.                                             | `string`  | `undefined` |
-| `required`           | `required`            | If `true`, it will indicate that the user must specify a value for the checkbox before the owning form can be submitted                | `boolean` | `undefined` |
-| `value` _(required)_ | `value`               | A string representing the value of the checkbox. Primarily used to differentiate a list of related checkboxes that have the same name. | `string`  | `undefined` |
+| Property             | Attribute             | Description                                                                                                                            | Type                   | Default     |
+| -------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ----------- |
+| `backgroundOnHover`  | `background-on-hover` | If true checkbox displays background on hover                                                                                          | `boolean \| undefined` | `false`     |
+| `checked`            | `checked`             | If true checkbox is checked                                                                                                            | `boolean \| undefined` | `undefined` |
+| `disabled`           | `disabled`            | If true checkbox is disabled                                                                                                           | `boolean \| undefined` | `false`     |
+| `formId`             | `form-id`             | The form ID that the checkbox is associated with                                                                                       | `string \| undefined`  | `undefined` |
+| `indeterminate`      | `indeterminate`       | A state that is neither checked nor unchecked                                                                                          | `boolean \| undefined` | `false`     |
+| `name` _(required)_  | `name`                | Name of the HTML input form control. Submitted with the form as part of a name/value pair.                                             | `string`               | `undefined` |
+| `required`           | `required`            | If `true`, it will indicate that the user must specify a value for the checkbox before the owning form can be submitted                | `boolean \| undefined` | `undefined` |
+| `value` _(required)_ | `value`               | A string representing the value of the checkbox. Primarily used to differentiate a list of related checkboxes that have the same name. | `string`               | `undefined` |
 
 
 ## Events
