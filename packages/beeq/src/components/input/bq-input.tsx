@@ -31,7 +31,7 @@ export class BqInput {
   private prefixElem?: HTMLElement;
   private suffixElem?: HTMLElement;
 
-  private debounceBqInput: TDebounce<void>;
+  private debounceBqInput?: TDebounce<void>;
   private fallbackInputId = 'input';
 
   // Reference to host HTML element
@@ -72,7 +72,7 @@ export class BqInput {
   @Prop({ reflect: true }) autocorrect: 'on' | 'off' = 'off';
 
   /** If true, the input will be focused on component render */
-  @Prop({ reflect: true }) autofocus: boolean;
+  @Prop({ reflect: true }) autofocus: boolean = false;
 
   /** The clear button aria label */
   @Prop({ reflect: true }) clearButtonLabel? = 'Clear value';
@@ -87,7 +87,7 @@ export class BqInput {
    * Indicates whether the input is disabled or not.
    * If `true`, the input is disabled and cannot be interacted with.
    */
-  @Prop({ mutable: true }) disabled?: boolean = false;
+  @Prop({ mutable: true }) disabled: boolean = false;
 
   /** If true, the clear button won't be displayed */
   @Prop({ reflect: true }) disableClear? = false;
@@ -109,7 +109,7 @@ export class BqInput {
   @Prop({ reflect: true }) max?: number | string;
 
   /** The maximum number of characters that the input field can accept. */
-  @Prop({ reflect: true }) maxlength: number;
+  @Prop({ reflect: true }) maxlength?: number;
 
   /**
    * The minimum value that the input field can accept.
@@ -118,7 +118,7 @@ export class BqInput {
   @Prop({ reflect: true }) min?: number | string;
 
   /** The minimum number of characters that the input field can accept. */
-  @Prop({ reflect: true }) minlength: number;
+  @Prop({ reflect: true }) minlength?: number;
 
   /** The input field name. */
   @Prop({ reflect: true }) name!: string;
@@ -143,7 +143,7 @@ export class BqInput {
    * Valid for date, month, week, time, datetime-local, number, and range.
    * See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
    */
-  @Prop({ reflect: true }) step: number | 'any';
+  @Prop({ reflect: true }) step?: number | 'any';
 
   /**
    * The type attribute specifies the type of input field to display.
@@ -165,7 +165,7 @@ export class BqInput {
   @Prop({ reflect: true }) validationStatus: TInputValidation = 'none';
 
   /** The input value, it can be used to reset the input to a previous value */
-  @Prop({ reflect: true, mutable: true }) value: TInputValue;
+  @Prop({ reflect: true, mutable: true }) value?: TInputValue;
 
   // Prop lifecycle events
   // =======================
@@ -249,7 +249,7 @@ export class BqInput {
     this.value = this.type === 'number' ? Number(ev.target.value) : ev.target.value;
 
     this.debounceBqInput = debounce(() => {
-      this.bqInput.emit({ value: this.value, el: this.el });
+      this.bqInput.emit({ value: this.value!, el: this.el });
     }, this.debounceTime);
     this.debounceBqInput();
   };
@@ -266,31 +266,31 @@ export class BqInput {
   private handleClearClick = (ev: CustomEvent) => {
     if (this.disabled) return;
 
-    this.inputElem.value = '';
-    this.value = this.inputElem.value;
+    this.inputElem!.value = '';
+    this.value = this.inputElem!.value;
 
     this.bqClear.emit(this.el);
     this.bqInput.emit({ value: this.value, el: this.el });
     this.bqChange.emit({ value: this.value, el: this.el });
-    this.inputElem.focus();
+    this.inputElem!.focus();
 
     ev.stopPropagation();
   };
 
   private handleLabelSlotChange = () => {
-    this.hasLabel = hasSlotContent(this.labelElem);
+    this.hasLabel = hasSlotContent(this.labelElem!);
   };
 
   private handlePrefixSlotChange = () => {
-    this.hasPrefix = hasSlotContent(this.prefixElem);
+    this.hasPrefix = hasSlotContent(this.prefixElem!);
   };
 
   private handleSuffixSlotChange = () => {
-    this.hasSuffix = hasSlotContent(this.suffixElem);
+    this.hasSuffix = hasSlotContent(this.suffixElem!);
   };
 
   private handleHelperTextSlotChange = () => {
-    this.hasHelperText = hasSlotContent(this.helperTextElem);
+    this.hasHelperText = hasSlotContent(this.helperTextElem!);
   };
 
   // render() function

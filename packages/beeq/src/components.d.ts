@@ -671,7 +671,7 @@ export namespace Components {
         /**
           * Indicates whether the input is disabled or not. If `true`, the input is disabled and cannot be interacted with.
          */
-        "disabled"?: boolean;
+        "disabled": boolean;
         /**
           * The ID of the form that the input field belongs to.
          */
@@ -687,7 +687,7 @@ export namespace Components {
         /**
           * The maximum number of characters that the input field can accept.
          */
-        "maxlength": number;
+        "maxlength"?: number;
         /**
           * The minimum value that the input field can accept. Only applies to date and number input types.
          */
@@ -695,7 +695,7 @@ export namespace Components {
         /**
           * The minimum number of characters that the input field can accept.
          */
-        "minlength": number;
+        "minlength"?: number;
         /**
           * The input field name.
          */
@@ -719,7 +719,7 @@ export namespace Components {
         /**
           * A number that specifies the granularity that the value must adhere to. Valid for date, month, week, time, datetime-local, number, and range. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
          */
-        "step": number | 'any';
+        "step"?: number | 'any';
         /**
           * The type attribute specifies the type of input field to display. Possible values are 'text', 'password', 'email', 'number', 'tel', 'search', 'url', and more. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types
          */
@@ -732,7 +732,7 @@ export namespace Components {
         /**
           * The input value, it can be used to reset the input to a previous value
          */
-        "value": TInputValue;
+        "value"?: TInputValue;
     }
     interface BqNotification {
         /**
