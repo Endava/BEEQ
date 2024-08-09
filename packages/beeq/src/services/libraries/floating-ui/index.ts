@@ -16,7 +16,7 @@ export class FloatingUI {
   panel: HTMLElement;
   trigger: ReferenceElement;
   options: FloatingUIOptions;
-  cleanUp: () => void;
+  cleanUp?: () => void;
 
   constructor(trigger: ReferenceElement, panel: HTMLElement, options?: FloatingUIOptions) {
     this.trigger = trigger;
@@ -28,7 +28,7 @@ export class FloatingUI {
       sameWidth: false,
       ...options,
     };
-    this.init(options);
+    this.init(options!);
   }
 
   init(options: FloatingUIOptions) {
@@ -47,6 +47,8 @@ export class FloatingUI {
             flip(),
             shift(),
             size(
+              // FIXME:
+              // @ts-expect-error Argument of type 'HTMLBqDatePickerElement' is not assignable to parameter of type 'HTMLElement'.ts(2345)
               this.options.sameWidth && {
                 apply({ rects, elements }) {
                   Object.assign(elements.floating.style, {
@@ -55,7 +57,7 @@ export class FloatingUI {
                 },
               },
             ),
-            arrow({ element: this.options.arrow || null }),
+            arrow({ element: this.options.arrow! }),
             this.positionChange(),
             hide(),
           ],
@@ -68,7 +70,7 @@ export class FloatingUI {
         });
 
         if (this.options.arrow) {
-          const { x: arrowX, y: arrowY } = middlewareData.arrow;
+          const { x: arrowX, y: arrowY } = middlewareData.arrow!;
           const staticSide = {
             top: 'bottom',
             right: 'left',
@@ -81,11 +83,11 @@ export class FloatingUI {
             top: arrowY != null ? `${arrowY}px` : '',
             right: '',
             bottom: '',
-            [staticSide]: '-4px',
+            [staticSide!]: '-4px',
           });
         }
 
-        const { referenceHidden } = middlewareData.hide;
+        const { referenceHidden } = middlewareData.hide!;
         Object.assign(this.panel.style, {
           visibility: referenceHidden ? 'hidden' : 'visible',
         });
@@ -101,6 +103,8 @@ export class FloatingUI {
   positionChange() {
     return {
       name: 'positionChange',
+      // FIXME:
+      // @ts-expect-error Argument of type 'HTMLBqDatePickerElement' is not assignable to parameter of type 'HTMLElement'.ts(2345)
       fn: ({ placement: position }) => {
         if (typeof this.options.onPositionChange !== 'function') return {};
         this.options.onPositionChange(position);
