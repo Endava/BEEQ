@@ -83,8 +83,8 @@ describe('bq-input', () => {
     const nativeInputElem = await page.find('bq-input >>> .bq-input--control__input');
 
     await nativeInputElem.type(inputValue);
-    await page.$eval('bq-input >>> .bq-input--control__input', (e: HTMLInputElement) => {
-      e.blur();
+    await page.$eval('bq-input >>> .bq-input--control__input', (e) => {
+      (e as HTMLInputElement).blur();
     });
     await page.waitForChanges();
 

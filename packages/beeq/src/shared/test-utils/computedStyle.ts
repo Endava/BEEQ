@@ -12,6 +12,8 @@ export const computedStyle = <T extends keyof CSSStyleDeclaration>(
   filter?: ReadonlyArray<T>,
 ): Promise<Pick<CSSStyleDeclaration, T>> => {
   return page.evaluate(
+    // FIXME:
+    // @ts-expect-error Argument of type '(querySelector: string, filter?: Array<T>) => any' is not assignable to parameter of type 'string
     (querySelector: string, filter?: Array<T>) => {
       const [lightDomSelector, shadowDomSelector] = querySelector.split('>>>');
 
@@ -22,7 +24,7 @@ export const computedStyle = <T extends keyof CSSStyleDeclaration>(
       }
 
       if (shadowDomSelector) {
-        element = element.shadowRoot.querySelector(shadowDomSelector);
+        element = element.shadowRoot!.querySelector(shadowDomSelector);
 
         if (!element) {
           throw new Error(`Could not find element ${shadowDomSelector}`);
@@ -45,5 +47,5 @@ export const computedStyle = <T extends keyof CSSStyleDeclaration>(
     },
     selector,
     filter,
-  );
+  ) as Promise<Pick<CSSStyleDeclaration, T>>;
 };

@@ -33,7 +33,7 @@ describe('bq-option-group', () => {
     `);
 
     const prefixText = await page.$eval('bq-option-group', (element) => {
-      const slotElement = element.shadowRoot.querySelector('slot[name="header-prefix"]');
+      const slotElement = element.shadowRoot!.querySelector('slot[name="header-prefix"]');
       const assignedElements = (slotElement as HTMLSlotElement).assignedElements({ flatten: true })[0];
 
       return assignedElements.textContent;
@@ -56,7 +56,7 @@ describe('bq-option-group', () => {
     `);
 
     const suffixText = await page.$eval('bq-option-group', (element) => {
-      const slotElement = element.shadowRoot.querySelector('slot[name="header-suffix"]');
+      const slotElement = element.shadowRoot!.querySelector('slot[name="header-suffix"]');
       const assignedElements = (slotElement as HTMLSlotElement).assignedElements({ flatten: true })[0];
 
       return assignedElements.textContent;
@@ -79,7 +79,7 @@ describe('bq-option-group', () => {
     `);
 
     const suffixText = await page.$eval('bq-option-group', (element) => {
-      const slotElement = element.shadowRoot.querySelector('slot[name="header-label"]');
+      const slotElement = element.shadowRoot!.querySelector('slot[name="header-label"]');
       const assignedElements = (slotElement as HTMLSlotElement).assignedElements({ flatten: true })[0];
 
       return assignedElements.textContent;

@@ -31,7 +31,7 @@ describe('bq-switch', () => {
     await page.setContent(`<bq-switch>${label}</bq-switch>`);
 
     const element = await page.waitForSelector('bq-switch');
-    const labelText = await element.evaluate((el) => el.textContent);
+    const labelText = await element!.evaluate((el) => el.textContent);
 
     expect(labelText).toEqualText(label);
   });

@@ -21,7 +21,8 @@ export const setProperties = async <T extends keyof HTMLElementTagNameMap = BqHT
   await page.$eval(
     element,
     (elementRef, attributes) => {
-      Object.entries(attributes).forEach(([attr, value]) => (elementRef[attr] = value));
+      // @ts-expect-error Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Element'.
+      Object.entries(attributes!).forEach(([attr, value]) => (elementRef[attr] = value));
     },
     attributes,
   );
@@ -32,7 +33,8 @@ export const setProperties = async <T extends keyof HTMLElementTagNameMap = BqHT
     element,
     (elementRef, attributes) => {
       const attrs = {};
-      Object.keys(attributes).forEach((attr) => (attrs[attr] = elementRef[attr]));
+      // @ts-expect-error Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Element'.
+      Object.keys(attributes!).forEach((attr) => (attrs[attr] = elementRef[attr]));
       return attrs;
     },
     attributes,

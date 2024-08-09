@@ -94,9 +94,9 @@ describe('bq-toast', () => {
     `);
 
     const iconWrapperName = await page.$eval('bq-toast', (element) => {
-      const slotElement = element.shadowRoot.querySelector<HTMLSlotElement>('slot[name="icon"]');
+      const slotElement = element.shadowRoot!.querySelector<HTMLSlotElement>('slot[name="icon"]');
 
-      const assignedElements = slotElement.assignedElements({ flatten: true })[0];
+      const assignedElements = slotElement!.assignedElements({ flatten: true })[0];
 
       return assignedElements.getAttribute('name');
     });

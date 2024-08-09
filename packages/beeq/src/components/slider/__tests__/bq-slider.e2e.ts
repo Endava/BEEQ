@@ -89,7 +89,7 @@ describe('bq-slider', () => {
     });
 
     const element = await page.find('bq-slider');
-    expect(element.shadowRoot.querySelectorAll('input').length).toBe(1);
+    expect(element.shadowRoot!.querySelectorAll('input').length).toBe(1);
 
     await setProperties(page, 'bq-slider', { type: 'range' });
     await page.waitForChanges();

@@ -33,7 +33,7 @@ describe('bq-step-item', () => {
     });
 
     const text = await page.$eval('bq-step-item', (element) => {
-      const slotElement = element.shadowRoot.querySelector('.bq-step-item__content--title').querySelector('slot');
+      const slotElement = element.shadowRoot!.querySelector('.bq-step-item__content--title')!.querySelector('slot');
       const assignedElements = (slotElement as HTMLSlotElement).assignedElements({ flatten: true })[0];
 
       return assignedElements.textContent;
@@ -55,7 +55,7 @@ describe('bq-step-item', () => {
     });
 
     const text = await page.$eval('bq-step-item', (element) => {
-      const slotElement = element.shadowRoot.querySelector('slot[name="description"]');
+      const slotElement = element.shadowRoot!.querySelector('slot[name="description"]');
       const assignedElements = (slotElement as HTMLSlotElement).assignedElements({ flatten: true })[0];
 
       return assignedElements.textContent;
@@ -75,7 +75,7 @@ describe('bq-step-item', () => {
     });
 
     const prefix = await page.$eval('bq-step-item', (element) => {
-      const slotElement = element.shadowRoot.querySelector('slot[name="prefix"]');
+      const slotElement = element.shadowRoot!.querySelector('slot[name="prefix"]');
       const assignedElements = (slotElement as HTMLSlotElement).assignedElements({ flatten: true })[0];
 
       return assignedElements.tagName;

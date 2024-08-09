@@ -27,8 +27,8 @@ describe('bq-radio', () => {
     });
 
     const labelText = await page.$eval('bq-radio', (element) => {
-      const slotElement = element.shadowRoot.querySelector('slot');
-      const assignedElements = slotElement.assignedElements({ flatten: true })[0];
+      const slotElement = element.shadowRoot!.querySelector('slot');
+      const assignedElements = slotElement!.assignedElements({ flatten: true })[0];
 
       return assignedElements.textContent;
     });
@@ -75,7 +75,7 @@ describe('bq-radio', () => {
     await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
 
-    const focusedTagName = await page.evaluate(() => document.activeElement.tagName.toLocaleLowerCase());
+    const focusedTagName = await page.evaluate(() => document.activeElement!.tagName.toLocaleLowerCase());
 
     expect(bqFocus).toHaveReceivedEventTimes(2);
     expect(bqClick).toHaveReceivedEventTimes(0);
@@ -96,7 +96,7 @@ describe('bq-radio', () => {
     await page.keyboard.press('Tab');
     await page.keyboard.press('0');
 
-    const focusedTagName = await page.evaluate(() => document.activeElement.tagName.toLocaleLowerCase());
+    const focusedTagName = await page.evaluate(() => document.activeElement!.tagName.toLocaleLowerCase());
 
     expect(bqFocus).toHaveReceivedEventTimes(1);
     expect(bqClick).toHaveReceivedEventTimes(0);

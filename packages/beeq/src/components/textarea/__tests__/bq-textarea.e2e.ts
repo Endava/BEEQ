@@ -83,8 +83,8 @@ describe('bq-textarea', () => {
     const nativeTextareaElem = await page.find('bq-textarea >>> .bq-textarea__input');
 
     await nativeTextareaElem.type(value);
-    await page.$eval('bq-textarea >>> .bq-textarea__input', (e: HTMLInputElement) => {
-      e.blur();
+    await page.$eval('bq-textarea >>> .bq-textarea__input', (e) => {
+      (e as unknown as HTMLInputElement).blur();
     });
     await page.waitForChanges();
 

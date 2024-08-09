@@ -3,7 +3,7 @@ import { newE2EPage } from '@stencil/core/testing';
 import { computedStyle, setProperties } from '../../../shared/test-utils';
 
 const waitForSvgLoad = async (elem: HTMLBqIconElement) => {
-  const partSVG = elem.shadowRoot.querySelector('[part="svg"]');
+  const partSVG = elem.shadowRoot!.querySelector('[part="svg"]');
   if (!partSVG) {
     return new Promise((resolve) => elem.addEventListener('svgLoaded', resolve));
   }

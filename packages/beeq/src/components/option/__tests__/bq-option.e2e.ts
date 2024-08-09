@@ -110,7 +110,7 @@ describe('bq-option', () => {
     `);
 
     const prefixText = await page.$eval('bq-option', (element) => {
-      const slotElement = element.shadowRoot.querySelector('slot[name="prefix"]');
+      const slotElement = element.shadowRoot!.querySelector('slot[name="prefix"]');
       const assignedElements = (slotElement as HTMLSlotElement).assignedElements({ flatten: true })[0];
 
       return assignedElements.textContent;
@@ -130,7 +130,7 @@ describe('bq-option', () => {
     });
 
     const suffixText = await page.$eval('bq-option', (element) => {
-      const slotElement = element.shadowRoot.querySelector('slot[name="suffix"]');
+      const slotElement = element.shadowRoot!.querySelector('slot[name="suffix"]');
       const assignedElements = (slotElement as HTMLSlotElement).assignedElements({ flatten: true })[0];
 
       return assignedElements.textContent;

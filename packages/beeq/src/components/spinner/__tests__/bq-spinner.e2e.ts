@@ -77,7 +77,7 @@ describe('bq-spinner', () => {
 
     const spinnerIcon = await page.find('bq-spinner >>> .bq-spinner--icon');
     const iconSlotElements = await page.$eval('bq-spinner', (element) => {
-      const slotElement = element.shadowRoot.querySelector('slot[name="icon"]');
+      const slotElement = element.shadowRoot!.querySelector('slot[name="icon"]');
       const assignedElements = (slotElement as HTMLSlotElement).assignedElements({ flatten: true });
 
       return assignedElements;

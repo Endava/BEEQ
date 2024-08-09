@@ -176,7 +176,7 @@ describe('bq-accordion-group', () => {
     await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
 
-    const focusedTagName = await page.evaluate(() => document.activeElement.tagName.toLocaleLowerCase());
+    const focusedTagName = await page.evaluate(() => document.activeElement!.tagName.toLocaleLowerCase());
 
     expect(bqFocus).toHaveReceivedEventTimes(3);
     expect(bqClick).toHaveReceivedEventTimes(0);

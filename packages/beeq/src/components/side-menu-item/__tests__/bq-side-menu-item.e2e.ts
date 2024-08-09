@@ -118,7 +118,7 @@ it('should render prefix element', async () => {
   });
 
   const prefixText = await page.$eval('bq-side-menu-item', (element) => {
-    const slotElement = element.shadowRoot.querySelector('slot[name="prefix"]');
+    const slotElement = element.shadowRoot!.querySelector('slot[name="prefix"]');
     const assignedElements = (slotElement as HTMLSlotElement).assignedElements({ flatten: true })[0];
 
     return assignedElements.textContent;
@@ -138,7 +138,7 @@ it('should render suffix element', async () => {
   });
 
   const suffixText = await page.$eval('bq-side-menu-item', (element) => {
-    const slotElement = element.shadowRoot.querySelector('slot[name="suffix"]');
+    const slotElement = element.shadowRoot!.querySelector('slot[name="suffix"]');
     const assignedElements = (slotElement as HTMLSlotElement).assignedElements({ flatten: true })[0];
 
     return assignedElements.textContent;

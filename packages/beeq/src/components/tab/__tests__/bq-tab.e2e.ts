@@ -7,9 +7,10 @@ const waitForSvgLoad = async (
   props?: Partial<Record<keyof HTMLBqIconElement, HTMLBqIconElement[keyof HTMLBqIconElement]>>,
 ) => {
   if (props) {
+    // @ts-expect-error Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'HTMLBqIconElement'.
     Object.keys(props).forEach((attr) => (elem[attr] = props[attr]));
   }
-  const partSVG = elem.shadowRoot.querySelector('[part="svg"]');
+  const partSVG = elem.shadowRoot!.querySelector('[part="svg"]');
   if (!partSVG) {
     return new Promise((resolve) => elem.addEventListener('svgLoaded', resolve));
   }
@@ -40,7 +41,7 @@ describe('bq-tab', () => {
     await page.setContent('<bq-tab id="1"><p>Tab text</p></bq-tab>');
 
     const slotText = await page.$eval('bq-tab', (element) => {
-      const slotElement = element.shadowRoot.querySelector('[part="text"] > slot');
+      const slotElement = element.shadowRoot!.querySelector('[part="text"] > slot');
       const assignedElements = (slotElement as HTMLSlotElement).assignedElements({ flatten: true })[0];
 
       return assignedElements.textContent;
@@ -56,10 +57,10 @@ describe('bq-tab', () => {
     await page.$eval('bq-icon', waitForSvgLoad);
 
     const slotText = await page.$eval('bq-tab', (element) => {
-      const slotElement = element.shadowRoot.querySelector('[part="icon"] > slot');
+      const slotElement = element.shadowRoot!.querySelector('[part="icon"] > slot');
       const assignedElements = (slotElement as HTMLSlotElement).assignedElements({ flatten: true })[0];
 
-      const svg = assignedElements.shadowRoot.querySelector('svg');
+      const svg = assignedElements.shadowRoot!.querySelector('svg')!;
 
       return svg.innerHTML;
     });
@@ -83,7 +84,7 @@ describe('bq-tab', () => {
     await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
 
-    const focusedTagName = await page.evaluate(() => document.activeElement.tagName.toLocaleLowerCase());
+    const focusedTagName = await page.evaluate(() => document.activeElement!.tagName.toLocaleLowerCase());
 
     expect(bqFocus).toHaveReceivedEventTimes(2);
     expect(bqClick).toHaveReceivedEventTimes(0);

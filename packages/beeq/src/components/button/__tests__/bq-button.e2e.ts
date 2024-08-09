@@ -58,7 +58,7 @@ describe('bq-button', () => {
     await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
 
-    const focusedTagName = await page.evaluate(() => document.activeElement.tagName.toLocaleLowerCase());
+    const focusedTagName = await page.evaluate(() => document.activeElement!.tagName.toLocaleLowerCase());
 
     expect(bqFocus).toHaveReceivedEventTimes(2);
     expect(bqClick).toHaveReceivedEventTimes(0);
@@ -75,7 +75,7 @@ describe('bq-button', () => {
     const bqBlur = await page.spyOnEvent('bqBlur');
 
     const element = await page.waitForSelector('bq-button');
-    await element.click();
+    await element!.click();
 
     expect(bqFocus).toHaveReceivedEventTimes(0);
     expect(bqClick).toHaveReceivedEventTimes(0);
@@ -87,7 +87,7 @@ describe('bq-button', () => {
     await page.setContent('<bq-button><span slot="prefix">Prefix text</span>Button</bq-button>');
 
     const prefixText = await page.$eval('bq-button', (element) => {
-      const slotElement = element.shadowRoot.querySelector('slot[name="prefix"]');
+      const slotElement = element.shadowRoot!.querySelector('slot[name="prefix"]');
       const assignedElements = (slotElement as HTMLSlotElement).assignedElements({ flatten: true })[0];
 
       return assignedElements.textContent;
@@ -101,7 +101,7 @@ describe('bq-button', () => {
     await page.setContent('<bq-button><span slot="suffix">Suffix text</span>Button</bq-button>');
 
     const suffixText = await page.$eval('bq-button', (element) => {
-      const slotElement = element.shadowRoot.querySelector('slot[name="suffix"]');
+      const slotElement = element.shadowRoot!.querySelector('slot[name="suffix"]');
       const assignedElements = (slotElement as HTMLSlotElement).assignedElements({ flatten: true })[0];
 
       return assignedElements.textContent;

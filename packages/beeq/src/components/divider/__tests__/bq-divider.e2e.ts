@@ -26,8 +26,8 @@ describe('bq-divider', () => {
     await page.setContent('<bq-divider><p>Label</p></bq-divider>');
 
     const labelText = await page.$eval('bq-divider', (element) => {
-      const slotElement = element.shadowRoot.querySelector('slot');
-      const assignedElements = slotElement.assignedElements({ flatten: true })[0];
+      const slotElement = element.shadowRoot!.querySelector('slot');
+      const assignedElements = slotElement!.assignedElements({ flatten: true })[0];
 
       return assignedElements.textContent;
     });

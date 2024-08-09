@@ -27,8 +27,8 @@ describe('bq-checkbox', () => {
     });
 
     const labelText = await page.$eval('bq-checkbox', (element) => {
-      const slotElement = element.shadowRoot.querySelector('slot');
-      const assignedElements = slotElement.assignedElements({ flatten: true })[0];
+      const slotElement = element.shadowRoot!.querySelector('slot');
+      const assignedElements = slotElement!.assignedElements({ flatten: true })[0];
 
       return assignedElements.textContent;
     });
@@ -50,7 +50,7 @@ describe('bq-checkbox', () => {
     await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
 
-    const focusedTagName = await page.evaluate(() => document.activeElement.tagName.toLocaleLowerCase());
+    const focusedTagName = await page.evaluate(() => document.activeElement!.tagName.toLocaleLowerCase());
 
     expect(bqFocus).toHaveReceivedEventTimes(2);
     expect(bqChange).toHaveReceivedEventTimes(0);
