@@ -90,9 +90,7 @@ export function getTextContent(slot: HTMLSlotElement, options?: IOptions): strin
  * @return {boolean} True or false if the given HTML element has slot
  */
 export function hasSlot(el: HTMLElement, name: string): boolean {
-  return (
-    Array.from(el.querySelectorAll('[slot]')).filter((slottedEl: HTMLSlotElement) => slottedEl.slot === name).length > 0
-  );
+  return Array.from(el.querySelectorAll('[slot]')).filter((slottedEl) => slottedEl.slot === name).length > 0;
 }
 
 /**

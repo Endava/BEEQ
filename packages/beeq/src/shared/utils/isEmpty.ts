@@ -10,7 +10,7 @@ type TCollection = Map<unknown, unknown> | Array<unknown> | Record<string, unkno
 export const isEmpty = <T extends TCollection>(value: T): boolean => {
   if (isNil(value)) {
     return true;
-  } else if ('size' in value) {
+  } else if ('size' in value!) {
     return !isDefined(value.size);
   } else {
     return !isDefined(Object.values(value).length);

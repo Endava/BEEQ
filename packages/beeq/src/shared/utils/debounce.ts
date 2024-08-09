@@ -19,7 +19,7 @@ export type TDebounce<T> = TDebounceFnReturn<T> & { cancel: () => void } extends
 export const debounce = <TFunc extends TFunction>(func: TFunc, wait = 0, immediate = false) => {
   let cancel: () => void | undefined;
 
-  function debounceHandler(...args: Parameters<typeof func>) {
+  function debounceHandler(this: unknown, ...args: Parameters<typeof func>) {
     cancel?.();
 
     // eslint-disable-next-line @typescript-eslint/no-this-alias

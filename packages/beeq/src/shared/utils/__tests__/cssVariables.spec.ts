@@ -6,7 +6,7 @@ function setupDOM(html: string) {
   const DOM = new jsdom.JSDOM(html);
   const { document } = DOM.window;
   global.document = document;
-  global.window = document.defaultView;
+  global.window = document.defaultView!;
   global.getComputedStyle = window.getComputedStyle.bind(window);
 }
 
