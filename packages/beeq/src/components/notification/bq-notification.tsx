@@ -28,10 +28,10 @@ export class BqNotification {
   // Own Properties
   // ====================
 
-  private autoDismissDebounce: TDebounce<void>;
-  private bodyElem: HTMLDivElement;
-  private footerElem: HTMLDivElement;
-  private notificationElem: HTMLDivElement;
+  private autoDismissDebounce?: TDebounce<void>;
+  private bodyElem?: HTMLDivElement;
+  private footerElem?: HTMLDivElement;
+  private notificationElem?: HTMLDivElement;
 
   // Reference to host HTML element
   // ===================================
@@ -49,19 +49,19 @@ export class BqNotification {
   // ========================
 
   /** If true, the notification will automatically hide after the specified amount of time */
-  @Prop({ reflect: true }) autoDismiss: boolean;
+  @Prop({ reflect: true }) autoDismiss?: boolean;
 
   /** The corder radius of the notification component */
   @Prop({ reflect: true }) border: TNotificationBorderRadius = 's';
 
   /** If true, the close button at the top right of the notification won't be shown */
-  @Prop({ reflect: true }) disableClose: boolean;
+  @Prop({ reflect: true }) disableClose?: boolean;
 
   /** If true, the notification icon won't be shown */
-  @Prop({ reflect: true }) hideIcon: boolean;
+  @Prop({ reflect: true }) hideIcon?: boolean;
 
   /** If true, the notification will be shown */
-  @Prop({ reflect: true, mutable: true }) open: boolean;
+  @Prop({ reflect: true, mutable: true }) open?: boolean;
 
   /** The length of time, in milliseconds, after which the notification will close itself. Only valid if `autoDismiss="true"` */
   @Prop({ reflect: true }) time: number = 3000;
@@ -89,7 +89,7 @@ export class BqNotification {
     this.autoDismissDebounce?.cancel();
 
     if (!(this.autoDismiss && this.open)) return;
-    this.autoDismissDebounce();
+    this.autoDismissDebounce?.();
   }
 
   @Watch('type')
@@ -183,7 +183,7 @@ export class BqNotification {
   private handleHide = async () => {
     const ev = this.bqHide.emit(this.el);
     if (!ev.defaultPrevented) {
-      await leave(this.notificationElem);
+      await leave(this.notificationElem!);
       this.open = false;
       this.handleTransitionEnd();
     }
@@ -193,7 +193,7 @@ export class BqNotification {
     const ev = this.bqShow.emit(this.el);
     if (!ev.defaultPrevented) {
       this.open = true;
-      await enter(this.notificationElem);
+      await enter(this.notificationElem!);
       this.handleTransitionEnd();
     }
   };
@@ -208,11 +208,11 @@ export class BqNotification {
   };
 
   private handleContentSlotChange = () => {
-    this.hasContent = hasSlotContent(this.bodyElem);
+    this.hasContent = hasSlotContent(this.bodyElem!);
   };
 
   private handleFooterSlotChange = () => {
-    this.hasFooter = hasSlotContent(this.footerElem, 'footer');
+    this.hasFooter = hasSlotContent(this.footerElem!, 'footer');
   };
 
   private get iconName(): string {
@@ -271,7 +271,7 @@ export class BqNotification {
           {/* ICON */}
           <div
             class={{
-              '!hidden': this.hideIcon,
+              '!hidden': !!this.hideIcon,
               [`color-${this.type}`]: true, // The icon color will be based on the type (info, success, warning, error)
               'notification--icon me-xs flex text-left align-top': true,
             }}

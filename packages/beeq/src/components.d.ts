@@ -738,7 +738,7 @@ export namespace Components {
         /**
           * If true, the notification will automatically hide after the specified amount of time
          */
-        "autoDismiss": boolean;
+        "autoDismiss"?: boolean;
         /**
           * The corder radius of the notification component
          */
@@ -746,7 +746,7 @@ export namespace Components {
         /**
           * If true, the close button at the top right of the notification won't be shown
          */
-        "disableClose": boolean;
+        "disableClose"?: boolean;
         /**
           * Method to be called to hide the notification component
          */
@@ -754,11 +754,11 @@ export namespace Components {
         /**
           * If true, the notification icon won't be shown
          */
-        "hideIcon": boolean;
+        "hideIcon"?: boolean;
         /**
           * If true, the notification will be shown
          */
-        "open": boolean;
+        "open"?: boolean;
         /**
           * Method to be called to show the notification component
          */
