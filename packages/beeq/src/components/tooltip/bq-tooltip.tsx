@@ -16,10 +16,10 @@ import { FloatingUI } from '../../services/libraries';
 export class BqTooltip {
   // Own Properties
   // ====================
-  private trigger: HTMLElement;
-  private panel: HTMLElement;
-  private arrow: HTMLElement;
-  private floatingUI: FloatingUI;
+  private trigger?: HTMLElement;
+  private panel?: HTMLElement;
+  private arrow?: HTMLElement;
+  private floatingUI?: FloatingUI;
 
   // Reference to host HTML element
   // ===================================
@@ -74,7 +74,7 @@ export class BqTooltip {
   @Watch('placement')
   @Watch('sameWidth')
   handleFloatingUIOptionsChange() {
-    this.floatingUI.init({
+    this.floatingUI!.init({
       placement: this.placement,
       distance: this.distance,
       sameWidth: this.sameWidth,
@@ -90,7 +90,7 @@ export class BqTooltip {
   // =====================================
 
   componentDidLoad() {
-    this.floatingUI = new FloatingUI(this.trigger, this.panel, {
+    this.floatingUI = new FloatingUI(this.trigger!, this.panel!, {
       ...(!this.hideArrow && { arrow: this.arrow }),
       placement: this.placement,
       distance: this.distance,
