@@ -18,9 +18,9 @@ export class Accordion {
     // Store the <details> element
     this.el = el;
     // Store the <summary> header element
-    this.header = el.querySelector('summary');
+    this.header = el.querySelector('summary')!;
     // Store the <div class="content"> element
-    this.panel = el.querySelector('.bq-accordion__body');
+    this.panel = el.querySelector('.bq-accordion__body')!;
     // Store the animation object (so we can cancel it, if needed)
     this.animation = null;
     // Store if the element is closing

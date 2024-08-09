@@ -98,7 +98,7 @@ export namespace Components {
         /**
           * If true all accordions are expanded
          */
-        "expandAll": boolean;
+        "expandAll"?: boolean;
         /**
           * If true multiple accordions can be expanded at the same time
          */

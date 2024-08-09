@@ -31,7 +31,7 @@ export class BqAccordionGroup {
   @Prop({ reflect: true, mutable: true }) appearance: TAccordionAppearance = 'filled';
 
   /** If true all accordions are expanded */
-  @Prop({ reflect: true }) expandAll: boolean;
+  @Prop({ reflect: true }) expandAll?: boolean;
 
   /**
    * Animation is set through JS when the browser does not support CSS calc-size()

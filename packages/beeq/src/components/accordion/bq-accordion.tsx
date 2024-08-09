@@ -21,10 +21,10 @@ export class BqAccordion {
   // Own Properties
   // ====================
 
-  private accordion: Accordion;
-  private prefixElem: HTMLDivElement;
-  private suffixElem: HTMLDivElement;
-  private detailsElem: HTMLDetailsElement;
+  private accordion: Accordion | null = null;
+  private prefixElem?: HTMLDivElement;
+  private suffixElem?: HTMLDivElement;
+  private detailsElem?: HTMLDetailsElement;
 
   // Reference to host HTML element
   // ===================================
@@ -104,7 +104,7 @@ export class BqAccordion {
       `[bq-accordion] calc-size() is not supported and animation will be set through JS
         For vertical layout, consider using the 'noAnimation' prop ('no-animation' attribute) to disable it`,
     );
-    this.accordion = !this.noAnimation ? new Accordion(this.detailsElem) : null;
+    this.accordion = !this.noAnimation ? new Accordion(this.detailsElem!) : null;
   }
 
   // Events section
@@ -112,25 +112,25 @@ export class BqAccordion {
   // ==============================================
 
   /** Handler to be called when the accordion loses focus */
-  @Event() bqBlur: EventEmitter<HTMLBqAccordionElement>;
+  @Event() bqBlur!: EventEmitter<HTMLBqAccordionElement>;
 
   /** Handler to be called when the accordion gets focus */
-  @Event() bqFocus: EventEmitter<HTMLBqAccordionElement>;
+  @Event() bqFocus!: EventEmitter<HTMLBqAccordionElement>;
 
   /** Handler to be called when the accordion is opened */
-  @Event() bqOpen: EventEmitter<HTMLBqAccordionElement>;
+  @Event() bqOpen!: EventEmitter<HTMLBqAccordionElement>;
 
   /** Handler to be called after the accordion is opened */
-  @Event() bqAfterOpen: EventEmitter<HTMLBqAccordionElement>;
+  @Event() bqAfterOpen!: EventEmitter<HTMLBqAccordionElement>;
 
   /** Handler to be called when the accordion is closed */
-  @Event() bqClose: EventEmitter<HTMLBqAccordionElement>;
+  @Event() bqClose!: EventEmitter<HTMLBqAccordionElement>;
 
   /** Handler to be called after the accordion is closed */
-  @Event() bqAfterClose: EventEmitter<HTMLBqAccordionElement>;
+  @Event() bqAfterClose!: EventEmitter<HTMLBqAccordionElement>;
 
   /** @internal Handler to be called when the accordion is clicked */
-  @Event() bqClick: EventEmitter<HTMLBqAccordionElement>;
+  @Event() bqClick!: EventEmitter<HTMLBqAccordionElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -188,11 +188,11 @@ export class BqAccordion {
   };
 
   private handlePrefixSlotChange = () => {
-    this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
+    this.hasPrefix = hasSlotContent(this.prefixElem!, 'prefix');
   };
 
   private handleSuffixSlotChange = () => {
-    this.hasSuffix = hasSlotContent(this.suffixElem, 'suffix');
+    this.hasSuffix = hasSlotContent(this.suffixElem!, 'suffix');
   };
 
   private get open() {
@@ -215,7 +215,7 @@ export class BqAccordion {
           'no-animation': this.noAnimation,
           disabled: this.disabled,
         }}
-        ref={(detailsElem: HTMLDetailsElement) => (this.detailsElem = detailsElem)}
+        ref={(detailsElem) => (this.detailsElem = detailsElem as unknown as HTMLDetailsElement)}
         open={this.open}
         part="base"
       >
