@@ -20,7 +20,7 @@ export class BqToast {
   // Own Properties
   // ====================
 
-  private autoDismissDebounce: TDebounce<void>;
+  private autoDismissDebounce?: TDebounce<void>;
 
   // Reference to host HTML element
   // ===================================
@@ -47,7 +47,7 @@ export class BqToast {
   @Prop({ reflect: true, mutable: true }) hideIcon = false;
 
   /** If true, the toast will be shown */
-  @Prop({ reflect: true, mutable: true }) open: boolean;
+  @Prop({ reflect: true, mutable: true }) open: boolean = false;
 
   /** The length of time, in milliseconds, after which the toast will close itself */
   @Prop({ reflect: true }) time: number = 3000;
@@ -90,10 +90,10 @@ export class BqToast {
   // ==============================================
 
   /** Callback handler to be called when the notification is hidden */
-  @Event() bqHide: EventEmitter<HTMLBqToastElement>;
+  @Event() bqHide!: EventEmitter<HTMLBqToastElement>;
 
   /** Callback handler to be called when the notification is shown */
-  @Event() bqShow: EventEmitter<HTMLBqToastElement>;
+  @Event() bqShow!: EventEmitter<HTMLBqToastElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
