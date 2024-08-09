@@ -21,7 +21,7 @@ export class BqTag {
   // Own Properties
   // ====================
 
-  private prefixElem: HTMLElement;
+  private prefixElem?: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -38,19 +38,19 @@ export class BqTag {
   // ========================
 
   /** The corner radius of the Tag (will override size's predefined border) */
-  @Prop({ reflect: true }) border: TTagBorderRadius;
+  @Prop({ reflect: true }) border?: TTagBorderRadius;
 
   /** If true, the Tag can be clickable */
   @Prop({ reflect: true }) clickable: boolean = false;
 
   /** The color style of the Tag */
-  @Prop({ reflect: true }) color: TTagColor;
+  @Prop({ reflect: true }) color?: TTagColor;
 
   /** If true, the Tag will be disabled (only if clickable = `true`, no interaction allowed) */
   @Prop({ reflect: true }) disabled?: boolean = false;
 
   /** If true, the Tag component will hidden (only if removable = `true`) */
-  @Prop({ reflect: true, mutable: true }) hidden: boolean;
+  @Prop({ reflect: true, mutable: true }) hidden: boolean = false;
 
   /** If true, the Tag component can be removed */
   @Prop({ reflect: true }) removable: boolean = false;
@@ -79,19 +79,19 @@ export class BqTag {
   // ==============================================
 
   /** Callback handler to be called when the tag is close/hidden  */
-  @Event() bqClose: EventEmitter;
+  @Event() bqClose!: EventEmitter;
 
   /** Callback handler to be called when the tag is not open/shown */
-  @Event() bqOpen: EventEmitter;
+  @Event() bqOpen!: EventEmitter;
 
   /** Handler to be called when tag loses focus */
-  @Event() bqBlur: EventEmitter<HTMLBqTagElement>;
+  @Event() bqBlur!: EventEmitter<HTMLBqTagElement>;
 
   /** Handler to be called when tag is clicked */
-  @Event() bqClick: EventEmitter<HTMLBqTagElement>;
+  @Event() bqClick!: EventEmitter<HTMLBqTagElement>;
 
   /** Handler to be called when tag is focused */
-  @Event() bqFocus: EventEmitter<HTMLBqTagElement>;
+  @Event() bqFocus!: EventEmitter<HTMLBqTagElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -171,7 +171,7 @@ export class BqTag {
   };
 
   private handleSlotChange = () => {
-    this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
+    this.hasPrefix = hasSlotContent(this.prefixElem!, 'prefix');
   };
 
   private get isClickable(): boolean {

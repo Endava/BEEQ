@@ -1300,7 +1300,7 @@ export namespace Components {
         /**
           * The color style of the Tag
          */
-        "color": TTagColor;
+        "color"?: TTagColor;
         /**
           * If true, the Tag will be disabled (only if clickable = `true`, no interaction allowed)
          */
