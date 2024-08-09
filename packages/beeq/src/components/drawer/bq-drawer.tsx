@@ -24,8 +24,8 @@ export class BqDrawer {
   // Own Properties
   // ====================
 
-  private footerElem: HTMLElement;
-  private drawerElem: HTMLDivElement;
+  private footerElem?: HTMLElement;
+  private drawerElem?: HTMLDivElement;
   private OPEN_CSS_CLASS = 'bq-drawer--open';
 
   // Reference to host HTML element
@@ -53,7 +53,7 @@ export class BqDrawer {
   @Prop({ reflect: true }) closeOnEsc = false;
 
   /** If true, the drawer component will be shown */
-  @Prop({ reflect: true, mutable: true }) open: boolean;
+  @Prop({ reflect: true, mutable: true }) open: boolean = false;
 
   /** @deprecated Defines the position of the drawer */
   @Prop({ reflect: true, mutable: true }) placement: TDrawerPlacement = 'right';
@@ -189,7 +189,7 @@ export class BqDrawer {
   // =======================================================
 
   private handleFooterSlotChange = () => {
-    this.hasFooter = hasSlotContent(this.footerElem, 'footer');
+    this.hasFooter = hasSlotContent(this.footerElem!, 'footer');
   };
 
   private handleAfterHide = async () => {
