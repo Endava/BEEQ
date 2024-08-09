@@ -17,8 +17,8 @@ export class BqOption {
   // Own Properties
   // ====================
 
-  private prefixElem: HTMLElement;
-  private suffixElem: HTMLElement;
+  private prefixElem?: HTMLElement;
+  private suffixElem?: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -55,16 +55,16 @@ export class BqOption {
   // ==============================================
 
   /** Handler to be called when item loses focus */
-  @Event() bqBlur: EventEmitter<HTMLBqOptionElement>;
+  @Event() bqBlur!: EventEmitter<HTMLBqOptionElement>;
 
   /** Handler to be called when item is focused */
-  @Event() bqFocus: EventEmitter<HTMLBqOptionElement>;
+  @Event() bqFocus!: EventEmitter<HTMLBqOptionElement>;
 
   /** Handler to be called when item is clicked */
-  @Event() bqClick: EventEmitter<HTMLBqOptionElement>;
+  @Event() bqClick!: EventEmitter<HTMLBqOptionElement>;
 
   /** Handler to be called on enter key press */
-  @Event() bqEnter: EventEmitter<HTMLBqOptionElement>;
+  @Event() bqEnter!: EventEmitter<HTMLBqOptionElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -122,11 +122,11 @@ export class BqOption {
   };
 
   private onSlotChange = () => {
-    this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
+    this.hasPrefix = hasSlotContent(this.prefixElem!, 'prefix');
   };
 
   private handleSuffixSlotChange = () => {
-    this.hasSuffix = hasSlotContent(this.suffixElem, 'suffix');
+    this.hasSuffix = hasSlotContent(this.suffixElem!, 'suffix');
   };
 
   private get isDisabledOrHidden() {
@@ -148,7 +148,7 @@ export class BqOption {
         <div
           class={{
             'bq-option': true,
-            disabled: this.disabled,
+            disabled: !!this.disabled,
             active: !this.disabled && this.selected,
           }}
           onBlur={this.onBlur}
