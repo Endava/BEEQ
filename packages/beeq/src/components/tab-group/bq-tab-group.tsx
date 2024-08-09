@@ -133,27 +133,22 @@ export class BqTabGroup {
   async onBqKeyDown(event: CustomEvent<KeyboardEvent>) {
     const { target } = event;
 
+    // NOTE: ensures the target is an HTML element with the tag name 'bq-tab'
     if (!isHTMLElement(target, 'bq-tab')) return;
 
-    switch (event.detail.key) {
-      case 'ArrowDown': {
-        await this.focusTabSibling(target, 'forward');
-        break;
-      }
-      case 'ArrowRight': {
-        await this.focusTabSibling(target, 'forward');
-        break;
-      }
-      case 'ArrowUp': {
-        await this.focusTabSibling(target, 'backward');
-        break;
-      }
-      case 'ArrowLeft': {
-        await this.focusTabSibling(target, 'backward');
-        break;
-      }
-      default:
-    }
+    const keyActions: { [key: string]: 'forward' | 'backward' } = {
+      ArrowDown: 'forward',
+      ArrowRight: 'forward',
+      ArrowUp: 'backward',
+      ArrowLeft: 'backward',
+    };
+
+    // NOTE: gets the direction based on key pressed
+    const direction = keyActions[event.detail.key];
+
+    if (!direction) return;
+
+    await this.focusTabSibling(target, direction);
   }
 
   @Listen('bqBlur', { capture: true, passive: true })
