@@ -28,10 +28,10 @@ export class BqDialog {
   // Own Properties
   // ====================
 
-  private dialogElem: HTMLDialogElement;
-  private contentElem: HTMLElement;
-  private footerElem: HTMLElement;
-  private closeSlotElem: HTMLElement;
+  private dialogElem?: HTMLDialogElement;
+  private contentElem?: HTMLElement;
+  private footerElem?: HTMLElement;
+  private closeSlotElem?: HTMLElement;
   private OPEN_CSS_CLASS = 'bq-dialog--open';
 
   // Reference to host HTML element
@@ -120,7 +120,7 @@ export class BqDialog {
 
   componentDidLoad() {
     this.handleOpenChange();
-    this.closeSlotElem = this.el.shadowRoot.querySelector('slot[name="button-close"]');
+    this.closeSlotElem = this.el.shadowRoot!.querySelector('slot[name="button-close"]') ?? undefined;
     this.closeSlotElem?.addEventListener('click', () => this.hide());
   }
 
@@ -232,11 +232,11 @@ export class BqDialog {
   };
 
   private handleContentSlotChange = () => {
-    this.hasContent = hasSlotContent(this.contentElem);
+    this.hasContent = hasSlotContent(this.contentElem!);
   };
 
   private handleFooterSlotChange = () => {
-    this.hasFooter = hasSlotContent(this.footerElem, 'footer');
+    this.hasFooter = hasSlotContent(this.footerElem!, 'footer');
   };
 
   // render() function
