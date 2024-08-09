@@ -30,8 +30,8 @@ export class BqButton {
   // Own Properties
   // ====================
 
-  private prefixElem: HTMLElement;
-  private suffixElem: HTMLElement;
+  private prefixElem?: HTMLElement;
+  private suffixElem?: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -67,7 +67,7 @@ export class BqButton {
   @Prop() download?: string;
 
   /** When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>` */
-  @Prop({ reflect: true }) href: string;
+  @Prop({ reflect: true }) href?: string;
 
   /** It determinate how the content should be aligned */
   @Prop({ reflect: true }) justifyContent: 'left' | 'center' | 'right' = 'center';
@@ -82,7 +82,7 @@ export class BqButton {
    * Where to display the linked URL, as the name for a browsing context (a `tab`, `window`, or `<iframe>`)
    * Details: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-target
    */
-  @Prop({ reflect: true }) target: '_blank' | '_parent' | '_self' | '_top';
+  @Prop({ reflect: true }) target?: '_blank' | '_parent' | '_self' | '_top';
 
   /** The default behavior of the button */
   @Prop({ reflect: true }) type: TButtonType = 'button';
@@ -109,13 +109,13 @@ export class BqButton {
   // ==============================================
 
   /** Handler to be called when the button loses focus */
-  @Event() bqBlur: EventEmitter<HTMLBqButtonElement>;
+  @Event() bqBlur!: EventEmitter<HTMLBqButtonElement>;
 
   /** Handler to be called when the button is clicked */
-  @Event() bqFocus: EventEmitter<HTMLBqButtonElement>;
+  @Event() bqFocus!: EventEmitter<HTMLBqButtonElement>;
 
   /** Handler to be called when button gets focus */
-  @Event() bqClick: EventEmitter<HTMLBqButtonElement>;
+  @Event() bqClick!: EventEmitter<HTMLBqButtonElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -172,8 +172,8 @@ export class BqButton {
   };
 
   private handleSlotChange = () => {
-    this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
-    this.hasSuffix = hasSlotContent(this.suffixElem, 'suffix');
+    this.hasPrefix = hasSlotContent(this.prefixElem!, 'prefix');
+    this.hasSuffix = hasSlotContent(this.suffixElem!, 'suffix');
   };
 
   // render() function

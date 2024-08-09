@@ -249,7 +249,7 @@ export namespace Components {
         /**
           * When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`
          */
-        "href": string;
+        "href"?: string;
         /**
           * It determinate how the content should be aligned
          */
@@ -265,7 +265,7 @@ export namespace Components {
         /**
           * Where to display the linked URL, as the name for a browsing context (a `tab`, `window`, or `<iframe>`) Details: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-target
          */
-        "target": '_blank' | '_parent' | '_self' | '_top';
+        "target"?: '_blank' | '_parent' | '_self' | '_top';
         /**
           * The default behavior of the button
          */
