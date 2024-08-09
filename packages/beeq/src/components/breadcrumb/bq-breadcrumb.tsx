@@ -14,7 +14,7 @@ export class BqBreadcrumb {
   // Own Properties
   // ====================
 
-  private spanElem: HTMLElement;
+  private spanElem?: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -39,13 +39,13 @@ export class BqBreadcrumb {
   // ==============================================
 
   /** Handler to be called when `bq-breadcrumb-item` item loses focus. */
-  @Event() bqBreadcrumbBlur: EventEmitter<HTMLBqBreadcrumbItemElement>;
+  @Event() bqBreadcrumbBlur!: EventEmitter<HTMLBqBreadcrumbItemElement>;
 
   /** Handler to be called when `bq-breadcrumb-item` item gets focus. */
-  @Event() bqBreadcrumbFocus: EventEmitter<HTMLBqBreadcrumbItemElement>;
+  @Event() bqBreadcrumbFocus!: EventEmitter<HTMLBqBreadcrumbItemElement>;
 
   /** Handler to be called when `bq-breadcrumb-item` is selected (on click/enter press). */
-  @Event() bqBreadcrumbClick: EventEmitter<HTMLBqBreadcrumbItemElement>;
+  @Event() bqBreadcrumbClick!: EventEmitter<HTMLBqBreadcrumbItemElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -104,9 +104,9 @@ export class BqBreadcrumb {
   }
 
   private get separatorFromSlot() {
-    return this.spanElem
-      .querySelector<HTMLSlotElement>('slot[name="separator"]')
-      .assignedElements({ flatten: true })[0] as HTMLElement;
+    return this.spanElem!.querySelector<HTMLSlotElement>('slot[name="separator"]')!.assignedElements({
+      flatten: true,
+    })[0] as HTMLElement;
   }
 
   // render() function

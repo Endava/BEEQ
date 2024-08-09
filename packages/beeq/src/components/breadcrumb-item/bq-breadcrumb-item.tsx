@@ -33,16 +33,16 @@ export class BqBreadcrumbItem {
    * The aria-label that corresponds to the full title of the destination page.
    * This won't be shown in the page, but it will be used by screen readers and other assistive devices.
    */
-  @Prop() ariaLabel: string;
+  @Prop() ariaLabel?: string;
 
   /** If true, the item is the last element inside breadcrumb */
   @Prop() isLastItem: boolean = false;
 
   /** If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered. */
-  @Prop({ reflect: true }) href: string;
+  @Prop({ reflect: true }) href?: string;
 
   /** Where to display the link in the browser context. Relevant only if `href` is set. */
-  @Prop({ reflect: true }) target: '_blank' | '_parent' | '_self' | '_top';
+  @Prop({ reflect: true }) target?: '_blank' | '_parent' | '_self' | '_top';
 
   /** Where to display the link in the browser context. Relevant only if `href` is set. */
   @Prop({ reflect: true }) rel: string = 'noreferrer noopener';
@@ -55,13 +55,13 @@ export class BqBreadcrumbItem {
   // ==============================================
 
   /** Handler to be called when item loses focus */
-  @Event() bqBlur: EventEmitter<HTMLBqBreadcrumbItemElement>;
+  @Event() bqBlur!: EventEmitter<HTMLBqBreadcrumbItemElement>;
 
   /** Handler to be called when item is focused */
-  @Event() bqFocus: EventEmitter<HTMLBqBreadcrumbItemElement>;
+  @Event() bqFocus!: EventEmitter<HTMLBqBreadcrumbItemElement>;
 
   /** Handler to be called when item is clicked */
-  @Event() bqClick: EventEmitter<HTMLBqBreadcrumbItemElement>;
+  @Event() bqClick!: EventEmitter<HTMLBqBreadcrumbItemElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order

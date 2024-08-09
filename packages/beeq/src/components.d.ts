@@ -204,11 +204,11 @@ export namespace Components {
         /**
           * The aria-label that corresponds to the full title of the destination page. This won't be shown in the page, but it will be used by screen readers and other assistive devices.
          */
-        "ariaLabel": string;
+        "ariaLabel"?: string;
         /**
           * If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
          */
-        "href": string;
+        "href"?: string;
         /**
           * If true, the item is the last element inside breadcrumb
          */
@@ -220,7 +220,7 @@ export namespace Components {
         /**
           * Where to display the link in the browser context. Relevant only if `href` is set.
          */
-        "target": '_blank' | '_parent' | '_self' | '_top';
+        "target"?: '_blank' | '_parent' | '_self' | '_top';
     }
     /**
      * Buttons are designed for users to take action on a page or a screen.
