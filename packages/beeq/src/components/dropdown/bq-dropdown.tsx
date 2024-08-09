@@ -20,7 +20,7 @@ export class BqDropdown {
   // ====================
 
   private dropdownPanelId = `bq-dropdown-panel-${++id}`;
-  private triggerElem: HTMLElement;
+  private triggerElem?: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -66,7 +66,7 @@ export class BqDropdown {
 
   @Watch('open')
   onOpenChange() {
-    this.bqOpen.emit({ open: this.open });
+    this.bqOpen.emit({ open: this.open! });
   }
 
   @Watch('disabled')
@@ -82,14 +82,14 @@ export class BqDropdown {
   // ==============================================
 
   /** Callback handler to be called when the dropdown panel is opened or closed. */
-  @Event() bqOpen: EventEmitter<{ open: boolean }>;
+  @Event() bqOpen!: EventEmitter<{ open: boolean }>;
 
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
 
   componentDidLoad() {
-    this.triggerElem = this.el.querySelector('[slot="trigger"]');
+    this.triggerElem = this.el.querySelector('[slot="trigger"]')!;
     this.handleDisabledChange();
   }
 
