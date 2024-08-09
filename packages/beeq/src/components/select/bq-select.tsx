@@ -51,7 +51,7 @@ export class BqSelect {
   private prefixElem?: HTMLElement;
   private suffixElem?: HTMLElement;
 
-  private debounceQuery: TDebounce<void>;
+  private debounceQuery?: TDebounce<void>;
 
   private fallbackInputId = 'select';
 
@@ -77,7 +77,7 @@ export class BqSelect {
   // ========================
 
   /** If true, the Select input will be focused on component render */
-  @Prop({ reflect: true }) autofocus: boolean;
+  @Prop({ reflect: true }) autofocus: boolean = false;
 
   /** The clear button aria label */
   @Prop({ reflect: true }) clearButtonLabel? = 'Clear value';
@@ -92,7 +92,7 @@ export class BqSelect {
    * Indicates whether the Select input is disabled or not.
    * If `true`, the Select is disabled and cannot be interacted with.
    */
-  @Prop({ mutable: true }) disabled?: boolean = false;
+  @Prop({ mutable: true }) disabled: boolean = false;
 
   /** If true, the clear button won't be displayed */
   @Prop({ reflect: true }) disableClear? = false;
@@ -116,7 +116,7 @@ export class BqSelect {
   @Prop({ reflect: true }) multiple?: boolean = false;
 
   /** If true, the Select panel will be visible. */
-  @Prop({ reflect: true, mutable: true }) open?: boolean = false;
+  @Prop({ reflect: true, mutable: true }) open: boolean = false;
 
   /** When set, it will override the height of the Select panel. */
   @Prop({ reflect: true }) panelHeight?: string;
@@ -155,7 +155,7 @@ export class BqSelect {
   @Prop({ reflect: true }) validationStatus: TInputValidation = 'none';
 
   /** The select input value, it can be used to reset the field to a previous value */
-  @Prop({ reflect: true, mutable: true }) value: TSelectValue;
+  @Prop({ reflect: true, mutable: true }) value?: TSelectValue;
 
   // Prop lifecycle events
   // =======================
@@ -199,7 +199,7 @@ export class BqSelect {
 
   componentDidLoad() {
     if (this.multiple && Array.isArray(this.value)) {
-      this.selectedOptions = this.options.filter((item) => this.value.includes(item.value));
+      this.selectedOptions = this.options.filter((item) => this.value!.includes(item.value!));
     }
 
     this.handleValueChange();
@@ -245,7 +245,7 @@ export class BqSelect {
     this.selectedOptions = [];
     if (!this.multiple) {
       this.displayValue = undefined;
-      this.inputElem.value = undefined;
+      this.inputElem!.value = '';
     }
 
     this.resetOptionsVisibility();
@@ -281,16 +281,16 @@ export class BqSelect {
     if (this.multiple) {
       this.handleMultipleSelection(item);
       // Clear the input value after selecting an item
-      this.inputElem.value = '';
+      this.inputElem!.value = '';
       // If multiple selection is enabled, emit the selected items array instead of relying on
       // the option list to emit the value of the selected item
-      this.bqSelect.emit({ value: this.value, item });
+      this.bqSelect.emit({ value: this.value!, item });
     } else {
       this.value = value;
     }
 
     this.resetOptionsVisibility();
-    this.inputElem.focus();
+    this.inputElem!.focus();
   };
 
   private handleMultipleSelection = (item: HTMLBqOptionElement) => {
@@ -304,7 +304,7 @@ export class BqSelect {
     }
 
     this.selectedOptions = Array.from(selectedOptionsSet);
-    this.value = this.selectedOptions.map((item) => item.value);
+    this.value = this.selectedOptions.map((item) => item.value!);
   };
 
   private handleSearchFilter = (ev: Event) => {
@@ -319,7 +319,7 @@ export class BqSelect {
     } else {
       this.debounceQuery = debounce(() => {
         this.options.forEach((item: HTMLBqOptionElement) => {
-          const itemLabel = this.getOptionLabel(item).toLowerCase();
+          const itemLabel = this.getOptionLabel(item)!.toLowerCase();
           item.hidden = !itemLabel.includes(query);
         });
       }, this.debounceTime);
@@ -336,7 +336,7 @@ export class BqSelect {
     (async () => {
       await this.clear();
     })();
-    this.inputElem.focus();
+    this.inputElem!.focus();
 
     ev.stopPropagation();
   };
@@ -345,23 +345,23 @@ export class BqSelect {
     if (this.disabled) return;
 
     this.handleMultipleSelection(item);
-    this.bqSelect.emit({ value: this.value, item });
+    this.bqSelect.emit({ value: this.value!, item });
   };
 
   private handleLabelSlotChange = () => {
-    this.hasLabel = hasSlotContent(this.labelElem);
+    this.hasLabel = hasSlotContent(this.labelElem!);
   };
 
   private handlePrefixSlotChange = () => {
-    this.hasPrefix = hasSlotContent(this.prefixElem);
+    this.hasPrefix = hasSlotContent(this.prefixElem!);
   };
 
   private handleSuffixSlotChange = () => {
-    this.hasSuffix = hasSlotContent(this.suffixElem);
+    this.hasSuffix = hasSlotContent(this.suffixElem!);
   };
 
   private handleHelperTextSlotChange = () => {
-    this.hasHelperText = hasSlotContent(this.helperTextElem);
+    this.hasHelperText = hasSlotContent(this.helperTextElem!);
   };
 
   private resetOptionsVisibility = () => {
@@ -375,9 +375,9 @@ export class BqSelect {
     // Sync selected state of the BqOption elements
     this.options.forEach((option: HTMLBqOptionElement) => {
       if (this.multiple && Array.isArray(this.value)) {
-        option.selected = this.value.includes(option.value);
+        option.selected = this.value.includes(option.value!);
       } else {
-        option.selected = option.value.toLowerCase() === String(this.value).toLowerCase();
+        option.selected = option.value!.toLowerCase() === String(this.value).toLowerCase();
       }
     });
 
@@ -385,14 +385,14 @@ export class BqSelect {
       // Sync display label
       const checkedItem = items.filter((item) => item.value === this.value)[0];
       this.displayValue = checkedItem ? this.getOptionLabel(checkedItem) : '';
-      this.inputElem.value = this.displayValue ?? '';
+      this.inputElem!.value = this.displayValue ?? '';
     } else {
-      this.selectedOptions = this.options.filter((item) => this.value?.includes(item.value));
+      this.selectedOptions = this.options.filter((item) => this.value?.includes(item.value!));
     }
   };
 
   private getOptionLabel = (item: HTMLBqOptionElement) => {
-    const slot = item.shadowRoot.querySelector('slot:not([name])');
+    const slot = item.shadowRoot!.querySelector('slot:not([name])');
     if (!slot) return;
 
     return getTextContent(slot as HTMLSlotElement);
@@ -473,7 +473,7 @@ export class BqSelect {
           id={labelId}
           class={{ 'bq-select__label': true, '!hidden': !this.hasLabel }}
           htmlFor={this.name || this.fallbackInputId}
-          ref={(labelElem: HTMLSpanElement) => (this.labelElem = labelElem)}
+          ref={(labelElem) => (this.labelElem = labelElem)}
           part="label"
         >
           <slot name="label" onSlotchange={this.handleLabelSlotChange} />
@@ -505,7 +505,7 @@ export class BqSelect {
             {/* Prefix */}
             <span
               class={{ 'bq-select__control--prefix': true, '!hidden': !this.hasPrefix }}
-              ref={(spanElem: HTMLSpanElement) => (this.prefixElem = spanElem)}
+              ref={(spanElem) => (this.prefixElem = spanElem)}
               part="prefix"
             >
               <slot name="prefix" onSlotchange={this.handlePrefixSlotChange} />
@@ -532,7 +532,7 @@ export class BqSelect {
                 form={this.form}
                 name={this.name}
                 placeholder={this.displayPlaceholder}
-                ref={(inputElem: HTMLInputElement) => (this.inputElem = inputElem)}
+                ref={(inputElem) => (this.inputElem = inputElem)}
                 readOnly={this.readonly}
                 required={this.required}
                 role="combobox"
@@ -568,7 +568,7 @@ export class BqSelect {
             {/* Suffix */}
             <span
               class={{ 'bq-select__control--suffix': true, 'rotate-180': this.open, 'rotate-0': !this.open }}
-              ref={(spanElem: HTMLSpanElement) => (this.suffixElem = spanElem)}
+              ref={(spanElem) => (this.suffixElem = spanElem)}
               part="suffix"
             >
               <slot name="suffix" onSlotchange={this.handleSuffixSlotChange}>
@@ -592,7 +592,7 @@ export class BqSelect {
             [`bq-select__helper-text validation-${this.validationStatus}`]: true,
             '!hidden': !this.hasHelperText,
           }}
-          ref={(divElem: HTMLDivElement) => (this.helperTextElem = divElem)}
+          ref={(divElem) => (this.helperTextElem = divElem)}
           part="helper-text"
         >
           <slot name="helper-text" onSlotchange={this.handleHelperTextSlotChange} />

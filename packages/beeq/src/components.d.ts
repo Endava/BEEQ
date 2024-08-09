@@ -958,7 +958,7 @@ export namespace Components {
         /**
           * Indicates whether the Select input is disabled or not. If `true`, the Select is disabled and cannot be interacted with.
          */
-        "disabled"?: boolean;
+        "disabled": boolean;
         /**
           * Represents the distance (gutter or margin) between the Select panel and the input element.
          */
@@ -986,7 +986,7 @@ export namespace Components {
         /**
           * If true, the Select panel will be visible.
          */
-        "open"?: boolean;
+        "open": boolean;
         /**
           * When set, it will override the height of the Select panel.
          */
