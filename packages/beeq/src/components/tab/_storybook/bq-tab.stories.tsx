@@ -2,7 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
 
 import mdx from './bq-tab.mdx';
-import { TAB_ORIENTATION, TAB_POSITION, TAB_SIZE } from '../bq-tab.types';
+import { TAB_ORIENTATION, TAB_PLACEMENT, TAB_SIZE } from '../bq-tab.types';
 
 const meta: Meta = {
   title: 'Components/Tabs/Tab',
@@ -17,7 +17,7 @@ const meta: Meta = {
     disabled: { control: 'boolean' },
     size: { control: 'select', options: [...TAB_SIZE] },
     orientation: { control: 'select', options: [...TAB_ORIENTATION] },
-    position: { control: 'select', options: [...TAB_POSITION] },
+    position: { control: 'select', options: [...TAB_PLACEMENT] },
     // Not part of the component
     text: { control: 'text', table: { disable: true } },
   },

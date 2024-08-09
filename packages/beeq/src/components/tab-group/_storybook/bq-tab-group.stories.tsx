@@ -3,7 +3,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { html } from 'lit-html';
 
 import mdx from './bq-tab-group.mdx';
-import { TAB_ORIENTATION, TAB_POSITION, TAB_SIZE } from '../../tab/bq-tab.types';
+import { TAB_ORIENTATION, TAB_PLACEMENT, TAB_SIZE } from '../../tab/bq-tab.types';
 
 const meta: Meta = {
   title: 'Components/Tabs',
@@ -16,7 +16,7 @@ const meta: Meta = {
   argTypes: {
     size: { control: 'select', options: [...TAB_SIZE] },
     orientation: { control: 'select', options: [...TAB_ORIENTATION] },
-    position: { control: 'select', options: [...TAB_POSITION] },
+    placement: { control: 'select', options: [...TAB_PLACEMENT] },
     'disable-divider': { control: 'boolean' },
     tabs: { control: 'text', table: { disable: true } },
     icons: { control: 'text', table: { disable: true } },
@@ -28,7 +28,7 @@ const meta: Meta = {
   args: {
     size: 'medium',
     orientation: 'horizontal',
-    position: 'start',
+    placement: 'start',
     'disable-divider': false,
     // Not part of the public API, so we don't want to expose it in the docs
     tabs: [
@@ -52,28 +52,29 @@ const Template = (args: Args) => {
     <main
       class=${classMap({
         flex: args.orientation === 'vertical',
-        'flex-row-reverse': args.position === 'end',
-        'gap-1': true,
+        'flex-row-reverse': args.placement === 'end',
+        'gap-xs2': true,
       })}
     >
       <bq-tab-group
         value="5"
         .size=${args.size}
         .orientation=${args.orientation}
-        .position=${args.position}
+        .placement=${args.placement}
         ?disable-divider=${args['disable-divider']}
         @bqChange=${args.bqChange}
         @bqFocus=${args.bqFocus}
         @bqBlur=${args.bqBlur}
       >
         ${args.tabs.map(
-          (tab, index) =>
-            html` <bq-tab tab-id=${tab.id}>
+          (tab, index) => html`
+            <bq-tab tab-id=${tab.id}>
               ${tab.label}
               ${args.icons
-                ? html`<bq-icon name="${args.icons[index % args.icons.length]}" slot="icon"></bq-icon>`
+                ? html`<bq-icon name="${args.icons[index % args.icons.length]}" slot="icon"> </bq-icon> `
                 : null}
-            </bq-tab>`,
+            </bq-tab>
+          `,
         )}
       </bq-tab-group>
       <div class="border h-80 w-full flex-1 border-dashed border-stroke-primary bg-[--bq-ui--alt]">

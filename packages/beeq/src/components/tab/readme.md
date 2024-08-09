@@ -13,7 +13,7 @@
 | `controls` _(required)_ | `controls`    | The tab panel id that the tab controls  | `string`                         | `undefined`    |
 | `disabled`              | `disabled`    | If true tab is disabled                 | `boolean`                        | `false`        |
 | `orientation`           | `orientation` | The direction that tab should be render | `"horizontal" \| "vertical"`     | `'horizontal'` |
-| `position`              | `position`    | The position that tab should be render  | `"end" \| "start"`               | `'start'`      |
+| `placement`             | `placement`   | The placement that tab should be render | `"end" \| "start"`               | `'start'`      |
 | `size`                  | `size`        | The size of the tab                     | `"large" \| "medium" \| "small"` | `'medium'`     |
 | `tabId` _(required)_    | `tab-id`      | The id of the tab                       | `string`                         | `undefined`    |
 
