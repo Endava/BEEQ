@@ -14,7 +14,7 @@ import { Component, Element, Event, EventEmitter, h, Method, Prop } from '@stenc
 export class BqRadio {
   // Own Properties
   // ====================
-  private inputElement: HTMLInputElement;
+  private inputElement?: HTMLInputElement;
 
   // Reference to host HTML element
   // ===================================
@@ -32,10 +32,10 @@ export class BqRadio {
   @Prop({ reflect: true, mutable: true }) checked?: boolean;
 
   /** If true radio input is disabled */
-  @Prop({ reflect: true }) disabled? = false;
+  @Prop({ reflect: true }) disabled = false;
 
   /** If true radio displays background on hover */
-  @Prop({ reflect: true }) backgroundOnHover? = false;
+  @Prop({ reflect: true }) backgroundOnHover = false;
 
   /** The form ID that the radio input is associated with */
   @Prop({ reflect: true }) formId?: string;
@@ -57,16 +57,16 @@ export class BqRadio {
   // ==============================================
 
   /** Handler to be called when the radio state changes */
-  @Event() bqClick: EventEmitter<HTMLBqRadioElement>;
+  @Event() bqClick!: EventEmitter<HTMLBqRadioElement>;
 
   /** Handler to be called when the radio gets focus */
-  @Event() bqFocus: EventEmitter<HTMLBqRadioElement>;
+  @Event() bqFocus!: EventEmitter<HTMLBqRadioElement>;
 
   /** Handler to be called when the radio loses focus */
-  @Event() bqBlur: EventEmitter<HTMLBqRadioElement>;
+  @Event() bqBlur!: EventEmitter<HTMLBqRadioElement>;
 
   /** Handler to be called when the radio key is pressed */
-  @Event() bqKeyDown: EventEmitter<KeyboardEvent>;
+  @Event() bqKeyDown!: EventEmitter<KeyboardEvent>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -154,7 +154,7 @@ export class BqRadio {
         class={{
           'bq-radio group': true,
           'is-disabled !cursor-not-allowed': this.disabled,
-          'is-checked': this.checked,
+          'is-checked': !!this.checked,
           'has-background': this.backgroundOnHover,
         }}
         part="base"

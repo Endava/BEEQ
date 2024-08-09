@@ -18,7 +18,7 @@ export class BqRadioGroup {
 
   private focusedBqRadio: HTMLBqRadioElement | null = null;
 
-  private debouncedBqChange: TDebounce<{ value: string; target: HTMLBqRadioElement }>;
+  private debouncedBqChange?: TDebounce<{ value: string; target: HTMLBqRadioElement }>;
 
   // Reference to host HTML element
   // ===================================
@@ -33,7 +33,7 @@ export class BqRadioGroup {
   // ========================
 
   /** If true, all radio inputs in the group will display a background on hover */
-  @Prop({ reflect: true }) backgroundOnHover? = false;
+  @Prop({ reflect: true }) backgroundOnHover = false;
 
   /** Name of the HTML input form control. Submitted with the form as part of a name/value pair.  */
   @Prop({ reflect: true }) name!: string;
@@ -42,7 +42,7 @@ export class BqRadioGroup {
   @Prop({ reflect: true, mutable: true }) value?: string;
 
   /** If true radio inputs are disabled */
-  @Prop({ reflect: true }) disabled? = false;
+  @Prop({ reflect: true }) disabled = false;
 
   /** If true displays fieldset */
   @Prop({ reflect: true }) fieldset? = false;
@@ -86,7 +86,7 @@ export class BqRadioGroup {
       this.debouncedBqChange.cancel();
     }
 
-    this.debouncedBqChange = debounce((event: Parameters<typeof this.debouncedBqChange>[0]) => {
+    this.debouncedBqChange = debounce((event: Parameters<NonNullable<typeof this.debouncedBqChange>>[0]) => {
       this.bqChange.emit(event);
     }, this.debounceTime);
   }
@@ -96,7 +96,7 @@ export class BqRadioGroup {
   // ==============================================
 
   /** Handler to be called when the radio state changes */
-  @Event() bqChange: EventEmitter<{ value: string; target: HTMLBqRadioElement }>;
+  @Event() bqChange!: EventEmitter<{ value: string; target: HTMLBqRadioElement }>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -219,7 +219,7 @@ export class BqRadioGroup {
     target.checked = true;
     this.value = value;
     this.focusedBqRadio = target;
-    this.debouncedBqChange({ value, target });
+    this.debouncedBqChange?.({ value, target });
   }
 
   // render() function
@@ -228,7 +228,7 @@ export class BqRadioGroup {
 
   render() {
     return (
-      <fieldset class={{ 'bq-radio-group': true, 'has-fieldset': this.fieldset }} role="radiogroup" part="base">
+      <fieldset class={{ 'bq-radio-group': true, 'has-fieldset': !!this.fieldset }} role="radiogroup" part="base">
         <legend part="label">
           <slot name="label" />
         </legend>

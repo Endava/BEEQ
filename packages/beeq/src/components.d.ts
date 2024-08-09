@@ -864,7 +864,7 @@ export namespace Components {
         /**
           * If true radio displays background on hover
          */
-        "backgroundOnHover"?: boolean | undefined;
+        "backgroundOnHover": boolean;
         /**
           * If true radio input is checked
          */
@@ -872,7 +872,7 @@ export namespace Components {
         /**
           * If true radio input is disabled
          */
-        "disabled"?: boolean | undefined;
+        "disabled": boolean;
         /**
           * The form ID that the radio input is associated with
          */
@@ -906,7 +906,7 @@ export namespace Components {
         /**
           * If true, all radio inputs in the group will display a background on hover
          */
-        "backgroundOnHover"?: boolean | undefined;
+        "backgroundOnHover": boolean;
         /**
           * A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change
          */
@@ -914,7 +914,7 @@ export namespace Components {
         /**
           * If true radio inputs are disabled
          */
-        "disabled"?: boolean | undefined;
+        "disabled": boolean;
         /**
           * If true displays fieldset
          */
@@ -1027,7 +1027,7 @@ export namespace Components {
         /**
           * The select input value, it can be used to reset the field to a previous value
          */
-        "value": TSelectValue;
+        "value"?: TSelectValue;
     }
     interface BqSideMenu {
         /**
@@ -3228,7 +3228,7 @@ declare namespace LocalJSX {
         /**
           * If true radio displays background on hover
          */
-        "backgroundOnHover"?: boolean | undefined;
+        "backgroundOnHover"?: boolean;
         /**
           * If true radio input is checked
          */
@@ -3236,7 +3236,7 @@ declare namespace LocalJSX {
         /**
           * If true radio input is disabled
          */
-        "disabled"?: boolean | undefined;
+        "disabled"?: boolean;
         /**
           * The form ID that the radio input is associated with
          */
@@ -3274,7 +3274,7 @@ declare namespace LocalJSX {
         /**
           * If true, all radio inputs in the group will display a background on hover
          */
-        "backgroundOnHover"?: boolean | undefined;
+        "backgroundOnHover"?: boolean;
         /**
           * A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change
          */
@@ -3282,7 +3282,7 @@ declare namespace LocalJSX {
         /**
           * If true radio inputs are disabled
          */
-        "disabled"?: boolean | undefined;
+        "disabled"?: boolean;
         /**
           * If true displays fieldset
          */
