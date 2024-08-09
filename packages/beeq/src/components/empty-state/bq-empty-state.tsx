@@ -21,8 +21,8 @@ export class BqEmptyState {
   // Own Properties
   // ====================
 
-  private bodyElem: HTMLDivElement;
-  private footerElem: HTMLDivElement;
+  private bodyElem?: HTMLDivElement;
+  private footerElem?: HTMLDivElement;
 
   // Reference to host HTML element
   // ===================================
@@ -78,11 +78,11 @@ export class BqEmptyState {
   // =======================================================
 
   private handleContentSlotChange = () => {
-    this.hasBody = hasSlotContent(this.bodyElem, 'body');
+    this.hasBody = hasSlotContent(this.bodyElem!, 'body');
   };
 
   private handleFooterSlotChange = () => {
-    this.hasFooter = hasSlotContent(this.footerElem, 'footer');
+    this.hasFooter = hasSlotContent(this.footerElem!, 'footer');
   };
 
   private get iconSize(): number {
