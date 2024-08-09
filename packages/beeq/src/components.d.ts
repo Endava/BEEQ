@@ -158,19 +158,19 @@ export namespace Components {
         /**
           * Alternate text for the avatar image if the image cannot be displayed
          */
-        "altText": string;
+        "altText"?: string;
         /**
           * The image source to load on the avatar (this can be also a base64 encoded image)
          */
-        "image": string;
+        "image"?: string;
         /**
           * The text to display on avatar
          */
-        "initials": string;
+        "initials"?: string;
         /**
           * A text to use for describing the avatar on assistive devices
          */
-        "label": string;
+        "label"?: string;
         /**
           * The shape of the avatar
          */

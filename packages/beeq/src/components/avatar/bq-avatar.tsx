@@ -17,7 +17,7 @@ export class BqAvatar {
   // Own Properties
   // ====================
 
-  trimmedInitials: string;
+  trimmedInitials?: string;
 
   // Reference to host HTML element
   // ===================================
@@ -28,22 +28,22 @@ export class BqAvatar {
   // Inlined decorator, alphabetical order
   // =======================================
 
-  @State() hasError: boolean;
+  @State() hasError: boolean = false;
 
   // Public Property API
   // ========================
 
   /** Alternate text for the avatar image if the image cannot be displayed */
-  @Prop({ reflect: true }) altText: string;
+  @Prop({ reflect: true }) altText?: string;
 
   /** The image source to load on the avatar (this can be also a base64 encoded image) */
-  @Prop({ reflect: true }) image: string;
+  @Prop({ reflect: true }) image?: string;
 
   /** A text to use for describing the avatar on assistive devices */
-  @Prop({ reflect: true }) label: string;
+  @Prop({ reflect: true }) label?: string;
 
   /** The text to display on avatar */
-  @Prop({ reflect: true }) initials: string;
+  @Prop({ reflect: true }) initials?: string;
 
   /** The shape of the avatar */
   @Prop({ reflect: true }) shape: TAvatarShape = 'circle';
@@ -110,7 +110,7 @@ export class BqAvatar {
 
     AVATAR_SIZE.forEach((size: TAvatarSize) => {
       if (this.size === size) {
-        this.trimmedInitials = this.initials.substring(0, this.getIndex(size));
+        this.trimmedInitials = this.initials!.substring(0, this.getIndex(size));
       }
     });
   };
