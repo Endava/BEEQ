@@ -20,13 +20,13 @@ export class BqBadge {
 
   private observer: MutationObserver = new MutationObserver((mutations) => {
     const [mutation] = mutations;
-    this.contentLength = mutation.target.textContent.length;
+    this.contentLength = mutation.target.textContent?.length ?? 0;
   });
 
   // Reference to host HTML element
   // ===================================
 
-  @Element() el: HTMLBqBadgeElement;
+  @Element() el!: HTMLBqBadgeElement;
 
   // State() variables
   // Inlined decorator, alphabetical order
