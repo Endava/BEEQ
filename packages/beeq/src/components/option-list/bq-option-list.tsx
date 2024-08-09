@@ -37,7 +37,7 @@ export class BqOptionList {
   // ==============================================
 
   /** Handler to be called when `bq-option` is selected (on click/enter press). */
-  @Event() bqSelect: EventEmitter<{ value: string; item: HTMLBqOptionElement }>;
+  @Event() bqSelect!: EventEmitter<{ value: string; item: HTMLBqOptionElement }>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -56,7 +56,7 @@ export class BqOptionList {
     const { target: item } = event;
     if (!isHTMLElement(item, 'bq-option') || !isEventTargetChildOfElement(event, this.el)) return;
 
-    this.bqSelect.emit({ item, value: item.value });
+    this.bqSelect.emit({ item, value: item.value! });
   }
 
   // Public methods API
