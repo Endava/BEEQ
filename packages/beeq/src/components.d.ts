@@ -1105,7 +1105,7 @@ export namespace Components {
         /**
           * The value of the slider. - If the slider type is `single`, the value is a number. - If the slider type is `range`, the value is an array of two numbers (the first number represents the `min` value and the second number represents the `max` value).
          */
-        "value": TSliderValue;
+        "value"?: TSliderValue;
     }
     /**
      * Spinners are designed for users to display data loading.
