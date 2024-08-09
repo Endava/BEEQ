@@ -84,8 +84,7 @@ export class BqDatePicker {
   // Inlined decorator, alphabetical order
   // =======================================
 
-  @State() focusedDate: string;
-  @State() displayDate: string;
+  @State() displayDate?: string;
   @State() hasLabel = false;
   @State() hasPrefix = false;
   @State() hasRangeEnd = false;
@@ -96,7 +95,7 @@ export class BqDatePicker {
   // ========================
 
   /** If `true`, the Date picker input will be focused on component render */
-  @Prop({ reflect: true }) autofocus: boolean;
+  @Prop({ reflect: true }) autofocus?: boolean;
 
   /** The clear button aria label */
   @Prop({ reflect: true }) clearButtonLabel? = 'Clear value';
@@ -143,7 +142,7 @@ export class BqDatePicker {
   @Prop({ reflect: true }) min?: string;
 
   /** Number of months to show when range is `true` */
-  @Prop({ reflect: true }) months: number;
+  @Prop({ reflect: true }) months?: number;
 
   /**
    * Specifies how the next/previous buttons should navigate the calendar.
@@ -199,7 +198,7 @@ export class BqDatePicker {
 
   /** The select input value represents the currently selected date or range and can be used to reset the field to a previous value.
    * All dates are expected in ISO-8601 format (YYYY-MM-DD). */
-  @Prop({ reflect: true, mutable: true }) value: string;
+  @Prop({ reflect: true, mutable: true }) value?: string;
 
   // Prop lifecycle events
   // =======================
@@ -264,7 +263,10 @@ export class BqDatePicker {
   handleClickOutside(ev: MouseEvent) {
     const { open, type, hasRangeEnd } = this;
     if (!open || type !== 'range' || ev.button !== 0) return;
+    // FIXME:
+    // @ts-expect-error Argument of type 'HTMLBqDatePickerElement' is not assignable to parameter of type 'HTMLElement'.ts(2345)
     if (isEventTargetChildOfElement(ev, this.el) || hasRangeEnd) return;
+    // @ts-expect-error Argument of type 'HTMLBqDatePickerElement' is not assignable to parameter of type 'HTMLElement'.ts(2345)
     if (isEventTargetChildOfElement(ev, this.el)) return;
 
     if (!hasRangeEnd) {
@@ -340,8 +342,8 @@ export class BqDatePicker {
 
     this.value = value;
     this.displayDate = this.formatDisplayValue(this.value);
-    this.inputElem.value = this.displayDate;
-    this.inputElem.focus();
+    this.inputElem!.value = this.displayDate ?? '';
+    this.inputElem?.focus();
 
     this.bqChange.emit({ value: this.value, el: this.el });
 
@@ -360,27 +362,27 @@ export class BqDatePicker {
   private handleClearClick = (ev: CustomEvent) => {
     if (this.disabled) return;
 
-    this.inputElem.value = '';
-    this.value = this.inputElem.value;
+    this.inputElem!.value = '';
+    this.value = this.inputElem!.value;
     this.hasRangeEnd = false;
 
     this.bqClear.emit(this.el);
     this.bqChange.emit({ value: this.value, el: this.el });
-    this.inputElem.focus();
+    this.inputElem?.focus();
 
     ev.stopPropagation();
   };
 
   private handleLabelSlotChange = () => {
-    this.hasLabel = hasSlotContent(this.labelElem);
+    this.hasLabel = hasSlotContent(this.labelElem!);
   };
 
   private handlePrefixSlotChange = () => {
-    this.hasPrefix = hasSlotContent(this.prefixElem);
+    this.hasPrefix = hasSlotContent(this.prefixElem!);
   };
 
   private handleSuffixSlotChange = () => {
-    this.hasSuffix = hasSlotContent(this.suffixElem);
+    this.hasSuffix = hasSlotContent(this.suffixElem!);
   };
 
   private generateCalendarMonth = (offset?: number, className = ''): JSX.Element => {
@@ -408,7 +410,7 @@ export class BqDatePicker {
    */
   private generateCalendarMonths = (): JSX.Element[] => {
     if (this.type === 'range' || (this.type === 'multi' && this.months)) {
-      return Array.from({ length: this.months }, (_, i) => {
+      return Array.from({ length: this.months ?? 0 }, (_, i) => {
         const offset = i > 0 ? i : undefined;
         const className = offset ? 'hidden sm:block' : '';
         return this.generateCalendarMonth(offset, className);
@@ -426,15 +428,18 @@ export class BqDatePicker {
    * @param value - The value to be processed, can be a string.
    * @returns The extracted last date portion of the value.
    */
-  private formatFocusedDate = (value: string): string | null => {
+  private formatFocusedDate = (value: string): string | undefined => {
     if (!value) return;
 
     const dateRegex = /\b\d{4}-\d{2}-\d{2}\b/;
     const match = dateRegex.exec(value);
-    return match ? match[0] : null;
+
+    if (!match) return;
+
+    return match[0];
   };
 
-  private formatDisplayValue = (value: string): string | undefined => {
+  private formatDisplayValue = (value?: string): string | undefined => {
     if (!value) return;
 
     const dateFormatter = new Intl.DateTimeFormat(this.locale, this.formatOptions);
@@ -478,7 +483,7 @@ export class BqDatePicker {
           id={labelId}
           class={{ 'bq-date-picker__label': true, '!hidden': !this.hasLabel }}
           htmlFor={this.name || this.fallbackInputId}
-          ref={(labelElem: HTMLSpanElement) => (this.labelElem = labelElem)}
+          ref={(labelElem) => (this.labelElem = labelElem)}
           part="label"
         >
           <slot name="label" onSlotchange={this.handleLabelSlotChange} />
@@ -500,7 +505,7 @@ export class BqDatePicker {
             class={{
               'bq-date-picker__control': true,
               [`validation-${this.validationStatus}`]: true,
-              disabled: this.disabled,
+              disabled: !!this.disabled,
             }}
             part="control"
             slot="trigger"
@@ -508,7 +513,7 @@ export class BqDatePicker {
             {/* Prefix */}
             <span
               class={{ 'bq-date-picker__control--prefix': true, '!hidden': !this.hasPrefix }}
-              ref={(spanElem: HTMLSpanElement) => (this.prefixElem = spanElem)}
+              ref={(spanElem) => (this.prefixElem = spanElem)}
               part="prefix"
             >
               <slot name="prefix" onSlotchange={this.handlePrefixSlotChange} />
@@ -528,7 +533,7 @@ export class BqDatePicker {
               name={this.name}
               placeholder={this.placeholder}
               readonly={this.type !== 'single'}
-              ref={(inputElem: HTMLInputElement) => (this.inputElem = inputElem)}
+              ref={(inputElem) => (this.inputElem = inputElem)}
               required={this.required}
               spellcheck={false}
               type="text"
@@ -560,7 +565,7 @@ export class BqDatePicker {
             {/* Suffix */}
             <span
               class="bq-date-picker__control--suffix"
-              ref={(spanElem: HTMLSpanElement) => (this.suffixElem = spanElem)}
+              ref={(spanElem) => (this.suffixElem = spanElem)}
               part="suffix"
             >
               <slot name="suffix" onSlotchange={this.handleSuffixSlotChange}>
