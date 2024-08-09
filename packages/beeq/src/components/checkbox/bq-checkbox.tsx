@@ -18,8 +18,8 @@ export class BqCheckbox {
   // Own Properties
   // ====================
 
-  private inputElem: HTMLInputElement;
-  private prevCheckedValue: boolean;
+  private inputElem?: HTMLInputElement;
+  private prevCheckedValue?: boolean;
 
   // Reference to host HTML element
   // ===================================
@@ -64,7 +64,7 @@ export class BqCheckbox {
   handleIndeterminatePropChange() {
     if (!this.inputElem) return;
 
-    this.inputElem.indeterminate = this.indeterminate;
+    this.inputElem.indeterminate = !!this.indeterminate;
     if (this.indeterminate) {
       this.checked = false;
     }
@@ -75,13 +75,13 @@ export class BqCheckbox {
   // ==============================================
 
   /** Handler to be called when the checkbox state changes */
-  @Event() bqChange: EventEmitter<{ checked: boolean }>;
+  @Event() bqChange!: EventEmitter<{ checked: boolean }>;
 
   /** Handler to be called when the checkbox gets focus */
-  @Event() bqFocus: EventEmitter<HTMLBqCheckboxElement>;
+  @Event() bqFocus!: EventEmitter<HTMLBqCheckboxElement>;
 
   /** Handler to be called when the checkbox loses focus */
-  @Event() bqBlur: EventEmitter<HTMLBqCheckboxElement>;
+  @Event() bqBlur!: EventEmitter<HTMLBqCheckboxElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -99,7 +99,7 @@ export class BqCheckbox {
      */
     if (this.checked !== this.prevCheckedValue) {
       if (!this.indeterminate) {
-        this.bqChange.emit({ checked: this.checked });
+        this.bqChange.emit({ checked: !!this.checked });
       }
       this.prevCheckedValue = this.checked;
     }
@@ -149,7 +149,7 @@ export class BqCheckbox {
 
   private handleChange = () => {
     this.checked = !this.checked;
-    this.inputElem.setAttribute('checked', `${this.checked}`);
+    this.inputElem!.setAttribute('checked', `${this.checked}`);
     this.indeterminate = false;
   };
 
@@ -170,10 +170,10 @@ export class BqCheckbox {
       <label
         class={{
           'bq-checkbox group': true,
-          'is-checked': this.checked,
-          'is-indeterminate': this.indeterminate,
-          'is-disabled !cursor-not-allowed': this.disabled,
-          'has-background': this.backgroundOnHover,
+          'is-checked': !!this.checked,
+          'is-indeterminate': !!this.indeterminate,
+          'is-disabled !cursor-not-allowed': !!this.disabled,
+          'has-background': !!this.backgroundOnHover,
         }}
         part="base"
       >
@@ -193,7 +193,7 @@ export class BqCheckbox {
             value={this.value}
             aria-checked={this.checked ? 'true' : 'false'}
             aria-disabled={this.disabled ? 'true' : 'false'}
-            ref={(input: HTMLInputElement) => (this.inputElem = input)}
+            ref={(input) => (this.inputElem = input)}
             onBlur={this.handleOnBlur}
             onChange={this.handleChange}
             onFocus={this.handleOnFocus}
