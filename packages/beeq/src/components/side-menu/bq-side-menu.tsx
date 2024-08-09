@@ -24,8 +24,8 @@ export class BqSideMenu {
   private bodyCssExpand = 'bq-body--side-menu__expand';
   private bodyCssCollapse = 'bq-body--side-menu__collapse';
 
-  private menuElem: HTMLElement;
-  private documentBody: HTMLBodyElement = document.querySelector('body');
+  private menuElem?: HTMLElement;
+  private documentBody: HTMLBodyElement = document.querySelector('body')!;
 
   // Reference to host HTML element
   // ===================================
@@ -60,10 +60,10 @@ export class BqSideMenu {
   // ==============================================
 
   /** Callback handler to be called when the Side menu changes its width from expanded to collapse and vice versa */
-  @Event() bqCollapse: EventEmitter<{ collapse: boolean }>;
+  @Event() bqCollapse!: EventEmitter<{ collapse: boolean }>;
 
   /** Callback handler to be called when the active/selected menu item changes */
-  @Event() bqSelect: EventEmitter<HTMLBqSideMenuItemElement>;
+  @Event() bqSelect!: EventEmitter<HTMLBqSideMenuItemElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -113,9 +113,9 @@ export class BqSideMenu {
   private get menuItems() {
     if (!this.menuElem) return [];
 
-    const slot = this.menuElem.querySelector('slot');
+    const slot = this.menuElem.querySelector('slot')!;
     return [...slot.assignedElements({ flatten: true })].filter(
-      (el: HTMLBqSideMenuItemElement) => el.tagName.toLowerCase() === this.menuItemCssSelector,
+      (el) => el.tagName.toLowerCase() === this.menuItemCssSelector,
     ) as [HTMLBqSideMenuItemElement];
   }
 

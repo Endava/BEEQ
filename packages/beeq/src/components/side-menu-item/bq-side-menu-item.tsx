@@ -19,7 +19,7 @@ export class BqSideMenuItem {
   // Own Properties
   // ====================
 
-  private labelElem: HTMLElement;
+  private labelElem?: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -30,7 +30,7 @@ export class BqSideMenuItem {
   // Inlined decorator, alphabetical order
   // =======================================
 
-  @State() textContent: string;
+  @State() textContent?: string;
 
   // Public Property API
   // ========================
@@ -52,13 +52,13 @@ export class BqSideMenuItem {
   // ==============================================
 
   /** Handler to be called when the button loses focus */
-  @Event() bqBlur: EventEmitter<HTMLBqSideMenuItemElement>;
+  @Event() bqBlur!: EventEmitter<HTMLBqSideMenuItemElement>;
 
   /** Handler to be called when the button is clicked */
-  @Event() bqFocus: EventEmitter<HTMLBqSideMenuItemElement>;
+  @Event() bqFocus!: EventEmitter<HTMLBqSideMenuItemElement>;
 
   /** Handler to be called when button gets focus */
-  @Event() bqClick: EventEmitter<HTMLBqSideMenuItemElement>;
+  @Event() bqClick!: EventEmitter<HTMLBqSideMenuItemElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -85,7 +85,7 @@ export class BqSideMenuItem {
 
   private handleSlotChange = () => {
     if (!this.labelElem) return;
-    this.textContent = getTextContent(this.labelElem.querySelector('slot'));
+    this.textContent = getTextContent(this.labelElem.querySelector('slot')!);
   };
 
   handleBlur = (ev: Event) => {
