@@ -16,9 +16,9 @@ export class BqPanel {
   // Own Properties
   // ====================
 
-  private panel: HTMLElement;
-  private floatingUI: FloatingUI;
-  private trigger: ReferenceElement;
+  private panel?: HTMLElement;
+  private floatingUI?: FloatingUI;
+  private trigger?: ReferenceElement;
 
   // Reference to host HTML element
   // ===================================
@@ -69,6 +69,8 @@ export class BqPanel {
   @Watch('skidding')
   @Watch('strategy')
   onPropChange() {
+    // FIXME:
+    // @ts-expect-error Argument of type is not assignable to parameter of type 'FloatingUIOptions'.
     this.floatingUI?.init({ ...this.options });
   }
 
@@ -82,15 +84,16 @@ export class BqPanel {
 
   componentDidLoad() {
     // We need to find the trigger element from the parent to position the panel relative to it.
-    const parentTrigger = this.el.parentElement.querySelector('div[part="trigger"]');
+    const parentTrigger = this.el.parentElement!.querySelector('div[part="trigger"]');
     if (!parentTrigger) return;
 
     this.trigger = {
       getBoundingClientRect: () => parentTrigger.getBoundingClientRect(),
       contextElement: parentTrigger,
     };
-
-    this.floatingUI = new FloatingUI(this.trigger, this.panel, { ...this.options });
+    // FIXME:
+    // @ts-expect-error Argument of type is not assignable to parameter of type 'FloatingUIOptions'.
+    this.floatingUI = new FloatingUI(this.trigger, this.panel!, { ...this.options });
     this.handleOpenChange();
   }
 
