@@ -1,7 +1,14 @@
-import { Component, Element, Event, EventEmitter, h, Listen, Prop, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop, Watch } from '@stencil/core';
 
 import { debounce, getNextElement, isHTMLElement, isNil, TDebounce, validatePropValue } from '../../shared/utils';
-import { TAB_SIZE, TTabSize } from '../tab/bq-tab.types';
+import {
+  TAB_ORIENTATION,
+  TAB_PLACEMENT,
+  TAB_SIZE,
+  TTabOrientation,
+  TTabPlacement,
+  TTabSize,
+} from '../tab/bq-tab.types';
 
 /**
  * @part base - The HTML div wrapper inside the shadow DOM.
@@ -36,6 +43,12 @@ export class BqTabGroup {
   /** The size of the tab */
   @Prop({ reflect: true }) size: TTabSize = 'medium';
 
+  /** The direction that tab should be render */
+  @Prop({ reflect: true }) orientation?: TTabOrientation = 'horizontal';
+
+  /** The placement that tab should be render */
+  @Prop({ reflect: true }) placement?: TTabPlacement = 'start';
+
   /** A number representing the delay value applied to bqChange event handler */
   @Prop({ reflect: true, mutable: true }) debounceTime = 0;
 
@@ -62,11 +75,17 @@ export class BqTabGroup {
 
   @Watch('size')
   @Watch('value')
+  @Watch('orientation')
+  @Watch('placement')
   checkPropValues() {
     validatePropValue(TAB_SIZE, 'medium', this.el, 'size');
+    validatePropValue(TAB_ORIENTATION, 'horizontal', this.el, 'orientation');
+    validatePropValue(TAB_PLACEMENT, 'start', this.el, 'placement');
 
     this.bqTabElements.forEach((bqTabElement) => {
       bqTabElement.size = this.size;
+      bqTabElement.orientation = this.orientation;
+      bqTabElement.placement = this.placement;
       bqTabElement.active = !isNil(this.value) ? bqTabElement.tabId === this.value : false;
     });
   }
@@ -114,19 +133,22 @@ export class BqTabGroup {
   async onBqKeyDown(event: CustomEvent<KeyboardEvent>) {
     const { target } = event;
 
+    // NOTE: ensures the target is an HTML element with the tag name 'bq-tab'
     if (!isHTMLElement(target, 'bq-tab')) return;
 
-    switch (event.detail.key) {
-      case 'ArrowRight': {
-        await this.focusTabSibling(target, 'forward');
-        break;
-      }
-      case 'ArrowLeft': {
-        await this.focusTabSibling(target, 'backward');
-        break;
-      }
-      default:
-    }
+    const keyActions: { [key: string]: 'forward' | 'backward' } = {
+      ArrowDown: 'forward',
+      ArrowRight: 'forward',
+      ArrowUp: 'backward',
+      ArrowLeft: 'backward',
+    };
+
+    // NOTE: gets the direction based on key pressed
+    const direction = keyActions[event.detail.key];
+
+    if (!direction) return;
+
+    await this.focusTabSibling(target, direction);
   }
 
   @Listen('bqBlur', { capture: true, passive: true })
@@ -209,11 +231,26 @@ export class BqTabGroup {
 
   render() {
     return (
-      <div class={{ 'bq-tab-group flex w-full': true, 'no-divider': this.disableDivider }} part="base">
-        <div class="bq-tab-group--container flex overflow-x-auto" role="tablist" part="tabs">
-          <slot />
+      <Host class={{ 'inline-block': this.orientation === 'vertical' }}>
+        <div
+          class={{
+            [`bq-tab-group bq-tab-group--${this.orientation}-${this.placement} flex is-full`]: true,
+            'no-divider': this.disableDivider,
+          }}
+          part="base"
+        >
+          <div
+            class={{
+              'bq-tab-group--container flex overflow-x-auto': true,
+              'flex-col': this.orientation !== 'horizontal',
+            }}
+            role="tablist"
+            part="tabs"
+          >
+            <slot />
+          </div>
         </div>
-      </div>
+      </Host>
     );
   }
 }

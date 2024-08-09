@@ -10,7 +10,30 @@
   @apply relative;
 
   &::after {
-    @apply absolute bottom-0 flex w-full border-0 border-b-s border-solid border-bg-tertiary content-empty;
+    @apply absolute flex border-0 border-solid border-bg-tertiary content-empty;
+  }
+
+  &--horizontal-start,
+  &--horizontal-end {
+    &::after {
+      @apply is-full inset-be-0 [border-block-end-width:--bq-stroke-s];
+    }
+  }
+
+  &--horizontal-start {
+    @apply justify-start;
+  }
+
+  &--horizontal-end {
+    @apply justify-end;
+  }
+
+  &--vertical-start::after {
+    @apply end-0 bs-full is-0 [border-block-end-width:0px] [border-inline-end-width:--bq-stroke-s];
+  }
+
+  &--vertical-end::after {
+    @apply start-0 bs-full is-0 [border-block-end-width:0px] [border-inline-start-width:--bq-stroke-s];
   }
 }
 

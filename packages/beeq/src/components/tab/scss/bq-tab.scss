@@ -15,13 +15,35 @@
   @apply transition-[color,background-color,border-color,box-shadow] duration-300;
 
   &::after {
-    @apply absolute -bottom-1 z-[1] block h-[2px]  bg-stroke-brand opacity-0 content-empty;
+    @apply absolute z-[1] block bg-stroke-brand opacity-0 content-empty -inset-be-1;
     @apply transition-opacity duration-300 ease-linear;
-    /**
+  }
+
+  &--horizontal-start,
+  &--horizontal-end {
+    &::after {
+      /**
      * This hack will make the underline larger so it fits till the tab bar edges for the first and last tab button,
      * because the parent container applies some padding to not cut the focus outline style.
      */
-    @apply -left-xs3 w-[calc(100%_+_var(--bq-spacing-xs2))];
+      @apply -start-xs3 bs-[2px] is-[calc(100%_+_var(--bq-spacing-xs2))];
+    }
+  }
+
+  &--vertical-start {
+    @apply justify-end is-full;
+
+    &::after {
+      @apply -end-xs2 bs-[calc(100%_+_var(--bq-spacing-xs2))] is-[2px];
+    }
+  }
+
+  &--vertical-end {
+    @apply justify-start is-full;
+
+    &::after {
+      @apply -start-xs2 bs-[calc(100%_+_var(--bq-spacing-xs2))] is-[2px];
+    }
   }
 
   &[aria-selected='true']::after {
@@ -29,32 +51,26 @@
   }
 
   &--small {
-    @apply px-[--bq-tab--padding-horizontal-small] py-[--bq-tab--padding-vertical-small];
+    @apply p-b-[--bq-tab--padding-vertical-small] p-i-[--bq-tab--padding-horizontal-small];
 
     ::slotted(bq-icon) {
       --bq-icon--size: var(--bq-tab--icon-size-small) #{!important};
-
-      @apply mr-xs2;
     }
   }
 
   &--medium {
-    @apply px-[--bq-tab--padding-horizontal-medium] py-[--bq-tab--padding-vertical-medium];
+    @apply p-b-[--bq-tab--padding-vertical-medium] p-i-[--bq-tab--padding-horizontal-medium];
 
     ::slotted(bq-icon) {
       --bq-icon--size: var(--bq-tab--icon-size-medium) #{!important};
-
-      @apply mr-xs;
     }
   }
 
   &--large {
-    @apply px-[--bq-tab--padding-horizontal-large] py-[--bq-tab--padding-vertical-large] text-l;
+    @apply text-l p-b-[--bq-tab--padding-vertical-large] p-i-[--bq-tab--padding-horizontal-large];
 
     ::slotted(bq-icon) {
       --bq-icon--size: var(--bq-tab--icon-size-large) #{!important};
-
-      @apply mr-xs;
     }
   }
 }
