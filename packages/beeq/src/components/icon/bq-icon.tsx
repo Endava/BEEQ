@@ -27,7 +27,7 @@ export class BqIcon {
   // Inlined decorator, alphabetical order
   // =======================================
 
-  @State() private _svgContent: string;
+  @State() private _svgContent?: string;
 
   // Public Property API
   // ========================
@@ -66,7 +66,7 @@ export class BqIcon {
    */
   @Watch('weight')
   handleWeightChange() {
-    if (this.name.includes(this.weight)) return;
+    if (this.name.includes(this.weight!)) return;
 
     console.warn(
       `❗️ [bq-icon]: the 'weight' property is deprecated, you should add the weight to the icon name.\n
@@ -90,7 +90,7 @@ export class BqIcon {
   // ==============================================
 
   /** Callback handler to be called when the SVG has loaded */
-  @Event() svgLoaded: EventEmitter;
+  @Event() svgLoaded!: EventEmitter;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -131,8 +131,8 @@ export class BqIcon {
 
   private loadIcon = (name: string) => {
     const url = this.getIconSource(name);
-    getSvgContent(url, true).then(() => {
-      this._svgContent = iconContent.get(url);
+    getSvgContent(url!, true).then(() => {
+      this._svgContent = iconContent.get(url!);
       this.svgLoaded.emit(this._svgContent);
     });
   };
