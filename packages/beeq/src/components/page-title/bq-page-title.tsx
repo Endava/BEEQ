@@ -20,9 +20,9 @@ export class BqPageTitle {
   // Own Properties
   // ====================
 
-  private backNavigationElem: HTMLElement;
-  private suffixElem: HTMLElement;
-  private subTitleElem: HTMLElement;
+  private backNavigationElem?: HTMLElement;
+  private suffixElem?: HTMLElement;
+  private subTitleElem?: HTMLElement;
 
   // Reference to host HTML element
   // ===================================
@@ -67,9 +67,9 @@ export class BqPageTitle {
   // =======================================================
 
   private handleSlotChange = () => {
-    this.haveBackNavigation = hasSlotContent(this.backNavigationElem, 'back');
-    this.hasSuffix = hasSlotContent(this.suffixElem, 'suffix');
-    this.hasSubTitle = hasSlotContent(this.subTitleElem, 'sub-title');
+    this.haveBackNavigation = hasSlotContent(this.backNavigationElem!, 'back');
+    this.hasSuffix = hasSlotContent(this.suffixElem!, 'suffix');
+    this.hasSubTitle = hasSlotContent(this.subTitleElem!, 'sub-title');
   };
 
   // render() function
