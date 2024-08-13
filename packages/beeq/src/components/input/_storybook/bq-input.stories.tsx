@@ -262,3 +262,89 @@ export const NoHelperText: Story = {
     suffix: true,
   },
 };
+
+export const WithForm: Story = {
+  render: () => {
+    const handleFormSubmit = (ev: Event) => {
+      ev.preventDefault();
+      const form = ev.target as HTMLFormElement;
+      const formData = new FormData(form);
+      const formValues = Object.fromEntries(formData.entries());
+
+      const codeElement = document.getElementById('form-data');
+      if (!codeElement) return;
+
+      codeElement.textContent = JSON.stringify(formValues, null, 2);
+    };
+
+    return html`
+      <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/night-owl.min.css" />
+
+      <div class="grid auto-cols-auto grid-cols-1 gap-y-l sm:grid-cols-2 sm:gap-x-l">
+        <bq-card>
+          <h4 class="m-be-m">Shipping Information</h4>
+          <form class="flex flex-col gap-y-m" @submit=${handleFormSubmit}>
+            <div class="grid grid-cols-1 gap-y-m sm:grid-cols-2 sm:gap-x-m">
+              <bq-input name="firstName" value="Brad Bernie" autocomplete="given-name" required>
+                <label class="flex flex-grow items-center" slot="label">First Name</label>
+              </bq-input>
+              <bq-input name="lastName" value="Beckett" autocomplete="family-name" required>
+                <label class="flex flex-grow items-center" slot="label">Last Name</label>
+              </bq-input>
+            </div>
+            <bq-input name="company" value="Endava" autocomplete="organization" required>
+              <label class="flex flex-grow items-center" slot="label">Company</label>
+            </bq-input>
+            <bq-input name="address" value="413 South Ohio Ave" autocomplete="shipping street-address" required>
+              <label class="flex flex-grow items-center" slot="label">Address</label>
+            </bq-input>
+            <div class="grid grid-cols-1 gap-y-m sm:grid-cols-2 sm:gap-x-m" autocomplete="address-level2">
+              <bq-input name="city" value="Oklahoma" required>
+                <label class="flex flex-grow items-center" slot="label">City</label>
+              </bq-input>
+              <bq-select name="country" value="us" autocomplete="country-name">
+                <label class="flex flex-grow items-center" slot="label">Country</label>
+                <bq-option value="au">Australia</bq-option>
+                <bq-option value="ca">Canada</bq-option>
+                <bq-option value="mx">Mexico</bq-option>
+                <bq-option value="pt">Portugal</bq-option>
+                <bq-option value="ro">Romania</bq-option>
+                <bq-option value="us">United States</bq-option>
+              </bq-select>
+            </div>
+            <div class="flex justify-end gap-x-s">
+              <bq-button appearance="secondary" type="reset">Cancel</bq-button>
+              <bq-button type="submit">Save</bq-button>
+            </div>
+          </form>
+        </bq-card>
+        <bq-card class="[&::part(wrapper)]:h-full">
+          <h4 class="m-be-m">Form Data</h4>
+          <div class="language-javascript overflow-x-scroll whitespace-pre rounded-s">
+            // Handle form submit<br />
+            const form = ev.target as HTMLFormElement;<br />
+            const formData = new FormData(form);<br />
+            const formValues = Object.fromEntries(formData.entries());
+          </div>
+          <pre>
+            <code id="form-data" class="rounded-s">
+              { // submit the form to see the data here }
+            </code>
+          </pre>
+        </bq-card>
+      </div>
+
+      <script type="module">
+        import hljs from 'https://unpkg.com/@highlightjs/cdn-assets@11.10.0/es/highlight.min.js';
+        import javascript from 'https://unpkg.com/@highlightjs/cdn-assets@11.10.0/es/languages/javascript.min.js';
+
+        hljs.registerLanguage('javascript', javascript);
+        hljs.highlightAll();
+
+        document.querySelectorAll('div.language-javascript').forEach((block) => {
+          hljs.highlightElement(block);
+        });
+      </script>
+    `;
+  },
+};
