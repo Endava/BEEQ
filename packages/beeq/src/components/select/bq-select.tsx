@@ -1,4 +1,16 @@
-import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import {
+  AttachInternals,
+  Component,
+  Element,
+  Event,
+  EventEmitter,
+  h,
+  Listen,
+  Method,
+  Prop,
+  State,
+  Watch,
+} from '@stencil/core';
 
 import { Placement } from '../../services/interfaces';
 import {
@@ -7,6 +19,7 @@ import {
   hasSlotContent,
   isDefined,
   isHTMLElement,
+  isNil,
   isString,
   TDebounce,
 } from '../../shared/utils';
@@ -37,6 +50,7 @@ export type TSelectValue = string | string[];
 @Component({
   tag: 'bq-select',
   styleUrl: './scss/bq-select.scss',
+  formAssociated: true,
   shadow: {
     delegatesFocus: true,
   },
@@ -59,6 +73,7 @@ export class BqSelect {
   // ===================================
 
   @Element() el!: HTMLBqSelectElement;
+  @AttachInternals() internals!: ElementInternals;
 
   // State() variables
   // Inlined decorator, alphabetical order
@@ -165,6 +180,7 @@ export class BqSelect {
     if (this.multiple && isString(this.value)) {
       // NOTE: we ensure that value is an array, changing the value will trigger Watch to execute thus the return
       this.value = Array.from(JSON.parse(String(this.value)));
+      this.internals.setFormValue(this.value.join(','));
       return;
     }
 
@@ -205,6 +221,18 @@ export class BqSelect {
     this.handleValueChange();
   }
 
+  formAssociatedCallback() {
+    this.internals.role = 'combobox';
+    this.internals.ariaExpanded = this.open ? 'true' : 'false';
+  }
+
+  async formResetCallback() {
+    if (isNil(this.value)) return;
+
+    this.internals.setValidity({});
+    this.clear();
+  }
+
   // Listeners
   // ==============
 
@@ -241,15 +269,23 @@ export class BqSelect {
   async clear(): Promise<void> {
     if (this.disabled) return;
 
+    const { multiple, inputElem, bqClear, el } = this;
+
+    // Clear value and selected options
     this.value = undefined;
     this.selectedOptions = [];
-    if (!this.multiple) {
+
+    // Clear display value and input element if not multiple
+    if (!multiple) {
       this.displayValue = undefined;
-      this.inputElem.value = undefined;
+      inputElem.value = undefined;
     }
 
+    // Update form value and reset options visibility
     this.resetOptionsVisibility();
-    this.bqClear.emit(this.el);
+
+    // Emit clear event
+    bqClear.emit(el);
   }
 
   // Local methods
@@ -369,26 +405,57 @@ export class BqSelect {
   };
 
   private syncItemsFromValue = () => {
-    const items = this.options;
-    if (!items.length) return;
+    const { internals, options, value } = this;
+    if (!options.length) return;
 
     // Sync selected state of the BqOption elements
-    this.options.forEach((option: HTMLBqOptionElement) => {
-      if (this.multiple && Array.isArray(this.value)) {
-        option.selected = this.value.includes(option.value);
+    this.syncSelectedOptionsState();
+
+    if (this.multiple) {
+      // Sync selected options for multiple selection mode
+      this.selectedOptions = options.filter((option) => this.value?.includes(option.value));
+    } else {
+      // Sync display label for single selection mode
+      this.updateDisplayLabel();
+    }
+
+    internals.setFormValue(!isNil(value) ? `${value}` : undefined);
+  };
+
+  /**
+   * Syncs the selected state of the BqOption elements which value is included in the `value` property.
+   * Notice that value can be a string or an array of strings.
+   *
+   * @private
+   * @memberof BqSelect
+   */
+  private syncSelectedOptionsState = () => {
+    const { options, multiple, value } = this;
+    const lowerCaseValue = String(value).toLowerCase();
+
+    options.forEach((option: HTMLBqOptionElement) => {
+      if (multiple && Array.isArray(value)) {
+        option.selected = value.includes(option.value);
       } else {
-        option.selected = option.value.toLowerCase() === String(this.value).toLowerCase();
+        option.selected = option.value.toLowerCase() === lowerCaseValue;
       }
     });
+  };
 
-    if (!this.multiple) {
-      // Sync display label
-      const checkedItem = items.filter((item) => item.value === this.value)[0];
-      this.displayValue = checkedItem ? this.getOptionLabel(checkedItem) : '';
-      this.inputElem.value = this.displayValue ?? '';
-    } else {
-      this.selectedOptions = this.options.filter((item) => this.value?.includes(item.value));
-    }
+  /**
+   * Updates the display value of the input element based on the selected option.
+   *
+   * @private
+   * @memberof BqSelect
+   */
+  private updateDisplayLabel = () => {
+    const { value, options, inputElem } = this;
+
+    const checkedItem = options.find((item) => item.value === value);
+    const displayValue = checkedItem ? this.getOptionLabel(checkedItem) : '';
+
+    inputElem.value = displayValue ?? '';
+    this.displayValue = displayValue;
   };
 
   private getOptionLabel = (item: HTMLBqOptionElement) => {
