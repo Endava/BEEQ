@@ -370,3 +370,88 @@ export const NoHelperText: Story = {
     prefix: true,
   },
 };
+
+export const WithForm: Story = {
+  render: () => {
+    const handleFormSubmit = (ev: Event) => {
+      ev.preventDefault();
+      const form = ev.target as HTMLFormElement;
+      const formData = new FormData(form);
+      const formValues = Object.fromEntries(formData.entries());
+
+      const codeElement = document.getElementById('form-data');
+      if (!codeElement) return;
+
+      codeElement.textContent = JSON.stringify(formValues, null, 2);
+    };
+
+    return html`
+      <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/night-owl.min.css" />
+
+      <div class="grid auto-cols-auto grid-cols-1 gap-y-l sm:grid-cols-2 sm:gap-x-l">
+        <bq-card>
+          <h4 class="m-be-m">User data</h4>
+          <form class="flex flex-col gap-y-m" @submit=${handleFormSubmit}>
+            <bq-input name="fullName" value="Brad Bernie Beckett" autocomplete="name" required>
+              <label class="flex flex-grow items-center" slot="label">Full Name</label>
+            </bq-input>
+            <div class="grid grid-cols-1 gap-y-m sm:grid-cols-2 sm:gap-x-m">
+              <bq-select name="gender" value="male" autocomplete="sex" readonly>
+                <label class="flex flex-grow items-center" slot="label">Gender</label>
+                <bq-option value="female">Female</bq-option>
+                <bq-option value="male">Male</bq-option>
+                <bq-option value="non-binary">Non-binary</bq-option>
+                <bq-option value="other">Other</bq-option>
+              </bq-select>
+              <bq-input name="bdayYear" type="number" value="1983" autocomplete="bday-year" required>
+                <label class="flex flex-grow items-center" slot="label">Year of birth date (YYYY)</label>
+              </bq-input>
+            </div>
+            <bq-select name="prevCountries" value='["ro","us"]' multiple autocomplete="country-name">
+              <label class="flex flex-grow items-center" slot="label">Previous countries</label>
+              <bq-option value="au">Australia</bq-option>
+              <bq-option value="ca">Canada</bq-option>
+              <bq-option value="mx">Mexico</bq-option>
+              <bq-option value="pt">Portugal</bq-option>
+              <bq-option value="ro">Romania</bq-option>
+              <bq-option value="us">United States</bq-option>
+              <span class="flex items-center gap-xs" slot="helper-text">
+                Please select the countries you have visited before.
+              </span>
+            </bq-select>
+            <div class="flex justify-end gap-x-s">
+              <bq-button appearance="secondary" type="reset">Cancel</bq-button>
+              <bq-button type="submit">Save</bq-button>
+            </div>
+          </form>
+        </bq-card>
+        <bq-card class="[&::part(wrapper)]:h-full">
+          <h4 class="m-be-m">Form Data</h4>
+          <div class="language-javascript overflow-x-scroll whitespace-pre rounded-s">
+            // Handle form submit<br />
+            const form = ev.target as HTMLFormElement;<br />
+            const formData = new FormData(form);<br />
+            const formValues = Object.fromEntries(formData.entries());
+          </div>
+          <pre>
+            <code id="form-data" class="rounded-s">
+              { // submit the form to see the data here }
+            </code>
+          </pre>
+        </bq-card>
+      </div>
+
+      <script type="module">
+        import hljs from 'https://unpkg.com/@highlightjs/cdn-assets@11.10.0/es/highlight.min.js';
+        import javascript from 'https://unpkg.com/@highlightjs/cdn-assets@11.10.0/es/languages/javascript.min.js';
+
+        hljs.registerLanguage('javascript', javascript);
+        hljs.highlightAll();
+
+        document.querySelectorAll('div.language-javascript').forEach((block) => {
+          hljs.highlightElement(block);
+        });
+      </script>
+    `;
+  },
+};
