@@ -1,7 +1,7 @@
 import { AttachInternals, Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
 import { TInputType, TInputValidation, TInputValue } from './bq-input.types';
-import { debounce, hasSlotContent, isDefined, isHTMLElement, TDebounce } from '../../shared/utils';
+import { debounce, hasSlotContent, isDefined, isHTMLElement, isNil, TDebounce } from '../../shared/utils';
 
 /**
  * @part base - The component's base wrapper.
@@ -218,6 +218,8 @@ export class BqInput {
   }
 
   formResetCallback() {
+    if (isNil(this.value)) return;
+
     this.handleClear();
   }
 
@@ -276,7 +278,7 @@ export class BqInput {
   private handleClear = () => {
     if (this.disabled) return;
 
-    const { inputElem, internals, bqClear, bqInput, bqChange, el } = this;
+    const { inputElem, internals } = this;
 
     // Clear input element value
     inputElem.value = '';
@@ -284,19 +286,19 @@ export class BqInput {
 
     // Update associated form control value
     internals.setFormValue(undefined);
-
-    // Emit events
-    bqClear.emit(el);
-    bqInput.emit({ value: this.value, el });
-    bqChange.emit({ value: this.value, el });
-
-    // Refocus input element
-    inputElem.focus();
   };
 
   private handleClearClick = (ev: CustomEvent) => {
     ev.stopPropagation();
     this.handleClear();
+
+    const { bqClear, bqChange, bqInput, el, inputElem } = this;
+    // Emit events
+    bqClear.emit(el);
+    bqInput.emit({ value: this.value, el });
+    bqChange.emit({ value: this.value, el });
+    // Refocus input element
+    inputElem.focus();
   };
 
   private handleLabelSlotChange = () => {
