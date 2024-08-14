@@ -1,7 +1,7 @@
-import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
 import { TInputType, TInputValidation, TInputValue } from './bq-input.types';
-import { debounce, hasSlotContent, isDefined, isHTMLElement, TDebounce } from '../../shared/utils';
+import { debounce, hasSlotContent, isDefined, isHTMLElement, isNil, TDebounce } from '../../shared/utils';
 
 /**
  * @part base - The component's base wrapper.
@@ -17,6 +17,7 @@ import { debounce, hasSlotContent, isDefined, isHTMLElement, TDebounce } from '.
 @Component({
   tag: 'bq-input',
   styleUrl: './scss/bq-input.scss',
+  formAssociated: true,
   shadow: {
     delegatesFocus: true,
   },
@@ -38,6 +39,7 @@ export class BqInput {
   // ===================================
 
   @Element() el!: HTMLBqInputElement;
+  @AttachInternals() internals!: ElementInternals;
 
   // State() variables
   // Inlined decorator, alphabetical order
@@ -174,10 +176,12 @@ export class BqInput {
   handleValueChange() {
     if (Array.isArray(this.value)) {
       this.hasValue = this.value.some((val) => val.length > 0);
+      this.internals.setFormValue(this.value.join(','));
       return;
     }
 
     this.hasValue = isDefined(this.value);
+    this.internals.setFormValue(`${this.value}`);
   }
 
   // Events section
@@ -209,8 +213,14 @@ export class BqInput {
   // Ordered by their natural call order
   // =====================================
 
-  componentDidLoad() {
+  componentWillLoad() {
     this.handleValueChange();
+  }
+
+  formResetCallback() {
+    if (isNil(this.value)) return;
+
+    this.handleClear();
   }
 
   // Listeners
@@ -247,6 +257,7 @@ export class BqInput {
 
     if (!isHTMLElement(ev.target, 'input')) return;
     this.value = this.type === 'number' ? Number(ev.target.value) : ev.target.value;
+    this.internals.setFormValue(`${this.value}`);
 
     this.debounceBqInput = debounce(() => {
       this.bqInput.emit({ value: this.value, el: this.el });
@@ -259,22 +270,35 @@ export class BqInput {
 
     if (!isHTMLElement(ev.target, 'input')) return;
     this.value = this.type === 'number' ? Number(ev.target.value) : ev.target.value;
+    this.internals.setFormValue(`${this.value}`);
 
     this.bqChange.emit({ value: this.value, el: this.el });
   };
 
-  private handleClearClick = (ev: CustomEvent) => {
+  private handleClear = () => {
     if (this.disabled) return;
 
-    this.inputElem.value = '';
-    this.value = this.inputElem.value;
+    const { inputElem, internals } = this;
 
-    this.bqClear.emit(this.el);
-    this.bqInput.emit({ value: this.value, el: this.el });
-    this.bqChange.emit({ value: this.value, el: this.el });
-    this.inputElem.focus();
+    // Clear input element value
+    inputElem.value = '';
+    this.value = inputElem.value;
 
+    // Update associated form control value
+    internals.setFormValue(undefined);
+  };
+
+  private handleClearClick = (ev: CustomEvent) => {
     ev.stopPropagation();
+    this.handleClear();
+
+    const { bqClear, bqChange, bqInput, el, inputElem } = this;
+    // Emit events
+    bqClear.emit(el);
+    bqInput.emit({ value: this.value, el });
+    bqChange.emit({ value: this.value, el });
+    // Refocus input element
+    inputElem.focus();
   };
 
   private handleLabelSlotChange = () => {
