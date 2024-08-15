@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Method, Prop, Watch } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, EventEmitter, h, Method, Prop, Watch } from '@stencil/core';
 
 import { isNil } from '../../shared/utils';
 
@@ -12,7 +12,10 @@ import { isNil } from '../../shared/utils';
 @Component({
   tag: 'bq-checkbox',
   styleUrl: './scss/bq-checkbox.scss',
-  shadow: true,
+  formAssociated: true,
+  shadow: {
+    delegatesFocus: true,
+  },
 })
 export class BqCheckbox {
   // Own Properties
@@ -25,6 +28,7 @@ export class BqCheckbox {
   // ===================================
 
   @Element() el!: HTMLBqCheckboxElement;
+  @AttachInternals() internals!: ElementInternals;
 
   // State() variables
   // Inlined decorator, alphabetical order
@@ -38,6 +42,9 @@ export class BqCheckbox {
 
   /** The form ID that the checkbox is associated with */
   @Prop({ reflect: true }) formId?: string;
+
+  /** The native form validation message */
+  @Prop({ mutable: true }) formValidationMessage?: string;
 
   /** If true checkbox is checked */
   @Prop({ reflect: true, mutable: true }) checked?: boolean;
@@ -68,6 +75,11 @@ export class BqCheckbox {
     if (this.indeterminate) {
       this.checked = false;
     }
+  }
+
+  @Watch('required')
+  handleRequiredPropChange() {
+    this.updateFormValidity();
   }
 
   // Events section
@@ -103,6 +115,18 @@ export class BqCheckbox {
       }
       this.prevCheckedValue = this.checked;
     }
+  }
+
+  formAssociatedCallback() {
+    this.setFormValue(this.checked);
+    this.updateFormValidity();
+  }
+
+  formResetCallback() {
+    this.clearSelection();
+    // Reset the form value and validity state
+    this.internals.setFormValue(undefined);
+    this.internals.setValidity({});
   }
 
   // Listeners
@@ -147,10 +171,42 @@ export class BqCheckbox {
   // These methods cannot be called from the host element.
   // =======================================================
 
+  private setFormValue = (checked: boolean) => {
+    const value = checked ? 'on' : undefined;
+    // Set form value based on the checked state
+    // Here we also pass the state of the checkbox (2nd argument) as the state of the form control
+    // Details: https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals/setFormValue
+    this.internals?.setFormValue(value, `${this.checked}`);
+  };
+
+  private updateFormValidity = () => {
+    const { formValidationMessage, internals, required, checked, inputElem } = this;
+    // Clear the validity state
+    internals?.states.clear();
+
+    if (!(required && !checked)) {
+      // If the checkbox is not required or is checked, set the validity state to valid
+      internals?.states.add('valid');
+      internals?.setValidity({});
+      return;
+    }
+
+    // Set validity state based on the required property and checked state
+    internals?.states.add('invalid');
+    internals?.setValidity({ valueMissing: true }, formValidationMessage, inputElem);
+  };
+
+  private clearSelection = () => {
+    this.checked = false;
+    this.indeterminate = false;
+  };
+
   private handleChange = () => {
     this.checked = !this.checked;
-    this.inputElem.setAttribute('checked', `${this.checked}`);
     this.indeterminate = false;
+
+    this.setFormValue(this.checked);
+    this.updateFormValidity();
   };
 
   private handleOnFocus = () => {
