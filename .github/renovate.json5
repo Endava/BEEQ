@@ -43,7 +43,11 @@
   packageRules: [
     {
       groupName: 'Angular',
-      matchPackagePrefixes: ['@angular', '@schematics', 'ng-packagr'],
+      matchPackagePrefixes: ['@angular', '@angular-devkit' '@schematics', 'ng-packagr'],
+    },
+    {
+      groupName: 'Angular ESLint',
+      matchPackagePrefixes: ['@angular-eslint'],
     },
     {
       groupName: 'Commitlint',

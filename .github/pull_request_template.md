@@ -4,7 +4,7 @@
 <!-- Please describe the behavior or changes that are being added by this PR. -->
 
 ## Related Issue
-<!-- If this PR is related to an existing issue, link it here. -->
+<!-- If this PR is related to an existing issue, please feel free to link it here. -->
 
 Fixes #ISSUE_NUMBER
 
@@ -15,11 +15,11 @@ Fixes #ISSUE_NUMBER
 <!-- Please provide screenshots or images to demonstrate the changes visually. -->
 
 ## Checklist
-<!-- Please review the following checklist and make sure all of the items are addressed. -->
+<!-- Please take a look at the following checklist and make sure all of the items are addressed. -->
 
 - [ ] I have read the [CONTRIBUTING](https://github.com/Endava/BEEQ/blob/main/CONTRIBUTING.md) document.
 - [ ] I have read the [CODE OF CONDUCT](https://github.com/Endava/BEEQ/blob/main/CODE_OF_CONDUCT.md) document.
-- [ ] I have reviewed my own code.
+- [ ] I have reviewed my code.
 - [ ] I have tested the changes locally.
 - [ ] I have updated the documentation (if applicable).
 - [ ] I have added unit tests and e2e tests (if applicable).
