@@ -303,6 +303,10 @@ export namespace Components {
          */
         "formId"?: string;
         /**
+          * The native form validation message
+         */
+        "formValidationMessage"?: string;
+        /**
           * A state that is neither checked nor unchecked
          */
         "indeterminate"?: boolean;
@@ -2588,6 +2592,10 @@ declare namespace LocalJSX {
           * The form ID that the checkbox is associated with
          */
         "formId"?: string;
+        /**
+          * The native form validation message
+         */
+        "formValidationMessage"?: string;
         /**
           * A state that is neither checked nor unchecked
          */
