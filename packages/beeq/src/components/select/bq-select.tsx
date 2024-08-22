@@ -13,16 +13,7 @@ import {
 } from '@stencil/core';
 
 import { Placement } from '../../services/interfaces';
-import {
-  debounce,
-  getTextContent,
-  hasSlotContent,
-  isDefined,
-  isHTMLElement,
-  isNil,
-  isString,
-  TDebounce,
-} from '../../shared/utils';
+import { debounce, hasSlotContent, isDefined, isHTMLElement, isNil, isString, TDebounce } from '../../shared/utils';
 import { TInputValidation } from '../input/bq-input.types';
 
 export type TSelectValue = string | string[];
@@ -454,15 +445,13 @@ export class BqSelect {
     const checkedItem = options.find((item) => item.value === value);
     const displayValue = checkedItem ? this.getOptionLabel(checkedItem) : '';
 
-    inputElem.value = displayValue ?? '';
+    inputElem.value = displayValue;
     this.displayValue = displayValue;
   };
 
   private getOptionLabel = (item: HTMLBqOptionElement) => {
-    const slot = item.shadowRoot.querySelector('slot:not([name])');
-    if (!slot) return;
-
-    return getTextContent(slot as HTMLSlotElement);
+    if (!item) return;
+    return item.innerText.trim() ?? '';
   };
 
   private get options() {
