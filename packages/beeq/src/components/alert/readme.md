@@ -21,12 +21,12 @@
 
 ## Events
 
-| Event          | Description                                                   | Type               |
-| -------------- | ------------------------------------------------------------- | ------------------ |
-| `bqAfterClose` | Callback handler to be called after the alert has been closed | `CustomEvent<any>` |
-| `bqAfterOpen`  | Callback handler to be called after the alert has been opened | `CustomEvent<any>` |
-| `bqHide`       | Callback handler to be called when the alert is hidden        | `CustomEvent<any>` |
-| `bqShow`       | Callback handler to be called when the alert is shown         | `CustomEvent<any>` |
+| Event         | Description                                                   | Type               |
+| ------------- | ------------------------------------------------------------- | ------------------ |
+| `bqAfterHide` | Callback handler to be called after the alert has been hidden | `CustomEvent<any>` |
+| `bqAfterShow` | Callback handler to be called after the alert has been shown  | `CustomEvent<any>` |
+| `bqHide`      | Callback handler to be called when the alert is hidden        | `CustomEvent<any>` |
+| `bqShow`      | Callback handler to be called when the alert is shown         | `CustomEvent<any>` |
 
 
 ## Methods
@@ -52,21 +52,30 @@ Type: `Promise<void>`
 
 
 
+## Slots
+
+| Slot          | Description                                                                          |
+| ------------- | ------------------------------------------------------------------------------------ |
+|               | The alert title content (no slot name required)                                      |
+| `"body"`      | The alert description content                                                        |
+| `"btn-close"` | The close button of the alert                                                        |
+| `"footer"`    | The alert footer content                                                             |
+| `"icon"`      | The predefined icon based on the alert type (info, success, warning, error, default) |
+
+
 ## Shadow Parts
 
-| Part             | Description                                                                                                               |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `"base"`         | The `<div>` container of the predefined bq-icon component                                                                 |
-| `"body"`         | The container `<div>` that wraps the alert description content                                                            |
-| `"btn-close"`    | The `bq-button` used to close the alert                                                                                   |
-| `"content"`      | The container `<div>` that wraps all the alert content (title, description, footer)                                       |
-| `"footer"`       | The container `<div>` that wraps the alert footer content                                                                 |
-| `"icon"`         | The `<bq-icon>` element used to render a predefined icon based on the alert type (info, success, warning, error, default) |
-| `"icon-outline"` | The container `<div>` that wraps the icon element                                                                         |
-| `"main"`         | The container `<div>` that wraps the alert main content (title, description)                                              |
-| `"svg"`          | The `<svg>` element of the predefined bq-icon component                                                                   |
-| `"title"`        | The container `<div>` that wraps the alert title content                                                                  |
-| `"wrapper"`      | The wrapper container `<div>` of the element inside the shadow DOM                                                        |
+| Part             | Description |
+| ---------------- | ----------- |
+| `"body"`         |             |
+| `"btn-close"`    |             |
+| `"content"`      |             |
+| `"footer"`       |             |
+| `"icon"`         |             |
+| `"icon-outline"` |             |
+| `"main"`         |             |
+| `"title"`        |             |
+| `"wrapper"`      |             |
 
 
 ## Dependencies

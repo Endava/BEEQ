@@ -17,6 +17,14 @@ import { debounce, enter, hasSlotContent, leave, TDebounce, validatePropValue } 
  * @part wrapper - The wrapper container `<div>` of the element inside the shadow DOM
  */
 
+/**
+ * @slot - The alert title content (no slot name required)
+ * @slot body - The alert description content
+ * @slot footer - The alert footer content
+ * @slot icon - The predefined icon based on the alert type (info, success, warning, error, default)
+ * @slot btn-close - The close button of the alert
+ */
+
 @Component({
   tag: 'bq-alert',
   styleUrl: './scss/bq-alert.scss',
@@ -116,11 +124,11 @@ export class BqAlert {
   /** Callback handler to be called when the alert is shown */
   @Event() bqShow!: EventEmitter;
 
-  /** Callback handler to be called after the alert has been opened */
-  @Event() bqAfterOpen!: EventEmitter;
+  /** Callback handler to be called after the alert has been shown */
+  @Event() bqAfterShow!: EventEmitter;
 
-  /** Callback handler to be called after the alert has been closed */
-  @Event() bqAfterClose!: EventEmitter;
+  /** Callback handler to be called after the alert has been hidden */
+  @Event() bqAfterHide!: EventEmitter;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -150,12 +158,13 @@ export class BqAlert {
   /** Method to be called to hide the alert component */
   @Method()
   async hide(): Promise<void> {
-    await this.handleHide();
+    this.open = false;
   }
+
   /** Method to be called to show the alert component */
   @Method()
   async show(): Promise<void> {
-    await this.handleShow();
+    this.open = true;
   }
 
   // Local methods
@@ -169,14 +178,12 @@ export class BqAlert {
       await leave(this.alertElement);
       this.el.classList.add('is-hidden');
       this.handleTransitionEnd();
-      this.open = false;
     }
   };
 
   private handleShow = async () => {
     const ev = this.bqShow.emit(this.el);
     if (!ev.defaultPrevented) {
-      this.open = true;
       this.el.classList.remove('is-hidden');
       await enter(this.alertElement);
       this.handleTransitionEnd();
@@ -185,11 +192,11 @@ export class BqAlert {
 
   private handleTransitionEnd = () => {
     if (this.open) {
-      this.bqAfterOpen.emit();
+      this.bqAfterShow.emit();
       return;
     }
 
-    this.bqAfterClose.emit();
+    this.bqAfterHide.emit();
   };
 
   private handleContentSlotChange = () => {
@@ -201,16 +208,13 @@ export class BqAlert {
   };
 
   private get iconName(): string {
-    switch (this.type) {
-      case 'error':
-        return 'x-circle';
-      case 'success':
-        return 'check-circle';
-      case 'warning':
-        return 'warning-circle';
-      default:
-        return 'info';
-    }
+    const iconName = {
+      error: 'x-circle',
+      success: 'check-circle',
+      warning: 'warning-circle',
+    };
+
+    return iconName[this.type] || 'info';
   }
 
   // render() function
@@ -247,13 +251,15 @@ export class BqAlert {
           {/* CLOSE BUTTON */}
           {!this.disableClose && (
             <bq-button
-              class="bq-alert__close absolute end-5 focus-visible:focus"
+              class="bq-alert__close absolute end-5 focus-visible:focus [&::part(label)]:inline-flex"
               appearance="text"
               size="small"
-              onClick={() => this.hide()}
+              onClick={this.hide.bind(this)}
               part="btn-close"
             >
-              <bq-icon name="x" />
+              <slot name="btn-close">
+                <bq-icon name="x" />
+              </slot>
             </bq-button>
           )}
           {/* ICON */}
