@@ -158,7 +158,7 @@
     "vite": "5.3.5",
     "vite-plugin-turbosnap": "1.0.3",
     "vite-tsconfig-paths": "4.3.2",
-    "vue": "3.4.35"
+    "vue": "3.4.38"
   },
   "volta": {
     "node": "20.16.0",
