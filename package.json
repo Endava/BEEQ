@@ -108,7 +108,7 @@
     "autoprefixer": "10.4.20",
     "babel-jest": "29.7.0",
     "chromatic": "11.7.0",
-    "core-js": "3.38.0",
+    "core-js": "3.38.1",
     "decompress": "4.2.1",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
