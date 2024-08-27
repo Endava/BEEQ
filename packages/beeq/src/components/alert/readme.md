@@ -21,12 +21,12 @@
 
 ## Events
 
-| Event          | Description                                                   | Type               |
-| -------------- | ------------------------------------------------------------- | ------------------ |
-| `bqAfterClose` | Callback handler to be called after the alert has been closed | `CustomEvent<any>` |
-| `bqAfterOpen`  | Callback handler to be called after the alert has been opened | `CustomEvent<any>` |
-| `bqHide`       | Callback handler to be called when the alert is hidden        | `CustomEvent<any>` |
-| `bqShow`       | Callback handler to be called when the alert is shown         | `CustomEvent<any>` |
+| Event         | Description                                                   | Type               |
+| ------------- | ------------------------------------------------------------- | ------------------ |
+| `bqAfterHide` | Callback handler to be called after the alert has been hidden | `CustomEvent<any>` |
+| `bqAfterShow` | Callback handler to be called after the alert has been shown  | `CustomEvent<any>` |
+| `bqHide`      | Callback handler to be called when the alert is hidden        | `CustomEvent<any>` |
+| `bqShow`      | Callback handler to be called when the alert is shown         | `CustomEvent<any>` |
 
 
 ## Methods
@@ -50,6 +50,17 @@ Method to be called to show the alert component
 Type: `Promise<void>`
 
 
+
+
+## Slots
+
+| Slot          | Description                                                                          |
+| ------------- | ------------------------------------------------------------------------------------ |
+|               | The alert title content (no slot name required)                                      |
+| `"body"`      | The alert description content                                                        |
+| `"btn-close"` | The close button of the alert                                                        |
+| `"footer"`    | The alert footer content                                                             |
+| `"icon"`      | The predefined icon based on the alert type (info, success, warning, error, default) |
 
 
 ## Shadow Parts
