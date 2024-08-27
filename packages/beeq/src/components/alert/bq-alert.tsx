@@ -15,9 +15,7 @@ import { debounce, enter, hasSlotContent, leave, TDebounce, validatePropValue } 
  * @part svg - The `<svg>` element of the predefined bq-icon component
  * @part title - The container `<div>` that wraps the alert title content
  * @part wrapper - The wrapper container `<div>` of the element inside the shadow DOM
- */
-
-/**
+ *
  * @slot - The alert title content (no slot name required)
  * @slot body - The alert description content
  * @slot footer - The alert footer content
