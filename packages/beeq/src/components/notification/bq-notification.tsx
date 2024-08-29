@@ -3,7 +3,7 @@ import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop,
 import { NOTIFICATION_TYPE, TNotificationBorderRadius, TNotificationType } from './bq-notification.types';
 import { debounce, enter, hasSlotContent, leave, TDebounce, validatePropValue } from '../../shared/utils';
 
-const notificationPortal = Object.assign(document.createElement('div'), { className: 'bq-notification-portal' });
+const NOTIFICATION_PORTAL_SELECTOR = 'bq-notification-portal';
 
 /**
  * @part base - The `<div>` container of the predefined bq-icon component.
@@ -17,6 +17,12 @@ const notificationPortal = Object.assign(document.createElement('div'), { classN
  * @part svg - The `<svg>` element of the predefined bq-icon component.
  * @part title - The container `<div>` that wraps the notification title content
  * @part wrapper - The wrapper container `<div>` of the element inside the shadow DOM
+ *
+ * @slot - The notification title content
+ * @slot body - The notification description content
+ * @slot footer - The notification footer content
+ * @slot icon - The icon to be displayed in the notification
+ * @slot btn-close - The close button of the notification
  */
 
 @Component({
@@ -44,6 +50,7 @@ export class BqNotification {
 
   @State() private hasContent = false;
   @State() private hasFooter = false;
+  @State() private notificationPortal = document.querySelector(`.${NOTIFICATION_PORTAL_SELECTOR}`);
 
   // Public Property API
   // ========================
@@ -117,6 +124,15 @@ export class BqNotification {
   // Ordered by their natural call order
   // =====================================
 
+  connectedCallback() {
+    const { notificationPortal } = this;
+    if (!notificationPortal) {
+      this.notificationPortal = Object.assign(document.createElement('div'), {
+        className: NOTIFICATION_PORTAL_SELECTOR,
+      });
+    }
+  }
+
   componentWillLoad() {
     this.checkPropValues();
     this.handleTimeout();
@@ -128,9 +144,10 @@ export class BqNotification {
   @Listen('bqAfterClose')
   afterNotificationClose() {
     try {
+      const { notificationPortal } = this;
       notificationPortal.removeChild(this.el);
       // Remove the notification portal from the DOM when there are no more notifications
-      if (notificationPortal.querySelector('bq-notification') === null) {
+      if (notificationPortal.querySelector(this.el.tagName.toLowerCase()) === null) {
         notificationPortal.remove();
       }
     } catch (error) {
@@ -165,11 +182,12 @@ export class BqNotification {
   /** This method can be used to display notifications in a fixed-position element that allows for stacking multiple notifications vertically */
   @Method()
   async toast() {
-    if (notificationPortal.parentElement === null) {
+    const { notificationPortal } = this;
+    if (notificationPortal?.parentElement === null) {
       document.body.append(notificationPortal);
     }
 
-    notificationPortal.appendChild(this.el);
+    notificationPortal?.appendChild(this.el);
     requestAnimationFrame(() => {
       this.show();
     });
@@ -216,16 +234,13 @@ export class BqNotification {
   };
 
   private get iconName(): string {
-    switch (this.type) {
-      case 'error':
-        return 'x-circle';
-      case 'success':
-        return 'check-circle';
-      case 'warning':
-        return 'warning-circle';
-      default:
-        return 'info';
-    }
+    const typeMap = {
+      error: 'x-circle',
+      success: 'check-circle',
+      warning: 'warning-circle',
+    };
+
+    return typeMap[this.type] || 'info';
   }
 
   // render() function
@@ -259,13 +274,15 @@ export class BqNotification {
           {/* CLOSE BUTTON */}
           {!this.disableClose && (
             <bq-button
-              class="notification--close absolute inset-ie-5"
+              class="notification--close absolute inset-ie-5 [&::part(label)]:inline-flex"
               appearance="text"
               size="small"
               onClick={() => this.hide()}
               part="btn-close"
             >
-              <bq-icon name="x" />
+              <slot name="btn-close">
+                <bq-icon name="x" />
+              </slot>
             </bq-button>
           )}
           {/* ICON */}

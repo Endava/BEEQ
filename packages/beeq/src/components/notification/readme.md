@@ -61,6 +61,17 @@ Type: `Promise<void>`
 
 
 
+## Slots
+
+| Slot          | Description                                  |
+| ------------- | -------------------------------------------- |
+|               | The notification title content               |
+| `"body"`      | The notification description content         |
+| `"btn-close"` | The close button of the notification         |
+| `"footer"`    | The notification footer content              |
+| `"icon"`      | The icon to be displayed in the notification |
+
+
 ## Shadow Parts
 
 | Part             | Description                                                                                |
