@@ -13,15 +13,23 @@ declare global {
   }
 }
 
-Object.defineProperty(window, 'bqSVGBasePath', {
-  configurable: true,
-  enumerable: false,
-  writable: true,
-});
+/**
+ * Define the `bqSVGBasePath` property on the global window object, but only when the window object is available.
+ */
+if (typeof window !== 'undefined') {
+  Object.defineProperty(window, 'bqSVGBasePath', {
+    configurable: true,
+    enumerable: false,
+    writable: true,
+  });
+}
 
 const DATA_BEEQ_ATTRIBUTE = 'data-beeq';
 const DEFAULT_SVG_PATH = 'svg';
-const scripts = [...document.getElementsByTagName('script')] as HTMLScriptElement[];
+const scripts: HTMLScriptElement[] =
+  typeof document !== 'undefined' && document
+    ? ([...document.getElementsByTagName('script')] as HTMLScriptElement[])
+    : [];
 
 /**
  * Sets the `bqSVGBasePath` in the global window object,
@@ -30,8 +38,10 @@ const scripts = [...document.getElementsByTagName('script')] as HTMLScriptElemen
  *
  * @param path - The new base path to set.
  */
-export const setBasePath = (path: string) => {
-  window.bqSVGBasePath = path;
+export const setBasePath = (path: string): void => {
+  if (typeof window !== 'undefined') {
+    window.bqSVGBasePath = path;
+  }
 };
 
 /**
@@ -40,7 +50,9 @@ export const setBasePath = (path: string) => {
  * @param subpath - The subpath to append to the base path.
  * @returns The full base path including the subpath.
  */
-export const getBasePath = (subpath = ''): string => {
+export const getBasePath = (subpath = ''): string | undefined => {
+  if (typeof window === 'undefined') return undefined;
+
   const { bqSVGBasePath } = window;
   if (!bqSVGBasePath) {
     initializeBasePath();
@@ -80,8 +92,9 @@ const formatBasePath = (subpath: string): string => {
   return window.bqSVGBasePath.replace(/\/$/, '') + formattedSubpath;
 };
 
-const findConfigScript = () => scripts.find((script) => script.hasAttribute(DATA_BEEQ_ATTRIBUTE));
+const findConfigScript = (): HTMLScriptElement => scripts.find((script) => script.hasAttribute(DATA_BEEQ_ATTRIBUTE));
 
-const findFallbackScript = () => scripts.find((script) => /beeq(\.esm)?\.js($|\?)/.test(script.src));
+const findFallbackScript = (): HTMLScriptElement => scripts.find((script) => /beeq(\.esm)?\.js($|\?)/.test(script.src));
 
-const getScriptPath = (script: HTMLScriptElement) => script.getAttribute('src').split('/').slice(0, -1).join('/');
+const getScriptPath = (script: HTMLScriptElement): string =>
+  script.getAttribute('src').split('/').slice(0, -1).join('/');

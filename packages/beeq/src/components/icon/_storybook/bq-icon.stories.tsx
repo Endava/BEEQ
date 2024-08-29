@@ -127,13 +127,13 @@ export const ExploreIcons: Story = {
         </span>
       </div>
       <bq-button class="m-be-xxl" appearance="primary" href="https://phosphoricons.com/" target="_blank">
-        <bq-icon name="binoculars" weight="fill" slot="prefix"></bq-icon>
+        <bq-icon name="binoculars-fill" slot="prefix"></bq-icon>
         Explore all the icons available
-        <bq-icon class="ms-m" name="caret-right" weight="regular" slot="suffix"></bq-icon>
+        <bq-icon class="ms-m" name="caret-right" slot="suffix"></bq-icon>
       </bq-button>
       <!-- Warning block -->
       <bq-alert class="m-be-l" type="warning" disable-close open>
-        <bq-icon name="warning" weight="fill" slot="icon"></bq-icon>
+        <bq-icon name="warning-fill" slot="icon"></bq-icon>
         Please notice
         <span slot="body">
           The SVG icons will be flipped horizontally when the <code>dir="rtl"</code> attribute is used.
