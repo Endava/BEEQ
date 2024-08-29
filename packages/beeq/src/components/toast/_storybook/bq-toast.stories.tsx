@@ -58,8 +58,7 @@ const Template = (args: Args) => {
           @bqShow=${args.bqShow}
           @bqHide=${onToastHide}
         >
-          ${args.text}
-          ${type === 'custom' ? html`<bq-icon slot="icon" size="24" weight="bold" name="star"></bq-icon>` : null}
+          ${args.text} ${type === 'custom' ? html`<bq-icon slot="icon" size="24" name="star-bold"></bq-icon>` : null}
         </bq-toast>
       </div>
     `,
@@ -96,7 +95,7 @@ const CustomIconTemplate = (args: Args) => {
       @bqHide=${onToastHide}
     >
       ${args.text}
-      <bq-icon slot="icon" size="24" weight="bold" name="star"></bq-icon>
+      <bq-icon slot="icon" size="24" name="star-bold"></bq-icon>
     </bq-toast>
   `;
 };
