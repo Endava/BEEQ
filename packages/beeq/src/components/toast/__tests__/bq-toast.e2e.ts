@@ -72,7 +72,7 @@ describe('bq-toast', () => {
 
     const iconWrapper = await page.find('bq-toast >>> bq-icon');
 
-    expect(iconWrapper).toEqualAttribute('name', 'info');
+    expect(iconWrapper).toEqualAttribute('name', 'info-bold');
   });
 
   it('should display success icon', async () => {
@@ -81,7 +81,7 @@ describe('bq-toast', () => {
 
     const iconWrapper = await page.find('bq-toast >>> bq-icon');
 
-    expect(iconWrapper).toEqualAttribute('name', 'check-circle');
+    expect(iconWrapper).toEqualAttribute('name', 'check-circle-bold');
   });
 
   it('should display custom icon', async () => {
@@ -89,7 +89,7 @@ describe('bq-toast', () => {
     await page.setContent(`
     <bq-toast>
       Text
-      <bq-icon slot="icon" size="24" weight="bold" name="star"></bq-icon>
+      <bq-icon slot="icon" size="24" name="star-bold"></bq-icon>
     </bq-toast>
     `);
 
@@ -101,7 +101,7 @@ describe('bq-toast', () => {
       return assignedElements.getAttribute('name');
     });
 
-    expect(iconWrapperName).toEqualText('star');
+    expect(iconWrapperName).toEqualText('star-bold');
   });
 
   it('should respect design style', async () => {
