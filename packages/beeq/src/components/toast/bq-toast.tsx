@@ -1,15 +1,18 @@
-import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
 import { TOAST_PLACEMENT, TOAST_TYPE, TToastBorderRadius, TToastPlacement, TToastType } from './bq-toast.types';
 import { debounce, TDebounce, validatePropValue } from '../../shared/utils';
 
-const toastPortal = Object.assign(document.createElement('div'), { className: 'bq-toast-portal' });
+const TOAST_PORTAL_SELECTOR = 'bq-toast-portal';
 
 /**
  * @part wrapper - The component's internal wrapper inside the shadow DOM.
  * @part icon-info - The `<div>` container that holds the icon component.
  * @part base - The `<div>` container of the internal bq-icon component.
  * @part svg - The `<svg>` element of the internal bq-icon component.
+ *
+ * @slot - The content to be displayed in the toast component.
+ * @slot icon - The icon to be displayed in the toast component.
  */
 @Component({
   tag: 'bq-toast',
@@ -30,6 +33,8 @@ export class BqToast {
   // State() variables
   // Inlined decorator, alphabetical order
   // =======================================
+
+  @State() private toastPortal = document.querySelector(`.${TOAST_PORTAL_SELECTOR}`);
 
   // Public Property API
   // ========================
@@ -61,8 +66,9 @@ export class BqToast {
     validatePropValue(TOAST_TYPE, 'default', this.el, 'type');
     validatePropValue(TOAST_PLACEMENT, 'bottom-center', this.el, 'placement');
 
-    toastPortal.classList.remove(...TOAST_PLACEMENT);
-    toastPortal.classList.add(this.placement);
+    const { toastPortal } = this;
+    toastPortal?.classList.remove(...TOAST_PLACEMENT);
+    toastPortal?.classList.add(this.placement);
   }
 
   @Watch('time')
@@ -99,6 +105,13 @@ export class BqToast {
   // Ordered by their natural call order
   // =====================================
 
+  connectedCallback() {
+    const { toastPortal } = this;
+    if (!toastPortal) {
+      this.toastPortal = Object.assign(document.createElement('div'), { className: TOAST_PORTAL_SELECTOR });
+    }
+  }
+
   componentWillLoad() {
     this.checkPropValues();
     this.handleTimeChange();
@@ -115,10 +128,11 @@ export class BqToast {
   @Listen('bqHide')
   onNotificationHide() {
     try {
-      toastPortal.removeChild(this.el);
+      const { toastPortal } = this;
+      toastPortal?.removeChild(this.el);
       // Remove the toast portal from the DOM when there are no more toasts
-      if (toastPortal.querySelector('bq-toast') === null) {
-        toastPortal.remove();
+      if (toastPortal?.querySelector(this.el.tagName.toLowerCase()) === null) {
+        toastPortal?.remove();
       }
     } catch (error) {
       /**
@@ -152,11 +166,12 @@ export class BqToast {
   /** This method can be used to display toasts in a fixed-position element that allows for stacking multiple toasts vertically */
   @Method()
   async toast() {
-    if (toastPortal.parentElement === null) {
+    const { toastPortal } = this;
+    if (toastPortal?.parentElement === null) {
       document.body.append(toastPortal);
     }
 
-    toastPortal.appendChild(this.el);
+    toastPortal?.appendChild(this.el);
 
     requestAnimationFrame(() => {
       this.show();
@@ -183,26 +198,15 @@ export class BqToast {
   };
 
   private get iconName() {
-    switch (this.type) {
-      case 'success': {
-        return 'check-circle';
-      }
-      case 'error': {
-        return 'x-circle';
-      }
-      case 'loading': {
-        return 'spinner-gap';
-      }
-      case 'alert': {
-        return 'warning';
-      }
-      case 'info': {
-        return 'info';
-      }
-      default: {
-        return 'info';
-      }
-    }
+    const typeMap = {
+      success: 'check-circle-bold',
+      error: 'x-circle-bold',
+      loading: 'spinner-gap-bold',
+      alert: 'warning-bold',
+      info: 'info-bold',
+    };
+
+    return typeMap[this.type] || 'info-bold';
   }
 
   // render() function
@@ -225,7 +229,7 @@ export class BqToast {
         <output class="bq-toast" part="wrapper">
           <div class={{ [`bq-toast--icon ${this.type}`]: true, '!hidden': this.hideIcon }} part="icon">
             <slot name="icon">
-              <bq-icon name={this.iconName} size="24" weight="bold" slot="icon" exportparts="base,svg"></bq-icon>
+              <bq-icon name={this.iconName} size="24" slot="icon" exportparts="base,svg" />
             </slot>
           </div>
           <slot />

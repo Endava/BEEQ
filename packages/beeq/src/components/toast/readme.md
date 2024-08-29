@@ -58,6 +58,14 @@ Type: `Promise<void>`
 
 
 
+## Slots
+
+| Slot     | Description                                         |
+| -------- | --------------------------------------------------- |
+|          | The content to be displayed in the toast component. |
+| `"icon"` | The icon to be displayed in the toast component.    |
+
+
 ## Shadow Parts
 
 | Part          | Description                                              |
