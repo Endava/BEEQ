@@ -97,7 +97,7 @@
     "@swc/core": "1.7.18",
     "@swc/helpers": "0.5.12",
     "@testing-library/dom": "10.4.0",
-    "@testing-library/react": "16.0.0",
+    "@testing-library/react": "16.0.1",
     "@types/jest": "29.5.12",
     "@types/mdx": "2.0.13",
     "@types/node": "22.5.0",
