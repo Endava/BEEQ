@@ -100,7 +100,7 @@
     "@testing-library/react": "16.0.0",
     "@types/jest": "29.5.12",
     "@types/mdx": "2.0.13",
-    "@types/node": "22.5.0",
+    "@types/node": "22.5.1",
     "@types/react": "18.3.4",
     "@types/react-dom": "18.3.0",
     "@typescript-eslint/eslint-plugin": "7.18.0",
