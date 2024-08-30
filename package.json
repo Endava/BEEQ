@@ -125,7 +125,7 @@
     "jest-environment-jsdom": "29.7.0",
     "jsdom": "24.1.1",
     "jsonc-eslint-parser": "2.4.0",
-    "lint-staged": "15.2.8",
+    "lint-staged": "15.2.9",
     "lit": "3.2.0",
     "lit-html": "3.2.0",
     "nanospinner": "1.1.0",
