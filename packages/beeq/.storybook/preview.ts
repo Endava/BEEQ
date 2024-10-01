@@ -87,9 +87,7 @@ const preview: Preview = {
         height: '250px',
       },
       container: (props: any) => {
-        const {
-          globals: { theme, mode, layout },
-        } = props.context.store.globals;
+        const { theme, mode, layout } = props.context.store.userGlobals.globals;
 
         const html = document.querySelector('html');
         html!.setAttribute('dir', layout.toLowerCase() ?? 'ltr');

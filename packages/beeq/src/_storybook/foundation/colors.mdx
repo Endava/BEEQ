@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meta, Title, Subtitle, Unstyled } from '@storybook/blocks';
-import { capitalize, mapColors } from './helper';
+import { capitalize, getVariableValue } from './helper';
 
 <Meta title="Foundation/Colors" />
 
@@ -19,16 +19,16 @@ import { capitalize, mapColors } from './helper';
       They represent the cornerstone of our visual identity and is carefully selected to reflect our brand's essence and values.
       Use the brand color judiciously to create a strong and cohesive visual language.
 
-      {Object.entries({ brand }).map(([name, value]) => (
-        <ColorItem name={name} value={value} />
+      {Object.entries({ brand }).map(([name, values]) => (
+        <ColorItem name={name} values={values} />
       ))}
 
       <Subtitle>Accent colors</Subtitle>
 
       The accent colors are used as a highlight to create visual interest and draw attention to specific design elements within the overall color scheme.
 
-      {Object.entries({ accent }).map(([name, value]) => (
-        <ColorItem name={name} value={value} />
+      {Object.entries({ accent }).map(([name, values]) => (
+        <ColorItem name={name} values={values} />
       ))}
 
       {(document.querySelector('body').getAttribute('bq-theme') === 'beeq') && (
@@ -42,72 +42,72 @@ import { capitalize, mapColors } from './helper';
 
       Background colors are used to create visual hierarchy and structure in the interface. They are used to separate content and create a clear distinction between different sections of the interface.
 
-      {Object.entries({ background }).map(([name, value]) => (
-        <ColorItem name={name} value={value} />
+      {Object.entries({ background }).map(([name, values]) => (
+        <ColorItem name={name} values={values} />
       ))}
 
       <Subtitle>User interface colors</Subtitle>
 
       These are used to create a consistent and harmonious visual language across the interface. They are used to create a clear distinction between different elements and to guide the user through the interface.
 
-      {Object.entries({ ui, text, icon, stroke }).map(([name, value]) => (
-        <ColorItem name={name} value={value} />
+      {Object.entries({ ui, text, icon, stroke }).map(([name, values]) => (
+        <ColorItem name={name} values={values} />
       ))}
 
       <Subtitle>System colors</Subtitle>
 
       System colors are used to convey information to the user. They are used to indicate the status of an action or to provide feedback to the user.
 
-      {Object.entries({ success, danger, warning, info }).map(([name, value]) => (
-        <ColorItem name={name} value={value} />
+      {Object.entries({ success, danger, warning, info }).map(([name, values]) => (
+        <ColorItem name={name} values={values} />
       ))}
 
       <Subtitle>Neutral colors</Subtitle>
 
       These colors help create a comfortable and easily accessible user experience, complementing other colors in the palette.
 
-      {Object.entries({ whiteBlack, neutral }).map(([name, value]) => {
+      {Object.entries({ whiteBlack, neutral }).map(([name, values]) => {
         if (name === 'whiteBlack') name = 'White & Black';
-        return <ColorItem name={name} value={value} />;
+        return <ColorItem name={name} values={values} />;
       })}
 
       <Subtitle>Data colors</Subtitle>
 
       Data colors are a set of distinct and easily distinguishable hues specifically designed for visualizing and presenting data in charts, graphs, and other data-driven elements.
 
-      {Object.entries({ data }).map(([name, value]) => (
-        <ColorItem name={name} value={value} />
+      {Object.entries({ data }).map(([name, values]) => (
+        <ColorItem name={name} values={values} />
       ))}
     </Unstyled>
   </div>
 </div>
 
-export const ColorItem = ({ name, value }) => (
+export const ColorItem = ({ name, values }) => (
   <div className="flex flex-col items-start m-b-xl">
     <div className="block m-be-s">{capitalize(name)}</div>
     <div className="flex flex-wrap gap-xs is-full">
-      {Object.entries(value).map(([colorName, colorValue]) => (
-        <div className="flex flex-1 flex-col text-center">
-          <div key={colorName} className="flex is-full bs-14 border-solid border-s border-stroke-primary m-be-xs" style={{ backgroundColor: `var(--${colorName})` }}></div>
+      {values.map((colorName) => (
+        <div key={colorName} className="flex flex-1 flex-col text-center">
+          <div className="flex is-full bs-14 border-solid border-s border-stroke-primary m-be-xs" style={{ backgroundColor: `var(--${colorName})` }}></div>
           <p className="!text-xs !font-bold">{`--${colorName}`}</p>
-          <p className="!text-xs !text-text-secondary">{colorValue}</p>
+          <p className="!text-xs !text-text-secondary">{getVariableValue(colorName)}</p>
         </div>
       ))}
     </div>
   </div>
 );
 
-export const brand = mapColors(['bq-brand-light', 'bq-brand', 'bq-brand-dark']);
-export const accent = mapColors(['bq-accent-light', 'bq-accent', 'bq-accent-dark']);
-export const background = mapColors(['bq-background--primary', 'bq-background--secondary', 'bq-background--tertiary', 'bq-background--alt', 'bq-background--inverse', 'bq-background--brand', 'bq-background--overlay']);
-export const ui = mapColors(['bq-ui--primary', 'bq-ui--secondary', 'bq-ui--tertiary', 'bq-ui--inverse', 'bq-ui--brand', 'bq-ui--brand-alt', 'bq-ui--alt']);
-export const text = mapColors(['bq-text--primary', 'bq-text--secondary', 'bq-text--inverse', 'bq-text--brand', 'bq-text--alt']);
-export const icon = mapColors(['bq-icon--primary', 'bq-icon--alt', 'bq-icon--secondary', 'bq-icon--inverse', 'bq-icon--brand']);
-export const stroke = mapColors(['bq-stroke--primary', 'bq-stroke--secondary', 'bq-stroke--tertiary', 'bq-stroke--inverse', 'bq-stroke--brand', 'bq-stroke--alt']);
-export const success = mapColors(['bq-success-light', 'bq-success', 'bq-success-dark']);
-export const danger = mapColors(['bq-danger-light', 'bq-danger', 'bq-danger-dark']);
-export const warning = mapColors(['bq-warning-light', 'bq-warning', 'bq-warning-dark']);
-export const info = mapColors(['bq-info-light', 'bq-info', 'bq-info-dark']);
-export const whiteBlack = mapColors(['bq-white', 'bq-black']);
-export const neutral = mapColors(['bq-neutral-50', 'bq-neutral-100', 'bq-neutral-200', 'bq-neutral-300', 'bq-neutral-400', 'bq-neutral-500', 'bq-neutral-600', 'bq-neutral-700', 'bq-neutral-800', 'bq-neutral-900', 'bq-neutral-950', 'bq-neutral-1000']);
-export const data = mapColors(['bq-data-01', 'bq-data-02', 'bq-data-03', 'bq-data-04', 'bq-data-05', 'bq-data-06', 'bq-data-07', 'bq-data-08', 'bq-data-09', 'bq-data-10', 'bq-data-11', 'bq-data-12']);
+export const brand = ['bq-brand-light', 'bq-brand', 'bq-brand-dark'];
+export const accent = ['bq-accent-light', 'bq-accent', 'bq-accent-dark'];
+export const background = ['bq-background--primary', 'bq-background--secondary', 'bq-background--tertiary', 'bq-background--alt', 'bq-background--inverse', 'bq-background--brand', 'bq-background--overlay'];
+export const ui = ['bq-ui--primary', 'bq-ui--secondary', 'bq-ui--tertiary', 'bq-ui--inverse', 'bq-ui--brand', 'bq-ui--brand-alt', 'bq-ui--alt'];
+export const text = ['bq-text--primary', 'bq-text--secondary', 'bq-text--inverse', 'bq-text--brand', 'bq-text--alt'];
+export const icon = ['bq-icon--primary', 'bq-icon--alt', 'bq-icon--secondary', 'bq-icon--inverse', 'bq-icon--brand'];
+export const stroke = ['bq-stroke--primary', 'bq-stroke--secondary', 'bq-stroke--tertiary', 'bq-stroke--inverse', 'bq-stroke--brand', 'bq-stroke--alt'];
+export const success = ['bq-success-light', 'bq-success', 'bq-success-dark'];
+export const danger = ['bq-danger-light', 'bq-danger', 'bq-danger-dark'];
+export const warning = ['bq-warning-light', 'bq-warning', 'bq-warning-dark'];
+export const info = ['bq-info-light', 'bq-info', 'bq-info-dark'];
+export const whiteBlack = ['bq-white', 'bq-black'];
+export const neutral = ['bq-neutral-50', 'bq-neutral-100', 'bq-neutral-200', 'bq-neutral-300', 'bq-neutral-400', 'bq-neutral-500', 'bq-neutral-600', 'bq-neutral-700', 'bq-neutral-800', 'bq-neutral-900', 'bq-neutral-950', 'bq-neutral-1000'];
+export const data = ['bq-data-01', 'bq-data-02', 'bq-data-03', 'bq-data-04', 'bq-data-05', 'bq-data-06', 'bq-data-07', 'bq-data-08', 'bq-data-09', 'bq-data-10', 'bq-data-11', 'bq-data-12'];
