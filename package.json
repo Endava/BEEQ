@@ -107,7 +107,7 @@
     "@typescript-eslint/parser": "7.18.0",
     "autoprefixer": "10.4.20",
     "babel-jest": "29.7.0",
-    "chromatic": "11.7.1",
+    "chromatic": "11.10.4",
     "core-js": "3.38.1",
     "decompress": "4.2.1",
     "eslint": "8.57.0",
