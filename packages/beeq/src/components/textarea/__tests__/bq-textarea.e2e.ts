@@ -78,11 +78,10 @@ describe('bq-textarea', () => {
     const page = await newE2EPage({
       html: `<bq-textarea></bq-textarea>`,
     });
-    const bqChange = await page.spyOnEvent('bqChange');
     const bqTextareaElem = await page.find('bq-textarea');
-    const nativeTextareaElem = await page.find('bq-textarea >>> .bq-textarea__input');
+    const bqChange = await bqTextareaElem.spyOnEvent('bqChange');
 
-    await nativeTextareaElem.type(value);
+    await page.type('bq-textarea >>> .bq-textarea__input', value, { delay: 100 });
     await page.$eval('bq-textarea >>> .bq-textarea__input', (e: HTMLInputElement) => {
       e.blur();
     });
@@ -98,12 +97,10 @@ describe('bq-textarea', () => {
       html: `<bq-textarea></bq-textarea>`,
     });
 
-    const bqInput = await page.spyOnEvent('bqInput');
-
     const bqTextareaElem = await page.find('bq-textarea');
+    const bqInput = await bqTextareaElem.spyOnEvent('bqInput');
 
-    await page.focus('bq-textarea >>> .bq-textarea__input');
-    await page.keyboard.type(value);
+    await page.type('bq-textarea >>> .bq-textarea__input', value, { delay: 100 });
     await page.waitForChanges();
 
     expect(await bqTextareaElem.getProperty('value')).toBe(value);
