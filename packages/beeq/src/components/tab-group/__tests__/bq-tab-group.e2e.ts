@@ -4,11 +4,11 @@ describe('bq-tab-group', () => {
   it('should render', async () => {
     const page = await newE2EPage({
       html: `
-    <bq-tab-group value="1">
-      <bq-tab tab-id="1">Tab 1</bq-tab>
-      <bq-tab tab-id="2">Tab 2</bq-tab>
-    </bq-tab-group>
-    `,
+        <bq-tab-group value="1">
+          <bq-tab tab-id="1">Tab 1</bq-tab>
+          <bq-tab tab-id="2">Tab 2</bq-tab>
+        </bq-tab-group>
+      `,
     });
 
     const element = await page.find('bq-tab-group');
@@ -19,11 +19,11 @@ describe('bq-tab-group', () => {
   it('should have shadow root', async () => {
     const page = await newE2EPage({
       html: `
-    <bq-tab-group value="1">
-      <bq-tab tab-id="1">Tab 1</bq-tab>
-      <bq-tab tab-id="2">Tab 2</bq-tab>
-    </bq-tab-group>
-    `,
+        <bq-tab-group value="1">
+          <bq-tab tab-id="1">Tab 1</bq-tab>
+          <bq-tab tab-id="2">Tab 2</bq-tab>
+        </bq-tab-group>
+      `,
     });
 
     const element = await page.find('bq-tab-group');
@@ -34,11 +34,11 @@ describe('bq-tab-group', () => {
   it('should change size of all tabs', async () => {
     const page = await newE2EPage({
       html: `
-    <bq-tab-group value="1" size="medium">
-      <bq-tab tab-id="1">Tab 1</bq-tab>
-      <bq-tab tab-id="2">Tab 2</bq-tab>
-    </bq-tab-group>
-    `,
+        <bq-tab-group value="1" size="medium">
+          <bq-tab tab-id="1">Tab 1</bq-tab>
+          <bq-tab tab-id="2">Tab 2</bq-tab>
+        </bq-tab-group>
+      `,
     });
 
     const element = await page.find('bq-tab');
@@ -49,19 +49,22 @@ describe('bq-tab-group', () => {
   it('should emit bqChange on tab click', async () => {
     const page = await newE2EPage({
       html: `
-    <bq-tab-group value="1">
-      <bq-tab tab-id="1">Tab 1</bq-tab>
-      <bq-tab tab-id="2">Tab 2</bq-tab>
-    </bq-tab-group>
-    `,
+        <bq-tab-group value="1">
+          <bq-tab tab-id="1">Tab 1</bq-tab>
+          <bq-tab tab-id="2">Tab 2</bq-tab>
+        </bq-tab-group>
+      `,
     });
 
-    const bqFocus = await page.spyOnEvent('bqFocus');
-    const bqChange = await page.spyOnEvent('bqChange');
-    const bqBlur = await page.spyOnEvent('bqBlur');
+    const bqTabGroupElement = await page.find('bq-tab-group');
+    const bqFocus = await bqTabGroupElement.spyOnEvent('bqFocus');
+    const bqChange = await bqTabGroupElement.spyOnEvent('bqChange');
+    const bqBlur = await bqTabGroupElement.spyOnEvent('bqBlur');
 
-    const element = await page.find('bq-tab');
+    const element = await page.find('bq-tab[tab-id="2"]');
     await element.click();
+
+    await page.waitForChanges();
 
     expect(bqFocus).toHaveReceivedEventTimes(1);
     expect(bqChange).toHaveReceivedEventTimes(1);
@@ -71,23 +74,31 @@ describe('bq-tab-group', () => {
   it('should emit bqChange on keyboard navigation', async () => {
     const page = await newE2EPage({
       html: `
-    <bq-tab-group value="1">
-      <bq-tab tab-id="1">Tab 1</bq-tab>
-      <bq-tab tab-id="2">Tab 2</bq-tab>
-      <bq-tab tab-id="3">Tab 3</bq-tab>
-      <bq-tab tab-id="4">Tab 4</bq-tab>
-    </bq-tab-group>
-    `,
+        <bq-tab-group value="1">
+          <bq-tab tab-id="1">Tab 1</bq-tab>
+          <bq-tab tab-id="2">Tab 2</bq-tab>
+          <bq-tab tab-id="3">Tab 3</bq-tab>
+          <bq-tab tab-id="4">Tab 4</bq-tab>
+        </bq-tab-group>
+      `,
     });
+    await page.waitForSelector('.hydrated');
 
-    const bqFocus = await page.spyOnEvent('bqFocus');
-    const bqChange = await page.spyOnEvent('bqChange');
-    const bqBlur = await page.spyOnEvent('bqBlur');
+    const bqTabGroupElement = await page.find('bq-tab-group');
+    const bqFocus = await bqTabGroupElement.spyOnEvent('bqFocus');
+    const bqChange = await bqTabGroupElement.spyOnEvent('bqChange');
+    const bqBlur = await bqTabGroupElement.spyOnEvent('bqBlur');
 
     await page.keyboard.press('Tab');
+    await page.waitForChanges();
+
     await page.keyboard.press('ArrowRight');
+    await page.waitForChanges();
     await page.keyboard.press('ArrowRight');
+    await page.waitForChanges();
     await page.keyboard.press('ArrowRight');
+    await page.waitForChanges();
+
     await page.keyboard.press('Tab');
 
     expect(bqFocus).toHaveReceivedEventTimes(4);
@@ -98,12 +109,12 @@ describe('bq-tab-group', () => {
   it('should change active tab if value is change externally', async () => {
     const page = await newE2EPage({
       html: `
-    <bq-tab-group value="1">
-      <bq-tab tab-id="1">Tab 1</bq-tab>
-      <bq-tab tab-id="2">Tab 2</bq-tab>
-      <bq-tab tab-id="3">Tab 3</bq-tab>
-      <bq-tab tab-id="4">Tab 4</bq-tab>
-    </bq-tab-group>
+        <bq-tab-group value="1">
+          <bq-tab tab-id="1">Tab 1</bq-tab>
+          <bq-tab tab-id="2">Tab 2</bq-tab>
+          <bq-tab tab-id="3">Tab 3</bq-tab>
+          <bq-tab tab-id="4">Tab 4</bq-tab>
+        </bq-tab-group>
       `,
     });
 

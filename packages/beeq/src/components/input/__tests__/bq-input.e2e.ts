@@ -73,17 +73,17 @@ describe('bq-input', () => {
 
   it('should write and emit change event', async () => {
     const inputValue = 'Hello';
+    const nativeInputSelector = 'bq-input >>> .bq-input--control__input';
+
     const page = await newE2EPage({
       html: '<bq-input></bq-input>',
     });
 
-    const bqChange = await page.spyOnEvent('bqChange');
-
     const bqInputElem = await page.find('bq-input');
-    const nativeInputElem = await page.find('bq-input >>> .bq-input--control__input');
+    const bqChange = await bqInputElem.spyOnEvent('bqChange');
 
-    await nativeInputElem.type(inputValue);
-    await page.$eval('bq-input >>> .bq-input--control__input', (e: HTMLInputElement) => {
+    await page.type(nativeInputSelector, inputValue, { delay: 100 });
+    await page.$eval(nativeInputSelector, (e: HTMLInputElement) => {
       e.blur();
     });
     await page.waitForChanges();
@@ -98,12 +98,10 @@ describe('bq-input', () => {
       html: '<bq-input></bq-input>',
     });
 
-    const bqInput = await page.spyOnEvent('bqInput');
-
     const bqInputElem = await page.find('bq-input');
+    const bqInput = await bqInputElem.spyOnEvent('bqInput');
 
-    await page.focus('bq-input >>> .bq-input--control__input');
-    await page.keyboard.type(inputValue);
+    await page.type('bq-input >>> .bq-input--control__input', inputValue, { delay: 100 });
     await page.waitForChanges();
 
     expect(await bqInputElem.getProperty('value')).toBe(inputValue);
@@ -113,14 +111,12 @@ describe('bq-input', () => {
   it('should clear the value and emit clear event', async () => {
     const inputValue = 'Hello';
     const page = await newE2EPage({
-      html: `
-        <bq-input value="${inputValue}"></bq-input>
-      `,
+      html: `<bq-input value="${inputValue}"></bq-input>`,
     });
 
-    const bqClear = await page.spyOnEvent('bqClear');
-
     const bqInputElem = await page.find('bq-input');
+    const bqClear = await bqInputElem.spyOnEvent('bqClear');
+
     const nativeInputElem = await page.find('bq-input >>> .bq-input--control__input');
     expect(await nativeInputElem.getProperty('value')).toBe(inputValue);
 
