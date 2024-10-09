@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: 'beeq-react',
   preset: '../../jest.preset.js',

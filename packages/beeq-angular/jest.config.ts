@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: 'beeq-angular',
   preset: '../../jest.preset.js',

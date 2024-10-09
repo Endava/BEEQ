@@ -260,6 +260,7 @@ export class BqTextarea {
         <label
           class={{ 'bq-textarea__label': true, '!hidden': !this.hasLabel }}
           htmlFor={this.name ?? this.fallbackId}
+          aria-label={this.name ?? this.fallbackId}
           ref={(label: HTMLLabelElement) => (this.labelElem = label)}
           part="label"
         >

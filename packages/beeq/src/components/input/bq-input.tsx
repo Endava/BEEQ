@@ -327,6 +327,7 @@ export class BqInput {
         {/* Label */}
         <label
           class={{ 'bq-input--label': true, '!hidden': !this.hasLabel }}
+          aria-label={this.name || this.fallbackInputId}
           htmlFor={this.name || this.fallbackInputId}
           ref={(labelElem) => (this.labelElem = labelElem)}
           part="label"
@@ -358,7 +359,6 @@ export class BqInput {
             autoCapitalize={this.autocapitalize}
             autoComplete={this.autocomplete}
             autoCorrect={this.autocorrect}
-            autoFocus={this.autofocus}
             disabled={this.disabled}
             form={this.form}
             inputMode={this.inputmode}

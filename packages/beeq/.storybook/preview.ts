@@ -1,11 +1,14 @@
+// eslint-disable-next-line import-x/no-unresolved
 import './assets/css/stories.css';
 
+import { DocsContainer } from '@storybook/blocks';
 import type { DecoratorFunction } from '@storybook/csf';
 import type { Preview, WebComponentsRenderer } from '@storybook/web-components';
-import { createElement } from 'react';
-import { DocsContainer } from '@storybook/blocks';
 import { setCustomElementsManifest } from '@storybook/web-components';
+import { createElement } from 'react';
 
+// @ts-expect-error: custom-elements is a generated file
+// eslint-disable-next-line import-x/no-unresolved
 import customElements from '../custom-elements.json';
 
 setCustomElementsManifest(customElements);
@@ -86,6 +89,7 @@ const preview: Preview = {
         inline: true,
         height: '250px',
       },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       container: (props: any) => {
         const { theme, mode, layout } = props.context.store.userGlobals.globals;
 

@@ -107,10 +107,6 @@
       matchPackagePrefixes: ['typescript'],
       allowedVersions: '<5.6.0',
     },
-    {
-      groupName: 'Typescript-Eslint',
-      matchPackagePrefixes: ['@typescript-eslint'],
-    },
     /**
      * Ignore eslint updates for v9.0.0 and above
      */

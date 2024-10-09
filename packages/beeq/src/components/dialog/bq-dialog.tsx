@@ -215,7 +215,11 @@ export class BqDialog {
 
     this.el.classList.add(this.OPEN_CSS_CLASS);
     // Show the dialog
-    this.disableBackdrop ? this.dialogElem.show() : this.dialogElem.showModal();
+    if (this.disableBackdrop) {
+      this.dialogElem.show();
+    } else {
+      this.dialogElem.showModal();
+    }
     await enter(this.dialogElem);
     // Emit bqAfterOpen event after the dialog is opened
     this.handleTransitionEnd();

@@ -3,8 +3,8 @@
   "compilerOptions": {
     "rootDir": ".",
     "baseUrl": ".",
-    "lib": ["dom", "es2019", "es2020", "es2021", "esnext"],
-    "target": "es2019",
+    "lib": ["dom", "esnext"],
+    "target": "esnext",
     "module": "esnext",
     "allowSyntheticDefaultImports": true,
     "allowUnreachableCode": false,

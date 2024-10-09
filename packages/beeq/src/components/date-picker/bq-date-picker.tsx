@@ -477,6 +477,7 @@ export class BqDatePicker {
         <label
           id={labelId}
           class={{ 'bq-date-picker__label': true, '!hidden': !this.hasLabel }}
+          aria-label={this.name || this.fallbackInputId}
           htmlFor={this.name || this.fallbackInputId}
           ref={(labelElem: HTMLSpanElement) => (this.labelElem = labelElem)}
           part="label"
@@ -519,7 +520,6 @@ export class BqDatePicker {
               class="bq-date-picker__control--input"
               autoComplete="off"
               autoCapitalize="off"
-              autoFocus={this.autofocus}
               aria-disabled={this.disabled ? 'true' : 'false'}
               aria-controls={`${this.name}`}
               aria-haspopup="dialog"
