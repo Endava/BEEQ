@@ -2,7 +2,7 @@ import type { Config } from 'tailwindcss';
 import plugin from 'tailwindcss/plugin';
 
 // NOTE: https://github.com/tailwindlabs/tailwindcss/discussions/6925#discussioncomment-1919382
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const { default: flattenColorPalette } = require('tailwindcss/lib/util/flattenColorPalette');
 
 export const LogicalProperties: Partial<Config> = plugin(function ({ matchUtilities, theme }) {
