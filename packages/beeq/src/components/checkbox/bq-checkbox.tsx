@@ -231,6 +231,7 @@ export class BqCheckbox {
           'is-disabled !cursor-not-allowed': this.disabled,
           'has-background': this.backgroundOnHover,
         }}
+        aria-label={this.name || 'checkbox'}
         part="base"
       >
         <div

@@ -528,6 +528,7 @@ export class BqSelect {
         <label
           id={labelId}
           class={{ 'bq-select__label': true, '!hidden': !this.hasLabel }}
+          aria-label={this.name || this.fallbackInputId}
           htmlFor={this.name || this.fallbackInputId}
           ref={(labelElem: HTMLSpanElement) => (this.labelElem = labelElem)}
           part="label"
@@ -579,7 +580,6 @@ export class BqSelect {
                 class="bq-select__control--input flex-grow is-full"
                 autoComplete="off"
                 autoCapitalize="off"
-                autoFocus={this.autofocus}
                 aria-disabled={this.disabled ? 'true' : 'false'}
                 aria-controls={`bq-options-${this.name}`}
                 aria-expanded={this.open ? 'true' : 'false'}

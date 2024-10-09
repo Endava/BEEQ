@@ -1,6 +1,6 @@
 const globals = require('globals');
 const jsESLint = require('@eslint/js');
-const nxPlugin = require('@nx/eslint-plugin');
+const nxESLint = require('@nx/eslint-plugin');
 const jsoncParser = require('jsonc-eslint-parser');
 const prettierPlugin = require('eslint-plugin-prettier');
 
@@ -11,7 +11,7 @@ module.exports = [
   { ignores: ['node_modules', '!.storybook', 'dist'] },
   {
     plugins: {
-      '@nx': nxPlugin,
+      '@nx': nxESLint,
     },
     languageOptions: {
       globals: {
@@ -23,7 +23,7 @@ module.exports = [
   {
     files: ['**/*.json'],
     languageOptions: {
-      parser: parser,
+      parser: jsoncParser,
     },
     rules: { '@nx/dependency-checks': 'error' },
   },

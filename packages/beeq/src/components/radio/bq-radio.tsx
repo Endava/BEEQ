@@ -9,7 +9,9 @@ import { Component, Element, Event, EventEmitter, h, Method, Prop } from '@stenc
 @Component({
   tag: 'bq-radio',
   styleUrl: './scss/bq-radio.scss',
-  shadow: true,
+  shadow: {
+    delegatesFocus: true,
+  },
 })
 export class BqRadio {
   // Own Properties
@@ -136,14 +138,6 @@ export class BqRadio {
     return `${-1 + +(this.checked ?? 1)}`;
   }
 
-  /**
-   * This method prevents label to steal the focus and trigger input blur
-   * details https://stackoverflow.com/a/73364174
-   */
-  private onLabelMouseDown = (event: MouseEvent) => {
-    event.preventDefault();
-  };
-
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -157,8 +151,8 @@ export class BqRadio {
           'is-checked': this.checked,
           'has-background': this.backgroundOnHover,
         }}
+        aria-label={this.name}
         part="base"
-        onMouseDown={this.onLabelMouseDown}
       >
         <div class="bq-radio__control">
           <input

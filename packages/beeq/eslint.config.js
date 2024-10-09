@@ -1,5 +1,5 @@
 const { fixupPluginRules } = require('@eslint/compat');
-const nxPlugin = require('@nx/eslint-plugin');
+const nxESLint = require('@nx/eslint-plugin');
 const importXPlugin = require('eslint-plugin-import-x');
 const jsxA11yPlugin = require('eslint-plugin-jsx-a11y');
 const prettierRecommended = require('eslint-plugin-prettier/recommended');
@@ -105,7 +105,7 @@ module.exports = [
       parser: jsoncParser,
     },
     plugins: {
-      '@nx': nxPlugin,
+      '@nx': nxESLint,
     },
     rules: {
       '@nx/dependency-checks': [

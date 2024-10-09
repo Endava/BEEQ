@@ -1,4 +1,5 @@
 import { join } from 'path';
+
 import type { StorybookConfig } from '@storybook/web-components-vite';
 
 export default {

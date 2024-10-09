@@ -84,7 +84,9 @@ export class BqBreadcrumb {
   private setSeparator = (): void => {
     this.breadcrumbItems.forEach((item, index, arr) => {
       item.isLastItem = index === arr.length - 1;
-      !item.isLastItem && item.append(this.getSeparatorElem());
+      if (!item.isLastItem) {
+        item.append(this.getSeparatorElem());
+      }
     });
   };
 

@@ -123,7 +123,11 @@ export class BqSideMenu {
     if (!this.menuItems.length) return;
 
     this.menuItems.forEach((menuItem: HTMLBqSideMenuItemElement) => (menuItem.collapse = this.collapse));
-    this.collapse ? this.collapseDocumentBody() : this.expandDocumentBody();
+    if (this.collapse) {
+      this.collapseDocumentBody();
+    } else {
+      this.expandDocumentBody();
+    }
   };
 
   private collapseDocumentBody = () => {
@@ -159,6 +163,7 @@ export class BqSideMenu {
         <nav
           class="bq-side-menu--nav flex flex-col gap-y-xs px-xs pt-xs2"
           ref={(navElem) => (this.menuElem = navElem)}
+          // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
           role="menu"
           part="nav"
         >

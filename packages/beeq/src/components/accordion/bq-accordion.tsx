@@ -79,7 +79,11 @@ export class BqAccordion {
       return;
     }
 
-    this.expanded ? this.accordion?.open() : this.accordion?.close();
+    if (this.expanded) {
+      this.accordion?.open();
+    } else {
+      this.accordion?.close();
+    }
     if (!this.isCssCalcSizeSupported) return;
 
     // NOTE: This is a workaround to trigger the transitionEnd event
@@ -153,7 +157,12 @@ export class BqAccordion {
     event.stopPropagation();
     if (event.target !== this.el) return;
 
-    this.expanded ? this.bqAfterOpen.emit(this.el) : this.bqAfterClose.emit(this.el);
+    if (this.expanded) {
+      this.bqAfterOpen.emit(this.el);
+      return;
+    }
+
+    this.bqAfterClose.emit(this.el);
   }
 
   // Public methods API

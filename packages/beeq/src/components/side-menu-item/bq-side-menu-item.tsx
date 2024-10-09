@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Prop, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Fragment, h, Prop, State } from '@stencil/core';
 
 import { getTextContent } from '../../shared/utils';
 
@@ -123,35 +123,38 @@ export class BqSideMenuItem {
   // ===================================
 
   private menuItem = () => (
-    <a
-      class={{
-        'bq-side-menu__item': true,
-        active: this.active,
-        disabled: this.disabled,
-        'is-collapsed': this.collapse,
-      }}
-      onBlur={this.handleBlur}
-      onFocus={this.handleFocus}
-      onClick={this.handleClick}
-      aria-disabled={this.disabled ? 'true' : 'false'}
-      role="menuitem"
-      tabindex={this.disabled ? -1 : 0}
-      slot="trigger"
-      part="base"
-    >
-      <div class="bq-side-menu__item--prefix flex items-center" part="prefix">
-        <slot name="prefix" />
-      </div>
-      <div
-        class="bq-side-menu__item--label overflow-hidden text-ellipsis whitespace-nowrap"
-        ref={(labelElem) => (this.labelElem = labelElem)}
+    <Fragment>
+      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+      <a
+        class={{
+          'bq-side-menu__item': true,
+          active: this.active,
+          disabled: this.disabled,
+          'is-collapsed': this.collapse,
+        }}
+        onBlur={this.handleBlur}
+        onFocus={this.handleFocus}
+        onClick={this.handleClick}
+        aria-disabled={this.disabled ? 'true' : 'false'}
+        role="menuitem"
+        tabindex={this.disabled ? -1 : 0}
+        slot="trigger"
+        part="base"
       >
-        <slot onSlotchange={this.handleSlotChange} />
-      </div>
-      <div class="bq-side-menu__item--suffix ml-auto flex items-center" part="suffix">
-        <slot name="suffix" />
-      </div>
-    </a>
+        <div class="bq-side-menu__item--prefix flex items-center" part="prefix">
+          <slot name="prefix" />
+        </div>
+        <div
+          class="bq-side-menu__item--label overflow-hidden text-ellipsis whitespace-nowrap"
+          ref={(labelElem) => (this.labelElem = labelElem)}
+        >
+          <slot onSlotchange={this.handleSlotChange} />
+        </div>
+        <div class="bq-side-menu__item--suffix ml-auto flex items-center" part="suffix">
+          <slot name="suffix" />
+        </div>
+      </a>
+    </Fragment>
   );
 
   render() {

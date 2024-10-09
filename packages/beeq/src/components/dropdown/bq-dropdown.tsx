@@ -74,7 +74,11 @@ export class BqDropdown {
     if (!this.triggerElem) return;
 
     // set 'disabled' attribute based on 'this.disabled' value, ensuring consistent state handling
-    this.disabled ? this.triggerElem?.setAttribute('disabled', 'true') : this.triggerElem?.removeAttribute('disabled');
+    if (!this.disabled) {
+      this.triggerElem?.removeAttribute('disabled');
+      return;
+    }
+    this.triggerElem?.setAttribute('disabled', 'true');
   }
 
   // Events section
