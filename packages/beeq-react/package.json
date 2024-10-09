@@ -7,7 +7,7 @@
   "module": "./src/index.js",
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@beeq/core": "^1.6.0"
+    "@beeq/core": "^1.7.0"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
