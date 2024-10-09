@@ -1,3 +1,4 @@
+// eslint-disable-next-line import-x/no-unresolved
 import './assets/css/stories.css';
 
 import { DocsContainer } from '@storybook/blocks';
@@ -6,6 +7,8 @@ import type { Preview, WebComponentsRenderer } from '@storybook/web-components';
 import { setCustomElementsManifest } from '@storybook/web-components';
 import { createElement } from 'react';
 
+// @ts-expect-error: custom-elements is a generated file
+// eslint-disable-next-line import-x/no-unresolved
 import customElements from '../custom-elements.json';
 
 setCustomElementsManifest(customElements);
