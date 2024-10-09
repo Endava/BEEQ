@@ -27,7 +27,6 @@
       "cache": true
     },
     "test": {
-      "dependsOn": [{ "target": "build", "projects": "beeq" }],
       "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"],
       "cache": true
     },

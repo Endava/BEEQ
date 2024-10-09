@@ -77,14 +77,14 @@ jobs:
           name: 🧾 NX report
           command: npx nx report
       - run:
-          name: ⏳ Build Libraries
-          command: npx nx affected -t build --exclude='*,!tag:publishable' --parallel=3 --base=$NX_BASE --head=$NX_HEAD
-      - run:
           name: 🩺 Run Linters
           command: npx nx affected -t lint --exclude='*,!tag:publishable' --parallel=3 --base=$NX_BASE --head=$NX_HEAD
       - run:
           name: 🧰 Run Unit Tests
           command: npx nx affected -t test --exclude='*,!tag:core' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --ci --runInBand
+      - run:
+          name: ⏳ Build Libraries
+          command: npx nx affected -t build --exclude='*,!tag:publishable' --parallel=3 --base=$NX_BASE --head=$NX_HEAD
       - run:
           name: 🧪 Run E2E Tests
           command: npx nx affected -t e2e --exclude='*,!tag:core' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --ci --code-coverage --runInBand
