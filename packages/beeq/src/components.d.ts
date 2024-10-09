@@ -629,7 +629,7 @@ export namespace Components {
         /**
           * Icon name to load. Please check all available icons [here](https://phosphoricons.com/)
          */
-        "name": string;
+        "name"?: string;
         /**
           * Set the size of the SVG
          */
@@ -2949,7 +2949,7 @@ declare namespace LocalJSX {
         /**
           * Icon name to load. Please check all available icons [here](https://phosphoricons.com/)
          */
-        "name": string;
+        "name"?: string;
         /**
           * Callback handler to be called when the SVG has loaded
          */

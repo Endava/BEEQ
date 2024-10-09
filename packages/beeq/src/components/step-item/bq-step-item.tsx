@@ -65,6 +65,10 @@ export class BqStepItem {
     this.checkPropValues();
   }
 
+  componentWillLoad() {
+    this.checkPropValues();
+  }
+
   componentDidLoad() {
     this.handleIconPrefix();
   }
