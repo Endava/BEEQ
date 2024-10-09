@@ -42,7 +42,7 @@
   "files.associations": {
     "*.json5": "json5",
   },
-  "html.customData": ["./dist/bee-q/custom-elements.json"],
+  "html.customData": ["./packages/beeq/custom-elements.json"],
   "less.validate": false,
   "scss.validate": false,
   "stylelint.validate": [

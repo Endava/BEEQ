@@ -17,7 +17,7 @@
       "!{projectRoot}/**/*.spec.ts",
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/jest.config.ts",
-      "!{projectRoot}/.eslintrc.json"
+      "!{projectRoot}/eslint.config.js"
     ]
   },
   "targetDefaults": {
@@ -62,7 +62,7 @@
     },
     "@nx/eslint:lint": {
       "cache": true,
-      "inputs": ["default", "{workspaceRoot}/.eslintrc.json", "{workspaceRoot}/tools/eslint-rules/**/*"]
+      "inputs": ["default", "{workspaceRoot}/eslint.config.js"]
     }
   },
   "nxCloudAccessToken": "ZTI2Yzg0YzktODZiMi00Yjg2LTlhMmMtYWI3NDhkODkzZjlmfHJlYWQtb25seQ==",
