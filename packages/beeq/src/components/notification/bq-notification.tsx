@@ -126,7 +126,7 @@ export class BqNotification {
 
   connectedCallback() {
     const { notificationPortal } = this;
-    if (!notificationPortal) {
+    if (!notificationPortal && typeof document !== 'undefined') {
       this.notificationPortal = Object.assign(document.createElement('div'), {
         className: NOTIFICATION_PORTAL_SELECTOR,
       });

@@ -3,31 +3,12 @@
  * https://github.com/shoelace-style/shoelace/blob/next/src/utilities/base-path.ts
  */
 
-/**
- * Extend the Window interface to include the `bqSVGBasePath` property and prevent it from being modified.
- * This is necessary to prevent the basePath from being modified by external scripts.
- */
-declare global {
-  interface Window {
-    bqSVGBasePath: string;
-  }
-}
-
-/**
- * Define the `bqSVGBasePath` property on the global window object, but only when the window object is available.
- */
-if (typeof window !== 'undefined') {
-  Object.defineProperty(window, 'bqSVGBasePath', {
-    configurable: true,
-    enumerable: false,
-    writable: true,
-  });
-}
+let bqSVGBasePath = '';
 
 const DATA_BEEQ_ATTRIBUTE = 'data-beeq';
 const DEFAULT_SVG_PATH = 'svg';
 const scripts: HTMLScriptElement[] =
-  typeof document !== 'undefined' && document
+  document && typeof document !== 'undefined'
     ? ([...document.getElementsByTagName('script')] as HTMLScriptElement[])
     : [];
 
@@ -39,9 +20,7 @@ const scripts: HTMLScriptElement[] =
  * @param path - The new base path to set.
  */
 export const setBasePath = (path: string): void => {
-  if (typeof window !== 'undefined') {
-    window.bqSVGBasePath = path;
-  }
+  bqSVGBasePath = path;
 };
 
 /**
@@ -50,15 +29,13 @@ export const setBasePath = (path: string): void => {
  * @param subpath - The subpath to append to the base path.
  * @returns The full base path including the subpath.
  */
-export const getBasePath = (subpath = ''): string | undefined => {
-  if (typeof window === 'undefined') return undefined;
-
-  const { bqSVGBasePath } = window;
+export const getBasePath = (subpath = ''): string => {
   if (!bqSVGBasePath) {
     initializeBasePath();
   }
 
-  return formatBasePath(subpath);
+  const formattedSubpath = subpath ? `/${subpath.replace(/^\//, '')}` : '';
+  return bqSVGBasePath.replace(/\/$/, '') + formattedSubpath;
 };
 
 /**
@@ -80,21 +57,10 @@ const initializeBasePath = (): void => {
   }
 };
 
-/**
- * Formats the `bqSVGBasePath` without a trailing slash.
- * If one exists, append the subpath separated by a slash.
- *
- * @param subpath - The subpath to append to the base path.
- * @returns The formatted base path.
- */
-const formatBasePath = (subpath: string): string => {
-  const formattedSubpath = subpath ? `/${subpath.replace(/^\//, '')}` : '';
-  return window.bqSVGBasePath.replace(/\/$/, '') + formattedSubpath;
-};
+const findConfigScript = (): HTMLScriptElement => scripts?.find((script) => script.hasAttribute(DATA_BEEQ_ATTRIBUTE));
 
-const findConfigScript = (): HTMLScriptElement => scripts.find((script) => script.hasAttribute(DATA_BEEQ_ATTRIBUTE));
-
-const findFallbackScript = (): HTMLScriptElement => scripts.find((script) => /beeq(\.esm)?\.js($|\?)/.test(script.src));
+const findFallbackScript = (): HTMLScriptElement =>
+  scripts?.find((script) => /beeq(\.esm)?\.js($|\?)/.test(script.src));
 
 const getScriptPath = (script: HTMLScriptElement): string =>
-  script.getAttribute('src').split('/').slice(0, -1).join('/');
+  script?.getAttribute('src').split('/').slice(0, -1).join('/');

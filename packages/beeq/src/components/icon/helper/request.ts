@@ -44,9 +44,10 @@ export const getSvgContent = async (url: string, sanitize: boolean) => {
 };
 
 export const validateContent = (svgContent: string): string => {
+  if (typeof document === 'undefined') return '';
+
   const svgTag = 'svg';
   const iconCssClass = 'bq-icon__svg';
-
   const div = document.createElement('div');
   div.innerHTML = svgContent;
 

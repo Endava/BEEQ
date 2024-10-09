@@ -107,7 +107,7 @@ export class BqToast {
 
   connectedCallback() {
     const { toastPortal } = this;
-    if (!toastPortal) {
+    if (!toastPortal && typeof document !== 'undefined') {
       this.toastPortal = Object.assign(document.createElement('div'), { className: TOAST_PORTAL_SELECTOR });
     }
   }
