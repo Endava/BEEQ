@@ -94,6 +94,10 @@ export class BqDivider {
     this.checkPropValues();
   }
 
+  componentWillLoad() {
+    this.checkPropValues();
+  }
+
   componentDidLoad() {
     this.handleSlotChange();
   }

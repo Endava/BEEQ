@@ -7,6 +7,13 @@
   "prefix": "beeq",
   "implicitDependencies": ["beeq"],
   "targets": {
+    "prebuild": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["tsx packages/beeq-angular/scripts/fix-value-accessor-path.ts"]
+      },
+      "dependsOn": [{ "dependencies": true, "target": "build" }]
+    },
     "build": {
       "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/beeq-angular"],
@@ -22,7 +29,7 @@
         }
       },
       "defaultConfiguration": "production",
-      "dependsOn": [{ "dependencies": true, "target": "build" }]
+      "dependsOn": [{ "target": "prebuild" }]
     },
     "lint": {
       "executor": "@nx/eslint:lint",

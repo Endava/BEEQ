@@ -249,6 +249,10 @@ export class BqDatePicker {
     this.handleValueChange();
   }
 
+  componentWillLoad() {
+    this.handleValueChange();
+  }
+
   // Listeners
   // ==============
 

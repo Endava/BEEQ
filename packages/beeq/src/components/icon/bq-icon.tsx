@@ -39,7 +39,7 @@ export class BqIcon {
   @Prop({ reflect: true }) color?: string;
 
   /** Icon name to load. Please check all available icons [here](https://phosphoricons.com/) */
-  @Prop({ reflect: true }) name!: string;
+  @Prop({ reflect: true }) name?: string;
 
   /** Set the size of the SVG */
   @Prop({ reflect: true }) size?: string | number = 24;
@@ -97,10 +97,11 @@ export class BqIcon {
   // =====================================
 
   connectedCallback() {
-    this.handlePropsChange();
+    this.setupIconComponent();
+  }
 
-    // !TO BE REMOVED: Delete this once the deprecated `weight` property is removed
-    if (!isNil(this.weight)) this.handleWeightChange();
+  componentWillLoad() {
+    this.setupIconComponent();
   }
 
   // Listeners
@@ -117,6 +118,12 @@ export class BqIcon {
   // Internal business logic.
   // These methods cannot be called from the host element.
   // =======================================================
+
+  private setupIconComponent = () => {
+    this.loadIcon(this.name);
+    // !TO BE REMOVED: Delete this once the deprecated `weight` property is removed
+    if (!isNil(this.weight)) this.handleWeightChange();
+  };
 
   private getIconSource = (name: string) => {
     if (!this.name && !this.src) return;

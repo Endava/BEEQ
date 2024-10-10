@@ -82,9 +82,12 @@ export const config: Config = {
       customElementsDir,
     }),
     react({
-      componentCorePackage,
-      proxiesFile: resolve(__dirname, '../beeq-react/src/components.ts').replace(/\\/g, '/'),
-      includeImportCustomElements: true,
+      outDir: resolve(__dirname, '../beeq-react/src/').replace(/\\/g, '/'),
+      customElementsDir,
+    }),
+    react({
+      outDir: resolve(__dirname, '../beeq-react/ssr').replace(/\\/g, '/'),
+      hydrateModule: '@beeq/core/dist/hydrate',
       customElementsDir,
     }),
     vue({
