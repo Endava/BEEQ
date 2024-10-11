@@ -123,19 +123,19 @@ const Template = (args: Args) => {
       ?disable-clear=${args['disable-clear']}
       ?disabled=${args.disabled}
       form=${ifDefined(args.form)}
-      inputmode=${args.inputmode}
+      inputmode=${ifDefined(args.inputmode)}
       max=${ifDefined(args.max)}
       maxlength=${ifDefined(args.maxlength)}
       min=${ifDefined(args.min)}
       minlength=${ifDefined(args.minlength)}
       name=${ifDefined(args.name)}
       pattern=${ifDefined(args.pattern)}
-      placeholder=${args.placeholder}
+      placeholder=${ifDefined(args.placeholder)}
       ?readonly=${args.readonly}
       ?required=${args.required}
       step=${ifDefined(args.step)}
       type=${ifDefined(args.type)}
-      validation-status=${args['validation-status']}
+      validation-status=${ifDefined(args['validation-status'])}
       value=${ifDefined(args.value)}
       @bqBlur=${args.bqBlur}
       @bqChange=${args.bqChange}
@@ -283,7 +283,7 @@ export const WithForm: Story = {
       <div class="grid auto-cols-auto grid-cols-1 gap-y-l sm:grid-cols-2 sm:gap-x-l">
         <bq-card>
           <h4 class="m-be-m">Shipping Information</h4>
-          <form class="flex flex-col gap-y-m" @submit=${handleFormSubmit}>
+          <form class="flex flex-col gap-y-m" @submit=${handleFormSubmit} method="post">
             <div class="grid grid-cols-1 gap-y-m sm:grid-cols-2 sm:gap-x-m">
               <bq-input name="firstName" value="Brad Bernie" autocomplete="given-name" required>
                 <label class="flex flex-grow items-center" slot="label">First Name</label>

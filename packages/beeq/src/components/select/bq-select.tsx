@@ -199,9 +199,11 @@ export class BqSelect {
   // =====================================
 
   connectedCallback() {
-    if (this.multiple) {
-      this.value = Array.isArray(this.value) ? this.value : Array.from(JSON.parse(String(this.value)));
-    }
+    this.initMultipleValue();
+  }
+
+  componentWillLoad() {
+    this.initMultipleValue();
   }
 
   componentDidLoad() {
@@ -283,6 +285,12 @@ export class BqSelect {
   // Internal business logic.
   // These methods cannot be called from the host element.
   // =======================================================
+
+  private initMultipleValue = () => {
+    if (!this.multiple) return;
+
+    this.value = Array.isArray(this.value) ? this.value : Array.from(JSON.parse(String(this.value)));
+  };
 
   private handleBlur = () => {
     if (this.disabled) return;

@@ -142,9 +142,11 @@ export class BqSlider {
   // =====================================
 
   connectedCallback() {
-    this.handleGapChange(this.gap);
-    this.setState(this.value);
-    this.handleStepPropChange();
+    this.init();
+  }
+
+  componentWillLoad() {
+    this.init();
   }
 
   componentDidLoad() {
@@ -169,6 +171,12 @@ export class BqSlider {
   // Internal business logic.
   // These methods cannot be called from the host element.
   // =======================================================
+
+  private init = () => {
+    this.handleGapChange(this.gap);
+    this.setState(this.value);
+    this.handleStepPropChange();
+  };
 
   private runUpdates = () => {
     this.updateProgressTrack();

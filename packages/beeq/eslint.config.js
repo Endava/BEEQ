@@ -35,6 +35,9 @@ module.exports = [
         },
       },
     },
+    linterOptions: {
+      reportUnusedDisableDirectives: false,
+    },
     settings: {
       react: { version: 'detect' },
     },

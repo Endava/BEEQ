@@ -50,7 +50,8 @@ export class BqNotification {
 
   @State() private hasContent = false;
   @State() private hasFooter = false;
-  @State() private notificationPortal = document.querySelector(`.${NOTIFICATION_PORTAL_SELECTOR}`);
+  @State() private notificationPortal =
+    typeof window !== 'undefined' ? document.querySelector(`.${NOTIFICATION_PORTAL_SELECTOR}`) : null;
 
   // Public Property API
   // ========================
@@ -126,7 +127,7 @@ export class BqNotification {
 
   connectedCallback() {
     const { notificationPortal } = this;
-    if (!notificationPortal) {
+    if (!notificationPortal && typeof window !== 'undefined') {
       this.notificationPortal = Object.assign(document.createElement('div'), {
         className: NOTIFICATION_PORTAL_SELECTOR,
       });

@@ -34,7 +34,8 @@ export class BqToast {
   // Inlined decorator, alphabetical order
   // =======================================
 
-  @State() private toastPortal = document.querySelector(`.${TOAST_PORTAL_SELECTOR}`);
+  @State() private toastPortal =
+    typeof window !== 'undefined' ? document.querySelector(`.${TOAST_PORTAL_SELECTOR}`) : null;
 
   // Public Property API
   // ========================
@@ -107,7 +108,7 @@ export class BqToast {
 
   connectedCallback() {
     const { toastPortal } = this;
-    if (!toastPortal) {
+    if (!toastPortal && typeof window !== 'undefined') {
       this.toastPortal = Object.assign(document.createElement('div'), { className: TOAST_PORTAL_SELECTOR });
     }
   }
