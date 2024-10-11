@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Host, Prop, State, Watch } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, EventEmitter, h, Host, Prop, State, Watch } from '@stencil/core';
 
 import {
   BUTTON_APPEARANCE,
@@ -24,7 +24,10 @@ import { hasSlotContent, isDefined, isNil, validatePropValue } from '../../share
 @Component({
   tag: 'bq-button',
   styleUrl: './scss/bq-button.scss',
-  shadow: true,
+  formAssociated: true,
+  shadow: {
+    delegatesFocus: true,
+  },
 })
 export class BqButton {
   // Own Properties
@@ -37,6 +40,7 @@ export class BqButton {
   // ===================================
 
   @Element() el!: HTMLBqButtonElement;
+  @AttachInternals() internals!: ElementInternals;
 
   // State() variables
   // Inlined decorator, alphabetical order
@@ -149,32 +153,61 @@ export class BqButton {
   };
 
   private handleClick = (ev: Event) => {
-    if (this.disabled || this.loading) {
-      ev.preventDefault();
-      ev.stopPropagation();
+    const { disabled, loading, bqClick, el } = this;
+
+    if (disabled || loading) {
+      this.preventEvent(ev);
       return;
     }
 
-    if (this.type === 'submit' || this.type === 'reset') {
-      const wrapperForm = this.el.closest('form');
-      if (!isNil(wrapperForm)) {
-        const btn = document.createElement('button');
-        btn.type = this.type;
-        btn.hidden = true;
-        wrapperForm.append(btn);
-
-        btn.click();
-        btn.remove();
-      }
+    const bqClickEvent = bqClick.emit(el);
+    if (bqClickEvent.defaultPrevented) {
+      this.preventEvent(ev);
+      return;
     }
 
-    this.bqClick.emit(this.el);
+    this.handleFormAction();
+  };
+
+  private handleFormAction() {
+    const {
+      type,
+      internals: { form },
+    } = this;
+    if (isNil(form)) return;
+
+    const formAction = this.formActions(form)[type];
+    if (isNil(formAction)) return;
+
+    formAction();
+  }
+
+  private formActions = (form: HTMLFormElement) => ({
+    submit: () => this.submitAssociatedForm(form),
+    reset: () => form.reset(),
+  });
+
+  private submitAssociatedForm = (form: HTMLFormElement) => {
+    if (typeof window === 'undefined' || isNil(form)) return;
+
+    const btn = document.createElement('button');
+    btn.type = this.type;
+    btn.hidden = true;
+    form.append(btn);
+
+    btn.click();
+    btn.remove();
   };
 
   private handleSlotChange = () => {
     this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
     this.hasSuffix = hasSlotContent(this.suffixElem, 'suffix');
   };
+
+  private preventEvent(ev: Event) {
+    ev.preventDefault();
+    ev.stopPropagation();
+  }
 
   // render() function
   // Always the last one in the class.
