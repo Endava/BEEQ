@@ -7,7 +7,7 @@ import { isNil, isString } from '../../../shared/utils';
 const requests = new Map<string, Promise<unknown>>();
 
 const fetchSvg = async (url: string, sanitize: boolean): Promise<unknown> => {
-  if (typeof fetch === 'undefined' || typeof document === 'undefined') return;
+  if (typeof fetch === 'undefined' || typeof window === 'undefined') return;
 
   if (requests.has(url)) return requests.get(url);
 
@@ -44,7 +44,7 @@ export const getSvgContent = async (url: string, sanitize: boolean) => {
 };
 
 export const validateContent = (svgContent: string): string => {
-  if (typeof document === 'undefined') return '';
+  if (typeof window === 'undefined') return '';
 
   const svgTag = 'svg';
   const iconCssClass = 'bq-icon__svg';

@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, h, Listen, Method, Prop, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
 import { TSideMenuAppearance, TSideMenuSize } from './bq-side-menu.types';
 import { isHTMLElement } from '../../shared/utils';
@@ -25,7 +25,6 @@ export class BqSideMenu {
   private bodyCssCollapse = 'bq-body--side-menu__collapse';
 
   private menuElem: HTMLElement;
-  private documentBody: HTMLBodyElement = document.querySelector('body');
 
   // Reference to host HTML element
   // ===================================
@@ -33,6 +32,8 @@ export class BqSideMenu {
   // State() variables
   // Inlined decorator, alphabetical order
   // =======================================
+
+  @State() private documentBody: HTMLBodyElement;
 
   // Public Property API
   // ========================
@@ -70,6 +71,7 @@ export class BqSideMenu {
   // =====================================
 
   componentDidLoad() {
+    this.documentBody = document.querySelector('body');
     this.documentBody.classList.add(this.bodyCss);
     this.handleCollapse();
   }
