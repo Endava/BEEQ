@@ -163,7 +163,7 @@
     "vite": "5.4.8",
     "vite-plugin-turbosnap": "1.0.3",
     "vite-tsconfig-paths": "5.0.1",
-    "vue": "3.5.10"
+    "vue": "3.5.11"
   },
   "overrides": {
     "eslint": "9.12.0"
