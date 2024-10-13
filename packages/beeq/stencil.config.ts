@@ -25,6 +25,9 @@ export const config: Config = {
   taskQueue: 'async',
   buildDist: true,
   enableCache: true,
+  env: {
+    BEEQ_ASSETS_BASE_PATH: process.env.BEEQ_ASSETS_BASE_PATH,
+  },
   globalScript: resolve(__dirname, './src/global/scripts/global.ts').replace(/\\/g, '/'),
   globalStyle: resolve(__dirname, './src/global/styles/default.scss').replace(/\\/g, '/'),
   plugins: [
@@ -94,7 +97,7 @@ export const config: Config = {
       componentCorePackage,
       proxiesFile: resolve(__dirname, '../beeq-vue/src/components.ts').replace(/\\/g, '/'),
       componentModels: vueComponentModels,
-      includeImportCustomElements: true,
+      includeDefineCustomElements: true,
       customElementsDir,
     }),
   ],
