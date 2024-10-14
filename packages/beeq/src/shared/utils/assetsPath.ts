@@ -2,8 +2,9 @@
  * Inspired by Shoelace's `getBasePath` and `setBasePath` functions.
  * https://github.com/shoelace-style/shoelace/blob/next/src/utilities/base-path.ts
  */
+import { Env } from '@stencil/core';
 
-let basePath: string | undefined;
+let beeqBasePath: string | undefined;
 const DATA_BEEQ_ATTRIBUTE = 'data-beeq';
 const DEFAULT_SVG_PATH = 'svg';
 
@@ -12,7 +13,7 @@ const DEFAULT_SVG_PATH = 'svg';
  * @param {string} path - The base path to set.
  */
 export const setBasePath = (path: string): void => {
-  basePath = path;
+  beeqBasePath = path;
 };
 
 /**
@@ -21,7 +22,7 @@ export const setBasePath = (path: string): void => {
  * @returns {string} The base path of the assets.
  */
 export const getBasePath = (subpath: string = ''): string => {
-  if (!basePath) {
+  if (!beeqBasePath) {
     const configScript = findConfigScript();
     const fallbackScript = configScript ? null : findFallbackScript();
 
@@ -31,13 +32,13 @@ export const getBasePath = (subpath: string = ''): string => {
       setBasePath(`${path}/${DEFAULT_SVG_PATH}`);
     } else {
       // Fallback: use an environment variable (if set) or the default path
-      setBasePath(process.env.ASSETS_BASE_PATH || `./${DEFAULT_SVG_PATH}`);
+      setBasePath(Env.BEEQ_ASSETS_BASE_PATH || `./${DEFAULT_SVG_PATH}`);
     }
   }
 
   // Return the base path without a trailing slash. If one exists, append the subpath separated by a slash.
   const formattedSubpath = subpath ? `/${subpath.replace(/^\//, '')}` : '';
-  return basePath.replace(/\/$/, '') + formattedSubpath;
+  return beeqBasePath.replace(/\/$/, '') + formattedSubpath;
 };
 
 /**
