@@ -4,23 +4,17 @@ An Angular-specific wrapper on top of BEEQ web components that enables NG_VALUE_
 
 ## Package installation
 
+> [!TIP]
+>  Please always refer to the [official BEEQ documentation](https://www.beeq.design/3d466e231/p/359a26-for-developers/b/08eb89) for more information about the installation.
+
 - install the package
-
-```
-npm install @beeq/angular
-```
-
-- update the package
-
-```
-npm install @beeq/angular@latest
-```
-
-if the `@beeq/core` package is added to your `package.json` should update both
 
 ```
 npm install @beeq/{core,angular}
 ```
+
+> [!NOTE]
+> Make sure that you have installed the `@beeq/core` package.
 
 ## Setup
 
@@ -43,7 +37,10 @@ applyPolyfills().then(() => {
 
 ### Add BEEQ styles and assets
 
-> ❗️The icons SVG are shipped in a separate folder. Projects will need to include `node_modules/@beeq/core/dist/beeq/svg` in their build and try to make it in a certain way that it respond to: `http://<domain>/svg`
+> [!TIP]
+>  BEEQ uses SVG icons and these assets are shipped in a separate folder. You can use the `setBasePath` method to set the path to the icons. Make sure that your project bundle the icons in a way that they are accessible from the browser.
+
+You can move the icons from the node_modules folder to your assets folder and set the path like this:
 
 ```json
 /** angular.json */
@@ -65,7 +62,7 @@ applyPolyfills().then(() => {
               {
                 "glob": "**/*",
                 "input": "node_modules/@beeq/core/dist/beeq/svg",
-                "output": "/svg/"
+                "output": "assets/svg/"
               }
             ],
             "styles": [
@@ -80,6 +77,25 @@ applyPolyfills().then(() => {
   }
 }
 ```
+
+```js
+// main.ts
+import { setBasePath } from '@beeq/core';
+
+setBasePath('/assets/svg/');
+```
+
+But you can also use a different icons library or a CDN (*no need to move the icons to your assets folder via angular.json*):
+
+```js
+import { setBasePath } from '@beeq/core';
+
+// Using heroicons library
+setBasePath('https://cdn.jsdelivr.net/npm/heroicons@2.1.5/24/outline');
+```
+
+> [!CAUTION]
+> When using a different icons library, make sure you use the correct icon names provided by the library or the CDN.
 
 BEEQ styles can be also imported into your application's main style file:
 
@@ -112,7 +128,8 @@ export class AppModule {}
 
 To enable two-way binding and the use of [ngModel] within BEEQ form components, you will need to add the Value Accessors in your module declarations, along with `@angular/forms`.
 
-> ❗️❗️ *Please notice that* **you might need to disable** `aot` *for enabling two-way data binding**. Details: https://github.com/ionic-team/stencil-ds-output-targets/issues/317*
+> [!CAUTION]
+> *Please notice that* **you might need to disable** `aot` *for enabling two-way data binding**. Details: https://github.com/ionic-team/stencil-ds-output-targets/issues/317*
 
 ```ts
 import { NgModule } from '@angular/core';

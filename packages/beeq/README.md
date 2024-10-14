@@ -4,9 +4,10 @@ The elements and components provided by BEEQ are being implemented with [Stencil
 
 ## Installation
 
-BEEQ elements, components, patterns, utilities, etc., are available as an npm package.
+> [!TIP]
+> Please always refer to the [official BEEQ documentation](https://www.beeq.design/3d466e231/p/359a26-for-developers) for more information about the installation.
 
-### For `stable` releases
+BEEQ elements, components, patterns, utilities, etc., are available as an npm package.
 
 ```bash
 $ npm i @beeq/core
@@ -28,7 +29,8 @@ BEEQ components are regular HTML elements, or custom elements (often referred to
 </html>
 ```
 
-> ❗️The icons SVG are shipped in a separate folder. Projects will need to include `node_modules/@beeq/core/dist/beeq/svg` in their build and try to make it in a certain way that it respond to: `http://<domain>/svg`
+> [!CAUTION]
+> The icons SVG are shipped in a separate folder. Projects will need to include `node_modules/@beeq/core/dist/beeq/svg` in their build and try to make it in a certain way that it respond to: `http://<domain>/svg`
 
 ### Events
 
