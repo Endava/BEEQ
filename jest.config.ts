@@ -1,6 +1,6 @@
-import { getJestProjects } from '@nrwl/jest';
+import { getJestProjectsAsync } from '@nx/jest';
 
-export default {
+export default async () => ({
   maxWorkers: 0,
-  projects: getJestProjects(),
-};
+  projects: await getJestProjectsAsync(),
+});
