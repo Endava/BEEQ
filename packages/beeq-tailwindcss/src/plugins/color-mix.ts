@@ -25,4 +25,40 @@ export const ColorMix: Partial<Config> = plugin(function ({ matchUtilities, them
     },
     { values: flattenColorPalette(theme('colors')) },
   );
+  matchUtilities(
+    {
+      // Background `hover` state blend color
+      'bg-hover': (value) => blendColor({ color: value, base: 'var(--bq-hover)' }),
+      // Background `active` state blend color
+      'bg-active': (value) => blendColor({ color: value, base: 'var(--bq-active)' }),
+    },
+    { values: flattenColorPalette(theme('backgroundColor')) },
+  );
+  matchUtilities(
+    {
+      // Border `hover` state blend color
+      'border-hover': (value) => blendColor({ color: value, base: 'var(--bq-hover)', property: 'border-color' }),
+      // Border `active` state blend color
+      'border-active': (value) => blendColor({ color: value, base: 'var(--bq-active)', property: 'border-color' }),
+    },
+    { values: flattenColorPalette(theme('borderColor')) },
+  );
+  matchUtilities(
+    {
+      // Text `hover` state blend color
+      'text-hover': (value) => blendColor({ color: value, base: 'var(--bq-hover)', property: 'color' }),
+      // Text `active` state blend color
+      'text-active': (value) => blendColor({ color: value, base: 'var(--bq-active)', property: 'color' }),
+    },
+    { values: flattenColorPalette(theme('textColor')) },
+  );
+  matchUtilities(
+    {
+      // Stroke `hover` state blend color
+      'stroke-hover': (value) => blendColor({ color: value, base: 'var(--bq-hover)', property: 'color' }),
+      // Stroke `active` state blend color
+      'stroke-active': (value) => blendColor({ color: value, base: 'var(--bq-active)', property: 'color' }),
+    },
+    { values: flattenColorPalette(theme('stroke')) },
+  );
 });

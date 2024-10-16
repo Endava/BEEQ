@@ -5,9 +5,9 @@
  */
 
 .bq-link {
-  @apply relative inline-block rounded-xs text-text-brand no-underline focus-visible:focus hover:text-hover-text-brand active:text-active-text-brand;
+  @apply relative inline-block rounded-xs text-brand no-underline focus-visible:focus hover:text-hover-brand active:text-active-brand;
   @apply after:absolute after:bottom-0 after:block after:h-[2px] after:w-full after:scale-x-0 after:rounded-full after:transition-transform after:duration-300 after:content-empty;
-  @apply hover:after:scale-x-100 hover:after:bg-hover-bg-brand active:after:bg-active-bg-brand;
+  @apply hover:after:scale-x-100 hover:after:bg-hover-brand active:after:bg-active-brand;
 }
 
 /**
