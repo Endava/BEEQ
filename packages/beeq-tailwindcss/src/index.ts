@@ -91,12 +91,22 @@ export default {
       l: 'var(--bq-stroke-l)',
     },
     extend: {
+      /* ------------------ Extend colors with declarative colors ----------------- */
+      backgroundColor: {
+        ...DECLARATIVE_COLORS.bg,
+        ui: { ...DECLARATIVE_COLORS.ui },
+      },
+      borderColor: { ...DECLARATIVE_COLORS.stroke },
+      stroke: { ...DECLARATIVE_COLORS.stroke },
+      textColor: { ...DECLARATIVE_COLORS.text },
+      fill: { ...DECLARATIVE_COLORS.icon },
+      /* --------------------------- End: Extend colors --------------------------- */
+      content: {
+        empty: "''",
+      },
       height: {
         // Details: https://web.dev/viewport-units/#the-need-for-new-viewport-units
         'dynamic-vh': '100dvh',
-      },
-      content: {
-        empty: "''",
       },
       spacing: {
         xs3: 'var(--bq-spacing-xs3)',
