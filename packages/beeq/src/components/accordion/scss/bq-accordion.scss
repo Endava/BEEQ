@@ -34,11 +34,11 @@
     border-style: var(--bq-accordion--expanded-border-style);
   }
 
-  &.small .bq-accordion__body {
+  &.small .bq-accordion__content {
     @apply rounded-ee-[--bq-accordion--small-radius] rounded-es-[--bq-accordion--small-radius] rounded-se-[0px] rounded-ss-[0px];
   }
 
-  &.medium .bq-accordion__body {
+  &.medium .bq-accordion__content {
     @apply rounded-ee-[--bq-accordion--medium-radius] rounded-es-[--bq-accordion--medium-radius] rounded-se-[0px] rounded-ss-[0px];
   }
 
@@ -51,7 +51,7 @@
       @apply text-[--bq-accordion--filled-collapsed-text-color];
     }
 
-    .bq-accordion__body {
+    .bq-accordion__content {
       @apply border-[length:--bq-accordion--panel-filled-border-width] border-[color:--bq-accordion--panel-filled-border-color];
 
       border-style: var(--bq-accordion--panel-filled-border-style);
@@ -75,7 +75,7 @@
       @apply text-[--bq-accordion--ghost-collapsed-text-color];
     }
 
-    .bq-accordion__body {
+    .bq-accordion__content {
       @apply border-[length:--bq-accordion--panel-ghost-border-width] border-[color:--bq-accordion--panel-ghost-border-color];
 
       border-style: var(--bq-accordion--panel-ghost-border-style);
@@ -90,19 +90,19 @@
     }
   }
 
-  &.small.filled .bq-accordion__body {
+  &.small.filled .bq-accordion__content {
     @apply pe-[--bq-accordion--panel-small-filled-padding-end] ps-[--bq-accordion--panel-small-filled-padding-start] p-b-[--bq-accordion--panel-small-filled-padding-y];
   }
 
-  &.medium.filled .bq-accordion__body {
+  &.medium.filled .bq-accordion__content {
     @apply pe-[--bq-accordion--panel-medium-filled-padding-end] ps-[--bq-accordion--panel-medium-filled-padding-start] p-b-[--bq-accordion--panel-medium-filled-padding-y];
   }
 
-  &.small.ghost .bq-accordion__body {
+  &.small.ghost .bq-accordion__content {
     @apply pe-[--bq-accordion--panel-small-ghost-padding-end] ps-[--bq-accordion--panel-small-ghost-padding-start] p-b-[--bq-accordion--panel-small-ghost-padding-y];
   }
 
-  &.medium.ghost .bq-accordion__body {
+  &.medium.ghost .bq-accordion__content {
     @apply pe-[--bq-accordion--panel-medium-ghost-padding-end] ps-[--bq-accordion--panel-medium-ghost-padding-start] p-b-[--bq-accordion--panel-medium-ghost-padding-y];
   }
 }
