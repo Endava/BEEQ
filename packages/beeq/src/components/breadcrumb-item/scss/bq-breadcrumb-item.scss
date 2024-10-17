@@ -9,7 +9,7 @@
   @apply rounded-[--bq-breadcrumb-item--border-radius] bg-[--bq-breadcrumb-item--background] shadow-[shadow:--bq-breadcrumb-item--box-shadow];
   @apply pe-[--bq-breadcrumb-item--padding-end] ps-[--bq-breadcrumb-item--padding-start] p-b-[--bq-breadcrumb-item--paddingY];
   @apply text-[length:--bq-breadcrumb-item--text-size] font-regular leading-[--bq-breadcrumb-item--line-height] text-[color:--bq-breadcrumb-item--text-color];
-  @apply focus-visible:focus hover:text-hover-text-brand active:outline-none;
+  @apply focus-visible:focus hover:text-hover-brand active:outline-none;
   @apply transition-colors duration-300 ease-in-out;
   @apply cursor-pointer no-underline;
 
