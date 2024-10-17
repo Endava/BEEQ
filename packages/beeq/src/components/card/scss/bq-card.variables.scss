@@ -8,18 +8,18 @@
    * @prop --bq-card--borderRadius - Card border radius
    * @prop --bq-card--borderStyle - Card border style
    * @prop --bq-card--borderWidth - Card border width
-   
+
    * @prop --bq-card--padding - Card padding
    * @prop --bq-card--paddingMinimal - Minimal card padding
    * @prop --bq-card--background - Card background color
    */
 
-  --bq-card--borderColor: theme(colors.transparent);
+  --bq-card--borderColor: theme(borderColor.transparent);
   --bq-card--borderRadius: theme(borderRadius.m);
   --bq-card--borderStyle: solid;
   --bq-card--borderWidth: theme(borderWidth.0);
 
   --bq-card--padding: theme(spacing.l);
   --bq-card--paddingMinimal: theme(spacing.xs);
-  --bq-card--background: theme(colors.bg.secondary);
+  --bq-card--background: theme(backgroundColor.secondary);
 }
