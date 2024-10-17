@@ -21,7 +21,7 @@
    * @prop --bq-button--large-paddingY - Button large padding Y
    * @prop --bq-button--large-font-size - Button large font size
    */
-  --bq-button--border-color: theme(colors.transparent);
+  --bq-button--border-color: theme(borderColor.transparent);
   --bq-button--border-radius: theme(borderRadius.m);
   --bq-button--border-style: solid;
   --bq-button--border-width: theme(borderWidth.0);
