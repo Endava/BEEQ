@@ -15,7 +15,7 @@
   &:not(.is-checked),
   &:not(.is-indeterminate) {
     &:not(.is-disabled):hover .bq-checkbox__checkbox {
-      @apply border-hover-icon-brand;
+      @apply border-hover-brand;
     }
   }
 
@@ -28,7 +28,7 @@
   &.is-checked,
   &.is-indeterminate {
     &:not(.is-disabled):hover .bq-checkbox__checkbox {
-      @apply bg-hover-ui-brand border-hover-icon-brand;
+      @apply bg-hover-ui-brand border-hover-brand;
     }
   }
 }
@@ -37,7 +37,7 @@
   // Checkbox square icon has `FOCUS`
   &:focus-visible {
     ~ .bq-checkbox__checkbox {
-      @apply focus border-stroke-brand;
+      @apply focus border-brand;
     }
   }
 
@@ -45,7 +45,7 @@
   &:checked,
   &:indeterminate {
     ~ .bq-checkbox__checkbox {
-      @apply border-stroke-brand bg-ui-brand;
+      @apply border-brand bg-ui-brand;
     }
   }
 
@@ -66,7 +66,7 @@
 
 // Checkbox square icon `DEFAULT` state (not checked/indeterminate, not hover, not disabled)
 .bq-checkbox__checkbox {
-  @apply rounded-[--bq-checkbox--border-radius] border-[length:--bq-checkbox--border-width] border-solid border-icon-primary;
+  @apply rounded-[--bq-checkbox--border-radius] border-[length:--bq-checkbox--border-width] border-solid border-[color:--bq-icon--primary];
 }
 
 .bq-checkbox__checkbox,
