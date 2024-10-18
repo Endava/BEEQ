@@ -58,32 +58,32 @@
 /* ------------------------------- Validation ------------------------------- */
 
 .bq-date-picker__control.validation-error {
-  @apply border-stroke-danger [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-danger;
+  @apply border-danger [&:not(.disabled):not(:focus-within)]:hover:border-hover-danger;
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme(colors.stroke.danger);
+    --bq-ring-color-focus: theme(stroke.danger);
 
-    @apply border-active-stroke-danger;
+    @apply border-active-danger;
   }
 }
 
 .bq-date-picker__control.validation-success {
-  @apply border-stroke-success [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-success;
+  @apply border-success [&:not(.disabled):not(:focus-within)]:hover:border-hover-success;
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme(colors.stroke.success);
+    --bq-ring-color-focus: theme(stroke.success);
 
-    @apply border-active-stroke-success;
+    @apply border-active-success;
   }
 }
 
 .bq-date-picker__control.validation-warning {
-  @apply border-stroke-warning [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-warning;
+  @apply border-warning [&:not(.disabled):not(:focus-within)]:hover:border-hover-warning;
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme(colors.stroke.warning);
+    --bq-ring-color-focus: theme(stroke.warning);
 
-    @apply border-active-stroke-warning;
+    @apply border-active-warning;
   }
 }
 
@@ -92,8 +92,8 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-date-picker__control--input {
-  @apply flex-auto cursor-[inherit] select-none appearance-none bg-[inherit] font-[inherit] text-[length:inherit] text-[color:inherit];
-  @apply border-none min-bs-[--bq-date-picker--icon-size] min-is-0 m-b-0 m-i-0 p-b-0 p-i-0 focus:outline-none focus-visible:outline-none;
+  @apply flex-auto cursor-inherit select-none appearance-none bg-inherit font-inherit text-[length:inherit] text-inherit;
+  @apply border-none min-bs-[--bq-date-picker--icon-size] min-is-0 p-b-0 p-i-0 m-b-0 m-i-0 focus:outline-none focus-visible:outline-none;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -166,8 +166,8 @@ calendar-month {
   --color-accent: var(--bq-ui--brand);
 
   &::part(button) {
-    @apply flex items-center justify-center rounded-s bg-transparent font-default text-text-primary transition-colors duration-200 ease-in-out p-b-0 p-i-0;
-    @apply size-[--bq-date-picker--day-size] focus-visible:focus hover:bg-hover-bg-secondary;
+    @apply flex items-center justify-center rounded-s bg-transparent font-default text-primary transition-colors duration-200 ease-in-out p-b-0 p-i-0;
+    @apply size-[--bq-date-picker--day-size] focus-visible:focus hover:bg-hover-secondary;
   }
 
   &::part(button day selected) {
@@ -175,11 +175,11 @@ calendar-month {
   }
 
   &::part(outside) {
-    @apply text-[--bq-text--secondary] opacity-100;
+    @apply text-secondary opacity-100;
   }
 
   &::part(selected) {
-    @apply rounded-s text-[color:--bq-text--alt];
+    @apply rounded-s text-alt;
   }
 
   &::part(range-inner) {
@@ -193,7 +193,7 @@ calendar-month {
   }
 
   &::part(today selected) {
-    @apply text-[color:--bq-text--alt];
+    @apply text-alt;
   }
 
   &::part(today range-inner) {

@@ -19,9 +19,12 @@ import {
   TYPOGRAPHY_DEFAULT,
 } from './theme';
 
+const inherit: string = 'inherit';
+
 export default {
   theme: {
     colors: {
+      inherit,
       current: 'currentColor',
       transparent: 'transparent',
       /* -------------------------------------------------------------------------- */
@@ -55,6 +58,7 @@ export default {
       l: 'var(--bq-box-shadow--l)',
     },
     fontFamily: {
+      inherit,
       default: 'var(--bq-font-family)',
       outfit: 'var(--bq-font-family--outfit)',
       poppins: 'var(--bq-font-family--poppins)',
@@ -80,11 +84,13 @@ export default {
       bold: 'var(--bq-font-weight--bold)',
     },
     lineHeight: {
+      inherit,
       small: 'var(--bq-font-line-height--small)',
       regular: 'var(--bq-font-line-height--regular)',
       large: 'var(--bq-font-line-height--large)',
     },
     strokeWidth: {
+      inherit,
       none: '0',
       s: 'var(--bq-stroke-s)',
       m: 'var(--bq-stroke-m)',
@@ -104,7 +110,11 @@ export default {
       content: {
         empty: "''",
       },
+      cursor: {
+        inherit,
+      },
       height: {
+        inherit,
         // Details: https://web.dev/viewport-units/#the-need-for-new-viewport-units
         'dynamic-vh': '100dvh',
       },
