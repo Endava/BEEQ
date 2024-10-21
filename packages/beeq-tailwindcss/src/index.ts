@@ -102,8 +102,14 @@ export default {
         ...DECLARATIVE_COLORS.bg,
         ui: { ...DECLARATIVE_COLORS.ui },
       },
-      borderColor: { ...DECLARATIVE_COLORS.stroke },
-      stroke: { ...DECLARATIVE_COLORS.stroke },
+      borderColor: {
+        ...DECLARATIVE_COLORS.stroke,
+        icon: { ...DECLARATIVE_COLORS.icon },
+      },
+      stroke: {
+        ...DECLARATIVE_COLORS.stroke,
+        icon: { ...DECLARATIVE_COLORS.icon },
+      },
       textColor: { ...DECLARATIVE_COLORS.text },
       fill: { ...DECLARATIVE_COLORS.icon },
       /* --------------------------- End: Extend colors --------------------------- */
