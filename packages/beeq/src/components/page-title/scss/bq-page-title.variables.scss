@@ -17,12 +17,12 @@
 
   /* stylelint-disable custom-property-pattern */
   --paddingY: theme(spacing.xl);
-  --subtitle-borderBlockEnd: 1px solid theme(colors.stroke.primary);
+  --subtitle-borderBlockEnd: 1px solid theme(stroke.primary);
   --subtitle-fontWeight: theme(fontWeight.medium);
-  --subtitle-textColor: theme(textColor.text.secondary);
+  --subtitle-textColor: theme(textColor.secondary);
   --subtitle-textSize: theme(fontSize.l);
   --title-fontWeight: theme(fontWeight.bold);
   --title-lineHeight: theme(lineHeight.regular);
-  --title-textColor: theme(textColor.text.primary);
+  --title-textColor: theme(textColor.primary);
   --title-textSize: theme(fontSize.xxl);
 }
