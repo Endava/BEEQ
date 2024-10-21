@@ -166,8 +166,9 @@ export class BqProgress {
           <div
             aria-hidden={!this.label || this.indeterminate ? 'true' : 'false'}
             class={{
-              'ms-xs font-medium leading-regular text-text-primary': true,
-              'text-ui-danger': this.type === 'error',
+              'ms-xs font-medium leading-regular': true,
+              'text-primary': this.type !== 'error',
+              'text-danger': this.type === 'error',
               'invisible ms-0 is-0': !this.label || this.indeterminate,
             }}
             style={{ fontVariant: 'tabular-nums' }}
