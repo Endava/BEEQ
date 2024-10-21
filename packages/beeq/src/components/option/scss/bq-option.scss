@@ -24,7 +24,7 @@
   // Hover
   @apply [&:not(.disabled)]:hover:bg-hover-ui-secondary;
   // Active
-  @apply [&.active:not(.disabled)]:bg-ui-brand-alt [&.active:not(.disabled)]:text-text-brand;
+  @apply [&.active:not(.disabled)]:bg-ui-brand-alt [&.active:not(.disabled)]:text-brand;
   // Disabled
   @apply [&.disabled]:cursor-not-allowed [&.disabled]:opacity-60;
 

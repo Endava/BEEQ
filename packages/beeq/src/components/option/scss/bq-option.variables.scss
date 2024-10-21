@@ -21,10 +21,10 @@
   * @prop --bq-option--padding-end: option label padding end
   */
 
-  --bq-option--background: theme(colors.ui.primary);
+  --bq-option--background: theme(backgroundColor.ui.primary);
   --bq-option--font-size: theme(fontSize.m);
 
-  --bq-option--border-color: theme(colors.transparent);
+  --bq-option--border-color: theme(stroke.transparent);
   --bq-option--border-style: none;
   --bq-option--border-width: theme(borderWidth.0);
   --bq-option--border-radius: theme(borderRadius.s);
