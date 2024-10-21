@@ -22,15 +22,15 @@
 }
 
 .bq-select__helper-text.validation-error {
-  @apply text-text-danger;
+  @apply text-danger;
 }
 
 .bq-select__helper-text.validation-success {
-  @apply text-text-success;
+  @apply text-success;
 }
 
 .bq-select__helper-text.validation-warning {
-  @apply text-text-warning;
+  @apply text-warning;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -78,32 +78,32 @@
 /* ------------------------------- Validation ------------------------------- */
 
 .bq-select__control.validation-error {
-  @apply border-stroke-danger [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-danger;
+  @apply border-danger [&:not(.disabled):not(:focus-within)]:hover:border-hover-danger;
 
   &:not(.disabled):focus-within {
     --bq-ring-color-focus: theme(colors.stroke.danger);
 
-    @apply border-active-stroke-danger;
+    @apply border-active-danger;
   }
 }
 
 .bq-select__control.validation-success {
-  @apply border-stroke-success [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-success;
+  @apply border-success [&:not(.disabled):not(:focus-within)]:hover:border-hover-success;
 
   &:not(.disabled):focus-within {
     --bq-ring-color-focus: theme(colors.stroke.success);
 
-    @apply border-active-stroke-success;
+    @apply border-active-success;
   }
 }
 
 .bq-select__control.validation-warning {
-  @apply border-stroke-warning [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-warning;
+  @apply border-warning [&:not(.disabled):not(:focus-within)]:hover:border-hover-warning;
 
   &:not(.disabled):focus-within {
     --bq-ring-color-focus: theme(colors.stroke.warning);
 
-    @apply border-active-stroke-warning;
+    @apply border-active-warning;
   }
 }
 
@@ -112,7 +112,7 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-select__control--input {
-  @apply flex-auto cursor-[inherit] select-none appearance-none bg-[inherit] font-[inherit] text-[length:inherit] text-[color:inherit];
+  @apply flex-auto cursor-inherit select-none appearance-none bg-inherit font-inherit text-[length:inherit] text-inherit;
   @apply m-0 border-none p-0 min-bs-[var(--bq-select--icon-size)] min-is-0 focus:outline-none focus-visible:outline-none;
 
   box-shadow: none;
