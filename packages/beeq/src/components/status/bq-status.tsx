@@ -71,7 +71,7 @@ export class BqStatus {
       <div class="bq-status inline-flex items-center gap-xs" part="base" role="status">
         <bq-badge class={`bq-status__circle rounded-full ${this.type}`} size="medium" part="circle" role="img" />
         <div
-          class="bq-status__text text-s font-medium leading-regular text-text-primary max-bs-[20px] p-b-0 p-i-0 m-b-0 m-i-0"
+          class="bq-status__text text-s font-medium leading-regular text-primary max-bs-[20px] p-b-0 p-i-0 m-b-0 m-i-0"
           part="text"
         >
           <slot />
