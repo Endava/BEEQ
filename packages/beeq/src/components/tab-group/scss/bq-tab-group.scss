@@ -10,7 +10,7 @@
   @apply relative;
 
   &::after {
-    @apply absolute flex border-0 border-solid border-bg-tertiary content-empty;
+    @apply absolute flex border-0 border-solid border-primary content-empty;
   }
 
   &--horizontal-start,
