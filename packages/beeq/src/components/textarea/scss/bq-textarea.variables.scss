@@ -23,27 +23,27 @@
    * @prop --bq-textarea--text-size - Textarea text size
    * @prop --bq-textarea--text-placeholder-color - Textarea placeholder text color
    */
-  --bq-textarea--background-color: theme(colors.ui.primary);
+  --bq-textarea--background-color: theme(backgroundColor.ui.primary);
 
-  --bq-textarea--border-color: theme(colors.stroke.tertiary);
-  --bq-textarea--border-color-focus: theme(colors.stroke.brand);
+  --bq-textarea--border-color: theme(stroke.tertiary);
+  --bq-textarea--border-color-focus: theme(stroke.brand);
   --bq-textarea--border-radius: theme(borderRadius.s);
   --bq-textarea--border-width: theme(borderWidth.s);
   --bq-textarea--border-style: solid;
 
   --bq-textarea--helper-margin-top: theme(spacing.xs);
   --bq-textarea--helper-text-size: theme(fontSize.s);
-  --bq-textarea--helper-text-color: theme(colors.text.primary);
+  --bq-textarea--helper-text-color: theme(textColor.primary);
 
   --bq-textarea--label-margin-bottom: theme(spacing.xs);
   --bq-textarea--label-text-size: theme(fontSize.s);
-  --bq-textarea--label-text-color: theme(colors.text.primary);
+  --bq-textarea--label-text-color: theme(textColor.primary);
 
   --bq-textarea--paddingY: theme(spacing.s);
   --bq-textarea--padding-start: theme(spacing.m);
   --bq-textarea--padding-end: theme(spacing.m);
 
-  --bq-textarea--text-color: theme(colors.text.primary);
+  --bq-textarea--text-color: theme(textColor.primary);
   --bq-textarea--text-size: theme(fontSize.m);
-  --bq-textarea--text-placeholder-color: theme(colors.text.secondary);
+  --bq-textarea--text-placeholder-color: theme(textColor.secondary);
 }
