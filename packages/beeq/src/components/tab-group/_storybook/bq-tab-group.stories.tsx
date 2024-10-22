@@ -78,7 +78,7 @@ const Template = (args: Args) => {
           `,
         )}
       </bq-tab-group>
-      <div class="border h-80 w-full flex-1 border-dashed border-stroke-primary bg-ui-alt">
+      <div class="border h-80 w-full flex-1 border-dashed border-primary bg-ui-alt">
         <h3 class="m-l">Tab content</h3>
       </div>
     </main>

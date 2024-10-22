@@ -195,7 +195,7 @@ const ConfirmTemplate = (args: Args) => {
         Deactivate account
       </h5>
       <p>Are your sure you want to deactivate your account? All of your data will be permanently removed.</p>
-      <span class="text-s text-text-secondary"> This action cannot be undone </span>
+      <span class="text-s text-secondary"> This action cannot be undone </span>
       <div class="flex gap-xs" slot="footer">
         <bq-button appearance="secondary" @bqClick=${handleDialogCancel}> Cancel </bq-button>
         <bq-button variant="danger" @bqClick=${handleDialogConfirm}> Yes, deactivate </bq-button>

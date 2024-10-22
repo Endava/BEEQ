@@ -246,8 +246,7 @@ export class BqSwitch {
           {/* Label */}
           <span
             class={{
-              'bq-switch--label text-m font-medium leading-regular text-text-primary transition-colors duration-300':
-                true,
+              'bq-switch--label text-m font-medium leading-regular text-primary transition-colors duration-300': true,
               'ms-s': this.hasLabel && !this.reverseOrder,
               'me-s': this.hasLabel && this.reverseOrder,
             }}

@@ -131,7 +131,7 @@ const TemplateSticky = (args: Args) => html`
   </bq-alert>
   <main class="grid grid-cols-1 p-b-m p-i-m">
     <h1 class="m-be-l">Dashboard</h1>
-    <div class="border border-dashed border-stroke-primary bg-[--bq-ui--alt] bs-80 is-full"></div>
+    <div class="border border-dashed border-primary bg-[--bq-ui--alt] bs-80 is-full"></div>
   </main>
 `;
 
