@@ -208,7 +208,7 @@ export class BqSpinner {
         </span>
         <span
           class={{
-            'bq-spinner--text font-medium leading-regular text-text-primary': true,
+            'bq-spinner--text font-medium leading-regular text-primary': true,
             '!hidden': !this.isTextDisplayed,
           }}
           part="text"
