@@ -72,6 +72,7 @@ describe('bq-accordion', () => {
 
     const header = await details.find('.bq-accordion__header');
     expect(header).toHaveAttribute('aria-expanded');
+    expect(header.getAttribute('aria-expanded')).toEqual('true');
   });
 
   it('should be collapsed when disabled', async () => {
@@ -84,7 +85,8 @@ describe('bq-accordion', () => {
     await page.waitForChanges();
 
     const summary = await page.find('bq-accordion >>> [part="base"] summary');
-    expect(summary.getAttribute('aria-expanded')).toBeFalsy();
+    expect(summary.getAttribute('aria-disabled')).toEqual('true');
+    expect(summary.getAttribute('aria-expanded')).toEqual('false');
   });
 
   it('should respect design style', async () => {
@@ -99,7 +101,7 @@ describe('bq-accordion', () => {
       'borderRadius',
       'padding',
     ]);
-    const smallPanelStyle = await computedStyle(page, 'bq-accordion[size="small"] >>> [part="panel"]', [
+    const smallPanelStyle = await computedStyle(page, 'bq-accordion[size="small"] >>> .bq-accordion__content', [
       'borderRadius',
       'padding',
     ]);
@@ -108,7 +110,7 @@ describe('bq-accordion', () => {
       'borderRadius',
       'padding',
     ]);
-    const mediumPanelStyle = await computedStyle(page, 'bq-accordion[size="medium"] >>> [part="panel"]', [
+    const mediumPanelStyle = await computedStyle(page, 'bq-accordion[size="medium"] >>> .bq-accordion__content', [
       'borderRadius',
       'padding',
     ]);
