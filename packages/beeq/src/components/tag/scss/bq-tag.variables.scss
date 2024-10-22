@@ -20,7 +20,7 @@
    * @prop --bq-tag--medium-padding-x: Tag medium padding horizontal
    * @prop --bq-tag--medium-padding-y: Tag medium padding vertical
    */
-  --bq-tag--background-color: theme(colors.ui.secondary);
+  --bq-tag--background-color: theme(backgroundColor.ui.secondary);
 
   --bq-tag--border-color: theme(colors.transparent);
   --bq-tag--border-radius: theme(borderRadius.s);
