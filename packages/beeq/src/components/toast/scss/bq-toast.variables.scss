@@ -21,7 +21,7 @@
    * @prop --bq-toast--icon-color-custom: Toast icon color when type is 'custom'
    */
 
-  --bq-toast--background: theme(colors.ui.primary);
+  --bq-toast--background: theme(backgroundColor.ui.primary);
   --bq-toast--box-shadow: theme(boxShadow.l);
 
   --bq-toast--padding-y: theme(spacing.s);
@@ -33,10 +33,10 @@
   --bq-toast--border-style: none;
   --bq-toast--border-color: theme(colors.transparent);
 
-  --bq-toast--icon-color-info: theme(colors.icon.brand);
-  --bq-toast--icon-color-success: theme(colors.icon.success);
-  --bq-toast--icon-color-alert: theme(colors.icon.warning);
-  --bq-toast--icon-color-error: theme(colors.icon.danger);
-  --bq-toast--icon-color-loading: theme(colors.icon.brand);
-  --bq-toast--icon-color-custom: theme(colors.icon.primary);
+  --bq-toast--icon-color-info: theme(fill.brand);
+  --bq-toast--icon-color-success: theme(fill.success);
+  --bq-toast--icon-color-alert: theme(fill.warning);
+  --bq-toast--icon-color-error: theme(fill.danger);
+  --bq-toast--icon-color-loading: theme(fill.brand);
+  --bq-toast--icon-color-custom: theme(fill.primary);
 }
