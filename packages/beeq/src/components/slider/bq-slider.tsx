@@ -315,7 +315,7 @@ export class BqSlider {
     return (
       <span
         class={{
-          [`${css} box-content block text-s font-medium leading-regular text-text-primary is-fit min-is-8 [font-variant:tabular-nums]`]:
+          [`${css} box-content block text-s font-medium leading-regular text-primary is-fit min-is-8 [font-variant:tabular-nums]`]:
             true,
           hidden: position === 'start' ? !this.enableValueIndicator : !this.enableValueIndicator || !this.isRangeType,
         }}
