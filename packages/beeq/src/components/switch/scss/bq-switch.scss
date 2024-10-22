@@ -34,7 +34,7 @@
 }
 
 .bq-switch--control__dot {
-  @apply absolute start-xs2 rounded-full bg-icon-inverse bs-[--bq-switch--dot-size] is-[--bq-switch--dot-size];
+  @apply absolute start-xs2 rounded-full bg-ui-primary bs-[--bq-switch--dot-size] is-[--bq-switch--dot-size];
   @apply group-[&.is-checked]:start-[calc(100%_-_var(--bq-switch--dot-size)_-_var(--bq-spacing-xs2))] group-[&.is-checked]:bg-[--bq-icon--alt];
   @apply transition-all duration-300;
 }
