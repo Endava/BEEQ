@@ -17,12 +17,12 @@
    * @prop --bq-tooltip--border-width - Tooltip border width
    * @prop --bq-tooltip--z-index: Tooltip z-index
    */
-  --bq-tooltip--background-color: theme(colors.ui.inverse);
+  --bq-tooltip--background-color: theme(backgroundColor.ui.inverse);
   --bq-tooltip--box-shadow: theme(boxShadow.m);
 
   --bq-tooltip--font-size: theme(fontSize.m);
   --bq-tooltip--line-height: theme(lineHeight.regular);
-  --bq-tooltip--text-color: theme(colors.text.inverse);
+  --bq-tooltip--text-color: theme(textColor.inverse);
 
   --bq-tooltip--paddingX: theme(padding.xs);
   --bq-tooltip--paddingY: theme(padding.xs2);
