@@ -20,6 +20,10 @@
    */
   dependencyDashboard: true,
   /**
+   * Controls if updates need manual approval from the Dependency Dashboard issue before PRs are created.
+   */
+  dependencyDashboardApproval: true,
+  /**
    * The ignoreDeps configuration field allows you to define a list of dependency names to be ignored by Renovate.
    * Currently it supports only "exact match" dependency names
    */
