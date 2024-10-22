@@ -58,7 +58,7 @@
   // Text
   @apply select-none text-[length:--bq-select--text-size] text-[color:--bq-select--text-color] placeholder:text-[color:--bq-select--text-placeholder-color];
   // Hover
-  @apply [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-brand;
+  @apply [&:not(.disabled):not(:focus-within)]:hover:border-hover-brand;
 
   border-style: var(--bq-select--border-style);
 
@@ -81,7 +81,7 @@
   @apply border-danger [&:not(.disabled):not(:focus-within)]:hover:border-hover-danger;
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme(colors.stroke.danger);
+    --bq-ring-color-focus: theme(stroke.danger);
 
     @apply border-active-danger;
   }
@@ -91,7 +91,7 @@
   @apply border-success [&:not(.disabled):not(:focus-within)]:hover:border-hover-success;
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme(colors.stroke.success);
+    --bq-ring-color-focus: theme(stroke.success);
 
     @apply border-active-success;
   }
@@ -101,7 +101,7 @@
   @apply border-warning [&:not(.disabled):not(:focus-within)]:hover:border-hover-warning;
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme(colors.stroke.warning);
+    --bq-ring-color-focus: theme(stroke.warning);
 
     @apply border-active-warning;
   }

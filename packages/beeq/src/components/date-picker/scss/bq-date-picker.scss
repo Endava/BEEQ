@@ -30,7 +30,7 @@
   // Text
   @apply select-none text-[length:--bq-date-picker--text-size] text-[color:--bq-date-picker--text-color] placeholder:text-[color:--bq-date-picker--text-placeholder-color];
   // Hover
-  @apply [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-brand;
+  @apply [&:not(.disabled):not(:focus-within)]:hover:border-hover-brand;
 
   border-style: var(--bq-date-picker--border-style);
 

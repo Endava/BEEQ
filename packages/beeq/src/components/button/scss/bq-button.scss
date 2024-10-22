@@ -39,7 +39,7 @@
 }
 
 .bq-button--primary.ghost {
-  @apply border-m border-solid border-stroke-brand bg-transparent text-brand;
+  @apply border-m border-solid border-brand bg-transparent text-brand;
   // Primary `HOVER` state
   @apply hover:enabled:bg-hover-ui-primary;
   // Primary `ACTIVE` state

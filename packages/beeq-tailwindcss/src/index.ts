@@ -27,14 +27,13 @@ export default {
       inherit,
       current: 'currentColor',
       transparent: 'transparent',
-      /* -------------------------------------------------------------------------- */
-      /*                         Default Theme (Declarative)                        */
-      /* -------------------------------------------------------------------------- */
-      ...DECLARATIVE_COLORS,
-      /* -------------------------------------------------------------------------- */
-      /*                         Extended colors (Primitive)                        */
-      /* -------------------------------------------------------------------------- */
+      /* ------------------- Extended palette color (Primitive) ------------------- */
       ...PRIMITIVE_COLORS,
+      /* ------------------- Specific Theme Colors (Declarative) ------------------ */
+      focus: DECLARATIVE_COLORS.focus,
+      data: { ...DECLARATIVE_COLORS.data },
+      icon: { ...DECLARATIVE_COLORS.icon },
+      ui: { ...DECLARATIVE_COLORS.ui },
     },
     borderRadius: {
       none: 'var(--bq-radius--none)',
@@ -98,18 +97,9 @@ export default {
     },
     extend: {
       /* ------------------ Extend colors with declarative colors ----------------- */
-      backgroundColor: {
-        ...DECLARATIVE_COLORS.bg,
-        ui: { ...DECLARATIVE_COLORS.ui },
-      },
-      borderColor: {
-        ...DECLARATIVE_COLORS.stroke,
-        icon: { ...DECLARATIVE_COLORS.icon },
-      },
-      stroke: {
-        ...DECLARATIVE_COLORS.stroke,
-        icon: { ...DECLARATIVE_COLORS.icon },
-      },
+      backgroundColor: { ...DECLARATIVE_COLORS.bg },
+      borderColor: { ...DECLARATIVE_COLORS.stroke },
+      stroke: { ...DECLARATIVE_COLORS.stroke },
       textColor: { ...DECLARATIVE_COLORS.text },
       fill: { ...DECLARATIVE_COLORS.icon },
       /* --------------------------- End: Extend colors --------------------------- */
