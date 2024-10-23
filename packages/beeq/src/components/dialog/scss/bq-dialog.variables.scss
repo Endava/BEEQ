@@ -21,13 +21,13 @@
    * @prop --bq-dialog-z-index: Dialog z-index applied when opened
    */
 
-  --bq-dialog--background: theme(colors.ui.primary);
-  --bq-dialog--background-backdrop: theme(colors.grey.900);
-  --bq-dialog--text-color: theme(colors.text.primary);
+  --bq-dialog--background: theme(backgroundColor.ui.primary);
+  --bq-dialog--background-backdrop: theme(backgroundColor.overlay);
+  --bq-dialog--text-color: theme(textColor.primary);
 
   --bq-dialog--box-shadow: theme(boxShadow.l);
 
-  --bq-dialog--border-color: theme(colors.transparent);
+  --bq-dialog--border-color: theme(stroke.transparent);
   --bq-dialog--border-radius: theme(borderRadius.m);
   --bq-dialog--border-style: none;
   --bq-dialog--border-width: unset;

@@ -180,8 +180,8 @@ export class BqTab {
         ref={(el) => (this.buttonElement = el)}
         class={{
           [`bq-tab bq-tab--${this.size} bq-tab--${this.orientation}-${this.placement}`]: true,
-          'text-text-brand': this.active,
-          'text-text-primary': !this.active,
+          'text-brand': this.active,
+          'text-primary': !this.active,
         }}
         id={this.tabId}
         onBlur={this.handleOnBlur}

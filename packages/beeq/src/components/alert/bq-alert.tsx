@@ -278,7 +278,7 @@ export class BqAlert {
               {/* TITLE */}
               <div
                 class={{
-                  'title-font font-semibold leading-regular text-text-primary': true,
+                  'title-font font-semibold leading-regular text-primary': true,
                   'flex items-center': this.sticky,
                 }}
                 part="title"

@@ -110,7 +110,7 @@ export class BqEmptyState {
         </div>
         <div
           class={{
-            'title-font font-bold leading-regular text-text-primary': true,
+            'font-bold leading-regular text-primary': true,
             'text-m': this.size === 'small',
             'text-l': this.size === 'medium',
             'text-xxl2': this.size === 'large',
@@ -137,7 +137,7 @@ export class BqEmptyState {
         >
           <slot name="body" onSlotchange={this.handleContentSlotChange} />
         </div>
-        <div class={{ 'flex items-start gap-xs': true }} ref={(div) => (this.footerElem = div)} part="footer">
+        <div class="flex items-start gap-xs" ref={(div) => (this.footerElem = div)} part="footer">
           <slot name="footer" onSlotchange={this.handleFooterSlotChange} />
         </div>
       </div>

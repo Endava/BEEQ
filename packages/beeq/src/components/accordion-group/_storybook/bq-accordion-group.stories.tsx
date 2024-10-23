@@ -19,7 +19,6 @@ const meta: Meta = {
     'no-animation': { control: 'boolean' },
     multiple: { control: 'boolean' },
     size: { control: 'select', options: [...ACCORDION_SIZE] },
-    text: { control: 'text', table: { disable: true } },
   },
   args: {
     appearance: 'filled',
@@ -27,7 +26,6 @@ const meta: Meta = {
     'no-animation': false,
     multiple: false,
     size: 'medium',
-    text: 'Header',
   },
 };
 export default meta;
@@ -44,7 +42,7 @@ export const Group: Story = {
       size=${ifDefined(args.size)}
     >
       <bq-accordion size=${args.size}>
-        <span slot="header">${args.text}</span>
+        <span slot="header">First</span>
         <div>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque magnam corporis perferendis, architecto vel
           ullam officia officiis necessitatibus optio nam soluta labore libero debitis? Delectus enim quaerat laboriosam
@@ -52,7 +50,7 @@ export const Group: Story = {
         </div>
       </bq-accordion>
       <bq-accordion expanded>
-        <span slot="header">${args.text}</span>
+        <span slot="header">Second</span>
         <div>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque magnam corporis perferendis, architecto vel
           ullam officia officiis necessitatibus optio nam soluta labore libero debitis? Delectus enim quaerat laboriosam
@@ -60,7 +58,7 @@ export const Group: Story = {
         </div>
       </bq-accordion>
       <bq-accordion disabled>
-        <span slot="header">${args.text}</span>
+        <span slot="header">Third</span>
         <div>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque magnam corporis perferendis, architecto vel
           ullam officia officiis necessitatibus optio nam soluta labore libero debitis? Delectus enim quaerat laboriosam
@@ -68,7 +66,7 @@ export const Group: Story = {
         </div>
       </bq-accordion>
       <bq-accordion>
-        <span slot="header">${args.text}</span>
+        <span slot="header">Four</span>
         <div>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque magnam corporis perferendis, architecto vel
           ullam officia officiis necessitatibus optio nam soluta labore libero debitis? Delectus enim quaerat laboriosam

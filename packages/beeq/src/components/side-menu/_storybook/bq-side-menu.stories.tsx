@@ -63,7 +63,7 @@ const Template = (args: Args) => html`
     </bq-side-menu-item>
     <bq-side-menu-item disabled>
       <bq-icon name="gauge" slot="prefix"></bq-icon>
-      Perfomance
+      Performance
     </bq-side-menu-item>
     <bq-side-menu-item>
       <bq-icon name="truck" slot="prefix"></bq-icon>
@@ -90,7 +90,7 @@ const Template = (args: Args) => html`
 
   <main class="grid grid-cols-1 p-m">
     <h1 class="mb-l">Dashboard</h1>
-    <div class="border h-80 w-full border-dashed border-stroke-primary bg-[--bq-ui--alt]">
+    <div class="border h-80 w-full border-dashed border-primary bg-[--bq-ui--alt]">
       <!-- Your content -->
     </div>
   </main>

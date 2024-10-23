@@ -303,7 +303,7 @@ export class BqCheckbox {
           </span>
         </div>
         <span
-          class="bq-checkbox__label ps-xs text-start font-medium leading-regular text-text-primary group-hover-[&:not(.is-disabled)]:text-hover-text-primary group-[.is-disabled]:opacity-60"
+          class="bq-checkbox__label ps-xs text-start font-medium leading-regular text-primary group-hover-[&:not(.is-disabled)]:text-hover-primary group-[.is-disabled]:opacity-60"
           part="label"
         >
           <slot />

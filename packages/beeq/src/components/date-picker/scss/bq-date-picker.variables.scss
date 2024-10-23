@@ -28,9 +28,9 @@
    * @prop --bq-date-picker--range-background-color - Background color for the selected date range in the date picker
    * @prop --bq-date-picker--currentDate-border-color - Date picker border color for current date
    */
-  --bq-date-picker--background-color: theme(colors.ui.primary);
+  --bq-date-picker--background-color: theme(backgroundColor.ui.primary);
 
-  --bq-date-picker--border-color: theme(colors.stroke.tertiary);
+  --bq-date-picker--border-color: theme(stroke.tertiary);
   --bq-date-picker--border-radius: theme(borderRadius.s);
   --bq-date-picker--border-width: theme(borderWidth.s);
   --bq-date-picker--currentDate-border-width: theme(borderWidth.m);
@@ -42,17 +42,17 @@
 
   --bq-date-picker--label-margin-bottom: theme(spacing.xs);
   --bq-date-picker--label-text-size: theme(fontSize.s);
-  --bq-date-picker--label-text-color: theme(colors.text.primary);
-  --bq-date-picker--currentDate-text-color: theme(colors.text.brand);
+  --bq-date-picker--label-text-color: theme(textColor.primary);
+  --bq-date-picker--currentDate-text-color: theme(textColor.brand);
 
   --bq-date-picker--padding-start: theme(spacing.m);
   --bq-date-picker--padding-end: theme(spacing.m);
   --bq-date-picker--paddingY: theme(spacing.s);
 
   --bq-date-picker--day-size: theme(spacing.xl);
-  --bq-date-picker--text-color: theme(colors.text.primary);
+  --bq-date-picker--text-color: theme(textColor.primary);
   --bq-date-picker--text-size: theme(fontSize.m);
-  --bq-date-picker--text-placeholder-color: theme(colors.text.secondary);
-  --bq-date-picker--range-background-color: theme(colors.ui.brand);
-  --bq-date-picker--currentDate-border-color: theme(colors.stroke.brand);
+  --bq-date-picker--text-placeholder-color: theme(textColor.secondary);
+  --bq-date-picker--range-background-color: theme(backgroundColor.ui.brand);
+  --bq-date-picker--currentDate-border-color: theme(stroke.brand);
 }

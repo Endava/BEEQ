@@ -21,16 +21,16 @@
   * @prop --bq-breadcrumb-item--padding-end-separator: Padding end of the breadcrumb item separator.
   */
 
-  --bq-breadcrumb-item--background: theme(colors.transparent);
+  --bq-breadcrumb-item--background: theme(backgroundColor.transparent);
   --bq-breadcrumb-item--box-shadow: none;
 
-  --bq-breadcrumb-item--border-color: theme(colors.transparent);
+  --bq-breadcrumb-item--border-color: theme(borderColor.transparent);
   --bq-breadcrumb-item--border-style: none;
   --bq-breadcrumb-item--border-width: theme(borderWidth.s);
   --bq-breadcrumb-item--border-radius: theme(borderRadius.s);
 
   --bq-breadcrumb-item--line-height: theme(lineHeight.regular);
-  --bq-breadcrumb-item--text-color: theme(colors.text.secondary);
+  --bq-breadcrumb-item--text-color: theme(textColor.secondary);
   --bq-breadcrumb-item--text-size: theme(fontSize.s);
   --bq-breadcrumb-item--text-size-separator: theme(fontSize.xs);
 

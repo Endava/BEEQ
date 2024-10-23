@@ -25,10 +25,10 @@
    * @prop --bq-input--text-size - Input text size
    * @prop --bq-input--text-placeholder-color - Input placeholder text color
    */
-  --bq-input--background-color: theme(colors.ui.primary);
+  --bq-input--background-color: theme(backgroundColor.ui.primary);
 
-  --bq-input--border-color: theme(colors.stroke.tertiary);
-  --bq-input--border-color-focus: theme(colors.stroke.brand);
+  --bq-input--border-color: theme(stroke.tertiary);
+  --bq-input--border-color-focus: theme(stroke.brand);
   --bq-input--border-radius: theme(borderRadius.s);
   --bq-input--border-width: theme(borderWidth.s);
   --bq-input--border-style: solid;
@@ -37,19 +37,19 @@
 
   --bq-input--helper-margin-top: theme(spacing.xs);
   --bq-input--helper-text-size: theme(fontSize.s);
-  --bq-input--helper-text-color: theme(colors.text.primary);
+  --bq-input--helper-text-color: theme(textColor.primary);
 
   --bq-input--icon-size: 24px;
 
   --bq-input--label-margin-bottom: theme(spacing.xs);
   --bq-input--label-text-size: theme(fontSize.s);
-  --bq-input--label-text-color: theme(colors.text.primary);
+  --bq-input--label-text-color: theme(textColor.primary);
 
   --bq-input--padding-start: theme(spacing.m);
   --bq-input--padding-end: theme(spacing.m);
   --bq-input--paddingY: theme(spacing.s);
 
-  --bq-input--text-color: theme(colors.text.primary);
+  --bq-input--text-color: theme(textColor.primary);
   --bq-input--text-size: theme(fontSize.m);
-  --bq-input--text-placeholder-color: theme(colors.text.secondary);
+  --bq-input--text-placeholder-color: theme(textColor.secondary);
 }

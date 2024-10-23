@@ -13,11 +13,11 @@
 }
 
 .bq-divider {
-  @apply flex items-center gap-[var(--bq-divider--title-marginX)];
+  @apply flex items-center gap-[--bq-divider--title-marginX];
 }
 
 .bq-divider--stroke {
-  @apply flex-grow stroke-[color:var(--bq-divider--stroke-color)] bs-[var(--bq-divider--stroke-thickness)] is-full;
+  @apply flex-grow stroke-[color:--bq-divider--stroke-color] bs-[--bq-divider--stroke-thickness] is-full;
 
   &.end {
     @apply rotate-180;
@@ -26,13 +26,13 @@
 
 .bq-divider--title__start .bq-divider--stroke.start,
 .bq-divider--title__end .bq-divider--stroke.end {
-  @apply flex-grow-0 basis-[var(--bq-divider--stroke-basis)];
+  @apply flex-grow-0 basis-[--bq-divider--stroke-basis];
 }
 
 .bq-divider--vertical {
-  @apply flex-col items-center gap-[var(--bq-divider--title-marginX)] is-full;
+  @apply flex-col items-center gap-[--bq-divider--title-marginX] is-full;
 
   .bq-divider--stroke {
-    @apply bs-full is-[var(--bq-divider--stroke-thickness)];
+    @apply bs-full is-[--bq-divider--stroke-thickness];
   }
 }

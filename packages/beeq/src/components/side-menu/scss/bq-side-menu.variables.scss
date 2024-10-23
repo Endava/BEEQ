@@ -8,9 +8,9 @@
    * @prop --bq-side-menu--brand-color: Side menu logo color
    * @prop --bq-side-menu--border-color: Side menu border color
    */
-  --bq-side-menu--bg-color: theme(colors.ui.primary);
-  --bq-side-menu--brand-color: theme(colors.ui.brand);
-  --bq-side-menu--border-color: var(--bq-neutral-100);
+  --bq-side-menu--bg-color: theme(backgroundColor.ui.primary);
+  --bq-side-menu--brand-color: theme(backgroundColor.ui.brand);
+  --bq-side-menu--border-color: theme(stroke.primary);
   /**
    * ⚠️ There are two CSS properties been added to the global (:root) scope
    * `--bq-side-menu--width` and `--bq-side-menu--width--collapse`

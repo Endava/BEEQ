@@ -76,9 +76,7 @@ const Template = (args: Args) => {
         <bq-icon name="user-circle" weight="bold" role="img" title="Info"></bq-icon>
         Title
       </div>
-      <div
-        class="flex items-center justify-center rounded-xs border-s border-dashed border-stroke-brand bg-red-100 bs-full"
-      >
+      <div class="flex items-center justify-center rounded-xs border-s border-dashed border-brand bg-red-100 bs-full">
         Slot
       </div>
       ${!args.noFooter

@@ -19,19 +19,21 @@ import {
   TYPOGRAPHY_DEFAULT,
 } from './theme';
 
+const inherit: string = 'inherit';
+
 export default {
   theme: {
     colors: {
+      inherit,
       current: 'currentColor',
       transparent: 'transparent',
-      /* -------------------------------------------------------------------------- */
-      /*                         Default Theme (Declarative)                        */
-      /* -------------------------------------------------------------------------- */
-      ...DECLARATIVE_COLORS,
-      /* -------------------------------------------------------------------------- */
-      /*                         Extended colors (Primitive)                        */
-      /* -------------------------------------------------------------------------- */
+      /* ------------------- Extended palette color (Primitive) ------------------- */
       ...PRIMITIVE_COLORS,
+      /* ------------------- Specific Theme Colors (Declarative) ------------------ */
+      focus: DECLARATIVE_COLORS.focus,
+      data: { ...DECLARATIVE_COLORS.data },
+      icon: { ...DECLARATIVE_COLORS.icon },
+      ui: { ...DECLARATIVE_COLORS.ui },
     },
     borderRadius: {
       none: 'var(--bq-radius--none)',
@@ -55,6 +57,7 @@ export default {
       l: 'var(--bq-box-shadow--l)',
     },
     fontFamily: {
+      inherit,
       default: 'var(--bq-font-family)',
       outfit: 'var(--bq-font-family--outfit)',
       poppins: 'var(--bq-font-family--poppins)',
@@ -80,23 +83,36 @@ export default {
       bold: 'var(--bq-font-weight--bold)',
     },
     lineHeight: {
+      inherit,
       small: 'var(--bq-font-line-height--small)',
       regular: 'var(--bq-font-line-height--regular)',
       large: 'var(--bq-font-line-height--large)',
     },
     strokeWidth: {
+      inherit,
       none: '0',
       s: 'var(--bq-stroke-s)',
       m: 'var(--bq-stroke-m)',
       l: 'var(--bq-stroke-l)',
     },
     extend: {
-      height: {
-        // Details: https://web.dev/viewport-units/#the-need-for-new-viewport-units
-        'dynamic-vh': '100dvh',
-      },
+      /* ------------------ Extend colors with declarative colors ----------------- */
+      backgroundColor: { ...DECLARATIVE_COLORS.bg },
+      borderColor: { ...DECLARATIVE_COLORS.stroke },
+      stroke: { ...DECLARATIVE_COLORS.stroke },
+      textColor: { ...DECLARATIVE_COLORS.text },
+      fill: { ...DECLARATIVE_COLORS.icon },
+      /* --------------------------- End: Extend colors --------------------------- */
       content: {
         empty: "''",
+      },
+      cursor: {
+        inherit,
+      },
+      height: {
+        inherit,
+        // Details: https://web.dev/viewport-units/#the-need-for-new-viewport-units
+        'dynamic-vh': '100dvh',
       },
       spacing: {
         xs3: 'var(--bq-spacing-xs3)',

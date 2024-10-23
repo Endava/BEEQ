@@ -26,9 +26,9 @@
   * @prop --bq-avatar--badge-left-circle: Badge left position shape circle
   */
 
-  --bq-avatar-background: theme(colors.ui.alt);
+  --bq-avatar-background: theme(backgroundColor.ui.alt);
 
-  --bq-avatar--border-color: theme(colors.stroke.tertiary);
+  --bq-avatar--border-color: theme(stroke.tertiary);
   --bq-avatar--border-style: solid;
   --bq-avatar--border-width: theme(borderWidth.m);
 

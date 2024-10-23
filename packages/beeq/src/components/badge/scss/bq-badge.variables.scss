@@ -15,10 +15,10 @@
    * @prop --bq-badge--size-large: Badge large size
    * @prop --bq-badge--text-color: Badge text color
    */
-  --bq-badge--background-color: theme(colors.ui.danger);
+  --bq-badge--background-color: theme(backgroundColor.ui.danger);
   --bq-badge--box-shadow: none;
 
-  --bq-badge--border-color: theme(colors.stroke.tertiary);
+  --bq-badge--border-color: theme(stroke.tertiary);
   --bq-badge--border-radius: theme(borderRadius.full);
   --bq-badge--border-style: none;
   --bq-badge--border-width: theme(borderWidth.0);
@@ -27,5 +27,5 @@
   --bq-badge--size-medium: 12px;
   --bq-badge--size-large: 16px;
 
-  --bq-badge--text-color: theme(colors.text.inverse);
+  --bq-badge--text-color: theme(textColor.inverse);
 }

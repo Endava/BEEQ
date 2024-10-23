@@ -14,6 +14,6 @@
   --bq-slider--size: 4px;
   --bq-slider--border-radius: theme(borderRadius.xs);
   --bq-slider--thumb-size: 13px;
-  --bq-slider--progress-color: theme(colors.ui.brand);
-  --bq-slider--trackarea-color: theme(colors.ui.secondary);
+  --bq-slider--progress-color: theme(backgroundColor.ui.brand);
+  --bq-slider--trackarea-color: theme(backgroundColor.ui.secondary);
 }

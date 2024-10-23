@@ -32,14 +32,14 @@ const meta: Meta = {
     'disable-divider': false,
     // Not part of the public API, so we don't want to expose it in the docs
     tabs: [
-      { id: 1, label: 'Tab' },
-      { id: 2, label: 'Tab' },
-      { id: 3, label: 'Long Tab name' },
-      { id: 4, label: 'Tab', disabled: true },
-      { id: 5, label: 'Tab' },
-      { id: 6, label: 'Tab' },
-      { id: 7, label: 'Tab' },
-      { id: 8, label: 'Tab' },
+      { id: 1, label: 'First' },
+      { id: 2, label: 'Second' },
+      { id: 3, label: 'Long name' },
+      { id: 4, label: 'Four', disabled: true },
+      { id: 5, label: 'Five' },
+      { id: 6, label: 'Six' },
+      { id: 7, label: 'Seven' },
+      { id: 8, label: 'Eight' },
     ],
   },
 };
@@ -57,6 +57,7 @@ const Template = (args: Args) => {
       })}
     >
       <bq-tab-group
+        class=${classMap({ 'm-be-m': args.orientation !== 'vertical' })}
         value="5"
         .size=${args.size}
         .orientation=${args.orientation}
@@ -68,16 +69,16 @@ const Template = (args: Args) => {
       >
         ${args.tabs.map(
           (tab, index) => html`
-            <bq-tab tab-id=${tab.id}>
+            <bq-tab tab-id=${tab.id} ?disabled=${tab.disabled}>
               ${tab.label}
               ${args.icons
-                ? html`<bq-icon name="${args.icons[index % args.icons.length]}" slot="icon"> </bq-icon> `
+                ? html`<bq-icon name="${args.icons[index % args.icons.length]}" slot="icon"></bq-icon>`
                 : null}
             </bq-tab>
           `,
         )}
       </bq-tab-group>
-      <div class="border h-80 w-full flex-1 border-dashed border-stroke-primary bg-[--bq-ui--alt]">
+      <div class="border h-80 w-full flex-1 border-dashed border-primary bg-ui-alt">
         <h3 class="m-l">Tab content</h3>
       </div>
     </main>

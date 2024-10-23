@@ -201,7 +201,7 @@ export const CustomTrigger: Story = {
 
 export const KeepOpen: Story = {
   render: (args: Args) => html`
-    <div class="rounded-m border-s border-solid border-stroke-success bg-ui-success-alt p-b-m p-i-m m-be-l">
+    <div class="rounded-m border-s border-solid border-success bg-ui-success-alt p-b-m p-i-m m-be-l">
       <p class="text-m font-bold m-be-xs">💡 NOTE:</p>
       If <code class="text-text-danger">keepOpenOnSelect</code> is set, the dropdown will remain open after a selection
       is made.

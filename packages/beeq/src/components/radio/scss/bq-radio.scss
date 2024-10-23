@@ -18,11 +18,11 @@
     }
 
     &.is-checked .bq-radio__circle {
-      @apply border-stroke-brand;
+      @apply border-icon-brand;
     }
 
     &.is-checked .bq-radio__checked {
-      @apply bg-icon-brand;
+      @apply bg-ui-brand;
     }
   }
 
@@ -41,7 +41,7 @@
   }
 
   &:not(.is-disabled):hover .bq-radio__circle {
-    @apply border-hover-ui-brand;
+    @apply border-hover-icon-brand;
   }
 
   &.is-checked:not(.is-disabled):hover {
@@ -53,7 +53,7 @@
 }
 
 .bq-radio__input {
-  @apply pointer-events-none absolute opacity-0 m-b-0 m-i-0 p-b-0 p-i-0;
+  @apply pointer-events-none absolute opacity-0 p-b-0 p-i-0 m-b-0 m-i-0;
 
   &:focus-visible {
     ~ .bq-radio__circle {
@@ -75,7 +75,7 @@
 }
 
 .bq-radio__label {
-  @apply font-medium leading-regular text-text-primary;
+  @apply font-medium leading-regular text-primary;
 }
 
 .bq-radio__circle,

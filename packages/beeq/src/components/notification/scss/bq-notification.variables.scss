@@ -20,10 +20,10 @@
    * @prop --bq-notification--padding: The notification padding
    * @prop --bq-notification--min-width: The notification min width
    */
-  --bq-notification--background: theme(colors.ui.primary);
+  --bq-notification--background: theme(backgroundColor.ui.primary);
   --bq-notification--box-shadow: theme(boxShadow.l);
 
-  --bq-notification--border-color: theme(colors.transparent);
+  --bq-notification--border-color: theme(stroke.transparent);
   --bq-notification--border-radius: theme(borderRadius.s);
   --bq-notification--border-style: none;
   --bq-notification--border-width: unset;
@@ -31,11 +31,11 @@
   --bq-notification--content-footer-gap: theme(spacing.m);
   --bq-notification--title-body-gap: theme(spacing.s);
 
-  --bq-notification--icon-color-error: theme(colors.icon.danger);
-  --bq-notification--icon-color-info: theme(colors.icon.brand);
-  --bq-notification--icon-color-neutral: theme(colors.icon.primary);
-  --bq-notification--icon-color-success: theme(colors.icon.success);
-  --bq-notification--icon-color-warning: theme(colors.icon.warning);
+  --bq-notification--icon-color-error: theme(fill.danger);
+  --bq-notification--icon-color-info: theme(fill.brand);
+  --bq-notification--icon-color-neutral: theme(fill.primary);
+  --bq-notification--icon-color-success: theme(fill.success);
+  --bq-notification--icon-color-warning: theme(fill.warning);
 
   --bq-notification--padding: theme(padding.m);
 

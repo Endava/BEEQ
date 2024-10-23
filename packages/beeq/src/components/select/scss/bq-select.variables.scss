@@ -26,10 +26,10 @@
    * @prop --bq-select--text-size - Select text size
    * @prop --bq-select--text-placeholder-color - Select placeholder text color
    */
-  --bq-select--background-color: theme(colors.ui.primary);
+  --bq-select--background-color: theme(backgroundColor.ui.primary);
 
-  --bq-select--border-color: theme(colors.stroke.tertiary);
-  --bq-select--border-color-focus: theme(colors.stroke.brand);
+  --bq-select--border-color: theme(stroke.tertiary);
+  --bq-select--border-color-focus: theme(stroke.brand);
   --bq-select--border-radius: theme(borderRadius.s);
   --bq-select--border-width: theme(borderWidth.s);
   --bq-select--border-style: solid;
@@ -38,19 +38,19 @@
 
   --bq-select--helper-margin-top: theme(spacing.xs);
   --bq-select--helper-text-size: theme(fontSize.s);
-  --bq-select--helper-text-color: theme(colors.text.primary);
+  --bq-select--helper-text-color: theme(textColor.primary);
 
   --bq-select--icon-size: 24px;
 
   --bq-select--label-margin-bottom: theme(spacing.xs);
   --bq-select--label-text-size: theme(fontSize.s);
-  --bq-select--label-text-color: theme(colors.text.primary);
+  --bq-select--label-text-color: theme(textColor.primary);
 
   --bq-select--padding-start: calc(var(--bq-spacing-m) - var(--bq-select--border-width));
   --bq-select--padding-end: calc(var(--bq-spacing-m) - var(--bq-select--border-width));
   --bq-select--paddingY: calc(var(--bq-spacing-s) - var(--bq-select--border-width));
 
-  --bq-select--text-color: theme(colors.text.primary);
+  --bq-select--text-color: theme(textColor.primary);
   --bq-select--text-size: theme(fontSize.m);
-  --bq-select--text-placeholder-color: theme(colors.text.secondary);
+  --bq-select--text-placeholder-color: theme(textColor.secondary);
 }

@@ -22,15 +22,15 @@
 }
 
 .bq-input--helper-text.validation-error {
-  @apply text-text-danger;
+  @apply text-danger;
 }
 
 .bq-input--helper-text.validation-success {
-  @apply text-text-success;
+  @apply text-success;
 }
 
 .bq-input--helper-text.validation-warning {
-  @apply text-text-warning;
+  @apply text-warning;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -46,7 +46,7 @@
   // Text
   @apply text-[length:--bq-input--text-size] text-[color:--bq-input--text-color] placeholder:text-[color:--bq-input--text-placeholder-color];
   // Hover
-  @apply [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-brand;
+  @apply [&:not(.disabled):not(:focus-within)]:hover:border-hover-brand;
 
   border-style: var(--bq-input--border-style);
 
@@ -75,32 +75,32 @@
 /* ------------------------------- Validation ------------------------------- */
 
 .bq-input--control.validation-error {
-  @apply border-stroke-danger [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-danger;
+  @apply border-danger [&:not(.disabled):not(:focus-within)]:hover:border-hover-danger;
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme(colors.stroke.danger);
+    --bq-ring-color-focus: theme(stroke.danger);
 
-    @apply border-active-stroke-danger;
+    @apply border-active-danger;
   }
 }
 
 .bq-input--control.validation-success {
-  @apply border-stroke-success [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-success;
+  @apply border-success [&:not(.disabled):not(:focus-within)]:hover:border-hover-success;
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme(colors.stroke.success);
+    --bq-ring-color-focus: theme(stroke.success);
 
-    @apply border-active-stroke-success;
+    @apply border-active-success;
   }
 }
 
 .bq-input--control.validation-warning {
-  @apply border-stroke-warning [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-warning;
+  @apply border-warning [&:not(.disabled):not(:focus-within)]:hover:border-hover-warning;
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme(colors.stroke.warning);
+    --bq-ring-color-focus: theme(stroke.warning);
 
-    @apply border-active-stroke-warning;
+    @apply border-active-warning;
   }
 }
 
@@ -109,8 +109,8 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-input--control__input {
-  @apply flex-auto cursor-[inherit] appearance-none bg-[inherit] font-[inherit] text-[length:inherit] text-[color:inherit];
-  @apply border-none min-bs-[--bq-input--icon-size] min-is-0 m-b-0 m-i-0 p-b-0 p-i-0 focus:outline-none focus-visible:outline-none;
+  @apply flex-auto cursor-inherit appearance-none bg-inherit font-inherit text-[length:inherit] text-inherit;
+  @apply border-none min-bs-[--bq-input--icon-size] min-is-0 p-b-0 p-i-0 m-b-0 m-i-0 focus:outline-none focus-visible:outline-none;
 
   box-shadow: none;
   font-weight: inherit;

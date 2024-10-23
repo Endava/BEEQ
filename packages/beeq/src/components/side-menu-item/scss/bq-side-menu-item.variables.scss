@@ -20,9 +20,9 @@
   --bq-side-menu-item--bg-hover: color-mix(in srgb, var(--bq-ui--alt), var(--bq-hover) 20%);
   --bq-side-menu-item--bg-active: theme(backgroundColor.ui.brand-alt);
 
-  --bq-side-menu-item--text-default: theme(textColor.text.primary);
-  --bq-side-menu-item--text-hover: theme(textColor.text.primary);
-  --bq-side-menu-item--text-active: theme(textColor.text.brand);
+  --bq-side-menu-item--text-default: theme(textColor.primary);
+  --bq-side-menu-item--text-hover: theme(textColor.primary);
+  --bq-side-menu-item--text-active: theme(textColor.brand);
 
   --bq-side-menu-item--paddingX: theme(space.l);
   --bq-side-menu-item--paddingY: theme(space.m);

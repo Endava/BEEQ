@@ -48,40 +48,40 @@
 }
 
 :host([appearance='brand']) {
-  --bq-focus: theme(colors.stroke.alt);
-  --bq-side-menu--bg-color: theme(colors.ui.brand);
-  --bq-side-menu--brand-color: theme(colors.stroke.inverse);
-  --bq-side-menu--border-color: theme(colors.ui.brand);
+  --bq-focus: theme(stroke.alt);
+  --bq-side-menu--bg-color: theme(backgroundColor.ui.brand);
+  --bq-side-menu--brand-color: theme(stroke.inverse);
+  --bq-side-menu--border-color: theme(stroke.brand);
 
   ::slotted(bq-side-menu-item) {
     --bq-side-menu-item--bg-hover: color-mix(in srgb, var(--bq-ui--brand), var(--bq-hover) 20%);
 
-    --bq-side-menu-item--text-default: theme(textColor.text.alt);
-    --bq-side-menu-item--text-hover: theme(textColor.text.alt);
+    --bq-side-menu-item--text-default: theme(textColor.alt);
+    --bq-side-menu-item--text-hover: theme(textColor.alt);
   }
 
   .bq-side-menu--footer ::slotted([slot='footer']) {
     --bq-ui--secondary: theme(colors.transparent);
-    --bq-text--primary: theme(textColor.text.inverse);
+    --bq-text--primary: theme(textColor.inverse);
   }
 }
 
 :host([appearance='inverse']) {
-  --bq-side-menu--bg-color: theme(colors.ui.inverse);
-  --bq-side-menu--brand-color: theme(colors.stroke.inverse);
-  --bq-side-menu--border-color: theme(colors.ui.inverse);
+  --bq-side-menu--bg-color: theme(backgroundColor.ui.inverse);
+  --bq-side-menu--brand-color: theme(stroke.inverse);
+  --bq-side-menu--border-color: theme(backgroundColor.ui.inverse);
 
   ::slotted(bq-side-menu-item) {
     --bq-side-menu-item--bg-hover: color-mix(in srgb, var(--bq-ui--inverse), var(--bq-hover) 20%);
     --bq-side-menu-item--bg-active: color-mix(in srgb, var(--bq-ui--alt), var(--bq-active) 20%);
 
-    --bq-side-menu-item--text-default: theme(textColor.text.inverse);
-    --bq-side-menu-item--text-hover: theme(textColor.text.inverse);
-    --bq-side-menu-item--text-active: theme(textColor.text.primary);
+    --bq-side-menu-item--text-default: theme(textColor.inverse);
+    --bq-side-menu-item--text-hover: theme(textColor.inverse);
+    --bq-side-menu-item--text-active: theme(textColor.primary);
   }
 
   .bq-side-menu--footer ::slotted([slot='footer']) {
     --bq-ui--secondary: theme(colors.transparent);
-    --bq-text--primary: theme(textColor.text.inverse);
+    --bq-text--primary: theme(textColor.inverse);
   }
 }

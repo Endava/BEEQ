@@ -557,7 +557,7 @@ export class BqDatePicker {
                 exportparts="button"
               >
                 <slot name="clear-icon">
-                  <bq-icon weight="bold" name="x-circle" class="flex" />
+                  <bq-icon name="x-circle" class="flex" />
                 </slot>
               </bq-button>
             )}
@@ -568,7 +568,7 @@ export class BqDatePicker {
               part="suffix"
             >
               <slot name="suffix" onSlotchange={this.handleSuffixSlotChange}>
-                <bq-icon name="calendar-blank" weight="bold" class="flex" />
+                <bq-icon name="calendar-blank" class="flex" />
               </slot>
             </span>
           </div>

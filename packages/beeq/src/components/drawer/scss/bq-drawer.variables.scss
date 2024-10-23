@@ -12,10 +12,10 @@
    * @prop --bq-drawer--zIndex - Z-index of the drawer component
    */
 
-  --bq-drawer--backgroundBackdrop: theme(colors.grey.900);
+  --bq-drawer--backgroundBackdrop: theme(backgroundColor.overlay);
   --bq-drawer--gap: theme(spacing.l);
   --bq-drawer--width: 320px;
   --bq-drawer--paddingX: theme(spacing.l);
   --bq-drawer--paddingY: theme(spacing.m);
-  --bq-drawer--zIndex: 9999;
+  --bq-drawer--zIndex: 10;
 }

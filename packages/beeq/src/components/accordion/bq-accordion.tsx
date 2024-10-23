@@ -229,14 +229,16 @@ export class BqAccordion {
         part="base"
       >
         <summary
+          id="bq-accordion__header"
           class="bq-accordion__header"
           onClick={this.handleClick}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
-          aria-expanded={this.expanded}
-          aria-disabled={this.disabled}
-          aria-controls="bq-accordion__body"
+          aria-expanded={this.expanded ? 'true' : 'false'}
+          aria-disabled={this.disabled ? 'true' : 'false'}
+          aria-controls="bq-accordion__content"
           tabindex={this.disabled ? -1 : 0}
+          role="button"
           part="header"
         >
           <div
@@ -262,6 +264,7 @@ export class BqAccordion {
               '!hidden': this.open && !this.rotate,
               'rotate-180': this.rotate && this.open,
             }}
+            aria-hidden="true"
           >
             <slot name="expand">
               <bq-icon name="plus" />
@@ -269,14 +272,20 @@ export class BqAccordion {
           </div>
           <div
             class={{ 'flex items-center justify-center': true, '!hidden': (!this.open && !this.rotate) || this.rotate }}
+            aria-hidden="true"
           >
             <slot name="collapse">
               <bq-icon name="minus" />
             </slot>
           </div>
         </summary>
-        <div id="bq-accordion__body" class="bq-accordion__body overflow-hidden" part="panel">
-          <slot />
+        <div
+          class="bq-accordion__body overflow-hidden"
+          aria-labelledby="bq-accordion__header"
+          role="region"
+          part="panel"
+        >
+          <slot id="bq-accordion__content" class="bq-accordion__content block" />
         </div>
       </details>
     );

@@ -11,11 +11,11 @@
    * @prop --bq-step-item--prefix-num-size - Size of the prefix number
    * @prop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
    */
-  --bq-step-item--prefix-color: theme(colors.icon.secondary);
-  --bq-step-item--prefix-color-current: theme(colors.icon.brand);
-  --bq-step-item--prefix-color-completed: theme(colors.icon.success);
-  --bq-step-item--prefix-color-error: theme(colors.icon.danger);
+  --bq-step-item--prefix-color: theme(stroke.icon.secondary);
+  --bq-step-item--prefix-color-current: theme(stroke.icon.brand);
+  --bq-step-item--prefix-color-completed: theme(stroke.icon.success);
+  --bq-step-item--prefix-color-error: theme(stroke.icon.danger);
 
   --bq-step-item--prefix-num-size: theme(spacing.xl);
-  --bq-step-item--prefix-num-bg-color: theme(colors.ui.secondary);
+  --bq-step-item--prefix-num-bg-color: theme(backgroundColor.ui.secondary);
 }

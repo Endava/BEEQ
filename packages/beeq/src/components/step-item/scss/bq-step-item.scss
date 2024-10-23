@@ -5,9 +5,9 @@
 @import './bq-step-item.variables';
 
 :host {
-  --bq-icon--color: theme(colors.icon.primary);
+  --bq-icon--color: theme(stroke.icon.primary);
 
-  @apply bg-bg-primary;
+  @apply bg-primary;
 }
 
 .bq-step-item__prefix.dot,
@@ -53,15 +53,15 @@
   // Status
 
   &.current {
-    @apply bg-[var(--bq-step-item--prefix-color-current)] text-[--bq-text--alt];
+    @apply bg-[var(--bq-step-item--prefix-color-current)] text-alt;
   }
 
   &.completed {
-    @apply bg-ui-success-alt text-text-success;
+    @apply bg-ui-success-alt text-success;
   }
 
   &.error {
-    @apply bg-ui-danger-alt text-text-danger;
+    @apply bg-ui-danger-alt text-danger;
   }
 
   &.disabled {

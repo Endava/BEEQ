@@ -12,6 +12,6 @@
 
   --bq-progress-bar--height: theme(height.1);
   --bq-progress-bar--indeterminateWidth: 25%;
-  --bq-progress-bar--indicatorColor: theme(colors.ui.brand);
-  --bq-progress-bar--trackColor: theme(colors.ui.secondary);
+  --bq-progress-bar--indicatorColor: theme(backgroundColor.ui.brand);
+  --bq-progress-bar--trackColor: theme(backgroundColor.ui.secondary);
 }

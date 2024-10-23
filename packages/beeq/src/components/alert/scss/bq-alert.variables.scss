@@ -39,25 +39,25 @@
   --bq-alert--content-footer-gap: theme(spacing.s);
   --bq-alert--title-body-gap: theme(spacing.s);
 
-  --bq-alert--background-info: theme(colors.ui.brand-alt);
-  --bq-alert--background-success: theme(colors.ui.success-alt);
-  --bq-alert--background-warning: theme(colors.ui.warning-alt);
-  --bq-alert--background-error: theme(colors.ui.danger-alt);
-  --bq-alert--background-default: theme(colors.ui.primary);
+  --bq-alert--background-info: theme(backgroundColor.ui.brand-alt);
+  --bq-alert--background-success: theme(backgroundColor.ui.success-alt);
+  --bq-alert--background-warning: theme(backgroundColor.ui.warning-alt);
+  --bq-alert--background-error: theme(backgroundColor.ui.danger-alt);
+  --bq-alert--background-default: theme(backgroundColor.ui.primary);
 
-  --bq-alert--border-info: theme(colors.stroke.brand);
-  --bq-alert--border-success: theme(colors.stroke.success);
-  --bq-alert--border-warning: theme(colors.stroke.warning);
-  --bq-alert--border-error: theme(colors.stroke.danger);
-  --bq-alert--border-default: theme(colors.stroke.secondary);
+  --bq-alert--border-info: theme(borderColor.brand);
+  --bq-alert--border-success: theme(borderColor.success);
+  --bq-alert--border-warning: theme(borderColor.warning);
+  --bq-alert--border-error: theme(borderColor.danger);
+  --bq-alert--border-default: theme(borderColor.secondary);
   --bq-alert--border-width: theme(borderWidth.s);
   --bq-alert--border-style: solid;
 
-  --bq-alert--icon-color-info: theme(colors.icon.brand);
-  --bq-alert--icon-color-success: theme(colors.icon.success);
-  --bq-alert--icon-color-warning: theme(colors.icon.warning);
-  --bq-alert--icon-color-error: theme(colors.icon.danger);
-  --bq-alert--icon-color-default: theme(colors.icon.primary);
+  --bq-alert--icon-color-info: theme(fill.brand);
+  --bq-alert--icon-color-success: theme(fill.success);
+  --bq-alert--icon-color-warning: theme(fill.warning);
+  --bq-alert--icon-color-error: theme(fill.danger);
+  --bq-alert--icon-color-default: theme(fill.primary);
 
   --bq-alert--padding: theme(padding.s);
 

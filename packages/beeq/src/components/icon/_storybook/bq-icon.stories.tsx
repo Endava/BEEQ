@@ -122,7 +122,7 @@ export const ExploreIcons: Story = {
           , is a flexible icon family for interfaces, diagrams, presentations — whatever, really, is free and
           open-source, licensed under MIT.
         </p>
-        <span class="text-xs text-text-secondary">
+        <span class="text-xs text-secondary">
           (Below, you're seeing only a few examples of the icons that the library provides)
         </span>
       </div>
@@ -149,11 +149,11 @@ export const ExploreIcons: Story = {
           (icon) => html`
             <div class="group flex flex-col items-stretch text-center outline-0" role="button" tabindex="0">
               <div
-                class="border flex w-full justify-center rounded-m border-s border-solid border-stroke-primary transition-[shadow,transform] p-b-m p-i-0 m-be-s group-hover:scale-125 group-hover:shadow-l"
+                class="border flex w-full justify-center rounded-m border-s border-solid border-primary transition-[shadow,transform] p-b-m p-i-0 m-be-s group-hover:scale-125 group-hover:shadow-l"
               >
                 ${Template({ ...args, name: icon })}
               </div>
-              <span class="text-s leading-regular text-text-primary">${icon}</span>
+              <span class="text-s leading-regular text-primary">${icon}</span>
             </div>
           `,
         )}

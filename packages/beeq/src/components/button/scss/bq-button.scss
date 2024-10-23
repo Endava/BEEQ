@@ -31,7 +31,7 @@
 /* -------------------------------------------------------------------------- */
 
 .bq-button--primary {
-  @apply bg-ui-brand text-text-alt;
+  @apply bg-ui-brand text-alt;
   // Primary `HOVER` state
   @apply hover:enabled:bg-hover-ui-brand;
   // Primary `ACTIVE` state
@@ -39,7 +39,7 @@
 }
 
 .bq-button--primary.ghost {
-  @apply border-m border-solid border-stroke-brand bg-transparent text-text-brand;
+  @apply border-m border-solid border-brand bg-transparent text-brand;
   // Primary `HOVER` state
   @apply hover:enabled:bg-hover-ui-primary;
   // Primary `ACTIVE` state
@@ -47,7 +47,7 @@
 }
 
 .bq-button--primary.danger {
-  @apply bg-ui-danger text-text-alt;
+  @apply bg-ui-danger text-alt;
   // Primary `HOVER` state
   @apply hover:enabled:bg-hover-ui-danger;
   // Primary `ACTIVE` state
@@ -55,7 +55,7 @@
 }
 
 .bq-button--secondary {
-  @apply bg-ui-secondary text-text-primary;
+  @apply bg-ui-secondary text-primary;
   // Secondary `HOVER` state
   @apply hover:enabled:bg-hover-ui-secondary;
   // Secondary `ACTIVE` state
@@ -63,7 +63,7 @@
 }
 
 .bq-button--secondary.ghost {
-  @apply border-m border-solid border-stroke-tertiary bg-transparent text-text-primary;
+  @apply border-m border-solid border-tertiary bg-transparent text-primary;
   // Secondary `HOVER` state
   @apply hover:enabled:bg-hover-ui-secondary;
   // Secondary `ACTIVE` state
@@ -71,7 +71,7 @@
 }
 
 .bq-button--link {
-  @apply bg-transparent text-text-brand no-underline;
+  @apply bg-transparent text-brand no-underline;
   // Primary `HOVER` state
   @apply [&:not(.disabled)]:hover:bg-hover-ui-primary;
   // Primary `ACTIVE` state
@@ -83,7 +83,7 @@
 }
 
 .bq-button--text {
-  @apply bg-transparent text-text-primary;
+  @apply bg-transparent text-primary;
   // Primary `HOVER` state
   @apply hover:enabled:bg-hover-ui-primary;
   // Primary `ACTIVE` state

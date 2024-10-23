@@ -31,7 +31,7 @@
   // Transition
   @apply transition-colors ease-in-out;
   // Hover
-  @apply [&:not([disabled]):not(:focus-within)]:hover:border-hover-stroke-brand;
+  @apply [&:not([disabled]):not(:focus-within)]:hover:border-hover-brand;
   // Disabled
   @apply disabled:cursor-not-allowed disabled:opacity-60;
   // Focus
@@ -47,32 +47,32 @@
 /* ------------------------------- Validations ------------------------------- */
 
 .bq-textarea__input.validation-error {
-  @apply border-stroke-danger [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-danger;
+  @apply border-danger [&:not(.disabled):not(:focus-within)]:hover:border-hover-danger;
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme(colors.stroke.danger);
+    --bq-ring-color-focus: theme(stroke.danger);
 
-    @apply border-active-stroke-danger;
+    @apply border-active-danger;
   }
 }
 
 .bq-textarea__input.validation-success {
-  @apply border-stroke-success [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-success;
+  @apply border-success [&:not(.disabled):not(:focus-within)]:hover:border-hover-success;
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme(colors.stroke.success);
+    --bq-ring-color-focus: theme(stroke.success);
 
-    @apply border-active-stroke-success;
+    @apply border-active-success;
   }
 }
 
 .bq-textarea__input.validation-warning {
-  @apply border-stroke-warning [&:not(.disabled):not(:focus-within)]:hover:border-hover-stroke-warning;
+  @apply border-warning [&:not(.disabled):not(:focus-within)]:hover:border-hover-warning;
 
   &:not(.disabled):focus-within {
-    --bq-ring-color-focus: theme(colors.stroke.warning);
+    --bq-ring-color-focus: theme(stroke.warning);
 
-    @apply border-active-stroke-warning;
+    @apply border-active-warning;
   }
 }
 
@@ -87,15 +87,15 @@
 /* ------------------------------- Validations ------------------------------ */
 
 .bq-textarea__helper.validation-error {
-  @apply text-text-danger;
+  @apply text-danger;
 }
 
 .bq-textarea__helper.validation-success {
-  @apply text-text-success;
+  @apply text-success;
 }
 
 .bq-textarea__helper.validation-warning {
-  @apply text-text-warning;
+  @apply text-warning;
 }
 
 /* ----------------------------- Helper counter ----------------------------- */

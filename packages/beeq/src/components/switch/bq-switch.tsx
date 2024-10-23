@@ -230,8 +230,6 @@ export class BqSwitch {
                 part="icon-on"
               />
             )}
-            {/* Dot */}
-            <div class="bq-switch--control__dot" part="dot" />
             {this.innerLabel === 'icon' && (
               <bq-icon
                 class="bq-switch--control__icon off"
@@ -242,12 +240,13 @@ export class BqSwitch {
                 part="icon-off"
               />
             )}
+            {/* Dot */}
+            <div class="bq-switch--control__dot" part="dot" />
           </div>
           {/* Label */}
           <span
             class={{
-              'bq-switch--label text-m font-medium leading-regular text-text-primary transition-colors duration-300':
-                true,
+              'bq-switch--label text-m font-medium leading-regular text-primary transition-colors duration-300': true,
               'ms-s': this.hasLabel && !this.reverseOrder,
               'me-s': this.hasLabel && this.reverseOrder,
             }}

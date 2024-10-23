@@ -15,6 +15,8 @@ declare module '@stencil/core' {
       'calendar-range': MapEvents<CalendarRangeProps> & JSXBase.HTMLAttributes<CalendarDateProps>;
       'calendar-date': CalendarDateProps & JSXBase.HTMLAttributes<CalendarDateProps>;
       'calendar-month': CalendarMonthProps & JSXBase.HTMLAttributes<CalendarMonthProps>;
+      // Extend the global slot HTML element to include the id and class attributes
+      slot: JSXBase.SlotAttributes & { id?: string; class?: string };
     }
   }
 }
