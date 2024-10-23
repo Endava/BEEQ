@@ -6,6 +6,9 @@ const tsESLint = require('typescript-eslint');
 module.exports = [
   ...tsESLint.configs.recommended,
   {
+    ignores: ['**/src/components.ts'],
+  },
+  {
     rules: {
       '@typescript-eslint/ban-ts-comment': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
@@ -24,7 +27,7 @@ module.exports = [
       '@nx/dependency-checks': [
         'error',
         {
-          ignoredDependencies: ['@beeq/core', 'tslib', 'vue'],
+          ignoredDependencies: ['@beeq/core', '@stencil/vue-output-target', 'tslib', 'vue'],
         },
       ],
     },
