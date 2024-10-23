@@ -98,6 +98,7 @@ export const config: Config = {
       proxiesFile: resolve(__dirname, '../beeq-vue/src/components.ts').replace(/\\/g, '/'),
       componentModels: vueComponentModels,
       includeDefineCustomElements: true,
+      hydrateModule: '@beeq/core/dist/hydrate',
       customElementsDir,
     }),
   ],
