@@ -54,6 +54,7 @@ export const config: Config = {
     {
       type: 'dist-custom-elements',
       customElementsExportBehavior: 'single-export-module',
+      externalRuntime: false,
       dir: customElementsDir,
       minify: true,
     },
@@ -96,8 +97,10 @@ export const config: Config = {
     vue({
       componentCorePackage,
       proxiesFile: resolve(__dirname, '../beeq-vue/src/components.ts').replace(/\\/g, '/'),
+      includeImportCustomElements: true,
+      includePolyfills: false,
+      includeDefineCustomElements: false,
       componentModels: vueComponentModels,
-      includeDefineCustomElements: true,
       hydrateModule: '@beeq/core/dist/hydrate',
       customElementsDir,
     }),

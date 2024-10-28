@@ -78,19 +78,19 @@ jobs:
           command: npx nx report
       - run:
           name: 🩺 Run Linters
-          command: npx nx affected -t lint --exclude='*,!tag:publishable' --parallel=3 --base=$NX_BASE --head=$NX_HEAD
+          command: npx nx affected -t lint --exclude='*,!tag:publishable' --parallel=3 --output-style=stream --base=$NX_BASE --head=$NX_HEAD
       - run:
           name: 🧰 Run Unit Tests
-          command: npx nx affected -t test --exclude='*,!tag:core' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --ci --runInBand
+          command: npx nx affected -t test --exclude='*,!tag:core' --parallel=3 --output-style=stream --ci --base=$NX_BASE --head=$NX_HEAD
       - run:
           name: ⏳ Build Libraries
-          command: npx nx affected -t build --exclude='*,!tag:publishable' --parallel=3 --base=$NX_BASE --head=$NX_HEAD
+          command: npx nx affected -t build --exclude='*,!tag:publishable' --parallel=3 --output-style=stream --base=$NX_BASE --head=$NX_HEAD
       - run:
           name: 🧪 Run E2E Tests
-          command: npx nx affected -t e2e --exclude='*,!tag:core' --parallel=3 --base=$NX_BASE --head=$NX_HEAD --ci --code-coverage --runInBand
+          command: npx nx affected -t e2e --exclude='*,!tag:core' --parallel=3 --ci --code-coverage --output-style=stream --base=$NX_BASE --head=$NX_HEAD
       - run:
           name: 📚 Build Storybook
-          command: npx nx run beeq:storybook-build --output-style=stream-without-prefixes
+          command: npx nx run beeq:storybook-build --output-style=stream
       - run:
           name: ⏹️ Stop Nx Cloud Agents
           command: npx nx-cloud stop-all-agents
