@@ -3,8 +3,8 @@
     [
       "@nx/js/babel",
       {
-        "useBuiltIns": "usage",
-      },
-    ],
-  ],
+        "useBuiltIns": "usage"
+      }
+    ]
+  ]
 }

@@ -101,7 +101,7 @@ export const config: Config = {
       includePolyfills: false,
       includeDefineCustomElements: false,
       componentModels: vueComponentModels,
-      hydrateModule: '@beeq/core/dist/hydrate',
+      // hydrateModule: '@beeq/core/dist/hydrate',
       customElementsDir,
     }),
   ],
