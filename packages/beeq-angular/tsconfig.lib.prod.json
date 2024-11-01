@@ -6,9 +6,9 @@
     "enableResourceInlining": true,
     "flatModuleId": "@beeq/angular",
     "flatModuleOutFile": "core.js",
-    "fullTemplateTypeCheck": false,
     "skipTemplateCodegen": true,
-    "strictMetadataEmit": true
+    "strictMetadataEmit": true,
+    "strictTemplates": true
   },
   "compilerOptions": {
     "declarationMap": false,
