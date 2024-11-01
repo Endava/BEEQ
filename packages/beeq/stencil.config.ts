@@ -72,6 +72,7 @@ export const config: Config = {
       directivesProxyFile: resolve(__dirname, '../beeq-angular/src/directives/components.ts').replace(/\\/g, '/'),
       directivesArrayFile: resolve(__dirname, '../beeq-angular/src/directives/index.ts').replace(/\\/g, '/'),
       valueAccessorConfigs: angularValueAccessorBindings,
+      inlineProperties: true,
       customElementsDir,
     }),
     angular({
