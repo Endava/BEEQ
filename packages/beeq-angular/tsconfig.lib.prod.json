@@ -1,15 +1,18 @@
 {
   "extends": "./tsconfig.lib.json",
-  "compilerOptions": {
-    "declarationMap": false,
-    "removeComments": false
-  },
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
     "compilationMode": "partial",
     "enableResourceInlining": true,
+    "flatModuleId": "@beeq/angular",
+    "flatModuleOutFile": "core.js",
     "fullTemplateTypeCheck": false,
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true
+  },
+  "compilerOptions": {
+    "declarationMap": false,
+    "removeComments": false,
+    "useDefineForClassFields": false
   }
 }
