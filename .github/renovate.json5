@@ -1,5 +1,5 @@
 {
-  $schema: 'https: //docs.renovatebot.com/renovate-schema.json',
+  $schema: "https: //docs.renovatebot.com/renovate-schema.json",
   /**
    * Determine assignees based on configured code owners and changes in PR
    */
@@ -7,11 +7,11 @@
   /**
    * Renovate will use `main` as thePull Request target
    */
-  baseBranches: ['main'],
+  baseBranches: ["main"],
   /**
    * Prefix to use for all branch names made by Renovate
    */
-  branchPrefix: 'chore/',
+  branchPrefix: "chore/",
   /**
    * Configuring dependencyDashboard to true will lead
    * to the creation of a "Dependency Dashboard" issue within the repository
@@ -31,132 +31,141 @@
   /**
    * Skip any package file whose path matches one of these
    */
-  ignorePaths: ['packages/**/package.json', 'tools/package.json'],
+  ignorePaths: ["packages/**/package.json", "tools/package.json"],
   /**
    * Labels to set in the Pull Request.
    */
-  labels: ['chore ⚙️', 'dependencies 📦'],
+  labels: ["chore ⚙️", "dependencies 📦"],
   /**
    * Time required before a new release is considered stable
    */
-  minimumReleaseAge: '3 days',
+  minimumReleaseAge: "3 days",
   /**
    * Package rules lets you apply rules to individual packages
    * or to groups of packages using regex pattern matching
    */
   packageRules: [
     {
-      groupName: 'Angular',
-      matchPackagePrefixes: ['@angular', '@angular-devkit', '@schematics', 'ng-packagr'],
+      groupName: "Angular",
+      matchPackageNames: [
+        "@angular{/,}**",
+        "@angular-devkit{/,}**",
+        "@schematics{/,}**",
+        "ng-packagr{/,}**",
+      ],
     },
     {
-      groupName: 'Angular ESLint',
-      matchPackagePrefixes: ['@angular-eslint'],
+      groupName: "Angular ESLint",
+      matchPackageNames: ["@angular-eslint{/,}**"],
     },
     {
-      groupName: 'Commitlint',
-      matchPackagePrefixes: ['@commitlint/'],
+      groupName: "Commitlint",
+      matchPackageNames: ["@commitlint/{/,}**"],
     },
     {
-      groupName: 'Eslint',
-      matchPackagePrefixes: ['eslint'],
+      groupName: "Eslint",
+      matchPackageNames: ["eslint{/,}**"],
     },
     {
-      groupName: 'Floating-UI',
-      matchPackagePrefixes: ['@floating-ui'],
+      groupName: "Floating-UI",
+      matchPackageNames: ["@floating-ui{/,}**"],
     },
     {
-      groupName: 'Jest',
-      matchPackageNames: ['babel-jest', 'jest', 'jest-environment-jsdom'],
+      groupName: "Jest",
+      matchPackageNames: ["babel-jest", "jest", "jest-environment-jsdom"],
     },
     {
-      groupName: 'Lit',
-      matchPackageNames: ['lit', 'lit-html'],
+      groupName: "Lit",
+      matchPackageNames: ["lit", "lit-html"],
     },
     {
-      groupName: 'Nx',
-      matchPackagePrefixes: ['@nx', 'nx'],
-      excludePackageNames: ['nx-cloud', 'nx-stylelint'],
+      groupName: "Nx",
+      matchPackageNames: [
+        "@nx{/,}**",
+        "nx{/,}**",
+        "!nx-cloud",
+        "!nx-stylelint",
+      ],
     },
     {
-      groupName: 'PostCSS',
-      matchPackagePrefixes: ['postcss'],
+      groupName: "PostCSS",
+      matchPackageNames: ["postcss{/,}**"],
     },
     {
-      groupName: 'React',
-      matchPackageNames: ['react', 'react-dom'],
+      groupName: "React",
+      matchPackageNames: ["react", "react-dom"],
     },
     {
-      groupName: 'Stencil',
-      matchPackagePrefixes: ['@stencil/'],
+      groupName: "Stencil",
+      matchPackageNames: ["@stencil/{/,}**"],
     },
     {
-      groupName: 'Storybook',
-      matchPackagePrefixes: ['@storybook/', 'storybook'],
+      groupName: "Storybook",
+      matchPackageNames: ["@storybook/{/,}**", "storybook{/,}**"],
     },
     {
-      groupName: 'Stylelint',
-      matchPackagePrefixes: ['stylelint'],
+      groupName: "Stylelint",
+      matchPackageNames: ["stylelint{/,}**"],
     },
     {
-      groupName: 'Swc',
-      matchPackagePrefixes: ['@swc'],
+      groupName: "Swc",
+      matchPackageNames: ["@swc{/,}**"],
     },
     {
-      groupName: 'Types React',
-      matchPackagePrefixes: ['@types/react'],
+      groupName: "Types React",
+      matchPackageNames: ["@types/react{/,}**"],
     },
     {
-      groupName: 'Typescript',
-      matchPackagePrefixes: ['typescript'],
-      allowedVersions: '<5.6.0',
+      groupName: "Typescript",
+      allowedVersions: "<5.6.0",
+      matchPackageNames: ["typescript{/,}**"],
     },
     /**
      * Ignore eslint updates for v9.0.0 and above
      */
     {
-      matchPackageNames: ['eslint'],
-      allowedVersions: '<9.0.0',
+      matchPackageNames: ["eslint"],
+      allowedVersions: "<9.0.0",
     },
     /**
      * Ignore zone.js updates for v0.15.0 and above
      */
     {
-      matchPackageNames: ['zone.js'],
-      allowedVersions: '<0.15.0',
+      matchPackageNames: ["zone.js"],
+      allowedVersions: "<0.15.0",
     },
     /**
      * Do not renovate peerDependencies versions/ranges
      */
     {
       enabled: false,
-      matchDepTypes: ['peerDependencies'],
+      matchDepTypes: ["peerDependencies"],
     },
   ],
   /**
    * Determines how to modify or update existing ranges.
    * pin = convert ranges to exact versions, e.g. ^1.0.0 -> 1.1.0
    */
-  rangeStrategy: 'pin',
+  rangeStrategy: "pin",
   /**
    * Controls when Renovate recreates a PR
    */
-  recreateWhen: 'never',
+  recreateWhen: "never",
   /**
    * Controls when Renovate rebases an existing branch
    */
-  rebaseWhen: 'conflicted',
+  rebaseWhen: "conflicted",
   /**
    * Run on the 1st day of the month
    * {@see https://crontab.guru} for debugging cron schedules
    */
-  schedule: ['* 0 1 * *'],
+  schedule: ["* 0 1 * *"],
   /**
    * Enable Semantic Commit prefixes for commits and PR titles
    */
-  semanticCommits: true,
+  semanticCommits: "enabled",
   /**
    * Schedule PRs to be created using EET timezone
    */
-  timezone: 'Europe/Bucharest',
+  timezone: "Europe/Bucharest",
 }
