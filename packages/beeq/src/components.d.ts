@@ -201,6 +201,61 @@ export namespace Components {
          */
         "size": TAccordionSize;
     }
+    /**
+     * The Alert is a user interface component used to convey important information to the user in a clear and concise manner.
+     * It can be used to notify users of success, failure, warning, or any other type of information that needs to be brought to their attention.
+     * @example ```html
+     * <bq-alert>
+     *   <bq-icon name="star" slot="icon"></bq-icon>
+     *   Title
+     *   <span slot="body">
+     *     Description
+     *     <a class="bq-link" href="https://example.com">Link</a>
+     *   </span>
+     *   <div slot="footer">
+     *     <bq-button appearance="primary" size="small">Button</bq-button>
+     *     <bq-button appearance="link" size="small">Button</bq-button>
+     *   </div>
+     * </bq-alert>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/848a50-alert
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
+     * @attr {boolean} [auto-dismiss=false] - If true, the alert will automatically hide after the specified amount of time
+     * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} [border='s'] - The corner radius of the alert component
+     * @attr {boolean} [disable-close=false] - If true, the close button at the top right of the alert won't be shown
+     * @attr {boolean} [hide-icon=false] - If true, the alert icon won't be shown
+     * @attr {boolean} [open=false] - If true, the alert will be shown
+     * @attr {number} [time=3000] - The length of time, in milliseconds, after which the alert will close itself. Only valid if `autoDismiss="true"`
+     * @attr {"info" | "success" | "warning" | "error" | "default"} [type='default'] - Type of Alert
+     * @attr {boolean} [sticky=false] - If true, the alert component will remain fixed at the top of the page, occupying the full viewport
+     * @event bqHide - Callback handler to be called when the alert is hidden
+     * @event bqShow - Callback handler to be called when the alert is shown
+     * @event bqAfterShow - Callback handler to be called after the alert has been shown
+     * @event bqAfterHide - Callback handler to be called after the alert has been hidden
+     * @cssprop --bq-alert--background - The alert background color
+     * @cssprop --bq-alert--border-radius - The alert border radius
+     * @cssprop --bq-alert--content-footer-gap - The alert content and footer gap
+     * @cssprop --bq-alert--title-body-gap - The alert title and body gap
+     * @cssprop --bq-alert--border-color - The alert border color
+     * @cssprop --bq-alert--border-style - The alert border style
+     * @cssprop --bq-alert--border-width - The alert border width
+     * @cssprop --bq-alert--background-info - The alert background color for info type
+     * @cssprop --bq-alert--background-success - The alert background color for success type
+     * @cssprop --bq-alert--background-warning - The alert background color for warning type
+     * @cssprop --bq-alert--background-error - The alert background color for error type
+     * @cssprop --bq-alert--border-info - The alert border color for info type
+     * @cssprop --bq-alert--border-success - The alert border color for success type
+     * @cssprop --bq-alert--border-warning - The alert border color for warning type
+     * @cssprop --bq-alert--border-error - The alert border color for error type
+     * @cssprop --bq-alert--icon-color-info - The alert icon color for info type
+     * @cssprop --bq-alert--icon-color-success - The alert icon color for success type
+     * @cssprop --bq-alert--icon-color-warning - The alert icon color for warning type
+     * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
+     * @cssprop --bq-alert--padding - The alert padding
+     * @cssprop --bq-alert--min-width - The alert min width
+     */
     interface BqAlert {
         /**
           * If true, the alert will automatically hide after the specified amount of time
@@ -1817,6 +1872,61 @@ declare global {
         "bqAfterShow": any;
         "bqAfterHide": any;
     }
+    /**
+     * The Alert is a user interface component used to convey important information to the user in a clear and concise manner.
+     * It can be used to notify users of success, failure, warning, or any other type of information that needs to be brought to their attention.
+     * @example ```html
+     * <bq-alert>
+     *   <bq-icon name="star" slot="icon"></bq-icon>
+     *   Title
+     *   <span slot="body">
+     *     Description
+     *     <a class="bq-link" href="https://example.com">Link</a>
+     *   </span>
+     *   <div slot="footer">
+     *     <bq-button appearance="primary" size="small">Button</bq-button>
+     *     <bq-button appearance="link" size="small">Button</bq-button>
+     *   </div>
+     * </bq-alert>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/848a50-alert
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
+     * @attr {boolean} [auto-dismiss=false] - If true, the alert will automatically hide after the specified amount of time
+     * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} [border='s'] - The corner radius of the alert component
+     * @attr {boolean} [disable-close=false] - If true, the close button at the top right of the alert won't be shown
+     * @attr {boolean} [hide-icon=false] - If true, the alert icon won't be shown
+     * @attr {boolean} [open=false] - If true, the alert will be shown
+     * @attr {number} [time=3000] - The length of time, in milliseconds, after which the alert will close itself. Only valid if `autoDismiss="true"`
+     * @attr {"info" | "success" | "warning" | "error" | "default"} [type='default'] - Type of Alert
+     * @attr {boolean} [sticky=false] - If true, the alert component will remain fixed at the top of the page, occupying the full viewport
+     * @event bqHide - Callback handler to be called when the alert is hidden
+     * @event bqShow - Callback handler to be called when the alert is shown
+     * @event bqAfterShow - Callback handler to be called after the alert has been shown
+     * @event bqAfterHide - Callback handler to be called after the alert has been hidden
+     * @cssprop --bq-alert--background - The alert background color
+     * @cssprop --bq-alert--border-radius - The alert border radius
+     * @cssprop --bq-alert--content-footer-gap - The alert content and footer gap
+     * @cssprop --bq-alert--title-body-gap - The alert title and body gap
+     * @cssprop --bq-alert--border-color - The alert border color
+     * @cssprop --bq-alert--border-style - The alert border style
+     * @cssprop --bq-alert--border-width - The alert border width
+     * @cssprop --bq-alert--background-info - The alert background color for info type
+     * @cssprop --bq-alert--background-success - The alert background color for success type
+     * @cssprop --bq-alert--background-warning - The alert background color for warning type
+     * @cssprop --bq-alert--background-error - The alert background color for error type
+     * @cssprop --bq-alert--border-info - The alert border color for info type
+     * @cssprop --bq-alert--border-success - The alert border color for success type
+     * @cssprop --bq-alert--border-warning - The alert border color for warning type
+     * @cssprop --bq-alert--border-error - The alert border color for error type
+     * @cssprop --bq-alert--icon-color-info - The alert icon color for info type
+     * @cssprop --bq-alert--icon-color-success - The alert icon color for success type
+     * @cssprop --bq-alert--icon-color-warning - The alert icon color for warning type
+     * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
+     * @cssprop --bq-alert--padding - The alert padding
+     * @cssprop --bq-alert--min-width - The alert min width
+     */
     interface HTMLBqAlertElement extends Components.BqAlert, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqAlertElementEventMap>(type: K, listener: (this: HTMLBqAlertElement, ev: BqAlertCustomEvent<HTMLBqAlertElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2628,6 +2738,61 @@ declare namespace LocalJSX {
          */
         "size"?: TAccordionSize;
     }
+    /**
+     * The Alert is a user interface component used to convey important information to the user in a clear and concise manner.
+     * It can be used to notify users of success, failure, warning, or any other type of information that needs to be brought to their attention.
+     * @example ```html
+     * <bq-alert>
+     *   <bq-icon name="star" slot="icon"></bq-icon>
+     *   Title
+     *   <span slot="body">
+     *     Description
+     *     <a class="bq-link" href="https://example.com">Link</a>
+     *   </span>
+     *   <div slot="footer">
+     *     <bq-button appearance="primary" size="small">Button</bq-button>
+     *     <bq-button appearance="link" size="small">Button</bq-button>
+     *   </div>
+     * </bq-alert>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/848a50-alert
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
+     * @attr {boolean} [auto-dismiss=false] - If true, the alert will automatically hide after the specified amount of time
+     * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} [border='s'] - The corner radius of the alert component
+     * @attr {boolean} [disable-close=false] - If true, the close button at the top right of the alert won't be shown
+     * @attr {boolean} [hide-icon=false] - If true, the alert icon won't be shown
+     * @attr {boolean} [open=false] - If true, the alert will be shown
+     * @attr {number} [time=3000] - The length of time, in milliseconds, after which the alert will close itself. Only valid if `autoDismiss="true"`
+     * @attr {"info" | "success" | "warning" | "error" | "default"} [type='default'] - Type of Alert
+     * @attr {boolean} [sticky=false] - If true, the alert component will remain fixed at the top of the page, occupying the full viewport
+     * @event bqHide - Callback handler to be called when the alert is hidden
+     * @event bqShow - Callback handler to be called when the alert is shown
+     * @event bqAfterShow - Callback handler to be called after the alert has been shown
+     * @event bqAfterHide - Callback handler to be called after the alert has been hidden
+     * @cssprop --bq-alert--background - The alert background color
+     * @cssprop --bq-alert--border-radius - The alert border radius
+     * @cssprop --bq-alert--content-footer-gap - The alert content and footer gap
+     * @cssprop --bq-alert--title-body-gap - The alert title and body gap
+     * @cssprop --bq-alert--border-color - The alert border color
+     * @cssprop --bq-alert--border-style - The alert border style
+     * @cssprop --bq-alert--border-width - The alert border width
+     * @cssprop --bq-alert--background-info - The alert background color for info type
+     * @cssprop --bq-alert--background-success - The alert background color for success type
+     * @cssprop --bq-alert--background-warning - The alert background color for warning type
+     * @cssprop --bq-alert--background-error - The alert background color for error type
+     * @cssprop --bq-alert--border-info - The alert border color for info type
+     * @cssprop --bq-alert--border-success - The alert border color for success type
+     * @cssprop --bq-alert--border-warning - The alert border color for warning type
+     * @cssprop --bq-alert--border-error - The alert border color for error type
+     * @cssprop --bq-alert--icon-color-info - The alert icon color for info type
+     * @cssprop --bq-alert--icon-color-success - The alert icon color for success type
+     * @cssprop --bq-alert--icon-color-warning - The alert icon color for warning type
+     * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
+     * @cssprop --bq-alert--padding - The alert padding
+     * @cssprop --bq-alert--min-width - The alert min width
+     */
     interface BqAlert {
         /**
           * If true, the alert will automatically hide after the specified amount of time
@@ -4342,6 +4507,61 @@ declare module "@stencil/core" {
              * @cssprop --bq-accordion-group--gap - Accordion group distance between elements
              */
             "bq-accordion-group": LocalJSX.BqAccordionGroup & JSXBase.HTMLAttributes<HTMLBqAccordionGroupElement>;
+            /**
+             * The Alert is a user interface component used to convey important information to the user in a clear and concise manner.
+             * It can be used to notify users of success, failure, warning, or any other type of information that needs to be brought to their attention.
+             * @example ```html
+             * <bq-alert>
+             *   <bq-icon name="star" slot="icon"></bq-icon>
+             *   Title
+             *   <span slot="body">
+             *     Description
+             *     <a class="bq-link" href="https://example.com">Link</a>
+             *   </span>
+             *   <div slot="footer">
+             *     <bq-button appearance="primary" size="small">Button</bq-button>
+             *     <bq-button appearance="link" size="small">Button</bq-button>
+             *   </div>
+             * </bq-alert>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/848a50-alert
+             * @status stable
+             * @dependency bq-button
+             * @dependency bq-icon
+             * @attr {boolean} [auto-dismiss=false] - If true, the alert will automatically hide after the specified amount of time
+             * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} [border='s'] - The corner radius of the alert component
+             * @attr {boolean} [disable-close=false] - If true, the close button at the top right of the alert won't be shown
+             * @attr {boolean} [hide-icon=false] - If true, the alert icon won't be shown
+             * @attr {boolean} [open=false] - If true, the alert will be shown
+             * @attr {number} [time=3000] - The length of time, in milliseconds, after which the alert will close itself. Only valid if `autoDismiss="true"`
+             * @attr {"info" | "success" | "warning" | "error" | "default"} [type='default'] - Type of Alert
+             * @attr {boolean} [sticky=false] - If true, the alert component will remain fixed at the top of the page, occupying the full viewport
+             * @event bqHide - Callback handler to be called when the alert is hidden
+             * @event bqShow - Callback handler to be called when the alert is shown
+             * @event bqAfterShow - Callback handler to be called after the alert has been shown
+             * @event bqAfterHide - Callback handler to be called after the alert has been hidden
+             * @cssprop --bq-alert--background - The alert background color
+             * @cssprop --bq-alert--border-radius - The alert border radius
+             * @cssprop --bq-alert--content-footer-gap - The alert content and footer gap
+             * @cssprop --bq-alert--title-body-gap - The alert title and body gap
+             * @cssprop --bq-alert--border-color - The alert border color
+             * @cssprop --bq-alert--border-style - The alert border style
+             * @cssprop --bq-alert--border-width - The alert border width
+             * @cssprop --bq-alert--background-info - The alert background color for info type
+             * @cssprop --bq-alert--background-success - The alert background color for success type
+             * @cssprop --bq-alert--background-warning - The alert background color for warning type
+             * @cssprop --bq-alert--background-error - The alert background color for error type
+             * @cssprop --bq-alert--border-info - The alert border color for info type
+             * @cssprop --bq-alert--border-success - The alert border color for success type
+             * @cssprop --bq-alert--border-warning - The alert border color for warning type
+             * @cssprop --bq-alert--border-error - The alert border color for error type
+             * @cssprop --bq-alert--icon-color-info - The alert icon color for info type
+             * @cssprop --bq-alert--icon-color-success - The alert icon color for success type
+             * @cssprop --bq-alert--icon-color-warning - The alert icon color for warning type
+             * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
+             * @cssprop --bq-alert--padding - The alert padding
+             * @cssprop --bq-alert--min-width - The alert min width
+             */
             "bq-alert": LocalJSX.BqAlert & JSXBase.HTMLAttributes<HTMLBqAlertElement>;
             "bq-avatar": LocalJSX.BqAvatar & JSXBase.HTMLAttributes<HTMLBqAvatarElement>;
             "bq-badge": LocalJSX.BqBadge & JSXBase.HTMLAttributes<HTMLBqBadgeElement>;

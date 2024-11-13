@@ -5,6 +5,11 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The Alert is a user interface component used to convey important information to the user in a clear and concise manner.
+It can be used to notify users of success, failure, warning, or any other type of information that needs to be brought to their attention.
+
 ## Properties
 
 | Property       | Attribute       | Description                                                                                                      | Type                                                       | Default     |
