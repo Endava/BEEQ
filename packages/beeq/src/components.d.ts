@@ -298,6 +298,45 @@ export namespace Components {
          */
         "type": TAlertType;
     }
+    /**
+     * The Avatar component is a simple and customizable element that displays an image or initials in a circular or square shape.
+     * This component is useful for displaying user profile pictures or any other image that represents a person or an entity.
+     * @example ```html
+     * <bq-avatar
+     *   alt-text="John Doe profile picture"
+     *   image="/image/url/photo-1524593689594.jpeg"
+     *   label="John Doe profile picture"
+     *   shape="circle"
+     *   size="medium"
+     * >
+     *   <bq-badge slot="badge" text-color="#fff">9</bq-badge>
+     * </bq-avatar>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/148da7-avatar
+     * @status stable
+     * @attr {string} alt-text - Alternate text for the avatar image if the image cannot be displayed.
+     * @attr {string} image - The image source to load on the avatar (this can be also a base64 encoded image).
+     * @attr {string} label - A text to use for describing the avatar on assistive devices.
+     * @attr {string} initials - The text to display on avatar.
+     * @attr {"circle" | "square"} shape - The shape of the avatar.
+     * @attr {"xsmall" | "small" | "medium" "large"} size - The size of the avatar.
+     * @cssprop --bq-avatar--background - Avatar background color
+     * @cssprop --bq-avatar--border-color - Avatar border color
+     * @cssprop --bq-avatar--border-style - Avatar border style
+     * @cssprop --bq-avatar--border-width - Avatar border width
+     * @cssprop --bq-avatar--border-radius-circle - Avatar border radius for circle & any size
+     * @cssprop --bq-avatar--border-radius-squareXs - Avatar border radius for square & size xsmall
+     * @cssprop --bq-avatar--border-radius-squareS - Avatar border radius for square & size small
+     * @cssprop --bq-avatar--border-radius-squareM - Avatar border radius for square & size medium/large
+     * @cssprop --bq-avatar--size-xsmall - Avatar xsmall size
+     * @cssprop --bq-avatar--size-small - Avatar small size
+     * @cssprop --bq-avatar--size-medium - Avatar medium size
+     * @cssprop --bq-avatar--size-large - Avatar large size
+     * @cssprop --bq-avatar--badge-top-square - Badge top position shape square
+     * @cssprop --bq-avatar--badge-left-square - Badge left position shape square
+     * @cssprop --bq-avatar--badge-top-circle - Badge top position shape circle
+     * @cssprop --bq-avatar--badge-left-circle - Badge left position shape circle
+     */
     interface BqAvatar {
         /**
           * Alternate text for the avatar image if the image cannot be displayed
@@ -1941,6 +1980,45 @@ declare global {
         prototype: HTMLBqAlertElement;
         new (): HTMLBqAlertElement;
     };
+    /**
+     * The Avatar component is a simple and customizable element that displays an image or initials in a circular or square shape.
+     * This component is useful for displaying user profile pictures or any other image that represents a person or an entity.
+     * @example ```html
+     * <bq-avatar
+     *   alt-text="John Doe profile picture"
+     *   image="/image/url/photo-1524593689594.jpeg"
+     *   label="John Doe profile picture"
+     *   shape="circle"
+     *   size="medium"
+     * >
+     *   <bq-badge slot="badge" text-color="#fff">9</bq-badge>
+     * </bq-avatar>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/148da7-avatar
+     * @status stable
+     * @attr {string} alt-text - Alternate text for the avatar image if the image cannot be displayed.
+     * @attr {string} image - The image source to load on the avatar (this can be also a base64 encoded image).
+     * @attr {string} label - A text to use for describing the avatar on assistive devices.
+     * @attr {string} initials - The text to display on avatar.
+     * @attr {"circle" | "square"} shape - The shape of the avatar.
+     * @attr {"xsmall" | "small" | "medium" "large"} size - The size of the avatar.
+     * @cssprop --bq-avatar--background - Avatar background color
+     * @cssprop --bq-avatar--border-color - Avatar border color
+     * @cssprop --bq-avatar--border-style - Avatar border style
+     * @cssprop --bq-avatar--border-width - Avatar border width
+     * @cssprop --bq-avatar--border-radius-circle - Avatar border radius for circle & any size
+     * @cssprop --bq-avatar--border-radius-squareXs - Avatar border radius for square & size xsmall
+     * @cssprop --bq-avatar--border-radius-squareS - Avatar border radius for square & size small
+     * @cssprop --bq-avatar--border-radius-squareM - Avatar border radius for square & size medium/large
+     * @cssprop --bq-avatar--size-xsmall - Avatar xsmall size
+     * @cssprop --bq-avatar--size-small - Avatar small size
+     * @cssprop --bq-avatar--size-medium - Avatar medium size
+     * @cssprop --bq-avatar--size-large - Avatar large size
+     * @cssprop --bq-avatar--badge-top-square - Badge top position shape square
+     * @cssprop --bq-avatar--badge-left-square - Badge left position shape square
+     * @cssprop --bq-avatar--badge-top-circle - Badge top position shape circle
+     * @cssprop --bq-avatar--badge-left-circle - Badge left position shape circle
+     */
     interface HTMLBqAvatarElement extends Components.BqAvatar, HTMLStencilElement {
     }
     var HTMLBqAvatarElement: {
@@ -2843,6 +2921,45 @@ declare namespace LocalJSX {
          */
         "type"?: TAlertType;
     }
+    /**
+     * The Avatar component is a simple and customizable element that displays an image or initials in a circular or square shape.
+     * This component is useful for displaying user profile pictures or any other image that represents a person or an entity.
+     * @example ```html
+     * <bq-avatar
+     *   alt-text="John Doe profile picture"
+     *   image="/image/url/photo-1524593689594.jpeg"
+     *   label="John Doe profile picture"
+     *   shape="circle"
+     *   size="medium"
+     * >
+     *   <bq-badge slot="badge" text-color="#fff">9</bq-badge>
+     * </bq-avatar>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/148da7-avatar
+     * @status stable
+     * @attr {string} alt-text - Alternate text for the avatar image if the image cannot be displayed.
+     * @attr {string} image - The image source to load on the avatar (this can be also a base64 encoded image).
+     * @attr {string} label - A text to use for describing the avatar on assistive devices.
+     * @attr {string} initials - The text to display on avatar.
+     * @attr {"circle" | "square"} shape - The shape of the avatar.
+     * @attr {"xsmall" | "small" | "medium" "large"} size - The size of the avatar.
+     * @cssprop --bq-avatar--background - Avatar background color
+     * @cssprop --bq-avatar--border-color - Avatar border color
+     * @cssprop --bq-avatar--border-style - Avatar border style
+     * @cssprop --bq-avatar--border-width - Avatar border width
+     * @cssprop --bq-avatar--border-radius-circle - Avatar border radius for circle & any size
+     * @cssprop --bq-avatar--border-radius-squareXs - Avatar border radius for square & size xsmall
+     * @cssprop --bq-avatar--border-radius-squareS - Avatar border radius for square & size small
+     * @cssprop --bq-avatar--border-radius-squareM - Avatar border radius for square & size medium/large
+     * @cssprop --bq-avatar--size-xsmall - Avatar xsmall size
+     * @cssprop --bq-avatar--size-small - Avatar small size
+     * @cssprop --bq-avatar--size-medium - Avatar medium size
+     * @cssprop --bq-avatar--size-large - Avatar large size
+     * @cssprop --bq-avatar--badge-top-square - Badge top position shape square
+     * @cssprop --bq-avatar--badge-left-square - Badge left position shape square
+     * @cssprop --bq-avatar--badge-top-circle - Badge top position shape circle
+     * @cssprop --bq-avatar--badge-left-circle - Badge left position shape circle
+     */
     interface BqAvatar {
         /**
           * Alternate text for the avatar image if the image cannot be displayed
@@ -4563,6 +4680,45 @@ declare module "@stencil/core" {
              * @cssprop --bq-alert--min-width - The alert min width
              */
             "bq-alert": LocalJSX.BqAlert & JSXBase.HTMLAttributes<HTMLBqAlertElement>;
+            /**
+             * The Avatar component is a simple and customizable element that displays an image or initials in a circular or square shape.
+             * This component is useful for displaying user profile pictures or any other image that represents a person or an entity.
+             * @example ```html
+             * <bq-avatar
+             *   alt-text="John Doe profile picture"
+             *   image="/image/url/photo-1524593689594.jpeg"
+             *   label="John Doe profile picture"
+             *   shape="circle"
+             *   size="medium"
+             * >
+             *   <bq-badge slot="badge" text-color="#fff">9</bq-badge>
+             * </bq-avatar>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/148da7-avatar
+             * @status stable
+             * @attr {string} alt-text - Alternate text for the avatar image if the image cannot be displayed.
+             * @attr {string} image - The image source to load on the avatar (this can be also a base64 encoded image).
+             * @attr {string} label - A text to use for describing the avatar on assistive devices.
+             * @attr {string} initials - The text to display on avatar.
+             * @attr {"circle" | "square"} shape - The shape of the avatar.
+             * @attr {"xsmall" | "small" | "medium" "large"} size - The size of the avatar.
+             * @cssprop --bq-avatar--background - Avatar background color
+             * @cssprop --bq-avatar--border-color - Avatar border color
+             * @cssprop --bq-avatar--border-style - Avatar border style
+             * @cssprop --bq-avatar--border-width - Avatar border width
+             * @cssprop --bq-avatar--border-radius-circle - Avatar border radius for circle & any size
+             * @cssprop --bq-avatar--border-radius-squareXs - Avatar border radius for square & size xsmall
+             * @cssprop --bq-avatar--border-radius-squareS - Avatar border radius for square & size small
+             * @cssprop --bq-avatar--border-radius-squareM - Avatar border radius for square & size medium/large
+             * @cssprop --bq-avatar--size-xsmall - Avatar xsmall size
+             * @cssprop --bq-avatar--size-small - Avatar small size
+             * @cssprop --bq-avatar--size-medium - Avatar medium size
+             * @cssprop --bq-avatar--size-large - Avatar large size
+             * @cssprop --bq-avatar--badge-top-square - Badge top position shape square
+             * @cssprop --bq-avatar--badge-left-square - Badge left position shape square
+             * @cssprop --bq-avatar--badge-top-circle - Badge top position shape circle
+             * @cssprop --bq-avatar--badge-left-circle - Badge left position shape circle
+             */
             "bq-avatar": LocalJSX.BqAvatar & JSXBase.HTMLAttributes<HTMLBqAvatarElement>;
             "bq-badge": LocalJSX.BqBadge & JSXBase.HTMLAttributes<HTMLBqBadgeElement>;
             "bq-breadcrumb": LocalJSX.BqBreadcrumb & JSXBase.HTMLAttributes<HTMLBqBreadcrumbElement>;

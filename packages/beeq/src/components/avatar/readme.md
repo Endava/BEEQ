@@ -5,6 +5,11 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The Avatar component is a simple and customizable element that displays an image or initials in a circular or square shape.
+This component is useful for displaying user profile pictures or any other image that represents a person or an entity.
+
 ## Properties
 
 | Property   | Attribute  | Description                                                                      | Type                                         | Default     |
@@ -17,13 +22,21 @@
 | `size`     | `size`     | The size of the avatar                                                           | `"large" \| "medium" \| "small" \| "xsmall"` | `'medium'`  |
 
 
+## Slots
+
+| Slot      | Description                                                                                                                                  |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `"badge"` | The badge slot is used to add a badge to the avatar. The badge is a small circle or square that can be used to display a number or a status. |
+
+
 ## Shadow Parts
 
-| Part     | Description                                                       |
-| -------- | ----------------------------------------------------------------- |
-| `"base"` | The component's internal wrapper.                                 |
-| `"img"`  | The `<image>` tag element that load the image source.             |
-| `"text"` | The `<span>` tag element that renderd the `Initials` text string. |
+| Part      | Description                                                        |
+| --------- | ------------------------------------------------------------------ |
+| `"badge"` | The container that wraps the badge slot element.                   |
+| `"base"`  | The component's internal wrapper.                                  |
+| `"img"`   | The `<image>` tag element that load the image source.              |
+| `"text"`  | The `<span>` tag element that rendered the `Initials` text string. |
 
 
 ----------------------------------------------
