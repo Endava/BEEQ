@@ -3,10 +3,50 @@ import { Component, Element, Event, EventEmitter, h, Prop } from '@stencil/core'
 import { isDefined } from '../../shared/utils';
 
 /**
+ * The Breadcrumb Item helps users understand their current location within a website or application's hierarchical structure.
+ *
+ * @example
+ * ```html
+ * <bq-breadcrumb-item label="Home page">
+ *   <bq-icon name="house-line" size="16"></bq-icon>
+ *   Home
+ * </bq-breadcrumb-item>
+ * ```
+ *
+ * @documentation https://www.beeq.design/3d466e231/p/61d6c0-breadcrumb
+ * @status stable
+ *
+ * @attr {string} href - If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
+ * @attr {string} target - Where to display the link in the browser context. Relevant only if `href` is set.
+ * @attr {string} rel - Where to display the link in the browser context. Relevant only if `href` is set.
+ *
+ * @event bqFocus - Handler to be called when item is focused
+ * @event bqClick - Handler to be called when item is clicked
+ * @event bqBlur - Handler to be called when item loses focus
+ *
+ * @slot - The default slot is used to add content to the breadcrumb item.
+ *
  * @part base - The component wrapper container
- * @part base - The breadcrumb item wrapper (`button` or `a`)
- * @part content - The `span` tag that loads the content item
- * @part separator - The `span` tag that loads the separator
+ * @part content - The `span` tag that wraps the content item
+ * @part item - The breadcrumb item wrapper (`button` or `a`)
+ * @part separator - The `span` tag that wraps the separator element
+ *
+ * @cssprop --bq-breadcrumb-item--background - Background color of the breadcrumb item
+ * @cssprop --bq-breadcrumb-item--box-shadow - Box shadow of the breadcrumb item
+ * @cssprop --bq-breadcrumb-item--border-color - Border color of the breadcrumb item
+ * @cssprop --bq-breadcrumb-item--border-style - Border style of the breadcrumb item
+ * @cssprop --bq-breadcrumb-item--border-width - Border width of the breadcrumb item
+ * @cssprop --bq-breadcrumb-item--border-radius - Border radius of the breadcrumb item
+ * @cssprop --bq-breadcrumb-item--line-height - Line height of the breadcrumb item
+ * @cssprop --bq-breadcrumb-item--text-color - Text color of the breadcrumb item
+ * @cssprop --bq-breadcrumb-item--text-color-current - Text color of the current breadcrumb item (active)
+ * @cssprop --bq-breadcrumb-item--text-size - Text size of the breadcrumb item
+ * @cssprop --bq-breadcrumb-item--text-size-separator - Text size of the breadcrumb item separator
+ * @cssprop --bq-breadcrumb-item--padding-start - Padding start of the breadcrumb item
+ * @cssprop --bq-breadcrumb-item--padding-end - Padding end of the breadcrumb item
+ * @cssprop --bq-breadcrumb-item--paddingY - Padding top and bottom of the breadcrumb item
+ * @cssprop --bq-breadcrumb-item--padding-start-separator - Padding start of the breadcrumb item separator
+ * @cssprop --bq-breadcrumb-item--padding-end-separator - Padding end of the breadcrumb item separator
  */
 @Component({
   tag: 'bq-breadcrumb-item',
@@ -28,15 +68,6 @@ export class BqBreadcrumbItem {
 
   // Public Property API
   // ========================
-
-  /**
-   * The aria-label that corresponds to the full title of the destination page.
-   * This won't be shown in the page, but it will be used by screen readers and other assistive devices.
-   */
-  @Prop() ariaLabel: string;
-
-  /** If true, the item is the last element inside breadcrumb */
-  @Prop() isLastItem: boolean = false;
 
   /** If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered. */
   @Prop({ reflect: true }) href: string;
@@ -103,7 +134,7 @@ export class BqBreadcrumbItem {
     const TagElem = isLink ? 'a' : 'button';
 
     return (
-      <div class="flex items-center" aria-label={this.ariaLabel} part="base">
+      <div class="flex items-center" part="base">
         <TagElem
           class="breadcrumb-item"
           href={isLink ? this.href : undefined}
@@ -112,25 +143,14 @@ export class BqBreadcrumbItem {
           onBlur={this.onBlur}
           onFocus={this.onFocus}
           onClick={this.onClick}
-          aria-current={isLink && this.isLastItem ? 'location' : undefined} // indicates the last link as the current page
           part="item"
         >
-          <span
-            class={{
-              'flex items-center gap-xs2': true,
-              'text-text-brand': this.isLastItem,
-            }}
-            part="content"
-          >
+          <span class="flex items-center gap-xs2" part="content">
             <slot></slot>
           </span>
         </TagElem>
-        <span
-          class={{
-            'breadcrumb-separator': true,
-          }}
-          part="separator"
-        >
+        {/* @internal use only */}
+        <span class="breadcrumb-separator" part="separator">
           <slot name="separator"></slot>
         </span>
       </div>

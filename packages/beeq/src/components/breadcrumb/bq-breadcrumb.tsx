@@ -1,9 +1,28 @@
-import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop } from '@stencil/core';
-
-import { isHTMLElement } from '../../shared/utils';
+import { Component, Element, h, Host, Prop } from '@stencil/core';
 
 /**
+ * The Breadcrumb is used to wraps a series of breadcrumb items to indicate the current page's location within a navigational hierarchy.
+ *
+ * @example
+ * ```html
+ * <bq-breadcrumb label="Breadcrumb">
+ *   <bq-breadcrumb-item>Home</bq-breadcrumb-item>
+ *   <bq-breadcrumb-item>Men's clothing</bq-breadcrumb-item>
+ *   <bq-breadcrumb-item>Shirt</bq-breadcrumb-item>
+ *   <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+ * </bq-breadcrumb>
+ * ```
+ *
+ * @documentation https://www.beeq.design/3d466e231/p/194fd1-breadcrumb
+ * @status stable
+ *
+ * @attr {string} label - The `aria-label` attribute to describe the type of navigation
+ *
+ * @slot - The default slot is used to add `bq-breadcrumb-item` items to the breadcrumb.
+ * @slot separator - The slot to add a separator between breadcrumb items. Default separator is `/`.
+ *
  * @part navigation - The `nav` tag that loads the breadcrumb items
+ * @part separator - The container that wraps the separator element
  */
 @Component({
   tag: 'bq-breadcrumb',
@@ -14,6 +33,7 @@ export class BqBreadcrumb {
   // Own Properties
   // ====================
 
+  private navElem: HTMLElement;
   private spanElem: HTMLElement;
 
   // Reference to host HTML element
@@ -29,7 +49,7 @@ export class BqBreadcrumb {
   // ========================
 
   /** The `aria-label` attribute to describe the type of navigation */
-  @Prop({ reflect: true }) ariaLabel: string = 'Breadcrumbs';
+  @Prop({ reflect: true }) label: string = 'Breadcrumbs';
 
   // Prop lifecycle events
   // =======================
@@ -38,36 +58,12 @@ export class BqBreadcrumb {
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Handler to be called when `bq-breadcrumb-item` item loses focus. */
-  @Event() bqBreadcrumbBlur: EventEmitter<HTMLBqBreadcrumbItemElement>;
-
-  /** Handler to be called when `bq-breadcrumb-item` item gets focus. */
-  @Event() bqBreadcrumbFocus: EventEmitter<HTMLBqBreadcrumbItemElement>;
-
-  /** Handler to be called when `bq-breadcrumb-item` is selected (on click/enter press). */
-  @Event() bqBreadcrumbClick: EventEmitter<HTMLBqBreadcrumbItemElement>;
-
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
 
   // Listeners
   // ==============
-
-  @Listen('bqBlur', { passive: true })
-  onBlur(event: CustomEvent<HTMLElement>) {
-    if (isHTMLElement(event.detail, 'bq-breadcrumb-item')) this.bqBreadcrumbBlur.emit(event.detail);
-  }
-
-  @Listen('bqFocus', { passive: true })
-  onFocus(event: CustomEvent<HTMLElement>) {
-    if (isHTMLElement(event.detail, 'bq-breadcrumb-item')) this.bqBreadcrumbFocus.emit(event.detail);
-  }
-
-  @Listen('bqClick', { passive: true })
-  onClick(event: CustomEvent<HTMLElement>) {
-    if (isHTMLElement(event.detail, 'bq-breadcrumb-item')) this.bqBreadcrumbClick.emit(event.detail);
-  }
 
   // Public methods API
   // These methods are exposed on the host element.
@@ -81,19 +77,23 @@ export class BqBreadcrumb {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private setSeparator = (): void => {
-    this.breadcrumbItems.forEach((item, index, arr) => {
-      item.isLastItem = index === arr.length - 1;
-      if (!item.isLastItem) {
-        item.append(this.getSeparatorElem());
+  private handleSlotChange = (): void => {
+    const breadcrumbItems = this.breadcrumbItems;
+    const itemCount = breadcrumbItems.length;
+    const separatorElem = this.getSeparatorElem();
+
+    breadcrumbItems.forEach((item, index) => {
+      const isLastItem = index === itemCount - 1;
+      const separatorSlot = item.querySelector('[slot="separator"]');
+
+      if (!separatorSlot && !isLastItem) {
+        item.append(separatorElem.cloneNode(true));
       }
+
+      item.setAttribute('aria-current', isLastItem ? 'page' : '');
     });
   };
 
-  /**
-   * clone original element and add slot attr
-   * @returns cloned separator element
-   */
   private getSeparatorElem = (): HTMLElement => {
     const clone = this.separatorFromSlot.cloneNode(true) as HTMLElement;
     clone.slot = 'separator';
@@ -101,14 +101,16 @@ export class BqBreadcrumb {
     return clone;
   };
 
-  private get breadcrumbItems(): HTMLBqBreadcrumbItemElement[] {
-    return Array.from(this.el.querySelectorAll('bq-breadcrumb-item'));
-  }
-
   private get separatorFromSlot() {
     return this.spanElem
       .querySelector<HTMLSlotElement>('slot[name="separator"]')
       .assignedElements({ flatten: true })[0] as HTMLElement;
+  }
+
+  private get breadcrumbItems(): HTMLBqBreadcrumbItemElement[] {
+    return this.navElem
+      .querySelector<HTMLSlotElement>('slot')
+      .assignedElements({ flatten: true }) as HTMLBqBreadcrumbItemElement[];
   }
 
   // render() function
@@ -118,11 +120,10 @@ export class BqBreadcrumb {
   render() {
     return (
       <Host>
-        <nav class="flex items-center" aria-label={this.ariaLabel} part="navigation">
-          <slot onSlotchange={this.setSeparator}></slot>
+        <nav class="flex items-center" aria-label={this.label} ref={(elem) => (this.navElem = elem)} part="navigation">
+          <slot onSlotchange={this.handleSlotChange}></slot>
         </nav>
-
-        <span hidden aria-hidden="true" ref={(element) => (this.spanElem = element)}>
+        <span hidden aria-hidden="true" ref={(element) => (this.spanElem = element)} part="separator">
           <slot name="separator">
             <span class="flex items-center justify-center is-3">/</span>
           </slot>

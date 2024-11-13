@@ -12,6 +12,7 @@
   * @prop --bq-breadcrumb-item--border-radius: Border radius of the breadcrumb item.
   * @prop --bq-breadcrumb-item--line-height: Line height of the breadcrumb item.
   * @prop --bq-breadcrumb-item--text-color: Text color of the breadcrumb item.
+  * @prop --bq-breadcrumb-item--text-color-current: Text color of the current breadcrumb item.
   * @prop --bq-breadcrumb-item--text-size: Text size of the breadcrumb item.
   * @prop --bq-breadcrumb-item--text-size-separator: Text size of the breadcrumb item separator.
   * @prop --bq-breadcrumb-item--padding-start: Padding start of the breadcrumb item.
@@ -31,6 +32,7 @@
 
   --bq-breadcrumb-item--line-height: theme(lineHeight.regular);
   --bq-breadcrumb-item--text-color: theme(textColor.secondary);
+  --bq-breadcrumb-item--text-color-current: theme(textColor.brand);
   --bq-breadcrumb-item--text-size: theme(fontSize.s);
   --bq-breadcrumb-item--text-size-separator: theme(fontSize.xs);
 

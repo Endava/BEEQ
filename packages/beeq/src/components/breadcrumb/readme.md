@@ -5,27 +5,31 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The Breadcrumb is used to wraps a series of breadcrumb items to indicate the current page's location within a navigational hierarchy.
+
 ## Properties
 
-| Property    | Attribute    | Description                                                   | Type     | Default         |
-| ----------- | ------------ | ------------------------------------------------------------- | -------- | --------------- |
-| `ariaLabel` | `aria-label` | The `aria-label` attribute to describe the type of navigation | `string` | `'Breadcrumbs'` |
+| Property | Attribute | Description                                                   | Type     | Default         |
+| -------- | --------- | ------------------------------------------------------------- | -------- | --------------- |
+| `label`  | `label`   | The `aria-label` attribute to describe the type of navigation | `string` | `'Breadcrumbs'` |
 
 
-## Events
+## Slots
 
-| Event               | Description                                                                        | Type                                       |
-| ------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------ |
-| `bqBreadcrumbBlur`  | Handler to be called when `bq-breadcrumb-item` item loses focus.                   | `CustomEvent<HTMLBqBreadcrumbItemElement>` |
-| `bqBreadcrumbClick` | Handler to be called when `bq-breadcrumb-item` is selected (on click/enter press). | `CustomEvent<HTMLBqBreadcrumbItemElement>` |
-| `bqBreadcrumbFocus` | Handler to be called when `bq-breadcrumb-item` item gets focus.                    | `CustomEvent<HTMLBqBreadcrumbItemElement>` |
+| Slot          | Description                                                                     |
+| ------------- | ------------------------------------------------------------------------------- |
+|               | The default slot is used to add `bq-breadcrumb-item` items to the breadcrumb.   |
+| `"separator"` | The slot to add a separator between breadcrumb items. Default separator is `/`. |
 
 
 ## Shadow Parts
 
-| Part           | Description                                   |
-| -------------- | --------------------------------------------- |
-| `"navigation"` | The `nav` tag that loads the breadcrumb items |
+| Part           | Description                                    |
+| -------------- | ---------------------------------------------- |
+| `"navigation"` | The `nav` tag that loads the breadcrumb items  |
+| `"separator"`  | The container that wraps the separator element |
 
 
 ----------------------------------------------

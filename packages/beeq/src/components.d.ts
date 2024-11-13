@@ -399,25 +399,64 @@ export namespace Components {
          */
         "textColor"?: string;
     }
+    /**
+     * The Breadcrumb is used to wraps a series of breadcrumb items to indicate the current page's location within a navigational hierarchy.
+     * @example ```html
+     * <bq-breadcrumb label="Breadcrumb">
+     *   <bq-breadcrumb-item>Home</bq-breadcrumb-item>
+     *   <bq-breadcrumb-item>Men's clothing</bq-breadcrumb-item>
+     *   <bq-breadcrumb-item>Shirt</bq-breadcrumb-item>
+     *   <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+     * </bq-breadcrumb>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/194fd1-breadcrumb
+     * @status stable
+     * @attr {string} label - The `aria-label` attribute to describe the type of navigation
+     */
     interface BqBreadcrumb {
         /**
           * The `aria-label` attribute to describe the type of navigation
          */
-        "ariaLabel": string;
+        "label": string;
     }
+    /**
+     * The Breadcrumb Item helps users understand their current location within a website or application's hierarchical structure.
+     * @example ```html
+     * <bq-breadcrumb-item label="Home page">
+     *   <bq-icon name="house-line" size="16"></bq-icon>
+     *   Home
+     * </bq-breadcrumb-item>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/61d6c0-breadcrumb
+     * @status stable
+     * @attr {string} href - If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
+     * @attr {string} target - Where to display the link in the browser context. Relevant only if `href` is set.
+     * @attr {string} rel - Where to display the link in the browser context. Relevant only if `href` is set.
+     * @event bqFocus - Handler to be called when item is focused
+     * @event bqClick - Handler to be called when item is clicked
+     * @event bqBlur - Handler to be called when item loses focus
+     * @cssprop --bq-breadcrumb-item--background - Background color of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--box-shadow - Box shadow of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--border-color - Border color of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--border-style - Border style of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--border-width - Border width of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--border-radius - Border radius of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--line-height - Line height of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--text-color - Text color of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--text-color-current - Text color of the current breadcrumb item (active)
+     * @cssprop --bq-breadcrumb-item--text-size - Text size of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--text-size-separator - Text size of the breadcrumb item separator
+     * @cssprop --bq-breadcrumb-item--padding-start - Padding start of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--padding-end - Padding end of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--paddingY - Padding top and bottom of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--padding-start-separator - Padding start of the breadcrumb item separator
+     * @cssprop --bq-breadcrumb-item--padding-end-separator - Padding end of the breadcrumb item separator
+     */
     interface BqBreadcrumbItem {
-        /**
-          * The aria-label that corresponds to the full title of the destination page. This won't be shown in the page, but it will be used by screen readers and other assistive devices.
-         */
-        "ariaLabel": string;
         /**
           * If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
          */
         "href": string;
-        /**
-          * If true, the item is the last element inside breadcrumb
-         */
-        "isLastItem": boolean;
         /**
           * Where to display the link in the browser context. Relevant only if `href` is set.
          */
@@ -1704,10 +1743,6 @@ export interface BqAlertCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqAlertElement;
 }
-export interface BqBreadcrumbCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLBqBreadcrumbElement;
-}
 export interface BqBreadcrumbItemCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqBreadcrumbItemElement;
@@ -2075,20 +2110,21 @@ declare global {
         prototype: HTMLBqBadgeElement;
         new (): HTMLBqBadgeElement;
     };
-    interface HTMLBqBreadcrumbElementEventMap {
-        "bqBreadcrumbBlur": HTMLBqBreadcrumbItemElement;
-        "bqBreadcrumbFocus": HTMLBqBreadcrumbItemElement;
-        "bqBreadcrumbClick": HTMLBqBreadcrumbItemElement;
-    }
+    /**
+     * The Breadcrumb is used to wraps a series of breadcrumb items to indicate the current page's location within a navigational hierarchy.
+     * @example ```html
+     * <bq-breadcrumb label="Breadcrumb">
+     *   <bq-breadcrumb-item>Home</bq-breadcrumb-item>
+     *   <bq-breadcrumb-item>Men's clothing</bq-breadcrumb-item>
+     *   <bq-breadcrumb-item>Shirt</bq-breadcrumb-item>
+     *   <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+     * </bq-breadcrumb>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/194fd1-breadcrumb
+     * @status stable
+     * @attr {string} label - The `aria-label` attribute to describe the type of navigation
+     */
     interface HTMLBqBreadcrumbElement extends Components.BqBreadcrumb, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLBqBreadcrumbElementEventMap>(type: K, listener: (this: HTMLBqBreadcrumbElement, ev: BqBreadcrumbCustomEvent<HTMLBqBreadcrumbElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLBqBreadcrumbElementEventMap>(type: K, listener: (this: HTMLBqBreadcrumbElement, ev: BqBreadcrumbCustomEvent<HTMLBqBreadcrumbElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqBreadcrumbElement: {
         prototype: HTMLBqBreadcrumbElement;
@@ -2099,6 +2135,39 @@ declare global {
         "bqFocus": HTMLBqBreadcrumbItemElement;
         "bqClick": HTMLBqBreadcrumbItemElement;
     }
+    /**
+     * The Breadcrumb Item helps users understand their current location within a website or application's hierarchical structure.
+     * @example ```html
+     * <bq-breadcrumb-item label="Home page">
+     *   <bq-icon name="house-line" size="16"></bq-icon>
+     *   Home
+     * </bq-breadcrumb-item>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/61d6c0-breadcrumb
+     * @status stable
+     * @attr {string} href - If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
+     * @attr {string} target - Where to display the link in the browser context. Relevant only if `href` is set.
+     * @attr {string} rel - Where to display the link in the browser context. Relevant only if `href` is set.
+     * @event bqFocus - Handler to be called when item is focused
+     * @event bqClick - Handler to be called when item is clicked
+     * @event bqBlur - Handler to be called when item loses focus
+     * @cssprop --bq-breadcrumb-item--background - Background color of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--box-shadow - Box shadow of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--border-color - Border color of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--border-style - Border style of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--border-width - Border width of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--border-radius - Border radius of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--line-height - Line height of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--text-color - Text color of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--text-color-current - Text color of the current breadcrumb item (active)
+     * @cssprop --bq-breadcrumb-item--text-size - Text size of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--text-size-separator - Text size of the breadcrumb item separator
+     * @cssprop --bq-breadcrumb-item--padding-start - Padding start of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--padding-end - Padding end of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--paddingY - Padding top and bottom of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--padding-start-separator - Padding start of the breadcrumb item separator
+     * @cssprop --bq-breadcrumb-item--padding-end-separator - Padding end of the breadcrumb item separator
+     */
     interface HTMLBqBreadcrumbItemElement extends Components.BqBreadcrumbItem, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqBreadcrumbItemElementEventMap>(type: K, listener: (this: HTMLBqBreadcrumbItemElement, ev: BqBreadcrumbItemCustomEvent<HTMLBqBreadcrumbItemElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -3066,37 +3135,64 @@ declare namespace LocalJSX {
          */
         "textColor"?: string;
     }
+    /**
+     * The Breadcrumb is used to wraps a series of breadcrumb items to indicate the current page's location within a navigational hierarchy.
+     * @example ```html
+     * <bq-breadcrumb label="Breadcrumb">
+     *   <bq-breadcrumb-item>Home</bq-breadcrumb-item>
+     *   <bq-breadcrumb-item>Men's clothing</bq-breadcrumb-item>
+     *   <bq-breadcrumb-item>Shirt</bq-breadcrumb-item>
+     *   <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+     * </bq-breadcrumb>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/194fd1-breadcrumb
+     * @status stable
+     * @attr {string} label - The `aria-label` attribute to describe the type of navigation
+     */
     interface BqBreadcrumb {
         /**
           * The `aria-label` attribute to describe the type of navigation
          */
-        "ariaLabel"?: string;
-        /**
-          * Handler to be called when `bq-breadcrumb-item` item loses focus.
-         */
-        "onBqBreadcrumbBlur"?: (event: BqBreadcrumbCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
-        /**
-          * Handler to be called when `bq-breadcrumb-item` is selected (on click/enter press).
-         */
-        "onBqBreadcrumbClick"?: (event: BqBreadcrumbCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
-        /**
-          * Handler to be called when `bq-breadcrumb-item` item gets focus.
-         */
-        "onBqBreadcrumbFocus"?: (event: BqBreadcrumbCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
+        "label"?: string;
     }
+    /**
+     * The Breadcrumb Item helps users understand their current location within a website or application's hierarchical structure.
+     * @example ```html
+     * <bq-breadcrumb-item label="Home page">
+     *   <bq-icon name="house-line" size="16"></bq-icon>
+     *   Home
+     * </bq-breadcrumb-item>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/61d6c0-breadcrumb
+     * @status stable
+     * @attr {string} href - If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
+     * @attr {string} target - Where to display the link in the browser context. Relevant only if `href` is set.
+     * @attr {string} rel - Where to display the link in the browser context. Relevant only if `href` is set.
+     * @event bqFocus - Handler to be called when item is focused
+     * @event bqClick - Handler to be called when item is clicked
+     * @event bqBlur - Handler to be called when item loses focus
+     * @cssprop --bq-breadcrumb-item--background - Background color of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--box-shadow - Box shadow of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--border-color - Border color of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--border-style - Border style of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--border-width - Border width of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--border-radius - Border radius of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--line-height - Line height of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--text-color - Text color of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--text-color-current - Text color of the current breadcrumb item (active)
+     * @cssprop --bq-breadcrumb-item--text-size - Text size of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--text-size-separator - Text size of the breadcrumb item separator
+     * @cssprop --bq-breadcrumb-item--padding-start - Padding start of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--padding-end - Padding end of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--paddingY - Padding top and bottom of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--padding-start-separator - Padding start of the breadcrumb item separator
+     * @cssprop --bq-breadcrumb-item--padding-end-separator - Padding end of the breadcrumb item separator
+     */
     interface BqBreadcrumbItem {
-        /**
-          * The aria-label that corresponds to the full title of the destination page. This won't be shown in the page, but it will be used by screen readers and other assistive devices.
-         */
-        "ariaLabel"?: string;
         /**
           * If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
          */
         "href"?: string;
-        /**
-          * If true, the item is the last element inside breadcrumb
-         */
-        "isLastItem"?: boolean;
         /**
           * Handler to be called when item loses focus
          */
@@ -4809,7 +4905,54 @@ declare module "@stencil/core" {
              * @cssprop --bq-badge--text-color - The badge text color
              */
             "bq-badge": LocalJSX.BqBadge & JSXBase.HTMLAttributes<HTMLBqBadgeElement>;
+            /**
+             * The Breadcrumb is used to wraps a series of breadcrumb items to indicate the current page's location within a navigational hierarchy.
+             * @example ```html
+             * <bq-breadcrumb label="Breadcrumb">
+             *   <bq-breadcrumb-item>Home</bq-breadcrumb-item>
+             *   <bq-breadcrumb-item>Men's clothing</bq-breadcrumb-item>
+             *   <bq-breadcrumb-item>Shirt</bq-breadcrumb-item>
+             *   <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+             * </bq-breadcrumb>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/194fd1-breadcrumb
+             * @status stable
+             * @attr {string} label - The `aria-label` attribute to describe the type of navigation
+             */
             "bq-breadcrumb": LocalJSX.BqBreadcrumb & JSXBase.HTMLAttributes<HTMLBqBreadcrumbElement>;
+            /**
+             * The Breadcrumb Item helps users understand their current location within a website or application's hierarchical structure.
+             * @example ```html
+             * <bq-breadcrumb-item label="Home page">
+             *   <bq-icon name="house-line" size="16"></bq-icon>
+             *   Home
+             * </bq-breadcrumb-item>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/61d6c0-breadcrumb
+             * @status stable
+             * @attr {string} href - If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
+             * @attr {string} target - Where to display the link in the browser context. Relevant only if `href` is set.
+             * @attr {string} rel - Where to display the link in the browser context. Relevant only if `href` is set.
+             * @event bqFocus - Handler to be called when item is focused
+             * @event bqClick - Handler to be called when item is clicked
+             * @event bqBlur - Handler to be called when item loses focus
+             * @cssprop --bq-breadcrumb-item--background - Background color of the breadcrumb item
+             * @cssprop --bq-breadcrumb-item--box-shadow - Box shadow of the breadcrumb item
+             * @cssprop --bq-breadcrumb-item--border-color - Border color of the breadcrumb item
+             * @cssprop --bq-breadcrumb-item--border-style - Border style of the breadcrumb item
+             * @cssprop --bq-breadcrumb-item--border-width - Border width of the breadcrumb item
+             * @cssprop --bq-breadcrumb-item--border-radius - Border radius of the breadcrumb item
+             * @cssprop --bq-breadcrumb-item--line-height - Line height of the breadcrumb item
+             * @cssprop --bq-breadcrumb-item--text-color - Text color of the breadcrumb item
+             * @cssprop --bq-breadcrumb-item--text-color-current - Text color of the current breadcrumb item (active)
+             * @cssprop --bq-breadcrumb-item--text-size - Text size of the breadcrumb item
+             * @cssprop --bq-breadcrumb-item--text-size-separator - Text size of the breadcrumb item separator
+             * @cssprop --bq-breadcrumb-item--padding-start - Padding start of the breadcrumb item
+             * @cssprop --bq-breadcrumb-item--padding-end - Padding end of the breadcrumb item
+             * @cssprop --bq-breadcrumb-item--paddingY - Padding top and bottom of the breadcrumb item
+             * @cssprop --bq-breadcrumb-item--padding-start-separator - Padding start of the breadcrumb item separator
+             * @cssprop --bq-breadcrumb-item--padding-end-separator - Padding end of the breadcrumb item separator
+             */
             "bq-breadcrumb-item": LocalJSX.BqBreadcrumbItem & JSXBase.HTMLAttributes<HTMLBqBreadcrumbItemElement>;
             /**
              * Buttons are designed for users to take action on a page or a screen.
