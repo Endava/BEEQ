@@ -64,32 +64,121 @@ export { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from "./components
 export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 export { TToastBorderRadius, TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export namespace Components {
+    /**
+     * The Accordion is a UI component that allows users to toggle between showing and hiding content sections. It provides a collapsible functionality, where only one section can be expanded at a time, while the others remain collapsed.
+     * @example ```html
+     * <bq-accordion appearance="filled" size="medium">
+     *   <bq-avatar size="xsmall" image="/image/url/img.png" slot="prefix"></bq-avatar>
+     *   <h3 slot="header">Header</h3>
+     *   <div>Lorem ipsum dolor...</div>
+     * </bq-accordion>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/713eae-accordion
+     * @status stable
+     * @dependency bq-icon
+     * @attr {"filled" | "ghost"} [appearance="filled"] - The appearance style of the Accordion
+     * @attr {boolean} [disabled=false] - If true, the Accordion is disabled
+     * @attr {boolean} [expanded=false] - If true, the Accordion is expanded
+     * @attr {boolean} [no-animation=false] - Animation is set through JS when the browser does not support CSS calc-size() If true, the Accordion animation, will be disabled. No animation will be applied.
+     * @attr {boolean} [rotate=false] - If true, the Accordion expand icon is rotate 180deg when expanded
+     * @attr {"small" | "medium"} [size="medium"] - The size of the the Accordion
+     * @event bqOpen - Handler to be called when the accordion is opened
+     * @event bqAfterOpen - Handler to be called after the accordion is opened
+     * @event bqClose - Handler to be called when the accordion is closed
+     * @event bqAfterClose - Handler to be called after the accordion is closed
+     * @event bqFocus - Handler to be called when the accordion gets focus
+     * @event bqClick - Handler to be called when the accordion is clicked
+     * @event bqBlur - Handler to be called when the accordion loses focus
+     * @cssprop --bq-accordion--small-padding-y - Accordion small vertical padding
+     * @cssprop --bq-accordion--small-padding-start - Accordion small start padding
+     * @cssprop --bq-accordion--small-padding-end - Accordion small end padding
+     * @cssprop --bq-accordion--small-padding-gap - Accordion small gap distance between suffix, title and prefix
+     * @cssprop --bq-accordion--small-radius - Accordion small border radius
+     * @cssprop --bq-accordion--medium-padding-y - Accordion medium vertical padding
+     * @cssprop --bq-accordion--medium-padding-start - Accordion medium start padding
+     * @cssprop --bq-accordion--medium-padding-end - Accordion medium end padding
+     * @cssprop --bq-accordion--medium-padding-gap - Accordion medium gap distance between suffix, title and prefix
+     * @cssprop --bq-accordion--medium-radius - Accordion medium border radius
+     * @cssprop --bq-accordion--collapsed-border-color - Accordion collapsed border color
+     * @cssprop --bq-accordion--collapsed-border-style - Accordion collapsed border style
+     * @cssprop --bq-accordion--collapsed-border-width - Accordion collapsed border width
+     * @cssprop --bq-accordion--expanded-border-color - Accordion expanded border color
+     * @cssprop --bq-accordion--expanded-border-style - Accordion expanded border style
+     * @cssprop --bq-accordion--expanded-border-width - Accordion expanded border width
+     * @cssprop --bq-accordion--filled-collapsed-background - Accordion filled collapsed header background
+     * @cssprop --bq-accordion--filled-collapsed-text-color - Accordion filled collapsed header text color
+     * @cssprop --bq-accordion--filled-expanded-background - Accordion filled expanded header background
+     * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Accordion filled expanded header color on hover
+     * @cssprop --bq-accordion--filled-expanded-text-color - Accordion filled expanded header text color
+     * @cssprop --bq-accordion--ghost-collapsed-background - Accordion ghost collapsed header background
+     * @cssprop --bq-accordion--ghost-collapsed-text-color - Accordion ghost collapsed header text color
+     * @cssprop --bq-accordion--ghost-expanded-background - Accordion ghost expanded header background
+     * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Accordion ghost expanded header color on hover
+     * @cssprop --bq-accordion--ghost-expanded-text-color - Accordion ghost expanded header text color
+     * @cssprop --bq-accordion--panel-filled-border-color - Accordion filled panel border color
+     * @cssprop --bq-accordion--panel-filled-border-style - Accordion filled panel border style
+     * @cssprop --bq-accordion--panel-filled-border-width - Accordion filled panel border width
+     * @cssprop --bq-accordion--panel-small-filled-padding-y - Accordion small filled panel vertical padding
+     * @cssprop --bq-accordion--panel-small-filled-padding-start - Accordion small filled panel start padding
+     * @cssprop --bq-accordion--panel-small-filled-padding-end - Accordion small filled panel end padding
+     * @cssprop --bq-accordion--panel-medium-filled-padding-y - Accordion medium filled panel vertical padding
+     * @cssprop --bq-accordion--panel-medium-filled-padding-start - Accordion medium filled panel start padding
+     * @cssprop --bq-accordion--panel-medium-filled-padding-end - Accordion medium filled panel end padding
+     * @cssprop --bq-accordion--panel-ghost-border-color - Accordion ghost panel border color
+     * @cssprop --bq-accordion--panel-ghost-border-style - Accordion ghost panel border style
+     * @cssprop --bq-accordion--panel-ghost-border-width - Accordion ghost panel border width
+     * @cssprop --bq-accordion--panel-small-ghost-padding-y - Accordion small ghost panel vertical padding
+     * @cssprop --bq-accordion--panel-small-ghost-padding-start - Accordion small ghost panel start padding
+     * @cssprop --bq-accordion--panel-small-ghost-padding-end - Accordion small ghost panel end padding
+     * @cssprop --bq-accordion--panel-medium-ghost-padding-y - Accordion medium ghost panel vertical padding
+     * @cssprop --bq-accordion--panel-medium-ghost-padding-start - Accordion medium ghost panel start padding
+     * @cssprop --bq-accordion--panel-medium-ghost-padding-end - Accordion medium ghost panel end padding
+     */
     interface BqAccordion {
         /**
-          * The appearance style of accordion
+          * The appearance style of the Accordion
          */
         "appearance": TAccordionAppearance;
         /**
-          * If true accordion is disabled
+          * If true, the Accordion is disabled
          */
         "disabled": boolean;
         /**
-          * If true accordion is expanded
+          * If true, the Accordion is expanded
          */
         "expanded": boolean;
         /**
-          * Animation is set through JS when the browser does not support CSS calc-size() If true, the accordion animation, will be disabled. No animation will be applied.
+          * Animation is set through JS when the browser does not support CSS calc-size() If true, the Accordion animation, will be disabled. No animation will be applied.
          */
         "noAnimation": boolean;
         /**
-          * If true accordion expand icon is rotate 180deg when expanded
+          * If true, the Accordion expand icon is rotate 180deg when expanded
          */
         "rotate": boolean;
         /**
-          * The size of accordion
+          * The size of the Accordion
          */
         "size": TAccordionSize;
     }
+    /**
+     * The accordion group component is a container for multiple accordion elements.
+     * It allows to manage the appearance and size of all accordions at once.
+     * @example ```html
+     * <bq-accordion-group appearance="filled" size="medium">
+     *   <bq-accordion> ... </bq-accordion>
+     *   <bq-accordion> ... </bq-accordion>
+     *   <bq-accordion> ... </bq-accordion>
+     * </bq-accordion-group>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/713eae-accordion
+     * @status stable
+     * @attr {"filled" | "ghost"} [appearance="filled"] - The appearance style of accordion to be applied to all accordions
+     * @attr {boolean} [expandAll=false] - If true all accordions are expanded
+     * @attr {boolean} [no-animation=false] - Animation is set through JS when the browser does not support CSS calc-size() If true, the accordion animation, will be disabled. No animation will be applied.
+     * @attr {boolean} [multiple=false] - If true multiple accordions can be expanded at the same time
+     * @attr {"small" | "medium"} [size="medium"] - The size of accordion to be applied to all accordions
+     * @cssprop --bq-accordion-group--gap - Accordion group distance between elements
+     */
     interface BqAccordionGroup {
         /**
           * The appearance style of accordion to be applied to all accordions
@@ -1613,6 +1702,76 @@ declare global {
         "bqAfterClose": HTMLBqAccordionElement;
         "bqClick": HTMLBqAccordionElement;
     }
+    /**
+     * The Accordion is a UI component that allows users to toggle between showing and hiding content sections. It provides a collapsible functionality, where only one section can be expanded at a time, while the others remain collapsed.
+     * @example ```html
+     * <bq-accordion appearance="filled" size="medium">
+     *   <bq-avatar size="xsmall" image="/image/url/img.png" slot="prefix"></bq-avatar>
+     *   <h3 slot="header">Header</h3>
+     *   <div>Lorem ipsum dolor...</div>
+     * </bq-accordion>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/713eae-accordion
+     * @status stable
+     * @dependency bq-icon
+     * @attr {"filled" | "ghost"} [appearance="filled"] - The appearance style of the Accordion
+     * @attr {boolean} [disabled=false] - If true, the Accordion is disabled
+     * @attr {boolean} [expanded=false] - If true, the Accordion is expanded
+     * @attr {boolean} [no-animation=false] - Animation is set through JS when the browser does not support CSS calc-size() If true, the Accordion animation, will be disabled. No animation will be applied.
+     * @attr {boolean} [rotate=false] - If true, the Accordion expand icon is rotate 180deg when expanded
+     * @attr {"small" | "medium"} [size="medium"] - The size of the the Accordion
+     * @event bqOpen - Handler to be called when the accordion is opened
+     * @event bqAfterOpen - Handler to be called after the accordion is opened
+     * @event bqClose - Handler to be called when the accordion is closed
+     * @event bqAfterClose - Handler to be called after the accordion is closed
+     * @event bqFocus - Handler to be called when the accordion gets focus
+     * @event bqClick - Handler to be called when the accordion is clicked
+     * @event bqBlur - Handler to be called when the accordion loses focus
+     * @cssprop --bq-accordion--small-padding-y - Accordion small vertical padding
+     * @cssprop --bq-accordion--small-padding-start - Accordion small start padding
+     * @cssprop --bq-accordion--small-padding-end - Accordion small end padding
+     * @cssprop --bq-accordion--small-padding-gap - Accordion small gap distance between suffix, title and prefix
+     * @cssprop --bq-accordion--small-radius - Accordion small border radius
+     * @cssprop --bq-accordion--medium-padding-y - Accordion medium vertical padding
+     * @cssprop --bq-accordion--medium-padding-start - Accordion medium start padding
+     * @cssprop --bq-accordion--medium-padding-end - Accordion medium end padding
+     * @cssprop --bq-accordion--medium-padding-gap - Accordion medium gap distance between suffix, title and prefix
+     * @cssprop --bq-accordion--medium-radius - Accordion medium border radius
+     * @cssprop --bq-accordion--collapsed-border-color - Accordion collapsed border color
+     * @cssprop --bq-accordion--collapsed-border-style - Accordion collapsed border style
+     * @cssprop --bq-accordion--collapsed-border-width - Accordion collapsed border width
+     * @cssprop --bq-accordion--expanded-border-color - Accordion expanded border color
+     * @cssprop --bq-accordion--expanded-border-style - Accordion expanded border style
+     * @cssprop --bq-accordion--expanded-border-width - Accordion expanded border width
+     * @cssprop --bq-accordion--filled-collapsed-background - Accordion filled collapsed header background
+     * @cssprop --bq-accordion--filled-collapsed-text-color - Accordion filled collapsed header text color
+     * @cssprop --bq-accordion--filled-expanded-background - Accordion filled expanded header background
+     * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Accordion filled expanded header color on hover
+     * @cssprop --bq-accordion--filled-expanded-text-color - Accordion filled expanded header text color
+     * @cssprop --bq-accordion--ghost-collapsed-background - Accordion ghost collapsed header background
+     * @cssprop --bq-accordion--ghost-collapsed-text-color - Accordion ghost collapsed header text color
+     * @cssprop --bq-accordion--ghost-expanded-background - Accordion ghost expanded header background
+     * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Accordion ghost expanded header color on hover
+     * @cssprop --bq-accordion--ghost-expanded-text-color - Accordion ghost expanded header text color
+     * @cssprop --bq-accordion--panel-filled-border-color - Accordion filled panel border color
+     * @cssprop --bq-accordion--panel-filled-border-style - Accordion filled panel border style
+     * @cssprop --bq-accordion--panel-filled-border-width - Accordion filled panel border width
+     * @cssprop --bq-accordion--panel-small-filled-padding-y - Accordion small filled panel vertical padding
+     * @cssprop --bq-accordion--panel-small-filled-padding-start - Accordion small filled panel start padding
+     * @cssprop --bq-accordion--panel-small-filled-padding-end - Accordion small filled panel end padding
+     * @cssprop --bq-accordion--panel-medium-filled-padding-y - Accordion medium filled panel vertical padding
+     * @cssprop --bq-accordion--panel-medium-filled-padding-start - Accordion medium filled panel start padding
+     * @cssprop --bq-accordion--panel-medium-filled-padding-end - Accordion medium filled panel end padding
+     * @cssprop --bq-accordion--panel-ghost-border-color - Accordion ghost panel border color
+     * @cssprop --bq-accordion--panel-ghost-border-style - Accordion ghost panel border style
+     * @cssprop --bq-accordion--panel-ghost-border-width - Accordion ghost panel border width
+     * @cssprop --bq-accordion--panel-small-ghost-padding-y - Accordion small ghost panel vertical padding
+     * @cssprop --bq-accordion--panel-small-ghost-padding-start - Accordion small ghost panel start padding
+     * @cssprop --bq-accordion--panel-small-ghost-padding-end - Accordion small ghost panel end padding
+     * @cssprop --bq-accordion--panel-medium-ghost-padding-y - Accordion medium ghost panel vertical padding
+     * @cssprop --bq-accordion--panel-medium-ghost-padding-start - Accordion medium ghost panel start padding
+     * @cssprop --bq-accordion--panel-medium-ghost-padding-end - Accordion medium ghost panel end padding
+     */
     interface HTMLBqAccordionElement extends Components.BqAccordion, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqAccordionElementEventMap>(type: K, listener: (this: HTMLBqAccordionElement, ev: BqAccordionCustomEvent<HTMLBqAccordionElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1627,6 +1786,25 @@ declare global {
         prototype: HTMLBqAccordionElement;
         new (): HTMLBqAccordionElement;
     };
+    /**
+     * The accordion group component is a container for multiple accordion elements.
+     * It allows to manage the appearance and size of all accordions at once.
+     * @example ```html
+     * <bq-accordion-group appearance="filled" size="medium">
+     *   <bq-accordion> ... </bq-accordion>
+     *   <bq-accordion> ... </bq-accordion>
+     *   <bq-accordion> ... </bq-accordion>
+     * </bq-accordion-group>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/713eae-accordion
+     * @status stable
+     * @attr {"filled" | "ghost"} [appearance="filled"] - The appearance style of accordion to be applied to all accordions
+     * @attr {boolean} [expandAll=false] - If true all accordions are expanded
+     * @attr {boolean} [no-animation=false] - Animation is set through JS when the browser does not support CSS calc-size() If true, the accordion animation, will be disabled. No animation will be applied.
+     * @attr {boolean} [multiple=false] - If true multiple accordions can be expanded at the same time
+     * @attr {"small" | "medium"} [size="medium"] - The size of accordion to be applied to all accordions
+     * @cssprop --bq-accordion-group--gap - Accordion group distance between elements
+     */
     interface HTMLBqAccordionGroupElement extends Components.BqAccordionGroup, HTMLStencilElement {
     }
     var HTMLBqAccordionGroupElement: {
@@ -2285,21 +2463,91 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    /**
+     * The Accordion is a UI component that allows users to toggle between showing and hiding content sections. It provides a collapsible functionality, where only one section can be expanded at a time, while the others remain collapsed.
+     * @example ```html
+     * <bq-accordion appearance="filled" size="medium">
+     *   <bq-avatar size="xsmall" image="/image/url/img.png" slot="prefix"></bq-avatar>
+     *   <h3 slot="header">Header</h3>
+     *   <div>Lorem ipsum dolor...</div>
+     * </bq-accordion>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/713eae-accordion
+     * @status stable
+     * @dependency bq-icon
+     * @attr {"filled" | "ghost"} [appearance="filled"] - The appearance style of the Accordion
+     * @attr {boolean} [disabled=false] - If true, the Accordion is disabled
+     * @attr {boolean} [expanded=false] - If true, the Accordion is expanded
+     * @attr {boolean} [no-animation=false] - Animation is set through JS when the browser does not support CSS calc-size() If true, the Accordion animation, will be disabled. No animation will be applied.
+     * @attr {boolean} [rotate=false] - If true, the Accordion expand icon is rotate 180deg when expanded
+     * @attr {"small" | "medium"} [size="medium"] - The size of the the Accordion
+     * @event bqOpen - Handler to be called when the accordion is opened
+     * @event bqAfterOpen - Handler to be called after the accordion is opened
+     * @event bqClose - Handler to be called when the accordion is closed
+     * @event bqAfterClose - Handler to be called after the accordion is closed
+     * @event bqFocus - Handler to be called when the accordion gets focus
+     * @event bqClick - Handler to be called when the accordion is clicked
+     * @event bqBlur - Handler to be called when the accordion loses focus
+     * @cssprop --bq-accordion--small-padding-y - Accordion small vertical padding
+     * @cssprop --bq-accordion--small-padding-start - Accordion small start padding
+     * @cssprop --bq-accordion--small-padding-end - Accordion small end padding
+     * @cssprop --bq-accordion--small-padding-gap - Accordion small gap distance between suffix, title and prefix
+     * @cssprop --bq-accordion--small-radius - Accordion small border radius
+     * @cssprop --bq-accordion--medium-padding-y - Accordion medium vertical padding
+     * @cssprop --bq-accordion--medium-padding-start - Accordion medium start padding
+     * @cssprop --bq-accordion--medium-padding-end - Accordion medium end padding
+     * @cssprop --bq-accordion--medium-padding-gap - Accordion medium gap distance between suffix, title and prefix
+     * @cssprop --bq-accordion--medium-radius - Accordion medium border radius
+     * @cssprop --bq-accordion--collapsed-border-color - Accordion collapsed border color
+     * @cssprop --bq-accordion--collapsed-border-style - Accordion collapsed border style
+     * @cssprop --bq-accordion--collapsed-border-width - Accordion collapsed border width
+     * @cssprop --bq-accordion--expanded-border-color - Accordion expanded border color
+     * @cssprop --bq-accordion--expanded-border-style - Accordion expanded border style
+     * @cssprop --bq-accordion--expanded-border-width - Accordion expanded border width
+     * @cssprop --bq-accordion--filled-collapsed-background - Accordion filled collapsed header background
+     * @cssprop --bq-accordion--filled-collapsed-text-color - Accordion filled collapsed header text color
+     * @cssprop --bq-accordion--filled-expanded-background - Accordion filled expanded header background
+     * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Accordion filled expanded header color on hover
+     * @cssprop --bq-accordion--filled-expanded-text-color - Accordion filled expanded header text color
+     * @cssprop --bq-accordion--ghost-collapsed-background - Accordion ghost collapsed header background
+     * @cssprop --bq-accordion--ghost-collapsed-text-color - Accordion ghost collapsed header text color
+     * @cssprop --bq-accordion--ghost-expanded-background - Accordion ghost expanded header background
+     * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Accordion ghost expanded header color on hover
+     * @cssprop --bq-accordion--ghost-expanded-text-color - Accordion ghost expanded header text color
+     * @cssprop --bq-accordion--panel-filled-border-color - Accordion filled panel border color
+     * @cssprop --bq-accordion--panel-filled-border-style - Accordion filled panel border style
+     * @cssprop --bq-accordion--panel-filled-border-width - Accordion filled panel border width
+     * @cssprop --bq-accordion--panel-small-filled-padding-y - Accordion small filled panel vertical padding
+     * @cssprop --bq-accordion--panel-small-filled-padding-start - Accordion small filled panel start padding
+     * @cssprop --bq-accordion--panel-small-filled-padding-end - Accordion small filled panel end padding
+     * @cssprop --bq-accordion--panel-medium-filled-padding-y - Accordion medium filled panel vertical padding
+     * @cssprop --bq-accordion--panel-medium-filled-padding-start - Accordion medium filled panel start padding
+     * @cssprop --bq-accordion--panel-medium-filled-padding-end - Accordion medium filled panel end padding
+     * @cssprop --bq-accordion--panel-ghost-border-color - Accordion ghost panel border color
+     * @cssprop --bq-accordion--panel-ghost-border-style - Accordion ghost panel border style
+     * @cssprop --bq-accordion--panel-ghost-border-width - Accordion ghost panel border width
+     * @cssprop --bq-accordion--panel-small-ghost-padding-y - Accordion small ghost panel vertical padding
+     * @cssprop --bq-accordion--panel-small-ghost-padding-start - Accordion small ghost panel start padding
+     * @cssprop --bq-accordion--panel-small-ghost-padding-end - Accordion small ghost panel end padding
+     * @cssprop --bq-accordion--panel-medium-ghost-padding-y - Accordion medium ghost panel vertical padding
+     * @cssprop --bq-accordion--panel-medium-ghost-padding-start - Accordion medium ghost panel start padding
+     * @cssprop --bq-accordion--panel-medium-ghost-padding-end - Accordion medium ghost panel end padding
+     */
     interface BqAccordion {
         /**
-          * The appearance style of accordion
+          * The appearance style of the Accordion
          */
         "appearance"?: TAccordionAppearance;
         /**
-          * If true accordion is disabled
+          * If true, the Accordion is disabled
          */
         "disabled"?: boolean;
         /**
-          * If true accordion is expanded
+          * If true, the Accordion is expanded
          */
         "expanded"?: boolean;
         /**
-          * Animation is set through JS when the browser does not support CSS calc-size() If true, the accordion animation, will be disabled. No animation will be applied.
+          * Animation is set through JS when the browser does not support CSS calc-size() If true, the Accordion animation, will be disabled. No animation will be applied.
          */
         "noAnimation"?: boolean;
         /**
@@ -2314,6 +2562,9 @@ declare namespace LocalJSX {
           * Handler to be called when the accordion loses focus
          */
         "onBqBlur"?: (event: BqAccordionCustomEvent<HTMLBqAccordionElement>) => void;
+        /**
+          * Handler to be called when the accordion is clicked
+         */
         "onBqClick"?: (event: BqAccordionCustomEvent<HTMLBqAccordionElement>) => void;
         /**
           * Handler to be called when the accordion is closed
@@ -2328,14 +2579,33 @@ declare namespace LocalJSX {
          */
         "onBqOpen"?: (event: BqAccordionCustomEvent<HTMLBqAccordionElement>) => void;
         /**
-          * If true accordion expand icon is rotate 180deg when expanded
+          * If true, the Accordion expand icon is rotate 180deg when expanded
          */
         "rotate"?: boolean;
         /**
-          * The size of accordion
+          * The size of the Accordion
          */
         "size"?: TAccordionSize;
     }
+    /**
+     * The accordion group component is a container for multiple accordion elements.
+     * It allows to manage the appearance and size of all accordions at once.
+     * @example ```html
+     * <bq-accordion-group appearance="filled" size="medium">
+     *   <bq-accordion> ... </bq-accordion>
+     *   <bq-accordion> ... </bq-accordion>
+     *   <bq-accordion> ... </bq-accordion>
+     * </bq-accordion-group>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/713eae-accordion
+     * @status stable
+     * @attr {"filled" | "ghost"} [appearance="filled"] - The appearance style of accordion to be applied to all accordions
+     * @attr {boolean} [expandAll=false] - If true all accordions are expanded
+     * @attr {boolean} [no-animation=false] - Animation is set through JS when the browser does not support CSS calc-size() If true, the accordion animation, will be disabled. No animation will be applied.
+     * @attr {boolean} [multiple=false] - If true multiple accordions can be expanded at the same time
+     * @attr {"small" | "medium"} [size="medium"] - The size of accordion to be applied to all accordions
+     * @cssprop --bq-accordion-group--gap - Accordion group distance between elements
+     */
     interface BqAccordionGroup {
         /**
           * The appearance style of accordion to be applied to all accordions
@@ -3981,7 +4251,96 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            /**
+             * The Accordion is a UI component that allows users to toggle between showing and hiding content sections. It provides a collapsible functionality, where only one section can be expanded at a time, while the others remain collapsed.
+             * @example ```html
+             * <bq-accordion appearance="filled" size="medium">
+             *   <bq-avatar size="xsmall" image="/image/url/img.png" slot="prefix"></bq-avatar>
+             *   <h3 slot="header">Header</h3>
+             *   <div>Lorem ipsum dolor...</div>
+             * </bq-accordion>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/713eae-accordion
+             * @status stable
+             * @dependency bq-icon
+             * @attr {"filled" | "ghost"} [appearance="filled"] - The appearance style of the Accordion
+             * @attr {boolean} [disabled=false] - If true, the Accordion is disabled
+             * @attr {boolean} [expanded=false] - If true, the Accordion is expanded
+             * @attr {boolean} [no-animation=false] - Animation is set through JS when the browser does not support CSS calc-size() If true, the Accordion animation, will be disabled. No animation will be applied.
+             * @attr {boolean} [rotate=false] - If true, the Accordion expand icon is rotate 180deg when expanded
+             * @attr {"small" | "medium"} [size="medium"] - The size of the the Accordion
+             * @event bqOpen - Handler to be called when the accordion is opened
+             * @event bqAfterOpen - Handler to be called after the accordion is opened
+             * @event bqClose - Handler to be called when the accordion is closed
+             * @event bqAfterClose - Handler to be called after the accordion is closed
+             * @event bqFocus - Handler to be called when the accordion gets focus
+             * @event bqClick - Handler to be called when the accordion is clicked
+             * @event bqBlur - Handler to be called when the accordion loses focus
+             * @cssprop --bq-accordion--small-padding-y - Accordion small vertical padding
+             * @cssprop --bq-accordion--small-padding-start - Accordion small start padding
+             * @cssprop --bq-accordion--small-padding-end - Accordion small end padding
+             * @cssprop --bq-accordion--small-padding-gap - Accordion small gap distance between suffix, title and prefix
+             * @cssprop --bq-accordion--small-radius - Accordion small border radius
+             * @cssprop --bq-accordion--medium-padding-y - Accordion medium vertical padding
+             * @cssprop --bq-accordion--medium-padding-start - Accordion medium start padding
+             * @cssprop --bq-accordion--medium-padding-end - Accordion medium end padding
+             * @cssprop --bq-accordion--medium-padding-gap - Accordion medium gap distance between suffix, title and prefix
+             * @cssprop --bq-accordion--medium-radius - Accordion medium border radius
+             * @cssprop --bq-accordion--collapsed-border-color - Accordion collapsed border color
+             * @cssprop --bq-accordion--collapsed-border-style - Accordion collapsed border style
+             * @cssprop --bq-accordion--collapsed-border-width - Accordion collapsed border width
+             * @cssprop --bq-accordion--expanded-border-color - Accordion expanded border color
+             * @cssprop --bq-accordion--expanded-border-style - Accordion expanded border style
+             * @cssprop --bq-accordion--expanded-border-width - Accordion expanded border width
+             * @cssprop --bq-accordion--filled-collapsed-background - Accordion filled collapsed header background
+             * @cssprop --bq-accordion--filled-collapsed-text-color - Accordion filled collapsed header text color
+             * @cssprop --bq-accordion--filled-expanded-background - Accordion filled expanded header background
+             * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Accordion filled expanded header color on hover
+             * @cssprop --bq-accordion--filled-expanded-text-color - Accordion filled expanded header text color
+             * @cssprop --bq-accordion--ghost-collapsed-background - Accordion ghost collapsed header background
+             * @cssprop --bq-accordion--ghost-collapsed-text-color - Accordion ghost collapsed header text color
+             * @cssprop --bq-accordion--ghost-expanded-background - Accordion ghost expanded header background
+             * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Accordion ghost expanded header color on hover
+             * @cssprop --bq-accordion--ghost-expanded-text-color - Accordion ghost expanded header text color
+             * @cssprop --bq-accordion--panel-filled-border-color - Accordion filled panel border color
+             * @cssprop --bq-accordion--panel-filled-border-style - Accordion filled panel border style
+             * @cssprop --bq-accordion--panel-filled-border-width - Accordion filled panel border width
+             * @cssprop --bq-accordion--panel-small-filled-padding-y - Accordion small filled panel vertical padding
+             * @cssprop --bq-accordion--panel-small-filled-padding-start - Accordion small filled panel start padding
+             * @cssprop --bq-accordion--panel-small-filled-padding-end - Accordion small filled panel end padding
+             * @cssprop --bq-accordion--panel-medium-filled-padding-y - Accordion medium filled panel vertical padding
+             * @cssprop --bq-accordion--panel-medium-filled-padding-start - Accordion medium filled panel start padding
+             * @cssprop --bq-accordion--panel-medium-filled-padding-end - Accordion medium filled panel end padding
+             * @cssprop --bq-accordion--panel-ghost-border-color - Accordion ghost panel border color
+             * @cssprop --bq-accordion--panel-ghost-border-style - Accordion ghost panel border style
+             * @cssprop --bq-accordion--panel-ghost-border-width - Accordion ghost panel border width
+             * @cssprop --bq-accordion--panel-small-ghost-padding-y - Accordion small ghost panel vertical padding
+             * @cssprop --bq-accordion--panel-small-ghost-padding-start - Accordion small ghost panel start padding
+             * @cssprop --bq-accordion--panel-small-ghost-padding-end - Accordion small ghost panel end padding
+             * @cssprop --bq-accordion--panel-medium-ghost-padding-y - Accordion medium ghost panel vertical padding
+             * @cssprop --bq-accordion--panel-medium-ghost-padding-start - Accordion medium ghost panel start padding
+             * @cssprop --bq-accordion--panel-medium-ghost-padding-end - Accordion medium ghost panel end padding
+             */
             "bq-accordion": LocalJSX.BqAccordion & JSXBase.HTMLAttributes<HTMLBqAccordionElement>;
+            /**
+             * The accordion group component is a container for multiple accordion elements.
+             * It allows to manage the appearance and size of all accordions at once.
+             * @example ```html
+             * <bq-accordion-group appearance="filled" size="medium">
+             *   <bq-accordion> ... </bq-accordion>
+             *   <bq-accordion> ... </bq-accordion>
+             *   <bq-accordion> ... </bq-accordion>
+             * </bq-accordion-group>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/713eae-accordion
+             * @status stable
+             * @attr {"filled" | "ghost"} [appearance="filled"] - The appearance style of accordion to be applied to all accordions
+             * @attr {boolean} [expandAll=false] - If true all accordions are expanded
+             * @attr {boolean} [no-animation=false] - Animation is set through JS when the browser does not support CSS calc-size() If true, the accordion animation, will be disabled. No animation will be applied.
+             * @attr {boolean} [multiple=false] - If true multiple accordions can be expanded at the same time
+             * @attr {"small" | "medium"} [size="medium"] - The size of accordion to be applied to all accordions
+             * @cssprop --bq-accordion-group--gap - Accordion group distance between elements
+             */
             "bq-accordion-group": LocalJSX.BqAccordionGroup & JSXBase.HTMLAttributes<HTMLBqAccordionGroupElement>;
             "bq-alert": LocalJSX.BqAlert & JSXBase.HTMLAttributes<HTMLBqAlertElement>;
             "bq-avatar": LocalJSX.BqAvatar & JSXBase.HTMLAttributes<HTMLBqAvatarElement>;
