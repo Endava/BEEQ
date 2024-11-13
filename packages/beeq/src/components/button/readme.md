@@ -36,6 +36,15 @@ Buttons are designed for users to take action on a page or a screen.
 | `bqFocus` | Handler to be called when the button is clicked  | `CustomEvent<HTMLBqButtonElement>` |
 
 
+## Slots
+
+| Slot       | Description                                                |
+| ---------- | ---------------------------------------------------------- |
+|            | The button label content                                   |
+| `"prefix"` | The prefix content to be displayed before the button label |
+| `"suffix"` | The suffix content to be displayed after the button label  |
+
+
 ## Shadow Parts
 
 | Part       | Description                                                   |
