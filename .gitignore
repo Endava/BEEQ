@@ -12,18 +12,20 @@ chromatic-diagnostics.json
 # source files to ignore
 .angular
 master.zip
+packages/beeq/.cem/*
+!packages/beeq/.cem/.gitkeep
 packages/beeq/.stencil
 packages/beeq/.storybook/assets/css/stories.css
-packages/beeq/vite.config.*.timestamp-*
-packages/beeq/custom-elements.json
-packages/beeq/src/components/icon/svg/**
+packages/beeq/.storybook/custom-elements.json
 packages/beeq/src/_storybook/CHANGELOG.md
+packages/beeq/src/components/icon/svg/**
+packages/beeq/vite.config.*.timestamp-*
 packages/beeq-angular/**/directives
 packages/beeq-react/src/components.ts
-packages/beeq-react/ssr/components.ts
 packages/beeq-react/ssr/components.server.ts
-packages/beeq-vue/src/vue-component-lib
+packages/beeq-react/ssr/components.ts
 packages/beeq-vue/src/components.ts
+packages/beeq-vue/src/vue-component-lib
 !.gitkeep
 
 # dependencies

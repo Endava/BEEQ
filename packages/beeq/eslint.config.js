@@ -122,6 +122,8 @@ module.exports = [
             '@stencil/react-output-target',
             '@stencil/sass',
             '@stencil/vue-output-target',
+            'cem-plugin-expanded-types',
+            'custom-element-vs-code-integration',
             'eslint-plugin-import-x',
             'eslint-plugin-jsx-a11y',
             'eslint-plugin-prettier',

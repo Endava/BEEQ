@@ -1,6 +1,7 @@
 import { promises as fs } from 'fs';
+import { resolve } from 'path';
 
-import { JsonDocs } from '@stencil/core/internal';
+import type { JsonDocs } from '@stencil/core/internal';
 
 export const generateCustomElementsJson = async (docsData: JsonDocs) => {
   const jsonData = {
@@ -60,12 +61,12 @@ export const generateCustomElementsJson = async (docsData: JsonDocs) => {
             description: slot.docs,
           })),
 
-          cssProperties: component.styles
-            .filter((style) => style.annotation === 'prop')
-            .map((style) => ({
-              name: style.name,
-              description: style.docs,
-            })),
+          cssProperties: component.docsTags
+            .filter((tag) => tag.name === 'cssprop')
+            .map((tag) => {
+              const [name, description] = tag.text.split(' - ');
+              return { name: name.trim(), description: description.trim() };
+            }),
 
           cssParts: component.parts.map((part) => ({
             name: part.name,
@@ -76,5 +77,5 @@ export const generateCustomElementsJson = async (docsData: JsonDocs) => {
     })),
   };
 
-  await fs.writeFile(`${__dirname}/../../custom-elements.json`, JSON.stringify(jsonData, null, 2));
+  await fs.writeFile(resolve(__dirname, '../../.storybook/custom-elements.json'), JSON.stringify(jsonData, null, 2));
 };

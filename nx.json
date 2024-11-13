@@ -38,6 +38,9 @@
       "inputs": ["default", "^production"],
       "cache": true
     },
+    "cem": {
+      "cache": true
+    },
     "icons": {
       "cache": true
     },

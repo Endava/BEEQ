@@ -13,5 +13,5 @@
     "**/*.stories.jsx",
     "**/*.stories.tsx"
   ],
-  "include": ["../../tailwind.config.ts", "**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"]
+  "include": ["../../tailwind.config.ts", "**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.mjs"]
 }

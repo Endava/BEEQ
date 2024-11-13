@@ -27,6 +27,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
+          "nx run beeq:cem-dev",
           "nx run beeq:stencil-start --noOpen",
           "nx run beeq:storybook-start-css",
           "nx run beeq:storybook-start"
@@ -65,11 +66,11 @@
       }
     },
     "build": {
-      "dependsOn": [{ "target": "icons" }, { "target": "build", "projects": "beeq-tailwindcss" }],
+      "dependsOn": [{ "target": "icons" }, { "target": "build", "projects": "beeq-tailwindcss" }, { "target": "cem" }],
       "executor": "@nxext/stencil:build",
       "outputs": [
         "{options.outputPath}",
-        "{projectRoot}/custom-elements.json",
+        "{projectRoot}/.storybook/custom-elements.json",
         "{workspaceRoot}/packages/beeq-angular/src/directives",
         "{workspaceRoot}/packages/beeq-angular/standalone/src/directives",
         "{workspaceRoot}/packages/beeq-react/src/components.ts",
@@ -118,6 +119,13 @@
       "options": {
         "command": "npx tailwindcss -i packages/beeq/src/global/styles/default.scss -o packages/beeq/.storybook/assets/css/stories.css --postcss ./postcss.config.js --minify"
       }
+    },
+    "cem": {
+      "command": "./node_modules/.bin/cem analyze --config {projectRoot}/cem.config.mjs",
+      "outputs": ["{projectRoot}/custom-elements.json"]
+    },
+    "cem-dev": {
+      "command": "./node_modules/.bin/cem analyze --config {projectRoot}/cem.config.mjs --watch"
     },
     "icons": {
       "executor": "@beeq/tools:icons",
@@ -175,16 +183,8 @@
         "command": "cp CHANGELOG.md {projectRoot}/src/_storybook"
       }
     },
-    "prepublish": {
-      "executor": "nx:run-commands",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "command": "mv dist/beeq/dist/README.md dist/beeq/"
-      }
-    },
     "publish": {
       "executor": "ngx-deploy-npm:deploy",
-      "dependsOn": ["prepublish"],
       "options": {
         "access": "public",
         "distFolderPath": "dist/beeq",
