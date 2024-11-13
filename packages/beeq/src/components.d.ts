@@ -363,6 +363,28 @@ export namespace Components {
          */
         "size": TAvatarSize;
     }
+    /**
+     * The Badge component is a visual indicator that can be added to various elements within a user interface.
+     * It is typically used to highlight important or relevant information, such as alerts, notifications, or statuses.
+     * @example ```html
+     * <bq-badge background-color="ui--success" text-color="text--inverse" size="small">9</bq-badge>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/194fd1-badge
+     * @status stable
+     * @attr {string} background-color - Badge background color. The value should be a valid value of the palette color.
+     * @attr {string} text-color - Badge number color. The value should be a valid value of the palette color.
+     * @attr {"small" | "medium" | "large"} size - The size of the badge. Relevant if badge has no content.
+     * @cssprop --bq-badge--background-color - The badge background color
+     * @cssprop --bq-badge--box-shadow - The badge box shadow
+     * @cssprop --bq-badge--border-color - The badge border color
+     * @cssprop --bq-badge--border-radius - The badge border radius
+     * @cssprop --bq-badge--border-style - The badge border style
+     * @cssprop --bq-badge--border-width - The badge border width
+     * @cssprop --bq-badge--size-small - The badge small size
+     * @cssprop --bq-badge--size-medium - The badge medium size
+     * @cssprop --bq-badge--size-large - The badge large size
+     * @cssprop --bq-badge--text-color - The badge text color
+     */
     interface BqBadge {
         /**
           * Badge background color. The value should be a valid value of the palette color
@@ -2025,6 +2047,28 @@ declare global {
         prototype: HTMLBqAvatarElement;
         new (): HTMLBqAvatarElement;
     };
+    /**
+     * The Badge component is a visual indicator that can be added to various elements within a user interface.
+     * It is typically used to highlight important or relevant information, such as alerts, notifications, or statuses.
+     * @example ```html
+     * <bq-badge background-color="ui--success" text-color="text--inverse" size="small">9</bq-badge>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/194fd1-badge
+     * @status stable
+     * @attr {string} background-color - Badge background color. The value should be a valid value of the palette color.
+     * @attr {string} text-color - Badge number color. The value should be a valid value of the palette color.
+     * @attr {"small" | "medium" | "large"} size - The size of the badge. Relevant if badge has no content.
+     * @cssprop --bq-badge--background-color - The badge background color
+     * @cssprop --bq-badge--box-shadow - The badge box shadow
+     * @cssprop --bq-badge--border-color - The badge border color
+     * @cssprop --bq-badge--border-radius - The badge border radius
+     * @cssprop --bq-badge--border-style - The badge border style
+     * @cssprop --bq-badge--border-width - The badge border width
+     * @cssprop --bq-badge--size-small - The badge small size
+     * @cssprop --bq-badge--size-medium - The badge medium size
+     * @cssprop --bq-badge--size-large - The badge large size
+     * @cssprop --bq-badge--text-color - The badge text color
+     */
     interface HTMLBqBadgeElement extends Components.BqBadge, HTMLStencilElement {
     }
     var HTMLBqBadgeElement: {
@@ -2986,6 +3030,28 @@ declare namespace LocalJSX {
          */
         "size"?: TAvatarSize;
     }
+    /**
+     * The Badge component is a visual indicator that can be added to various elements within a user interface.
+     * It is typically used to highlight important or relevant information, such as alerts, notifications, or statuses.
+     * @example ```html
+     * <bq-badge background-color="ui--success" text-color="text--inverse" size="small">9</bq-badge>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/194fd1-badge
+     * @status stable
+     * @attr {string} background-color - Badge background color. The value should be a valid value of the palette color.
+     * @attr {string} text-color - Badge number color. The value should be a valid value of the palette color.
+     * @attr {"small" | "medium" | "large"} size - The size of the badge. Relevant if badge has no content.
+     * @cssprop --bq-badge--background-color - The badge background color
+     * @cssprop --bq-badge--box-shadow - The badge box shadow
+     * @cssprop --bq-badge--border-color - The badge border color
+     * @cssprop --bq-badge--border-radius - The badge border radius
+     * @cssprop --bq-badge--border-style - The badge border style
+     * @cssprop --bq-badge--border-width - The badge border width
+     * @cssprop --bq-badge--size-small - The badge small size
+     * @cssprop --bq-badge--size-medium - The badge medium size
+     * @cssprop --bq-badge--size-large - The badge large size
+     * @cssprop --bq-badge--text-color - The badge text color
+     */
     interface BqBadge {
         /**
           * Badge background color. The value should be a valid value of the palette color
@@ -4720,6 +4786,28 @@ declare module "@stencil/core" {
              * @cssprop --bq-avatar--badge-left-circle - Badge left position shape circle
              */
             "bq-avatar": LocalJSX.BqAvatar & JSXBase.HTMLAttributes<HTMLBqAvatarElement>;
+            /**
+             * The Badge component is a visual indicator that can be added to various elements within a user interface.
+             * It is typically used to highlight important or relevant information, such as alerts, notifications, or statuses.
+             * @example ```html
+             * <bq-badge background-color="ui--success" text-color="text--inverse" size="small">9</bq-badge>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/194fd1-badge
+             * @status stable
+             * @attr {string} background-color - Badge background color. The value should be a valid value of the palette color.
+             * @attr {string} text-color - Badge number color. The value should be a valid value of the palette color.
+             * @attr {"small" | "medium" | "large"} size - The size of the badge. Relevant if badge has no content.
+             * @cssprop --bq-badge--background-color - The badge background color
+             * @cssprop --bq-badge--box-shadow - The badge box shadow
+             * @cssprop --bq-badge--border-color - The badge border color
+             * @cssprop --bq-badge--border-radius - The badge border radius
+             * @cssprop --bq-badge--border-style - The badge border style
+             * @cssprop --bq-badge--border-width - The badge border width
+             * @cssprop --bq-badge--size-small - The badge small size
+             * @cssprop --bq-badge--size-medium - The badge medium size
+             * @cssprop --bq-badge--size-large - The badge large size
+             * @cssprop --bq-badge--text-color - The badge text color
+             */
             "bq-badge": LocalJSX.BqBadge & JSXBase.HTMLAttributes<HTMLBqBadgeElement>;
             "bq-breadcrumb": LocalJSX.BqBreadcrumb & JSXBase.HTMLAttributes<HTMLBqBreadcrumbElement>;
             "bq-breadcrumb-item": LocalJSX.BqBreadcrumbItem & JSXBase.HTMLAttributes<HTMLBqBreadcrumbItemElement>;
