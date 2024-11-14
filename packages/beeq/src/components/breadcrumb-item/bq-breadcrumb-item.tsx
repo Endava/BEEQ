@@ -5,7 +5,7 @@ import { isDefined } from '../../shared/utils';
 /**
  * The Breadcrumb Item helps users understand their current location within a website or application's hierarchical structure.
  *
- * @example
+ * @example How to use it
  * ```html
  * <bq-breadcrumb-item label="Home page">
  *   <bq-icon name="house-line" size="16"></bq-icon>

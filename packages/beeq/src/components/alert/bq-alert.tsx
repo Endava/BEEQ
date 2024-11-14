@@ -7,7 +7,7 @@ import { debounce, enter, hasSlotContent, leave, TDebounce, validatePropValue } 
  * The Alert is a user interface component used to convey important information to the user in a clear and concise manner.
  * It can be used to notify users of success, failure, warning, or any other type of information that needs to be brought to their attention.
  *
- * @example
+ * @example How to use it
  * ```html
  * <bq-alert>
  *   <bq-icon name="star" slot="icon"></bq-icon>

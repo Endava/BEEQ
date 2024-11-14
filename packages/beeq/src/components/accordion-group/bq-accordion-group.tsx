@@ -7,7 +7,7 @@ import { TAccordionAppearance, TAccordionSize } from '../accordion/bq-accordion.
  * The accordion group component is a container for multiple accordion elements.
  * It allows to manage the appearance and size of all accordions at once.
  *
- * @example
+ * @example How to use it
  * ```html
  * <bq-accordion-group appearance="filled" size="medium">
  *   <bq-accordion> ... </bq-accordion>

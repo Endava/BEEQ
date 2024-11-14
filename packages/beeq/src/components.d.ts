@@ -66,11 +66,12 @@ export { TToastBorderRadius, TToastPlacement, TToastType } from "./components/to
 export namespace Components {
     /**
      * The Accordion is a UI component that allows users to toggle between showing and hiding content sections. It provides a collapsible functionality, where only one section can be expanded at a time, while the others remain collapsed.
-     * @example ```html
+     * @example How to use it
+     * ```html
      * <bq-accordion appearance="filled" size="medium">
-     *   <bq-avatar size="xsmall" image="/image/url/img.png" slot="prefix"></bq-avatar>
-     *   <h3 slot="header">Header</h3>
-     *   <div>Lorem ipsum dolor...</div>
+     * <bq-avatar size="xsmall" image="/image/url/img.png" slot="prefix"></bq-avatar>
+     * <h3 slot="header">Header</h3>
+     * <div>Lorem ipsum dolor...</div>
      * </bq-accordion>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/713eae-accordion
@@ -163,11 +164,12 @@ export namespace Components {
     /**
      * The accordion group component is a container for multiple accordion elements.
      * It allows to manage the appearance and size of all accordions at once.
-     * @example ```html
+     * @example How to use it
+     * ```html
      * <bq-accordion-group appearance="filled" size="medium">
-     *   <bq-accordion> ... </bq-accordion>
-     *   <bq-accordion> ... </bq-accordion>
-     *   <bq-accordion> ... </bq-accordion>
+     * <bq-accordion> ... </bq-accordion>
+     * <bq-accordion> ... </bq-accordion>
+     * <bq-accordion> ... </bq-accordion>
      * </bq-accordion-group>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/713eae-accordion
@@ -204,18 +206,19 @@ export namespace Components {
     /**
      * The Alert is a user interface component used to convey important information to the user in a clear and concise manner.
      * It can be used to notify users of success, failure, warning, or any other type of information that needs to be brought to their attention.
-     * @example ```html
+     * @example How to use it
+     * ```html
      * <bq-alert>
-     *   <bq-icon name="star" slot="icon"></bq-icon>
-     *   Title
-     *   <span slot="body">
-     *     Description
-     *     <a class="bq-link" href="https://example.com">Link</a>
-     *   </span>
-     *   <div slot="footer">
-     *     <bq-button appearance="primary" size="small">Button</bq-button>
-     *     <bq-button appearance="link" size="small">Button</bq-button>
-     *   </div>
+     * <bq-icon name="star" slot="icon"></bq-icon>
+     * Title
+     * <span slot="body">
+     * Description
+     * <a class="bq-link" href="https://example.com">Link</a>
+     * </span>
+     * <div slot="footer">
+     * <bq-button appearance="primary" size="small">Button</bq-button>
+     * <bq-button appearance="link" size="small">Button</bq-button>
+     * </div>
      * </bq-alert>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/848a50-alert
@@ -301,15 +304,16 @@ export namespace Components {
     /**
      * The Avatar component is a simple and customizable element that displays an image or initials in a circular or square shape.
      * This component is useful for displaying user profile pictures or any other image that represents a person or an entity.
-     * @example ```html
+     * @example How to use it
+     * ```html
      * <bq-avatar
-     *   alt-text="John Doe profile picture"
-     *   image="/image/url/photo-1524593689594.jpeg"
-     *   label="John Doe profile picture"
-     *   shape="circle"
-     *   size="medium"
+     * alt-text="John Doe profile picture"
+     * image="/image/url/photo-1524593689594.jpeg"
+     * label="John Doe profile picture"
+     * shape="circle"
+     * size="medium"
      * >
-     *   <bq-badge slot="badge" text-color="#fff">9</bq-badge>
+     * <bq-badge slot="badge" text-color="#fff">9</bq-badge>
      * </bq-avatar>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/148da7-avatar
@@ -319,7 +323,7 @@ export namespace Components {
      * @attr {string} label - A text to use for describing the avatar on assistive devices.
      * @attr {string} initials - The text to display on avatar.
      * @attr {"circle" | "square"} shape - The shape of the avatar.
-     * @attr {"xsmall" | "small" | "medium" "large"} size - The size of the avatar.
+     * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
      * @cssprop --bq-avatar--background - Avatar background color
      * @cssprop --bq-avatar--border-color - Avatar border color
      * @cssprop --bq-avatar--border-style - Avatar border style
@@ -366,7 +370,8 @@ export namespace Components {
     /**
      * The Badge component is a visual indicator that can be added to various elements within a user interface.
      * It is typically used to highlight important or relevant information, such as alerts, notifications, or statuses.
-     * @example ```html
+     * @example How to use it
+     * ```html
      * <bq-badge background-color="ui--success" text-color="text--inverse" size="small">9</bq-badge>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/194fd1-badge
@@ -401,12 +406,13 @@ export namespace Components {
     }
     /**
      * The Breadcrumb is used to wraps a series of breadcrumb items to indicate the current page's location within a navigational hierarchy.
-     * @example ```html
+     * @example How to use it
+     * ```html
      * <bq-breadcrumb label="Breadcrumb">
-     *   <bq-breadcrumb-item>Home</bq-breadcrumb-item>
-     *   <bq-breadcrumb-item>Men's clothing</bq-breadcrumb-item>
-     *   <bq-breadcrumb-item>Shirt</bq-breadcrumb-item>
-     *   <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+     * <bq-breadcrumb-item>Home</bq-breadcrumb-item>
+     * <bq-breadcrumb-item>Men's clothing</bq-breadcrumb-item>
+     * <bq-breadcrumb-item>Shirt</bq-breadcrumb-item>
+     * <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
      * </bq-breadcrumb>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/194fd1-breadcrumb
@@ -421,10 +427,11 @@ export namespace Components {
     }
     /**
      * The Breadcrumb Item helps users understand their current location within a website or application's hierarchical structure.
-     * @example ```html
+     * @example How to use it
+     * ```html
      * <bq-breadcrumb-item label="Home page">
-     *   <bq-icon name="house-line" size="16"></bq-icon>
-     *   Home
+     * <bq-icon name="house-line" size="16"></bq-icon>
+     * Home
      * </bq-breadcrumb-item>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/61d6c0-breadcrumb
@@ -468,10 +475,11 @@ export namespace Components {
     }
     /**
      * Buttons are designed for users to take action on a page or a screen.
-     * @example ```html
+     * @example How to use it
+     * ```html
      * <bq-button appearance="primary" border="m" size="medium">
-     *   <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>
-     *   Go back
+     * <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>
+     * Go back
      * </bq-button>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/286b43-buttons
@@ -1895,11 +1903,12 @@ declare global {
     }
     /**
      * The Accordion is a UI component that allows users to toggle between showing and hiding content sections. It provides a collapsible functionality, where only one section can be expanded at a time, while the others remain collapsed.
-     * @example ```html
+     * @example How to use it
+     * ```html
      * <bq-accordion appearance="filled" size="medium">
-     *   <bq-avatar size="xsmall" image="/image/url/img.png" slot="prefix"></bq-avatar>
-     *   <h3 slot="header">Header</h3>
-     *   <div>Lorem ipsum dolor...</div>
+     * <bq-avatar size="xsmall" image="/image/url/img.png" slot="prefix"></bq-avatar>
+     * <h3 slot="header">Header</h3>
+     * <div>Lorem ipsum dolor...</div>
      * </bq-accordion>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/713eae-accordion
@@ -1980,11 +1989,12 @@ declare global {
     /**
      * The accordion group component is a container for multiple accordion elements.
      * It allows to manage the appearance and size of all accordions at once.
-     * @example ```html
+     * @example How to use it
+     * ```html
      * <bq-accordion-group appearance="filled" size="medium">
-     *   <bq-accordion> ... </bq-accordion>
-     *   <bq-accordion> ... </bq-accordion>
-     *   <bq-accordion> ... </bq-accordion>
+     * <bq-accordion> ... </bq-accordion>
+     * <bq-accordion> ... </bq-accordion>
+     * <bq-accordion> ... </bq-accordion>
      * </bq-accordion-group>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/713eae-accordion
@@ -2011,18 +2021,19 @@ declare global {
     /**
      * The Alert is a user interface component used to convey important information to the user in a clear and concise manner.
      * It can be used to notify users of success, failure, warning, or any other type of information that needs to be brought to their attention.
-     * @example ```html
+     * @example How to use it
+     * ```html
      * <bq-alert>
-     *   <bq-icon name="star" slot="icon"></bq-icon>
-     *   Title
-     *   <span slot="body">
-     *     Description
-     *     <a class="bq-link" href="https://example.com">Link</a>
-     *   </span>
-     *   <div slot="footer">
-     *     <bq-button appearance="primary" size="small">Button</bq-button>
-     *     <bq-button appearance="link" size="small">Button</bq-button>
-     *   </div>
+     * <bq-icon name="star" slot="icon"></bq-icon>
+     * Title
+     * <span slot="body">
+     * Description
+     * <a class="bq-link" href="https://example.com">Link</a>
+     * </span>
+     * <div slot="footer">
+     * <bq-button appearance="primary" size="small">Button</bq-button>
+     * <bq-button appearance="link" size="small">Button</bq-button>
+     * </div>
      * </bq-alert>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/848a50-alert
@@ -2080,15 +2091,16 @@ declare global {
     /**
      * The Avatar component is a simple and customizable element that displays an image or initials in a circular or square shape.
      * This component is useful for displaying user profile pictures or any other image that represents a person or an entity.
-     * @example ```html
+     * @example How to use it
+     * ```html
      * <bq-avatar
-     *   alt-text="John Doe profile picture"
-     *   image="/image/url/photo-1524593689594.jpeg"
-     *   label="John Doe profile picture"
-     *   shape="circle"
-     *   size="medium"
+     * alt-text="John Doe profile picture"
+     * image="/image/url/photo-1524593689594.jpeg"
+     * label="John Doe profile picture"
+     * shape="circle"
+     * size="medium"
      * >
-     *   <bq-badge slot="badge" text-color="#fff">9</bq-badge>
+     * <bq-badge slot="badge" text-color="#fff">9</bq-badge>
      * </bq-avatar>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/148da7-avatar
@@ -2098,7 +2110,7 @@ declare global {
      * @attr {string} label - A text to use for describing the avatar on assistive devices.
      * @attr {string} initials - The text to display on avatar.
      * @attr {"circle" | "square"} shape - The shape of the avatar.
-     * @attr {"xsmall" | "small" | "medium" "large"} size - The size of the avatar.
+     * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
      * @cssprop --bq-avatar--background - Avatar background color
      * @cssprop --bq-avatar--border-color - Avatar border color
      * @cssprop --bq-avatar--border-style - Avatar border style
@@ -2125,7 +2137,8 @@ declare global {
     /**
      * The Badge component is a visual indicator that can be added to various elements within a user interface.
      * It is typically used to highlight important or relevant information, such as alerts, notifications, or statuses.
-     * @example ```html
+     * @example How to use it
+     * ```html
      * <bq-badge background-color="ui--success" text-color="text--inverse" size="small">9</bq-badge>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/194fd1-badge
@@ -2152,12 +2165,13 @@ declare global {
     };
     /**
      * The Breadcrumb is used to wraps a series of breadcrumb items to indicate the current page's location within a navigational hierarchy.
-     * @example ```html
+     * @example How to use it
+     * ```html
      * <bq-breadcrumb label="Breadcrumb">
-     *   <bq-breadcrumb-item>Home</bq-breadcrumb-item>
-     *   <bq-breadcrumb-item>Men's clothing</bq-breadcrumb-item>
-     *   <bq-breadcrumb-item>Shirt</bq-breadcrumb-item>
-     *   <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+     * <bq-breadcrumb-item>Home</bq-breadcrumb-item>
+     * <bq-breadcrumb-item>Men's clothing</bq-breadcrumb-item>
+     * <bq-breadcrumb-item>Shirt</bq-breadcrumb-item>
+     * <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
      * </bq-breadcrumb>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/194fd1-breadcrumb
@@ -2177,10 +2191,11 @@ declare global {
     }
     /**
      * The Breadcrumb Item helps users understand their current location within a website or application's hierarchical structure.
-     * @example ```html
+     * @example How to use it
+     * ```html
      * <bq-breadcrumb-item label="Home page">
-     *   <bq-icon name="house-line" size="16"></bq-icon>
-     *   Home
+     * <bq-icon name="house-line" size="16"></bq-icon>
+     * Home
      * </bq-breadcrumb-item>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/61d6c0-breadcrumb
@@ -2229,10 +2244,11 @@ declare global {
     }
     /**
      * Buttons are designed for users to take action on a page or a screen.
-     * @example ```html
+     * @example How to use it
+     * ```html
      * <bq-button appearance="primary" border="m" size="medium">
-     *   <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>
-     *   Go back
+     * <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>
+     * Go back
      * </bq-button>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/286b43-buttons
@@ -2846,11 +2862,12 @@ declare global {
 declare namespace LocalJSX {
     /**
      * The Accordion is a UI component that allows users to toggle between showing and hiding content sections. It provides a collapsible functionality, where only one section can be expanded at a time, while the others remain collapsed.
-     * @example ```html
+     * @example How to use it
+     * ```html
      * <bq-accordion appearance="filled" size="medium">
-     *   <bq-avatar size="xsmall" image="/image/url/img.png" slot="prefix"></bq-avatar>
-     *   <h3 slot="header">Header</h3>
-     *   <div>Lorem ipsum dolor...</div>
+     * <bq-avatar size="xsmall" image="/image/url/img.png" slot="prefix"></bq-avatar>
+     * <h3 slot="header">Header</h3>
+     * <div>Lorem ipsum dolor...</div>
      * </bq-accordion>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/713eae-accordion
@@ -2971,11 +2988,12 @@ declare namespace LocalJSX {
     /**
      * The accordion group component is a container for multiple accordion elements.
      * It allows to manage the appearance and size of all accordions at once.
-     * @example ```html
+     * @example How to use it
+     * ```html
      * <bq-accordion-group appearance="filled" size="medium">
-     *   <bq-accordion> ... </bq-accordion>
-     *   <bq-accordion> ... </bq-accordion>
-     *   <bq-accordion> ... </bq-accordion>
+     * <bq-accordion> ... </bq-accordion>
+     * <bq-accordion> ... </bq-accordion>
+     * <bq-accordion> ... </bq-accordion>
      * </bq-accordion-group>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/713eae-accordion
@@ -3012,18 +3030,19 @@ declare namespace LocalJSX {
     /**
      * The Alert is a user interface component used to convey important information to the user in a clear and concise manner.
      * It can be used to notify users of success, failure, warning, or any other type of information that needs to be brought to their attention.
-     * @example ```html
+     * @example How to use it
+     * ```html
      * <bq-alert>
-     *   <bq-icon name="star" slot="icon"></bq-icon>
-     *   Title
-     *   <span slot="body">
-     *     Description
-     *     <a class="bq-link" href="https://example.com">Link</a>
-     *   </span>
-     *   <div slot="footer">
-     *     <bq-button appearance="primary" size="small">Button</bq-button>
-     *     <bq-button appearance="link" size="small">Button</bq-button>
-     *   </div>
+     * <bq-icon name="star" slot="icon"></bq-icon>
+     * Title
+     * <span slot="body">
+     * Description
+     * <a class="bq-link" href="https://example.com">Link</a>
+     * </span>
+     * <div slot="footer">
+     * <bq-button appearance="primary" size="small">Button</bq-button>
+     * <bq-button appearance="link" size="small">Button</bq-button>
+     * </div>
      * </bq-alert>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/848a50-alert
@@ -3117,15 +3136,16 @@ declare namespace LocalJSX {
     /**
      * The Avatar component is a simple and customizable element that displays an image or initials in a circular or square shape.
      * This component is useful for displaying user profile pictures or any other image that represents a person or an entity.
-     * @example ```html
+     * @example How to use it
+     * ```html
      * <bq-avatar
-     *   alt-text="John Doe profile picture"
-     *   image="/image/url/photo-1524593689594.jpeg"
-     *   label="John Doe profile picture"
-     *   shape="circle"
-     *   size="medium"
+     * alt-text="John Doe profile picture"
+     * image="/image/url/photo-1524593689594.jpeg"
+     * label="John Doe profile picture"
+     * shape="circle"
+     * size="medium"
      * >
-     *   <bq-badge slot="badge" text-color="#fff">9</bq-badge>
+     * <bq-badge slot="badge" text-color="#fff">9</bq-badge>
      * </bq-avatar>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/148da7-avatar
@@ -3135,7 +3155,7 @@ declare namespace LocalJSX {
      * @attr {string} label - A text to use for describing the avatar on assistive devices.
      * @attr {string} initials - The text to display on avatar.
      * @attr {"circle" | "square"} shape - The shape of the avatar.
-     * @attr {"xsmall" | "small" | "medium" "large"} size - The size of the avatar.
+     * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
      * @cssprop --bq-avatar--background - Avatar background color
      * @cssprop --bq-avatar--border-color - Avatar border color
      * @cssprop --bq-avatar--border-style - Avatar border style
@@ -3182,7 +3202,8 @@ declare namespace LocalJSX {
     /**
      * The Badge component is a visual indicator that can be added to various elements within a user interface.
      * It is typically used to highlight important or relevant information, such as alerts, notifications, or statuses.
-     * @example ```html
+     * @example How to use it
+     * ```html
      * <bq-badge background-color="ui--success" text-color="text--inverse" size="small">9</bq-badge>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/194fd1-badge
@@ -3217,12 +3238,13 @@ declare namespace LocalJSX {
     }
     /**
      * The Breadcrumb is used to wraps a series of breadcrumb items to indicate the current page's location within a navigational hierarchy.
-     * @example ```html
+     * @example How to use it
+     * ```html
      * <bq-breadcrumb label="Breadcrumb">
-     *   <bq-breadcrumb-item>Home</bq-breadcrumb-item>
-     *   <bq-breadcrumb-item>Men's clothing</bq-breadcrumb-item>
-     *   <bq-breadcrumb-item>Shirt</bq-breadcrumb-item>
-     *   <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+     * <bq-breadcrumb-item>Home</bq-breadcrumb-item>
+     * <bq-breadcrumb-item>Men's clothing</bq-breadcrumb-item>
+     * <bq-breadcrumb-item>Shirt</bq-breadcrumb-item>
+     * <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
      * </bq-breadcrumb>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/194fd1-breadcrumb
@@ -3237,10 +3259,11 @@ declare namespace LocalJSX {
     }
     /**
      * The Breadcrumb Item helps users understand their current location within a website or application's hierarchical structure.
-     * @example ```html
+     * @example How to use it
+     * ```html
      * <bq-breadcrumb-item label="Home page">
-     *   <bq-icon name="house-line" size="16"></bq-icon>
-     *   Home
+     * <bq-icon name="house-line" size="16"></bq-icon>
+     * Home
      * </bq-breadcrumb-item>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/61d6c0-breadcrumb
@@ -3296,10 +3319,11 @@ declare namespace LocalJSX {
     }
     /**
      * Buttons are designed for users to take action on a page or a screen.
-     * @example ```html
+     * @example How to use it
+     * ```html
      * <bq-button appearance="primary" border="m" size="medium">
-     *   <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>
-     *   Go back
+     * <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>
+     * Go back
      * </bq-button>
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/286b43-buttons
@@ -4817,11 +4841,12 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             /**
              * The Accordion is a UI component that allows users to toggle between showing and hiding content sections. It provides a collapsible functionality, where only one section can be expanded at a time, while the others remain collapsed.
-             * @example ```html
+             * @example How to use it
+             * ```html
              * <bq-accordion appearance="filled" size="medium">
-             *   <bq-avatar size="xsmall" image="/image/url/img.png" slot="prefix"></bq-avatar>
-             *   <h3 slot="header">Header</h3>
-             *   <div>Lorem ipsum dolor...</div>
+             * <bq-avatar size="xsmall" image="/image/url/img.png" slot="prefix"></bq-avatar>
+             * <h3 slot="header">Header</h3>
+             * <div>Lorem ipsum dolor...</div>
              * </bq-accordion>
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/713eae-accordion
@@ -4889,11 +4914,12 @@ declare module "@stencil/core" {
             /**
              * The accordion group component is a container for multiple accordion elements.
              * It allows to manage the appearance and size of all accordions at once.
-             * @example ```html
+             * @example How to use it
+             * ```html
              * <bq-accordion-group appearance="filled" size="medium">
-             *   <bq-accordion> ... </bq-accordion>
-             *   <bq-accordion> ... </bq-accordion>
-             *   <bq-accordion> ... </bq-accordion>
+             * <bq-accordion> ... </bq-accordion>
+             * <bq-accordion> ... </bq-accordion>
+             * <bq-accordion> ... </bq-accordion>
              * </bq-accordion-group>
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/713eae-accordion
@@ -4909,18 +4935,19 @@ declare module "@stencil/core" {
             /**
              * The Alert is a user interface component used to convey important information to the user in a clear and concise manner.
              * It can be used to notify users of success, failure, warning, or any other type of information that needs to be brought to their attention.
-             * @example ```html
+             * @example How to use it
+             * ```html
              * <bq-alert>
-             *   <bq-icon name="star" slot="icon"></bq-icon>
-             *   Title
-             *   <span slot="body">
-             *     Description
-             *     <a class="bq-link" href="https://example.com">Link</a>
-             *   </span>
-             *   <div slot="footer">
-             *     <bq-button appearance="primary" size="small">Button</bq-button>
-             *     <bq-button appearance="link" size="small">Button</bq-button>
-             *   </div>
+             * <bq-icon name="star" slot="icon"></bq-icon>
+             * Title
+             * <span slot="body">
+             * Description
+             * <a class="bq-link" href="https://example.com">Link</a>
+             * </span>
+             * <div slot="footer">
+             * <bq-button appearance="primary" size="small">Button</bq-button>
+             * <bq-button appearance="link" size="small">Button</bq-button>
+             * </div>
              * </bq-alert>
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/848a50-alert
@@ -4965,15 +4992,16 @@ declare module "@stencil/core" {
             /**
              * The Avatar component is a simple and customizable element that displays an image or initials in a circular or square shape.
              * This component is useful for displaying user profile pictures or any other image that represents a person or an entity.
-             * @example ```html
+             * @example How to use it
+             * ```html
              * <bq-avatar
-             *   alt-text="John Doe profile picture"
-             *   image="/image/url/photo-1524593689594.jpeg"
-             *   label="John Doe profile picture"
-             *   shape="circle"
-             *   size="medium"
+             * alt-text="John Doe profile picture"
+             * image="/image/url/photo-1524593689594.jpeg"
+             * label="John Doe profile picture"
+             * shape="circle"
+             * size="medium"
              * >
-             *   <bq-badge slot="badge" text-color="#fff">9</bq-badge>
+             * <bq-badge slot="badge" text-color="#fff">9</bq-badge>
              * </bq-avatar>
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/148da7-avatar
@@ -4983,7 +5011,7 @@ declare module "@stencil/core" {
              * @attr {string} label - A text to use for describing the avatar on assistive devices.
              * @attr {string} initials - The text to display on avatar.
              * @attr {"circle" | "square"} shape - The shape of the avatar.
-             * @attr {"xsmall" | "small" | "medium" "large"} size - The size of the avatar.
+             * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
              * @cssprop --bq-avatar--background - Avatar background color
              * @cssprop --bq-avatar--border-color - Avatar border color
              * @cssprop --bq-avatar--border-style - Avatar border style
@@ -5005,7 +5033,8 @@ declare module "@stencil/core" {
             /**
              * The Badge component is a visual indicator that can be added to various elements within a user interface.
              * It is typically used to highlight important or relevant information, such as alerts, notifications, or statuses.
-             * @example ```html
+             * @example How to use it
+             * ```html
              * <bq-badge background-color="ui--success" text-color="text--inverse" size="small">9</bq-badge>
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/194fd1-badge
@@ -5027,12 +5056,13 @@ declare module "@stencil/core" {
             "bq-badge": LocalJSX.BqBadge & JSXBase.HTMLAttributes<HTMLBqBadgeElement>;
             /**
              * The Breadcrumb is used to wraps a series of breadcrumb items to indicate the current page's location within a navigational hierarchy.
-             * @example ```html
+             * @example How to use it
+             * ```html
              * <bq-breadcrumb label="Breadcrumb">
-             *   <bq-breadcrumb-item>Home</bq-breadcrumb-item>
-             *   <bq-breadcrumb-item>Men's clothing</bq-breadcrumb-item>
-             *   <bq-breadcrumb-item>Shirt</bq-breadcrumb-item>
-             *   <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+             * <bq-breadcrumb-item>Home</bq-breadcrumb-item>
+             * <bq-breadcrumb-item>Men's clothing</bq-breadcrumb-item>
+             * <bq-breadcrumb-item>Shirt</bq-breadcrumb-item>
+             * <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
              * </bq-breadcrumb>
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/194fd1-breadcrumb
@@ -5042,10 +5072,11 @@ declare module "@stencil/core" {
             "bq-breadcrumb": LocalJSX.BqBreadcrumb & JSXBase.HTMLAttributes<HTMLBqBreadcrumbElement>;
             /**
              * The Breadcrumb Item helps users understand their current location within a website or application's hierarchical structure.
-             * @example ```html
+             * @example How to use it
+             * ```html
              * <bq-breadcrumb-item label="Home page">
-             *   <bq-icon name="house-line" size="16"></bq-icon>
-             *   Home
+             * <bq-icon name="house-line" size="16"></bq-icon>
+             * Home
              * </bq-breadcrumb-item>
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/61d6c0-breadcrumb
@@ -5076,10 +5107,11 @@ declare module "@stencil/core" {
             "bq-breadcrumb-item": LocalJSX.BqBreadcrumbItem & JSXBase.HTMLAttributes<HTMLBqBreadcrumbItemElement>;
             /**
              * Buttons are designed for users to take action on a page or a screen.
-             * @example ```html
+             * @example How to use it
+             * ```html
              * <bq-button appearance="primary" border="m" size="medium">
-             *   <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>
-             *   Go back
+             * <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>
+             * Go back
              * </bq-button>
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/286b43-buttons

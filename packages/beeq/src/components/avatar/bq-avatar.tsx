@@ -7,7 +7,7 @@ import { validatePropValue } from '../../shared/utils';
  * The Avatar component is a simple and customizable element that displays an image or initials in a circular or square shape.
  * This component is useful for displaying user profile pictures or any other image that represents a person or an entity.
  *
- * @example
+ * @example How to use it
  * ```html
  * <bq-avatar
  *   alt-text="John Doe profile picture"
@@ -28,7 +28,7 @@ import { validatePropValue } from '../../shared/utils';
  * @attr {string} label - A text to use for describing the avatar on assistive devices.
  * @attr {string} initials - The text to display on avatar.
  * @attr {"circle" | "square"} shape - The shape of the avatar.
- * @attr {"xsmall" | "small" | "medium" "large"} size - The size of the avatar.
+ * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
  *
  * @slot badge - The badge slot is used to add a badge to the avatar. The badge is a small circle or square that can be used to display a number or a status.
  *

@@ -7,7 +7,7 @@ import { hasSlotContent, validatePropValue } from '../../shared/utils';
 /**
  * The Accordion is a UI component that allows users to toggle between showing and hiding content sections. It provides a collapsible functionality, where only one section can be expanded at a time, while the others remain collapsed.
  *
- * @example
+ * @example How to use it
  * ```html
  * <bq-accordion appearance="filled" size="medium">
  *   <bq-avatar size="xsmall" image="/image/url/img.png" slot="prefix"></bq-avatar>

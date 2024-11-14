@@ -16,7 +16,7 @@ import { hasSlotContent, isDefined, isNil, validatePropValue } from '../../share
 /**
  * Buttons are designed for users to take action on a page or a screen.
  *
- * @example
+ * @example How to use it
  * ```html
  * <bq-button appearance="primary" border="m" size="medium">
  *   <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>

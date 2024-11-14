@@ -3,7 +3,7 @@ import { Component, Element, h, Host, Prop } from '@stencil/core';
 /**
  * The Breadcrumb is used to wraps a series of breadcrumb items to indicate the current page's location within a navigational hierarchy.
  *
- * @example
+ * @example How to use it
  * ```html
  * <bq-breadcrumb label="Breadcrumb">
  *   <bq-breadcrumb-item>Home</bq-breadcrumb-item>

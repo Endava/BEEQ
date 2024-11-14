@@ -7,7 +7,7 @@ import { getColorCSSVariable, getTextContent, isNil, validatePropValue } from '.
  * The Badge component is a visual indicator that can be added to various elements within a user interface.
  * It is typically used to highlight important or relevant information, such as alerts, notifications, or statuses.
  *
- * @example
+ * @example How to use it
  * ```html
  * <bq-badge background-color="ui--success" text-color="text--inverse" size="small">9</bq-badge>
  * ```
