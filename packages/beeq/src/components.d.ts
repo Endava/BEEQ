@@ -567,6 +567,30 @@ export namespace Components {
          */
         "variant": TButtonVariant;
     }
+    /**
+     * The Card component serves as a versatile container designed for flexible content presentation within user interfaces.
+     * Its structure accommodates various styles, allowing users to customize and adapt it according to their design preferences.
+     * @example How to use it
+     * ```html
+     * <bq-card type="default" border="m">
+     * <div class="p-m">
+     * <h3 class="text-xl font-bold">Card Title</h3>
+     * <p class="text-m">Card content goes here</p>
+     * </div>
+     * </bq-card>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/522abb-card
+     * @status stable
+     * @attr {"default" | "minimal"} type - Type of card component
+     * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} border - The corner radius of the card component
+     * @cssprop --bq-card--borderColor - Card border color
+     * @cssprop --bq-card--borderRadius - Card border radius
+     * @cssprop --bq-card--borderStyle - Card border style
+     * @cssprop --bq-card--borderWidth - Card border width
+     * @cssprop --bq-card--padding - Card padding
+     * @cssprop --bq-card--paddingMinimal - Minimal card padding
+     * @cssprop --bq-card--background - Card background color
+     */
     interface BqCard {
         /**
           * The corner radius of the card component
@@ -577,6 +601,36 @@ export namespace Components {
          */
         "type": TCardType;
     }
+    /**
+     * The checkbox is a UI component that allows users to select one or more options from a list of choices.
+     * It is commonly used in forms, surveys, and settings pages.
+     * @example How to use it
+     * ```html
+     * <bq-checkbox name="bq-checkbox" value="checkbox-value" background-on-hover>
+     * Checkbox label
+     * </bq-checkbox>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/431f17-checkbox
+     * @status stable
+     * @attr {boolean} background-on-hover - If true checkbox displays background on hover
+     * @attr {string} form-id - The form ID that the checkbox is associated with
+     * @attr {string} form-validation-message - The native form validation message
+     * @attr {boolean} checked - If true checkbox is checked
+     * @attr {boolean} disabled - If true checkbox is disabled
+     * @attr {boolean} indeterminate - A state that is neither checked nor unchecked
+     * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+     * @attr {boolean} required - If `true`, it will indicate that the user must specify a value for the checkbox before the owning form can be submitted
+     * @attr {string} value - A string representing the value of the checkbox. Primarily used to differentiate a list of related checkboxes that have the same name
+     * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+     * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+     * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+     * @event bqChange - Handler to be called when the checkbox state changes
+     * @event bqFocus - Handler to be called when the checkbox gets focus
+     * @event bqBlur - Handler to be called when the checkbox loses focus
+     * @cssprop --bq-checkbox--size - Checkbox size
+     * @cssprop --bq-checkbox--border-radius - Checkbox border radius
+     * @cssprop --bq-checkbox--border-width - Checkbox border width
+     */
     interface BqCheckbox {
         /**
           * If true checkbox displays background on hover
@@ -2300,6 +2354,30 @@ declare global {
         prototype: HTMLBqButtonElement;
         new (): HTMLBqButtonElement;
     };
+    /**
+     * The Card component serves as a versatile container designed for flexible content presentation within user interfaces.
+     * Its structure accommodates various styles, allowing users to customize and adapt it according to their design preferences.
+     * @example How to use it
+     * ```html
+     * <bq-card type="default" border="m">
+     * <div class="p-m">
+     * <h3 class="text-xl font-bold">Card Title</h3>
+     * <p class="text-m">Card content goes here</p>
+     * </div>
+     * </bq-card>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/522abb-card
+     * @status stable
+     * @attr {"default" | "minimal"} type - Type of card component
+     * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} border - The corner radius of the card component
+     * @cssprop --bq-card--borderColor - Card border color
+     * @cssprop --bq-card--borderRadius - Card border radius
+     * @cssprop --bq-card--borderStyle - Card border style
+     * @cssprop --bq-card--borderWidth - Card border width
+     * @cssprop --bq-card--padding - Card padding
+     * @cssprop --bq-card--paddingMinimal - Minimal card padding
+     * @cssprop --bq-card--background - Card background color
+     */
     interface HTMLBqCardElement extends Components.BqCard, HTMLStencilElement {
     }
     var HTMLBqCardElement: {
@@ -2311,6 +2389,36 @@ declare global {
         "bqFocus": HTMLBqCheckboxElement;
         "bqBlur": HTMLBqCheckboxElement;
     }
+    /**
+     * The checkbox is a UI component that allows users to select one or more options from a list of choices.
+     * It is commonly used in forms, surveys, and settings pages.
+     * @example How to use it
+     * ```html
+     * <bq-checkbox name="bq-checkbox" value="checkbox-value" background-on-hover>
+     * Checkbox label
+     * </bq-checkbox>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/431f17-checkbox
+     * @status stable
+     * @attr {boolean} background-on-hover - If true checkbox displays background on hover
+     * @attr {string} form-id - The form ID that the checkbox is associated with
+     * @attr {string} form-validation-message - The native form validation message
+     * @attr {boolean} checked - If true checkbox is checked
+     * @attr {boolean} disabled - If true checkbox is disabled
+     * @attr {boolean} indeterminate - A state that is neither checked nor unchecked
+     * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+     * @attr {boolean} required - If `true`, it will indicate that the user must specify a value for the checkbox before the owning form can be submitted
+     * @attr {string} value - A string representing the value of the checkbox. Primarily used to differentiate a list of related checkboxes that have the same name
+     * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+     * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+     * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+     * @event bqChange - Handler to be called when the checkbox state changes
+     * @event bqFocus - Handler to be called when the checkbox gets focus
+     * @event bqBlur - Handler to be called when the checkbox loses focus
+     * @cssprop --bq-checkbox--size - Checkbox size
+     * @cssprop --bq-checkbox--border-radius - Checkbox border radius
+     * @cssprop --bq-checkbox--border-width - Checkbox border width
+     */
     interface HTMLBqCheckboxElement extends Components.BqCheckbox, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqCheckboxElementEventMap>(type: K, listener: (this: HTMLBqCheckboxElement, ev: BqCheckboxCustomEvent<HTMLBqCheckboxElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -3423,6 +3531,30 @@ declare namespace LocalJSX {
          */
         "variant"?: TButtonVariant;
     }
+    /**
+     * The Card component serves as a versatile container designed for flexible content presentation within user interfaces.
+     * Its structure accommodates various styles, allowing users to customize and adapt it according to their design preferences.
+     * @example How to use it
+     * ```html
+     * <bq-card type="default" border="m">
+     * <div class="p-m">
+     * <h3 class="text-xl font-bold">Card Title</h3>
+     * <p class="text-m">Card content goes here</p>
+     * </div>
+     * </bq-card>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/522abb-card
+     * @status stable
+     * @attr {"default" | "minimal"} type - Type of card component
+     * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} border - The corner radius of the card component
+     * @cssprop --bq-card--borderColor - Card border color
+     * @cssprop --bq-card--borderRadius - Card border radius
+     * @cssprop --bq-card--borderStyle - Card border style
+     * @cssprop --bq-card--borderWidth - Card border width
+     * @cssprop --bq-card--padding - Card padding
+     * @cssprop --bq-card--paddingMinimal - Minimal card padding
+     * @cssprop --bq-card--background - Card background color
+     */
     interface BqCard {
         /**
           * The corner radius of the card component
@@ -3433,6 +3565,36 @@ declare namespace LocalJSX {
          */
         "type"?: TCardType;
     }
+    /**
+     * The checkbox is a UI component that allows users to select one or more options from a list of choices.
+     * It is commonly used in forms, surveys, and settings pages.
+     * @example How to use it
+     * ```html
+     * <bq-checkbox name="bq-checkbox" value="checkbox-value" background-on-hover>
+     * Checkbox label
+     * </bq-checkbox>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/431f17-checkbox
+     * @status stable
+     * @attr {boolean} background-on-hover - If true checkbox displays background on hover
+     * @attr {string} form-id - The form ID that the checkbox is associated with
+     * @attr {string} form-validation-message - The native form validation message
+     * @attr {boolean} checked - If true checkbox is checked
+     * @attr {boolean} disabled - If true checkbox is disabled
+     * @attr {boolean} indeterminate - A state that is neither checked nor unchecked
+     * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+     * @attr {boolean} required - If `true`, it will indicate that the user must specify a value for the checkbox before the owning form can be submitted
+     * @attr {string} value - A string representing the value of the checkbox. Primarily used to differentiate a list of related checkboxes that have the same name
+     * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+     * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+     * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+     * @event bqChange - Handler to be called when the checkbox state changes
+     * @event bqFocus - Handler to be called when the checkbox gets focus
+     * @event bqBlur - Handler to be called when the checkbox loses focus
+     * @cssprop --bq-checkbox--size - Checkbox size
+     * @cssprop --bq-checkbox--border-radius - Checkbox border radius
+     * @cssprop --bq-checkbox--border-width - Checkbox border width
+     */
     interface BqCheckbox {
         /**
           * If true checkbox displays background on hover
@@ -5150,7 +5312,61 @@ declare module "@stencil/core" {
              * @cssprop --bq-button--large-font-size - Button large font size
              */
             "bq-button": LocalJSX.BqButton & JSXBase.HTMLAttributes<HTMLBqButtonElement>;
+            /**
+             * The Card component serves as a versatile container designed for flexible content presentation within user interfaces.
+             * Its structure accommodates various styles, allowing users to customize and adapt it according to their design preferences.
+             * @example How to use it
+             * ```html
+             * <bq-card type="default" border="m">
+             * <div class="p-m">
+             * <h3 class="text-xl font-bold">Card Title</h3>
+             * <p class="text-m">Card content goes here</p>
+             * </div>
+             * </bq-card>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/522abb-card
+             * @status stable
+             * @attr {"default" | "minimal"} type - Type of card component
+             * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} border - The corner radius of the card component
+             * @cssprop --bq-card--borderColor - Card border color
+             * @cssprop --bq-card--borderRadius - Card border radius
+             * @cssprop --bq-card--borderStyle - Card border style
+             * @cssprop --bq-card--borderWidth - Card border width
+             * @cssprop --bq-card--padding - Card padding
+             * @cssprop --bq-card--paddingMinimal - Minimal card padding
+             * @cssprop --bq-card--background - Card background color
+             */
             "bq-card": LocalJSX.BqCard & JSXBase.HTMLAttributes<HTMLBqCardElement>;
+            /**
+             * The checkbox is a UI component that allows users to select one or more options from a list of choices.
+             * It is commonly used in forms, surveys, and settings pages.
+             * @example How to use it
+             * ```html
+             * <bq-checkbox name="bq-checkbox" value="checkbox-value" background-on-hover>
+             * Checkbox label
+             * </bq-checkbox>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/431f17-checkbox
+             * @status stable
+             * @attr {boolean} background-on-hover - If true checkbox displays background on hover
+             * @attr {string} form-id - The form ID that the checkbox is associated with
+             * @attr {string} form-validation-message - The native form validation message
+             * @attr {boolean} checked - If true checkbox is checked
+             * @attr {boolean} disabled - If true checkbox is disabled
+             * @attr {boolean} indeterminate - A state that is neither checked nor unchecked
+             * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+             * @attr {boolean} required - If `true`, it will indicate that the user must specify a value for the checkbox before the owning form can be submitted
+             * @attr {string} value - A string representing the value of the checkbox. Primarily used to differentiate a list of related checkboxes that have the same name
+             * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+             * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+             * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+             * @event bqChange - Handler to be called when the checkbox state changes
+             * @event bqFocus - Handler to be called when the checkbox gets focus
+             * @event bqBlur - Handler to be called when the checkbox loses focus
+             * @cssprop --bq-checkbox--size - Checkbox size
+             * @cssprop --bq-checkbox--border-radius - Checkbox border radius
+             * @cssprop --bq-checkbox--border-width - Checkbox border width
+             */
             "bq-checkbox": LocalJSX.BqCheckbox & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
             "bq-date-picker": LocalJSX.BqDatePicker & JSXBase.HTMLAttributes<HTMLBqDatePickerElement>;
             "bq-dialog": LocalJSX.BqDialog & JSXBase.HTMLAttributes<HTMLBqDialogElement>;

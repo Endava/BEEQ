@@ -5,6 +5,11 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The checkbox is a UI component that allows users to select one or more options from a list of choices.
+It is commonly used in forms, surveys, and settings pages.
+
 ## Properties
 
 | Property                | Attribute                 | Description                                                                                                                            | Type      | Default     |
@@ -63,6 +68,13 @@ Use this method instead of the global `element.focus()`.
 Type: `Promise<void>`
 
 
+
+
+## Slots
+
+| Slot | Description                           |
+| ---- | ------------------------------------- |
+|      | The content of the checkbox component |
 
 
 ## Shadow Parts
