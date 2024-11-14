@@ -10,7 +10,10 @@
  * https://custom-elements-manifest.open-wc.org/analyzer/
  */
 
+import { customJSDocTagsPlugin } from 'cem-plugin-custom-jsdoc-tags';
 import { expandTypesPlugin, getTsProgram } from 'cem-plugin-expanded-types';
+import { jsdocExamplePlugin } from 'cem-plugin-jsdoc-example';
+import { customElementJsxPlugin } from 'custom-element-jsx-integration';
 import { customElementVsCodePlugin } from 'custom-element-vs-code-integration';
 
 export default {
@@ -23,7 +26,7 @@ export default {
     'packages/beeq/src/components/**/__test__/**/*',
   ],
   /** Directory to write the output to */
-  outdir: 'packages/beeq/.cem',
+  outdir: 'packages/beeq/cem',
   /** Run in dev mode, provides extra logging */
   dev: false,
   /** Enable special handling for Stencil.js compiler */
@@ -31,11 +34,26 @@ export default {
   /** Custom plugins to run */
   plugins: [
     expandTypesPlugin(),
+    jsdocExamplePlugin(),
+    customJSDocTagsPlugin({
+      tags: {
+        dependency: {
+          mappedName: 'dependencies',
+          isArray: true,
+        },
+        part: {
+          mappedName: 'csspart',
+        },
+      },
+    }),
+    customElementJsxPlugin({
+      outdir: 'packages/beeq/cem',
+      fileName: 'beeq.d.ts',
+    }),
     customElementVsCodePlugin({
-      outdir: 'packages/beeq/.cem',
+      outdir: 'packages/beeq/cem',
       htmlFileName: 'beeq.html-custom-data.json',
-      cssFileName: 'beeq.css-custom-data.json',
-      descriptionSrc: 'description',
+      cssFileName: null,
     }),
   ],
   /** Overrides default module creation: */

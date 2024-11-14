@@ -43,7 +43,6 @@
     "*.json5": "json5",
   },
   "html.customData": ["./packages/beeq/.cem/beeq.html-custom-data.json"],
-  "css.customData": ["./packages/beeq/.cem/beeq.css-custom-data.json"],
   "less.validate": false,
   "scss.validate": false,
   "stylelint.validate": [

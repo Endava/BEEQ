@@ -3,6 +3,7 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "composite": true,
+    "resolveJsonModule": true,
     "removeComments": false
   },
   "exclude": [

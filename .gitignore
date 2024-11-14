@@ -12,11 +12,11 @@ chromatic-diagnostics.json
 # source files to ignore
 .angular
 master.zip
-packages/beeq/.cem/*
-!packages/beeq/.cem/.gitkeep
 packages/beeq/.stencil
 packages/beeq/.storybook/assets/css/stories.css
 packages/beeq/.storybook/custom-elements.json
+packages/beeq/cem/*
+!packages/beeq/cem/.gitkeep
 packages/beeq/src/_storybook/CHANGELOG.md
 packages/beeq/src/components/icon/svg/**
 packages/beeq/vite.config.*.timestamp-*

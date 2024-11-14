@@ -16,7 +16,7 @@ module.exports = [
   importXPlugin.flatConfigs.typescript,
   jsxA11yPlugin.flatConfigs.recommended,
   {
-    ignores: ['**/*.e2e.ts', '**/*.spec.ts', '**/*.spec.tsx'],
+    ignores: ['**/*.e2e.ts', '**/*.spec.ts', '**/*.spec.tsx', '**/cem/*.*'],
   },
   {
     languageOptions: {
@@ -122,7 +122,10 @@ module.exports = [
             '@stencil/react-output-target',
             '@stencil/sass',
             '@stencil/vue-output-target',
+            'cem-plugin-custom-jsdoc-tags',
             'cem-plugin-expanded-types',
+            'cem-plugin-jsdoc-example',
+            'custom-element-jsx-integration',
             'custom-element-vs-code-integration',
             'eslint-plugin-import-x',
             'eslint-plugin-jsx-a11y',
