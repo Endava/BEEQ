@@ -5,6 +5,10 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The Date Picker is a intuitive UI element component allows users to select dates from a visual calendar interface, providing an intuitive way to input date information.
+
 ## Properties
 
 | Property            | Attribute            | Description                                                                                                                                                                                                            | Type                                                                                                                                                                 | Default                                                              |
@@ -63,38 +67,38 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part                      | Description                                                                                                  |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| `"base"`                  | The component's base wrapper.                                                                                |
-| `"button"`                | The native HTML button used under the hood in the clear button.                                              |
-| `"calendar__button"`      | Any button within the component.                                                                             |
-| `"calendar__container"`   | The container for the entire component.                                                                      |
-| `"calendar__day"`         | The buttons corresponding to each day in the grid.                                                           |
-| `"calendar__disabled"`    | A button that is disabled due to min/max.                                                                    |
-| `"calendar__disallowed"`  | Any day that has been disallowed via isDateDisallowed.                                                       |
-| `"calendar__head"`        | The table's header row.                                                                                      |
-| `"calendar__header"`      | The container for heading and button's.                                                                      |
-| `"calendar__heading"`     | The heading containing the month and year.  // Parts specific to the calendar-month component:               |
-| `"calendar__next"`        | The next page button.                                                                                        |
-| `"calendar__outside"`     | Any days which are outside the current month.                                                                |
-| `"calendar__previous"`    | The previous page button.                                                                                    |
-| `"calendar__range-end"`   | The day at the end of a date range.                                                                          |
-| `"calendar__range-inner"` | Any days between the start and end of a date range.                                                          |
-| `"calendar__range-start"` | The day at the start of a date range.                                                                        |
-| `"calendar__selected"`    | Any days which are selected.                                                                                 |
-| `"calendar__table"`       | The <table> element.                                                                                         |
-| `"calendar__td"`          | The table's body cells.                                                                                      |
-| `"calendar__th"`          | The table's header cells.                                                                                    |
-| `"calendar__today"`       | Today's day.                                                                                                 |
-| `"calendar__tr"`          | Any row within the table.                                                                                    |
-| `"calendar__week"`        | The table's body rows.                                                                                       |
-| `"clear-btn"`             | The clear button.                                                                                            |
-| `"control"`               | The input control wrapper.                                                                                   |
-| `"input"`                 | The native HTML input element used under the hood.                                                           |
-| `"label"`                 | The label slot container.                                                                                    |
-| `"panel"`                 | The date picker panel container                                                                              |
-| `"prefix"`                | The prefix slot container.                                                                                   |
-| `"suffix"`                | The suffix slot container.  // Parts from the Cally library for calendar-date and calendar-range components: |
+| Part                      | Description                                                               |
+| ------------------------- | ------------------------------------------------------------------------- |
+| `"base"`                  | The component's base wrapper.                                             |
+| `"button"`                | The native HTML button used under the hood in the clear button.           |
+| `"calendar__button"`      | Any button used in the calendar-month component.                          |
+| `"calendar__container"`   | The calendar-range container for the entire component.                    |
+| `"calendar__day"`         | The buttons corresponding to each day in the calendar-month grid.         |
+| `"calendar__disabled"`    | A button that is disabled due to min/max on the calendar-range component. |
+| `"calendar__disallowed"`  | Any day that has been disallowed via isDateDisallowed.                    |
+| `"calendar__head"`        | The calendar-month table's header row.                                    |
+| `"calendar__header"`      | The calendar-range container for the heading and buttons.                 |
+| `"calendar__heading"`     | The calendar-month heading container that labels the month.               |
+| `"calendar__next"`        | The next page button on the calendar-range component.                     |
+| `"calendar__outside"`     | Any days which are outside the current month.                             |
+| `"calendar__previous"`    | The previous page button on the calendar-range component.                 |
+| `"calendar__range-end"`   | The day at the end of a date range.                                       |
+| `"calendar__range-inner"` | Any days between the start and end of a date range.                       |
+| `"calendar__range-start"` | The day at the start of a date range.                                     |
+| `"calendar__selected"`    | Any days which are selected.                                              |
+| `"calendar__table"`       | The calendar-month <table> element.                                       |
+| `"calendar__td"`          | The calendar-month table's body cells.                                    |
+| `"calendar__th"`          | The calendar-month table's header cells.                                  |
+| `"calendar__today"`       | The Today's day.                                                          |
+| `"calendar__tr"`          | Any row within the table on the calendar-month component.                 |
+| `"calendar__week"`        | The calendar-month table's body rows.                                     |
+| `"clear-btn"`             | The clear button.                                                         |
+| `"control"`               | The input control wrapper.                                                |
+| `"input"`                 | The native HTML input element used under the hood.                        |
+| `"label"`                 | The label slot container.                                                 |
+| `"panel"`                 | The date picker panel container                                           |
+| `"prefix"`                | The prefix slot container.                                                |
+| `"suffix"`                | The suffix slot container.                                                |
 
 
 ## Dependencies
