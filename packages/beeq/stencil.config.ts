@@ -62,7 +62,7 @@ export const config: Config = {
       type: 'dist',
       copy: [
         { src: '../README.md', dest: '../../.', warn: true },
-        { src: '../.cem/*.*', dest: '../cem', warn: true },
+        { src: '../cem/*.*', dest: '../cem', warn: true },
       ],
     },
     { type: 'dist-hydrate-script', dir: 'dist/hydrate' },
