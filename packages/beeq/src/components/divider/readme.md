@@ -3,6 +3,10 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The Divider component is used to visually separate content in a layout.
+
 ## Properties
 
 | Property          | Attribute           | Description                                                                                      | Type                            | Default             |
@@ -18,15 +22,22 @@
 | `titleAlignment`  | `title-alignment`   | Set the alignment of the title on the main axis of the divider (horizontal / vertical)           | `"end" \| "middle" \| "start"`  | `'middle'`          |
 
 
+## Slots
+
+| Slot | Description                       |
+| ---- | --------------------------------- |
+|      | The title content of the divider. |
+
+
 ## Shadow Parts
 
-| Part                | Description                                                                     |
-| ------------------- | ------------------------------------------------------------------------------- |
-| `"base"`            | The component's internal wrapper.                                               |
-| `"dash-end"`        | The component's internal svg wrapper for the end line of the divider's stroke   |
-| `"dash-end-line"`   | The component's internal line component of the divider's stroke                 |
-| `"dash-start"`      | The component's internal svg wrapper for the start line of the divider's stroke |
-| `"dash-start-line"` | The component's internal line component of the divider's stroke                 |
+| Part                | Description                                                                      |
+| ------------------- | -------------------------------------------------------------------------------- |
+| `"base"`            | The component's internal wrapper.                                                |
+| `"dash-end"`        | The component's internal svg wrapper for the end line of the divider's stroke.   |
+| `"dash-end-line"`   | The component's internal line component of the divider's stroke.                 |
+| `"dash-start"`      | The component's internal svg wrapper for the start line of the divider's stroke. |
+| `"dash-start-line"` | The component's internal line component of the divider's stroke.                 |
 
 
 ## Dependencies

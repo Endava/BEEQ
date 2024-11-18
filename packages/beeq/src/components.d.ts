@@ -879,9 +879,64 @@ export namespace Components {
          */
         "value": string;
     }
+    /**
+     * The Dialog component is used to display additional content or prompt a user for action.
+     * It provides a way to display additional information, options, or controls in a separate, non-obstructive interface element.
+     * @example How to use it
+     * ```html
+     * <bq-dialog footer-appearance="standard" border="m" size="medium">
+     * <h5 class="bold flex items-center gap-s" slot="title">
+     * <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
+     * Title
+     * </h5>
+     * <p>
+     * Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+     * standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+     * type specimen book.
+     * </p>
+     * <div class="flex gap-xs" slot="footer">
+     * <bq-button appearance="link">Button</bq-button>
+     * <bq-button variant="ghost">Button</bq-button>
+     * <bq-button variant="standard" slot="footer">Button</bq-button>
+     * </div>
+     * </bq-dialog>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/15b6fc-dialog
+     * @status stable
+     * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} border - Border radius of the dialog component.
+     * @attr {boolean} disable-backdrop - If true, the backdrop overlay won't be shown when the dialog opens.
+     * @attr {boolean} disable-close-esc-keydown - If true, the dialog will not close when the [Esc] key is pressed.
+     * @attr {boolean} disable-close-click-outside - If true, the dialog will not close when clicking on the backdrop overlay.
+     * @attr {"standard" | "highlight"} footer-appearance - The appearance of the footer.
+     * @attr {boolean} hide-close-button - If true, it hides the close button.
+     * @attr {boolean} open - If true, the dialog will be shown as open.
+     * @attr {"small" | "medium" | "large"} size - The size of the dialog.
+     * @method show - Open the dialog.
+     * @method hide - Closes the dialog.
+     * @method cancel - Dismiss or cancel the dialog.
+     * @event bqCancel - Callback handler emitted when the dialog has been canceled or dismissed.
+     * @event bqClose - Callback handler emitted when the dialog will close.
+     * @event bqOpen - Callback handler emitted when the dialog will open.
+     * @event bqAfterOpen - Callback handler emitted when the dialog finish opening.
+     * @event bqAfterClose - Callback handler emitted when the dialog finish closing.
+     * @cssprop --bq-dialog--background - Dialog background color
+     * @cssprop --bq-dialog--background-backdrop - Dialog backdrop background color
+     * @cssprop --bq-dialog--box-shadow - Dialog box shadow
+     * @cssprop --bq-dialog--border-color - Dialog border color
+     * @cssprop --bq-dialog--border-style - Dialog border style
+     * @cssprop --bq-dialog--border-width - Dialog border width
+     * @cssprop --bq-dialog--border-radius - Dialog border radius
+     * @cssprop --bq-dialog--padding - Dialog padding
+     * @cssprop --bq-dialog--content-footer-gap - Dialog gap distance between content and footer elements
+     * @cssprop --bq-dialog--title-body-gap - Dialog gap distance between title and body elements
+     * @cssprop --bq-dialog--width-small - Dialog small width
+     * @cssprop --bq-dialog--width-medium - Dialog medium width
+     * @cssprop --bq-dialog--width-large - Dialog large width
+     * @cssprop --bq-dialog-z-index - Dialog z-index applied when opened
+     */
     interface BqDialog {
         /**
-          * Corder radius of the dialog component
+          * Border radius of the dialog component
          */
         "border": TDialogBorderRadius;
         /**
@@ -925,6 +980,28 @@ export namespace Components {
          */
         "size": TDialogSize;
     }
+    /**
+     * The Divider component is used to visually separate content in a layout.
+     * @example How to use it
+     * ```html
+     * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
+     * <span slot="title">Divider Title</span>
+     * </bq-divider>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/53dfe6-divider
+     * @status stable
+     * @attr {boolean} dashed - If true, the divider has a dashed pattern.
+     * @attr {"horizontal" | "vertical"} orientation - The default orientation of the divider.
+     * @attr {string} stroke-color - Set the stroke color of the divider. The value should be a valid value of the palette color.
+     * @attr {"start" | "middle" | "end"} title-alignment - Set the alignment of the title on the main axis of the divider (horizontal / vertical).
+     * @attr {number} stroke-dash-width - Set the width of each dash of the divider's stroke. This is applicable when the stroke is dashed.
+     * @attr {number} stroke-dash-gap - Set the gap of the divider's stroke. This is applicable when the stroke is dashed.
+     * @attr {number} stroke-thickness - Set the thickness of the divider's stroke. Value expressed in px.
+     * @attr {number} stroke-basis - Set the min width of the divider's stroke when text is not centered. Value expressed in px.
+     * @attr {"square" | "round" | "butt"} stroke-linecap - Set the line of the divider's stroke. This is applicable when the stroke is dashed.
+     * @cssprop --bq-divider--color - Divider color
+     * @cssprop --bq-divider--title-marginX - Divider space between title and delimiters
+     */
     interface BqDivider {
         /**
           * If true, the divider has a dashed pattern
@@ -2622,6 +2699,61 @@ declare global {
         "bqAfterOpen": void;
         "bqAfterClose": void;
     }
+    /**
+     * The Dialog component is used to display additional content or prompt a user for action.
+     * It provides a way to display additional information, options, or controls in a separate, non-obstructive interface element.
+     * @example How to use it
+     * ```html
+     * <bq-dialog footer-appearance="standard" border="m" size="medium">
+     * <h5 class="bold flex items-center gap-s" slot="title">
+     * <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
+     * Title
+     * </h5>
+     * <p>
+     * Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+     * standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+     * type specimen book.
+     * </p>
+     * <div class="flex gap-xs" slot="footer">
+     * <bq-button appearance="link">Button</bq-button>
+     * <bq-button variant="ghost">Button</bq-button>
+     * <bq-button variant="standard" slot="footer">Button</bq-button>
+     * </div>
+     * </bq-dialog>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/15b6fc-dialog
+     * @status stable
+     * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} border - Border radius of the dialog component.
+     * @attr {boolean} disable-backdrop - If true, the backdrop overlay won't be shown when the dialog opens.
+     * @attr {boolean} disable-close-esc-keydown - If true, the dialog will not close when the [Esc] key is pressed.
+     * @attr {boolean} disable-close-click-outside - If true, the dialog will not close when clicking on the backdrop overlay.
+     * @attr {"standard" | "highlight"} footer-appearance - The appearance of the footer.
+     * @attr {boolean} hide-close-button - If true, it hides the close button.
+     * @attr {boolean} open - If true, the dialog will be shown as open.
+     * @attr {"small" | "medium" | "large"} size - The size of the dialog.
+     * @method show - Open the dialog.
+     * @method hide - Closes the dialog.
+     * @method cancel - Dismiss or cancel the dialog.
+     * @event bqCancel - Callback handler emitted when the dialog has been canceled or dismissed.
+     * @event bqClose - Callback handler emitted when the dialog will close.
+     * @event bqOpen - Callback handler emitted when the dialog will open.
+     * @event bqAfterOpen - Callback handler emitted when the dialog finish opening.
+     * @event bqAfterClose - Callback handler emitted when the dialog finish closing.
+     * @cssprop --bq-dialog--background - Dialog background color
+     * @cssprop --bq-dialog--background-backdrop - Dialog backdrop background color
+     * @cssprop --bq-dialog--box-shadow - Dialog box shadow
+     * @cssprop --bq-dialog--border-color - Dialog border color
+     * @cssprop --bq-dialog--border-style - Dialog border style
+     * @cssprop --bq-dialog--border-width - Dialog border width
+     * @cssprop --bq-dialog--border-radius - Dialog border radius
+     * @cssprop --bq-dialog--padding - Dialog padding
+     * @cssprop --bq-dialog--content-footer-gap - Dialog gap distance between content and footer elements
+     * @cssprop --bq-dialog--title-body-gap - Dialog gap distance between title and body elements
+     * @cssprop --bq-dialog--width-small - Dialog small width
+     * @cssprop --bq-dialog--width-medium - Dialog medium width
+     * @cssprop --bq-dialog--width-large - Dialog large width
+     * @cssprop --bq-dialog-z-index - Dialog z-index applied when opened
+     */
     interface HTMLBqDialogElement extends Components.BqDialog, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqDialogElementEventMap>(type: K, listener: (this: HTMLBqDialogElement, ev: BqDialogCustomEvent<HTMLBqDialogElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2636,6 +2768,28 @@ declare global {
         prototype: HTMLBqDialogElement;
         new (): HTMLBqDialogElement;
     };
+    /**
+     * The Divider component is used to visually separate content in a layout.
+     * @example How to use it
+     * ```html
+     * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
+     * <span slot="title">Divider Title</span>
+     * </bq-divider>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/53dfe6-divider
+     * @status stable
+     * @attr {boolean} dashed - If true, the divider has a dashed pattern.
+     * @attr {"horizontal" | "vertical"} orientation - The default orientation of the divider.
+     * @attr {string} stroke-color - Set the stroke color of the divider. The value should be a valid value of the palette color.
+     * @attr {"start" | "middle" | "end"} title-alignment - Set the alignment of the title on the main axis of the divider (horizontal / vertical).
+     * @attr {number} stroke-dash-width - Set the width of each dash of the divider's stroke. This is applicable when the stroke is dashed.
+     * @attr {number} stroke-dash-gap - Set the gap of the divider's stroke. This is applicable when the stroke is dashed.
+     * @attr {number} stroke-thickness - Set the thickness of the divider's stroke. Value expressed in px.
+     * @attr {number} stroke-basis - Set the min width of the divider's stroke when text is not centered. Value expressed in px.
+     * @attr {"square" | "round" | "butt"} stroke-linecap - Set the line of the divider's stroke. This is applicable when the stroke is dashed.
+     * @cssprop --bq-divider--color - Divider color
+     * @cssprop --bq-divider--title-marginX - Divider space between title and delimiters
+     */
     interface HTMLBqDividerElement extends Components.BqDivider, HTMLStencilElement {
     }
     var HTMLBqDividerElement: {
@@ -4015,9 +4169,64 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    /**
+     * The Dialog component is used to display additional content or prompt a user for action.
+     * It provides a way to display additional information, options, or controls in a separate, non-obstructive interface element.
+     * @example How to use it
+     * ```html
+     * <bq-dialog footer-appearance="standard" border="m" size="medium">
+     * <h5 class="bold flex items-center gap-s" slot="title">
+     * <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
+     * Title
+     * </h5>
+     * <p>
+     * Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+     * standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+     * type specimen book.
+     * </p>
+     * <div class="flex gap-xs" slot="footer">
+     * <bq-button appearance="link">Button</bq-button>
+     * <bq-button variant="ghost">Button</bq-button>
+     * <bq-button variant="standard" slot="footer">Button</bq-button>
+     * </div>
+     * </bq-dialog>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/15b6fc-dialog
+     * @status stable
+     * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} border - Border radius of the dialog component.
+     * @attr {boolean} disable-backdrop - If true, the backdrop overlay won't be shown when the dialog opens.
+     * @attr {boolean} disable-close-esc-keydown - If true, the dialog will not close when the [Esc] key is pressed.
+     * @attr {boolean} disable-close-click-outside - If true, the dialog will not close when clicking on the backdrop overlay.
+     * @attr {"standard" | "highlight"} footer-appearance - The appearance of the footer.
+     * @attr {boolean} hide-close-button - If true, it hides the close button.
+     * @attr {boolean} open - If true, the dialog will be shown as open.
+     * @attr {"small" | "medium" | "large"} size - The size of the dialog.
+     * @method show - Open the dialog.
+     * @method hide - Closes the dialog.
+     * @method cancel - Dismiss or cancel the dialog.
+     * @event bqCancel - Callback handler emitted when the dialog has been canceled or dismissed.
+     * @event bqClose - Callback handler emitted when the dialog will close.
+     * @event bqOpen - Callback handler emitted when the dialog will open.
+     * @event bqAfterOpen - Callback handler emitted when the dialog finish opening.
+     * @event bqAfterClose - Callback handler emitted when the dialog finish closing.
+     * @cssprop --bq-dialog--background - Dialog background color
+     * @cssprop --bq-dialog--background-backdrop - Dialog backdrop background color
+     * @cssprop --bq-dialog--box-shadow - Dialog box shadow
+     * @cssprop --bq-dialog--border-color - Dialog border color
+     * @cssprop --bq-dialog--border-style - Dialog border style
+     * @cssprop --bq-dialog--border-width - Dialog border width
+     * @cssprop --bq-dialog--border-radius - Dialog border radius
+     * @cssprop --bq-dialog--padding - Dialog padding
+     * @cssprop --bq-dialog--content-footer-gap - Dialog gap distance between content and footer elements
+     * @cssprop --bq-dialog--title-body-gap - Dialog gap distance between title and body elements
+     * @cssprop --bq-dialog--width-small - Dialog small width
+     * @cssprop --bq-dialog--width-medium - Dialog medium width
+     * @cssprop --bq-dialog--width-large - Dialog large width
+     * @cssprop --bq-dialog-z-index - Dialog z-index applied when opened
+     */
     interface BqDialog {
         /**
-          * Corder radius of the dialog component
+          * Border radius of the dialog component
          */
         "border"?: TDialogBorderRadius;
         /**
@@ -4069,6 +4278,28 @@ declare namespace LocalJSX {
          */
         "size"?: TDialogSize;
     }
+    /**
+     * The Divider component is used to visually separate content in a layout.
+     * @example How to use it
+     * ```html
+     * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
+     * <span slot="title">Divider Title</span>
+     * </bq-divider>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/53dfe6-divider
+     * @status stable
+     * @attr {boolean} dashed - If true, the divider has a dashed pattern.
+     * @attr {"horizontal" | "vertical"} orientation - The default orientation of the divider.
+     * @attr {string} stroke-color - Set the stroke color of the divider. The value should be a valid value of the palette color.
+     * @attr {"start" | "middle" | "end"} title-alignment - Set the alignment of the title on the main axis of the divider (horizontal / vertical).
+     * @attr {number} stroke-dash-width - Set the width of each dash of the divider's stroke. This is applicable when the stroke is dashed.
+     * @attr {number} stroke-dash-gap - Set the gap of the divider's stroke. This is applicable when the stroke is dashed.
+     * @attr {number} stroke-thickness - Set the thickness of the divider's stroke. Value expressed in px.
+     * @attr {number} stroke-basis - Set the min width of the divider's stroke when text is not centered. Value expressed in px.
+     * @attr {"square" | "round" | "butt"} stroke-linecap - Set the line of the divider's stroke. This is applicable when the stroke is dashed.
+     * @cssprop --bq-divider--color - Divider color
+     * @cssprop --bq-divider--title-marginX - Divider space between title and delimiters
+     */
     interface BqDivider {
         /**
           * If true, the divider has a dashed pattern
@@ -5693,7 +5924,84 @@ declare module "@stencil/core" {
              * @cssprop --bq-date-picker--text-size - Date picker text size
              */
             "bq-date-picker": LocalJSX.BqDatePicker & JSXBase.HTMLAttributes<HTMLBqDatePickerElement>;
+            /**
+             * The Dialog component is used to display additional content or prompt a user for action.
+             * It provides a way to display additional information, options, or controls in a separate, non-obstructive interface element.
+             * @example How to use it
+             * ```html
+             * <bq-dialog footer-appearance="standard" border="m" size="medium">
+             * <h5 class="bold flex items-center gap-s" slot="title">
+             * <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
+             * Title
+             * </h5>
+             * <p>
+             * Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+             * standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+             * type specimen book.
+             * </p>
+             * <div class="flex gap-xs" slot="footer">
+             * <bq-button appearance="link">Button</bq-button>
+             * <bq-button variant="ghost">Button</bq-button>
+             * <bq-button variant="standard" slot="footer">Button</bq-button>
+             * </div>
+             * </bq-dialog>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/15b6fc-dialog
+             * @status stable
+             * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} border - Border radius of the dialog component.
+             * @attr {boolean} disable-backdrop - If true, the backdrop overlay won't be shown when the dialog opens.
+             * @attr {boolean} disable-close-esc-keydown - If true, the dialog will not close when the [Esc] key is pressed.
+             * @attr {boolean} disable-close-click-outside - If true, the dialog will not close when clicking on the backdrop overlay.
+             * @attr {"standard" | "highlight"} footer-appearance - The appearance of the footer.
+             * @attr {boolean} hide-close-button - If true, it hides the close button.
+             * @attr {boolean} open - If true, the dialog will be shown as open.
+             * @attr {"small" | "medium" | "large"} size - The size of the dialog.
+             * @method show - Open the dialog.
+             * @method hide - Closes the dialog.
+             * @method cancel - Dismiss or cancel the dialog.
+             * @event bqCancel - Callback handler emitted when the dialog has been canceled or dismissed.
+             * @event bqClose - Callback handler emitted when the dialog will close.
+             * @event bqOpen - Callback handler emitted when the dialog will open.
+             * @event bqAfterOpen - Callback handler emitted when the dialog finish opening.
+             * @event bqAfterClose - Callback handler emitted when the dialog finish closing.
+             * @cssprop --bq-dialog--background - Dialog background color
+             * @cssprop --bq-dialog--background-backdrop - Dialog backdrop background color
+             * @cssprop --bq-dialog--box-shadow - Dialog box shadow
+             * @cssprop --bq-dialog--border-color - Dialog border color
+             * @cssprop --bq-dialog--border-style - Dialog border style
+             * @cssprop --bq-dialog--border-width - Dialog border width
+             * @cssprop --bq-dialog--border-radius - Dialog border radius
+             * @cssprop --bq-dialog--padding - Dialog padding
+             * @cssprop --bq-dialog--content-footer-gap - Dialog gap distance between content and footer elements
+             * @cssprop --bq-dialog--title-body-gap - Dialog gap distance between title and body elements
+             * @cssprop --bq-dialog--width-small - Dialog small width
+             * @cssprop --bq-dialog--width-medium - Dialog medium width
+             * @cssprop --bq-dialog--width-large - Dialog large width
+             * @cssprop --bq-dialog-z-index - Dialog z-index applied when opened
+             */
             "bq-dialog": LocalJSX.BqDialog & JSXBase.HTMLAttributes<HTMLBqDialogElement>;
+            /**
+             * The Divider component is used to visually separate content in a layout.
+             * @example How to use it
+             * ```html
+             * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
+             * <span slot="title">Divider Title</span>
+             * </bq-divider>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/53dfe6-divider
+             * @status stable
+             * @attr {boolean} dashed - If true, the divider has a dashed pattern.
+             * @attr {"horizontal" | "vertical"} orientation - The default orientation of the divider.
+             * @attr {string} stroke-color - Set the stroke color of the divider. The value should be a valid value of the palette color.
+             * @attr {"start" | "middle" | "end"} title-alignment - Set the alignment of the title on the main axis of the divider (horizontal / vertical).
+             * @attr {number} stroke-dash-width - Set the width of each dash of the divider's stroke. This is applicable when the stroke is dashed.
+             * @attr {number} stroke-dash-gap - Set the gap of the divider's stroke. This is applicable when the stroke is dashed.
+             * @attr {number} stroke-thickness - Set the thickness of the divider's stroke. Value expressed in px.
+             * @attr {number} stroke-basis - Set the min width of the divider's stroke when text is not centered. Value expressed in px.
+             * @attr {"square" | "round" | "butt"} stroke-linecap - Set the line of the divider's stroke. This is applicable when the stroke is dashed.
+             * @cssprop --bq-divider--color - Divider color
+             * @cssprop --bq-divider--title-marginX - Divider space between title and delimiters
+             */
             "bq-divider": LocalJSX.BqDivider & JSXBase.HTMLAttributes<HTMLBqDividerElement>;
             "bq-drawer": LocalJSX.BqDrawer & JSXBase.HTMLAttributes<HTMLBqDrawerElement>;
             "bq-dropdown": LocalJSX.BqDropdown & JSXBase.HTMLAttributes<HTMLBqDropdownElement>;
