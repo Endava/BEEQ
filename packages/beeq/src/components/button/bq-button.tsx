@@ -262,7 +262,7 @@ export class BqButton {
               class="bq-button__loader"
               name="spinner-gap"
               role="img"
-              title={`${this.appearance} button loader`}
+              label={`${this.appearance} button loader`}
             />
           )}
         </TagElem>
