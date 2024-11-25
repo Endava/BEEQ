@@ -4,21 +4,17 @@
 
 :host {
   /**
-  * @prop --bq-panel--background: Panel background color
-
-  * @prop --bq-panel--border-color: Panel border color
-  * @prop --bq-panel--border-radius: Panel border radius
-  * @prop --bq-panel--border-style: Panel border style
-  * @prop --bq-panel--border-width: Panel border width
-
-  * @prop --bq-panel--box-shadow: Panel box shadow
-  * @prop --bq-panel--padding: Panel padding
-
-  * @prop --bq-panel--height: Panel height
-  * @prop --bq-panel--width: Panel width
-  * @prop --bq-panel-z-index: Panel z-index applied when opened
-  */
-
+   * @prop --bq-panel--background - Panel background color
+   * @prop --bq-panel--border-color - Panel border color
+   * @prop --bq-panel--border-radius - Panel border radius
+   * @prop --bq-panel--border-style - Panel border style
+   * @prop --bq-panel--border-width - Panel border width
+   * @prop --bq-panel--box-shadow - Panel box shadow
+   * @prop --bq-panel--padding - Panel padding
+   * @prop --bq-panel--height - Panel height
+   * @prop --bq-panel--width - Panel width
+   * @prop --bq-panel-z-index - Panel z-index applied when opened
+   */
   --bq-panel--background: theme(backgroundColor.ui.primary);
 
   --bq-panel--border-color: theme(stroke.transparent);
