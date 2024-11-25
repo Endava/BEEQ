@@ -5,6 +5,11 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+An option refers to a specific choice that appears in a list of selectable items that can be opened or closed by the user.
+It can be an element of the navigation system that allows users to select different sections or pages within an application or it can be used within a dropdown list.
+
 ## Properties
 
 | Property   | Attribute  | Description                                                                     | Type      | Default     |
@@ -23,6 +28,14 @@
 | `bqClick` | Handler to be called when item is clicked  | `CustomEvent<HTMLBqOptionElement>` |
 | `bqEnter` | Handler to be called on enter key press    | `CustomEvent<HTMLBqOptionElement>` |
 | `bqFocus` | Handler to be called when item is focused  | `CustomEvent<HTMLBqOptionElement>` |
+
+
+## Slots
+
+| Slot       | Description                                          |
+| ---------- | ---------------------------------------------------- |
+|            | The label content to be displayed.                   |
+| `"prefix"` | The prefix content to be displayed before the label. |
 
 
 ## Shadow Parts

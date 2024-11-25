@@ -4,20 +4,16 @@
 
 :host {
   /**
-  * @prop --bq-option-group--background: option group background color
-  * @prop --bq-option-group--font-size: option group font size
-  * @prop --bq-option-group--line-height: option group line height
-
-  * @prop --bq-option-group--label-padding-start: option group header padding start
-  * @prop --bq-option-group--label-padding-end: option group header padding start
-  * @prop --bq-option-group--label-paddingY: option group header padding Y axis
-
-  * @prop --bq-option-group--label-text-padding-start: option group text within label padding start
-  * @prop --bq-option-group--label-text-padding-end: option group text within label padding start
-
-  * @prop --bq-option-group--container-padding-start: option group container padding start
+  * @prop --bq-option-group--background - option group background color
+  * @prop --bq-option-group--font-size - option group font size
+  * @prop --bq-option-group--line-height - option group line height
+  * @prop --bq-option-group--label-padding-start - option group header padding start
+  * @prop --bq-option-group--label-padding-end - option group header padding start
+  * @prop --bq-option-group--label-paddingY - option group header padding Y axis
+  * @prop --bq-option-group--label-text-padding-start - option group text within label padding start
+  * @prop --bq-option-group--label-text-padding-end - option group text within label padding start
+  * @prop --bq-option-group--container-padding-start - option group container padding start
   */
-
   --bq-option-group--background: theme(backgroundColor.ui.primary);
   --bq-option-group--font-size: theme(fontSize.s);
   --bq-option-group--line-height: theme(lineHeight.regular);
