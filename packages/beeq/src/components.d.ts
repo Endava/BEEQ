@@ -1575,8 +1575,64 @@ export namespace Components {
          */
         "ariaLabel": string;
     }
+    /**
+     * The Page Title component is a versatile and essential element used to display the main title of a page or section within an application.
+     * @example How to use it
+     * ```html
+     * <bq-page-title>
+     * <bq-button appearance="link" slot="back">
+     * <bq-icon
+     * color="text--primary"
+     * name="arrow-left"
+     * weight="bold"
+     * role="img"
+     * title="Navigate back to the previous page"
+     * ></bq-icon>
+     * </bq-button>
+     * Title
+     * <div slot="sub-title">Sub-title</div>
+     * </bq-page-title>
+     * ```
+     * @documentation https://storybook.beeq.design/?path=/docs/components-page-title--overview
+     * @status stable
+     * @cssprop --paddingY - Padding top and bottom of the page title wrapper
+     * @cssprop --subtitle-borderBlockEnd - Page title border end color
+     * @cssprop --subtitle-fontWeight - Page title font weight for subtitle
+     * @cssprop --subtitle-textColor - Page title color for sub-title
+     * @cssprop --subtitle-textSize - Page title text size for subtitle
+     * @cssprop --title-fontWeight - Page title font weight for title
+     * @cssprop --title-lineHeight - Page title text line height
+     * @cssprop --title-textColor - Page title color for title
+     * @cssprop --title-textSize - Page title text size for title
+     */
     interface BqPageTitle {
     }
+    /**
+     * The Panel component is a versatile and essential element used to wrap and display content in a floating panel.
+     * @example How to use it
+     * ```html
+     * <bq-panel open>
+     * <div>Panel content</div>
+     * </bq-panel>
+     * ```
+     * @status stable
+     * @attr {number} distance - Represents the distance (gutter or margin) between the panel and the trigger element.
+     * @attr {"top" | "bottom" | "left" | "right" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end" | "right-start" | "right-end"} placement - Position of the panel.
+     * @attr {boolean} open - If true, the panel will be visible.
+     * @attr {boolean} same-width - Whether the panel should have the same width as the trigger element.
+     * @attr {number} skidding - Represents the skidding between the panel and the trigger element.
+     * @attr {"fixed" | "absolute"} strategy - Defines the strategy to position the panel.
+     * @prop --bq-panel--background - Panel background color
+     * @prop --bq-panel--border-color - Panel border color
+     * @prop --bq-panel--border-radius - Panel border radius
+     * @prop --bq-panel--border-style - Panel border style
+     * @prop --bq-panel--border-width - Panel border width
+     * @prop --bq-panel--box-shadow - Panel box shadow
+     * @prop --bq-panel--padding - Panel padding
+     * @prop --bq-panel--height - Panel height
+     * @prop --bq-panel--width - Panel width
+     * @prop --bq-panel-z-index - Panel z-index applied when opened
+     */
     interface BqPanel {
         /**
           * Represents the distance (gutter or margin) between the panel and the trigger element.
@@ -1603,6 +1659,26 @@ export namespace Components {
          */
         "strategy"?: 'fixed' | 'absolute';
     }
+    /**
+     * The progress bar is a user interface component that visually represents the completion status of a task or process.
+     * @example How to use it
+     * ```html
+     * <bq-progress value="50"></bq-progress>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/691cb3-progress
+     * @status stable
+     * @attr {"rounded" | "rounded-full"} border-shape - It will set the border style of the progress bar
+     * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value
+     * @attr {boolean} indeterminate - If `true` the indeterminate state of progress bar is enabled
+     * @attr {boolean} label - If `true`, a label text showing the value (in percentage) will be shown
+     * @attr {"small" | "medium" | "large"} thickness - Progress bar thickness
+     * @attr {"default" | "error"} type - Progress type
+     * @attr {number} value - A number representing the current value of the progress bar
+     * @cssprop --bq-progress-bar--height - The progress bars height
+     * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
+     * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
+     * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
+     */
     interface BqProgress {
         /**
           * It will set the border style of the progress bar
@@ -1617,7 +1693,7 @@ export namespace Components {
          */
         "indeterminate": boolean;
         /**
-          * If `true`, a label text showing the value (in percentage) will be shown
+          * If `true, a label text showing the value (in percentage) will be shown
          */
         "label": boolean;
         /**
@@ -3473,18 +3549,94 @@ declare global {
         prototype: HTMLBqOptionListElement;
         new (): HTMLBqOptionListElement;
     };
+    /**
+     * The Page Title component is a versatile and essential element used to display the main title of a page or section within an application.
+     * @example How to use it
+     * ```html
+     * <bq-page-title>
+     * <bq-button appearance="link" slot="back">
+     * <bq-icon
+     * color="text--primary"
+     * name="arrow-left"
+     * weight="bold"
+     * role="img"
+     * title="Navigate back to the previous page"
+     * ></bq-icon>
+     * </bq-button>
+     * Title
+     * <div slot="sub-title">Sub-title</div>
+     * </bq-page-title>
+     * ```
+     * @documentation https://storybook.beeq.design/?path=/docs/components-page-title--overview
+     * @status stable
+     * @cssprop --paddingY - Padding top and bottom of the page title wrapper
+     * @cssprop --subtitle-borderBlockEnd - Page title border end color
+     * @cssprop --subtitle-fontWeight - Page title font weight for subtitle
+     * @cssprop --subtitle-textColor - Page title color for sub-title
+     * @cssprop --subtitle-textSize - Page title text size for subtitle
+     * @cssprop --title-fontWeight - Page title font weight for title
+     * @cssprop --title-lineHeight - Page title text line height
+     * @cssprop --title-textColor - Page title color for title
+     * @cssprop --title-textSize - Page title text size for title
+     */
     interface HTMLBqPageTitleElement extends Components.BqPageTitle, HTMLStencilElement {
     }
     var HTMLBqPageTitleElement: {
         prototype: HTMLBqPageTitleElement;
         new (): HTMLBqPageTitleElement;
     };
+    /**
+     * The Panel component is a versatile and essential element used to wrap and display content in a floating panel.
+     * @example How to use it
+     * ```html
+     * <bq-panel open>
+     * <div>Panel content</div>
+     * </bq-panel>
+     * ```
+     * @status stable
+     * @attr {number} distance - Represents the distance (gutter or margin) between the panel and the trigger element.
+     * @attr {"top" | "bottom" | "left" | "right" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end" | "right-start" | "right-end"} placement - Position of the panel.
+     * @attr {boolean} open - If true, the panel will be visible.
+     * @attr {boolean} same-width - Whether the panel should have the same width as the trigger element.
+     * @attr {number} skidding - Represents the skidding between the panel and the trigger element.
+     * @attr {"fixed" | "absolute"} strategy - Defines the strategy to position the panel.
+     * @prop --bq-panel--background - Panel background color
+     * @prop --bq-panel--border-color - Panel border color
+     * @prop --bq-panel--border-radius - Panel border radius
+     * @prop --bq-panel--border-style - Panel border style
+     * @prop --bq-panel--border-width - Panel border width
+     * @prop --bq-panel--box-shadow - Panel box shadow
+     * @prop --bq-panel--padding - Panel padding
+     * @prop --bq-panel--height - Panel height
+     * @prop --bq-panel--width - Panel width
+     * @prop --bq-panel-z-index - Panel z-index applied when opened
+     */
     interface HTMLBqPanelElement extends Components.BqPanel, HTMLStencilElement {
     }
     var HTMLBqPanelElement: {
         prototype: HTMLBqPanelElement;
         new (): HTMLBqPanelElement;
     };
+    /**
+     * The progress bar is a user interface component that visually represents the completion status of a task or process.
+     * @example How to use it
+     * ```html
+     * <bq-progress value="50"></bq-progress>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/691cb3-progress
+     * @status stable
+     * @attr {"rounded" | "rounded-full"} border-shape - It will set the border style of the progress bar
+     * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value
+     * @attr {boolean} indeterminate - If `true` the indeterminate state of progress bar is enabled
+     * @attr {boolean} label - If `true`, a label text showing the value (in percentage) will be shown
+     * @attr {"small" | "medium" | "large"} thickness - Progress bar thickness
+     * @attr {"default" | "error"} type - Progress type
+     * @attr {number} value - A number representing the current value of the progress bar
+     * @cssprop --bq-progress-bar--height - The progress bars height
+     * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
+     * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
+     * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
+     */
     interface HTMLBqProgressElement extends Components.BqProgress, HTMLStencilElement {
     }
     var HTMLBqProgressElement: {
@@ -5463,8 +5615,64 @@ declare namespace LocalJSX {
          */
         "onBqSelect"?: (event: BqOptionListCustomEvent<{ value: string; item: HTMLBqOptionElement }>) => void;
     }
+    /**
+     * The Page Title component is a versatile and essential element used to display the main title of a page or section within an application.
+     * @example How to use it
+     * ```html
+     * <bq-page-title>
+     * <bq-button appearance="link" slot="back">
+     * <bq-icon
+     * color="text--primary"
+     * name="arrow-left"
+     * weight="bold"
+     * role="img"
+     * title="Navigate back to the previous page"
+     * ></bq-icon>
+     * </bq-button>
+     * Title
+     * <div slot="sub-title">Sub-title</div>
+     * </bq-page-title>
+     * ```
+     * @documentation https://storybook.beeq.design/?path=/docs/components-page-title--overview
+     * @status stable
+     * @cssprop --paddingY - Padding top and bottom of the page title wrapper
+     * @cssprop --subtitle-borderBlockEnd - Page title border end color
+     * @cssprop --subtitle-fontWeight - Page title font weight for subtitle
+     * @cssprop --subtitle-textColor - Page title color for sub-title
+     * @cssprop --subtitle-textSize - Page title text size for subtitle
+     * @cssprop --title-fontWeight - Page title font weight for title
+     * @cssprop --title-lineHeight - Page title text line height
+     * @cssprop --title-textColor - Page title color for title
+     * @cssprop --title-textSize - Page title text size for title
+     */
     interface BqPageTitle {
     }
+    /**
+     * The Panel component is a versatile and essential element used to wrap and display content in a floating panel.
+     * @example How to use it
+     * ```html
+     * <bq-panel open>
+     * <div>Panel content</div>
+     * </bq-panel>
+     * ```
+     * @status stable
+     * @attr {number} distance - Represents the distance (gutter or margin) between the panel and the trigger element.
+     * @attr {"top" | "bottom" | "left" | "right" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end" | "right-start" | "right-end"} placement - Position of the panel.
+     * @attr {boolean} open - If true, the panel will be visible.
+     * @attr {boolean} same-width - Whether the panel should have the same width as the trigger element.
+     * @attr {number} skidding - Represents the skidding between the panel and the trigger element.
+     * @attr {"fixed" | "absolute"} strategy - Defines the strategy to position the panel.
+     * @prop --bq-panel--background - Panel background color
+     * @prop --bq-panel--border-color - Panel border color
+     * @prop --bq-panel--border-radius - Panel border radius
+     * @prop --bq-panel--border-style - Panel border style
+     * @prop --bq-panel--border-width - Panel border width
+     * @prop --bq-panel--box-shadow - Panel box shadow
+     * @prop --bq-panel--padding - Panel padding
+     * @prop --bq-panel--height - Panel height
+     * @prop --bq-panel--width - Panel width
+     * @prop --bq-panel-z-index - Panel z-index applied when opened
+     */
     interface BqPanel {
         /**
           * Represents the distance (gutter or margin) between the panel and the trigger element.
@@ -5491,6 +5699,26 @@ declare namespace LocalJSX {
          */
         "strategy"?: 'fixed' | 'absolute';
     }
+    /**
+     * The progress bar is a user interface component that visually represents the completion status of a task or process.
+     * @example How to use it
+     * ```html
+     * <bq-progress value="50"></bq-progress>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/691cb3-progress
+     * @status stable
+     * @attr {"rounded" | "rounded-full"} border-shape - It will set the border style of the progress bar
+     * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value
+     * @attr {boolean} indeterminate - If `true` the indeterminate state of progress bar is enabled
+     * @attr {boolean} label - If `true`, a label text showing the value (in percentage) will be shown
+     * @attr {"small" | "medium" | "large"} thickness - Progress bar thickness
+     * @attr {"default" | "error"} type - Progress type
+     * @attr {number} value - A number representing the current value of the progress bar
+     * @cssprop --bq-progress-bar--height - The progress bars height
+     * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
+     * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
+     * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
+     */
     interface BqProgress {
         /**
           * It will set the border style of the progress bar
@@ -5505,7 +5733,7 @@ declare namespace LocalJSX {
          */
         "indeterminate"?: boolean;
         /**
-          * If `true`, a label text showing the value (in percentage) will be shown
+          * If `true, a label text showing the value (in percentage) will be shown
          */
         "label"?: boolean;
         /**
@@ -7075,8 +7303,84 @@ declare module "@stencil/core" {
              * @cssprop --bq-option-group--gapY-list - Option group gap between items Y axis
              */
             "bq-option-list": LocalJSX.BqOptionList & JSXBase.HTMLAttributes<HTMLBqOptionListElement>;
+            /**
+             * The Page Title component is a versatile and essential element used to display the main title of a page or section within an application.
+             * @example How to use it
+             * ```html
+             * <bq-page-title>
+             * <bq-button appearance="link" slot="back">
+             * <bq-icon
+             * color="text--primary"
+             * name="arrow-left"
+             * weight="bold"
+             * role="img"
+             * title="Navigate back to the previous page"
+             * ></bq-icon>
+             * </bq-button>
+             * Title
+             * <div slot="sub-title">Sub-title</div>
+             * </bq-page-title>
+             * ```
+             * @documentation https://storybook.beeq.design/?path=/docs/components-page-title--overview
+             * @status stable
+             * @cssprop --paddingY - Padding top and bottom of the page title wrapper
+             * @cssprop --subtitle-borderBlockEnd - Page title border end color
+             * @cssprop --subtitle-fontWeight - Page title font weight for subtitle
+             * @cssprop --subtitle-textColor - Page title color for sub-title
+             * @cssprop --subtitle-textSize - Page title text size for subtitle
+             * @cssprop --title-fontWeight - Page title font weight for title
+             * @cssprop --title-lineHeight - Page title text line height
+             * @cssprop --title-textColor - Page title color for title
+             * @cssprop --title-textSize - Page title text size for title
+             */
             "bq-page-title": LocalJSX.BqPageTitle & JSXBase.HTMLAttributes<HTMLBqPageTitleElement>;
+            /**
+             * The Panel component is a versatile and essential element used to wrap and display content in a floating panel.
+             * @example How to use it
+             * ```html
+             * <bq-panel open>
+             * <div>Panel content</div>
+             * </bq-panel>
+             * ```
+             * @status stable
+             * @attr {number} distance - Represents the distance (gutter or margin) between the panel and the trigger element.
+             * @attr {"top" | "bottom" | "left" | "right" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end" | "right-start" | "right-end"} placement - Position of the panel.
+             * @attr {boolean} open - If true, the panel will be visible.
+             * @attr {boolean} same-width - Whether the panel should have the same width as the trigger element.
+             * @attr {number} skidding - Represents the skidding between the panel and the trigger element.
+             * @attr {"fixed" | "absolute"} strategy - Defines the strategy to position the panel.
+             * @prop --bq-panel--background - Panel background color
+             * @prop --bq-panel--border-color - Panel border color
+             * @prop --bq-panel--border-radius - Panel border radius
+             * @prop --bq-panel--border-style - Panel border style
+             * @prop --bq-panel--border-width - Panel border width
+             * @prop --bq-panel--box-shadow - Panel box shadow
+             * @prop --bq-panel--padding - Panel padding
+             * @prop --bq-panel--height - Panel height
+             * @prop --bq-panel--width - Panel width
+             * @prop --bq-panel-z-index - Panel z-index applied when opened
+             */
             "bq-panel": LocalJSX.BqPanel & JSXBase.HTMLAttributes<HTMLBqPanelElement>;
+            /**
+             * The progress bar is a user interface component that visually represents the completion status of a task or process.
+             * @example How to use it
+             * ```html
+             * <bq-progress value="50"></bq-progress>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/691cb3-progress
+             * @status stable
+             * @attr {"rounded" | "rounded-full"} border-shape - It will set the border style of the progress bar
+             * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value
+             * @attr {boolean} indeterminate - If `true` the indeterminate state of progress bar is enabled
+             * @attr {boolean} label - If `true`, a label text showing the value (in percentage) will be shown
+             * @attr {"small" | "medium" | "large"} thickness - Progress bar thickness
+             * @attr {"default" | "error"} type - Progress type
+             * @attr {number} value - A number representing the current value of the progress bar
+             * @cssprop --bq-progress-bar--height - The progress bars height
+             * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
+             * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
+             * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
+             */
             "bq-progress": LocalJSX.BqProgress & JSXBase.HTMLAttributes<HTMLBqProgressElement>;
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;

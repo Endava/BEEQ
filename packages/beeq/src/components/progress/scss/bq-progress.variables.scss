@@ -4,12 +4,11 @@
 
 :host {
   /**
-    * @prop --bq-progress-bar--height: The progress bars height
-    * @prop --bq-progress-bar--indeterminateWidth: The progress bar width when its indeterminate
-    * @prop --bq-progress-bar--indicatorColor: The progress bar color (inside the track area)
-    * @prop --bq-progress-bar--trackColor: The progress bar track area (the grey one)
+   * @prop --bq-progress-bar--height - The progress bars height
+   * @prop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
+   * @prop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
+   * @prop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
    */
-
   --bq-progress-bar--height: theme(height.1);
   --bq-progress-bar--indeterminateWidth: 25%;
   --bq-progress-bar--indicatorColor: theme(backgroundColor.ui.brand);
