@@ -5,6 +5,10 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The radio group is a user interface component that groups radio buttons to enable a single selection within the group.
+
 ## Properties
 
 | Property            | Attribute             | Description                                                                                                               | Type                         | Default      |

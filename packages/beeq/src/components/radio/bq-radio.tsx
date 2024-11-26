@@ -1,10 +1,31 @@
 import { Component, Element, Event, EventEmitter, h, Method, Prop } from '@stencil/core';
 
 /**
+ * The radio button is a user interface element that allows users to select a single option.
+ *
+ * @example How to use it
+ * ```html
+ * <bq-radio value="option1">Radio option 1</bq-radio>
+ * ```
+ *
+ * @documentation https://www.beeq.design/3d466e231/p/9718e1-radio-button/b/09d7b1
+ * @status stable
+ *
+ * @attr {boolean} background-on-hover - If `true`, the radio displays background on hover
+ * @attr {boolean} checked - If `true` radio input is checked
+ * @attr {boolean} disabled - If `true` radio input is disabled
+ * @attr {string} form-id - The form ID that the radio input is associated with
+ * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+ * @attr {boolean} required - If `true`, it will indicate that the user must specify a value for the radio before the owning form can be submitted
+ * @attr {boolean} value - A string representing the value of the radio
+ *
  * @part base - The component's internal wrapper of the radio component.
  * @part input - The native HTML `<input type="radio">` used under the hood.
  * @part radio - The component's internal wrapper of the radio component.
  * @part label - The `<span>` element that holds the text content.
+ *
+ * @cssprop --bq-radio--size - Radio size
+ * @cssprop --bq-radio--border-width - Radio border width
  */
 @Component({
   tag: 'bq-radio',

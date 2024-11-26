@@ -1709,6 +1709,24 @@ export namespace Components {
          */
         "value": number;
     }
+    /**
+     * The radio button is a user interface element that allows users to select a single option.
+     * @example How to use it
+     * ```html
+     * <bq-radio value="option1">Radio option 1</bq-radio>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/9718e1-radio-button/b/09d7b1
+     * @status stable
+     * @attr {boolean} background-on-hover - If `true`, the radio displays background on hover
+     * @attr {boolean} checked - If `true` radio input is checked
+     * @attr {boolean} disabled - If `true` radio input is disabled
+     * @attr {string} form-id - The form ID that the radio input is associated with
+     * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+     * @attr {boolean} required - If `true`, it will indicate that the user must specify a value for the radio before the owning form can be submitted
+     * @attr {boolean} value - A string representing the value of the radio
+     * @cssprop --bq-radio--size - Radio size
+     * @cssprop --bq-radio--border-width - Radio border width
+     */
     interface BqRadio {
         /**
           * If true radio displays background on hover
@@ -1751,6 +1769,27 @@ export namespace Components {
          */
         "value": string;
     }
+    /**
+     * The radio group is a user interface component that groups radio buttons to enable a single selection within the group.
+     * @example How to use it
+     * ```html
+     * <bq-radio-group fieldset value="option1">
+     * <span slot="label">radio group</span>
+     * <bq-radio value="option1">Radio option 1</bq-radio>
+     * <bq-radio value="option2">Radio option 2</bq-radio>
+     * <bq-radio value="option3">Radio option 3</bq-radio>
+     * </bq-radio-group>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/9718e1-radio-button/b/09d7b1
+     * @status stable
+     * @attr {boolean} background-on-hover - If `true`, the radio displays background on hover
+     * @attr {number} debounce-time - A number representing the delay time (in milliseconds) that bqChange event handler gets triggered once the value change
+     * @attr {boolean} disabled - If `true` radio inputs are disabled
+     * @attr {boolean} fieldset - If `true` displays fieldset
+     * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+     * @attr {"horizontal" | "vertical"} orientation - The display orientation of the radio inputs
+     * @attr {string} value - The display orientation of the radio inputs
+     */
     interface BqRadioGroup {
         /**
           * If true, all radio inputs in the group will display a background on hover
@@ -3649,6 +3688,24 @@ declare global {
         "bqBlur": HTMLBqRadioElement;
         "bqKeyDown": KeyboardEvent;
     }
+    /**
+     * The radio button is a user interface element that allows users to select a single option.
+     * @example How to use it
+     * ```html
+     * <bq-radio value="option1">Radio option 1</bq-radio>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/9718e1-radio-button/b/09d7b1
+     * @status stable
+     * @attr {boolean} background-on-hover - If `true`, the radio displays background on hover
+     * @attr {boolean} checked - If `true` radio input is checked
+     * @attr {boolean} disabled - If `true` radio input is disabled
+     * @attr {string} form-id - The form ID that the radio input is associated with
+     * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+     * @attr {boolean} required - If `true`, it will indicate that the user must specify a value for the radio before the owning form can be submitted
+     * @attr {boolean} value - A string representing the value of the radio
+     * @cssprop --bq-radio--size - Radio size
+     * @cssprop --bq-radio--border-width - Radio border width
+     */
     interface HTMLBqRadioElement extends Components.BqRadio, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqRadioElementEventMap>(type: K, listener: (this: HTMLBqRadioElement, ev: BqRadioCustomEvent<HTMLBqRadioElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -3666,6 +3723,27 @@ declare global {
     interface HTMLBqRadioGroupElementEventMap {
         "bqChange": { value: string; target: HTMLBqRadioElement };
     }
+    /**
+     * The radio group is a user interface component that groups radio buttons to enable a single selection within the group.
+     * @example How to use it
+     * ```html
+     * <bq-radio-group fieldset value="option1">
+     * <span slot="label">radio group</span>
+     * <bq-radio value="option1">Radio option 1</bq-radio>
+     * <bq-radio value="option2">Radio option 2</bq-radio>
+     * <bq-radio value="option3">Radio option 3</bq-radio>
+     * </bq-radio-group>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/9718e1-radio-button/b/09d7b1
+     * @status stable
+     * @attr {boolean} background-on-hover - If `true`, the radio displays background on hover
+     * @attr {number} debounce-time - A number representing the delay time (in milliseconds) that bqChange event handler gets triggered once the value change
+     * @attr {boolean} disabled - If `true` radio inputs are disabled
+     * @attr {boolean} fieldset - If `true` displays fieldset
+     * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+     * @attr {"horizontal" | "vertical"} orientation - The display orientation of the radio inputs
+     * @attr {string} value - The display orientation of the radio inputs
+     */
     interface HTMLBqRadioGroupElement extends Components.BqRadioGroup, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqRadioGroupElementEventMap>(type: K, listener: (this: HTMLBqRadioGroupElement, ev: BqRadioGroupCustomEvent<HTMLBqRadioGroupElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -5749,6 +5827,24 @@ declare namespace LocalJSX {
          */
         "value"?: number;
     }
+    /**
+     * The radio button is a user interface element that allows users to select a single option.
+     * @example How to use it
+     * ```html
+     * <bq-radio value="option1">Radio option 1</bq-radio>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/9718e1-radio-button/b/09d7b1
+     * @status stable
+     * @attr {boolean} background-on-hover - If `true`, the radio displays background on hover
+     * @attr {boolean} checked - If `true` radio input is checked
+     * @attr {boolean} disabled - If `true` radio input is disabled
+     * @attr {string} form-id - The form ID that the radio input is associated with
+     * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+     * @attr {boolean} required - If `true`, it will indicate that the user must specify a value for the radio before the owning form can be submitted
+     * @attr {boolean} value - A string representing the value of the radio
+     * @cssprop --bq-radio--size - Radio size
+     * @cssprop --bq-radio--border-width - Radio border width
+     */
     interface BqRadio {
         /**
           * If true radio displays background on hover
@@ -5795,6 +5891,27 @@ declare namespace LocalJSX {
          */
         "value": string;
     }
+    /**
+     * The radio group is a user interface component that groups radio buttons to enable a single selection within the group.
+     * @example How to use it
+     * ```html
+     * <bq-radio-group fieldset value="option1">
+     * <span slot="label">radio group</span>
+     * <bq-radio value="option1">Radio option 1</bq-radio>
+     * <bq-radio value="option2">Radio option 2</bq-radio>
+     * <bq-radio value="option3">Radio option 3</bq-radio>
+     * </bq-radio-group>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/9718e1-radio-button/b/09d7b1
+     * @status stable
+     * @attr {boolean} background-on-hover - If `true`, the radio displays background on hover
+     * @attr {number} debounce-time - A number representing the delay time (in milliseconds) that bqChange event handler gets triggered once the value change
+     * @attr {boolean} disabled - If `true` radio inputs are disabled
+     * @attr {boolean} fieldset - If `true` displays fieldset
+     * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+     * @attr {"horizontal" | "vertical"} orientation - The display orientation of the radio inputs
+     * @attr {string} value - The display orientation of the radio inputs
+     */
     interface BqRadioGroup {
         /**
           * If true, all radio inputs in the group will display a background on hover
@@ -7382,7 +7499,46 @@ declare module "@stencil/core" {
              * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
              */
             "bq-progress": LocalJSX.BqProgress & JSXBase.HTMLAttributes<HTMLBqProgressElement>;
+            /**
+             * The radio button is a user interface element that allows users to select a single option.
+             * @example How to use it
+             * ```html
+             * <bq-radio value="option1">Radio option 1</bq-radio>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/9718e1-radio-button/b/09d7b1
+             * @status stable
+             * @attr {boolean} background-on-hover - If `true`, the radio displays background on hover
+             * @attr {boolean} checked - If `true` radio input is checked
+             * @attr {boolean} disabled - If `true` radio input is disabled
+             * @attr {string} form-id - The form ID that the radio input is associated with
+             * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+             * @attr {boolean} required - If `true`, it will indicate that the user must specify a value for the radio before the owning form can be submitted
+             * @attr {boolean} value - A string representing the value of the radio
+             * @cssprop --bq-radio--size - Radio size
+             * @cssprop --bq-radio--border-width - Radio border width
+             */
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
+            /**
+             * The radio group is a user interface component that groups radio buttons to enable a single selection within the group.
+             * @example How to use it
+             * ```html
+             * <bq-radio-group fieldset value="option1">
+             * <span slot="label">radio group</span>
+             * <bq-radio value="option1">Radio option 1</bq-radio>
+             * <bq-radio value="option2">Radio option 2</bq-radio>
+             * <bq-radio value="option3">Radio option 3</bq-radio>
+             * </bq-radio-group>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/9718e1-radio-button/b/09d7b1
+             * @status stable
+             * @attr {boolean} background-on-hover - If `true`, the radio displays background on hover
+             * @attr {number} debounce-time - A number representing the delay time (in milliseconds) that bqChange event handler gets triggered once the value change
+             * @attr {boolean} disabled - If `true` radio inputs are disabled
+             * @attr {boolean} fieldset - If `true` displays fieldset
+             * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+             * @attr {"horizontal" | "vertical"} orientation - The display orientation of the radio inputs
+             * @attr {string} value - The display orientation of the radio inputs
+             */
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
             "bq-select": LocalJSX.BqSelect & JSXBase.HTMLAttributes<HTMLBqSelectElement>;
             "bq-side-menu": LocalJSX.BqSideMenu & JSXBase.HTMLAttributes<HTMLBqSideMenuElement>;

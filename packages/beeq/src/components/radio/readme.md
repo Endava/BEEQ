@@ -5,6 +5,10 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The radio button is a user interface element that allows users to select a single option.
+
 ## Properties
 
 | Property             | Attribute             | Description                                                                                                          | Type      | Default     |
