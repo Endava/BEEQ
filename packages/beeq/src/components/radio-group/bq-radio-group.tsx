@@ -33,6 +33,9 @@ import { debounce, isHTMLElement, isNil, TDebounce, validatePropValue } from '..
  *
  * @event bqChange - Handler to be called when the radio state changes
  *
+ * @slot - The bq-radio items to group
+ * @slot label - The label content of radio group
+ *
  * @part base - The component's internal wrapper of the radio components.
  * @part label - The `<legend>` element that holds the text content.
  * @part group - The `<div>` element that holds the radio inputs.

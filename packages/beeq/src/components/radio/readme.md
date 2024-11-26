@@ -68,6 +68,13 @@ Type: `Promise<void>`
 
 
 
+## Slots
+
+| Slot | Description       |
+| ---- | ----------------- |
+|      | The bq-radio item |
+
+
 ## Shadow Parts
 
 | Part      | Description                                                 |

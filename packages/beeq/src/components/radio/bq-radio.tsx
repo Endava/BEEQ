@@ -28,6 +28,8 @@ import { Component, Element, Event, EventEmitter, h, Method, Prop } from '@stenc
  * @event bqFocus - Handler to be called when the radio gets focused
  * @event bqKeyDown - The handler is to be called when the radio key is pressed
  *
+ * @slot - The bq-radio item
+ *
  * @part base - The component's internal wrapper of the radio component.
  * @part input - The native HTML `<input type="radio">` used under the hood.
  * @part radio - The component's internal wrapper of the radio component.

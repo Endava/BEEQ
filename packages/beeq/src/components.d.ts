@@ -1724,6 +1724,13 @@ export namespace Components {
      * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
      * @attr {boolean} required - If `true`, it will indicate that the user must specify a value for the radio before the owning form can be submitted
      * @attr {boolean} value - A string representing the value of the radio
+     * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+     * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+     * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+     * @event bqBlur - Handler to be called when the radio loses focus
+     * @event bqClick - Handler to be called when the radio state changes
+     * @event bqFocus - Handler to be called when the radio gets focused
+     * @event bqKeyDown - The handler is to be called when the radio key is pressed
      * @cssprop --bq-radio--size - Radio size
      * @cssprop --bq-radio--border-width - Radio border width
      */
@@ -1789,6 +1796,10 @@ export namespace Components {
      * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
      * @attr {"horizontal" | "vertical"} orientation - The display orientation of the radio inputs
      * @attr {string} value - The display orientation of the radio inputs
+     * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+     * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+     * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+     * @event bqChange - Handler to be called when the radio state changes
      */
     interface BqRadioGroup {
         /**
@@ -3703,6 +3714,13 @@ declare global {
      * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
      * @attr {boolean} required - If `true`, it will indicate that the user must specify a value for the radio before the owning form can be submitted
      * @attr {boolean} value - A string representing the value of the radio
+     * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+     * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+     * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+     * @event bqBlur - Handler to be called when the radio loses focus
+     * @event bqClick - Handler to be called when the radio state changes
+     * @event bqFocus - Handler to be called when the radio gets focused
+     * @event bqKeyDown - The handler is to be called when the radio key is pressed
      * @cssprop --bq-radio--size - Radio size
      * @cssprop --bq-radio--border-width - Radio border width
      */
@@ -3743,6 +3761,10 @@ declare global {
      * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
      * @attr {"horizontal" | "vertical"} orientation - The display orientation of the radio inputs
      * @attr {string} value - The display orientation of the radio inputs
+     * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+     * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+     * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+     * @event bqChange - Handler to be called when the radio state changes
      */
     interface HTMLBqRadioGroupElement extends Components.BqRadioGroup, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqRadioGroupElementEventMap>(type: K, listener: (this: HTMLBqRadioGroupElement, ev: BqRadioGroupCustomEvent<HTMLBqRadioGroupElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -5842,6 +5864,13 @@ declare namespace LocalJSX {
      * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
      * @attr {boolean} required - If `true`, it will indicate that the user must specify a value for the radio before the owning form can be submitted
      * @attr {boolean} value - A string representing the value of the radio
+     * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+     * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+     * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+     * @event bqBlur - Handler to be called when the radio loses focus
+     * @event bqClick - Handler to be called when the radio state changes
+     * @event bqFocus - Handler to be called when the radio gets focused
+     * @event bqKeyDown - The handler is to be called when the radio key is pressed
      * @cssprop --bq-radio--size - Radio size
      * @cssprop --bq-radio--border-width - Radio border width
      */
@@ -5911,6 +5940,10 @@ declare namespace LocalJSX {
      * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
      * @attr {"horizontal" | "vertical"} orientation - The display orientation of the radio inputs
      * @attr {string} value - The display orientation of the radio inputs
+     * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+     * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+     * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+     * @event bqChange - Handler to be called when the radio state changes
      */
     interface BqRadioGroup {
         /**
@@ -7514,6 +7547,13 @@ declare module "@stencil/core" {
              * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
              * @attr {boolean} required - If `true`, it will indicate that the user must specify a value for the radio before the owning form can be submitted
              * @attr {boolean} value - A string representing the value of the radio
+             * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+             * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+             * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+             * @event bqBlur - Handler to be called when the radio loses focus
+             * @event bqClick - Handler to be called when the radio state changes
+             * @event bqFocus - Handler to be called when the radio gets focused
+             * @event bqKeyDown - The handler is to be called when the radio key is pressed
              * @cssprop --bq-radio--size - Radio size
              * @cssprop --bq-radio--border-width - Radio border width
              */
@@ -7538,6 +7578,10 @@ declare module "@stencil/core" {
              * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
              * @attr {"horizontal" | "vertical"} orientation - The display orientation of the radio inputs
              * @attr {string} value - The display orientation of the radio inputs
+             * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+             * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+             * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+             * @event bqChange - Handler to be called when the radio state changes
              */
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
             "bq-select": LocalJSX.BqSelect & JSXBase.HTMLAttributes<HTMLBqSelectElement>;
