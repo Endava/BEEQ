@@ -19,6 +19,15 @@ import { Component, Element, Event, EventEmitter, h, Method, Prop } from '@stenc
  * @attr {boolean} required - If `true`, it will indicate that the user must specify a value for the radio before the owning form can be submitted
  * @attr {boolean} value - A string representing the value of the radio
  *
+ * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+ * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+ * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+ *
+ * @event bqBlur - Handler to be called when the radio loses focus
+ * @event bqClick - Handler to be called when the radio state changes
+ * @event bqFocus - Handler to be called when the radio gets focused
+ * @event bqKeyDown - The handler is to be called when the radio key is pressed
+ *
  * @part base - The component's internal wrapper of the radio component.
  * @part input - The native HTML `<input type="radio">` used under the hood.
  * @part radio - The component's internal wrapper of the radio component.
