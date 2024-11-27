@@ -2594,6 +2594,63 @@ export namespace Components {
          */
         "variant": TTagVariant;
     }
+    /**
+     * The Textarea component is a multi-line text input control that is often used in a form to collect user inputs like comments or reviews.
+     * @example How to use it
+     * ```html
+     * <bq-textarea maxlength="0" name="textarea" placeholder="Placeholder..." rows="5">
+     * <label slot="label">Label</label>
+     * <span class="flex items-center gap-xs" slot="helper-text">
+     * <bq-icon name="star"></bq-icon>
+     * Helper text
+     * </span>
+     * </bq-textarea>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/16792c-textarea
+     * @status stable
+     * @attr {string} autocapitalize - Controls whether or not the textarea field should be capitalized and how.
+     * @attr {string} autocomplete - Specifies whether or not the textarea field should have autocomplete enabled.
+     * @attr {string} autocorrect - Controls whether or not the textarea field should have autocorrect enabled.
+     * @attr {boolean} autofocus - If `true`, the textarea will be focused on component render.
+     * @attr {boolean} auto-grow - If `true`, the textarea will automatically grow and shrink to fit its contents.
+     * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes.
+     * @attr {boolean} disabled - If `true`, the user cannot interact with the textarea.
+     * @attr {boolean} disable-resize - If `true`, it will block the user's ability to resize the textarea.
+     * @attr {string} form - The ID of the form that the textarea field belongs to.
+     * @attr {number} maxlength - The maximum number of characters that can be entered into the textarea (`0`: no limit).
+     * @attr {string} name - The name of the textarea element.
+     * @attr {string} placeholder - The placeholder text to show when there is no value.
+     * @attr {boolean} readonly - If `true`, the textarea field cannot be modified.
+     * @attr {boolean} required - Indicates whether or not the textarea field is required to be filled out before submitting the form.
+     * @attr {number} rows - The number of visible text lines for the control. It must be a positive integer.
+     * @attr {boolean} spellcheck - If `true`, the textarea content may be checked for spelling errors.
+     * @attr {"error" | "none" | "success" | "warning"} validation-status - The validation status of the textarea.
+     * @attr {string} value - The value of the textarea. It can be used to reset the textarea to a previous value.
+     * @attr {"soft" | "hard"} wrap - Specifies how the text in a text area is to be wrapped when submitted in a form.
+     * @event bqBlur - Handler to be called when the textarea loses focus.
+     * @event bqChange - Handler to be called when the textarea value has changed and the textarea loses focus.
+     * @event bqClear - Handler to be called when the textarea value has been cleared.
+     * @event bqFocus - Handler to be called when the textarea has received focus.
+     * @event bqInput - Handler to be called when the textarea value changes.
+     * @prop --bq-textarea--background-color - Textarea background color
+     * @prop --bq-textarea--border-color - Textarea border color
+     * @prop --bq-textarea--border-color-focus - Textarea border color on focus
+     * @prop --bq-textarea--border-radius - Textarea border radius
+     * @prop --bq-textarea--border-width - Textarea border width
+     * @prop --bq-textarea--border-style - Textarea border style
+     * @prop --bq-textarea--helper-margin-top - Textarea helper text margin top
+     * @prop --bq-textarea--helper-text-color - Textarea helper text color
+     * @prop --bq-textarea--helper-text-size - Textarea helper text size
+     * @prop --bq-textarea--label-margin-bottom - Textarea label margin bottom
+     * @prop --bq-textarea--label-text-color - Textarea label text color
+     * @prop --bq-textarea--label-text-size - Textarea label text size
+     * @prop --bq-textarea--paddingY - Textarea padding top and bottom
+     * @prop --bq-textarea--padding-start - Textarea padding start
+     * @prop --bq-textarea--padding-end - Textarea padding end
+     * @prop --bq-textarea--text-color - Textarea text color
+     * @prop --bq-textarea--text-size - Textarea text size
+     * @prop --bq-textarea--text-placeholder-color - Textarea placeholder text color
+     */
     interface BqTextarea {
         /**
           * If `true`, the textarea will automatically grow and shrink to fit its contents. If `false`, the textarea will have a fixed height specified by the `rows` property.
@@ -4707,6 +4764,63 @@ declare global {
         "bqFocus": HTMLBqTextareaElement;
         "bqInput": { value: string; el: HTMLBqTextareaElement };
     }
+    /**
+     * The Textarea component is a multi-line text input control that is often used in a form to collect user inputs like comments or reviews.
+     * @example How to use it
+     * ```html
+     * <bq-textarea maxlength="0" name="textarea" placeholder="Placeholder..." rows="5">
+     * <label slot="label">Label</label>
+     * <span class="flex items-center gap-xs" slot="helper-text">
+     * <bq-icon name="star"></bq-icon>
+     * Helper text
+     * </span>
+     * </bq-textarea>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/16792c-textarea
+     * @status stable
+     * @attr {string} autocapitalize - Controls whether or not the textarea field should be capitalized and how.
+     * @attr {string} autocomplete - Specifies whether or not the textarea field should have autocomplete enabled.
+     * @attr {string} autocorrect - Controls whether or not the textarea field should have autocorrect enabled.
+     * @attr {boolean} autofocus - If `true`, the textarea will be focused on component render.
+     * @attr {boolean} auto-grow - If `true`, the textarea will automatically grow and shrink to fit its contents.
+     * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes.
+     * @attr {boolean} disabled - If `true`, the user cannot interact with the textarea.
+     * @attr {boolean} disable-resize - If `true`, it will block the user's ability to resize the textarea.
+     * @attr {string} form - The ID of the form that the textarea field belongs to.
+     * @attr {number} maxlength - The maximum number of characters that can be entered into the textarea (`0`: no limit).
+     * @attr {string} name - The name of the textarea element.
+     * @attr {string} placeholder - The placeholder text to show when there is no value.
+     * @attr {boolean} readonly - If `true`, the textarea field cannot be modified.
+     * @attr {boolean} required - Indicates whether or not the textarea field is required to be filled out before submitting the form.
+     * @attr {number} rows - The number of visible text lines for the control. It must be a positive integer.
+     * @attr {boolean} spellcheck - If `true`, the textarea content may be checked for spelling errors.
+     * @attr {"error" | "none" | "success" | "warning"} validation-status - The validation status of the textarea.
+     * @attr {string} value - The value of the textarea. It can be used to reset the textarea to a previous value.
+     * @attr {"soft" | "hard"} wrap - Specifies how the text in a text area is to be wrapped when submitted in a form.
+     * @event bqBlur - Handler to be called when the textarea loses focus.
+     * @event bqChange - Handler to be called when the textarea value has changed and the textarea loses focus.
+     * @event bqClear - Handler to be called when the textarea value has been cleared.
+     * @event bqFocus - Handler to be called when the textarea has received focus.
+     * @event bqInput - Handler to be called when the textarea value changes.
+     * @prop --bq-textarea--background-color - Textarea background color
+     * @prop --bq-textarea--border-color - Textarea border color
+     * @prop --bq-textarea--border-color-focus - Textarea border color on focus
+     * @prop --bq-textarea--border-radius - Textarea border radius
+     * @prop --bq-textarea--border-width - Textarea border width
+     * @prop --bq-textarea--border-style - Textarea border style
+     * @prop --bq-textarea--helper-margin-top - Textarea helper text margin top
+     * @prop --bq-textarea--helper-text-color - Textarea helper text color
+     * @prop --bq-textarea--helper-text-size - Textarea helper text size
+     * @prop --bq-textarea--label-margin-bottom - Textarea label margin bottom
+     * @prop --bq-textarea--label-text-color - Textarea label text color
+     * @prop --bq-textarea--label-text-size - Textarea label text size
+     * @prop --bq-textarea--paddingY - Textarea padding top and bottom
+     * @prop --bq-textarea--padding-start - Textarea padding start
+     * @prop --bq-textarea--padding-end - Textarea padding end
+     * @prop --bq-textarea--text-color - Textarea text color
+     * @prop --bq-textarea--text-size - Textarea text size
+     * @prop --bq-textarea--text-placeholder-color - Textarea placeholder text color
+     */
     interface HTMLBqTextareaElement extends Components.BqTextarea, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqTextareaElementEventMap>(type: K, listener: (this: HTMLBqTextareaElement, ev: BqTextareaCustomEvent<HTMLBqTextareaElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -7528,6 +7642,63 @@ declare namespace LocalJSX {
          */
         "variant"?: TTagVariant;
     }
+    /**
+     * The Textarea component is a multi-line text input control that is often used in a form to collect user inputs like comments or reviews.
+     * @example How to use it
+     * ```html
+     * <bq-textarea maxlength="0" name="textarea" placeholder="Placeholder..." rows="5">
+     * <label slot="label">Label</label>
+     * <span class="flex items-center gap-xs" slot="helper-text">
+     * <bq-icon name="star"></bq-icon>
+     * Helper text
+     * </span>
+     * </bq-textarea>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/16792c-textarea
+     * @status stable
+     * @attr {string} autocapitalize - Controls whether or not the textarea field should be capitalized and how.
+     * @attr {string} autocomplete - Specifies whether or not the textarea field should have autocomplete enabled.
+     * @attr {string} autocorrect - Controls whether or not the textarea field should have autocorrect enabled.
+     * @attr {boolean} autofocus - If `true`, the textarea will be focused on component render.
+     * @attr {boolean} auto-grow - If `true`, the textarea will automatically grow and shrink to fit its contents.
+     * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes.
+     * @attr {boolean} disabled - If `true`, the user cannot interact with the textarea.
+     * @attr {boolean} disable-resize - If `true`, it will block the user's ability to resize the textarea.
+     * @attr {string} form - The ID of the form that the textarea field belongs to.
+     * @attr {number} maxlength - The maximum number of characters that can be entered into the textarea (`0`: no limit).
+     * @attr {string} name - The name of the textarea element.
+     * @attr {string} placeholder - The placeholder text to show when there is no value.
+     * @attr {boolean} readonly - If `true`, the textarea field cannot be modified.
+     * @attr {boolean} required - Indicates whether or not the textarea field is required to be filled out before submitting the form.
+     * @attr {number} rows - The number of visible text lines for the control. It must be a positive integer.
+     * @attr {boolean} spellcheck - If `true`, the textarea content may be checked for spelling errors.
+     * @attr {"error" | "none" | "success" | "warning"} validation-status - The validation status of the textarea.
+     * @attr {string} value - The value of the textarea. It can be used to reset the textarea to a previous value.
+     * @attr {"soft" | "hard"} wrap - Specifies how the text in a text area is to be wrapped when submitted in a form.
+     * @event bqBlur - Handler to be called when the textarea loses focus.
+     * @event bqChange - Handler to be called when the textarea value has changed and the textarea loses focus.
+     * @event bqClear - Handler to be called when the textarea value has been cleared.
+     * @event bqFocus - Handler to be called when the textarea has received focus.
+     * @event bqInput - Handler to be called when the textarea value changes.
+     * @prop --bq-textarea--background-color - Textarea background color
+     * @prop --bq-textarea--border-color - Textarea border color
+     * @prop --bq-textarea--border-color-focus - Textarea border color on focus
+     * @prop --bq-textarea--border-radius - Textarea border radius
+     * @prop --bq-textarea--border-width - Textarea border width
+     * @prop --bq-textarea--border-style - Textarea border style
+     * @prop --bq-textarea--helper-margin-top - Textarea helper text margin top
+     * @prop --bq-textarea--helper-text-color - Textarea helper text color
+     * @prop --bq-textarea--helper-text-size - Textarea helper text size
+     * @prop --bq-textarea--label-margin-bottom - Textarea label margin bottom
+     * @prop --bq-textarea--label-text-color - Textarea label text color
+     * @prop --bq-textarea--label-text-size - Textarea label text size
+     * @prop --bq-textarea--paddingY - Textarea padding top and bottom
+     * @prop --bq-textarea--padding-start - Textarea padding start
+     * @prop --bq-textarea--padding-end - Textarea padding end
+     * @prop --bq-textarea--text-color - Textarea text color
+     * @prop --bq-textarea--text-size - Textarea text size
+     * @prop --bq-textarea--text-placeholder-color - Textarea placeholder text color
+     */
     interface BqTextarea {
         /**
           * If `true`, the textarea will automatically grow and shrink to fit its contents. If `false`, the textarea will have a fixed height specified by the `rows` property.
@@ -9056,6 +9227,63 @@ declare module "@stencil/core" {
              * @cssprop --bq-tag--medium-padding-y - Tag medium padding vertical
              */
             "bq-tag": LocalJSX.BqTag & JSXBase.HTMLAttributes<HTMLBqTagElement>;
+            /**
+             * The Textarea component is a multi-line text input control that is often used in a form to collect user inputs like comments or reviews.
+             * @example How to use it
+             * ```html
+             * <bq-textarea maxlength="0" name="textarea" placeholder="Placeholder..." rows="5">
+             * <label slot="label">Label</label>
+             * <span class="flex items-center gap-xs" slot="helper-text">
+             * <bq-icon name="star"></bq-icon>
+             * Helper text
+             * </span>
+             * </bq-textarea>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/16792c-textarea
+             * @status stable
+             * @attr {string} autocapitalize - Controls whether or not the textarea field should be capitalized and how.
+             * @attr {string} autocomplete - Specifies whether or not the textarea field should have autocomplete enabled.
+             * @attr {string} autocorrect - Controls whether or not the textarea field should have autocorrect enabled.
+             * @attr {boolean} autofocus - If `true`, the textarea will be focused on component render.
+             * @attr {boolean} auto-grow - If `true`, the textarea will automatically grow and shrink to fit its contents.
+             * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes.
+             * @attr {boolean} disabled - If `true`, the user cannot interact with the textarea.
+             * @attr {boolean} disable-resize - If `true`, it will block the user's ability to resize the textarea.
+             * @attr {string} form - The ID of the form that the textarea field belongs to.
+             * @attr {number} maxlength - The maximum number of characters that can be entered into the textarea (`0`: no limit).
+             * @attr {string} name - The name of the textarea element.
+             * @attr {string} placeholder - The placeholder text to show when there is no value.
+             * @attr {boolean} readonly - If `true`, the textarea field cannot be modified.
+             * @attr {boolean} required - Indicates whether or not the textarea field is required to be filled out before submitting the form.
+             * @attr {number} rows - The number of visible text lines for the control. It must be a positive integer.
+             * @attr {boolean} spellcheck - If `true`, the textarea content may be checked for spelling errors.
+             * @attr {"error" | "none" | "success" | "warning"} validation-status - The validation status of the textarea.
+             * @attr {string} value - The value of the textarea. It can be used to reset the textarea to a previous value.
+             * @attr {"soft" | "hard"} wrap - Specifies how the text in a text area is to be wrapped when submitted in a form.
+             * @event bqBlur - Handler to be called when the textarea loses focus.
+             * @event bqChange - Handler to be called when the textarea value has changed and the textarea loses focus.
+             * @event bqClear - Handler to be called when the textarea value has been cleared.
+             * @event bqFocus - Handler to be called when the textarea has received focus.
+             * @event bqInput - Handler to be called when the textarea value changes.
+             * @prop --bq-textarea--background-color - Textarea background color
+             * @prop --bq-textarea--border-color - Textarea border color
+             * @prop --bq-textarea--border-color-focus - Textarea border color on focus
+             * @prop --bq-textarea--border-radius - Textarea border radius
+             * @prop --bq-textarea--border-width - Textarea border width
+             * @prop --bq-textarea--border-style - Textarea border style
+             * @prop --bq-textarea--helper-margin-top - Textarea helper text margin top
+             * @prop --bq-textarea--helper-text-color - Textarea helper text color
+             * @prop --bq-textarea--helper-text-size - Textarea helper text size
+             * @prop --bq-textarea--label-margin-bottom - Textarea label margin bottom
+             * @prop --bq-textarea--label-text-color - Textarea label text color
+             * @prop --bq-textarea--label-text-size - Textarea label text size
+             * @prop --bq-textarea--paddingY - Textarea padding top and bottom
+             * @prop --bq-textarea--padding-start - Textarea padding start
+             * @prop --bq-textarea--padding-end - Textarea padding end
+             * @prop --bq-textarea--text-color - Textarea text color
+             * @prop --bq-textarea--text-size - Textarea text size
+             * @prop --bq-textarea--text-placeholder-color - Textarea placeholder text color
+             */
             "bq-textarea": LocalJSX.BqTextarea & JSXBase.HTMLAttributes<HTMLBqTextareaElement>;
             "bq-toast": LocalJSX.BqToast & JSXBase.HTMLAttributes<HTMLBqToastElement>;
             "bq-tooltip": LocalJSX.BqTooltip & JSXBase.HTMLAttributes<HTMLBqTooltipElement>;

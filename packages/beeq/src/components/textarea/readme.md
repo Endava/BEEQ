@@ -5,6 +5,10 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The Textarea component is a multi-line text input control that is often used in a form to collect user inputs like comments or reviews.
+
 ## Properties
 
 | Property                   | Attribute           | Description                                                                                                                                                                                                                                        | Type                                                      | Default     |
@@ -39,6 +43,14 @@
 | `bqClear`  | Callback handler emitted when the textarea value has been cleared                                                                                                                                                                          | `CustomEvent<HTMLBqTextareaElement>`                         |
 | `bqFocus`  | Callback handler emitted when the textarea has received focus                                                                                                                                                                              | `CustomEvent<HTMLBqTextareaElement>`                         |
 | `bqInput`  | Callback handler emitted when the textarea value changes. This handler is called whenever the user types or pastes text into the textarea field.                                                                                           | `CustomEvent<{ value: string; el: HTMLBqTextareaElement; }>` |
+
+
+## Slots
+
+| Slot            | Description         |
+| --------------- | ------------------- |
+| `"helper-text"` | The helper text.    |
+| `"label"`       | The textarea label. |
 
 
 ## Shadow Parts
