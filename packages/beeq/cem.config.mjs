@@ -13,8 +13,47 @@
 import { customJSDocTagsPlugin } from 'cem-plugin-custom-jsdoc-tags';
 import { expandTypesPlugin, getTsProgram } from 'cem-plugin-expanded-types';
 import { jsdocExamplePlugin } from 'cem-plugin-jsdoc-example';
-import { customElementJsxPlugin } from 'custom-element-jsx-integration';
 import { customElementVsCodePlugin } from 'custom-element-vs-code-integration';
+
+const replace = (str, terms) => {
+  terms.forEach(({ from, to }) => {
+    str = str.replace(from, to);
+  });
+  return str;
+};
+
+const applyReplacements = (path, terms) => replace(path, terms);
+
+/** Custom plugin to rename module paths in the custom-elements.json manifest */
+const beeqCemModulePaths = {
+  name: 'beeq-cem-module-paths',
+  packageLinkPhase({ customElementsManifest }) {
+    const terms = [
+      // Rename `packages/beeq/src/` and intermediate directories to `components/`
+      { from: /^packages\/beeq\/src\/components\/[^/]+\//, to: 'components/' },
+      // Change the file extension to .js
+      { from: /\.(t|j)sx?$/, to: '.js' },
+    ];
+
+    customElementsManifest?.modules?.forEach((mod) => {
+      mod.path = applyReplacements(mod.path, terms);
+
+      mod.exports?.forEach((ex) => {
+        ex.declaration.module = applyReplacements(ex.declaration.module, terms);
+      });
+
+      mod.declarations?.forEach((dec) => {
+        if (dec.kind === 'class') {
+          dec.members?.forEach((member) => {
+            if (member.inheritedFrom) {
+              member.inheritedFrom.module = applyReplacements(member.inheritedFrom.module, terms);
+            }
+          });
+        }
+      });
+    });
+  },
+};
 
 export default {
   /** Files to analyze */
@@ -46,15 +85,12 @@ export default {
         },
       },
     }),
-    customElementJsxPlugin({
-      outdir: 'packages/beeq/cem',
-      fileName: 'beeq.d.ts',
-    }),
     customElementVsCodePlugin({
       outdir: 'packages/beeq/cem',
       htmlFileName: 'beeq.html-custom-data.json',
       cssFileName: null,
     }),
+    beeqCemModulePaths,
   ],
   /** Overrides default module creation: */
   overrideModuleCreation: ({ ts, globs }) => {

@@ -116,7 +116,6 @@
     "cem-plugin-jsdoc-example": "0.0.9",
     "chromatic": "11.12.5",
     "core-js": "3.38.1",
-    "custom-element-jsx-integration": "1.5.3",
     "custom-element-vs-code-integration": "1.4.1",
     "decompress": "4.2.1",
     "eslint": "9.12.0",
