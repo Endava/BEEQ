@@ -19,6 +19,63 @@ import { TInputValidation } from '../input/bq-input.types';
 export type TSelectValue = string | string[];
 
 /**
+ * The select input component lets users choose from a predefined list, commonly used in forms for easy data selection.
+ *
+ * @example How to use it
+ * ```html
+ * <bq-select placeholder="Placeholder">
+ *   <label slot="label">Select label</label>
+ *   <span slot="helper-text">
+ *     <bq-icon name="star"></bq-icon>
+ *       Helper text
+ *   </span>
+ *
+ *   <bq-option value="1">Option 1</bq-option>
+ *   <bq-option value="2">Option 2</bq-option>
+ *   <bq-option value="3">Option 3</bq-option>
+ * </bq-select>
+ * ```
+ *
+ * @documentation https://www.beeq.design/3d466e231/p/41989d-select/b/09d7b1
+ * @status stable
+ *
+ * @attr {boolean} autofocus - If `true`, the Select input will be focused on component render.
+ * @attr {string} clear-button-label - The clear button aria label.
+ * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
+ * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+ * @attr {boolean} disabled - Indicates whether the Select input is disabled and cannot be interacted with.
+ * @attr {number} distance - Represents the distance (gutter or margin) between the Select panel and the input element.
+ * @attr {string} form - The ID of the form that Select input field belongs to.
+ * @attr {boolean} keep-open-on-select - If `true`, the Select panel will remain open after a selection is made.
+ * @attr {number} max-tags-visible - The maximum number of tags to display when multiple selection is enabled.
+ * @attr {boolean} multiple - If `true`, the Select input will allow multiple selections.
+ * @attr {string} name - The Select input name.
+ * @attr {boolean} open - If `true`, the Select panel will be visible.
+ * @attr {string} panel-height - When set, it will override the height of the Select panel.
+ * @attr {string} placeholder - The Select input placeholder text value.
+ * @attr {"bottom" | "bottom-end" | "bottom-start" | "left" | "left-end" | "left-start" | "right" | "right-end" | "right-start" | "top" | "top-end" | "top-start"} placement - Position of the Select panel.
+ * @attr {boolean} readonly - If `true`, the Select input cannot be modified.
+ * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
+ * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
+ * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
+ * @attr {"absolute" | "fixed"} strategy - Defines the strategy to position the Select panel.
+ * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
+ * @attr {"number" | "string" | "string[]"} value - The select input value can be used to reset the field to a previous value.
+ *
+ * @method clear - Method to be called to clear the selected value.
+ *
+ * @event bqBlur - The callback handler is emitted when the Select input loses focus.
+ * @event bqClear - The callback handler is emitted when the selected value has been cleared.
+ * @event bqFocus - A callback handler is emitted when the Select input has received focus.
+ * @event bqSelect - The callback handler is emitted when the selected value has changed.
+ *
+ * @slot label - The label slot container.
+ * @slot prefix - The prefix slot container.
+ * @slot tags - The tags slot container.
+ * @slot clear-icon - The clear icon slot container.
+ * @slot suffix - The suffix slot container.
+ * @slot helper-text - The helper text slot container.
+ *
  * @part base - The component's base wrapper.
  * @part button - The native HTML button used under the hood in the clear button.
  * @part clear-btn - The clear button.
@@ -37,6 +94,28 @@ export type TSelectValue = string | string[];
  * @part tag__text - The text slot container of the BqTag for multiple selection.
  * @part tag__btn-close - The close button of the BqTag for multiple selection.
  * @part option-list - The option list container.
+ *
+ * @cssprop --bq-select--background-color - Select background color
+ * @cssprop --bq-select--border-color - Select border color
+ * @cssprop --bq-select--border-color-focus - Select border color on focus
+ * @cssprop --bq-select--border-color-disabled - Select border color when disabled
+ * @cssprop --bq-select--border-radius - Select border radius
+ * @cssprop --bq-select--border-width - Select border width
+ * @cssprop --bq-select--border-style - Select border style
+ * @cssprop --bq-select--gap - Gap between Select content and prefix/suffix
+ * @cssprop --bq-select--helper-margin-top - Helper text margin top
+ * @cssprop --bq-select--helper-text-color - Helper text color
+ * @cssprop --bq-select--helper-text-size - Helper text size
+ * @cssprop --bq-select--icon-size - Icon size to use in prefix/suffix and clear button
+ * @cssprop --bq-select--label-margin-bottom - Select label margin bottom
+ * @cssprop --bq-select--label-text-color - Select label text color
+ * @cssprop --bq-select--label-text-size - Select label text size
+ * @cssprop --bq-select--padding-start - Select padding start
+ * @cssprop --bq-select--padding-end - Select padding end
+ * @cssprop --bq-select--paddingY - Select padding top and bottom
+ * @cssprop --bq-select--text-color - Select text color
+ * @cssprop --bq-select--text-size - Select text size
+ * @cssprop --bq-select--text-placeholder-color - Select placeholder text color
  */
 @Component({
   tag: 'bq-select',
