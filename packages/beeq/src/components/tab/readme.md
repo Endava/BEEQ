@@ -5,6 +5,11 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The tab is a user interface element that allows users to navigate between different sections of a page.
+It should be used inside `<bq-tab-group>` component.
+
 ## Properties
 
 | Property                | Attribute     | Description                             | Type                             | Default        |
@@ -29,23 +34,6 @@
 
 
 ## Methods
-
-### `enableFocus(value: boolean) => Promise<void>`
-
-Sets tabindex on the native `<button>` HTML element used under the hood.
-This method is used inside `<bq-tab-group>` to make tab focusable after the active one is focused
-
-#### Parameters
-
-| Name    | Type      | Description |
-| ------- | --------- | ----------- |
-| `value` | `boolean` |             |
-
-#### Returns
-
-Type: `Promise<void>`
-
-
 
 ### `vBlur() => Promise<void>`
 

@@ -6,17 +6,17 @@
   /**
    * @prop --bq-tab--font-size - Font size
    * @prop --bq-tab--font-weight - Font weight
-   * @prop --bq-tab--line-height - Line height
-   * @prop --bq-tab--label-icon-gap - Gap between label and icon
-   * @prop --bq-tab--padding-vertical-small - Vertical padding for small tab
-   * @prop --bq-tab--padding-horizontal-small - Horizontal padding for small tab
-   * @prop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
-   * @prop --bq-tab--padding-horizontal-medium - Horizontal padding for medium tab
-   * @prop --bq-tab--padding-vertical-large - Vertical padding for large tab
-   * @prop --bq-tab--padding-horizontal-large - Horizontal padding for large tab
-   * @prop --bq-tab--icon-size-small - Icon size for small tab
-   * @prop --bq-tab--icon-size-medium - Icon size for medium tab
    * @prop --bq-tab--icon-size-large - Icon size for large tab
+   * @prop --bq-tab--icon-size-medium - Icon size for medium tab
+   * @prop --bq-tab--icon-size-small - Icon size for small tab
+   * @prop --bq-tab--label-icon-gap - Gap between label and icon
+   * @prop --bq-tab--line-height - Line height
+   * @prop --bq-tab--padding-horizontal-large - Horizontal padding for large tab
+   * @prop --bq-tab--padding-horizontal-medium - Horizontal padding for medium tab
+   * @prop --bq-tab--padding-horizontal-small - Horizontal padding for small tab
+   * @prop --bq-tab--padding-vertical-large - Vertical padding for large tab
+   * @prop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
+   * @prop --bq-tab--padding-vertical-small - Vertical padding for small tab
    */
   --bq-tab--font-size: theme(fontSize.m);
   --bq-tab--font-weight: theme(fontWeight.medium);

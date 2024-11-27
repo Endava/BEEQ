@@ -2383,6 +2383,43 @@ export namespace Components {
          */
         "value"?: string;
     }
+    /**
+     * The tab is a user interface element that allows users to navigate between different sections of a page.
+     * It should be used inside `<bq-tab-group>` component.
+     * @example How to use it
+     * ```html
+     * <bq-tab tab-id="1" controls="panel-1">Tab 1</bq-tab>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/775321-tabs
+     * @status stable
+     * @attr {boolean} active - If `true` tab is active
+     * @attr {string} controls - The tab panel id that the tab controls
+     * @attr {boolean} disabled - If `true` tab is disabled
+     * @attr {string} orientation - The direction that tab should be render
+     * @attr {string} placement - The placement that tab should be render
+     * @attr {string} size - The size of the tab
+     * @attr {string} tab-id - The id of the tab
+     * @event bqClick - Handler to be called when the tab state changes
+     * @event bqFocus - Handler to be called when the tab gets focus
+     * @event bqBlur - Handler to be called when the tab loses focus
+     * @event bqKeyDown - Handler to be called when the tab key is pressed
+     * @method vClick - Simulate a click event on the native `<button>` HTML element used under the hood
+     * @method vFocus - Sets focus on the native `<button>` HTML element used under the hood
+     * @method vBlur - Remove focus from the native `<button>` HTML element used under the hood
+     * @cssprop --bq-tab--font-size - Font size
+     * @cssprop --bq-tab--font-weight - Font weight
+     * @cssprop --bq-tab--icon-size-large - Icon size for large tab
+     * @cssprop --bq-tab--icon-size-medium - Icon size for medium tab
+     * @cssprop --bq-tab--icon-size-small - Icon size for small tab
+     * @cssprop --bq-tab--label-icon-gap - Gap between label and icon
+     * @cssprop --bq-tab--line-height - Line height
+     * @cssprop --bq-tab--padding-horizontal-large - Horizontal padding for large tab
+     * @cssprop --bq-tab--padding-horizontal-medium - Horizontal padding for medium tab
+     * @cssprop --bq-tab--padding-horizontal-small - Horizontal padding for small tab
+     * @cssprop --bq-tab--padding-vertical-large - Vertical padding for large tab
+     * @cssprop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
+     * @cssprop --bq-tab--padding-vertical-small - Vertical padding for small tab
+     */
     interface BqTab {
         /**
           * If true tab is active
@@ -2396,9 +2433,6 @@ export namespace Components {
           * If true tab is disabled
          */
         "disabled": boolean;
-        /**
-          * Sets tabindex on the native `<button>` HTML element used under the hood. This method is used inside `<bq-tab-group>` to make tab focusable after the active one is focused
-         */
         "enableFocus": (value: boolean) => Promise<void>;
         /**
           * The direction that tab should be render
@@ -2429,6 +2463,27 @@ export namespace Components {
          */
         "vFocus": () => Promise<void>;
     }
+    /**
+     * The tab group is a user interface element that allows users wrap a set of tab items.
+     * @example How to use it
+     * ```html
+     * <bq-tab-group value="5">
+     * <bq-tab tab-id="1">Tab</bq-tab>
+     * <bq-tab tab-id="2" active>Tab</bq-tab>
+     * <bq-tab tab-id="3">Long Tab name</bq-tab>
+     * <bq-tab tab-id="4" disabled>Tab</bq-tab>
+     * </bq-tab-group>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/775321-tabs
+     * @status stable
+     * @attr {number} debounce-time - A number representing the delay value applied to bqChange event handler
+     * @attr {boolean} disable-divider - If true, the underline divider below the tabs won't be shown
+     * @attr {string} orientation - The direction that tab should be render
+     * @attr {string} placement - The placement that tab should be render
+     * @attr {string} size - The size of the tab
+     * @attr {string} value - A string representing the id of the selected tab.
+     * @event bqChange - Handler to be called when the tab value changes
+     */
     interface BqTabGroup {
         /**
           * A number representing the delay value applied to bqChange event handler
@@ -4459,6 +4514,43 @@ declare global {
         "bqBlur": HTMLBqTabElement;
         "bqKeyDown": KeyboardEvent;
     }
+    /**
+     * The tab is a user interface element that allows users to navigate between different sections of a page.
+     * It should be used inside `<bq-tab-group>` component.
+     * @example How to use it
+     * ```html
+     * <bq-tab tab-id="1" controls="panel-1">Tab 1</bq-tab>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/775321-tabs
+     * @status stable
+     * @attr {boolean} active - If `true` tab is active
+     * @attr {string} controls - The tab panel id that the tab controls
+     * @attr {boolean} disabled - If `true` tab is disabled
+     * @attr {string} orientation - The direction that tab should be render
+     * @attr {string} placement - The placement that tab should be render
+     * @attr {string} size - The size of the tab
+     * @attr {string} tab-id - The id of the tab
+     * @event bqClick - Handler to be called when the tab state changes
+     * @event bqFocus - Handler to be called when the tab gets focus
+     * @event bqBlur - Handler to be called when the tab loses focus
+     * @event bqKeyDown - Handler to be called when the tab key is pressed
+     * @method vClick - Simulate a click event on the native `<button>` HTML element used under the hood
+     * @method vFocus - Sets focus on the native `<button>` HTML element used under the hood
+     * @method vBlur - Remove focus from the native `<button>` HTML element used under the hood
+     * @cssprop --bq-tab--font-size - Font size
+     * @cssprop --bq-tab--font-weight - Font weight
+     * @cssprop --bq-tab--icon-size-large - Icon size for large tab
+     * @cssprop --bq-tab--icon-size-medium - Icon size for medium tab
+     * @cssprop --bq-tab--icon-size-small - Icon size for small tab
+     * @cssprop --bq-tab--label-icon-gap - Gap between label and icon
+     * @cssprop --bq-tab--line-height - Line height
+     * @cssprop --bq-tab--padding-horizontal-large - Horizontal padding for large tab
+     * @cssprop --bq-tab--padding-horizontal-medium - Horizontal padding for medium tab
+     * @cssprop --bq-tab--padding-horizontal-small - Horizontal padding for small tab
+     * @cssprop --bq-tab--padding-vertical-large - Vertical padding for large tab
+     * @cssprop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
+     * @cssprop --bq-tab--padding-vertical-small - Vertical padding for small tab
+     */
     interface HTMLBqTabElement extends Components.BqTab, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqTabElementEventMap>(type: K, listener: (this: HTMLBqTabElement, ev: BqTabCustomEvent<HTMLBqTabElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -4476,6 +4568,27 @@ declare global {
     interface HTMLBqTabGroupElementEventMap {
         "bqChange": { target: HTMLBqTabElement; value: string };
     }
+    /**
+     * The tab group is a user interface element that allows users wrap a set of tab items.
+     * @example How to use it
+     * ```html
+     * <bq-tab-group value="5">
+     * <bq-tab tab-id="1">Tab</bq-tab>
+     * <bq-tab tab-id="2" active>Tab</bq-tab>
+     * <bq-tab tab-id="3">Long Tab name</bq-tab>
+     * <bq-tab tab-id="4" disabled>Tab</bq-tab>
+     * </bq-tab-group>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/775321-tabs
+     * @status stable
+     * @attr {number} debounce-time - A number representing the delay value applied to bqChange event handler
+     * @attr {boolean} disable-divider - If true, the underline divider below the tabs won't be shown
+     * @attr {string} orientation - The direction that tab should be render
+     * @attr {string} placement - The placement that tab should be render
+     * @attr {string} size - The size of the tab
+     * @attr {string} value - A string representing the id of the selected tab.
+     * @event bqChange - Handler to be called when the tab value changes
+     */
     interface HTMLBqTabGroupElement extends Components.BqTabGroup, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqTabGroupElementEventMap>(type: K, listener: (this: HTMLBqTabGroupElement, ev: BqTabGroupCustomEvent<HTMLBqTabGroupElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -7109,6 +7222,43 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    /**
+     * The tab is a user interface element that allows users to navigate between different sections of a page.
+     * It should be used inside `<bq-tab-group>` component.
+     * @example How to use it
+     * ```html
+     * <bq-tab tab-id="1" controls="panel-1">Tab 1</bq-tab>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/775321-tabs
+     * @status stable
+     * @attr {boolean} active - If `true` tab is active
+     * @attr {string} controls - The tab panel id that the tab controls
+     * @attr {boolean} disabled - If `true` tab is disabled
+     * @attr {string} orientation - The direction that tab should be render
+     * @attr {string} placement - The placement that tab should be render
+     * @attr {string} size - The size of the tab
+     * @attr {string} tab-id - The id of the tab
+     * @event bqClick - Handler to be called when the tab state changes
+     * @event bqFocus - Handler to be called when the tab gets focus
+     * @event bqBlur - Handler to be called when the tab loses focus
+     * @event bqKeyDown - Handler to be called when the tab key is pressed
+     * @method vClick - Simulate a click event on the native `<button>` HTML element used under the hood
+     * @method vFocus - Sets focus on the native `<button>` HTML element used under the hood
+     * @method vBlur - Remove focus from the native `<button>` HTML element used under the hood
+     * @cssprop --bq-tab--font-size - Font size
+     * @cssprop --bq-tab--font-weight - Font weight
+     * @cssprop --bq-tab--icon-size-large - Icon size for large tab
+     * @cssprop --bq-tab--icon-size-medium - Icon size for medium tab
+     * @cssprop --bq-tab--icon-size-small - Icon size for small tab
+     * @cssprop --bq-tab--label-icon-gap - Gap between label and icon
+     * @cssprop --bq-tab--line-height - Line height
+     * @cssprop --bq-tab--padding-horizontal-large - Horizontal padding for large tab
+     * @cssprop --bq-tab--padding-horizontal-medium - Horizontal padding for medium tab
+     * @cssprop --bq-tab--padding-horizontal-small - Horizontal padding for small tab
+     * @cssprop --bq-tab--padding-vertical-large - Vertical padding for large tab
+     * @cssprop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
+     * @cssprop --bq-tab--padding-vertical-small - Vertical padding for small tab
+     */
     interface BqTab {
         /**
           * If true tab is active
@@ -7155,6 +7305,27 @@ declare namespace LocalJSX {
          */
         "tabId": string;
     }
+    /**
+     * The tab group is a user interface element that allows users wrap a set of tab items.
+     * @example How to use it
+     * ```html
+     * <bq-tab-group value="5">
+     * <bq-tab tab-id="1">Tab</bq-tab>
+     * <bq-tab tab-id="2" active>Tab</bq-tab>
+     * <bq-tab tab-id="3">Long Tab name</bq-tab>
+     * <bq-tab tab-id="4" disabled>Tab</bq-tab>
+     * </bq-tab-group>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/775321-tabs
+     * @status stable
+     * @attr {number} debounce-time - A number representing the delay value applied to bqChange event handler
+     * @attr {boolean} disable-divider - If true, the underline divider below the tabs won't be shown
+     * @attr {string} orientation - The direction that tab should be render
+     * @attr {string} placement - The placement that tab should be render
+     * @attr {string} size - The size of the tab
+     * @attr {string} value - A string representing the id of the selected tab.
+     * @event bqChange - Handler to be called when the tab value changes
+     */
     interface BqTabGroup {
         /**
           * A number representing the delay value applied to bqChange event handler
@@ -8672,7 +8843,65 @@ declare module "@stencil/core" {
              * @cssprop --bq-switch--dot-size - Switch dot size
              */
             "bq-switch": LocalJSX.BqSwitch & JSXBase.HTMLAttributes<HTMLBqSwitchElement>;
+            /**
+             * The tab is a user interface element that allows users to navigate between different sections of a page.
+             * It should be used inside `<bq-tab-group>` component.
+             * @example How to use it
+             * ```html
+             * <bq-tab tab-id="1" controls="panel-1">Tab 1</bq-tab>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/775321-tabs
+             * @status stable
+             * @attr {boolean} active - If `true` tab is active
+             * @attr {string} controls - The tab panel id that the tab controls
+             * @attr {boolean} disabled - If `true` tab is disabled
+             * @attr {string} orientation - The direction that tab should be render
+             * @attr {string} placement - The placement that tab should be render
+             * @attr {string} size - The size of the tab
+             * @attr {string} tab-id - The id of the tab
+             * @event bqClick - Handler to be called when the tab state changes
+             * @event bqFocus - Handler to be called when the tab gets focus
+             * @event bqBlur - Handler to be called when the tab loses focus
+             * @event bqKeyDown - Handler to be called when the tab key is pressed
+             * @method vClick - Simulate a click event on the native `<button>` HTML element used under the hood
+             * @method vFocus - Sets focus on the native `<button>` HTML element used under the hood
+             * @method vBlur - Remove focus from the native `<button>` HTML element used under the hood
+             * @cssprop --bq-tab--font-size - Font size
+             * @cssprop --bq-tab--font-weight - Font weight
+             * @cssprop --bq-tab--icon-size-large - Icon size for large tab
+             * @cssprop --bq-tab--icon-size-medium - Icon size for medium tab
+             * @cssprop --bq-tab--icon-size-small - Icon size for small tab
+             * @cssprop --bq-tab--label-icon-gap - Gap between label and icon
+             * @cssprop --bq-tab--line-height - Line height
+             * @cssprop --bq-tab--padding-horizontal-large - Horizontal padding for large tab
+             * @cssprop --bq-tab--padding-horizontal-medium - Horizontal padding for medium tab
+             * @cssprop --bq-tab--padding-horizontal-small - Horizontal padding for small tab
+             * @cssprop --bq-tab--padding-vertical-large - Vertical padding for large tab
+             * @cssprop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
+             * @cssprop --bq-tab--padding-vertical-small - Vertical padding for small tab
+             */
             "bq-tab": LocalJSX.BqTab & JSXBase.HTMLAttributes<HTMLBqTabElement>;
+            /**
+             * The tab group is a user interface element that allows users wrap a set of tab items.
+             * @example How to use it
+             * ```html
+             * <bq-tab-group value="5">
+             * <bq-tab tab-id="1">Tab</bq-tab>
+             * <bq-tab tab-id="2" active>Tab</bq-tab>
+             * <bq-tab tab-id="3">Long Tab name</bq-tab>
+             * <bq-tab tab-id="4" disabled>Tab</bq-tab>
+             * </bq-tab-group>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/775321-tabs
+             * @status stable
+             * @attr {number} debounce-time - A number representing the delay value applied to bqChange event handler
+             * @attr {boolean} disable-divider - If true, the underline divider below the tabs won't be shown
+             * @attr {string} orientation - The direction that tab should be render
+             * @attr {string} placement - The placement that tab should be render
+             * @attr {string} size - The size of the tab
+             * @attr {string} value - A string representing the id of the selected tab.
+             * @event bqChange - Handler to be called when the tab value changes
+             */
             "bq-tab-group": LocalJSX.BqTabGroup & JSXBase.HTMLAttributes<HTMLBqTabGroupElement>;
             "bq-tag": LocalJSX.BqTag & JSXBase.HTMLAttributes<HTMLBqTagElement>;
             "bq-textarea": LocalJSX.BqTextarea & JSXBase.HTMLAttributes<HTMLBqTextareaElement>;
