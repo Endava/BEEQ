@@ -2228,6 +2228,30 @@ export namespace Components {
          */
         "type": TStatusType;
     }
+    /**
+     * The Step Item Component is a UI element used to display a single step or stage in a process or task.
+     * It should be used inside the Steps component.
+     * @example How to use it
+     * ```html
+     * <bq-step-item status="completed">
+     * <bq-icon slot="prefix" name="check-circle"></bq-icon>
+     * <span>Title</span>
+     * <span slot="description">Description</span>
+     * </bq-step-item>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
+     * @status stable
+     * @attr {"small" | "medium"} size - It defines prefix size
+     * @attr {"completed" | "current" | "error" | "default" | "disabled"} status - It defines step item appearance based on its status
+     * @attr {"numeric" | "icon" | "dot"} type - It defines the step item type used
+     * @event bqClick - Callback handler emitted when the step item is clicked
+     * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
+     * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
+     * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
+     * @cssprop --bq-step-item--prefix-color-error - Color of the prefix icon when error
+     * @cssprop --bq-step-item--prefix-num-size - Size of the prefix number
+     * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
+     */
     interface BqStepItem {
         /**
           * It defines prefix size
@@ -2242,6 +2266,26 @@ export namespace Components {
          */
         "type"?: TStepsType;
     }
+    /**
+     * The Steps Component is a UI element used to display a series of steps or stages in a process or task.
+     * It is used to guide users through a process or task and to indicate their progress.
+     * @example How to use it
+     * ```html
+     * <bq-steps divider-color="stroke--primary" type="dot" size="medium">
+     * <bq-step-item status="completed"> ... </bq-step-item>
+     * <bq-step-item status="error"> ... </bq-step-item>
+     * <bq-step-item status="current"> ... </bq-step-item>
+     * <bq-step-item status="default"> ... </bq-step-item>
+     * </bq-steps>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
+     * @status stable
+     * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
+     * @attr {"medium" | "small"} size - The size of the steps
+     * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
+     * @cssprop --bq-steps--divider-color - Divider color
+     * @cssprop --bq-steps--gap - Gap between steps
+     */
     interface BqSteps {
         /**
           * The color of the line that connects the steps. It should be a valid declarative color token.
@@ -4272,6 +4316,30 @@ declare global {
     interface HTMLBqStepItemElementEventMap {
         "bqClick": { target: HTMLBqStepItemElement; value: string };
     }
+    /**
+     * The Step Item Component is a UI element used to display a single step or stage in a process or task.
+     * It should be used inside the Steps component.
+     * @example How to use it
+     * ```html
+     * <bq-step-item status="completed">
+     * <bq-icon slot="prefix" name="check-circle"></bq-icon>
+     * <span>Title</span>
+     * <span slot="description">Description</span>
+     * </bq-step-item>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
+     * @status stable
+     * @attr {"small" | "medium"} size - It defines prefix size
+     * @attr {"completed" | "current" | "error" | "default" | "disabled"} status - It defines step item appearance based on its status
+     * @attr {"numeric" | "icon" | "dot"} type - It defines the step item type used
+     * @event bqClick - Callback handler emitted when the step item is clicked
+     * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
+     * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
+     * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
+     * @cssprop --bq-step-item--prefix-color-error - Color of the prefix icon when error
+     * @cssprop --bq-step-item--prefix-num-size - Size of the prefix number
+     * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
+     */
     interface HTMLBqStepItemElement extends Components.BqStepItem, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqStepItemElementEventMap>(type: K, listener: (this: HTMLBqStepItemElement, ev: BqStepItemCustomEvent<HTMLBqStepItemElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -4286,6 +4354,26 @@ declare global {
         prototype: HTMLBqStepItemElement;
         new (): HTMLBqStepItemElement;
     };
+    /**
+     * The Steps Component is a UI element used to display a series of steps or stages in a process or task.
+     * It is used to guide users through a process or task and to indicate their progress.
+     * @example How to use it
+     * ```html
+     * <bq-steps divider-color="stroke--primary" type="dot" size="medium">
+     * <bq-step-item status="completed"> ... </bq-step-item>
+     * <bq-step-item status="error"> ... </bq-step-item>
+     * <bq-step-item status="current"> ... </bq-step-item>
+     * <bq-step-item status="default"> ... </bq-step-item>
+     * </bq-steps>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
+     * @status stable
+     * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
+     * @attr {"medium" | "small"} size - The size of the steps
+     * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
+     * @cssprop --bq-steps--divider-color - Divider color
+     * @cssprop --bq-steps--gap - Gap between steps
+     */
     interface HTMLBqStepsElement extends Components.BqSteps, HTMLStencilElement {
     }
     var HTMLBqStepsElement: {
@@ -6812,6 +6900,30 @@ declare namespace LocalJSX {
          */
         "type"?: TStatusType;
     }
+    /**
+     * The Step Item Component is a UI element used to display a single step or stage in a process or task.
+     * It should be used inside the Steps component.
+     * @example How to use it
+     * ```html
+     * <bq-step-item status="completed">
+     * <bq-icon slot="prefix" name="check-circle"></bq-icon>
+     * <span>Title</span>
+     * <span slot="description">Description</span>
+     * </bq-step-item>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
+     * @status stable
+     * @attr {"small" | "medium"} size - It defines prefix size
+     * @attr {"completed" | "current" | "error" | "default" | "disabled"} status - It defines step item appearance based on its status
+     * @attr {"numeric" | "icon" | "dot"} type - It defines the step item type used
+     * @event bqClick - Callback handler emitted when the step item is clicked
+     * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
+     * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
+     * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
+     * @cssprop --bq-step-item--prefix-color-error - Color of the prefix icon when error
+     * @cssprop --bq-step-item--prefix-num-size - Size of the prefix number
+     * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
+     */
     interface BqStepItem {
         /**
           * Callback handler emitted when the step item is clicked
@@ -6830,6 +6942,26 @@ declare namespace LocalJSX {
          */
         "type"?: TStepsType;
     }
+    /**
+     * The Steps Component is a UI element used to display a series of steps or stages in a process or task.
+     * It is used to guide users through a process or task and to indicate their progress.
+     * @example How to use it
+     * ```html
+     * <bq-steps divider-color="stroke--primary" type="dot" size="medium">
+     * <bq-step-item status="completed"> ... </bq-step-item>
+     * <bq-step-item status="error"> ... </bq-step-item>
+     * <bq-step-item status="current"> ... </bq-step-item>
+     * <bq-step-item status="default"> ... </bq-step-item>
+     * </bq-steps>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
+     * @status stable
+     * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
+     * @attr {"medium" | "small"} size - The size of the steps
+     * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
+     * @cssprop --bq-steps--divider-color - Divider color
+     * @cssprop --bq-steps--gap - Gap between steps
+     */
     interface BqSteps {
         /**
           * The color of the line that connects the steps. It should be a valid declarative color token.
@@ -8389,7 +8521,51 @@ declare module "@stencil/core" {
              * @cssprop --bq-status-circ - Status circle size.
              */
             "bq-status": LocalJSX.BqStatus & JSXBase.HTMLAttributes<HTMLBqStatusElement>;
+            /**
+             * The Step Item Component is a UI element used to display a single step or stage in a process or task.
+             * It should be used inside the Steps component.
+             * @example How to use it
+             * ```html
+             * <bq-step-item status="completed">
+             * <bq-icon slot="prefix" name="check-circle"></bq-icon>
+             * <span>Title</span>
+             * <span slot="description">Description</span>
+             * </bq-step-item>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
+             * @status stable
+             * @attr {"small" | "medium"} size - It defines prefix size
+             * @attr {"completed" | "current" | "error" | "default" | "disabled"} status - It defines step item appearance based on its status
+             * @attr {"numeric" | "icon" | "dot"} type - It defines the step item type used
+             * @event bqClick - Callback handler emitted when the step item is clicked
+             * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
+             * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
+             * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
+             * @cssprop --bq-step-item--prefix-color-error - Color of the prefix icon when error
+             * @cssprop --bq-step-item--prefix-num-size - Size of the prefix number
+             * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
+             */
             "bq-step-item": LocalJSX.BqStepItem & JSXBase.HTMLAttributes<HTMLBqStepItemElement>;
+            /**
+             * The Steps Component is a UI element used to display a series of steps or stages in a process or task.
+             * It is used to guide users through a process or task and to indicate their progress.
+             * @example How to use it
+             * ```html
+             * <bq-steps divider-color="stroke--primary" type="dot" size="medium">
+             * <bq-step-item status="completed"> ... </bq-step-item>
+             * <bq-step-item status="error"> ... </bq-step-item>
+             * <bq-step-item status="current"> ... </bq-step-item>
+             * <bq-step-item status="default"> ... </bq-step-item>
+             * </bq-steps>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
+             * @status stable
+             * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
+             * @attr {"medium" | "small"} size - The size of the steps
+             * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
+             * @cssprop --bq-steps--divider-color - Divider color
+             * @cssprop --bq-steps--gap - Gap between steps
+             */
             "bq-steps": LocalJSX.BqSteps & JSXBase.HTMLAttributes<HTMLBqStepsElement>;
             /**
              * Toggle switches are digital on/off switches.

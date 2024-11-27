@@ -5,6 +5,11 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The Step Item Component is a UI element used to display a single step or stage in a process or task.
+It should be used inside the Steps component.
+
 ## Properties
 
 | Property | Attribute | Description                                         | Type                                                             | Default     |
@@ -19,6 +24,15 @@
 | Event     | Description                                            | Type                                                             |
 | --------- | ------------------------------------------------------ | ---------------------------------------------------------------- |
 | `bqClick` | Callback handler emitted when the step item is clicked | `CustomEvent<{ target: HTMLBqStepItemElement; value: string; }>` |
+
+
+## Slots
+
+| Slot            | Description               |
+| --------------- | ------------------------- |
+|                 | The step item content     |
+| `"description"` | The step item description |
+| `"prefix"`      | The step item prefix      |
 
 
 ## Shadow Parts
