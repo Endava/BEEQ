@@ -29,11 +29,11 @@ Represents the default side menu item for standard navigation elements, providin
 
 ## Slots
 
-| Slot                              | Description                   |
-| --------------------------------- | ----------------------------- |
-| `"The content of the menu item."` |                               |
-| `"prefix"`                        | The prefix part of menu item. |
-| `"suffix"`                        | The suffix part of menu item. |
+| Slot       | Description                   |
+| ---------- | ----------------------------- |
+|            | The content of the menu item. |
+| `"prefix"` | The prefix part of menu item. |
+| `"suffix"` | The suffix part of menu item. |
 
 
 ## Shadow Parts

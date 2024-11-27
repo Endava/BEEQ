@@ -25,7 +25,7 @@ import { getTextContent } from '../../shared/utils';
  * @event bqFocus - Handler to be called when the button is clicked.
  *
  * @slot prefix - The prefix part of menu item.
- * @slot The content of the menu item.
+ * @slot - The content of the menu item.
  * @slot suffix - The suffix part of menu item.
  *
  * @part base - The component wrapper container inside the shadow DOM

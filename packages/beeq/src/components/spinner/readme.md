@@ -20,10 +20,10 @@ Spinners are designed for users to display data loading.
 
 ## Slots
 
-| Slot                                      | Description              |
-| ----------------------------------------- | ------------------------ |
-| `"The content of the spinner component."` |                          |
-| `"icon"`                                  | The icon slot container. |
+| Slot     | Description                           |
+| -------- | ------------------------------------- |
+|          | The content of the spinner component. |
+| `"icon"` | The icon slot container.              |
 
 
 ## Shadow Parts

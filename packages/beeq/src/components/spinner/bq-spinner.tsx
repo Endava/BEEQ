@@ -28,7 +28,7 @@ import {
  * @attr {"above" | "below" | "left" | "right" | "none"} text-position - It defines the position of the label text.
  *
  * @slot icon - The icon slot container.
- * @slot The content of the spinner component.
+ * @slot - The content of the spinner component.
  *
  * @part base - The div wrapper container used under the hood.
  * @part icon - The `<svg>` icon element used to spin/animate.
