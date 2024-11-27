@@ -71,6 +71,13 @@ Type: `Promise<void>`
 
 
 
+## Slots
+
+| Slot | Description           |
+| ---- | --------------------- |
+|      | The switch label text |
+
+
 ## Shadow Parts
 
 | Part         | Description                                                       |
