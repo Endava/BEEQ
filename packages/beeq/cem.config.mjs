@@ -3,7 +3,7 @@
 /* -------------------------------------------------------------------------- */
 
 /**
- * This file is a configuration file for the Custom Elements Manifest (CEM) tool.
+ * This is the configuration file for the Custom Elements Manifest (CEM) tool.
  * It allows you to specify how your components are analyzed and what plugins are used.
  *
  * For more information on how to configure CEM, please visit:
@@ -32,7 +32,7 @@ const beeqCemModulePaths = {
       // Rename `packages/beeq/src/` and intermediate directories to `components/`
       { from: /^packages\/beeq\/src\/components\/[^/]+\//, to: 'components/' },
       // Change the file extension to .js
-      { from: /\.(t|j)sx?$/, to: '.js' },
+      { from: /\.[tj]sx?$/, to: '.js' },
     ];
 
     customElementsManifest?.modules?.forEach((mod) => {
