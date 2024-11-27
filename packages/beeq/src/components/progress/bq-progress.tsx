@@ -21,6 +21,8 @@ import { validatePropValue } from '../../shared/utils';
  * @documentation https://www.beeq.design/3d466e231/p/691cb3-progress
  * @status stable
  *
+ * @dependency bq-tooltip
+ *
  * @attr {"rounded" | "rounded-full"} border-shape - It will set the border style of the progress bar
  * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value
  * @attr {boolean} indeterminate - If `true` the indeterminate state of progress bar is enabled

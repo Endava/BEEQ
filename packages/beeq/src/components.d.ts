@@ -903,6 +903,8 @@ export namespace Components {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/15b6fc-dialog
      * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
      * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} border - Border radius of the dialog component.
      * @attr {boolean} disable-backdrop - If true, the backdrop overlay won't be shown when the dialog opens.
      * @attr {boolean} disable-close-esc-keydown - If true, the dialog will not close when the [Esc] key is pressed.
@@ -1057,6 +1059,9 @@ export namespace Components {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/871139-drawer
      * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
+     * @dependency bq-divider
      * @attr {boolean} enable-backdrop - If true, the backdrop overlay will be shown when the drawer opens.
      * @attr {boolean} close-on-click-outside - If true, the drawer will not close when clicking outside the panel.
      * @attr {boolean} close-on-esc - If true, the drawer will not close when the [Esc] key is pressed.
@@ -1127,6 +1132,7 @@ export namespace Components {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/47ff4b-dropdown
      * @status stable
+     * @dependency bq-panel
      * @attr {boolean} disabled - If true, the dropdown panel will be visible and won't be shown.
      * @attr {number} distance - Represents the distance (gutter or margin) between the panel and the trigger element.
      * @attr {boolean} keep-open-on-select - If true, the panel will remain open after a selection is made.
@@ -1194,6 +1200,7 @@ export namespace Components {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/673ae0-empty-state/b/09d7b1
      * @status stable
+     * @dependency bq-icon
      * @attr {"large" | "medium" | "small"} size - The size of the empty state component
      */
     interface BqEmptyState {
@@ -1255,6 +1262,8 @@ export namespace Components {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/980362-input
      * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
      * @attr {string} autocapitalize - Controls whether or not the input field should be capitalized and how.
      * @attr {string} autocomplete - Specifies whether or not the input field should have autocomplete enabled.
      * @attr {string} autocorrect - Controls whether or not the input field should have autocorrect enabled.
@@ -1417,6 +1426,8 @@ export namespace Components {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/945cb6-notification
      * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
      * @attr {boolean} auto-dismiss - If true, the notification will automatically hide after the specified amount of time
      * @attr {string} border - The corder radius of the notification component
      * @attr {boolean} disable-close - If true, the close button at the top right of the notification won't be shown
@@ -1677,6 +1688,7 @@ export namespace Components {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/691cb3-progress
      * @status stable
+     * @dependency bq-tooltip
      * @attr {"rounded" | "rounded-full"} border-shape - It will set the border style of the progress bar
      * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value
      * @attr {boolean} indeterminate - If `true` the indeterminate state of progress bar is enabled
@@ -1858,6 +1870,11 @@ export namespace Components {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/41989d-select/b/09d7b1
      * @status stable
+     * @dependency bq-button
+     * @dependency bq-dropdown
+     * @dependency bq-icon
+     * @dependency bq-option-list
+     * @dependency bq-tag
      * @attr {boolean} autofocus - If `true`, the Select input will be focused on component render.
      * @attr {string} clear-button-label - The clear button aria label.
      * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
@@ -2070,6 +2087,7 @@ export namespace Components {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/99822d-side-menu/b/09d7b1
      * @status stable
+     * @dependency bq-tooltip
      * @attr {boolean} active - If `true`, the menu item will be shown as active/selected.
      * @attr {boolean} collapse - If `true`, the item label and suffix will be hidden and the with will be reduced according to its parent.
      * @attr {boolean} disabled - If `true`, the menu item will be disabled (no interaction allowed).
@@ -2108,6 +2126,7 @@ export namespace Components {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/509cbc-slider/b/09d7b1
      * @status stable
+     * @dependency bq-tooltip
      * @attr {number} debounce-time - The amount of time, in milliseconds, to wait to trigger the bqChange event after each value change.
      * @attr {boolean} disabled - If `true` the slider is disabled.
      * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value.
@@ -2219,6 +2238,7 @@ export namespace Components {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/46c8d5-status/b/09d7b1
      * @status stable
+     * @dependency bq-badge
      * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
      * @cssprop --bq-status-circ - Status circle size.
      */
@@ -2280,6 +2300,7 @@ export namespace Components {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
      * @status stable
+     * @dependency bq-divider
      * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
      * @attr {"medium" | "small"} size - The size of the steps
      * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
@@ -2311,6 +2332,7 @@ export namespace Components {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/49d9c9-switch
      * @status stable
+     * @dependency bq-icon
      * @attr {boolean} background-on-hover - If `true`, a background will be displayed on hover
      * @attr {boolean} checked - It indicates whether if the switch is `ON` by default (when the page loads)
      * @attr {boolean} disabled - If `true`, the switch control will be disabled and no interaction will be allowed
@@ -2519,6 +2541,8 @@ export namespace Components {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/42f8c9-tag
      * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
      * @attr {string} border - The corner radius of the Tag (will override size's predefined border)
      * @attr {boolean} clickable - If `true`, the Tag can be clickable
      * @attr {"error" | "gray" | "info" | "success" | "warning"} color - The color style of the Tag
@@ -2741,6 +2765,7 @@ export namespace Components {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/83da51-toast
      * @status stable
+     * @dependency bq-icon
      * @attr {"s" | "none" | "xs2" | "xs" | "m" | "l" | "full"} border - The corder radius of the toast component
      * @attr {"success" | "error" | "loading" | "alert" | "info"} type - Type of toast
      * @attr {"top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right"} placement - Placement of toast
@@ -3603,6 +3628,8 @@ declare global {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/15b6fc-dialog
      * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
      * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} border - Border radius of the dialog component.
      * @attr {boolean} disable-backdrop - If true, the backdrop overlay won't be shown when the dialog opens.
      * @attr {boolean} disable-close-esc-keydown - If true, the dialog will not close when the [Esc] key is pressed.
@@ -3699,6 +3726,9 @@ declare global {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/871139-drawer
      * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
+     * @dependency bq-divider
      * @attr {boolean} enable-backdrop - If true, the backdrop overlay will be shown when the drawer opens.
      * @attr {boolean} close-on-click-outside - If true, the drawer will not close when clicking outside the panel.
      * @attr {boolean} close-on-esc - If true, the drawer will not close when the [Esc] key is pressed.
@@ -3752,6 +3782,7 @@ declare global {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/47ff4b-dropdown
      * @status stable
+     * @dependency bq-panel
      * @attr {boolean} disabled - If true, the dropdown panel will be visible and won't be shown.
      * @attr {number} distance - Represents the distance (gutter or margin) between the panel and the trigger element.
      * @attr {boolean} keep-open-on-select - If true, the panel will remain open after a selection is made.
@@ -3795,6 +3826,7 @@ declare global {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/673ae0-empty-state/b/09d7b1
      * @status stable
+     * @dependency bq-icon
      * @attr {"large" | "medium" | "small"} size - The size of the empty state component
      */
     interface HTMLBqEmptyStateElement extends Components.BqEmptyState, HTMLStencilElement {
@@ -3854,6 +3886,8 @@ declare global {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/980362-input
      * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
      * @attr {string} autocapitalize - Controls whether or not the input field should be capitalized and how.
      * @attr {string} autocomplete - Specifies whether or not the input field should have autocomplete enabled.
      * @attr {string} autocorrect - Controls whether or not the input field should have autocorrect enabled.
@@ -3941,6 +3975,8 @@ declare global {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/945cb6-notification
      * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
      * @attr {boolean} auto-dismiss - If true, the notification will automatically hide after the specified amount of time
      * @attr {string} border - The corder radius of the notification component
      * @attr {boolean} disable-close - If true, the close button at the top right of the notification won't be shown
@@ -4174,6 +4210,7 @@ declare global {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/691cb3-progress
      * @status stable
+     * @dependency bq-tooltip
      * @attr {"rounded" | "rounded-full"} border-shape - It will set the border style of the progress bar
      * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value
      * @attr {boolean} indeterminate - If `true` the indeterminate state of progress bar is enabled
@@ -4302,6 +4339,11 @@ declare global {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/41989d-select/b/09d7b1
      * @status stable
+     * @dependency bq-button
+     * @dependency bq-dropdown
+     * @dependency bq-icon
+     * @dependency bq-option-list
+     * @dependency bq-tag
      * @attr {boolean} autofocus - If `true`, the Select input will be focused on component render.
      * @attr {string} clear-button-label - The clear button aria label.
      * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
@@ -4436,6 +4478,7 @@ declare global {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/99822d-side-menu/b/09d7b1
      * @status stable
+     * @dependency bq-tooltip
      * @attr {boolean} active - If `true`, the menu item will be shown as active/selected.
      * @attr {boolean} collapse - If `true`, the item label and suffix will be hidden and the with will be reduced according to its parent.
      * @attr {boolean} disabled - If `true`, the menu item will be disabled (no interaction allowed).
@@ -4479,6 +4522,7 @@ declare global {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/509cbc-slider/b/09d7b1
      * @status stable
+     * @dependency bq-tooltip
      * @attr {number} debounce-time - The amount of time, in milliseconds, to wait to trigger the bqChange event after each value change.
      * @attr {boolean} disabled - If `true` the slider is disabled.
      * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value.
@@ -4550,6 +4594,7 @@ declare global {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/46c8d5-status/b/09d7b1
      * @status stable
+     * @dependency bq-badge
      * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
      * @cssprop --bq-status-circ - Status circle size.
      */
@@ -4614,6 +4659,7 @@ declare global {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
      * @status stable
+     * @dependency bq-divider
      * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
      * @attr {"medium" | "small"} size - The size of the steps
      * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
@@ -4642,6 +4688,7 @@ declare global {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/49d9c9-switch
      * @status stable
+     * @dependency bq-icon
      * @attr {boolean} background-on-hover - If `true`, a background will be displayed on hover
      * @attr {boolean} checked - It indicates whether if the switch is `ON` by default (when the page loads)
      * @attr {boolean} disabled - If `true`, the switch control will be disabled and no interaction will be allowed
@@ -4785,6 +4832,8 @@ declare global {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/42f8c9-tag
      * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
      * @attr {string} border - The corner radius of the Tag (will override size's predefined border)
      * @attr {boolean} clickable - If `true`, the Tag can be clickable
      * @attr {"error" | "gray" | "info" | "success" | "warning"} color - The color style of the Tag
@@ -4921,6 +4970,7 @@ declare global {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/83da51-toast
      * @status stable
+     * @dependency bq-icon
      * @attr {"s" | "none" | "xs2" | "xs" | "m" | "l" | "full"} border - The corder radius of the toast component
      * @attr {"success" | "error" | "loading" | "alert" | "info"} type - Type of toast
      * @attr {"top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right"} placement - Placement of toast
@@ -5956,6 +6006,8 @@ declare namespace LocalJSX {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/15b6fc-dialog
      * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
      * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} border - Border radius of the dialog component.
      * @attr {boolean} disable-backdrop - If true, the backdrop overlay won't be shown when the dialog opens.
      * @attr {boolean} disable-close-esc-keydown - If true, the dialog will not close when the [Esc] key is pressed.
@@ -6118,6 +6170,9 @@ declare namespace LocalJSX {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/871139-drawer
      * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
+     * @dependency bq-divider
      * @attr {boolean} enable-backdrop - If true, the backdrop overlay will be shown when the drawer opens.
      * @attr {boolean} close-on-click-outside - If true, the drawer will not close when clicking outside the panel.
      * @attr {boolean} close-on-esc - If true, the drawer will not close when the [Esc] key is pressed.
@@ -6196,6 +6251,7 @@ declare namespace LocalJSX {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/47ff4b-dropdown
      * @status stable
+     * @dependency bq-panel
      * @attr {boolean} disabled - If true, the dropdown panel will be visible and won't be shown.
      * @attr {number} distance - Represents the distance (gutter or margin) between the panel and the trigger element.
      * @attr {boolean} keep-open-on-select - If true, the panel will remain open after a selection is made.
@@ -6267,6 +6323,7 @@ declare namespace LocalJSX {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/673ae0-empty-state/b/09d7b1
      * @status stable
+     * @dependency bq-icon
      * @attr {"large" | "medium" | "small"} size - The size of the empty state component
      */
     interface BqEmptyState {
@@ -6332,6 +6389,8 @@ declare namespace LocalJSX {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/980362-input
      * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
      * @attr {string} autocapitalize - Controls whether or not the input field should be capitalized and how.
      * @attr {string} autocomplete - Specifies whether or not the input field should have autocomplete enabled.
      * @attr {string} autocorrect - Controls whether or not the input field should have autocorrect enabled.
@@ -6514,6 +6573,8 @@ declare namespace LocalJSX {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/945cb6-notification
      * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
      * @attr {boolean} auto-dismiss - If true, the notification will automatically hide after the specified amount of time
      * @attr {string} border - The corder radius of the notification component
      * @attr {boolean} disable-close - If true, the close button at the top right of the notification won't be shown
@@ -6798,6 +6859,7 @@ declare namespace LocalJSX {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/691cb3-progress
      * @status stable
+     * @dependency bq-tooltip
      * @attr {"rounded" | "rounded-full"} border-shape - It will set the border style of the progress bar
      * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value
      * @attr {boolean} indeterminate - If `true` the indeterminate state of progress bar is enabled
@@ -6987,6 +7049,11 @@ declare namespace LocalJSX {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/41989d-select/b/09d7b1
      * @status stable
+     * @dependency bq-button
+     * @dependency bq-dropdown
+     * @dependency bq-icon
+     * @dependency bq-option-list
+     * @dependency bq-tag
      * @attr {boolean} autofocus - If `true`, the Select input will be focused on component render.
      * @attr {string} clear-button-label - The clear button aria label.
      * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
@@ -7213,6 +7280,7 @@ declare namespace LocalJSX {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/99822d-side-menu/b/09d7b1
      * @status stable
+     * @dependency bq-tooltip
      * @attr {boolean} active - If `true`, the menu item will be shown as active/selected.
      * @attr {boolean} collapse - If `true`, the item label and suffix will be hidden and the with will be reduced according to its parent.
      * @attr {boolean} disabled - If `true`, the menu item will be disabled (no interaction allowed).
@@ -7263,6 +7331,7 @@ declare namespace LocalJSX {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/509cbc-slider/b/09d7b1
      * @status stable
+     * @dependency bq-tooltip
      * @attr {number} debounce-time - The amount of time, in milliseconds, to wait to trigger the bqChange event after each value change.
      * @attr {boolean} disabled - If `true` the slider is disabled.
      * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value.
@@ -7386,6 +7455,7 @@ declare namespace LocalJSX {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/46c8d5-status/b/09d7b1
      * @status stable
+     * @dependency bq-badge
      * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
      * @cssprop --bq-status-circ - Status circle size.
      */
@@ -7451,6 +7521,7 @@ declare namespace LocalJSX {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
      * @status stable
+     * @dependency bq-divider
      * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
      * @attr {"medium" | "small"} size - The size of the steps
      * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
@@ -7482,6 +7553,7 @@ declare namespace LocalJSX {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/49d9c9-switch
      * @status stable
+     * @dependency bq-icon
      * @attr {boolean} background-on-hover - If `true`, a background will be displayed on hover
      * @attr {boolean} checked - It indicates whether if the switch is `ON` by default (when the page loads)
      * @attr {boolean} disabled - If `true`, the switch control will be disabled and no interaction will be allowed
@@ -7697,6 +7769,8 @@ declare namespace LocalJSX {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/42f8c9-tag
      * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
      * @attr {string} border - The corner radius of the Tag (will override size's predefined border)
      * @attr {boolean} clickable - If `true`, the Tag can be clickable
      * @attr {"error" | "gray" | "info" | "success" | "warning"} color - The color style of the Tag
@@ -7951,6 +8025,7 @@ declare namespace LocalJSX {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/83da51-toast
      * @status stable
+     * @dependency bq-icon
      * @attr {"s" | "none" | "xs2" | "xs" | "m" | "l" | "full"} border - The corder radius of the toast component
      * @attr {"success" | "error" | "loading" | "alert" | "info"} type - Type of toast
      * @attr {"top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right"} placement - Placement of toast
@@ -8594,6 +8669,8 @@ declare module "@stencil/core" {
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/15b6fc-dialog
              * @status stable
+             * @dependency bq-button
+             * @dependency bq-icon
              * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} border - Border radius of the dialog component.
              * @attr {boolean} disable-backdrop - If true, the backdrop overlay won't be shown when the dialog opens.
              * @attr {boolean} disable-close-esc-keydown - If true, the dialog will not close when the [Esc] key is pressed.
@@ -8666,6 +8743,9 @@ declare module "@stencil/core" {
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/871139-drawer
              * @status stable
+             * @dependency bq-button
+             * @dependency bq-icon
+             * @dependency bq-divider
              * @attr {boolean} enable-backdrop - If true, the backdrop overlay will be shown when the drawer opens.
              * @attr {boolean} close-on-click-outside - If true, the drawer will not close when clicking outside the panel.
              * @attr {boolean} close-on-esc - If true, the drawer will not close when the [Esc] key is pressed.
@@ -8703,6 +8783,7 @@ declare module "@stencil/core" {
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/47ff4b-dropdown
              * @status stable
+             * @dependency bq-panel
              * @attr {boolean} disabled - If true, the dropdown panel will be visible and won't be shown.
              * @attr {number} distance - Represents the distance (gutter or margin) between the panel and the trigger element.
              * @attr {boolean} keep-open-on-select - If true, the panel will remain open after a selection is made.
@@ -8733,6 +8814,7 @@ declare module "@stencil/core" {
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/673ae0-empty-state/b/09d7b1
              * @status stable
+             * @dependency bq-icon
              * @attr {"large" | "medium" | "small"} size - The size of the empty state component
              */
             "bq-empty-state": LocalJSX.BqEmptyState & JSXBase.HTMLAttributes<HTMLBqEmptyStateElement>;
@@ -8764,6 +8846,8 @@ declare module "@stencil/core" {
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/980362-input
              * @status stable
+             * @dependency bq-button
+             * @dependency bq-icon
              * @attr {string} autocapitalize - Controls whether or not the input field should be capitalized and how.
              * @attr {string} autocomplete - Specifies whether or not the input field should have autocomplete enabled.
              * @attr {string} autocorrect - Controls whether or not the input field should have autocorrect enabled.
@@ -8832,6 +8916,8 @@ declare module "@stencil/core" {
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/945cb6-notification
              * @status stable
+             * @dependency bq-button
+             * @dependency bq-icon
              * @attr {boolean} auto-dismiss - If true, the notification will automatically hide after the specified amount of time
              * @attr {string} border - The corder radius of the notification component
              * @attr {boolean} disable-close - If true, the close button at the top right of the notification won't be shown
@@ -9002,6 +9088,7 @@ declare module "@stencil/core" {
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/691cb3-progress
              * @status stable
+             * @dependency bq-tooltip
              * @attr {"rounded" | "rounded-full"} border-shape - It will set the border style of the progress bar
              * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value
              * @attr {boolean} indeterminate - If `true` the indeterminate state of progress bar is enabled
@@ -9084,6 +9171,11 @@ declare module "@stencil/core" {
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/41989d-select/b/09d7b1
              * @status stable
+             * @dependency bq-button
+             * @dependency bq-dropdown
+             * @dependency bq-icon
+             * @dependency bq-option-list
+             * @dependency bq-tag
              * @attr {boolean} autofocus - If `true`, the Select input will be focused on component render.
              * @attr {string} clear-button-label - The clear button aria label.
              * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
@@ -9183,6 +9275,7 @@ declare module "@stencil/core" {
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/99822d-side-menu/b/09d7b1
              * @status stable
+             * @dependency bq-tooltip
              * @attr {boolean} active - If `true`, the menu item will be shown as active/selected.
              * @attr {boolean} collapse - If `true`, the item label and suffix will be hidden and the with will be reduced according to its parent.
              * @attr {boolean} disabled - If `true`, the menu item will be disabled (no interaction allowed).
@@ -9208,6 +9301,7 @@ declare module "@stencil/core" {
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/509cbc-slider/b/09d7b1
              * @status stable
+             * @dependency bq-tooltip
              * @attr {number} debounce-time - The amount of time, in milliseconds, to wait to trigger the bqChange event after each value change.
              * @attr {boolean} disabled - If `true` the slider is disabled.
              * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value.
@@ -9261,6 +9355,7 @@ declare module "@stencil/core" {
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/46c8d5-status/b/09d7b1
              * @status stable
+             * @dependency bq-badge
              * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
              * @cssprop --bq-status-circ - Status circle size.
              */
@@ -9304,6 +9399,7 @@ declare module "@stencil/core" {
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
              * @status stable
+             * @dependency bq-divider
              * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
              * @attr {"medium" | "small"} size - The size of the steps
              * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
@@ -9322,6 +9418,7 @@ declare module "@stencil/core" {
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/49d9c9-switch
              * @status stable
+             * @dependency bq-icon
              * @attr {boolean} background-on-hover - If `true`, a background will be displayed on hover
              * @attr {boolean} checked - It indicates whether if the switch is `ON` by default (when the page loads)
              * @attr {boolean} disabled - If `true`, the switch control will be disabled and no interaction will be allowed
@@ -9410,6 +9507,8 @@ declare module "@stencil/core" {
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/42f8c9-tag
              * @status stable
+             * @dependency bq-button
+             * @dependency bq-icon
              * @attr {string} border - The corner radius of the Tag (will override size's predefined border)
              * @attr {boolean} clickable - If `true`, the Tag can be clickable
              * @attr {"error" | "gray" | "info" | "success" | "warning"} color - The color style of the Tag
@@ -9509,6 +9608,7 @@ declare module "@stencil/core" {
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/83da51-toast
              * @status stable
+             * @dependency bq-icon
              * @attr {"s" | "none" | "xs2" | "xs" | "m" | "l" | "full"} border - The corder radius of the toast component
              * @attr {"success" | "error" | "loading" | "alert" | "info"} type - Type of toast
              * @attr {"top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right"} placement - Placement of toast

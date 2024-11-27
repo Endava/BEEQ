@@ -26,6 +26,9 @@ const NOTIFICATION_PORTAL_SELECTOR = 'bq-notification-portal';
  * @documentation https://www.beeq.design/3d466e231/p/945cb6-notification
  * @status stable
  *
+ * @dependency bq-button
+ * @dependency bq-icon
+ *
  * @attr {boolean} auto-dismiss - If true, the notification will automatically hide after the specified amount of time
  * @attr {string} border - The corder radius of the notification component
  * @attr {boolean} disable-close - If true, the close button at the top right of the notification won't be shown

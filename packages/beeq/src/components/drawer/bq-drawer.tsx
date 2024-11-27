@@ -23,6 +23,10 @@ import { enter, hasSlotContent, isNil, leave, validatePropValue } from '../../sh
  * @documentation https://www.beeq.design/3d466e231/p/871139-drawer
  * @status stable
  *
+ * @dependency bq-button
+ * @dependency bq-icon
+ * @dependency bq-divider
+ *
  * @attr {boolean} enable-backdrop - If true, the backdrop overlay will be shown when the drawer opens.
  * @attr {boolean} close-on-click-outside - If true, the drawer will not close when clicking outside the panel.
  * @attr {boolean} close-on-esc - If true, the drawer will not close when the [Esc] key is pressed.

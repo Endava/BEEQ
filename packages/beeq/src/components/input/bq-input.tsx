@@ -15,6 +15,9 @@ import { debounce, hasSlotContent, isDefined, isHTMLElement, isNil, TDebounce } 
  * @documentation https://www.beeq.design/3d466e231/p/980362-input
  * @status stable
  *
+ * @dependency bq-button
+ * @dependency bq-icon
+ *
  * @attr {string} autocapitalize - Controls whether or not the input field should be capitalized and how.
  * @attr {string} autocomplete - Specifies whether or not the input field should have autocomplete enabled.
  * @attr {string} autocorrect - Controls whether or not the input field should have autocorrect enabled.

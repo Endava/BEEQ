@@ -14,6 +14,8 @@ import { hasSlotContent, validatePropValue } from '../../shared/utils';
  * @documentation https://www.beeq.design/3d466e231/p/673ae0-empty-state/b/09d7b1
  * @status stable
  *
+ * @dependency bq-icon
+ *
  * @attr {"large" | "medium" | "small"} size - The size of the empty state component
  *
  * @slot thumbnail - The element that wraps the thumbnail element

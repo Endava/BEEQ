@@ -25,6 +25,8 @@ let id = 0;
  * @documentation https://www.beeq.design/3d466e231/p/47ff4b-dropdown
  * @status stable
  *
+ * @dependency bq-panel
+ *
  * @attr {boolean} disabled - If true, the dropdown panel will be visible and won't be shown.
  * @attr {number} distance - Represents the distance (gutter or margin) between the panel and the trigger element.
  * @attr {boolean} keep-open-on-select - If true, the panel will remain open after a selection is made.

@@ -14,6 +14,8 @@ import { validatePropValue } from '../../shared/utils';
  * @documentation https://www.beeq.design/3d466e231/p/46c8d5-status/b/09d7b1
  * @status stable
  *
+ * @dependency bq-badge
+ *
  * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
  *
  * @slot The content of the status component.

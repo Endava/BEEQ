@@ -19,6 +19,8 @@ const TOAST_PORTAL_SELECTOR = 'bq-toast-portal';
  * @documentation https://www.beeq.design/3d466e231/p/83da51-toast
  * @status stable
  *
+ * @dependency bq-icon
+ *
  * @attr {"s" | "none" | "xs2" | "xs" | "m" | "l" | "full"} border - The corder radius of the toast component
  * @attr {"success" | "error" | "loading" | "alert" | "info"} type - Type of toast
  * @attr {"top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right"} placement - Placement of toast

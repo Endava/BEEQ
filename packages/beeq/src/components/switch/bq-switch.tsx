@@ -17,6 +17,8 @@ import { getTextContent, isNil } from '../../shared/utils';
  * @documentation https://www.beeq.design/3d466e231/p/49d9c9-switch
  * @status stable
  *
+ * @dependency bq-icon
+ *
  * @attr {boolean} background-on-hover - If `true`, a background will be displayed on hover
  * @attr {boolean} checked - It indicates whether if the switch is `ON` by default (when the page loads)
  * @attr {boolean} disabled - If `true`, the switch control will be disabled and no interaction will be allowed

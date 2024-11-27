@@ -16,6 +16,9 @@ import { getColorCSSVariable, hasSlotContent, validatePropValue } from '../../sh
  * @documentation https://www.beeq.design/3d466e231/p/42f8c9-tag
  * @status stable
  *
+ * @dependency bq-button
+ * @dependency bq-icon
+ *
  * @attr {string} border - The corner radius of the Tag (will override size's predefined border)
  * @attr {boolean} clickable - If `true`, the Tag can be clickable
  * @attr {"error" | "gray" | "info" | "success" | "warning"} color - The color style of the Tag

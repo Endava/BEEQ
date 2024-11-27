@@ -36,6 +36,9 @@ import { enter, hasSlotContent, leave, validatePropValue } from '../../shared/ut
  * @documentation https://www.beeq.design/3d466e231/p/15b6fc-dialog
  * @status stable
  *
+ * @dependency bq-button
+ * @dependency bq-icon
+ *
  * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} border - Border radius of the dialog component.
  * @attr {boolean} disable-backdrop - If true, the backdrop overlay won't be shown when the dialog opens.
  * @attr {boolean} disable-close-esc-keydown - If true, the dialog will not close when the [Esc] key is pressed.

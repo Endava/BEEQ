@@ -20,6 +20,8 @@ import { validatePropValue } from '../../shared/utils';
  * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
  * @status stable
  *
+ * @dependency bq-divider
+ *
  * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
  * @attr {"medium" | "small"} size - The size of the steps
  * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items

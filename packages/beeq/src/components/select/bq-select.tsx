@@ -39,6 +39,12 @@ export type TSelectValue = string | string[];
  * @documentation https://www.beeq.design/3d466e231/p/41989d-select/b/09d7b1
  * @status stable
  *
+ * @dependency bq-button
+ * @dependency bq-dropdown
+ * @dependency bq-icon
+ * @dependency bq-option-list
+ * @dependency bq-tag
+ *
  * @attr {boolean} autofocus - If `true`, the Select input will be focused on component render.
  * @attr {string} clear-button-label - The clear button aria label.
  * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.

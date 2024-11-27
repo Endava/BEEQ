@@ -14,6 +14,8 @@ import { clamp, debounce, isNil, isString, TDebounce } from '../../shared/utils'
  * @documentation https://www.beeq.design/3d466e231/p/509cbc-slider/b/09d7b1
  * @status stable
  *
+ * @dependency bq-tooltip
+ *
  * @attr {number} debounce-time - The amount of time, in milliseconds, to wait to trigger the bqChange event after each value change.
  * @attr {boolean} disabled - If `true` the slider is disabled.
  * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value.

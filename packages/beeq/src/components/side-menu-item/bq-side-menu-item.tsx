@@ -16,6 +16,8 @@ import { getTextContent } from '../../shared/utils';
  * @documentation https://www.beeq.design/3d466e231/p/99822d-side-menu/b/09d7b1
  * @status stable
  *
+ * @dependency bq-tooltip
+ *
  * @attr {boolean} active - If `true`, the menu item will be shown as active/selected.
  * @attr {boolean} collapse - If `true`, the item label and suffix will be hidden and the with will be reduced according to its parent.
  * @attr {boolean} disabled - If `true`, the menu item will be disabled (no interaction allowed).
