@@ -1186,6 +1186,16 @@ export namespace Components {
          */
         "strategy"?: 'fixed' | 'absolute';
     }
+    /**
+     * An Empty State is a UI component displayed when there is no data or content available, often used in dynamic or inactive application states.
+     * @example How to use it
+     * ```html
+     * <bq-empty-state size="medium">Title</bq-empty-state>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/673ae0-empty-state/b/09d7b1
+     * @status stable
+     * @attr {"large" | "medium" | "small"} size - The size of the empty state component
+     */
     interface BqEmptyState {
         /**
           * The size of the empty state component
@@ -3298,6 +3308,16 @@ declare global {
         prototype: HTMLBqDropdownElement;
         new (): HTMLBqDropdownElement;
     };
+    /**
+     * An Empty State is a UI component displayed when there is no data or content available, often used in dynamic or inactive application states.
+     * @example How to use it
+     * ```html
+     * <bq-empty-state size="medium">Title</bq-empty-state>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/673ae0-empty-state/b/09d7b1
+     * @status stable
+     * @attr {"large" | "medium" | "small"} size - The size of the empty state component
+     */
     interface HTMLBqEmptyStateElement extends Components.BqEmptyState, HTMLStencilElement {
     }
     var HTMLBqEmptyStateElement: {
@@ -5278,6 +5298,16 @@ declare namespace LocalJSX {
          */
         "strategy"?: 'fixed' | 'absolute';
     }
+    /**
+     * An Empty State is a UI component displayed when there is no data or content available, often used in dynamic or inactive application states.
+     * @example How to use it
+     * ```html
+     * <bq-empty-state size="medium">Title</bq-empty-state>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/673ae0-empty-state/b/09d7b1
+     * @status stable
+     * @attr {"large" | "medium" | "small"} size - The size of the empty state component
+     */
     interface BqEmptyState {
         /**
           * The size of the empty state component
@@ -7252,6 +7282,16 @@ declare module "@stencil/core" {
              * @cssprop --bq-panel-z-index - Panel z-index applied when opened
              */
             "bq-dropdown": LocalJSX.BqDropdown & JSXBase.HTMLAttributes<HTMLBqDropdownElement>;
+            /**
+             * An Empty State is a UI component displayed when there is no data or content available, often used in dynamic or inactive application states.
+             * @example How to use it
+             * ```html
+             * <bq-empty-state size="medium">Title</bq-empty-state>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/673ae0-empty-state/b/09d7b1
+             * @status stable
+             * @attr {"large" | "medium" | "small"} size - The size of the empty state component
+             */
             "bq-empty-state": LocalJSX.BqEmptyState & JSXBase.HTMLAttributes<HTMLBqEmptyStateElement>;
             /**
              * The Icon component is an image that provides a visual representation of an object, action, or concept displayed on the screen.
