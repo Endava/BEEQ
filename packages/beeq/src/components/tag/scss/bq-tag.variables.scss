@@ -4,21 +4,18 @@
 
 :host {
   /**
-   * @prop --bq-tag--background-color: Tag background color
-   *
-   * @prop --bq-tag--border-color: Tag border color
-   * @prop --bq-tag--border-radius: Tag border radius
-   * @prop --bq-tag--border-style: Tag border style
-   * @prop --bq-tag--border-width: Tag border width
-   *
-   * @prop --bq-tag--small-border-radius: Tag small border radius
-   * @prop --bq-tag--small-gap: Tag small gap between content
-   * @prop --bq-tag--small-padding-x: Tag small padding horizontal
-   * @prop --bq-tag--small-padding-y: Tag small padding vertical
-   *
-   * @prop --bq-tag--medium-gap: Tag medium gap between content
-   * @prop --bq-tag--medium-padding-x: Tag medium padding horizontal
-   * @prop --bq-tag--medium-padding-y: Tag medium padding vertical
+   * @prop --bq-tag--background-color - Tag background color
+   * @prop --bq-tag--border-color - Tag border color
+   * @prop --bq-tag--border-radius - Tag border radius
+   * @prop --bq-tag--border-style - Tag border style
+   * @prop --bq-tag--border-width - Tag border width
+   * @prop --bq-tag--small-border-radius - Tag small border radius
+   * @prop --bq-tag--small-gap - Tag small gap between content
+   * @prop --bq-tag--small-padding-x - Tag small padding horizontal
+   * @prop --bq-tag--small-padding-y - Tag small padding vertical
+   * @prop --bq-tag--medium-gap - Tag medium gap between content
+   * @prop --bq-tag--medium-padding-x - Tag medium padding horizontal
+   * @prop --bq-tag--medium-padding-y - Tag medium padding vertical
    */
   --bq-tag--background-color: theme(backgroundColor.ui.secondary);
 
