@@ -5,6 +5,10 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+Sliders provide a visual representation of adjustable content, enabling users to change values by dragging a handle along a horizontal track.
+
 ## Properties
 
 | Property               | Attribute                | Description                                                                                                                                                                                                                                             | Type                           | Default     |

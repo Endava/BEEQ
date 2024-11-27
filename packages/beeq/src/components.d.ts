@@ -2100,6 +2100,35 @@ export namespace Components {
          */
         "disabled": boolean;
     }
+    /**
+     * Sliders provide a visual representation of adjustable content, enabling users to change values by dragging a handle along a horizontal track.
+     * @example How to use it
+     * ```html
+     * <bq-slider max="100" value="30"></bq-slider>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/509cbc-slider/b/09d7b1
+     * @status stable
+     * @attr {number} debounce-time - The amount of time, in milliseconds, to wait to trigger the bqChange event after each value change.
+     * @attr {boolean} disabled - If `true` the slider is disabled.
+     * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value.
+     * @attr {boolean} enable-value-indicator - If `true` it will show the value label on the side of the slider track area.
+     * @attr {number} gap - A number representing the amount to remain between the minimum and maximum values (only for range type).
+     * @attr {number} max - A number representing the max value of the slider.
+     * @attr {number} min - A number representing the min value of the slider.
+     * @attr {number} step - A number represents the step of the slider. ⚠️ Please notice that the value (or list of values if the slider type is range) will be rounded to the nearest multiple of step.
+     * @attr {boolean} tooltip-always-visible - If `true`, a tooltip will always display the progress value. It relies on enableTooltip and if enableTooltip is false, tooltipAlwaysVisible cannot be true.
+     * @attr {"range" | "single"} type - It defines the type of slider to display.
+     * @attr {"[number, number]" | "number" | "string"} value - The value of the slider. If the slider type is single, the value is a number.
+     * If the slider type is range, the value is an array of two numbers (the first number represents the min value and the second number represents the max value).
+     * @event bqBlur - Handler to be called when the slider loses focus.
+     * @event bqChange - Handler to be called when changing the value on range inputs.
+     * @event bqFocus - Handler to be called when the slider gets focused.
+     * @cssprop --bq-slider--size - The height of the slider track/progress area
+     * @cssprop --bq-slider--border-radius - Slider border radius
+     * @cssprop --bq-slider--thumb-size - Slider hover thumb size
+     * @cssprop --bq-slider--progress-color - Slider progress background color
+     * @cssprop --bq-slider--trackarea-color - Slider track background color
+     */
     interface BqSlider {
         /**
           * The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change.
@@ -4122,6 +4151,35 @@ declare global {
         "bqBlur": HTMLBqSliderElement;
         "bqFocus": HTMLBqSliderElement;
     }
+    /**
+     * Sliders provide a visual representation of adjustable content, enabling users to change values by dragging a handle along a horizontal track.
+     * @example How to use it
+     * ```html
+     * <bq-slider max="100" value="30"></bq-slider>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/509cbc-slider/b/09d7b1
+     * @status stable
+     * @attr {number} debounce-time - The amount of time, in milliseconds, to wait to trigger the bqChange event after each value change.
+     * @attr {boolean} disabled - If `true` the slider is disabled.
+     * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value.
+     * @attr {boolean} enable-value-indicator - If `true` it will show the value label on the side of the slider track area.
+     * @attr {number} gap - A number representing the amount to remain between the minimum and maximum values (only for range type).
+     * @attr {number} max - A number representing the max value of the slider.
+     * @attr {number} min - A number representing the min value of the slider.
+     * @attr {number} step - A number represents the step of the slider. ⚠️ Please notice that the value (or list of values if the slider type is range) will be rounded to the nearest multiple of step.
+     * @attr {boolean} tooltip-always-visible - If `true`, a tooltip will always display the progress value. It relies on enableTooltip and if enableTooltip is false, tooltipAlwaysVisible cannot be true.
+     * @attr {"range" | "single"} type - It defines the type of slider to display.
+     * @attr {"[number, number]" | "number" | "string"} value - The value of the slider. If the slider type is single, the value is a number.
+     * If the slider type is range, the value is an array of two numbers (the first number represents the min value and the second number represents the max value).
+     * @event bqBlur - Handler to be called when the slider loses focus.
+     * @event bqChange - Handler to be called when changing the value on range inputs.
+     * @event bqFocus - Handler to be called when the slider gets focused.
+     * @cssprop --bq-slider--size - The height of the slider track/progress area
+     * @cssprop --bq-slider--border-radius - Slider border radius
+     * @cssprop --bq-slider--thumb-size - Slider hover thumb size
+     * @cssprop --bq-slider--progress-color - Slider progress background color
+     * @cssprop --bq-slider--trackarea-color - Slider track background color
+     */
     interface HTMLBqSliderElement extends Components.BqSlider, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqSliderElementEventMap>(type: K, listener: (this: HTMLBqSliderElement, ev: BqSliderCustomEvent<HTMLBqSliderElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -6554,6 +6612,35 @@ declare namespace LocalJSX {
          */
         "onBqFocus"?: (event: BqSideMenuItemCustomEvent<HTMLBqSideMenuItemElement>) => void;
     }
+    /**
+     * Sliders provide a visual representation of adjustable content, enabling users to change values by dragging a handle along a horizontal track.
+     * @example How to use it
+     * ```html
+     * <bq-slider max="100" value="30"></bq-slider>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/509cbc-slider/b/09d7b1
+     * @status stable
+     * @attr {number} debounce-time - The amount of time, in milliseconds, to wait to trigger the bqChange event after each value change.
+     * @attr {boolean} disabled - If `true` the slider is disabled.
+     * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value.
+     * @attr {boolean} enable-value-indicator - If `true` it will show the value label on the side of the slider track area.
+     * @attr {number} gap - A number representing the amount to remain between the minimum and maximum values (only for range type).
+     * @attr {number} max - A number representing the max value of the slider.
+     * @attr {number} min - A number representing the min value of the slider.
+     * @attr {number} step - A number represents the step of the slider. ⚠️ Please notice that the value (or list of values if the slider type is range) will be rounded to the nearest multiple of step.
+     * @attr {boolean} tooltip-always-visible - If `true`, a tooltip will always display the progress value. It relies on enableTooltip and if enableTooltip is false, tooltipAlwaysVisible cannot be true.
+     * @attr {"range" | "single"} type - It defines the type of slider to display.
+     * @attr {"[number, number]" | "number" | "string"} value - The value of the slider. If the slider type is single, the value is a number.
+     * If the slider type is range, the value is an array of two numbers (the first number represents the min value and the second number represents the max value).
+     * @event bqBlur - Handler to be called when the slider loses focus.
+     * @event bqChange - Handler to be called when changing the value on range inputs.
+     * @event bqFocus - Handler to be called when the slider gets focused.
+     * @cssprop --bq-slider--size - The height of the slider track/progress area
+     * @cssprop --bq-slider--border-radius - Slider border radius
+     * @cssprop --bq-slider--thumb-size - Slider hover thumb size
+     * @cssprop --bq-slider--progress-color - Slider progress background color
+     * @cssprop --bq-slider--trackarea-color - Slider track background color
+     */
     interface BqSlider {
         /**
           * The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change.
@@ -8147,6 +8234,35 @@ declare module "@stencil/core" {
              * @cssprop --bq-side-menu-item--paddingY - Side menu item horizontal padding
              */
             "bq-side-menu-item": LocalJSX.BqSideMenuItem & JSXBase.HTMLAttributes<HTMLBqSideMenuItemElement>;
+            /**
+             * Sliders provide a visual representation of adjustable content, enabling users to change values by dragging a handle along a horizontal track.
+             * @example How to use it
+             * ```html
+             * <bq-slider max="100" value="30"></bq-slider>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/509cbc-slider/b/09d7b1
+             * @status stable
+             * @attr {number} debounce-time - The amount of time, in milliseconds, to wait to trigger the bqChange event after each value change.
+             * @attr {boolean} disabled - If `true` the slider is disabled.
+             * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value.
+             * @attr {boolean} enable-value-indicator - If `true` it will show the value label on the side of the slider track area.
+             * @attr {number} gap - A number representing the amount to remain between the minimum and maximum values (only for range type).
+             * @attr {number} max - A number representing the max value of the slider.
+             * @attr {number} min - A number representing the min value of the slider.
+             * @attr {number} step - A number represents the step of the slider. ⚠️ Please notice that the value (or list of values if the slider type is range) will be rounded to the nearest multiple of step.
+             * @attr {boolean} tooltip-always-visible - If `true`, a tooltip will always display the progress value. It relies on enableTooltip and if enableTooltip is false, tooltipAlwaysVisible cannot be true.
+             * @attr {"range" | "single"} type - It defines the type of slider to display.
+             * @attr {"[number, number]" | "number" | "string"} value - The value of the slider. If the slider type is single, the value is a number.
+             * If the slider type is range, the value is an array of two numbers (the first number represents the min value and the second number represents the max value).
+             * @event bqBlur - Handler to be called when the slider loses focus.
+             * @event bqChange - Handler to be called when changing the value on range inputs.
+             * @event bqFocus - Handler to be called when the slider gets focused.
+             * @cssprop --bq-slider--size - The height of the slider track/progress area
+             * @cssprop --bq-slider--border-radius - Slider border radius
+             * @cssprop --bq-slider--thumb-size - Slider hover thumb size
+             * @cssprop --bq-slider--progress-color - Slider progress background color
+             * @cssprop --bq-slider--trackarea-color - Slider track background color
+             */
             "bq-slider": LocalJSX.BqSlider & JSXBase.HTMLAttributes<HTMLBqSliderElement>;
             /**
              * Spinners are designed for users to display data loading.
