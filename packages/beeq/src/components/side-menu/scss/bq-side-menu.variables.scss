@@ -4,9 +4,9 @@
 
 :host {
   /**
-   * @prop --bq-side-menu--bg-color: Side menu background color
-   * @prop --bq-side-menu--brand-color: Side menu logo color
-   * @prop --bq-side-menu--border-color: Side menu border color
+   * @prop --bq-side-menu--bg-color - Side menu background color
+   * @prop --bq-side-menu--brand-color - Side menu logo color
+   * @prop --bq-side-menu--border-color - Side menu border color
    */
   --bq-side-menu--bg-color: theme(backgroundColor.ui.primary);
   --bq-side-menu--brand-color: theme(backgroundColor.ui.brand);

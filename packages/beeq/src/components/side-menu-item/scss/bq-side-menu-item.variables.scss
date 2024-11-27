@@ -4,17 +4,17 @@
 
 :host {
   /**
-   * @prop --bq-side-menu-item--bg-default: Side menu item default background color
-   * @prop --bq-side-menu-item--bg-hover: Side menu item hover background color
-   * @prop --bq-side-menu-item--bg-active: Side menu item active background color
+   * @prop --bq-side-menu-item--bg-default - Side menu item default background color
+   * @prop --bq-side-menu-item--bg-hover - Side menu item hover background color
+   * @prop --bq-side-menu-item--bg-active - Side menu item active background color
    *
-   * @prop --bq-side-menu-item--text-default: Side menu item default text color
-   * @prop --bq-side-menu-item--text-hover: Side menu item hover text color
-   * @prop --bq-side-menu-item--text-active: Side menu item active text color
-   * @prop --bq-side-menu-item--text-disabled: Side menu item disable text color
+   * @prop --bq-side-menu-item--text-default - Side menu item default text color
+   * @prop --bq-side-menu-item--text-hover - Side menu item hover text color
+   * @prop --bq-side-menu-item--text-active - Side menu item active text color
+   * @prop --bq-side-menu-item--text-disabled - Side menu item disable text color
    *
-   * @prop --bq-side-menu-item--paddingX: Side menu item vertical padding
-   * @prop --bq-side-menu-item--paddingY: Side menu item horizontal padding
+   * @prop --bq-side-menu-item--paddingX - Side menu item vertical padding
+   * @prop --bq-side-menu-item--paddingY - Side menu item horizontal padding
    */
   --bq-side-menu-item--bg-default: theme(backgroundColor.transparent);
   --bq-side-menu-item--bg-hover: color-mix(in srgb, var(--bq-ui--alt), var(--bq-hover) 20%);

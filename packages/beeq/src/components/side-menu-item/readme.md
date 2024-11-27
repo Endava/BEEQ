@@ -5,6 +5,10 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+Represents the default side menu item for standard navigation elements, providing a clean and straightforward way to display menu options.
+
 ## Properties
 
 | Property   | Attribute  | Description                                                                                           | Type      | Default |
@@ -21,6 +25,15 @@
 | `bqBlur`  | Handler to be called when the button loses focus | `CustomEvent<HTMLBqSideMenuItemElement>` |
 | `bqClick` | Handler to be called when button gets focus      | `CustomEvent<HTMLBqSideMenuItemElement>` |
 | `bqFocus` | Handler to be called when the button is clicked  | `CustomEvent<HTMLBqSideMenuItemElement>` |
+
+
+## Slots
+
+| Slot                              | Description                   |
+| --------------------------------- | ----------------------------- |
+| `"The content of the menu item."` |                               |
+| `"prefix"`                        | The prefix part of menu item. |
+| `"suffix"`                        | The suffix part of menu item. |
 
 
 ## Shadow Parts
