@@ -2177,6 +2177,25 @@ export namespace Components {
     }
     /**
      * Spinners are designed for users to display data loading.
+     * @example How to use it
+     * ```html
+     * <bq-spinner size="medium" text-position="bellow">
+     * <span>Loading...</span>
+     * </bq-spinner>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/275f10-spinner/b/09d7b1
+     * @status stable
+     * @attr {boolean} animation - If `false`, the animation on the icon element will be stopped.
+     * @attr {"small" | "medium" | "large"} size - It defines the size of the icon element displayed.
+     * @attr {"above" | "below" | "left" | "right" | "none"} text-position - It defines the position of the label text.
+     * @cssprop --bq-spinner--color - Spinner color
+     * @cssprop --bq-spinner--size-large - Spinner large size
+     * @cssprop --bq-spinner--size-medium - Spinner medium size
+     * @cssprop --bq-spinner--size-small - Spinner small size
+     * @cssprop --bq-spinner--large-text-fontSize - Spinner large text font size
+     * @cssprop --bq-spinner--medium-text-fontSize - Spinner medium text font size
+     * @cssprop --bq-spinner--small-text-fontSize - Spinner small text font size
+     * @cssprop --bq-spinner--text-lineHeight - Spinner text line height
      */
     interface BqSpinner {
         /**
@@ -2192,6 +2211,17 @@ export namespace Components {
          */
         "textPosition": TSpinnerTextPosition;
     }
+    /**
+     * The Status Component is a UI element that represents the current state or condition of an item, task, or process.
+     * @example How to use it
+     * ```html
+     * <bq-status type="alert">Alert status</bq-status>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/46c8d5-status/b/09d7b1
+     * @status stable
+     * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
+     * @cssprop --bq-status-circ - Status circle size.
+     */
     interface BqStatus {
         /**
           * It defines the type of status to display
@@ -4196,6 +4226,25 @@ declare global {
     };
     /**
      * Spinners are designed for users to display data loading.
+     * @example How to use it
+     * ```html
+     * <bq-spinner size="medium" text-position="bellow">
+     * <span>Loading...</span>
+     * </bq-spinner>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/275f10-spinner/b/09d7b1
+     * @status stable
+     * @attr {boolean} animation - If `false`, the animation on the icon element will be stopped.
+     * @attr {"small" | "medium" | "large"} size - It defines the size of the icon element displayed.
+     * @attr {"above" | "below" | "left" | "right" | "none"} text-position - It defines the position of the label text.
+     * @cssprop --bq-spinner--color - Spinner color
+     * @cssprop --bq-spinner--size-large - Spinner large size
+     * @cssprop --bq-spinner--size-medium - Spinner medium size
+     * @cssprop --bq-spinner--size-small - Spinner small size
+     * @cssprop --bq-spinner--large-text-fontSize - Spinner large text font size
+     * @cssprop --bq-spinner--medium-text-fontSize - Spinner medium text font size
+     * @cssprop --bq-spinner--small-text-fontSize - Spinner small text font size
+     * @cssprop --bq-spinner--text-lineHeight - Spinner text line height
      */
     interface HTMLBqSpinnerElement extends Components.BqSpinner, HTMLStencilElement {
     }
@@ -4203,6 +4252,17 @@ declare global {
         prototype: HTMLBqSpinnerElement;
         new (): HTMLBqSpinnerElement;
     };
+    /**
+     * The Status Component is a UI element that represents the current state or condition of an item, task, or process.
+     * @example How to use it
+     * ```html
+     * <bq-status type="alert">Alert status</bq-status>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/46c8d5-status/b/09d7b1
+     * @status stable
+     * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
+     * @cssprop --bq-status-circ - Status circle size.
+     */
     interface HTMLBqStatusElement extends Components.BqStatus, HTMLStencilElement {
     }
     var HTMLBqStatusElement: {
@@ -6701,6 +6761,25 @@ declare namespace LocalJSX {
     }
     /**
      * Spinners are designed for users to display data loading.
+     * @example How to use it
+     * ```html
+     * <bq-spinner size="medium" text-position="bellow">
+     * <span>Loading...</span>
+     * </bq-spinner>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/275f10-spinner/b/09d7b1
+     * @status stable
+     * @attr {boolean} animation - If `false`, the animation on the icon element will be stopped.
+     * @attr {"small" | "medium" | "large"} size - It defines the size of the icon element displayed.
+     * @attr {"above" | "below" | "left" | "right" | "none"} text-position - It defines the position of the label text.
+     * @cssprop --bq-spinner--color - Spinner color
+     * @cssprop --bq-spinner--size-large - Spinner large size
+     * @cssprop --bq-spinner--size-medium - Spinner medium size
+     * @cssprop --bq-spinner--size-small - Spinner small size
+     * @cssprop --bq-spinner--large-text-fontSize - Spinner large text font size
+     * @cssprop --bq-spinner--medium-text-fontSize - Spinner medium text font size
+     * @cssprop --bq-spinner--small-text-fontSize - Spinner small text font size
+     * @cssprop --bq-spinner--text-lineHeight - Spinner text line height
      */
     interface BqSpinner {
         /**
@@ -6716,6 +6795,17 @@ declare namespace LocalJSX {
          */
         "textPosition"?: TSpinnerTextPosition;
     }
+    /**
+     * The Status Component is a UI element that represents the current state or condition of an item, task, or process.
+     * @example How to use it
+     * ```html
+     * <bq-status type="alert">Alert status</bq-status>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/46c8d5-status/b/09d7b1
+     * @status stable
+     * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
+     * @cssprop --bq-status-circ - Status circle size.
+     */
     interface BqStatus {
         /**
           * It defines the type of status to display
@@ -8266,8 +8356,38 @@ declare module "@stencil/core" {
             "bq-slider": LocalJSX.BqSlider & JSXBase.HTMLAttributes<HTMLBqSliderElement>;
             /**
              * Spinners are designed for users to display data loading.
+             * @example How to use it
+             * ```html
+             * <bq-spinner size="medium" text-position="bellow">
+             * <span>Loading...</span>
+             * </bq-spinner>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/275f10-spinner/b/09d7b1
+             * @status stable
+             * @attr {boolean} animation - If `false`, the animation on the icon element will be stopped.
+             * @attr {"small" | "medium" | "large"} size - It defines the size of the icon element displayed.
+             * @attr {"above" | "below" | "left" | "right" | "none"} text-position - It defines the position of the label text.
+             * @cssprop --bq-spinner--color - Spinner color
+             * @cssprop --bq-spinner--size-large - Spinner large size
+             * @cssprop --bq-spinner--size-medium - Spinner medium size
+             * @cssprop --bq-spinner--size-small - Spinner small size
+             * @cssprop --bq-spinner--large-text-fontSize - Spinner large text font size
+             * @cssprop --bq-spinner--medium-text-fontSize - Spinner medium text font size
+             * @cssprop --bq-spinner--small-text-fontSize - Spinner small text font size
+             * @cssprop --bq-spinner--text-lineHeight - Spinner text line height
              */
             "bq-spinner": LocalJSX.BqSpinner & JSXBase.HTMLAttributes<HTMLBqSpinnerElement>;
+            /**
+             * The Status Component is a UI element that represents the current state or condition of an item, task, or process.
+             * @example How to use it
+             * ```html
+             * <bq-status type="alert">Alert status</bq-status>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/46c8d5-status/b/09d7b1
+             * @status stable
+             * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
+             * @cssprop --bq-status-circ - Status circle size.
+             */
             "bq-status": LocalJSX.BqStatus & JSXBase.HTMLAttributes<HTMLBqStatusElement>;
             "bq-step-item": LocalJSX.BqStepItem & JSXBase.HTMLAttributes<HTMLBqStepItemElement>;
             "bq-steps": LocalJSX.BqSteps & JSXBase.HTMLAttributes<HTMLBqStepsElement>;
