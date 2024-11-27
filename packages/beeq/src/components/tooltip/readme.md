@@ -5,6 +5,10 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The Tooltip component is a small pop-up box that appears when a user hovers over or clicks on an element, providing additional information or context.
+
 ## Properties
 
 | Property        | Attribute        | Description                                                                                                                          | Type                                                                                                                                                                 | Default   |
@@ -39,6 +43,14 @@ Shows the tooltip
 Type: `Promise<void>`
 
 
+
+
+## Slots
+
+| Slot        | Description                                 |
+| ----------- | ------------------------------------------- |
+|             | The tooltip content                         |
+| `"trigger"` | The element which displays tooltip on hover |
 
 
 ## Shadow Parts
