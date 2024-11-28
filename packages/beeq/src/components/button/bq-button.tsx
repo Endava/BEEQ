@@ -257,14 +257,7 @@ export class BqButton {
           <span class="bq-button__suffix" ref={(spanElem) => (this.suffixElem = spanElem)} part="suffix">
             <slot name="suffix" onSlotchange={this.handleSlotChange} />
           </span>
-          {this.loading && (
-            <bq-icon
-              class="bq-button__loader"
-              name="spinner-gap"
-              role="img"
-              label={`${this.appearance} button loader`}
-            />
-          )}
+          {this.loading && <bq-icon class="bq-button__loader" name="spinner-gap" />}
         </TagElem>
       </Host>
     );
