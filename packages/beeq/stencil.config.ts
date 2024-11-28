@@ -55,7 +55,7 @@ export const config: Config = {
     {
       type: 'dist',
       copy: [
-        { src: '../README.md', dest: '../../.', warn: true },
+        { src: '../README.md', dest: '../../README.md', warn: true },
         { src: '../cem/*.*', dest: '../', warn: true },
       ],
     },
