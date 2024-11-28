@@ -3,11 +3,48 @@ import { AttachInternals, Component, Element, Event, EventEmitter, h, Method, Pr
 import { isNil } from '../../shared/utils';
 
 /**
+ * The checkbox is a UI component that allows users to select one or more options from a list of choices.
+ * It is commonly used in forms, surveys, and settings pages.
+ *
+ * @example How to use it
+ * ```html
+ * <bq-checkbox name="bq-checkbox" value="checkbox-value" background-on-hover>
+ *   Checkbox label
+ * </bq-checkbox>
+ * ```
+ *
+ * @documentation https://www.beeq.design/3d466e231/p/431f17-checkbox
+ * @status stable
+ *
+ * @attr {boolean} background-on-hover - If true checkbox displays background on hover
+ * @attr {string} form-id - The form ID that the checkbox is associated with
+ * @attr {string} form-validation-message - The native form validation message
+ * @attr {boolean} checked - If true checkbox is checked
+ * @attr {boolean} disabled - If true checkbox is disabled
+ * @attr {boolean} indeterminate - A state that is neither checked nor unchecked
+ * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+ * @attr {boolean} required - If `true`, it will indicate that the user must specify a value for the checkbox before the owning form can be submitted
+ * @attr {string} value - A string representing the value of the checkbox. Primarily used to differentiate a list of related checkboxes that have the same name
+ *
+ * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+ * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+ * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+ *
+ * @event bqChange - Handler to be called when the checkbox state changes
+ * @event bqFocus - Handler to be called when the checkbox gets focus
+ * @event bqBlur - Handler to be called when the checkbox loses focus
+ *
+ * @slot - The content of the checkbox component
+ *
  * @part base - The component's internal wrapper of the checkbox component.
  * @part control - The container `<div>` element that holds the custom checkbox.
  * @part input - The native HTML `<input type="checkbox">` used under the hood.
  * @part checkbox - The `<span>` element that renders the custom checked/indeterminate state.
  * @part label - The `<span>` element that holds the text content.
+ *
+ * @cssprop --bq-checkbox--size - Checkbox size
+ * @cssprop --bq-checkbox--border-radius - Checkbox border radius
+ * @cssprop --bq-checkbox--border-width - Checkbox border width
  */
 @Component({
   tag: 'bq-checkbox',

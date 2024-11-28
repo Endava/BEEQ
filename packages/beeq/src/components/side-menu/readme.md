@@ -5,6 +5,12 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The default side menu serves as a versatile container for organizing and displaying navigation elements,
+ with default side menu items providing a clean and straightforward way to represent individual menu options.
+ Together, they form the foundation for building structured and intuitive side menu layouts.
+
 ## Properties
 
 | Property     | Attribute    | Description                                      | Type                                | Default     |
@@ -33,6 +39,15 @@ Toggle the collapse state of the side menu
 Type: `Promise<void>`
 
 
+
+
+## Slots
+
+| Slot                                            | Description                                                    |
+| ----------------------------------------------- | -------------------------------------------------------------- |
+| `"The main section that holds all menu items."` |                                                                |
+| `"footer"`                                      | The section for adding footer content to the side menu.        |
+| `"logo"`                                        | The section for displaying the logo or brand in the side menu. |
 
 
 ## Shadow Parts

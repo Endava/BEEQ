@@ -5,6 +5,10 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The radio button is a user interface element that allows users to select a single option.
+
 ## Properties
 
 | Property             | Attribute             | Description                                                                                                          | Type      | Default     |
@@ -62,6 +66,13 @@ Use this method instead of the global `element.focus()`.
 Type: `Promise<void>`
 
 
+
+
+## Slots
+
+| Slot | Description       |
+| ---- | ----------------- |
+|      | The bq-radio item |
 
 
 ## Shadow Parts

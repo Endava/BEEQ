@@ -5,11 +5,24 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+An Empty State is a UI component displayed when there is no data or content available, often used in dynamic or inactive application states.
+
 ## Properties
 
 | Property | Attribute | Description                           | Type                             | Default    |
 | -------- | --------- | ------------------------------------- | -------------------------------- | ---------- |
 | `size`   | `size`    | The size of the empty state component | `"large" \| "medium" \| "small"` | `'medium'` |
+
+
+## Slots
+
+| Slot          | Description                                                  |
+| ------------- | ------------------------------------------------------------ |
+| `"body"`      | The content to be displayed after the thumbnail section      |
+| `"footer"`    | The content to be displayed after the body section as footer |
+| `"thumbnail"` | The element that wraps the thumbnail element                 |
 
 
 ## Shadow Parts

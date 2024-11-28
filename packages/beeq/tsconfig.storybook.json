@@ -18,7 +18,6 @@
     "**/*.stories.ts",
     "**/*.stories.tsx",
     "**/*.ts",
-    "**/*.tsx",
-    "custom-elements.json"
+    "**/*.tsx"
   ]
 }

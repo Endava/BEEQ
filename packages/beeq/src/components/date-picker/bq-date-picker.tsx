@@ -13,8 +13,94 @@ import {
 import { TInputValidation } from '../input/bq-input.types';
 
 /**
+ * The Date Picker is a intuitive UI element component allows users to select dates from a visual calendar interface, providing an intuitive way to input date information.
+ *
+ * @example How to use it
+ * ```html
+ * <bq-date-picker
+ *   first-day-of-week="1"
+ *   locale="en-GB"
+ *   months-per-view="single"
+ *   months="2"
+ *   name="bq-date-picker"
+ *   placeholder="Enter your date"
+ *   placement="bottom-end"
+ *   show-outside-days="false"
+ *   type="range"
+ *   validation-status="none"
+ *   value="2024-05-25"
+ * >
+ *   <label class="flex flex-grow items-center" slot="label">
+ *     Date picker label
+ *   </label>
+ * </bq-date-picker>
+ * ```
+ *
+ * @documentation https://www.beeq.design/3d466e231/p/5793a9-date-picker
+ * @status stable
+ *
+ * @dependency bq-button
+ * @dependency bq-dropdown
+ * @dependency bq-icon
+ *
+ * @attr {boolean} autofocus - If `true`, the Date picker input will be focused on component render.
+ * @attr {string} clear-button-label - The clear button aria label.
+ * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+ * @attr {boolean} disabled - Indicates whether the Date picker input is disabled or not.
+ * @attr {number} distance - Represents the distance (gutter or margin) between the Date picker panel and the input element.
+ * @attr {0 | 1 | 2 | 3 | 4 | 5 | 6} first-day-of-week - The first day of the week, where Sunday is 0, Monday is 1, etc.
+ * @attr {Intl.DateTimeFormatOptions} format-options - The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
+ * @attr {string} form - The ID of the form that the Date picker input belongs to.
+ * @attr {function} is-date-disallowed - A function that takes a date and returns true if the date should not be selectable.
+ * @attr {Intl.LocalesArgument} locale - The locale for formatting dates. If not set, will use the browser's locale. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
+ * @attr {string} max - The latest date that can be selected.
+ * @attr {string} min - The earliest date that can be selected.
+ * @attr {number} months - Number of months to show when range is `true`.
+ * @attr {string} name - The Date picker input name.
+ * @attr {boolean} open - If `true`, the Date picker panel will be visible.
+ * @attr {string} panel-height - When set, it will override the height of the Date picker panel.
+ * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Position of the Date picker panel.
+ * @attr {boolean} required - Indicates whether or not the Date picker input is required to be filled out before submitting the form.
+ * @attr {number} skidding - Represents the skidding between the Date picker panel and the input element.
+ * @attr {boolean} show-outside-days - Whether to show days outside the month.
+ * @attr {string} strategy - Defines the strategy to position the Date picker panel.
+ * @attr {string} tentative - The date that is tentatively selected, e.g. the start of a range selection.
+ * @attr {"single" | "multi" | "range"} type - It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection.
+ * @attr {"error" | "none" | "success" | "warning"} validation-status - The validation status of the Select input.
+ * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value.
+ *
+ * @method clear - Clears the selected value.
+ *
+ * @event bqBlur - Callback handler emitted when the input loses focus.
+ * @event bqChange - Callback handler emitted when the input value has changed and the input loses focus.
+ * @event bqClear - Callback handler emitted when the input value has been cleared.
+ * @event bqFocus - Callback handler emitted when the input has received focus.
+ *
  * @part base - The component's base wrapper.
  * @part button - The native HTML button used under the hood in the clear button.
+ * @part calendar__button - Any button used in the calendar-month component.
+ * @part calendar__button - Any button within the calendar-range component.
+ * @part calendar__container - The calendar-range container for the entire component.
+ * @part calendar__day - The buttons corresponding to each day in the calendar-month grid.
+ * @part calendar__disabled - A button that is disabled due to min/max on the calendar-range component.
+ * @part calendar__disallowed - Any day that has been disallowed via isDateDisallowed.
+ * @part calendar__head - The calendar-month table's header row.
+ * @part calendar__header - The calendar-range container for the heading and buttons.
+ * @part calendar__heading - The calendar-month heading container that labels the month.
+ * @part calendar__heading - The calendar-range heading containing the month and year.
+ * @part calendar__next - The next page button on the calendar-range component.
+ * @part calendar__outside - Any days which are outside the current month.
+ * @part calendar__previous - The previous page button on the calendar-range component.
+ * @part calendar__range-end - The day at the end of a date range.
+ * @part calendar__range-inner - Any days between the start and end of a date range.
+ * @part calendar__range-start - The day at the start of a date range.
+ * @part calendar__selected - Any days which are selected.
+ * @part calendar__table - The calendar-month <table> element.
+ * @part calendar__td - The calendar-month table's body cells.
+ * @part calendar__th - The calendar-month table's header cells.
+ * @part calendar__today - The Today's day.
+ * @part calendar__tr - Any row within the table on the calendar-month component.
+ * @part calendar__week - The calendar-month table's body rows.
  * @part clear-btn - The clear button.
  * @part control - The input control wrapper.
  * @part input - The native HTML input element used under the hood.
@@ -22,33 +108,30 @@ import { TInputValidation } from '../input/bq-input.types';
  * @part panel - The date picker panel container
  * @part prefix - The prefix slot container.
  * @part suffix - The suffix slot container.
-
-// Parts from the Cally library for calendar-date and calendar-range components:
- * @part calendar__container - The container for the entire component.
- * @part calendar__header - The container for heading and button's.
- * @part calendar__button - Any button within the component.
- * @part calendar__previous - The previous page button.
- * @part calendar__next - The next page button.
- * @part calendar__disabled - A button that is disabled due to min/max.
- * @part calendar__heading - The heading containing the month and year.
-
-// Parts specific to the calendar-month component:
- * @part calendar__heading - The heading that labels the month.
- * @part calendar__table - The <table> element.
- * @part calendar__tr - Any row within the table.
- * @part calendar__head - The table's header row.
- * @part calendar__week - The table's body rows.
- * @part calendar__th - The table's header cells.
- * @part calendar__td - The table's body cells.
- * @part calendar__button - Any button used in the component.
- * @part calendar__day - The buttons corresponding to each day in the grid.
- * @part calendar__selected - Any days which are selected.
- * @part calendar__today - Today's day.
- * @part calendar__disallowed - Any day that has been disallowed via isDateDisallowed.
- * @part calendar__outside - Any days which are outside the current month.
- * @part calendar__range-start - The day at the start of a date range.
- * @part calendar__range-end - The day at the end of a date range.
- * @part calendar__range-inner - Any days between the start and end of a date range.
+ *
+ * @cssprop --bq-date-picker--background-color - Date picker background color
+ * @cssprop --bq-date-picker--border-color - Date picker border color
+ * @cssprop --bq-date-picker--border-color-disabled - Date picker border color when disabled
+ * @cssprop --bq-date-picker--border-color-focus - Date picker border color on focus
+ * @cssprop --bq-date-picker--border-radius - Date picker border radius
+ * @cssprop --bq-date-picker--border-style - Date picker border style
+ * @cssprop --bq-date-picker--border-width - Date picker border width
+ * @cssprop --bq-date-picker--currentDate-border-color - Date picker border color for current date
+ * @cssprop --bq-date-picker--currentDate-border-width - Date picker border width for current date
+ * @cssprop --bq-date-picker--currentDate-text-color - Date picker label text color for currentDate
+ * @cssprop --bq-date-picker--day-size - Date picker button day size
+ * @cssprop --bq-date-picker--gap - Gap between Date picker content and prefix/suffix
+ * @cssprop --bq-date-picker--icon-size - Icon size to use in prefix/suffix and clear button
+ * @cssprop --bq-date-picker--label-margin-bottom - Date picker label margin bottom
+ * @cssprop --bq-date-picker--label-text-color - Date picker label text color
+ * @cssprop --bq-date-picker--label-text-size - Date picker label text size
+ * @cssprop --bq-date-picker--padding-end - Date picker padding end
+ * @cssprop --bq-date-picker--padding-start - Date picker padding start
+ * @cssprop --bq-date-picker--paddingY - Date picker padding top and bottom
+ * @cssprop --bq-date-picker--range-background-color - Background color for the selected date range in the date picker
+ * @cssprop --bq-date-picker--text-color - Date picker text color
+ * @cssprop --bq-date-picker--text-placeholder-color - Date picker placeholder text color
+ * @cssprop --bq-date-picker--text-size - Date picker text size
  */
 @Component({
   tag: 'bq-date-picker',

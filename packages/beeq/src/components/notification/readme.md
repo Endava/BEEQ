@@ -5,6 +5,10 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The Notification component is a user interface element used to provide information or alerts to users in a non-intrusive manner.
+
 ## Properties
 
 | Property       | Attribute       | Description                                                                                                             | Type                                                       | Default     |

@@ -5,6 +5,11 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The Tag Component is a UI element used to label and categorize content within an application.
+Tags are commonly used to label items with keywords or categories, making it easier to find and organize content.
+
 ## Properties
 
 | Property    | Attribute   | Description                                                                            | Type                                                     | Default     |
@@ -52,6 +57,14 @@ Method to be called to show the tag component
 Type: `Promise<void>`
 
 
+
+
+## Slots
+
+| Slot       | Description                                                         |
+| ---------- | ------------------------------------------------------------------- |
+|            | The text content of the tag                                         |
+| `"prefix"` | The prefix slot to add an icon or any other content before the text |
 
 
 ## Shadow Parts

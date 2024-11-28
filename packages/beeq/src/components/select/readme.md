@@ -5,6 +5,10 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The select input component lets users choose from a predefined list, commonly used in forms for easy data selection.
+
 ## Properties
 
 | Property            | Attribute             | Description                                                                                                                                                  | Type                                                                                                                                                                 | Default         |
@@ -54,6 +58,18 @@ Clears the selected value.
 Type: `Promise<void>`
 
 
+
+
+## Slots
+
+| Slot            | Description                     |
+| --------------- | ------------------------------- |
+| `"clear-icon"`  | The clear icon slot container.  |
+| `"helper-text"` | The helper text slot container. |
+| `"label"`       | The label slot container.       |
+| `"prefix"`      | The prefix slot container.      |
+| `"suffix"`      | The suffix slot container.      |
+| `"tags"`        | The tags slot container.        |
 
 
 ## Shadow Parts

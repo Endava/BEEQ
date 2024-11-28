@@ -5,10 +5,30 @@ import { getSvgContent, iconContent } from './helper/request';
 import { getBasePath, getColorCSSVariable, isNil } from '../../shared/utils';
 
 /**
- * Icons are simplified images that graphically explain the meaning of an object on the screen.
+ * The Icon component is an image that provides a visual representation of an object, action, or concept displayed on the screen.
+ * It is a small graphical element that is used to enhance the user interface and improve user experience.
+ *
+ * @example How to use it
+ * ```html
+ * <bq-icon color="text--brand" name="bell-ringing" size="24"></bq-icon>
+ * ```
+ *
+ * @documentation https://www.beeq.design/3d466e231/p/675fad-icon
+ * @status stable
+ *
+ * @attr {string} color - Set the stroke color of the SVG. The value should be a valid value of the palette color.
+ * @attr {string} label - Label for the icon, used for accessibility.
+ * @attr {string} name - Icon name to load. Please check all available icons [here](https://phosphoricons.com/).
+ * @attr {string | number} size - Set the size of the SVG.
+ * @attr {string} src - Set the source of the SVG. If the source is set, the name property will be ignored.
+ *
+ * @event svgLoaded - Callback handler to be called when the SVG has loaded.
  *
  * @part base - The component's internal wrapper that holds the icon SVG content.
  * @part svg - The `<svg>` tag element inside the component.
+ *
+ * @cssprop --bq-icon--color - The stroke color of the SVG.
+ * @cssprop --bq-icon--size - The size of the SVG.
  */
 @Component({
   assetsDirs: ['svg'],

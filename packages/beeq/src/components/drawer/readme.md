@@ -5,6 +5,10 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The Drawer component provides a sliding panel interface commonly used for navigation or presenting additional content without taking up significant screen space.
+
 ## Properties
 
 | Property              | Attribute                | Description                                                                                  | Type                | Default     |
@@ -50,19 +54,30 @@ Type: `Promise<void>`
 
 
 
+## Slots
+
+| Slot               | Description                               |
+| ------------------ | ----------------------------------------- |
+|                    | The body content of the drawer.           |
+| `"button-close"`   | The close button content of the drawer.   |
+| `"footer"`         | The footer content of the drawer.         |
+| `"footer-divider"` | The footer divider content of the drawer. |
+| `"title"`          | The title content of the drawer.          |
+
+
 ## Shadow Parts
 
-| Part                    | Description                                                  |
-| ----------------------- | ------------------------------------------------------------ |
-| `"backdrop"`            | The `<div>` that holds the backdrop overlay                  |
-| `"body"`                | The `<main>` that holds the drawer body content              |
-| `"button-close"`        | The BqButton that closes the drawer                          |
-| `"button-close__btn"`   | The native button used under the hood that closes the drawer |
-| `"button-close__label"` | The text inside the native button that closes the drawer     |
-| `"footer"`              | The `<footer>` that holds footer content                     |
-| `"header"`              | The `<header>` that holds the icon, title, and close button  |
-| `"panel"`               | The `<div>` that holds the drawer entire content             |
-| `"title"`               | The `<div>` that holds the title content                     |
+| Part                    | Description                                                   |
+| ----------------------- | ------------------------------------------------------------- |
+| `"backdrop"`            | The `<div>` that holds the backdrop overlay.                  |
+| `"body"`                | The `<main>` that holds the drawer body content.              |
+| `"button-close"`        | The BqButton that closes the drawer.                          |
+| `"button-close__btn"`   | The native button used under the hood that closes the drawer. |
+| `"button-close__label"` | The text inside the native button that closes the drawer.     |
+| `"footer"`              | The `<footer>` that holds footer content.                     |
+| `"header"`              | The `<header>` that holds the icon, title, and close button.  |
+| `"panel"`               | The `<div>` that holds the drawer entire content.             |
+| `"title"`               | The `<div>` that holds the title content.                     |
 
 
 ## Dependencies

@@ -5,6 +5,10 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The Panel component is a versatile and essential element used to wrap and display content in a floating panel.
+
 ## Properties
 
 | Property    | Attribute    | Description                                                                           | Type                                                                                                                                                                 | Default          |
@@ -15,6 +19,13 @@
 | `sameWidth` | `same-width` | Whether the panel should have the same width as the trigger element                   | `boolean`                                                                                                                                                            | `false`          |
 | `skidding`  | `skidding`   | Represents the skidding between the panel and the trigger element.                    | `number`                                                                                                                                                             | `0`              |
 | `strategy`  | `strategy`   | Defines the strategy to position the panel                                            | `"absolute" \| "fixed"`                                                                                                                                              | `'fixed'`        |
+
+
+## Slots
+
+| Slot | Description               |
+| ---- | ------------------------- |
+|      | The content of the panel. |
 
 
 ## Shadow Parts

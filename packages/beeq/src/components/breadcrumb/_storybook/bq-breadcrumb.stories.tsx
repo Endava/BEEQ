@@ -15,9 +15,9 @@ const meta: Meta = {
   argTypes: {
     'aria-label': { control: 'text' },
     // Event handlers
-    bqBreadcrumbBlur: { action: 'bqBlur' },
-    bqBreadcrumbClick: { action: 'bqClick' },
-    bqBreadcrumbFocus: { action: 'bqFocus' },
+    bqBlur: { action: 'bqBlur', table: { disable: true } },
+    bqClick: { action: 'bqClick', table: { disable: true } },
+    bqFocus: { action: 'bqFocus', table: { disable: true } },
     // Not part of the public API, so we don't want to expose it in the docs
     text: { control: 'text', table: { disable: true } },
     htmlNode: { control: 'object', table: { disable: true } },
@@ -35,23 +35,20 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => html`
-  <bq-breadcrumb
-    @bqBreadcrumbBlur=${args.bqBreadcrumbBlur}
-    @bqBreadcrumbClick=${args.bqBreadcrumbClick}
-    @bqBreadcrumbFocus=${args.bqBreadcrumbFocus}
-  >
+  <bq-breadcrumb label=${args['aria-label']} @bqBlur=${args.bqBlur} @bqClick=${args.bqClick} @bqFocus=${args.bqFocus}>
     ${args.htmlNode}
     <bq-breadcrumb-item
       href=${ifDefined(args.useLinks ? 'https://example.com/' : null)}
       target=${ifDefined(args.useLinks ? '_blank' : null)}
       aria-label="Home page"
     >
-      <bq-icon name="house-line" size="16"></bq-icon>
+      <bq-icon name="house-line" size="16" aria-hidden="true"></bq-icon>
+      Home
     </bq-breadcrumb-item>
     <bq-breadcrumb-item
       href=${ifDefined(args.useLinks ? 'https://example.com/' : null)}
       target=${ifDefined(args.useLinks ? '_blank' : null)}
-      aria-label="Men clothing"
+      aria-label="Men's Clothing"
     >
       Men's Clothing
     </bq-breadcrumb-item>
@@ -60,7 +57,7 @@ const Template = (args: Args) => html`
       target=${ifDefined(args.useLinks ? '_blank' : null)}
       aria-label="Shirts"
     >
-      <bq-icon name="shirt-folded" size="16"></bq-icon>
+      <bq-icon name="shirt-folded" size="16" aria-hidden="true"></bq-icon>
       Shirts
     </bq-breadcrumb-item>
     <bq-breadcrumb-item

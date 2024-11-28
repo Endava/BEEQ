@@ -18,6 +18,14 @@ Spinners are designed for users to display data loading.
 | `textPosition` | `text-position` | It defines the position of the label text                     | `"above" \| "bellow" \| "left" \| "none" \| "right"` | `'none'`   |
 
 
+## Slots
+
+| Slot     | Description                           |
+| -------- | ------------------------------------- |
+|          | The content of the spinner component. |
+| `"icon"` | The icon slot container.              |
+
+
 ## Shadow Parts
 
 | Part            | Description                                                                |

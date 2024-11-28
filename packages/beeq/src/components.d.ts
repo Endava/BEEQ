@@ -64,32 +64,123 @@ export { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from "./components
 export { TTextareaAutoCapitalize, TTextareaWrap } from "./components/textarea/bq-textarea.types";
 export { TToastBorderRadius, TToastPlacement, TToastType } from "./components/toast/bq-toast.types";
 export namespace Components {
+    /**
+     * The Accordion is a UI component that allows users to toggle between showing and hiding content sections. It provides a collapsible functionality, where only one section can be expanded at a time, while the others remain collapsed.
+     * @example How to use it
+     * ```html
+     * <bq-accordion appearance="filled" size="medium">
+     * <bq-avatar size="xsmall" image="/image/url/img.png" slot="prefix"></bq-avatar>
+     * <h3 slot="header">Header</h3>
+     * <div>Lorem ipsum dolor...</div>
+     * </bq-accordion>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/713eae-accordion
+     * @status stable
+     * @dependency bq-icon
+     * @attr {"filled" | "ghost"} [appearance="filled"] - The appearance style of the Accordion
+     * @attr {boolean} [disabled=false] - If true, the Accordion is disabled
+     * @attr {boolean} [expanded=false] - If true, the Accordion is expanded
+     * @attr {boolean} [no-animation=false] - Animation is set through JS when the browser does not support CSS calc-size() If true, the Accordion animation, will be disabled. No animation will be applied.
+     * @attr {boolean} [rotate=false] - If true, the Accordion expand icon is rotate 180deg when expanded
+     * @attr {"small" | "medium"} [size="medium"] - The size of the the Accordion
+     * @event bqOpen - Handler to be called when the accordion is opened
+     * @event bqAfterOpen - Handler to be called after the accordion is opened
+     * @event bqClose - Handler to be called when the accordion is closed
+     * @event bqAfterClose - Handler to be called after the accordion is closed
+     * @event bqFocus - Handler to be called when the accordion gets focus
+     * @event bqClick - Handler to be called when the accordion is clicked
+     * @event bqBlur - Handler to be called when the accordion loses focus
+     * @cssprop --bq-accordion--small-padding-y - Accordion small vertical padding
+     * @cssprop --bq-accordion--small-padding-start - Accordion small start padding
+     * @cssprop --bq-accordion--small-padding-end - Accordion small end padding
+     * @cssprop --bq-accordion--small-padding-gap - Accordion small gap distance between suffix, title and prefix
+     * @cssprop --bq-accordion--small-radius - Accordion small border radius
+     * @cssprop --bq-accordion--medium-padding-y - Accordion medium vertical padding
+     * @cssprop --bq-accordion--medium-padding-start - Accordion medium start padding
+     * @cssprop --bq-accordion--medium-padding-end - Accordion medium end padding
+     * @cssprop --bq-accordion--medium-padding-gap - Accordion medium gap distance between suffix, title and prefix
+     * @cssprop --bq-accordion--medium-radius - Accordion medium border radius
+     * @cssprop --bq-accordion--collapsed-border-color - Accordion collapsed border color
+     * @cssprop --bq-accordion--collapsed-border-style - Accordion collapsed border style
+     * @cssprop --bq-accordion--collapsed-border-width - Accordion collapsed border width
+     * @cssprop --bq-accordion--expanded-border-color - Accordion expanded border color
+     * @cssprop --bq-accordion--expanded-border-style - Accordion expanded border style
+     * @cssprop --bq-accordion--expanded-border-width - Accordion expanded border width
+     * @cssprop --bq-accordion--filled-collapsed-background - Accordion filled collapsed header background
+     * @cssprop --bq-accordion--filled-collapsed-text-color - Accordion filled collapsed header text color
+     * @cssprop --bq-accordion--filled-expanded-background - Accordion filled expanded header background
+     * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Accordion filled expanded header color on hover
+     * @cssprop --bq-accordion--filled-expanded-text-color - Accordion filled expanded header text color
+     * @cssprop --bq-accordion--ghost-collapsed-background - Accordion ghost collapsed header background
+     * @cssprop --bq-accordion--ghost-collapsed-text-color - Accordion ghost collapsed header text color
+     * @cssprop --bq-accordion--ghost-expanded-background - Accordion ghost expanded header background
+     * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Accordion ghost expanded header color on hover
+     * @cssprop --bq-accordion--ghost-expanded-text-color - Accordion ghost expanded header text color
+     * @cssprop --bq-accordion--panel-filled-border-color - Accordion filled panel border color
+     * @cssprop --bq-accordion--panel-filled-border-style - Accordion filled panel border style
+     * @cssprop --bq-accordion--panel-filled-border-width - Accordion filled panel border width
+     * @cssprop --bq-accordion--panel-small-filled-padding-y - Accordion small filled panel vertical padding
+     * @cssprop --bq-accordion--panel-small-filled-padding-start - Accordion small filled panel start padding
+     * @cssprop --bq-accordion--panel-small-filled-padding-end - Accordion small filled panel end padding
+     * @cssprop --bq-accordion--panel-medium-filled-padding-y - Accordion medium filled panel vertical padding
+     * @cssprop --bq-accordion--panel-medium-filled-padding-start - Accordion medium filled panel start padding
+     * @cssprop --bq-accordion--panel-medium-filled-padding-end - Accordion medium filled panel end padding
+     * @cssprop --bq-accordion--panel-ghost-border-color - Accordion ghost panel border color
+     * @cssprop --bq-accordion--panel-ghost-border-style - Accordion ghost panel border style
+     * @cssprop --bq-accordion--panel-ghost-border-width - Accordion ghost panel border width
+     * @cssprop --bq-accordion--panel-small-ghost-padding-y - Accordion small ghost panel vertical padding
+     * @cssprop --bq-accordion--panel-small-ghost-padding-start - Accordion small ghost panel start padding
+     * @cssprop --bq-accordion--panel-small-ghost-padding-end - Accordion small ghost panel end padding
+     * @cssprop --bq-accordion--panel-medium-ghost-padding-y - Accordion medium ghost panel vertical padding
+     * @cssprop --bq-accordion--panel-medium-ghost-padding-start - Accordion medium ghost panel start padding
+     * @cssprop --bq-accordion--panel-medium-ghost-padding-end - Accordion medium ghost panel end padding
+     */
     interface BqAccordion {
         /**
-          * The appearance style of accordion
+          * The appearance style of the Accordion
          */
         "appearance": TAccordionAppearance;
         /**
-          * If true accordion is disabled
+          * If true, the Accordion is disabled
          */
         "disabled": boolean;
         /**
-          * If true accordion is expanded
+          * If true, the Accordion is expanded
          */
         "expanded": boolean;
         /**
-          * Animation is set through JS when the browser does not support CSS calc-size() If true, the accordion animation, will be disabled. No animation will be applied.
+          * Animation is set through JS when the browser does not support CSS calc-size() If true, the Accordion animation, will be disabled. No animation will be applied.
          */
         "noAnimation": boolean;
         /**
-          * If true accordion expand icon is rotate 180deg when expanded
+          * If true, the Accordion expand icon is rotate 180deg when expanded
          */
         "rotate": boolean;
         /**
-          * The size of accordion
+          * The size of the Accordion
          */
         "size": TAccordionSize;
     }
+    /**
+     * The accordion group component is a container for multiple accordion elements.
+     * It allows to manage the appearance and size of all accordions at once.
+     * @example How to use it
+     * ```html
+     * <bq-accordion-group appearance="filled" size="medium">
+     * <bq-accordion> ... </bq-accordion>
+     * <bq-accordion> ... </bq-accordion>
+     * <bq-accordion> ... </bq-accordion>
+     * </bq-accordion-group>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/713eae-accordion
+     * @status stable
+     * @attr {"filled" | "ghost"} [appearance="filled"] - The appearance style of accordion to be applied to all accordions
+     * @attr {boolean} [expandAll=false] - If true all accordions are expanded
+     * @attr {boolean} [no-animation=false] - Animation is set through JS when the browser does not support CSS calc-size() If true, the accordion animation, will be disabled. No animation will be applied.
+     * @attr {boolean} [multiple=false] - If true multiple accordions can be expanded at the same time
+     * @attr {"small" | "medium"} [size="medium"] - The size of accordion to be applied to all accordions
+     * @cssprop --bq-accordion-group--gap - Accordion group distance between elements
+     */
     interface BqAccordionGroup {
         /**
           * The appearance style of accordion to be applied to all accordions
@@ -112,6 +203,62 @@ export namespace Components {
          */
         "size": TAccordionSize;
     }
+    /**
+     * The Alert is a user interface component used to convey important information to the user in a clear and concise manner.
+     * It can be used to notify users of success, failure, warning, or any other type of information that needs to be brought to their attention.
+     * @example How to use it
+     * ```html
+     * <bq-alert>
+     * <bq-icon name="star" slot="icon"></bq-icon>
+     * Title
+     * <span slot="body">
+     * Description
+     * <a class="bq-link" href="https://example.com">Link</a>
+     * </span>
+     * <div slot="footer">
+     * <bq-button appearance="primary" size="small">Button</bq-button>
+     * <bq-button appearance="link" size="small">Button</bq-button>
+     * </div>
+     * </bq-alert>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/848a50-alert
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
+     * @attr {boolean} [auto-dismiss=false] - If true, the alert will automatically hide after the specified amount of time
+     * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} [border='s'] - The corner radius of the alert component
+     * @attr {boolean} [disable-close=false] - If true, the close button at the top right of the alert won't be shown
+     * @attr {boolean} [hide-icon=false] - If true, the alert icon won't be shown
+     * @attr {boolean} [open=false] - If true, the alert will be shown
+     * @attr {number} [time=3000] - The length of time, in milliseconds, after which the alert will close itself. Only valid if `autoDismiss="true"`
+     * @attr {"info" | "success" | "warning" | "error" | "default"} [type='default'] - Type of Alert
+     * @attr {boolean} [sticky=false] - If true, the alert component will remain fixed at the top of the page, occupying the full viewport
+     * @event bqHide - Callback handler to be called when the alert is hidden
+     * @event bqShow - Callback handler to be called when the alert is shown
+     * @event bqAfterShow - Callback handler to be called after the alert has been shown
+     * @event bqAfterHide - Callback handler to be called after the alert has been hidden
+     * @cssprop --bq-alert--background - The alert background color
+     * @cssprop --bq-alert--border-radius - The alert border radius
+     * @cssprop --bq-alert--content-footer-gap - The alert content and footer gap
+     * @cssprop --bq-alert--title-body-gap - The alert title and body gap
+     * @cssprop --bq-alert--border-color - The alert border color
+     * @cssprop --bq-alert--border-style - The alert border style
+     * @cssprop --bq-alert--border-width - The alert border width
+     * @cssprop --bq-alert--background-info - The alert background color for info type
+     * @cssprop --bq-alert--background-success - The alert background color for success type
+     * @cssprop --bq-alert--background-warning - The alert background color for warning type
+     * @cssprop --bq-alert--background-error - The alert background color for error type
+     * @cssprop --bq-alert--border-info - The alert border color for info type
+     * @cssprop --bq-alert--border-success - The alert border color for success type
+     * @cssprop --bq-alert--border-warning - The alert border color for warning type
+     * @cssprop --bq-alert--border-error - The alert border color for error type
+     * @cssprop --bq-alert--icon-color-info - The alert icon color for info type
+     * @cssprop --bq-alert--icon-color-success - The alert icon color for success type
+     * @cssprop --bq-alert--icon-color-warning - The alert icon color for warning type
+     * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
+     * @cssprop --bq-alert--padding - The alert padding
+     * @cssprop --bq-alert--min-width - The alert min width
+     */
     interface BqAlert {
         /**
           * If true, the alert will automatically hide after the specified amount of time
@@ -154,6 +301,46 @@ export namespace Components {
          */
         "type": TAlertType;
     }
+    /**
+     * The Avatar component is a simple and customizable element that displays an image or initials in a circular or square shape.
+     * This component is useful for displaying user profile pictures or any other image that represents a person or an entity.
+     * @example How to use it
+     * ```html
+     * <bq-avatar
+     * alt-text="John Doe profile picture"
+     * image="/image/url/photo-1524593689594.jpeg"
+     * label="John Doe profile picture"
+     * shape="circle"
+     * size="medium"
+     * >
+     * <bq-badge slot="badge" text-color="#fff">9</bq-badge>
+     * </bq-avatar>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/148da7-avatar
+     * @status stable
+     * @attr {string} alt-text - Alternate text for the avatar image if the image cannot be displayed.
+     * @attr {string} image - The image source to load on the avatar (this can be also a base64 encoded image).
+     * @attr {string} label - A text to use for describing the avatar on assistive devices.
+     * @attr {string} initials - The text to display on avatar.
+     * @attr {"circle" | "square"} shape - The shape of the avatar.
+     * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
+     * @cssprop --bq-avatar--background - Avatar background color
+     * @cssprop --bq-avatar--border-color - Avatar border color
+     * @cssprop --bq-avatar--border-style - Avatar border style
+     * @cssprop --bq-avatar--border-width - Avatar border width
+     * @cssprop --bq-avatar--border-radius-circle - Avatar border radius for circle & any size
+     * @cssprop --bq-avatar--border-radius-squareXs - Avatar border radius for square & size xsmall
+     * @cssprop --bq-avatar--border-radius-squareS - Avatar border radius for square & size small
+     * @cssprop --bq-avatar--border-radius-squareM - Avatar border radius for square & size medium/large
+     * @cssprop --bq-avatar--size-xsmall - Avatar xsmall size
+     * @cssprop --bq-avatar--size-small - Avatar small size
+     * @cssprop --bq-avatar--size-medium - Avatar medium size
+     * @cssprop --bq-avatar--size-large - Avatar large size
+     * @cssprop --bq-avatar--badge-top-square - Badge top position shape square
+     * @cssprop --bq-avatar--badge-left-square - Badge left position shape square
+     * @cssprop --bq-avatar--badge-top-circle - Badge top position shape circle
+     * @cssprop --bq-avatar--badge-left-circle - Badge left position shape circle
+     */
     interface BqAvatar {
         /**
           * Alternate text for the avatar image if the image cannot be displayed
@@ -180,6 +367,29 @@ export namespace Components {
          */
         "size": TAvatarSize;
     }
+    /**
+     * The Badge component is a visual indicator that can be added to various elements within a user interface.
+     * It is typically used to highlight important or relevant information, such as alerts, notifications, or statuses.
+     * @example How to use it
+     * ```html
+     * <bq-badge background-color="ui--success" text-color="text--inverse" size="small">9</bq-badge>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/194fd1-badge
+     * @status stable
+     * @attr {string} background-color - Badge background color. The value should be a valid value of the palette color.
+     * @attr {string} text-color - Badge number color. The value should be a valid value of the palette color.
+     * @attr {"small" | "medium" | "large"} size - The size of the badge. Relevant if badge has no content.
+     * @cssprop --bq-badge--background-color - The badge background color
+     * @cssprop --bq-badge--box-shadow - The badge box shadow
+     * @cssprop --bq-badge--border-color - The badge border color
+     * @cssprop --bq-badge--border-radius - The badge border radius
+     * @cssprop --bq-badge--border-style - The badge border style
+     * @cssprop --bq-badge--border-width - The badge border width
+     * @cssprop --bq-badge--size-small - The badge small size
+     * @cssprop --bq-badge--size-medium - The badge medium size
+     * @cssprop --bq-badge--size-large - The badge large size
+     * @cssprop --bq-badge--text-color - The badge text color
+     */
     interface BqBadge {
         /**
           * Badge background color. The value should be a valid value of the palette color
@@ -194,25 +404,66 @@ export namespace Components {
          */
         "textColor"?: string;
     }
+    /**
+     * The Breadcrumb is used to wraps a series of breadcrumb items to indicate the current page's location within a navigational hierarchy.
+     * @example How to use it
+     * ```html
+     * <bq-breadcrumb label="Breadcrumb">
+     * <bq-breadcrumb-item>Home</bq-breadcrumb-item>
+     * <bq-breadcrumb-item>Men's clothing</bq-breadcrumb-item>
+     * <bq-breadcrumb-item>Shirt</bq-breadcrumb-item>
+     * <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+     * </bq-breadcrumb>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/194fd1-breadcrumb
+     * @status stable
+     * @attr {string} label - The `aria-label` attribute to describe the type of navigation
+     */
     interface BqBreadcrumb {
         /**
           * The `aria-label` attribute to describe the type of navigation
          */
-        "ariaLabel": string;
+        "label": string;
     }
+    /**
+     * The Breadcrumb Item helps users understand their current location within a website or application's hierarchical structure.
+     * @example How to use it
+     * ```html
+     * <bq-breadcrumb-item label="Home page">
+     * <bq-icon name="house-line" size="16"></bq-icon>
+     * Home
+     * </bq-breadcrumb-item>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/61d6c0-breadcrumb
+     * @status stable
+     * @attr {string} href - If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
+     * @attr {string} target - Where to display the link in the browser context. Relevant only if `href` is set.
+     * @attr {string} rel - Where to display the link in the browser context. Relevant only if `href` is set.
+     * @event bqFocus - Handler to be called when item is focused
+     * @event bqClick - Handler to be called when item is clicked
+     * @event bqBlur - Handler to be called when item loses focus
+     * @cssprop --bq-breadcrumb-item--background - Background color of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--box-shadow - Box shadow of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--border-color - Border color of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--border-style - Border style of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--border-width - Border width of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--border-radius - Border radius of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--line-height - Line height of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--text-color - Text color of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--text-color-current - Text color of the current breadcrumb item (active)
+     * @cssprop --bq-breadcrumb-item--text-size - Text size of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--text-size-separator - Text size of the breadcrumb item separator
+     * @cssprop --bq-breadcrumb-item--padding-start - Padding start of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--padding-end - Padding end of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--paddingY - Padding top and bottom of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--padding-start-separator - Padding start of the breadcrumb item separator
+     * @cssprop --bq-breadcrumb-item--padding-end-separator - Padding end of the breadcrumb item separator
+     */
     interface BqBreadcrumbItem {
-        /**
-          * The aria-label that corresponds to the full title of the destination page. This won't be shown in the page, but it will be used by screen readers and other assistive devices.
-         */
-        "ariaLabel": string;
         /**
           * If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
          */
         "href": string;
-        /**
-          * If true, the item is the last element inside breadcrumb
-         */
-        "isLastItem": boolean;
         /**
           * Where to display the link in the browser context. Relevant only if `href` is set.
          */
@@ -224,6 +475,47 @@ export namespace Components {
     }
     /**
      * Buttons are designed for users to take action on a page or a screen.
+     * @example How to use it
+     * ```html
+     * <bq-button appearance="primary" border="m" size="medium">
+     * <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>
+     * Go back
+     * </bq-button>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/286b43-buttons
+     * @status stable
+     * @dependency bq-icon
+     * @attr {"primary" | "secondary" | "link" | "text"} appearance - The appearance style to apply to the button
+     * @attr {boolean} block - If `true`, it will make the button fit to its parent width.
+     * @attr {string} border - The corner radius of the button
+     * @attr {boolean} disabled - If `true`, the button will be disabled (no interaction allowed)
+     * @attr {string} download - Tells the browser to treat the linked URL as a download. Only used when `href` is set.
+     * @attr {string} href - When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`
+     * @attr {"left" | "center" | "right"} justify-content - It determinate how the content should be aligned
+     * @attr {boolean} loading - If `true` it will display the button in a loading state
+     * @attr {"small" | "medium" | "large"} size - The size of the button
+     * @attr {"_blank" | "_parent" | "_self" | "_top"} target - Where to display the linked URL, as the name for a browsing context (a `tab`, `window`, or `<iframe>`)
+     * @attr {"button" | "submit" | "reset"} type - The default behavior of the button
+     * @attr {"standard" | "ghost" | "danger"} variant - The variant of button to apply on top of the appearance (applicable only to `appearance="primary"`)
+     * @event bqBlur - Handler to be called when the button loses focus
+     * @event bqFocus - Handler to be called when button gets focus
+     * @event bqClick - Handler to be called when the button is clicked
+     * @cssprop --bq-button--border-color - Button border color
+     * @cssprop --bq-button--border-radius - Button border radius
+     * @cssprop --bq-button--border-style - Button border style
+     * @cssprop --bq-button--border-width - Button border width
+     * @cssprop --bq-button--small-height - Button small height
+     * @cssprop --bq-button--small-paddingX - Button small padding block (top and bottom)
+     * @cssprop --bq-button--small-paddingY - Button small padding inline (left and right)
+     * @cssprop --bq-button--small-font-size - Button small font size
+     * @cssprop --bq-button--medium-height - Button medium height
+     * @cssprop --bq-button--medium-paddingX - Button medium padding block (top and bottom)
+     * @cssprop --bq-button--medium-paddingY - Button medium padding inline (left and right)
+     * @cssprop --bq-button--medium-font-size - Button medium font size
+     * @cssprop --bq-button--large-height - Button large height
+     * @cssprop --bq-button--large-paddingX - Button large padding block (top and bottom)
+     * @cssprop --bq-button--large-paddingY - Button large padding inline (left and right)
+     * @cssprop --bq-button--large-font-size - Button large font size
      */
     interface BqButton {
         /**
@@ -275,6 +567,30 @@ export namespace Components {
          */
         "variant": TButtonVariant;
     }
+    /**
+     * The Card component serves as a versatile container designed for flexible content presentation within user interfaces.
+     * Its structure accommodates various styles, allowing users to customize and adapt it according to their design preferences.
+     * @example How to use it
+     * ```html
+     * <bq-card type="default" border="m">
+     * <div class="p-m">
+     * <h3 class="text-xl font-bold">Card Title</h3>
+     * <p class="text-m">Card content goes here</p>
+     * </div>
+     * </bq-card>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/522abb-card
+     * @status stable
+     * @attr {"default" | "minimal"} type - Type of card component
+     * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} border - The corner radius of the card component
+     * @cssprop --bq-card--borderColor - Card border color
+     * @cssprop --bq-card--borderRadius - Card border radius
+     * @cssprop --bq-card--borderStyle - Card border style
+     * @cssprop --bq-card--borderWidth - Card border width
+     * @cssprop --bq-card--padding - Card padding
+     * @cssprop --bq-card--paddingMinimal - Minimal card padding
+     * @cssprop --bq-card--background - Card background color
+     */
     interface BqCard {
         /**
           * The corner radius of the card component
@@ -285,6 +601,36 @@ export namespace Components {
          */
         "type": TCardType;
     }
+    /**
+     * The checkbox is a UI component that allows users to select one or more options from a list of choices.
+     * It is commonly used in forms, surveys, and settings pages.
+     * @example How to use it
+     * ```html
+     * <bq-checkbox name="bq-checkbox" value="checkbox-value" background-on-hover>
+     * Checkbox label
+     * </bq-checkbox>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/431f17-checkbox
+     * @status stable
+     * @attr {boolean} background-on-hover - If true checkbox displays background on hover
+     * @attr {string} form-id - The form ID that the checkbox is associated with
+     * @attr {string} form-validation-message - The native form validation message
+     * @attr {boolean} checked - If true checkbox is checked
+     * @attr {boolean} disabled - If true checkbox is disabled
+     * @attr {boolean} indeterminate - A state that is neither checked nor unchecked
+     * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+     * @attr {boolean} required - If `true`, it will indicate that the user must specify a value for the checkbox before the owning form can be submitted
+     * @attr {string} value - A string representing the value of the checkbox. Primarily used to differentiate a list of related checkboxes that have the same name
+     * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+     * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+     * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+     * @event bqChange - Handler to be called when the checkbox state changes
+     * @event bqFocus - Handler to be called when the checkbox gets focus
+     * @event bqBlur - Handler to be called when the checkbox loses focus
+     * @cssprop --bq-checkbox--size - Checkbox size
+     * @cssprop --bq-checkbox--border-radius - Checkbox border radius
+     * @cssprop --bq-checkbox--border-width - Checkbox border width
+     */
     interface BqCheckbox {
         /**
           * If true checkbox displays background on hover
@@ -335,6 +681,87 @@ export namespace Components {
          */
         "value": string;
     }
+    /**
+     * The Date Picker is a intuitive UI element component allows users to select dates from a visual calendar interface, providing an intuitive way to input date information.
+     * @example How to use it
+     * ```html
+     * <bq-date-picker
+     * first-day-of-week="1"
+     * locale="en-GB"
+     * months-per-view="single"
+     * months="2"
+     * name="bq-date-picker"
+     * placeholder="Enter your date"
+     * placement="bottom-end"
+     * show-outside-days="false"
+     * type="range"
+     * validation-status="none"
+     * value="2024-05-25"
+     * >
+     * <label class="flex flex-grow items-center" slot="label">
+     * Date picker label
+     * </label>
+     * </bq-date-picker>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/5793a9-date-picker
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-dropdown
+     * @dependency bq-icon
+     * @attr {boolean} autofocus - If `true`, the Date picker input will be focused on component render.
+     * @attr {string} clear-button-label - The clear button aria label.
+     * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+     * @attr {boolean} disabled - Indicates whether the Date picker input is disabled or not.
+     * @attr {number} distance - Represents the distance (gutter or margin) between the Date picker panel and the input element.
+     * @attr {0 | 1 | 2 | 3 | 4 | 5 | 6} first-day-of-week - The first day of the week, where Sunday is 0, Monday is 1, etc.
+     * @attr {Intl.DateTimeFormatOptions} format-options - The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
+     * @attr {string} form - The ID of the form that the Date picker input belongs to.
+     * @attr {function} is-date-disallowed - A function that takes a date and returns true if the date should not be selectable.
+     * @attr {Intl.LocalesArgument} locale - The locale for formatting dates. If not set, will use the browser's locale. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
+     * @attr {string} max - The latest date that can be selected.
+     * @attr {string} min - The earliest date that can be selected.
+     * @attr {number} months - Number of months to show when range is `true`.
+     * @attr {string} name - The Date picker input name.
+     * @attr {boolean} open - If `true`, the Date picker panel will be visible.
+     * @attr {string} panel-height - When set, it will override the height of the Date picker panel.
+     * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Position of the Date picker panel.
+     * @attr {boolean} required - Indicates whether or not the Date picker input is required to be filled out before submitting the form.
+     * @attr {number} skidding - Represents the skidding between the Date picker panel and the input element.
+     * @attr {boolean} show-outside-days - Whether to show days outside the month.
+     * @attr {string} strategy - Defines the strategy to position the Date picker panel.
+     * @attr {string} tentative - The date that is tentatively selected, e.g. the start of a range selection.
+     * @attr {"single" | "multi" | "range"} type - It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection.
+     * @attr {"error" | "none" | "success" | "warning"} validation-status - The validation status of the Select input.
+     * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value.
+     * @method clear - Clears the selected value.
+     * @event bqBlur - Callback handler emitted when the input loses focus.
+     * @event bqChange - Callback handler emitted when the input value has changed and the input loses focus.
+     * @event bqClear - Callback handler emitted when the input value has been cleared.
+     * @event bqFocus - Callback handler emitted when the input has received focus.
+     * @cssprop --bq-date-picker--background-color - Date picker background color
+     * @cssprop --bq-date-picker--border-color - Date picker border color
+     * @cssprop --bq-date-picker--border-color-disabled - Date picker border color when disabled
+     * @cssprop --bq-date-picker--border-color-focus - Date picker border color on focus
+     * @cssprop --bq-date-picker--border-radius - Date picker border radius
+     * @cssprop --bq-date-picker--border-style - Date picker border style
+     * @cssprop --bq-date-picker--border-width - Date picker border width
+     * @cssprop --bq-date-picker--currentDate-border-color - Date picker border color for current date
+     * @cssprop --bq-date-picker--currentDate-border-width - Date picker border width for current date
+     * @cssprop --bq-date-picker--currentDate-text-color - Date picker label text color for currentDate
+     * @cssprop --bq-date-picker--day-size - Date picker button day size
+     * @cssprop --bq-date-picker--gap - Gap between Date picker content and prefix/suffix
+     * @cssprop --bq-date-picker--icon-size - Icon size to use in prefix/suffix and clear button
+     * @cssprop --bq-date-picker--label-margin-bottom - Date picker label margin bottom
+     * @cssprop --bq-date-picker--label-text-color - Date picker label text color
+     * @cssprop --bq-date-picker--label-text-size - Date picker label text size
+     * @cssprop --bq-date-picker--padding-end - Date picker padding end
+     * @cssprop --bq-date-picker--padding-start - Date picker padding start
+     * @cssprop --bq-date-picker--paddingY - Date picker padding top and bottom
+     * @cssprop --bq-date-picker--range-background-color - Background color for the selected date range in the date picker
+     * @cssprop --bq-date-picker--text-color - Date picker text color
+     * @cssprop --bq-date-picker--text-placeholder-color - Date picker placeholder text color
+     * @cssprop --bq-date-picker--text-size - Date picker text size
+     */
     interface BqDatePicker {
         /**
           * If `true`, the Date picker input will be focused on component render
@@ -452,9 +879,66 @@ export namespace Components {
          */
         "value": string;
     }
+    /**
+     * The Dialog component is used to display additional content or prompt a user for action.
+     * It provides a way to display additional information, options, or controls in a separate, non-obstructive interface element.
+     * @example How to use it
+     * ```html
+     * <bq-dialog footer-appearance="standard" border="m" size="medium">
+     * <h5 class="bold flex items-center gap-s" slot="title">
+     * <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
+     * Title
+     * </h5>
+     * <p>
+     * Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+     * standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+     * type specimen book.
+     * </p>
+     * <div class="flex gap-xs" slot="footer">
+     * <bq-button appearance="link">Button</bq-button>
+     * <bq-button variant="ghost">Button</bq-button>
+     * <bq-button variant="standard" slot="footer">Button</bq-button>
+     * </div>
+     * </bq-dialog>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/15b6fc-dialog
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
+     * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} border - Border radius of the dialog component.
+     * @attr {boolean} disable-backdrop - If true, the backdrop overlay won't be shown when the dialog opens.
+     * @attr {boolean} disable-close-esc-keydown - If true, the dialog will not close when the [Esc] key is pressed.
+     * @attr {boolean} disable-close-click-outside - If true, the dialog will not close when clicking on the backdrop overlay.
+     * @attr {"standard" | "highlight"} footer-appearance - The appearance of the footer.
+     * @attr {boolean} hide-close-button - If true, it hides the close button.
+     * @attr {boolean} open - If true, the dialog will be shown as open.
+     * @attr {"small" | "medium" | "large"} size - The size of the dialog.
+     * @method show - Open the dialog.
+     * @method hide - Closes the dialog.
+     * @method cancel - Dismiss or cancel the dialog.
+     * @event bqCancel - Callback handler emitted when the dialog has been canceled or dismissed.
+     * @event bqClose - Callback handler emitted when the dialog will close.
+     * @event bqOpen - Callback handler emitted when the dialog will open.
+     * @event bqAfterOpen - Callback handler emitted when the dialog finish opening.
+     * @event bqAfterClose - Callback handler emitted when the dialog finish closing.
+     * @cssprop --bq-dialog--background - Dialog background color
+     * @cssprop --bq-dialog--background-backdrop - Dialog backdrop background color
+     * @cssprop --bq-dialog--box-shadow - Dialog box shadow
+     * @cssprop --bq-dialog--border-color - Dialog border color
+     * @cssprop --bq-dialog--border-style - Dialog border style
+     * @cssprop --bq-dialog--border-width - Dialog border width
+     * @cssprop --bq-dialog--border-radius - Dialog border radius
+     * @cssprop --bq-dialog--padding - Dialog padding
+     * @cssprop --bq-dialog--content-footer-gap - Dialog gap distance between content and footer elements
+     * @cssprop --bq-dialog--title-body-gap - Dialog gap distance between title and body elements
+     * @cssprop --bq-dialog--width-small - Dialog small width
+     * @cssprop --bq-dialog--width-medium - Dialog medium width
+     * @cssprop --bq-dialog--width-large - Dialog large width
+     * @cssprop --bq-dialog-z-index - Dialog z-index applied when opened
+     */
     interface BqDialog {
         /**
-          * Corder radius of the dialog component
+          * Border radius of the dialog component
          */
         "border": TDialogBorderRadius;
         /**
@@ -498,6 +982,28 @@ export namespace Components {
          */
         "size": TDialogSize;
     }
+    /**
+     * The Divider component is used to visually separate content in a layout.
+     * @example How to use it
+     * ```html
+     * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
+     * <span slot="title">Divider Title</span>
+     * </bq-divider>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/53dfe6-divider
+     * @status stable
+     * @attr {boolean} dashed - If true, the divider has a dashed pattern.
+     * @attr {"horizontal" | "vertical"} orientation - The default orientation of the divider.
+     * @attr {string} stroke-color - Set the stroke color of the divider. The value should be a valid value of the palette color.
+     * @attr {"start" | "middle" | "end"} title-alignment - Set the alignment of the title on the main axis of the divider (horizontal / vertical).
+     * @attr {number} stroke-dash-width - Set the width of each dash of the divider's stroke. This is applicable when the stroke is dashed.
+     * @attr {number} stroke-dash-gap - Set the gap of the divider's stroke. This is applicable when the stroke is dashed.
+     * @attr {number} stroke-thickness - Set the thickness of the divider's stroke. Value expressed in px.
+     * @attr {number} stroke-basis - Set the min width of the divider's stroke when text is not centered. Value expressed in px.
+     * @attr {"square" | "round" | "butt"} stroke-linecap - Set the line of the divider's stroke. This is applicable when the stroke is dashed.
+     * @cssprop --bq-divider--color - Divider color
+     * @cssprop --bq-divider--title-marginX - Divider space between title and delimiters
+     */
     interface BqDivider {
         /**
           * If true, the divider has a dashed pattern
@@ -536,6 +1042,44 @@ export namespace Components {
          */
         "titleAlignment"?: TDividerTitleAlignment;
     }
+    /**
+     * The Drawer component provides a sliding panel interface commonly used for navigation or presenting additional content without taking up significant screen space.
+     * @example How to use it
+     * ```html
+     * <bq-drawer position="end">
+     * <div class="flex gap-xs" slot="title">Title</div>
+     * <div class="...">
+     * Content
+     * </div>
+     * <div class="flex flex-1 justify-center gap-xs" slot="footer">
+     * <bq-button appearance="primary" block="" size="small">Button</bq-button>
+     * <bq-button appearance="link" block="" size="small">Button</bq-button>
+     * </div>
+     * </bq-drawer>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/871139-drawer
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
+     * @dependency bq-divider
+     * @attr {boolean} enable-backdrop - If true, the backdrop overlay will be shown when the drawer opens.
+     * @attr {boolean} close-on-click-outside - If true, the drawer will not close when clicking outside the panel.
+     * @attr {boolean} close-on-esc - If true, the drawer will not close when the [Esc] key is pressed.
+     * @attr {boolean} open - If true, the drawer component will be shown.
+     * @attr {"start" | "end"} position - Defines the position of the drawer.
+     * @method show - Method to be called to show the drawer component.
+     * @method hide - Method to be called to hide the drawer component.
+     * @event bqClose - Callback handler to be called when the drawer is closed.
+     * @event bqOpen - Callback handler to be called when the drawer is opened.
+     * @event bqAfterOpen - Callback handler to be called after the drawer has been opened.
+     * @event bqAfterClose - Callback handler to be called after the drawer has been closed.
+     * @cssprop --bq-drawer--backgroundBackdrop - Background color of the backdrop
+     * @cssprop --bq-drawer--gap - Gap between the drawer and the viewport
+     * @cssprop --bq-drawer--width - Width of the drawer
+     * @cssprop --bq-drawer--paddingX - Padding left and right of the drawer
+     * @cssprop --bq-drawer--paddingY - Padding top and bottom of the drawer
+     * @cssprop --bq-drawer--zIndex - Z-index of the drawer component
+     */
     interface BqDrawer {
         /**
           * If true, the drawer will not close when clicking outside the panel
@@ -570,6 +1114,46 @@ export namespace Components {
          */
         "show": () => Promise<void>;
     }
+    /**
+     * The Dropdown Component is commonly used when presenting a list of selectable options that are too numerous to fit comfortably on the screen.
+     * They provide an efficient way to save space and present a long list of options in a compact and organized manner.
+     * @example How to use it
+     * ```html
+     * <bq-dropdown placement="bottom-start">
+     * <bq-button slot="trigger">Dropdown</bq-button>
+     * <bq-option-list>
+     * <bq-option value="users">...</bq-option>
+     * <bq-option value="user">...</bq-option>
+     * <bq-option value="dashboard">...</bq-option>
+     * <bq-option value="settings">...</bq-option>
+     * <bq-option value="logout">...</bq-option>
+     * </bq-option-list>
+     * </bq-dropdown>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/47ff4b-dropdown
+     * @status stable
+     * @dependency bq-panel
+     * @attr {boolean} disabled - If true, the dropdown panel will be visible and won't be shown.
+     * @attr {number} distance - Represents the distance (gutter or margin) between the panel and the trigger element.
+     * @attr {boolean} keep-open-on-select - If true, the panel will remain open after a selection is made.
+     * @attr {"top" | "bottom" | "left" | "right" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end" | "right-start" | "right-end"} placement - Position of the panel.
+     * @attr {boolean} open - If true, the panel will be visible.
+     * @attr {string} panel-height - When set, it will override the height of the dropdown panel.
+     * @attr {boolean} same-width - Whether the panel should have the same width as the trigger element.
+     * @attr {number} skidding - Represents the skidding between the panel and the trigger element.
+     * @attr {"fixed" | "absolute"} strategy - Defines the strategy to position the panel.
+     * @event bqOpen - Callback handler to be called when the dropdown panel is opened or closed.
+     * @cssprop --bq-panel--background - Panel background color
+     * @cssprop --bq-panel--border-color - Panel border color
+     * @cssprop --bq-panel--border-radius - Panel border radius
+     * @cssprop --bq-panel--border-style - Panel border style
+     * @cssprop --bq-panel--border-width - Panel border width
+     * @cssprop --bq-panel--box-shadow - Panel box shadow
+     * @cssprop --bq-panel--padding - Panel padding
+     * @cssprop --bq-panel--height - Panel height
+     * @cssprop --bq-panel--width - Panel width
+     * @cssprop --bq-panel-z-index - Panel z-index applied when opened
+     */
     interface BqDropdown {
         /**
           * If true, the dropdown panel will be visible and won't be shown.
@@ -608,6 +1192,17 @@ export namespace Components {
          */
         "strategy"?: 'fixed' | 'absolute';
     }
+    /**
+     * An Empty State is a UI component displayed when there is no data or content available, often used in dynamic or inactive application states.
+     * @example How to use it
+     * ```html
+     * <bq-empty-state size="medium">Title</bq-empty-state>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/673ae0-empty-state/b/09d7b1
+     * @status stable
+     * @dependency bq-icon
+     * @attr {"large" | "medium" | "small"} size - The size of the empty state component
+     */
     interface BqEmptyState {
         /**
           * The size of the empty state component
@@ -615,7 +1210,22 @@ export namespace Components {
         "size": TEmptyStateSize;
     }
     /**
-     * Icons are simplified images that graphically explain the meaning of an object on the screen.
+     * The Icon component is an image that provides a visual representation of an object, action, or concept displayed on the screen.
+     * It is a small graphical element that is used to enhance the user interface and improve user experience.
+     * @example How to use it
+     * ```html
+     * <bq-icon color="text--brand" name="bell-ringing" size="24"></bq-icon>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/675fad-icon
+     * @status stable
+     * @attr {string} color - Set the stroke color of the SVG. The value should be a valid value of the palette color.
+     * @attr {string} label - Label for the icon, used for accessibility.
+     * @attr {string} name - Icon name to load. Please check all available icons [here](https://phosphoricons.com/).
+     * @attr {string | number} size - Set the size of the SVG.
+     * @attr {string} src - Set the source of the SVG. If the source is set, the name property will be ignored.
+     * @event svgLoaded - Callback handler to be called when the SVG has loaded.
+     * @cssprop --bq-icon--color - The stroke color of the SVG.
+     * @cssprop --bq-icon--size - The size of the SVG.
      */
     interface BqIcon {
         /**
@@ -643,6 +1253,66 @@ export namespace Components {
          */
         "weight"?: TIconWeight;
     }
+    /**
+     * The Input component is a fundamental user interface element that allows users to input data by typing it into a text field.
+     * It is commonly used in web and mobile applications for various purposes, such as collecting user information, search inputs, and login forms.
+     * @example How to use it
+     * ```html
+     * <bq-input name="username" label="Username" placeholder="Enter your username"></bq-input>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/980362-input
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
+     * @attr {string} autocapitalize - Controls whether or not the input field should be capitalized and how.
+     * @attr {string} autocomplete - Specifies whether or not the input field should have autocomplete enabled.
+     * @attr {string} autocorrect - Controls whether or not the input field should have autocorrect enabled.
+     * @attr {boolean} autofocus - If true, the input will be focused on component render.
+     * @attr {string} clear-button-label - The clear button aria label.
+     * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
+     * @attr {boolean} disabled - Indicates whether the input is disabled or not.
+     * @attr {boolean} disable-clear - If true, the clear button won't be displayed.
+     * @attr {string} form - The ID of the form that the input field belongs to.
+     * @attr {string} inputmode - The inputmode attribute specifies what kind of input mechanism would be most helpful for users entering content into the input field.
+     * @attr {number | string} max - The maximum value that the input field can accept.
+     * @attr {number} maxlength - The maximum number of characters that the input field can accept.
+     * @attr {number | string} min - The minimum value that the input field can accept.
+     * @attr {number} minlength - The minimum number of characters that the input field can accept.
+     * @attr {string} name - The input field name.
+     * @attr {string} pattern - Specifies a regular expression the form control's value should match.
+     * @attr {string} placeholder - The input placeholder text value.
+     * @attr {boolean} readonly - If true, the input field cannot be modified.
+     * @attr {boolean} required - Indicates whether or not the input field is required to be filled out before submitting the form.
+     * @attr {number | 'any'} step - A number that specifies the granularity that the value must adhere to.
+     * @attr {string} type - The type attribute specifies the type of input field to display.
+     * @attr {'none' | 'error' | 'warning' | 'success'} validation-status - The validation status of the input.
+     * @attr {string | number | string[]} value - The input value, it can be used to reset the input to a previous value.
+     * @event bqBlur - Callback handler emitted when the input loses focus.
+     * @event bqChange - Callback handler emitted when the input value has changed and the input loses focus.
+     * @event bqClear - Callback handler emitted when the input value has been cleared.
+     * @event bqFocus - Callback handler emitted when the input has received focus.
+     * @event bqInput - Callback handler emitted when the input value changes.
+     * @cssprop --bq-input--background-color - Input background color
+     * @cssprop --bq-input--border-color - Input border color
+     * @cssprop --bq-input--border-color-focus - Input border color on focus
+     * @cssprop --bq-input--border-radius - Input border radius
+     * @cssprop --bq-input--border-width - Input border width
+     * @cssprop --bq-input--border-style - Input border style
+     * @cssprop --bq-input--gap - Gap between input content and prefix/suffix
+     * @cssprop --bq-input--helper-margin-top - Helper text margin top
+     * @cssprop --bq-input--helper-text-color - Helper text color
+     * @cssprop --bq-input--helper-text-size - Helper text size
+     * @cssprop --bq-input--icon-size - Icon size to use in prefix/suffix and clear button
+     * @cssprop --bq-input--label-margin-bottom - Input label margin bottom
+     * @cssprop --bq-input--label-text-color - Input label text color
+     * @cssprop --bq-input--label-text-size - Input label text size
+     * @cssprop --bq-input--padding-start - Input padding start
+     * @cssprop --bq-input--padding-end - Input padding end
+     * @cssprop --bq-input--paddingY - Input padding top and bottom
+     * @cssprop --bq-input--text-color - Input text color
+     * @cssprop --bq-input--text-size - Input text size
+     * @cssprop --bq-input--text-placeholder-color - Input placeholder text color
+     */
     interface BqInput {
         /**
           * Controls whether or not the input field should be capitalized and how. Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
@@ -738,6 +1408,53 @@ export namespace Components {
          */
         "value": TInputValue;
     }
+    /**
+     * The Notification component is a user interface element used to provide information or alerts to users in a non-intrusive manner.
+     * @example How to use it
+     * ```html
+     * <bq-notification border="s" time="3000" type="info">
+     * Title
+     * <span slot="body">
+     * This is some description text text
+     * <a class="bq-link" href="https://example.com">Link</a>
+     * </span>
+     * <div class="flex gap-xs" slot="footer">
+     * <bq-button appearance="primary" size="small">Button</bq-button>
+     * <bq-button appearance="link" size="small">Button</bq-button>
+     * </div>
+     * </bq-notification>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/945cb6-notification
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
+     * @attr {boolean} auto-dismiss - If true, the notification will automatically hide after the specified amount of time
+     * @attr {string} border - The corder radius of the notification component
+     * @attr {boolean} disable-close - If true, the close button at the top right of the notification won't be shown
+     * @attr {boolean} hide-icon - If true, the notification icon won't be shown
+     * @attr {boolean} open - If true, the notification will be shown
+     * @attr {number} time - The length of time, in milliseconds, after which the notification will close itself. Only valid if `auto-dismiss="true"`
+     * @attr {string} type - Type of Notification
+     * @event bqAfterClose - Callback handler to be called after the notification has been closed
+     * @event bqAfterOpen - Callback handler to be called after the notification has been opened
+     * @event bqHide - Callback handler to be called when the notification is hidden
+     * @event bqShow - Callback handler to be called when the notification is shown
+     * @cssprop --bq-notification--background - The notification background color
+     * @cssprop --bq-notification--box-shadow - The notification box shadow
+     * @cssprop --bq-notification--border-color - The notification border color
+     * @cssprop --bq-notification--border-radius - The notification border radius
+     * @cssprop --bq-notification--border-style - The notification border style
+     * @cssprop --bq-notification--border-width - The notification border width
+     * @cssprop --bq-notification--content-footer-gap - The notification content and footer gap
+     * @cssprop --bq-notification--title-body-gap - The notification title and body gap
+     * @cssprop --bq-notification--icon-color-error - The notification icon color for error type
+     * @cssprop --bq-notification--icon-color-info - The notification icon color for info type
+     * @cssprop --bq-notification--icon-color-neutral - The notification icon color for neutral type
+     * @cssprop --bq-notification--icon-color-success - The notification icon color for success type
+     * @cssprop --bq-notification--icon-color-warning - The notification icon color for warning type
+     * @cssprop --bq-notification--padding - The notification padding
+     * @cssprop --bq-notification--min-width - The notification min width
+     */
     interface BqNotification {
         /**
           * If true, the notification will automatically hide after the specified amount of time
@@ -780,6 +1497,39 @@ export namespace Components {
          */
         "type": TNotificationType;
     }
+    /**
+     * An option refers to a specific choice that appears in a list of selectable items that can be opened or closed by the user.
+     * It can be an element of the navigation system that allows users to select different sections or pages within an application or it can be used within a dropdown list.
+     * @example How to use it
+     * ```html
+     * <bq-option value="user">
+     * <span>User profile</span>
+     * <bq-icon slot="suffix" name="user"></bq-icon>
+     * </bq-option>
+     * ```
+     * @documentation https://storybook.beeq.design/?path=/story/components-option--with-option-group
+     * @status stable
+     * @attr {boolean} disabled - If true, the option is disabled.
+     * @attr {boolean} hidden - If true, the option is hidden.
+     * @attr {string} value - A string representing the value of the option. Can be used to identify the item.
+     * @attr {boolean} selected - If true, the option is selected and active.
+     * @event bqBlur - Handler to be called when item loses focus.
+     * @event bqFocus - Handler to be called when item is focused.
+     * @event bqClick - Handler to be called when item is clicked.
+     * @event bqEnter - Handler to be called on enter key press.
+     * @cssprop --bq-option--background - background color
+     * @cssprop --bq-option--font-size - font size
+     * @cssprop --bq-option--border-color - border color
+     * @cssprop --bq-option--border-style - border style
+     * @cssprop --bq-option--border-width - border width
+     * @cssprop --bq-option--border-radius - border radius
+     * @cssprop --bq-option--box-shadow - box shadow
+     * @cssprop --bq-option--gap-start - gap space between prefix and label
+     * @cssprop --bq-option--gap-end - gap space between label and suffix
+     * @cssprop --bq-option--paddingY - padding Y axis
+     * @cssprop --bq-option--padding-start - option label padding start
+     * @cssprop --bq-option--padding-end - option label padding end
+     */
     interface BqOption {
         /**
           * If true, the option is disabled.
@@ -798,16 +1548,112 @@ export namespace Components {
          */
         "value"?: string;
     }
+    /**
+     * The option group component is a container for multiple option elements.
+     * It allows to manage the appearance and size of all options at once.
+     * @example How to use it
+     * ```html
+     * <bq-option-group class="hydrated">
+     * <span slot="header-label">Sport</span>
+     * <bq-option value="football">Football</bq-option>
+     * <bq-option value="basketball">Basketball</bq-option>
+     * <bq-option value="tennis">Tennis</bq-option>
+     * </bq-option-group>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/3b1b7b-option-group
+     * @status stable
+     * @cssprop --bq-option-group--background - option group background color
+     * @cssprop --bq-option-group--font-size - option group font size
+     * @cssprop --bq-option-group--line-height - option group line height
+     * @cssprop --bq-option-group--label-padding-start - option group header padding start
+     * @cssprop --bq-option-group--label-padding-end - option group header padding start
+     * @cssprop --bq-option-group--label-paddingY - option group header padding Y axis
+     * @cssprop --bq-option-group--label-text-padding-start - option group text within label padding start
+     * @cssprop --bq-option-group--label-text-padding-end - option group text within label padding start
+     * @cssprop --bq-option-group--container-padding-start - option group container padding start
+     */
     interface BqOptionGroup {
     }
+    /**
+     * The option list component is a container for multiple option elements.
+     * It allows to manage the appearance and size of all options at once.
+     * @example How to use it
+     * ```html
+     * <bq-option-list>
+     * <bq-option value="football">Football</bq-option>
+     * <bq-option value="basketball">Basketball</bq-option>
+     * <bq-option value="tennis">Tennis</bq-option>
+     * </bq-option-list>
+     * ```
+     * @documentation https://storybook.beeq.design/?path=/story/components-option--default
+     * @status stable
+     * @attr {string} aria-label - Aria label for the list.
+     * @cssprop --bq-option-group--gapY-list - Option group gap between items Y axis
+     */
     interface BqOptionList {
         /**
           * Aria label for the list.
          */
         "ariaLabel": string;
     }
+    /**
+     * The Page Title component is a versatile and essential element used to display the main title of a page or section within an application.
+     * @example How to use it
+     * ```html
+     * <bq-page-title>
+     * <bq-button appearance="link" slot="back">
+     * <bq-icon
+     * color="text--primary"
+     * name="arrow-left"
+     * weight="bold"
+     * role="img"
+     * title="Navigate back to the previous page"
+     * ></bq-icon>
+     * </bq-button>
+     * Title
+     * <div slot="sub-title">Sub-title</div>
+     * </bq-page-title>
+     * ```
+     * @documentation https://storybook.beeq.design/?path=/docs/components-page-title--overview
+     * @status stable
+     * @cssprop --paddingY - Padding top and bottom of the page title wrapper
+     * @cssprop --subtitle-borderBlockEnd - Page title border end color
+     * @cssprop --subtitle-fontWeight - Page title font weight for subtitle
+     * @cssprop --subtitle-textColor - Page title color for sub-title
+     * @cssprop --subtitle-textSize - Page title text size for subtitle
+     * @cssprop --title-fontWeight - Page title font weight for title
+     * @cssprop --title-lineHeight - Page title text line height
+     * @cssprop --title-textColor - Page title color for title
+     * @cssprop --title-textSize - Page title text size for title
+     */
     interface BqPageTitle {
     }
+    /**
+     * The Panel component is a versatile and essential element used to wrap and display content in a floating panel.
+     * @example How to use it
+     * ```html
+     * <bq-panel open>
+     * <div>Panel content</div>
+     * </bq-panel>
+     * ```
+     * @status stable
+     * @attr {number} distance - Represents the distance (gutter or margin) between the panel and the trigger element.
+     * @attr {"top" | "bottom" | "left" | "right" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end" | "right-start" | "right-end"} placement - Position of the panel.
+     * @attr {boolean} open - If true, the panel will be visible.
+     * @attr {boolean} same-width - Whether the panel should have the same width as the trigger element.
+     * @attr {number} skidding - Represents the skidding between the panel and the trigger element.
+     * @attr {"fixed" | "absolute"} strategy - Defines the strategy to position the panel.
+     * @prop --bq-panel--background - Panel background color
+     * @prop --bq-panel--border-color - Panel border color
+     * @prop --bq-panel--border-radius - Panel border radius
+     * @prop --bq-panel--border-style - Panel border style
+     * @prop --bq-panel--border-width - Panel border width
+     * @prop --bq-panel--box-shadow - Panel box shadow
+     * @prop --bq-panel--padding - Panel padding
+     * @prop --bq-panel--height - Panel height
+     * @prop --bq-panel--width - Panel width
+     * @prop --bq-panel-z-index - Panel z-index applied when opened
+     */
     interface BqPanel {
         /**
           * Represents the distance (gutter or margin) between the panel and the trigger element.
@@ -834,6 +1680,27 @@ export namespace Components {
          */
         "strategy"?: 'fixed' | 'absolute';
     }
+    /**
+     * The progress bar is a user interface component that visually represents the completion status of a task or process.
+     * @example How to use it
+     * ```html
+     * <bq-progress value="50"></bq-progress>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/691cb3-progress
+     * @status stable
+     * @dependency bq-tooltip
+     * @attr {"rounded" | "rounded-full"} border-shape - It will set the border style of the progress bar
+     * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value
+     * @attr {boolean} indeterminate - If `true` the indeterminate state of progress bar is enabled
+     * @attr {boolean} label - If `true`, a label text showing the value (in percentage) will be shown
+     * @attr {"small" | "medium" | "large"} thickness - Progress bar thickness
+     * @attr {"default" | "error"} type - Progress type
+     * @attr {number} value - A number representing the current value of the progress bar
+     * @cssprop --bq-progress-bar--height - The progress bars height
+     * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
+     * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
+     * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
+     */
     interface BqProgress {
         /**
           * It will set the border style of the progress bar
@@ -848,7 +1715,7 @@ export namespace Components {
          */
         "indeterminate": boolean;
         /**
-          * If `true`, a label text showing the value (in percentage) will be shown
+          * If `true, a label text showing the value (in percentage) will be shown
          */
         "label": boolean;
         /**
@@ -864,6 +1731,31 @@ export namespace Components {
          */
         "value": number;
     }
+    /**
+     * The radio button is a user interface element that allows users to select a single option.
+     * @example How to use it
+     * ```html
+     * <bq-radio value="option1">Radio option 1</bq-radio>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/9718e1-radio-button/b/09d7b1
+     * @status stable
+     * @attr {boolean} background-on-hover - If `true`, the radio displays background on hover
+     * @attr {boolean} checked - If `true` radio input is checked
+     * @attr {boolean} disabled - If `true` radio input is disabled
+     * @attr {string} form-id - The form ID that the radio input is associated with
+     * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+     * @attr {boolean} required - If `true`, it will indicate that the user must specify a value for the radio before the owning form can be submitted
+     * @attr {boolean} value - A string representing the value of the radio
+     * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+     * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+     * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+     * @event bqBlur - Handler to be called when the radio loses focus
+     * @event bqClick - Handler to be called when the radio state changes
+     * @event bqFocus - Handler to be called when the radio gets focused
+     * @event bqKeyDown - The handler is to be called when the radio key is pressed
+     * @cssprop --bq-radio--size - Radio size
+     * @cssprop --bq-radio--border-width - Radio border width
+     */
     interface BqRadio {
         /**
           * If true radio displays background on hover
@@ -906,6 +1798,31 @@ export namespace Components {
          */
         "value": string;
     }
+    /**
+     * The radio group is a user interface component that groups radio buttons to enable a single selection within the group.
+     * @example How to use it
+     * ```html
+     * <bq-radio-group fieldset value="option1">
+     * <span slot="label">radio group</span>
+     * <bq-radio value="option1">Radio option 1</bq-radio>
+     * <bq-radio value="option2">Radio option 2</bq-radio>
+     * <bq-radio value="option3">Radio option 3</bq-radio>
+     * </bq-radio-group>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/9718e1-radio-button/b/09d7b1
+     * @status stable
+     * @attr {boolean} background-on-hover - If `true`, the radio displays background on hover
+     * @attr {number} debounce-time - A number representing the delay time (in milliseconds) that bqChange event handler gets triggered once the value change
+     * @attr {boolean} disabled - If `true` radio inputs are disabled
+     * @attr {boolean} fieldset - If `true` displays fieldset
+     * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+     * @attr {"horizontal" | "vertical"} orientation - The display orientation of the radio inputs
+     * @attr {string} value - The display orientation of the radio inputs
+     * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+     * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+     * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+     * @event bqChange - Handler to be called when the radio state changes
+     */
     interface BqRadioGroup {
         /**
           * If true, all radio inputs in the group will display a background on hover
@@ -936,6 +1853,77 @@ export namespace Components {
          */
         "value"?: string;
     }
+    /**
+     * The select input component lets users choose from a predefined list, commonly used in forms for easy data selection.
+     * @example How to use it
+     * ```html
+     * <bq-select placeholder="Placeholder">
+     * <label slot="label">Select label</label>
+     * <span slot="helper-text">
+     * <bq-icon name="star"></bq-icon>
+     * Helper text
+     * </span>
+     * <bq-option value="1">Option 1</bq-option>
+     * <bq-option value="2">Option 2</bq-option>
+     * <bq-option value="3">Option 3</bq-option>
+     * </bq-select>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/41989d-select/b/09d7b1
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-dropdown
+     * @dependency bq-icon
+     * @dependency bq-option-list
+     * @dependency bq-tag
+     * @attr {boolean} autofocus - If `true`, the Select input will be focused on component render.
+     * @attr {string} clear-button-label - The clear button aria label.
+     * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
+     * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+     * @attr {boolean} disabled - Indicates whether the Select input is disabled and cannot be interacted with.
+     * @attr {number} distance - Represents the distance (gutter or margin) between the Select panel and the input element.
+     * @attr {string} form - The ID of the form that Select input field belongs to.
+     * @attr {boolean} keep-open-on-select - If `true`, the Select panel will remain open after a selection is made.
+     * @attr {number} max-tags-visible - The maximum number of tags to display when multiple selection is enabled.
+     * @attr {boolean} multiple - If `true`, the Select input will allow multiple selections.
+     * @attr {string} name - The Select input name.
+     * @attr {boolean} open - If `true`, the Select panel will be visible.
+     * @attr {string} panel-height - When set, it will override the height of the Select panel.
+     * @attr {string} placeholder - The Select input placeholder text value.
+     * @attr {"bottom" | "bottom-end" | "bottom-start" | "left" | "left-end" | "left-start" | "right" | "right-end" | "right-start" | "top" | "top-end" | "top-start"} placement - Position of the Select panel.
+     * @attr {boolean} readonly - If `true`, the Select input cannot be modified.
+     * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
+     * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
+     * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
+     * @attr {"absolute" | "fixed"} strategy - Defines the strategy to position the Select panel.
+     * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
+     * @attr {"number" | "string" | "string[]"} value - The select input value can be used to reset the field to a previous value.
+     * @method clear - Method to be called to clear the selected value.
+     * @event bqBlur - The callback handler is emitted when the Select input loses focus.
+     * @event bqClear - The callback handler is emitted when the selected value has been cleared.
+     * @event bqFocus - A callback handler is emitted when the Select input has received focus.
+     * @event bqSelect - The callback handler is emitted when the selected value has changed.
+     * @cssprop --bq-select--background-color - Select background color
+     * @cssprop --bq-select--border-color - Select border color
+     * @cssprop --bq-select--border-color-focus - Select border color on focus
+     * @cssprop --bq-select--border-color-disabled - Select border color when disabled
+     * @cssprop --bq-select--border-radius - Select border radius
+     * @cssprop --bq-select--border-width - Select border width
+     * @cssprop --bq-select--border-style - Select border style
+     * @cssprop --bq-select--gap - Gap between Select content and prefix/suffix
+     * @cssprop --bq-select--helper-margin-top - Helper text margin top
+     * @cssprop --bq-select--helper-text-color - Helper text color
+     * @cssprop --bq-select--helper-text-size - Helper text size
+     * @cssprop --bq-select--icon-size - Icon size to use in prefix/suffix and clear button
+     * @cssprop --bq-select--label-margin-bottom - Select label margin bottom
+     * @cssprop --bq-select--label-text-color - Select label text color
+     * @cssprop --bq-select--label-text-size - Select label text size
+     * @cssprop --bq-select--padding-start - Select padding start
+     * @cssprop --bq-select--padding-end - Select padding end
+     * @cssprop --bq-select--paddingY - Select padding top and bottom
+     * @cssprop --bq-select--text-color - Select text color
+     * @cssprop --bq-select--text-size - Select text size
+     * @cssprop --bq-select--text-placeholder-color - Select placeholder text color
+     */
     interface BqSelect {
         /**
           * If true, the Select input will be focused on component render
@@ -1033,6 +2021,42 @@ export namespace Components {
          */
         "value": TSelectValue;
     }
+    /**
+     * The default side menu serves as a versatile container for organizing and displaying navigation elements,
+     *  with default side menu items providing a clean and straightforward way to represent individual menu options.
+     *  Together, they form the foundation for building structured and intuitive side menu layouts.
+     * @example How to use it
+     * ```html
+     * <bq-side-menu>
+     * <div slot="logo">
+     * <h1>Your Logo</h1>
+     * </div>
+     * <bq-side-menu-item active>
+     * <bq-icon name="home" slot="prefix"></bq-icon>
+     * Home
+     * </bq-side-menu-item>
+     * <bq-side-menu-item>
+     * <bq-icon name="settings" slot="prefix"></bq-icon>
+     * Settings
+     * </bq-side-menu-item>
+     * <bq-side-menu-item disabled>
+     * <bq-icon name="help" slot="prefix"></bq-icon>
+     * Help
+     * </bq-side-menu-item>
+     * </bq-side-menu>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/99822d-side-menu/b/09d7b1
+     * @status stable
+     * @attr {"brand" | "default" | "inverse"} appearance - It sets a predefined appearance of the side menu.
+     * @attr {boolean} collapse - If `true`, the container will reduce its width.
+     * @attr {"medium" | "small"} - size - It sets the size of the navigation menu items.
+     * @method toggleCollapse - Method to be called to toggle the collapse state of the side menu.
+     * @event bqCollapse - Callback handler to be called when the Side menu changes its width from expanded to collapse and vice versa.
+     * @event bqSelect - Callback handler to be called when the active/selected menu item changes.
+     * @cssprop --bq-side-menu--bg-color - Side menu background color
+     * @cssprop --bq-side-menu--brand-color - Side menu logo color
+     * @cssprop --bq-side-menu--border-color - Side menu border color
+     */
     interface BqSideMenu {
         /**
           * It sets a predefined appearance of the side menu
@@ -1051,6 +2075,35 @@ export namespace Components {
          */
         "toggleCollapse": () => Promise<void>;
     }
+    /**
+     * Represents the default side menu item for standard navigation elements, providing a clean and straightforward way to display menu options.
+     * @example How to use it
+     * ```html
+     * <bq-side-menu-item>
+     * <bq-icon name="star-four" slot="prefix"></bq-icon>
+     * Menu item
+     * <bq-badge slot="suffix">5</bq-badge>
+     * </bq-side-menu-item>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/99822d-side-menu/b/09d7b1
+     * @status stable
+     * @dependency bq-tooltip
+     * @attr {boolean} active - If `true`, the menu item will be shown as active/selected.
+     * @attr {boolean} collapse - If `true`, the item label and suffix will be hidden and the with will be reduced according to its parent.
+     * @attr {boolean} disabled - If `true`, the menu item will be disabled (no interaction allowed).
+     * @event bqBlur - Handler to be called when the button loses focus.
+     * @event bqClick - Handler to be called when the button gets focused.
+     * @event bqFocus - Handler to be called when the button is clicked.
+     * @cssprop --bq-side-menu-item--bg-default - Side menu item default background color
+     * @cssprop --bq-side-menu-item--bg-hover - Side menu item hover background color
+     * @cssprop --bq-side-menu-item--bg-active - Side menu item active background color
+     * @cssprop --bq-side-menu-item--text-default - Side menu item default text color
+     * @cssprop --bq-side-menu-item--text-hover - Side menu item hover text color
+     * @cssprop --bq-side-menu-item--text-active - Side menu item active text color
+     * @cssprop --bq-side-menu-item--text-disabled - Side menu item disable text color
+     * @cssprop --bq-side-menu-item--paddingX - Side menu item vertical padding
+     * @cssprop --bq-side-menu-item--paddingY - Side menu item horizontal padding
+     */
     interface BqSideMenuItem {
         /**
           * If true, the menu item will be shown as active/selected.
@@ -1065,6 +2118,36 @@ export namespace Components {
          */
         "disabled": boolean;
     }
+    /**
+     * Sliders provide a visual representation of adjustable content, enabling users to change values by dragging a handle along a horizontal track.
+     * @example How to use it
+     * ```html
+     * <bq-slider max="100" value="30"></bq-slider>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/509cbc-slider/b/09d7b1
+     * @status stable
+     * @dependency bq-tooltip
+     * @attr {number} debounce-time - The amount of time, in milliseconds, to wait to trigger the bqChange event after each value change.
+     * @attr {boolean} disabled - If `true` the slider is disabled.
+     * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value.
+     * @attr {boolean} enable-value-indicator - If `true` it will show the value label on the side of the slider track area.
+     * @attr {number} gap - A number representing the amount to remain between the minimum and maximum values (only for range type).
+     * @attr {number} max - A number representing the max value of the slider.
+     * @attr {number} min - A number representing the min value of the slider.
+     * @attr {number} step - A number represents the step of the slider. ⚠️ Please notice that the value (or list of values if the slider type is range) will be rounded to the nearest multiple of step.
+     * @attr {boolean} tooltip-always-visible - If `true`, a tooltip will always display the progress value. It relies on enableTooltip and if enableTooltip is false, tooltipAlwaysVisible cannot be true.
+     * @attr {"range" | "single"} type - It defines the type of slider to display.
+     * @attr {"[number, number]" | "number" | "string"} value - The value of the slider. If the slider type is single, the value is a number.
+     * If the slider type is range, the value is an array of two numbers (the first number represents the min value and the second number represents the max value).
+     * @event bqBlur - Handler to be called when the slider loses focus.
+     * @event bqChange - Handler to be called when changing the value on range inputs.
+     * @event bqFocus - Handler to be called when the slider gets focused.
+     * @cssprop --bq-slider--size - The height of the slider track/progress area
+     * @cssprop --bq-slider--border-radius - Slider border radius
+     * @cssprop --bq-slider--thumb-size - Slider hover thumb size
+     * @cssprop --bq-slider--progress-color - Slider progress background color
+     * @cssprop --bq-slider--trackarea-color - Slider track background color
+     */
     interface BqSlider {
         /**
           * The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change.
@@ -1113,6 +2196,25 @@ export namespace Components {
     }
     /**
      * Spinners are designed for users to display data loading.
+     * @example How to use it
+     * ```html
+     * <bq-spinner size="medium" text-position="bellow">
+     * <span>Loading...</span>
+     * </bq-spinner>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/275f10-spinner/b/09d7b1
+     * @status stable
+     * @attr {boolean} animation - If `false`, the animation on the icon element will be stopped.
+     * @attr {"small" | "medium" | "large"} size - It defines the size of the icon element displayed.
+     * @attr {"above" | "below" | "left" | "right" | "none"} text-position - It defines the position of the label text.
+     * @cssprop --bq-spinner--color - Spinner color
+     * @cssprop --bq-spinner--size-large - Spinner large size
+     * @cssprop --bq-spinner--size-medium - Spinner medium size
+     * @cssprop --bq-spinner--size-small - Spinner small size
+     * @cssprop --bq-spinner--large-text-fontSize - Spinner large text font size
+     * @cssprop --bq-spinner--medium-text-fontSize - Spinner medium text font size
+     * @cssprop --bq-spinner--small-text-fontSize - Spinner small text font size
+     * @cssprop --bq-spinner--text-lineHeight - Spinner text line height
      */
     interface BqSpinner {
         /**
@@ -1128,12 +2230,48 @@ export namespace Components {
          */
         "textPosition": TSpinnerTextPosition;
     }
+    /**
+     * The Status Component is a UI element that represents the current state or condition of an item, task, or process.
+     * @example How to use it
+     * ```html
+     * <bq-status type="alert">Alert status</bq-status>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/46c8d5-status/b/09d7b1
+     * @status stable
+     * @dependency bq-badge
+     * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
+     * @cssprop --bq-status-circ - Status circle size.
+     */
     interface BqStatus {
         /**
           * It defines the type of status to display
          */
         "type": TStatusType;
     }
+    /**
+     * The Step Item Component is a UI element used to display a single step or stage in a process or task.
+     * It should be used inside the Steps component.
+     * @example How to use it
+     * ```html
+     * <bq-step-item status="completed">
+     * <bq-icon slot="prefix" name="check-circle"></bq-icon>
+     * <span>Title</span>
+     * <span slot="description">Description</span>
+     * </bq-step-item>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
+     * @status stable
+     * @attr {"small" | "medium"} size - It defines prefix size
+     * @attr {"completed" | "current" | "error" | "default" | "disabled"} status - It defines step item appearance based on its status
+     * @attr {"numeric" | "icon" | "dot"} type - It defines the step item type used
+     * @event bqClick - Callback handler emitted when the step item is clicked
+     * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
+     * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
+     * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
+     * @cssprop --bq-step-item--prefix-color-error - Color of the prefix icon when error
+     * @cssprop --bq-step-item--prefix-num-size - Size of the prefix number
+     * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
+     */
     interface BqStepItem {
         /**
           * It defines prefix size
@@ -1148,6 +2286,27 @@ export namespace Components {
          */
         "type"?: TStepsType;
     }
+    /**
+     * The Steps Component is a UI element used to display a series of steps or stages in a process or task.
+     * It is used to guide users through a process or task and to indicate their progress.
+     * @example How to use it
+     * ```html
+     * <bq-steps divider-color="stroke--primary" type="dot" size="medium">
+     * <bq-step-item status="completed"> ... </bq-step-item>
+     * <bq-step-item status="error"> ... </bq-step-item>
+     * <bq-step-item status="current"> ... </bq-step-item>
+     * <bq-step-item status="default"> ... </bq-step-item>
+     * </bq-steps>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
+     * @status stable
+     * @dependency bq-divider
+     * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
+     * @attr {"medium" | "small"} size - The size of the steps
+     * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
+     * @cssprop --bq-steps--divider-color - Divider color
+     * @cssprop --bq-steps--gap - Gap between steps
+     */
     interface BqSteps {
         /**
           * The color of the line that connects the steps. It should be a valid declarative color token.
@@ -1165,6 +2324,32 @@ export namespace Components {
     /**
      * Toggle switches are digital on/off switches.
      * They should provide immediate results, giving users the freedom to control their preferences as needed.
+     * @example How to use it
+     * ```html
+     * <bq-switch inner-label="default" justify-content="start" name="bq-switch" value="Switch value">
+     * Toggle me!
+     * </bq-switch>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/49d9c9-switch
+     * @status stable
+     * @dependency bq-icon
+     * @attr {boolean} background-on-hover - If `true`, a background will be displayed on hover
+     * @attr {boolean} checked - It indicates whether if the switch is `ON` by default (when the page loads)
+     * @attr {boolean} disabled - If `true`, the switch control will be disabled and no interaction will be allowed
+     * @attr {boolean} full-width - If `true`, the component will take the full width space available on the parent container
+     * @attr {"default" | "icon"} inner-label - It indicates how to to display the on/off marks inside the control, with icons or none (default)
+     * @attr {"start" | "end" | "center" | "space-between" | "space-around" | "space-evenly"} justify-content - It defines how to distribute the space between and around the control and the label text
+     * @attr {string} name - Name of the form control. Submitted with the form as part of a name/value pair
+     * @attr {boolean} required - If `true`, it will indicate that the user must switch `ON` the element before the owning form can be submitted
+     * @attr {boolean} reverse-order - If `true`, the order of the control and the label text will be changed
+     * @attr {string} value - The input control's value, submitted as a name/value pair with form data
+     * @event bqChange - Handler to be called when the switch state changes
+     * @event bqFocus - Handler to be called when the switch gets focus
+     * @event bqBlur - Handler to be called when the switch loses focus
+     * @cssprop --bq-switch--height - Switch height
+     * @cssprop --bq-switch--justify-content - Switch justify content
+     * @cssprop --bq-switch--width - Switch width
+     * @cssprop --bq-switch--dot-size - Switch dot size
      */
     interface BqSwitch {
         /**
@@ -1220,6 +2405,43 @@ export namespace Components {
          */
         "value"?: string;
     }
+    /**
+     * The tab is a user interface element that allows users to navigate between different sections of a page.
+     * It should be used inside `<bq-tab-group>` component.
+     * @example How to use it
+     * ```html
+     * <bq-tab tab-id="1" controls="panel-1">Tab 1</bq-tab>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/775321-tabs
+     * @status stable
+     * @attr {boolean} active - If `true` tab is active
+     * @attr {string} controls - The tab panel id that the tab controls
+     * @attr {boolean} disabled - If `true` tab is disabled
+     * @attr {string} orientation - The direction that tab should be render
+     * @attr {string} placement - The placement that tab should be render
+     * @attr {string} size - The size of the tab
+     * @attr {string} tab-id - The id of the tab
+     * @event bqClick - Handler to be called when the tab state changes
+     * @event bqFocus - Handler to be called when the tab gets focus
+     * @event bqBlur - Handler to be called when the tab loses focus
+     * @event bqKeyDown - Handler to be called when the tab key is pressed
+     * @method vClick - Simulate a click event on the native `<button>` HTML element used under the hood
+     * @method vFocus - Sets focus on the native `<button>` HTML element used under the hood
+     * @method vBlur - Remove focus from the native `<button>` HTML element used under the hood
+     * @cssprop --bq-tab--font-size - Font size
+     * @cssprop --bq-tab--font-weight - Font weight
+     * @cssprop --bq-tab--icon-size-large - Icon size for large tab
+     * @cssprop --bq-tab--icon-size-medium - Icon size for medium tab
+     * @cssprop --bq-tab--icon-size-small - Icon size for small tab
+     * @cssprop --bq-tab--label-icon-gap - Gap between label and icon
+     * @cssprop --bq-tab--line-height - Line height
+     * @cssprop --bq-tab--padding-horizontal-large - Horizontal padding for large tab
+     * @cssprop --bq-tab--padding-horizontal-medium - Horizontal padding for medium tab
+     * @cssprop --bq-tab--padding-horizontal-small - Horizontal padding for small tab
+     * @cssprop --bq-tab--padding-vertical-large - Vertical padding for large tab
+     * @cssprop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
+     * @cssprop --bq-tab--padding-vertical-small - Vertical padding for small tab
+     */
     interface BqTab {
         /**
           * If true tab is active
@@ -1233,9 +2455,6 @@ export namespace Components {
           * If true tab is disabled
          */
         "disabled": boolean;
-        /**
-          * Sets tabindex on the native `<button>` HTML element used under the hood. This method is used inside `<bq-tab-group>` to make tab focusable after the active one is focused
-         */
         "enableFocus": (value: boolean) => Promise<void>;
         /**
           * The direction that tab should be render
@@ -1266,6 +2485,27 @@ export namespace Components {
          */
         "vFocus": () => Promise<void>;
     }
+    /**
+     * The tab group is a user interface element that allows users wrap a set of tab items.
+     * @example How to use it
+     * ```html
+     * <bq-tab-group value="5">
+     * <bq-tab tab-id="1">Tab</bq-tab>
+     * <bq-tab tab-id="2" active>Tab</bq-tab>
+     * <bq-tab tab-id="3">Long Tab name</bq-tab>
+     * <bq-tab tab-id="4" disabled>Tab</bq-tab>
+     * </bq-tab-group>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/775321-tabs
+     * @status stable
+     * @attr {number} debounce-time - A number representing the delay value applied to bqChange event handler
+     * @attr {boolean} disable-divider - If true, the underline divider below the tabs won't be shown
+     * @attr {string} orientation - The direction that tab should be render
+     * @attr {string} placement - The placement that tab should be render
+     * @attr {string} size - The size of the tab
+     * @attr {string} value - A string representing the id of the selected tab.
+     * @event bqChange - Handler to be called when the tab value changes
+     */
     interface BqTabGroup {
         /**
           * A number representing the delay value applied to bqChange event handler
@@ -1292,6 +2532,46 @@ export namespace Components {
          */
         "value": string;
     }
+    /**
+     * The Tag Component is a UI element used to label and categorize content within an application.
+     * Tags are commonly used to label items with keywords or categories, making it easier to find and organize content.
+     * @example How to use it
+     * ```html
+     * <bq-tag color="success" size="medium" variant="filled">Success</bq-tag>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/42f8c9-tag
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
+     * @attr {string} border - The corner radius of the Tag (will override size's predefined border)
+     * @attr {boolean} clickable - If `true`, the Tag can be clickable
+     * @attr {"error" | "gray" | "info" | "success" | "warning"} color - The color style of the Tag
+     * @attr {boolean} disabled - If `true`, the Tag will be disabled (only if clickable = `true`, no interaction allowed)
+     * @attr {boolean} hidden - If `true`, the Tag component will hidden (only if removable = `true`)
+     * @attr {boolean} removable - If `true`, the Tag component can be removed
+     * @attr {boolean} selected - If `true`, the Tag is selected (only if clickable = `true`)
+     * @attr {"xsmall" | "small" | "medium"} size - The size of the Tag component
+     * @attr {"outline" | "filled"} variant - The variant of Tag to apply on top of the variant
+     * @method hide - Method to be called to remove the tag component
+     * @method show - Method to be called to show the tag component
+     * @event bqClose - Callback handler to be called when the tag is close/hidden
+     * @event bqOpen - Callback handler to be called when the tag is not open/shown
+     * @event bqBlur - Handler to be called when tag loses focus
+     * @event bqClick - Handler to be called when tag is clicked
+     * @event bqFocus - Handler to be called when tag is focused
+     * @cssprop --bq-tag--background-color - Tag background color
+     * @cssprop --bq-tag--border-color - Tag border color
+     * @cssprop --bq-tag--border-radius - Tag border radius
+     * @cssprop --bq-tag--border-style - Tag border style
+     * @cssprop --bq-tag--border-width - Tag border width
+     * @cssprop --bq-tag--small-border-radius - Tag small border radius
+     * @cssprop --bq-tag--small-gap - Tag small gap between content
+     * @cssprop --bq-tag--small-padding-x - Tag small padding horizontal
+     * @cssprop --bq-tag--small-padding-y - Tag small padding vertical
+     * @cssprop --bq-tag--medium-gap - Tag medium gap between content
+     * @cssprop --bq-tag--medium-padding-x - Tag medium padding horizontal
+     * @cssprop --bq-tag--medium-padding-y - Tag medium padding vertical
+     */
     interface BqTag {
         /**
           * The corner radius of the Tag (will override size's predefined border)
@@ -1338,6 +2618,63 @@ export namespace Components {
          */
         "variant": TTagVariant;
     }
+    /**
+     * The Textarea component is a multi-line text input control that is often used in a form to collect user inputs like comments or reviews.
+     * @example How to use it
+     * ```html
+     * <bq-textarea maxlength="0" name="textarea" placeholder="Placeholder..." rows="5">
+     * <label slot="label">Label</label>
+     * <span class="flex items-center gap-xs" slot="helper-text">
+     * <bq-icon name="star"></bq-icon>
+     * Helper text
+     * </span>
+     * </bq-textarea>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/16792c-textarea
+     * @status stable
+     * @attr {string} autocapitalize - Controls whether or not the textarea field should be capitalized and how.
+     * @attr {string} autocomplete - Specifies whether or not the textarea field should have autocomplete enabled.
+     * @attr {string} autocorrect - Controls whether or not the textarea field should have autocorrect enabled.
+     * @attr {boolean} autofocus - If `true`, the textarea will be focused on component render.
+     * @attr {boolean} auto-grow - If `true`, the textarea will automatically grow and shrink to fit its contents.
+     * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes.
+     * @attr {boolean} disabled - If `true`, the user cannot interact with the textarea.
+     * @attr {boolean} disable-resize - If `true`, it will block the user's ability to resize the textarea.
+     * @attr {string} form - The ID of the form that the textarea field belongs to.
+     * @attr {number} maxlength - The maximum number of characters that can be entered into the textarea (`0`: no limit).
+     * @attr {string} name - The name of the textarea element.
+     * @attr {string} placeholder - The placeholder text to show when there is no value.
+     * @attr {boolean} readonly - If `true`, the textarea field cannot be modified.
+     * @attr {boolean} required - Indicates whether or not the textarea field is required to be filled out before submitting the form.
+     * @attr {number} rows - The number of visible text lines for the control. It must be a positive integer.
+     * @attr {boolean} spellcheck - If `true`, the textarea content may be checked for spelling errors.
+     * @attr {"error" | "none" | "success" | "warning"} validation-status - The validation status of the textarea.
+     * @attr {string} value - The value of the textarea. It can be used to reset the textarea to a previous value.
+     * @attr {"soft" | "hard"} wrap - Specifies how the text in a text area is to be wrapped when submitted in a form.
+     * @event bqBlur - Handler to be called when the textarea loses focus.
+     * @event bqChange - Handler to be called when the textarea value has changed and the textarea loses focus.
+     * @event bqClear - Handler to be called when the textarea value has been cleared.
+     * @event bqFocus - Handler to be called when the textarea has received focus.
+     * @event bqInput - Handler to be called when the textarea value changes.
+     * @prop --bq-textarea--background-color - Textarea background color
+     * @prop --bq-textarea--border-color - Textarea border color
+     * @prop --bq-textarea--border-color-focus - Textarea border color on focus
+     * @prop --bq-textarea--border-radius - Textarea border radius
+     * @prop --bq-textarea--border-width - Textarea border width
+     * @prop --bq-textarea--border-style - Textarea border style
+     * @prop --bq-textarea--helper-margin-top - Textarea helper text margin top
+     * @prop --bq-textarea--helper-text-color - Textarea helper text color
+     * @prop --bq-textarea--helper-text-size - Textarea helper text size
+     * @prop --bq-textarea--label-margin-bottom - Textarea label margin bottom
+     * @prop --bq-textarea--label-text-color - Textarea label text color
+     * @prop --bq-textarea--label-text-size - Textarea label text size
+     * @prop --bq-textarea--paddingY - Textarea padding top and bottom
+     * @prop --bq-textarea--padding-start - Textarea padding start
+     * @prop --bq-textarea--padding-end - Textarea padding end
+     * @prop --bq-textarea--text-color - Textarea text color
+     * @prop --bq-textarea--text-size - Textarea text size
+     * @prop --bq-textarea--text-placeholder-color - Textarea placeholder text color
+     */
     interface BqTextarea {
         /**
           * If `true`, the textarea will automatically grow and shrink to fit its contents. If `false`, the textarea will have a fixed height specified by the `rows` property.
@@ -1417,6 +2754,45 @@ export namespace Components {
          */
         "wrap": TTextareaWrap;
     }
+    /**
+     * Toasts are time-based components used to display short messages.
+     * Commonly used for errors, confirmations, or progress updates.
+     * @example How to use it
+     * ```html
+     * <bq-toast type="info">
+     * This is a message
+     * </bq-toast>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/83da51-toast
+     * @status stable
+     * @dependency bq-icon
+     * @attr {"s" | "none" | "xs2" | "xs" | "m" | "l" | "full"} border - The corder radius of the toast component
+     * @attr {"success" | "error" | "loading" | "alert" | "info"} type - Type of toast
+     * @attr {"top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right"} placement - Placement of toast
+     * @attr {boolean} hide-icon - If true will hide toast icon
+     * @attr {boolean} open - If true, the toast will be shown
+     * @attr {number} time - The length of time, in milliseconds, after which the toast will close itself
+     * @method show - Method to be called to show the toast component
+     * @method hide - Method to be called to hide the toast component
+     * @method toast - This method can be used to display toasts in a fixed-position element that allows for stacking multiple toasts vertically
+     * @event bqHide - Callback handler to be called when the notification is hidden
+     * @event bqShow - Callback handler to be called when the notification is shown
+     * @cssprop --bq-toast--background - Toast background color
+     * @cssprop --bq-toast--box-shadow - Toast box shadow
+     * @cssprop --bq-toast--padding-y - Toast vertical padding
+     * @cssprop --bq-toast--padding-x - Toast horizontal padding
+     * @cssprop --bq-toast--gap - Toast distance between icon and text
+     * @cssprop --bq-toast--border-radius - Toast border radius
+     * @cssprop --bq-toast--border-color - Toast border color
+     * @cssprop --bq-toast--border-style - Toast border style
+     * @cssprop --bq-toast--border-width - Toast border width
+     * @cssprop --bq-toast--icon-color-info - Toast icon color when type is 'info'
+     * @cssprop --bq-toast--icon-color-success - Toast icon color when type is 'success'
+     * @cssprop --bq-toast--icon-color-alert - Toast icon color when type is 'alert'
+     * @cssprop --bq-toast--icon-color-error - Toast icon color when type is 'error'
+     * @cssprop --bq-toast--icon-color-loading - Toast icon color when type is 'loading'
+     * @cssprop --bq-toast--icon-color-custom - Toast icon color when type is 'custom'
+     */
     interface BqToast {
         /**
           * The corder radius of the toast component
@@ -1455,6 +2831,39 @@ export namespace Components {
          */
         "type": TToastType;
     }
+    /**
+     * The Tooltip component is a small pop-up box that appears when a user hovers over or clicks on an element, providing additional information or context.
+     * @example How to use it
+     * ```html
+     * <bq-tooltip visible>
+     * Yuhu! I'm a tooltip 🙃
+     * <bq-button slot="trigger">Hover me!</bq-button>
+     * </bq-tooltip>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/64c562-tooltip
+     * @status stable
+     * @attr {boolean} always-visible - If true, the tooltip will always be visible
+     * @attr {number} distance - Distance between trigger element and tooltip
+     * @attr {boolean} hide-arrow - If true, the arrow on the tooltip content won't be shown
+     * @attr {"top" | "right" | "bottom" | "left"} placement - Defines the position of the tooltip
+     * @attr {boolean} same-width - Whether the tooltip should have the same width as the trigger element (applicable only for content shorter than the trigger element)
+     * @attr {"click" | "hover"} display-on - Set the action when the tooltip should be displayed, on hover (default) or click
+     * @attr {boolean} visible - Indicates whether or not the tooltip is visible when the component is first rendered, and when interacting with the trigger
+     * @method show - Shows the tooltip
+     * @method hide - Hides the tooltip
+     * @cssprop --bq-tooltip--background-color - Tooltip background color
+     * @cssprop --bq-tooltip--box-shadow - Tooltip box shadow
+     * @cssprop --bq-tooltip--font-size - Tooltip font size
+     * @cssprop --bq-tooltip--line-height - Tooltip line height
+     * @cssprop --bq-tooltip--text-color - Tooltip text color
+     * @cssprop --bq-tooltip--paddingX - Tooltip horizontal padding
+     * @cssprop --bq-tooltip--paddingY - Tooltip vertical padding
+     * @cssprop --bq-tooltip--border-color - Tooltip border color
+     * @cssprop --bq-tooltip--border-radius - Tooltip border radius
+     * @cssprop --bq-tooltip--border-style - Tooltip border style
+     * @cssprop --bq-tooltip--border-width - Tooltip border width
+     * @cssprop --bq-tooltip--z-index: Tooltip z-index
+     */
     interface BqTooltip {
         /**
           * If true, the tooltip will always be visible
@@ -1498,10 +2907,6 @@ export interface BqAccordionCustomEvent<T> extends CustomEvent<T> {
 export interface BqAlertCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqAlertElement;
-}
-export interface BqBreadcrumbCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLBqBreadcrumbElement;
 }
 export interface BqBreadcrumbItemCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1613,6 +3018,77 @@ declare global {
         "bqAfterClose": HTMLBqAccordionElement;
         "bqClick": HTMLBqAccordionElement;
     }
+    /**
+     * The Accordion is a UI component that allows users to toggle between showing and hiding content sections. It provides a collapsible functionality, where only one section can be expanded at a time, while the others remain collapsed.
+     * @example How to use it
+     * ```html
+     * <bq-accordion appearance="filled" size="medium">
+     * <bq-avatar size="xsmall" image="/image/url/img.png" slot="prefix"></bq-avatar>
+     * <h3 slot="header">Header</h3>
+     * <div>Lorem ipsum dolor...</div>
+     * </bq-accordion>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/713eae-accordion
+     * @status stable
+     * @dependency bq-icon
+     * @attr {"filled" | "ghost"} [appearance="filled"] - The appearance style of the Accordion
+     * @attr {boolean} [disabled=false] - If true, the Accordion is disabled
+     * @attr {boolean} [expanded=false] - If true, the Accordion is expanded
+     * @attr {boolean} [no-animation=false] - Animation is set through JS when the browser does not support CSS calc-size() If true, the Accordion animation, will be disabled. No animation will be applied.
+     * @attr {boolean} [rotate=false] - If true, the Accordion expand icon is rotate 180deg when expanded
+     * @attr {"small" | "medium"} [size="medium"] - The size of the the Accordion
+     * @event bqOpen - Handler to be called when the accordion is opened
+     * @event bqAfterOpen - Handler to be called after the accordion is opened
+     * @event bqClose - Handler to be called when the accordion is closed
+     * @event bqAfterClose - Handler to be called after the accordion is closed
+     * @event bqFocus - Handler to be called when the accordion gets focus
+     * @event bqClick - Handler to be called when the accordion is clicked
+     * @event bqBlur - Handler to be called when the accordion loses focus
+     * @cssprop --bq-accordion--small-padding-y - Accordion small vertical padding
+     * @cssprop --bq-accordion--small-padding-start - Accordion small start padding
+     * @cssprop --bq-accordion--small-padding-end - Accordion small end padding
+     * @cssprop --bq-accordion--small-padding-gap - Accordion small gap distance between suffix, title and prefix
+     * @cssprop --bq-accordion--small-radius - Accordion small border radius
+     * @cssprop --bq-accordion--medium-padding-y - Accordion medium vertical padding
+     * @cssprop --bq-accordion--medium-padding-start - Accordion medium start padding
+     * @cssprop --bq-accordion--medium-padding-end - Accordion medium end padding
+     * @cssprop --bq-accordion--medium-padding-gap - Accordion medium gap distance between suffix, title and prefix
+     * @cssprop --bq-accordion--medium-radius - Accordion medium border radius
+     * @cssprop --bq-accordion--collapsed-border-color - Accordion collapsed border color
+     * @cssprop --bq-accordion--collapsed-border-style - Accordion collapsed border style
+     * @cssprop --bq-accordion--collapsed-border-width - Accordion collapsed border width
+     * @cssprop --bq-accordion--expanded-border-color - Accordion expanded border color
+     * @cssprop --bq-accordion--expanded-border-style - Accordion expanded border style
+     * @cssprop --bq-accordion--expanded-border-width - Accordion expanded border width
+     * @cssprop --bq-accordion--filled-collapsed-background - Accordion filled collapsed header background
+     * @cssprop --bq-accordion--filled-collapsed-text-color - Accordion filled collapsed header text color
+     * @cssprop --bq-accordion--filled-expanded-background - Accordion filled expanded header background
+     * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Accordion filled expanded header color on hover
+     * @cssprop --bq-accordion--filled-expanded-text-color - Accordion filled expanded header text color
+     * @cssprop --bq-accordion--ghost-collapsed-background - Accordion ghost collapsed header background
+     * @cssprop --bq-accordion--ghost-collapsed-text-color - Accordion ghost collapsed header text color
+     * @cssprop --bq-accordion--ghost-expanded-background - Accordion ghost expanded header background
+     * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Accordion ghost expanded header color on hover
+     * @cssprop --bq-accordion--ghost-expanded-text-color - Accordion ghost expanded header text color
+     * @cssprop --bq-accordion--panel-filled-border-color - Accordion filled panel border color
+     * @cssprop --bq-accordion--panel-filled-border-style - Accordion filled panel border style
+     * @cssprop --bq-accordion--panel-filled-border-width - Accordion filled panel border width
+     * @cssprop --bq-accordion--panel-small-filled-padding-y - Accordion small filled panel vertical padding
+     * @cssprop --bq-accordion--panel-small-filled-padding-start - Accordion small filled panel start padding
+     * @cssprop --bq-accordion--panel-small-filled-padding-end - Accordion small filled panel end padding
+     * @cssprop --bq-accordion--panel-medium-filled-padding-y - Accordion medium filled panel vertical padding
+     * @cssprop --bq-accordion--panel-medium-filled-padding-start - Accordion medium filled panel start padding
+     * @cssprop --bq-accordion--panel-medium-filled-padding-end - Accordion medium filled panel end padding
+     * @cssprop --bq-accordion--panel-ghost-border-color - Accordion ghost panel border color
+     * @cssprop --bq-accordion--panel-ghost-border-style - Accordion ghost panel border style
+     * @cssprop --bq-accordion--panel-ghost-border-width - Accordion ghost panel border width
+     * @cssprop --bq-accordion--panel-small-ghost-padding-y - Accordion small ghost panel vertical padding
+     * @cssprop --bq-accordion--panel-small-ghost-padding-start - Accordion small ghost panel start padding
+     * @cssprop --bq-accordion--panel-small-ghost-padding-end - Accordion small ghost panel end padding
+     * @cssprop --bq-accordion--panel-medium-ghost-padding-y - Accordion medium ghost panel vertical padding
+     * @cssprop --bq-accordion--panel-medium-ghost-padding-start - Accordion medium ghost panel start padding
+     * @cssprop --bq-accordion--panel-medium-ghost-padding-end - Accordion medium ghost panel end padding
+     */
     interface HTMLBqAccordionElement extends Components.BqAccordion, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqAccordionElementEventMap>(type: K, listener: (this: HTMLBqAccordionElement, ev: BqAccordionCustomEvent<HTMLBqAccordionElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1627,6 +3103,26 @@ declare global {
         prototype: HTMLBqAccordionElement;
         new (): HTMLBqAccordionElement;
     };
+    /**
+     * The accordion group component is a container for multiple accordion elements.
+     * It allows to manage the appearance and size of all accordions at once.
+     * @example How to use it
+     * ```html
+     * <bq-accordion-group appearance="filled" size="medium">
+     * <bq-accordion> ... </bq-accordion>
+     * <bq-accordion> ... </bq-accordion>
+     * <bq-accordion> ... </bq-accordion>
+     * </bq-accordion-group>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/713eae-accordion
+     * @status stable
+     * @attr {"filled" | "ghost"} [appearance="filled"] - The appearance style of accordion to be applied to all accordions
+     * @attr {boolean} [expandAll=false] - If true all accordions are expanded
+     * @attr {boolean} [no-animation=false] - Animation is set through JS when the browser does not support CSS calc-size() If true, the accordion animation, will be disabled. No animation will be applied.
+     * @attr {boolean} [multiple=false] - If true multiple accordions can be expanded at the same time
+     * @attr {"small" | "medium"} [size="medium"] - The size of accordion to be applied to all accordions
+     * @cssprop --bq-accordion-group--gap - Accordion group distance between elements
+     */
     interface HTMLBqAccordionGroupElement extends Components.BqAccordionGroup, HTMLStencilElement {
     }
     var HTMLBqAccordionGroupElement: {
@@ -1639,6 +3135,62 @@ declare global {
         "bqAfterShow": any;
         "bqAfterHide": any;
     }
+    /**
+     * The Alert is a user interface component used to convey important information to the user in a clear and concise manner.
+     * It can be used to notify users of success, failure, warning, or any other type of information that needs to be brought to their attention.
+     * @example How to use it
+     * ```html
+     * <bq-alert>
+     * <bq-icon name="star" slot="icon"></bq-icon>
+     * Title
+     * <span slot="body">
+     * Description
+     * <a class="bq-link" href="https://example.com">Link</a>
+     * </span>
+     * <div slot="footer">
+     * <bq-button appearance="primary" size="small">Button</bq-button>
+     * <bq-button appearance="link" size="small">Button</bq-button>
+     * </div>
+     * </bq-alert>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/848a50-alert
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
+     * @attr {boolean} [auto-dismiss=false] - If true, the alert will automatically hide after the specified amount of time
+     * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} [border='s'] - The corner radius of the alert component
+     * @attr {boolean} [disable-close=false] - If true, the close button at the top right of the alert won't be shown
+     * @attr {boolean} [hide-icon=false] - If true, the alert icon won't be shown
+     * @attr {boolean} [open=false] - If true, the alert will be shown
+     * @attr {number} [time=3000] - The length of time, in milliseconds, after which the alert will close itself. Only valid if `autoDismiss="true"`
+     * @attr {"info" | "success" | "warning" | "error" | "default"} [type='default'] - Type of Alert
+     * @attr {boolean} [sticky=false] - If true, the alert component will remain fixed at the top of the page, occupying the full viewport
+     * @event bqHide - Callback handler to be called when the alert is hidden
+     * @event bqShow - Callback handler to be called when the alert is shown
+     * @event bqAfterShow - Callback handler to be called after the alert has been shown
+     * @event bqAfterHide - Callback handler to be called after the alert has been hidden
+     * @cssprop --bq-alert--background - The alert background color
+     * @cssprop --bq-alert--border-radius - The alert border radius
+     * @cssprop --bq-alert--content-footer-gap - The alert content and footer gap
+     * @cssprop --bq-alert--title-body-gap - The alert title and body gap
+     * @cssprop --bq-alert--border-color - The alert border color
+     * @cssprop --bq-alert--border-style - The alert border style
+     * @cssprop --bq-alert--border-width - The alert border width
+     * @cssprop --bq-alert--background-info - The alert background color for info type
+     * @cssprop --bq-alert--background-success - The alert background color for success type
+     * @cssprop --bq-alert--background-warning - The alert background color for warning type
+     * @cssprop --bq-alert--background-error - The alert background color for error type
+     * @cssprop --bq-alert--border-info - The alert border color for info type
+     * @cssprop --bq-alert--border-success - The alert border color for success type
+     * @cssprop --bq-alert--border-warning - The alert border color for warning type
+     * @cssprop --bq-alert--border-error - The alert border color for error type
+     * @cssprop --bq-alert--icon-color-info - The alert icon color for info type
+     * @cssprop --bq-alert--icon-color-success - The alert icon color for success type
+     * @cssprop --bq-alert--icon-color-warning - The alert icon color for warning type
+     * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
+     * @cssprop --bq-alert--padding - The alert padding
+     * @cssprop --bq-alert--min-width - The alert min width
+     */
     interface HTMLBqAlertElement extends Components.BqAlert, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqAlertElementEventMap>(type: K, listener: (this: HTMLBqAlertElement, ev: BqAlertCustomEvent<HTMLBqAlertElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1653,32 +3205,97 @@ declare global {
         prototype: HTMLBqAlertElement;
         new (): HTMLBqAlertElement;
     };
+    /**
+     * The Avatar component is a simple and customizable element that displays an image or initials in a circular or square shape.
+     * This component is useful for displaying user profile pictures or any other image that represents a person or an entity.
+     * @example How to use it
+     * ```html
+     * <bq-avatar
+     * alt-text="John Doe profile picture"
+     * image="/image/url/photo-1524593689594.jpeg"
+     * label="John Doe profile picture"
+     * shape="circle"
+     * size="medium"
+     * >
+     * <bq-badge slot="badge" text-color="#fff">9</bq-badge>
+     * </bq-avatar>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/148da7-avatar
+     * @status stable
+     * @attr {string} alt-text - Alternate text for the avatar image if the image cannot be displayed.
+     * @attr {string} image - The image source to load on the avatar (this can be also a base64 encoded image).
+     * @attr {string} label - A text to use for describing the avatar on assistive devices.
+     * @attr {string} initials - The text to display on avatar.
+     * @attr {"circle" | "square"} shape - The shape of the avatar.
+     * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
+     * @cssprop --bq-avatar--background - Avatar background color
+     * @cssprop --bq-avatar--border-color - Avatar border color
+     * @cssprop --bq-avatar--border-style - Avatar border style
+     * @cssprop --bq-avatar--border-width - Avatar border width
+     * @cssprop --bq-avatar--border-radius-circle - Avatar border radius for circle & any size
+     * @cssprop --bq-avatar--border-radius-squareXs - Avatar border radius for square & size xsmall
+     * @cssprop --bq-avatar--border-radius-squareS - Avatar border radius for square & size small
+     * @cssprop --bq-avatar--border-radius-squareM - Avatar border radius for square & size medium/large
+     * @cssprop --bq-avatar--size-xsmall - Avatar xsmall size
+     * @cssprop --bq-avatar--size-small - Avatar small size
+     * @cssprop --bq-avatar--size-medium - Avatar medium size
+     * @cssprop --bq-avatar--size-large - Avatar large size
+     * @cssprop --bq-avatar--badge-top-square - Badge top position shape square
+     * @cssprop --bq-avatar--badge-left-square - Badge left position shape square
+     * @cssprop --bq-avatar--badge-top-circle - Badge top position shape circle
+     * @cssprop --bq-avatar--badge-left-circle - Badge left position shape circle
+     */
     interface HTMLBqAvatarElement extends Components.BqAvatar, HTMLStencilElement {
     }
     var HTMLBqAvatarElement: {
         prototype: HTMLBqAvatarElement;
         new (): HTMLBqAvatarElement;
     };
+    /**
+     * The Badge component is a visual indicator that can be added to various elements within a user interface.
+     * It is typically used to highlight important or relevant information, such as alerts, notifications, or statuses.
+     * @example How to use it
+     * ```html
+     * <bq-badge background-color="ui--success" text-color="text--inverse" size="small">9</bq-badge>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/194fd1-badge
+     * @status stable
+     * @attr {string} background-color - Badge background color. The value should be a valid value of the palette color.
+     * @attr {string} text-color - Badge number color. The value should be a valid value of the palette color.
+     * @attr {"small" | "medium" | "large"} size - The size of the badge. Relevant if badge has no content.
+     * @cssprop --bq-badge--background-color - The badge background color
+     * @cssprop --bq-badge--box-shadow - The badge box shadow
+     * @cssprop --bq-badge--border-color - The badge border color
+     * @cssprop --bq-badge--border-radius - The badge border radius
+     * @cssprop --bq-badge--border-style - The badge border style
+     * @cssprop --bq-badge--border-width - The badge border width
+     * @cssprop --bq-badge--size-small - The badge small size
+     * @cssprop --bq-badge--size-medium - The badge medium size
+     * @cssprop --bq-badge--size-large - The badge large size
+     * @cssprop --bq-badge--text-color - The badge text color
+     */
     interface HTMLBqBadgeElement extends Components.BqBadge, HTMLStencilElement {
     }
     var HTMLBqBadgeElement: {
         prototype: HTMLBqBadgeElement;
         new (): HTMLBqBadgeElement;
     };
-    interface HTMLBqBreadcrumbElementEventMap {
-        "bqBreadcrumbBlur": HTMLBqBreadcrumbItemElement;
-        "bqBreadcrumbFocus": HTMLBqBreadcrumbItemElement;
-        "bqBreadcrumbClick": HTMLBqBreadcrumbItemElement;
-    }
+    /**
+     * The Breadcrumb is used to wraps a series of breadcrumb items to indicate the current page's location within a navigational hierarchy.
+     * @example How to use it
+     * ```html
+     * <bq-breadcrumb label="Breadcrumb">
+     * <bq-breadcrumb-item>Home</bq-breadcrumb-item>
+     * <bq-breadcrumb-item>Men's clothing</bq-breadcrumb-item>
+     * <bq-breadcrumb-item>Shirt</bq-breadcrumb-item>
+     * <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+     * </bq-breadcrumb>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/194fd1-breadcrumb
+     * @status stable
+     * @attr {string} label - The `aria-label` attribute to describe the type of navigation
+     */
     interface HTMLBqBreadcrumbElement extends Components.BqBreadcrumb, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLBqBreadcrumbElementEventMap>(type: K, listener: (this: HTMLBqBreadcrumbElement, ev: BqBreadcrumbCustomEvent<HTMLBqBreadcrumbElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLBqBreadcrumbElementEventMap>(type: K, listener: (this: HTMLBqBreadcrumbElement, ev: BqBreadcrumbCustomEvent<HTMLBqBreadcrumbElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqBreadcrumbElement: {
         prototype: HTMLBqBreadcrumbElement;
@@ -1689,6 +3306,40 @@ declare global {
         "bqFocus": HTMLBqBreadcrumbItemElement;
         "bqClick": HTMLBqBreadcrumbItemElement;
     }
+    /**
+     * The Breadcrumb Item helps users understand their current location within a website or application's hierarchical structure.
+     * @example How to use it
+     * ```html
+     * <bq-breadcrumb-item label="Home page">
+     * <bq-icon name="house-line" size="16"></bq-icon>
+     * Home
+     * </bq-breadcrumb-item>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/61d6c0-breadcrumb
+     * @status stable
+     * @attr {string} href - If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
+     * @attr {string} target - Where to display the link in the browser context. Relevant only if `href` is set.
+     * @attr {string} rel - Where to display the link in the browser context. Relevant only if `href` is set.
+     * @event bqFocus - Handler to be called when item is focused
+     * @event bqClick - Handler to be called when item is clicked
+     * @event bqBlur - Handler to be called when item loses focus
+     * @cssprop --bq-breadcrumb-item--background - Background color of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--box-shadow - Box shadow of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--border-color - Border color of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--border-style - Border style of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--border-width - Border width of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--border-radius - Border radius of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--line-height - Line height of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--text-color - Text color of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--text-color-current - Text color of the current breadcrumb item (active)
+     * @cssprop --bq-breadcrumb-item--text-size - Text size of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--text-size-separator - Text size of the breadcrumb item separator
+     * @cssprop --bq-breadcrumb-item--padding-start - Padding start of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--padding-end - Padding end of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--paddingY - Padding top and bottom of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--padding-start-separator - Padding start of the breadcrumb item separator
+     * @cssprop --bq-breadcrumb-item--padding-end-separator - Padding end of the breadcrumb item separator
+     */
     interface HTMLBqBreadcrumbItemElement extends Components.BqBreadcrumbItem, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqBreadcrumbItemElementEventMap>(type: K, listener: (this: HTMLBqBreadcrumbItemElement, ev: BqBreadcrumbItemCustomEvent<HTMLBqBreadcrumbItemElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1710,6 +3361,47 @@ declare global {
     }
     /**
      * Buttons are designed for users to take action on a page or a screen.
+     * @example How to use it
+     * ```html
+     * <bq-button appearance="primary" border="m" size="medium">
+     * <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>
+     * Go back
+     * </bq-button>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/286b43-buttons
+     * @status stable
+     * @dependency bq-icon
+     * @attr {"primary" | "secondary" | "link" | "text"} appearance - The appearance style to apply to the button
+     * @attr {boolean} block - If `true`, it will make the button fit to its parent width.
+     * @attr {string} border - The corner radius of the button
+     * @attr {boolean} disabled - If `true`, the button will be disabled (no interaction allowed)
+     * @attr {string} download - Tells the browser to treat the linked URL as a download. Only used when `href` is set.
+     * @attr {string} href - When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`
+     * @attr {"left" | "center" | "right"} justify-content - It determinate how the content should be aligned
+     * @attr {boolean} loading - If `true` it will display the button in a loading state
+     * @attr {"small" | "medium" | "large"} size - The size of the button
+     * @attr {"_blank" | "_parent" | "_self" | "_top"} target - Where to display the linked URL, as the name for a browsing context (a `tab`, `window`, or `<iframe>`)
+     * @attr {"button" | "submit" | "reset"} type - The default behavior of the button
+     * @attr {"standard" | "ghost" | "danger"} variant - The variant of button to apply on top of the appearance (applicable only to `appearance="primary"`)
+     * @event bqBlur - Handler to be called when the button loses focus
+     * @event bqFocus - Handler to be called when button gets focus
+     * @event bqClick - Handler to be called when the button is clicked
+     * @cssprop --bq-button--border-color - Button border color
+     * @cssprop --bq-button--border-radius - Button border radius
+     * @cssprop --bq-button--border-style - Button border style
+     * @cssprop --bq-button--border-width - Button border width
+     * @cssprop --bq-button--small-height - Button small height
+     * @cssprop --bq-button--small-paddingX - Button small padding block (top and bottom)
+     * @cssprop --bq-button--small-paddingY - Button small padding inline (left and right)
+     * @cssprop --bq-button--small-font-size - Button small font size
+     * @cssprop --bq-button--medium-height - Button medium height
+     * @cssprop --bq-button--medium-paddingX - Button medium padding block (top and bottom)
+     * @cssprop --bq-button--medium-paddingY - Button medium padding inline (left and right)
+     * @cssprop --bq-button--medium-font-size - Button medium font size
+     * @cssprop --bq-button--large-height - Button large height
+     * @cssprop --bq-button--large-paddingX - Button large padding block (top and bottom)
+     * @cssprop --bq-button--large-paddingY - Button large padding inline (left and right)
+     * @cssprop --bq-button--large-font-size - Button large font size
      */
     interface HTMLBqButtonElement extends Components.BqButton, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqButtonElementEventMap>(type: K, listener: (this: HTMLBqButtonElement, ev: BqButtonCustomEvent<HTMLBqButtonElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1725,6 +3417,30 @@ declare global {
         prototype: HTMLBqButtonElement;
         new (): HTMLBqButtonElement;
     };
+    /**
+     * The Card component serves as a versatile container designed for flexible content presentation within user interfaces.
+     * Its structure accommodates various styles, allowing users to customize and adapt it according to their design preferences.
+     * @example How to use it
+     * ```html
+     * <bq-card type="default" border="m">
+     * <div class="p-m">
+     * <h3 class="text-xl font-bold">Card Title</h3>
+     * <p class="text-m">Card content goes here</p>
+     * </div>
+     * </bq-card>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/522abb-card
+     * @status stable
+     * @attr {"default" | "minimal"} type - Type of card component
+     * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} border - The corner radius of the card component
+     * @cssprop --bq-card--borderColor - Card border color
+     * @cssprop --bq-card--borderRadius - Card border radius
+     * @cssprop --bq-card--borderStyle - Card border style
+     * @cssprop --bq-card--borderWidth - Card border width
+     * @cssprop --bq-card--padding - Card padding
+     * @cssprop --bq-card--paddingMinimal - Minimal card padding
+     * @cssprop --bq-card--background - Card background color
+     */
     interface HTMLBqCardElement extends Components.BqCard, HTMLStencilElement {
     }
     var HTMLBqCardElement: {
@@ -1736,6 +3452,36 @@ declare global {
         "bqFocus": HTMLBqCheckboxElement;
         "bqBlur": HTMLBqCheckboxElement;
     }
+    /**
+     * The checkbox is a UI component that allows users to select one or more options from a list of choices.
+     * It is commonly used in forms, surveys, and settings pages.
+     * @example How to use it
+     * ```html
+     * <bq-checkbox name="bq-checkbox" value="checkbox-value" background-on-hover>
+     * Checkbox label
+     * </bq-checkbox>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/431f17-checkbox
+     * @status stable
+     * @attr {boolean} background-on-hover - If true checkbox displays background on hover
+     * @attr {string} form-id - The form ID that the checkbox is associated with
+     * @attr {string} form-validation-message - The native form validation message
+     * @attr {boolean} checked - If true checkbox is checked
+     * @attr {boolean} disabled - If true checkbox is disabled
+     * @attr {boolean} indeterminate - A state that is neither checked nor unchecked
+     * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+     * @attr {boolean} required - If `true`, it will indicate that the user must specify a value for the checkbox before the owning form can be submitted
+     * @attr {string} value - A string representing the value of the checkbox. Primarily used to differentiate a list of related checkboxes that have the same name
+     * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+     * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+     * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+     * @event bqChange - Handler to be called when the checkbox state changes
+     * @event bqFocus - Handler to be called when the checkbox gets focus
+     * @event bqBlur - Handler to be called when the checkbox loses focus
+     * @cssprop --bq-checkbox--size - Checkbox size
+     * @cssprop --bq-checkbox--border-radius - Checkbox border radius
+     * @cssprop --bq-checkbox--border-width - Checkbox border width
+     */
     interface HTMLBqCheckboxElement extends Components.BqCheckbox, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqCheckboxElementEventMap>(type: K, listener: (this: HTMLBqCheckboxElement, ev: BqCheckboxCustomEvent<HTMLBqCheckboxElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1756,6 +3502,87 @@ declare global {
         "bqClear": HTMLBqDatePickerElement;
         "bqFocus": HTMLBqDatePickerElement;
     }
+    /**
+     * The Date Picker is a intuitive UI element component allows users to select dates from a visual calendar interface, providing an intuitive way to input date information.
+     * @example How to use it
+     * ```html
+     * <bq-date-picker
+     * first-day-of-week="1"
+     * locale="en-GB"
+     * months-per-view="single"
+     * months="2"
+     * name="bq-date-picker"
+     * placeholder="Enter your date"
+     * placement="bottom-end"
+     * show-outside-days="false"
+     * type="range"
+     * validation-status="none"
+     * value="2024-05-25"
+     * >
+     * <label class="flex flex-grow items-center" slot="label">
+     * Date picker label
+     * </label>
+     * </bq-date-picker>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/5793a9-date-picker
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-dropdown
+     * @dependency bq-icon
+     * @attr {boolean} autofocus - If `true`, the Date picker input will be focused on component render.
+     * @attr {string} clear-button-label - The clear button aria label.
+     * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+     * @attr {boolean} disabled - Indicates whether the Date picker input is disabled or not.
+     * @attr {number} distance - Represents the distance (gutter or margin) between the Date picker panel and the input element.
+     * @attr {0 | 1 | 2 | 3 | 4 | 5 | 6} first-day-of-week - The first day of the week, where Sunday is 0, Monday is 1, etc.
+     * @attr {Intl.DateTimeFormatOptions} format-options - The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
+     * @attr {string} form - The ID of the form that the Date picker input belongs to.
+     * @attr {function} is-date-disallowed - A function that takes a date and returns true if the date should not be selectable.
+     * @attr {Intl.LocalesArgument} locale - The locale for formatting dates. If not set, will use the browser's locale. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
+     * @attr {string} max - The latest date that can be selected.
+     * @attr {string} min - The earliest date that can be selected.
+     * @attr {number} months - Number of months to show when range is `true`.
+     * @attr {string} name - The Date picker input name.
+     * @attr {boolean} open - If `true`, the Date picker panel will be visible.
+     * @attr {string} panel-height - When set, it will override the height of the Date picker panel.
+     * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Position of the Date picker panel.
+     * @attr {boolean} required - Indicates whether or not the Date picker input is required to be filled out before submitting the form.
+     * @attr {number} skidding - Represents the skidding between the Date picker panel and the input element.
+     * @attr {boolean} show-outside-days - Whether to show days outside the month.
+     * @attr {string} strategy - Defines the strategy to position the Date picker panel.
+     * @attr {string} tentative - The date that is tentatively selected, e.g. the start of a range selection.
+     * @attr {"single" | "multi" | "range"} type - It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection.
+     * @attr {"error" | "none" | "success" | "warning"} validation-status - The validation status of the Select input.
+     * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value.
+     * @method clear - Clears the selected value.
+     * @event bqBlur - Callback handler emitted when the input loses focus.
+     * @event bqChange - Callback handler emitted when the input value has changed and the input loses focus.
+     * @event bqClear - Callback handler emitted when the input value has been cleared.
+     * @event bqFocus - Callback handler emitted when the input has received focus.
+     * @cssprop --bq-date-picker--background-color - Date picker background color
+     * @cssprop --bq-date-picker--border-color - Date picker border color
+     * @cssprop --bq-date-picker--border-color-disabled - Date picker border color when disabled
+     * @cssprop --bq-date-picker--border-color-focus - Date picker border color on focus
+     * @cssprop --bq-date-picker--border-radius - Date picker border radius
+     * @cssprop --bq-date-picker--border-style - Date picker border style
+     * @cssprop --bq-date-picker--border-width - Date picker border width
+     * @cssprop --bq-date-picker--currentDate-border-color - Date picker border color for current date
+     * @cssprop --bq-date-picker--currentDate-border-width - Date picker border width for current date
+     * @cssprop --bq-date-picker--currentDate-text-color - Date picker label text color for currentDate
+     * @cssprop --bq-date-picker--day-size - Date picker button day size
+     * @cssprop --bq-date-picker--gap - Gap between Date picker content and prefix/suffix
+     * @cssprop --bq-date-picker--icon-size - Icon size to use in prefix/suffix and clear button
+     * @cssprop --bq-date-picker--label-margin-bottom - Date picker label margin bottom
+     * @cssprop --bq-date-picker--label-text-color - Date picker label text color
+     * @cssprop --bq-date-picker--label-text-size - Date picker label text size
+     * @cssprop --bq-date-picker--padding-end - Date picker padding end
+     * @cssprop --bq-date-picker--padding-start - Date picker padding start
+     * @cssprop --bq-date-picker--paddingY - Date picker padding top and bottom
+     * @cssprop --bq-date-picker--range-background-color - Background color for the selected date range in the date picker
+     * @cssprop --bq-date-picker--text-color - Date picker text color
+     * @cssprop --bq-date-picker--text-placeholder-color - Date picker placeholder text color
+     * @cssprop --bq-date-picker--text-size - Date picker text size
+     */
     interface HTMLBqDatePickerElement extends Components.BqDatePicker, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqDatePickerElementEventMap>(type: K, listener: (this: HTMLBqDatePickerElement, ev: BqDatePickerCustomEvent<HTMLBqDatePickerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1777,6 +3604,63 @@ declare global {
         "bqAfterOpen": void;
         "bqAfterClose": void;
     }
+    /**
+     * The Dialog component is used to display additional content or prompt a user for action.
+     * It provides a way to display additional information, options, or controls in a separate, non-obstructive interface element.
+     * @example How to use it
+     * ```html
+     * <bq-dialog footer-appearance="standard" border="m" size="medium">
+     * <h5 class="bold flex items-center gap-s" slot="title">
+     * <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
+     * Title
+     * </h5>
+     * <p>
+     * Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+     * standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+     * type specimen book.
+     * </p>
+     * <div class="flex gap-xs" slot="footer">
+     * <bq-button appearance="link">Button</bq-button>
+     * <bq-button variant="ghost">Button</bq-button>
+     * <bq-button variant="standard" slot="footer">Button</bq-button>
+     * </div>
+     * </bq-dialog>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/15b6fc-dialog
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
+     * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} border - Border radius of the dialog component.
+     * @attr {boolean} disable-backdrop - If true, the backdrop overlay won't be shown when the dialog opens.
+     * @attr {boolean} disable-close-esc-keydown - If true, the dialog will not close when the [Esc] key is pressed.
+     * @attr {boolean} disable-close-click-outside - If true, the dialog will not close when clicking on the backdrop overlay.
+     * @attr {"standard" | "highlight"} footer-appearance - The appearance of the footer.
+     * @attr {boolean} hide-close-button - If true, it hides the close button.
+     * @attr {boolean} open - If true, the dialog will be shown as open.
+     * @attr {"small" | "medium" | "large"} size - The size of the dialog.
+     * @method show - Open the dialog.
+     * @method hide - Closes the dialog.
+     * @method cancel - Dismiss or cancel the dialog.
+     * @event bqCancel - Callback handler emitted when the dialog has been canceled or dismissed.
+     * @event bqClose - Callback handler emitted when the dialog will close.
+     * @event bqOpen - Callback handler emitted when the dialog will open.
+     * @event bqAfterOpen - Callback handler emitted when the dialog finish opening.
+     * @event bqAfterClose - Callback handler emitted when the dialog finish closing.
+     * @cssprop --bq-dialog--background - Dialog background color
+     * @cssprop --bq-dialog--background-backdrop - Dialog backdrop background color
+     * @cssprop --bq-dialog--box-shadow - Dialog box shadow
+     * @cssprop --bq-dialog--border-color - Dialog border color
+     * @cssprop --bq-dialog--border-style - Dialog border style
+     * @cssprop --bq-dialog--border-width - Dialog border width
+     * @cssprop --bq-dialog--border-radius - Dialog border radius
+     * @cssprop --bq-dialog--padding - Dialog padding
+     * @cssprop --bq-dialog--content-footer-gap - Dialog gap distance between content and footer elements
+     * @cssprop --bq-dialog--title-body-gap - Dialog gap distance between title and body elements
+     * @cssprop --bq-dialog--width-small - Dialog small width
+     * @cssprop --bq-dialog--width-medium - Dialog medium width
+     * @cssprop --bq-dialog--width-large - Dialog large width
+     * @cssprop --bq-dialog-z-index - Dialog z-index applied when opened
+     */
     interface HTMLBqDialogElement extends Components.BqDialog, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqDialogElementEventMap>(type: K, listener: (this: HTMLBqDialogElement, ev: BqDialogCustomEvent<HTMLBqDialogElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1791,6 +3675,28 @@ declare global {
         prototype: HTMLBqDialogElement;
         new (): HTMLBqDialogElement;
     };
+    /**
+     * The Divider component is used to visually separate content in a layout.
+     * @example How to use it
+     * ```html
+     * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
+     * <span slot="title">Divider Title</span>
+     * </bq-divider>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/53dfe6-divider
+     * @status stable
+     * @attr {boolean} dashed - If true, the divider has a dashed pattern.
+     * @attr {"horizontal" | "vertical"} orientation - The default orientation of the divider.
+     * @attr {string} stroke-color - Set the stroke color of the divider. The value should be a valid value of the palette color.
+     * @attr {"start" | "middle" | "end"} title-alignment - Set the alignment of the title on the main axis of the divider (horizontal / vertical).
+     * @attr {number} stroke-dash-width - Set the width of each dash of the divider's stroke. This is applicable when the stroke is dashed.
+     * @attr {number} stroke-dash-gap - Set the gap of the divider's stroke. This is applicable when the stroke is dashed.
+     * @attr {number} stroke-thickness - Set the thickness of the divider's stroke. Value expressed in px.
+     * @attr {number} stroke-basis - Set the min width of the divider's stroke when text is not centered. Value expressed in px.
+     * @attr {"square" | "round" | "butt"} stroke-linecap - Set the line of the divider's stroke. This is applicable when the stroke is dashed.
+     * @cssprop --bq-divider--color - Divider color
+     * @cssprop --bq-divider--title-marginX - Divider space between title and delimiters
+     */
     interface HTMLBqDividerElement extends Components.BqDivider, HTMLStencilElement {
     }
     var HTMLBqDividerElement: {
@@ -1803,6 +3709,44 @@ declare global {
         "bqAfterOpen": any;
         "bqAfterClose": any;
     }
+    /**
+     * The Drawer component provides a sliding panel interface commonly used for navigation or presenting additional content without taking up significant screen space.
+     * @example How to use it
+     * ```html
+     * <bq-drawer position="end">
+     * <div class="flex gap-xs" slot="title">Title</div>
+     * <div class="...">
+     * Content
+     * </div>
+     * <div class="flex flex-1 justify-center gap-xs" slot="footer">
+     * <bq-button appearance="primary" block="" size="small">Button</bq-button>
+     * <bq-button appearance="link" block="" size="small">Button</bq-button>
+     * </div>
+     * </bq-drawer>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/871139-drawer
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
+     * @dependency bq-divider
+     * @attr {boolean} enable-backdrop - If true, the backdrop overlay will be shown when the drawer opens.
+     * @attr {boolean} close-on-click-outside - If true, the drawer will not close when clicking outside the panel.
+     * @attr {boolean} close-on-esc - If true, the drawer will not close when the [Esc] key is pressed.
+     * @attr {boolean} open - If true, the drawer component will be shown.
+     * @attr {"start" | "end"} position - Defines the position of the drawer.
+     * @method show - Method to be called to show the drawer component.
+     * @method hide - Method to be called to hide the drawer component.
+     * @event bqClose - Callback handler to be called when the drawer is closed.
+     * @event bqOpen - Callback handler to be called when the drawer is opened.
+     * @event bqAfterOpen - Callback handler to be called after the drawer has been opened.
+     * @event bqAfterClose - Callback handler to be called after the drawer has been closed.
+     * @cssprop --bq-drawer--backgroundBackdrop - Background color of the backdrop
+     * @cssprop --bq-drawer--gap - Gap between the drawer and the viewport
+     * @cssprop --bq-drawer--width - Width of the drawer
+     * @cssprop --bq-drawer--paddingX - Padding left and right of the drawer
+     * @cssprop --bq-drawer--paddingY - Padding top and bottom of the drawer
+     * @cssprop --bq-drawer--zIndex - Z-index of the drawer component
+     */
     interface HTMLBqDrawerElement extends Components.BqDrawer, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqDrawerElementEventMap>(type: K, listener: (this: HTMLBqDrawerElement, ev: BqDrawerCustomEvent<HTMLBqDrawerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1820,6 +3764,46 @@ declare global {
     interface HTMLBqDropdownElementEventMap {
         "bqOpen": { open: boolean };
     }
+    /**
+     * The Dropdown Component is commonly used when presenting a list of selectable options that are too numerous to fit comfortably on the screen.
+     * They provide an efficient way to save space and present a long list of options in a compact and organized manner.
+     * @example How to use it
+     * ```html
+     * <bq-dropdown placement="bottom-start">
+     * <bq-button slot="trigger">Dropdown</bq-button>
+     * <bq-option-list>
+     * <bq-option value="users">...</bq-option>
+     * <bq-option value="user">...</bq-option>
+     * <bq-option value="dashboard">...</bq-option>
+     * <bq-option value="settings">...</bq-option>
+     * <bq-option value="logout">...</bq-option>
+     * </bq-option-list>
+     * </bq-dropdown>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/47ff4b-dropdown
+     * @status stable
+     * @dependency bq-panel
+     * @attr {boolean} disabled - If true, the dropdown panel will be visible and won't be shown.
+     * @attr {number} distance - Represents the distance (gutter or margin) between the panel and the trigger element.
+     * @attr {boolean} keep-open-on-select - If true, the panel will remain open after a selection is made.
+     * @attr {"top" | "bottom" | "left" | "right" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end" | "right-start" | "right-end"} placement - Position of the panel.
+     * @attr {boolean} open - If true, the panel will be visible.
+     * @attr {string} panel-height - When set, it will override the height of the dropdown panel.
+     * @attr {boolean} same-width - Whether the panel should have the same width as the trigger element.
+     * @attr {number} skidding - Represents the skidding between the panel and the trigger element.
+     * @attr {"fixed" | "absolute"} strategy - Defines the strategy to position the panel.
+     * @event bqOpen - Callback handler to be called when the dropdown panel is opened or closed.
+     * @cssprop --bq-panel--background - Panel background color
+     * @cssprop --bq-panel--border-color - Panel border color
+     * @cssprop --bq-panel--border-radius - Panel border radius
+     * @cssprop --bq-panel--border-style - Panel border style
+     * @cssprop --bq-panel--border-width - Panel border width
+     * @cssprop --bq-panel--box-shadow - Panel box shadow
+     * @cssprop --bq-panel--padding - Panel padding
+     * @cssprop --bq-panel--height - Panel height
+     * @cssprop --bq-panel--width - Panel width
+     * @cssprop --bq-panel-z-index - Panel z-index applied when opened
+     */
     interface HTMLBqDropdownElement extends Components.BqDropdown, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqDropdownElementEventMap>(type: K, listener: (this: HTMLBqDropdownElement, ev: BqDropdownCustomEvent<HTMLBqDropdownElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1834,6 +3818,17 @@ declare global {
         prototype: HTMLBqDropdownElement;
         new (): HTMLBqDropdownElement;
     };
+    /**
+     * An Empty State is a UI component displayed when there is no data or content available, often used in dynamic or inactive application states.
+     * @example How to use it
+     * ```html
+     * <bq-empty-state size="medium">Title</bq-empty-state>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/673ae0-empty-state/b/09d7b1
+     * @status stable
+     * @dependency bq-icon
+     * @attr {"large" | "medium" | "small"} size - The size of the empty state component
+     */
     interface HTMLBqEmptyStateElement extends Components.BqEmptyState, HTMLStencilElement {
     }
     var HTMLBqEmptyStateElement: {
@@ -1844,7 +3839,22 @@ declare global {
         "svgLoaded": any;
     }
     /**
-     * Icons are simplified images that graphically explain the meaning of an object on the screen.
+     * The Icon component is an image that provides a visual representation of an object, action, or concept displayed on the screen.
+     * It is a small graphical element that is used to enhance the user interface and improve user experience.
+     * @example How to use it
+     * ```html
+     * <bq-icon color="text--brand" name="bell-ringing" size="24"></bq-icon>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/675fad-icon
+     * @status stable
+     * @attr {string} color - Set the stroke color of the SVG. The value should be a valid value of the palette color.
+     * @attr {string} label - Label for the icon, used for accessibility.
+     * @attr {string} name - Icon name to load. Please check all available icons [here](https://phosphoricons.com/).
+     * @attr {string | number} size - Set the size of the SVG.
+     * @attr {string} src - Set the source of the SVG. If the source is set, the name property will be ignored.
+     * @event svgLoaded - Callback handler to be called when the SVG has loaded.
+     * @cssprop --bq-icon--color - The stroke color of the SVG.
+     * @cssprop --bq-icon--size - The size of the SVG.
      */
     interface HTMLBqIconElement extends Components.BqIcon, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqIconElementEventMap>(type: K, listener: (this: HTMLBqIconElement, ev: BqIconCustomEvent<HTMLBqIconElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1867,6 +3877,66 @@ declare global {
         "bqFocus": HTMLBqInputElement;
         "bqInput": { value: string | number | string[]; el: HTMLBqInputElement };
     }
+    /**
+     * The Input component is a fundamental user interface element that allows users to input data by typing it into a text field.
+     * It is commonly used in web and mobile applications for various purposes, such as collecting user information, search inputs, and login forms.
+     * @example How to use it
+     * ```html
+     * <bq-input name="username" label="Username" placeholder="Enter your username"></bq-input>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/980362-input
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
+     * @attr {string} autocapitalize - Controls whether or not the input field should be capitalized and how.
+     * @attr {string} autocomplete - Specifies whether or not the input field should have autocomplete enabled.
+     * @attr {string} autocorrect - Controls whether or not the input field should have autocorrect enabled.
+     * @attr {boolean} autofocus - If true, the input will be focused on component render.
+     * @attr {string} clear-button-label - The clear button aria label.
+     * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
+     * @attr {boolean} disabled - Indicates whether the input is disabled or not.
+     * @attr {boolean} disable-clear - If true, the clear button won't be displayed.
+     * @attr {string} form - The ID of the form that the input field belongs to.
+     * @attr {string} inputmode - The inputmode attribute specifies what kind of input mechanism would be most helpful for users entering content into the input field.
+     * @attr {number | string} max - The maximum value that the input field can accept.
+     * @attr {number} maxlength - The maximum number of characters that the input field can accept.
+     * @attr {number | string} min - The minimum value that the input field can accept.
+     * @attr {number} minlength - The minimum number of characters that the input field can accept.
+     * @attr {string} name - The input field name.
+     * @attr {string} pattern - Specifies a regular expression the form control's value should match.
+     * @attr {string} placeholder - The input placeholder text value.
+     * @attr {boolean} readonly - If true, the input field cannot be modified.
+     * @attr {boolean} required - Indicates whether or not the input field is required to be filled out before submitting the form.
+     * @attr {number | 'any'} step - A number that specifies the granularity that the value must adhere to.
+     * @attr {string} type - The type attribute specifies the type of input field to display.
+     * @attr {'none' | 'error' | 'warning' | 'success'} validation-status - The validation status of the input.
+     * @attr {string | number | string[]} value - The input value, it can be used to reset the input to a previous value.
+     * @event bqBlur - Callback handler emitted when the input loses focus.
+     * @event bqChange - Callback handler emitted when the input value has changed and the input loses focus.
+     * @event bqClear - Callback handler emitted when the input value has been cleared.
+     * @event bqFocus - Callback handler emitted when the input has received focus.
+     * @event bqInput - Callback handler emitted when the input value changes.
+     * @cssprop --bq-input--background-color - Input background color
+     * @cssprop --bq-input--border-color - Input border color
+     * @cssprop --bq-input--border-color-focus - Input border color on focus
+     * @cssprop --bq-input--border-radius - Input border radius
+     * @cssprop --bq-input--border-width - Input border width
+     * @cssprop --bq-input--border-style - Input border style
+     * @cssprop --bq-input--gap - Gap between input content and prefix/suffix
+     * @cssprop --bq-input--helper-margin-top - Helper text margin top
+     * @cssprop --bq-input--helper-text-color - Helper text color
+     * @cssprop --bq-input--helper-text-size - Helper text size
+     * @cssprop --bq-input--icon-size - Icon size to use in prefix/suffix and clear button
+     * @cssprop --bq-input--label-margin-bottom - Input label margin bottom
+     * @cssprop --bq-input--label-text-color - Input label text color
+     * @cssprop --bq-input--label-text-size - Input label text size
+     * @cssprop --bq-input--padding-start - Input padding start
+     * @cssprop --bq-input--padding-end - Input padding end
+     * @cssprop --bq-input--paddingY - Input padding top and bottom
+     * @cssprop --bq-input--text-color - Input text color
+     * @cssprop --bq-input--text-size - Input text size
+     * @cssprop --bq-input--text-placeholder-color - Input placeholder text color
+     */
     interface HTMLBqInputElement extends Components.BqInput, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqInputElementEventMap>(type: K, listener: (this: HTMLBqInputElement, ev: BqInputCustomEvent<HTMLBqInputElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1887,6 +3957,53 @@ declare global {
         "bqAfterOpen": any;
         "bqAfterClose": any;
     }
+    /**
+     * The Notification component is a user interface element used to provide information or alerts to users in a non-intrusive manner.
+     * @example How to use it
+     * ```html
+     * <bq-notification border="s" time="3000" type="info">
+     * Title
+     * <span slot="body">
+     * This is some description text text
+     * <a class="bq-link" href="https://example.com">Link</a>
+     * </span>
+     * <div class="flex gap-xs" slot="footer">
+     * <bq-button appearance="primary" size="small">Button</bq-button>
+     * <bq-button appearance="link" size="small">Button</bq-button>
+     * </div>
+     * </bq-notification>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/945cb6-notification
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
+     * @attr {boolean} auto-dismiss - If true, the notification will automatically hide after the specified amount of time
+     * @attr {string} border - The corder radius of the notification component
+     * @attr {boolean} disable-close - If true, the close button at the top right of the notification won't be shown
+     * @attr {boolean} hide-icon - If true, the notification icon won't be shown
+     * @attr {boolean} open - If true, the notification will be shown
+     * @attr {number} time - The length of time, in milliseconds, after which the notification will close itself. Only valid if `auto-dismiss="true"`
+     * @attr {string} type - Type of Notification
+     * @event bqAfterClose - Callback handler to be called after the notification has been closed
+     * @event bqAfterOpen - Callback handler to be called after the notification has been opened
+     * @event bqHide - Callback handler to be called when the notification is hidden
+     * @event bqShow - Callback handler to be called when the notification is shown
+     * @cssprop --bq-notification--background - The notification background color
+     * @cssprop --bq-notification--box-shadow - The notification box shadow
+     * @cssprop --bq-notification--border-color - The notification border color
+     * @cssprop --bq-notification--border-radius - The notification border radius
+     * @cssprop --bq-notification--border-style - The notification border style
+     * @cssprop --bq-notification--border-width - The notification border width
+     * @cssprop --bq-notification--content-footer-gap - The notification content and footer gap
+     * @cssprop --bq-notification--title-body-gap - The notification title and body gap
+     * @cssprop --bq-notification--icon-color-error - The notification icon color for error type
+     * @cssprop --bq-notification--icon-color-info - The notification icon color for info type
+     * @cssprop --bq-notification--icon-color-neutral - The notification icon color for neutral type
+     * @cssprop --bq-notification--icon-color-success - The notification icon color for success type
+     * @cssprop --bq-notification--icon-color-warning - The notification icon color for warning type
+     * @cssprop --bq-notification--padding - The notification padding
+     * @cssprop --bq-notification--min-width - The notification min width
+     */
     interface HTMLBqNotificationElement extends Components.BqNotification, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqNotificationElementEventMap>(type: K, listener: (this: HTMLBqNotificationElement, ev: BqNotificationCustomEvent<HTMLBqNotificationElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1907,6 +4024,39 @@ declare global {
         "bqClick": HTMLBqOptionElement;
         "bqEnter": HTMLBqOptionElement;
     }
+    /**
+     * An option refers to a specific choice that appears in a list of selectable items that can be opened or closed by the user.
+     * It can be an element of the navigation system that allows users to select different sections or pages within an application or it can be used within a dropdown list.
+     * @example How to use it
+     * ```html
+     * <bq-option value="user">
+     * <span>User profile</span>
+     * <bq-icon slot="suffix" name="user"></bq-icon>
+     * </bq-option>
+     * ```
+     * @documentation https://storybook.beeq.design/?path=/story/components-option--with-option-group
+     * @status stable
+     * @attr {boolean} disabled - If true, the option is disabled.
+     * @attr {boolean} hidden - If true, the option is hidden.
+     * @attr {string} value - A string representing the value of the option. Can be used to identify the item.
+     * @attr {boolean} selected - If true, the option is selected and active.
+     * @event bqBlur - Handler to be called when item loses focus.
+     * @event bqFocus - Handler to be called when item is focused.
+     * @event bqClick - Handler to be called when item is clicked.
+     * @event bqEnter - Handler to be called on enter key press.
+     * @cssprop --bq-option--background - background color
+     * @cssprop --bq-option--font-size - font size
+     * @cssprop --bq-option--border-color - border color
+     * @cssprop --bq-option--border-style - border style
+     * @cssprop --bq-option--border-width - border width
+     * @cssprop --bq-option--border-radius - border radius
+     * @cssprop --bq-option--box-shadow - box shadow
+     * @cssprop --bq-option--gap-start - gap space between prefix and label
+     * @cssprop --bq-option--gap-end - gap space between label and suffix
+     * @cssprop --bq-option--paddingY - padding Y axis
+     * @cssprop --bq-option--padding-start - option label padding start
+     * @cssprop --bq-option--padding-end - option label padding end
+     */
     interface HTMLBqOptionElement extends Components.BqOption, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqOptionElementEventMap>(type: K, listener: (this: HTMLBqOptionElement, ev: BqOptionCustomEvent<HTMLBqOptionElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1921,6 +4071,30 @@ declare global {
         prototype: HTMLBqOptionElement;
         new (): HTMLBqOptionElement;
     };
+    /**
+     * The option group component is a container for multiple option elements.
+     * It allows to manage the appearance and size of all options at once.
+     * @example How to use it
+     * ```html
+     * <bq-option-group class="hydrated">
+     * <span slot="header-label">Sport</span>
+     * <bq-option value="football">Football</bq-option>
+     * <bq-option value="basketball">Basketball</bq-option>
+     * <bq-option value="tennis">Tennis</bq-option>
+     * </bq-option-group>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/3b1b7b-option-group
+     * @status stable
+     * @cssprop --bq-option-group--background - option group background color
+     * @cssprop --bq-option-group--font-size - option group font size
+     * @cssprop --bq-option-group--line-height - option group line height
+     * @cssprop --bq-option-group--label-padding-start - option group header padding start
+     * @cssprop --bq-option-group--label-padding-end - option group header padding start
+     * @cssprop --bq-option-group--label-paddingY - option group header padding Y axis
+     * @cssprop --bq-option-group--label-text-padding-start - option group text within label padding start
+     * @cssprop --bq-option-group--label-text-padding-end - option group text within label padding start
+     * @cssprop --bq-option-group--container-padding-start - option group container padding start
+     */
     interface HTMLBqOptionGroupElement extends Components.BqOptionGroup, HTMLStencilElement {
     }
     var HTMLBqOptionGroupElement: {
@@ -1930,6 +4104,22 @@ declare global {
     interface HTMLBqOptionListElementEventMap {
         "bqSelect": { value: string; item: HTMLBqOptionElement };
     }
+    /**
+     * The option list component is a container for multiple option elements.
+     * It allows to manage the appearance and size of all options at once.
+     * @example How to use it
+     * ```html
+     * <bq-option-list>
+     * <bq-option value="football">Football</bq-option>
+     * <bq-option value="basketball">Basketball</bq-option>
+     * <bq-option value="tennis">Tennis</bq-option>
+     * </bq-option-list>
+     * ```
+     * @documentation https://storybook.beeq.design/?path=/story/components-option--default
+     * @status stable
+     * @attr {string} aria-label - Aria label for the list.
+     * @cssprop --bq-option-group--gapY-list - Option group gap between items Y axis
+     */
     interface HTMLBqOptionListElement extends Components.BqOptionList, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqOptionListElementEventMap>(type: K, listener: (this: HTMLBqOptionListElement, ev: BqOptionListCustomEvent<HTMLBqOptionListElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1944,18 +4134,95 @@ declare global {
         prototype: HTMLBqOptionListElement;
         new (): HTMLBqOptionListElement;
     };
+    /**
+     * The Page Title component is a versatile and essential element used to display the main title of a page or section within an application.
+     * @example How to use it
+     * ```html
+     * <bq-page-title>
+     * <bq-button appearance="link" slot="back">
+     * <bq-icon
+     * color="text--primary"
+     * name="arrow-left"
+     * weight="bold"
+     * role="img"
+     * title="Navigate back to the previous page"
+     * ></bq-icon>
+     * </bq-button>
+     * Title
+     * <div slot="sub-title">Sub-title</div>
+     * </bq-page-title>
+     * ```
+     * @documentation https://storybook.beeq.design/?path=/docs/components-page-title--overview
+     * @status stable
+     * @cssprop --paddingY - Padding top and bottom of the page title wrapper
+     * @cssprop --subtitle-borderBlockEnd - Page title border end color
+     * @cssprop --subtitle-fontWeight - Page title font weight for subtitle
+     * @cssprop --subtitle-textColor - Page title color for sub-title
+     * @cssprop --subtitle-textSize - Page title text size for subtitle
+     * @cssprop --title-fontWeight - Page title font weight for title
+     * @cssprop --title-lineHeight - Page title text line height
+     * @cssprop --title-textColor - Page title color for title
+     * @cssprop --title-textSize - Page title text size for title
+     */
     interface HTMLBqPageTitleElement extends Components.BqPageTitle, HTMLStencilElement {
     }
     var HTMLBqPageTitleElement: {
         prototype: HTMLBqPageTitleElement;
         new (): HTMLBqPageTitleElement;
     };
+    /**
+     * The Panel component is a versatile and essential element used to wrap and display content in a floating panel.
+     * @example How to use it
+     * ```html
+     * <bq-panel open>
+     * <div>Panel content</div>
+     * </bq-panel>
+     * ```
+     * @status stable
+     * @attr {number} distance - Represents the distance (gutter or margin) between the panel and the trigger element.
+     * @attr {"top" | "bottom" | "left" | "right" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end" | "right-start" | "right-end"} placement - Position of the panel.
+     * @attr {boolean} open - If true, the panel will be visible.
+     * @attr {boolean} same-width - Whether the panel should have the same width as the trigger element.
+     * @attr {number} skidding - Represents the skidding between the panel and the trigger element.
+     * @attr {"fixed" | "absolute"} strategy - Defines the strategy to position the panel.
+     * @prop --bq-panel--background - Panel background color
+     * @prop --bq-panel--border-color - Panel border color
+     * @prop --bq-panel--border-radius - Panel border radius
+     * @prop --bq-panel--border-style - Panel border style
+     * @prop --bq-panel--border-width - Panel border width
+     * @prop --bq-panel--box-shadow - Panel box shadow
+     * @prop --bq-panel--padding - Panel padding
+     * @prop --bq-panel--height - Panel height
+     * @prop --bq-panel--width - Panel width
+     * @prop --bq-panel-z-index - Panel z-index applied when opened
+     */
     interface HTMLBqPanelElement extends Components.BqPanel, HTMLStencilElement {
     }
     var HTMLBqPanelElement: {
         prototype: HTMLBqPanelElement;
         new (): HTMLBqPanelElement;
     };
+    /**
+     * The progress bar is a user interface component that visually represents the completion status of a task or process.
+     * @example How to use it
+     * ```html
+     * <bq-progress value="50"></bq-progress>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/691cb3-progress
+     * @status stable
+     * @dependency bq-tooltip
+     * @attr {"rounded" | "rounded-full"} border-shape - It will set the border style of the progress bar
+     * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value
+     * @attr {boolean} indeterminate - If `true` the indeterminate state of progress bar is enabled
+     * @attr {boolean} label - If `true`, a label text showing the value (in percentage) will be shown
+     * @attr {"small" | "medium" | "large"} thickness - Progress bar thickness
+     * @attr {"default" | "error"} type - Progress type
+     * @attr {number} value - A number representing the current value of the progress bar
+     * @cssprop --bq-progress-bar--height - The progress bars height
+     * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
+     * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
+     * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
+     */
     interface HTMLBqProgressElement extends Components.BqProgress, HTMLStencilElement {
     }
     var HTMLBqProgressElement: {
@@ -1968,6 +4235,31 @@ declare global {
         "bqBlur": HTMLBqRadioElement;
         "bqKeyDown": KeyboardEvent;
     }
+    /**
+     * The radio button is a user interface element that allows users to select a single option.
+     * @example How to use it
+     * ```html
+     * <bq-radio value="option1">Radio option 1</bq-radio>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/9718e1-radio-button/b/09d7b1
+     * @status stable
+     * @attr {boolean} background-on-hover - If `true`, the radio displays background on hover
+     * @attr {boolean} checked - If `true` radio input is checked
+     * @attr {boolean} disabled - If `true` radio input is disabled
+     * @attr {string} form-id - The form ID that the radio input is associated with
+     * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+     * @attr {boolean} required - If `true`, it will indicate that the user must specify a value for the radio before the owning form can be submitted
+     * @attr {boolean} value - A string representing the value of the radio
+     * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+     * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+     * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+     * @event bqBlur - Handler to be called when the radio loses focus
+     * @event bqClick - Handler to be called when the radio state changes
+     * @event bqFocus - Handler to be called when the radio gets focused
+     * @event bqKeyDown - The handler is to be called when the radio key is pressed
+     * @cssprop --bq-radio--size - Radio size
+     * @cssprop --bq-radio--border-width - Radio border width
+     */
     interface HTMLBqRadioElement extends Components.BqRadio, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqRadioElementEventMap>(type: K, listener: (this: HTMLBqRadioElement, ev: BqRadioCustomEvent<HTMLBqRadioElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1985,6 +4277,31 @@ declare global {
     interface HTMLBqRadioGroupElementEventMap {
         "bqChange": { value: string; target: HTMLBqRadioElement };
     }
+    /**
+     * The radio group is a user interface component that groups radio buttons to enable a single selection within the group.
+     * @example How to use it
+     * ```html
+     * <bq-radio-group fieldset value="option1">
+     * <span slot="label">radio group</span>
+     * <bq-radio value="option1">Radio option 1</bq-radio>
+     * <bq-radio value="option2">Radio option 2</bq-radio>
+     * <bq-radio value="option3">Radio option 3</bq-radio>
+     * </bq-radio-group>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/9718e1-radio-button/b/09d7b1
+     * @status stable
+     * @attr {boolean} background-on-hover - If `true`, the radio displays background on hover
+     * @attr {number} debounce-time - A number representing the delay time (in milliseconds) that bqChange event handler gets triggered once the value change
+     * @attr {boolean} disabled - If `true` radio inputs are disabled
+     * @attr {boolean} fieldset - If `true` displays fieldset
+     * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+     * @attr {"horizontal" | "vertical"} orientation - The display orientation of the radio inputs
+     * @attr {string} value - The display orientation of the radio inputs
+     * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+     * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+     * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+     * @event bqChange - Handler to be called when the radio state changes
+     */
     interface HTMLBqRadioGroupElement extends Components.BqRadioGroup, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqRadioGroupElementEventMap>(type: K, listener: (this: HTMLBqRadioGroupElement, ev: BqRadioGroupCustomEvent<HTMLBqRadioGroupElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2005,6 +4322,77 @@ declare global {
         "bqFocus": HTMLBqSelectElement;
         "bqSelect": { value: string | number | string[]; item: HTMLBqOptionElement };
     }
+    /**
+     * The select input component lets users choose from a predefined list, commonly used in forms for easy data selection.
+     * @example How to use it
+     * ```html
+     * <bq-select placeholder="Placeholder">
+     * <label slot="label">Select label</label>
+     * <span slot="helper-text">
+     * <bq-icon name="star"></bq-icon>
+     * Helper text
+     * </span>
+     * <bq-option value="1">Option 1</bq-option>
+     * <bq-option value="2">Option 2</bq-option>
+     * <bq-option value="3">Option 3</bq-option>
+     * </bq-select>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/41989d-select/b/09d7b1
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-dropdown
+     * @dependency bq-icon
+     * @dependency bq-option-list
+     * @dependency bq-tag
+     * @attr {boolean} autofocus - If `true`, the Select input will be focused on component render.
+     * @attr {string} clear-button-label - The clear button aria label.
+     * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
+     * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+     * @attr {boolean} disabled - Indicates whether the Select input is disabled and cannot be interacted with.
+     * @attr {number} distance - Represents the distance (gutter or margin) between the Select panel and the input element.
+     * @attr {string} form - The ID of the form that Select input field belongs to.
+     * @attr {boolean} keep-open-on-select - If `true`, the Select panel will remain open after a selection is made.
+     * @attr {number} max-tags-visible - The maximum number of tags to display when multiple selection is enabled.
+     * @attr {boolean} multiple - If `true`, the Select input will allow multiple selections.
+     * @attr {string} name - The Select input name.
+     * @attr {boolean} open - If `true`, the Select panel will be visible.
+     * @attr {string} panel-height - When set, it will override the height of the Select panel.
+     * @attr {string} placeholder - The Select input placeholder text value.
+     * @attr {"bottom" | "bottom-end" | "bottom-start" | "left" | "left-end" | "left-start" | "right" | "right-end" | "right-start" | "top" | "top-end" | "top-start"} placement - Position of the Select panel.
+     * @attr {boolean} readonly - If `true`, the Select input cannot be modified.
+     * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
+     * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
+     * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
+     * @attr {"absolute" | "fixed"} strategy - Defines the strategy to position the Select panel.
+     * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
+     * @attr {"number" | "string" | "string[]"} value - The select input value can be used to reset the field to a previous value.
+     * @method clear - Method to be called to clear the selected value.
+     * @event bqBlur - The callback handler is emitted when the Select input loses focus.
+     * @event bqClear - The callback handler is emitted when the selected value has been cleared.
+     * @event bqFocus - A callback handler is emitted when the Select input has received focus.
+     * @event bqSelect - The callback handler is emitted when the selected value has changed.
+     * @cssprop --bq-select--background-color - Select background color
+     * @cssprop --bq-select--border-color - Select border color
+     * @cssprop --bq-select--border-color-focus - Select border color on focus
+     * @cssprop --bq-select--border-color-disabled - Select border color when disabled
+     * @cssprop --bq-select--border-radius - Select border radius
+     * @cssprop --bq-select--border-width - Select border width
+     * @cssprop --bq-select--border-style - Select border style
+     * @cssprop --bq-select--gap - Gap between Select content and prefix/suffix
+     * @cssprop --bq-select--helper-margin-top - Helper text margin top
+     * @cssprop --bq-select--helper-text-color - Helper text color
+     * @cssprop --bq-select--helper-text-size - Helper text size
+     * @cssprop --bq-select--icon-size - Icon size to use in prefix/suffix and clear button
+     * @cssprop --bq-select--label-margin-bottom - Select label margin bottom
+     * @cssprop --bq-select--label-text-color - Select label text color
+     * @cssprop --bq-select--label-text-size - Select label text size
+     * @cssprop --bq-select--padding-start - Select padding start
+     * @cssprop --bq-select--padding-end - Select padding end
+     * @cssprop --bq-select--paddingY - Select padding top and bottom
+     * @cssprop --bq-select--text-color - Select text color
+     * @cssprop --bq-select--text-size - Select text size
+     * @cssprop --bq-select--text-placeholder-color - Select placeholder text color
+     */
     interface HTMLBqSelectElement extends Components.BqSelect, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqSelectElementEventMap>(type: K, listener: (this: HTMLBqSelectElement, ev: BqSelectCustomEvent<HTMLBqSelectElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2023,6 +4411,42 @@ declare global {
         "bqCollapse": { collapse: boolean };
         "bqSelect": HTMLBqSideMenuItemElement;
     }
+    /**
+     * The default side menu serves as a versatile container for organizing and displaying navigation elements,
+     *  with default side menu items providing a clean and straightforward way to represent individual menu options.
+     *  Together, they form the foundation for building structured and intuitive side menu layouts.
+     * @example How to use it
+     * ```html
+     * <bq-side-menu>
+     * <div slot="logo">
+     * <h1>Your Logo</h1>
+     * </div>
+     * <bq-side-menu-item active>
+     * <bq-icon name="home" slot="prefix"></bq-icon>
+     * Home
+     * </bq-side-menu-item>
+     * <bq-side-menu-item>
+     * <bq-icon name="settings" slot="prefix"></bq-icon>
+     * Settings
+     * </bq-side-menu-item>
+     * <bq-side-menu-item disabled>
+     * <bq-icon name="help" slot="prefix"></bq-icon>
+     * Help
+     * </bq-side-menu-item>
+     * </bq-side-menu>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/99822d-side-menu/b/09d7b1
+     * @status stable
+     * @attr {"brand" | "default" | "inverse"} appearance - It sets a predefined appearance of the side menu.
+     * @attr {boolean} collapse - If `true`, the container will reduce its width.
+     * @attr {"medium" | "small"} - size - It sets the size of the navigation menu items.
+     * @method toggleCollapse - Method to be called to toggle the collapse state of the side menu.
+     * @event bqCollapse - Callback handler to be called when the Side menu changes its width from expanded to collapse and vice versa.
+     * @event bqSelect - Callback handler to be called when the active/selected menu item changes.
+     * @cssprop --bq-side-menu--bg-color - Side menu background color
+     * @cssprop --bq-side-menu--brand-color - Side menu logo color
+     * @cssprop --bq-side-menu--border-color - Side menu border color
+     */
     interface HTMLBqSideMenuElement extends Components.BqSideMenu, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqSideMenuElementEventMap>(type: K, listener: (this: HTMLBqSideMenuElement, ev: BqSideMenuCustomEvent<HTMLBqSideMenuElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2042,6 +4466,35 @@ declare global {
         "bqFocus": HTMLBqSideMenuItemElement;
         "bqClick": HTMLBqSideMenuItemElement;
     }
+    /**
+     * Represents the default side menu item for standard navigation elements, providing a clean and straightforward way to display menu options.
+     * @example How to use it
+     * ```html
+     * <bq-side-menu-item>
+     * <bq-icon name="star-four" slot="prefix"></bq-icon>
+     * Menu item
+     * <bq-badge slot="suffix">5</bq-badge>
+     * </bq-side-menu-item>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/99822d-side-menu/b/09d7b1
+     * @status stable
+     * @dependency bq-tooltip
+     * @attr {boolean} active - If `true`, the menu item will be shown as active/selected.
+     * @attr {boolean} collapse - If `true`, the item label and suffix will be hidden and the with will be reduced according to its parent.
+     * @attr {boolean} disabled - If `true`, the menu item will be disabled (no interaction allowed).
+     * @event bqBlur - Handler to be called when the button loses focus.
+     * @event bqClick - Handler to be called when the button gets focused.
+     * @event bqFocus - Handler to be called when the button is clicked.
+     * @cssprop --bq-side-menu-item--bg-default - Side menu item default background color
+     * @cssprop --bq-side-menu-item--bg-hover - Side menu item hover background color
+     * @cssprop --bq-side-menu-item--bg-active - Side menu item active background color
+     * @cssprop --bq-side-menu-item--text-default - Side menu item default text color
+     * @cssprop --bq-side-menu-item--text-hover - Side menu item hover text color
+     * @cssprop --bq-side-menu-item--text-active - Side menu item active text color
+     * @cssprop --bq-side-menu-item--text-disabled - Side menu item disable text color
+     * @cssprop --bq-side-menu-item--paddingX - Side menu item vertical padding
+     * @cssprop --bq-side-menu-item--paddingY - Side menu item horizontal padding
+     */
     interface HTMLBqSideMenuItemElement extends Components.BqSideMenuItem, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqSideMenuItemElementEventMap>(type: K, listener: (this: HTMLBqSideMenuItemElement, ev: BqSideMenuItemCustomEvent<HTMLBqSideMenuItemElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2061,6 +4514,36 @@ declare global {
         "bqBlur": HTMLBqSliderElement;
         "bqFocus": HTMLBqSliderElement;
     }
+    /**
+     * Sliders provide a visual representation of adjustable content, enabling users to change values by dragging a handle along a horizontal track.
+     * @example How to use it
+     * ```html
+     * <bq-slider max="100" value="30"></bq-slider>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/509cbc-slider/b/09d7b1
+     * @status stable
+     * @dependency bq-tooltip
+     * @attr {number} debounce-time - The amount of time, in milliseconds, to wait to trigger the bqChange event after each value change.
+     * @attr {boolean} disabled - If `true` the slider is disabled.
+     * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value.
+     * @attr {boolean} enable-value-indicator - If `true` it will show the value label on the side of the slider track area.
+     * @attr {number} gap - A number representing the amount to remain between the minimum and maximum values (only for range type).
+     * @attr {number} max - A number representing the max value of the slider.
+     * @attr {number} min - A number representing the min value of the slider.
+     * @attr {number} step - A number represents the step of the slider. ⚠️ Please notice that the value (or list of values if the slider type is range) will be rounded to the nearest multiple of step.
+     * @attr {boolean} tooltip-always-visible - If `true`, a tooltip will always display the progress value. It relies on enableTooltip and if enableTooltip is false, tooltipAlwaysVisible cannot be true.
+     * @attr {"range" | "single"} type - It defines the type of slider to display.
+     * @attr {"[number, number]" | "number" | "string"} value - The value of the slider. If the slider type is single, the value is a number.
+     * If the slider type is range, the value is an array of two numbers (the first number represents the min value and the second number represents the max value).
+     * @event bqBlur - Handler to be called when the slider loses focus.
+     * @event bqChange - Handler to be called when changing the value on range inputs.
+     * @event bqFocus - Handler to be called when the slider gets focused.
+     * @cssprop --bq-slider--size - The height of the slider track/progress area
+     * @cssprop --bq-slider--border-radius - Slider border radius
+     * @cssprop --bq-slider--thumb-size - Slider hover thumb size
+     * @cssprop --bq-slider--progress-color - Slider progress background color
+     * @cssprop --bq-slider--trackarea-color - Slider track background color
+     */
     interface HTMLBqSliderElement extends Components.BqSlider, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqSliderElementEventMap>(type: K, listener: (this: HTMLBqSliderElement, ev: BqSliderCustomEvent<HTMLBqSliderElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2077,6 +4560,25 @@ declare global {
     };
     /**
      * Spinners are designed for users to display data loading.
+     * @example How to use it
+     * ```html
+     * <bq-spinner size="medium" text-position="bellow">
+     * <span>Loading...</span>
+     * </bq-spinner>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/275f10-spinner/b/09d7b1
+     * @status stable
+     * @attr {boolean} animation - If `false`, the animation on the icon element will be stopped.
+     * @attr {"small" | "medium" | "large"} size - It defines the size of the icon element displayed.
+     * @attr {"above" | "below" | "left" | "right" | "none"} text-position - It defines the position of the label text.
+     * @cssprop --bq-spinner--color - Spinner color
+     * @cssprop --bq-spinner--size-large - Spinner large size
+     * @cssprop --bq-spinner--size-medium - Spinner medium size
+     * @cssprop --bq-spinner--size-small - Spinner small size
+     * @cssprop --bq-spinner--large-text-fontSize - Spinner large text font size
+     * @cssprop --bq-spinner--medium-text-fontSize - Spinner medium text font size
+     * @cssprop --bq-spinner--small-text-fontSize - Spinner small text font size
+     * @cssprop --bq-spinner--text-lineHeight - Spinner text line height
      */
     interface HTMLBqSpinnerElement extends Components.BqSpinner, HTMLStencilElement {
     }
@@ -2084,6 +4586,18 @@ declare global {
         prototype: HTMLBqSpinnerElement;
         new (): HTMLBqSpinnerElement;
     };
+    /**
+     * The Status Component is a UI element that represents the current state or condition of an item, task, or process.
+     * @example How to use it
+     * ```html
+     * <bq-status type="alert">Alert status</bq-status>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/46c8d5-status/b/09d7b1
+     * @status stable
+     * @dependency bq-badge
+     * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
+     * @cssprop --bq-status-circ - Status circle size.
+     */
     interface HTMLBqStatusElement extends Components.BqStatus, HTMLStencilElement {
     }
     var HTMLBqStatusElement: {
@@ -2093,6 +4607,30 @@ declare global {
     interface HTMLBqStepItemElementEventMap {
         "bqClick": { target: HTMLBqStepItemElement; value: string };
     }
+    /**
+     * The Step Item Component is a UI element used to display a single step or stage in a process or task.
+     * It should be used inside the Steps component.
+     * @example How to use it
+     * ```html
+     * <bq-step-item status="completed">
+     * <bq-icon slot="prefix" name="check-circle"></bq-icon>
+     * <span>Title</span>
+     * <span slot="description">Description</span>
+     * </bq-step-item>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
+     * @status stable
+     * @attr {"small" | "medium"} size - It defines prefix size
+     * @attr {"completed" | "current" | "error" | "default" | "disabled"} status - It defines step item appearance based on its status
+     * @attr {"numeric" | "icon" | "dot"} type - It defines the step item type used
+     * @event bqClick - Callback handler emitted when the step item is clicked
+     * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
+     * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
+     * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
+     * @cssprop --bq-step-item--prefix-color-error - Color of the prefix icon when error
+     * @cssprop --bq-step-item--prefix-num-size - Size of the prefix number
+     * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
+     */
     interface HTMLBqStepItemElement extends Components.BqStepItem, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqStepItemElementEventMap>(type: K, listener: (this: HTMLBqStepItemElement, ev: BqStepItemCustomEvent<HTMLBqStepItemElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2107,6 +4645,27 @@ declare global {
         prototype: HTMLBqStepItemElement;
         new (): HTMLBqStepItemElement;
     };
+    /**
+     * The Steps Component is a UI element used to display a series of steps or stages in a process or task.
+     * It is used to guide users through a process or task and to indicate their progress.
+     * @example How to use it
+     * ```html
+     * <bq-steps divider-color="stroke--primary" type="dot" size="medium">
+     * <bq-step-item status="completed"> ... </bq-step-item>
+     * <bq-step-item status="error"> ... </bq-step-item>
+     * <bq-step-item status="current"> ... </bq-step-item>
+     * <bq-step-item status="default"> ... </bq-step-item>
+     * </bq-steps>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
+     * @status stable
+     * @dependency bq-divider
+     * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
+     * @attr {"medium" | "small"} size - The size of the steps
+     * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
+     * @cssprop --bq-steps--divider-color - Divider color
+     * @cssprop --bq-steps--gap - Gap between steps
+     */
     interface HTMLBqStepsElement extends Components.BqSteps, HTMLStencilElement {
     }
     var HTMLBqStepsElement: {
@@ -2121,6 +4680,32 @@ declare global {
     /**
      * Toggle switches are digital on/off switches.
      * They should provide immediate results, giving users the freedom to control their preferences as needed.
+     * @example How to use it
+     * ```html
+     * <bq-switch inner-label="default" justify-content="start" name="bq-switch" value="Switch value">
+     * Toggle me!
+     * </bq-switch>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/49d9c9-switch
+     * @status stable
+     * @dependency bq-icon
+     * @attr {boolean} background-on-hover - If `true`, a background will be displayed on hover
+     * @attr {boolean} checked - It indicates whether if the switch is `ON` by default (when the page loads)
+     * @attr {boolean} disabled - If `true`, the switch control will be disabled and no interaction will be allowed
+     * @attr {boolean} full-width - If `true`, the component will take the full width space available on the parent container
+     * @attr {"default" | "icon"} inner-label - It indicates how to to display the on/off marks inside the control, with icons or none (default)
+     * @attr {"start" | "end" | "center" | "space-between" | "space-around" | "space-evenly"} justify-content - It defines how to distribute the space between and around the control and the label text
+     * @attr {string} name - Name of the form control. Submitted with the form as part of a name/value pair
+     * @attr {boolean} required - If `true`, it will indicate that the user must switch `ON` the element before the owning form can be submitted
+     * @attr {boolean} reverse-order - If `true`, the order of the control and the label text will be changed
+     * @attr {string} value - The input control's value, submitted as a name/value pair with form data
+     * @event bqChange - Handler to be called when the switch state changes
+     * @event bqFocus - Handler to be called when the switch gets focus
+     * @event bqBlur - Handler to be called when the switch loses focus
+     * @cssprop --bq-switch--height - Switch height
+     * @cssprop --bq-switch--justify-content - Switch justify content
+     * @cssprop --bq-switch--width - Switch width
+     * @cssprop --bq-switch--dot-size - Switch dot size
      */
     interface HTMLBqSwitchElement extends Components.BqSwitch, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqSwitchElementEventMap>(type: K, listener: (this: HTMLBqSwitchElement, ev: BqSwitchCustomEvent<HTMLBqSwitchElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2142,6 +4727,43 @@ declare global {
         "bqBlur": HTMLBqTabElement;
         "bqKeyDown": KeyboardEvent;
     }
+    /**
+     * The tab is a user interface element that allows users to navigate between different sections of a page.
+     * It should be used inside `<bq-tab-group>` component.
+     * @example How to use it
+     * ```html
+     * <bq-tab tab-id="1" controls="panel-1">Tab 1</bq-tab>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/775321-tabs
+     * @status stable
+     * @attr {boolean} active - If `true` tab is active
+     * @attr {string} controls - The tab panel id that the tab controls
+     * @attr {boolean} disabled - If `true` tab is disabled
+     * @attr {string} orientation - The direction that tab should be render
+     * @attr {string} placement - The placement that tab should be render
+     * @attr {string} size - The size of the tab
+     * @attr {string} tab-id - The id of the tab
+     * @event bqClick - Handler to be called when the tab state changes
+     * @event bqFocus - Handler to be called when the tab gets focus
+     * @event bqBlur - Handler to be called when the tab loses focus
+     * @event bqKeyDown - Handler to be called when the tab key is pressed
+     * @method vClick - Simulate a click event on the native `<button>` HTML element used under the hood
+     * @method vFocus - Sets focus on the native `<button>` HTML element used under the hood
+     * @method vBlur - Remove focus from the native `<button>` HTML element used under the hood
+     * @cssprop --bq-tab--font-size - Font size
+     * @cssprop --bq-tab--font-weight - Font weight
+     * @cssprop --bq-tab--icon-size-large - Icon size for large tab
+     * @cssprop --bq-tab--icon-size-medium - Icon size for medium tab
+     * @cssprop --bq-tab--icon-size-small - Icon size for small tab
+     * @cssprop --bq-tab--label-icon-gap - Gap between label and icon
+     * @cssprop --bq-tab--line-height - Line height
+     * @cssprop --bq-tab--padding-horizontal-large - Horizontal padding for large tab
+     * @cssprop --bq-tab--padding-horizontal-medium - Horizontal padding for medium tab
+     * @cssprop --bq-tab--padding-horizontal-small - Horizontal padding for small tab
+     * @cssprop --bq-tab--padding-vertical-large - Vertical padding for large tab
+     * @cssprop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
+     * @cssprop --bq-tab--padding-vertical-small - Vertical padding for small tab
+     */
     interface HTMLBqTabElement extends Components.BqTab, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqTabElementEventMap>(type: K, listener: (this: HTMLBqTabElement, ev: BqTabCustomEvent<HTMLBqTabElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2159,6 +4781,27 @@ declare global {
     interface HTMLBqTabGroupElementEventMap {
         "bqChange": { target: HTMLBqTabElement; value: string };
     }
+    /**
+     * The tab group is a user interface element that allows users wrap a set of tab items.
+     * @example How to use it
+     * ```html
+     * <bq-tab-group value="5">
+     * <bq-tab tab-id="1">Tab</bq-tab>
+     * <bq-tab tab-id="2" active>Tab</bq-tab>
+     * <bq-tab tab-id="3">Long Tab name</bq-tab>
+     * <bq-tab tab-id="4" disabled>Tab</bq-tab>
+     * </bq-tab-group>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/775321-tabs
+     * @status stable
+     * @attr {number} debounce-time - A number representing the delay value applied to bqChange event handler
+     * @attr {boolean} disable-divider - If true, the underline divider below the tabs won't be shown
+     * @attr {string} orientation - The direction that tab should be render
+     * @attr {string} placement - The placement that tab should be render
+     * @attr {string} size - The size of the tab
+     * @attr {string} value - A string representing the id of the selected tab.
+     * @event bqChange - Handler to be called when the tab value changes
+     */
     interface HTMLBqTabGroupElement extends Components.BqTabGroup, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqTabGroupElementEventMap>(type: K, listener: (this: HTMLBqTabGroupElement, ev: BqTabGroupCustomEvent<HTMLBqTabGroupElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2180,6 +4823,46 @@ declare global {
         "bqClick": HTMLBqTagElement;
         "bqFocus": HTMLBqTagElement;
     }
+    /**
+     * The Tag Component is a UI element used to label and categorize content within an application.
+     * Tags are commonly used to label items with keywords or categories, making it easier to find and organize content.
+     * @example How to use it
+     * ```html
+     * <bq-tag color="success" size="medium" variant="filled">Success</bq-tag>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/42f8c9-tag
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
+     * @attr {string} border - The corner radius of the Tag (will override size's predefined border)
+     * @attr {boolean} clickable - If `true`, the Tag can be clickable
+     * @attr {"error" | "gray" | "info" | "success" | "warning"} color - The color style of the Tag
+     * @attr {boolean} disabled - If `true`, the Tag will be disabled (only if clickable = `true`, no interaction allowed)
+     * @attr {boolean} hidden - If `true`, the Tag component will hidden (only if removable = `true`)
+     * @attr {boolean} removable - If `true`, the Tag component can be removed
+     * @attr {boolean} selected - If `true`, the Tag is selected (only if clickable = `true`)
+     * @attr {"xsmall" | "small" | "medium"} size - The size of the Tag component
+     * @attr {"outline" | "filled"} variant - The variant of Tag to apply on top of the variant
+     * @method hide - Method to be called to remove the tag component
+     * @method show - Method to be called to show the tag component
+     * @event bqClose - Callback handler to be called when the tag is close/hidden
+     * @event bqOpen - Callback handler to be called when the tag is not open/shown
+     * @event bqBlur - Handler to be called when tag loses focus
+     * @event bqClick - Handler to be called when tag is clicked
+     * @event bqFocus - Handler to be called when tag is focused
+     * @cssprop --bq-tag--background-color - Tag background color
+     * @cssprop --bq-tag--border-color - Tag border color
+     * @cssprop --bq-tag--border-radius - Tag border radius
+     * @cssprop --bq-tag--border-style - Tag border style
+     * @cssprop --bq-tag--border-width - Tag border width
+     * @cssprop --bq-tag--small-border-radius - Tag small border radius
+     * @cssprop --bq-tag--small-gap - Tag small gap between content
+     * @cssprop --bq-tag--small-padding-x - Tag small padding horizontal
+     * @cssprop --bq-tag--small-padding-y - Tag small padding vertical
+     * @cssprop --bq-tag--medium-gap - Tag medium gap between content
+     * @cssprop --bq-tag--medium-padding-x - Tag medium padding horizontal
+     * @cssprop --bq-tag--medium-padding-y - Tag medium padding vertical
+     */
     interface HTMLBqTagElement extends Components.BqTag, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqTagElementEventMap>(type: K, listener: (this: HTMLBqTagElement, ev: BqTagCustomEvent<HTMLBqTagElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2201,6 +4884,63 @@ declare global {
         "bqFocus": HTMLBqTextareaElement;
         "bqInput": { value: string; el: HTMLBqTextareaElement };
     }
+    /**
+     * The Textarea component is a multi-line text input control that is often used in a form to collect user inputs like comments or reviews.
+     * @example How to use it
+     * ```html
+     * <bq-textarea maxlength="0" name="textarea" placeholder="Placeholder..." rows="5">
+     * <label slot="label">Label</label>
+     * <span class="flex items-center gap-xs" slot="helper-text">
+     * <bq-icon name="star"></bq-icon>
+     * Helper text
+     * </span>
+     * </bq-textarea>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/16792c-textarea
+     * @status stable
+     * @attr {string} autocapitalize - Controls whether or not the textarea field should be capitalized and how.
+     * @attr {string} autocomplete - Specifies whether or not the textarea field should have autocomplete enabled.
+     * @attr {string} autocorrect - Controls whether or not the textarea field should have autocorrect enabled.
+     * @attr {boolean} autofocus - If `true`, the textarea will be focused on component render.
+     * @attr {boolean} auto-grow - If `true`, the textarea will automatically grow and shrink to fit its contents.
+     * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes.
+     * @attr {boolean} disabled - If `true`, the user cannot interact with the textarea.
+     * @attr {boolean} disable-resize - If `true`, it will block the user's ability to resize the textarea.
+     * @attr {string} form - The ID of the form that the textarea field belongs to.
+     * @attr {number} maxlength - The maximum number of characters that can be entered into the textarea (`0`: no limit).
+     * @attr {string} name - The name of the textarea element.
+     * @attr {string} placeholder - The placeholder text to show when there is no value.
+     * @attr {boolean} readonly - If `true`, the textarea field cannot be modified.
+     * @attr {boolean} required - Indicates whether or not the textarea field is required to be filled out before submitting the form.
+     * @attr {number} rows - The number of visible text lines for the control. It must be a positive integer.
+     * @attr {boolean} spellcheck - If `true`, the textarea content may be checked for spelling errors.
+     * @attr {"error" | "none" | "success" | "warning"} validation-status - The validation status of the textarea.
+     * @attr {string} value - The value of the textarea. It can be used to reset the textarea to a previous value.
+     * @attr {"soft" | "hard"} wrap - Specifies how the text in a text area is to be wrapped when submitted in a form.
+     * @event bqBlur - Handler to be called when the textarea loses focus.
+     * @event bqChange - Handler to be called when the textarea value has changed and the textarea loses focus.
+     * @event bqClear - Handler to be called when the textarea value has been cleared.
+     * @event bqFocus - Handler to be called when the textarea has received focus.
+     * @event bqInput - Handler to be called when the textarea value changes.
+     * @prop --bq-textarea--background-color - Textarea background color
+     * @prop --bq-textarea--border-color - Textarea border color
+     * @prop --bq-textarea--border-color-focus - Textarea border color on focus
+     * @prop --bq-textarea--border-radius - Textarea border radius
+     * @prop --bq-textarea--border-width - Textarea border width
+     * @prop --bq-textarea--border-style - Textarea border style
+     * @prop --bq-textarea--helper-margin-top - Textarea helper text margin top
+     * @prop --bq-textarea--helper-text-color - Textarea helper text color
+     * @prop --bq-textarea--helper-text-size - Textarea helper text size
+     * @prop --bq-textarea--label-margin-bottom - Textarea label margin bottom
+     * @prop --bq-textarea--label-text-color - Textarea label text color
+     * @prop --bq-textarea--label-text-size - Textarea label text size
+     * @prop --bq-textarea--paddingY - Textarea padding top and bottom
+     * @prop --bq-textarea--padding-start - Textarea padding start
+     * @prop --bq-textarea--padding-end - Textarea padding end
+     * @prop --bq-textarea--text-color - Textarea text color
+     * @prop --bq-textarea--text-size - Textarea text size
+     * @prop --bq-textarea--text-placeholder-color - Textarea placeholder text color
+     */
     interface HTMLBqTextareaElement extends Components.BqTextarea, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqTextareaElementEventMap>(type: K, listener: (this: HTMLBqTextareaElement, ev: BqTextareaCustomEvent<HTMLBqTextareaElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2219,6 +4959,45 @@ declare global {
         "bqHide": HTMLBqToastElement;
         "bqShow": HTMLBqToastElement;
     }
+    /**
+     * Toasts are time-based components used to display short messages.
+     * Commonly used for errors, confirmations, or progress updates.
+     * @example How to use it
+     * ```html
+     * <bq-toast type="info">
+     * This is a message
+     * </bq-toast>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/83da51-toast
+     * @status stable
+     * @dependency bq-icon
+     * @attr {"s" | "none" | "xs2" | "xs" | "m" | "l" | "full"} border - The corder radius of the toast component
+     * @attr {"success" | "error" | "loading" | "alert" | "info"} type - Type of toast
+     * @attr {"top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right"} placement - Placement of toast
+     * @attr {boolean} hide-icon - If true will hide toast icon
+     * @attr {boolean} open - If true, the toast will be shown
+     * @attr {number} time - The length of time, in milliseconds, after which the toast will close itself
+     * @method show - Method to be called to show the toast component
+     * @method hide - Method to be called to hide the toast component
+     * @method toast - This method can be used to display toasts in a fixed-position element that allows for stacking multiple toasts vertically
+     * @event bqHide - Callback handler to be called when the notification is hidden
+     * @event bqShow - Callback handler to be called when the notification is shown
+     * @cssprop --bq-toast--background - Toast background color
+     * @cssprop --bq-toast--box-shadow - Toast box shadow
+     * @cssprop --bq-toast--padding-y - Toast vertical padding
+     * @cssprop --bq-toast--padding-x - Toast horizontal padding
+     * @cssprop --bq-toast--gap - Toast distance between icon and text
+     * @cssprop --bq-toast--border-radius - Toast border radius
+     * @cssprop --bq-toast--border-color - Toast border color
+     * @cssprop --bq-toast--border-style - Toast border style
+     * @cssprop --bq-toast--border-width - Toast border width
+     * @cssprop --bq-toast--icon-color-info - Toast icon color when type is 'info'
+     * @cssprop --bq-toast--icon-color-success - Toast icon color when type is 'success'
+     * @cssprop --bq-toast--icon-color-alert - Toast icon color when type is 'alert'
+     * @cssprop --bq-toast--icon-color-error - Toast icon color when type is 'error'
+     * @cssprop --bq-toast--icon-color-loading - Toast icon color when type is 'loading'
+     * @cssprop --bq-toast--icon-color-custom - Toast icon color when type is 'custom'
+     */
     interface HTMLBqToastElement extends Components.BqToast, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqToastElementEventMap>(type: K, listener: (this: HTMLBqToastElement, ev: BqToastCustomEvent<HTMLBqToastElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2233,6 +5012,39 @@ declare global {
         prototype: HTMLBqToastElement;
         new (): HTMLBqToastElement;
     };
+    /**
+     * The Tooltip component is a small pop-up box that appears when a user hovers over or clicks on an element, providing additional information or context.
+     * @example How to use it
+     * ```html
+     * <bq-tooltip visible>
+     * Yuhu! I'm a tooltip 🙃
+     * <bq-button slot="trigger">Hover me!</bq-button>
+     * </bq-tooltip>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/64c562-tooltip
+     * @status stable
+     * @attr {boolean} always-visible - If true, the tooltip will always be visible
+     * @attr {number} distance - Distance between trigger element and tooltip
+     * @attr {boolean} hide-arrow - If true, the arrow on the tooltip content won't be shown
+     * @attr {"top" | "right" | "bottom" | "left"} placement - Defines the position of the tooltip
+     * @attr {boolean} same-width - Whether the tooltip should have the same width as the trigger element (applicable only for content shorter than the trigger element)
+     * @attr {"click" | "hover"} display-on - Set the action when the tooltip should be displayed, on hover (default) or click
+     * @attr {boolean} visible - Indicates whether or not the tooltip is visible when the component is first rendered, and when interacting with the trigger
+     * @method show - Shows the tooltip
+     * @method hide - Hides the tooltip
+     * @cssprop --bq-tooltip--background-color - Tooltip background color
+     * @cssprop --bq-tooltip--box-shadow - Tooltip box shadow
+     * @cssprop --bq-tooltip--font-size - Tooltip font size
+     * @cssprop --bq-tooltip--line-height - Tooltip line height
+     * @cssprop --bq-tooltip--text-color - Tooltip text color
+     * @cssprop --bq-tooltip--paddingX - Tooltip horizontal padding
+     * @cssprop --bq-tooltip--paddingY - Tooltip vertical padding
+     * @cssprop --bq-tooltip--border-color - Tooltip border color
+     * @cssprop --bq-tooltip--border-radius - Tooltip border radius
+     * @cssprop --bq-tooltip--border-style - Tooltip border style
+     * @cssprop --bq-tooltip--border-width - Tooltip border width
+     * @cssprop --bq-tooltip--z-index: Tooltip z-index
+     */
     interface HTMLBqTooltipElement extends Components.BqTooltip, HTMLStencilElement {
     }
     var HTMLBqTooltipElement: {
@@ -2285,21 +5097,92 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    /**
+     * The Accordion is a UI component that allows users to toggle between showing and hiding content sections. It provides a collapsible functionality, where only one section can be expanded at a time, while the others remain collapsed.
+     * @example How to use it
+     * ```html
+     * <bq-accordion appearance="filled" size="medium">
+     * <bq-avatar size="xsmall" image="/image/url/img.png" slot="prefix"></bq-avatar>
+     * <h3 slot="header">Header</h3>
+     * <div>Lorem ipsum dolor...</div>
+     * </bq-accordion>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/713eae-accordion
+     * @status stable
+     * @dependency bq-icon
+     * @attr {"filled" | "ghost"} [appearance="filled"] - The appearance style of the Accordion
+     * @attr {boolean} [disabled=false] - If true, the Accordion is disabled
+     * @attr {boolean} [expanded=false] - If true, the Accordion is expanded
+     * @attr {boolean} [no-animation=false] - Animation is set through JS when the browser does not support CSS calc-size() If true, the Accordion animation, will be disabled. No animation will be applied.
+     * @attr {boolean} [rotate=false] - If true, the Accordion expand icon is rotate 180deg when expanded
+     * @attr {"small" | "medium"} [size="medium"] - The size of the the Accordion
+     * @event bqOpen - Handler to be called when the accordion is opened
+     * @event bqAfterOpen - Handler to be called after the accordion is opened
+     * @event bqClose - Handler to be called when the accordion is closed
+     * @event bqAfterClose - Handler to be called after the accordion is closed
+     * @event bqFocus - Handler to be called when the accordion gets focus
+     * @event bqClick - Handler to be called when the accordion is clicked
+     * @event bqBlur - Handler to be called when the accordion loses focus
+     * @cssprop --bq-accordion--small-padding-y - Accordion small vertical padding
+     * @cssprop --bq-accordion--small-padding-start - Accordion small start padding
+     * @cssprop --bq-accordion--small-padding-end - Accordion small end padding
+     * @cssprop --bq-accordion--small-padding-gap - Accordion small gap distance between suffix, title and prefix
+     * @cssprop --bq-accordion--small-radius - Accordion small border radius
+     * @cssprop --bq-accordion--medium-padding-y - Accordion medium vertical padding
+     * @cssprop --bq-accordion--medium-padding-start - Accordion medium start padding
+     * @cssprop --bq-accordion--medium-padding-end - Accordion medium end padding
+     * @cssprop --bq-accordion--medium-padding-gap - Accordion medium gap distance between suffix, title and prefix
+     * @cssprop --bq-accordion--medium-radius - Accordion medium border radius
+     * @cssprop --bq-accordion--collapsed-border-color - Accordion collapsed border color
+     * @cssprop --bq-accordion--collapsed-border-style - Accordion collapsed border style
+     * @cssprop --bq-accordion--collapsed-border-width - Accordion collapsed border width
+     * @cssprop --bq-accordion--expanded-border-color - Accordion expanded border color
+     * @cssprop --bq-accordion--expanded-border-style - Accordion expanded border style
+     * @cssprop --bq-accordion--expanded-border-width - Accordion expanded border width
+     * @cssprop --bq-accordion--filled-collapsed-background - Accordion filled collapsed header background
+     * @cssprop --bq-accordion--filled-collapsed-text-color - Accordion filled collapsed header text color
+     * @cssprop --bq-accordion--filled-expanded-background - Accordion filled expanded header background
+     * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Accordion filled expanded header color on hover
+     * @cssprop --bq-accordion--filled-expanded-text-color - Accordion filled expanded header text color
+     * @cssprop --bq-accordion--ghost-collapsed-background - Accordion ghost collapsed header background
+     * @cssprop --bq-accordion--ghost-collapsed-text-color - Accordion ghost collapsed header text color
+     * @cssprop --bq-accordion--ghost-expanded-background - Accordion ghost expanded header background
+     * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Accordion ghost expanded header color on hover
+     * @cssprop --bq-accordion--ghost-expanded-text-color - Accordion ghost expanded header text color
+     * @cssprop --bq-accordion--panel-filled-border-color - Accordion filled panel border color
+     * @cssprop --bq-accordion--panel-filled-border-style - Accordion filled panel border style
+     * @cssprop --bq-accordion--panel-filled-border-width - Accordion filled panel border width
+     * @cssprop --bq-accordion--panel-small-filled-padding-y - Accordion small filled panel vertical padding
+     * @cssprop --bq-accordion--panel-small-filled-padding-start - Accordion small filled panel start padding
+     * @cssprop --bq-accordion--panel-small-filled-padding-end - Accordion small filled panel end padding
+     * @cssprop --bq-accordion--panel-medium-filled-padding-y - Accordion medium filled panel vertical padding
+     * @cssprop --bq-accordion--panel-medium-filled-padding-start - Accordion medium filled panel start padding
+     * @cssprop --bq-accordion--panel-medium-filled-padding-end - Accordion medium filled panel end padding
+     * @cssprop --bq-accordion--panel-ghost-border-color - Accordion ghost panel border color
+     * @cssprop --bq-accordion--panel-ghost-border-style - Accordion ghost panel border style
+     * @cssprop --bq-accordion--panel-ghost-border-width - Accordion ghost panel border width
+     * @cssprop --bq-accordion--panel-small-ghost-padding-y - Accordion small ghost panel vertical padding
+     * @cssprop --bq-accordion--panel-small-ghost-padding-start - Accordion small ghost panel start padding
+     * @cssprop --bq-accordion--panel-small-ghost-padding-end - Accordion small ghost panel end padding
+     * @cssprop --bq-accordion--panel-medium-ghost-padding-y - Accordion medium ghost panel vertical padding
+     * @cssprop --bq-accordion--panel-medium-ghost-padding-start - Accordion medium ghost panel start padding
+     * @cssprop --bq-accordion--panel-medium-ghost-padding-end - Accordion medium ghost panel end padding
+     */
     interface BqAccordion {
         /**
-          * The appearance style of accordion
+          * The appearance style of the Accordion
          */
         "appearance"?: TAccordionAppearance;
         /**
-          * If true accordion is disabled
+          * If true, the Accordion is disabled
          */
         "disabled"?: boolean;
         /**
-          * If true accordion is expanded
+          * If true, the Accordion is expanded
          */
         "expanded"?: boolean;
         /**
-          * Animation is set through JS when the browser does not support CSS calc-size() If true, the accordion animation, will be disabled. No animation will be applied.
+          * Animation is set through JS when the browser does not support CSS calc-size() If true, the Accordion animation, will be disabled. No animation will be applied.
          */
         "noAnimation"?: boolean;
         /**
@@ -2314,6 +5197,9 @@ declare namespace LocalJSX {
           * Handler to be called when the accordion loses focus
          */
         "onBqBlur"?: (event: BqAccordionCustomEvent<HTMLBqAccordionElement>) => void;
+        /**
+          * Handler to be called when the accordion is clicked
+         */
         "onBqClick"?: (event: BqAccordionCustomEvent<HTMLBqAccordionElement>) => void;
         /**
           * Handler to be called when the accordion is closed
@@ -2328,14 +5214,34 @@ declare namespace LocalJSX {
          */
         "onBqOpen"?: (event: BqAccordionCustomEvent<HTMLBqAccordionElement>) => void;
         /**
-          * If true accordion expand icon is rotate 180deg when expanded
+          * If true, the Accordion expand icon is rotate 180deg when expanded
          */
         "rotate"?: boolean;
         /**
-          * The size of accordion
+          * The size of the Accordion
          */
         "size"?: TAccordionSize;
     }
+    /**
+     * The accordion group component is a container for multiple accordion elements.
+     * It allows to manage the appearance and size of all accordions at once.
+     * @example How to use it
+     * ```html
+     * <bq-accordion-group appearance="filled" size="medium">
+     * <bq-accordion> ... </bq-accordion>
+     * <bq-accordion> ... </bq-accordion>
+     * <bq-accordion> ... </bq-accordion>
+     * </bq-accordion-group>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/713eae-accordion
+     * @status stable
+     * @attr {"filled" | "ghost"} [appearance="filled"] - The appearance style of accordion to be applied to all accordions
+     * @attr {boolean} [expandAll=false] - If true all accordions are expanded
+     * @attr {boolean} [no-animation=false] - Animation is set through JS when the browser does not support CSS calc-size() If true, the accordion animation, will be disabled. No animation will be applied.
+     * @attr {boolean} [multiple=false] - If true multiple accordions can be expanded at the same time
+     * @attr {"small" | "medium"} [size="medium"] - The size of accordion to be applied to all accordions
+     * @cssprop --bq-accordion-group--gap - Accordion group distance between elements
+     */
     interface BqAccordionGroup {
         /**
           * The appearance style of accordion to be applied to all accordions
@@ -2358,6 +5264,62 @@ declare namespace LocalJSX {
          */
         "size"?: TAccordionSize;
     }
+    /**
+     * The Alert is a user interface component used to convey important information to the user in a clear and concise manner.
+     * It can be used to notify users of success, failure, warning, or any other type of information that needs to be brought to their attention.
+     * @example How to use it
+     * ```html
+     * <bq-alert>
+     * <bq-icon name="star" slot="icon"></bq-icon>
+     * Title
+     * <span slot="body">
+     * Description
+     * <a class="bq-link" href="https://example.com">Link</a>
+     * </span>
+     * <div slot="footer">
+     * <bq-button appearance="primary" size="small">Button</bq-button>
+     * <bq-button appearance="link" size="small">Button</bq-button>
+     * </div>
+     * </bq-alert>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/848a50-alert
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
+     * @attr {boolean} [auto-dismiss=false] - If true, the alert will automatically hide after the specified amount of time
+     * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} [border='s'] - The corner radius of the alert component
+     * @attr {boolean} [disable-close=false] - If true, the close button at the top right of the alert won't be shown
+     * @attr {boolean} [hide-icon=false] - If true, the alert icon won't be shown
+     * @attr {boolean} [open=false] - If true, the alert will be shown
+     * @attr {number} [time=3000] - The length of time, in milliseconds, after which the alert will close itself. Only valid if `autoDismiss="true"`
+     * @attr {"info" | "success" | "warning" | "error" | "default"} [type='default'] - Type of Alert
+     * @attr {boolean} [sticky=false] - If true, the alert component will remain fixed at the top of the page, occupying the full viewport
+     * @event bqHide - Callback handler to be called when the alert is hidden
+     * @event bqShow - Callback handler to be called when the alert is shown
+     * @event bqAfterShow - Callback handler to be called after the alert has been shown
+     * @event bqAfterHide - Callback handler to be called after the alert has been hidden
+     * @cssprop --bq-alert--background - The alert background color
+     * @cssprop --bq-alert--border-radius - The alert border radius
+     * @cssprop --bq-alert--content-footer-gap - The alert content and footer gap
+     * @cssprop --bq-alert--title-body-gap - The alert title and body gap
+     * @cssprop --bq-alert--border-color - The alert border color
+     * @cssprop --bq-alert--border-style - The alert border style
+     * @cssprop --bq-alert--border-width - The alert border width
+     * @cssprop --bq-alert--background-info - The alert background color for info type
+     * @cssprop --bq-alert--background-success - The alert background color for success type
+     * @cssprop --bq-alert--background-warning - The alert background color for warning type
+     * @cssprop --bq-alert--background-error - The alert background color for error type
+     * @cssprop --bq-alert--border-info - The alert border color for info type
+     * @cssprop --bq-alert--border-success - The alert border color for success type
+     * @cssprop --bq-alert--border-warning - The alert border color for warning type
+     * @cssprop --bq-alert--border-error - The alert border color for error type
+     * @cssprop --bq-alert--icon-color-info - The alert icon color for info type
+     * @cssprop --bq-alert--icon-color-success - The alert icon color for success type
+     * @cssprop --bq-alert--icon-color-warning - The alert icon color for warning type
+     * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
+     * @cssprop --bq-alert--padding - The alert padding
+     * @cssprop --bq-alert--min-width - The alert min width
+     */
     interface BqAlert {
         /**
           * If true, the alert will automatically hide after the specified amount of time
@@ -2408,6 +5370,46 @@ declare namespace LocalJSX {
          */
         "type"?: TAlertType;
     }
+    /**
+     * The Avatar component is a simple and customizable element that displays an image or initials in a circular or square shape.
+     * This component is useful for displaying user profile pictures or any other image that represents a person or an entity.
+     * @example How to use it
+     * ```html
+     * <bq-avatar
+     * alt-text="John Doe profile picture"
+     * image="/image/url/photo-1524593689594.jpeg"
+     * label="John Doe profile picture"
+     * shape="circle"
+     * size="medium"
+     * >
+     * <bq-badge slot="badge" text-color="#fff">9</bq-badge>
+     * </bq-avatar>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/148da7-avatar
+     * @status stable
+     * @attr {string} alt-text - Alternate text for the avatar image if the image cannot be displayed.
+     * @attr {string} image - The image source to load on the avatar (this can be also a base64 encoded image).
+     * @attr {string} label - A text to use for describing the avatar on assistive devices.
+     * @attr {string} initials - The text to display on avatar.
+     * @attr {"circle" | "square"} shape - The shape of the avatar.
+     * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
+     * @cssprop --bq-avatar--background - Avatar background color
+     * @cssprop --bq-avatar--border-color - Avatar border color
+     * @cssprop --bq-avatar--border-style - Avatar border style
+     * @cssprop --bq-avatar--border-width - Avatar border width
+     * @cssprop --bq-avatar--border-radius-circle - Avatar border radius for circle & any size
+     * @cssprop --bq-avatar--border-radius-squareXs - Avatar border radius for square & size xsmall
+     * @cssprop --bq-avatar--border-radius-squareS - Avatar border radius for square & size small
+     * @cssprop --bq-avatar--border-radius-squareM - Avatar border radius for square & size medium/large
+     * @cssprop --bq-avatar--size-xsmall - Avatar xsmall size
+     * @cssprop --bq-avatar--size-small - Avatar small size
+     * @cssprop --bq-avatar--size-medium - Avatar medium size
+     * @cssprop --bq-avatar--size-large - Avatar large size
+     * @cssprop --bq-avatar--badge-top-square - Badge top position shape square
+     * @cssprop --bq-avatar--badge-left-square - Badge left position shape square
+     * @cssprop --bq-avatar--badge-top-circle - Badge top position shape circle
+     * @cssprop --bq-avatar--badge-left-circle - Badge left position shape circle
+     */
     interface BqAvatar {
         /**
           * Alternate text for the avatar image if the image cannot be displayed
@@ -2434,6 +5436,29 @@ declare namespace LocalJSX {
          */
         "size"?: TAvatarSize;
     }
+    /**
+     * The Badge component is a visual indicator that can be added to various elements within a user interface.
+     * It is typically used to highlight important or relevant information, such as alerts, notifications, or statuses.
+     * @example How to use it
+     * ```html
+     * <bq-badge background-color="ui--success" text-color="text--inverse" size="small">9</bq-badge>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/194fd1-badge
+     * @status stable
+     * @attr {string} background-color - Badge background color. The value should be a valid value of the palette color.
+     * @attr {string} text-color - Badge number color. The value should be a valid value of the palette color.
+     * @attr {"small" | "medium" | "large"} size - The size of the badge. Relevant if badge has no content.
+     * @cssprop --bq-badge--background-color - The badge background color
+     * @cssprop --bq-badge--box-shadow - The badge box shadow
+     * @cssprop --bq-badge--border-color - The badge border color
+     * @cssprop --bq-badge--border-radius - The badge border radius
+     * @cssprop --bq-badge--border-style - The badge border style
+     * @cssprop --bq-badge--border-width - The badge border width
+     * @cssprop --bq-badge--size-small - The badge small size
+     * @cssprop --bq-badge--size-medium - The badge medium size
+     * @cssprop --bq-badge--size-large - The badge large size
+     * @cssprop --bq-badge--text-color - The badge text color
+     */
     interface BqBadge {
         /**
           * Badge background color. The value should be a valid value of the palette color
@@ -2448,37 +5473,66 @@ declare namespace LocalJSX {
          */
         "textColor"?: string;
     }
+    /**
+     * The Breadcrumb is used to wraps a series of breadcrumb items to indicate the current page's location within a navigational hierarchy.
+     * @example How to use it
+     * ```html
+     * <bq-breadcrumb label="Breadcrumb">
+     * <bq-breadcrumb-item>Home</bq-breadcrumb-item>
+     * <bq-breadcrumb-item>Men's clothing</bq-breadcrumb-item>
+     * <bq-breadcrumb-item>Shirt</bq-breadcrumb-item>
+     * <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+     * </bq-breadcrumb>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/194fd1-breadcrumb
+     * @status stable
+     * @attr {string} label - The `aria-label` attribute to describe the type of navigation
+     */
     interface BqBreadcrumb {
         /**
           * The `aria-label` attribute to describe the type of navigation
          */
-        "ariaLabel"?: string;
-        /**
-          * Handler to be called when `bq-breadcrumb-item` item loses focus.
-         */
-        "onBqBreadcrumbBlur"?: (event: BqBreadcrumbCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
-        /**
-          * Handler to be called when `bq-breadcrumb-item` is selected (on click/enter press).
-         */
-        "onBqBreadcrumbClick"?: (event: BqBreadcrumbCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
-        /**
-          * Handler to be called when `bq-breadcrumb-item` item gets focus.
-         */
-        "onBqBreadcrumbFocus"?: (event: BqBreadcrumbCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
+        "label"?: string;
     }
+    /**
+     * The Breadcrumb Item helps users understand their current location within a website or application's hierarchical structure.
+     * @example How to use it
+     * ```html
+     * <bq-breadcrumb-item label="Home page">
+     * <bq-icon name="house-line" size="16"></bq-icon>
+     * Home
+     * </bq-breadcrumb-item>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/61d6c0-breadcrumb
+     * @status stable
+     * @attr {string} href - If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
+     * @attr {string} target - Where to display the link in the browser context. Relevant only if `href` is set.
+     * @attr {string} rel - Where to display the link in the browser context. Relevant only if `href` is set.
+     * @event bqFocus - Handler to be called when item is focused
+     * @event bqClick - Handler to be called when item is clicked
+     * @event bqBlur - Handler to be called when item loses focus
+     * @cssprop --bq-breadcrumb-item--background - Background color of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--box-shadow - Box shadow of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--border-color - Border color of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--border-style - Border style of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--border-width - Border width of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--border-radius - Border radius of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--line-height - Line height of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--text-color - Text color of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--text-color-current - Text color of the current breadcrumb item (active)
+     * @cssprop --bq-breadcrumb-item--text-size - Text size of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--text-size-separator - Text size of the breadcrumb item separator
+     * @cssprop --bq-breadcrumb-item--padding-start - Padding start of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--padding-end - Padding end of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--paddingY - Padding top and bottom of the breadcrumb item
+     * @cssprop --bq-breadcrumb-item--padding-start-separator - Padding start of the breadcrumb item separator
+     * @cssprop --bq-breadcrumb-item--padding-end-separator - Padding end of the breadcrumb item separator
+     */
     interface BqBreadcrumbItem {
-        /**
-          * The aria-label that corresponds to the full title of the destination page. This won't be shown in the page, but it will be used by screen readers and other assistive devices.
-         */
-        "ariaLabel"?: string;
         /**
           * If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
          */
         "href"?: string;
-        /**
-          * If true, the item is the last element inside breadcrumb
-         */
-        "isLastItem"?: boolean;
         /**
           * Handler to be called when item loses focus
          */
@@ -2502,6 +5556,47 @@ declare namespace LocalJSX {
     }
     /**
      * Buttons are designed for users to take action on a page or a screen.
+     * @example How to use it
+     * ```html
+     * <bq-button appearance="primary" border="m" size="medium">
+     * <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>
+     * Go back
+     * </bq-button>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/286b43-buttons
+     * @status stable
+     * @dependency bq-icon
+     * @attr {"primary" | "secondary" | "link" | "text"} appearance - The appearance style to apply to the button
+     * @attr {boolean} block - If `true`, it will make the button fit to its parent width.
+     * @attr {string} border - The corner radius of the button
+     * @attr {boolean} disabled - If `true`, the button will be disabled (no interaction allowed)
+     * @attr {string} download - Tells the browser to treat the linked URL as a download. Only used when `href` is set.
+     * @attr {string} href - When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`
+     * @attr {"left" | "center" | "right"} justify-content - It determinate how the content should be aligned
+     * @attr {boolean} loading - If `true` it will display the button in a loading state
+     * @attr {"small" | "medium" | "large"} size - The size of the button
+     * @attr {"_blank" | "_parent" | "_self" | "_top"} target - Where to display the linked URL, as the name for a browsing context (a `tab`, `window`, or `<iframe>`)
+     * @attr {"button" | "submit" | "reset"} type - The default behavior of the button
+     * @attr {"standard" | "ghost" | "danger"} variant - The variant of button to apply on top of the appearance (applicable only to `appearance="primary"`)
+     * @event bqBlur - Handler to be called when the button loses focus
+     * @event bqFocus - Handler to be called when button gets focus
+     * @event bqClick - Handler to be called when the button is clicked
+     * @cssprop --bq-button--border-color - Button border color
+     * @cssprop --bq-button--border-radius - Button border radius
+     * @cssprop --bq-button--border-style - Button border style
+     * @cssprop --bq-button--border-width - Button border width
+     * @cssprop --bq-button--small-height - Button small height
+     * @cssprop --bq-button--small-paddingX - Button small padding block (top and bottom)
+     * @cssprop --bq-button--small-paddingY - Button small padding inline (left and right)
+     * @cssprop --bq-button--small-font-size - Button small font size
+     * @cssprop --bq-button--medium-height - Button medium height
+     * @cssprop --bq-button--medium-paddingX - Button medium padding block (top and bottom)
+     * @cssprop --bq-button--medium-paddingY - Button medium padding inline (left and right)
+     * @cssprop --bq-button--medium-font-size - Button medium font size
+     * @cssprop --bq-button--large-height - Button large height
+     * @cssprop --bq-button--large-paddingX - Button large padding block (top and bottom)
+     * @cssprop --bq-button--large-paddingY - Button large padding inline (left and right)
+     * @cssprop --bq-button--large-font-size - Button large font size
      */
     interface BqButton {
         /**
@@ -2565,6 +5660,30 @@ declare namespace LocalJSX {
          */
         "variant"?: TButtonVariant;
     }
+    /**
+     * The Card component serves as a versatile container designed for flexible content presentation within user interfaces.
+     * Its structure accommodates various styles, allowing users to customize and adapt it according to their design preferences.
+     * @example How to use it
+     * ```html
+     * <bq-card type="default" border="m">
+     * <div class="p-m">
+     * <h3 class="text-xl font-bold">Card Title</h3>
+     * <p class="text-m">Card content goes here</p>
+     * </div>
+     * </bq-card>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/522abb-card
+     * @status stable
+     * @attr {"default" | "minimal"} type - Type of card component
+     * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} border - The corner radius of the card component
+     * @cssprop --bq-card--borderColor - Card border color
+     * @cssprop --bq-card--borderRadius - Card border radius
+     * @cssprop --bq-card--borderStyle - Card border style
+     * @cssprop --bq-card--borderWidth - Card border width
+     * @cssprop --bq-card--padding - Card padding
+     * @cssprop --bq-card--paddingMinimal - Minimal card padding
+     * @cssprop --bq-card--background - Card background color
+     */
     interface BqCard {
         /**
           * The corner radius of the card component
@@ -2575,6 +5694,36 @@ declare namespace LocalJSX {
          */
         "type"?: TCardType;
     }
+    /**
+     * The checkbox is a UI component that allows users to select one or more options from a list of choices.
+     * It is commonly used in forms, surveys, and settings pages.
+     * @example How to use it
+     * ```html
+     * <bq-checkbox name="bq-checkbox" value="checkbox-value" background-on-hover>
+     * Checkbox label
+     * </bq-checkbox>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/431f17-checkbox
+     * @status stable
+     * @attr {boolean} background-on-hover - If true checkbox displays background on hover
+     * @attr {string} form-id - The form ID that the checkbox is associated with
+     * @attr {string} form-validation-message - The native form validation message
+     * @attr {boolean} checked - If true checkbox is checked
+     * @attr {boolean} disabled - If true checkbox is disabled
+     * @attr {boolean} indeterminate - A state that is neither checked nor unchecked
+     * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+     * @attr {boolean} required - If `true`, it will indicate that the user must specify a value for the checkbox before the owning form can be submitted
+     * @attr {string} value - A string representing the value of the checkbox. Primarily used to differentiate a list of related checkboxes that have the same name
+     * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+     * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+     * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+     * @event bqChange - Handler to be called when the checkbox state changes
+     * @event bqFocus - Handler to be called when the checkbox gets focus
+     * @event bqBlur - Handler to be called when the checkbox loses focus
+     * @cssprop --bq-checkbox--size - Checkbox size
+     * @cssprop --bq-checkbox--border-radius - Checkbox border radius
+     * @cssprop --bq-checkbox--border-width - Checkbox border width
+     */
     interface BqCheckbox {
         /**
           * If true checkbox displays background on hover
@@ -2625,6 +5774,87 @@ declare namespace LocalJSX {
          */
         "value": string;
     }
+    /**
+     * The Date Picker is a intuitive UI element component allows users to select dates from a visual calendar interface, providing an intuitive way to input date information.
+     * @example How to use it
+     * ```html
+     * <bq-date-picker
+     * first-day-of-week="1"
+     * locale="en-GB"
+     * months-per-view="single"
+     * months="2"
+     * name="bq-date-picker"
+     * placeholder="Enter your date"
+     * placement="bottom-end"
+     * show-outside-days="false"
+     * type="range"
+     * validation-status="none"
+     * value="2024-05-25"
+     * >
+     * <label class="flex flex-grow items-center" slot="label">
+     * Date picker label
+     * </label>
+     * </bq-date-picker>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/5793a9-date-picker
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-dropdown
+     * @dependency bq-icon
+     * @attr {boolean} autofocus - If `true`, the Date picker input will be focused on component render.
+     * @attr {string} clear-button-label - The clear button aria label.
+     * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+     * @attr {boolean} disabled - Indicates whether the Date picker input is disabled or not.
+     * @attr {number} distance - Represents the distance (gutter or margin) between the Date picker panel and the input element.
+     * @attr {0 | 1 | 2 | 3 | 4 | 5 | 6} first-day-of-week - The first day of the week, where Sunday is 0, Monday is 1, etc.
+     * @attr {Intl.DateTimeFormatOptions} format-options - The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
+     * @attr {string} form - The ID of the form that the Date picker input belongs to.
+     * @attr {function} is-date-disallowed - A function that takes a date and returns true if the date should not be selectable.
+     * @attr {Intl.LocalesArgument} locale - The locale for formatting dates. If not set, will use the browser's locale. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
+     * @attr {string} max - The latest date that can be selected.
+     * @attr {string} min - The earliest date that can be selected.
+     * @attr {number} months - Number of months to show when range is `true`.
+     * @attr {string} name - The Date picker input name.
+     * @attr {boolean} open - If `true`, the Date picker panel will be visible.
+     * @attr {string} panel-height - When set, it will override the height of the Date picker panel.
+     * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Position of the Date picker panel.
+     * @attr {boolean} required - Indicates whether or not the Date picker input is required to be filled out before submitting the form.
+     * @attr {number} skidding - Represents the skidding between the Date picker panel and the input element.
+     * @attr {boolean} show-outside-days - Whether to show days outside the month.
+     * @attr {string} strategy - Defines the strategy to position the Date picker panel.
+     * @attr {string} tentative - The date that is tentatively selected, e.g. the start of a range selection.
+     * @attr {"single" | "multi" | "range"} type - It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection.
+     * @attr {"error" | "none" | "success" | "warning"} validation-status - The validation status of the Select input.
+     * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value.
+     * @method clear - Clears the selected value.
+     * @event bqBlur - Callback handler emitted when the input loses focus.
+     * @event bqChange - Callback handler emitted when the input value has changed and the input loses focus.
+     * @event bqClear - Callback handler emitted when the input value has been cleared.
+     * @event bqFocus - Callback handler emitted when the input has received focus.
+     * @cssprop --bq-date-picker--background-color - Date picker background color
+     * @cssprop --bq-date-picker--border-color - Date picker border color
+     * @cssprop --bq-date-picker--border-color-disabled - Date picker border color when disabled
+     * @cssprop --bq-date-picker--border-color-focus - Date picker border color on focus
+     * @cssprop --bq-date-picker--border-radius - Date picker border radius
+     * @cssprop --bq-date-picker--border-style - Date picker border style
+     * @cssprop --bq-date-picker--border-width - Date picker border width
+     * @cssprop --bq-date-picker--currentDate-border-color - Date picker border color for current date
+     * @cssprop --bq-date-picker--currentDate-border-width - Date picker border width for current date
+     * @cssprop --bq-date-picker--currentDate-text-color - Date picker label text color for currentDate
+     * @cssprop --bq-date-picker--day-size - Date picker button day size
+     * @cssprop --bq-date-picker--gap - Gap between Date picker content and prefix/suffix
+     * @cssprop --bq-date-picker--icon-size - Icon size to use in prefix/suffix and clear button
+     * @cssprop --bq-date-picker--label-margin-bottom - Date picker label margin bottom
+     * @cssprop --bq-date-picker--label-text-color - Date picker label text color
+     * @cssprop --bq-date-picker--label-text-size - Date picker label text size
+     * @cssprop --bq-date-picker--padding-end - Date picker padding end
+     * @cssprop --bq-date-picker--padding-start - Date picker padding start
+     * @cssprop --bq-date-picker--paddingY - Date picker padding top and bottom
+     * @cssprop --bq-date-picker--range-background-color - Background color for the selected date range in the date picker
+     * @cssprop --bq-date-picker--text-color - Date picker text color
+     * @cssprop --bq-date-picker--text-placeholder-color - Date picker placeholder text color
+     * @cssprop --bq-date-picker--text-size - Date picker text size
+     */
     interface BqDatePicker {
         /**
           * If `true`, the Date picker input will be focused on component render
@@ -2752,9 +5982,66 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    /**
+     * The Dialog component is used to display additional content or prompt a user for action.
+     * It provides a way to display additional information, options, or controls in a separate, non-obstructive interface element.
+     * @example How to use it
+     * ```html
+     * <bq-dialog footer-appearance="standard" border="m" size="medium">
+     * <h5 class="bold flex items-center gap-s" slot="title">
+     * <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
+     * Title
+     * </h5>
+     * <p>
+     * Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+     * standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+     * type specimen book.
+     * </p>
+     * <div class="flex gap-xs" slot="footer">
+     * <bq-button appearance="link">Button</bq-button>
+     * <bq-button variant="ghost">Button</bq-button>
+     * <bq-button variant="standard" slot="footer">Button</bq-button>
+     * </div>
+     * </bq-dialog>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/15b6fc-dialog
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
+     * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} border - Border radius of the dialog component.
+     * @attr {boolean} disable-backdrop - If true, the backdrop overlay won't be shown when the dialog opens.
+     * @attr {boolean} disable-close-esc-keydown - If true, the dialog will not close when the [Esc] key is pressed.
+     * @attr {boolean} disable-close-click-outside - If true, the dialog will not close when clicking on the backdrop overlay.
+     * @attr {"standard" | "highlight"} footer-appearance - The appearance of the footer.
+     * @attr {boolean} hide-close-button - If true, it hides the close button.
+     * @attr {boolean} open - If true, the dialog will be shown as open.
+     * @attr {"small" | "medium" | "large"} size - The size of the dialog.
+     * @method show - Open the dialog.
+     * @method hide - Closes the dialog.
+     * @method cancel - Dismiss or cancel the dialog.
+     * @event bqCancel - Callback handler emitted when the dialog has been canceled or dismissed.
+     * @event bqClose - Callback handler emitted when the dialog will close.
+     * @event bqOpen - Callback handler emitted when the dialog will open.
+     * @event bqAfterOpen - Callback handler emitted when the dialog finish opening.
+     * @event bqAfterClose - Callback handler emitted when the dialog finish closing.
+     * @cssprop --bq-dialog--background - Dialog background color
+     * @cssprop --bq-dialog--background-backdrop - Dialog backdrop background color
+     * @cssprop --bq-dialog--box-shadow - Dialog box shadow
+     * @cssprop --bq-dialog--border-color - Dialog border color
+     * @cssprop --bq-dialog--border-style - Dialog border style
+     * @cssprop --bq-dialog--border-width - Dialog border width
+     * @cssprop --bq-dialog--border-radius - Dialog border radius
+     * @cssprop --bq-dialog--padding - Dialog padding
+     * @cssprop --bq-dialog--content-footer-gap - Dialog gap distance between content and footer elements
+     * @cssprop --bq-dialog--title-body-gap - Dialog gap distance between title and body elements
+     * @cssprop --bq-dialog--width-small - Dialog small width
+     * @cssprop --bq-dialog--width-medium - Dialog medium width
+     * @cssprop --bq-dialog--width-large - Dialog large width
+     * @cssprop --bq-dialog-z-index - Dialog z-index applied when opened
+     */
     interface BqDialog {
         /**
-          * Corder radius of the dialog component
+          * Border radius of the dialog component
          */
         "border"?: TDialogBorderRadius;
         /**
@@ -2806,6 +6093,28 @@ declare namespace LocalJSX {
          */
         "size"?: TDialogSize;
     }
+    /**
+     * The Divider component is used to visually separate content in a layout.
+     * @example How to use it
+     * ```html
+     * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
+     * <span slot="title">Divider Title</span>
+     * </bq-divider>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/53dfe6-divider
+     * @status stable
+     * @attr {boolean} dashed - If true, the divider has a dashed pattern.
+     * @attr {"horizontal" | "vertical"} orientation - The default orientation of the divider.
+     * @attr {string} stroke-color - Set the stroke color of the divider. The value should be a valid value of the palette color.
+     * @attr {"start" | "middle" | "end"} title-alignment - Set the alignment of the title on the main axis of the divider (horizontal / vertical).
+     * @attr {number} stroke-dash-width - Set the width of each dash of the divider's stroke. This is applicable when the stroke is dashed.
+     * @attr {number} stroke-dash-gap - Set the gap of the divider's stroke. This is applicable when the stroke is dashed.
+     * @attr {number} stroke-thickness - Set the thickness of the divider's stroke. Value expressed in px.
+     * @attr {number} stroke-basis - Set the min width of the divider's stroke when text is not centered. Value expressed in px.
+     * @attr {"square" | "round" | "butt"} stroke-linecap - Set the line of the divider's stroke. This is applicable when the stroke is dashed.
+     * @cssprop --bq-divider--color - Divider color
+     * @cssprop --bq-divider--title-marginX - Divider space between title and delimiters
+     */
     interface BqDivider {
         /**
           * If true, the divider has a dashed pattern
@@ -2844,6 +6153,44 @@ declare namespace LocalJSX {
          */
         "titleAlignment"?: TDividerTitleAlignment;
     }
+    /**
+     * The Drawer component provides a sliding panel interface commonly used for navigation or presenting additional content without taking up significant screen space.
+     * @example How to use it
+     * ```html
+     * <bq-drawer position="end">
+     * <div class="flex gap-xs" slot="title">Title</div>
+     * <div class="...">
+     * Content
+     * </div>
+     * <div class="flex flex-1 justify-center gap-xs" slot="footer">
+     * <bq-button appearance="primary" block="" size="small">Button</bq-button>
+     * <bq-button appearance="link" block="" size="small">Button</bq-button>
+     * </div>
+     * </bq-drawer>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/871139-drawer
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
+     * @dependency bq-divider
+     * @attr {boolean} enable-backdrop - If true, the backdrop overlay will be shown when the drawer opens.
+     * @attr {boolean} close-on-click-outside - If true, the drawer will not close when clicking outside the panel.
+     * @attr {boolean} close-on-esc - If true, the drawer will not close when the [Esc] key is pressed.
+     * @attr {boolean} open - If true, the drawer component will be shown.
+     * @attr {"start" | "end"} position - Defines the position of the drawer.
+     * @method show - Method to be called to show the drawer component.
+     * @method hide - Method to be called to hide the drawer component.
+     * @event bqClose - Callback handler to be called when the drawer is closed.
+     * @event bqOpen - Callback handler to be called when the drawer is opened.
+     * @event bqAfterOpen - Callback handler to be called after the drawer has been opened.
+     * @event bqAfterClose - Callback handler to be called after the drawer has been closed.
+     * @cssprop --bq-drawer--backgroundBackdrop - Background color of the backdrop
+     * @cssprop --bq-drawer--gap - Gap between the drawer and the viewport
+     * @cssprop --bq-drawer--width - Width of the drawer
+     * @cssprop --bq-drawer--paddingX - Padding left and right of the drawer
+     * @cssprop --bq-drawer--paddingY - Padding top and bottom of the drawer
+     * @cssprop --bq-drawer--zIndex - Z-index of the drawer component
+     */
     interface BqDrawer {
         /**
           * If true, the drawer will not close when clicking outside the panel
@@ -2886,6 +6233,46 @@ declare namespace LocalJSX {
          */
         "position"?: TDrawerPosition;
     }
+    /**
+     * The Dropdown Component is commonly used when presenting a list of selectable options that are too numerous to fit comfortably on the screen.
+     * They provide an efficient way to save space and present a long list of options in a compact and organized manner.
+     * @example How to use it
+     * ```html
+     * <bq-dropdown placement="bottom-start">
+     * <bq-button slot="trigger">Dropdown</bq-button>
+     * <bq-option-list>
+     * <bq-option value="users">...</bq-option>
+     * <bq-option value="user">...</bq-option>
+     * <bq-option value="dashboard">...</bq-option>
+     * <bq-option value="settings">...</bq-option>
+     * <bq-option value="logout">...</bq-option>
+     * </bq-option-list>
+     * </bq-dropdown>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/47ff4b-dropdown
+     * @status stable
+     * @dependency bq-panel
+     * @attr {boolean} disabled - If true, the dropdown panel will be visible and won't be shown.
+     * @attr {number} distance - Represents the distance (gutter or margin) between the panel and the trigger element.
+     * @attr {boolean} keep-open-on-select - If true, the panel will remain open after a selection is made.
+     * @attr {"top" | "bottom" | "left" | "right" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end" | "right-start" | "right-end"} placement - Position of the panel.
+     * @attr {boolean} open - If true, the panel will be visible.
+     * @attr {string} panel-height - When set, it will override the height of the dropdown panel.
+     * @attr {boolean} same-width - Whether the panel should have the same width as the trigger element.
+     * @attr {number} skidding - Represents the skidding between the panel and the trigger element.
+     * @attr {"fixed" | "absolute"} strategy - Defines the strategy to position the panel.
+     * @event bqOpen - Callback handler to be called when the dropdown panel is opened or closed.
+     * @cssprop --bq-panel--background - Panel background color
+     * @cssprop --bq-panel--border-color - Panel border color
+     * @cssprop --bq-panel--border-radius - Panel border radius
+     * @cssprop --bq-panel--border-style - Panel border style
+     * @cssprop --bq-panel--border-width - Panel border width
+     * @cssprop --bq-panel--box-shadow - Panel box shadow
+     * @cssprop --bq-panel--padding - Panel padding
+     * @cssprop --bq-panel--height - Panel height
+     * @cssprop --bq-panel--width - Panel width
+     * @cssprop --bq-panel-z-index - Panel z-index applied when opened
+     */
     interface BqDropdown {
         /**
           * If true, the dropdown panel will be visible and won't be shown.
@@ -2928,6 +6315,17 @@ declare namespace LocalJSX {
          */
         "strategy"?: 'fixed' | 'absolute';
     }
+    /**
+     * An Empty State is a UI component displayed when there is no data or content available, often used in dynamic or inactive application states.
+     * @example How to use it
+     * ```html
+     * <bq-empty-state size="medium">Title</bq-empty-state>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/673ae0-empty-state/b/09d7b1
+     * @status stable
+     * @dependency bq-icon
+     * @attr {"large" | "medium" | "small"} size - The size of the empty state component
+     */
     interface BqEmptyState {
         /**
           * The size of the empty state component
@@ -2935,7 +6333,22 @@ declare namespace LocalJSX {
         "size"?: TEmptyStateSize;
     }
     /**
-     * Icons are simplified images that graphically explain the meaning of an object on the screen.
+     * The Icon component is an image that provides a visual representation of an object, action, or concept displayed on the screen.
+     * It is a small graphical element that is used to enhance the user interface and improve user experience.
+     * @example How to use it
+     * ```html
+     * <bq-icon color="text--brand" name="bell-ringing" size="24"></bq-icon>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/675fad-icon
+     * @status stable
+     * @attr {string} color - Set the stroke color of the SVG. The value should be a valid value of the palette color.
+     * @attr {string} label - Label for the icon, used for accessibility.
+     * @attr {string} name - Icon name to load. Please check all available icons [here](https://phosphoricons.com/).
+     * @attr {string | number} size - Set the size of the SVG.
+     * @attr {string} src - Set the source of the SVG. If the source is set, the name property will be ignored.
+     * @event svgLoaded - Callback handler to be called when the SVG has loaded.
+     * @cssprop --bq-icon--color - The stroke color of the SVG.
+     * @cssprop --bq-icon--size - The size of the SVG.
      */
     interface BqIcon {
         /**
@@ -2967,6 +6380,66 @@ declare namespace LocalJSX {
          */
         "weight"?: TIconWeight;
     }
+    /**
+     * The Input component is a fundamental user interface element that allows users to input data by typing it into a text field.
+     * It is commonly used in web and mobile applications for various purposes, such as collecting user information, search inputs, and login forms.
+     * @example How to use it
+     * ```html
+     * <bq-input name="username" label="Username" placeholder="Enter your username"></bq-input>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/980362-input
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
+     * @attr {string} autocapitalize - Controls whether or not the input field should be capitalized and how.
+     * @attr {string} autocomplete - Specifies whether or not the input field should have autocomplete enabled.
+     * @attr {string} autocorrect - Controls whether or not the input field should have autocorrect enabled.
+     * @attr {boolean} autofocus - If true, the input will be focused on component render.
+     * @attr {string} clear-button-label - The clear button aria label.
+     * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
+     * @attr {boolean} disabled - Indicates whether the input is disabled or not.
+     * @attr {boolean} disable-clear - If true, the clear button won't be displayed.
+     * @attr {string} form - The ID of the form that the input field belongs to.
+     * @attr {string} inputmode - The inputmode attribute specifies what kind of input mechanism would be most helpful for users entering content into the input field.
+     * @attr {number | string} max - The maximum value that the input field can accept.
+     * @attr {number} maxlength - The maximum number of characters that the input field can accept.
+     * @attr {number | string} min - The minimum value that the input field can accept.
+     * @attr {number} minlength - The minimum number of characters that the input field can accept.
+     * @attr {string} name - The input field name.
+     * @attr {string} pattern - Specifies a regular expression the form control's value should match.
+     * @attr {string} placeholder - The input placeholder text value.
+     * @attr {boolean} readonly - If true, the input field cannot be modified.
+     * @attr {boolean} required - Indicates whether or not the input field is required to be filled out before submitting the form.
+     * @attr {number | 'any'} step - A number that specifies the granularity that the value must adhere to.
+     * @attr {string} type - The type attribute specifies the type of input field to display.
+     * @attr {'none' | 'error' | 'warning' | 'success'} validation-status - The validation status of the input.
+     * @attr {string | number | string[]} value - The input value, it can be used to reset the input to a previous value.
+     * @event bqBlur - Callback handler emitted when the input loses focus.
+     * @event bqChange - Callback handler emitted when the input value has changed and the input loses focus.
+     * @event bqClear - Callback handler emitted when the input value has been cleared.
+     * @event bqFocus - Callback handler emitted when the input has received focus.
+     * @event bqInput - Callback handler emitted when the input value changes.
+     * @cssprop --bq-input--background-color - Input background color
+     * @cssprop --bq-input--border-color - Input border color
+     * @cssprop --bq-input--border-color-focus - Input border color on focus
+     * @cssprop --bq-input--border-radius - Input border radius
+     * @cssprop --bq-input--border-width - Input border width
+     * @cssprop --bq-input--border-style - Input border style
+     * @cssprop --bq-input--gap - Gap between input content and prefix/suffix
+     * @cssprop --bq-input--helper-margin-top - Helper text margin top
+     * @cssprop --bq-input--helper-text-color - Helper text color
+     * @cssprop --bq-input--helper-text-size - Helper text size
+     * @cssprop --bq-input--icon-size - Icon size to use in prefix/suffix and clear button
+     * @cssprop --bq-input--label-margin-bottom - Input label margin bottom
+     * @cssprop --bq-input--label-text-color - Input label text color
+     * @cssprop --bq-input--label-text-size - Input label text size
+     * @cssprop --bq-input--padding-start - Input padding start
+     * @cssprop --bq-input--padding-end - Input padding end
+     * @cssprop --bq-input--paddingY - Input padding top and bottom
+     * @cssprop --bq-input--text-color - Input text color
+     * @cssprop --bq-input--text-size - Input text size
+     * @cssprop --bq-input--text-placeholder-color - Input placeholder text color
+     */
     interface BqInput {
         /**
           * Controls whether or not the input field should be capitalized and how. Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
@@ -3082,6 +6555,53 @@ declare namespace LocalJSX {
          */
         "value"?: TInputValue;
     }
+    /**
+     * The Notification component is a user interface element used to provide information or alerts to users in a non-intrusive manner.
+     * @example How to use it
+     * ```html
+     * <bq-notification border="s" time="3000" type="info">
+     * Title
+     * <span slot="body">
+     * This is some description text text
+     * <a class="bq-link" href="https://example.com">Link</a>
+     * </span>
+     * <div class="flex gap-xs" slot="footer">
+     * <bq-button appearance="primary" size="small">Button</bq-button>
+     * <bq-button appearance="link" size="small">Button</bq-button>
+     * </div>
+     * </bq-notification>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/945cb6-notification
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
+     * @attr {boolean} auto-dismiss - If true, the notification will automatically hide after the specified amount of time
+     * @attr {string} border - The corder radius of the notification component
+     * @attr {boolean} disable-close - If true, the close button at the top right of the notification won't be shown
+     * @attr {boolean} hide-icon - If true, the notification icon won't be shown
+     * @attr {boolean} open - If true, the notification will be shown
+     * @attr {number} time - The length of time, in milliseconds, after which the notification will close itself. Only valid if `auto-dismiss="true"`
+     * @attr {string} type - Type of Notification
+     * @event bqAfterClose - Callback handler to be called after the notification has been closed
+     * @event bqAfterOpen - Callback handler to be called after the notification has been opened
+     * @event bqHide - Callback handler to be called when the notification is hidden
+     * @event bqShow - Callback handler to be called when the notification is shown
+     * @cssprop --bq-notification--background - The notification background color
+     * @cssprop --bq-notification--box-shadow - The notification box shadow
+     * @cssprop --bq-notification--border-color - The notification border color
+     * @cssprop --bq-notification--border-radius - The notification border radius
+     * @cssprop --bq-notification--border-style - The notification border style
+     * @cssprop --bq-notification--border-width - The notification border width
+     * @cssprop --bq-notification--content-footer-gap - The notification content and footer gap
+     * @cssprop --bq-notification--title-body-gap - The notification title and body gap
+     * @cssprop --bq-notification--icon-color-error - The notification icon color for error type
+     * @cssprop --bq-notification--icon-color-info - The notification icon color for info type
+     * @cssprop --bq-notification--icon-color-neutral - The notification icon color for neutral type
+     * @cssprop --bq-notification--icon-color-success - The notification icon color for success type
+     * @cssprop --bq-notification--icon-color-warning - The notification icon color for warning type
+     * @cssprop --bq-notification--padding - The notification padding
+     * @cssprop --bq-notification--min-width - The notification min width
+     */
     interface BqNotification {
         /**
           * If true, the notification will automatically hide after the specified amount of time
@@ -3128,6 +6648,39 @@ declare namespace LocalJSX {
          */
         "type"?: TNotificationType;
     }
+    /**
+     * An option refers to a specific choice that appears in a list of selectable items that can be opened or closed by the user.
+     * It can be an element of the navigation system that allows users to select different sections or pages within an application or it can be used within a dropdown list.
+     * @example How to use it
+     * ```html
+     * <bq-option value="user">
+     * <span>User profile</span>
+     * <bq-icon slot="suffix" name="user"></bq-icon>
+     * </bq-option>
+     * ```
+     * @documentation https://storybook.beeq.design/?path=/story/components-option--with-option-group
+     * @status stable
+     * @attr {boolean} disabled - If true, the option is disabled.
+     * @attr {boolean} hidden - If true, the option is hidden.
+     * @attr {string} value - A string representing the value of the option. Can be used to identify the item.
+     * @attr {boolean} selected - If true, the option is selected and active.
+     * @event bqBlur - Handler to be called when item loses focus.
+     * @event bqFocus - Handler to be called when item is focused.
+     * @event bqClick - Handler to be called when item is clicked.
+     * @event bqEnter - Handler to be called on enter key press.
+     * @cssprop --bq-option--background - background color
+     * @cssprop --bq-option--font-size - font size
+     * @cssprop --bq-option--border-color - border color
+     * @cssprop --bq-option--border-style - border style
+     * @cssprop --bq-option--border-width - border width
+     * @cssprop --bq-option--border-radius - border radius
+     * @cssprop --bq-option--box-shadow - box shadow
+     * @cssprop --bq-option--gap-start - gap space between prefix and label
+     * @cssprop --bq-option--gap-end - gap space between label and suffix
+     * @cssprop --bq-option--paddingY - padding Y axis
+     * @cssprop --bq-option--padding-start - option label padding start
+     * @cssprop --bq-option--padding-end - option label padding end
+     */
     interface BqOption {
         /**
           * If true, the option is disabled.
@@ -3162,8 +6715,48 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    /**
+     * The option group component is a container for multiple option elements.
+     * It allows to manage the appearance and size of all options at once.
+     * @example How to use it
+     * ```html
+     * <bq-option-group class="hydrated">
+     * <span slot="header-label">Sport</span>
+     * <bq-option value="football">Football</bq-option>
+     * <bq-option value="basketball">Basketball</bq-option>
+     * <bq-option value="tennis">Tennis</bq-option>
+     * </bq-option-group>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/3b1b7b-option-group
+     * @status stable
+     * @cssprop --bq-option-group--background - option group background color
+     * @cssprop --bq-option-group--font-size - option group font size
+     * @cssprop --bq-option-group--line-height - option group line height
+     * @cssprop --bq-option-group--label-padding-start - option group header padding start
+     * @cssprop --bq-option-group--label-padding-end - option group header padding start
+     * @cssprop --bq-option-group--label-paddingY - option group header padding Y axis
+     * @cssprop --bq-option-group--label-text-padding-start - option group text within label padding start
+     * @cssprop --bq-option-group--label-text-padding-end - option group text within label padding start
+     * @cssprop --bq-option-group--container-padding-start - option group container padding start
+     */
     interface BqOptionGroup {
     }
+    /**
+     * The option list component is a container for multiple option elements.
+     * It allows to manage the appearance and size of all options at once.
+     * @example How to use it
+     * ```html
+     * <bq-option-list>
+     * <bq-option value="football">Football</bq-option>
+     * <bq-option value="basketball">Basketball</bq-option>
+     * <bq-option value="tennis">Tennis</bq-option>
+     * </bq-option-list>
+     * ```
+     * @documentation https://storybook.beeq.design/?path=/story/components-option--default
+     * @status stable
+     * @attr {string} aria-label - Aria label for the list.
+     * @cssprop --bq-option-group--gapY-list - Option group gap between items Y axis
+     */
     interface BqOptionList {
         /**
           * Aria label for the list.
@@ -3174,8 +6767,64 @@ declare namespace LocalJSX {
          */
         "onBqSelect"?: (event: BqOptionListCustomEvent<{ value: string; item: HTMLBqOptionElement }>) => void;
     }
+    /**
+     * The Page Title component is a versatile and essential element used to display the main title of a page or section within an application.
+     * @example How to use it
+     * ```html
+     * <bq-page-title>
+     * <bq-button appearance="link" slot="back">
+     * <bq-icon
+     * color="text--primary"
+     * name="arrow-left"
+     * weight="bold"
+     * role="img"
+     * title="Navigate back to the previous page"
+     * ></bq-icon>
+     * </bq-button>
+     * Title
+     * <div slot="sub-title">Sub-title</div>
+     * </bq-page-title>
+     * ```
+     * @documentation https://storybook.beeq.design/?path=/docs/components-page-title--overview
+     * @status stable
+     * @cssprop --paddingY - Padding top and bottom of the page title wrapper
+     * @cssprop --subtitle-borderBlockEnd - Page title border end color
+     * @cssprop --subtitle-fontWeight - Page title font weight for subtitle
+     * @cssprop --subtitle-textColor - Page title color for sub-title
+     * @cssprop --subtitle-textSize - Page title text size for subtitle
+     * @cssprop --title-fontWeight - Page title font weight for title
+     * @cssprop --title-lineHeight - Page title text line height
+     * @cssprop --title-textColor - Page title color for title
+     * @cssprop --title-textSize - Page title text size for title
+     */
     interface BqPageTitle {
     }
+    /**
+     * The Panel component is a versatile and essential element used to wrap and display content in a floating panel.
+     * @example How to use it
+     * ```html
+     * <bq-panel open>
+     * <div>Panel content</div>
+     * </bq-panel>
+     * ```
+     * @status stable
+     * @attr {number} distance - Represents the distance (gutter or margin) between the panel and the trigger element.
+     * @attr {"top" | "bottom" | "left" | "right" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end" | "right-start" | "right-end"} placement - Position of the panel.
+     * @attr {boolean} open - If true, the panel will be visible.
+     * @attr {boolean} same-width - Whether the panel should have the same width as the trigger element.
+     * @attr {number} skidding - Represents the skidding between the panel and the trigger element.
+     * @attr {"fixed" | "absolute"} strategy - Defines the strategy to position the panel.
+     * @prop --bq-panel--background - Panel background color
+     * @prop --bq-panel--border-color - Panel border color
+     * @prop --bq-panel--border-radius - Panel border radius
+     * @prop --bq-panel--border-style - Panel border style
+     * @prop --bq-panel--border-width - Panel border width
+     * @prop --bq-panel--box-shadow - Panel box shadow
+     * @prop --bq-panel--padding - Panel padding
+     * @prop --bq-panel--height - Panel height
+     * @prop --bq-panel--width - Panel width
+     * @prop --bq-panel-z-index - Panel z-index applied when opened
+     */
     interface BqPanel {
         /**
           * Represents the distance (gutter or margin) between the panel and the trigger element.
@@ -3202,6 +6851,27 @@ declare namespace LocalJSX {
          */
         "strategy"?: 'fixed' | 'absolute';
     }
+    /**
+     * The progress bar is a user interface component that visually represents the completion status of a task or process.
+     * @example How to use it
+     * ```html
+     * <bq-progress value="50"></bq-progress>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/691cb3-progress
+     * @status stable
+     * @dependency bq-tooltip
+     * @attr {"rounded" | "rounded-full"} border-shape - It will set the border style of the progress bar
+     * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value
+     * @attr {boolean} indeterminate - If `true` the indeterminate state of progress bar is enabled
+     * @attr {boolean} label - If `true`, a label text showing the value (in percentage) will be shown
+     * @attr {"small" | "medium" | "large"} thickness - Progress bar thickness
+     * @attr {"default" | "error"} type - Progress type
+     * @attr {number} value - A number representing the current value of the progress bar
+     * @cssprop --bq-progress-bar--height - The progress bars height
+     * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
+     * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
+     * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
+     */
     interface BqProgress {
         /**
           * It will set the border style of the progress bar
@@ -3216,7 +6886,7 @@ declare namespace LocalJSX {
          */
         "indeterminate"?: boolean;
         /**
-          * If `true`, a label text showing the value (in percentage) will be shown
+          * If `true, a label text showing the value (in percentage) will be shown
          */
         "label"?: boolean;
         /**
@@ -3232,6 +6902,31 @@ declare namespace LocalJSX {
          */
         "value"?: number;
     }
+    /**
+     * The radio button is a user interface element that allows users to select a single option.
+     * @example How to use it
+     * ```html
+     * <bq-radio value="option1">Radio option 1</bq-radio>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/9718e1-radio-button/b/09d7b1
+     * @status stable
+     * @attr {boolean} background-on-hover - If `true`, the radio displays background on hover
+     * @attr {boolean} checked - If `true` radio input is checked
+     * @attr {boolean} disabled - If `true` radio input is disabled
+     * @attr {string} form-id - The form ID that the radio input is associated with
+     * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+     * @attr {boolean} required - If `true`, it will indicate that the user must specify a value for the radio before the owning form can be submitted
+     * @attr {boolean} value - A string representing the value of the radio
+     * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+     * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+     * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+     * @event bqBlur - Handler to be called when the radio loses focus
+     * @event bqClick - Handler to be called when the radio state changes
+     * @event bqFocus - Handler to be called when the radio gets focused
+     * @event bqKeyDown - The handler is to be called when the radio key is pressed
+     * @cssprop --bq-radio--size - Radio size
+     * @cssprop --bq-radio--border-width - Radio border width
+     */
     interface BqRadio {
         /**
           * If true radio displays background on hover
@@ -3278,6 +6973,31 @@ declare namespace LocalJSX {
          */
         "value": string;
     }
+    /**
+     * The radio group is a user interface component that groups radio buttons to enable a single selection within the group.
+     * @example How to use it
+     * ```html
+     * <bq-radio-group fieldset value="option1">
+     * <span slot="label">radio group</span>
+     * <bq-radio value="option1">Radio option 1</bq-radio>
+     * <bq-radio value="option2">Radio option 2</bq-radio>
+     * <bq-radio value="option3">Radio option 3</bq-radio>
+     * </bq-radio-group>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/9718e1-radio-button/b/09d7b1
+     * @status stable
+     * @attr {boolean} background-on-hover - If `true`, the radio displays background on hover
+     * @attr {number} debounce-time - A number representing the delay time (in milliseconds) that bqChange event handler gets triggered once the value change
+     * @attr {boolean} disabled - If `true` radio inputs are disabled
+     * @attr {boolean} fieldset - If `true` displays fieldset
+     * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+     * @attr {"horizontal" | "vertical"} orientation - The display orientation of the radio inputs
+     * @attr {string} value - The display orientation of the radio inputs
+     * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+     * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+     * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+     * @event bqChange - Handler to be called when the radio state changes
+     */
     interface BqRadioGroup {
         /**
           * If true, all radio inputs in the group will display a background on hover
@@ -3312,6 +7032,77 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    /**
+     * The select input component lets users choose from a predefined list, commonly used in forms for easy data selection.
+     * @example How to use it
+     * ```html
+     * <bq-select placeholder="Placeholder">
+     * <label slot="label">Select label</label>
+     * <span slot="helper-text">
+     * <bq-icon name="star"></bq-icon>
+     * Helper text
+     * </span>
+     * <bq-option value="1">Option 1</bq-option>
+     * <bq-option value="2">Option 2</bq-option>
+     * <bq-option value="3">Option 3</bq-option>
+     * </bq-select>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/41989d-select/b/09d7b1
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-dropdown
+     * @dependency bq-icon
+     * @dependency bq-option-list
+     * @dependency bq-tag
+     * @attr {boolean} autofocus - If `true`, the Select input will be focused on component render.
+     * @attr {string} clear-button-label - The clear button aria label.
+     * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
+     * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+     * @attr {boolean} disabled - Indicates whether the Select input is disabled and cannot be interacted with.
+     * @attr {number} distance - Represents the distance (gutter or margin) between the Select panel and the input element.
+     * @attr {string} form - The ID of the form that Select input field belongs to.
+     * @attr {boolean} keep-open-on-select - If `true`, the Select panel will remain open after a selection is made.
+     * @attr {number} max-tags-visible - The maximum number of tags to display when multiple selection is enabled.
+     * @attr {boolean} multiple - If `true`, the Select input will allow multiple selections.
+     * @attr {string} name - The Select input name.
+     * @attr {boolean} open - If `true`, the Select panel will be visible.
+     * @attr {string} panel-height - When set, it will override the height of the Select panel.
+     * @attr {string} placeholder - The Select input placeholder text value.
+     * @attr {"bottom" | "bottom-end" | "bottom-start" | "left" | "left-end" | "left-start" | "right" | "right-end" | "right-start" | "top" | "top-end" | "top-start"} placement - Position of the Select panel.
+     * @attr {boolean} readonly - If `true`, the Select input cannot be modified.
+     * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
+     * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
+     * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
+     * @attr {"absolute" | "fixed"} strategy - Defines the strategy to position the Select panel.
+     * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
+     * @attr {"number" | "string" | "string[]"} value - The select input value can be used to reset the field to a previous value.
+     * @method clear - Method to be called to clear the selected value.
+     * @event bqBlur - The callback handler is emitted when the Select input loses focus.
+     * @event bqClear - The callback handler is emitted when the selected value has been cleared.
+     * @event bqFocus - A callback handler is emitted when the Select input has received focus.
+     * @event bqSelect - The callback handler is emitted when the selected value has changed.
+     * @cssprop --bq-select--background-color - Select background color
+     * @cssprop --bq-select--border-color - Select border color
+     * @cssprop --bq-select--border-color-focus - Select border color on focus
+     * @cssprop --bq-select--border-color-disabled - Select border color when disabled
+     * @cssprop --bq-select--border-radius - Select border radius
+     * @cssprop --bq-select--border-width - Select border width
+     * @cssprop --bq-select--border-style - Select border style
+     * @cssprop --bq-select--gap - Gap between Select content and prefix/suffix
+     * @cssprop --bq-select--helper-margin-top - Helper text margin top
+     * @cssprop --bq-select--helper-text-color - Helper text color
+     * @cssprop --bq-select--helper-text-size - Helper text size
+     * @cssprop --bq-select--icon-size - Icon size to use in prefix/suffix and clear button
+     * @cssprop --bq-select--label-margin-bottom - Select label margin bottom
+     * @cssprop --bq-select--label-text-color - Select label text color
+     * @cssprop --bq-select--label-text-size - Select label text size
+     * @cssprop --bq-select--padding-start - Select padding start
+     * @cssprop --bq-select--padding-end - Select padding end
+     * @cssprop --bq-select--paddingY - Select padding top and bottom
+     * @cssprop --bq-select--text-color - Select text color
+     * @cssprop --bq-select--text-size - Select text size
+     * @cssprop --bq-select--text-placeholder-color - Select placeholder text color
+     */
     interface BqSelect {
         /**
           * If true, the Select input will be focused on component render
@@ -3419,6 +7210,42 @@ declare namespace LocalJSX {
          */
         "value"?: TSelectValue;
     }
+    /**
+     * The default side menu serves as a versatile container for organizing and displaying navigation elements,
+     *  with default side menu items providing a clean and straightforward way to represent individual menu options.
+     *  Together, they form the foundation for building structured and intuitive side menu layouts.
+     * @example How to use it
+     * ```html
+     * <bq-side-menu>
+     * <div slot="logo">
+     * <h1>Your Logo</h1>
+     * </div>
+     * <bq-side-menu-item active>
+     * <bq-icon name="home" slot="prefix"></bq-icon>
+     * Home
+     * </bq-side-menu-item>
+     * <bq-side-menu-item>
+     * <bq-icon name="settings" slot="prefix"></bq-icon>
+     * Settings
+     * </bq-side-menu-item>
+     * <bq-side-menu-item disabled>
+     * <bq-icon name="help" slot="prefix"></bq-icon>
+     * Help
+     * </bq-side-menu-item>
+     * </bq-side-menu>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/99822d-side-menu/b/09d7b1
+     * @status stable
+     * @attr {"brand" | "default" | "inverse"} appearance - It sets a predefined appearance of the side menu.
+     * @attr {boolean} collapse - If `true`, the container will reduce its width.
+     * @attr {"medium" | "small"} - size - It sets the size of the navigation menu items.
+     * @method toggleCollapse - Method to be called to toggle the collapse state of the side menu.
+     * @event bqCollapse - Callback handler to be called when the Side menu changes its width from expanded to collapse and vice versa.
+     * @event bqSelect - Callback handler to be called when the active/selected menu item changes.
+     * @cssprop --bq-side-menu--bg-color - Side menu background color
+     * @cssprop --bq-side-menu--brand-color - Side menu logo color
+     * @cssprop --bq-side-menu--border-color - Side menu border color
+     */
     interface BqSideMenu {
         /**
           * It sets a predefined appearance of the side menu
@@ -3441,6 +7268,35 @@ declare namespace LocalJSX {
          */
         "size"?: TSideMenuSize;
     }
+    /**
+     * Represents the default side menu item for standard navigation elements, providing a clean and straightforward way to display menu options.
+     * @example How to use it
+     * ```html
+     * <bq-side-menu-item>
+     * <bq-icon name="star-four" slot="prefix"></bq-icon>
+     * Menu item
+     * <bq-badge slot="suffix">5</bq-badge>
+     * </bq-side-menu-item>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/99822d-side-menu/b/09d7b1
+     * @status stable
+     * @dependency bq-tooltip
+     * @attr {boolean} active - If `true`, the menu item will be shown as active/selected.
+     * @attr {boolean} collapse - If `true`, the item label and suffix will be hidden and the with will be reduced according to its parent.
+     * @attr {boolean} disabled - If `true`, the menu item will be disabled (no interaction allowed).
+     * @event bqBlur - Handler to be called when the button loses focus.
+     * @event bqClick - Handler to be called when the button gets focused.
+     * @event bqFocus - Handler to be called when the button is clicked.
+     * @cssprop --bq-side-menu-item--bg-default - Side menu item default background color
+     * @cssprop --bq-side-menu-item--bg-hover - Side menu item hover background color
+     * @cssprop --bq-side-menu-item--bg-active - Side menu item active background color
+     * @cssprop --bq-side-menu-item--text-default - Side menu item default text color
+     * @cssprop --bq-side-menu-item--text-hover - Side menu item hover text color
+     * @cssprop --bq-side-menu-item--text-active - Side menu item active text color
+     * @cssprop --bq-side-menu-item--text-disabled - Side menu item disable text color
+     * @cssprop --bq-side-menu-item--paddingX - Side menu item vertical padding
+     * @cssprop --bq-side-menu-item--paddingY - Side menu item horizontal padding
+     */
     interface BqSideMenuItem {
         /**
           * If true, the menu item will be shown as active/selected.
@@ -3467,6 +7323,36 @@ declare namespace LocalJSX {
          */
         "onBqFocus"?: (event: BqSideMenuItemCustomEvent<HTMLBqSideMenuItemElement>) => void;
     }
+    /**
+     * Sliders provide a visual representation of adjustable content, enabling users to change values by dragging a handle along a horizontal track.
+     * @example How to use it
+     * ```html
+     * <bq-slider max="100" value="30"></bq-slider>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/509cbc-slider/b/09d7b1
+     * @status stable
+     * @dependency bq-tooltip
+     * @attr {number} debounce-time - The amount of time, in milliseconds, to wait to trigger the bqChange event after each value change.
+     * @attr {boolean} disabled - If `true` the slider is disabled.
+     * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value.
+     * @attr {boolean} enable-value-indicator - If `true` it will show the value label on the side of the slider track area.
+     * @attr {number} gap - A number representing the amount to remain between the minimum and maximum values (only for range type).
+     * @attr {number} max - A number representing the max value of the slider.
+     * @attr {number} min - A number representing the min value of the slider.
+     * @attr {number} step - A number represents the step of the slider. ⚠️ Please notice that the value (or list of values if the slider type is range) will be rounded to the nearest multiple of step.
+     * @attr {boolean} tooltip-always-visible - If `true`, a tooltip will always display the progress value. It relies on enableTooltip and if enableTooltip is false, tooltipAlwaysVisible cannot be true.
+     * @attr {"range" | "single"} type - It defines the type of slider to display.
+     * @attr {"[number, number]" | "number" | "string"} value - The value of the slider. If the slider type is single, the value is a number.
+     * If the slider type is range, the value is an array of two numbers (the first number represents the min value and the second number represents the max value).
+     * @event bqBlur - Handler to be called when the slider loses focus.
+     * @event bqChange - Handler to be called when changing the value on range inputs.
+     * @event bqFocus - Handler to be called when the slider gets focused.
+     * @cssprop --bq-slider--size - The height of the slider track/progress area
+     * @cssprop --bq-slider--border-radius - Slider border radius
+     * @cssprop --bq-slider--thumb-size - Slider hover thumb size
+     * @cssprop --bq-slider--progress-color - Slider progress background color
+     * @cssprop --bq-slider--trackarea-color - Slider track background color
+     */
     interface BqSlider {
         /**
           * The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change.
@@ -3527,6 +7413,25 @@ declare namespace LocalJSX {
     }
     /**
      * Spinners are designed for users to display data loading.
+     * @example How to use it
+     * ```html
+     * <bq-spinner size="medium" text-position="bellow">
+     * <span>Loading...</span>
+     * </bq-spinner>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/275f10-spinner/b/09d7b1
+     * @status stable
+     * @attr {boolean} animation - If `false`, the animation on the icon element will be stopped.
+     * @attr {"small" | "medium" | "large"} size - It defines the size of the icon element displayed.
+     * @attr {"above" | "below" | "left" | "right" | "none"} text-position - It defines the position of the label text.
+     * @cssprop --bq-spinner--color - Spinner color
+     * @cssprop --bq-spinner--size-large - Spinner large size
+     * @cssprop --bq-spinner--size-medium - Spinner medium size
+     * @cssprop --bq-spinner--size-small - Spinner small size
+     * @cssprop --bq-spinner--large-text-fontSize - Spinner large text font size
+     * @cssprop --bq-spinner--medium-text-fontSize - Spinner medium text font size
+     * @cssprop --bq-spinner--small-text-fontSize - Spinner small text font size
+     * @cssprop --bq-spinner--text-lineHeight - Spinner text line height
      */
     interface BqSpinner {
         /**
@@ -3542,12 +7447,48 @@ declare namespace LocalJSX {
          */
         "textPosition"?: TSpinnerTextPosition;
     }
+    /**
+     * The Status Component is a UI element that represents the current state or condition of an item, task, or process.
+     * @example How to use it
+     * ```html
+     * <bq-status type="alert">Alert status</bq-status>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/46c8d5-status/b/09d7b1
+     * @status stable
+     * @dependency bq-badge
+     * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
+     * @cssprop --bq-status-circ - Status circle size.
+     */
     interface BqStatus {
         /**
           * It defines the type of status to display
          */
         "type"?: TStatusType;
     }
+    /**
+     * The Step Item Component is a UI element used to display a single step or stage in a process or task.
+     * It should be used inside the Steps component.
+     * @example How to use it
+     * ```html
+     * <bq-step-item status="completed">
+     * <bq-icon slot="prefix" name="check-circle"></bq-icon>
+     * <span>Title</span>
+     * <span slot="description">Description</span>
+     * </bq-step-item>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
+     * @status stable
+     * @attr {"small" | "medium"} size - It defines prefix size
+     * @attr {"completed" | "current" | "error" | "default" | "disabled"} status - It defines step item appearance based on its status
+     * @attr {"numeric" | "icon" | "dot"} type - It defines the step item type used
+     * @event bqClick - Callback handler emitted when the step item is clicked
+     * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
+     * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
+     * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
+     * @cssprop --bq-step-item--prefix-color-error - Color of the prefix icon when error
+     * @cssprop --bq-step-item--prefix-num-size - Size of the prefix number
+     * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
+     */
     interface BqStepItem {
         /**
           * Callback handler emitted when the step item is clicked
@@ -3566,6 +7507,27 @@ declare namespace LocalJSX {
          */
         "type"?: TStepsType;
     }
+    /**
+     * The Steps Component is a UI element used to display a series of steps or stages in a process or task.
+     * It is used to guide users through a process or task and to indicate their progress.
+     * @example How to use it
+     * ```html
+     * <bq-steps divider-color="stroke--primary" type="dot" size="medium">
+     * <bq-step-item status="completed"> ... </bq-step-item>
+     * <bq-step-item status="error"> ... </bq-step-item>
+     * <bq-step-item status="current"> ... </bq-step-item>
+     * <bq-step-item status="default"> ... </bq-step-item>
+     * </bq-steps>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
+     * @status stable
+     * @dependency bq-divider
+     * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
+     * @attr {"medium" | "small"} size - The size of the steps
+     * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
+     * @cssprop --bq-steps--divider-color - Divider color
+     * @cssprop --bq-steps--gap - Gap between steps
+     */
     interface BqSteps {
         /**
           * The color of the line that connects the steps. It should be a valid declarative color token.
@@ -3583,6 +7545,32 @@ declare namespace LocalJSX {
     /**
      * Toggle switches are digital on/off switches.
      * They should provide immediate results, giving users the freedom to control their preferences as needed.
+     * @example How to use it
+     * ```html
+     * <bq-switch inner-label="default" justify-content="start" name="bq-switch" value="Switch value">
+     * Toggle me!
+     * </bq-switch>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/49d9c9-switch
+     * @status stable
+     * @dependency bq-icon
+     * @attr {boolean} background-on-hover - If `true`, a background will be displayed on hover
+     * @attr {boolean} checked - It indicates whether if the switch is `ON` by default (when the page loads)
+     * @attr {boolean} disabled - If `true`, the switch control will be disabled and no interaction will be allowed
+     * @attr {boolean} full-width - If `true`, the component will take the full width space available on the parent container
+     * @attr {"default" | "icon"} inner-label - It indicates how to to display the on/off marks inside the control, with icons or none (default)
+     * @attr {"start" | "end" | "center" | "space-between" | "space-around" | "space-evenly"} justify-content - It defines how to distribute the space between and around the control and the label text
+     * @attr {string} name - Name of the form control. Submitted with the form as part of a name/value pair
+     * @attr {boolean} required - If `true`, it will indicate that the user must switch `ON` the element before the owning form can be submitted
+     * @attr {boolean} reverse-order - If `true`, the order of the control and the label text will be changed
+     * @attr {string} value - The input control's value, submitted as a name/value pair with form data
+     * @event bqChange - Handler to be called when the switch state changes
+     * @event bqFocus - Handler to be called when the switch gets focus
+     * @event bqBlur - Handler to be called when the switch loses focus
+     * @cssprop --bq-switch--height - Switch height
+     * @cssprop --bq-switch--justify-content - Switch justify content
+     * @cssprop --bq-switch--width - Switch width
+     * @cssprop --bq-switch--dot-size - Switch dot size
      */
     interface BqSwitch {
         /**
@@ -3638,6 +7626,43 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    /**
+     * The tab is a user interface element that allows users to navigate between different sections of a page.
+     * It should be used inside `<bq-tab-group>` component.
+     * @example How to use it
+     * ```html
+     * <bq-tab tab-id="1" controls="panel-1">Tab 1</bq-tab>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/775321-tabs
+     * @status stable
+     * @attr {boolean} active - If `true` tab is active
+     * @attr {string} controls - The tab panel id that the tab controls
+     * @attr {boolean} disabled - If `true` tab is disabled
+     * @attr {string} orientation - The direction that tab should be render
+     * @attr {string} placement - The placement that tab should be render
+     * @attr {string} size - The size of the tab
+     * @attr {string} tab-id - The id of the tab
+     * @event bqClick - Handler to be called when the tab state changes
+     * @event bqFocus - Handler to be called when the tab gets focus
+     * @event bqBlur - Handler to be called when the tab loses focus
+     * @event bqKeyDown - Handler to be called when the tab key is pressed
+     * @method vClick - Simulate a click event on the native `<button>` HTML element used under the hood
+     * @method vFocus - Sets focus on the native `<button>` HTML element used under the hood
+     * @method vBlur - Remove focus from the native `<button>` HTML element used under the hood
+     * @cssprop --bq-tab--font-size - Font size
+     * @cssprop --bq-tab--font-weight - Font weight
+     * @cssprop --bq-tab--icon-size-large - Icon size for large tab
+     * @cssprop --bq-tab--icon-size-medium - Icon size for medium tab
+     * @cssprop --bq-tab--icon-size-small - Icon size for small tab
+     * @cssprop --bq-tab--label-icon-gap - Gap between label and icon
+     * @cssprop --bq-tab--line-height - Line height
+     * @cssprop --bq-tab--padding-horizontal-large - Horizontal padding for large tab
+     * @cssprop --bq-tab--padding-horizontal-medium - Horizontal padding for medium tab
+     * @cssprop --bq-tab--padding-horizontal-small - Horizontal padding for small tab
+     * @cssprop --bq-tab--padding-vertical-large - Vertical padding for large tab
+     * @cssprop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
+     * @cssprop --bq-tab--padding-vertical-small - Vertical padding for small tab
+     */
     interface BqTab {
         /**
           * If true tab is active
@@ -3684,6 +7709,27 @@ declare namespace LocalJSX {
          */
         "tabId": string;
     }
+    /**
+     * The tab group is a user interface element that allows users wrap a set of tab items.
+     * @example How to use it
+     * ```html
+     * <bq-tab-group value="5">
+     * <bq-tab tab-id="1">Tab</bq-tab>
+     * <bq-tab tab-id="2" active>Tab</bq-tab>
+     * <bq-tab tab-id="3">Long Tab name</bq-tab>
+     * <bq-tab tab-id="4" disabled>Tab</bq-tab>
+     * </bq-tab-group>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/775321-tabs
+     * @status stable
+     * @attr {number} debounce-time - A number representing the delay value applied to bqChange event handler
+     * @attr {boolean} disable-divider - If true, the underline divider below the tabs won't be shown
+     * @attr {string} orientation - The direction that tab should be render
+     * @attr {string} placement - The placement that tab should be render
+     * @attr {string} size - The size of the tab
+     * @attr {string} value - A string representing the id of the selected tab.
+     * @event bqChange - Handler to be called when the tab value changes
+     */
     interface BqTabGroup {
         /**
           * A number representing the delay value applied to bqChange event handler
@@ -3714,6 +7760,46 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    /**
+     * The Tag Component is a UI element used to label and categorize content within an application.
+     * Tags are commonly used to label items with keywords or categories, making it easier to find and organize content.
+     * @example How to use it
+     * ```html
+     * <bq-tag color="success" size="medium" variant="filled">Success</bq-tag>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/42f8c9-tag
+     * @status stable
+     * @dependency bq-button
+     * @dependency bq-icon
+     * @attr {string} border - The corner radius of the Tag (will override size's predefined border)
+     * @attr {boolean} clickable - If `true`, the Tag can be clickable
+     * @attr {"error" | "gray" | "info" | "success" | "warning"} color - The color style of the Tag
+     * @attr {boolean} disabled - If `true`, the Tag will be disabled (only if clickable = `true`, no interaction allowed)
+     * @attr {boolean} hidden - If `true`, the Tag component will hidden (only if removable = `true`)
+     * @attr {boolean} removable - If `true`, the Tag component can be removed
+     * @attr {boolean} selected - If `true`, the Tag is selected (only if clickable = `true`)
+     * @attr {"xsmall" | "small" | "medium"} size - The size of the Tag component
+     * @attr {"outline" | "filled"} variant - The variant of Tag to apply on top of the variant
+     * @method hide - Method to be called to remove the tag component
+     * @method show - Method to be called to show the tag component
+     * @event bqClose - Callback handler to be called when the tag is close/hidden
+     * @event bqOpen - Callback handler to be called when the tag is not open/shown
+     * @event bqBlur - Handler to be called when tag loses focus
+     * @event bqClick - Handler to be called when tag is clicked
+     * @event bqFocus - Handler to be called when tag is focused
+     * @cssprop --bq-tag--background-color - Tag background color
+     * @cssprop --bq-tag--border-color - Tag border color
+     * @cssprop --bq-tag--border-radius - Tag border radius
+     * @cssprop --bq-tag--border-style - Tag border style
+     * @cssprop --bq-tag--border-width - Tag border width
+     * @cssprop --bq-tag--small-border-radius - Tag small border radius
+     * @cssprop --bq-tag--small-gap - Tag small gap between content
+     * @cssprop --bq-tag--small-padding-x - Tag small padding horizontal
+     * @cssprop --bq-tag--small-padding-y - Tag small padding vertical
+     * @cssprop --bq-tag--medium-gap - Tag medium gap between content
+     * @cssprop --bq-tag--medium-padding-x - Tag medium padding horizontal
+     * @cssprop --bq-tag--medium-padding-y - Tag medium padding vertical
+     */
     interface BqTag {
         /**
           * The corner radius of the Tag (will override size's predefined border)
@@ -3772,6 +7858,63 @@ declare namespace LocalJSX {
          */
         "variant"?: TTagVariant;
     }
+    /**
+     * The Textarea component is a multi-line text input control that is often used in a form to collect user inputs like comments or reviews.
+     * @example How to use it
+     * ```html
+     * <bq-textarea maxlength="0" name="textarea" placeholder="Placeholder..." rows="5">
+     * <label slot="label">Label</label>
+     * <span class="flex items-center gap-xs" slot="helper-text">
+     * <bq-icon name="star"></bq-icon>
+     * Helper text
+     * </span>
+     * </bq-textarea>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/16792c-textarea
+     * @status stable
+     * @attr {string} autocapitalize - Controls whether or not the textarea field should be capitalized and how.
+     * @attr {string} autocomplete - Specifies whether or not the textarea field should have autocomplete enabled.
+     * @attr {string} autocorrect - Controls whether or not the textarea field should have autocorrect enabled.
+     * @attr {boolean} autofocus - If `true`, the textarea will be focused on component render.
+     * @attr {boolean} auto-grow - If `true`, the textarea will automatically grow and shrink to fit its contents.
+     * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes.
+     * @attr {boolean} disabled - If `true`, the user cannot interact with the textarea.
+     * @attr {boolean} disable-resize - If `true`, it will block the user's ability to resize the textarea.
+     * @attr {string} form - The ID of the form that the textarea field belongs to.
+     * @attr {number} maxlength - The maximum number of characters that can be entered into the textarea (`0`: no limit).
+     * @attr {string} name - The name of the textarea element.
+     * @attr {string} placeholder - The placeholder text to show when there is no value.
+     * @attr {boolean} readonly - If `true`, the textarea field cannot be modified.
+     * @attr {boolean} required - Indicates whether or not the textarea field is required to be filled out before submitting the form.
+     * @attr {number} rows - The number of visible text lines for the control. It must be a positive integer.
+     * @attr {boolean} spellcheck - If `true`, the textarea content may be checked for spelling errors.
+     * @attr {"error" | "none" | "success" | "warning"} validation-status - The validation status of the textarea.
+     * @attr {string} value - The value of the textarea. It can be used to reset the textarea to a previous value.
+     * @attr {"soft" | "hard"} wrap - Specifies how the text in a text area is to be wrapped when submitted in a form.
+     * @event bqBlur - Handler to be called when the textarea loses focus.
+     * @event bqChange - Handler to be called when the textarea value has changed and the textarea loses focus.
+     * @event bqClear - Handler to be called when the textarea value has been cleared.
+     * @event bqFocus - Handler to be called when the textarea has received focus.
+     * @event bqInput - Handler to be called when the textarea value changes.
+     * @prop --bq-textarea--background-color - Textarea background color
+     * @prop --bq-textarea--border-color - Textarea border color
+     * @prop --bq-textarea--border-color-focus - Textarea border color on focus
+     * @prop --bq-textarea--border-radius - Textarea border radius
+     * @prop --bq-textarea--border-width - Textarea border width
+     * @prop --bq-textarea--border-style - Textarea border style
+     * @prop --bq-textarea--helper-margin-top - Textarea helper text margin top
+     * @prop --bq-textarea--helper-text-color - Textarea helper text color
+     * @prop --bq-textarea--helper-text-size - Textarea helper text size
+     * @prop --bq-textarea--label-margin-bottom - Textarea label margin bottom
+     * @prop --bq-textarea--label-text-color - Textarea label text color
+     * @prop --bq-textarea--label-text-size - Textarea label text size
+     * @prop --bq-textarea--paddingY - Textarea padding top and bottom
+     * @prop --bq-textarea--padding-start - Textarea padding start
+     * @prop --bq-textarea--padding-end - Textarea padding end
+     * @prop --bq-textarea--text-color - Textarea text color
+     * @prop --bq-textarea--text-size - Textarea text size
+     * @prop --bq-textarea--text-placeholder-color - Textarea placeholder text color
+     */
     interface BqTextarea {
         /**
           * If `true`, the textarea will automatically grow and shrink to fit its contents. If `false`, the textarea will have a fixed height specified by the `rows` property.
@@ -3871,6 +8014,45 @@ declare namespace LocalJSX {
          */
         "wrap"?: TTextareaWrap;
     }
+    /**
+     * Toasts are time-based components used to display short messages.
+     * Commonly used for errors, confirmations, or progress updates.
+     * @example How to use it
+     * ```html
+     * <bq-toast type="info">
+     * This is a message
+     * </bq-toast>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/83da51-toast
+     * @status stable
+     * @dependency bq-icon
+     * @attr {"s" | "none" | "xs2" | "xs" | "m" | "l" | "full"} border - The corder radius of the toast component
+     * @attr {"success" | "error" | "loading" | "alert" | "info"} type - Type of toast
+     * @attr {"top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right"} placement - Placement of toast
+     * @attr {boolean} hide-icon - If true will hide toast icon
+     * @attr {boolean} open - If true, the toast will be shown
+     * @attr {number} time - The length of time, in milliseconds, after which the toast will close itself
+     * @method show - Method to be called to show the toast component
+     * @method hide - Method to be called to hide the toast component
+     * @method toast - This method can be used to display toasts in a fixed-position element that allows for stacking multiple toasts vertically
+     * @event bqHide - Callback handler to be called when the notification is hidden
+     * @event bqShow - Callback handler to be called when the notification is shown
+     * @cssprop --bq-toast--background - Toast background color
+     * @cssprop --bq-toast--box-shadow - Toast box shadow
+     * @cssprop --bq-toast--padding-y - Toast vertical padding
+     * @cssprop --bq-toast--padding-x - Toast horizontal padding
+     * @cssprop --bq-toast--gap - Toast distance between icon and text
+     * @cssprop --bq-toast--border-radius - Toast border radius
+     * @cssprop --bq-toast--border-color - Toast border color
+     * @cssprop --bq-toast--border-style - Toast border style
+     * @cssprop --bq-toast--border-width - Toast border width
+     * @cssprop --bq-toast--icon-color-info - Toast icon color when type is 'info'
+     * @cssprop --bq-toast--icon-color-success - Toast icon color when type is 'success'
+     * @cssprop --bq-toast--icon-color-alert - Toast icon color when type is 'alert'
+     * @cssprop --bq-toast--icon-color-error - Toast icon color when type is 'error'
+     * @cssprop --bq-toast--icon-color-loading - Toast icon color when type is 'loading'
+     * @cssprop --bq-toast--icon-color-custom - Toast icon color when type is 'custom'
+     */
     interface BqToast {
         /**
           * The corder radius of the toast component
@@ -3905,6 +8087,39 @@ declare namespace LocalJSX {
          */
         "type"?: TToastType;
     }
+    /**
+     * The Tooltip component is a small pop-up box that appears when a user hovers over or clicks on an element, providing additional information or context.
+     * @example How to use it
+     * ```html
+     * <bq-tooltip visible>
+     * Yuhu! I'm a tooltip 🙃
+     * <bq-button slot="trigger">Hover me!</bq-button>
+     * </bq-tooltip>
+     * ```
+     * @documentation https://www.beeq.design/3d466e231/p/64c562-tooltip
+     * @status stable
+     * @attr {boolean} always-visible - If true, the tooltip will always be visible
+     * @attr {number} distance - Distance between trigger element and tooltip
+     * @attr {boolean} hide-arrow - If true, the arrow on the tooltip content won't be shown
+     * @attr {"top" | "right" | "bottom" | "left"} placement - Defines the position of the tooltip
+     * @attr {boolean} same-width - Whether the tooltip should have the same width as the trigger element (applicable only for content shorter than the trigger element)
+     * @attr {"click" | "hover"} display-on - Set the action when the tooltip should be displayed, on hover (default) or click
+     * @attr {boolean} visible - Indicates whether or not the tooltip is visible when the component is first rendered, and when interacting with the trigger
+     * @method show - Shows the tooltip
+     * @method hide - Hides the tooltip
+     * @cssprop --bq-tooltip--background-color - Tooltip background color
+     * @cssprop --bq-tooltip--box-shadow - Tooltip box shadow
+     * @cssprop --bq-tooltip--font-size - Tooltip font size
+     * @cssprop --bq-tooltip--line-height - Tooltip line height
+     * @cssprop --bq-tooltip--text-color - Tooltip text color
+     * @cssprop --bq-tooltip--paddingX - Tooltip horizontal padding
+     * @cssprop --bq-tooltip--paddingY - Tooltip vertical padding
+     * @cssprop --bq-tooltip--border-color - Tooltip border color
+     * @cssprop --bq-tooltip--border-radius - Tooltip border radius
+     * @cssprop --bq-tooltip--border-style - Tooltip border style
+     * @cssprop --bq-tooltip--border-width - Tooltip border width
+     * @cssprop --bq-tooltip--z-index: Tooltip z-index
+     */
     interface BqTooltip {
         /**
           * If true, the tooltip will always be visible
@@ -3981,60 +8196,1480 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            /**
+             * The Accordion is a UI component that allows users to toggle between showing and hiding content sections. It provides a collapsible functionality, where only one section can be expanded at a time, while the others remain collapsed.
+             * @example How to use it
+             * ```html
+             * <bq-accordion appearance="filled" size="medium">
+             * <bq-avatar size="xsmall" image="/image/url/img.png" slot="prefix"></bq-avatar>
+             * <h3 slot="header">Header</h3>
+             * <div>Lorem ipsum dolor...</div>
+             * </bq-accordion>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/713eae-accordion
+             * @status stable
+             * @dependency bq-icon
+             * @attr {"filled" | "ghost"} [appearance="filled"] - The appearance style of the Accordion
+             * @attr {boolean} [disabled=false] - If true, the Accordion is disabled
+             * @attr {boolean} [expanded=false] - If true, the Accordion is expanded
+             * @attr {boolean} [no-animation=false] - Animation is set through JS when the browser does not support CSS calc-size() If true, the Accordion animation, will be disabled. No animation will be applied.
+             * @attr {boolean} [rotate=false] - If true, the Accordion expand icon is rotate 180deg when expanded
+             * @attr {"small" | "medium"} [size="medium"] - The size of the the Accordion
+             * @event bqOpen - Handler to be called when the accordion is opened
+             * @event bqAfterOpen - Handler to be called after the accordion is opened
+             * @event bqClose - Handler to be called when the accordion is closed
+             * @event bqAfterClose - Handler to be called after the accordion is closed
+             * @event bqFocus - Handler to be called when the accordion gets focus
+             * @event bqClick - Handler to be called when the accordion is clicked
+             * @event bqBlur - Handler to be called when the accordion loses focus
+             * @cssprop --bq-accordion--small-padding-y - Accordion small vertical padding
+             * @cssprop --bq-accordion--small-padding-start - Accordion small start padding
+             * @cssprop --bq-accordion--small-padding-end - Accordion small end padding
+             * @cssprop --bq-accordion--small-padding-gap - Accordion small gap distance between suffix, title and prefix
+             * @cssprop --bq-accordion--small-radius - Accordion small border radius
+             * @cssprop --bq-accordion--medium-padding-y - Accordion medium vertical padding
+             * @cssprop --bq-accordion--medium-padding-start - Accordion medium start padding
+             * @cssprop --bq-accordion--medium-padding-end - Accordion medium end padding
+             * @cssprop --bq-accordion--medium-padding-gap - Accordion medium gap distance between suffix, title and prefix
+             * @cssprop --bq-accordion--medium-radius - Accordion medium border radius
+             * @cssprop --bq-accordion--collapsed-border-color - Accordion collapsed border color
+             * @cssprop --bq-accordion--collapsed-border-style - Accordion collapsed border style
+             * @cssprop --bq-accordion--collapsed-border-width - Accordion collapsed border width
+             * @cssprop --bq-accordion--expanded-border-color - Accordion expanded border color
+             * @cssprop --bq-accordion--expanded-border-style - Accordion expanded border style
+             * @cssprop --bq-accordion--expanded-border-width - Accordion expanded border width
+             * @cssprop --bq-accordion--filled-collapsed-background - Accordion filled collapsed header background
+             * @cssprop --bq-accordion--filled-collapsed-text-color - Accordion filled collapsed header text color
+             * @cssprop --bq-accordion--filled-expanded-background - Accordion filled expanded header background
+             * @cssprop --bq-accordion--filled-expanded-collapsed-hover - Accordion filled expanded header color on hover
+             * @cssprop --bq-accordion--filled-expanded-text-color - Accordion filled expanded header text color
+             * @cssprop --bq-accordion--ghost-collapsed-background - Accordion ghost collapsed header background
+             * @cssprop --bq-accordion--ghost-collapsed-text-color - Accordion ghost collapsed header text color
+             * @cssprop --bq-accordion--ghost-expanded-background - Accordion ghost expanded header background
+             * @cssprop --bq-accordion--ghost-expanded-collapsed-hover - Accordion ghost expanded header color on hover
+             * @cssprop --bq-accordion--ghost-expanded-text-color - Accordion ghost expanded header text color
+             * @cssprop --bq-accordion--panel-filled-border-color - Accordion filled panel border color
+             * @cssprop --bq-accordion--panel-filled-border-style - Accordion filled panel border style
+             * @cssprop --bq-accordion--panel-filled-border-width - Accordion filled panel border width
+             * @cssprop --bq-accordion--panel-small-filled-padding-y - Accordion small filled panel vertical padding
+             * @cssprop --bq-accordion--panel-small-filled-padding-start - Accordion small filled panel start padding
+             * @cssprop --bq-accordion--panel-small-filled-padding-end - Accordion small filled panel end padding
+             * @cssprop --bq-accordion--panel-medium-filled-padding-y - Accordion medium filled panel vertical padding
+             * @cssprop --bq-accordion--panel-medium-filled-padding-start - Accordion medium filled panel start padding
+             * @cssprop --bq-accordion--panel-medium-filled-padding-end - Accordion medium filled panel end padding
+             * @cssprop --bq-accordion--panel-ghost-border-color - Accordion ghost panel border color
+             * @cssprop --bq-accordion--panel-ghost-border-style - Accordion ghost panel border style
+             * @cssprop --bq-accordion--panel-ghost-border-width - Accordion ghost panel border width
+             * @cssprop --bq-accordion--panel-small-ghost-padding-y - Accordion small ghost panel vertical padding
+             * @cssprop --bq-accordion--panel-small-ghost-padding-start - Accordion small ghost panel start padding
+             * @cssprop --bq-accordion--panel-small-ghost-padding-end - Accordion small ghost panel end padding
+             * @cssprop --bq-accordion--panel-medium-ghost-padding-y - Accordion medium ghost panel vertical padding
+             * @cssprop --bq-accordion--panel-medium-ghost-padding-start - Accordion medium ghost panel start padding
+             * @cssprop --bq-accordion--panel-medium-ghost-padding-end - Accordion medium ghost panel end padding
+             */
             "bq-accordion": LocalJSX.BqAccordion & JSXBase.HTMLAttributes<HTMLBqAccordionElement>;
+            /**
+             * The accordion group component is a container for multiple accordion elements.
+             * It allows to manage the appearance and size of all accordions at once.
+             * @example How to use it
+             * ```html
+             * <bq-accordion-group appearance="filled" size="medium">
+             * <bq-accordion> ... </bq-accordion>
+             * <bq-accordion> ... </bq-accordion>
+             * <bq-accordion> ... </bq-accordion>
+             * </bq-accordion-group>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/713eae-accordion
+             * @status stable
+             * @attr {"filled" | "ghost"} [appearance="filled"] - The appearance style of accordion to be applied to all accordions
+             * @attr {boolean} [expandAll=false] - If true all accordions are expanded
+             * @attr {boolean} [no-animation=false] - Animation is set through JS when the browser does not support CSS calc-size() If true, the accordion animation, will be disabled. No animation will be applied.
+             * @attr {boolean} [multiple=false] - If true multiple accordions can be expanded at the same time
+             * @attr {"small" | "medium"} [size="medium"] - The size of accordion to be applied to all accordions
+             * @cssprop --bq-accordion-group--gap - Accordion group distance between elements
+             */
             "bq-accordion-group": LocalJSX.BqAccordionGroup & JSXBase.HTMLAttributes<HTMLBqAccordionGroupElement>;
+            /**
+             * The Alert is a user interface component used to convey important information to the user in a clear and concise manner.
+             * It can be used to notify users of success, failure, warning, or any other type of information that needs to be brought to their attention.
+             * @example How to use it
+             * ```html
+             * <bq-alert>
+             * <bq-icon name="star" slot="icon"></bq-icon>
+             * Title
+             * <span slot="body">
+             * Description
+             * <a class="bq-link" href="https://example.com">Link</a>
+             * </span>
+             * <div slot="footer">
+             * <bq-button appearance="primary" size="small">Button</bq-button>
+             * <bq-button appearance="link" size="small">Button</bq-button>
+             * </div>
+             * </bq-alert>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/848a50-alert
+             * @status stable
+             * @dependency bq-button
+             * @dependency bq-icon
+             * @attr {boolean} [auto-dismiss=false] - If true, the alert will automatically hide after the specified amount of time
+             * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} [border='s'] - The corner radius of the alert component
+             * @attr {boolean} [disable-close=false] - If true, the close button at the top right of the alert won't be shown
+             * @attr {boolean} [hide-icon=false] - If true, the alert icon won't be shown
+             * @attr {boolean} [open=false] - If true, the alert will be shown
+             * @attr {number} [time=3000] - The length of time, in milliseconds, after which the alert will close itself. Only valid if `autoDismiss="true"`
+             * @attr {"info" | "success" | "warning" | "error" | "default"} [type='default'] - Type of Alert
+             * @attr {boolean} [sticky=false] - If true, the alert component will remain fixed at the top of the page, occupying the full viewport
+             * @event bqHide - Callback handler to be called when the alert is hidden
+             * @event bqShow - Callback handler to be called when the alert is shown
+             * @event bqAfterShow - Callback handler to be called after the alert has been shown
+             * @event bqAfterHide - Callback handler to be called after the alert has been hidden
+             * @cssprop --bq-alert--background - The alert background color
+             * @cssprop --bq-alert--border-radius - The alert border radius
+             * @cssprop --bq-alert--content-footer-gap - The alert content and footer gap
+             * @cssprop --bq-alert--title-body-gap - The alert title and body gap
+             * @cssprop --bq-alert--border-color - The alert border color
+             * @cssprop --bq-alert--border-style - The alert border style
+             * @cssprop --bq-alert--border-width - The alert border width
+             * @cssprop --bq-alert--background-info - The alert background color for info type
+             * @cssprop --bq-alert--background-success - The alert background color for success type
+             * @cssprop --bq-alert--background-warning - The alert background color for warning type
+             * @cssprop --bq-alert--background-error - The alert background color for error type
+             * @cssprop --bq-alert--border-info - The alert border color for info type
+             * @cssprop --bq-alert--border-success - The alert border color for success type
+             * @cssprop --bq-alert--border-warning - The alert border color for warning type
+             * @cssprop --bq-alert--border-error - The alert border color for error type
+             * @cssprop --bq-alert--icon-color-info - The alert icon color for info type
+             * @cssprop --bq-alert--icon-color-success - The alert icon color for success type
+             * @cssprop --bq-alert--icon-color-warning - The alert icon color for warning type
+             * @cssprop --bq-alert--icon-color-error - The alert icon color for error type
+             * @cssprop --bq-alert--padding - The alert padding
+             * @cssprop --bq-alert--min-width - The alert min width
+             */
             "bq-alert": LocalJSX.BqAlert & JSXBase.HTMLAttributes<HTMLBqAlertElement>;
+            /**
+             * The Avatar component is a simple and customizable element that displays an image or initials in a circular or square shape.
+             * This component is useful for displaying user profile pictures or any other image that represents a person or an entity.
+             * @example How to use it
+             * ```html
+             * <bq-avatar
+             * alt-text="John Doe profile picture"
+             * image="/image/url/photo-1524593689594.jpeg"
+             * label="John Doe profile picture"
+             * shape="circle"
+             * size="medium"
+             * >
+             * <bq-badge slot="badge" text-color="#fff">9</bq-badge>
+             * </bq-avatar>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/148da7-avatar
+             * @status stable
+             * @attr {string} alt-text - Alternate text for the avatar image if the image cannot be displayed.
+             * @attr {string} image - The image source to load on the avatar (this can be also a base64 encoded image).
+             * @attr {string} label - A text to use for describing the avatar on assistive devices.
+             * @attr {string} initials - The text to display on avatar.
+             * @attr {"circle" | "square"} shape - The shape of the avatar.
+             * @attr {"xsmall" | "small" | "medium" | "large"} size - The size of the avatar.
+             * @cssprop --bq-avatar--background - Avatar background color
+             * @cssprop --bq-avatar--border-color - Avatar border color
+             * @cssprop --bq-avatar--border-style - Avatar border style
+             * @cssprop --bq-avatar--border-width - Avatar border width
+             * @cssprop --bq-avatar--border-radius-circle - Avatar border radius for circle & any size
+             * @cssprop --bq-avatar--border-radius-squareXs - Avatar border radius for square & size xsmall
+             * @cssprop --bq-avatar--border-radius-squareS - Avatar border radius for square & size small
+             * @cssprop --bq-avatar--border-radius-squareM - Avatar border radius for square & size medium/large
+             * @cssprop --bq-avatar--size-xsmall - Avatar xsmall size
+             * @cssprop --bq-avatar--size-small - Avatar small size
+             * @cssprop --bq-avatar--size-medium - Avatar medium size
+             * @cssprop --bq-avatar--size-large - Avatar large size
+             * @cssprop --bq-avatar--badge-top-square - Badge top position shape square
+             * @cssprop --bq-avatar--badge-left-square - Badge left position shape square
+             * @cssprop --bq-avatar--badge-top-circle - Badge top position shape circle
+             * @cssprop --bq-avatar--badge-left-circle - Badge left position shape circle
+             */
             "bq-avatar": LocalJSX.BqAvatar & JSXBase.HTMLAttributes<HTMLBqAvatarElement>;
+            /**
+             * The Badge component is a visual indicator that can be added to various elements within a user interface.
+             * It is typically used to highlight important or relevant information, such as alerts, notifications, or statuses.
+             * @example How to use it
+             * ```html
+             * <bq-badge background-color="ui--success" text-color="text--inverse" size="small">9</bq-badge>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/194fd1-badge
+             * @status stable
+             * @attr {string} background-color - Badge background color. The value should be a valid value of the palette color.
+             * @attr {string} text-color - Badge number color. The value should be a valid value of the palette color.
+             * @attr {"small" | "medium" | "large"} size - The size of the badge. Relevant if badge has no content.
+             * @cssprop --bq-badge--background-color - The badge background color
+             * @cssprop --bq-badge--box-shadow - The badge box shadow
+             * @cssprop --bq-badge--border-color - The badge border color
+             * @cssprop --bq-badge--border-radius - The badge border radius
+             * @cssprop --bq-badge--border-style - The badge border style
+             * @cssprop --bq-badge--border-width - The badge border width
+             * @cssprop --bq-badge--size-small - The badge small size
+             * @cssprop --bq-badge--size-medium - The badge medium size
+             * @cssprop --bq-badge--size-large - The badge large size
+             * @cssprop --bq-badge--text-color - The badge text color
+             */
             "bq-badge": LocalJSX.BqBadge & JSXBase.HTMLAttributes<HTMLBqBadgeElement>;
+            /**
+             * The Breadcrumb is used to wraps a series of breadcrumb items to indicate the current page's location within a navigational hierarchy.
+             * @example How to use it
+             * ```html
+             * <bq-breadcrumb label="Breadcrumb">
+             * <bq-breadcrumb-item>Home</bq-breadcrumb-item>
+             * <bq-breadcrumb-item>Men's clothing</bq-breadcrumb-item>
+             * <bq-breadcrumb-item>Shirt</bq-breadcrumb-item>
+             * <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+             * </bq-breadcrumb>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/194fd1-breadcrumb
+             * @status stable
+             * @attr {string} label - The `aria-label` attribute to describe the type of navigation
+             */
             "bq-breadcrumb": LocalJSX.BqBreadcrumb & JSXBase.HTMLAttributes<HTMLBqBreadcrumbElement>;
+            /**
+             * The Breadcrumb Item helps users understand their current location within a website or application's hierarchical structure.
+             * @example How to use it
+             * ```html
+             * <bq-breadcrumb-item label="Home page">
+             * <bq-icon name="house-line" size="16"></bq-icon>
+             * Home
+             * </bq-breadcrumb-item>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/61d6c0-breadcrumb
+             * @status stable
+             * @attr {string} href - If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered.
+             * @attr {string} target - Where to display the link in the browser context. Relevant only if `href` is set.
+             * @attr {string} rel - Where to display the link in the browser context. Relevant only if `href` is set.
+             * @event bqFocus - Handler to be called when item is focused
+             * @event bqClick - Handler to be called when item is clicked
+             * @event bqBlur - Handler to be called when item loses focus
+             * @cssprop --bq-breadcrumb-item--background - Background color of the breadcrumb item
+             * @cssprop --bq-breadcrumb-item--box-shadow - Box shadow of the breadcrumb item
+             * @cssprop --bq-breadcrumb-item--border-color - Border color of the breadcrumb item
+             * @cssprop --bq-breadcrumb-item--border-style - Border style of the breadcrumb item
+             * @cssprop --bq-breadcrumb-item--border-width - Border width of the breadcrumb item
+             * @cssprop --bq-breadcrumb-item--border-radius - Border radius of the breadcrumb item
+             * @cssprop --bq-breadcrumb-item--line-height - Line height of the breadcrumb item
+             * @cssprop --bq-breadcrumb-item--text-color - Text color of the breadcrumb item
+             * @cssprop --bq-breadcrumb-item--text-color-current - Text color of the current breadcrumb item (active)
+             * @cssprop --bq-breadcrumb-item--text-size - Text size of the breadcrumb item
+             * @cssprop --bq-breadcrumb-item--text-size-separator - Text size of the breadcrumb item separator
+             * @cssprop --bq-breadcrumb-item--padding-start - Padding start of the breadcrumb item
+             * @cssprop --bq-breadcrumb-item--padding-end - Padding end of the breadcrumb item
+             * @cssprop --bq-breadcrumb-item--paddingY - Padding top and bottom of the breadcrumb item
+             * @cssprop --bq-breadcrumb-item--padding-start-separator - Padding start of the breadcrumb item separator
+             * @cssprop --bq-breadcrumb-item--padding-end-separator - Padding end of the breadcrumb item separator
+             */
             "bq-breadcrumb-item": LocalJSX.BqBreadcrumbItem & JSXBase.HTMLAttributes<HTMLBqBreadcrumbItemElement>;
             /**
              * Buttons are designed for users to take action on a page or a screen.
+             * @example How to use it
+             * ```html
+             * <bq-button appearance="primary" border="m" size="medium">
+             * <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>
+             * Go back
+             * </bq-button>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/286b43-buttons
+             * @status stable
+             * @dependency bq-icon
+             * @attr {"primary" | "secondary" | "link" | "text"} appearance - The appearance style to apply to the button
+             * @attr {boolean} block - If `true`, it will make the button fit to its parent width.
+             * @attr {string} border - The corner radius of the button
+             * @attr {boolean} disabled - If `true`, the button will be disabled (no interaction allowed)
+             * @attr {string} download - Tells the browser to treat the linked URL as a download. Only used when `href` is set.
+             * @attr {string} href - When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`
+             * @attr {"left" | "center" | "right"} justify-content - It determinate how the content should be aligned
+             * @attr {boolean} loading - If `true` it will display the button in a loading state
+             * @attr {"small" | "medium" | "large"} size - The size of the button
+             * @attr {"_blank" | "_parent" | "_self" | "_top"} target - Where to display the linked URL, as the name for a browsing context (a `tab`, `window`, or `<iframe>`)
+             * @attr {"button" | "submit" | "reset"} type - The default behavior of the button
+             * @attr {"standard" | "ghost" | "danger"} variant - The variant of button to apply on top of the appearance (applicable only to `appearance="primary"`)
+             * @event bqBlur - Handler to be called when the button loses focus
+             * @event bqFocus - Handler to be called when button gets focus
+             * @event bqClick - Handler to be called when the button is clicked
+             * @cssprop --bq-button--border-color - Button border color
+             * @cssprop --bq-button--border-radius - Button border radius
+             * @cssprop --bq-button--border-style - Button border style
+             * @cssprop --bq-button--border-width - Button border width
+             * @cssprop --bq-button--small-height - Button small height
+             * @cssprop --bq-button--small-paddingX - Button small padding block (top and bottom)
+             * @cssprop --bq-button--small-paddingY - Button small padding inline (left and right)
+             * @cssprop --bq-button--small-font-size - Button small font size
+             * @cssprop --bq-button--medium-height - Button medium height
+             * @cssprop --bq-button--medium-paddingX - Button medium padding block (top and bottom)
+             * @cssprop --bq-button--medium-paddingY - Button medium padding inline (left and right)
+             * @cssprop --bq-button--medium-font-size - Button medium font size
+             * @cssprop --bq-button--large-height - Button large height
+             * @cssprop --bq-button--large-paddingX - Button large padding block (top and bottom)
+             * @cssprop --bq-button--large-paddingY - Button large padding inline (left and right)
+             * @cssprop --bq-button--large-font-size - Button large font size
              */
             "bq-button": LocalJSX.BqButton & JSXBase.HTMLAttributes<HTMLBqButtonElement>;
+            /**
+             * The Card component serves as a versatile container designed for flexible content presentation within user interfaces.
+             * Its structure accommodates various styles, allowing users to customize and adapt it according to their design preferences.
+             * @example How to use it
+             * ```html
+             * <bq-card type="default" border="m">
+             * <div class="p-m">
+             * <h3 class="text-xl font-bold">Card Title</h3>
+             * <p class="text-m">Card content goes here</p>
+             * </div>
+             * </bq-card>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/522abb-card
+             * @status stable
+             * @attr {"default" | "minimal"} type - Type of card component
+             * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} border - The corner radius of the card component
+             * @cssprop --bq-card--borderColor - Card border color
+             * @cssprop --bq-card--borderRadius - Card border radius
+             * @cssprop --bq-card--borderStyle - Card border style
+             * @cssprop --bq-card--borderWidth - Card border width
+             * @cssprop --bq-card--padding - Card padding
+             * @cssprop --bq-card--paddingMinimal - Minimal card padding
+             * @cssprop --bq-card--background - Card background color
+             */
             "bq-card": LocalJSX.BqCard & JSXBase.HTMLAttributes<HTMLBqCardElement>;
+            /**
+             * The checkbox is a UI component that allows users to select one or more options from a list of choices.
+             * It is commonly used in forms, surveys, and settings pages.
+             * @example How to use it
+             * ```html
+             * <bq-checkbox name="bq-checkbox" value="checkbox-value" background-on-hover>
+             * Checkbox label
+             * </bq-checkbox>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/431f17-checkbox
+             * @status stable
+             * @attr {boolean} background-on-hover - If true checkbox displays background on hover
+             * @attr {string} form-id - The form ID that the checkbox is associated with
+             * @attr {string} form-validation-message - The native form validation message
+             * @attr {boolean} checked - If true checkbox is checked
+             * @attr {boolean} disabled - If true checkbox is disabled
+             * @attr {boolean} indeterminate - A state that is neither checked nor unchecked
+             * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+             * @attr {boolean} required - If `true`, it will indicate that the user must specify a value for the checkbox before the owning form can be submitted
+             * @attr {string} value - A string representing the value of the checkbox. Primarily used to differentiate a list of related checkboxes that have the same name
+             * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+             * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+             * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+             * @event bqChange - Handler to be called when the checkbox state changes
+             * @event bqFocus - Handler to be called when the checkbox gets focus
+             * @event bqBlur - Handler to be called when the checkbox loses focus
+             * @cssprop --bq-checkbox--size - Checkbox size
+             * @cssprop --bq-checkbox--border-radius - Checkbox border radius
+             * @cssprop --bq-checkbox--border-width - Checkbox border width
+             */
             "bq-checkbox": LocalJSX.BqCheckbox & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
+            /**
+             * The Date Picker is a intuitive UI element component allows users to select dates from a visual calendar interface, providing an intuitive way to input date information.
+             * @example How to use it
+             * ```html
+             * <bq-date-picker
+             * first-day-of-week="1"
+             * locale="en-GB"
+             * months-per-view="single"
+             * months="2"
+             * name="bq-date-picker"
+             * placeholder="Enter your date"
+             * placement="bottom-end"
+             * show-outside-days="false"
+             * type="range"
+             * validation-status="none"
+             * value="2024-05-25"
+             * >
+             * <label class="flex flex-grow items-center" slot="label">
+             * Date picker label
+             * </label>
+             * </bq-date-picker>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/5793a9-date-picker
+             * @status stable
+             * @dependency bq-button
+             * @dependency bq-dropdown
+             * @dependency bq-icon
+             * @attr {boolean} autofocus - If `true`, the Date picker input will be focused on component render.
+             * @attr {string} clear-button-label - The clear button aria label.
+             * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+             * @attr {boolean} disabled - Indicates whether the Date picker input is disabled or not.
+             * @attr {number} distance - Represents the distance (gutter or margin) between the Date picker panel and the input element.
+             * @attr {0 | 1 | 2 | 3 | 4 | 5 | 6} first-day-of-week - The first day of the week, where Sunday is 0, Monday is 1, etc.
+             * @attr {Intl.DateTimeFormatOptions} format-options - The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
+             * @attr {string} form - The ID of the form that the Date picker input belongs to.
+             * @attr {function} is-date-disallowed - A function that takes a date and returns true if the date should not be selectable.
+             * @attr {Intl.LocalesArgument} locale - The locale for formatting dates. If not set, will use the browser's locale. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
+             * @attr {string} max - The latest date that can be selected.
+             * @attr {string} min - The earliest date that can be selected.
+             * @attr {number} months - Number of months to show when range is `true`.
+             * @attr {string} name - The Date picker input name.
+             * @attr {boolean} open - If `true`, the Date picker panel will be visible.
+             * @attr {string} panel-height - When set, it will override the height of the Date picker panel.
+             * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Position of the Date picker panel.
+             * @attr {boolean} required - Indicates whether or not the Date picker input is required to be filled out before submitting the form.
+             * @attr {number} skidding - Represents the skidding between the Date picker panel and the input element.
+             * @attr {boolean} show-outside-days - Whether to show days outside the month.
+             * @attr {string} strategy - Defines the strategy to position the Date picker panel.
+             * @attr {string} tentative - The date that is tentatively selected, e.g. the start of a range selection.
+             * @attr {"single" | "multi" | "range"} type - It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection.
+             * @attr {"error" | "none" | "success" | "warning"} validation-status - The validation status of the Select input.
+             * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value.
+             * @method clear - Clears the selected value.
+             * @event bqBlur - Callback handler emitted when the input loses focus.
+             * @event bqChange - Callback handler emitted when the input value has changed and the input loses focus.
+             * @event bqClear - Callback handler emitted when the input value has been cleared.
+             * @event bqFocus - Callback handler emitted when the input has received focus.
+             * @cssprop --bq-date-picker--background-color - Date picker background color
+             * @cssprop --bq-date-picker--border-color - Date picker border color
+             * @cssprop --bq-date-picker--border-color-disabled - Date picker border color when disabled
+             * @cssprop --bq-date-picker--border-color-focus - Date picker border color on focus
+             * @cssprop --bq-date-picker--border-radius - Date picker border radius
+             * @cssprop --bq-date-picker--border-style - Date picker border style
+             * @cssprop --bq-date-picker--border-width - Date picker border width
+             * @cssprop --bq-date-picker--currentDate-border-color - Date picker border color for current date
+             * @cssprop --bq-date-picker--currentDate-border-width - Date picker border width for current date
+             * @cssprop --bq-date-picker--currentDate-text-color - Date picker label text color for currentDate
+             * @cssprop --bq-date-picker--day-size - Date picker button day size
+             * @cssprop --bq-date-picker--gap - Gap between Date picker content and prefix/suffix
+             * @cssprop --bq-date-picker--icon-size - Icon size to use in prefix/suffix and clear button
+             * @cssprop --bq-date-picker--label-margin-bottom - Date picker label margin bottom
+             * @cssprop --bq-date-picker--label-text-color - Date picker label text color
+             * @cssprop --bq-date-picker--label-text-size - Date picker label text size
+             * @cssprop --bq-date-picker--padding-end - Date picker padding end
+             * @cssprop --bq-date-picker--padding-start - Date picker padding start
+             * @cssprop --bq-date-picker--paddingY - Date picker padding top and bottom
+             * @cssprop --bq-date-picker--range-background-color - Background color for the selected date range in the date picker
+             * @cssprop --bq-date-picker--text-color - Date picker text color
+             * @cssprop --bq-date-picker--text-placeholder-color - Date picker placeholder text color
+             * @cssprop --bq-date-picker--text-size - Date picker text size
+             */
             "bq-date-picker": LocalJSX.BqDatePicker & JSXBase.HTMLAttributes<HTMLBqDatePickerElement>;
+            /**
+             * The Dialog component is used to display additional content or prompt a user for action.
+             * It provides a way to display additional information, options, or controls in a separate, non-obstructive interface element.
+             * @example How to use it
+             * ```html
+             * <bq-dialog footer-appearance="standard" border="m" size="medium">
+             * <h5 class="bold flex items-center gap-s" slot="title">
+             * <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
+             * Title
+             * </h5>
+             * <p>
+             * Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+             * standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+             * type specimen book.
+             * </p>
+             * <div class="flex gap-xs" slot="footer">
+             * <bq-button appearance="link">Button</bq-button>
+             * <bq-button variant="ghost">Button</bq-button>
+             * <bq-button variant="standard" slot="footer">Button</bq-button>
+             * </div>
+             * </bq-dialog>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/15b6fc-dialog
+             * @status stable
+             * @dependency bq-button
+             * @dependency bq-icon
+             * @attr {"none" | "xs2" | "xs" | "s" | "m" | "l" | "full"} border - Border radius of the dialog component.
+             * @attr {boolean} disable-backdrop - If true, the backdrop overlay won't be shown when the dialog opens.
+             * @attr {boolean} disable-close-esc-keydown - If true, the dialog will not close when the [Esc] key is pressed.
+             * @attr {boolean} disable-close-click-outside - If true, the dialog will not close when clicking on the backdrop overlay.
+             * @attr {"standard" | "highlight"} footer-appearance - The appearance of the footer.
+             * @attr {boolean} hide-close-button - If true, it hides the close button.
+             * @attr {boolean} open - If true, the dialog will be shown as open.
+             * @attr {"small" | "medium" | "large"} size - The size of the dialog.
+             * @method show - Open the dialog.
+             * @method hide - Closes the dialog.
+             * @method cancel - Dismiss or cancel the dialog.
+             * @event bqCancel - Callback handler emitted when the dialog has been canceled or dismissed.
+             * @event bqClose - Callback handler emitted when the dialog will close.
+             * @event bqOpen - Callback handler emitted when the dialog will open.
+             * @event bqAfterOpen - Callback handler emitted when the dialog finish opening.
+             * @event bqAfterClose - Callback handler emitted when the dialog finish closing.
+             * @cssprop --bq-dialog--background - Dialog background color
+             * @cssprop --bq-dialog--background-backdrop - Dialog backdrop background color
+             * @cssprop --bq-dialog--box-shadow - Dialog box shadow
+             * @cssprop --bq-dialog--border-color - Dialog border color
+             * @cssprop --bq-dialog--border-style - Dialog border style
+             * @cssprop --bq-dialog--border-width - Dialog border width
+             * @cssprop --bq-dialog--border-radius - Dialog border radius
+             * @cssprop --bq-dialog--padding - Dialog padding
+             * @cssprop --bq-dialog--content-footer-gap - Dialog gap distance between content and footer elements
+             * @cssprop --bq-dialog--title-body-gap - Dialog gap distance between title and body elements
+             * @cssprop --bq-dialog--width-small - Dialog small width
+             * @cssprop --bq-dialog--width-medium - Dialog medium width
+             * @cssprop --bq-dialog--width-large - Dialog large width
+             * @cssprop --bq-dialog-z-index - Dialog z-index applied when opened
+             */
             "bq-dialog": LocalJSX.BqDialog & JSXBase.HTMLAttributes<HTMLBqDialogElement>;
+            /**
+             * The Divider component is used to visually separate content in a layout.
+             * @example How to use it
+             * ```html
+             * <bq-divider orientation="horizontal" stroke-color="stroke--primary" title-alignment="middle">
+             * <span slot="title">Divider Title</span>
+             * </bq-divider>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/53dfe6-divider
+             * @status stable
+             * @attr {boolean} dashed - If true, the divider has a dashed pattern.
+             * @attr {"horizontal" | "vertical"} orientation - The default orientation of the divider.
+             * @attr {string} stroke-color - Set the stroke color of the divider. The value should be a valid value of the palette color.
+             * @attr {"start" | "middle" | "end"} title-alignment - Set the alignment of the title on the main axis of the divider (horizontal / vertical).
+             * @attr {number} stroke-dash-width - Set the width of each dash of the divider's stroke. This is applicable when the stroke is dashed.
+             * @attr {number} stroke-dash-gap - Set the gap of the divider's stroke. This is applicable when the stroke is dashed.
+             * @attr {number} stroke-thickness - Set the thickness of the divider's stroke. Value expressed in px.
+             * @attr {number} stroke-basis - Set the min width of the divider's stroke when text is not centered. Value expressed in px.
+             * @attr {"square" | "round" | "butt"} stroke-linecap - Set the line of the divider's stroke. This is applicable when the stroke is dashed.
+             * @cssprop --bq-divider--color - Divider color
+             * @cssprop --bq-divider--title-marginX - Divider space between title and delimiters
+             */
             "bq-divider": LocalJSX.BqDivider & JSXBase.HTMLAttributes<HTMLBqDividerElement>;
+            /**
+             * The Drawer component provides a sliding panel interface commonly used for navigation or presenting additional content without taking up significant screen space.
+             * @example How to use it
+             * ```html
+             * <bq-drawer position="end">
+             * <div class="flex gap-xs" slot="title">Title</div>
+             * <div class="...">
+             * Content
+             * </div>
+             * <div class="flex flex-1 justify-center gap-xs" slot="footer">
+             * <bq-button appearance="primary" block="" size="small">Button</bq-button>
+             * <bq-button appearance="link" block="" size="small">Button</bq-button>
+             * </div>
+             * </bq-drawer>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/871139-drawer
+             * @status stable
+             * @dependency bq-button
+             * @dependency bq-icon
+             * @dependency bq-divider
+             * @attr {boolean} enable-backdrop - If true, the backdrop overlay will be shown when the drawer opens.
+             * @attr {boolean} close-on-click-outside - If true, the drawer will not close when clicking outside the panel.
+             * @attr {boolean} close-on-esc - If true, the drawer will not close when the [Esc] key is pressed.
+             * @attr {boolean} open - If true, the drawer component will be shown.
+             * @attr {"start" | "end"} position - Defines the position of the drawer.
+             * @method show - Method to be called to show the drawer component.
+             * @method hide - Method to be called to hide the drawer component.
+             * @event bqClose - Callback handler to be called when the drawer is closed.
+             * @event bqOpen - Callback handler to be called when the drawer is opened.
+             * @event bqAfterOpen - Callback handler to be called after the drawer has been opened.
+             * @event bqAfterClose - Callback handler to be called after the drawer has been closed.
+             * @cssprop --bq-drawer--backgroundBackdrop - Background color of the backdrop
+             * @cssprop --bq-drawer--gap - Gap between the drawer and the viewport
+             * @cssprop --bq-drawer--width - Width of the drawer
+             * @cssprop --bq-drawer--paddingX - Padding left and right of the drawer
+             * @cssprop --bq-drawer--paddingY - Padding top and bottom of the drawer
+             * @cssprop --bq-drawer--zIndex - Z-index of the drawer component
+             */
             "bq-drawer": LocalJSX.BqDrawer & JSXBase.HTMLAttributes<HTMLBqDrawerElement>;
+            /**
+             * The Dropdown Component is commonly used when presenting a list of selectable options that are too numerous to fit comfortably on the screen.
+             * They provide an efficient way to save space and present a long list of options in a compact and organized manner.
+             * @example How to use it
+             * ```html
+             * <bq-dropdown placement="bottom-start">
+             * <bq-button slot="trigger">Dropdown</bq-button>
+             * <bq-option-list>
+             * <bq-option value="users">...</bq-option>
+             * <bq-option value="user">...</bq-option>
+             * <bq-option value="dashboard">...</bq-option>
+             * <bq-option value="settings">...</bq-option>
+             * <bq-option value="logout">...</bq-option>
+             * </bq-option-list>
+             * </bq-dropdown>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/47ff4b-dropdown
+             * @status stable
+             * @dependency bq-panel
+             * @attr {boolean} disabled - If true, the dropdown panel will be visible and won't be shown.
+             * @attr {number} distance - Represents the distance (gutter or margin) between the panel and the trigger element.
+             * @attr {boolean} keep-open-on-select - If true, the panel will remain open after a selection is made.
+             * @attr {"top" | "bottom" | "left" | "right" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end" | "right-start" | "right-end"} placement - Position of the panel.
+             * @attr {boolean} open - If true, the panel will be visible.
+             * @attr {string} panel-height - When set, it will override the height of the dropdown panel.
+             * @attr {boolean} same-width - Whether the panel should have the same width as the trigger element.
+             * @attr {number} skidding - Represents the skidding between the panel and the trigger element.
+             * @attr {"fixed" | "absolute"} strategy - Defines the strategy to position the panel.
+             * @event bqOpen - Callback handler to be called when the dropdown panel is opened or closed.
+             * @cssprop --bq-panel--background - Panel background color
+             * @cssprop --bq-panel--border-color - Panel border color
+             * @cssprop --bq-panel--border-radius - Panel border radius
+             * @cssprop --bq-panel--border-style - Panel border style
+             * @cssprop --bq-panel--border-width - Panel border width
+             * @cssprop --bq-panel--box-shadow - Panel box shadow
+             * @cssprop --bq-panel--padding - Panel padding
+             * @cssprop --bq-panel--height - Panel height
+             * @cssprop --bq-panel--width - Panel width
+             * @cssprop --bq-panel-z-index - Panel z-index applied when opened
+             */
             "bq-dropdown": LocalJSX.BqDropdown & JSXBase.HTMLAttributes<HTMLBqDropdownElement>;
+            /**
+             * An Empty State is a UI component displayed when there is no data or content available, often used in dynamic or inactive application states.
+             * @example How to use it
+             * ```html
+             * <bq-empty-state size="medium">Title</bq-empty-state>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/673ae0-empty-state/b/09d7b1
+             * @status stable
+             * @dependency bq-icon
+             * @attr {"large" | "medium" | "small"} size - The size of the empty state component
+             */
             "bq-empty-state": LocalJSX.BqEmptyState & JSXBase.HTMLAttributes<HTMLBqEmptyStateElement>;
             /**
-             * Icons are simplified images that graphically explain the meaning of an object on the screen.
+             * The Icon component is an image that provides a visual representation of an object, action, or concept displayed on the screen.
+             * It is a small graphical element that is used to enhance the user interface and improve user experience.
+             * @example How to use it
+             * ```html
+             * <bq-icon color="text--brand" name="bell-ringing" size="24"></bq-icon>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/675fad-icon
+             * @status stable
+             * @attr {string} color - Set the stroke color of the SVG. The value should be a valid value of the palette color.
+             * @attr {string} label - Label for the icon, used for accessibility.
+             * @attr {string} name - Icon name to load. Please check all available icons [here](https://phosphoricons.com/).
+             * @attr {string | number} size - Set the size of the SVG.
+             * @attr {string} src - Set the source of the SVG. If the source is set, the name property will be ignored.
+             * @event svgLoaded - Callback handler to be called when the SVG has loaded.
+             * @cssprop --bq-icon--color - The stroke color of the SVG.
+             * @cssprop --bq-icon--size - The size of the SVG.
              */
             "bq-icon": LocalJSX.BqIcon & JSXBase.HTMLAttributes<HTMLBqIconElement>;
+            /**
+             * The Input component is a fundamental user interface element that allows users to input data by typing it into a text field.
+             * It is commonly used in web and mobile applications for various purposes, such as collecting user information, search inputs, and login forms.
+             * @example How to use it
+             * ```html
+             * <bq-input name="username" label="Username" placeholder="Enter your username"></bq-input>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/980362-input
+             * @status stable
+             * @dependency bq-button
+             * @dependency bq-icon
+             * @attr {string} autocapitalize - Controls whether or not the input field should be capitalized and how.
+             * @attr {string} autocomplete - Specifies whether or not the input field should have autocomplete enabled.
+             * @attr {string} autocorrect - Controls whether or not the input field should have autocorrect enabled.
+             * @attr {boolean} autofocus - If true, the input will be focused on component render.
+             * @attr {string} clear-button-label - The clear button aria label.
+             * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
+             * @attr {boolean} disabled - Indicates whether the input is disabled or not.
+             * @attr {boolean} disable-clear - If true, the clear button won't be displayed.
+             * @attr {string} form - The ID of the form that the input field belongs to.
+             * @attr {string} inputmode - The inputmode attribute specifies what kind of input mechanism would be most helpful for users entering content into the input field.
+             * @attr {number | string} max - The maximum value that the input field can accept.
+             * @attr {number} maxlength - The maximum number of characters that the input field can accept.
+             * @attr {number | string} min - The minimum value that the input field can accept.
+             * @attr {number} minlength - The minimum number of characters that the input field can accept.
+             * @attr {string} name - The input field name.
+             * @attr {string} pattern - Specifies a regular expression the form control's value should match.
+             * @attr {string} placeholder - The input placeholder text value.
+             * @attr {boolean} readonly - If true, the input field cannot be modified.
+             * @attr {boolean} required - Indicates whether or not the input field is required to be filled out before submitting the form.
+             * @attr {number | 'any'} step - A number that specifies the granularity that the value must adhere to.
+             * @attr {string} type - The type attribute specifies the type of input field to display.
+             * @attr {'none' | 'error' | 'warning' | 'success'} validation-status - The validation status of the input.
+             * @attr {string | number | string[]} value - The input value, it can be used to reset the input to a previous value.
+             * @event bqBlur - Callback handler emitted when the input loses focus.
+             * @event bqChange - Callback handler emitted when the input value has changed and the input loses focus.
+             * @event bqClear - Callback handler emitted when the input value has been cleared.
+             * @event bqFocus - Callback handler emitted when the input has received focus.
+             * @event bqInput - Callback handler emitted when the input value changes.
+             * @cssprop --bq-input--background-color - Input background color
+             * @cssprop --bq-input--border-color - Input border color
+             * @cssprop --bq-input--border-color-focus - Input border color on focus
+             * @cssprop --bq-input--border-radius - Input border radius
+             * @cssprop --bq-input--border-width - Input border width
+             * @cssprop --bq-input--border-style - Input border style
+             * @cssprop --bq-input--gap - Gap between input content and prefix/suffix
+             * @cssprop --bq-input--helper-margin-top - Helper text margin top
+             * @cssprop --bq-input--helper-text-color - Helper text color
+             * @cssprop --bq-input--helper-text-size - Helper text size
+             * @cssprop --bq-input--icon-size - Icon size to use in prefix/suffix and clear button
+             * @cssprop --bq-input--label-margin-bottom - Input label margin bottom
+             * @cssprop --bq-input--label-text-color - Input label text color
+             * @cssprop --bq-input--label-text-size - Input label text size
+             * @cssprop --bq-input--padding-start - Input padding start
+             * @cssprop --bq-input--padding-end - Input padding end
+             * @cssprop --bq-input--paddingY - Input padding top and bottom
+             * @cssprop --bq-input--text-color - Input text color
+             * @cssprop --bq-input--text-size - Input text size
+             * @cssprop --bq-input--text-placeholder-color - Input placeholder text color
+             */
             "bq-input": LocalJSX.BqInput & JSXBase.HTMLAttributes<HTMLBqInputElement>;
+            /**
+             * The Notification component is a user interface element used to provide information or alerts to users in a non-intrusive manner.
+             * @example How to use it
+             * ```html
+             * <bq-notification border="s" time="3000" type="info">
+             * Title
+             * <span slot="body">
+             * This is some description text text
+             * <a class="bq-link" href="https://example.com">Link</a>
+             * </span>
+             * <div class="flex gap-xs" slot="footer">
+             * <bq-button appearance="primary" size="small">Button</bq-button>
+             * <bq-button appearance="link" size="small">Button</bq-button>
+             * </div>
+             * </bq-notification>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/945cb6-notification
+             * @status stable
+             * @dependency bq-button
+             * @dependency bq-icon
+             * @attr {boolean} auto-dismiss - If true, the notification will automatically hide after the specified amount of time
+             * @attr {string} border - The corder radius of the notification component
+             * @attr {boolean} disable-close - If true, the close button at the top right of the notification won't be shown
+             * @attr {boolean} hide-icon - If true, the notification icon won't be shown
+             * @attr {boolean} open - If true, the notification will be shown
+             * @attr {number} time - The length of time, in milliseconds, after which the notification will close itself. Only valid if `auto-dismiss="true"`
+             * @attr {string} type - Type of Notification
+             * @event bqAfterClose - Callback handler to be called after the notification has been closed
+             * @event bqAfterOpen - Callback handler to be called after the notification has been opened
+             * @event bqHide - Callback handler to be called when the notification is hidden
+             * @event bqShow - Callback handler to be called when the notification is shown
+             * @cssprop --bq-notification--background - The notification background color
+             * @cssprop --bq-notification--box-shadow - The notification box shadow
+             * @cssprop --bq-notification--border-color - The notification border color
+             * @cssprop --bq-notification--border-radius - The notification border radius
+             * @cssprop --bq-notification--border-style - The notification border style
+             * @cssprop --bq-notification--border-width - The notification border width
+             * @cssprop --bq-notification--content-footer-gap - The notification content and footer gap
+             * @cssprop --bq-notification--title-body-gap - The notification title and body gap
+             * @cssprop --bq-notification--icon-color-error - The notification icon color for error type
+             * @cssprop --bq-notification--icon-color-info - The notification icon color for info type
+             * @cssprop --bq-notification--icon-color-neutral - The notification icon color for neutral type
+             * @cssprop --bq-notification--icon-color-success - The notification icon color for success type
+             * @cssprop --bq-notification--icon-color-warning - The notification icon color for warning type
+             * @cssprop --bq-notification--padding - The notification padding
+             * @cssprop --bq-notification--min-width - The notification min width
+             */
             "bq-notification": LocalJSX.BqNotification & JSXBase.HTMLAttributes<HTMLBqNotificationElement>;
+            /**
+             * An option refers to a specific choice that appears in a list of selectable items that can be opened or closed by the user.
+             * It can be an element of the navigation system that allows users to select different sections or pages within an application or it can be used within a dropdown list.
+             * @example How to use it
+             * ```html
+             * <bq-option value="user">
+             * <span>User profile</span>
+             * <bq-icon slot="suffix" name="user"></bq-icon>
+             * </bq-option>
+             * ```
+             * @documentation https://storybook.beeq.design/?path=/story/components-option--with-option-group
+             * @status stable
+             * @attr {boolean} disabled - If true, the option is disabled.
+             * @attr {boolean} hidden - If true, the option is hidden.
+             * @attr {string} value - A string representing the value of the option. Can be used to identify the item.
+             * @attr {boolean} selected - If true, the option is selected and active.
+             * @event bqBlur - Handler to be called when item loses focus.
+             * @event bqFocus - Handler to be called when item is focused.
+             * @event bqClick - Handler to be called when item is clicked.
+             * @event bqEnter - Handler to be called on enter key press.
+             * @cssprop --bq-option--background - background color
+             * @cssprop --bq-option--font-size - font size
+             * @cssprop --bq-option--border-color - border color
+             * @cssprop --bq-option--border-style - border style
+             * @cssprop --bq-option--border-width - border width
+             * @cssprop --bq-option--border-radius - border radius
+             * @cssprop --bq-option--box-shadow - box shadow
+             * @cssprop --bq-option--gap-start - gap space between prefix and label
+             * @cssprop --bq-option--gap-end - gap space between label and suffix
+             * @cssprop --bq-option--paddingY - padding Y axis
+             * @cssprop --bq-option--padding-start - option label padding start
+             * @cssprop --bq-option--padding-end - option label padding end
+             */
             "bq-option": LocalJSX.BqOption & JSXBase.HTMLAttributes<HTMLBqOptionElement>;
+            /**
+             * The option group component is a container for multiple option elements.
+             * It allows to manage the appearance and size of all options at once.
+             * @example How to use it
+             * ```html
+             * <bq-option-group class="hydrated">
+             * <span slot="header-label">Sport</span>
+             * <bq-option value="football">Football</bq-option>
+             * <bq-option value="basketball">Basketball</bq-option>
+             * <bq-option value="tennis">Tennis</bq-option>
+             * </bq-option-group>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/3b1b7b-option-group
+             * @status stable
+             * @cssprop --bq-option-group--background - option group background color
+             * @cssprop --bq-option-group--font-size - option group font size
+             * @cssprop --bq-option-group--line-height - option group line height
+             * @cssprop --bq-option-group--label-padding-start - option group header padding start
+             * @cssprop --bq-option-group--label-padding-end - option group header padding start
+             * @cssprop --bq-option-group--label-paddingY - option group header padding Y axis
+             * @cssprop --bq-option-group--label-text-padding-start - option group text within label padding start
+             * @cssprop --bq-option-group--label-text-padding-end - option group text within label padding start
+             * @cssprop --bq-option-group--container-padding-start - option group container padding start
+             */
             "bq-option-group": LocalJSX.BqOptionGroup & JSXBase.HTMLAttributes<HTMLBqOptionGroupElement>;
+            /**
+             * The option list component is a container for multiple option elements.
+             * It allows to manage the appearance and size of all options at once.
+             * @example How to use it
+             * ```html
+             * <bq-option-list>
+             * <bq-option value="football">Football</bq-option>
+             * <bq-option value="basketball">Basketball</bq-option>
+             * <bq-option value="tennis">Tennis</bq-option>
+             * </bq-option-list>
+             * ```
+             * @documentation https://storybook.beeq.design/?path=/story/components-option--default
+             * @status stable
+             * @attr {string} aria-label - Aria label for the list.
+             * @cssprop --bq-option-group--gapY-list - Option group gap between items Y axis
+             */
             "bq-option-list": LocalJSX.BqOptionList & JSXBase.HTMLAttributes<HTMLBqOptionListElement>;
+            /**
+             * The Page Title component is a versatile and essential element used to display the main title of a page or section within an application.
+             * @example How to use it
+             * ```html
+             * <bq-page-title>
+             * <bq-button appearance="link" slot="back">
+             * <bq-icon
+             * color="text--primary"
+             * name="arrow-left"
+             * weight="bold"
+             * role="img"
+             * title="Navigate back to the previous page"
+             * ></bq-icon>
+             * </bq-button>
+             * Title
+             * <div slot="sub-title">Sub-title</div>
+             * </bq-page-title>
+             * ```
+             * @documentation https://storybook.beeq.design/?path=/docs/components-page-title--overview
+             * @status stable
+             * @cssprop --paddingY - Padding top and bottom of the page title wrapper
+             * @cssprop --subtitle-borderBlockEnd - Page title border end color
+             * @cssprop --subtitle-fontWeight - Page title font weight for subtitle
+             * @cssprop --subtitle-textColor - Page title color for sub-title
+             * @cssprop --subtitle-textSize - Page title text size for subtitle
+             * @cssprop --title-fontWeight - Page title font weight for title
+             * @cssprop --title-lineHeight - Page title text line height
+             * @cssprop --title-textColor - Page title color for title
+             * @cssprop --title-textSize - Page title text size for title
+             */
             "bq-page-title": LocalJSX.BqPageTitle & JSXBase.HTMLAttributes<HTMLBqPageTitleElement>;
+            /**
+             * The Panel component is a versatile and essential element used to wrap and display content in a floating panel.
+             * @example How to use it
+             * ```html
+             * <bq-panel open>
+             * <div>Panel content</div>
+             * </bq-panel>
+             * ```
+             * @status stable
+             * @attr {number} distance - Represents the distance (gutter or margin) between the panel and the trigger element.
+             * @attr {"top" | "bottom" | "left" | "right" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end" | "right-start" | "right-end"} placement - Position of the panel.
+             * @attr {boolean} open - If true, the panel will be visible.
+             * @attr {boolean} same-width - Whether the panel should have the same width as the trigger element.
+             * @attr {number} skidding - Represents the skidding between the panel and the trigger element.
+             * @attr {"fixed" | "absolute"} strategy - Defines the strategy to position the panel.
+             * @prop --bq-panel--background - Panel background color
+             * @prop --bq-panel--border-color - Panel border color
+             * @prop --bq-panel--border-radius - Panel border radius
+             * @prop --bq-panel--border-style - Panel border style
+             * @prop --bq-panel--border-width - Panel border width
+             * @prop --bq-panel--box-shadow - Panel box shadow
+             * @prop --bq-panel--padding - Panel padding
+             * @prop --bq-panel--height - Panel height
+             * @prop --bq-panel--width - Panel width
+             * @prop --bq-panel-z-index - Panel z-index applied when opened
+             */
             "bq-panel": LocalJSX.BqPanel & JSXBase.HTMLAttributes<HTMLBqPanelElement>;
+            /**
+             * The progress bar is a user interface component that visually represents the completion status of a task or process.
+             * @example How to use it
+             * ```html
+             * <bq-progress value="50"></bq-progress>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/691cb3-progress
+             * @status stable
+             * @dependency bq-tooltip
+             * @attr {"rounded" | "rounded-full"} border-shape - It will set the border style of the progress bar
+             * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value
+             * @attr {boolean} indeterminate - If `true` the indeterminate state of progress bar is enabled
+             * @attr {boolean} label - If `true`, a label text showing the value (in percentage) will be shown
+             * @attr {"small" | "medium" | "large"} thickness - Progress bar thickness
+             * @attr {"default" | "error"} type - Progress type
+             * @attr {number} value - A number representing the current value of the progress bar
+             * @cssprop --bq-progress-bar--height - The progress bars height
+             * @cssprop --bq-progress-bar--indeterminateWidth - The progress bar width when its indeterminate
+             * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
+             * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
+             */
             "bq-progress": LocalJSX.BqProgress & JSXBase.HTMLAttributes<HTMLBqProgressElement>;
+            /**
+             * The radio button is a user interface element that allows users to select a single option.
+             * @example How to use it
+             * ```html
+             * <bq-radio value="option1">Radio option 1</bq-radio>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/9718e1-radio-button/b/09d7b1
+             * @status stable
+             * @attr {boolean} background-on-hover - If `true`, the radio displays background on hover
+             * @attr {boolean} checked - If `true` radio input is checked
+             * @attr {boolean} disabled - If `true` radio input is disabled
+             * @attr {string} form-id - The form ID that the radio input is associated with
+             * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+             * @attr {boolean} required - If `true`, it will indicate that the user must specify a value for the radio before the owning form can be submitted
+             * @attr {boolean} value - A string representing the value of the radio
+             * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+             * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+             * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+             * @event bqBlur - Handler to be called when the radio loses focus
+             * @event bqClick - Handler to be called when the radio state changes
+             * @event bqFocus - Handler to be called when the radio gets focused
+             * @event bqKeyDown - The handler is to be called when the radio key is pressed
+             * @cssprop --bq-radio--size - Radio size
+             * @cssprop --bq-radio--border-width - Radio border width
+             */
             "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
+            /**
+             * The radio group is a user interface component that groups radio buttons to enable a single selection within the group.
+             * @example How to use it
+             * ```html
+             * <bq-radio-group fieldset value="option1">
+             * <span slot="label">radio group</span>
+             * <bq-radio value="option1">Radio option 1</bq-radio>
+             * <bq-radio value="option2">Radio option 2</bq-radio>
+             * <bq-radio value="option3">Radio option 3</bq-radio>
+             * </bq-radio-group>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/9718e1-radio-button/b/09d7b1
+             * @status stable
+             * @attr {boolean} background-on-hover - If `true`, the radio displays background on hover
+             * @attr {number} debounce-time - A number representing the delay time (in milliseconds) that bqChange event handler gets triggered once the value change
+             * @attr {boolean} disabled - If `true` radio inputs are disabled
+             * @attr {boolean} fieldset - If `true` displays fieldset
+             * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
+             * @attr {"horizontal" | "vertical"} orientation - The display orientation of the radio inputs
+             * @attr {string} value - The display orientation of the radio inputs
+             * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
+             * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
+             * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+             * @event bqChange - Handler to be called when the radio state changes
+             */
             "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
+            /**
+             * The select input component lets users choose from a predefined list, commonly used in forms for easy data selection.
+             * @example How to use it
+             * ```html
+             * <bq-select placeholder="Placeholder">
+             * <label slot="label">Select label</label>
+             * <span slot="helper-text">
+             * <bq-icon name="star"></bq-icon>
+             * Helper text
+             * </span>
+             * <bq-option value="1">Option 1</bq-option>
+             * <bq-option value="2">Option 2</bq-option>
+             * <bq-option value="3">Option 3</bq-option>
+             * </bq-select>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/41989d-select/b/09d7b1
+             * @status stable
+             * @dependency bq-button
+             * @dependency bq-dropdown
+             * @dependency bq-icon
+             * @dependency bq-option-list
+             * @dependency bq-tag
+             * @attr {boolean} autofocus - If `true`, the Select input will be focused on component render.
+             * @attr {string} clear-button-label - The clear button aria label.
+             * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
+             * @attr {boolean} disable-clear - If `true`, the clear button won't be displayed.
+             * @attr {boolean} disabled - Indicates whether the Select input is disabled and cannot be interacted with.
+             * @attr {number} distance - Represents the distance (gutter or margin) between the Select panel and the input element.
+             * @attr {string} form - The ID of the form that Select input field belongs to.
+             * @attr {boolean} keep-open-on-select - If `true`, the Select panel will remain open after a selection is made.
+             * @attr {number} max-tags-visible - The maximum number of tags to display when multiple selection is enabled.
+             * @attr {boolean} multiple - If `true`, the Select input will allow multiple selections.
+             * @attr {string} name - The Select input name.
+             * @attr {boolean} open - If `true`, the Select panel will be visible.
+             * @attr {string} panel-height - When set, it will override the height of the Select panel.
+             * @attr {string} placeholder - The Select input placeholder text value.
+             * @attr {"bottom" | "bottom-end" | "bottom-start" | "left" | "left-end" | "left-start" | "right" | "right-end" | "right-start" | "top" | "top-end" | "top-start"} placement - Position of the Select panel.
+             * @attr {boolean} readonly - If `true`, the Select input cannot be modified.
+             * @attr {boolean} required - Indicates whether or not the Select input is required to be filled out before submitting the form.
+             * @attr {boolean} same-width - Whether the panel should have the Select same width as the input element.
+             * @attr {number} skidding - Represents the skidding between the Select panel and the input element.
+             * @attr {"absolute" | "fixed"} strategy - Defines the strategy to position the Select panel.
+             * @attr {"error" | "success" | "warning" | "none"} validation-status - The validation status of the Select input.
+             * @attr {"number" | "string" | "string[]"} value - The select input value can be used to reset the field to a previous value.
+             * @method clear - Method to be called to clear the selected value.
+             * @event bqBlur - The callback handler is emitted when the Select input loses focus.
+             * @event bqClear - The callback handler is emitted when the selected value has been cleared.
+             * @event bqFocus - A callback handler is emitted when the Select input has received focus.
+             * @event bqSelect - The callback handler is emitted when the selected value has changed.
+             * @cssprop --bq-select--background-color - Select background color
+             * @cssprop --bq-select--border-color - Select border color
+             * @cssprop --bq-select--border-color-focus - Select border color on focus
+             * @cssprop --bq-select--border-color-disabled - Select border color when disabled
+             * @cssprop --bq-select--border-radius - Select border radius
+             * @cssprop --bq-select--border-width - Select border width
+             * @cssprop --bq-select--border-style - Select border style
+             * @cssprop --bq-select--gap - Gap between Select content and prefix/suffix
+             * @cssprop --bq-select--helper-margin-top - Helper text margin top
+             * @cssprop --bq-select--helper-text-color - Helper text color
+             * @cssprop --bq-select--helper-text-size - Helper text size
+             * @cssprop --bq-select--icon-size - Icon size to use in prefix/suffix and clear button
+             * @cssprop --bq-select--label-margin-bottom - Select label margin bottom
+             * @cssprop --bq-select--label-text-color - Select label text color
+             * @cssprop --bq-select--label-text-size - Select label text size
+             * @cssprop --bq-select--padding-start - Select padding start
+             * @cssprop --bq-select--padding-end - Select padding end
+             * @cssprop --bq-select--paddingY - Select padding top and bottom
+             * @cssprop --bq-select--text-color - Select text color
+             * @cssprop --bq-select--text-size - Select text size
+             * @cssprop --bq-select--text-placeholder-color - Select placeholder text color
+             */
             "bq-select": LocalJSX.BqSelect & JSXBase.HTMLAttributes<HTMLBqSelectElement>;
+            /**
+             * The default side menu serves as a versatile container for organizing and displaying navigation elements,
+             *  with default side menu items providing a clean and straightforward way to represent individual menu options.
+             *  Together, they form the foundation for building structured and intuitive side menu layouts.
+             * @example How to use it
+             * ```html
+             * <bq-side-menu>
+             * <div slot="logo">
+             * <h1>Your Logo</h1>
+             * </div>
+             * <bq-side-menu-item active>
+             * <bq-icon name="home" slot="prefix"></bq-icon>
+             * Home
+             * </bq-side-menu-item>
+             * <bq-side-menu-item>
+             * <bq-icon name="settings" slot="prefix"></bq-icon>
+             * Settings
+             * </bq-side-menu-item>
+             * <bq-side-menu-item disabled>
+             * <bq-icon name="help" slot="prefix"></bq-icon>
+             * Help
+             * </bq-side-menu-item>
+             * </bq-side-menu>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/99822d-side-menu/b/09d7b1
+             * @status stable
+             * @attr {"brand" | "default" | "inverse"} appearance - It sets a predefined appearance of the side menu.
+             * @attr {boolean} collapse - If `true`, the container will reduce its width.
+             * @attr {"medium" | "small"} - size - It sets the size of the navigation menu items.
+             * @method toggleCollapse - Method to be called to toggle the collapse state of the side menu.
+             * @event bqCollapse - Callback handler to be called when the Side menu changes its width from expanded to collapse and vice versa.
+             * @event bqSelect - Callback handler to be called when the active/selected menu item changes.
+             * @cssprop --bq-side-menu--bg-color - Side menu background color
+             * @cssprop --bq-side-menu--brand-color - Side menu logo color
+             * @cssprop --bq-side-menu--border-color - Side menu border color
+             */
             "bq-side-menu": LocalJSX.BqSideMenu & JSXBase.HTMLAttributes<HTMLBqSideMenuElement>;
+            /**
+             * Represents the default side menu item for standard navigation elements, providing a clean and straightforward way to display menu options.
+             * @example How to use it
+             * ```html
+             * <bq-side-menu-item>
+             * <bq-icon name="star-four" slot="prefix"></bq-icon>
+             * Menu item
+             * <bq-badge slot="suffix">5</bq-badge>
+             * </bq-side-menu-item>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/99822d-side-menu/b/09d7b1
+             * @status stable
+             * @dependency bq-tooltip
+             * @attr {boolean} active - If `true`, the menu item will be shown as active/selected.
+             * @attr {boolean} collapse - If `true`, the item label and suffix will be hidden and the with will be reduced according to its parent.
+             * @attr {boolean} disabled - If `true`, the menu item will be disabled (no interaction allowed).
+             * @event bqBlur - Handler to be called when the button loses focus.
+             * @event bqClick - Handler to be called when the button gets focused.
+             * @event bqFocus - Handler to be called when the button is clicked.
+             * @cssprop --bq-side-menu-item--bg-default - Side menu item default background color
+             * @cssprop --bq-side-menu-item--bg-hover - Side menu item hover background color
+             * @cssprop --bq-side-menu-item--bg-active - Side menu item active background color
+             * @cssprop --bq-side-menu-item--text-default - Side menu item default text color
+             * @cssprop --bq-side-menu-item--text-hover - Side menu item hover text color
+             * @cssprop --bq-side-menu-item--text-active - Side menu item active text color
+             * @cssprop --bq-side-menu-item--text-disabled - Side menu item disable text color
+             * @cssprop --bq-side-menu-item--paddingX - Side menu item vertical padding
+             * @cssprop --bq-side-menu-item--paddingY - Side menu item horizontal padding
+             */
             "bq-side-menu-item": LocalJSX.BqSideMenuItem & JSXBase.HTMLAttributes<HTMLBqSideMenuItemElement>;
+            /**
+             * Sliders provide a visual representation of adjustable content, enabling users to change values by dragging a handle along a horizontal track.
+             * @example How to use it
+             * ```html
+             * <bq-slider max="100" value="30"></bq-slider>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/509cbc-slider/b/09d7b1
+             * @status stable
+             * @dependency bq-tooltip
+             * @attr {number} debounce-time - The amount of time, in milliseconds, to wait to trigger the bqChange event after each value change.
+             * @attr {boolean} disabled - If `true` the slider is disabled.
+             * @attr {boolean} enable-tooltip - If `true`, a tooltip will be shown displaying the progress value.
+             * @attr {boolean} enable-value-indicator - If `true` it will show the value label on the side of the slider track area.
+             * @attr {number} gap - A number representing the amount to remain between the minimum and maximum values (only for range type).
+             * @attr {number} max - A number representing the max value of the slider.
+             * @attr {number} min - A number representing the min value of the slider.
+             * @attr {number} step - A number represents the step of the slider. ⚠️ Please notice that the value (or list of values if the slider type is range) will be rounded to the nearest multiple of step.
+             * @attr {boolean} tooltip-always-visible - If `true`, a tooltip will always display the progress value. It relies on enableTooltip and if enableTooltip is false, tooltipAlwaysVisible cannot be true.
+             * @attr {"range" | "single"} type - It defines the type of slider to display.
+             * @attr {"[number, number]" | "number" | "string"} value - The value of the slider. If the slider type is single, the value is a number.
+             * If the slider type is range, the value is an array of two numbers (the first number represents the min value and the second number represents the max value).
+             * @event bqBlur - Handler to be called when the slider loses focus.
+             * @event bqChange - Handler to be called when changing the value on range inputs.
+             * @event bqFocus - Handler to be called when the slider gets focused.
+             * @cssprop --bq-slider--size - The height of the slider track/progress area
+             * @cssprop --bq-slider--border-radius - Slider border radius
+             * @cssprop --bq-slider--thumb-size - Slider hover thumb size
+             * @cssprop --bq-slider--progress-color - Slider progress background color
+             * @cssprop --bq-slider--trackarea-color - Slider track background color
+             */
             "bq-slider": LocalJSX.BqSlider & JSXBase.HTMLAttributes<HTMLBqSliderElement>;
             /**
              * Spinners are designed for users to display data loading.
+             * @example How to use it
+             * ```html
+             * <bq-spinner size="medium" text-position="bellow">
+             * <span>Loading...</span>
+             * </bq-spinner>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/275f10-spinner/b/09d7b1
+             * @status stable
+             * @attr {boolean} animation - If `false`, the animation on the icon element will be stopped.
+             * @attr {"small" | "medium" | "large"} size - It defines the size of the icon element displayed.
+             * @attr {"above" | "below" | "left" | "right" | "none"} text-position - It defines the position of the label text.
+             * @cssprop --bq-spinner--color - Spinner color
+             * @cssprop --bq-spinner--size-large - Spinner large size
+             * @cssprop --bq-spinner--size-medium - Spinner medium size
+             * @cssprop --bq-spinner--size-small - Spinner small size
+             * @cssprop --bq-spinner--large-text-fontSize - Spinner large text font size
+             * @cssprop --bq-spinner--medium-text-fontSize - Spinner medium text font size
+             * @cssprop --bq-spinner--small-text-fontSize - Spinner small text font size
+             * @cssprop --bq-spinner--text-lineHeight - Spinner text line height
              */
             "bq-spinner": LocalJSX.BqSpinner & JSXBase.HTMLAttributes<HTMLBqSpinnerElement>;
+            /**
+             * The Status Component is a UI element that represents the current state or condition of an item, task, or process.
+             * @example How to use it
+             * ```html
+             * <bq-status type="alert">Alert status</bq-status>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/46c8d5-status/b/09d7b1
+             * @status stable
+             * @dependency bq-badge
+             * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
+             * @cssprop --bq-status-circ - Status circle size.
+             */
             "bq-status": LocalJSX.BqStatus & JSXBase.HTMLAttributes<HTMLBqStatusElement>;
+            /**
+             * The Step Item Component is a UI element used to display a single step or stage in a process or task.
+             * It should be used inside the Steps component.
+             * @example How to use it
+             * ```html
+             * <bq-step-item status="completed">
+             * <bq-icon slot="prefix" name="check-circle"></bq-icon>
+             * <span>Title</span>
+             * <span slot="description">Description</span>
+             * </bq-step-item>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
+             * @status stable
+             * @attr {"small" | "medium"} size - It defines prefix size
+             * @attr {"completed" | "current" | "error" | "default" | "disabled"} status - It defines step item appearance based on its status
+             * @attr {"numeric" | "icon" | "dot"} type - It defines the step item type used
+             * @event bqClick - Callback handler emitted when the step item is clicked
+             * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
+             * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
+             * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
+             * @cssprop --bq-step-item--prefix-color-error - Color of the prefix icon when error
+             * @cssprop --bq-step-item--prefix-num-size - Size of the prefix number
+             * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
+             */
             "bq-step-item": LocalJSX.BqStepItem & JSXBase.HTMLAttributes<HTMLBqStepItemElement>;
+            /**
+             * The Steps Component is a UI element used to display a series of steps or stages in a process or task.
+             * It is used to guide users through a process or task and to indicate their progress.
+             * @example How to use it
+             * ```html
+             * <bq-steps divider-color="stroke--primary" type="dot" size="medium">
+             * <bq-step-item status="completed"> ... </bq-step-item>
+             * <bq-step-item status="error"> ... </bq-step-item>
+             * <bq-step-item status="current"> ... </bq-step-item>
+             * <bq-step-item status="default"> ... </bq-step-item>
+             * </bq-steps>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
+             * @status stable
+             * @dependency bq-divider
+             * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
+             * @attr {"medium" | "small"} size - The size of the steps
+             * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
+             * @cssprop --bq-steps--divider-color - Divider color
+             * @cssprop --bq-steps--gap - Gap between steps
+             */
             "bq-steps": LocalJSX.BqSteps & JSXBase.HTMLAttributes<HTMLBqStepsElement>;
             /**
              * Toggle switches are digital on/off switches.
              * They should provide immediate results, giving users the freedom to control their preferences as needed.
+             * @example How to use it
+             * ```html
+             * <bq-switch inner-label="default" justify-content="start" name="bq-switch" value="Switch value">
+             * Toggle me!
+             * </bq-switch>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/49d9c9-switch
+             * @status stable
+             * @dependency bq-icon
+             * @attr {boolean} background-on-hover - If `true`, a background will be displayed on hover
+             * @attr {boolean} checked - It indicates whether if the switch is `ON` by default (when the page loads)
+             * @attr {boolean} disabled - If `true`, the switch control will be disabled and no interaction will be allowed
+             * @attr {boolean} full-width - If `true`, the component will take the full width space available on the parent container
+             * @attr {"default" | "icon"} inner-label - It indicates how to to display the on/off marks inside the control, with icons or none (default)
+             * @attr {"start" | "end" | "center" | "space-between" | "space-around" | "space-evenly"} justify-content - It defines how to distribute the space between and around the control and the label text
+             * @attr {string} name - Name of the form control. Submitted with the form as part of a name/value pair
+             * @attr {boolean} required - If `true`, it will indicate that the user must switch `ON` the element before the owning form can be submitted
+             * @attr {boolean} reverse-order - If `true`, the order of the control and the label text will be changed
+             * @attr {string} value - The input control's value, submitted as a name/value pair with form data
+             * @event bqChange - Handler to be called when the switch state changes
+             * @event bqFocus - Handler to be called when the switch gets focus
+             * @event bqBlur - Handler to be called when the switch loses focus
+             * @cssprop --bq-switch--height - Switch height
+             * @cssprop --bq-switch--justify-content - Switch justify content
+             * @cssprop --bq-switch--width - Switch width
+             * @cssprop --bq-switch--dot-size - Switch dot size
              */
             "bq-switch": LocalJSX.BqSwitch & JSXBase.HTMLAttributes<HTMLBqSwitchElement>;
+            /**
+             * The tab is a user interface element that allows users to navigate between different sections of a page.
+             * It should be used inside `<bq-tab-group>` component.
+             * @example How to use it
+             * ```html
+             * <bq-tab tab-id="1" controls="panel-1">Tab 1</bq-tab>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/775321-tabs
+             * @status stable
+             * @attr {boolean} active - If `true` tab is active
+             * @attr {string} controls - The tab panel id that the tab controls
+             * @attr {boolean} disabled - If `true` tab is disabled
+             * @attr {string} orientation - The direction that tab should be render
+             * @attr {string} placement - The placement that tab should be render
+             * @attr {string} size - The size of the tab
+             * @attr {string} tab-id - The id of the tab
+             * @event bqClick - Handler to be called when the tab state changes
+             * @event bqFocus - Handler to be called when the tab gets focus
+             * @event bqBlur - Handler to be called when the tab loses focus
+             * @event bqKeyDown - Handler to be called when the tab key is pressed
+             * @method vClick - Simulate a click event on the native `<button>` HTML element used under the hood
+             * @method vFocus - Sets focus on the native `<button>` HTML element used under the hood
+             * @method vBlur - Remove focus from the native `<button>` HTML element used under the hood
+             * @cssprop --bq-tab--font-size - Font size
+             * @cssprop --bq-tab--font-weight - Font weight
+             * @cssprop --bq-tab--icon-size-large - Icon size for large tab
+             * @cssprop --bq-tab--icon-size-medium - Icon size for medium tab
+             * @cssprop --bq-tab--icon-size-small - Icon size for small tab
+             * @cssprop --bq-tab--label-icon-gap - Gap between label and icon
+             * @cssprop --bq-tab--line-height - Line height
+             * @cssprop --bq-tab--padding-horizontal-large - Horizontal padding for large tab
+             * @cssprop --bq-tab--padding-horizontal-medium - Horizontal padding for medium tab
+             * @cssprop --bq-tab--padding-horizontal-small - Horizontal padding for small tab
+             * @cssprop --bq-tab--padding-vertical-large - Vertical padding for large tab
+             * @cssprop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
+             * @cssprop --bq-tab--padding-vertical-small - Vertical padding for small tab
+             */
             "bq-tab": LocalJSX.BqTab & JSXBase.HTMLAttributes<HTMLBqTabElement>;
+            /**
+             * The tab group is a user interface element that allows users wrap a set of tab items.
+             * @example How to use it
+             * ```html
+             * <bq-tab-group value="5">
+             * <bq-tab tab-id="1">Tab</bq-tab>
+             * <bq-tab tab-id="2" active>Tab</bq-tab>
+             * <bq-tab tab-id="3">Long Tab name</bq-tab>
+             * <bq-tab tab-id="4" disabled>Tab</bq-tab>
+             * </bq-tab-group>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/775321-tabs
+             * @status stable
+             * @attr {number} debounce-time - A number representing the delay value applied to bqChange event handler
+             * @attr {boolean} disable-divider - If true, the underline divider below the tabs won't be shown
+             * @attr {string} orientation - The direction that tab should be render
+             * @attr {string} placement - The placement that tab should be render
+             * @attr {string} size - The size of the tab
+             * @attr {string} value - A string representing the id of the selected tab.
+             * @event bqChange - Handler to be called when the tab value changes
+             */
             "bq-tab-group": LocalJSX.BqTabGroup & JSXBase.HTMLAttributes<HTMLBqTabGroupElement>;
+            /**
+             * The Tag Component is a UI element used to label and categorize content within an application.
+             * Tags are commonly used to label items with keywords or categories, making it easier to find and organize content.
+             * @example How to use it
+             * ```html
+             * <bq-tag color="success" size="medium" variant="filled">Success</bq-tag>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/42f8c9-tag
+             * @status stable
+             * @dependency bq-button
+             * @dependency bq-icon
+             * @attr {string} border - The corner radius of the Tag (will override size's predefined border)
+             * @attr {boolean} clickable - If `true`, the Tag can be clickable
+             * @attr {"error" | "gray" | "info" | "success" | "warning"} color - The color style of the Tag
+             * @attr {boolean} disabled - If `true`, the Tag will be disabled (only if clickable = `true`, no interaction allowed)
+             * @attr {boolean} hidden - If `true`, the Tag component will hidden (only if removable = `true`)
+             * @attr {boolean} removable - If `true`, the Tag component can be removed
+             * @attr {boolean} selected - If `true`, the Tag is selected (only if clickable = `true`)
+             * @attr {"xsmall" | "small" | "medium"} size - The size of the Tag component
+             * @attr {"outline" | "filled"} variant - The variant of Tag to apply on top of the variant
+             * @method hide - Method to be called to remove the tag component
+             * @method show - Method to be called to show the tag component
+             * @event bqClose - Callback handler to be called when the tag is close/hidden
+             * @event bqOpen - Callback handler to be called when the tag is not open/shown
+             * @event bqBlur - Handler to be called when tag loses focus
+             * @event bqClick - Handler to be called when tag is clicked
+             * @event bqFocus - Handler to be called when tag is focused
+             * @cssprop --bq-tag--background-color - Tag background color
+             * @cssprop --bq-tag--border-color - Tag border color
+             * @cssprop --bq-tag--border-radius - Tag border radius
+             * @cssprop --bq-tag--border-style - Tag border style
+             * @cssprop --bq-tag--border-width - Tag border width
+             * @cssprop --bq-tag--small-border-radius - Tag small border radius
+             * @cssprop --bq-tag--small-gap - Tag small gap between content
+             * @cssprop --bq-tag--small-padding-x - Tag small padding horizontal
+             * @cssprop --bq-tag--small-padding-y - Tag small padding vertical
+             * @cssprop --bq-tag--medium-gap - Tag medium gap between content
+             * @cssprop --bq-tag--medium-padding-x - Tag medium padding horizontal
+             * @cssprop --bq-tag--medium-padding-y - Tag medium padding vertical
+             */
             "bq-tag": LocalJSX.BqTag & JSXBase.HTMLAttributes<HTMLBqTagElement>;
+            /**
+             * The Textarea component is a multi-line text input control that is often used in a form to collect user inputs like comments or reviews.
+             * @example How to use it
+             * ```html
+             * <bq-textarea maxlength="0" name="textarea" placeholder="Placeholder..." rows="5">
+             * <label slot="label">Label</label>
+             * <span class="flex items-center gap-xs" slot="helper-text">
+             * <bq-icon name="star"></bq-icon>
+             * Helper text
+             * </span>
+             * </bq-textarea>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/16792c-textarea
+             * @status stable
+             * @attr {string} autocapitalize - Controls whether or not the textarea field should be capitalized and how.
+             * @attr {string} autocomplete - Specifies whether or not the textarea field should have autocomplete enabled.
+             * @attr {string} autocorrect - Controls whether or not the textarea field should have autocorrect enabled.
+             * @attr {boolean} autofocus - If `true`, the textarea will be focused on component render.
+             * @attr {boolean} auto-grow - If `true`, the textarea will automatically grow and shrink to fit its contents.
+             * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes.
+             * @attr {boolean} disabled - If `true`, the user cannot interact with the textarea.
+             * @attr {boolean} disable-resize - If `true`, it will block the user's ability to resize the textarea.
+             * @attr {string} form - The ID of the form that the textarea field belongs to.
+             * @attr {number} maxlength - The maximum number of characters that can be entered into the textarea (`0`: no limit).
+             * @attr {string} name - The name of the textarea element.
+             * @attr {string} placeholder - The placeholder text to show when there is no value.
+             * @attr {boolean} readonly - If `true`, the textarea field cannot be modified.
+             * @attr {boolean} required - Indicates whether or not the textarea field is required to be filled out before submitting the form.
+             * @attr {number} rows - The number of visible text lines for the control. It must be a positive integer.
+             * @attr {boolean} spellcheck - If `true`, the textarea content may be checked for spelling errors.
+             * @attr {"error" | "none" | "success" | "warning"} validation-status - The validation status of the textarea.
+             * @attr {string} value - The value of the textarea. It can be used to reset the textarea to a previous value.
+             * @attr {"soft" | "hard"} wrap - Specifies how the text in a text area is to be wrapped when submitted in a form.
+             * @event bqBlur - Handler to be called when the textarea loses focus.
+             * @event bqChange - Handler to be called when the textarea value has changed and the textarea loses focus.
+             * @event bqClear - Handler to be called when the textarea value has been cleared.
+             * @event bqFocus - Handler to be called when the textarea has received focus.
+             * @event bqInput - Handler to be called when the textarea value changes.
+             * @prop --bq-textarea--background-color - Textarea background color
+             * @prop --bq-textarea--border-color - Textarea border color
+             * @prop --bq-textarea--border-color-focus - Textarea border color on focus
+             * @prop --bq-textarea--border-radius - Textarea border radius
+             * @prop --bq-textarea--border-width - Textarea border width
+             * @prop --bq-textarea--border-style - Textarea border style
+             * @prop --bq-textarea--helper-margin-top - Textarea helper text margin top
+             * @prop --bq-textarea--helper-text-color - Textarea helper text color
+             * @prop --bq-textarea--helper-text-size - Textarea helper text size
+             * @prop --bq-textarea--label-margin-bottom - Textarea label margin bottom
+             * @prop --bq-textarea--label-text-color - Textarea label text color
+             * @prop --bq-textarea--label-text-size - Textarea label text size
+             * @prop --bq-textarea--paddingY - Textarea padding top and bottom
+             * @prop --bq-textarea--padding-start - Textarea padding start
+             * @prop --bq-textarea--padding-end - Textarea padding end
+             * @prop --bq-textarea--text-color - Textarea text color
+             * @prop --bq-textarea--text-size - Textarea text size
+             * @prop --bq-textarea--text-placeholder-color - Textarea placeholder text color
+             */
             "bq-textarea": LocalJSX.BqTextarea & JSXBase.HTMLAttributes<HTMLBqTextareaElement>;
+            /**
+             * Toasts are time-based components used to display short messages.
+             * Commonly used for errors, confirmations, or progress updates.
+             * @example How to use it
+             * ```html
+             * <bq-toast type="info">
+             * This is a message
+             * </bq-toast>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/83da51-toast
+             * @status stable
+             * @dependency bq-icon
+             * @attr {"s" | "none" | "xs2" | "xs" | "m" | "l" | "full"} border - The corder radius of the toast component
+             * @attr {"success" | "error" | "loading" | "alert" | "info"} type - Type of toast
+             * @attr {"top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right"} placement - Placement of toast
+             * @attr {boolean} hide-icon - If true will hide toast icon
+             * @attr {boolean} open - If true, the toast will be shown
+             * @attr {number} time - The length of time, in milliseconds, after which the toast will close itself
+             * @method show - Method to be called to show the toast component
+             * @method hide - Method to be called to hide the toast component
+             * @method toast - This method can be used to display toasts in a fixed-position element that allows for stacking multiple toasts vertically
+             * @event bqHide - Callback handler to be called when the notification is hidden
+             * @event bqShow - Callback handler to be called when the notification is shown
+             * @cssprop --bq-toast--background - Toast background color
+             * @cssprop --bq-toast--box-shadow - Toast box shadow
+             * @cssprop --bq-toast--padding-y - Toast vertical padding
+             * @cssprop --bq-toast--padding-x - Toast horizontal padding
+             * @cssprop --bq-toast--gap - Toast distance between icon and text
+             * @cssprop --bq-toast--border-radius - Toast border radius
+             * @cssprop --bq-toast--border-color - Toast border color
+             * @cssprop --bq-toast--border-style - Toast border style
+             * @cssprop --bq-toast--border-width - Toast border width
+             * @cssprop --bq-toast--icon-color-info - Toast icon color when type is 'info'
+             * @cssprop --bq-toast--icon-color-success - Toast icon color when type is 'success'
+             * @cssprop --bq-toast--icon-color-alert - Toast icon color when type is 'alert'
+             * @cssprop --bq-toast--icon-color-error - Toast icon color when type is 'error'
+             * @cssprop --bq-toast--icon-color-loading - Toast icon color when type is 'loading'
+             * @cssprop --bq-toast--icon-color-custom - Toast icon color when type is 'custom'
+             */
             "bq-toast": LocalJSX.BqToast & JSXBase.HTMLAttributes<HTMLBqToastElement>;
+            /**
+             * The Tooltip component is a small pop-up box that appears when a user hovers over or clicks on an element, providing additional information or context.
+             * @example How to use it
+             * ```html
+             * <bq-tooltip visible>
+             * Yuhu! I'm a tooltip 🙃
+             * <bq-button slot="trigger">Hover me!</bq-button>
+             * </bq-tooltip>
+             * ```
+             * @documentation https://www.beeq.design/3d466e231/p/64c562-tooltip
+             * @status stable
+             * @attr {boolean} always-visible - If true, the tooltip will always be visible
+             * @attr {number} distance - Distance between trigger element and tooltip
+             * @attr {boolean} hide-arrow - If true, the arrow on the tooltip content won't be shown
+             * @attr {"top" | "right" | "bottom" | "left"} placement - Defines the position of the tooltip
+             * @attr {boolean} same-width - Whether the tooltip should have the same width as the trigger element (applicable only for content shorter than the trigger element)
+             * @attr {"click" | "hover"} display-on - Set the action when the tooltip should be displayed, on hover (default) or click
+             * @attr {boolean} visible - Indicates whether or not the tooltip is visible when the component is first rendered, and when interacting with the trigger
+             * @method show - Shows the tooltip
+             * @method hide - Hides the tooltip
+             * @cssprop --bq-tooltip--background-color - Tooltip background color
+             * @cssprop --bq-tooltip--box-shadow - Tooltip box shadow
+             * @cssprop --bq-tooltip--font-size - Tooltip font size
+             * @cssprop --bq-tooltip--line-height - Tooltip line height
+             * @cssprop --bq-tooltip--text-color - Tooltip text color
+             * @cssprop --bq-tooltip--paddingX - Tooltip horizontal padding
+             * @cssprop --bq-tooltip--paddingY - Tooltip vertical padding
+             * @cssprop --bq-tooltip--border-color - Tooltip border color
+             * @cssprop --bq-tooltip--border-radius - Tooltip border radius
+             * @cssprop --bq-tooltip--border-style - Tooltip border style
+             * @cssprop --bq-tooltip--border-width - Tooltip border width
+             * @cssprop --bq-tooltip--z-index: Tooltip z-index
+             */
             "bq-tooltip": LocalJSX.BqTooltip & JSXBase.HTMLAttributes<HTMLBqTooltipElement>;
         }
     }

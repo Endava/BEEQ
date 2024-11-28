@@ -28,9 +28,9 @@ describe('bq-breadcrumb', () => {
       `,
     });
 
-    const bqBlur = await page.spyOnEvent('bqBreadcrumbBlur');
-    const bqFocus = await page.spyOnEvent('bqBreadcrumbFocus');
-    const bqClick = await page.spyOnEvent('bqBreadcrumbClick');
+    const bqBlur = await page.spyOnEvent('bqBlur');
+    const bqFocus = await page.spyOnEvent('bqFocus');
+    const bqClick = await page.spyOnEvent('bqClick');
     const element = await page.find('bq-breadcrumb-item');
 
     await element.click();
@@ -49,9 +49,9 @@ describe('bq-breadcrumb', () => {
       `,
     });
 
-    const bqBlur = await page.spyOnEvent('bqBreadcrumbBlur');
-    const bqFocus = await page.spyOnEvent('bqBreadcrumbFocus');
-    const bqClick = await page.spyOnEvent('bqBreadcrumbClick');
+    const bqBlur = await page.spyOnEvent('bqBlur');
+    const bqFocus = await page.spyOnEvent('bqFocus');
+    const bqClick = await page.spyOnEvent('bqClick');
 
     await page.keyboard.press('Tab');
 
@@ -69,9 +69,9 @@ describe('bq-breadcrumb', () => {
       `,
     });
 
-    const bqBlur = await page.spyOnEvent('bqBreadcrumbBlur');
-    const bqFocus = await page.spyOnEvent('bqBreadcrumbFocus');
-    const bqClick = await page.spyOnEvent('bqBreadcrumbClick');
+    const bqBlur = await page.spyOnEvent('bqBlur');
+    const bqFocus = await page.spyOnEvent('bqFocus');
+    const bqClick = await page.spyOnEvent('bqClick');
 
     await page.keyboard.press('Tab');
     await page.keyboard.press('Enter');

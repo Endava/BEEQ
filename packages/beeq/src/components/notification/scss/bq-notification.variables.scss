@@ -4,21 +4,21 @@
 
 :host {
   /**
-   * @prop --bq-notification--background: The notification background color
-   * @prop --bq-notification--box-shadow: The notification box shadow
-   * @prop --bq-notification--border-color: The notification border color
-   * @prop --bq-notification--border-radius: The notification border radius
-   * @prop --bq-notification--border-style: The notification border style
-   * @prop --bq-notification--border-width: The notification border width
-   * @prop --bq-notification--content-footer-gap: The notification content and footer gap
-   * @prop --bq-notification--title-body-gap: The notification title and body gap
-   * @prop --bq-notification--icon-color-error: The notification icon color for error type
-   * @prop --bq-notification--icon-color-info: The notification icon color for info type
-   * @prop --bq-notification--icon-color-neutral: The notification icon color for neutral type
-   * @prop --bq-notification--icon-color-success: The notification icon color for success type
-   * @prop --bq-notification--icon-color-warning: The notification icon color for warning type
-   * @prop --bq-notification--padding: The notification padding
-   * @prop --bq-notification--min-width: The notification min width
+   * @prop --bq-notification--background - The notification background color
+   * @prop --bq-notification--box-shadow - The notification box shadow
+   * @prop --bq-notification--border-color - The notification border color
+   * @prop --bq-notification--border-radius - The notification border radius
+   * @prop --bq-notification--border-style - The notification border style
+   * @prop --bq-notification--border-width - The notification border width
+   * @prop --bq-notification--content-footer-gap - The notification content and footer gap
+   * @prop --bq-notification--title-body-gap - The notification title and body gap
+   * @prop --bq-notification--icon-color-error - The notification icon color for error type
+   * @prop --bq-notification--icon-color-info - The notification icon color for info type
+   * @prop --bq-notification--icon-color-neutral - The notification icon color for neutral type
+   * @prop --bq-notification--icon-color-success - The notification icon color for success type
+   * @prop --bq-notification--icon-color-warning - The notification icon color for warning type
+   * @prop --bq-notification--padding - The notification padding
+   * @prop --bq-notification--min-width - The notification min width
    */
   --bq-notification--background: theme(backgroundColor.ui.primary);
   --bq-notification--box-shadow: theme(boxShadow.l);

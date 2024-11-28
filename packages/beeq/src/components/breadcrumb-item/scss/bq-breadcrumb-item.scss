@@ -4,6 +4,12 @@
 
 @import './bq-breadcrumb-item.variables';
 
+:host([aria-current='page']) {
+  .breadcrumb-item {
+    @apply text-[color:--bq-breadcrumb-item--text-color-current];
+  }
+}
+
 .breadcrumb-item {
   @apply border-[length:--bq-breadcrumb-item--border-width] border-[color:--bq-breadcrumb-item--border-color];
   @apply rounded-[--bq-breadcrumb-item--border-radius] bg-[--bq-breadcrumb-item--background] shadow-[shadow:--bq-breadcrumb-item--box-shadow];

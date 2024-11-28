@@ -5,11 +5,16 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The Dialog component is used to display additional content or prompt a user for action.
+It provides a way to display additional information, options, or controls in a separate, non-obstructive interface element.
+
 ## Properties
 
 | Property                   | Attribute                     | Description                                                              | Type                                                     | Default      |
 | -------------------------- | ----------------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------- | ------------ |
-| `border`                   | `border`                      | Corder radius of the dialog component                                    | `"full" \| "l" \| "m" \| "none" \| "s" \| "xs" \| "xs2"` | `'m'`        |
+| `border`                   | `border`                      | Border radius of the dialog component                                    | `"full" \| "l" \| "m" \| "none" \| "s" \| "xs" \| "xs2"` | `'m'`        |
 | `disableBackdrop`          | `disable-backdrop`            | If true, the backdrop overlay won't be shown when the dialog opens       | `boolean`                                                | `false`      |
 | `disableCloseClickOutside` | `disable-close-click-outside` | If true, the dialog will not close when clicking on the backdrop overlay | `boolean`                                                | `false`      |
 | `disableCloseEscKeydown`   | `disable-close-esc-keydown`   | If true, the dialog will not close when the [Esc] key is press           | `boolean`                                                | `false`      |
@@ -63,17 +68,27 @@ Type: `Promise<void>`
 
 
 
+## Slots
+
+| Slot             | Description                             |
+| ---------------- | --------------------------------------- |
+|                  | The body content of the dialog.         |
+| `"button-close"` | The close button content of the dialog. |
+| `"footer"`       | The footer content of the dialog.       |
+| `"title"`        | The title content of the dialog.        |
+
+
 ## Shadow Parts
 
-| Part             | Description                                                             |
-| ---------------- | ----------------------------------------------------------------------- |
-| `"body"`         | The `<main>` that holds the dialog body content                         |
-| `"button-close"` | The button that close the dialog on click                               |
-| `"content"`      | The `<div>` container that holds the dialog title and body content      |
-| `"dialog"`       | The `<dialog>` wrapper container inside the shadow DOM                  |
-| `"footer"`       | The `<footer>` that holds footer content                                |
-| `"header"`       | The `<header>` that holds the icon, title, description and close button |
-| `"title"`        | The `<div>` that holds the title content                                |
+| Part             | Description                                                              |
+| ---------------- | ------------------------------------------------------------------------ |
+| `"body"`         | The `<main>` that holds the dialog body content.                         |
+| `"button-close"` | The button that closes the dialog on click.                              |
+| `"content"`      | The `<div>` container that holds the dialog title and body content.      |
+| `"dialog"`       | The `<dialog>` wrapper container inside the shadow DOM.                  |
+| `"footer"`       | The `<footer>` that holds footer content.                                |
+| `"header"`       | The `<header>` that holds the icon, title, description and close button. |
+| `"title"`        | The `<div>` that holds the title content.                                |
 
 
 ## Dependencies

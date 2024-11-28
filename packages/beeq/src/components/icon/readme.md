@@ -5,7 +5,8 @@
 
 ## Overview
 
-Icons are simplified images that graphically explain the meaning of an object on the screen.
+The Icon component is an image that provides a visual representation of an object, action, or concept displayed on the screen.
+It is a small graphical element that is used to enhance the user interface and improve user experience.
 
 ## Properties
 

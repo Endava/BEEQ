@@ -4,6 +4,24 @@ import { EMPTY_STATE_SIZE, SIZE_TO_VALUE_MAP, TEmptyStateSize } from './bq-empty
 import { hasSlotContent, validatePropValue } from '../../shared/utils';
 
 /**
+ * An Empty State is a UI component displayed when there is no data or content available, often used in dynamic or inactive application states.
+ *
+ * @example How to use it
+ * ```html
+ * <bq-empty-state size="medium">Title</bq-empty-state>
+ * ```
+ *
+ * @documentation https://www.beeq.design/3d466e231/p/673ae0-empty-state/b/09d7b1
+ * @status stable
+ *
+ * @dependency bq-icon
+ *
+ * @attr {"large" | "medium" | "small"} size - The size of the empty state component
+ *
+ * @slot thumbnail - The element that wraps the thumbnail element
+ * @slot body - The content to be displayed after the thumbnail section
+ * @slot footer - The content to be displayed after the body section as footer
+ *
  * @part body - The container `<div>` that wraps the alert description content
  * @part footer - The container `<div>` that wraps the alert footer content
  * @part icon - The `<bq-icon>` element used to render a predefined icon size based on the empty state size (small, medium, large)

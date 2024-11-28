@@ -4,11 +4,53 @@ import { TAB_ORIENTATION, TAB_PLACEMENT, TAB_SIZE, TTabOrientation, TTabPlacemen
 import { hasSlotContent, validatePropValue } from '../../shared/utils';
 
 /**
+ * The tab is a user interface element that allows users to navigate between different sections of a page.
+ * It should be used inside `<bq-tab-group>` component.
+ *
+ * @example How to use it
+ * ```html
+ * <bq-tab tab-id="1" controls="panel-1">Tab 1</bq-tab>
+ * ```
+ *
+ * @documentation https://www.beeq.design/3d466e231/p/775321-tabs
+ * @status stable
+ *
+ * @attr {boolean} active - If `true` tab is active
+ * @attr {string} controls - The tab panel id that the tab controls
+ * @attr {boolean} disabled - If `true` tab is disabled
+ * @attr {string} orientation - The direction that tab should be render
+ * @attr {string} placement - The placement that tab should be render
+ * @attr {string} size - The size of the tab
+ * @attr {string} tab-id - The id of the tab
+ *
+ * @event bqClick - Handler to be called when the tab state changes
+ * @event bqFocus - Handler to be called when the tab gets focus
+ * @event bqBlur - Handler to be called when the tab loses focus
+ * @event bqKeyDown - Handler to be called when the tab key is pressed
+ *
+ * @method vClick - Simulate a click event on the native `<button>` HTML element used under the hood
+ * @method vFocus - Sets focus on the native `<button>` HTML element used under the hood
+ * @method vBlur - Remove focus from the native `<button>` HTML element used under the hood
+ *
  * @part base - The HTML button used under the hood.
  * @part content - The HTML `<div>` element that holds the content.
  * @part icon - The HTML `<div>` element that holds the icon content.
  * @part text - The HTML `<div>` element that holds the text content.
  * @part underline - The HTML `<div>` element that display active state.
+ *
+ * @cssprop --bq-tab--font-size - Font size
+ * @cssprop --bq-tab--font-weight - Font weight
+ * @cssprop --bq-tab--icon-size-large - Icon size for large tab
+ * @cssprop --bq-tab--icon-size-medium - Icon size for medium tab
+ * @cssprop --bq-tab--icon-size-small - Icon size for small tab
+ * @cssprop --bq-tab--label-icon-gap - Gap between label and icon
+ * @cssprop --bq-tab--line-height - Line height
+ * @cssprop --bq-tab--padding-horizontal-large - Horizontal padding for large tab
+ * @cssprop --bq-tab--padding-horizontal-medium - Horizontal padding for medium tab
+ * @cssprop --bq-tab--padding-horizontal-small - Horizontal padding for small tab
+ * @cssprop --bq-tab--padding-vertical-large - Vertical padding for large tab
+ * @cssprop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
+ * @cssprop --bq-tab--padding-vertical-small - Vertical padding for small tab
  */
 @Component({
   tag: 'bq-tab',
@@ -40,11 +82,11 @@ export class BqTab {
   /** If true tab is active */
   @Prop({ reflect: true, mutable: true }) active?: boolean;
 
+  /** The tab panel id that the tab controls */
+  @Prop({ reflect: true }) controls!: string;
+
   /** If true tab is disabled */
   @Prop({ reflect: true }) disabled = false;
-
-  /** The size of the tab */
-  @Prop({ reflect: true }) size: TTabSize = 'medium';
 
   /** The direction that tab should be render */
   @Prop({ reflect: true }) orientation?: TTabOrientation = 'horizontal';
@@ -52,11 +94,11 @@ export class BqTab {
   /** The placement that tab should be render */
   @Prop({ reflect: true }) placement?: TTabPlacement = 'start';
 
+  /** The size of the tab */
+  @Prop({ reflect: true }) size: TTabSize = 'medium';
+
   /** The id of the tab */
   @Prop({ reflect: true }) tabId!: string;
-
-  /** The tab panel id that the tab controls */
-  @Prop({ reflect: true }) controls!: string;
 
   // Prop lifecycle events
   // =======================
@@ -131,7 +173,7 @@ export class BqTab {
   }
 
   /**
-   * Sets tabindex on the native `<button>` HTML element used under the hood.
+   * @internal Sets tabindex on the native `<button>` HTML element used under the hood.
    * This method is used inside `<bq-tab-group>` to make tab focusable after the active one is focused
    */
   @Method()

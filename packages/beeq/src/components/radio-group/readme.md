@@ -5,6 +5,10 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The radio group is a user interface component that groups radio buttons to enable a single selection within the group.
+
 ## Properties
 
 | Property            | Attribute             | Description                                                                                                               | Type                         | Default      |
@@ -23,6 +27,14 @@
 | Event      | Description                                       | Type                                                          |
 | ---------- | ------------------------------------------------- | ------------------------------------------------------------- |
 | `bqChange` | Handler to be called when the radio state changes | `CustomEvent<{ value: string; target: HTMLBqRadioElement; }>` |
+
+
+## Slots
+
+| Slot      | Description                      |
+| --------- | -------------------------------- |
+|           | The bq-radio items to group      |
+| `"label"` | The label content of radio group |
 
 
 ## Shadow Parts

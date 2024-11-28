@@ -3,6 +3,7 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "composite": true,
+    "resolveJsonModule": true,
     "removeComments": false
   },
   "exclude": [
@@ -13,5 +14,5 @@
     "**/*.stories.jsx",
     "**/*.stories.tsx"
   ],
-  "include": ["../../tailwind.config.ts", "**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"]
+  "include": ["../../tailwind.config.ts", "**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.mjs"]
 }

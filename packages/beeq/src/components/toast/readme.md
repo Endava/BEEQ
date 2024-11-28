@@ -5,6 +5,11 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+Toasts are time-based components used to display short messages.
+Commonly used for errors, confirmations, or progress updates.
+
 ## Properties
 
 | Property    | Attribute   | Description                                                                  | Type                                                                                              | Default           |

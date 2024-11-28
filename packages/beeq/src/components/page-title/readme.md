@@ -5,6 +5,20 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The Page Title component is a versatile and essential element used to display the main title of a page or section within an application.
+
+## Slots
+
+| Slot          | Description                 |
+| ------------- | --------------------------- |
+|               | The main title content.     |
+| `"back"`      | The back navigation button. |
+| `"sub-title"` | The sub-title content.      |
+| `"suffix"`    | The suffix content.         |
+
+
 ## Shadow Parts
 
 | Part             | Description                                                                                             |

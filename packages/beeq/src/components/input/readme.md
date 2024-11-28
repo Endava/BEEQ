@@ -5,6 +5,11 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The Input component is a fundamental user interface element that allows users to input data by typing it into a text field.
+It is commonly used in web and mobile applications for various purposes, such as collecting user information, search inputs, and login forms.
+
 ## Properties
 
 | Property            | Attribute            | Description                                                                                                                                                                                                                                                                                                                  | Type                                                                                                                | Default         |
@@ -43,6 +48,17 @@
 | `bqClear`  | Callback handler emitted when the input value has been cleared                                                                                                                                                                 | `CustomEvent<HTMLBqInputElement>`                                               |
 | `bqFocus`  | Callback handler emitted when the input has received focus                                                                                                                                                                     | `CustomEvent<HTMLBqInputElement>`                                               |
 | `bqInput`  | Callback handler emitted when the input value changes. This handler is called whenever the user types or pastes text into the input field.                                                                                     | `CustomEvent<{ value: string \| number \| string[]; el: HTMLBqInputElement; }>` |
+
+
+## Slots
+
+| Slot            | Description                     |
+| --------------- | ------------------------------- |
+| `"clear-icon"`  | The clear icon slot container.  |
+| `"helper-text"` | The helper text slot container. |
+| `"label"`       | The label slot container.       |
+| `"prefix"`      | The prefix slot container.      |
+| `"suffix"`      | The suffix slot container.      |
 
 
 ## Shadow Parts

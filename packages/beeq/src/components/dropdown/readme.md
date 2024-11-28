@@ -5,6 +5,11 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The Dropdown Component is commonly used when presenting a list of selectable options that are too numerous to fit comfortably on the screen.
+They provide an efficient way to save space and present a long list of options in a compact and organized manner.
+
 ## Properties
 
 | Property           | Attribute             | Description                                                                           | Type                                                                                                                                                                 | Default          |
@@ -27,14 +32,22 @@
 | `bqOpen` | Callback handler to be called when the dropdown panel is opened or closed. | `CustomEvent<{ open: boolean; }>` |
 
 
+## Slots
+
+| Slot        | Description                                        |
+| ----------- | -------------------------------------------------- |
+|             | The content of the dropdown panel.                 |
+| `"trigger"` | The trigger element that opens the dropdown panel. |
+
+
 ## Shadow Parts
 
-| Part         | Description                                                                             |
-| ------------ | --------------------------------------------------------------------------------------- |
-| `"base"`     | The component's internal wrapper.                                                       |
-| `"dropdown"` | The `<bq-panel>` element used under the hood to display the dropdown panel              |
-| `"panel"`    | The `<div>` element used to display and style the panel inside the `<bq-panel>` element |
-| `"trigger"`  | The `<div>` element that hosts the trigger element                                      |
+| Part         | Description                                                                              |
+| ------------ | ---------------------------------------------------------------------------------------- |
+| `"base"`     | The component's internal wrapper.                                                        |
+| `"dropdown"` | The `<bq-panel>` element used under the hood to display the dropdown panel.              |
+| `"panel"`    | The `<div>` element used to display and style the panel inside the `<bq-panel>` element. |
+| `"trigger"`  | The `<div>` element that hosts the trigger element.                                      |
 
 
 ## Dependencies

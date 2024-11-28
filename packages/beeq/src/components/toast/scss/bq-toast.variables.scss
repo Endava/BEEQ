@@ -4,21 +4,21 @@
 
 :host {
   /**
-   * @prop --bq-toast--background: Toast background color
-   * @prop --bq-toast--box-shadow: Toast box shadow
-   * @prop --bq-toast--padding-y: Toast vertical padding
-   * @prop --bq-toast--padding-x: Toast horizontal padding
-   * @prop --bq-toast--gap: Toast distance between icon and text
-   * @prop --bq-toast--border-radius: Toast border radius
-   * @prop --bq-toast--border-color: Toast border color
-   * @prop --bq-toast--border-style: Toast border style
-   * @prop --bq-toast--border-width: Toast border width
-   * @prop --bq-toast--icon-color-info: Toast icon color when type is 'info'
-   * @prop --bq-toast--icon-color-success: Toast icon color when type is 'success'
-   * @prop --bq-toast--icon-color-alert: Toast icon color when type is 'alert'
-   * @prop --bq-toast--icon-color-error: Toast icon color when type is 'error'
-   * @prop --bq-toast--icon-color-loading: Toast icon color when type is 'loading'
-   * @prop --bq-toast--icon-color-custom: Toast icon color when type is 'custom'
+   * @prop --bq-toast--background - Toast background color
+   * @prop --bq-toast--box-shadow - Toast box shadow
+   * @prop --bq-toast--padding-y - Toast vertical padding
+   * @prop --bq-toast--padding-x - Toast horizontal padding
+   * @prop --bq-toast--gap - Toast distance between icon and text
+   * @prop --bq-toast--border-radius - Toast border radius
+   * @prop --bq-toast--border-color - Toast border color
+   * @prop --bq-toast--border-style - Toast border style
+   * @prop --bq-toast--border-width - Toast border width
+   * @prop --bq-toast--icon-color-info - Toast icon color when type is 'info'
+   * @prop --bq-toast--icon-color-success - Toast icon color when type is 'success'
+   * @prop --bq-toast--icon-color-alert - Toast icon color when type is 'alert'
+   * @prop --bq-toast--icon-color-error - Toast icon color when type is 'error'
+   * @prop --bq-toast--icon-color-loading - Toast icon color when type is 'loading'
+   * @prop --bq-toast--icon-color-custom - Toast icon color when type is 'custom'
    */
 
   --bq-toast--background: theme(backgroundColor.ui.primary);

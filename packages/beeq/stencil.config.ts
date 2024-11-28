@@ -47,9 +47,18 @@ export const config: Config = {
   ],
   outputTargets: [
     { type: 'docs-readme' },
+    /**
+     * The output custom-elements.json file is used by Storybook to generate the documentation.
+     * @see packages/beeq/.storybook/custom-elements.json
+     */
     { type: 'docs-custom', generator: generateCustomElementsJson },
-    { type: 'docs-vscode', file: 'custom-elements.json' },
-    { type: 'dist', copy: [{ src: '../README.md' }] },
+    {
+      type: 'dist',
+      copy: [
+        { src: '../README.md', dest: '../../.', warn: true },
+        { src: '../cem/*.*', dest: '../', warn: true },
+      ],
+    },
     { type: 'dist-hydrate-script', dir: 'dist/hydrate' },
     {
       type: 'dist-custom-elements',

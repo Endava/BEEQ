@@ -6,6 +6,48 @@ import { debounce, enter, hasSlotContent, leave, TDebounce, validatePropValue } 
 const NOTIFICATION_PORTAL_SELECTOR = 'bq-notification-portal';
 
 /**
+ * The Notification component is a user interface element used to provide information or alerts to users in a non-intrusive manner.
+ *
+ * @example How to use it
+ * ```html
+ * <bq-notification border="s" time="3000" type="info">
+ *   Title
+ *   <span slot="body">
+ *     This is some description text text
+ *     <a class="bq-link" href="https://example.com">Link</a>
+ *   </span>
+ *   <div class="flex gap-xs" slot="footer">
+ *     <bq-button appearance="primary" size="small">Button</bq-button>
+ *     <bq-button appearance="link" size="small">Button</bq-button>
+ *   </div>
+ * </bq-notification>
+ * ```
+ *
+ * @documentation https://www.beeq.design/3d466e231/p/945cb6-notification
+ * @status stable
+ *
+ * @dependency bq-button
+ * @dependency bq-icon
+ *
+ * @attr {boolean} auto-dismiss - If true, the notification will automatically hide after the specified amount of time
+ * @attr {string} border - The corder radius of the notification component
+ * @attr {boolean} disable-close - If true, the close button at the top right of the notification won't be shown
+ * @attr {boolean} hide-icon - If true, the notification icon won't be shown
+ * @attr {boolean} open - If true, the notification will be shown
+ * @attr {number} time - The length of time, in milliseconds, after which the notification will close itself. Only valid if `auto-dismiss="true"`
+ * @attr {string} type - Type of Notification
+ *
+ * @event bqAfterClose - Callback handler to be called after the notification has been closed
+ * @event bqAfterOpen - Callback handler to be called after the notification has been opened
+ * @event bqHide - Callback handler to be called when the notification is hidden
+ * @event bqShow - Callback handler to be called when the notification is shown
+ *
+ * @slot - The notification title content
+ * @slot body - The notification description content
+ * @slot footer - The notification footer content
+ * @slot icon - The icon to be displayed in the notification
+ * @slot btn-close - The close button of the notification
+ *
  * @part base - The `<div>` container of the predefined bq-icon component.
  * @part body - The container `<div>` that wraps the notification description content
  * @part btn-close - The `bq-button` used to close the notification
@@ -18,13 +60,22 @@ const NOTIFICATION_PORTAL_SELECTOR = 'bq-notification-portal';
  * @part title - The container `<div>` that wraps the notification title content
  * @part wrapper - The wrapper container `<div>` of the element inside the shadow DOM
  *
- * @slot - The notification title content
- * @slot body - The notification description content
- * @slot footer - The notification footer content
- * @slot icon - The icon to be displayed in the notification
- * @slot btn-close - The close button of the notification
+ * @cssprop --bq-notification--background - The notification background color
+ * @cssprop --bq-notification--box-shadow - The notification box shadow
+ * @cssprop --bq-notification--border-color - The notification border color
+ * @cssprop --bq-notification--border-radius - The notification border radius
+ * @cssprop --bq-notification--border-style - The notification border style
+ * @cssprop --bq-notification--border-width - The notification border width
+ * @cssprop --bq-notification--content-footer-gap - The notification content and footer gap
+ * @cssprop --bq-notification--title-body-gap - The notification title and body gap
+ * @cssprop --bq-notification--icon-color-error - The notification icon color for error type
+ * @cssprop --bq-notification--icon-color-info - The notification icon color for info type
+ * @cssprop --bq-notification--icon-color-neutral - The notification icon color for neutral type
+ * @cssprop --bq-notification--icon-color-success - The notification icon color for success type
+ * @cssprop --bq-notification--icon-color-warning - The notification icon color for warning type
+ * @cssprop --bq-notification--padding - The notification padding
+ * @cssprop --bq-notification--min-width - The notification min width
  */
-
 @Component({
   tag: 'bq-notification',
   styleUrl: './scss/bq-notification.scss',

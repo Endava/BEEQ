@@ -5,6 +5,11 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The Steps Component is a UI element used to display a series of steps or stages in a process or task.
+It is used to guide users through a process or task and to indicate their progress.
+
 ## Properties
 
 | Property       | Attribute       | Description                                                                                  | Type                           | Default             |
@@ -12,6 +17,13 @@
 | `dividerColor` | `divider-color` | The color of the line that connects the steps. It should be a valid declarative color token. | `string`                       | `'stroke--primary'` |
 | `size`         | `size`          | The size of the steps                                                                        | `"medium" \| "small"`          | `'medium'`          |
 | `type`         | `type`          | The type of prefix element to use on the step items                                          | `"dot" \| "icon" \| "numeric"` | `undefined`         |
+
+
+## Slots
+
+| Slot | Description    |
+| ---- | -------------- |
+|      | The step items |
 
 
 ## Shadow Parts

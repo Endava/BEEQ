@@ -5,6 +5,10 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+The tab group is a user interface element that allows users wrap a set of tab items.
+
 ## Properties
 
 | Property         | Attribute         | Description                                                             | Type                             | Default        |
@@ -22,6 +26,13 @@
 | Event      | Description                                     | Type                                                        |
 | ---------- | ----------------------------------------------- | ----------------------------------------------------------- |
 | `bqChange` | Handler to be called when the tab value changes | `CustomEvent<{ target: HTMLBqTabElement; value: string; }>` |
+
+
+## Slots
+
+| Slot | Description      |
+| ---- | ---------------- |
+|      | The bq-tab items |
 
 
 ## Shadow Parts
