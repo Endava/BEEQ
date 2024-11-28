@@ -65,7 +65,7 @@ export const generateCustomElementsJson = async (docsData: JsonDocs) => {
             .filter((tag) => tag.name === 'cssprop')
             .map((tag) => {
               const [name, description] = tag.text.split(' - ');
-              return { name: name.trim(), description: description.trim() };
+              return { name: name?.trim(), description: description?.trim() };
             }),
 
           cssParts: component.parts.map((part) => ({

@@ -179,6 +179,7 @@
     },
     "prepare-storybook": {
       "executor": "nx:run-commands",
+      "outputs": ["{projectRoot}/src/_storybook/CHANGELOG.md"],
       "options": {
         "command": "cp CHANGELOG.md {projectRoot}/src/_storybook"
       }
