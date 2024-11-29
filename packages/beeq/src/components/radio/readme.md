@@ -34,6 +34,16 @@ The radio button is a user interface element that allows users to select a singl
 
 ## Methods
 
+### `getNativeInput() => Promise<HTMLInputElement>`
+
+Returns the native `<input>` HTML element used under the hood.
+
+#### Returns
+
+Type: `Promise<HTMLInputElement>`
+
+
+
 ### `vBlur() => Promise<void>`
 
 Remove focus from the native `<input>` HTML element used under the hood.

@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Listen, Prop, Watch } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, EventEmitter, h, Listen, Prop, Watch } from '@stencil/core';
 
 import { RADIO_GROUP_ORIENTATION, TRadioGroupOrientation } from './bq-radio-group.types';
 import { debounce, isHTMLElement, isNil, TDebounce, validatePropValue } from '../../shared/utils';
@@ -25,6 +25,8 @@ import { debounce, isHTMLElement, isNil, TDebounce, validatePropValue } from '..
  * @attr {boolean} fieldset - If `true` displays fieldset
  * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
  * @attr {"horizontal" | "vertical"} orientation - The display orientation of the radio inputs
+ * @attr {boolean} required - If `true`, the radio group is required
+ * @attr {string} required-validation-message - The native form validation message when the radio group is required
  * @attr {string} value - The display orientation of the radio inputs
  *
  * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
@@ -43,19 +45,22 @@ import { debounce, isHTMLElement, isNil, TDebounce, validatePropValue } from '..
 @Component({
   tag: 'bq-radio-group',
   styleUrl: './scss/bq-radio-group.scss',
-  shadow: true,
+  formAssociated: true,
+  shadow: {
+    delegatesFocus: true,
+  },
 })
 export class BqRadioGroup {
   // Own Properties
   // ====================
 
   private focusedBqRadio: HTMLBqRadioElement | null = null;
-
   private debouncedBqChange: TDebounce<{ value: string; target: HTMLBqRadioElement }>;
 
   // Reference to host HTML element
   // ===================================
 
+  @AttachInternals() internals!: ElementInternals;
   @Element() el!: HTMLBqRadioGroupElement;
 
   // State() variables
@@ -68,11 +73,8 @@ export class BqRadioGroup {
   /** If true, all radio inputs in the group will display a background on hover */
   @Prop({ reflect: true }) backgroundOnHover? = false;
 
-  /** Name of the HTML input form control. Submitted with the form as part of a name/value pair.  */
-  @Prop({ reflect: true }) name!: string;
-
-  /** A string representing the value of the radio. */
-  @Prop({ reflect: true, mutable: true }) value?: string;
+  /** A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change */
+  @Prop({ reflect: true, mutable: true }) debounceTime = 0;
 
   /** If true radio inputs are disabled */
   @Prop({ reflect: true }) disabled? = false;
@@ -80,11 +82,20 @@ export class BqRadioGroup {
   /** If true displays fieldset */
   @Prop({ reflect: true }) fieldset? = false;
 
-  /** The display orientation of the radio inputs */
-  @Prop({ reflect: true, mutable: true }) orientation: TRadioGroupOrientation = 'vertical';
+  /** Name of the HTML input form control. Submitted with the form as part of a name/value pair.  */
+  @Prop({ reflect: true }) name!: string;
 
-  /** A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change */
-  @Prop({ reflect: true, mutable: true }) debounceTime = 0;
+  /** The display orientation of the radio inputs */
+  @Prop({ reflect: true, mutable: true }) orientation?: TRadioGroupOrientation = 'vertical';
+
+  /** If true, the radio group is required */
+  @Prop({ reflect: true }) required? = false;
+
+  /** The native form validation message when the radio group is required */
+  @Prop({ reflect: true }) requiredValidationMessage?: string;
+
+  /** A string representing the value of the radio. */
+  @Prop({ reflect: true, mutable: true }) value?: string;
 
   // Prop lifecycle events
   // =======================
@@ -92,15 +103,17 @@ export class BqRadioGroup {
   @Watch('backgroundOnHover')
   @Watch('disabled')
   @Watch('name')
+  @Watch('required')
   @Watch('value')
   handleGroupProperties() {
     if (!this.bqRadioElements) return;
 
     this.bqRadioElements.forEach((bqRadio) => {
       bqRadio.backgroundOnHover = this.backgroundOnHover;
+      bqRadio.checked = !isNil(this.value) ? bqRadio.value === this.value : false;
       bqRadio.disabled = this.disabled;
       bqRadio.name = this.name;
-      bqRadio.checked = !isNil(this.value) ? bqRadio.value === this.value : false;
+      bqRadio.required = this.required;
     });
   }
 
@@ -124,6 +137,12 @@ export class BqRadioGroup {
     }, this.debounceTime);
   }
 
+  @Watch('required')
+  @Watch('value')
+  async handleRequiredChange() {
+    await this.updateFormValidity();
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
@@ -138,10 +157,21 @@ export class BqRadioGroup {
   componentWillLoad() {
     this.checkPropValues();
     this.checkDebounceChange();
+    this.internals.setFormValue(this.value);
   }
 
   componentDidLoad() {
     this.handleGroupProperties();
+  }
+
+  async formAssociatedCallback() {
+    this.internals.setFormValue(this.value);
+    await this.updateFormValidity();
+  }
+
+  formResetCallback() {
+    this.value = null;
+    this.internals.setFormValue(this.value);
   }
 
   // Listeners
@@ -164,7 +194,7 @@ export class BqRadioGroup {
 
     const target = event.detail;
     this.bqRadioElements.forEach((bqRadioElement) => (bqRadioElement.checked = bqRadioElement === target));
-    this.checkRadioInput(event.detail);
+    this.setCheckedRadioItem(event.detail);
   }
 
   @Listen('bqKeyDown')
@@ -176,13 +206,13 @@ export class BqRadioGroup {
     switch (event.detail.key) {
       case 'ArrowDown':
       case 'ArrowRight': {
-        this.focusRadioInputSibbling(target, true);
+        this.focusRadioInputSibling(target, true);
         break;
       }
 
       case 'ArrowUp':
       case 'ArrowLeft': {
-        this.focusRadioInputSibbling(target, false);
+        this.focusRadioInputSibling(target, false);
         break;
       }
 
@@ -218,11 +248,7 @@ export class BqRadioGroup {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private get bqRadioElements(): HTMLBqRadioElement[] {
-    return Array.from(this.el.querySelectorAll('bq-radio'));
-  }
-
-  private focusRadioInputSibbling(currentTarget: HTMLBqRadioElement, next: boolean): void {
+  private focusRadioInputSibling = (currentTarget: HTMLBqRadioElement, next: boolean): void => {
     this.bqRadioElements.forEach((bqRadioElement, index, elements) => {
       if (bqRadioElement === currentTarget) {
         const target = this.getNextRadioElement(elements, index, next);
@@ -230,12 +256,21 @@ export class BqRadioGroup {
         currentTarget.checked = false;
 
         target.vFocus();
-        this.checkRadioInput(target);
+        this.setCheckedRadioItem(target);
       }
     });
-  }
+  };
 
-  private getNextRadioElement(elements: HTMLBqRadioElement[], index: number, forward = true): HTMLBqRadioElement {
+  private setCheckedRadioItem = (target: HTMLBqRadioElement): void => {
+    const { value } = target;
+    target.checked = true;
+    this.value = value;
+    this.focusedBqRadio = target;
+    this.internals.setFormValue(value);
+    this.debouncedBqChange({ value, target });
+  };
+
+  private getNextRadioElement = (elements: HTMLBqRadioElement[], index: number, forward = true): HTMLBqRadioElement => {
     let element = null;
     let elementIndex = index;
 
@@ -245,14 +280,31 @@ export class BqRadioGroup {
     } while (element.disabled);
 
     return element;
-  }
+  };
 
-  private checkRadioInput(target: HTMLBqRadioElement): void {
-    const { value } = target;
-    target.checked = true;
-    this.value = value;
-    this.focusedBqRadio = target;
-    this.debouncedBqChange({ value, target });
+  private updateFormValidity = async (): Promise<void> => {
+    const { internals, required, requiredValidationMessage, value } = this;
+    // Clear the validity state
+    internals?.states.clear();
+
+    if (!required || (required && !isNil(value))) {
+      // If the checkbox is not required or is checked, set the validity state to valid
+      internals?.states.add('valid');
+      internals?.setValidity({});
+      return;
+    }
+
+    // If the checkbox is required and not checked, set the validity state to invalid
+    internals?.states.add('invalid');
+    internals?.setValidity(
+      { valueMissing: true },
+      requiredValidationMessage,
+      await this.bqRadioElements[0].getNativeInput(),
+    );
+  };
+
+  private get bqRadioElements(): HTMLBqRadioElement[] {
+    return Array.from(this.el.querySelectorAll('bq-radio'));
   }
 
   // render() function
@@ -261,12 +313,18 @@ export class BqRadioGroup {
 
   render() {
     return (
-      <fieldset class={{ 'bq-radio-group': true, 'has-fieldset': this.fieldset }} role="radiogroup" part="base">
+      <fieldset
+        class={{ 'bq-radio-group': true, 'has-fieldset': this.fieldset }}
+        aria-labelledby="bq-radio-group__label"
+        aria-controls="bq-radiogroup"
+        role="radiogroup"
+        part="base"
+      >
         <legend part="label">
-          <slot name="label" />
+          <slot id="bq-radiogroup__label" name="label" />
         </legend>
         <div class={`bq-radio-group--${this.orientation}`} part="group">
-          <slot />
+          <slot id="bq-radiogroup" />
         </div>
       </fieldset>
     );
