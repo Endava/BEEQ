@@ -1749,6 +1749,7 @@ export namespace Components {
      * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
      * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
      * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+     * @method getNativeInput - Returns the native `<input>` HTML element used under the hood
      * @event bqBlur - Handler to be called when the radio loses focus
      * @event bqClick - Handler to be called when the radio state changes
      * @event bqFocus - Handler to be called when the radio gets focused
@@ -1773,6 +1774,10 @@ export namespace Components {
           * The form ID that the radio input is associated with
          */
         "formId"?: string;
+        /**
+          * Returns the native `<input>` HTML element used under the hood.
+         */
+        "getNativeInput": () => Promise<HTMLInputElement>;
         /**
           * Name of the HTML input form control. Submitted with the form as part of a name/value pair.
          */
@@ -1817,6 +1822,8 @@ export namespace Components {
      * @attr {boolean} fieldset - If `true` displays fieldset
      * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
      * @attr {"horizontal" | "vertical"} orientation - The display orientation of the radio inputs
+     * @attr {boolean} required - If `true`, the radio group is required
+     * @attr {string} required-validation-message - The native form validation message when the radio group is required
      * @attr {string} value - The display orientation of the radio inputs
      * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
      * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
@@ -1847,7 +1854,15 @@ export namespace Components {
         /**
           * The display orientation of the radio inputs
          */
-        "orientation": TRadioGroupOrientation;
+        "orientation"?: TRadioGroupOrientation;
+        /**
+          * If true, the radio group is required
+         */
+        "required"?: boolean;
+        /**
+          * The native form validation message when the radio group is required
+         */
+        "requiredValidationMessage"?: string;
         /**
           * A string representing the value of the radio.
          */
@@ -4253,6 +4268,7 @@ declare global {
      * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
      * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
      * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+     * @method getNativeInput - Returns the native `<input>` HTML element used under the hood
      * @event bqBlur - Handler to be called when the radio loses focus
      * @event bqClick - Handler to be called when the radio state changes
      * @event bqFocus - Handler to be called when the radio gets focused
@@ -4296,6 +4312,8 @@ declare global {
      * @attr {boolean} fieldset - If `true` displays fieldset
      * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
      * @attr {"horizontal" | "vertical"} orientation - The display orientation of the radio inputs
+     * @attr {boolean} required - If `true`, the radio group is required
+     * @attr {string} required-validation-message - The native form validation message when the radio group is required
      * @attr {string} value - The display orientation of the radio inputs
      * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
      * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
@@ -6920,6 +6938,7 @@ declare namespace LocalJSX {
      * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
      * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
      * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+     * @method getNativeInput - Returns the native `<input>` HTML element used under the hood
      * @event bqBlur - Handler to be called when the radio loses focus
      * @event bqClick - Handler to be called when the radio state changes
      * @event bqFocus - Handler to be called when the radio gets focused
@@ -6992,6 +7011,8 @@ declare namespace LocalJSX {
      * @attr {boolean} fieldset - If `true` displays fieldset
      * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
      * @attr {"horizontal" | "vertical"} orientation - The display orientation of the radio inputs
+     * @attr {boolean} required - If `true`, the radio group is required
+     * @attr {string} required-validation-message - The native form validation message when the radio group is required
      * @attr {string} value - The display orientation of the radio inputs
      * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
      * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
@@ -7027,6 +7048,14 @@ declare namespace LocalJSX {
           * The display orientation of the radio inputs
          */
         "orientation"?: TRadioGroupOrientation;
+        /**
+          * If true, the radio group is required
+         */
+        "required"?: boolean;
+        /**
+          * The native form validation message when the radio group is required
+         */
+        "requiredValidationMessage"?: string;
         /**
           * A string representing the value of the radio.
          */
@@ -9120,6 +9149,7 @@ declare module "@stencil/core" {
              * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
              * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
              * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+             * @method getNativeInput - Returns the native `<input>` HTML element used under the hood
              * @event bqBlur - Handler to be called when the radio loses focus
              * @event bqClick - Handler to be called when the radio state changes
              * @event bqFocus - Handler to be called when the radio gets focused
@@ -9147,6 +9177,8 @@ declare module "@stencil/core" {
              * @attr {boolean} fieldset - If `true` displays fieldset
              * @attr {string} name - Name of the HTML input form control. Submitted with the form as part of a name/value pair
              * @attr {"horizontal" | "vertical"} orientation - The display orientation of the radio inputs
+             * @attr {boolean} required - If `true`, the radio group is required
+             * @attr {string} required-validation-message - The native form validation message when the radio group is required
              * @attr {string} value - The display orientation of the radio inputs
              * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
              * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood

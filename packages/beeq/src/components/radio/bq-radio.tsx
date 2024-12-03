@@ -22,6 +22,7 @@ import { Component, Element, Event, EventEmitter, h, Method, Prop } from '@stenc
  * @method vClick - Simulate a click event on the native `<input>` HTML element used under the hood
  * @method vFocus - Sets focus on the native `<input>` HTML element used under the hood
  * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
+ * @method getNativeInput - Returns the native `<input>` HTML element used under the hood
  *
  * @event bqBlur - Handler to be called when the radio loses focus
  * @event bqClick - Handler to be called when the radio state changes
@@ -143,6 +144,14 @@ export class BqRadio {
     this.inputElement?.blur();
   }
 
+  /**
+   * Returns the native `<input>` HTML element used under the hood.
+   */
+  @Method()
+  async getNativeInput() {
+    return this.inputElement;
+  }
+
   // Local methods
   // Internal business logic.
   // These methods cannot be called from the host element.
@@ -183,7 +192,6 @@ export class BqRadio {
           'is-checked': this.checked,
           'has-background': this.backgroundOnHover,
         }}
-        aria-label={this.name}
         part="base"
       >
         <div class="bq-radio__control">
@@ -202,6 +210,7 @@ export class BqRadio {
             onKeyDown={this.handleOnKeyDown}
             aria-checked={this.checked ? 'true' : 'false'}
             aria-disabled={this.disabled ? 'true' : 'false'}
+            aria-labelledby="bq-radio__label"
             tabindex={this.tabindex}
             part="input"
           />
@@ -213,7 +222,7 @@ export class BqRadio {
           class="bq-radio__label group-hover:text-text-primary-hover group-[.is-disabled]:text-text-primary-disabled"
           part="label"
         >
-          <slot></slot>
+          <slot id="bq-radio__label"></slot>
         </span>
       </label>
     );
