@@ -167,27 +167,27 @@ calendar-month {
 
   &::part(button) {
     @apply flex items-center justify-center rounded-s bg-transparent font-default text-primary transition-colors duration-200 ease-in-out p-b-0 p-i-0;
-    @apply size-[--bq-date-picker--day-size] focus-visible:focus hover:bg-hover-secondary;
+    @apply size-[--bq-date-picker--day-size] focus-visible:focus enabled:hover:bg-hover-secondary disabled:cursor-not-allowed;
+  }
+
+  &::part(button day disallowed) {
+    @apply cursor-not-allowed bg-transparent #{!important};
   }
 
   &::part(button day selected) {
-    @apply bg-[--bq-date-picker--range-background-color] hover:bg-hover-ui-brand;
+    @apply rounded-s bg-[--bq-date-picker--range-background-color] text-alt enabled:hover:bg-hover-ui-brand;
   }
 
-  &::part(outside) {
-    @apply text-secondary opacity-100;
+  &::part(button day selected range-inner) {
+    @apply rounded-none bg-[--bq-date-picker--range-inner-background-color] text-primary hover:text-alt;
   }
 
-  &::part(selected) {
-    @apply rounded-s text-alt;
-  }
-
-  &::part(range-inner) {
-    @apply rounded-none;
+  &::part(button day outside) {
+    @apply cursor-pointer text-secondary opacity-100;
   }
 
   &::part(today) {
-    @apply rounded-s border-[length:--bq-date-picker--currentDate-border-width] border-[color:--bq-date-picker--currentDate-border-color] text-[color:--bq-date-picker--currentDate-text-color];
+    @apply rounded-s border-[length:--bq-date-picker--currentDate-border-width] border-[color:--bq-date-picker--currentDate-border-color];
 
     border-style: var(--bq-date-picker--border-style);
   }

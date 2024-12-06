@@ -109,29 +109,29 @@ import { TInputValidation } from '../input/bq-input.types';
  * @part prefix - The prefix slot container.
  * @part suffix - The suffix slot container.
  *
- * @cssprop --bq-date-picker--background-color - Date picker background color
- * @cssprop --bq-date-picker--border-color - Date picker border color
- * @cssprop --bq-date-picker--border-color-disabled - Date picker border color when disabled
- * @cssprop --bq-date-picker--border-color-focus - Date picker border color on focus
- * @cssprop --bq-date-picker--border-radius - Date picker border radius
- * @cssprop --bq-date-picker--border-style - Date picker border style
- * @cssprop --bq-date-picker--border-width - Date picker border width
- * @cssprop --bq-date-picker--currentDate-border-color - Date picker border color for current date
- * @cssprop --bq-date-picker--currentDate-border-width - Date picker border width for current date
- * @cssprop --bq-date-picker--currentDate-text-color - Date picker label text color for currentDate
- * @cssprop --bq-date-picker--day-size - Date picker button day size
- * @cssprop --bq-date-picker--gap - Gap between Date picker content and prefix/suffix
- * @cssprop --bq-date-picker--icon-size - Icon size to use in prefix/suffix and clear button
- * @cssprop --bq-date-picker--label-margin-bottom - Date picker label margin bottom
- * @cssprop --bq-date-picker--label-text-color - Date picker label text color
- * @cssprop --bq-date-picker--label-text-size - Date picker label text size
- * @cssprop --bq-date-picker--padding-end - Date picker padding end
- * @cssprop --bq-date-picker--padding-start - Date picker padding start
- * @cssprop --bq-date-picker--paddingY - Date picker padding top and bottom
- * @cssprop --bq-date-picker--range-background-color - Background color for the selected date range in the date picker
- * @cssprop --bq-date-picker--text-color - Date picker text color
- * @cssprop --bq-date-picker--text-placeholder-color - Date picker placeholder text color
- * @cssprop --bq-date-picker--text-size - Date picker text size
+ * @cssprop --bq-date-picker--background-color - Date picker background color.
+ * @cssprop --bq-date-picker--border-color - Date picker border color.
+ * @cssprop --bq-date-picker--border-color-disabled - Date picker border color when disabled.
+ * @cssprop --bq-date-picker--border-color-focus - Date picker border color on focus.
+ * @cssprop --bq-date-picker--border-radius - Date picker border radius.
+ * @cssprop --bq-date-picker--border-style - Date picker border style.
+ * @cssprop --bq-date-picker--border-width - Date picker border width.
+ * @cssprop --bq-date-picker--currentDate-border-color - Date picker border color for current date.
+ * @cssprop --bq-date-picker--currentDate-border-width - Date picker border width for current date.
+ * @cssprop --bq-date-picker--day-size - Date picker button day size.
+ * @cssprop --bq-date-picker--gap - Gap between Date picker content and prefix/suffix.
+ * @cssprop --bq-date-picker--icon-size - Icon size to use in prefix/suffix and clear button.
+ * @cssprop --bq-date-picker--label-margin-bottom - Date picker label margin bottom.
+ * @cssprop --bq-date-picker--label-text-color - Date picker label text color.
+ * @cssprop --bq-date-picker--label-text-size - Date picker label text size.
+ * @cssprop --bq-date-picker--padding-end - Date picker padding end.
+ * @cssprop --bq-date-picker--padding-start - Date picker padding start.
+ * @cssprop --bq-date-picker--paddingY - Date picker padding top and bottom.
+ * @cssprop --bq-date-picker--range-background-color - Background color for the selected date range in the date picker.
+ * @cssprop --bq-date-picker--range-inner-background-color - Background color for the selected dates inside the date range in the date picker.
+ * @cssprop --bq-date-picker--text-color - Date picker text color.
+ * @cssprop --bq-date-picker--text-placeholder-color - Date picker placeholder text color.
+ * @cssprop --bq-date-picker--text-size - Date picker text size.
  */
 @Component({
   tag: 'bq-date-picker',
