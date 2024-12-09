@@ -157,31 +157,31 @@ const Template = (args: Args) => {
     ${style}
     <bq-date-picker
       ?autofocus=${args.autofocus}
-      clear-button-label=${args['clear-button-label']}
-      distance=${args.distance}
+      clear-button-label=${ifDefined(args['clear-button-label'])}
+      distance=${ifDefined(args.distance)}
       ?disable-clear=${args['disable-clear']}
       ?disabled=${args.disabled}
-      first-day-of-week=${args['first-day-of-week']}
+      first-day-of-week=${ifDefined(args['first-day-of-week'])}
       form=${ifDefined(args.form)}
       .formatOptions=${args.formatOptions}
       .isDateDisallowed=${dateDisallowed}
       locale=${ifDefined(args.locale)}
       max=${ifDefined(args.max)}
       min=${ifDefined(args.min)}
-      months=${args.months}
-      months-per-view=${args['months-per-view']}
+      months=${ifDefined(args.months)}
+      months-per-view=${ifDefined(args['months-per-view'])}
       name=${ifDefined(args.name)}
       ?open=${args.open}
-      panel-height=${args['panel-height']}
-      placeholder=${args.placeholder}
-      placement=${args.placement}
+      panel-height=${ifDefined(args['panel-height'])}
+      placeholder=${ifDefined(args.placeholder)}
+      placement=${ifDefined(args.placement)}
       ?required=${args.required}
-      show-outside-days=${args['show-outside-days']}
-      skidding=${args.skidding}
-      strategy=${args.strategy}
-      tentative=${args.tentative}
-      type=${args.type}
-      validation-status=${args['validation-status']}
+      ?show-outside-days=${args['show-outside-days']}
+      skidding=${ifDefined(args.skidding)}
+      strategy=${ifDefined(args.strategy)}
+      tentative=${ifDefined(args.tentative)}
+      type=${ifDefined(args.type)}
+      validation-status=${ifDefined(args['validation-status'])}
       value=${ifDefined(args.value)}
       @bqBlur=${args.bqBlur}
       @bqChange=${args.bqChange}
@@ -349,5 +349,90 @@ export const NoLabel: Story = {
   args: {
     noLabel: true,
     value: '2024-10-13',
+  },
+};
+
+export const WithForm: Story = {
+  render: () => {
+    const handleFormSubmit = (ev: Event) => {
+      ev.preventDefault();
+      const form = ev.target as HTMLFormElement;
+      const formData = new FormData(form);
+      const formValues = Object.fromEntries(formData.entries());
+
+      const codeElement = document.getElementById('form-data');
+      if (!codeElement) return;
+
+      codeElement.textContent = JSON.stringify(formValues, null, 2);
+    };
+
+    return html`
+      <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/night-owl.min.css" />
+
+      <div class="grid auto-cols-auto grid-cols-1 gap-y-l sm:grid-cols-2 sm:gap-x-l">
+        <bq-card>
+          <h4 class="m-be-m">Travel information</h4>
+          <form class="flex flex-col gap-y-m" @submit=${handleFormSubmit}>
+            <bq-input name="fullName" value="Brad Bernie Beckett" autocomplete="name" required>
+              <label class="flex flex-grow items-center" slot="label">Full Name</label>
+            </bq-input>
+            <div class="grid grid-cols-1 gap-y-m sm:grid-cols-2 sm:gap-x-m">
+              <bq-input name="passportNumber" value="052763786" autocomplete="bday-year" required>
+                <label class="flex flex-grow items-center" slot="label">Passport number</label>
+              </bq-input>
+              <bq-date-picker
+                name="passportExpDate"
+                value="2024-05-20"
+                placeholder="Select a date"
+                type="single"
+                required
+              >
+                <label class="flex flex-grow items-center" slot="label"> Expiration date </label>
+              </bq-date-picker>
+            </div>
+            <bq-date-picker
+              name="tripDate"
+              placeholder="Select a start and end date for your travel"
+              value="2024-12-25/2025-01-10"
+              type="range"
+              months="2"
+              required
+            >
+              <label class="flex flex-grow items-center" slot="label"> Travel dates </label>
+            </bq-date-picker>
+            <div class="flex justify-end gap-x-s">
+              <bq-button appearance="secondary" type="reset">Cancel</bq-button>
+              <bq-button type="submit">Save</bq-button>
+            </div>
+          </form>
+        </bq-card>
+        <bq-card class="[&::part(wrapper)]:h-full">
+          <h4 class="m-be-m">Form Data</h4>
+          <div class="language-javascript overflow-x-scroll whitespace-pre rounded-s">
+            // Handle form submit<br />
+            const form = ev.target as HTMLFormElement;<br />
+            const formData = new FormData(form);<br />
+            const formValues = Object.fromEntries(formData.entries());
+          </div>
+          <pre>
+            <code id="form-data" class="rounded-s">
+              { // submit the form to see the data here }
+            </code>
+          </pre>
+        </bq-card>
+      </div>
+
+      <script type="module">
+        import hljs from 'https://unpkg.com/@highlightjs/cdn-assets@11.10.0/es/highlight.min.js';
+        import javascript from 'https://unpkg.com/@highlightjs/cdn-assets@11.10.0/es/languages/javascript.min.js';
+
+        hljs.registerLanguage('javascript', javascript);
+        hljs.highlightAll();
+
+        document.querySelectorAll('div.language-javascript').forEach((block) => {
+          hljs.highlightElement(block);
+        });
+      </script>
+    `;
   },
 };

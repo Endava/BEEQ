@@ -1,4 +1,16 @@
-import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import {
+  AttachInternals,
+  Component,
+  Element,
+  Event,
+  EventEmitter,
+  h,
+  Listen,
+  Method,
+  Prop,
+  State,
+  Watch,
+} from '@stencil/core';
 import { CalendarDate } from 'cally';
 
 import { DATE_PICKER_TYPE, DaysOfWeek, TDatePickerType } from './bq-date-picker.types';
@@ -8,6 +20,7 @@ import {
   isDefined,
   isEventTargetChildOfElement,
   isHTMLElement,
+  isNil,
   validatePropValue,
 } from '../../shared/utils';
 import { TInputValidation } from '../input/bq-input.types';
@@ -136,6 +149,7 @@ import { TInputValidation } from '../input/bq-input.types';
 @Component({
   tag: 'bq-date-picker',
   styleUrl: './scss/bq-date-picker.scss',
+  formAssociated: true,
   shadow: {
     delegatesFocus: true,
   },
@@ -161,6 +175,7 @@ export class BqDatePicker {
   // Reference to host HTML element
   // ===================================
 
+  @AttachInternals() internals: ElementInternals;
   @Element() el!: HTMLBqDatePickerElement;
 
   // State() variables
@@ -289,13 +304,16 @@ export class BqDatePicker {
 
   @Watch('value')
   handleValueChange() {
-    if (Array.isArray(this.value)) {
-      this.hasValue = this.value.some((val) => val.length > 0);
+    const { formatDisplayValue, internals, value } = this;
+    internals.setFormValue(!isNil(value) ? `${value}` : undefined);
+
+    if (Array.isArray(value)) {
+      this.hasValue = value.some((val) => val.length > 0);
       return;
     }
 
-    this.hasValue = isDefined(this.value);
-    this.displayDate = this.formatDisplayValue(this.value);
+    this.hasValue = isDefined(value);
+    this.displayDate = formatDisplayValue(value);
 
     this.setFocusedDate();
   }
@@ -328,12 +346,14 @@ export class BqDatePicker {
   // Ordered by their natural call order
   // =====================================
 
-  connectedCallback() {
+  componentWillLoad() {
     this.handleValueChange();
   }
 
-  componentWillLoad() {
-    this.handleValueChange();
+  formResetCallback() {
+    if (isNil(this.value)) return;
+
+    this.clear();
   }
 
   // Listeners
@@ -378,7 +398,7 @@ export class BqDatePicker {
     if (this.disabled) return;
 
     this.value = undefined;
-
+    this.internals.setFormValue(undefined);
     this.bqClear.emit(this.el);
   }
 
@@ -403,14 +423,12 @@ export class BqDatePicker {
     if (!this.callyElem) return;
     // We need to set the focused date in the calendar component via a ref
     // because it doesn't work when passed as a prop (the Cally element does not re-render)
-    this.callyElem.focusedDate = this.value
-      ? this.formatFocusedDate(this.value)
-      : new Date().toLocaleDateString('fr-CA');
+    this.focusedDate = this.value ? this.formatFocusedDate(this.value) : new Date().toLocaleDateString('fr-CA');
+    this.callyElem.focusedDate = this.focusedDate;
   };
 
   private handleChange = (ev: Event) => {
     if (this.disabled) return;
-
     if (!isHTMLElement(ev.target, 'input')) return;
 
     const dateValue = new Date(ev.target.value);
@@ -418,6 +436,7 @@ export class BqDatePicker {
       // We need to force the value to respect the format: yyyy-mm-dd, hence the hardcoded locale
       this.value = dateValue.toLocaleDateString('fr-CA');
       this.displayDate = this.formatDisplayValue(this.value);
+      this.internals.setFormValue(`${this.value}`);
       this.bqChange.emit({ value: this.value, el: this.el });
     }
   };
@@ -430,6 +449,7 @@ export class BqDatePicker {
     this.inputElem.value = this.displayDate;
     this.inputElem.focus();
 
+    this.internals.setFormValue(`${this.value}`);
     this.bqChange.emit({ value: this.value, el: this.el });
 
     this.open = this.type === 'multi';
@@ -453,6 +473,7 @@ export class BqDatePicker {
 
     this.bqClear.emit(this.el);
     this.bqChange.emit({ value: this.value, el: this.el });
+    this.internals.setFormValue(undefined);
     this.inputElem.focus();
 
     ev.stopPropagation();
