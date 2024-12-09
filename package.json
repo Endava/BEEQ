@@ -63,7 +63,7 @@
     "@custom-elements-manifest/analyzer": "0.10.3",
     "@eslint/compat": "1.2.2",
     "@eslint/eslintrc": "3.1.0",
-    "@jscutlery/semver": "5.3.1",
+    "@jscutlery/semver": "5.5.1",
     "@nx/angular": "20.1.4",
     "@nx/devkit": "20.1.4",
     "@nx/esbuild": "20.1.4",
