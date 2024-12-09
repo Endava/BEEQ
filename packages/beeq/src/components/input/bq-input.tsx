@@ -245,14 +245,15 @@ export class BqInput {
 
   @Watch('value')
   handleValueChange() {
-    if (Array.isArray(this.value)) {
-      this.hasValue = this.value.some((val) => val.length > 0);
-      this.internals.setFormValue(this.value.join(','));
+    const { internals, value } = this;
+    if (Array.isArray(value)) {
+      this.hasValue = value.some((val) => val.length > 0);
+      this.internals.setFormValue(value.join(','));
       return;
     }
 
-    this.hasValue = isDefined(this.value);
-    this.internals.setFormValue(`${this.value}`);
+    this.hasValue = isDefined(value);
+    internals.setFormValue(!isNil(value) ? `${value}` : undefined);
   }
 
   // Events section
