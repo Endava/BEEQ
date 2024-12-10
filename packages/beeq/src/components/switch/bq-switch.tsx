@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, EventEmitter, h, Host, Method, Prop, State } from '@stencil/core';
 
 import { TSwitchInnerLabel, TSwitchJustifyContent } from './bq-switch.types';
 import { getTextContent, isNil } from '../../shared/utils';
@@ -51,6 +51,7 @@ import { getTextContent, isNil } from '../../shared/utils';
 @Component({
   tag: 'bq-switch',
   styleUrl: './scss/bq-switch.scss',
+  formAssociated: true,
   shadow: {
     delegatesFocus: true,
   },
@@ -66,6 +67,7 @@ export class BqSwitch {
   // Reference to host HTML element
   // ===================================
 
+  @AttachInternals() internals!: ElementInternals;
   @Element() el!: HTMLBqSwitchElement;
 
   // State() variables
@@ -150,6 +152,15 @@ export class BqSwitch {
     }
   }
 
+  formAssociatedCallback() {
+    this.setFormValue(this.checked);
+  }
+
+  formResetCallback() {
+    // Reset the form validity state
+    this.internals.setValidity({});
+  }
+
   // Listeners
   // ==============
 
@@ -195,6 +206,7 @@ export class BqSwitch {
   private handleChange = () => {
     this.checked = !this.checked;
     this.inputElem.setAttribute('checked', `${this.checked}`);
+    this.setFormValue(this.checked);
   };
 
   private handleOnFocus = () => {
@@ -210,6 +222,15 @@ export class BqSwitch {
     if (isNil(slot)) return;
 
     this.hasLabel = !!getTextContent(slot, { recurse: true }).length;
+  };
+
+  private setFormValue = (checked: boolean) => {
+    console.log('setFormValue', checked);
+    const value = checked ? 'on' : 'off';
+    // Set form value based on the checked state
+    // Here we also pass the state of the component (2nd argument) as the state of the form control
+    // Details: https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals/setFormValue
+    this.internals?.setFormValue(value, `${this.checked}`);
   };
 
   // render() function

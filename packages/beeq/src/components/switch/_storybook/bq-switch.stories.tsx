@@ -124,3 +124,70 @@ export const FullWidth: Story = {
     'reverse-order': true,
   },
 };
+
+export const WithForm: Story = {
+  render: (args: Args) => {
+    const handleFormSubmit = (ev: Event) => {
+      ev.preventDefault();
+      const form = ev.target as HTMLFormElement;
+      const formData = new FormData(form);
+      const formValues = Object.fromEntries(formData.entries());
+
+      const codeElement = document.getElementById('form-data');
+      if (!codeElement) return;
+
+      codeElement.textContent = JSON.stringify(formValues, null, 2);
+    };
+
+    return html`
+      <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/night-owl.min.css" />
+      <div class="grid auto-cols-auto grid-cols-1 gap-y-l sm:grid-cols-2 sm:gap-x-l">
+        <bq-card style="--bq-card--background: transparent">
+          <h4 class="m-be-m">Account settings</h4>
+          <form class="flex flex-col gap-y-m" @submit=${handleFormSubmit}>
+            ${Template({ ...args, text: 'Show app list in menu', name: 'showAppList' })}
+            ${Template({ ...args, text: 'Show recently added apps', name: 'showRecentlyApps', checked: true })}
+            ${Template({ ...args, text: 'Show most used apps', name: 'showUsedApps', disabled: true })}
+            ${Template({ ...args, text: 'Show app notifications', name: 'showAppNotifications', checked: true })}
+            <div class="flex justify-end gap-x-s">
+              <bq-button appearance="secondary" type="reset">Cancel</bq-button>
+              <bq-button type="submit">Save</bq-button>
+            </div>
+          </form>
+        </bq-card>
+        <bq-card class="[&::part(wrapper)]:h-full">
+          <h4 class="m-be-m">Form Data</h4>
+          <div class="language-javascript overflow-x-scroll whitespace-pre rounded-s">
+            // Handle form submit<br />
+            const form = ev.target as HTMLFormElement;<br />
+            const formData = new FormData(form);<br />
+            const formValues = Object.fromEntries(formData.entries());
+          </div>
+          <pre>
+            <code id="form-data" class="rounded-s">
+              { // submit the form to see the data here }
+            </code>
+          </pre>
+        </bq-card>
+      </div>
+
+      <script type="module">
+        import hljs from 'https://unpkg.com/@highlightjs/cdn-assets@11.10.0/es/highlight.min.js';
+        import javascript from 'https://unpkg.com/@highlightjs/cdn-assets@11.10.0/es/languages/javascript.min.js';
+
+        hljs.registerLanguage('javascript', javascript);
+        hljs.highlightAll();
+
+        document.querySelectorAll('div.language-javascript').forEach((block) => {
+          hljs.highlightElement(block);
+        });
+      </script>
+    `;
+  },
+  args: {
+    'background-on-hover': true,
+    'full-width': true,
+    'justify-content': 'space-between',
+    'reverse-order': true,
+  },
+};
