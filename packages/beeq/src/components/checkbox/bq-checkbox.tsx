@@ -160,10 +160,12 @@ export class BqCheckbox {
   }
 
   formResetCallback() {
-    this.clearSelection();
     // Reset the form value and validity state
-    this.internals.setFormValue(undefined);
-    this.internals.setValidity({});
+    this.checked = false;
+    this.indeterminate = false;
+    this.inputElem.removeAttribute('checked');
+    this.internals?.setFormValue(undefined);
+    this.updateFormValidity();
   }
 
   // Listeners
@@ -231,11 +233,6 @@ export class BqCheckbox {
     // Set validity state based on the required property and checked state
     internals?.states.add('invalid');
     internals?.setValidity({ valueMissing: true }, formValidationMessage, inputElem);
-  };
-
-  private clearSelection = () => {
-    this.checked = false;
-    this.indeterminate = false;
   };
 
   private handleChange = () => {

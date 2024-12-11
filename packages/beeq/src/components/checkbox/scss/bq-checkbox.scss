@@ -35,6 +35,7 @@
 
 .bq-checkbox__input {
   // Checkbox square icon has `FOCUS`
+  &:focus,
   &:focus-visible {
     ~ .bq-checkbox__checkbox {
       @apply focus border-brand;

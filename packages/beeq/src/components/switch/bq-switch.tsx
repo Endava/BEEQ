@@ -1,4 +1,16 @@
-import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State } from '@stencil/core';
+import {
+  AttachInternals,
+  Component,
+  Element,
+  Event,
+  EventEmitter,
+  h,
+  Host,
+  Method,
+  Prop,
+  State,
+  Watch,
+} from '@stencil/core';
 
 import { TSwitchInnerLabel, TSwitchJustifyContent } from './bq-switch.types';
 import { getTextContent, isNil } from '../../shared/utils';
@@ -22,6 +34,7 @@ import { getTextContent, isNil } from '../../shared/utils';
  * @attr {boolean} background-on-hover - If `true`, a background will be displayed on hover
  * @attr {boolean} checked - It indicates whether if the switch is `ON` by default (when the page loads)
  * @attr {boolean} disabled - If `true`, the switch control will be disabled and no interaction will be allowed
+ * @attr {string} form-validation-message - The native form validation message
  * @attr {boolean} full-width - If `true`, the component will take the full width space available on the parent container
  * @attr {"default" | "icon"} inner-label - It indicates how to to display the on/off marks inside the control, with icons or none (default)
  * @attr {"start" | "end" | "center" | "space-between" | "space-around" | "space-evenly"} justify-content - It defines how to distribute the space between and around the control and the label text
@@ -51,6 +64,7 @@ import { getTextContent, isNil } from '../../shared/utils';
 @Component({
   tag: 'bq-switch',
   styleUrl: './scss/bq-switch.scss',
+  formAssociated: true,
   shadow: {
     delegatesFocus: true,
   },
@@ -66,6 +80,7 @@ export class BqSwitch {
   // Reference to host HTML element
   // ===================================
 
+  @AttachInternals() internals!: ElementInternals;
   @Element() el!: HTMLBqSwitchElement;
 
   // State() variables
@@ -85,6 +100,9 @@ export class BqSwitch {
 
   /** If true, the switch control will be disabled and no interaction will be allowed */
   @Prop({ reflect: true }) disabled?: boolean = false;
+
+  /** The native form validation message */
+  @Prop({ mutable: true }) formValidationMessage?: string;
 
   /** If true, the component will take the full width space available on the parent container */
   @Prop({ reflect: true }) fullWidth?: boolean = false;
@@ -112,6 +130,11 @@ export class BqSwitch {
 
   // Prop lifecycle events
   // =======================
+
+  @Watch('required')
+  handleRequiredChange() {
+    this.updateFormValidity();
+  }
 
   // Events section
   // Requires JSDocs for public API documentation
@@ -148,6 +171,19 @@ export class BqSwitch {
       this.bqChange.emit({ checked: this.checked });
       this.prevCheckedValue = this.checked;
     }
+  }
+
+  formAssociatedCallback() {
+    this.setFormValue(this.checked);
+    this.updateFormValidity();
+  }
+
+  formResetCallback() {
+    // Reset the form value and validity state
+    this.checked = false;
+    this.inputElem.removeAttribute('checked');
+    this.internals?.setFormValue(undefined);
+    this.updateFormValidity();
   }
 
   // Listeners
@@ -195,6 +231,8 @@ export class BqSwitch {
   private handleChange = () => {
     this.checked = !this.checked;
     this.inputElem.setAttribute('checked', `${this.checked}`);
+    this.setFormValue(this.checked);
+    this.updateFormValidity();
   };
 
   private handleOnFocus = () => {
@@ -210,6 +248,31 @@ export class BqSwitch {
     if (isNil(slot)) return;
 
     this.hasLabel = !!getTextContent(slot, { recurse: true }).length;
+  };
+
+  private setFormValue = (checked: boolean) => {
+    const value = checked ? 'on' : undefined;
+    // Set form value based on the checked state
+    // Here we also pass the state of the component (2nd argument) as the state of the form control
+    // Details: https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals/setFormValue
+    this.internals?.setFormValue(value, `${this.checked}`);
+  };
+
+  private updateFormValidity = () => {
+    const { formValidationMessage, internals, required, checked, inputElem } = this;
+    // Clear the validity state
+    internals?.states.clear();
+
+    if (!(required && !checked)) {
+      // If the switch component is not required or is checked, set the validity state to valid
+      internals?.states.add('valid');
+      internals?.setValidity({});
+      return;
+    }
+
+    // Set validity state based on the required property and checked state
+    internals?.states.add('invalid');
+    internals?.setValidity({ valueMissing: true }, formValidationMessage, inputElem);
   };
 
   // render() function
@@ -233,7 +296,7 @@ export class BqSwitch {
         <label class={{ 'bq-switch group': true, ...labelCssClasses }} part="base">
           {/* Hidden native HTML input */}
           <input
-            class="bq-switch--input peer sr-only peer-checked:invisible"
+            class="bq-switch--input peer sr-only !bs-[--bq-switch--dot-size] !is-[--bq-switch--width] peer-checked:invisible"
             type="checkbox"
             checked={this.checked}
             disabled={this.disabled}
