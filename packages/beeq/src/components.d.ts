@@ -2665,6 +2665,7 @@ export namespace Components {
      * @attr {boolean} disabled - If `true`, the user cannot interact with the textarea.
      * @attr {boolean} disable-resize - If `true`, it will block the user's ability to resize the textarea.
      * @attr {string} form - The ID of the form that the textarea field belongs to.
+     * @attr {string} form-validation-message - The native form validation message.
      * @attr {number} maxlength - The maximum number of characters that can be entered into the textarea (`0`: no limit).
      * @attr {string} name - The name of the textarea element.
      * @attr {string} placeholder - The placeholder text to show when there is no value.
@@ -2680,24 +2681,24 @@ export namespace Components {
      * @event bqClear - Handler to be called when the textarea value has been cleared.
      * @event bqFocus - Handler to be called when the textarea has received focus.
      * @event bqInput - Handler to be called when the textarea value changes.
-     * @prop --bq-textarea--background-color - Textarea background color
-     * @prop --bq-textarea--border-color - Textarea border color
-     * @prop --bq-textarea--border-color-focus - Textarea border color on focus
-     * @prop --bq-textarea--border-radius - Textarea border radius
-     * @prop --bq-textarea--border-width - Textarea border width
-     * @prop --bq-textarea--border-style - Textarea border style
-     * @prop --bq-textarea--helper-margin-top - Textarea helper text margin top
-     * @prop --bq-textarea--helper-text-color - Textarea helper text color
-     * @prop --bq-textarea--helper-text-size - Textarea helper text size
-     * @prop --bq-textarea--label-margin-bottom - Textarea label margin bottom
-     * @prop --bq-textarea--label-text-color - Textarea label text color
-     * @prop --bq-textarea--label-text-size - Textarea label text size
-     * @prop --bq-textarea--paddingY - Textarea padding top and bottom
-     * @prop --bq-textarea--padding-start - Textarea padding start
-     * @prop --bq-textarea--padding-end - Textarea padding end
-     * @prop --bq-textarea--text-color - Textarea text color
-     * @prop --bq-textarea--text-size - Textarea text size
-     * @prop --bq-textarea--text-placeholder-color - Textarea placeholder text color
+     * @cssprop --bq-textarea--background-color - Textarea background color
+     * @cssprop --bq-textarea--border-color - Textarea border color
+     * @cssprop --bq-textarea--border-color-focus - Textarea border color on focus
+     * @cssprop --bq-textarea--border-radius - Textarea border radius
+     * @cssprop --bq-textarea--border-width - Textarea border width
+     * @cssprop --bq-textarea--border-style - Textarea border style
+     * @cssprop --bq-textarea--helper-margin-top - Textarea helper text margin top
+     * @cssprop --bq-textarea--helper-text-color - Textarea helper text color
+     * @cssprop --bq-textarea--helper-text-size - Textarea helper text size
+     * @cssprop --bq-textarea--label-margin-bottom - Textarea label margin bottom
+     * @cssprop --bq-textarea--label-text-color - Textarea label text color
+     * @cssprop --bq-textarea--label-text-size - Textarea label text size
+     * @cssprop --bq-textarea--paddingY - Textarea padding top and bottom
+     * @cssprop --bq-textarea--padding-start - Textarea padding start
+     * @cssprop --bq-textarea--padding-end - Textarea padding end
+     * @cssprop --bq-textarea--text-color - Textarea text color
+     * @cssprop --bq-textarea--text-size - Textarea text size
+     * @cssprop --bq-textarea--text-placeholder-color - Textarea placeholder text color
      */
     interface BqTextarea {
         /**
@@ -2736,6 +2737,10 @@ export namespace Components {
           * The ID of the form that the textarea field belongs to.
          */
         "form"?: string;
+        /**
+          * The native form validation message
+         */
+        "formValidationMessage"?: string;
         /**
           * The maximum number of characters that can be entered into the textarea (`0`: no limit). When enabled, a character counter will be shown underneath the textarea.
          */
@@ -4935,6 +4940,7 @@ declare global {
      * @attr {boolean} disabled - If `true`, the user cannot interact with the textarea.
      * @attr {boolean} disable-resize - If `true`, it will block the user's ability to resize the textarea.
      * @attr {string} form - The ID of the form that the textarea field belongs to.
+     * @attr {string} form-validation-message - The native form validation message.
      * @attr {number} maxlength - The maximum number of characters that can be entered into the textarea (`0`: no limit).
      * @attr {string} name - The name of the textarea element.
      * @attr {string} placeholder - The placeholder text to show when there is no value.
@@ -4950,24 +4956,24 @@ declare global {
      * @event bqClear - Handler to be called when the textarea value has been cleared.
      * @event bqFocus - Handler to be called when the textarea has received focus.
      * @event bqInput - Handler to be called when the textarea value changes.
-     * @prop --bq-textarea--background-color - Textarea background color
-     * @prop --bq-textarea--border-color - Textarea border color
-     * @prop --bq-textarea--border-color-focus - Textarea border color on focus
-     * @prop --bq-textarea--border-radius - Textarea border radius
-     * @prop --bq-textarea--border-width - Textarea border width
-     * @prop --bq-textarea--border-style - Textarea border style
-     * @prop --bq-textarea--helper-margin-top - Textarea helper text margin top
-     * @prop --bq-textarea--helper-text-color - Textarea helper text color
-     * @prop --bq-textarea--helper-text-size - Textarea helper text size
-     * @prop --bq-textarea--label-margin-bottom - Textarea label margin bottom
-     * @prop --bq-textarea--label-text-color - Textarea label text color
-     * @prop --bq-textarea--label-text-size - Textarea label text size
-     * @prop --bq-textarea--paddingY - Textarea padding top and bottom
-     * @prop --bq-textarea--padding-start - Textarea padding start
-     * @prop --bq-textarea--padding-end - Textarea padding end
-     * @prop --bq-textarea--text-color - Textarea text color
-     * @prop --bq-textarea--text-size - Textarea text size
-     * @prop --bq-textarea--text-placeholder-color - Textarea placeholder text color
+     * @cssprop --bq-textarea--background-color - Textarea background color
+     * @cssprop --bq-textarea--border-color - Textarea border color
+     * @cssprop --bq-textarea--border-color-focus - Textarea border color on focus
+     * @cssprop --bq-textarea--border-radius - Textarea border radius
+     * @cssprop --bq-textarea--border-width - Textarea border width
+     * @cssprop --bq-textarea--border-style - Textarea border style
+     * @cssprop --bq-textarea--helper-margin-top - Textarea helper text margin top
+     * @cssprop --bq-textarea--helper-text-color - Textarea helper text color
+     * @cssprop --bq-textarea--helper-text-size - Textarea helper text size
+     * @cssprop --bq-textarea--label-margin-bottom - Textarea label margin bottom
+     * @cssprop --bq-textarea--label-text-color - Textarea label text color
+     * @cssprop --bq-textarea--label-text-size - Textarea label text size
+     * @cssprop --bq-textarea--paddingY - Textarea padding top and bottom
+     * @cssprop --bq-textarea--padding-start - Textarea padding start
+     * @cssprop --bq-textarea--padding-end - Textarea padding end
+     * @cssprop --bq-textarea--text-color - Textarea text color
+     * @cssprop --bq-textarea--text-size - Textarea text size
+     * @cssprop --bq-textarea--text-placeholder-color - Textarea placeholder text color
      */
     interface HTMLBqTextareaElement extends Components.BqTextarea, HTMLStencilElement {
         addEventListener<K extends keyof HTMLBqTextareaElementEventMap>(type: K, listener: (this: HTMLBqTextareaElement, ev: BqTextareaCustomEvent<HTMLBqTextareaElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -7929,6 +7935,7 @@ declare namespace LocalJSX {
      * @attr {boolean} disabled - If `true`, the user cannot interact with the textarea.
      * @attr {boolean} disable-resize - If `true`, it will block the user's ability to resize the textarea.
      * @attr {string} form - The ID of the form that the textarea field belongs to.
+     * @attr {string} form-validation-message - The native form validation message.
      * @attr {number} maxlength - The maximum number of characters that can be entered into the textarea (`0`: no limit).
      * @attr {string} name - The name of the textarea element.
      * @attr {string} placeholder - The placeholder text to show when there is no value.
@@ -7944,24 +7951,24 @@ declare namespace LocalJSX {
      * @event bqClear - Handler to be called when the textarea value has been cleared.
      * @event bqFocus - Handler to be called when the textarea has received focus.
      * @event bqInput - Handler to be called when the textarea value changes.
-     * @prop --bq-textarea--background-color - Textarea background color
-     * @prop --bq-textarea--border-color - Textarea border color
-     * @prop --bq-textarea--border-color-focus - Textarea border color on focus
-     * @prop --bq-textarea--border-radius - Textarea border radius
-     * @prop --bq-textarea--border-width - Textarea border width
-     * @prop --bq-textarea--border-style - Textarea border style
-     * @prop --bq-textarea--helper-margin-top - Textarea helper text margin top
-     * @prop --bq-textarea--helper-text-color - Textarea helper text color
-     * @prop --bq-textarea--helper-text-size - Textarea helper text size
-     * @prop --bq-textarea--label-margin-bottom - Textarea label margin bottom
-     * @prop --bq-textarea--label-text-color - Textarea label text color
-     * @prop --bq-textarea--label-text-size - Textarea label text size
-     * @prop --bq-textarea--paddingY - Textarea padding top and bottom
-     * @prop --bq-textarea--padding-start - Textarea padding start
-     * @prop --bq-textarea--padding-end - Textarea padding end
-     * @prop --bq-textarea--text-color - Textarea text color
-     * @prop --bq-textarea--text-size - Textarea text size
-     * @prop --bq-textarea--text-placeholder-color - Textarea placeholder text color
+     * @cssprop --bq-textarea--background-color - Textarea background color
+     * @cssprop --bq-textarea--border-color - Textarea border color
+     * @cssprop --bq-textarea--border-color-focus - Textarea border color on focus
+     * @cssprop --bq-textarea--border-radius - Textarea border radius
+     * @cssprop --bq-textarea--border-width - Textarea border width
+     * @cssprop --bq-textarea--border-style - Textarea border style
+     * @cssprop --bq-textarea--helper-margin-top - Textarea helper text margin top
+     * @cssprop --bq-textarea--helper-text-color - Textarea helper text color
+     * @cssprop --bq-textarea--helper-text-size - Textarea helper text size
+     * @cssprop --bq-textarea--label-margin-bottom - Textarea label margin bottom
+     * @cssprop --bq-textarea--label-text-color - Textarea label text color
+     * @cssprop --bq-textarea--label-text-size - Textarea label text size
+     * @cssprop --bq-textarea--paddingY - Textarea padding top and bottom
+     * @cssprop --bq-textarea--padding-start - Textarea padding start
+     * @cssprop --bq-textarea--padding-end - Textarea padding end
+     * @cssprop --bq-textarea--text-color - Textarea text color
+     * @cssprop --bq-textarea--text-size - Textarea text size
+     * @cssprop --bq-textarea--text-placeholder-color - Textarea placeholder text color
      */
     interface BqTextarea {
         /**
@@ -8000,6 +8007,10 @@ declare namespace LocalJSX {
           * The ID of the form that the textarea field belongs to.
          */
         "form"?: string;
+        /**
+          * The native form validation message
+         */
+        "formValidationMessage"?: string;
         /**
           * The maximum number of characters that can be entered into the textarea (`0`: no limit). When enabled, a character counter will be shown underneath the textarea.
          */
@@ -9614,6 +9625,7 @@ declare module "@stencil/core" {
              * @attr {boolean} disabled - If `true`, the user cannot interact with the textarea.
              * @attr {boolean} disable-resize - If `true`, it will block the user's ability to resize the textarea.
              * @attr {string} form - The ID of the form that the textarea field belongs to.
+             * @attr {string} form-validation-message - The native form validation message.
              * @attr {number} maxlength - The maximum number of characters that can be entered into the textarea (`0`: no limit).
              * @attr {string} name - The name of the textarea element.
              * @attr {string} placeholder - The placeholder text to show when there is no value.
@@ -9629,24 +9641,24 @@ declare module "@stencil/core" {
              * @event bqClear - Handler to be called when the textarea value has been cleared.
              * @event bqFocus - Handler to be called when the textarea has received focus.
              * @event bqInput - Handler to be called when the textarea value changes.
-             * @prop --bq-textarea--background-color - Textarea background color
-             * @prop --bq-textarea--border-color - Textarea border color
-             * @prop --bq-textarea--border-color-focus - Textarea border color on focus
-             * @prop --bq-textarea--border-radius - Textarea border radius
-             * @prop --bq-textarea--border-width - Textarea border width
-             * @prop --bq-textarea--border-style - Textarea border style
-             * @prop --bq-textarea--helper-margin-top - Textarea helper text margin top
-             * @prop --bq-textarea--helper-text-color - Textarea helper text color
-             * @prop --bq-textarea--helper-text-size - Textarea helper text size
-             * @prop --bq-textarea--label-margin-bottom - Textarea label margin bottom
-             * @prop --bq-textarea--label-text-color - Textarea label text color
-             * @prop --bq-textarea--label-text-size - Textarea label text size
-             * @prop --bq-textarea--paddingY - Textarea padding top and bottom
-             * @prop --bq-textarea--padding-start - Textarea padding start
-             * @prop --bq-textarea--padding-end - Textarea padding end
-             * @prop --bq-textarea--text-color - Textarea text color
-             * @prop --bq-textarea--text-size - Textarea text size
-             * @prop --bq-textarea--text-placeholder-color - Textarea placeholder text color
+             * @cssprop --bq-textarea--background-color - Textarea background color
+             * @cssprop --bq-textarea--border-color - Textarea border color
+             * @cssprop --bq-textarea--border-color-focus - Textarea border color on focus
+             * @cssprop --bq-textarea--border-radius - Textarea border radius
+             * @cssprop --bq-textarea--border-width - Textarea border width
+             * @cssprop --bq-textarea--border-style - Textarea border style
+             * @cssprop --bq-textarea--helper-margin-top - Textarea helper text margin top
+             * @cssprop --bq-textarea--helper-text-color - Textarea helper text color
+             * @cssprop --bq-textarea--helper-text-size - Textarea helper text size
+             * @cssprop --bq-textarea--label-margin-bottom - Textarea label margin bottom
+             * @cssprop --bq-textarea--label-text-color - Textarea label text color
+             * @cssprop --bq-textarea--label-text-size - Textarea label text size
+             * @cssprop --bq-textarea--paddingY - Textarea padding top and bottom
+             * @cssprop --bq-textarea--padding-start - Textarea padding start
+             * @cssprop --bq-textarea--padding-end - Textarea padding end
+             * @cssprop --bq-textarea--text-color - Textarea text color
+             * @cssprop --bq-textarea--text-size - Textarea text size
+             * @cssprop --bq-textarea--text-placeholder-color - Textarea placeholder text color
              */
             "bq-textarea": LocalJSX.BqTextarea & JSXBase.HTMLAttributes<HTMLBqTextareaElement>;
             /**
