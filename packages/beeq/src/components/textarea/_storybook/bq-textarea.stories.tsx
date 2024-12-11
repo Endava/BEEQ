@@ -198,14 +198,26 @@ export const WithForm: Story = {
       <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/night-owl.min.css" />
       <div class="grid auto-cols-auto grid-cols-1 gap-y-l sm:grid-cols-2 sm:gap-x-l">
         <bq-card style="--bq-card--background: transparent">
-          <h4 class="m-be-m">Feedback</h4>
+          <h4 class="m-be-m">Submit your issue</h4>
           <form class="flex flex-col gap-y-m" @submit=${handleFormSubmit}>
-            <!-- Success -->
+            <div class="grid grid-cols-1 gap-y-m sm:grid-cols-2 sm:gap-x-m">
+              <bq-input name="firstName" value="Brad Bernie" autocomplete="given-name" required>
+                <label class="flex flex-grow items-center" slot="label">First Name</label>
+              </bq-input>
+              <bq-input name="lastName" value="Beckett" autocomplete="family-name" required>
+                <label class="flex flex-grow items-center" slot="label">Last Name Optional</label>
+              </bq-input>
+            </div>
+            <bq-input name="email" type="email" autocomplete="email">
+              <div slot="label" class="flex flex-1 items-center">
+                <label class="flex flex-grow items-center">Email address</label>
+                <span class="text-text-secondary">Optional</span>
+              </div>
+            </bq-input>
             ${Template({
               ...args,
-              value: 'The service was excellent, and the staff was very friendly!',
-              name: 'positiveFeedback',
-              placeholder: 'Enter your positive feedback...',
+              name: 'details',
+              placeholder: 'Please tell us more details about the problem you are facing...',
               required: true,
             })}
             <div class="flex justify-end gap-x-s">

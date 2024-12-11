@@ -1,7 +1,7 @@
 import { AttachInternals, Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
 import { TTextareaAutoCapitalize, TTextareaWrap } from './bq-textarea.types';
-import { debounce, hasSlotContent, isHTMLElement, TDebounce } from '../../shared/utils';
+import { debounce, hasSlotContent, isHTMLElement, isNil, TDebounce } from '../../shared/utils';
 import { TInputValidation } from '../input/bq-input.types';
 
 /**
@@ -191,10 +191,10 @@ export class BqTextarea {
    * - `'warning'`: The textarea has a validation warning.
    * - `'success'`: The textarea has passed validation.
    */
-  @Prop({ reflect: true }) validationStatus: TInputValidation = 'none';
+  @Prop({ reflect: true, mutable: true }) validationStatus: TInputValidation = 'none';
 
   /** The value of the textarea. It can be used to reset the textarea to a previous value. */
-  @Prop({ mutable: true }) value: string;
+  @Prop({ mutable: true }) value: string = '';
 
   /** Specifies how the text in a text area is to be wrapped when submitted in a form */
   @Prop({ reflect: true }) wrap: TTextareaWrap = 'soft';
@@ -205,9 +205,9 @@ export class BqTextarea {
   @Watch('value')
   handleValueChange() {
     if (!this.textarea) return;
-    if (!this.maxlength || this.value.length < this.maxlength) return;
+    if (!this.maxlength || this.value?.length < this.maxlength) return;
     // If the value is longer than the maxlength, we need to truncate it
-    this.value = this.value.substring(0, this.maxlength);
+    this.value = this.value?.substring(0, this.maxlength);
     this.textarea.value = this.value;
   }
 
@@ -245,6 +245,10 @@ export class BqTextarea {
   // Ordered by their natural call order
   // =====================================
 
+  componentDidLoad() {
+    this.handleValueChange();
+  }
+
   formAssociatedCallback() {
     this.setFormValue(this.value);
     this.updateFormValidity();
@@ -253,16 +257,12 @@ export class BqTextarea {
   formResetCallback() {
     this.clearSelection();
     // Reset the form validity state
-    this.internals.setFormValue(undefined);
-    this.internals.setValidity({});
+    this.setFormValue();
+    this.updateFormValidity();
   }
 
   // Listeners
   // ==============
-
-  componentDidLoad() {
-    this.handleValueChange();
-  }
 
   // Public methods API
   // These methods are exposed on the host element.
@@ -279,7 +279,7 @@ export class BqTextarea {
   private get numberOfCharacters() {
     if (!this.maxlength || !this.textarea) return 0;
 
-    return this.value.length;
+    return this.value?.length;
   }
 
   private handleBlur = () => {
@@ -339,10 +339,8 @@ export class BqTextarea {
     this.hasHelperText = hasSlotContent(this.helperTextElem);
   };
 
-  private setFormValue = (value: string) => {
-    console.log('setFormValue', value);
-    const textareaValue = value ? value : '';
-    this.internals?.setFormValue(textareaValue, `${this.value}`);
+  private setFormValue = (value?: string) => {
+    this.internals.setFormValue(!isNil(value) ? `${value}` : undefined);
   };
 
   private updateFormValidity = () => {
@@ -355,27 +353,17 @@ export class BqTextarea {
       // Set validity state to invalid
       internals?.states.add('invalid');
       internals?.setValidity({ valueMissing: true }, formValidationMessage, textarea);
-
-      // Update validationStatus to 'error' when required and empty
-      this.validationStatus = 'error';
       return;
     }
 
     // Set validity state to valid if textarea has value or is not required
     internals?.states.add('valid');
     internals?.setValidity({});
-
-    // Update validationStatus to 'success' when valid
-    this.validationStatus = 'success';
   };
 
   private clearSelection = () => {
-    const { textarea, internals } = this;
-    textarea.value = '';
-    this.value = textarea.value;
-
-    // Update associated form control value
-    internals.setFormValue(undefined);
+    this.value = '';
+    this.textarea.value = this.value;
   };
 
   // render() function
