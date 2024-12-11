@@ -23,7 +23,7 @@
    * @prop --bq-textarea--text-size - Textarea text size
    * @prop --bq-textarea--text-placeholder-color - Textarea placeholder text color
    */
-  --bq-textarea--background-color: theme(backgroundColor.ui.primary);
+  --bq-textarea--background-color: theme(colors.transparent);
 
   --bq-textarea--border-color: theme(stroke.tertiary);
   --bq-textarea--border-color-focus: theme(stroke.brand);

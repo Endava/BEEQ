@@ -197,7 +197,7 @@ export const WithForm: Story = {
     return html`
       <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/night-owl.min.css" />
       <div class="grid auto-cols-auto grid-cols-1 gap-y-l sm:grid-cols-2 sm:gap-x-l">
-        <bq-card style="--bq-card--background: transparent">
+        <bq-card>
           <h4 class="m-be-m">Submit your issue</h4>
           <form class="flex flex-col gap-y-m" @submit=${handleFormSubmit}>
             <div class="grid grid-cols-1 gap-y-m sm:grid-cols-2 sm:gap-x-m">
