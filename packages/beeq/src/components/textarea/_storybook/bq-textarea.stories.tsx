@@ -181,7 +181,7 @@ export const Validation: Story = {
 };
 
 export const WithForm: Story = {
-  render: (args: Args) => {
+  render: () => {
     const handleFormSubmit = (ev: Event) => {
       ev.preventDefault();
       const form = ev.target as HTMLFormElement;
@@ -214,12 +214,16 @@ export const WithForm: Story = {
                 <span class="text-text-secondary">Optional</span>
               </div>
             </bq-input>
-            ${Template({
-              ...args,
-              name: 'details',
-              placeholder: 'Please tell us more details about the problem you are facing...',
-              required: true,
-            })}
+            <bq-textarea
+              required
+              form-validation-message="Please, provide a detailed description of the issue"
+              maxlength="100"
+              name="details"
+              placeholder="Please tell us more about the problem you are facing..."
+              rows="5"
+            >
+              <label slot="label">What's the issue?</label>
+            </bq-textarea>
             <div class="flex justify-end gap-x-s">
               <bq-button appearance="secondary" type="reset">Cancel</bq-button>
               <bq-button type="submit">Save</bq-button>
@@ -251,9 +255,5 @@ export const WithForm: Story = {
         });
       </script>
     `;
-  },
-  args: {
-    maxlength: '100',
-    'form-validation-message': 'Please add your feedback!',
   },
 };

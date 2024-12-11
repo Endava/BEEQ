@@ -194,7 +194,7 @@ export class BqTextarea {
   @Prop({ reflect: true, mutable: true }) validationStatus: TInputValidation = 'none';
 
   /** The value of the textarea. It can be used to reset the textarea to a previous value. */
-  @Prop({ mutable: true }) value: string = '';
+  @Prop({ mutable: true }) value: string;
 
   /** Specifies how the text in a text area is to be wrapped when submitted in a form */
   @Prop({ reflect: true }) wrap: TTextareaWrap = 'soft';
@@ -208,7 +208,7 @@ export class BqTextarea {
     if (!this.maxlength || this.value?.length < this.maxlength) return;
     // If the value is longer than the maxlength, we need to truncate it
     this.value = this.value?.substring(0, this.maxlength);
-    this.textarea.value = this.value;
+    this.textarea.value = this.value ?? '';
   }
 
   @Watch('required')
@@ -427,8 +427,11 @@ export class BqTextarea {
           >
             <slot name="helper-text" onSlotchange={this.handleHelperTextSlotChange} />
           </span>
-          <span class={{ 'bq-textarea__helper--counter': true, '!hidden': !this.maxlength }} part="helper-counter">
-            {this.numberOfCharacters}/{this.maxlength}
+          <span
+            class={{ 'bq-textarea__helper--counter [fontVariant:tabular-nums]': true, '!hidden': !this.maxlength }}
+            part="helper-counter"
+          >
+            {this.numberOfCharacters ?? 0}/{this.maxlength}
           </span>
         </div>
       </div>
