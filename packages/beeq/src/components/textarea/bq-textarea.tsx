@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
 import { TTextareaAutoCapitalize, TTextareaWrap } from './bq-textarea.types';
 import { debounce, hasSlotContent, isHTMLElement, TDebounce } from '../../shared/utils';
@@ -30,6 +30,7 @@ import { TInputValidation } from '../input/bq-input.types';
  * @attr {boolean} disabled - If `true`, the user cannot interact with the textarea.
  * @attr {boolean} disable-resize - If `true`, it will block the user's ability to resize the textarea.
  * @attr {string} form - The ID of the form that the textarea field belongs to.
+ * @attr {string} form-validation-message - The native form validation message.
  * @attr {number} maxlength - The maximum number of characters that can be entered into the textarea (`0`: no limit).
  * @attr {string} name - The name of the textarea element.
  * @attr {string} placeholder - The placeholder text to show when there is no value.
@@ -57,28 +58,29 @@ import { TInputValidation } from '../input/bq-input.types';
  * @part helper-text - The helper text.
  * @part helper-counter - The helper counter.
  *
- * @prop --bq-textarea--background-color - Textarea background color
- * @prop --bq-textarea--border-color - Textarea border color
- * @prop --bq-textarea--border-color-focus - Textarea border color on focus
- * @prop --bq-textarea--border-radius - Textarea border radius
- * @prop --bq-textarea--border-width - Textarea border width
- * @prop --bq-textarea--border-style - Textarea border style
- * @prop --bq-textarea--helper-margin-top - Textarea helper text margin top
- * @prop --bq-textarea--helper-text-color - Textarea helper text color
- * @prop --bq-textarea--helper-text-size - Textarea helper text size
- * @prop --bq-textarea--label-margin-bottom - Textarea label margin bottom
- * @prop --bq-textarea--label-text-color - Textarea label text color
- * @prop --bq-textarea--label-text-size - Textarea label text size
- * @prop --bq-textarea--paddingY - Textarea padding top and bottom
- * @prop --bq-textarea--padding-start - Textarea padding start
- * @prop --bq-textarea--padding-end - Textarea padding end
- * @prop --bq-textarea--text-color - Textarea text color
- * @prop --bq-textarea--text-size - Textarea text size
- * @prop --bq-textarea--text-placeholder-color - Textarea placeholder text color
+ * @cssprop --bq-textarea--background-color - Textarea background color
+ * @cssprop --bq-textarea--border-color - Textarea border color
+ * @cssprop --bq-textarea--border-color-focus - Textarea border color on focus
+ * @cssprop --bq-textarea--border-radius - Textarea border radius
+ * @cssprop --bq-textarea--border-width - Textarea border width
+ * @cssprop --bq-textarea--border-style - Textarea border style
+ * @cssprop --bq-textarea--helper-margin-top - Textarea helper text margin top
+ * @cssprop --bq-textarea--helper-text-color - Textarea helper text color
+ * @cssprop --bq-textarea--helper-text-size - Textarea helper text size
+ * @cssprop --bq-textarea--label-margin-bottom - Textarea label margin bottom
+ * @cssprop --bq-textarea--label-text-color - Textarea label text color
+ * @cssprop --bq-textarea--label-text-size - Textarea label text size
+ * @cssprop --bq-textarea--paddingY - Textarea padding top and bottom
+ * @cssprop --bq-textarea--padding-start - Textarea padding start
+ * @cssprop --bq-textarea--padding-end - Textarea padding end
+ * @cssprop --bq-textarea--text-color - Textarea text color
+ * @cssprop --bq-textarea--text-size - Textarea text size
+ * @cssprop --bq-textarea--text-placeholder-color - Textarea placeholder text color
  */
 @Component({
   tag: 'bq-textarea',
   styleUrl: './scss/bq-textarea.scss',
+  formAssociated: true,
   shadow: {
     delegatesFocus: true,
   },
@@ -97,6 +99,7 @@ export class BqTextarea {
   // Reference to host HTML element
   // ===================================
 
+  @AttachInternals() internals!: ElementInternals;
   @Element() el!: HTMLBqTextareaElement;
 
   // State() variables
@@ -152,6 +155,9 @@ export class BqTextarea {
   /** The ID of the form that the textarea field belongs to. */
   @Prop({ reflect: true }) form?: string;
 
+  /** The native form validation message */
+  @Prop({ mutable: true }) formValidationMessage?: string;
+
   /**
    * The maximum number of characters that can be entered into the textarea (`0`: no limit).
    * When enabled, a character counter will be shown underneath the textarea.
@@ -205,6 +211,11 @@ export class BqTextarea {
     this.textarea.value = this.value;
   }
 
+  @Watch('required')
+  handleRequiredPropChange() {
+    this.updateFormValidity();
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
@@ -233,6 +244,18 @@ export class BqTextarea {
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
+
+  formAssociatedCallback() {
+    this.setFormValue(this.value);
+    this.updateFormValidity();
+  }
+
+  formResetCallback() {
+    this.clearSelection();
+    // Reset the form validity state
+    this.internals.setFormValue(undefined);
+    this.internals.setValidity({});
+  }
 
   // Listeners
   // ==============
@@ -276,6 +299,8 @@ export class BqTextarea {
 
     if (!isHTMLElement(ev.target, 'textarea')) return;
     this.value = ev.target.value;
+    this.setFormValue(this.value);
+    this.updateFormValidity();
 
     this.bqChange.emit({ value: this.value, el: this.el });
   };
@@ -312,6 +337,45 @@ export class BqTextarea {
 
   private handleHelperTextSlotChange = () => {
     this.hasHelperText = hasSlotContent(this.helperTextElem);
+  };
+
+  private setFormValue = (value: string) => {
+    console.log('setFormValue', value);
+    const textareaValue = value ? value : '';
+    this.internals?.setFormValue(textareaValue, `${this.value}`);
+  };
+
+  private updateFormValidity = () => {
+    const { formValidationMessage, internals, required, value, textarea } = this;
+
+    // Clear the validity state
+    internals?.states.clear();
+
+    if (required && (!value || value.trim() === '')) {
+      // Set validity state to invalid
+      internals?.states.add('invalid');
+      internals?.setValidity({ valueMissing: true }, formValidationMessage, textarea);
+
+      // Update validationStatus to 'error' when required and empty
+      this.validationStatus = 'error';
+      return;
+    }
+
+    // Set validity state to valid if textarea has value or is not required
+    internals?.states.add('valid');
+    internals?.setValidity({});
+
+    // Update validationStatus to 'success' when valid
+    this.validationStatus = 'success';
+  };
+
+  private clearSelection = () => {
+    const { textarea, internals } = this;
+    textarea.value = '';
+    this.value = textarea.value;
+
+    // Update associated form control value
+    internals.setFormValue(undefined);
   };
 
   // render() function
