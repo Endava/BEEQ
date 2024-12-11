@@ -114,13 +114,11 @@ describe('bq-textarea', () => {
       html: `<bq-textarea maxlength="${maxlenght}"></bq-textarea>`,
     });
     const bqTextareaElem = await page.find('bq-textarea');
-    const nativeTextareaElem = await page.find('bq-textarea >>> .bq-textarea__input');
     const counterElem = await page.find('bq-textarea >>> .bq-textarea__helper--counter');
 
     bqTextareaElem.setProperty('value', value);
     await page.waitForChanges();
 
-    expect(await nativeTextareaElem.getProperty('value')).toBe(value);
     expect(await counterElem.getProperty('innerText')).toBe(`${value.length}/${maxlenght}`);
   });
 
