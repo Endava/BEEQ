@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
 import { TSliderType, TSliderValue } from './bq-slider.types';
 import { clamp, debounce, isNil, isString, TDebounce } from '../../shared/utils';
@@ -51,6 +51,7 @@ import { clamp, debounce, isNil, isString, TDebounce } from '../../shared/utils'
 @Component({
   tag: 'bq-slider',
   styleUrl: './scss/bq-slider.scss',
+  formAssociated: true,
   shadow: {
     delegatesFocus: true,
   },
@@ -70,6 +71,7 @@ export class BqSlider {
   // Reference to host HTML element
   // ===================================
 
+  @AttachInternals() internals!: ElementInternals;
   @Element() el!: HTMLBqSliderElement;
 
   // State() variables
@@ -108,6 +110,9 @@ export class BqSlider {
 
   /** A number representing the min value of the slider. */
   @Prop({ reflect: true }) min = 0;
+
+  /** Name of the form control. Submitted with the form as part of a name/value pair */
+  @Prop({ reflect: true }) name: string;
 
   /**
    * A number representing the step of the slider.
@@ -176,10 +181,6 @@ export class BqSlider {
   // Ordered by their natural call order
   // =====================================
 
-  connectedCallback() {
-    this.init();
-  }
-
   componentWillLoad() {
     this.init();
   }
@@ -190,6 +191,10 @@ export class BqSlider {
 
   componentDidUpdate() {
     this.runUpdates();
+  }
+
+  formAssociatedCallback() {
+    this.internals?.setFormValue(`${this.value}`);
   }
 
   // Listeners
@@ -258,7 +263,9 @@ export class BqSlider {
 
     // Sync the prop value.
     // This will trigger the `@Watch('value')` method and emit the `bqChange` event.
-    this.value = this.isRangeType ? [this.minValue, this.maxValue] : this.minValue;
+    const { internals, isRangeType, maxValue, minValue } = this;
+    this.value = isRangeType ? [minValue, maxValue] : minValue;
+    internals?.setFormValue(isRangeType ? JSON.stringify(this.value) : this.value.toString());
   };
 
   private calculatePercent = (value: number) => {
@@ -385,6 +392,7 @@ export class BqSlider {
         disabled={this.disabled}
         min={this.min}
         max={this.max}
+        name={this.name}
         step={this.step}
         ref={refCallback}
         onInput={(ev) => this.handleInputChange(type, ev)}

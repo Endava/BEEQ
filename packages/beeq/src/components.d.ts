@@ -2193,6 +2193,10 @@ export namespace Components {
          */
         "min": number;
         /**
+          * Name of the form control. Submitted with the form as part of a name/value pair
+         */
+        "name": string;
+        /**
           * A number representing the step of the slider. ⚠️ Please notice that the value (or list of values if the slider type is `range`) will be rounded to the nearest multiple of `step`.
          */
         "step": number;
@@ -7417,6 +7421,10 @@ declare namespace LocalJSX {
           * A number representing the min value of the slider.
          */
         "min"?: number;
+        /**
+          * Name of the form control. Submitted with the form as part of a name/value pair
+         */
+        "name"?: string;
         /**
           * Handler to be called when the slider loses focus
          */

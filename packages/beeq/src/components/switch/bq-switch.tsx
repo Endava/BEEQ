@@ -174,7 +174,6 @@ export class BqSwitch {
   }
 
   formAssociatedCallback() {
-    console.log('formAssociatedCallback...');
     this.setFormValue(this.checked);
     this.updateFormValidity();
   }
