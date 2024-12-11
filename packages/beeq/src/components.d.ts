@@ -2351,6 +2351,7 @@ export namespace Components {
      * @attr {boolean} background-on-hover - If `true`, a background will be displayed on hover
      * @attr {boolean} checked - It indicates whether if the switch is `ON` by default (when the page loads)
      * @attr {boolean} disabled - If `true`, the switch control will be disabled and no interaction will be allowed
+     * @attr {string} form-validation-message - The native form validation message
      * @attr {boolean} full-width - If `true`, the component will take the full width space available on the parent container
      * @attr {"default" | "icon"} inner-label - It indicates how to to display the on/off marks inside the control, with icons or none (default)
      * @attr {"start" | "end" | "center" | "space-between" | "space-around" | "space-evenly"} justify-content - It defines how to distribute the space between and around the control and the label text
@@ -2379,6 +2380,10 @@ export namespace Components {
           * If true, the switch control will be disabled and no interaction will be allowed
          */
         "disabled"?: boolean;
+        /**
+          * The native form validation message
+         */
+        "formValidationMessage"?: string;
         /**
           * If true, the component will take the full width space available on the parent container
          */
@@ -4710,6 +4715,7 @@ declare global {
      * @attr {boolean} background-on-hover - If `true`, a background will be displayed on hover
      * @attr {boolean} checked - It indicates whether if the switch is `ON` by default (when the page loads)
      * @attr {boolean} disabled - If `true`, the switch control will be disabled and no interaction will be allowed
+     * @attr {string} form-validation-message - The native form validation message
      * @attr {boolean} full-width - If `true`, the component will take the full width space available on the parent container
      * @attr {"default" | "icon"} inner-label - It indicates how to to display the on/off marks inside the control, with icons or none (default)
      * @attr {"start" | "end" | "center" | "space-between" | "space-around" | "space-evenly"} justify-content - It defines how to distribute the space between and around the control and the label text
@@ -7586,6 +7592,7 @@ declare namespace LocalJSX {
      * @attr {boolean} background-on-hover - If `true`, a background will be displayed on hover
      * @attr {boolean} checked - It indicates whether if the switch is `ON` by default (when the page loads)
      * @attr {boolean} disabled - If `true`, the switch control will be disabled and no interaction will be allowed
+     * @attr {string} form-validation-message - The native form validation message
      * @attr {boolean} full-width - If `true`, the component will take the full width space available on the parent container
      * @attr {"default" | "icon"} inner-label - It indicates how to to display the on/off marks inside the control, with icons or none (default)
      * @attr {"start" | "end" | "center" | "space-between" | "space-around" | "space-evenly"} justify-content - It defines how to distribute the space between and around the control and the label text
@@ -7614,6 +7621,10 @@ declare namespace LocalJSX {
           * If true, the switch control will be disabled and no interaction will be allowed
          */
         "disabled"?: boolean;
+        /**
+          * The native form validation message
+         */
+        "formValidationMessage"?: string;
         /**
           * If true, the component will take the full width space available on the parent container
          */
@@ -9454,6 +9465,7 @@ declare module "@stencil/core" {
              * @attr {boolean} background-on-hover - If `true`, a background will be displayed on hover
              * @attr {boolean} checked - It indicates whether if the switch is `ON` by default (when the page loads)
              * @attr {boolean} disabled - If `true`, the switch control will be disabled and no interaction will be allowed
+             * @attr {string} form-validation-message - The native form validation message
              * @attr {boolean} full-width - If `true`, the component will take the full width space available on the parent container
              * @attr {"default" | "icon"} inner-label - It indicates how to to display the on/off marks inside the control, with icons or none (default)
              * @attr {"start" | "end" | "center" | "space-between" | "space-around" | "space-evenly"} justify-content - It defines how to distribute the space between and around the control and the label text

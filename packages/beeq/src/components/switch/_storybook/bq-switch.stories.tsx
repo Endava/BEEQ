@@ -17,6 +17,7 @@ const meta: Meta = {
     'background-on-hover': { control: 'boolean' },
     checked: { control: 'boolean' },
     disabled: { control: 'boolean' },
+    'form-validation-message': { control: 'text' },
     'full-width': { control: 'boolean' },
     'inner-label': { control: 'inline-radio', options: [...SWITCH_INNER_LABEL] },
     'justify-content': { control: 'select', options: [...SWITCH_JUSTIFY_CONTENT] },
@@ -35,6 +36,7 @@ const meta: Meta = {
     'background-on-hover': false,
     checked: false,
     disabled: false,
+    'form-validation-message': undefined,
     'full-width': false,
     'inner-label': 'default',
     'justify-content': 'start',
@@ -55,6 +57,7 @@ const Template = (args: Args) => html`
     ?background-on-hover=${args['background-on-hover']}
     ?checked=${args.checked}
     ?disabled=${args.disabled}
+    form-validation-message=${ifDefined(args['form-validation-message'])}
     ?full-width=${args['full-width']}
     inner-label=${ifDefined(args['inner-label'])}
     justify-content=${ifDefined(args['justify-content'])}
@@ -145,9 +148,15 @@ export const WithForm: Story = {
         <bq-card style="--bq-card--background: transparent">
           <h4 class="m-be-m">Account settings</h4>
           <form class="flex flex-col gap-y-m" @submit=${handleFormSubmit}>
-            ${Template({ ...args, text: 'Show app list in menu', name: 'showAppList' })}
+            ${Template({
+              ...args,
+              text: 'Show app list in the menu',
+              name: 'showAppList',
+              required: true,
+              'form-validation-message': 'Please enable showing the app list in the menu',
+            })}
             ${Template({ ...args, text: 'Show recently added apps', name: 'showRecentlyApps', checked: true })}
-            ${Template({ ...args, text: 'Show most used apps', name: 'showUsedApps', disabled: true })}
+            ${Template({ ...args, text: 'Show most used apps', name: 'showUsedApps' })}
             ${Template({ ...args, text: 'Show app notifications', name: 'showAppNotifications', checked: true })}
             <div class="flex justify-end gap-x-s">
               <bq-button appearance="secondary" type="reset">Cancel</bq-button>
