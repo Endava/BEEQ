@@ -285,21 +285,50 @@ export const WithForm: Story = {
           <h4 class="m-be-m">Shipping Information</h4>
           <form class="flex flex-col gap-y-m" @submit=${handleFormSubmit} method="post">
             <div class="grid grid-cols-1 gap-y-m sm:grid-cols-2 sm:gap-x-m">
-              <bq-input name="firstName" value="Brad Bernie" autocomplete="given-name" required>
+              <bq-input
+                name="firstName"
+                value="Brad Bernie"
+                autocomplete="given-name"
+                form-validation-message="Please, tell us what's your name"
+                required
+              >
                 <label class="flex flex-grow items-center" slot="label">First Name</label>
               </bq-input>
-              <bq-input name="lastName" value="Beckett" autocomplete="family-name" required>
+              <bq-input
+                name="lastName"
+                value="Beckett"
+                autocomplete="family-name"
+                form-validation-message="Please, tell us your family name"
+                required
+              >
                 <label class="flex flex-grow items-center" slot="label">Last Name</label>
               </bq-input>
             </div>
-            <bq-input name="company" value="Endava" autocomplete="organization" required>
+            <bq-input
+              name="company"
+              value="Endava"
+              autocomplete="organization"
+              form-validation-message="Please, tell us your company name"
+              required
+            >
               <label class="flex flex-grow items-center" slot="label">Company</label>
             </bq-input>
-            <bq-input name="address" value="413 South Ohio Ave" autocomplete="shipping street-address" required>
+            <bq-input
+              name="address"
+              value="413 South Ohio Ave"
+              autocomplete="shipping street-address"
+              form-validation-message="Please, tell us your address"
+              required
+            >
               <label class="flex flex-grow items-center" slot="label">Address</label>
             </bq-input>
             <div class="grid grid-cols-1 gap-y-m sm:grid-cols-2 sm:gap-x-m" autocomplete="address-level2">
-              <bq-input name="city" value="Oklahoma" required>
+              <bq-input
+                name="city"
+                value="Oklahoma"
+                form-validation-message="Please, tell us in which city you live"
+                required
+              >
                 <label class="flex flex-grow items-center" slot="label">City</label>
               </bq-input>
               <bq-select name="country" value="us" autocomplete="country-name">

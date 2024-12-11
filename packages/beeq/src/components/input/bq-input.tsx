@@ -27,6 +27,7 @@ import { debounce, hasSlotContent, isDefined, isHTMLElement, isNil, TDebounce } 
  * @attr {boolean} disabled - Indicates whether the input is disabled or not.
  * @attr {boolean} disable-clear - If true, the clear button won't be displayed.
  * @attr {string} form - The ID of the form that the input field belongs to.
+ * @attr {string} form-validation-message - The native form validation message (mandatory if `required` is set).
  * @attr {string} inputmode - The inputmode attribute specifies what kind of input mechanism would be most helpful for users entering content into the input field.
  * @attr {number | string} max - The maximum value that the input field can accept.
  * @attr {number} maxlength - The maximum number of characters that the input field can accept.
@@ -168,6 +169,9 @@ export class BqInput {
   /** The ID of the form that the input field belongs to. */
   @Prop({ reflect: true }) form?: string;
 
+  /** The native form validation message (mandatory if `required` is set) */
+  @Prop({ mutable: true }) formValidationMessage?: string;
+
   /**
    * The inputmode attribute specifies what kind of input mechanism would be most helpful for users entering content into the input field.
    * This allows a browser to display an appropriate virtual keyboard while editing.
@@ -289,6 +293,11 @@ export class BqInput {
     this.handleValueChange();
   }
 
+  formAssociatedCallback() {
+    this.setFormValue(this.value.toString());
+    this.updateFormValidity();
+  }
+
   formResetCallback() {
     if (isNil(this.value)) return;
 
@@ -329,7 +338,6 @@ export class BqInput {
 
     if (!isHTMLElement(ev.target, 'input')) return;
     this.value = this.type === 'number' ? Number(ev.target.value) : ev.target.value;
-    this.internals.setFormValue(`${this.value}`);
 
     this.debounceBqInput = debounce(() => {
       this.bqInput.emit({ value: this.value, el: this.el });
@@ -342,7 +350,9 @@ export class BqInput {
 
     if (!isHTMLElement(ev.target, 'input')) return;
     this.value = this.type === 'number' ? Number(ev.target.value) : ev.target.value;
-    this.internals.setFormValue(`${this.value}`);
+    // Update form value and validity
+    this.setFormValue(`${this.value}`);
+    this.updateFormValidity();
 
     this.bqChange.emit({ value: this.value, el: this.el });
   };
@@ -350,14 +360,13 @@ export class BqInput {
   private handleClear = () => {
     if (this.disabled) return;
 
-    const { inputElem, internals } = this;
-
+    const { inputElem, setFormValue, updateFormValidity } = this;
     // Clear input element value
     inputElem.value = '';
     this.value = inputElem.value;
-
-    // Update associated form control value
-    internals.setFormValue(undefined);
+    // Set form value to empty string abd update validity
+    setFormValue(this.value);
+    updateFormValidity();
   };
 
   private handleClearClick = (ev: CustomEvent) => {
@@ -371,6 +380,28 @@ export class BqInput {
     bqChange.emit({ value: this.value, el });
     // Refocus input element
     inputElem.focus();
+  };
+
+  private setFormValue = (value?: string) => {
+    this.internals.setFormValue(!isNil(value) ? `${value}` : undefined);
+  };
+
+  private updateFormValidity = () => {
+    const { formValidationMessage, internals, required, value, inputElem } = this;
+
+    // Clear the validity state
+    internals?.states.clear();
+
+    if (required && (!value || value.toString().trim() === '')) {
+      // Set validity state to invalid
+      internals?.states.add('invalid');
+      internals?.setValidity({ valueMissing: true }, formValidationMessage, inputElem);
+      return;
+    }
+
+    // Set validity state to valid if textarea has value or is not required
+    internals?.states.add('valid');
+    internals?.setValidity({});
   };
 
   private handleLabelSlotChange = () => {
