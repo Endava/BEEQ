@@ -27,6 +27,7 @@
   }
 }
 
+.bq-switch--input:not(:disabled):focus,
 .bq-switch--input:not(:disabled):focus-visible {
   ~ .bq-switch--control {
     @apply focus;
