@@ -183,6 +183,7 @@ export class BqSwitch {
     // Reset the form value and validity state
     this.checked = false;
     this.inputElem.removeAttribute('checked');
+    this.internals?.setFormValue(undefined);
     this.updateFormValidity();
   }
 

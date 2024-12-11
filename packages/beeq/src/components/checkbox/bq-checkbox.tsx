@@ -164,6 +164,7 @@ export class BqCheckbox {
     this.checked = false;
     this.indeterminate = false;
     this.inputElem.removeAttribute('checked');
+    this.internals?.setFormValue(undefined);
     this.updateFormValidity();
   }
 
