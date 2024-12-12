@@ -1273,6 +1273,7 @@ export namespace Components {
      * @attr {boolean} disabled - Indicates whether the input is disabled or not.
      * @attr {boolean} disable-clear - If true, the clear button won't be displayed.
      * @attr {string} form - The ID of the form that the input field belongs to.
+     * @attr {string} form-validation-message - The native form validation message (mandatory if `required` is set).
      * @attr {string} inputmode - The inputmode attribute specifies what kind of input mechanism would be most helpful for users entering content into the input field.
      * @attr {number | string} max - The maximum value that the input field can accept.
      * @attr {number} maxlength - The maximum number of characters that the input field can accept.
@@ -1350,6 +1351,10 @@ export namespace Components {
           * The ID of the form that the input field belongs to.
          */
         "form"?: string;
+        /**
+          * The native form validation message (mandatory if `required` is set)
+         */
+        "formValidationMessage"?: string;
         /**
           * The inputmode attribute specifies what kind of input mechanism would be most helpful for users entering content into the input field. This allows a browser to display an appropriate virtual keyboard while editing. Possible values are 'none', 'text', 'decimal', 'numeric', 'tel', 'search', 'email', 'url', and 'date'.
          */
@@ -3926,6 +3931,7 @@ declare global {
      * @attr {boolean} disabled - Indicates whether the input is disabled or not.
      * @attr {boolean} disable-clear - If true, the clear button won't be displayed.
      * @attr {string} form - The ID of the form that the input field belongs to.
+     * @attr {string} form-validation-message - The native form validation message (mandatory if `required` is set).
      * @attr {string} inputmode - The inputmode attribute specifies what kind of input mechanism would be most helpful for users entering content into the input field.
      * @attr {number | string} max - The maximum value that the input field can accept.
      * @attr {number} maxlength - The maximum number of characters that the input field can accept.
@@ -6434,6 +6440,7 @@ declare namespace LocalJSX {
      * @attr {boolean} disabled - Indicates whether the input is disabled or not.
      * @attr {boolean} disable-clear - If true, the clear button won't be displayed.
      * @attr {string} form - The ID of the form that the input field belongs to.
+     * @attr {string} form-validation-message - The native form validation message (mandatory if `required` is set).
      * @attr {string} inputmode - The inputmode attribute specifies what kind of input mechanism would be most helpful for users entering content into the input field.
      * @attr {number | string} max - The maximum value that the input field can accept.
      * @attr {number} maxlength - The maximum number of characters that the input field can accept.
@@ -6511,6 +6518,10 @@ declare namespace LocalJSX {
           * The ID of the form that the input field belongs to.
          */
         "form"?: string;
+        /**
+          * The native form validation message (mandatory if `required` is set)
+         */
+        "formValidationMessage"?: string;
         /**
           * The inputmode attribute specifies what kind of input mechanism would be most helpful for users entering content into the input field. This allows a browser to display an appropriate virtual keyboard while editing. Possible values are 'none', 'text', 'decimal', 'numeric', 'tel', 'search', 'email', 'url', and 'date'.
          */
@@ -8916,6 +8927,7 @@ declare module "@stencil/core" {
              * @attr {boolean} disabled - Indicates whether the input is disabled or not.
              * @attr {boolean} disable-clear - If true, the clear button won't be displayed.
              * @attr {string} form - The ID of the form that the input field belongs to.
+             * @attr {string} form-validation-message - The native form validation message (mandatory if `required` is set).
              * @attr {string} inputmode - The inputmode attribute specifies what kind of input mechanism would be most helpful for users entering content into the input field.
              * @attr {number | string} max - The maximum value that the input field can accept.
              * @attr {number} maxlength - The maximum number of characters that the input field can accept.
