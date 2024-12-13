@@ -1,7 +1,7 @@
 import { Component, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
 import { TSideMenuAppearance, TSideMenuSize } from './bq-side-menu.types';
-import { isHTMLElement } from '../../shared/utils';
+import { isClient, isHTMLElement } from '../../shared/utils';
 
 /**
  *The default side menu serves as a versatile container for organizing and displaying navigation elements,
@@ -116,6 +116,8 @@ export class BqSideMenu {
   // =====================================
 
   componentDidLoad() {
+    if (!isClient()) return;
+
     this.documentBody = document.querySelector('body');
     this.documentBody.classList.add(this.bodyCss);
     this.handleCollapse();

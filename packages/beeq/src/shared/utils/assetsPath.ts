@@ -4,6 +4,8 @@
  */
 import { Env } from '@stencil/core';
 
+import { isClient } from './isClient';
+
 let beeqBasePath: string | undefined;
 const DATA_BEEQ_ATTRIBUTE = 'data-beeq';
 const DEFAULT_SVG_PATH = 'svg';
@@ -46,7 +48,7 @@ export const getBasePath = (subpath: string = ''): string => {
  * @returns The configuration script element or null if not found.
  */
 const findConfigScript = (): HTMLScriptElement | null => {
-  if (typeof window === 'undefined') return null;
+  if (!isClient()) return null;
 
   return document.querySelector(`script[${DATA_BEEQ_ATTRIBUTE}]`);
 };
@@ -56,7 +58,7 @@ const findConfigScript = (): HTMLScriptElement | null => {
  * @returns The fallback script element or null if not found.
  */
 const findFallbackScript = (): HTMLScriptElement | null => {
-  if (typeof window === 'undefined') return null;
+  if (!isClient()) return null;
 
   return document.querySelector(`script[src*="beeq"]`);
 };
@@ -67,7 +69,7 @@ const findFallbackScript = (): HTMLScriptElement | null => {
  * @returns The path of the script element.
  */
 const getScriptPath = (script: HTMLScriptElement): string => {
-  if (typeof window === 'undefined') return '';
+  if (!isClient()) return '';
 
   const src = script.getAttribute('src');
   return src ? src.substring(0, src.lastIndexOf('/')) : '';

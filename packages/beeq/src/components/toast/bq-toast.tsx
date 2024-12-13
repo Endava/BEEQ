@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
 import { TOAST_PLACEMENT, TOAST_TYPE, TToastBorderRadius, TToastPlacement, TToastType } from './bq-toast.types';
-import { debounce, TDebounce, validatePropValue } from '../../shared/utils';
+import { debounce, isClient, TDebounce, validatePropValue } from '../../shared/utils';
 
 const TOAST_PORTAL_SELECTOR = 'bq-toast-portal';
 
@@ -79,8 +79,7 @@ export class BqToast {
   // Inlined decorator, alphabetical order
   // =======================================
 
-  @State() private toastPortal =
-    typeof window !== 'undefined' ? document.querySelector(`.${TOAST_PORTAL_SELECTOR}`) : null;
+  @State() private toastPortal = isClient() ? document.querySelector(`.${TOAST_PORTAL_SELECTOR}`) : null;
 
   // Public Property API
   // ========================
@@ -152,8 +151,10 @@ export class BqToast {
   // =====================================
 
   connectedCallback() {
+    if (!isClient()) return;
+
     const { toastPortal } = this;
-    if (!toastPortal && typeof window !== 'undefined') {
+    if (!toastPortal) {
       this.toastPortal = Object.assign(document.createElement('div'), { className: TOAST_PORTAL_SELECTOR });
     }
   }
@@ -212,6 +213,8 @@ export class BqToast {
   /** This method can be used to display toasts in a fixed-position element that allows for stacking multiple toasts vertically */
   @Method()
   async toast() {
+    if (!isClient()) return;
+
     const { toastPortal } = this;
     if (toastPortal?.parentElement === null) {
       document.body.append(toastPortal);

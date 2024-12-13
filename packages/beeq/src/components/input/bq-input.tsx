@@ -294,7 +294,7 @@ export class BqInput {
   }
 
   formAssociatedCallback() {
-    this.setFormValue(this.value.toString());
+    this.setFormValue(this.value?.toString());
     this.updateFormValidity();
   }
 

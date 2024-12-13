@@ -17,6 +17,7 @@ import { DATE_PICKER_TYPE, DaysOfWeek, TDatePickerType } from './bq-date-picker.
 import { Placement } from '../../services/interfaces';
 import {
   hasSlotContent,
+  isClient,
   isDefined,
   isEventTargetChildOfElement,
   isHTMLElement,
@@ -64,6 +65,7 @@ import { TInputValidation } from '../input/bq-input.types';
  * @attr {0 | 1 | 2 | 3 | 4 | 5 | 6} first-day-of-week - The first day of the week, where Sunday is 0, Monday is 1, etc.
  * @attr {Intl.DateTimeFormatOptions} format-options - The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
  * @attr {string} form - The ID of the form that the Date picker input belongs to.
+ * @attr {string} form-validation-message - The native form validation message (mandatory if `required` is set).
  * @attr {function} is-date-disallowed - A function that takes a date and returns true if the date should not be selectable.
  * @attr {Intl.LocalesArgument} locale - The locale for formatting dates. If not set, will use the browser's locale. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
  * @attr {string} max - The latest date that can be selected.
@@ -226,6 +228,9 @@ export class BqDatePicker {
   /** The ID of the form that the Date picker input belongs to. */
   @Prop({ reflect: true }) form?: string;
 
+  /** The native form validation message (mandatory if `required` is set) */
+  @Prop({ mutable: true }) formValidationMessage?: string;
+
   /** A function that takes a date and returns true if the date should not be selectable */
   @Prop({ reflect: true }) isDateDisallowed?: (date: Date) => boolean;
 
@@ -305,7 +310,9 @@ export class BqDatePicker {
   @Watch('value')
   handleValueChange() {
     const { formatDisplayValue, internals, value } = this;
+
     internals.setFormValue(!isNil(value) ? `${value}` : undefined);
+    this.updateFormValidity();
 
     if (Array.isArray(value)) {
       this.hasValue = value.some((val) => val.length > 0);
@@ -346,8 +353,18 @@ export class BqDatePicker {
   // Ordered by their natural call order
   // =====================================
 
+  async connectedCallback() {
+    if (!isClient()) return;
+
+    await import('cally');
+  }
+
   componentWillLoad() {
     this.handleValueChange();
+  }
+
+  formAssociatedCallback() {
+    this.updateFormValidity();
   }
 
   formResetCallback() {
@@ -558,6 +575,24 @@ export class BqDatePicker {
     }
 
     return dateFormatter.format(new Date(value));
+  };
+
+  private updateFormValidity = () => {
+    const { formValidationMessage, internals, required, value, inputElem } = this;
+
+    // Clear the validity state
+    internals?.states.clear();
+
+    if (required && (!value || value.toString().trim() === '')) {
+      // Set validity state to invalid
+      internals?.states.add('invalid');
+      internals?.setValidity({ valueMissing: true }, formValidationMessage, inputElem);
+      return;
+    }
+
+    // Set validity state to valid if textarea has value or is not required
+    internals?.states.add('valid');
+    internals?.setValidity({});
   };
 
   private get CalendarType() {

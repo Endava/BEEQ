@@ -716,6 +716,7 @@ export namespace Components {
      * @attr {0 | 1 | 2 | 3 | 4 | 5 | 6} first-day-of-week - The first day of the week, where Sunday is 0, Monday is 1, etc.
      * @attr {Intl.DateTimeFormatOptions} format-options - The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
      * @attr {string} form - The ID of the form that the Date picker input belongs to.
+     * @attr {string} form-validation-message - The native form validation message (mandatory if `required` is set).
      * @attr {function} is-date-disallowed - A function that takes a date and returns true if the date should not be selectable.
      * @attr {Intl.LocalesArgument} locale - The locale for formatting dates. If not set, will use the browser's locale. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
      * @attr {string} max - The latest date that can be selected.
@@ -797,6 +798,10 @@ export namespace Components {
           * The ID of the form that the Date picker input belongs to.
          */
         "form"?: string;
+        /**
+          * The native form validation message (mandatory if `required` is set)
+         */
+        "formValidationMessage"?: string;
         /**
           * The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
          */
@@ -3571,6 +3576,7 @@ declare global {
      * @attr {0 | 1 | 2 | 3 | 4 | 5 | 6} first-day-of-week - The first day of the week, where Sunday is 0, Monday is 1, etc.
      * @attr {Intl.DateTimeFormatOptions} format-options - The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
      * @attr {string} form - The ID of the form that the Date picker input belongs to.
+     * @attr {string} form-validation-message - The native form validation message (mandatory if `required` is set).
      * @attr {function} is-date-disallowed - A function that takes a date and returns true if the date should not be selectable.
      * @attr {Intl.LocalesArgument} locale - The locale for formatting dates. If not set, will use the browser's locale. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
      * @attr {string} max - The latest date that can be selected.
@@ -5849,6 +5855,7 @@ declare namespace LocalJSX {
      * @attr {0 | 1 | 2 | 3 | 4 | 5 | 6} first-day-of-week - The first day of the week, where Sunday is 0, Monday is 1, etc.
      * @attr {Intl.DateTimeFormatOptions} format-options - The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
      * @attr {string} form - The ID of the form that the Date picker input belongs to.
+     * @attr {string} form-validation-message - The native form validation message (mandatory if `required` is set).
      * @attr {function} is-date-disallowed - A function that takes a date and returns true if the date should not be selectable.
      * @attr {Intl.LocalesArgument} locale - The locale for formatting dates. If not set, will use the browser's locale. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
      * @attr {string} max - The latest date that can be selected.
@@ -5924,6 +5931,10 @@ declare namespace LocalJSX {
           * The ID of the form that the Date picker input belongs to.
          */
         "form"?: string;
+        /**
+          * The native form validation message (mandatory if `required` is set)
+         */
+        "formValidationMessage"?: string;
         /**
           * The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
          */
@@ -8668,6 +8679,7 @@ declare module "@stencil/core" {
              * @attr {0 | 1 | 2 | 3 | 4 | 5 | 6} first-day-of-week - The first day of the week, where Sunday is 0, Monday is 1, etc.
              * @attr {Intl.DateTimeFormatOptions} format-options - The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
              * @attr {string} form - The ID of the form that the Date picker input belongs to.
+             * @attr {string} form-validation-message - The native form validation message (mandatory if `required` is set).
              * @attr {function} is-date-disallowed - A function that takes a date and returns true if the date should not be selectable.
              * @attr {Intl.LocalesArgument} locale - The locale for formatting dates. If not set, will use the browser's locale. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
              * @attr {string} max - The latest date that can be selected.

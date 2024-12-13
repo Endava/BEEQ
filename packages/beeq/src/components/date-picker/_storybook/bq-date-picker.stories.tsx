@@ -381,9 +381,10 @@ export const WithForm: Story = {
                 <label class="flex flex-grow items-center" slot="label">Passport number</label>
               </bq-input>
               <bq-date-picker
-                name="passportExpDate"
-                value="2024-05-20"
+                name="passportExpiration"
+                value="2034-05-20"
                 placeholder="Select a date"
+                form-validation-message="Please, you must provide your passport expiration date"
                 type="single"
                 required
               >
@@ -393,6 +394,7 @@ export const WithForm: Story = {
             <bq-date-picker
               name="tripDate"
               placeholder="Select a start and end date for your travel"
+              form-validation-message="Please, tell us when you are planning to travel"
               value="2024-12-25/2025-01-10"
               type="range"
               months="2"
