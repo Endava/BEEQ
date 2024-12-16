@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
 import { NOTIFICATION_TYPE, TNotificationBorderRadius, TNotificationType } from './bq-notification.types';
-import { debounce, enter, hasSlotContent, leave, TDebounce, validatePropValue } from '../../shared/utils';
+import { debounce, enter, hasSlotContent, isClient, leave, TDebounce, validatePropValue } from '../../shared/utils';
 
 const NOTIFICATION_PORTAL_SELECTOR = 'bq-notification-portal';
 
@@ -101,8 +101,7 @@ export class BqNotification {
 
   @State() private hasContent = false;
   @State() private hasFooter = false;
-  @State() private notificationPortal =
-    typeof window !== 'undefined' ? document.querySelector(`.${NOTIFICATION_PORTAL_SELECTOR}`) : null;
+  @State() private notificationPortal = isClient() ? document.querySelector(`.${NOTIFICATION_PORTAL_SELECTOR}`) : null;
 
   // Public Property API
   // ========================
@@ -177,8 +176,10 @@ export class BqNotification {
   // =====================================
 
   connectedCallback() {
+    if (!isClient()) return;
+
     const { notificationPortal } = this;
-    if (!notificationPortal && typeof window !== 'undefined') {
+    if (!notificationPortal) {
       this.notificationPortal = Object.assign(document.createElement('div'), {
         className: NOTIFICATION_PORTAL_SELECTOR,
       });
@@ -234,6 +235,8 @@ export class BqNotification {
   /** This method can be used to display notifications in a fixed-position element that allows for stacking multiple notifications vertically */
   @Method()
   async toast() {
+    if (!isClient()) return;
+
     const { notificationPortal } = this;
     if (notificationPortal?.parentElement === null) {
       document.body.append(notificationPortal);

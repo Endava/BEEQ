@@ -5,6 +5,7 @@ export * from './debounce';
 export * from './event';
 export * from './getNextElement';
 export * from './getRandom';
+export * from './isClient';
 export * from './isDefined';
 export * from './isEmpty';
 export * from './isHTMLElement';

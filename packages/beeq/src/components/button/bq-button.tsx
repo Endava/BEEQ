@@ -11,7 +11,7 @@ import {
   TButtonType,
   TButtonVariant,
 } from './bq-button.types';
-import { hasSlotContent, isDefined, isNil, validatePropValue } from '../../shared/utils';
+import { hasSlotContent, isClient, isDefined, isNil, validatePropValue } from '../../shared/utils';
 
 /**
  * Buttons are designed for users to take action on a page or a screen.
@@ -239,7 +239,7 @@ export class BqButton {
   });
 
   private submitAssociatedForm = (form: HTMLFormElement) => {
-    if (typeof window === 'undefined' || isNil(form)) return;
+    if (!isClient() || isNil(form)) return;
 
     const btn = document.createElement('button');
     btn.type = this.type;
