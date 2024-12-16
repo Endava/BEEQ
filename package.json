@@ -139,7 +139,7 @@
     "lit-html": "3.2.1",
     "nanospinner": "1.2.0",
     "ng-packagr": "18.2.1",
-    "ngx-deploy-npm": "8.3.0",
+    "ngx-deploy-npm": "8.3.1",
     "npm-run-all": "4.1.5",
     "nx": "20.2.2",
     "nx-stylelint": "18.0.0",
