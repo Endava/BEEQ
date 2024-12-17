@@ -23,22 +23,6 @@
       "options": {
         "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/package.json", "{projectRoot}/project.json"]
       }
-    },
-    "publish": {
-      "executor": "ngx-deploy-npm:deploy",
-      "options": {
-        "access": "public",
-        "distFolderPath": "dist/beeq-react",
-        "tag": "latest"
-      }
-    },
-    "publish-beta": {
-      "executor": "ngx-deploy-npm:deploy",
-      "options": {
-        "access": "public",
-        "distFolderPath": "dist/beeq-react",
-        "tag": "beta"
-      }
     }
   }
 }

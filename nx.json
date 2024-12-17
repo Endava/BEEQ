@@ -70,6 +70,46 @@
       "inputs": ["default", "{workspaceRoot}/eslint.config.js"]
     }
   },
+  "release": {
+    "changelog": {
+      "workspaceChangelog": {
+        "createRelease": "github",
+        "renderOptions": {
+          "authors": true,
+          "mapAuthorsToGitHubUsernames": true,
+          "commitReferences": true,
+          "versionTitleDate": true
+        }
+      }
+    },
+    "conventionalCommits": {
+      "types": {
+        "feat": { "changelog": { "title": "Features ⚡️" } },
+        "fix": { "changelog": { "title": "Bug Fixes 🐞", "semverBump": "patch" } },
+        "test": { "changelog": { "title": "Test 🧪" }, "semverBump": "patch" },
+        "docs": { "changelog": { "title": "Documentation 📚", "semverBump": "patch" } },
+        "style": { "changelog": { "title": "Style 🎨", "semverBump": "patch" } },
+        "chore": { "changelog": { "title": "Chore ⚙️", "semverBump": "patch" } },
+        "perf": { "changelog": { "title": "Performance ⌛️", "semverBump": "patch" } },
+        "refactor": { "changelog": { "title": "Refactor 🛠️", "semverBump": "patch" } },
+        "release": false
+      }
+    },
+    "git": {
+      "commit": true,
+      "commitMessage": "release: {version} [skip ci]",
+      "stageChanges": true,
+      "tag": true
+    },
+    "projects": ["packages/*"],
+    "releaseTagPattern": "v{version}",
+    "version": {
+      "conventionalCommits": true,
+      "generatorOptions": {
+        "versionPrefix": "^"
+      }
+    }
+  },
   "nxCloudAccessToken": "ZTI2Yzg0YzktODZiMi00Yjg2LTlhMmMtYWI3NDhkODkzZjlmfHJlYWQtb25seQ==",
   "generators": {
     "@nx/react": {

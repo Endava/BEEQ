@@ -36,22 +36,6 @@
       "options": {
         "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/package.json", "{projectRoot}/project.json"]
       }
-    },
-    "publish": {
-      "executor": "ngx-deploy-npm:deploy",
-      "options": {
-        "access": "public",
-        "distFolderPath": "dist/beeq-angular",
-        "tag": "latest"
-      }
-    },
-    "publish-beta": {
-      "executor": "ngx-deploy-npm:deploy",
-      "options": {
-        "access": "public",
-        "distFolderPath": "dist/beeq-angular",
-        "tag": "beta"
-      }
     }
   }
 }
