@@ -106,6 +106,7 @@
     "version": {
       "conventionalCommits": true,
       "generatorOptions": {
+        "skipLockFileUpdate": true,
         "versionPrefix": "^"
       }
     }
