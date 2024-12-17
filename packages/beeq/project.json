@@ -183,22 +183,6 @@
       "options": {
         "command": "cp CHANGELOG.md {projectRoot}/src/_storybook"
       }
-    },
-    "publish": {
-      "executor": "ngx-deploy-npm:deploy",
-      "options": {
-        "access": "public",
-        "distFolderPath": "dist/beeq",
-        "tag": "latest"
-      }
-    },
-    "publish-beta": {
-      "executor": "ngx-deploy-npm:deploy",
-      "options": {
-        "access": "public",
-        "distFolderPath": "dist/beeq",
-        "tag": "beta"
-      }
     }
   }
 }

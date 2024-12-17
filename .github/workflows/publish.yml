@@ -6,6 +6,7 @@ on:
 
 env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 
 permissions:
@@ -28,7 +29,7 @@ jobs:
       - name: 🔍 Check GH_TOKEN
         uses: ./.github/actions/check-token
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: $GH_TOKEN
 
       - name: 🛠 Setup Volta
         uses: volta-cli/action@v4
@@ -42,13 +43,13 @@ jobs:
 
       - name: 👀 Check NPM credentials
         run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
+          echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" >> .npmrc
           npm whoami
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: 🚀 Publish BEEQ to NPM registry
-        run: npx nx run-many -t publish -p tag:publishable --parallel=1 --output-style=stream-without-prefixes
+        run: npx nx release publish --parallel=5 --output-style=stream
+        env:
+          NPM_CONFIG_PROVENANCE: true
 
       - name: 🚚 Deploy BEEQ Storybook to GitHub Pages
         uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3

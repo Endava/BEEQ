@@ -1,11 +1,3 @@
-# Changelog
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)
-and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
-
-
 ## [1.7.0](https://github.com/Endava/BEEQ/compare/v1.6.1...v1.7.0) (2024-08-05)
 
 

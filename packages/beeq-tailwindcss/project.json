@@ -32,14 +32,6 @@
       "options": {
         "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/package.json", "{projectRoot}/project.json"]
       }
-    },
-    "publish": {
-      "executor": "ngx-deploy-npm:deploy",
-      "options": {
-        "access": "public",
-        "distFolderPath": "dist/beeq-tailwindcss",
-        "tag": "latest"
-      }
     }
   }
 }
