@@ -1,4 +1,19 @@
-## 1.8.0 (2024-12-17)
+## 1.8.1 (2024-12-18)
+
+### Chore ⚙️
+
+- **CI:** packages files not being published to NPM with `nx release publish` ([37fb77c](https://github.com/Endava/BEEQ/commit/37fb77c))
+- **deps:** update dependency globals to v15.13.0 ([#1383](https://github.com/Endava/BEEQ/pull/1383))
+- **deps:** update dependency puppeteer to v23.10.4 ([#1384](https://github.com/Endava/BEEQ/pull/1384))
+- **deps:** update dependency vite to v5.4.11 ([#1385](https://github.com/Endava/BEEQ/pull/1385))
+- **deps:** update dependency vue to v3.5.13 ([#1386](https://github.com/Endava/BEEQ/pull/1386))
+- **deps:** update dependency chromatic to v11.20.2 ([#1387](https://github.com/Endava/BEEQ/pull/1387))
+
+### ❤️ Thank You
+
+- Dabiel González Ramos
+
+## [1.8.0](https://github.com/Endava/BEEQ/compare/v1.7.0...v1.8.0) (2024-12-17)
 
 ### Features ⚡️
 
