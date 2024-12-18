@@ -1,0 +1,34 @@
+name: Update Storybook (via GitHub Pages)
+
+on: workflow_dispatch
+
+env:
+  NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  main:
+    name: 📘 Storybook deploy
+    runs-on: ubuntu-latest
+    env:
+      NX_BRANCH: ${{ github.head_ref || github.ref_name }}
+    steps:
+      - name: 🛎 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🛠 Setup Volta
+        uses: volta-cli/action@v4
+
+      - name: 🚚 Deploy BEEQ Storybook to GitHub Pages
+        uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
+        with:
+          build_command: npm run build
+          checkout: false
+          install_command: npm ci
+          path: ./dist/storybook/beeq

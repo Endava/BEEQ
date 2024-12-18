@@ -1,4 +1,4 @@
-## 1.8.1 (2024-12-18)
+## [1.8.1](https://github.com/Endava/BEEQ/compare/v1.8.0...v1.8.1) (2024-12-18)
 
 ### Chore ⚙️
 
