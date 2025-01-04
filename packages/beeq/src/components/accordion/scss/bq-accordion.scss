@@ -107,18 +107,15 @@
   }
 }
 
-/* stylelint-disable-next-line selector-pseudo-element-no-unknown */
 .bq-accordion::details-content {
   @apply block overflow-hidden transition-[block-size,content-visibility] duration-300 ease-in-out bs-0 [transition-behavior:allow-discrete];
 }
 
-/* stylelint-disable-next-line selector-pseudo-element-no-unknown */
 .bq-accordion[open]::details-content {
   /* block-size: auto is just a fallback for browsers that don't support the calc-size() function */
   @apply bs-auto;
 }
 
-/* stylelint-disable-next-line selector-pseudo-element-no-unknown */
 .bq-accordion[open]:not(.no-animation)::details-content {
   @apply supports-[block-size:calc-size(auto)]:bs-[calc-size(auto)];
 }
