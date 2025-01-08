@@ -174,7 +174,7 @@ export class BqAccordion {
     } else {
       this.accordion?.close();
     }
-    if (!this.isCssCalcSizeSupported) return;
+    if (!this.isCssInterpolateSizeSupported) return;
 
     // NOTE: This is a workaround to trigger the transitionEnd event
     // when the open/close animation is handled via CSS instead of JS
@@ -192,10 +192,10 @@ export class BqAccordion {
 
   @Watch('noAnimation')
   handleJsAnimation() {
-    if (this.isCssCalcSizeSupported) return;
+    if (this.isCssInterpolateSizeSupported) return;
 
     console.warn(
-      `[bq-accordion] calc-size() is not supported and animation will be set through JS
+      `[bq-accordion] animating to/from intrinsic sizing keywords (interpolate-size: allow-keywords) is not supported and animation will be set through JS.
         For vertical layout, consider using the 'noAnimation' prop ('no-animation' attribute) to disable it`,
     );
     this.accordion = !this.noAnimation ? new Accordion(this.detailsElem) : null;
@@ -298,8 +298,8 @@ export class BqAccordion {
     return this.expanded && !this.disabled;
   }
 
-  private get isCssCalcSizeSupported() {
-    return window.CSS?.supports('(block-size: calc-size(auto))');
+  private get isCssInterpolateSizeSupported() {
+    return window.CSS?.supports('(interpolate-size: allow-keywords)');
   }
 
   // render() function
