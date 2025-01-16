@@ -1,6 +1,7 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 
 import mdx from './bq-accordion.mdx';
 import { ACCORDION_APPEARANCE, ACCORDION_SIZE } from '../bq-accordion.types';
@@ -62,7 +63,7 @@ const Template = (args: Args) => html`
     @bqClose=${args.bqClose}
     @bqAfterClose=${args.bqAfterClose}
   >
-    ${ifDefined(args.prefix) ? args.prefix : nothing}
+    ${ifDefined(args.prefix) ? unsafeHTML(args.prefix) : nothing}
     <span slot="header">${args.header}</span>
     <div>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque magnam corporis perferendis, architecto vel ullam
@@ -71,7 +72,7 @@ const Template = (args: Args) => html`
     </div>
     ${ifDefined(args.suffix) ? args.suffix : nothing}
     <!-- Custom collapse/expand icon -->
-    ${ifDefined(args.collapse) ? args.collapse : nothing}
+    ${ifDefined(args.collapse) ? unsafeHTML(args.collapse) : nothing}
   </bq-accordion>
 `;
 
@@ -100,7 +101,7 @@ export const Prefix: Story = {
     prefix: { control: 'text', table: { disable: true } },
   },
   args: {
-    prefix: html`<bq-icon name="heart" slot="prefix"></bq-icon>`,
+    prefix: `<bq-icon name="heart" slot="prefix"></bq-icon>`,
   },
 };
 
@@ -110,7 +111,7 @@ export const Avatar: Story = {
     prefix: { control: 'text', table: { disable: true } },
   },
   args: {
-    prefix: html`
+    prefix: `
       <bq-avatar
         size="xsmall"
         image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
@@ -126,7 +127,7 @@ export const Suffix: Story = {
     suffix: { control: 'text', table: { disable: true } },
   },
   args: {
-    suffix: html`<bq-icon name="gear" slot="suffix"></bq-icon>`,
+    suffix: `<bq-icon name="gear" slot="suffix"></bq-icon>`,
   },
 };
 
@@ -136,7 +137,7 @@ export const CustomCollapseExpand: Story = {
     collapse: { control: 'text', table: { disable: true } },
   },
   args: {
-    collapse: html`<bq-icon name="caret-up" slot="expand"></bq-icon>`,
+    collapse: `<bq-icon name="caret-up" slot="expand"></bq-icon>`,
     rotate: true,
   },
 };

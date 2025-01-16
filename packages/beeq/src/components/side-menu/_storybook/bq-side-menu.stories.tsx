@@ -1,5 +1,7 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html, nothing } from 'lit-html';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 
 import mdx from './bq-side-menu.mdx';
 import { SIDE_MENU_APPEARANCE, SIDE_MENU_SIZE } from '../bq-side-menu.types';
@@ -36,7 +38,7 @@ type Story = StoryObj;
 const Template = (args: Args) => html`
   <bq-side-menu
     appearance=${args.appearance}
-    collapse=${args.collapse}
+    ?collapse=${args.collapse}
     size=${args.size}
     @bqCollapse=${args.bqCollapse}
     @bqSelect=${args.bqSelect}
@@ -85,7 +87,7 @@ const Template = (args: Args) => html`
       <bq-icon name="gear" slot="prefix"></bq-icon>
       Settings
     </bq-side-menu-item>
-    ${args.footerContent}
+    ${ifDefined(args.footerContent) ? unsafeHTML(args.footerContent) : nothing}
   </bq-side-menu>
 
   <main class="grid grid-cols-1 p-m">
@@ -125,7 +127,7 @@ export const SmallSize: Story = {
 export const WithFooter: Story = {
   render: Template,
   args: {
-    footerContent: html`
+    footerContent: `
       <div class="" slot="footer">
         <bq-button appearance="text" slot="footer">
           <bq-icon name="bell"></bq-icon>

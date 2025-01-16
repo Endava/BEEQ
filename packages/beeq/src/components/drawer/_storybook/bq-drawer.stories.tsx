@@ -1,6 +1,7 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 
 import mdx from './bq-drawer.mdx';
 import { DRAWER_POSITIONS } from '../bq-drawer.types';
@@ -71,7 +72,7 @@ const Template = (args: Args) => {
       @bqAfterOpen=${args.bqAfterOpen}
       @bqAfterClose=${args.bqAfterClose}
     >
-      ${ifDefined(args.customCloseIcon) ? args.customCloseIcon : nothing}
+      ${ifDefined(args.customCloseIcon) ? unsafeHTML(args.customCloseIcon) : nothing}
       <div class="flex gap-xs" slot="title">
         <bq-icon name="user-circle" weight="bold" role="img" title="Info"></bq-icon>
         Title
@@ -130,11 +131,13 @@ export const WithCustomCloseIcon: Story = {
   render: Template,
   args: {
     'enable-backdrop': true,
-    customCloseIcon: html`<bq-icon
-      name="arrow-fat-lines-right"
-      role="img"
-      title="Close"
-      slot="button-close"
-    ></bq-icon>`,
+    customCloseIcon: `
+      <bq-icon
+        name="arrow-fat-lines-right"
+        role="img"
+        title="Close"
+        slot="button-close"
+      ></bq-icon>
+    `,
   },
 };
