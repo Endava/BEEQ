@@ -117,7 +117,7 @@
     "custom-element-vs-code-integration": "1.4.1",
     "decompress": "4.2.1",
     "eslint": "9.17.0",
-    "eslint-config-prettier": "9.1.0",
+    "eslint-config-prettier": "10.0.1",
     "eslint-import-resolver-typescript": "3.7.0",
     "eslint-plugin-import-x": "4.6.1",
     "eslint-plugin-jsx-a11y": "6.10.2",
@@ -171,6 +171,7 @@
   "overrides": {
     "@custom-elements-manifest/analyzer": "$@custom-elements-manifest/analyzer",
     "eslint": "9.17.0",
+    "eslint-config-prettier": "$eslint-config-prettier",
     "vite": "$vite"
   },
   "volta": {
