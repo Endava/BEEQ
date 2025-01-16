@@ -1,6 +1,7 @@
 import { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 
 import mdx from './bq-steps.mdx';
 import { STEPS_SIZE, STEPS_TYPE } from '../bq-steps.types';
@@ -30,7 +31,7 @@ export default meta;
 const Template = (args: Args) => {
   return html`
     <bq-steps divider-color=${args['divider-color']} type=${args.type} size=${args.size}>
-      ${ifDefined(args.children) ? args.children : nothing}
+      ${ifDefined(args.children) ? unsafeHTML(args.children) : nothing}
     </bq-steps>
   `;
 };
@@ -39,7 +40,7 @@ export const Dots: StoryObj = {
   render: Template,
   args: {
     type: 'dot',
-    children: html`
+    children: `
       <bq-step-item status="default">
         <bq-icon slot="prefix" name="circle"></bq-icon>
         <span>Title</span>
@@ -73,7 +74,7 @@ export const Icons: StoryObj = {
   render: Template,
   args: {
     type: 'icon',
-    children: html`
+    children: `
       <bq-step-item status="completed">
         <bq-icon slot="prefix" name="airplane-takeoff"></bq-icon>
         <span>Flight</span>
@@ -102,7 +103,7 @@ export const Numbers: StoryObj = {
   render: Template,
   args: {
     type: 'numeric',
-    children: html`
+    children: `
       <bq-step-item status="default">
         <span slot="prefix">1</span>
         <span>Title</span>

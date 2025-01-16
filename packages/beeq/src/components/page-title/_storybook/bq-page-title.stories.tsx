@@ -1,5 +1,6 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html, nothing } from 'lit-html';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 
 import mdx from './bq-page-title.mdx';
 
@@ -44,7 +45,7 @@ const Template = (args: Args) => {
           `
         : nothing}
       ${args.title} ${args['sub-title'] ? html`<div slot="sub-title">${args['sub-title']}</div>` : nothing}
-      ${args.actions ? html`<div class="${actionsSlotClass}" slot="suffix">${args.actions}</div>` : nothing}
+      ${args.actions ? html`<div class="${actionsSlotClass}" slot="suffix">${unsafeHTML(args.actions)}</div>` : nothing}
     </bq-page-title>
   `;
 };
@@ -82,9 +83,9 @@ export const TitleBackActions: Story = {
     'have-back-navigation': true,
     title: 'Title',
     'sub-title': 'Sub-title',
-    actions: html`
-      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="pencil-simple" weight="bold"></bq-icon>
-      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="download-simple" weight="bold"></bq-icon>
+    actions: `
+      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="pencil-simple-bold"></bq-icon>
+      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="download-simple-bold"></bq-icon>
     `,
     'custom-style': true,
   },
@@ -97,9 +98,9 @@ export const TitleBackActionsCustomDefault: Story = {
     'have-back-navigation': true,
     title: 'Title',
     'sub-title': 'Sub-title',
-    actions: html`
-      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="pencil-simple" weight="bold"></bq-icon>
-      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="download-simple" weight="bold"></bq-icon>
+    actions: `
+      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="pencil-simple-bold"></bq-icon>
+      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="download-simple-bold"></bq-icon>
     `,
   },
 };
@@ -112,9 +113,9 @@ export const TitleBackActionsCustom: Story = {
     'have-back-navigation': true,
     title: 'Title',
     'sub-title': 'Sub-title',
-    actions: html`
-      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="pencil-simple" weight="bold"></bq-icon>
-      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="download-simple" weight="bold"></bq-icon>
+    actions: `
+      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="pencil-simple-bold"></bq-icon>
+      <bq-icon class="p-b-xs2 p-i-xs2" color="text--brand" name="download-simple-bold"></bq-icon>
     `,
     'custom-style': true,
   },

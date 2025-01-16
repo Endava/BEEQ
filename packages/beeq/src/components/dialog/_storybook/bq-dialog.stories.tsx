@@ -1,6 +1,7 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 
 import mdx from './bq-dialog.mdx';
 import { DIALOG_BORDER_RADIUS, DIALOG_FOOTER_APPEARANCE, DIALOG_SIZE } from '../bq-dialog.types';
@@ -75,7 +76,7 @@ const Template = (args: Args) => {
       @bqAfterOpen=${args.bqAfterOpen}
       @bqAfterClose=${args.bqAfterClose}
     >
-      ${ifDefined(args.customClose)}
+      ${ifDefined(args.customClose) ? unsafeHTML(args.customClose) : nothing}
       <h5 class="bold flex items-center gap-s" slot="title">
         <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
         Title
@@ -137,7 +138,7 @@ export const CustomCloseButton: Story = {
   render: Template,
   args: {
     open: true,
-    customClose: html`
+    customClose: `
       <style>
         bq-button[slot='button-close']::part(button) {
           border-radius: var(--bq-radius--full);

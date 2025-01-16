@@ -1,6 +1,7 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
-import { html } from 'lit-html';
+import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 
 import mdx from './bq-card.mdx';
 import { CARD_BORDER_RADIUS, CARD_TYPE } from '../bq-card.types';
@@ -30,18 +31,20 @@ type Story = StoryObj;
 
 const Template = (args: Args) => html`
   <div class="max-w-sm">
-    <bq-card border=${args.border} type=${ifDefined(args.type)}>${ifDefined(args.content)}</bq-card>
+    <bq-card border=${args.border} type=${ifDefined(args.type)}>
+      ${ifDefined(args.content) ? unsafeHTML(args.content) : nothing}
+    </bq-card>
   </div>
 `;
 
 export const Default: Story = {
   render: Template,
   args: {
-    content: html`
+    content: `
       <div class="flex flex-col gap-6">
         <div>
           <div class="flex flex-row items-center gap-xs2">
-            <span class="text-text-secondary">Title</span> <bq-icon color="text--brand" size="16" name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
+            <span class="text-text-secondary">Title</span> <bq-icon color="text--brand" size="16" name="star" weight="bold" part="icon"/></bq-icon>
           </div>
           <h4>194</h4>
         </div>
@@ -61,25 +64,25 @@ export const Default: Story = {
 export const FeatureHighlights: Story = {
   render: Template,
   args: {
-    content: html`
+    content: `
       <div class="flex flex-col font-medium gap-m">
         <h6 class="text-m font-medium">Title</h6>
         <div class="flex flex-col gap-s">
           <div class="flex flex-row items-center gap-xs">
-            <bq-icon name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
-            Lorem Ipsum is simply dummy text 
+            <bq-icon name="star-bold" part="icon"/></bq-icon>
+            Lorem Ipsum is simply dummy text
           </div>
           <div class="flex flex-row items-center gap-xs">
-            <bq-icon name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
-            Lorem Ipsum is simply dummy text 
+            <bq-icon name="star-bold" part="icon"/></bq-icon>
+            Lorem Ipsum is simply dummy text
           </div>
           <div class="flex flex-row items-center gap-xs">
-            <bq-icon name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
-            Lorem Ipsum is simply dummy text 
+            <bq-icon name="star-bold" part="icon"/></bq-icon>
+            Lorem Ipsum is simply dummy text
           </div>
           <div class="flex flex-row items-center gap-xs">
-            <bq-icon name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
-            Lorem Ipsum is simply dummy text 
+            <bq-icon name="star-bold" part="icon"/></bq-icon>
+            Lorem Ipsum is simply dummy text
           </div>
         </div>
       </div>
@@ -90,12 +93,12 @@ export const FeatureHighlights: Story = {
 export const PerformanceOverview: Story = {
   render: Template,
   args: {
-    content: html`
+    content: `
       <div class="flex flex-row gap-m">
-        <bq-icon color="text--brand" size="56" name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
+        <bq-icon color="text--brand" size="56" name="star-bold" part="icon"/></bq-icon>
         <div>
           <div class="flex flex-row items-center gap-xs2">
-            <span class="text-text-secondary">Title</span> <bq-icon color="text--brand" size="16" name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
+            <span class="text-text-secondary">Title</span> <bq-icon color="text--brand" size="16" name="star" weight="bold" part="icon"/></bq-icon>
           </div>
           <div class="flex items-end gap-xs">
             <h4>194</h4>
@@ -111,9 +114,9 @@ export const PerformanceOverview: Story = {
 export const DetailedContent: Story = {
   render: Template,
   args: {
-    content: html`
+    content: `
       <div class="flex flex-col items-start gap-m">
-        <bq-icon color="text--brand" size="56" name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
+        <bq-icon color="text--brand" size="56" name="star" weight="bold" part="icon"/></bq-icon>
         <div class="flex flex-col gap-xs2">
           <h6 class="text-m font-medium">Title</h6>
           <p class="text-text-secondary items-stretch">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
@@ -127,10 +130,10 @@ export const DetailedContent: Story = {
 export const MiniCard: Story = {
   render: Template,
   args: {
-    content: html`
+    content: `
       <div class="flex is-full">
-        <div class="flex p-i-l p-b-l bg-bg-brand rounded-s-[--bq-card--borderRadius]">
-          <bq-icon color="text--alt" size="24" name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
+        <div class="flex p-i-l p-b-l bg-brand rounded-s-[--bq-card--borderRadius]">
+          <bq-icon color="text--alt" size="24" name="star" weight="bold" part="icon"/></bq-icon>
         </div>
         <div class="flex items-center p-i-[--bq-card--paddingMinimal] p-b-[--bq-card--paddingMinimal] justify-between is-full">
           <div class="flex flex-col ps-2">
@@ -138,7 +141,7 @@ export const MiniCard: Story = {
             <p class="text-text-secondary">description</p>
           </div>
           <div class="p-i-[--bq-card--paddingMinimal] p-b-[--bq-card--paddingMinimal]">
-            <bq-icon color="text--brand" size="24" name="star" weight="bold" part="icon" exportparts="base,svg" /></bq-icon>
+            <bq-icon color="text--brand" size="24" name="star" weight="bold" part="icon"/></bq-icon>
           </div>
         </div>
       </div>
