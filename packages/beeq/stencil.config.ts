@@ -123,6 +123,9 @@ export const config: Config = {
     experimentalScopedSlotChanges: true,
     experimentalSlotFixes: true,
   },
+  testing: {
+    browserHeadless: 'shell',
+  },
   preamble: 'Built by Endavans\n© https://beeq.design - Apache 2 License.',
   watchIgnoredRegex: /(custom-elements\.)((d\.ts)|(json))$/g,
   devServer: {
