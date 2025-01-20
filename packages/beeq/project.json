@@ -158,7 +158,8 @@
         "configPath": "packages/beeq/stencil.config.ts",
         "outputPath": "dist/beeq",
         "runInBand": true,
-        "noBuild": true
+        "noBuild": true,
+        "noStackTrace": true
       }
     },
     "lint": {

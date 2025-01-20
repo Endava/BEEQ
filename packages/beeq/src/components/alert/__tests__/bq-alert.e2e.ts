@@ -108,7 +108,7 @@ describe('bq-alert', () => {
     expect(footerSlot).not.toBeNull();
   });
 
-  it('should call methods', async () => {
+  it('should call show() method', async () => {
     const page = await newE2EPage({
       html: `
         <bq-alert>
@@ -118,22 +118,34 @@ describe('bq-alert', () => {
       `,
     });
 
-    await page.$eval('bq-alert', async (elem: HTMLBqAlertElement) => {
-      await elem.show();
-    });
+    const alertElem = await page.find('bq-alert');
+    await alertElem.callMethod('show');
     await page.waitForChanges();
 
-    const visibleAlert = await page.find('bq-alert');
-    expect(visibleAlert).toEqualAttribute('aria-hidden', 'false');
-    expect(visibleAlert).toEqualAttribute('hidden', 'false');
+    const visibleAlertElem = await page.find('bq-alert');
+    expect(visibleAlertElem).toEqualAttribute('aria-hidden', 'false');
+    expect(visibleAlertElem).toEqualAttribute('hidden', 'false');
+  });
 
-    await page.$eval('bq-alert', async (elem: HTMLBqAlertElement) => {
-      await elem.hide();
+  it('should call hide() method', async () => {
+    const page = await newE2EPage({
+      html: `
+        <bq-alert open>
+          Alert title
+          <span slot="body">You have a new alert message</span>
+        </bq-alert>
+      `,
     });
+
+    const alertElem = await page.find('bq-alert');
+    expect(alertElem).not.toEqualAttribute('aria-hidden', 'true');
+    expect(alertElem).not.toHaveClass('is-hidden');
+
+    await alertElem.callMethod('hide');
     await page.waitForChanges();
 
-    const hiddenAlert = await page.find('bq-alert');
-    expect(hiddenAlert).toEqualAttribute('aria-hidden', 'true');
-    expect(hiddenAlert).toEqualAttribute('hidden', 'true');
+    const hiddenAlertElem = await page.find('bq-alert');
+    expect(hiddenAlertElem).toEqualAttribute('aria-hidden', 'true');
+    expect(hiddenAlertElem).toEqualAttribute('hidden', 'true');
   });
 });

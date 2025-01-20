@@ -62,14 +62,7 @@ We recommend the use of [Volta](https://volta.sh/) to manage Node and NPM versio
 
 > With Volta, you can select a Node engine once and then stop worrying about it. You can switch between projects and stop having to manually switch between Nodes.
 
-Once you have Volta installed, whenever you change to the BEEQ folder locally, it will switch to the right Node and NPM versions pinned in the `package.json`:
-
-```json
-  "volta": {
-    "node": "20.11.1",
-    "npm": "10.4.0"
-  }
-```
+Once you have Volta installed, whenever you change to the BEEQ folder locally, it will switch to the right Node and NPM versions [pinned in the `package.json`](./package.json#L177).
 
 Volta is not mandatory, you can still use any Node/NPM setup that fits you most, just keep in mind that you'll need:
 
@@ -122,6 +115,10 @@ npm run build
 ### Test 🧪
 
 BEEQ uses [Jest](https://jestjs.io/) for unit tests and Jest and [Puppeteer](https://pptr.dev/) for end-to-end tests.
+
+> [!CAUTION]
+> Puppeteer uses Chromium to run the tests. Make sure you have Chrome installed on your machine or set the `PUPPETEER_EXECUTABLE_PATH` environment variable to point to the path of your Chromium browser executable.
+> E.g., `export PUPPETEER_EXECUTABLE_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"`
 
 You can run all the tests once, by executing:
 
