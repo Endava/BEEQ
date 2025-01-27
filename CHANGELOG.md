@@ -1,3 +1,56 @@
+## 1.8.2 (2025-01-27)
+
+### Refactor 🛠️
+
+- **Accordion:** replace `calc-size()` animation with `interpolate-size` ([#1393](https://github.com/Endava/BEEQ/pull/1393))
+
+### Documentation 📚
+
+- **Zeroheight:** fix SVG loader script to display BEEQ icons in the code preview ([4a1e2b4](https://github.com/Endava/BEEQ/commit/4a1e2b4))
+
+### Chore ⚙️
+
+- **deps:** update node.js to v22.12.0 ([#1389](https://github.com/Endava/BEEQ/pull/1389))
+- **deps:** update dependency npm to v11 ([#1391](https://github.com/Endava/BEEQ/pull/1391))
+- **deps:** update Stencil output targets ([#1388](https://github.com/Endava/BEEQ/pull/1388))
+- **deps:** update dependency stylelint to v16.12.0 ([#1390](https://github.com/Endava/BEEQ/pull/1390))
+- **deps:** update dependency tailwindcss to v3.4.17 ([#1392](https://github.com/Endava/BEEQ/pull/1392))
+- **deps:** update nx to v20.3.0 ([#1394](https://github.com/Endava/BEEQ/pull/1394))
+- **deps:** update dependency @stencil/core to v4.23.1 ([#1395](https://github.com/Endava/BEEQ/pull/1395))
+- **deps:** update commitlint ([#1396](https://github.com/Endava/BEEQ/pull/1396))
+- **deps:** update eslint ([#1397](https://github.com/Endava/BEEQ/pull/1397))
+- **deps:** update dependency chromatic to v11.22.0 ([#1398](https://github.com/Endava/BEEQ/pull/1398))
+- **deps:** update dependency core-js to v3.39.0 ([#1399](https://github.com/Endava/BEEQ/pull/1399))
+- **deps:** update dependency vite to v6 ([#1400](https://github.com/Endava/BEEQ/pull/1400))
+- **deps:** update swc ([#1401](https://github.com/Endava/BEEQ/pull/1401))
+- **deps:** update dependency core-js to v3.40.0 ([#1402](https://github.com/Endava/BEEQ/pull/1402))
+- **deps:** update dependency puppeteer to v23.11.1 ([#1403](https://github.com/Endava/BEEQ/pull/1403))
+- **deps:** update dependency @babel/core to v7.26.0 ([#1404](https://github.com/Endava/BEEQ/pull/1404))
+- **deps:** update dependency globals to v15.14.0 ([#1406](https://github.com/Endava/BEEQ/pull/1406))
+- **deps:** update dependency @babel/preset-react to v7.26.3 ([#1405](https://github.com/Endava/BEEQ/pull/1405))
+- **deps:** fix conflicting peer dependency after installing vite v6 ([#1407](https://github.com/Endava/BEEQ/pull/1407))
+- **deps:** update dependency @types/react to v18.3.18 ([#1408](https://github.com/Endava/BEEQ/pull/1408))
+- **deps:** update dependency puppeteer to v24 ([#1411](https://github.com/Endava/BEEQ/pull/1411))
+- **deps:** update node.js to v22.13.0 ([#1410](https://github.com/Endava/BEEQ/pull/1410))
+- **deps:** update stencil ([#1412](https://github.com/Endava/BEEQ/pull/1412))
+- **deps:** update nx to v20.3.1 ([#1413](https://github.com/Endava/BEEQ/pull/1413))
+- **deps:** update dependency stylelint to v16.13.0 ([#1414](https://github.com/Endava/BEEQ/pull/1414))
+- **deps:** update dependency stylelint-config-standard to v37 ([#1415](https://github.com/Endava/BEEQ/pull/1415))
+- **deps:** update dependency eslint-plugin-react to v7.37.4 ([#1416](https://github.com/Endava/BEEQ/pull/1416))
+- **deps:** update storybook to v8.5.0 ([#1417](https://github.com/Endava/BEEQ/pull/1417))
+- **deps:** update dependency eslint-config-prettier to v10 ([#1418](https://github.com/Endava/BEEQ/pull/1418))
+- **deps:** update dependency puppeteer to v24.1.0 ([#1419](https://github.com/Endava/BEEQ/pull/1419))
+- **deps:** update dependency @stencil/core to v4.24.0 ([#1420](https://github.com/Endava/BEEQ/pull/1420))
+- **deps:** update dependency @stencil/core to v4.25.0 ([#1421](https://github.com/Endava/BEEQ/pull/1421))
+- **deps:** update storybook to v8.5.1 ([#1422](https://github.com/Endava/BEEQ/pull/1422))
+- **deps:** update nx to v20.3.3 ([#1423](https://github.com/Endava/BEEQ/pull/1423))
+- **deps:** update storybook to v8.5.2 ([#1425](https://github.com/Endava/BEEQ/pull/1425))
+- **deps:** update dependency @stencil/core to v4.25.1 ([#1424](https://github.com/Endava/BEEQ/pull/1424))
+
+### ❤️ Thank You
+
+- Dabiel González Ramos @dgonzalezr
+
 ## [1.8.1](https://github.com/Endava/BEEQ/compare/v1.8.0...v1.8.1) (2024-12-18)
 
 ### Chore ⚙️
