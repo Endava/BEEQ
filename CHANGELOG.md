@@ -1,4 +1,4 @@
-## 1.8.2 (2025-01-27)
+## [1.8.2](https://github.com/Endava/BEEQ/compare/v1.8.1...v1.8.2) (2025-01-27)
 
 ### Refactor 🛠️
 
