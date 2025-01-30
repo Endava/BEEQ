@@ -508,7 +508,7 @@ export class BqDatePicker {
     this.hasSuffix = hasSlotContent(this.suffixElem);
   };
 
-  private generateCalendarMonth = (offset?: number, className = ''): JSX.Element => {
+  private generateCalendarMonth = (offset?: number, className = ''): Element => {
     return (
       <calendar-month
         offset={offset}
@@ -519,7 +519,7 @@ export class BqDatePicker {
   };
 
   /**
-   * Generates an array of JSX.Element representing calendar months.
+   * Generates an array of Elements representing the calendar months.
    *
    * If the type of the date picker is 'range' or 'multi' and the number of months is specified,
    * it generates an array of calendar months with the specified length. Each month will have an offset
@@ -529,9 +529,9 @@ export class BqDatePicker {
    * If the type of the date picker is not 'range' or 'multi', or if the number of months is not specified,
    * it generates an array with a single calendar month.
    *
-   * @returns {JSX.Element[]} An array of JSX.Element representing calendar months.
+   * @returns {Element[]} An array of elements representing the calendar months.
    */
-  private generateCalendarMonths = (): JSX.Element[] => {
+  private generateCalendarMonths = (): Element[] => {
     if (this.type === 'range' || (this.type === 'multi' && this.months)) {
       return Array.from({ length: this.months }, (_, i) => {
         const offset = i > 0 ? i : undefined;

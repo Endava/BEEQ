@@ -27,7 +27,7 @@ module.exports = [
       '@nx/dependency-checks': [
         'error',
         {
-          ignoredDependencies: ['@beeq/core', '@stencil/react-output-target', 'react', 'react-dom'],
+          ignoredDependencies: ['@beeq/core', '@stencil/react-output-target', 'react', 'react-dom', 'tslib'],
         },
       ],
     },
