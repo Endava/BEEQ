@@ -8,12 +8,11 @@
   "types": "./src/index.d.ts",
   "dependencies": {
     "@beeq/core": "^1.8.2",
-    "@stencil/react-output-target": "^0.7.1"
+    "@stencil/react-output-target": "^0.8.2"
   },
   "peerDependencies": {
-    "react": ">=18.0.0",
-    "react-dom": ">=18.0.0",
-    "tslib": "^2.6.3"
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19"
   },
   "repository": {
     "type": "git",
