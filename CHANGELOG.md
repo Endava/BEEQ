@@ -1,3 +1,15 @@
+## 1.8.3 (2025-01-31)
+
+### Chore ⚙️
+
+- **deps:** update dependency @stencil/vue-output-target to v0.9.4 ([#1426](https://github.com/Endava/BEEQ/pull/1426))
+- **deps:** update nx to v20.4.0 ([#1427](https://github.com/Endava/BEEQ/pull/1427))
+- **deps:** update React dependencies to v19 (major) ([#1428](https://github.com/Endava/BEEQ/pull/1428))
+
+### ❤️ Thank You
+
+- Dabiel González Ramos @dgonzalezr
+
 ## [1.8.2](https://github.com/Endava/BEEQ/compare/v1.8.1...v1.8.2) (2025-01-27)
 
 ### Refactor 🛠️
