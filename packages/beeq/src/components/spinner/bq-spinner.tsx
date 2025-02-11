@@ -117,6 +117,8 @@ export class BqSpinner {
   }
 
   componentDidLoad() {
+    this.handleSlotChange();
+    this.handleIconSlotChange();
     this.setIconSize();
   }
 

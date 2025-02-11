@@ -88,6 +88,10 @@ export class BqPageTitle {
   // Ordered by their natural call order
   // =====================================
 
+  componentDidLoad() {
+    this.handleSlotChange();
+  }
+
   // Listeners
   // ==============
 

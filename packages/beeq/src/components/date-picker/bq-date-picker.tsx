@@ -358,7 +358,6 @@ export class BqDatePicker {
     if (!isClient() || isCallyLibraryLoaded()) return;
 
     try {
-      console.log('Loading Cally library...');
       await loadCallyLibrary();
     } catch (error) {
       console.error(error);

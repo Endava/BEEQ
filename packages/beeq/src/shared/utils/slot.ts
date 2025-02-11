@@ -103,6 +103,8 @@ export function hasSlot(el: HTMLElement, name: string): boolean {
  * @return {boolean} True or false if the slot have HTML children elements
  */
 export function hasSlotContent(el: HTMLElement, name?: string): boolean {
+  if (!el) return false;
+
   const slotSelector = name ? `[name='${name}']` : '';
   const slotContent = el.querySelector<HTMLSlotElement>(`slot${slotSelector}`)?.assignedElements({ flatten: true });
   if (!slotContent || !Array.isArray(slotContent)) return false;

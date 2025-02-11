@@ -80,6 +80,10 @@ export class BqEmptyState {
     this.checkPropValues();
   }
 
+  componentDidLoad() {
+    this.handleSlotChange();
+  }
+
   // Listeners
   // ==============
 
@@ -95,11 +99,8 @@ export class BqEmptyState {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private handleContentSlotChange = () => {
+  private handleSlotChange = () => {
     this.hasBody = hasSlotContent(this.bodyElem, 'body');
-  };
-
-  private handleFooterSlotChange = () => {
     this.hasFooter = hasSlotContent(this.footerElem, 'footer');
   };
 
@@ -153,10 +154,10 @@ export class BqEmptyState {
           ref={(div) => (this.bodyElem = div)}
           part="body"
         >
-          <slot name="body" onSlotchange={this.handleContentSlotChange} />
+          <slot name="body" onSlotchange={this.handleSlotChange} />
         </div>
         <div class="flex items-start gap-xs" ref={(div) => (this.footerElem = div)} part="footer">
-          <slot name="footer" onSlotchange={this.handleFooterSlotChange} />
+          <slot name="footer" onSlotchange={this.handleSlotChange} />
         </div>
       </div>
     );

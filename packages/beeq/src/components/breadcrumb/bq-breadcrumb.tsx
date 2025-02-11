@@ -62,6 +62,10 @@ export class BqBreadcrumb {
   // Ordered by their natural call order
   // =====================================
 
+  componentDidLoad() {
+    this.handleSlotChange();
+  }
+
   // Listeners
   // ==============
 

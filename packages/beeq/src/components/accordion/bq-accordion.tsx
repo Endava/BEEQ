@@ -237,6 +237,7 @@ export class BqAccordion {
   componentDidLoad() {
     this.handleJsAnimation();
     this.handleExpandedChange();
+    this.handleSlotChange();
   }
 
   // Listeners
@@ -286,11 +287,8 @@ export class BqAccordion {
     this.bqBlur.emit(this.el);
   };
 
-  private handlePrefixSlotChange = () => {
+  private handleSlotChange = () => {
     this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
-  };
-
-  private handleSuffixSlotChange = () => {
     this.hasSuffix = hasSlotContent(this.suffixElem, 'suffix');
   };
 
@@ -336,7 +334,7 @@ export class BqAccordion {
             class={{ 'bq-accordion__header--prefix': true, '!hidden': !this.hasPrefix }}
             part="prefix"
           >
-            <slot name="prefix" onSlotchange={this.handlePrefixSlotChange} />
+            <slot name="prefix" onSlotchange={this.handleSlotChange} />
           </div>
           <div class="bq-accordion__header--text" part="text">
             <slot name="header" />
@@ -346,7 +344,7 @@ export class BqAccordion {
             class={{ 'bq-accordion__header--suffix': true, '!hidden': !this.hasSuffix }}
             part="suffix"
           >
-            <slot name="suffix" onSlotchange={this.handleSuffixSlotChange} />
+            <slot name="suffix" onSlotchange={this.handleSlotChange} />
           </div>
           <div
             class={{

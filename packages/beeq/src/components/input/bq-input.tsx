@@ -293,6 +293,10 @@ export class BqInput {
     this.handleValueChange();
   }
 
+  componentDidLoad() {
+    this.handleSlotChange();
+  }
+
   formAssociatedCallback() {
     this.setFormValue(this.value?.toString());
     this.updateFormValidity();
@@ -404,19 +408,10 @@ export class BqInput {
     internals?.setValidity({});
   };
 
-  private handleLabelSlotChange = () => {
+  private handleSlotChange = () => {
     this.hasLabel = hasSlotContent(this.labelElem);
-  };
-
-  private handlePrefixSlotChange = () => {
     this.hasPrefix = hasSlotContent(this.prefixElem);
-  };
-
-  private handleSuffixSlotChange = () => {
     this.hasSuffix = hasSlotContent(this.suffixElem);
-  };
-
-  private handleHelperTextSlotChange = () => {
     this.hasHelperText = hasSlotContent(this.helperTextElem);
   };
 
@@ -435,7 +430,7 @@ export class BqInput {
           ref={(labelElem) => (this.labelElem = labelElem)}
           part="label"
         >
-          <slot name="label" onSlotchange={this.handleLabelSlotChange} />
+          <slot name="label" onSlotchange={this.handleSlotChange} />
         </label>
         {/* Input control group */}
         <div
@@ -452,7 +447,7 @@ export class BqInput {
             ref={(spanElem) => (this.prefixElem = spanElem)}
             part="prefix"
           >
-            <slot name="prefix" onSlotchange={this.handlePrefixSlotChange} />
+            <slot name="prefix" onSlotchange={this.handleSlotChange} />
           </span>
           {/* HTML Input */}
           <input
@@ -509,7 +504,7 @@ export class BqInput {
             ref={(spanElem) => (this.suffixElem = spanElem)}
             part="suffix"
           >
-            <slot name="suffix" onSlotchange={this.handleSuffixSlotChange} />
+            <slot name="suffix" onSlotchange={this.handleSlotChange} />
           </span>
         </div>
         {/* Helper text */}
@@ -521,7 +516,7 @@ export class BqInput {
           ref={(divElem) => (this.helperTextElem = divElem)}
           part="helper-text"
         >
-          <slot name="helper-text" onSlotchange={this.handleHelperTextSlotChange} />
+          <slot name="helper-text" onSlotchange={this.handleSlotChange} />
         </div>
       </div>
     );

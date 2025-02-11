@@ -110,6 +110,10 @@ export class BqOption {
   // Ordered by their natural call order
   // =====================================
 
+  componentDidLoad() {
+    this.handleSlotChange();
+  }
+
   // Listeners
   // ==============
 
@@ -161,11 +165,8 @@ export class BqOption {
     this.bqClick.emit(this.el);
   };
 
-  private onSlotChange = () => {
+  private handleSlotChange = () => {
     this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
-  };
-
-  private handleSuffixSlotChange = () => {
     this.hasSuffix = hasSlotContent(this.suffixElem, 'suffix');
   };
 
@@ -206,7 +207,7 @@ export class BqOption {
             ref={(elem) => (this.prefixElem = elem)}
             part="prefix"
           >
-            <slot name="prefix" onSlotchange={this.onSlotChange} />
+            <slot name="prefix" onSlotchange={this.handleSlotChange} />
           </span>
           <span class="bq-option__label" part="label">
             <slot />
@@ -219,7 +220,7 @@ export class BqOption {
             ref={(elem) => (this.suffixElem = elem)}
             part="suffix"
           >
-            <slot name="suffix" onSlotchange={this.handleSuffixSlotChange} />
+            <slot name="suffix" onSlotchange={this.handleSlotChange} />
           </span>
         </div>
       </Host>

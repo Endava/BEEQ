@@ -246,6 +246,7 @@ export class BqTextarea {
   // =====================================
 
   componentDidLoad() {
+    this.handleSlotChange();
     this.handleValueChange();
   }
 
@@ -331,11 +332,8 @@ export class BqTextarea {
     inputElem.style.height = `${inputElem.scrollHeight}px`;
   };
 
-  private handleLabelSlotChange = () => {
+  private handleSlotChange = () => {
     this.hasLabel = hasSlotContent(this.labelElem);
-  };
-
-  private handleHelperTextSlotChange = () => {
     this.hasHelperText = hasSlotContent(this.helperTextElem);
   };
 
@@ -380,7 +378,7 @@ export class BqTextarea {
           ref={(label: HTMLLabelElement) => (this.labelElem = label)}
           part="label"
         >
-          <slot name="label" onSlotchange={this.handleLabelSlotChange} />
+          <slot name="label" onSlotchange={this.handleSlotChange} />
         </label>
         <textarea
           id={this.name ?? this.fallbackId}
@@ -425,7 +423,7 @@ export class BqTextarea {
             ref={(span: HTMLElement) => (this.helperTextElem = span)}
             part="helper-text"
           >
-            <slot name="helper-text" onSlotchange={this.handleHelperTextSlotChange} />
+            <slot name="helper-text" onSlotchange={this.handleSlotChange} />
           </span>
           <span
             class={{ 'bq-textarea__helper--counter [fontVariant:tabular-nums]': true, '!hidden': !this.maxlength }}

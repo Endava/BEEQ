@@ -203,6 +203,8 @@ export class BqAlert {
   }
 
   componentDidLoad() {
+    this.handleSlotChange();
+
     if (!this.open) {
       this.el.classList.add('is-hidden');
     }
@@ -262,11 +264,8 @@ export class BqAlert {
     this.bqAfterHide.emit();
   };
 
-  private handleContentSlotChange = () => {
+  private handleSlotChange = () => {
     this.hasContent = hasSlotContent(this.bodyElem, 'body');
-  };
-
-  private handleFooterSlotChange = () => {
     this.hasFooter = hasSlotContent(this.footerElem, 'footer');
   };
 
@@ -356,7 +355,7 @@ export class BqAlert {
                 ref={(div) => (this.bodyElem = div)}
                 part="body"
               >
-                <slot name="body" onSlotchange={this.handleContentSlotChange} />
+                <slot name="body" onSlotchange={this.handleSlotChange} />
               </div>
             </div>
             {/* FOOTER */}
@@ -365,7 +364,7 @@ export class BqAlert {
               ref={(div) => (this.footerElem = div)}
               part="footer"
             >
-              <slot name="footer" onSlotchange={this.handleFooterSlotChange} />
+              <slot name="footer" onSlotchange={this.handleSlotChange} />
             </div>
           </div>
         </div>

@@ -180,6 +180,10 @@ export class BqButton {
     this.checkPropValues();
   }
 
+  componentDidLoad() {
+    this.handleSlotChange();
+  }
+
   // Listeners
   // ==============
 
