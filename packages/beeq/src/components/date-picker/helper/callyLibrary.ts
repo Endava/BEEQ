@@ -20,6 +20,7 @@ let isLibraryLoaded = false;
  * @returns {boolean} True if the library is loaded
  */
 export const isCallyLibraryLoaded = (): boolean => {
+  // This might be a bit redundant, but it's a sanity check to ensure the library is actually loaded
   return isLibraryLoaded || document.querySelector(`script[${CALLY_SCRIPT_ATTRIBUTE}]`) !== null;
 };
 

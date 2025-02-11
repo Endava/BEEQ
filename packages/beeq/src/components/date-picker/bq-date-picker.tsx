@@ -184,6 +184,7 @@ export class BqDatePicker {
   // Inlined decorator, alphabetical order
   // =======================================
 
+  @State() isCallyLoaded = false;
   @State() focusedDate: string;
   @State() displayDate: string;
   @State() hasLabel = false;
@@ -309,8 +310,8 @@ export class BqDatePicker {
 
   @Watch('value')
   handleValueChange() {
-    const { formatDisplayValue, internals, value } = this;
-    if (!isCallyLibraryLoaded()) return;
+    const { formatDisplayValue, internals, isCallyLoaded, value } = this;
+    if (!isCallyLoaded) return;
 
     internals.setFormValue(!isNil(value) ? `${value}` : undefined);
     this.updateFormValidity();
@@ -355,10 +356,11 @@ export class BqDatePicker {
   // =====================================
 
   async connectedCallback() {
-    if (!isClient() || isCallyLibraryLoaded()) return;
+    if (!isClient() || this.isCallyLoaded) return;
 
     try {
       await loadCallyLibrary();
+      this.isCallyLoaded = isCallyLibraryLoaded();
     } catch (error) {
       console.error(error);
     }
@@ -443,8 +445,8 @@ export class BqDatePicker {
   };
 
   private setFocusedDate = () => {
-    const { callyElem, formatFocusedDate, value } = this;
-    if (!(callyElem && isCallyLibraryLoaded())) return;
+    const { callyElem, formatFocusedDate, isCallyLoaded, value } = this;
+    if (!(callyElem && isCallyLoaded)) return;
     // We need to set the focused date in the calendar component via a ref
     // because it doesn't work when passed as a prop (the Cally element does not re-render)
     this.focusedDate = value ? formatFocusedDate(value) : new Date().toLocaleDateString('fr-CA');
@@ -510,7 +512,7 @@ export class BqDatePicker {
   };
 
   private generateCalendarMonth = (offset?: number, className = ''): Element | null => {
-    if (!isCallyLibraryLoaded()) return null;
+    if (!this.isCallyLoaded) return null;
 
     return (
       <calendar-month
@@ -535,7 +537,7 @@ export class BqDatePicker {
    * @returns {Element[]} An array of elements representing the calendar months.
    */
   private generateCalendarMonths = (): Element[] => {
-    if (!isCallyLibraryLoaded()) return [];
+    if (!this.isCallyLoaded) return [];
 
     if (this.type === 'range' || (this.type === 'multi' && this.months)) {
       return Array.from({ length: this.months }, (_, i) => {
@@ -716,7 +718,7 @@ export class BqDatePicker {
               </slot>
             </span>
           </div>
-          {isCallyLibraryLoaded() && (
+          {this.isCallyLoaded && (
             <CallyCalendar
               isDateDisallowed={this.isDateDisallowed}
               locale={this.locale as string}
