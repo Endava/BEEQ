@@ -734,7 +734,7 @@ export class BqDatePicker {
               onRangestart={this.handleCalendarRangeStart}
               onRangeend={this.handleCalendarRangeEnd}
               exportparts="container:calendar__container,header:calendar__header,button:calendar__button,previous:calendar__previous,next:calendar__next,disabled:calendar__disabled,heading:calendar__heading"
-              ref={(elem: TCalendarDate) => (this.callyElem = elem as TCalendarDate)}
+              ref={(elem: TCalendarDate) => (this.callyElem = elem)}
             >
               <bq-icon color="text--primary" slot="previous" name="caret-left" label="Previous" />
               <bq-icon color="text--primary" slot="next" name="caret-right" label="Next" />

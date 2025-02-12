@@ -2,16 +2,16 @@
 /*                         Cally Library loader helper                        */
 /* -------------------------------------------------------------------------- */
 
-const CALLY_SCRIPT_ATTRIBUTE = 'data-cally-library' as const;
+const CALLY_SCRIPT_ATTRIBUTE = 'data-cally-library';
 //❗ Make sure to update the version here when the library releases a new version
-const CALLY_LIB_VERSION = '0.8.0' as const;
+const CALLY_LIB_VERSION = '0.8.0';
 /**
  * ❗ Make sure to update the hash here if the `CALLY_LIB_VERSION` is updated
  * This hash is used to ensure the integrity of the library when loading it
  * from a CDN.
  * @see https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity
  */
-const CALLY_LIB_HASH = 'sha384-giuY/f8D3+ehgOTmQMr4HvrreOITDmvXsZuDCJ1csQ+3dURHA24NqRd8lkSI6uGF' as const;
+const CALLY_LIB_HASH = 'sha384-giuY/f8D3+ehgOTmQMr4HvrreOITDmvXsZuDCJ1csQ+3dURHA24NqRd8lkSI6uGF';
 
 let isLibraryLoaded = false;
 
@@ -70,12 +70,13 @@ const loadScript = ({ type, src, attributes = {} }: ScriptConfig): Promise<void>
     script.type = type;
     script.src = src;
 
+    script.onload = () => resolve();
+    script.onerror = (error: Event) =>
+      reject(new Error(`Failed to load script: ${src}, ${error instanceof Error ? error.message : 'Unknown error'}`));
+
     Object.entries(attributes).forEach(([key, value]) => {
       script.setAttribute(key, value);
     });
-
-    script.onload = () => resolve();
-    script.onerror = (error: Event) => reject(error);
 
     document.head.appendChild(script);
   });
