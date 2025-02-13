@@ -136,6 +136,10 @@ export class BqTab {
     this.checkPropValues();
   }
 
+  componentDidLoad() {
+    this.handleIconSlotChange();
+  }
+
   // Listeners
   // ==============
 

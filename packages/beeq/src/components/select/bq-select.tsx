@@ -292,10 +292,11 @@ export class BqSelect {
   }
 
   componentDidLoad() {
+    this.handleSlotChange();
+
     if (this.multiple && Array.isArray(this.value)) {
       this.selectedOptions = this.options.filter((item) => this.value.includes(item.value));
     }
-
     this.handleValueChange();
   }
 
@@ -468,19 +469,10 @@ export class BqSelect {
     this.bqSelect.emit({ value: this.value, item });
   };
 
-  private handleLabelSlotChange = () => {
+  private handleSlotChange = () => {
     this.hasLabel = hasSlotContent(this.labelElem);
-  };
-
-  private handlePrefixSlotChange = () => {
     this.hasPrefix = hasSlotContent(this.prefixElem);
-  };
-
-  private handleSuffixSlotChange = () => {
     this.hasSuffix = hasSlotContent(this.suffixElem);
-  };
-
-  private handleHelperTextSlotChange = () => {
     this.hasHelperText = hasSlotContent(this.helperTextElem);
   };
 
@@ -626,7 +618,7 @@ export class BqSelect {
           ref={(labelElem: HTMLSpanElement) => (this.labelElem = labelElem)}
           part="label"
         >
-          <slot name="label" onSlotchange={this.handleLabelSlotChange} />
+          <slot name="label" onSlotchange={this.handleSlotChange} />
         </label>
         {/* Select dropdown */}
         <bq-dropdown
@@ -658,7 +650,7 @@ export class BqSelect {
               ref={(spanElem: HTMLSpanElement) => (this.prefixElem = spanElem)}
               part="prefix"
             >
-              <slot name="prefix" onSlotchange={this.handlePrefixSlotChange} />
+              <slot name="prefix" onSlotchange={this.handleSlotChange} />
             </span>
             <div class="flex flex-1 overflow-x-auto" part="input-outline">
               {/* Display selected values using BqTags for multiple selection */}
@@ -720,7 +712,7 @@ export class BqSelect {
               ref={(spanElem: HTMLSpanElement) => (this.suffixElem = spanElem)}
               part="suffix"
             >
-              <slot name="suffix" onSlotchange={this.handleSuffixSlotChange}>
+              <slot name="suffix" onSlotchange={this.handleSlotChange}>
                 <bq-icon name="caret-down" class="flex" />
               </slot>
             </span>
@@ -744,7 +736,7 @@ export class BqSelect {
           ref={(divElem: HTMLDivElement) => (this.helperTextElem = divElem)}
           part="helper-text"
         >
-          <slot name="helper-text" onSlotchange={this.handleHelperTextSlotChange} />
+          <slot name="helper-text" onSlotchange={this.handleSlotChange} />
         </div>
       </div>
     );

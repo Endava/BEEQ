@@ -94,6 +94,10 @@ export class BqBadge {
     this.handleSizePropChange();
   }
 
+  componentDidLoad() {
+    this.handleSlotChange();
+  }
+
   disconnectedCallback() {
     this.observer?.disconnect();
   }
@@ -113,7 +117,7 @@ export class BqBadge {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private onSlotChange = () => {
+  private handleSlotChange = () => {
     const slot = this.slot;
 
     if (isNil(slot)) return;
@@ -159,7 +163,7 @@ export class BqBadge {
           part="base"
         >
           <span ref={(element) => (this.spanElement = element)} class="text-xs font-bold leading-small" part="number">
-            <slot onSlotchange={this.onSlotChange}></slot>
+            <slot onSlotchange={this.handleSlotChange}></slot>
           </span>
         </div>
       </Host>

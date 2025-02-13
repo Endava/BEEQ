@@ -183,6 +183,10 @@ export class BqDrawer {
     this.handlePlacementChange();
   }
 
+  componentDidLoad() {
+    this.handleFooterSlotChange();
+  }
+
   // Listeners
   // ==============
 

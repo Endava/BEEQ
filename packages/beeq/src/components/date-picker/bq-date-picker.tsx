@@ -11,9 +11,9 @@ import {
   State,
   Watch,
 } from '@stencil/core';
-import { CalendarDate } from 'cally';
 
-import { DATE_PICKER_TYPE, DaysOfWeek, TDatePickerType } from './bq-date-picker.types';
+import { DATE_PICKER_TYPE, DaysOfWeek, TCalendarDate, TDatePickerType } from './bq-date-picker.types';
+import { isCallyLibraryLoaded, loadCallyLibrary } from './helper/callyLibrary';
 import { Placement } from '../../services/interfaces';
 import {
   hasSlotContent,
@@ -160,7 +160,7 @@ export class BqDatePicker {
   // Own Properties
   // ====================
 
-  private callyElem?: InstanceType<typeof CalendarDate>;
+  private callyElem?: TCalendarDate;
   private inputElem?: HTMLInputElement;
   private labelElem?: HTMLElement;
   private prefixElem?: HTMLElement;
@@ -184,6 +184,7 @@ export class BqDatePicker {
   // Inlined decorator, alphabetical order
   // =======================================
 
+  @State() isCallyLoaded = false;
   @State() focusedDate: string;
   @State() displayDate: string;
   @State() hasLabel = false;
@@ -309,7 +310,8 @@ export class BqDatePicker {
 
   @Watch('value')
   handleValueChange() {
-    const { formatDisplayValue, internals, value } = this;
+    const { formatDisplayValue, internals, isCallyLoaded, value } = this;
+    if (!isCallyLoaded) return;
 
     internals.setFormValue(!isNil(value) ? `${value}` : undefined);
     this.updateFormValidity();
@@ -354,12 +356,18 @@ export class BqDatePicker {
   // =====================================
 
   async connectedCallback() {
-    if (!isClient()) return;
+    if (!isClient() || this.isCallyLoaded) return;
 
-    await import('cally');
+    try {
+      await loadCallyLibrary();
+      this.isCallyLoaded = isCallyLibraryLoaded();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
-  componentWillLoad() {
+  async componentDidLoad() {
+    this.handleSlotChange();
     this.handleValueChange();
   }
 
@@ -437,10 +445,11 @@ export class BqDatePicker {
   };
 
   private setFocusedDate = () => {
-    if (!this.callyElem) return;
+    const { callyElem, formatFocusedDate, isCallyLoaded, value } = this;
+    if (!(callyElem && isCallyLoaded)) return;
     // We need to set the focused date in the calendar component via a ref
     // because it doesn't work when passed as a prop (the Cally element does not re-render)
-    this.focusedDate = this.value ? this.formatFocusedDate(this.value) : new Date().toLocaleDateString('fr-CA');
+    this.focusedDate = value ? formatFocusedDate(value) : new Date().toLocaleDateString('fr-CA');
     this.callyElem.focusedDate = this.focusedDate;
   };
 
@@ -496,19 +505,15 @@ export class BqDatePicker {
     ev.stopPropagation();
   };
 
-  private handleLabelSlotChange = () => {
+  private handleSlotChange = () => {
     this.hasLabel = hasSlotContent(this.labelElem);
-  };
-
-  private handlePrefixSlotChange = () => {
     this.hasPrefix = hasSlotContent(this.prefixElem);
-  };
-
-  private handleSuffixSlotChange = () => {
     this.hasSuffix = hasSlotContent(this.suffixElem);
   };
 
-  private generateCalendarMonth = (offset?: number, className = ''): Element => {
+  private generateCalendarMonth = (offset?: number, className = ''): Element | null => {
+    if (!this.isCallyLoaded) return null;
+
     return (
       <calendar-month
         offset={offset}
@@ -532,6 +537,8 @@ export class BqDatePicker {
    * @returns {Element[]} An array of elements representing the calendar months.
    */
   private generateCalendarMonths = (): Element[] => {
+    if (!this.isCallyLoaded) return [];
+
     if (this.type === 'range' || (this.type === 'multi' && this.months)) {
       return Array.from({ length: this.months }, (_, i) => {
         const offset = i > 0 ? i : undefined;
@@ -625,7 +632,7 @@ export class BqDatePicker {
           ref={(labelElem: HTMLSpanElement) => (this.labelElem = labelElem)}
           part="label"
         >
-          <slot name="label" onSlotchange={this.handleLabelSlotChange} />
+          <slot name="label" onSlotchange={this.handleSlotChange} />
         </label>
         {/* Select date picker dropdown */}
         <bq-dropdown
@@ -655,7 +662,7 @@ export class BqDatePicker {
               ref={(spanElem: HTMLSpanElement) => (this.prefixElem = spanElem)}
               part="prefix"
             >
-              <slot name="prefix" onSlotchange={this.handlePrefixSlotChange} />
+              <slot name="prefix" onSlotchange={this.handleSlotChange} />
             </span>
             {/* HTML Input */}
             <input
@@ -706,33 +713,35 @@ export class BqDatePicker {
               ref={(spanElem: HTMLSpanElement) => (this.suffixElem = spanElem)}
               part="suffix"
             >
-              <slot name="suffix" onSlotchange={this.handleSuffixSlotChange}>
+              <slot name="suffix" onSlotchange={this.handleSlotChange}>
                 <bq-icon name="calendar-blank" class="flex" />
               </slot>
             </span>
           </div>
-          <CallyCalendar
-            isDateDisallowed={this.isDateDisallowed}
-            locale={this.locale as string}
-            value={this.value}
-            min={this.min}
-            max={this.max}
-            months={this.months}
-            tentative={this.tentative}
-            pageBy={this.monthsPerView}
-            firstDayOfWeek={this.firstDayOfWeek}
-            showOutsideDays={this.showOutsideDays}
-            onChange={this.handleCalendarChange}
-            onRangestart={this.handleCalendarRangeStart}
-            onRangeend={this.handleCalendarRangeEnd}
-            exportparts="container:calendar__container,header:calendar__header,button:calendar__button,previous:calendar__previous,next:calendar__next,disabled:calendar__disabled,heading:calendar__heading"
-            ref={(elem) => (this.callyElem = elem as InstanceType<typeof CalendarDate>)}
-          >
-            <bq-icon color="text--primary" slot="previous" name="caret-left" label="Previous" />
-            <bq-icon color="text--primary" slot="next" name="caret-right" label="Next" />
+          {this.isCallyLoaded && (
+            <CallyCalendar
+              isDateDisallowed={this.isDateDisallowed}
+              locale={this.locale as string}
+              value={this.value}
+              min={this.min}
+              max={this.max}
+              months={this.months}
+              tentative={this.tentative}
+              pageBy={this.monthsPerView}
+              firstDayOfWeek={this.firstDayOfWeek}
+              showOutsideDays={this.showOutsideDays}
+              onChange={this.handleCalendarChange}
+              onRangestart={this.handleCalendarRangeStart}
+              onRangeend={this.handleCalendarRangeEnd}
+              exportparts="container:calendar__container,header:calendar__header,button:calendar__button,previous:calendar__previous,next:calendar__next,disabled:calendar__disabled,heading:calendar__heading"
+              ref={(elem: TCalendarDate) => (this.callyElem = elem)}
+            >
+              <bq-icon color="text--primary" slot="previous" name="caret-left" label="Previous" />
+              <bq-icon color="text--primary" slot="next" name="caret-right" label="Next" />
 
-            <div class="flex flex-wrap justify-center gap-[--bq-spacing-m]">{this.generateCalendarMonths()}</div>
-          </CallyCalendar>
+              <div class="flex flex-wrap justify-center gap-[--bq-spacing-m]">{this.generateCalendarMonths()}</div>
+            </CallyCalendar>
+          )}
         </bq-dropdown>
       </div>
     );

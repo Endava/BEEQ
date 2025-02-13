@@ -150,6 +150,10 @@ export class BqTag {
     this.checkPropValues();
   }
 
+  componentDidLoad() {
+    this.handleSlotChange();
+  }
+
   // Listeners
   // ==============
 

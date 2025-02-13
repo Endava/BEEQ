@@ -191,6 +191,10 @@ export class BqNotification {
     this.handleTimeout();
   }
 
+  componentDidLoad() {
+    this.handleSlotChange();
+  }
+
   // Listeners
   // ==============
 
@@ -280,11 +284,8 @@ export class BqNotification {
     this.bqAfterClose.emit();
   };
 
-  private handleContentSlotChange = () => {
+  private handleSlotChange = () => {
     this.hasContent = hasSlotContent(this.bodyElem);
-  };
-
-  private handleFooterSlotChange = () => {
     this.hasFooter = hasSlotContent(this.footerElem, 'footer');
   };
 
@@ -366,7 +367,7 @@ export class BqNotification {
                 ref={(div) => (this.bodyElem = div)}
                 part="body"
               >
-                <slot name="body" onSlotchange={this.handleContentSlotChange} />
+                <slot name="body" onSlotchange={this.handleSlotChange} />
               </div>
             </div>
             {/* FOOTER */}
@@ -375,7 +376,7 @@ export class BqNotification {
               ref={(div) => (this.footerElem = div)}
               part="footer"
             >
-              <slot name="footer" onSlotchange={this.handleFooterSlotChange} />
+              <slot name="footer" onSlotchange={this.handleSlotChange} />
             </div>
           </div>
         </div>

@@ -15,8 +15,7 @@
   "dependencies": {
     "@floating-ui/core": "^1.6.9",
     "@floating-ui/dom": "^1.6.13",
-    "@stencil/core": "^4.25.1",
-    "cally": "^0.7.2"
+    "@stencil/core": "^4.25.1"
   },
   "repository": {
     "type": "git",

@@ -186,7 +186,9 @@ export class BqDialog {
   }
 
   componentDidLoad() {
+    this.handleSlotChange();
     this.handleOpenChange();
+
     this.closeSlotElem = this.el.shadowRoot.querySelector('slot[name="button-close"]');
     this.closeSlotElem?.addEventListener('click', () => this.hide());
   }
@@ -302,11 +304,8 @@ export class BqDialog {
     this.el.classList.remove(this.OPEN_CSS_CLASS);
   };
 
-  private handleContentSlotChange = () => {
+  private handleSlotChange = () => {
     this.hasContent = hasSlotContent(this.contentElem);
-  };
-
-  private handleFooterSlotChange = () => {
     this.hasFooter = hasSlotContent(this.footerElem, 'footer');
   };
 
@@ -360,7 +359,7 @@ export class BqDialog {
             ref={(mainElem) => (this.contentElem = mainElem)}
             part="body"
           >
-            <slot onSlotchange={this.handleContentSlotChange} />
+            <slot onSlotchange={this.handleSlotChange} />
           </div>
         </main>
         <footer
@@ -372,7 +371,7 @@ export class BqDialog {
           ref={(footerElem) => (this.footerElem = footerElem)}
           part="footer"
         >
-          <slot name="footer" onSlotchange={this.handleFooterSlotChange} />
+          <slot name="footer" onSlotchange={this.handleSlotChange} />
         </footer>
       </dialog>
     );

@@ -10,15 +10,16 @@ import tailwind, { PluginConfigOpts, tailwindHMR } from 'stencil-tailwind-plugin
 import { angularValueAccessorBindings, generateCustomElementsJson, vueComponentModels } from './src/tools';
 import tailwindConf from '../../tailwind.config';
 
-const tailwindOpts: PluginConfigOpts = {
-  postcss: resolve(__dirname, '../../postcss.config.js').replace(/\\/g, '/'),
-  tailwindConf: tailwindConf,
-  stripComments: true,
-};
-
 const namespace = 'beeq';
 const componentCorePackage = `@${namespace}/core`;
 const customElementsDir = 'dist/components';
+const resolvePath = (path: string) => resolve(__dirname, path).replace(/\\/g, '/');
+
+const tailwindOpts: PluginConfigOpts = {
+  postcss: resolvePath('../../postcss.config.js'),
+  tailwindConf: tailwindConf,
+  stripComments: true,
+};
 
 export const config: Config = {
   namespace,
@@ -28,14 +29,11 @@ export const config: Config = {
   env: {
     BEEQ_ASSETS_BASE_PATH: process.env.BEEQ_ASSETS_BASE_PATH,
   },
-  globalStyle: resolve(__dirname, './src/global/styles/default.scss').replace(/\\/g, '/'),
+  globalStyle: resolvePath('./src/global/styles/default.scss'),
   plugins: [
     sass({
-      includePaths: [
-        resolve(__dirname, '../../node_modules').replace(/\\/g, '/'),
-        resolve(__dirname, 'src/global/styles').replace(/\\/g, '/'),
-      ],
-      injectGlobalPaths: [resolve(__dirname, 'src/global/styles/mixins/index.scss').replace(/\\/g, '/')],
+      includePaths: [resolvePath('../../node_modules'), resolvePath('src/global/styles')],
+      injectGlobalPaths: [resolvePath('src/global/styles/mixins/index.scss')],
       outputStyle: 'compressed',
       sourceMap: true,
       sourceMapEmbed: true,
@@ -75,37 +73,39 @@ export const config: Config = {
       serviceWorker: null, // disable service workers
     },
     angular({
+      /* --------------------------- Angular output target -------------------------- */
       componentCorePackage,
       outputType: 'component', // Generate many component wrappers tied to a single Angular module (lazy/hydrated approach)
-      directivesProxyFile: resolve(__dirname, '../beeq-angular/src/directives/components.ts').replace(/\\/g, '/'),
-      directivesArrayFile: resolve(__dirname, '../beeq-angular/src/directives/index.ts').replace(/\\/g, '/'),
+      directivesProxyFile: resolvePath('../beeq-angular/src/directives/components.ts'),
+      directivesArrayFile: resolvePath('../beeq-angular/src/directives/index.ts'),
       valueAccessorConfigs: angularValueAccessorBindings,
       inlineProperties: true,
       customElementsDir,
     }),
     angular({
+      /* -------------------- Angular Standalone output target -------------------- */
       componentCorePackage,
       outputType: 'standalone', // Generate a component with the standalone flag set to true.
-      directivesProxyFile: resolve(__dirname, '../beeq-angular/standalone/src/directives/components.ts').replace(
-        /\\/g,
-        '/',
-      ),
-      directivesArrayFile: resolve(__dirname, '../beeq-angular/standalone/src/directives/index.ts').replace(/\\/g, '/'),
+      directivesProxyFile: resolvePath('../beeq-angular/standalone/src/directives/components.ts'),
+      directivesArrayFile: resolvePath('../beeq-angular/standalone/src/directives/index.ts'),
       valueAccessorConfigs: angularValueAccessorBindings,
       customElementsDir,
     }),
     react({
-      outDir: resolve(__dirname, '../beeq-react/src/').replace(/\\/g, '/'),
+      /* --------------------------- React output target -------------------------- */
+      outDir: resolvePath('../beeq-react/src/'),
       customElementsDir,
     }),
     react({
-      outDir: resolve(__dirname, '../beeq-react/ssr').replace(/\\/g, '/'),
+      /* ------------------------- React SSR output target ------------------------ */
+      outDir: resolvePath('../beeq-react/ssr'),
       hydrateModule: '@beeq/core/dist/hydrate',
       customElementsDir,
     }),
     vue({
+      /* ---------------------------- Vue output target --------------------------- */
       componentCorePackage,
-      proxiesFile: resolve(__dirname, '../beeq-vue/src/components.ts').replace(/\\/g, '/'),
+      proxiesFile: resolvePath('../beeq-vue/src/components.ts'),
       includeImportCustomElements: true,
       includePolyfills: false,
       includeDefineCustomElements: false,
