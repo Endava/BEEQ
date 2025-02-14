@@ -1,0 +1,13 @@
+diff --git a/node_modules/@nxext/stencil/src/executors/stencil-runtime/stencil-config.js b/node_modules/@nxext/stencil/src/executors/stencil-runtime/stencil-config.js
+index 4e17cca..df259f9 100644
+--- a/node_modules/@nxext/stencil/src/executors/stencil-runtime/stencil-config.js
++++ b/node_modules/@nxext/stencil/src/executors/stencil-runtime/stencil-config.js
+@@ -38,7 +38,7 @@ function initializeStencilConfig(taskCommand, options, context, flags) {
+             sys,
+         });
+         const loadedConfig = loadConfigResults.config;
+-        const strictConfig = Object.assign(Object.assign({}, loadedConfig), { flags: flags, logger, outputTargets: (_a = loadedConfig.outputTargets) !== null && _a !== void 0 ? _a : [], rootDir: (_b = loadedConfig.rootDir) !== null && _b !== void 0 ? _b : '/', sys: sys !== null && sys !== void 0 ? sys : loadedConfig.sys, testing: (_c = loadedConfig.testing) !== null && _c !== void 0 ? _c : {} });
++        const strictConfig = Object.assign(Object.assign({}, loadedConfig), { flags: flags, logger, outputTargets: (_a = loadedConfig === null || loadedConfig === void 0 ? void 0 : loadedConfig.outputTargets) !== null && _a !== void 0 ? _a : [], rootDir: (_b = loadedConfig === null || loadedConfig === void 0 ? void 0 : loadedConfig.rootDir) !== null && _b !== void 0 ? _b : '/', sys: sys !== null && sys !== void 0 ? sys : loadedConfig === null || loadedConfig === void 0 ? void 0 : loadedConfig.sys, testing: (_c = loadedConfig === null || loadedConfig === void 0 ? void 0 : loadedConfig.testing) !== null && _c !== void 0 ? _c : {} });
+         if (strictConfig.flags.task === 'build') {
+             strictConfig.rootDir = distDir;
+             strictConfig.packageJsonFilePath = (0, normalize_path_1.normalizePath)((0, path_1.join)(distDir, 'package.json'));
