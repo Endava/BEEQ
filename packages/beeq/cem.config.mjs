@@ -10,7 +10,7 @@
  * https://custom-elements-manifest.open-wc.org/analyzer/
  */
 
-import { customJSDocTagsPlugin } from 'cem-plugin-custom-jsdoc-tags';
+import { jsDocTagsPlugin } from '@wc-toolkit/jsdoc-tags';
 import { expandTypesPlugin, getTsProgram } from 'cem-plugin-expanded-types';
 import { jsdocExamplePlugin } from 'cem-plugin-jsdoc-example';
 import { customElementVsCodePlugin } from 'custom-element-vs-code-integration';
@@ -74,7 +74,7 @@ export default {
   plugins: [
     expandTypesPlugin(),
     jsdocExamplePlugin(),
-    customJSDocTagsPlugin({
+    jsDocTagsPlugin({
       tags: {
         dependency: {
           mappedName: 'dependencies',
