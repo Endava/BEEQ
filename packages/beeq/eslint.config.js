@@ -122,7 +122,7 @@ module.exports = [
             '@stencil/react-output-target',
             '@stencil/sass',
             '@stencil/vue-output-target',
-            'cem-plugin-custom-jsdoc-tags',
+            '@wc-toolkit/jsdoc-tags',
             'cem-plugin-expanded-types',
             'cem-plugin-jsdoc-example',
             'custom-element-jsx-integration',
