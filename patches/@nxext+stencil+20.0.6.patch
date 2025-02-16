@@ -1,5 +1,28 @@
+diff --git a/node_modules/@nxext/stencil/src/executors/stencil-runtime/prepare-config-and-outputarget-paths.js b/node_modules/@nxext/stencil/src/executors/stencil-runtime/prepare-config-and-outputarget-paths.js
+index f524f03..bbece15 100644
+--- a/node_modules/@nxext/stencil/src/executors/stencil-runtime/prepare-config-and-outputarget-paths.js
++++ b/node_modules/@nxext/stencil/src/executors/stencil-runtime/prepare-config-and-outputarget-paths.js
+@@ -80,14 +80,14 @@ function prepareConfigAndOutputargetPaths(config, pathCollection) {
+         ];
+         const outputTargets = calculateOutputTargetPathVariables(config, pathCollection, pathVariables);
+         const devServerConfig = Object.assign(config.devServer, {
+-            root: config.devServer.root.replace(pathCollection.projectRoot, pathCollection.distDir),
++            root: (_a = config.devServer.root) === null || _a === void 0 ? void 0 : _a.replace(pathCollection.projectRoot, pathCollection.distDir),
+             openBrowser: config.flags.open,
+         });
+-        if (!config.flags.e2e) {
+-            config.packageJsonFilePath = config.packageJsonFilePath.replace(pathCollection.projectRoot, pathCollection.distDir);
++        if (!((_b = config.flags) === null || _b === void 0 ? void 0 : _b.e2e)) {
++            config.packageJsonFilePath = (_c = config.packageJsonFilePath) === null || _c === void 0 ? void 0 : _c.replace(pathCollection.projectRoot, pathCollection.distDir);
+         }
+         else {
+-            config.packageJsonFilePath = config.packageJsonFilePath.replace('package.json', 'package.e2e.json');
++            config.packageJsonFilePath = (_d = config.packageJsonFilePath) === null || _d === void 0 ? void 0 : _d.replace('package.json', 'package.e2e.json');
+         }
+         return Object.assign(Object.assign({}, config), { outputTargets: outputTargets, devServer: devServerConfig });
+     });
 diff --git a/node_modules/@nxext/stencil/src/executors/stencil-runtime/stencil-config.js b/node_modules/@nxext/stencil/src/executors/stencil-runtime/stencil-config.js
-index 4e17cca..df259f9 100644
+index 4e17cca..3a61c31 100644
 --- a/node_modules/@nxext/stencil/src/executors/stencil-runtime/stencil-config.js
 +++ b/node_modules/@nxext/stencil/src/executors/stencil-runtime/stencil-config.js
 @@ -38,7 +38,7 @@ function initializeStencilConfig(taskCommand, options, context, flags) {
@@ -11,3 +34,20 @@ index 4e17cca..df259f9 100644
          if (strictConfig.flags.task === 'build') {
              strictConfig.rootDir = distDir;
              strictConfig.packageJsonFilePath = (0, normalize_path_1.normalizePath)((0, path_1.join)(distDir, 'package.json'));
+diff --git a/node_modules/@nxext/stencil/src/executors/test/executor.js b/node_modules/@nxext/stencil/src/executors/test/executor.js
+index d784a66..4fb59fc 100644
+--- a/node_modules/@nxext/stencil/src/executors/test/executor.js
++++ b/node_modules/@nxext/stencil/src/executors/test/executor.js
+@@ -16,12 +16,6 @@ function createStencilCompilerOptions(taskCommand, options) {
+ function runExecutor(options, context) {
+     return tslib_1.__awaiter(this, void 0, void 0, function* () {
+         const taskCommand = 'test';
+-        devkit_1.logger.info(`
+-  ###
+-  ### You have to downgrade the Jest packages to Jest 27. We won't do this automatically cause it could break other Nx projects.
+-  ### Stencil itself supports just Jest 27, Nx uses Jest 28 by default. Downgrade with caution!
+-  ###
+-  `);
+         const flags = createStencilCompilerOptions(taskCommand, options);
+         const { strictConfig, pathCollection } = yield (0, stencil_runtime_1.initializeStencilConfig)(taskCommand, options, context, flags);
+         const stencilConfig = yield (0, stencil_runtime_1.prepareConfigAndOutputargetPaths)(strictConfig, pathCollection);
