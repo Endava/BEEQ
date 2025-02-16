@@ -1,28 +1,37 @@
 diff --git a/node_modules/@nxext/stencil/src/executors/stencil-runtime/prepare-config-and-outputarget-paths.js b/node_modules/@nxext/stencil/src/executors/stencil-runtime/prepare-config-and-outputarget-paths.js
-index f524f03..bbece15 100644
+index f524f03..b208416 100644
 --- a/node_modules/@nxext/stencil/src/executors/stencil-runtime/prepare-config-and-outputarget-paths.js
 +++ b/node_modules/@nxext/stencil/src/executors/stencil-runtime/prepare-config-and-outputarget-paths.js
-@@ -80,14 +80,14 @@ function prepareConfigAndOutputargetPaths(config, pathCollection) {
+@@ -55,6 +55,7 @@ function prepareDistDirAndPkgJson(pathCollection) {
+ }
+ function prepareConfigAndOutputargetPaths(config, pathCollection) {
+     return tslib_1.__awaiter(this, void 0, void 0, function* () {
++        var _a, _b, _c, _d, _e;
+         prepareDistDirAndPkgJson(pathCollection);
+         if (config.flags.e2e) {
+             (0, e2e_testing_1.prepareE2eTesting)(pathCollection);
+@@ -80,14 +81,14 @@ function prepareConfigAndOutputargetPaths(config, pathCollection) {
          ];
          const outputTargets = calculateOutputTargetPathVariables(config, pathCollection, pathVariables);
          const devServerConfig = Object.assign(config.devServer, {
 -            root: config.devServer.root.replace(pathCollection.projectRoot, pathCollection.distDir),
+-            openBrowser: config.flags.open,
 +            root: (_a = config.devServer.root) === null || _a === void 0 ? void 0 : _a.replace(pathCollection.projectRoot, pathCollection.distDir),
-             openBrowser: config.flags.open,
++            openBrowser: (_b = config.flags) === null || _b === void 0 ? void 0 : _b.open,
          });
 -        if (!config.flags.e2e) {
 -            config.packageJsonFilePath = config.packageJsonFilePath.replace(pathCollection.projectRoot, pathCollection.distDir);
-+        if (!((_b = config.flags) === null || _b === void 0 ? void 0 : _b.e2e)) {
-+            config.packageJsonFilePath = (_c = config.packageJsonFilePath) === null || _c === void 0 ? void 0 : _c.replace(pathCollection.projectRoot, pathCollection.distDir);
++        if (!((_c = config.flags) === null || _c === void 0 ? void 0 : _c.e2e)) {
++            config.packageJsonFilePath = (_d = config.packageJsonFilePath) === null || _d === void 0 ? void 0 : _d.replace(pathCollection.projectRoot, pathCollection.distDir);
          }
          else {
 -            config.packageJsonFilePath = config.packageJsonFilePath.replace('package.json', 'package.e2e.json');
-+            config.packageJsonFilePath = (_d = config.packageJsonFilePath) === null || _d === void 0 ? void 0 : _d.replace('package.json', 'package.e2e.json');
++            config.packageJsonFilePath = (_e = config.packageJsonFilePath) === null || _e === void 0 ? void 0 : _e.replace('package.json', 'package.e2e.json');
          }
          return Object.assign(Object.assign({}, config), { outputTargets: outputTargets, devServer: devServerConfig });
      });
 diff --git a/node_modules/@nxext/stencil/src/executors/stencil-runtime/stencil-config.js b/node_modules/@nxext/stencil/src/executors/stencil-runtime/stencil-config.js
-index 4e17cca..3a61c31 100644
+index 4e17cca..df259f9 100644
 --- a/node_modules/@nxext/stencil/src/executors/stencil-runtime/stencil-config.js
 +++ b/node_modules/@nxext/stencil/src/executors/stencil-runtime/stencil-config.js
 @@ -38,7 +38,7 @@ function initializeStencilConfig(taskCommand, options, context, flags) {
@@ -35,7 +44,7 @@ index 4e17cca..3a61c31 100644
              strictConfig.rootDir = distDir;
              strictConfig.packageJsonFilePath = (0, normalize_path_1.normalizePath)((0, path_1.join)(distDir, 'package.json'));
 diff --git a/node_modules/@nxext/stencil/src/executors/test/executor.js b/node_modules/@nxext/stencil/src/executors/test/executor.js
-index d784a66..4fb59fc 100644
+index d784a66..6a53c5e 100644
 --- a/node_modules/@nxext/stencil/src/executors/test/executor.js
 +++ b/node_modules/@nxext/stencil/src/executors/test/executor.js
 @@ -16,12 +16,6 @@ function createStencilCompilerOptions(taskCommand, options) {
