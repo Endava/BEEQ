@@ -1,13 +1,13 @@
 {
   "name": "@beeq/react",
-  "version": "1.8.3",
+  "version": "1.8.4",
   "license": "Apache-2.0",
   "description": "React specific wrapper for BEEQ Design System components",
   "main": "./src/index.js",
   "module": "./src/index.js",
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@beeq/core": "^1.8.3",
+    "@beeq/core": "^1.8.4",
     "@stencil/react-output-target": "^0.8.2"
   },
   "peerDependencies": {

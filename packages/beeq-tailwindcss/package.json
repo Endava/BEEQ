@@ -1,6 +1,6 @@
 {
   "name": "@beeq/tailwindcss",
-  "version": "1.8.3",
+  "version": "1.8.4",
   "license": "Apache-2.0",
   "description": "BEEQ's opinionated TailwindCSS configuration",
   "main": "./index.cjs.js",

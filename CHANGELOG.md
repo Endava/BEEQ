@@ -1,3 +1,28 @@
+## 1.8.4 (2025-02-17)
+
+### Bug Fixes 🐞
+
+- **React SSR:** avoid dynamic import for the Cally calendar web component used on `bq-date-picker` ([#1431](https://github.com/Endava/BEEQ/pull/1431))
+
+### Chore ⚙️
+
+- **deps:** update dependency @stencil/core to v4.25.3 ([#1429](https://github.com/Endava/BEEQ/pull/1429))
+- **deps:** update storybook to v8.5.3 ([#1430](https://github.com/Endava/BEEQ/pull/1430))
+- **deps:** update dependency @stencil/core to v4.26.0 ([#1432](https://github.com/Endava/BEEQ/pull/1432))
+- **deps:** update storybook to v8.5.5 ([#1433](https://github.com/Endava/BEEQ/pull/1433))
+- **deps:** replace `cem-plugin-custom-jsdoc-tags` dependency with `@wc-toolkit/jsdoc-tags` ([#1434](https://github.com/Endava/BEEQ/pull/1434))
+- **deps:** update nx to v20.4.3 ([#1435](https://github.com/Endava/BEEQ/pull/1435))
+- **deps:** update storybook to v8.5.6 ([#1436](https://github.com/Endava/BEEQ/pull/1436))
+- **deps:** update angular to v18.2.14 ([#1438](https://github.com/Endava/BEEQ/pull/1438))
+- **deps:** update nx to v20.4.4 ([#1437](https://github.com/Endava/BEEQ/pull/1437))
+- **deps:** update dependency chromatic to v11.25.2 ([#1439](https://github.com/Endava/BEEQ/pull/1439))
+- **deps:** update dependency prettier to v3.5.1 ([#1440](https://github.com/Endava/BEEQ/pull/1440))
+- **deps:** update dependency @types/react to v19.0.9 ([#1441](https://github.com/Endava/BEEQ/pull/1441))
+
+### ❤️ Thank You
+
+- Dabiel González Ramos @dgonzalezr
+
 ## 1.8.3 (2025-01-31)
 
 ### Chore ⚙️
