@@ -1,42 +1,49 @@
 diff --git a/src/executors/stencil-runtime/prepare-config-and-outputarget-paths.js b/src/executors/stencil-runtime/prepare-config-and-outputarget-paths.js
-index f524f0381c45121eaf0f362ab8f7fcd08367e156..7ccfeeff11a50e49d5b869653ae5e5acabe929e6 100644
+index f524f0381c45121eaf0f362ab8f7fcd08367e156..f0bbe77eede3ea0d5cce55e0c26893b6bd2df720 100644
 --- a/src/executors/stencil-runtime/prepare-config-and-outputarget-paths.js
 +++ b/src/executors/stencil-runtime/prepare-config-and-outputarget-paths.js
 @@ -55,6 +55,7 @@ function prepareDistDirAndPkgJson(pathCollection) {
  }
  function prepareConfigAndOutputargetPaths(config, pathCollection) {
      return tslib_1.__awaiter(this, void 0, void 0, function* () {
-+        var _a, _b, _c, _d, _e, _f;
++        var _a, _b, _c, _d, _e;
          prepareDistDirAndPkgJson(pathCollection);
          if (config.flags.e2e) {
              (0, e2e_testing_1.prepareE2eTesting)(pathCollection);
-@@ -80,14 +81,14 @@ function prepareConfigAndOutputargetPaths(config, pathCollection) {
+@@ -79,15 +80,17 @@ function prepareConfigAndOutputargetPaths(config, pathCollection) {
+             'componentDts',
          ];
          const outputTargets = calculateOutputTargetPathVariables(config, pathCollection, pathVariables);
-         const devServerConfig = Object.assign(config.devServer, {
+-        const devServerConfig = Object.assign(config.devServer, {
 -            root: config.devServer.root.replace(pathCollection.projectRoot, pathCollection.distDir),
 -            openBrowser: config.flags.open,
-+            root: (_b = (_a = config.devServer) === null || _a === void 0 ? void 0 : _a.root) === null || _b === void 0 ? void 0 : _b.replace(pathCollection.projectRoot, pathCollection.distDir),
-+            openBrowser: (_c = config.flags) === null || _c === void 0 ? void 0 : _c.open,
-         });
+-        });
 -        if (!config.flags.e2e) {
 -            config.packageJsonFilePath = config.packageJsonFilePath.replace(pathCollection.projectRoot, pathCollection.distDir);
-+        if (!((_d = config.flags) === null || _d === void 0 ? void 0 : _d.e2e)) {
-+            config.packageJsonFilePath = (_e = config.packageJsonFilePath) === null || _e === void 0 ? void 0 : _e.replace(pathCollection.projectRoot, pathCollection.distDir);
++        const devServerConfig = config.devServer
++            ? Object.assign(config.devServer, {
++                root: (_a = config.devServer.root) === null || _a === void 0 ? void 0 : _a.replace(pathCollection.projectRoot, pathCollection.distDir),
++                openBrowser: (_b = config.flags) === null || _b === void 0 ? void 0 : _b.open,
++            })
++            : undefined;
++        if (!((_c = config.flags) === null || _c === void 0 ? void 0 : _c.e2e)) {
++            config.packageJsonFilePath = (_d = config.packageJsonFilePath) === null || _d === void 0 ? void 0 : _d.replace(pathCollection.projectRoot, pathCollection.distDir);
          }
          else {
 -            config.packageJsonFilePath = config.packageJsonFilePath.replace('package.json', 'package.e2e.json');
-+            config.packageJsonFilePath = (_f = config.packageJsonFilePath) === null || _f === void 0 ? void 0 : _f.replace('package.json', 'package.e2e.json');
++            config.packageJsonFilePath = (_e = config.packageJsonFilePath) === null || _e === void 0 ? void 0 : _e.replace('package.json', 'package.e2e.json');
          }
          return Object.assign(Object.assign({}, config), { outputTargets: outputTargets, devServer: devServerConfig });
      });
 diff --git a/src/executors/stencil-runtime/stencil-config.js b/src/executors/stencil-runtime/stencil-config.js
-index 4e17cca33f8480d1c7a5d0f93fe3fb1c4b58db49..3a61c31bf7810121dd63ecd389fd80560f8cfc45 100644
+index 4e17cca33f8480d1c7a5d0f93fe3fb1c4b58db49..834e3ac7928ec84f28908594a971a65f99329a51 100644
 --- a/src/executors/stencil-runtime/stencil-config.js
 +++ b/src/executors/stencil-runtime/stencil-config.js
-@@ -38,7 +38,7 @@ function initializeStencilConfig(taskCommand, options, context, flags) {
+@@ -37,8 +37,9 @@ function initializeStencilConfig(taskCommand, options, context, flags) {
+             logger,
              sys,
          });
++        console.log('loadConfigResults', loadConfigResults);
          const loadedConfig = loadConfigResults.config;
 -        const strictConfig = Object.assign(Object.assign({}, loadedConfig), { flags: flags, logger, outputTargets: (_a = loadedConfig.outputTargets) !== null && _a !== void 0 ? _a : [], rootDir: (_b = loadedConfig.rootDir) !== null && _b !== void 0 ? _b : '/', sys: sys !== null && sys !== void 0 ? sys : loadedConfig.sys, testing: (_c = loadedConfig.testing) !== null && _c !== void 0 ? _c : {} });
 +        const strictConfig = Object.assign(Object.assign({}, loadedConfig), { flags: flags, logger, outputTargets: (_a = loadedConfig === null || loadedConfig === void 0 ? void 0 : loadedConfig.outputTargets) !== null && _a !== void 0 ? _a : [], rootDir: (_b = loadedConfig === null || loadedConfig === void 0 ? void 0 : loadedConfig.rootDir) !== null && _b !== void 0 ? _b : '/', sys: sys !== null && sys !== void 0 ? sys : loadedConfig === null || loadedConfig === void 0 ? void 0 : loadedConfig.sys, testing: (_c = loadedConfig === null || loadedConfig === void 0 ? void 0 : loadedConfig.testing) !== null && _c !== void 0 ? _c : {} });

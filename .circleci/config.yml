@@ -31,7 +31,7 @@ commands:
     steps:
       - run:
           name: 🚀 Publish to Chromatic
-          command: pnpdx chromatic --project-token=${CHROMATIC_PROJECT_TOKEN} --ci --debug --no-file-hashing
+          command: pnpm exec chromatic --project-token=${CHROMATIC_PROJECT_TOKEN} --ci --debug --no-file-hashing
 
 # ---------------------------------------------------------------------------- #
 #                         Jobs are collections of steps                        #
@@ -85,7 +85,7 @@ jobs:
           command: pnpm exec nx affected -t lint --exclude='*,!tag:publishable' --parallel=4 --output-style=stream --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 🧰 Run Unit Tests
-          command: pnpm exec nx affected -t test --exclude='*,!tag:core' --parallel=4 --output-style=stream --ci --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t test --exclude='*,!tag:core' --parallel=4 --output-style=stream --ci --base=$NX_BASE --head=$NX_HEAD --verbose --skip-nx-cache
       - run:
           name: ⏳ Build Libraries
           command: pnpm exec nx affected -t build --exclude='*,!tag:publishable' --parallel=4 --output-style=stream --base=$NX_BASE --head=$NX_HEAD --verbose
