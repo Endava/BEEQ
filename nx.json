@@ -21,49 +21,37 @@
     ]
   },
   "targetDefaults": {
-    "prebuild": {
-      "cache": true
-    },
+    "cem": { "cache": true },
+    "icons": { "cache": true },
+    "lint": { "cache": true },
+    "stylelint": { "cache": true },
+    "prepare-storybook": { "cache": true },
+    "prebuild": { "cache": true },
     "build": {
+      "cache": true,
       "dependsOn": ["^build"],
-      "inputs": ["production", "^production"],
-      "cache": true
+      "inputs": ["production", "^production"]
     },
     "test": {
-      "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"],
-      "cache": true
+      "cache": true,
+      "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"]
     },
     "e2e": {
-      "dependsOn": [{ "target": "build", "projects": "beeq" }],
+      "cache": true,
       "inputs": ["default", "^production"],
-      "cache": true
-    },
-    "cem": {
-      "cache": true
-    },
-    "icons": {
-      "cache": true
-    },
-    "lint": {
-      "cache": true
-    },
-    "prepare-storybook": {
-      "cache": true
+      "dependsOn": [{ "target": "build", "projects": "beeq" }]
     },
     "storybook-build": {
+      "cache": true,
       "dependsOn": [
         { "target": "prepare-storybook", "projects": "beeq" },
         { "target": "build", "projects": "beeq" },
         { "target": "storybook-build-css", "projects": "beeq" }
-      ],
-      "cache": true
+      ]
     },
     "storybook-build-css": {
-      "dependsOn": [{ "target": "build", "projects": "beeq-tailwindcss" }],
-      "cache": true
-    },
-    "stylelint": {
-      "cache": true
+      "cache": true,
+      "dependsOn": [{ "target": "build", "projects": "beeq-tailwindcss" }]
     },
     "@nx/eslint:lint": {
       "cache": true,

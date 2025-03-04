@@ -2,6 +2,7 @@
 
 # compiled output
 .nx/*
+.stencil
 !.nx/workflows
 !.nx/nxw.js
 /dist

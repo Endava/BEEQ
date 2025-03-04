@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 
 import { angularOutputTarget as angular } from '@stencil/angular-output-target';
-import { Config } from '@stencil/core';
+import type { Config } from '@stencil/core';
 import { reactOutputTarget as react } from '@stencil/react-output-target';
 import { sass } from '@stencil/sass';
 import { vueOutputTarget as vue } from '@stencil/vue-output-target';
@@ -26,9 +26,8 @@ export const config: Config = {
   taskQueue: 'async',
   buildDist: true,
   enableCache: true,
-  env: {
-    BEEQ_ASSETS_BASE_PATH: process.env.BEEQ_ASSETS_BASE_PATH,
-  },
+  cacheDir: resolvePath('../../.stencil'),
+  sourceMap: true,
   globalStyle: resolvePath('./src/global/styles/default.scss'),
   plugins: [
     sass({
