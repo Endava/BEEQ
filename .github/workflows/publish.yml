@@ -38,23 +38,23 @@ jobs:
         uses: ./.github/actions/cache-deps
 
       - name: ⏳ Build
-        run: npm run build
+        run: pnpm build
         shell: bash
 
       - name: 👀 Check NPM credentials
         run: |
           echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" >> .npmrc
-          npm whoami
+          pnpm whoami
 
       - name: 🚀 Publish BEEQ to NPM registry
-        run: npx nx release publish --parallel=5 --output-style=stream
+        run: pnpm exec nx release publish --parallel=5 --output-style=stream
         env:
           NPM_CONFIG_PROVENANCE: true
 
       - name: 🚚 Deploy BEEQ Storybook to GitHub Pages
         uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
         with:
-          build_command: npm run build
+          build_command: pnpm build:storybook
           checkout: false
-          install_command: npm ci
+          install_command: pnpm install --frozen-lockfile
           path: ./dist/storybook/beeq

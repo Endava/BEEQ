@@ -28,7 +28,7 @@ jobs:
       - name: 🚚 Deploy BEEQ Storybook to GitHub Pages
         uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
         with:
-          build_command: npm run build
+          build_command: pnpm build:storybook
           checkout: false
-          install_command: npm ci
+          install_command: pnpm install --frozen-lockfile
           path: ./dist/storybook/beeq
