@@ -26,12 +26,6 @@ commands:
           command: |
             $HOME/.volta/bin/node --version
             $HOME/.volta/bin/pnpm --version
-      - run:
-          name: 🔧 Setup PNPM aliases
-          command: |
-            echo 'alias pnpx="pnpm exec"' >> $BASH_ENV
-            echo 'alias pnpdx="pnpm dlx"' >> $BASH_ENV
-            source $BASH_ENV
   chromatic-deployment:
     description: Publish changes to Chromatic storybook
     steps:
@@ -56,10 +50,10 @@ jobs:
     steps:
       # Checkout the code as the first step.
       - checkout
+      - setup-node
       - run:
           name: ▶️ Start Nx Cloud Agents
-          command: pnpx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --with-env-vars="NX_VERBOSE_LOGGING"
-      - setup-node
+          command: pnpm dlx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --with-env-vars="NX_VERBOSE_LOGGING"
       - restore_cache:
           name: 💫 Restore PNPM dependencies
           # CircleCI will first try to load a cache associated with the current version of pnpm-lock.yaml.
@@ -85,25 +79,25 @@ jobs:
           # Derives SHAs for base and head for use in `nx affected` commands in CI
       - run:
           name: 🧾 NX report
-          command: pnpx nx report
+          command: pnpm exec nx report
       - run:
           name: 🩺 Run Linters
-          command: pnpx nx affected -t lint --exclude='*,!tag:publishable' --parallel=3 --output-style=stream --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t lint --exclude='*,!tag:publishable' --parallel=4 --output-style=stream --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 🧰 Run Unit Tests
-          command: pnpx nx affected -t test --exclude='*,!tag:core' --parallel=3 --output-style=stream --ci --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t test --exclude='*,!tag:core' --parallel=4 --output-style=stream --ci --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: ⏳ Build Libraries
-          command: pnpx nx affected -t build --exclude='*,!tag:publishable' --parallel=3 --output-style=stream --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t build --exclude='*,!tag:publishable' --parallel=4 --output-style=stream --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 🧪 Run E2E Tests
-          command: pnpx nx affected -t e2e --exclude='*,!tag:core' --parallel=3 --ci --code-coverage --output-style=stream --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t e2e --exclude='*,!tag:core' --parallel=4 --ci --code-coverage --output-style=stream --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 📚 Build Storybook
-          command: pnpx nx run beeq:storybook-build --output-style=stream --verbose
+          command: pnpm exec nx run beeq:storybook-build --parallel --output-style=stream --verbose
       - run:
           name: ⏹️ Stop Nx Cloud Agents
-          command: pnpx nx-cloud stop-all-agents
+          command: pnpm dlx nx-cloud stop-all-agents
       - chromatic-deployment
 
 # ---------------------------------------------------------------------------- #
