@@ -1,8 +1,11 @@
-import { Component, Element, Event, EventEmitter, h, Prop, Watch } from '@stencil/core';
+import { Component, Element, Event, h, Prop, Watch } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 
-import { STEP_ITEM_STATUS, TStepItemStatus } from './bq-step-item.types';
+import { STEP_ITEM_STATUS } from './bq-step-item.types';
+import type { TStepItemStatus } from './bq-step-item.types';
 import { isHTMLElement, validatePropValue } from '../../shared/utils';
-import { STEPS_SIZE, TStepsSize, TStepsType } from '../steps/bq-steps.types';
+import { STEPS_SIZE } from '../steps/bq-steps.types';
+import type { TStepsSize, TStepsType } from '../steps/bq-steps.types';
 
 /**
  * The Step Item Component is a UI element used to display a single step or stage in a process or task.

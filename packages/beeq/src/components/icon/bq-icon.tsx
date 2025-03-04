@@ -1,6 +1,7 @@
-import { Component, Event, EventEmitter, h, Host, Prop, State, Watch } from '@stencil/core';
+import { Component, Event, h, Host, Prop, State, Watch } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 
-import { TIconWeight } from './bq-icon.types';
+import type { TIconWeight } from './bq-icon.types';
 import { getSvgContent, iconContent } from './helper/request';
 import { getBasePath, getColorCSSVariable, isNil } from '../../shared/utils';
 
@@ -146,7 +147,7 @@ export class BqIcon {
   };
 
   private getIconSource = (name: string) => {
-    if (!this.name && !this.src) return;
+    if (!this.name && !this.src) return undefined;
     // Return the src if it is set
     if (this.src) return this.src;
 

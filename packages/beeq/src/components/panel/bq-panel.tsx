@@ -1,7 +1,7 @@
 import { ReferenceElement } from '@floating-ui/dom';
 import { Component, Element, h, Prop, Watch } from '@stencil/core';
 
-import { Placement } from '../../services/interfaces';
+import type { Placement } from '../../services/interfaces';
 import { FloatingUI } from '../../services/libraries';
 
 /**

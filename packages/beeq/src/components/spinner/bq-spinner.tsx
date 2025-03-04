@@ -1,6 +1,7 @@
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 
-import { SPINNER_SIZE, SPINNER_TEXT_POSITION, TSpinnerSize, TSpinnerTextPosition } from './bq-spinner.types';
+import { SPINNER_SIZE, SPINNER_TEXT_POSITION } from './bq-spinner.types';
+import type { TSpinnerSize, TSpinnerTextPosition } from './bq-spinner.types';
 import {
   getCSSVariableValue,
   getTextContent,

@@ -1,9 +1,10 @@
-import { Component, Element, Event, EventEmitter, h, Listen, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, h, Listen, Prop, State, Watch } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 
-import { ACCORDION_APPEARANCE, ACCORDION_SIZE, TAccordionAppearance, TAccordionSize } from './bq-accordion.types';
+import { ACCORDION_APPEARANCE, ACCORDION_SIZE } from './bq-accordion.types';
+import type { TAccordionAppearance, TAccordionSize } from './bq-accordion.types';
 import { Accordion } from './helper';
 import { hasSlotContent, validatePropValue } from '../../shared/utils';
-
 /**
  * The Accordion is a UI component that allows users to toggle between showing and hiding content sections. It provides a collapsible functionality, where only one section can be expanded at a time, while the others remain collapsed.
  *

@@ -1,14 +1,9 @@
-import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop, Watch } from '@stencil/core';
+import { Component, Element, Event, h, Host, Listen, Prop, Watch } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 
 import { debounce, getNextElement, isHTMLElement, isNil, TDebounce, validatePropValue } from '../../shared/utils';
-import {
-  TAB_ORIENTATION,
-  TAB_PLACEMENT,
-  TAB_SIZE,
-  TTabOrientation,
-  TTabPlacement,
-  TTabSize,
-} from '../tab/bq-tab.types';
+import { TAB_ORIENTATION, TAB_PLACEMENT, TAB_SIZE } from '../tab/bq-tab.types';
+import type { TTabOrientation, TTabPlacement, TTabSize } from '../tab/bq-tab.types';
 
 /**
  * The tab group is a user interface element that allows users wrap a set of tab items.

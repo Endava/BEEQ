@@ -21,7 +21,7 @@
     "build:beeq": "pnpm exec nx run-many -t build -p tag:core --output-style=stream",
     "build:beeq:tailwindcss": "pnpm exec nx run beeq-tailwindcss:build --output-style=stream-without-prefixes",
     "build:wrappers": "pnpm exec nx run-many -t build -p tag:wrapper --parallel --output-style=stream",
-    "build:storybook": "pnpm exec nx run-many -t build-storybook -p tag:core --parallel --output-style=stream",
+    "build:storybook": "pnpm exec nx run-many -t storybook-build -p tag:core --parallel --output-style=stream",
     "lint": "pnpm exec nx run-many -t lint -p tag:publishable --parallel=4 --output-style=stream",
     "lint:branch-name": "chmod 755 .husky/branch-name.sh && sh .husky/branch-name.sh",
     "lint:staged": "lint-staged --verbose",

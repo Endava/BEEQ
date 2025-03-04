@@ -1,7 +1,7 @@
 import { Component, Element, h, Listen, Prop, Watch } from '@stencil/core';
 
 import { isHTMLElement, isNil } from '../../shared/utils';
-import { TAccordionAppearance, TAccordionSize } from '../accordion/bq-accordion.types';
+import type { TAccordionAppearance, TAccordionSize } from '../accordion/bq-accordion.types';
 
 /**
  * The accordion group component is a container for multiple accordion elements.

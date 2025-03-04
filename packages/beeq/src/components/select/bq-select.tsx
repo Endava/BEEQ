@@ -1,20 +1,9 @@
-import {
-  AttachInternals,
-  Component,
-  Element,
-  Event,
-  EventEmitter,
-  h,
-  Listen,
-  Method,
-  Prop,
-  State,
-  Watch,
-} from '@stencil/core';
+import { AttachInternals, Component, Element, Event, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 
-import { Placement } from '../../services/interfaces';
+import type { Placement } from '../../services/interfaces';
 import { debounce, hasSlotContent, isDefined, isHTMLElement, isNil, isString, TDebounce } from '../../shared/utils';
-import { TInputValidation } from '../input/bq-input.types';
+import type { TInputValidation } from '../input/bq-input.types';
 
 export type TSelectValue = string | string[];
 
@@ -535,7 +524,7 @@ export class BqSelect {
   };
 
   private getOptionLabel = (item: HTMLBqOptionElement) => {
-    if (!item) return;
+    if (!item) return '';
     return item.innerText.trim() ?? '';
   };
 

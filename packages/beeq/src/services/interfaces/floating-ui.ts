@@ -1,3 +1,4 @@
+// eslint-disable-next-line import-x/namespace
 import { Placement, Strategy } from '@floating-ui/core';
 
 export interface FloatingUIOptions {
@@ -9,4 +10,4 @@ export interface FloatingUIOptions {
   skidding?: number;
   onPositionChange?: (placement: Placement) => void;
 }
-export { Placement };
+export type { Placement };

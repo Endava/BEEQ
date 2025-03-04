@@ -15,7 +15,7 @@ export const iconContent = new Map<string, string>();
  */
 const fetchSvg = async (url: string, sanitize: boolean): Promise<unknown> => {
   if (isNil(url) || typeof fetch === 'undefined' || typeof window === 'undefined') {
-    return;
+    return undefined;
   }
 
   if (requests.has(url)) return requests.get(url);
@@ -25,7 +25,7 @@ const fetchSvg = async (url: string, sanitize: boolean): Promise<unknown> => {
 
     if (!response.ok) {
       iconContent.set(url, '');
-      return;
+      return undefined;
     }
 
     let svgContent = await response.text();
@@ -39,6 +39,7 @@ const fetchSvg = async (url: string, sanitize: boolean): Promise<unknown> => {
   } catch (error) {
     console.error(`[BqIcon] Failed to fetch SVG from ${url}:`, error);
     iconContent.set(url, '');
+    return undefined;
   }
 };
 
@@ -49,7 +50,7 @@ const fetchSvg = async (url: string, sanitize: boolean): Promise<unknown> => {
  * @returns {Promise<unknown>} - A promise that resolves to the SVG content.
  */
 export const getSvgContent = async (url: string, sanitize: boolean): Promise<unknown> => {
-  if (isNil(url)) return;
+  if (isNil(url)) return undefined;
 
   let req = requests.get(url);
 

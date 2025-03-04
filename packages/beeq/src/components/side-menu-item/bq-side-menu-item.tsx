@@ -1,4 +1,5 @@
-import { Component, Element, Event, EventEmitter, Fragment, h, Prop, State } from '@stencil/core';
+import { Component, Element, Event, Fragment, h, Prop, State } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 
 import { getTextContent } from '../../shared/utils';
 

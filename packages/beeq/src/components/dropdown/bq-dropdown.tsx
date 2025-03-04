@@ -1,6 +1,7 @@
-import { Component, Element, Event, EventEmitter, h, Listen, Prop, Watch } from '@stencil/core';
+import { Component, Element, Event, h, Listen, Prop, Watch } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 
-import { Placement } from '../../services/interfaces';
+import type { Placement } from '../../services/interfaces';
 
 let id = 0;
 

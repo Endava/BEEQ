@@ -1,6 +1,8 @@
-import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, h, Host, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 
-import { TOAST_PLACEMENT, TOAST_TYPE, TToastBorderRadius, TToastPlacement, TToastType } from './bq-toast.types';
+import { TOAST_PLACEMENT, TOAST_TYPE } from './bq-toast.types';
+import type { TToastBorderRadius, TToastPlacement, TToastType } from './bq-toast.types';
 import { debounce, isClient, TDebounce, validatePropValue } from '../../shared/utils';
 
 const TOAST_PORTAL_SELECTOR = 'bq-toast-portal';

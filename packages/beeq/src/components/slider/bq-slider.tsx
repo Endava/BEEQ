@@ -1,6 +1,7 @@
-import { AttachInternals, Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, h, Prop, State, Watch } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 
-import { TSliderType, TSliderValue } from './bq-slider.types';
+import type { TSliderType, TSliderValue } from './bq-slider.types';
 import { clamp, debounce, isNil, isString, TDebounce } from '../../shared/utils';
 
 /**
@@ -288,7 +289,7 @@ export class BqSlider {
   };
 
   private calculateThumbPosition = (value: number): number => {
-    if (!this.progressElem) return;
+    if (!this.progressElem) return 0;
 
     // Get the width of the track area and the size of the input range thumb
     const trackAreaWidth = this.trackElem.getBoundingClientRect().width;

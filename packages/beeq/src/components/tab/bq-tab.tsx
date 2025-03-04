@@ -1,6 +1,8 @@
-import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, h, Method, Prop, State, Watch } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 
-import { TAB_ORIENTATION, TAB_PLACEMENT, TAB_SIZE, TTabOrientation, TTabPlacement, TTabSize } from './bq-tab.types';
+import { TAB_ORIENTATION, TAB_PLACEMENT, TAB_SIZE } from './bq-tab.types';
+import type { TTabOrientation, TTabPlacement, TTabSize } from './bq-tab.types';
 import { hasSlotContent, validatePropValue } from '../../shared/utils';
 
 /**

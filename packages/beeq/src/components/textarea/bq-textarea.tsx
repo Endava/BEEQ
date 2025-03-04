@@ -1,8 +1,9 @@
-import { AttachInternals, Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, h, Prop, State, Watch } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 
-import { TTextareaAutoCapitalize, TTextareaWrap } from './bq-textarea.types';
+import type { TTextareaAutoCapitalize, TTextareaWrap } from './bq-textarea.types';
 import { debounce, hasSlotContent, isHTMLElement, isNil, TDebounce } from '../../shared/utils';
-import { TInputValidation } from '../input/bq-input.types';
+import type { TInputValidation } from '../input/bq-input.types';
 
 /**
  * The Textarea component is a multi-line text input control that is often used in a form to collect user inputs like comments or reviews.

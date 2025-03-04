@@ -1,6 +1,8 @@
-import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, h, Host, Method, Prop, State, Watch } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 
-import { TAG_COLOR, TAG_SIZE, TAG_VARIANT, TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from './bq-tag.types';
+import { TAG_COLOR, TAG_SIZE, TAG_VARIANT } from './bq-tag.types';
+import type { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from './bq-tag.types';
 import { iconSize, textColor } from './helper';
 import { getColorCSSVariable, hasSlotContent, validatePropValue } from '../../shared/utils';
 

@@ -1,10 +1,8 @@
-import { AttachInternals, Component, Element, Event, EventEmitter, h, Host, Prop, State, Watch } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, h, Host, Prop, State, Watch } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 
-import {
-  BUTTON_APPEARANCE,
-  BUTTON_SIZE,
-  BUTTON_TYPE,
-  BUTTON_VARIANT,
+import { BUTTON_APPEARANCE, BUTTON_SIZE, BUTTON_TYPE, BUTTON_VARIANT } from './bq-button.types';
+import type {
   TButtonAppearance,
   TButtonBorderRadius,
   TButtonSize,

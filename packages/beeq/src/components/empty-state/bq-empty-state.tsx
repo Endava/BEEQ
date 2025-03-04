@@ -1,6 +1,7 @@
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 
-import { EMPTY_STATE_SIZE, SIZE_TO_VALUE_MAP, TEmptyStateSize } from './bq-empty-state.types';
+import { EMPTY_STATE_SIZE, SIZE_TO_VALUE_MAP } from './bq-empty-state.types';
+import type { TEmptyStateSize } from './bq-empty-state.types';
 import { hasSlotContent, validatePropValue } from '../../shared/utils';
 
 /**
