@@ -1,6 +1,8 @@
-import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, h, Host, Method, Prop, State, Watch } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 
-import { ALERT_TYPE, TAlertBorderRadius, TAlertType } from './bq-alert.types';
+import { ALERT_TYPE } from './bq-alert.types';
+import type { TAlertBorderRadius, TAlertType } from './bq-alert.types';
 import { debounce, enter, hasSlotContent, leave, TDebounce, validatePropValue } from '../../shared/utils';
 
 /**

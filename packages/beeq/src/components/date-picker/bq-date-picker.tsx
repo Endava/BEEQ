@@ -1,20 +1,10 @@
-import {
-  AttachInternals,
-  Component,
-  Element,
-  Event,
-  EventEmitter,
-  h,
-  Listen,
-  Method,
-  Prop,
-  State,
-  Watch,
-} from '@stencil/core';
+import { AttachInternals, Component, Element, Event, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 
-import { DATE_PICKER_TYPE, DaysOfWeek, TCalendarDate, TDatePickerType } from './bq-date-picker.types';
+import { DATE_PICKER_TYPE } from './bq-date-picker.types';
+import type { DaysOfWeek, TCalendarDate, TDatePickerType } from './bq-date-picker.types';
 import { isCallyLibraryLoaded, loadCallyLibrary } from './helper/callyLibrary';
-import { Placement } from '../../services/interfaces';
+import type { Placement } from '../../services/interfaces';
 import {
   hasSlotContent,
   isClient,
@@ -24,7 +14,7 @@ import {
   isNil,
   validatePropValue,
 } from '../../shared/utils';
-import { TInputValidation } from '../input/bq-input.types';
+import type { TInputValidation } from '../input/bq-input.types';
 
 /**
  * The Date Picker is a intuitive UI element component allows users to select dates from a visual calendar interface, providing an intuitive way to input date information.
@@ -558,16 +548,16 @@ export class BqDatePicker {
    * @param value - The value to be processed, can be a string.
    * @returns The extracted last date portion of the value.
    */
-  private formatFocusedDate = (value: string): string | null => {
-    if (!value) return;
+  private formatFocusedDate = (value: string): string | undefined => {
+    if (!value) return undefined;
 
     const dateRegex = /\b\d{4}-\d{2}-\d{2}\b/;
     const match = dateRegex.exec(value);
-    return match ? match[0] : null;
+    return match ? match[0] : undefined;
   };
 
   private formatDisplayValue = (value: string): string | undefined => {
-    if (!value) return;
+    if (!value) return undefined;
 
     const dateFormatter = new Intl.DateTimeFormat(this.locale, this.formatOptions);
 

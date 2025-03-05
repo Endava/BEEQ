@@ -5,10 +5,8 @@ import {
   DIVIDER_ORIENTATION_ENUM,
   DIVIDER_STROKE_LINECAP,
   DIVIDER_TITLE_ALIGNMENT,
-  TDividerOrientation,
-  TDividerStrokeLinecap,
-  TDividerTitleAlignment,
 } from './bq-divider.types';
+import type { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from './bq-divider.types';
 import { getColorCSSVariable, getTextContent, hasSlotContent, isNil, validatePropValue } from '../../shared/utils';
 
 /**

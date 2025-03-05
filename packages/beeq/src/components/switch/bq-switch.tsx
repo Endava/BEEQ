@@ -1,18 +1,7 @@
-import {
-  AttachInternals,
-  Component,
-  Element,
-  Event,
-  EventEmitter,
-  h,
-  Host,
-  Method,
-  Prop,
-  State,
-  Watch,
-} from '@stencil/core';
+import { AttachInternals, Component, Element, Event, h, Host, Method, Prop, State, Watch } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 
-import { TSwitchInnerLabel, TSwitchJustifyContent } from './bq-switch.types';
+import type { TSwitchInnerLabel, TSwitchJustifyContent } from './bq-switch.types';
 import { getTextContent, isNil } from '../../shared/utils';
 
 /**

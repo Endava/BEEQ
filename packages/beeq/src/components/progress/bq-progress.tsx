@@ -1,13 +1,7 @@
 import { Component, Element, h, Host, Prop, Watch } from '@stencil/core';
 
-import {
-  PROGRESS_BORDER_SHAPE,
-  PROGRESS_THICKNESS,
-  PROGRESS_TYPE,
-  TProgressBorderShape,
-  TProgressThickness,
-  TProgressType,
-} from './bq-progress.types';
+import { PROGRESS_BORDER_SHAPE, PROGRESS_THICKNESS, PROGRESS_TYPE } from './bq-progress.types';
+import type { TProgressBorderShape, TProgressThickness, TProgressType } from './bq-progress.types';
 import { validatePropValue } from '../../shared/utils';
 
 /**

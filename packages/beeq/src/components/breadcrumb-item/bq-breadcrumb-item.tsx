@@ -1,4 +1,5 @@
-import { Component, Element, Event, EventEmitter, h, Prop } from '@stencil/core';
+import { Component, Element, Event, h, Prop } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 
 import { isDefined } from '../../shared/utils';
 

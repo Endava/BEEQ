@@ -1,6 +1,7 @@
 import { Component, Element, h, Prop, Watch } from '@stencil/core';
 
-import { STEPS_SIZE, STEPS_TYPE, TStepsSize, TStepsType } from './bq-steps.types';
+import { STEPS_SIZE, STEPS_TYPE } from './bq-steps.types';
+import type { TStepsSize, TStepsType } from './bq-steps.types';
 import { validatePropValue } from '../../shared/utils';
 
 /**

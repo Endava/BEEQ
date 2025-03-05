@@ -1,0 +1,8 @@
+{
+  "install": "never",
+  "interactive": true,
+  "loglevel": "info",
+  "packageManager": "pnpm",
+  "upgrade": true,
+  "workspace": true
+}

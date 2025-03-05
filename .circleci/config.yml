@@ -10,25 +10,28 @@ orbs:
 # ---------------------------------------------------------------------------- #
 commands:
   setup-node:
-    description: Install volta & ensure consistent node and npm versions are installed
+    description: Install volta & ensure consistent node and pnpm versions are installed
     steps:
       - run:
           name: 🛠 Setup Volta
           command: |
+            export VOLTA_FEATURE_PNPM=1
             curl https://get.volta.sh | bash
+            echo 'export VOLTA_FEATURE_PNPM=1' >> $BASH_ENV
             echo 'export VOLTA_HOME=$HOME/.volta' >> $BASH_ENV
             echo 'export PATH=$VOLTA_HOME:$PATH' >> $BASH_ENV
+            source $BASH_ENV
       - run:
           name: 🔎 Check Node and NPM versions
           command: |
             $HOME/.volta/bin/node --version
-            $HOME/.volta/bin/npm --version
+            $HOME/.volta/bin/pnpm --version
   chromatic-deployment:
     description: Publish changes to Chromatic storybook
     steps:
       - run:
           name: 🚀 Publish to Chromatic
-          command: npx chromatic --project-token=${CHROMATIC_PROJECT_TOKEN} --ci --debug --no-file-hashing
+          command: pnpm exec chromatic --project-token=${CHROMATIC_PROJECT_TOKEN} --ci --debug --no-file-hashing
 
 # ---------------------------------------------------------------------------- #
 #                         Jobs are collections of steps                        #
@@ -47,53 +50,54 @@ jobs:
     steps:
       # Checkout the code as the first step.
       - checkout
+      - setup-node
       - run:
           name: ▶️ Start Nx Cloud Agents
-          command: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --with-env-vars="NX_VERBOSE_LOGGING"
-      - setup-node
+          command: pnpm dlx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --with-env-vars="NX_VERBOSE_LOGGING"
       - restore_cache:
-          name: 💫 Restore Cache dependencies
-          # CircleCI will first try to load a cache associated with the current version of package-lock.json.
+          name: 💫 Restore PNPM dependencies
+          # CircleCI will first try to load a cache associated with the current version of pnpm-lock.yaml.
           # If the lock file has changed due to a dependency being added, then no cache will be found.
-          # Next, it will use the static fallback key node-deps-v1-{{ .Branch }}- to load the most recent valid cache
-          # with the node-deps-v1-{{ .Branch }}- prefix.
+          # Next, it will use the static fallback key pnpm-deps-v1-{{ .Branch }}- to load the most recent valid cache
+          # with the pnpm-deps-v1-{{ .Branch }}- prefix.
           keys:
-            - node-deps-{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-{{checksum "package-lock.json"}}
-            - node-deps-{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-
+            - pnpm-deps-{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-{{checksum "pnpm-lock.yaml"}}
+            - pnpm-deps-{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-
       - run:
           name: 📦 Install dependencies
           #  In this case, only those dependencies that are not in the cache will be installed.
-          command: npm ci
+          command: pnpm install --frozen-lockfile
       - save_cache:
-          name: 💾 Save Cache dependencies
-          # After all of the project’s dependencies have been loaded,
+          name: 💾 Save PNPM dependencies
+          # After all of the project's dependencies have been loaded,
           # the save_cache step will save the updated dependency tree to a new cache in the node_modules directory.
-          key: node-deps-{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-{{checksum "package-lock.json"}}
+          key: pnpm-deps-{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-{{checksum "pnpm-lock.yaml"}}
           paths:
             - node_modules
+            - ~/.pnpm-store
       - nx/set-shas
           # Derives SHAs for base and head for use in `nx affected` commands in CI
       - run:
           name: 🧾 NX report
-          command: npx nx report
+          command: pnpm exec nx report
       - run:
           name: 🩺 Run Linters
-          command: npx nx affected -t lint --exclude='*,!tag:publishable' --parallel=3 --output-style=stream --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t lint --exclude='*,!tag:publishable' --parallel=4 --output-style=stream --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 🧰 Run Unit Tests
-          command: npx nx affected -t test --exclude='*,!tag:core' --parallel=3 --output-style=stream --ci --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t test --exclude='*,!tag:core' --parallel=4 --output-style=stream --ci --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: ⏳ Build Libraries
-          command: npx nx affected -t build --exclude='*,!tag:publishable' --parallel=3 --output-style=stream --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t build --exclude='*,!tag:publishable' --parallel=4 --output-style=stream --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 🧪 Run E2E Tests
-          command: npx nx affected -t e2e --exclude='*,!tag:core' --parallel=3 --ci --code-coverage --output-style=stream --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t e2e --exclude='*,!tag:core' --parallel=4 --ci --code-coverage --output-style=stream --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 📚 Build Storybook
-          command: npx nx run beeq:storybook-build --output-style=stream --verbose
+          command: pnpm exec nx run beeq:storybook-build --parallel --output-style=stream --verbose
       - run:
           name: ⏹️ Stop Nx Cloud Agents
-          command: npx nx-cloud stop-all-agents
+          command: pnpm dlx nx-cloud stop-all-agents
       - chromatic-deployment
 
 # ---------------------------------------------------------------------------- #

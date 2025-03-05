@@ -1,4 +1,5 @@
-import { Component, Element, Event, EventEmitter, h, Method, Prop } from '@stencil/core';
+import { Component, Element, Event, h, Method, Prop } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 
 /**
  * The radio button is a user interface element that allows users to select a single option.

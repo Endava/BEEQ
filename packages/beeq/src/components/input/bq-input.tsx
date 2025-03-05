@@ -1,6 +1,7 @@
-import { AttachInternals, Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, h, Prop, State, Watch } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 
-import { TInputType, TInputValidation, TInputValue } from './bq-input.types';
+import type { TInputType, TInputValidation, TInputValue } from './bq-input.types';
 import { debounce, hasSlotContent, isDefined, isHTMLElement, isNil, TDebounce } from '../../shared/utils';
 
 /**

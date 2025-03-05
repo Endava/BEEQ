@@ -1,7 +1,7 @@
-diff --git a/node_modules/@nxext/stencil/src/executors/stencil-runtime/prepare-config-and-outputarget-paths.js b/node_modules/@nxext/stencil/src/executors/stencil-runtime/prepare-config-and-outputarget-paths.js
-index f524f03..b208416 100644
---- a/node_modules/@nxext/stencil/src/executors/stencil-runtime/prepare-config-and-outputarget-paths.js
-+++ b/node_modules/@nxext/stencil/src/executors/stencil-runtime/prepare-config-and-outputarget-paths.js
+diff --git a/src/executors/stencil-runtime/prepare-config-and-outputarget-paths.js b/src/executors/stencil-runtime/prepare-config-and-outputarget-paths.js
+index f524f0381c45121eaf0f362ab8f7fcd08367e156..f0bbe77eede3ea0d5cce55e0c26893b6bd2df720 100644
+--- a/src/executors/stencil-runtime/prepare-config-and-outputarget-paths.js
++++ b/src/executors/stencil-runtime/prepare-config-and-outputarget-paths.js
 @@ -55,6 +55,7 @@ function prepareDistDirAndPkgJson(pathCollection) {
  }
  function prepareConfigAndOutputargetPaths(config, pathCollection) {
@@ -10,17 +10,22 @@ index f524f03..b208416 100644
          prepareDistDirAndPkgJson(pathCollection);
          if (config.flags.e2e) {
              (0, e2e_testing_1.prepareE2eTesting)(pathCollection);
-@@ -80,14 +81,14 @@ function prepareConfigAndOutputargetPaths(config, pathCollection) {
+@@ -79,15 +80,17 @@ function prepareConfigAndOutputargetPaths(config, pathCollection) {
+             'componentDts',
          ];
          const outputTargets = calculateOutputTargetPathVariables(config, pathCollection, pathVariables);
-         const devServerConfig = Object.assign(config.devServer, {
+-        const devServerConfig = Object.assign(config.devServer, {
 -            root: config.devServer.root.replace(pathCollection.projectRoot, pathCollection.distDir),
 -            openBrowser: config.flags.open,
-+            root: (_a = config.devServer.root) === null || _a === void 0 ? void 0 : _a.replace(pathCollection.projectRoot, pathCollection.distDir),
-+            openBrowser: (_b = config.flags) === null || _b === void 0 ? void 0 : _b.open,
-         });
+-        });
 -        if (!config.flags.e2e) {
 -            config.packageJsonFilePath = config.packageJsonFilePath.replace(pathCollection.projectRoot, pathCollection.distDir);
++        const devServerConfig = config.devServer
++            ? Object.assign(config.devServer, {
++                root: (_a = config.devServer.root) === null || _a === void 0 ? void 0 : _a.replace(pathCollection.projectRoot, pathCollection.distDir),
++                openBrowser: (_b = config.flags) === null || _b === void 0 ? void 0 : _b.open,
++            })
++            : undefined;
 +        if (!((_c = config.flags) === null || _c === void 0 ? void 0 : _c.e2e)) {
 +            config.packageJsonFilePath = (_d = config.packageJsonFilePath) === null || _d === void 0 ? void 0 : _d.replace(pathCollection.projectRoot, pathCollection.distDir);
          }
@@ -30,10 +35,10 @@ index f524f03..b208416 100644
          }
          return Object.assign(Object.assign({}, config), { outputTargets: outputTargets, devServer: devServerConfig });
      });
-diff --git a/node_modules/@nxext/stencil/src/executors/stencil-runtime/stencil-config.js b/node_modules/@nxext/stencil/src/executors/stencil-runtime/stencil-config.js
-index 4e17cca..df259f9 100644
---- a/node_modules/@nxext/stencil/src/executors/stencil-runtime/stencil-config.js
-+++ b/node_modules/@nxext/stencil/src/executors/stencil-runtime/stencil-config.js
+diff --git a/src/executors/stencil-runtime/stencil-config.js b/src/executors/stencil-runtime/stencil-config.js
+index 4e17cca33f8480d1c7a5d0f93fe3fb1c4b58db49..3a61c31bf7810121dd63ecd389fd80560f8cfc45 100644
+--- a/src/executors/stencil-runtime/stencil-config.js
++++ b/src/executors/stencil-runtime/stencil-config.js
 @@ -38,7 +38,7 @@ function initializeStencilConfig(taskCommand, options, context, flags) {
              sys,
          });
@@ -43,10 +48,10 @@ index 4e17cca..df259f9 100644
          if (strictConfig.flags.task === 'build') {
              strictConfig.rootDir = distDir;
              strictConfig.packageJsonFilePath = (0, normalize_path_1.normalizePath)((0, path_1.join)(distDir, 'package.json'));
-diff --git a/node_modules/@nxext/stencil/src/executors/test/executor.js b/node_modules/@nxext/stencil/src/executors/test/executor.js
-index d784a66..6a53c5e 100644
---- a/node_modules/@nxext/stencil/src/executors/test/executor.js
-+++ b/node_modules/@nxext/stencil/src/executors/test/executor.js
+diff --git a/src/executors/test/executor.js b/src/executors/test/executor.js
+index d784a66f88968264bf31e19beedb48f659de31dd..4fb59fcdb4950ad9e176af31860c72297c5a45e0 100644
+--- a/src/executors/test/executor.js
++++ b/src/executors/test/executor.js
 @@ -16,12 +16,6 @@ function createStencilCompilerOptions(taskCommand, options) {
  function runExecutor(options, context) {
      return tslib_1.__awaiter(this, void 0, void 0, function* () {

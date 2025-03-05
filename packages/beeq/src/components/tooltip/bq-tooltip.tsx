@@ -1,6 +1,6 @@
 import { Component, Element, h, Listen, Method, Prop, Watch } from '@stencil/core';
 
-import { Placement } from '../../services/interfaces';
+import type { Placement } from '../../services/interfaces';
 import { FloatingUI } from '../../services/libraries';
 
 /**

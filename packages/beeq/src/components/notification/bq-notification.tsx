@@ -1,6 +1,8 @@
-import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, h, Host, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 
-import { NOTIFICATION_TYPE, TNotificationBorderRadius, TNotificationType } from './bq-notification.types';
+import { NOTIFICATION_TYPE } from './bq-notification.types';
+import type { TNotificationBorderRadius, TNotificationType } from './bq-notification.types';
 import { debounce, enter, hasSlotContent, isClient, leave, TDebounce, validatePropValue } from '../../shared/utils';
 
 const NOTIFICATION_PORTAL_SELECTOR = 'bq-notification-portal';

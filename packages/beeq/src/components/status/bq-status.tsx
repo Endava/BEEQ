@@ -1,6 +1,7 @@
 import { Component, Element, h, Prop, Watch } from '@stencil/core';
 
-import { STATUS_TYPE, TStatusType } from './bq-status.types';
+import { STATUS_TYPE } from './bq-status.types';
+import type { TStatusType } from './bq-status.types';
 import { validatePropValue } from '../../shared/utils';
 
 /**

@@ -1,6 +1,7 @@
 import { Component, Element, h, Host, Prop, Watch } from '@stencil/core';
 
-import { CARD_TYPE, TCardBorderRadius, TCardType } from './bq-card.types';
+import { CARD_TYPE } from './bq-card.types';
+import type { TCardBorderRadius, TCardType } from './bq-card.types';
 import { validatePropValue } from '../../shared/utils';
 
 /**

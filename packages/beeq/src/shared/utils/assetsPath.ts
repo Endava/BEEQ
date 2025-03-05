@@ -2,8 +2,6 @@
  * Inspired by Shoelace's `getBasePath` and `setBasePath` functions.
  * https://github.com/shoelace-style/shoelace/blob/next/src/utilities/base-path.ts
  */
-import { Env } from '@stencil/core';
-
 import { isClient } from './isClient';
 
 let beeqBasePath: string | undefined;
@@ -33,8 +31,8 @@ export const getBasePath = (subpath: string = ''): string => {
       const path = configScript ? script.getAttribute(DATA_BEEQ_ATTRIBUTE) : getScriptPath(script);
       setBasePath(`${path}/${DEFAULT_SVG_PATH}`);
     } else {
-      // Fallback: use an environment variable (if set) or the default path
-      setBasePath(Env.BEEQ_ASSETS_BASE_PATH || `./${DEFAULT_SVG_PATH}`);
+      // Fallback: use the default path
+      setBasePath(`./${DEFAULT_SVG_PATH}`);
     }
   }
 
