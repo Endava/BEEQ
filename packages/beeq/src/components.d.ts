@@ -153,10 +153,6 @@ export namespace Components {
          */
         "noAnimation": boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "no-animation"?: boolean;
-        /**
           * If true, the Accordion expand icon is rotate 180deg when expanded
          */
         "rotate": boolean;
@@ -195,10 +191,6 @@ export namespace Components {
          */
         "expandAll": boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "expand-all"?: boolean;
-        /**
           * If true multiple accordions can be expanded at the same time
          */
         "multiple": boolean;
@@ -206,10 +198,6 @@ export namespace Components {
           * Animation is set through JS when the browser does not support CSS calc-size() If true, the accordion animation, will be disabled. No animation will be applied.
          */
         "noAnimation": boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "no-animation"?: boolean;
         /**
           * The size of accordion to be applied to all accordions
          */
@@ -277,10 +265,6 @@ export namespace Components {
          */
         "autoDismiss": boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "auto-dismiss"?: boolean;
-        /**
           * The corner radius of the alert component
          */
         "border": TAlertBorderRadius;
@@ -289,10 +273,6 @@ export namespace Components {
          */
         "disableClose": boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "disable-close"?: boolean;
-        /**
           * Method to be called to hide the alert component
          */
         "hide": () => Promise<void>;
@@ -300,10 +280,6 @@ export namespace Components {
           * If true, the alert icon won't be shown
          */
         "hideIcon": boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "hide-icon"?: boolean;
         /**
           * If true, the alert will be shown
          */
@@ -371,10 +347,6 @@ export namespace Components {
          */
         "altText": string;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "alt-text"?: string;
-        /**
           * The image source to load on the avatar (this can be also a base64 encoded image)
          */
         "image": string;
@@ -424,10 +396,6 @@ export namespace Components {
          */
         "backgroundColor"?: string;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "background-color"?: string;
-        /**
           * The size of the badge. Relevant if badge has no content.
          */
         "size"?: TBadgeSize;
@@ -435,10 +403,6 @@ export namespace Components {
           * Badge number color. The value should be a valid value of the palette color
          */
         "textColor"?: string;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "text-color"?: string;
     }
     /**
      * The Breadcrumb is used to wraps a series of breadcrumb items to indicate the current page's location within a navigational hierarchy.
@@ -583,10 +547,6 @@ export namespace Components {
          */
         "justifyContent": 'left' | 'center' | 'right';
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "justify-content"?: 'left' | 'center' | 'right';
-        /**
           * If `true` it will display the button in a loading state
          */
         "loading": boolean;
@@ -677,10 +637,6 @@ export namespace Components {
          */
         "backgroundOnHover"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "background-on-hover"?: boolean;
-        /**
           * If true checkbox is checked
          */
         "checked"?: boolean;
@@ -693,17 +649,9 @@ export namespace Components {
          */
         "formId"?: string;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "form-id"?: string;
-        /**
           * The native form validation message
          */
         "formValidationMessage"?: string;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "form-validation-message"?: string;
         /**
           * A state that is neither checked nor unchecked
          */
@@ -831,17 +779,9 @@ export namespace Components {
          */
         "clearButtonLabel"?: string;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "clear-button-label"?: string;
-        /**
           * If `true`, the clear button won't be displayed
          */
         "disableClear"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "disable-clear"?: boolean;
         /**
           * Indicates whether the Date picker input is disabled or not. If `true`, the Date picker is disabled and cannot be interacted with.
          */
@@ -855,10 +795,6 @@ export namespace Components {
          */
         "firstDayOfWeek"?: DaysOfWeek;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "first-day-of-week"?: DaysOfWeek;
-        /**
           * The ID of the form that the Date picker input belongs to.
          */
         "form"?: string;
@@ -866,10 +802,6 @@ export namespace Components {
           * The native form validation message (mandatory if `required` is set)
          */
         "formValidationMessage"?: string;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "form-validation-message"?: string;
         /**
           * The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
          */
@@ -899,10 +831,6 @@ export namespace Components {
          */
         "monthsPerView": 'single' | 'months';
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "months-per-view"?: 'single' | 'months';
-        /**
           * The Date picker input name.
          */
         "name": string;
@@ -914,10 +842,6 @@ export namespace Components {
           * When set, it will override the height of the Date picker panel.
          */
         "panelHeight"?: string;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "panel-height"?: string;
         /**
           * The Date picker input placeholder text value
          */
@@ -934,10 +858,6 @@ export namespace Components {
           * Whether to show days outside the month
          */
         "showOutsideDays": boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "show-outside-days"?: boolean;
         /**
           * Represents the skidding between the Date picker panel and the input element.
          */
@@ -959,10 +879,6 @@ export namespace Components {
           * @remarks This property is used to indicate the validation status of the select input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
          */
         "validationStatus": TInputValidation;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "validation-status"?: TInputValidation;
         /**
           * The select input value represents the currently selected date or range and can be used to reset the field to a previous value. All dates are expected in ISO-8601 format (YYYY-MM-DD).
          */
@@ -1039,33 +955,17 @@ export namespace Components {
          */
         "disableBackdrop": boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "disable-backdrop"?: boolean;
-        /**
           * If true, the dialog will not close when clicking on the backdrop overlay
          */
         "disableCloseClickOutside": boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "disable-close-click-outside"?: boolean;
         /**
           * If true, the dialog will not close when the [Esc] key is press
          */
         "disableCloseEscKeydown": boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "disable-close-esc-keydown"?: boolean;
-        /**
           * The appearance of footer
          */
         "footerAppearance": TDialogFooterAppearance;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "footer-appearance"?: TDialogFooterAppearance;
         /**
           * Closes the dialog
          */
@@ -1074,10 +974,6 @@ export namespace Components {
           * If true, it hides the close button
          */
         "hideCloseButton": boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "hide-close-button"?: boolean;
         /**
           * If true, the dialog will be shown as open
          */
@@ -1127,57 +1023,29 @@ export namespace Components {
          */
         "strokeBasis"?: number;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "stroke-basis"?: number;
-        /**
           * Set the stroke color of the divider. The value should be a valid value of the palette color
          */
         "strokeColor"?: string;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "stroke-color"?: string;
         /**
           * Set the gap of the divider's stroke. This is applicable when the stroke is dashed
          */
         "strokeDashGap"?: number;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "stroke-dash-gap"?: number;
-        /**
           * Set the width of each dash of the divider's stroke. This is applicable when the stroke is dashed
          */
         "strokeDashWidth"?: number;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "stroke-dash-width"?: number;
         /**
           * Set the line of the divider's stroke. This is applicable when the stroke is dashed
          */
         "strokeLinecap"?: TDividerStrokeLinecap;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "stroke-linecap"?: TDividerStrokeLinecap;
-        /**
           * Set the thickness of the divider's stroke. Value expressed in px
          */
         "strokeThickness"?: number;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "stroke-thickness"?: number;
-        /**
           * Set the alignment of the title on the main axis of the divider (horizontal / vertical)
          */
         "titleAlignment"?: TDividerTitleAlignment;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "title-alignment"?: TDividerTitleAlignment;
     }
     /**
      * The Drawer component provides a sliding panel interface commonly used for navigation or presenting additional content without taking up significant screen space.
@@ -1223,25 +1091,13 @@ export namespace Components {
          */
         "closeOnClickOutside": boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "close-on-click-outside"?: boolean;
-        /**
           * If true, the dialog will not close when the [Esc] key is pressed
          */
         "closeOnEsc": boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "close-on-esc"?: boolean;
-        /**
           * If true, the backdrop overlay will be shown when the drawer opens
          */
         "enableBackdrop": boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "enable-backdrop"?: boolean;
         /**
           * Method to be called to hide the drawer component
          */
@@ -1317,10 +1173,6 @@ export namespace Components {
          */
         "keepOpenOnSelect"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "keep-open-on-select"?: boolean;
-        /**
           * If true, the panel will be visible.
          */
         "open"?: boolean;
@@ -1329,10 +1181,6 @@ export namespace Components {
          */
         "panelHeight"?: string;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "panel-height"?: string;
-        /**
           * Position of the panel
          */
         "placement"?: Placement;
@@ -1340,10 +1188,6 @@ export namespace Components {
           * Whether the panel should have the same width as the trigger element
          */
         "sameWidth"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "same-width"?: boolean;
         /**
           * Represents the skidding between the panel and the trigger element.
          */
@@ -1497,25 +1341,13 @@ export namespace Components {
          */
         "clearButtonLabel"?: string;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "clear-button-label"?: string;
-        /**
           * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur.
          */
         "debounceTime"?: number;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "debounce-time"?: number;
-        /**
           * If true, the clear button won't be displayed
          */
         "disableClear"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "disable-clear"?: boolean;
         /**
           * Indicates whether the input is disabled or not. If `true`, the input is disabled and cannot be interacted with.
          */
@@ -1528,10 +1360,6 @@ export namespace Components {
           * The native form validation message (mandatory if `required` is set)
          */
         "formValidationMessage"?: string;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "form-validation-message"?: string;
         /**
           * The inputmode attribute specifies what kind of input mechanism would be most helpful for users entering content into the input field. This allows a browser to display an appropriate virtual keyboard while editing. Possible values are 'none', 'text', 'decimal', 'numeric', 'tel', 'search', 'email', 'url', and 'date'.
          */
@@ -1585,10 +1413,6 @@ export namespace Components {
           * @remarks This property is used to indicate the validation status of the input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
          */
         "validationStatus": TInputValidation;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "validation-status"?: TInputValidation;
         /**
           * The input value, it can be used to reset the input to a previous value
          */
@@ -1647,10 +1471,6 @@ export namespace Components {
          */
         "autoDismiss": boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "auto-dismiss"?: boolean;
-        /**
           * The corder radius of the notification component
          */
         "border": TNotificationBorderRadius;
@@ -1659,10 +1479,6 @@ export namespace Components {
          */
         "disableClose": boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "disable-close"?: boolean;
-        /**
           * Method to be called to hide the notification component
          */
         "hide": () => Promise<void>;
@@ -1670,10 +1486,6 @@ export namespace Components {
           * If true, the notification icon won't be shown
          */
         "hideIcon": boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "hide-icon"?: boolean;
         /**
           * If true, the notification will be shown
          */
@@ -1793,10 +1605,6 @@ export namespace Components {
           * Aria label for the list.
          */
         "ariaLabel": string;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "aria-label"?: string;
     }
     /**
      * The Page Title component is a versatile and essential element used to display the main title of a page or section within an application.
@@ -1874,10 +1682,6 @@ export namespace Components {
          */
         "sameWidth"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "same-width"?: boolean;
-        /**
           * Represents the skidding between the panel and the trigger element.
          */
         "skidding"?: number;
@@ -1913,17 +1717,9 @@ export namespace Components {
          */
         "borderShape": TProgressBorderShape;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "border-shape"?: TProgressBorderShape;
-        /**
           * If `true`, a tooltip will be shown displaying the progress value
          */
         "enableTooltip": boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "enable-tooltip"?: boolean;
         /**
           * If `true` the indeterminate state of progress bar is enabled
          */
@@ -1977,10 +1773,6 @@ export namespace Components {
          */
         "backgroundOnHover"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "background-on-hover"?: boolean;
-        /**
           * If true radio input is checked
          */
         "checked"?: boolean;
@@ -1992,10 +1784,6 @@ export namespace Components {
           * The form ID that the radio input is associated with
          */
         "formId"?: string;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "form-id"?: string;
         /**
           * Returns the native `<input>` HTML element used under the hood.
          */
@@ -2058,17 +1846,9 @@ export namespace Components {
          */
         "backgroundOnHover"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "background-on-hover"?: boolean;
-        /**
           * A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change
          */
         "debounceTime": number;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "debounce-time"?: number;
         /**
           * If true radio inputs are disabled
          */
@@ -2093,10 +1873,6 @@ export namespace Components {
           * The native form validation message when the radio group is required
          */
         "requiredValidationMessage"?: string;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "required-validation-message"?: string;
         /**
           * A string representing the value of the radio.
          */
@@ -2189,25 +1965,13 @@ export namespace Components {
          */
         "clearButtonLabel"?: string;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "clear-button-label"?: string;
-        /**
           * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur.
          */
         "debounceTime"?: number;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "debounce-time"?: number;
-        /**
           * If true, the clear button won't be displayed
          */
         "disableClear"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "disable-clear"?: boolean;
         /**
           * Indicates whether the Select input is disabled or not. If `true`, the Select is disabled and cannot be interacted with.
          */
@@ -2225,17 +1989,9 @@ export namespace Components {
          */
         "keepOpenOnSelect"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "keep-open-on-select"?: boolean;
-        /**
           * The maximum number of tags to display when multiple selection is enabled
          */
         "maxTagsVisible": number;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "max-tags-visible"?: number;
         /**
           * If true, the Select input will allow multiple selections.
          */
@@ -2252,10 +2008,6 @@ export namespace Components {
           * When set, it will override the height of the Select panel.
          */
         "panelHeight"?: string;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "panel-height"?: string;
         /**
           * The Select input placeholder text value
          */
@@ -2277,10 +2029,6 @@ export namespace Components {
          */
         "sameWidth"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "same-width"?: boolean;
-        /**
           * Represents the skidding between the Select panel and the input element.
          */
         "skidding"?: number;
@@ -2293,10 +2041,6 @@ export namespace Components {
           * @remarks This property is used to indicate the validation status of the select input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
          */
         "validationStatus": TInputValidation;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "validation-status"?: TInputValidation;
         /**
           * The select input value, it can be used to reset the field to a previous value
          */
@@ -2435,10 +2179,6 @@ export namespace Components {
          */
         "debounceTime": number;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "debounce-time"?: number;
-        /**
           * If `true` the slider is disabled.
          */
         "disabled"?: boolean;
@@ -2447,17 +2187,9 @@ export namespace Components {
          */
         "enableTooltip": boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "enable-tooltip"?: boolean;
-        /**
           * If `true` it will show the value label on a side of the slider track area
          */
         "enableValueIndicator"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "enable-value-indicator"?: boolean;
         /**
           * A number representing the amount to remain between the minimum and maximum values (only for range type).
          */
@@ -2482,10 +2214,6 @@ export namespace Components {
           * If `true`, a tooltip will always display the progress value. It relies on enableTooltip and if enableTooltip is false, tooltipAlwaysVisible cannot be true.
          */
         "tooltipAlwaysVisible": boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "tooltip-always-visible"?: boolean;
         /**
           * It defines the type of slider to display
          */
@@ -2530,10 +2258,6 @@ export namespace Components {
           * It defines the position of the label text
          */
         "textPosition": TSpinnerTextPosition;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "text-position"?: TSpinnerTextPosition;
     }
     /**
      * The Status Component is a UI element that represents the current state or condition of an item, task, or process.
@@ -2618,10 +2342,6 @@ export namespace Components {
          */
         "dividerColor": string;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "divider-color"?: string;
-        /**
           * The size of the steps
          */
         "size": TStepsSize;
@@ -2667,10 +2387,6 @@ export namespace Components {
          */
         "backgroundOnHover"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "background-on-hover"?: boolean;
-        /**
           * It indicates whether if the switch is `ON` by default (when the page loads)
          */
         "checked"?: boolean;
@@ -2683,33 +2399,17 @@ export namespace Components {
          */
         "formValidationMessage"?: string;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "form-validation-message"?: string;
-        /**
           * If true, the component will take the full width space available on the parent container
          */
         "fullWidth"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "full-width"?: boolean;
         /**
           * It indicates how to to display the on/off marks inside the control, with icons or none (default)
          */
         "innerLabel"?: TSwitchInnerLabel;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "inner-label"?: TSwitchInnerLabel;
-        /**
           * It defines how to distribute the space between and around the control and the label text (https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content)
          */
         "justifyContent"?: TSwitchJustifyContent;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "justify-content"?: TSwitchJustifyContent;
         /**
           * Name of the form control. Submitted with the form as part of a name/value pair
          */
@@ -2722,10 +2422,6 @@ export namespace Components {
           * If true, the order of the control and the label text will be changed
          */
         "reverseOrder"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "reverse-order"?: boolean;
         /**
           * Remove focus from the native `<input>` HTML element used under the hood. Use this method instead of the global `element.blur()`.
          */
@@ -2811,10 +2507,6 @@ export namespace Components {
          */
         "tabId": string;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "tab-id"?: string;
-        /**
           * Remove focus from the native `<button>` HTML element used under the hood. Use this method instead of the global `element.blur()`.
          */
         "vBlur": () => Promise<void>;
@@ -2854,17 +2546,9 @@ export namespace Components {
          */
         "debounceTime": number;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "debounce-time"?: number;
-        /**
           * If true, the underline divider below the tabs won't be shown
          */
         "disableDivider": boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "disable-divider"?: boolean;
         /**
           * The direction that tab should be render
          */
@@ -3032,10 +2716,6 @@ export namespace Components {
          */
         "autoGrow": boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "auto-grow"?: boolean;
-        /**
           * Controls whether or not the textarea field should be capitalized and how. Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
          */
         "autocapitalize": TTextareaAutoCapitalize;
@@ -3056,17 +2736,9 @@ export namespace Components {
          */
         "debounceTime"?: number;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "debounce-time"?: number;
-        /**
           * If `true`, it will block the user's ability to resize the textarea.
          */
         "disableResize"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "disable-resize"?: boolean;
         /**
           * If `true`, the user cannot interact with the textarea.
          */
@@ -3079,10 +2751,6 @@ export namespace Components {
           * The native form validation message
          */
         "formValidationMessage"?: string;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "form-validation-message"?: string;
         /**
           * The maximum number of characters that can be entered into the textarea (`0`: no limit). When enabled, a character counter will be shown underneath the textarea.
          */
@@ -3116,10 +2784,6 @@ export namespace Components {
           * @remarks This property is used to indicate the validation status of the textarea. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The textarea has a validation error. - `'warning'`: The textarea has a validation warning. - `'success'`: The textarea has passed validation.
          */
         "validationStatus": TInputValidation;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "validation-status"?: TInputValidation;
         /**
           * The value of the textarea. It can be used to reset the textarea to a previous value.
          */
@@ -3181,10 +2845,6 @@ export namespace Components {
           * If true will hide toast icon
          */
         "hideIcon": boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "hide-icon"?: boolean;
         /**
           * If true, the toast will be shown
          */
@@ -3249,17 +2909,9 @@ export namespace Components {
          */
         "alwaysVisible"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "always-visible"?: boolean;
-        /**
           * Set the action when the tooltip should be displayed, on hover (default) or click
          */
         "displayOn": 'click' | 'hover';
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "display-on"?: 'click' | 'hover';
         /**
           * Distance between trigger element and tooltip
          */
@@ -3272,19 +2924,11 @@ export namespace Components {
           * If true, the arrow on the tooltip content won't be shown
          */
         "hideArrow"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "hide-arrow"?: boolean;
         "placement"?: Placement;
         /**
           * Whether the tooltip should have the same width as the trigger element (applicable only for content shorter than the trigger element)
          */
         "sameWidth"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "same-width"?: boolean;
         /**
           * Shows the tooltip
          */
@@ -5588,10 +5232,6 @@ declare namespace LocalJSX {
          */
         "noAnimation"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "no-animation"?: boolean;
-        /**
           * Handler to be called after the accordion is closed
          */
         "onBqAfterClose"?: (event: BqAccordionCustomEvent<HTMLBqAccordionElement>) => void;
@@ -5658,10 +5298,6 @@ declare namespace LocalJSX {
          */
         "expandAll"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "expand-all"?: boolean;
-        /**
           * If true multiple accordions can be expanded at the same time
          */
         "multiple"?: boolean;
@@ -5669,10 +5305,6 @@ declare namespace LocalJSX {
           * Animation is set through JS when the browser does not support CSS calc-size() If true, the accordion animation, will be disabled. No animation will be applied.
          */
         "noAnimation"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "no-animation"?: boolean;
         /**
           * The size of accordion to be applied to all accordions
          */
@@ -5740,10 +5372,6 @@ declare namespace LocalJSX {
          */
         "autoDismiss"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "auto-dismiss"?: boolean;
-        /**
           * The corner radius of the alert component
          */
         "border"?: TAlertBorderRadius;
@@ -5752,17 +5380,9 @@ declare namespace LocalJSX {
          */
         "disableClose"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "disable-close"?: boolean;
-        /**
           * If true, the alert icon won't be shown
          */
         "hideIcon"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "hide-icon"?: boolean;
         /**
           * Callback handler to be called after the alert has been hidden
          */
@@ -5842,10 +5462,6 @@ declare namespace LocalJSX {
          */
         "altText"?: string;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "alt-text"?: string;
-        /**
           * The image source to load on the avatar (this can be also a base64 encoded image)
          */
         "image"?: string;
@@ -5895,10 +5511,6 @@ declare namespace LocalJSX {
          */
         "backgroundColor"?: string;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "background-color"?: string;
-        /**
           * The size of the badge. Relevant if badge has no content.
          */
         "size"?: TBadgeSize;
@@ -5906,10 +5518,6 @@ declare namespace LocalJSX {
           * Badge number color. The value should be a valid value of the palette color
          */
         "textColor"?: string;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "text-color"?: string;
     }
     /**
      * The Breadcrumb is used to wraps a series of breadcrumb items to indicate the current page's location within a navigational hierarchy.
@@ -6066,10 +5674,6 @@ declare namespace LocalJSX {
          */
         "justifyContent"?: 'left' | 'center' | 'right';
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "justify-content"?: 'left' | 'center' | 'right';
-        /**
           * If `true` it will display the button in a loading state
          */
         "loading"?: boolean;
@@ -6172,10 +5776,6 @@ declare namespace LocalJSX {
          */
         "backgroundOnHover"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "background-on-hover"?: boolean;
-        /**
           * If true checkbox is checked
          */
         "checked"?: boolean;
@@ -6188,17 +5788,9 @@ declare namespace LocalJSX {
          */
         "formId"?: string;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "form-id"?: string;
-        /**
           * The native form validation message
          */
         "formValidationMessage"?: string;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "form-validation-message"?: string;
         /**
           * A state that is neither checked nor unchecked
          */
@@ -6320,17 +5912,9 @@ declare namespace LocalJSX {
          */
         "clearButtonLabel"?: string;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "clear-button-label"?: string;
-        /**
           * If `true`, the clear button won't be displayed
          */
         "disableClear"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "disable-clear"?: boolean;
         /**
           * Indicates whether the Date picker input is disabled or not. If `true`, the Date picker is disabled and cannot be interacted with.
          */
@@ -6344,10 +5928,6 @@ declare namespace LocalJSX {
          */
         "firstDayOfWeek"?: DaysOfWeek;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "first-day-of-week"?: DaysOfWeek;
-        /**
           * The ID of the form that the Date picker input belongs to.
          */
         "form"?: string;
@@ -6355,10 +5935,6 @@ declare namespace LocalJSX {
           * The native form validation message (mandatory if `required` is set)
          */
         "formValidationMessage"?: string;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "form-validation-message"?: string;
         /**
           * The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
          */
@@ -6388,10 +5964,6 @@ declare namespace LocalJSX {
          */
         "monthsPerView"?: 'single' | 'months';
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "months-per-view"?: 'single' | 'months';
-        /**
           * The Date picker input name.
          */
         "name": string;
@@ -6420,10 +5992,6 @@ declare namespace LocalJSX {
          */
         "panelHeight"?: string;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "panel-height"?: string;
-        /**
           * The Date picker input placeholder text value
          */
         "placeholder"?: string;
@@ -6439,10 +6007,6 @@ declare namespace LocalJSX {
           * Whether to show days outside the month
          */
         "showOutsideDays"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "show-outside-days"?: boolean;
         /**
           * Represents the skidding between the Date picker panel and the input element.
          */
@@ -6464,10 +6028,6 @@ declare namespace LocalJSX {
           * @remarks This property is used to indicate the validation status of the select input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
          */
         "validationStatus"?: TInputValidation;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "validation-status"?: TInputValidation;
         /**
           * The select input value represents the currently selected date or range and can be used to reset the field to a previous value. All dates are expected in ISO-8601 format (YYYY-MM-DD).
          */
@@ -6540,41 +6100,21 @@ declare namespace LocalJSX {
          */
         "disableBackdrop"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "disable-backdrop"?: boolean;
-        /**
           * If true, the dialog will not close when clicking on the backdrop overlay
          */
         "disableCloseClickOutside"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "disable-close-click-outside"?: boolean;
         /**
           * If true, the dialog will not close when the [Esc] key is press
          */
         "disableCloseEscKeydown"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "disable-close-esc-keydown"?: boolean;
-        /**
           * The appearance of footer
          */
         "footerAppearance"?: TDialogFooterAppearance;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "footer-appearance"?: TDialogFooterAppearance;
-        /**
           * If true, it hides the close button
          */
         "hideCloseButton"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "hide-close-button"?: boolean;
         /**
           * Callback handler emitted when the dialog finish closing
          */
@@ -6640,57 +6180,29 @@ declare namespace LocalJSX {
          */
         "strokeBasis"?: number;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "stroke-basis"?: number;
-        /**
           * Set the stroke color of the divider. The value should be a valid value of the palette color
          */
         "strokeColor"?: string;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "stroke-color"?: string;
         /**
           * Set the gap of the divider's stroke. This is applicable when the stroke is dashed
          */
         "strokeDashGap"?: number;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "stroke-dash-gap"?: number;
-        /**
           * Set the width of each dash of the divider's stroke. This is applicable when the stroke is dashed
          */
         "strokeDashWidth"?: number;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "stroke-dash-width"?: number;
         /**
           * Set the line of the divider's stroke. This is applicable when the stroke is dashed
          */
         "strokeLinecap"?: TDividerStrokeLinecap;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "stroke-linecap"?: TDividerStrokeLinecap;
-        /**
           * Set the thickness of the divider's stroke. Value expressed in px
          */
         "strokeThickness"?: number;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "stroke-thickness"?: number;
-        /**
           * Set the alignment of the title on the main axis of the divider (horizontal / vertical)
          */
         "titleAlignment"?: TDividerTitleAlignment;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "title-alignment"?: TDividerTitleAlignment;
     }
     /**
      * The Drawer component provides a sliding panel interface commonly used for navigation or presenting additional content without taking up significant screen space.
@@ -6736,25 +6248,13 @@ declare namespace LocalJSX {
          */
         "closeOnClickOutside"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "close-on-click-outside"?: boolean;
-        /**
           * If true, the dialog will not close when the [Esc] key is pressed
          */
         "closeOnEsc"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "close-on-esc"?: boolean;
-        /**
           * If true, the backdrop overlay will be shown when the drawer opens
          */
         "enableBackdrop"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "enable-backdrop"?: boolean;
         /**
           * Callback handler to be called after the drawer has been closed
          */
@@ -6838,10 +6338,6 @@ declare namespace LocalJSX {
          */
         "keepOpenOnSelect"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "keep-open-on-select"?: boolean;
-        /**
           * Callback handler to be called when the dropdown panel is opened or closed.
          */
         "onBqOpen"?: (event: BqDropdownCustomEvent<{ open: boolean }>) => void;
@@ -6854,10 +6350,6 @@ declare namespace LocalJSX {
          */
         "panelHeight"?: string;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "panel-height"?: string;
-        /**
           * Position of the panel
          */
         "placement"?: Placement;
@@ -6865,10 +6357,6 @@ declare namespace LocalJSX {
           * Whether the panel should have the same width as the trigger element
          */
         "sameWidth"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "same-width"?: boolean;
         /**
           * Represents the skidding between the panel and the trigger element.
          */
@@ -7026,25 +6514,13 @@ declare namespace LocalJSX {
          */
         "clearButtonLabel"?: string;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "clear-button-label"?: string;
-        /**
           * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur.
          */
         "debounceTime"?: number;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "debounce-time"?: number;
-        /**
           * If true, the clear button won't be displayed
          */
         "disableClear"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "disable-clear"?: boolean;
         /**
           * Indicates whether the input is disabled or not. If `true`, the input is disabled and cannot be interacted with.
          */
@@ -7057,10 +6533,6 @@ declare namespace LocalJSX {
           * The native form validation message (mandatory if `required` is set)
          */
         "formValidationMessage"?: string;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "form-validation-message"?: string;
         /**
           * The inputmode attribute specifies what kind of input mechanism would be most helpful for users entering content into the input field. This allows a browser to display an appropriate virtual keyboard while editing. Possible values are 'none', 'text', 'decimal', 'numeric', 'tel', 'search', 'email', 'url', and 'date'.
          */
@@ -7135,10 +6607,6 @@ declare namespace LocalJSX {
          */
         "validationStatus"?: TInputValidation;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "validation-status"?: TInputValidation;
-        /**
           * The input value, it can be used to reset the input to a previous value
          */
         "value"?: TInputValue;
@@ -7196,10 +6664,6 @@ declare namespace LocalJSX {
          */
         "autoDismiss"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "auto-dismiss"?: boolean;
-        /**
           * The corder radius of the notification component
          */
         "border"?: TNotificationBorderRadius;
@@ -7208,17 +6672,9 @@ declare namespace LocalJSX {
          */
         "disableClose"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "disable-close"?: boolean;
-        /**
           * If true, the notification icon won't be shown
          */
         "hideIcon"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "hide-icon"?: boolean;
         /**
           * Callback handler to be called after the notification has been closed
          */
@@ -7363,10 +6819,6 @@ declare namespace LocalJSX {
          */
         "ariaLabel"?: string;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "aria-label"?: string;
-        /**
           * Handler to be called when `bq-option` is selected (on click/enter press).
          */
         "onBqSelect"?: (event: BqOptionListCustomEvent<{ value: string; item: HTMLBqOptionElement }>) => void;
@@ -7447,10 +6899,6 @@ declare namespace LocalJSX {
          */
         "sameWidth"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "same-width"?: boolean;
-        /**
           * Represents the skidding between the panel and the trigger element.
          */
         "skidding"?: number;
@@ -7486,17 +6934,9 @@ declare namespace LocalJSX {
          */
         "borderShape"?: TProgressBorderShape;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "border-shape"?: TProgressBorderShape;
-        /**
           * If `true`, a tooltip will be shown displaying the progress value
          */
         "enableTooltip"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "enable-tooltip"?: boolean;
         /**
           * If `true` the indeterminate state of progress bar is enabled
          */
@@ -7550,10 +6990,6 @@ declare namespace LocalJSX {
          */
         "backgroundOnHover"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "background-on-hover"?: boolean;
-        /**
           * If true radio input is checked
          */
         "checked"?: boolean;
@@ -7565,10 +7001,6 @@ declare namespace LocalJSX {
           * The form ID that the radio input is associated with
          */
         "formId"?: string;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "form-id"?: string;
         /**
           * Name of the HTML input form control. Submitted with the form as part of a name/value pair.
          */
@@ -7631,17 +7063,9 @@ declare namespace LocalJSX {
          */
         "backgroundOnHover"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "background-on-hover"?: boolean;
-        /**
           * A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change
          */
         "debounceTime"?: number;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "debounce-time"?: number;
         /**
           * If true radio inputs are disabled
          */
@@ -7670,10 +7094,6 @@ declare namespace LocalJSX {
           * The native form validation message when the radio group is required
          */
         "requiredValidationMessage"?: string;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "required-validation-message"?: string;
         /**
           * A string representing the value of the radio.
          */
@@ -7760,25 +7180,13 @@ declare namespace LocalJSX {
          */
         "clearButtonLabel"?: string;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "clear-button-label"?: string;
-        /**
           * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur.
          */
         "debounceTime"?: number;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "debounce-time"?: number;
-        /**
           * If true, the clear button won't be displayed
          */
         "disableClear"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "disable-clear"?: boolean;
         /**
           * Indicates whether the Select input is disabled or not. If `true`, the Select is disabled and cannot be interacted with.
          */
@@ -7796,17 +7204,9 @@ declare namespace LocalJSX {
          */
         "keepOpenOnSelect"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "keep-open-on-select"?: boolean;
-        /**
           * The maximum number of tags to display when multiple selection is enabled
          */
         "maxTagsVisible"?: number;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "max-tags-visible"?: number;
         /**
           * If true, the Select input will allow multiple selections.
          */
@@ -7840,10 +7240,6 @@ declare namespace LocalJSX {
          */
         "panelHeight"?: string;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "panel-height"?: string;
-        /**
           * The Select input placeholder text value
          */
         "placeholder"?: string;
@@ -7864,10 +7260,6 @@ declare namespace LocalJSX {
          */
         "sameWidth"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "same-width"?: boolean;
-        /**
           * Represents the skidding between the Select panel and the input element.
          */
         "skidding"?: number;
@@ -7880,10 +7272,6 @@ declare namespace LocalJSX {
           * @remarks This property is used to indicate the validation status of the select input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
          */
         "validationStatus"?: TInputValidation;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "validation-status"?: TInputValidation;
         /**
           * The select input value, it can be used to reset the field to a previous value
          */
@@ -8038,10 +7426,6 @@ declare namespace LocalJSX {
          */
         "debounceTime"?: number;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "debounce-time"?: number;
-        /**
           * If `true` the slider is disabled.
          */
         "disabled"?: boolean;
@@ -8050,17 +7434,9 @@ declare namespace LocalJSX {
          */
         "enableTooltip"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "enable-tooltip"?: boolean;
-        /**
           * If `true` it will show the value label on a side of the slider track area
          */
         "enableValueIndicator"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "enable-value-indicator"?: boolean;
         /**
           * A number representing the amount to remain between the minimum and maximum values (only for range type).
          */
@@ -8097,10 +7473,6 @@ declare namespace LocalJSX {
           * If `true`, a tooltip will always display the progress value. It relies on enableTooltip and if enableTooltip is false, tooltipAlwaysVisible cannot be true.
          */
         "tooltipAlwaysVisible"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "tooltip-always-visible"?: boolean;
         /**
           * It defines the type of slider to display
          */
@@ -8145,10 +7517,6 @@ declare namespace LocalJSX {
           * It defines the position of the label text
          */
         "textPosition"?: TSpinnerTextPosition;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "text-position"?: TSpinnerTextPosition;
     }
     /**
      * The Status Component is a UI element that represents the current state or condition of an item, task, or process.
@@ -8237,10 +7605,6 @@ declare namespace LocalJSX {
          */
         "dividerColor"?: string;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "divider-color"?: string;
-        /**
           * The size of the steps
          */
         "size"?: TStepsSize;
@@ -8286,10 +7650,6 @@ declare namespace LocalJSX {
          */
         "backgroundOnHover"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "background-on-hover"?: boolean;
-        /**
           * It indicates whether if the switch is `ON` by default (when the page loads)
          */
         "checked"?: boolean;
@@ -8302,33 +7662,17 @@ declare namespace LocalJSX {
          */
         "formValidationMessage"?: string;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "form-validation-message"?: string;
-        /**
           * If true, the component will take the full width space available on the parent container
          */
         "fullWidth"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "full-width"?: boolean;
         /**
           * It indicates how to to display the on/off marks inside the control, with icons or none (default)
          */
         "innerLabel"?: TSwitchInnerLabel;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "inner-label"?: TSwitchInnerLabel;
-        /**
           * It defines how to distribute the space between and around the control and the label text (https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content)
          */
         "justifyContent"?: TSwitchJustifyContent;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "justify-content"?: TSwitchJustifyContent;
         /**
           * Name of the form control. Submitted with the form as part of a name/value pair
          */
@@ -8353,10 +7697,6 @@ declare namespace LocalJSX {
           * If true, the order of the control and the label text will be changed
          */
         "reverseOrder"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "reverse-order"?: boolean;
         /**
           * The input control's value, submitted as a name/value pair with form data.
          */
@@ -8444,10 +7784,6 @@ declare namespace LocalJSX {
           * The id of the tab
          */
         "tabId": string;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "tab-id"?: string;
     }
     /**
      * The tab group is a user interface element that allows users wrap a set of tab items.
@@ -8476,17 +7812,9 @@ declare namespace LocalJSX {
          */
         "debounceTime"?: number;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "debounce-time"?: number;
-        /**
           * If true, the underline divider below the tabs won't be shown
          */
         "disableDivider"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "disable-divider"?: boolean;
         /**
           * Handler to be called when the tab value changes
          */
@@ -8670,10 +7998,6 @@ declare namespace LocalJSX {
          */
         "autoGrow"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "auto-grow"?: boolean;
-        /**
           * Controls whether or not the textarea field should be capitalized and how. Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
          */
         "autocapitalize"?: TTextareaAutoCapitalize;
@@ -8694,17 +8018,9 @@ declare namespace LocalJSX {
          */
         "debounceTime"?: number;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "debounce-time"?: number;
-        /**
           * If `true`, it will block the user's ability to resize the textarea.
          */
         "disableResize"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "disable-resize"?: boolean;
         /**
           * If `true`, the user cannot interact with the textarea.
          */
@@ -8717,10 +8033,6 @@ declare namespace LocalJSX {
           * The native form validation message
          */
         "formValidationMessage"?: string;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "form-validation-message"?: string;
         /**
           * The maximum number of characters that can be entered into the textarea (`0`: no limit). When enabled, a character counter will be shown underneath the textarea.
          */
@@ -8774,10 +8086,6 @@ declare namespace LocalJSX {
           * @remarks This property is used to indicate the validation status of the textarea. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The textarea has a validation error. - `'warning'`: The textarea has a validation warning. - `'success'`: The textarea has passed validation.
          */
         "validationStatus"?: TInputValidation;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "validation-status"?: TInputValidation;
         /**
           * The value of the textarea. It can be used to reset the textarea to a previous value.
          */
@@ -8835,10 +8143,6 @@ declare namespace LocalJSX {
           * If true will hide toast icon
          */
         "hideIcon"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "hide-icon"?: boolean;
         /**
           * Callback handler to be called when the notification is hidden
          */
@@ -8903,17 +8207,9 @@ declare namespace LocalJSX {
          */
         "alwaysVisible"?: boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "always-visible"?: boolean;
-        /**
           * Set the action when the tooltip should be displayed, on hover (default) or click
          */
         "displayOn"?: 'click' | 'hover';
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "display-on"?: 'click' | 'hover';
         /**
           * Distance between trigger element and tooltip
          */
@@ -8922,19 +8218,11 @@ declare namespace LocalJSX {
           * If true, the arrow on the tooltip content won't be shown
          */
         "hideArrow"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "hide-arrow"?: boolean;
         "placement"?: Placement;
         /**
           * Whether the tooltip should have the same width as the trigger element (applicable only for content shorter than the trigger element)
          */
         "sameWidth"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "same-width"?: boolean;
         /**
           * Indicates whether or not the tooltip is visible when the component is first rendered, and when interacting with the trigger
          */
