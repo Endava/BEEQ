@@ -181,13 +181,13 @@
       "@nxext/stencil@20.0.6": "patches/@nxext__stencil@20.0.6.patch"
     }
   },
-  "packageManager": "pnpm@10.5.2",
+  "packageManager": "pnpm@10.6.2",
   "engines": {
     "node": ">=22.0.0",
     "pnpm": ">=10.0.0"
   },
   "volta": {
     "node": "22.13.0",
-    "pnpm": "10.5.2"
+    "pnpm": "10.6.2"
   }
 }
