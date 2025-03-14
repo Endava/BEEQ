@@ -100,11 +100,6 @@
       matchPackageNames: ["@stencil/{/,}**"],
     },
     {
-      groupName: "Stencil Sass",
-      allowedVersions: "<3.1.0",
-      matchPackageNames: ["@stencil/sass"]
-    },
-    {
       groupName: "Storybook",
       matchPackageNames: ["@storybook/{/,}**", "storybook{/,}**"],
     },
@@ -124,13 +119,6 @@
       groupName: "Typescript",
       allowedVersions: "<5.6.0",
       matchPackageNames: ["typescript{/,}**"],
-    },
-    /**
-     * Ignore eslint updates for v9.0.0 and above
-     */
-    {
-      matchPackageNames: ["eslint"],
-      allowedVersions: "<9.0.0",
     },
     /**
      * Ignore zone.js updates for v0.15.0 and above

@@ -155,8 +155,8 @@ importers:
         specifier: 0.8.2
         version: 0.8.2(@stencil/core@4.27.2)(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@stencil/sass':
-        specifier: 3.0.12
-        version: 3.0.12(@stencil/core@4.27.2)
+        specifier: 3.1.9
+        version: 3.1.9(@stencil/core@4.27.2)
       '@stencil/vue-output-target':
         specifier: 0.9.6
         version: 0.9.6(@stencil/core@4.27.2)(vue@3.5.13(typescript@5.5.4))
@@ -3619,8 +3619,8 @@ packages:
       react: 19.0.0
       react-dom: 19.0.0
 
-  '@stencil/sass@3.0.12':
-    resolution: {integrity: sha512-aXMgpG13ftxLYo2dDauapvE9gKzSxTAqCMOfTqbPhKUCZ43JsknkLx+PArRaFtfYeVGSQ8eTS4ck7/Nlec+PNA==}
+  '@stencil/sass@3.1.9':
+    resolution: {integrity: sha512-NL6VVhiixuMBjSYETer0OVnGOB/x25hv1bnbq+p6GWH0/yXc2cKcaa2E67B8HH86SMRrshBo0PQAFCJjtyW2GA==}
     engines: {node: '>=12.0.0', npm: '>=6.0.0'}
     peerDependencies:
       '@stencil/core': '>=2.0.0 || >=3.0.0-beta.0 || >= 4.0.0-beta.0 || >= 4.0.0'
@@ -15826,9 +15826,10 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@stencil/sass@3.0.12(@stencil/core@4.27.2)':
+  '@stencil/sass@3.1.9(@stencil/core@4.27.2)':
     dependencies:
       '@stencil/core': 4.27.2
+      sass-embedded: 1.85.1
 
   '@stencil/vue-output-target@0.9.5(@stencil/core@4.27.2)(vue@3.5.13(typescript@5.7.3))':
     dependencies:
