@@ -37,6 +37,8 @@ export const config: Config = {
       sourceMap: true,
       sourceMapEmbed: true,
       sourceMapContents: true,
+      // @ts-expect-error - silenceDeprecations is not typed in @stencil/sass config
+      silenceDeprecations: ['import'],
     }),
     tailwind(tailwindOpts),
     tailwindHMR({ tailwindConf }),
