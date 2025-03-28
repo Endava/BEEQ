@@ -1,21 +1,21 @@
+<!-- Hidden top link -->
+<a id="readme-top"></a>
+
 <div align="center">
-  <img
-    width="100%"
-    src="./.github/BEEQ-overview.png"
-    alt="BEEQ Design System"
-  />
+  <img src="./.github/BEEQ-overview.png" alt="BEEQ Design System" />
 </div>
 
-<h1 align="center">BEEQ, a web component library initiative</h1>
-
+<h1 align="center" style="font-size: 2rem;">BEEQ, a web component library initiative</h1>
 <p align="center">This repository holds the source code of the web components present in the BEEQ Design System.</p>
-
+<p align="center"><a href="https://beeq.design/" alt="BEEQ official documentation"><strong>Explore the documentation »</strong></a></p>
+<br/>
+<br/>
 <p align="center">
   <a aria-label="license" href="./LICENSE">
-    <img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="">
+    <img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="Open source license">
   </a>
 </p>
-
+<br/>
 <div align="center">
 
 | Package                                                          | Version                                                                                                            | Documentation                            |
@@ -28,7 +28,20 @@
 
 </div>
 
-## ⚠️ Before Starting ⚠️
+## Documentation 📚
+
+Explore BEEQ, learn the fundamentals, and discover more advanced topics at the [**documentation site**](https://beeq.design)
+
+- [Getting started](https://www.beeq.design/3d466e231/p/3352a6-getting-started)
+- [Style guide](https://www.beeq.design/3d466e231/p/58b904-style-guide)
+- [Advanced guides](https://www.beeq.design/3d466e231/p/6733bc-styles)
+- [Roadmap](https://www.beeq.design/3d466e231/p/319f18-releases--roadmap)
+
+### Storybook 📕
+
+Feel free to [check our Storybook](https://storybook.beeq.design/) to see all the BEEQ components released. There you can find all the component's APIs (properties, events, and methods exposed) along with the variations that each component allows.
+
+## Development 👨‍💻
 
 ### Structure 🧩
 
@@ -56,10 +69,13 @@ where:
 - **[packages/beeq-vue](./packages/beeq-vue):** Vue.js-specific wrapper for BEEQ core library
 - **[packages/beeq-tailwindcss](./packages/beeq-tailwindcss):** BEEQ's opinionated TailwindCSS configuration
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Dependencies 📡
 
 We recommend the use of [Volta](https://volta.sh/) to manage Node and NPM versions. The [installation process](https://docs.volta.sh/guide/getting-started) is pretty straightforward, and as referenced on their official site:
 
+> [!TIP]
 > With Volta, you can select a Node engine once and then stop worrying about it. You can switch between projects and stop having to manually switch between Nodes.
 
 Once you have Volta installed, whenever you change to the BEEQ folder locally, it will switch to the right Node and NPM versions [pinned in the `package.json`](./package.json#L177).
@@ -68,6 +84,8 @@ Volta is not mandatory, you can still use any Node/NPM setup that fits you most,
 
 - [`NodeJS`](https://nodejs.org/en/download/) v18.x or higher
 - [NPM](https://nodejs.org/en/knowledge/getting-started/npm/what-is-npm/) v8 or higher
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Usage
 
@@ -79,7 +97,7 @@ The BEEQ components are published to the NPM package manager registry. You can u
 - 📙 [How to use the `@beeq/vue` package](packages/beeq-vue/README.md)
 - 📓 [How to use the `@beeq/tailwindcss` preset](packages/beeq-tailwindcss/README.md)
 
-Feel free to [check our Storybook](https://storybook.beeq.design/) to see all the BEEQ components released. There you can find all the component's APIs (properties, events, and methods exposed) along with the variations that each component allows.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Running the project 🏃‍
 
@@ -112,11 +130,13 @@ For a Production build, just run:
 npm run build
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Test 🧪
 
 BEEQ uses [Jest](https://jestjs.io/) for unit tests and Jest and [Puppeteer](https://pptr.dev/) for end-to-end tests.
 
-> [!CAUTION]
+> [!NOTE]
 > Puppeteer uses Chromium to run the tests. Make sure you have Chrome installed on your machine or set the `PUPPETEER_EXECUTABLE_PATH` environment variable to point to the path of your Chromium browser executable.
 > E.g., `export PUPPETEER_EXECUTABLE_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"`
 
@@ -125,14 +145,16 @@ You can run all the tests once, by executing:
 ```bash
 npm run test
 ```
-
-🚨 If you get an error similar to the one below, **try to check out locally the `main` branch and run the tests again**.
+> [!IMPORTANT]
+> If you get an error similar to the one below, **try to check out locally the `main` branch and run the tests again**.
 
 ```bash
 fatal: Not a valid object name main
 fatal: No such ref: 'main'
 nx affected
 ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Generate component
 
@@ -147,6 +169,8 @@ npm run g
 💥 If you are in the mood and want to help 🙂, please read carefully our [Contributing Guidelines](./CONTRIBUTING.md) and Development Standards.
 
 ❗️ When working on a bug fix, new feature, etc., please notice that we follow a [GitFlow workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow). Make sure to [follow the instructions from the Contributing Branching Strategy guidelines](./CONTRIBUTING.md#branching-strategy) about how to create your branch when starting to work on a bug/hot fixing, new feature, etc.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Documentation 📖
 
@@ -171,3 +195,5 @@ We would like to express our sincere gratitude to [Chromatic](https://www.chroma
 </a>
 
 Thank you to the [Nx](https://nx.dev/) team for helping us streamline our CI process and efficiently manage our Monorepo.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
