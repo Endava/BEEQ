@@ -41,6 +41,18 @@ Explore BEEQ, learn the fundamentals, and discover more advanced topics at the [
 
 Feel free to [check our Storybook](https://storybook.beeq.design/) to see all the BEEQ components released. There you can find all the component's APIs (properties, events, and methods exposed) along with the variations that each component allows.
 
+### Usage
+
+The BEEQ components are published to the NPM package manager registry. You can use the `@beeq/core` or any of the framework-specific wrappers (`@beeq/angular`, `@beeq/react`) depending on the technology stack of your project. Make sure the follow the usage instructions for each package:
+
+- 📘 [How to use the `@beeq/core` package](packages/beeq/README.md)
+- 📗 [How to use the `@beeq/angular` package](packages/beeq-angular/README.md)
+- 📕 [How to use the `@beeq/react` package](packages/beeq-react/README.md)
+- 📙 [How to use the `@beeq/vue` package](packages/beeq-vue/README.md)
+- 📓 [How to use the `@beeq/tailwindcss` preset](packages/beeq-tailwindcss/README.md)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Development 👨‍💻
 
 ### Structure 🧩
@@ -82,20 +94,8 @@ Once you have Volta installed, whenever you change to the BEEQ folder locally, i
 
 Volta is not mandatory, you can still use any Node/NPM setup that fits you most, just keep in mind that you'll need:
 
-- [`NodeJS`](https://nodejs.org/en/download/) v18.x or higher
-- [NPM](https://nodejs.org/en/knowledge/getting-started/npm/what-is-npm/) v8 or higher
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Usage
-
-The BEEQ components are published to the NPM package manager registry. You can use the `@beeq/core` or any of the framework-specific wrappers (`@beeq/angular`, `@beeq/react`) depending on the technology stack of your project. Make sure the follow the usage instructions for each package:
-
-- 📘 [How to use the `@beeq/core` package](packages/beeq/README.md)
-- 📗 [How to use the `@beeq/angular` package](packages/beeq-angular/README.md)
-- 📕 [How to use the `@beeq/react` package](packages/beeq-react/README.md)
-- 📙 [How to use the `@beeq/vue` package](packages/beeq-vue/README.md)
-- 📓 [How to use the `@beeq/tailwindcss` preset](packages/beeq-tailwindcss/README.md)
+- [NodeJS](https://nodejs.org/en/download/) v18.x or higher
+- [PNPM](https://pnpm.io/installation) v10 or higher
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -114,20 +114,37 @@ git checkout main
 Simply run:
 
 ```bash
-npm ci
+pnpm i --frozen-lockfile
 # Make sure to build first the project before starting it
-npm run build
-npm start
+pnpm build
+pnpm start
 ```
 
 Start coding 😃!
+
+> [!TIP]
+> Since we used [NX](https://nx.dev) to handle our monorepo, you can leverage powerful commands like `nx affected` to run commands only on projects affected by your changes, or `nx run-many` to run commands across multiple projects. For example:
+
+```bash
+# Run tests only on affected projects
+nx affected:test
+
+# Build all packages
+nx run-many --target=build --all
+
+# Run a specific target on multiple projects
+nx run-many --target=lint --projects=beeq,beeq-react
+```
+
+> We use these commands in our CI pipeline to optimize our build and test processes. Feel free to check out [our CircleCI config](.circleci/config.yml) to see how we implement them!
+> Don't forget to check out the [NX documentation](https://nx.dev/using-nx/affected) for more tips on working with monorepos.
 
 ### Build 📦
 
 For a Production build, just run:
 
 ```bash
-npm run build
+pnpm build
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -136,22 +153,32 @@ npm run build
 
 BEEQ uses [Jest](https://jestjs.io/) for unit tests and Jest and [Puppeteer](https://pptr.dev/) for end-to-end tests.
 
-> [!NOTE]
+> [!IMPORTANT]
 > Puppeteer uses Chromium to run the tests. Make sure you have Chrome installed on your machine or set the `PUPPETEER_EXECUTABLE_PATH` environment variable to point to the path of your Chromium browser executable.
 > E.g., `export PUPPETEER_EXECUTABLE_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"`
 
 You can run all the tests once, by executing:
 
 ```bash
-npm run test
+pnpm test
 ```
-> [!IMPORTANT]
-> If you get an error similar to the one below, **try to check out locally the `main` branch and run the tests again**.
+
+or run unit tests and e2e tests separately:
 
 ```bash
-fatal: Not a valid object name main
-fatal: No such ref: 'main'
-nx affected
+pnpm test:spec
+pnpm test:e2e
+```
+
+> [!TIP]
+> You can execute specific tests, whether they're spec tests or e2e tests, by supplying the file name as an argument (if you want to run tests in watch mode, just add the `--watch` argument).
+
+```bash
+pnpm test:spec -- debounce --watch
+```
+
+```bash
+pnpm test:e2e -- dialog --watch
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -161,8 +188,10 @@ nx affected
 BEEQ comes with a component generator that saves you time when creating the skeleton for a new component. To use the generator, you just need to run the following command and follow the instructions in your prompt CLI:
 
 ```bash
-npm run g
+pnpm g
 ```
+
+![BEEQ component generator](https://github.com/user-attachments/assets/a9a9c442-fb21-4e54-b7c1-067db1b275ae)
 
 ## Contributing 💻
 
