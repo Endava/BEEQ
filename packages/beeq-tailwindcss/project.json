@@ -30,6 +30,7 @@
       "executor": "@nx/eslint:lint",
       "dependsOn": ["build"],
       "options": {
+        "cache": true,
         "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/package.json", "{projectRoot}/project.json"]
       }
     }

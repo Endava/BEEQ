@@ -191,7 +191,7 @@ BEEQ comes with a component generator that saves you time when creating the skel
 pnpm g
 ```
 
-![BEEQ component generator](https://github.com/user-attachments/assets/a9a9c442-fb21-4e54-b7c1-067db1b275ae)
+![Image](https://github.com/user-attachments/assets/02147423-d196-4cca-9897-391feabd9b8e)
 
 ## Contributing 💻
 

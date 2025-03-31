@@ -166,6 +166,7 @@
       "executor": "@nx/eslint:lint",
       "dependsOn": [{ "target": "stylelint" }],
       "options": {
+        "cache": true,
         "lintFilePatterns": ["{projectRoot}/**/*.{ts,tsx}", "{projectRoot}/package.json", "{projectRoot}/project.json"]
       }
     },

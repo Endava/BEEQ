@@ -34,6 +34,7 @@
     "lint": {
       "executor": "@nx/eslint:lint",
       "options": {
+        "cache": true,
         "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/package.json", "{projectRoot}/project.json"]
       }
     }

@@ -52,13 +52,14 @@ node_modules
 
 # misc
 .cache
-/.sass-cache
-/connect.lock
-/coverage
-/libpeerconnection.log
+.eslintcache
+.sass-cache
 npm-debug.log
 yarn-error.log
 testem.log
+/connect.lock
+/coverage
+/libpeerconnection.log
 /typings
 
 # System Files
