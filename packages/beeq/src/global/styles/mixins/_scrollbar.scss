@@ -1,5 +1,12 @@
 /**
- * Hide the scrollbar while scrolling is still functional
+ * Use this mixin to hide the scrollbar while scrolling is still functional.
+ *
+ * @example
+ * ```scss
+ * .element {
+ *   @include hide-scrollbar;
+ * }
+ * ```
  */
 @mixin hide-scrollbar {
   -ms-overflow-style: none;
