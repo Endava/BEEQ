@@ -42,7 +42,8 @@ node_modules
 .settings/
 *.sublime-workspace
 
-# IDE - VSCode
+# IDE - VSCode/Cursor
+.cursor/*
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
