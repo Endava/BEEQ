@@ -104,7 +104,7 @@
       }
     }
   },
-  "nxCloudAccessToken": "ZTI2Yzg0YzktODZiMi00Yjg2LTlhMmMtYWI3NDhkODkzZjlmfHJlYWQtb25seQ==",
+  "nxCloudId": "64007df8da9fd31ee8a4d06e",
   "generators": {
     "@nx/react": {
       "application": {
