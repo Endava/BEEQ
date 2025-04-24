@@ -19,13 +19,13 @@ commands:
             curl https://get.volta.sh | bash
             echo 'export VOLTA_FEATURE_PNPM=1' >> $BASH_ENV
             echo 'export VOLTA_HOME=$HOME/.volta' >> $BASH_ENV
-            echo 'export PATH=$VOLTA_HOME:$PATH' >> $BASH_ENV
+            echo 'export PATH=$VOLTA_HOME/bin:$PATH' >> $BASH_ENV
             source $BASH_ENV
       - run:
-          name: 🔎 Check Node and NPM versions
+          name: 🔎 Check Node and PNPM versions
           command: |
-            $HOME/.volta/bin/node --version
-            $HOME/.volta/bin/pnpm --version
+            node --version
+            pnpm --version
   chromatic-deployment:
     description: Publish changes to Chromatic storybook
     steps:
@@ -46,6 +46,7 @@ jobs:
     # parallelism: 4
     environment:
       NX_BRANCH: << pipeline.git.branch >>
+      NX_VERBOSE_LOGGING: "true"
     # Then run your node commands!
     # CircleCI will report the results back to your VCS provider.
     steps:
@@ -54,7 +55,7 @@ jobs:
       - setup-node
       - run:
           name: ▶️ Start Nx Cloud Agents
-          command: pnpm dlx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --with-env-vars="NX_VERBOSE_LOGGING"
+          command: pnpm dlx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --with-env-vars="NX_VERBOSE_LOGGING NX_BRANCH"
       - restore_cache:
           name: 💫 Restore PNPM dependencies
           # CircleCI will first try to load a cache associated with the current version of pnpm-lock.yaml.
