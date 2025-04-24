@@ -1,3 +1,11 @@
+// @ts-nocheck
+
+/**
+ * The directives folder containing the value accessors is generated dynamically
+ * when compiling the `beeq` package.
+ * ⚠️ Since this file won't change that much, it is safe to disable TypeScript checking.
+ */
+
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { APP_INITIALIZER, ModuleWithProviders, NgModule, NgZone } from '@angular/core';
 import { defineCustomElements } from '@beeq/core/dist/loader';

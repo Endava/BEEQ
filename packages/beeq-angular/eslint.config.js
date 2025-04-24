@@ -23,6 +23,7 @@ module.exports = [
       '@angular-eslint/directive-class-suffix': 'off',
       '@angular-eslint/directive-selector': 'off',
       '@angular-eslint/no-host-metadata-property': 'off',
+      '@typescript-eslint/ban-ts-comment': 'off',
     },
   },
   {
