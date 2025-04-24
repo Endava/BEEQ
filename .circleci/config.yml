@@ -19,13 +19,13 @@ commands:
             curl https://get.volta.sh | bash
             echo 'export VOLTA_FEATURE_PNPM=1' >> $BASH_ENV
             echo 'export VOLTA_HOME=$HOME/.volta' >> $BASH_ENV
-            echo 'export PATH=$VOLTA_HOME:$PATH' >> $BASH_ENV
+            echo 'export PATH=$VOLTA_HOME/bin:$PATH' >> $BASH_ENV
             source $BASH_ENV
       - run:
-          name: 🔎 Check Node and NPM versions
+          name: 🔎 Check Node and PNPM versions
           command: |
-            $HOME/.volta/bin/node --version
-            $HOME/.volta/bin/pnpm --version
+            node --version
+            pnpm --version
   chromatic-deployment:
     description: Publish changes to Chromatic storybook
     steps:
