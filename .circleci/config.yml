@@ -46,6 +46,7 @@ jobs:
     # parallelism: 4
     environment:
       NX_BRANCH: << pipeline.git.branch >>
+      NX_VERBOSE_LOGGING: "true"
     # Then run your node commands!
     # CircleCI will report the results back to your VCS provider.
     steps:
@@ -54,7 +55,7 @@ jobs:
       - setup-node
       - run:
           name: ▶️ Start Nx Cloud Agents
-          command: pnpm dlx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --with-env-vars="NX_VERBOSE_LOGGING"
+          command: pnpm dlx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --with-env-vars="NX_VERBOSE_LOGGING NX_BRANCH"
       - restore_cache:
           name: 💫 Restore PNPM dependencies
           # CircleCI will first try to load a cache associated with the current version of pnpm-lock.yaml.
