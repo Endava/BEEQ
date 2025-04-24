@@ -3,7 +3,7 @@
 version: 2.1
 
 orbs:
-  nx: nrwl/nx@1.6.2
+  nx: nrwl/nx@1.7.0
 
 # ---------------------------------------------------------------------------- #
 #              Sequence of steps as a map to be executed in a job              #
@@ -41,7 +41,8 @@ jobs:
     # You can specify an image from DockerHub or use one of our Convenience/Machine Images from CircleCI's Developer Hub.
     # A list of available CircleCI Docker Machine Images are available here: https://circleci.com/developer/images?imageType=machine
     machine:
-      image: ubuntu-2204:2023.02.1
+      image: ubuntu-2404:2024.11.1
+    resource_class: medium
     # parallelism: 4
     environment:
       NX_BRANCH: << pipeline.git.branch >>
