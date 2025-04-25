@@ -48,7 +48,7 @@ First of all, please be aware that when you submit code changes, your submission
 
 ### <a name="report-an-error-or-bug"></a> Report an Error or Bug
 
-Report a bug by [opening a new issue](issues/new/choose). When you are opening an issue, please be sure to report as much information as you can to allow us to replicate the problem and faster find the solution.
+Report a bug by [opening a new issue](https://github.com/Endava/BEEQ/issues/new/choose). When you are opening an issue, please be sure to report as much information as you can to allow us to replicate the problem and faster find the solution.
 
 **Great Bug Reports** tend to have:
 

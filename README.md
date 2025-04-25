@@ -41,9 +41,13 @@ Explore BEEQ, learn the fundamentals, and discover more advanced topics at the [
 
 Feel free to [check our Storybook](https://storybook.beeq.design/) to see all the BEEQ components released. There you can find all the component's APIs (properties, events, and methods exposed) along with the variations that each component allows.
 
+### Submit an issue
+
+Report a bug or request a new feature by [opening a new issue](https://github.com/Endava/BEEQ/issues/new/choose)
+
 ### Usage
 
-The BEEQ components are published to the NPM package manager registry. You can use the `@beeq/core` or any of the framework-specific wrappers (`@beeq/angular`, `@beeq/react`) depending on the technology stack of your project. Make sure the follow the usage instructions for each package:
+The BEEQ components are published to the NPM package manager registry. You can use the `@beeq/core` or any of the framework-specific wrappers (`@beeq/angular`, `@beeq/react`, `@beeq/vue`) depending on the technology stack of your project. Make sure the follow the usage instructions for each package:
 
 - 📘 [How to use the `@beeq/core` package](packages/beeq/README.md)
 - 📗 [How to use the `@beeq/angular` package](packages/beeq-angular/README.md)
@@ -121,6 +125,8 @@ pnpm start
 ```
 
 Start coding 😃!
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 > [!TIP]
 > Since we used [NX](https://nx.dev) to handle our monorepo, you can leverage powerful commands like `nx affected` to run commands only on projects affected by your changes, or `nx run-many` to run commands across multiple projects. For example:
