@@ -14,7 +14,7 @@ overrides:
 
 patchedDependencies:
   '@nxext/stencil@20.0.6':
-    hash: c4ad21e545ceff7ac87f392a8e7dce64bc3258eff2f35439473955d6614be422
+    hash: 603b464b155c549972d676035da397cd1e0c446481f398ad037ace1774332e8e
     path: patches/@nxext__stencil@20.0.6.patch
 
 importers:
@@ -138,7 +138,7 @@ importers:
         version: 20.8.0(@swc-node/register@1.10.9(@swc/core@1.11.5(@swc/helpers@0.5.15))(@swc/types@0.1.21)(typescript@5.5.4))(@swc/core@1.11.5(@swc/helpers@0.5.15))
       '@nxext/stencil':
         specifier: 20.0.6
-        version: 20.0.6(patch_hash=c4ad21e545ceff7ac87f392a8e7dce64bc3258eff2f35439473955d6614be422)(928d9d3f0ee81bafa88e08495d1e4f2a)
+        version: 20.0.6(patch_hash=603b464b155c549972d676035da397cd1e0c446481f398ad037ace1774332e8e)(01fcbdd9ed749bdfbba68aeedc632181)
       '@rollup/plugin-url':
         specifier: 8.0.2
         version: 8.0.2(rollup@4.40.0)
@@ -15911,7 +15911,7 @@ snapshots:
       - supports-color
       - verdaccio
 
-  '@nxext/stencil@20.0.6(patch_hash=c4ad21e545ceff7ac87f392a8e7dce64bc3258eff2f35439473955d6614be422)(928d9d3f0ee81bafa88e08495d1e4f2a)':
+  '@nxext/stencil@20.0.6(patch_hash=603b464b155c549972d676035da397cd1e0c446481f398ad037ace1774332e8e)(01fcbdd9ed749bdfbba68aeedc632181)':
     dependencies:
       '@nx/angular': 20.8.0(a9e808b7e327f116fece1ecbcdf23cea)
       '@nx/cypress': 20.8.1(@babel/traverse@7.27.0)(@swc-node/register@1.10.9(@swc/core@1.11.5(@swc/helpers@0.5.15))(@swc/types@0.1.21)(typescript@5.5.4))(@swc/core@1.11.5(@swc/helpers@0.5.15))(@zkochan/js-yaml@0.0.7)(eslint@9.25.1(jiti@2.4.2))(nx@20.8.0(@swc-node/register@1.10.9(@swc/core@1.11.5(@swc/helpers@0.5.15))(@swc/types@0.1.21)(typescript@5.5.4))(@swc/core@1.11.5(@swc/helpers@0.5.15)))(typescript@5.5.4)

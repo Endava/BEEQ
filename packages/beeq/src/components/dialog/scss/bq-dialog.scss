@@ -15,7 +15,7 @@
 /* --------------------------------- Dialog --------------------------------- */
 
 .bq-dialog {
-  @apply absolute flex flex-col gap-[--bq-dialog--content-footer-gap] p-b-0 p-i-0;
+  @apply fixed flex flex-col gap-[--bq-dialog--content-footer-gap] p-b-0 p-i-0;
   @apply bg-[--bq-dialog--background] text-[--bq-dialog--text-color] shadow-[shadow:--bq-dialog--box-shadow];
   @apply rounded-[--bq-dialog--border-radius] border-[length:--bq-dialog--border-width] border-[color:--bq-dialog--border-color];
   // If mobile resolution, dialog will be full width
@@ -49,13 +49,13 @@
 /* ------------------------------ Dialog header ----------------------------- */
 
 .bq-dialog--header {
-  @apply sticky flex items-center gap-m inset-bs-0 p-b-[--bq-dialog--padding] p-be-0 p-i-[--bq-dialog--padding];
+  @apply sticky flex items-center gap-m p-b-[--bq-dialog--padding] p-be-0 p-i-[--bq-dialog--padding] inset-bs-0;
 }
 
 /* ------------------------------ Dialog footer ----------------------------- */
 
 .bq-dialog--footer {
-  @apply sticky flex items-center justify-end gap-xs is-full inset-bs-[100%] p-b-[--bq-dialog--padding] p-bs-0 p-i-[--bq-dialog--padding];
+  @apply sticky flex items-center justify-end gap-xs is-full p-b-[--bq-dialog--padding] p-bs-0 p-i-[--bq-dialog--padding] inset-bs-[100%];
 }
 
 /* --------------------------- Dialog close button -------------------------- */
