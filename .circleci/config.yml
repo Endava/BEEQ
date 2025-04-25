@@ -50,12 +50,8 @@ jobs:
     # Then run your node commands!
     # CircleCI will report the results back to your VCS provider.
     steps:
-      # Checkout the code as the first step.
       - checkout
       - setup-node
-      - run:
-          name: ▶️ Start Nx Cloud Agents
-          command: pnpm dlx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --with-env-vars="NX_VERBOSE_LOGGING NX_BRANCH"
       - restore_cache:
           name: 💫 Restore PNPM dependencies
           # CircleCI will first try to load a cache associated with the current version of pnpm-lock.yaml.
@@ -77,11 +73,13 @@ jobs:
           paths:
             - node_modules
             - ~/.pnpm-store
-      - nx/set-shas
-          # Derives SHAs for base and head for use in `nx affected` commands in CI
       - run:
           name: 🧾 NX report
           command: pnpm exec nx report
+      - run:
+          name: ▶️ Start Nx Cloud Agents
+          command: pnpm dlx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --with-env-vars="NX_VERBOSE_LOGGING NX_BRANCH"
+      - nx/set-shas # Derives SHAs for base and head for use in `nx affected` commands in CI
       - run:
           name: 🩺 Run Linters
           command: pnpm exec nx affected -t lint --exclude='*,!tag:publishable' --parallel=4 --output-style=stream --base=$NX_BASE --head=$NX_HEAD --verbose
