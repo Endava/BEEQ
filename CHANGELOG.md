@@ -1,4 +1,4 @@
-## 1.8.4 (2025-02-17)
+## [1.8.4](https://github.com/Endava/BEEQ/compare/v1.8.3...v1.8.4) (2025-02-17)
 
 ### Bug Fixes 🐞
 
@@ -23,7 +23,7 @@
 
 - Dabiel González Ramos @dgonzalezr
 
-## 1.8.3 (2025-01-31)
+## [1.8.3](https://github.com/Endava/BEEQ/compare/v1.8.2...v1.8.3) (2025-01-31)
 
 ### Chore ⚙️
 

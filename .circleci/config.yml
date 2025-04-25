@@ -41,8 +41,8 @@ jobs:
     # You can specify an image from DockerHub or use one of our Convenience/Machine Images from CircleCI's Developer Hub.
     # A list of available CircleCI Docker Machine Images are available here: https://circleci.com/developer/images?imageType=machine
     machine:
-      image: ubuntu-2404:2024.11.1
-    resource_class: medium
+      image: ubuntu-2204:current
+    resource_class: arm.medium
     # parallelism: 4
     environment:
       NX_BRANCH: << pipeline.git.branch >>
