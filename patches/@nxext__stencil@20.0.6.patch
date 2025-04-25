@@ -1,3 +1,31 @@
+diff --git a/src/executors/serve/executor.d.ts b/src/executors/serve/executor.d.ts
+index 785841d7a9cee9eca9699b123bdd6f8539e23966..6c49ba084ecc83da53c1e38c46189798f1ef29b6 100644
+--- a/src/executors/serve/executor.d.ts
++++ b/src/executors/serve/executor.d.ts
+@@ -1,8 +1,6 @@
+ import { StencilServeOptions } from './schema';
+ import { ExecutorContext } from '@nx/devkit';
+-export default function runExecutor(options: StencilServeOptions, context: ExecutorContext): AsyncGenerator<{
+-    success: boolean;
+-}, {
++export default function runExecutor(options: StencilServeOptions, context: ExecutorContext): AsyncGenerator<never, {
+     success: boolean;
+     error?: undefined;
+ } | {
+diff --git a/src/executors/serve/executor.js b/src/executors/serve/executor.js
+index 372793056e356b30a25c8cc34fd21b7ecf6b1339..5740dbba18b50d39f51c2c27a8d2e625f1a5cea6 100644
+--- a/src/executors/serve/executor.js
++++ b/src/executors/serve/executor.js
+@@ -33,9 +33,6 @@ function runExecutor(options, context) {
+         const taskCommand = 'build';
+         const projGraph = yield tslib_1.__await((0, project_graph_1.createProjectGraphAsync)());
+         const { target, dependencies } = (0, buildable_libs_utils_1.calculateProjectDependencies)(projGraph, context.root, context.projectName, context.targetName, context.configurationName);
+-        if (!(0, buildable_libs_utils_1.checkDependentProjectsHaveBeenBuilt)(context.root, context.projectName, context.targetName, dependencies)) {
+-            yield yield tslib_1.__await({ success: false });
+-        }
+         const flags = createStencilCompilerOptions(taskCommand, options);
+         const { strictConfig, pathCollection } = yield tslib_1.__await((0, stencil_runtime_1.initializeStencilConfig)(taskCommand, options, context, flags));
+         const config = yield tslib_1.__await((0, stencil_runtime_1.prepareConfigAndOutputargetPaths)(strictConfig, pathCollection));
 diff --git a/src/executors/stencil-runtime/prepare-config-and-outputarget-paths.js b/src/executors/stencil-runtime/prepare-config-and-outputarget-paths.js
 index f524f0381c45121eaf0f362ab8f7fcd08367e156..f0bbe77eede3ea0d5cce55e0c26893b6bd2df720 100644
 --- a/src/executors/stencil-runtime/prepare-config-and-outputarget-paths.js
@@ -49,7 +77,7 @@ index 4e17cca33f8480d1c7a5d0f93fe3fb1c4b58db49..3a61c31bf7810121dd63ecd389fd8056
              strictConfig.rootDir = distDir;
              strictConfig.packageJsonFilePath = (0, normalize_path_1.normalizePath)((0, path_1.join)(distDir, 'package.json'));
 diff --git a/src/executors/test/executor.js b/src/executors/test/executor.js
-index d784a66f88968264bf31e19beedb48f659de31dd..4fb59fcdb4950ad9e176af31860c72297c5a45e0 100644
+index d784a66f88968264bf31e19beedb48f659de31dd..6a53c5ed83ce2b7f2b03848a3a9bf241a79181e6 100644
 --- a/src/executors/test/executor.js
 +++ b/src/executors/test/executor.js
 @@ -16,12 +16,6 @@ function createStencilCompilerOptions(taskCommand, options) {
