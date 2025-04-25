@@ -68,7 +68,7 @@ jobs:
       - run:
           name: 📦 Install dependencies
           #  In this case, only those dependencies that are not in the cache will be installed.
-          command: pnpm install --frozen-lockfile
+          command: NODE_ENV=ci pnpm install --frozen-lockfile
       - save_cache:
           name: 💾 Save PNPM dependencies
           # After all of the project's dependencies have been loaded,

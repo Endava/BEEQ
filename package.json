@@ -58,9 +58,9 @@
     "@babel/preset-react": "7.26.3",
     "@beeq/storybook-addon-html": "6.0.0",
     "@chromatic-com/storybook": "3.2.5",
-    "@commitlint/cli": "19.7.1",
-    "@commitlint/config-angular": "19.7.1",
-    "@commitlint/config-conventional": "19.7.1",
+    "@commitlint/cli": "19.8.0",
+    "@commitlint/config-angular": "19.8.0",
+    "@commitlint/config-conventional": "19.8.0",
     "@custom-elements-manifest/analyzer": "0.10.4",
     "@eslint/compat": "1.2.7",
     "@eslint/eslintrc": "3.3.0",
@@ -167,19 +167,6 @@
     "vite-plugin-turbosnap": "1.0.3",
     "vite-tsconfig-paths": "5.1.4",
     "vue": "3.5.13"
-  },
-  "pnpm": {
-    "overrides": {
-      "@custom-elements-manifest/analyzer": "$@custom-elements-manifest/analyzer",
-      "eslint": "$eslint",
-      "eslint-config-prettier": "$eslint-config-prettier",
-      "react": "$react",
-      "react-dom": "$react-dom",
-      "vite": "$vite"
-    },
-    "patchedDependencies": {
-      "@nxext/stencil@20.0.6": "patches/@nxext__stencil@20.0.6.patch"
-    }
   },
   "packageManager": "pnpm@10.6.2",
   "engines": {
