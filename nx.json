@@ -104,7 +104,7 @@
       }
     }
   },
-  "nxCloudId": "64007df8da9fd31ee8a4d06e",
+  "neverConnectToCloud": true,
   "generators": {
     "@nx/react": {
       "application": {
