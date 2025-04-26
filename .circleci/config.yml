@@ -4,6 +4,7 @@ version: 2.1
 
 orbs:
   nx: nrwl/nx@1.7.0
+  browser-tools: circleci/browser-tools@1.5.3
 
 # ---------------------------------------------------------------------------- #
 #              Sequence of steps as a map to be executed in a job              #
@@ -26,6 +27,33 @@ commands:
           command: |
             node --version
             pnpm --version
+  setup-deps:
+    description: Set up dependencies with optimal caching
+    steps:
+      - restore_cache:
+          name: 💫 Restore PNPM package cache
+          keys:
+            - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+      - restore_cache:
+          name: 💫 Restore PNPM modules cache
+          keys:
+            - pnpm-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "pnpm-lock.yaml" }}
+            - pnpm-modules-{{ .Environment.CACHE_VERSION }}-
+      - run:
+          name: 📦 Install dependencies
+          command: |
+            SKIP_POSTINSTALL=1 pnpm install --frozen-lockfile --prefer-offline
+      - save_cache:
+          name: 💾 Save PNPM package cache
+          key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+          paths:
+            - ~/.pnpm-store
+      - save_cache:
+          name: 💾 Save PNPM modules cache
+          key: pnpm-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "pnpm-lock.yaml" }}
+          paths:
+            - node_modules
+            - "*/*/node_modules"
   chromatic-deployment:
     description: Publish changes to Chromatic storybook
     steps:
@@ -38,67 +66,82 @@ commands:
 # ---------------------------------------------------------------------------- #
 jobs:
   build-and-test:
-    # You can specify an image from DockerHub or use one of our Convenience/Machine Images from CircleCI's Developer Hub.
-    # A list of available CircleCI Docker Machine Images are available here: https://circleci.com/developer/images?imageType=machine
-    machine:
-      image: ubuntu-2204:current
-    resource_class: arm.medium
-    # parallelism: 4
+    # Using a Docker image that comes with Chrome pre-installed to speed up the process
+    docker:
+      - image: cimg/node:22.15.0-browsers
+    resource_class: large
     environment:
       NX_BRANCH: << pipeline.git.branch >>
       NX_VERBOSE_LOGGING: "true"
+      # Set Puppeteer to skip downloading its own Chrome
+      PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true"
+      # Better memory usage for Node.js
+      NODE_OPTIONS: "--max-old-space-size=4096"
     # Then run your node commands!
     # CircleCI will report the results back to your VCS provider.
     steps:
       - checkout
-      - setup-node
-      - restore_cache:
-          name: 💫 Restore PNPM dependencies
-          # CircleCI will first try to load a cache associated with the current version of pnpm-lock.yaml.
-          # If the lock file has changed due to a dependency being added, then no cache will be found.
-          # Next, it will use the static fallback key pnpm-deps-v1-{{ .Branch }}- to load the most recent valid cache
-          # with the pnpm-deps-v1-{{ .Branch }}- prefix.
-          keys:
-            - pnpm-deps-{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-{{checksum "pnpm-lock.yaml"}}
-            - pnpm-deps-{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-
+
+      # Install Chrome using the browser-tools orb
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
       - run:
-          name: 📦 Install dependencies
-          #  In this case, only those dependencies that are not in the cache will be installed.
-          command: NODE_ENV=ci pnpm install --frozen-lockfile
-      - save_cache:
-          name: 💾 Save PNPM dependencies
-          # After all of the project's dependencies have been loaded,
-          # the save_cache step will save the updated dependency tree to a new cache in the node_modules directory.
-          key: pnpm-deps-{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-{{checksum "pnpm-lock.yaml"}}
-          paths:
-            - node_modules
-            - ~/.pnpm-store
+          name: 🔍 Verify Chrome Installation
+          command: |
+            google-chrome --version
+            chromedriver --version
+            echo "export PUPPETEER_EXECUTABLE_PATH=$(which google-chrome)" >> $BASH_ENV
+
+      - setup-node
+      - setup-deps
+
+      # Cache the NX build cache
+      - restore_cache:
+          name: 💫 Restore NX cache
+          keys:
+            - nx-cache-{{ .Branch }}-{{ .Revision }}
+            - nx-cache-{{ .Branch }}-
+            - nx-cache-
       - run:
           name: 🧾 NX report
           command: pnpm exec nx report
-      - run:
-          name: ▶️ Start Nx Cloud Agents
-          command: pnpm dlx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --with-env-vars="NX_VERBOSE_LOGGING NX_BRANCH"
       - nx/set-shas # Derives SHAs for base and head for use in `nx affected` commands in CI
+
+      # - run:
+      #     name: ▶️ Start Nx Cloud Agents
+      #     command: pnpm dlx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --with-env-vars="NX_VERBOSE_LOGGING NX_BRANCH"
       - run:
           name: 🩺 Run Linters
-          command: pnpm exec nx affected -t lint --exclude='*,!tag:publishable' --parallel=4 --output-style=stream --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t lint --exclude='*,!tag:publishable' --parallel --output-style=stream --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 🧰 Run Unit Tests
-          command: pnpm exec nx affected -t test --exclude='*,!tag:core' --parallel=4 --output-style=stream --ci --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t test --exclude='*,!tag:core' --output-style=stream --ci --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: ⏳ Build Libraries
-          command: pnpm exec nx affected -t build --exclude='*,!tag:publishable' --parallel=4 --output-style=stream --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t build --exclude='*,!tag:publishable' --parallel --output-style=stream --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 🧪 Run E2E Tests
-          command: pnpm exec nx affected -t e2e --exclude='*,!tag:core' --parallel=4 --ci --code-coverage --output-style=stream --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t e2e --exclude='*,!tag:core' --output-style=stream --ci --code-coverage --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 📚 Build Storybook
-          command: pnpm exec nx run beeq:storybook-build --parallel --output-style=stream --verbose
-      - run:
-          name: ⏹️ Stop Nx Cloud Agents
-          command: pnpm dlx nx-cloud stop-all-agents
+          command: pnpm exec nx run beeq:storybook-build --output-style=stream --verbose
+      # - run:
+      #     name: ⏹️ Stop Nx Cloud Agents
+      #     command: pnpm dlx nx-cloud stop-all-agents
+      - save_cache:
+          name: 💾 Save NX cache
+          key: nx-cache-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - .nx/cache
+
       - chromatic-deployment
+
+      # Store test results
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: test-results
+          destination: test-results
 
 # ---------------------------------------------------------------------------- #
 #                         Used for orchestrate all jobs                        #
