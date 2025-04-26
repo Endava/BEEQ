@@ -2,6 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
 
 import mdx from './bq-progress.mdx';
+import { isChromatic, skipSnapshotParameters } from '../../../../.storybook/chromatic-parameters';
 import { PROGRESS_BORDER_SHAPE, PROGRESS_THICKNESS, PROGRESS_TYPE } from '../bq-progress.types';
 
 const meta: Meta = {
@@ -10,6 +11,9 @@ const meta: Meta = {
   parameters: {
     docs: {
       page: mdx,
+    },
+    chromatic: {
+      disableSnapshot: isChromatic(), // Skip snapshots in Chromatic due to animation
     },
   },
   argTypes: {
@@ -35,25 +39,31 @@ export default meta;
 
 type Story = StoryObj;
 
-const Template = (args: Args) => html`
-  <div class="is-64">
-    <bq-progress
-      value=${args.value}
-      indeterminate=${args.indeterminate}
-      thickness=${args.thickness}
-      type=${args.type}
-      border-shape=${args['border-shape']}
-      ?label=${args.label}
-      ?enable-tooltip=${args['enable-tooltip']}
-    ></bq-progress>
-  </div>
-`;
+const Template = (args: Args) => {
+  // In Chromatic environment, make sure indeterminate is always false
+  const indeterminate = isChromatic() ? false : args.indeterminate;
+
+  return html`
+    <div class="is-64">
+      <bq-progress
+        value=${args.value}
+        ?indeterminate=${indeterminate}
+        thickness=${args.thickness}
+        type=${args.type}
+        border-shape=${args['border-shape']}
+        ?label=${args.label}
+        ?enable-tooltip=${args['enable-tooltip']}
+      ></bq-progress>
+    </div>
+  `;
+};
 
 export const Default: Story = {
   render: Template,
   args: {
     value: 10,
   },
+  parameters: skipSnapshotParameters,
 };
 
 export const LargeThickness: Story = {
@@ -62,6 +72,7 @@ export const LargeThickness: Story = {
     value: 20,
     thickness: 'large',
   },
+  parameters: skipSnapshotParameters,
 };
 
 export const ErrorState: Story = {
@@ -71,6 +82,7 @@ export const ErrorState: Story = {
     value: 40,
     type: 'error',
   },
+  parameters: skipSnapshotParameters,
 };
 
 export const BorderShape: Story = {
@@ -79,6 +91,7 @@ export const BorderShape: Story = {
     value: 80,
     'border-shape': 'square',
   },
+  parameters: skipSnapshotParameters,
 };
 
 export const WithLabel: Story = {
@@ -87,6 +100,7 @@ export const WithLabel: Story = {
     value: 60,
     label: true,
   },
+  parameters: skipSnapshotParameters,
 };
 
 export const WithTooltip: Story = {
@@ -95,6 +109,7 @@ export const WithTooltip: Story = {
     value: 80,
     'enable-tooltip': true,
   },
+  parameters: skipSnapshotParameters,
 };
 
 export const Indeterminate: Story = {
@@ -102,4 +117,5 @@ export const Indeterminate: Story = {
   args: {
     indeterminate: true,
   },
+  parameters: skipSnapshotParameters,
 };

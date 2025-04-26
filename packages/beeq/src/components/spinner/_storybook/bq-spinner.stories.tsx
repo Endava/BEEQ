@@ -2,6 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
 
 import mdx from './bq-spinner.mdx';
+import { isChromatic, skipSnapshotParameters } from '../../../../.storybook/chromatic-parameters';
 import { SPINNER_SIZE, SPINNER_TEXT_POSITION } from '../bq-spinner.types';
 
 const meta: Meta = {
@@ -12,6 +13,9 @@ const meta: Meta = {
       page: mdx,
     },
     layout: 'centered',
+    chromatic: {
+      disableSnapshot: isChromatic(), // Skip snapshot in Chromatic due to animation
+    },
   },
   argTypes: {
     animation: { control: 'boolean' },
@@ -33,8 +37,11 @@ export default meta;
 type Story = StoryObj;
 
 const Template = (args: Args) => {
+  // In Chromatic environment, always set animation to false
+  const animation = isChromatic() ? false : args.animation;
+
   return html`
-    <bq-spinner ?animation=${args.animation} size=${args.size} text-position=${args['text-position']}>
+    <bq-spinner ?animation=${animation} size=${args.size} text-position=${args['text-position']}>
       <span>${args.text}</span>
     </bq-spinner>
   `;
@@ -42,6 +49,7 @@ const Template = (args: Args) => {
 
 export const Large: Story = {
   render: Template,
+  parameters: skipSnapshotParameters,
 };
 
 export const Medium: Story = {
@@ -49,6 +57,7 @@ export const Medium: Story = {
   args: {
     size: 'medium',
   },
+  parameters: skipSnapshotParameters,
 };
 
 export const Small: Story = {
@@ -56,13 +65,20 @@ export const Small: Story = {
   args: {
     size: 'small',
   },
+  parameters: skipSnapshotParameters,
 };
 
 export const CustomIcon: Story = {
-  render: (args: Args) => html`
-    <bq-spinner ?animation=${args.animation} size=${args.size} text-position=${args['text-position']}>
-      <bq-icon name="spinner-gap" slot="icon"></bq-icon>
-      <span>${args.text}</span>
-    </bq-spinner>
-  `,
+  render: (args: Args) => {
+    // In Chromatic environment, always set animation to false
+    const animation = isChromatic() ? false : args.animation;
+
+    return html`
+      <bq-spinner ?animation=${animation} size=${args.size} text-position=${args['text-position']}>
+        <bq-icon name="spinner-gap" slot="icon"></bq-icon>
+        <span>${args.text}</span>
+      </bq-spinner>
+    `;
+  },
+  parameters: skipSnapshotParameters,
 };

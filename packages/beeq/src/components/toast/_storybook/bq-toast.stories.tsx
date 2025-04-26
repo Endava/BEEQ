@@ -2,6 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
 
 import mdx from './bq-toast.mdx';
+import { skipSnapshotParameters } from '../../../../.storybook/chromatic-parameters';
 import { getRandomFromArray } from '../../../shared/utils';
 import { TOAST_BORDER_RADIUS, TOAST_PLACEMENT, TOAST_TYPE } from '../bq-toast.types';
 
@@ -51,8 +52,8 @@ const Template = (args: Args) => {
         <bq-toast
           border=${args.border}
           type=${type}
-          hide-icon=${args['hide-icon']}
-          open=${args.open}
+          ?hide-icon=${args['hide-icon']}
+          ?open=${args.open}
           time=${args.time}
           placement=${args.placement}
           @bqShow=${args.bqShow}
@@ -75,6 +76,7 @@ export const Default: Story = {
   args: {
     open: true,
   },
+  parameters: skipSnapshotParameters,
 };
 
 const CustomIconTemplate = (args: Args) => {
@@ -87,8 +89,8 @@ const CustomIconTemplate = (args: Args) => {
     <bq-toast
       border=${args.border}
       type=${args.type}
-      hide-icon=${args['hide-icon']}
-      open=${args.open}
+      ?hide-icon=${args['hide-icon']}
+      ?open=${args.open}
       time=${args.time}
       placement=${args.placement}
       @bqShow=${args.bqShow}
