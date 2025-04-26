@@ -83,8 +83,8 @@ importers:
         specifier: 6.0.0
         version: 6.0.0(prettier@3.5.3)(react-syntax-highlighter@15.6.1(react@19.1.0))
       '@chromatic-com/storybook':
-        specifier: 3.2.5
-        version: 3.2.5(react@19.1.0)(storybook@8.6.12(prettier@3.5.3))
+        specifier: 3.2.6
+        version: 3.2.6(react@19.1.0)(storybook@8.6.12(prettier@3.5.3))
       '@commitlint/cli':
         specifier: 19.8.0
         version: 19.8.0(@types/node@22.14.1)(typescript@5.5.4)
@@ -1355,8 +1355,8 @@ packages:
   '@bufbuild/protobuf@2.2.5':
     resolution: {integrity: sha512-/g5EzJifw5GF8aren8wZ/G5oMuPoGeS6MQD3ca8ddcvdXR5UELUfdTZITCGNhNXynY/AYl3Z4plmxdj/tRl/hQ==}
 
-  '@chromatic-com/storybook@3.2.5':
-    resolution: {integrity: sha512-Y388ft6po5FmGKdkcqz3r2sW6aMF5DSBaatC0jvT5bI/Dh27RJw3gPTmXJcZVNjteNl6tpiP3qxZ9MswAk5luw==}
+  '@chromatic-com/storybook@3.2.6':
+    resolution: {integrity: sha512-FDmn5Ry2DzQdik+eq2sp/kJMMT36Ewe7ONXUXM2Izd97c7r6R/QyGli8eyh/F0iyqVvbLveNYFyF0dBOJNwLqw==}
     engines: {node: '>=16.0.0', yarn: '>=1.22.18'}
     peerDependencies:
       storybook: ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
@@ -13443,7 +13443,7 @@ snapshots:
 
   '@bufbuild/protobuf@2.2.5': {}
 
-  '@chromatic-com/storybook@3.2.5(react@19.1.0)(storybook@8.6.12(prettier@3.5.3))':
+  '@chromatic-com/storybook@3.2.6(react@19.1.0)(storybook@8.6.12(prettier@3.5.3))':
     dependencies:
       chromatic: 11.26.1
       filesize: 10.1.6
