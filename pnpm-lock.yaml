@@ -251,8 +251,8 @@ importers:
         specifier: 0.0.9
         version: 0.0.9(@custom-elements-manifest/analyzer@0.10.4)
       chromatic:
-        specifier: 11.26.1
-        version: 11.26.1
+        specifier: 11.28.2
+        version: 11.28.2
       core-js:
         specifier: 3.41.0
         version: 3.41.0
@@ -5272,8 +5272,8 @@ packages:
     resolution: {integrity: sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==}
     engines: {node: '>=10'}
 
-  chromatic@11.26.1:
-    resolution: {integrity: sha512-kVMTigrKI7TOOV04i1lTTIVJsmQ+fj6ZFXyZ3LcdCioOrxO/zCVB1y74iX0iKS++cpi3bJcG+UszkmvptGDEuA==}
+  chromatic@11.28.2:
+    resolution: {integrity: sha512-aCmUPcZUs4/p9zRZdMreOoO/5JqO2DiJC3md1/vRx8dlMRcmR/YI5ZbgXZcai2absVR+6hsXZ5XiPxV2sboTuQ==}
     hasBin: true
     peerDependencies:
       '@chromatic-com/cypress': ^0.*.* || ^1.0.0
@@ -13333,7 +13333,7 @@ snapshots:
 
   '@chromatic-com/storybook@3.2.6(react@19.1.0)(storybook@8.6.12(prettier@3.5.3))':
     dependencies:
-      chromatic: 11.26.1
+      chromatic: 11.28.2
       filesize: 10.1.6
       jsonfile: 6.1.0
       react-confetti: 6.4.0(react@19.1.0)
@@ -17991,7 +17991,7 @@ snapshots:
 
   chownr@2.0.0: {}
 
-  chromatic@11.26.1: {}
+  chromatic@11.28.2: {}
 
   chrome-trace-event@1.0.4: {}
 

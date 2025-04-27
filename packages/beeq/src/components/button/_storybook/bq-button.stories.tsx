@@ -2,6 +2,7 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
 
 import mdx from './bq-button.mdx';
+import { isChromatic, skipSnapshotParameters } from '../../../../.storybook/chromatic-parameters';
 import { BUTTON_APPEARANCE, BUTTON_BORDER_RADIUS, BUTTON_SIZE, BUTTON_TYPE, BUTTON_VARIANT } from '../bq-button.types';
 
 const meta: Meta = {
@@ -49,26 +50,31 @@ export default meta;
 
 type Story = StoryObj;
 
-const Template = (args: Args) => html`
-  <bq-button
-    appearance=${args.appearance}
-    ?block=${args.block}
-    border=${args.border}
-    ?disabled=${args.disabled}
-    href=${args.href}
-    justify-content=${args['justify-content']}
-    ?loading=${args.loading}
-    size=${args.size}
-    target=${args.target}
-    type=${args.type}
-    variant=${args.variant}
-    @bqBlur=${args.bqBlur}
-    @bqClick=${args.bqClick}
-    @bqFocus=${args.bqFocus}
-  >
-    ${args.buttonText}
-  </bq-button>
-`;
+const Template = (args: Args) => {
+  // In Chromatic environment, make sure loading is false
+  const loading = isChromatic() ? false : args.loading;
+
+  return html`
+    <bq-button
+      appearance=${args.appearance}
+      ?block=${args.block}
+      border=${args.border}
+      ?disabled=${args.disabled}
+      href=${args.href}
+      justify-content=${args['justify-content']}
+      ?loading=${loading}
+      size=${args.size}
+      target=${args.target}
+      type=${args.type}
+      variant=${args.variant}
+      @bqBlur=${args.bqBlur}
+      @bqClick=${args.bqClick}
+      @bqFocus=${args.bqFocus}
+    >
+      ${args.buttonText}
+    </bq-button>
+  `;
+};
 
 export const Primary: Story = {
   render: Template,
@@ -110,6 +116,7 @@ export const Loading: Story = {
     loading: true,
     buttonText: 'Loading button',
   },
+  parameters: skipSnapshotParameters,
 };
 
 export const Block: Story = {
@@ -121,72 +128,87 @@ export const Block: Story = {
 };
 
 export const IconLeft: Story = {
-  render: (args) => html`
-    <bq-button
-      appearance=${args.appearance}
-      ?block=${args.block}
-      border=${args.border}
-      ?disabled=${args.disabled}
-      href=${args.href}
-      justify-content=${args['justify-content']}
-      ?loading=${args.loading}
-      size=${args.size}
-      target=${args.target}
-      type=${args.type}
-      variant=${args.variant}
-      @bqBlur=${args.bqBlur}
-      @bqClick=${args.bqClick}
-      @bqFocus=${args.bqFocus}
-    >
-      <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>
-      Go back
-    </bq-button>
-  `,
+  render: (args) => {
+    // In Chromatic environment, make sure loading is false
+    const loading = isChromatic() ? false : args.loading;
+
+    return html`
+      <bq-button
+        appearance=${args.appearance}
+        ?block=${args.block}
+        border=${args.border}
+        ?disabled=${args.disabled}
+        href=${args.href}
+        justify-content=${args['justify-content']}
+        ?loading=${loading}
+        size=${args.size}
+        target=${args.target}
+        type=${args.type}
+        variant=${args.variant}
+        @bqBlur=${args.bqBlur}
+        @bqClick=${args.bqClick}
+        @bqFocus=${args.bqFocus}
+      >
+        <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>
+        Go back
+      </bq-button>
+    `;
+  },
 };
 
 export const IconRight: Story = {
-  render: (args) => html`
-    <bq-button
-      appearance=${args.appearance}
-      border=${args.border}
-      ?block=${args.block}
-      ?disabled=${args.disabled}
-      href=${args.href}
-      justify-content=${args['justify-content']}
-      ?loading=${args.loading}
-      size=${args.size}
-      target=${args.target}
-      type=${args.type}
-      variant=${args.variant}
-      @bqBlur=${args.bqBlur}
-      @bqClick=${args.bqClick}
-      @bqFocus=${args.bqFocus}
-    >
-      Next step
-      <bq-icon name="arrow-circle-right" slot="suffix"></bq-icon>
-    </bq-button>
-  `,
+  render: (args) => {
+    // In Chromatic environment, make sure loading is false
+    const loading = isChromatic() ? false : args.loading;
+
+    return html`
+      <bq-button
+        appearance=${args.appearance}
+        border=${args.border}
+        ?block=${args.block}
+        ?disabled=${args.disabled}
+        href=${args.href}
+        justify-content=${args['justify-content']}
+        ?loading=${loading}
+        size=${args.size}
+        target=${args.target}
+        type=${args.type}
+        variant=${args.variant}
+        @bqBlur=${args.bqBlur}
+        @bqClick=${args.bqClick}
+        @bqFocus=${args.bqFocus}
+      >
+        Next step
+        <bq-icon name="arrow-circle-right" slot="suffix"></bq-icon>
+      </bq-button>
+    `;
+  },
 };
 
 export const OnlyIcon: Story = {
-  render: (args) => html`
-    <bq-button
-      appearance=${args.appearance}
-      border=${args.border}
-      ?block=${args.block}
-      ?disabled=${args.disabled}
-      href=${args.href}
-      justify-content=${args['justify-content']}
-      ?loading=${args.loading}
-      size=${args.size}
-      target=${args.target}
-      type=${args.type}
-      variant=${args.variant}
-      @bqBlur=${args.bqBlur}
-      @bqClick=${args.bqClick}
-      @bqFocus=${args.bqFocus}
-    >
-      <bq-icon name="bell-ringing"></bq-icon>
-    </bq-button>
-  `,
+  render: (args) => {
+    // In Chromatic environment, make sure loading is false
+    const loading = isChromatic() ? false : args.loading;
+
+    return html`
+      <bq-button
+        appearance=${args.appearance}
+        border=${args.border}
+        ?block=${args.block}
+        ?disabled=${args.disabled}
+        href=${args.href}
+        justify-content=${args['justify-content']}
+        ?loading=${loading}
+        size=${args.size}
+        target=${args.target}
+        type=${args.type}
+        variant=${args.variant}
+        @bqBlur=${args.bqBlur}
+        @bqClick=${args.bqClick}
+        @bqFocus=${args.bqFocus}
+      >
+        <bq-icon name="bell-ringing"></bq-icon>
+      </bq-button>
+    `;
+  },
 };
