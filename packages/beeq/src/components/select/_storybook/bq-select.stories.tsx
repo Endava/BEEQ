@@ -465,7 +465,7 @@ export const CustomFiltering: Story = {
       await new Promise((resolve) => setTimeout(resolve, 500));
       return args.options.filter(
         (option) =>
-          option.label.toLowerCase().includes(query.toLowerCase()) ||
+          option.label.toLowerCase().includes(query.toLowerCase()) ??
           option.value.toLowerCase().includes(query.toLowerCase()),
       );
     };
