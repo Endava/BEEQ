@@ -340,13 +340,13 @@ export class BqSelect {
     const { multiple, inputElem, bqClear, el } = this;
 
     // Clear value and selected options
-    this.value = undefined;
+    this.value = '';
     this.selectedOptions = [];
 
     // Clear display value and input element if not multiple
     if (!multiple) {
-      this.displayValue = undefined;
-      inputElem.value = undefined;
+      this.displayValue = '';
+      inputElem.value = '';
     }
 
     // Update form value and reset options visibility
