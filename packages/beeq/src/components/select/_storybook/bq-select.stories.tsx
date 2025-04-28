@@ -58,6 +58,7 @@ const meta: Meta = {
     bqClear: { action: 'bqClear' },
     bqFocus: { action: 'bqFocus' },
     bqSelect: { action: 'bqSelect' },
+    bqInput: { action: 'bqInput' },
     // Not part of the public API, so we don't want to expose it in the docs
     noLabel: { control: 'boolean', table: { disable: true } },
     hasLabelTooltip: { control: 'boolean', table: { disable: true } },
@@ -182,6 +183,7 @@ const Template = (args: Args) => {
       validation-status=${args['validation-status']}
       value=${args.multiple ? ifDefined(JSON.stringify(args.value)) : args.value}
       @bqBlur=${args.bqBlur}
+      @bqInput=${args.bqInput}
       @bqSelect=${args.customTags ? onSelect : args.bqSelect}
       @bqClear=${args.customTags ? onClear : args.bqClear}
       @bqFocus=${args.bqFocus}
@@ -453,5 +455,151 @@ export const WithForm: Story = {
         });
       </script>
     `;
+  },
+};
+
+export const CustomFiltering: Story = {
+  render: (args: Args) => {
+    // Simulate an API call with a delay
+    const fetchFilteredOptions = async (query: string) => {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      return args.options.filter(
+        (option) =>
+          option.label.toLowerCase().includes(query.toLowerCase()) ||
+          option.value.toLowerCase().includes(query.toLowerCase()),
+      );
+    };
+
+    // Function to show all options
+    const showAllOptions = (select: HTMLBqSelectElement) => {
+      select.querySelectorAll('bq-option').forEach((option) => {
+        option.hidden = false;
+      });
+    };
+
+    const handleInput = async (event: CustomEvent<{ value: string }>) => {
+      event.preventDefault();
+
+      const select = event.target as HTMLBqSelectElement;
+      const query = event.detail.value;
+
+      // Remove loading/no-results states if they exist
+      select.querySelectorAll('bq-option[data-temp]').forEach((option: HTMLBqOptionElement) => option.remove());
+
+      if (!query) {
+        showAllOptions(select);
+        return;
+      }
+
+      // Hide all options initially and show loading state
+      select.querySelectorAll('bq-option').forEach((option) => {
+        option.hidden = true;
+      });
+
+      select.insertAdjacentHTML(
+        'beforeend',
+        `
+        <bq-option disabled data-temp>
+          <bq-spinner slot="prefix" animation size="small" text-position="right"></bq-spinner>
+          Loading...
+        </bq-option>
+      `,
+      );
+
+      try {
+        const filteredOptions = await fetchFilteredOptions(query);
+
+        // Remove loading state
+        select.querySelectorAll('bq-option[data-temp]').forEach((option) => option.remove());
+
+        if (filteredOptions.length === 0) {
+          select.insertAdjacentHTML(
+            'beforeend',
+            `
+            <bq-option disabled data-temp>
+              <bq-icon slot="prefix" name="x-circle"></bq-icon> No results found
+            </bq-option>
+          `,
+          );
+        } else {
+          // Show only filtered options and highlight matching text
+          select.querySelectorAll('bq-option:not([data-temp])').forEach((option: HTMLBqOptionElement) => {
+            const matchingOption = filteredOptions.find((item: HTMLBqOptionElement) => item.value === option.value);
+            if (matchingOption) {
+              option.hidden = false;
+              // Create regex that matches the query with case insensitivity
+              const regex = new RegExp(`(${query})`, 'gi');
+              const highlightedLabel = matchingOption.label.replace(regex, '<b>$1</b>');
+              option.innerHTML = `
+                <bq-icon slot="prefix" name="${matchingOption.icon}"></bq-icon> ${highlightedLabel}
+              `;
+            } else {
+              option.hidden = true;
+            }
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching options:', error);
+        select.querySelectorAll('bq-option[data-temp]').forEach((option) => option.remove());
+        select.insertAdjacentHTML(
+          'beforeend',
+          `
+          <bq-option disabled data-temp>
+            <bq-icon slot="prefix" name="warning"></bq-icon> Error loading options
+          </bq-option>
+        `,
+        );
+      }
+
+      args.bqInput(event);
+    };
+
+    // Handle selection to restore original options
+    const handleSelect = (event: CustomEvent<{ value: string; item: HTMLBqOptionElement }>) => {
+      const select = event.target as HTMLBqSelectElement;
+      // Clear the input value after selection
+      select.querySelector('input').value = '';
+      // Show all options again
+      showAllOptions(select);
+      // Remove any temporary options (loading/no results)
+      select.querySelectorAll('bq-option[data-temp]').forEach((option) => option.remove());
+      // Call the original bqSelect handler
+      args.bqSelect(event);
+    };
+
+    return html`
+      <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/night-owl.min.css" />
+      <div class="flex flex-col">
+        <h4>Custom filtering</h4>
+        <p class="text-secondary">
+          This example demonstrates custom filtering of options with loading states and visibility toggling. It uses the
+          <code>bqInput</code> (with <code>event.preventDefault()</code>) and <code>bqSelect</code> events to handle the
+          input and selection events.
+        </p>
+        <pre>
+          <code class="language-javascript rounded-m">
+            const bqSelectElement = document.querySelector('bq-select');
+            bqSelectElement.addEventListener('bqInput', handleInput);
+
+            function handleInput(event) {
+              event.preventDefault();
+              ...
+            }
+          </code>
+        </pre>
+        ${Template({ ...args, bqInput: handleInput, bqSelect: handleSelect })}
+      </div>
+      <script type="module">
+        import hljs from 'https://unpkg.com/@highlightjs/cdn-assets@11.10.0/es/highlight.min.js';
+        import javascript from 'https://unpkg.com/@highlightjs/cdn-assets@11.10.0/es/languages/javascript.min.js';
+
+        hljs.registerLanguage('javascript', javascript);
+        hljs.highlightAll();
+      </script>
+    `;
+  },
+  args: {
+    placeholder: 'Search options...',
+    'debounce-time': 300,
   },
 };
