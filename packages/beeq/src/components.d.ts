@@ -4365,6 +4365,7 @@ declare global {
         "bqClear": HTMLBqSelectElement;
         "bqFocus": HTMLBqSelectElement;
         "bqSelect": { value: string | number | string[]; item: HTMLBqOptionElement };
+        "bqInput": { value: string | number | string[] };
     }
     /**
      * The select input component lets users choose from a predefined list, commonly used in forms for easy data selection.
@@ -7227,6 +7228,10 @@ declare namespace LocalJSX {
           * Callback handler emitted when the Select input has received focus
          */
         "onBqFocus"?: (event: BqSelectCustomEvent<HTMLBqSelectElement>) => void;
+        /**
+          * Callback handler emitted when the Select input changes its value while typing
+         */
+        "onBqInput"?: (event: BqSelectCustomEvent<{ value: string | number | string[] }>) => void;
         /**
           * Callback handler emitted when the selected value has changed
          */

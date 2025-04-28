@@ -39,12 +39,13 @@ The select input component lets users choose from a predefined list, commonly us
 
 ## Events
 
-| Event      | Description                                                       | Type                                                                               |
-| ---------- | ----------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| `bqBlur`   | Callback handler emitted when the Select input loses focus        | `CustomEvent<HTMLBqSelectElement>`                                                 |
-| `bqClear`  | Callback handler emitted when the selected value has been cleared | `CustomEvent<HTMLBqSelectElement>`                                                 |
-| `bqFocus`  | Callback handler emitted when the Select input has received focus | `CustomEvent<HTMLBqSelectElement>`                                                 |
-| `bqSelect` | Callback handler emitted when the selected value has changed      | `CustomEvent<{ value: string \| number \| string[]; item: HTMLBqOptionElement; }>` |
+| Event      | Description                                                                   | Type                                                                               |
+| ---------- | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `bqBlur`   | Callback handler emitted when the Select input loses focus                    | `CustomEvent<HTMLBqSelectElement>`                                                 |
+| `bqClear`  | Callback handler emitted when the selected value has been cleared             | `CustomEvent<HTMLBqSelectElement>`                                                 |
+| `bqFocus`  | Callback handler emitted when the Select input has received focus             | `CustomEvent<HTMLBqSelectElement>`                                                 |
+| `bqInput`  | Callback handler emitted when the Select input changes its value while typing | `CustomEvent<{ value: string \| number \| string[]; }>`                            |
+| `bqSelect` | Callback handler emitted when the selected value has changed                  | `CustomEvent<{ value: string \| number \| string[]; item: HTMLBqOptionElement; }>` |
 
 
 ## Methods

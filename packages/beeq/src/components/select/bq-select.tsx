@@ -131,6 +131,7 @@ export class BqSelect {
   private suffixElem?: HTMLElement;
 
   private debounceQuery: TDebounce<void>;
+  private debounceInput: TDebounce<void>;
 
   private fallbackInputId = 'select';
 
@@ -267,6 +268,9 @@ export class BqSelect {
 
   /** Callback handler emitted when the selected value has changed */
   @Event() bqSelect!: EventEmitter<{ value: string | number | string[]; item: HTMLBqOptionElement }>;
+
+  /** Callback handler emitted when the Select input changes its value while typing */
+  @Event() bqInput: EventEmitter<{ value: string | number | string[] }>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -417,20 +421,18 @@ export class BqSelect {
     this.value = this.selectedOptions.map((item) => item.value);
   };
 
-  private handleSearchFilter = (ev: Event) => {
+  private handleSearchFilter = (value: string) => {
     if (this.disabled) return;
 
     this.debounceQuery?.cancel();
 
-    const query = (ev.target as HTMLInputElement).value?.toLowerCase().trim();
-
-    if (!isDefined(query)) {
+    if (!isDefined(value)) {
       this.clear();
     } else {
       this.debounceQuery = debounce(() => {
         this.options.forEach((item: HTMLBqOptionElement) => {
           const itemLabel = this.getOptionLabel(item).toLowerCase();
-          item.hidden = !itemLabel.includes(query);
+          item.hidden = !itemLabel.includes(value);
         });
       }, this.debounceTime);
 
@@ -440,6 +442,25 @@ export class BqSelect {
     // The panel will close once a selection is made
     // so we need to make sure it's open when the user is typing and the query is not empty
     this.open = true;
+  };
+
+  private handleInput = (ev: Event) => {
+    console.log('handleInput', ev);
+    if (this.disabled) return;
+
+    const { value } = ev.target as HTMLInputElement;
+
+    this.debounceInput?.cancel();
+
+    this.debounceInput = debounce(() => {
+      const inputEvent = this.bqInput.emit({ value });
+      if (!inputEvent.defaultPrevented) {
+        // Continue with search filtering only if the event wasn't prevented
+        this.handleSearchFilter(value);
+      }
+    }, this.debounceTime);
+
+    this.debounceInput();
   };
 
   private handleClearClick = (ev: CustomEvent) => {
@@ -673,7 +694,7 @@ export class BqSelect {
                 // Events
                 onBlur={this.handleBlur}
                 onFocus={this.handleFocus}
-                onInput={this.handleSearchFilter}
+                onInput={this.handleInput}
               />
             </div>
             {/* Clear Button */}
