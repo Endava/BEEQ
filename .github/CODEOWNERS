@@ -1,19 +1,14 @@
 # These owners will be the default owners for everything in
-# the repo. Unless a later match takes precedence,
-# @global-owner1 and @global-owner2 will be requested for
-# review when someone opens a pull request.
-* @dgonzalezr @endv-bogdanb @Cata1989
+# the repo. Unless a later match takes precedence, the following people will be requested for review
+# when someone opens a pull request.
+* @dgonzalezr
 
-# Any change related to the .github workflows
-# will require approval from @dgonzalezr.
-.github/ @dgonzalezr @endv-bogdanb
+# Any change related to the .github workflows will require approval from the following people:
+.github/ @dgonzalezr
 
-# Any change related to the NPM dependencies
-# will require approval from @dgonzalezr @endv-bogdanb.
+# Any change related to the NPM dependencies will require approval from the following people:
+package.json @dgonzalezr
+package-lock.json @dgonzalezr
 
-package.json @dgonzalezr @endv-bogdanb
-package-lock.json @dgonzalezr @endv-bogdanb
-
-# Any change inside the `/packages` directory
-# will require approval from @dgonzalezr @endv-bogdanb.
-/packages @dgonzalezr @endv-bogdanb @Cata1989
+# Any change inside the `/packages` directory will require approval from the following people:
+/packages @dgonzalezr @endv-bogdanb
