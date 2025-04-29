@@ -373,6 +373,33 @@ export const NoHelperText: Story = {
   },
 };
 
+export const Reset: Story = {
+  render: (args: Args) => {
+    const handleSelect = async (event: CustomEvent<{ value: string }>) => {
+      args.bqSelect(event);
+
+      const bqElement = event.target as HTMLBqSelectElement;
+      setTimeout(async () => {
+        await bqElement.reset(args.value);
+      }, 2000);
+    };
+
+    return html`
+      <div class="flex flex-col">
+        <h4>Reset</h4>
+        <p class="text-secondary m-be-l">
+          This example demonstrates the <code>reset</code> method. After 2 seconds, the value will be reset to the
+          initial value.
+        </p>
+        ${Template({ ...args, bqSelect: handleSelect })}
+      </div>
+    `;
+  },
+  args: {
+    value: 'swimming',
+  },
+};
+
 export const WithForm: Story = {
   render: () => {
     const handleFormSubmit = (ev: Event) => {
@@ -557,14 +584,14 @@ export const CustomFiltering: Story = {
     // Handle selection to restore original options
     const handleSelect = (event: CustomEvent<{ value: string; item: HTMLBqOptionElement }>) => {
       const select = event.target as HTMLBqSelectElement;
-      // Clear the input value after selection
-      select.querySelector('input').value = '';
       // Show all options again
       showAllOptions(select);
       // Remove any temporary options (loading/no results)
       select.querySelectorAll('bq-option[data-temp]').forEach((option) => option.remove());
       // Call the original bqSelect handler
       args.bqSelect(event);
+      // Clear the input value after selection
+      select.value = '';
     };
 
     return html`
