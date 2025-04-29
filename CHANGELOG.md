@@ -1,3 +1,64 @@
+## 1.9.0 (2025-04-29)
+
+### Features ⚡️
+
+- **Select:** add bqInput event for real-time input value changes when filtering ([#1476](https://github.com/Endava/BEEQ/pull/1476))
+- **Select:** add reset method to restore to a previous value ([#1477](https://github.com/Endava/BEEQ/pull/1477))
+
+### Bug Fixes 🐞
+
+- **Dialog:** change positioning from `absolute` to `fixed` ([#1464](https://github.com/Endava/BEEQ/pull/1464))
+- **Select:** change value clearing logic to use empty string instead undefined ([#1475](https://github.com/Endava/BEEQ/pull/1475))
+
+### Documentation 📚
+
+- **README:** enhance structure and content for better navigation and clarity ([ba586bf](https://github.com/Endava/BEEQ/commit/ba586bf))
+- **README:** enhance development section with PNPM commands and NX tips ([e256b34](https://github.com/Endava/BEEQ/commit/e256b34))
+
+### Chore ⚙️
+
+- **ESLint:** enable cache ([ff4a4b1](https://github.com/Endava/BEEQ/commit/ff4a4b1))
+- **Workspace:** move from `NPM` to `PNPM` ([#1442](https://github.com/Endava/BEEQ/pull/1442))
+- **deps:** update storybook to v8.6.3 ([#1443](https://github.com/Endava/BEEQ/pull/1443))
+- **deps:** update nx to v20.4.6 ([#1444](https://github.com/Endava/BEEQ/pull/1444))
+- **deps:** update stencil ([b839181](https://github.com/Endava/BEEQ/commit/b839181))
+- **deps:** update pnpm to v10.6.2 ([#1449](https://github.com/Endava/BEEQ/pull/1449))
+- **deps:** update storybook to v8.6.4 ([#1446](https://github.com/Endava/BEEQ/pull/1446))
+- **deps:** update node.js to v22.14.0 ([#1447](https://github.com/Endava/BEEQ/pull/1447))
+- **deps:** update nx to v20.5.0 ([#1448](https://github.com/Endava/BEEQ/pull/1448))
+- **deps:** update `@stencil/sass` to v3.1.9 and silence deprecation warnings ([#1450](https://github.com/Endava/BEEQ/pull/1450))
+- **deps:** update `@stencil/core`, `@stencil/sass` and `@stencil/vue-output-target` dependencies ([#1452](https://github.com/Endava/BEEQ/pull/1452))
+- **deps:** update dependency @stencil/sass to v3.2.1 ([#1453](https://github.com/Endava/BEEQ/pull/1453))
+- **deps:** update storybook to v8.6.12 ([#1456](https://github.com/Endava/BEEQ/pull/1456))
+- **deps:** update nx to v20.8.0 ([#1457](https://github.com/Endava/BEEQ/pull/1457))
+- **deps:** update react to v19.1.0 ([#1454](https://github.com/Endava/BEEQ/pull/1454))
+- **deps:** update types react to v19.1.2 ([#1455](https://github.com/Endava/BEEQ/pull/1455))
+- **deps:** update angular to v18.2.18 ([#1459](https://github.com/Endava/BEEQ/pull/1459))
+- **deps:** update eslint ([#1458](https://github.com/Endava/BEEQ/pull/1458))
+- **deps:** update commitlint to v19.8.0 ([#1460](https://github.com/Endava/BEEQ/pull/1460))
+- **deps:** update dependency stylelint to v16.18.0 ([#1462](https://github.com/Endava/BEEQ/pull/1462))
+- **deps:** update pnpm to v10.9.0 ([#1463](https://github.com/Endava/BEEQ/pull/1463))
+- **deps:** update node.js to v22.15.0 ([#1466](https://github.com/Endava/BEEQ/pull/1466))
+- **deps:** update lit to v3.3.0 ([#1465](https://github.com/Endava/BEEQ/pull/1465))
+- **deps:** update dependency puppeteer to v24.7.1 ([#1467](https://github.com/Endava/BEEQ/pull/1467))
+- **deps:** update dependency ts-jest to v29.3.2 ([#1468](https://github.com/Endava/BEEQ/pull/1468))
+- **deps:** update dependency stylelint to v16.19.0 ([#1469](https://github.com/Endava/BEEQ/pull/1469))
+- **deps:** update dependency @chromatic-com/storybook to v3.2.6 ([#1471](https://github.com/Endava/BEEQ/pull/1471))
+- **deps:** update angular to v18.2.19 ([#1470](https://github.com/Endava/BEEQ/pull/1470))
+- **deps:** update nx to v20.8.1 ([#1473](https://github.com/Endava/BEEQ/pull/1473))
+- **deps:** update dependency chromatic to v11.28.2 ([#1472](https://github.com/Endava/BEEQ/pull/1472))
+- **deps:** update `@stencil/{core, react-output-target}` to v4.30.0 and v1.0.2 ([#1474](https://github.com/Endava/BEEQ/pull/1474))
+- **deps:** sync `@beeq/core` version in the wrapper packages ([36870b9](https://github.com/Endava/BEEQ/commit/36870b9))
+- **volta:** update Node.js hooks to use official distribution URLs ([95e2764](https://github.com/Endava/BEEQ/commit/95e2764))
+
+### Style 🎨
+
+- **Select:** remove console log leftover from handleInput method ([5184673](https://github.com/Endava/BEEQ/commit/5184673))
+
+### ❤️ Thank You
+
+- Dabiel González Ramos @dgonzalezr
+
 ## [1.8.4](https://github.com/Endava/BEEQ/compare/v1.8.3...v1.8.4) (2025-02-17)
 
 ### Bug Fixes 🐞
