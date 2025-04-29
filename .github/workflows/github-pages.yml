@@ -16,6 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NX_BRANCH: ${{ github.head_ref || github.ref_name }}
+      VOLTA_FEATURE_PNPM: 1
     steps:
       - name: 🛎 Checkout
         uses: actions/checkout@v4
@@ -24,6 +25,14 @@ jobs:
 
       - name: 🛠 Setup Volta
         uses: volta-cli/action@v4
+
+      - name: 🔎 Check Node and PNPM versions
+        run: |
+          node --version
+          pnpm --version
+
+      - name: 💫 Load and cache dependencies
+        uses: ./.github/actions/cache-deps
 
       - name: 🚚 Deploy BEEQ Storybook to GitHub Pages
         uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3

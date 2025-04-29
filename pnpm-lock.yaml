@@ -434,14 +434,14 @@ importers:
         specifier: '>=14.0.0'
         version: 18.2.13(rxjs@7.8.2)(zone.js@0.14.10)
       '@beeq/core':
-        specifier: workspace:*
-        version: link:../beeq
+        specifier: ^1.8.4
+        version: 1.8.4
 
   packages/beeq-react:
     dependencies:
       '@beeq/core':
-        specifier: workspace:*
-        version: link:../beeq
+        specifier: ^1.8.4
+        version: 1.8.4
       '@stencil/react-output-target':
         specifier: ^0.8.2
         version: 0.8.2(@stencil/core@4.30.0)(@types/react@19.1.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -464,8 +464,8 @@ importers:
   packages/beeq-vue:
     dependencies:
       '@beeq/core':
-        specifier: workspace:*
-        version: link:../beeq
+        specifier: ^1.8.4
+        version: 1.8.4
       '@stencil/vue-output-target':
         specifier: ^0.10.7
         version: 0.10.7(@stencil/core@4.30.0)(vue@3.5.13(typescript@5.7.3))
@@ -1345,6 +1345,9 @@ packages:
 
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
+
+  '@beeq/core@1.8.4':
+    resolution: {integrity: sha512-+ZiELlaQOZEqrFodrhH4iBVLbeCDxxRR7H7ljZ+kzLDyUDw8RAUSLVEBc/hXfY+gnHCN5wP+4seh2DfmUNOdxw==}
 
   '@beeq/storybook-addon-html@6.0.0':
     resolution: {integrity: sha512-OhpLp8AHV6qEh/+Sb8kLka/I3hluvt79C+XSKv6HwG2LRldD5EgegAVGE4ZLqM2afr8JHYrHLmEKrqH7brZd1w==}
@@ -13335,6 +13338,12 @@ snapshots:
       '@babel/helper-validator-identifier': 7.25.9
 
   '@bcoe/v8-coverage@0.2.3': {}
+
+  '@beeq/core@1.8.4':
+    dependencies:
+      '@floating-ui/core': 1.6.9
+      '@floating-ui/dom': 1.6.13
+      '@stencil/core': 4.30.0
 
   '@beeq/storybook-addon-html@6.0.0(prettier@3.5.3)(react-syntax-highlighter@15.6.1(react@19.1.0))':
     dependencies:

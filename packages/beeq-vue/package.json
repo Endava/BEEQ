@@ -6,7 +6,7 @@
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@beeq/core": "workspace:*",
+    "@beeq/core": "^1.8.4",
     "@stencil/vue-output-target": "^0.10.7"
   },
   "peerDependencies": {

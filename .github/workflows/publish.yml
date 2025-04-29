@@ -1,8 +1,9 @@
 name: NPM publish and Storybook deploy
 
 on:
+  workflow_dispatch: # Allows manual triggering
   release:
-    types: [published]
+    types: [published] # Triggers on release publish
 
 env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -20,19 +21,25 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NX_BRANCH: ${{ github.head_ref || github.ref_name }}
+      VOLTA_FEATURE_PNPM: 1
     steps:
       - name: 🛎 Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: 🔍 Check GH_TOKEN
+      - name: 🔑 Check GH_TOKEN
         uses: ./.github/actions/check-token
         with:
           GITHUB_TOKEN: $GH_TOKEN
 
       - name: 🛠 Setup Volta
         uses: volta-cli/action@v4
+
+      - name: 🔎 Check Node and PNPM versions
+        run: |
+          node --version
+          pnpm --version
 
       - name: 💫 Load and cache dependencies
         uses: ./.github/actions/cache-deps
