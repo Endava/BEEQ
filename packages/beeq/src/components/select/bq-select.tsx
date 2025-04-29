@@ -481,7 +481,6 @@ export class BqSelect {
   };
 
   private handleInput = (ev: Event) => {
-    console.log('handleInput', ev);
     if (this.disabled) return;
 
     const { value } = ev.target as HTMLInputElement;
