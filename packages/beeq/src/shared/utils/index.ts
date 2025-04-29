@@ -14,4 +14,5 @@ export * from './isString';
 export * from './props';
 export * from './setRafTimeout';
 export * from './slot';
+export * from './stringToArray';
 export * from './transition';
