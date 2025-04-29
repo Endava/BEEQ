@@ -2,7 +2,15 @@ import { AttachInternals, Component, Element, Event, h, Listen, Method, Prop, St
 import type { EventEmitter } from '@stencil/core';
 
 import type { Placement } from '../../services/interfaces';
-import { debounce, hasSlotContent, isDefined, isHTMLElement, isNil, isString, TDebounce } from '../../shared/utils';
+import {
+  debounce,
+  hasSlotContent,
+  isDefined,
+  isHTMLElement,
+  isNil,
+  stringToArray,
+  TDebounce,
+} from '../../shared/utils';
 import type { TInputValidation } from '../input/bq-input.types';
 
 export type TSelectValue = string | string[];
@@ -243,13 +251,26 @@ export class BqSelect {
 
   @Watch('value')
   handleValueChange() {
-    if (this.multiple && isString(this.value)) {
-      // NOTE: we ensure that value is an array, changing the value will trigger Watch to execute thus the return
-      this.value = Array.from(JSON.parse(String(this.value)));
-      this.internals.setFormValue(this.value.join(','));
+    // Early return for undefined/null values
+    if (isNil(this.value)) {
+      this.value = this.multiple ? [] : '';
+      this.internals.setFormValue(undefined);
+      this.syncItemsFromValue();
       return;
     }
 
+    // Handle multiple selection mode
+    if (this.multiple) {
+      this.value = stringToArray(this.value);
+      this.internals.setFormValue(this.value.join(','));
+      this.syncItemsFromValue();
+
+      return;
+    }
+
+    // Handle single selection mode
+    this.value = String(this.value);
+    this.internals.setFormValue(this.value);
     this.syncItemsFromValue();
   }
 
@@ -358,6 +379,21 @@ export class BqSelect {
 
     // Emit clear event
     bqClear.emit(el);
+  }
+
+  /**
+   * Resets the Select input to a previous value.
+   *
+   * @param {TSelectValue} value - The value to reset the Select input to.
+   * @return {Promise<void>}
+   * @memberof BqSelect
+   */
+  @Method()
+  async reset(value: TSelectValue): Promise<void> {
+    if (isNil(value)) return;
+
+    this.value = value;
+    this.syncItemsFromValue();
   }
 
   // Local methods
@@ -500,11 +536,10 @@ export class BqSelect {
     if (this.multiple) {
       // Sync selected options for multiple selection mode
       this.selectedOptions = options.filter((option) => this.value?.includes(option.value));
-    } else {
-      // Sync display label for single selection mode
-      this.updateDisplayLabel();
     }
 
+    // Always update display value and form value
+    this.updateDisplayLabel();
     internals.setFormValue(!isNil(value) ? `${value}` : undefined);
   };
 

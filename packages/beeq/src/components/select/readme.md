@@ -60,6 +60,22 @@ Type: `Promise<void>`
 
 
 
+### `reset(value: TSelectValue) => Promise<void>`
+
+Resets the Select input to a previous value.
+
+#### Parameters
+
+| Name    | Type                 | Description                               |
+| ------- | -------------------- | ----------------------------------------- |
+| `value` | `string \| string[]` | - The value to reset the Select input to. |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 
 ## Slots
 

@@ -2025,6 +2025,13 @@ export namespace Components {
          */
         "required"?: boolean;
         /**
+          * Resets the Select input to a previous value.
+          * @param value - The value to reset the Select input to.
+          * @return 
+          * @memberof BqSelect
+         */
+        "reset": (value: TSelectValue) => Promise<void>;
+        /**
           * Whether the panel should have the Select same width as the input element
          */
         "sameWidth"?: boolean;
