@@ -4,7 +4,6 @@
   "sourceRoot": "packages/beeq/src",
   "projectType": "library",
   "tags": ["components", "core", "publishable"],
-  "implicitDependencies": ["beeq-tailwindcss"],
   "generators": {
     "@nxext/stencil:component": {
       "style": "scss"
@@ -142,6 +141,7 @@
     "test": {
       "executor": "@nxext/stencil:test",
       "outputs": ["{options.outputPath}"],
+      "dependsOn": [{ "target": "build", "projects": "beeq-tailwindcss" }],
       "options": {
         "projectType": "library",
         "tsConfig": "packages/beeq/tsconfig.lib.json",

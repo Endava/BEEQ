@@ -71,18 +71,17 @@ jobs:
       - image: cimg/node:22.15.0-browsers
     resource_class: large
     environment:
+      # Set the branch name to be used in the NX commands
       NX_BRANCH: << pipeline.git.branch >>
+      # Enable verbose logging for NX
       NX_VERBOSE_LOGGING: "true"
       # Set Puppeteer to skip downloading its own Chrome
       PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true"
       # Better memory usage for Node.js
       NODE_OPTIONS: "--max-old-space-size=4096"
-    # Then run your node commands!
-    # CircleCI will report the results back to your VCS provider.
+
     steps:
       - checkout
-
-      # Install Chrome using the browser-tools orb
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
       - run:
@@ -91,25 +90,16 @@ jobs:
             google-chrome --version
             chromedriver --version
             echo "export PUPPETEER_EXECUTABLE_PATH=$(which google-chrome)" >> $BASH_ENV
-
       - setup-node
       - setup-deps
-
-      # Cache the NX build cache
-      - restore_cache:
-          name: 💫 Restore NX cache
-          keys:
-            - nx-cache-{{ .Branch }}-{{ .Revision }}
-            - nx-cache-{{ .Branch }}-
-            - nx-cache-
       - run:
           name: 🧾 NX report
           command: pnpm exec nx report
       - nx/set-shas # Derives SHAs for base and head for use in `nx affected` commands in CI
-
-      # - run:
-      #     name: ▶️ Start Nx Cloud Agents
-      #     command: pnpm dlx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --with-env-vars="NX_VERBOSE_LOGGING NX_BRANCH"
+      # Start Nx Cloud Agents
+      - run:
+          name: ▶️ Start Nx Cloud Agents
+          command: pnpm dlx nx-cloud start-ci-run --distribute-on="3 linux-medium-plus-js" --with-env-vars="NX_VERBOSE_LOGGING NX_BRANCH"
       - run:
           name: 🩺 Run Linters
           command: pnpm exec nx affected -t lint --exclude='*,!tag:publishable' --parallel --output-style=stream --base=$NX_BASE --head=$NX_HEAD --verbose
@@ -125,18 +115,11 @@ jobs:
       - run:
           name: 📚 Build Storybook
           command: pnpm exec nx run beeq:storybook-build --output-style=stream --verbose
-      # - run:
-      #     name: ⏹️ Stop Nx Cloud Agents
-      #     command: pnpm dlx nx-cloud stop-all-agents
-      - save_cache:
-          name: 💾 Save NX cache
-          key: nx-cache-{{ .Branch }}-{{ .Revision }}
-          paths:
-            - .nx/cache
-
+      - run:
+          name: ⏹️ Stop Nx Cloud Agents
+          command: pnpm dlx nx-cloud stop-all-agents
+      # End: Nx Cloud Agents
       - chromatic-deployment
-
-      # Store test results
       - store_test_results:
           path: test-results
       - store_artifacts:
