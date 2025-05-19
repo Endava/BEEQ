@@ -7,11 +7,21 @@ orbs:
   browser-tools: circleci/browser-tools@1.5.3
 
 # ---------------------------------------------------------------------------- #
-#              Sequence of steps as a map to be executed in a job              #
+#                             Environment Variables                            #
 # ---------------------------------------------------------------------------- #
+
+env-vars: &env-vars
+  NX_BRANCH: << pipeline.git.branch >>
+  NX_VERBOSE_LOGGING: "true"
+  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true"
+  NODE_OPTIONS: "--max-old-space-size=4096"
+
+# ---------------------------------------------------------------------------- #
+#                                Reusable steps                                #
+# ---------------------------------------------------------------------------- #
+
 commands:
   setup-node:
-    description: Install volta & ensure consistent node and pnpm versions are installed
     steps:
       - run:
           name: 🛠 Setup Volta
@@ -27,61 +37,63 @@ commands:
           command: |
             node --version
             pnpm --version
+
   setup-deps:
-    description: Set up dependencies with optimal caching
     steps:
+      # First, try to restore the pnpm store cache
       - restore_cache:
-          name: 💫 Restore PNPM package cache
+          name: 💫 Restore PNPM store cache
           keys:
-            - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+            - pnpm-store-{{ arch }}-{{ checksum "pnpm-lock.yaml" }}
+            - pnpm-store-{{ arch }}-
+            - pnpm-store-
+
+      # Then, try to restore node_modules cache
       - restore_cache:
-          name: 💫 Restore PNPM modules cache
+          name: 💫 Restore node_modules cache
           keys:
-            - pnpm-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "pnpm-lock.yaml" }}
-            - pnpm-modules-{{ .Environment.CACHE_VERSION }}-
+            - node-modules-{{ arch }}-{{ checksum "pnpm-lock.yaml" }}
+            - node-modules-{{ arch }}-
+            - node-modules-
+
+      # Install dependencies with network access but prefer offline when possible
       - run:
           name: 📦 Install dependencies
           command: |
-            SKIP_POSTINSTALL=1 pnpm install --frozen-lockfile --prefer-offline
-      - save_cache:
-          name: 💾 Save PNPM package cache
-          key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
-          paths:
-            - ~/.pnpm-store
-      - save_cache:
-          name: 💾 Save PNPM modules cache
-          key: pnpm-modules-{{ .Environment.CACHE_VERSION }}-{{ checksum "pnpm-lock.yaml" }}
-          paths:
-            - node_modules
-            - "*/*/node_modules"
-  chromatic-deployment:
-    description: Publish changes to Chromatic storybook
-    steps:
-      - run:
-          name: 🚀 Publish to Chromatic
-          command: pnpm exec chromatic --project-token=${CHROMATIC_PROJECT_TOKEN} --ci --debug --no-file-hashing
+            # Create pnpm store directory
+            mkdir -p /home/circleci/.pnpm-store
 
-# ---------------------------------------------------------------------------- #
-#                         Jobs are collections of steps                        #
-# ---------------------------------------------------------------------------- #
-jobs:
-  build-and-test:
-    # Using a Docker image that comes with Chrome pre-installed to speed up the process
-    docker:
-      - image: cimg/node:22.15.0-browsers
-    resource_class: large
-    environment:
-      # Set the branch name to be used in the NX commands
-      NX_BRANCH: << pipeline.git.branch >>
-      # Enable verbose logging for NX
-      NX_VERBOSE_LOGGING: "true"
-      # Set Puppeteer to skip downloading its own Chrome
-      PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true"
-      # Better memory usage for Node.js
-      NODE_OPTIONS: "--max-old-space-size=4096"
+            # Enable pnpm store compression and other optimizations
+            pnpm config set compression-level 9
+            pnpm config set store-dir /home/circleci/.pnpm-store
+            pnpm config set prefer-offline true
+            pnpm config set network-concurrency 8
 
+            # Install with network access but prefer offline packages
+            PNPM_CACHE_DIR=/home/circleci/.pnpm-store pnpm install --frozen-lockfile --prefer-offline
+          no_output_timeout: 5m
+
+      # Save the pnpm store cache
+      - save_cache:
+          name: 💾 Save PNPM store cache
+          key: pnpm-store-{{ arch }}-{{ checksum "pnpm-lock.yaml" }}
+          paths:
+            - /home/circleci/.pnpm-store
+
+      # Save the node_modules cache
+      - save_cache:
+          name: 💾 Save node_modules cache
+          key: node-modules-{{ arch }}-{{ checksum "pnpm-lock.yaml" }}
+          paths:
+            - ./node_modules
+            - ./packages/beeq/node_modules
+            - ./packages/beeq-angular/node_modules
+            - ./packages/beeq-react/node_modules
+            - ./packages/beeq-vue/node_modules
+            - ./packages/beeq-tailwindcss/node_modules
+
+  setup-browser-tools:
     steps:
-      - checkout
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
       - run:
@@ -90,46 +102,79 @@ jobs:
             google-chrome --version
             chromedriver --version
             echo "export PUPPETEER_EXECUTABLE_PATH=$(which google-chrome)" >> $BASH_ENV
+
+# ---------------------------------------------------------------------------- #
+#                                     Jobs                                     #
+# ---------------------------------------------------------------------------- #
+
+jobs:
+  main:
+    docker:
+      - image: cimg/node:22.15.0-browsers
+    resource_class: large
+    environment: *env-vars
+    steps:
+      - checkout
       - setup-node
       - setup-deps
+      - setup-browser-tools
+      # Start Nx Cloud and run all tasks
       - run:
           name: 🧾 NX report
           command: pnpm exec nx report
-      - nx/set-shas # Derives SHAs for base and head for use in `nx affected` commands in CI
-      # Start Nx Cloud Agents
+      - nx/set-shas
       - run:
-          name: ▶️ Start Nx Cloud Agents
+          name: ▶️ Start Nx Cloud CI Run
           command: pnpm dlx nx-cloud start-ci-run --distribute-on="3 linux-medium-plus-js" --with-env-vars="NX_VERBOSE_LOGGING NX_BRANCH"
+      # Run all Nx commands
       - run:
           name: 🩺 Run Linters
-          command: pnpm exec nx affected -t lint --exclude='*,!tag:publishable' --parallel --output-style=stream --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t lint --exclude='*,!tag:core' --parallel --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 🧰 Run Unit Tests
-          command: pnpm exec nx affected -t test --exclude='*,!tag:core' --output-style=stream --ci --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t test --exclude='*,!tag:core' --parallel --base=$NX_BASE --head=$NX_HEAD --ci --verbose
       - run:
           name: ⏳ Build Libraries
-          command: pnpm exec nx affected -t build --exclude='*,!tag:publishable' --parallel --output-style=stream --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t build --exclude='*,!tag:publishable' --parallel --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 🧪 Run E2E Tests
-          command: pnpm exec nx affected -t e2e --exclude='*,!tag:core' --output-style=stream --ci --code-coverage --base=$NX_BASE --head=$NX_HEAD --verbose
+          command: pnpm exec nx affected -t e2e --exclude='*,!tag:core' --parallel --base=$NX_BASE --head=$NX_HEAD --ci --code-coverage --verbose
       - run:
           name: 📚 Build Storybook
           command: pnpm exec nx run beeq:storybook-build --output-style=stream --verbose
+      # Stop Nx Cloud agents
       - run:
           name: ⏹️ Stop Nx Cloud Agents
           command: pnpm dlx nx-cloud stop-all-agents
-      # End: Nx Cloud Agents
-      - chromatic-deployment
-      - store_test_results:
-          path: test-results
-      - store_artifacts:
-          path: test-results
-          destination: test-results
+      # Persist artifacts for Chromatic
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist
+            - .nx
+            - dist/storybook/beeq
+
+  chromatic:
+    docker:
+      - image: cimg/node:22.15.0-browsers
+    environment: *env-vars
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: 🚀 Publish to Chromatic
+          command: pnpm dlx chromatic --project-token=${CHROMATIC_PROJECT_TOKEN} --ci --debug --storybook-build-dir dist/storybook/beeq
 
 # ---------------------------------------------------------------------------- #
-#                         Used for orchestrate all jobs                        #
+#                                   Workflows                                  #
 # ---------------------------------------------------------------------------- #
+
 workflows:
+  version: 2
   ⏳ Build and Test:
     jobs:
-      - build-and-test
+      - main
+      - chromatic:
+          requires:
+            - main

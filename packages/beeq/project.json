@@ -23,19 +23,8 @@
   },
   "targets": {
     "start": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
-          "nx run beeq:cem-dev",
-          "nx run beeq:stencil-start --noOpen",
-          "nx run beeq:storybook-start-css",
-          "nx run beeq:storybook-start"
-        ],
-        "parallel": true
-      }
-    },
-    "stencil-start": {
       "executor": "@nxext/stencil:serve",
+      "dependsOn": ["cem-dev", "storybook"],
       "outputs": ["{options.outputPath}"],
       "options": {
         "projectType": "library",
@@ -48,9 +37,9 @@
         "dev": true
       }
     },
-    "storybook-start": {
+    "storybook": {
       "executor": "@nx/storybook:storybook",
-      "dependsOn": [{ "target": "prepare-storybook" }],
+      "dependsOn": ["prepare-storybook", "storybook-start-css"],
       "options": {
         "loglevel": "silly",
         "configDir": "packages/beeq/.storybook",
@@ -62,7 +51,8 @@
         "ci": {
           "quiet": true
         }
-      }
+      },
+      "continuous": true
     },
     "build": {
       "dependsOn": [{ "target": "icons" }, { "target": "build", "projects": "beeq-tailwindcss" }, { "target": "cem" }],
@@ -110,7 +100,8 @@
       "outputs": ["{projectRoot}/.storybook/assets/css"],
       "options": {
         "command": "npx tailwindcss -i packages/beeq/src/global/styles/default.scss -o packages/beeq/.storybook/assets/css/stories.css --postcss ./postcss.config.js --watch"
-      }
+      },
+      "continuous": true
     },
     "storybook-build-css": {
       "executor": "nx:run-commands",
@@ -124,7 +115,8 @@
       "outputs": ["{projectRoot}/custom-elements.json"]
     },
     "cem-dev": {
-      "command": "./node_modules/.bin/cem analyze --config {projectRoot}/cem.config.mjs --watch"
+      "command": "./node_modules/.bin/cem analyze --config {projectRoot}/cem.config.mjs --watch",
+      "continuous": true
     },
     "icons": {
       "executor": "@beeq/tools:icons",

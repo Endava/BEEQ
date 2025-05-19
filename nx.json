@@ -1,6 +1,8 @@
 {
   "extends": "nx/presets/npm.json",
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "nxCloudId": "64007df8da9fd31ee8a4d06e",
+  "useDaemonProcess": false,
   "workspaceLayout": {
     "appsDir": "apps",
     "libsDir": "packages"
@@ -69,7 +71,7 @@
         "createRelease": "github",
         "renderOptions": {
           "authors": true,
-          "mapAuthorsToGitHubUsernames": true,
+          "applyUsernameToAuthors": true,
           "commitReferences": true,
           "versionTitleDate": true
         }
@@ -104,7 +106,6 @@
       }
     }
   },
-  "nxCloudId": "64007df8da9fd31ee8a4d06e",
   "generators": {
     "@nx/react": {
       "application": {
