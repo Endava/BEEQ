@@ -35,7 +35,8 @@
         "docsReadme": true,
         "docs": true,
         "dev": true
-      }
+      },
+      "continuous": true
     },
     "storybook": {
       "executor": "@nx/storybook:storybook",
