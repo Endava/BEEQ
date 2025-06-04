@@ -1,4 +1,3 @@
-import type { Config } from 'tailwindcss';
 import plugin from 'tailwindcss/plugin';
 
 import { blendColor } from '../helpers';
@@ -7,7 +6,7 @@ import { blendColor } from '../helpers';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const { default: flattenColorPalette } = require('tailwindcss/lib/util/flattenColorPalette');
 
-export const ColorMix: Partial<Config> = plugin(function ({ matchUtilities, theme }) {
+export const ColorMix = plugin(function ({ matchUtilities, theme }) {
   matchUtilities(
     {
       // Background `hover` state blend color
