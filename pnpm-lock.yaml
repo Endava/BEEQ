@@ -382,9 +382,6 @@ importers:
       tailwindcss:
         specifier: 3.4.17
         version: 3.4.17(ts-node@10.9.2(@swc/core@1.11.5(@swc/helpers@0.5.15))(@types/node@22.14.1)(typescript@5.5.4))
-      tailwindcss-theme-swapper:
-        specifier: 0.12.0
-        version: 0.12.0(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.11.5(@swc/helpers@0.5.15))(@types/node@22.14.1)(typescript@5.5.4)))
       ts-jest:
         specifier: 29.3.2
         version: 29.3.2(@babel/core@7.26.9)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.26.9))(esbuild@0.25.3)(jest@29.7.0(@types/node@22.14.1)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.11.5(@swc/helpers@0.5.15))(@types/node@22.14.1)(typescript@5.5.4)))(typescript@5.5.4)
@@ -457,9 +454,6 @@ importers:
       tailwindcss:
         specifier: ^3.4.17
         version: 3.4.17(ts-node@10.9.2(@swc/core@1.11.5(@swc/helpers@0.5.15))(@types/node@22.14.1)(typescript@5.7.3))
-      tailwindcss-theme-swapper:
-        specifier: ^0.12.0
-        version: 0.12.0(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.11.5(@swc/helpers@0.5.15))(@types/node@22.14.1)(typescript@5.7.3)))
 
   packages/beeq-vue:
     dependencies:
@@ -10925,11 +10919,6 @@ packages:
   table@6.9.0:
     resolution: {integrity: sha512-9kY+CygyYM6j02t5YFHbNz2FN5QmYGv9zAjVp4lCDjlCw7amdckXlEt/bjMhUIfj4ThGRE4gCUH5+yGnNuPo5A==}
     engines: {node: '>=10.0.0'}
-
-  tailwindcss-theme-swapper@0.12.0:
-    resolution: {integrity: sha512-0BoDM27BZ9kSoVut7MwUe8+ECyvFIdIAIvAuhdtvEiEIUpzz9bCku3eaHRzeWqQxd3plmC2PSgGcXw8J35qYpg==}
-    peerDependencies:
-      tailwindcss: '>=3.0.0 || insiders'
 
   tailwindcss@3.4.17:
     resolution: {integrity: sha512-w33E2aCvSDP0tW9RZuNXadXlkHXqFzSkQew/aIa2i/Sj8fThxwovwlXHSPXTbAHwEIhBFXAedUhP2tueAKP8Og==}
@@ -25356,14 +25345,6 @@ snapshots:
       slice-ansi: 4.0.0
       string-width: 4.2.3
       strip-ansi: 6.0.1
-
-  tailwindcss-theme-swapper@0.12.0(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.11.5(@swc/helpers@0.5.15))(@types/node@22.14.1)(typescript@5.5.4))):
-    dependencies:
-      tailwindcss: 3.4.17(ts-node@10.9.2(@swc/core@1.11.5(@swc/helpers@0.5.15))(@types/node@22.14.1)(typescript@5.5.4))
-
-  tailwindcss-theme-swapper@0.12.0(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.11.5(@swc/helpers@0.5.15))(@types/node@22.14.1)(typescript@5.7.3))):
-    dependencies:
-      tailwindcss: 3.4.17(ts-node@10.9.2(@swc/core@1.11.5(@swc/helpers@0.5.15))(@types/node@22.14.1)(typescript@5.7.3))
 
   tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.11.5(@swc/helpers@0.5.15))(@types/node@22.14.1)(typescript@5.5.4)):
     dependencies:

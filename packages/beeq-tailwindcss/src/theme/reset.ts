@@ -20,7 +20,9 @@ export const reset: CSSRuleObject | CSSRuleObject[] = {
   },
   /* Set core root defaults */
   html: {
+    'font-family': 'var(--bq-font-family)',
     'font-size': 'var(--bq-font-size--m)',
+    'text-size-adjust': 'none',
   },
   'html:focus-within': {
     'scroll-behavior': 'smooth',
@@ -31,9 +33,8 @@ export const reset: CSSRuleObject | CSSRuleObject[] = {
     '-moz-osx-font-smoothing': 'grayscale',
     'background-color': 'var(--bq-background--primary)',
     color: 'var(--bq-text--primary)',
-    'font-family': 'var(--bq-font-family)',
     'line-height': 'var(--bq-font-line-height--regular)',
-    'min-height': '100vh',
+    'min-height': '100vb',
     'text-rendering': 'optimizeSpeed',
   },
   /* A elements that don't have a class get default styles */

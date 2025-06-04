@@ -1,10 +1,7 @@
 import type { Config } from 'tailwindcss';
 import plugin from 'tailwindcss/plugin';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import ThemeSwapper from 'tailwindcss-theme-swapper';
 
-import { ColorMix, LogicalProperties } from './plugins';
+import { BeeqThemeSwapper, ColorMix, LogicalProperties } from './plugins';
 import {
   CSS_COLORS,
   DECLARATIVE_COLORS,
@@ -159,38 +156,47 @@ export default {
     // Local Custom Plugins
     ColorMix,
     LogicalProperties,
-    // Tailwind CSS Theme Swapper
-    ThemeSwapper({
+    BeeqThemeSwapper({
       themes: [
+        // Base theme - always uses :where() for low specificity
         {
-          name: 'root',
+          name: 'base',
           selectors: [':root'],
           theme: { ...DefaultRootTheme },
         },
+        // Light mode - higher specificity to override base theme
         {
           name: 'light',
-          selectors: [':root', '.light', '.beeq.light', '[bq-mode="light"]'],
+          selectors: ['.light', '.beeq.light', '[bq-mode="light"]'],
           theme: { ...DefaultLightTheme },
+          mode: true,
         },
+        // Dark mode - higher specificity to override base theme
         {
           name: 'dark',
           selectors: ['.dark', '.beeq.dark', '[bq-mode="dark"]'],
           theme: { ...DefaultDarkTheme },
+          mode: true,
         },
+        // Endava theme - uses :where() for low specificity
         {
           name: 'endava',
           selectors: ['.endava', '[bq-theme="endava"]'],
           theme: { ...EndavaRootTheme },
         },
+        // Endava light mode - higher specificity to override endava theme
         {
           name: 'endava-light',
           selectors: ['.endava.light', '[bq-theme="endava"][bq-mode="light"]'],
           theme: { ...EndavaLightTheme },
+          mode: true,
         },
+        // Endava dark mode - higher specificity to override endava theme
         {
           name: 'endava-dark',
           selectors: ['.endava.dark', '[bq-theme="endava"][bq-mode="dark"]'],
           theme: { ...EndavaDarkTheme },
+          mode: true,
         },
       ],
     }),
