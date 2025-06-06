@@ -45,6 +45,19 @@ module.exports = [
       storybook: fixupPluginRules(storybookPlugin),
     },
   },
+  // Storybook config files - disable TypeScript project-aware linting
+  {
+    files: ['.storybook/*.ts'],
+    languageOptions: {
+      parser: require('@typescript-eslint/parser'),
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        // Disable TypeScript project references for these files
+        project: false,
+      },
+    },
+  },
   // Project-specific TypeScript config
   {
     rules: {
@@ -122,6 +135,7 @@ module.exports = [
             '@stencil/react-output-target',
             '@stencil/sass',
             '@stencil/vue-output-target',
+            '@typescript-eslint/parser',
             '@wc-toolkit/type-parser',
             '@wc-toolkit/jsdoc-tags',
             'cem-plugin-jsdoc-example',
