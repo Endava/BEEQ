@@ -2,6 +2,7 @@ import { Component, Element, h, Listen, Method, Prop, Watch } from '@stencil/cor
 
 import type { Placement } from '../../services/interfaces';
 import { FloatingUI } from '../../services/libraries';
+import { isEventTargetChildOfElement } from '../../shared/utils';
 
 /**
  * The Tooltip component is a small pop-up box that appears when a user hovers over or clicks on an element, providing additional information or context.
@@ -146,13 +147,32 @@ export class BqTooltip {
   // Listeners
   // ==============
 
+  @Listen('keydown', { target: 'document' })
+  handleDocumentKeyDown(event: KeyboardEvent) {
+    // Early returns for performance optimization
+    if (this.alwaysVisible || !this.visible || this.displayOn !== 'click') return;
+    // Hide tooltip when the user presses the escape key, but only if the displayOn is click and the tooltip is visible
+    if (event.key !== 'Escape') return;
+
+    this.hide();
+  }
+
   @Listen('mousedown', { target: 'document' })
-  async handleDocumentMouseDown(event: MouseEvent) {
-    // Close when clicking outside of the close element
-    const path = event.composedPath();
-    if (!path.includes(this.el)) {
-      await this.hide();
-    }
+  handleDocumentMouseDown(event: MouseEvent) {
+    // Early returns for performance optimization
+    if (this.alwaysVisible || !this.visible) return;
+    // Hide tooltip when the user clicks outside of the tooltip, but only if the displayOn is click and the tooltip is visible
+    if (isEventTargetChildOfElement(event, this.el)) return;
+
+    this.hide();
+  }
+
+  @Listen('scroll', { target: 'document', passive: true })
+  handleDocumentScroll() {
+    // Early returns for performance optimization
+    if (this.alwaysVisible || !this.visible) return;
+    // Hide tooltip when the user scrolls, but only if the the tooltip is visible
+    this.hide();
   }
 
   // Public methods API
@@ -183,25 +203,29 @@ export class BqTooltip {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private handleTriggerMouseOver = () => {
-    (async () => {
-      if (this.displayOn !== 'hover') return;
-      await this.show();
-    })();
+  private handleTriggerMouseOver = async () => {
+    if (this.displayOn !== 'hover') return;
+    await this.show();
   };
 
-  private handleTriggerMouseLeave = () => {
-    (async () => {
-      if (this.displayOn !== 'hover') return;
-      await this.hide();
-    })();
+  private handleTriggerMouseLeave = async () => {
+    if (this.displayOn !== 'hover') return;
+    await this.hide();
   };
 
-  private handleTriggerOnClick = () => {
-    (async () => {
-      if (this.displayOn !== 'click') return;
-      await (this.visible ? this.hide() : this.show());
-    })();
+  private handleTriggerOnClick = async () => {
+    if (this.displayOn !== 'click') return;
+    await (this.visible ? this.hide() : this.show());
+  };
+
+  private handleTriggerFocusin = async () => {
+    if (this.visible || this.displayOn === 'click') return;
+    await this.show();
+  };
+
+  private handleTriggerFocusout = async () => {
+    if (!this.visible || this.displayOn === 'click') return;
+    await this.hide();
   };
 
   private showTooltip = () => {
@@ -231,6 +255,8 @@ export class BqTooltip {
           onMouseOver={this.handleTriggerMouseOver}
           onMouseLeave={this.handleTriggerMouseLeave}
           onClick={this.handleTriggerOnClick}
+          onFocusinCapture={this.handleTriggerFocusin}
+          onFocusoutCapture={this.handleTriggerFocusout}
           ref={(el) => (this.trigger = el)}
           part="trigger"
         >
