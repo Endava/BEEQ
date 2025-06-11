@@ -19,6 +19,7 @@ const meta: Meta = {
     'clear-button-label': { control: 'text' },
     'debounce-time': { control: 'number' },
     'disable-clear': { control: 'boolean' },
+    'disable-scroll-lock': { control: 'boolean' },
     distance: { control: 'number' },
     disabled: { control: 'boolean' },
     form: { control: 'text' },
@@ -74,6 +75,7 @@ const meta: Meta = {
     'clear-button-label': 'Clear value',
     'debounce-time': 0,
     'disable-clear': false,
+    'disable-scroll-lock': false,
     distance: 8,
     disabled: false,
     form: undefined,
@@ -87,7 +89,7 @@ const meta: Meta = {
     placeholder: 'Placeholder',
     'same-width': false,
     skidding: 0,
-    strategy: 'absolute',
+    strategy: 'fixed',
     readonly: false,
     required: false,
     'validation-status': 'none',
@@ -162,10 +164,11 @@ const Template = (args: Args) => {
     <bq-select
       ?autofocus=${args.autofocus}
       clear-button-label=${args['clear-button-label']}
-      distance=${args.distance}
       debounce-time=${args['debounce-time']}
       ?disable-clear=${args['disable-clear']}
+      ?disable-scroll-lock=${args['disable-scroll-lock']}
       ?disabled=${args.disabled}
+      distance=${ifDefined(args.distance)}
       form=${ifDefined(args.form)}
       ?keep-open-on-select=${args['keep-open-on-select']}
       name=${ifDefined(args.name)}
@@ -246,7 +249,7 @@ export const Default: Story = {
 };
 
 export const Open: Story = {
-  render: Template,
+  render: (args: Args) => html` <div class="flex min-h-[150vh] items-center">${Template({ ...args })}</div> `,
   args: {
     autofocus: true,
     open: true,
@@ -406,6 +409,7 @@ export const WithForm: Story = {
       ev.preventDefault();
       const form = ev.target as HTMLFormElement;
       const formData = new FormData(form);
+      // @ts-expect-error FormData.entries is not typed
       const formValues = Object.fromEntries(formData.entries());
 
       const codeElement = document.getElementById('form-data');
@@ -628,5 +632,67 @@ export const CustomFiltering: Story = {
   args: {
     placeholder: 'Search options...',
     'debounce-time': 300,
+  },
+};
+
+export const ScrollableContainer: Story = {
+  render: (args: Args) => html`
+    <div class="flex h-[150dvh] flex-col gap-m">
+      <h4>Scroll Behavior Demo</h4>
+      <p class="text-secondary">
+        This example demonstrates how the Select behaves in scrollable containers. The Select uses a simple and reliable
+        approach:
+        <strong>body scroll lock</strong> + <strong>auto-close on ancestor scroll</strong>.
+      </p>
+      <p class="text-s italic text-secondary">
+        (Try to scroll the container below. The Select will close automatically, while the page body scroll is being
+        locked until the Select panel is closed.)
+      </p>
+
+      <!-- Scrollable container with Select inside -->
+      <div class="border border-stroke-primary h-64 overflow-y-auto rounded-s bg-ui-secondary p-m">
+        <div class="flex h-96 flex-col gap-m">
+          <p>This is a scrollable container with some content...</p>
+          <div class="space-y-xs">
+            <p>📝 <strong>When Select is closed:</strong> You can scroll this container normally.</p>
+            <p>🔒 <strong>When Select is open:</strong> Body scroll is locked to prevent background scrolling.</p>
+            <p>
+              ⚡ <strong>Auto-close behavior:</strong> The Select panel closes automatically when you scroll anywhere.
+            </p>
+          </div>
+
+          <!-- Select component inside scrollable container -->
+          <div class="mt-xs">${Template({ ...args, placeholder: 'Select inside scrollable container' })}</div>
+
+          <div class="space-y-xs">
+            <p>More content below the Select...</p>
+            <p>🎯 <strong>Try this:</strong> Open the Select, then try to scroll this container.</p>
+            <p>✨ <strong>Expected behavior:</strong> The Select panel will close immediately.</p>
+            <p>
+              🚀 <strong>Why this works:</strong> Simple scroll detection prevents floating panels from becoming
+              detached.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Regular body scroll area -->
+      <div class="mt-l space-y-xs">
+        <p>This content is in the normal page body flow.</p>
+        <p>
+          <strong>Body scroll behavior:</strong> When the Select above is opened, the body scroll is locked. This
+          prevents the page from scrolling in the background while the panel is open.
+        </p>
+        <p>
+          <strong>Accessibility note:</strong> This approach follows established patterns used by major design systems
+          and provides a consistent, predictable user experience.
+        </p>
+      </div>
+    </div>
+  `,
+  args: {
+    autofocus: false,
+    open: false,
+    placeholder: 'Select inside container',
   },
 };

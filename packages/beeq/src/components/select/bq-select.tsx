@@ -177,6 +177,9 @@ export class BqSelect {
    */
   @Prop({ reflect: true, mutable: true }) debounceTime? = 0;
 
+  /** If true, the Select panel will not lock the page body scroll when open. */
+  @Prop({ reflect: true }) disableScrollLock?: boolean = false;
+
   /**
    * Indicates whether the Select input is disabled or not.
    * If `true`, the Select is disabled and cannot be interacted with.
@@ -343,6 +346,17 @@ export class BqSelect {
     if (isHTMLElement(ev.target, 'bq-select')) return;
 
     ev.stopPropagation();
+  }
+
+  @Listen('scroll', { target: 'window', passive: true, capture: true })
+  handleScrollEvent() {
+    if (!this.open) return;
+
+    // Close the panel when the a scroll event is triggered.
+    // This is useful for those cases where the floating panel is inside a scrollable container.
+    // For example, a select inside a dialog, drawer, etc.
+    // ⚠️ Notice that document body scroll lock is handled via the `scrollLock` utility.
+    this.open = false;
   }
 
   // Public methods API
@@ -667,6 +681,7 @@ export class BqSelect {
         {/* Select dropdown */}
         <bq-dropdown
           class="bq-select__dropdown w-full"
+          disableScrollLock={this.disableScrollLock}
           disabled={this.disabled}
           distance={this.distance}
           keepOpenOnSelect={this.keepOpenOnSelect}
