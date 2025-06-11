@@ -1,5 +1,6 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit-html';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import mdx from './bq-dropdown.mdx';
 
@@ -12,6 +13,7 @@ const meta: Meta = {
     },
   },
   argTypes: {
+    'disable-scroll-lock': { control: 'boolean' },
     disabled: { control: 'boolean' },
     distance: { control: 'number' },
     placement: {
@@ -44,6 +46,7 @@ const meta: Meta = {
     enableOptionGroup: { control: 'boolean', table: { disable: true } },
   },
   args: {
+    'disable-scroll-lock': false,
     disabled: false,
     distance: 4,
     placement: 'bottom-start',
@@ -99,14 +102,15 @@ const Template = (args: Args) => {
   return html`
     <bq-dropdown
       ?disabled=${args.disabled}
-      distance=${args.distance}
-      placement=${args.placement}
-      ?open=${args.open}
-      panel-height=${args['panel-height']}
+      distance=${ifDefined(args.distance)}
+      ?disable-scroll-lock=${args['disable-scroll-lock']}
       ?keep-open-on-select=${args['keep-open-on-select']}
+      ?open=${args.open}
+      panel-height=${ifDefined(args['panel-height'])}
+      placement=${ifDefined(args.placement)}
       ?same-width=${args['same-width']}
-      skidding=${args.skidding}
-      strategy=${args.strategy}
+      skidding=${ifDefined(args.skidding)}
+      strategy=${ifDefined(args.strategy)}
       @bqSelect=${args.bqSelect}
     >
       <!-- TRIGGER ELEMENT -->

@@ -2,6 +2,7 @@ import { Component, Element, Event, h, Listen, Prop, Watch } from '@stencil/core
 import type { EventEmitter } from '@stencil/core';
 
 import type { Placement } from '../../services/interfaces';
+import { isEventTargetChildOfElement } from '../../shared/utils';
 
 let id = 0;
 
@@ -83,6 +84,9 @@ export class BqDropdown {
   // Public Property API
   // ========================
 
+  /** If true, the dropdown panel will not lock the page body scroll when open. */
+  @Prop({ reflect: true }) disableScrollLock?: boolean = false;
+
   /** If true, the dropdown panel will be visible and won't be shown. */
   @Prop({ reflect: true }) disabled?: boolean = false;
 
@@ -149,37 +153,41 @@ export class BqDropdown {
   // Listeners
   // ==============
 
+  @Listen('bqSelect', { passive: true })
+  onItemSelect() {
+    if (this.keepOpenOnSelect) return;
+
+    this.open = false;
+  }
+
   /** Listens for the 'click' event on the document object
    * and closes the dropdown panel if the click is outside the component.
    */
   @Listen('click', { target: 'document', passive: true })
   onClickOutside(event: MouseEvent) {
-    if (!this.open) return;
+    if (!this.open || isEventTargetChildOfElement(event, this.el)) return;
 
     // Close when clicking outside of the close element
-    const path = event.composedPath();
-    if (!path.includes(this.el)) {
-      this.open = false;
-    }
+    this.open = false;
   }
 
-  /**
-   * Listens for the 'keyup' event on the window object
-   * and closes the dropdown panel if the 'Escape' key or 'Tab' key outside the component is pressed.
-   */
   @Listen('keyup', { target: 'window', passive: true })
   onEscape(event: KeyboardEvent) {
     if (!this.open) return;
-
-    if (event.key === 'Escape' || (event.key === 'Tab' && !event.composedPath().includes(this.el))) {
+    // Close the panel when pressing Escape or when pressing Tab and the component loses focus.
+    if (event.key === 'Escape' || (event.key === 'Tab' && !isEventTargetChildOfElement(event, this.el))) {
       this.open = false;
     }
   }
 
-  @Listen('bqSelect', { passive: true })
-  onItemSelect() {
-    if (this.keepOpenOnSelect) return;
+  @Listen('scroll', { target: 'window', passive: true, capture: true })
+  handleScrollEvent() {
+    if (!this.open) return;
 
+    // Close the panel when the a scroll event is triggered.
+    // This is useful for those cases where the floating panel is inside a scrollable container.
+    // For example, a select inside a dialog, drawer, etc.
+    // ⚠️ Notice that document body scroll lock is handled via the `scrollLock` utility.
     this.open = false;
   }
 
@@ -228,6 +236,7 @@ export class BqDropdown {
           style={style}
           id={this.dropdownPanelId}
           class="bq-dropdown__panel"
+          disableScrollLock={this.disableScrollLock}
           distance={this.distance}
           placement={this.placement}
           open={this.open}
