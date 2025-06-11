@@ -3,6 +3,7 @@ import { Component, Element, h, Prop, Watch } from '@stencil/core';
 
 import type { Placement } from '../../services/interfaces';
 import { FloatingUI } from '../../services/libraries';
+import { isClient, lockBodyScroll, unlockBodyScroll } from '../../shared/utils';
 
 /**
  * The Panel component is a versatile and essential element used to wrap and display content in a floating panel.
@@ -63,6 +64,9 @@ export class BqPanel {
   // Public Property API
   // ========================
 
+  /** If true, the panel will not lock the page body scroll when open. */
+  @Prop({ reflect: true }) disableScrollLock?: boolean = false;
+
   /** Represents the distance (gutter or margin) between the panel and the trigger element. */
   @Prop({ reflect: true }) distance?: number = 4;
 
@@ -100,6 +104,8 @@ export class BqPanel {
   @Watch('skidding')
   @Watch('strategy')
   onPropChange() {
+    if (!isClient()) return;
+
     this.floatingUI?.init({ ...this.options });
   }
 
@@ -112,8 +118,11 @@ export class BqPanel {
   // =====================================
 
   componentDidLoad() {
+    if (!isClient()) return;
+
     // We need to find the trigger element from the parent to position the panel relative to it.
     const parentTrigger = this.el.parentElement.querySelector('div[part="trigger"]');
+
     if (!parentTrigger) return;
 
     this.trigger = {
@@ -126,7 +135,14 @@ export class BqPanel {
   }
 
   disconnectedCallback() {
+    if (!isClient()) return;
+
     this.floatingUI?.destroy();
+
+    // Ensure scroll lock is removed if the component is disconnected while the panel is open.
+    if (this.open && !this.disableScrollLock) {
+      unlockBodyScroll();
+    }
   }
 
   // Listeners
@@ -145,11 +161,23 @@ export class BqPanel {
   // =======================================================
 
   private showPanel() {
+    if (!isClient()) return;
+
     this.floatingUI?.update();
+
+    // Lock the body scroll if the disableScrollLock prop is not true.
+    if (!this.disableScrollLock) {
+      lockBodyScroll();
+    }
   }
 
   private async hidePanel() {
     this.open = false;
+
+    // Unlock the body scroll if the disableScrollLock prop is not true.
+    if (isClient() && !this.disableScrollLock) {
+      unlockBodyScroll();
+    }
   }
 
   private get options() {
