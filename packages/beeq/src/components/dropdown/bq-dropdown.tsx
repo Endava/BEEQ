@@ -182,9 +182,9 @@ export class BqDropdown {
 
   @Listen('scroll', { target: 'window', passive: true, capture: true })
   handleScrollEvent() {
-    if (!this.open) return;
+    if (!this.open || this.disableScrollLock) return;
 
-    // Close the panel when the a scroll event is triggered.
+    // Close the panel when the scroll event is triggered.
     // This is useful for those cases where the floating panel is inside a scrollable container.
     // For example, a select inside a dialog, drawer, etc.
     // ⚠️ Notice that document body scroll lock is handled via the `scrollLock` utility.
