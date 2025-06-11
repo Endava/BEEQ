@@ -1161,6 +1161,10 @@ export namespace Components {
      */
     interface BqDropdown {
         /**
+          * If true, the dropdown panel will not lock the page body scroll when open.
+         */
+        "disableScrollLock"?: boolean;
+        /**
           * If true, the dropdown panel will be visible and won't be shown.
          */
         "disabled"?: boolean;
@@ -1666,6 +1670,10 @@ export namespace Components {
      */
     interface BqPanel {
         /**
+          * If true, the panel will not lock the page body scroll when open.
+         */
+        "disableScrollLock"?: boolean;
+        /**
           * Represents the distance (gutter or margin) between the panel and the trigger element.
          */
         "distance"?: number;
@@ -1972,6 +1980,10 @@ export namespace Components {
           * If true, the clear button won't be displayed
          */
         "disableClear"?: boolean;
+        /**
+          * If true, the Select panel will not lock the page body scroll when open.
+         */
+        "disableScrollLock"?: boolean;
         /**
           * Indicates whether the Select input is disabled or not. If `true`, the Select is disabled and cannot be interacted with.
          */
@@ -6334,6 +6346,10 @@ declare namespace LocalJSX {
      */
     interface BqDropdown {
         /**
+          * If true, the dropdown panel will not lock the page body scroll when open.
+         */
+        "disableScrollLock"?: boolean;
+        /**
           * If true, the dropdown panel will be visible and won't be shown.
          */
         "disabled"?: boolean;
@@ -6891,6 +6907,10 @@ declare namespace LocalJSX {
      */
     interface BqPanel {
         /**
+          * If true, the panel will not lock the page body scroll when open.
+         */
+        "disableScrollLock"?: boolean;
+        /**
           * Represents the distance (gutter or margin) between the panel and the trigger element.
          */
         "distance"?: number;
@@ -7195,6 +7215,10 @@ declare namespace LocalJSX {
           * If true, the clear button won't be displayed
          */
         "disableClear"?: boolean;
+        /**
+          * If true, the Select panel will not lock the page body scroll when open.
+         */
+        "disableScrollLock"?: boolean;
         /**
           * Indicates whether the Select input is disabled or not. If `true`, the Select is disabled and cannot be interacted with.
          */

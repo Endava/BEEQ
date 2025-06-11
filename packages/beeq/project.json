@@ -24,13 +24,14 @@
   "targets": {
     "start": {
       "executor": "@nxext/stencil:serve",
-      "dependsOn": ["cem-dev", "storybook"],
+      "dependsOn": ["cem-dev", "storybook", { "projects": "beeq-tailwindcss", "target": "build" }],
       "outputs": ["{options.outputPath}"],
       "options": {
         "projectType": "library",
         "tsConfig": "packages/beeq/tsconfig.lib.json",
         "configPath": "packages/beeq/stencil.config.ts",
         "outputPath": "dist/beeq",
+        "noOpen": true,
         "watch": true,
         "docsReadme": true,
         "docs": true,
