@@ -4,16 +4,15 @@
  * In order to reduce the likelihood of conflicts, all classes within the file must begin with ".bq-".
  */
 
+/* --------------------------- `<a>` link element --------------------------- */
 .bq-link {
   @apply relative inline-block rounded-xs text-brand no-underline focus-visible:focus hover:text-hover-brand active:text-active-brand;
   @apply after:absolute after:bottom-0 after:block after:h-[2px] after:w-full after:scale-x-0 after:rounded-full after:transition-transform after:duration-300 after:content-empty;
   @apply hover:after:scale-x-100 hover:after:bg-hover-brand active:after:bg-active-brand;
 }
 
-/**
- * Use these classes in the document.body when side menu component is present
- */
-
+/* -------------------------------- Side menu ------------------------------- */
+/* Use these classes in the document.body when side menu component is present */
 .bq-body--side-menu {
   @apply relative transition-[padding-inline-start] duration-300;
 }
@@ -26,10 +25,8 @@
   @apply ps-[var(--bq-side-menu--width)] #{!important};
 }
 
-/**
- * Use these classes for the notification portal container
- */
-
+/* ---------------------------- Notification portal ------------------------- */
+/* Use these classes for the notification portal container */
 .bq-notification-portal {
   @apply fixed end-0 top-0 z-50 max-h-full max-w-full;
 }
@@ -38,10 +35,8 @@
   @apply m-4;
 }
 
-/**
- * Use these classes for the toast portal container
- */
-
+/* ------------------------------- Toast portal ----------------------------- */
+/* Use these classes for the toast portal container */
 .bq-toast-portal {
   @apply fixed z-50 flex max-h-full flex-col gap-s;
   // NOTE: on mobile we display toast full screen top / bottom
@@ -69,5 +64,20 @@
 
   &.bottom-right {
     @apply bottom-xxl2 sm:right-xxl2;
+  }
+}
+
+/* ---------------------------- Body scroll lock ---------------------------- */
+/* Use these classes for body scroll lock when floating panels are open */
+.bq-body--scroll-lock {
+  @apply overflow-hidden overscroll-none;
+}
+
+/* Enhanced mobile support for scroll lock */
+@supports (-webkit-touch-callout: none) {
+  .bq-body--scroll-lock {
+    @apply overscroll-none;
+    /* iOS-specific: prevent rubber band scrolling */
+    -webkit-overflow-scrolling: auto;
   }
 }
