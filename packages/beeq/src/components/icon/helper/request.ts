@@ -129,12 +129,10 @@ export const getSvgContent = async (url?: string, sanitize = true): Promise<stri
     return cachedContent || undefined;
   }
 
-  // Check for pending request
-  let request = cache.requests.get(url);
-
-  if (!request) {
+  // Check if the request is already in the cache
+  if (!cache.requests.has(url)) {
     // Create new request with proper cleanup
-    request = fetchAndProcessSvg(url, sanitize).then((content) => {
+    const request = fetchAndProcessSvg(url, sanitize).then((content) => {
       // Cache the result (including empty strings for failed requests)
       cache.content.set(url, content);
       // Clean up the pending request
@@ -145,7 +143,7 @@ export const getSvgContent = async (url?: string, sanitize = true): Promise<stri
     cache.requests.set(url, request);
   }
 
-  return request;
+  return cache.requests.get(url);
 };
 
 /**
