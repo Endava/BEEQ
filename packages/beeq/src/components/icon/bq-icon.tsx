@@ -2,7 +2,7 @@ import { Component, Event, h, Host, Prop, State, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
 
 import type { TIconWeight } from './bq-icon.types';
-import { getSvgContent, iconContent } from './helper/request';
+import { getSvgContent } from './helper/request';
 import { getBasePath, getColorCSSVariable, isNil } from '../../shared/utils';
 
 /**
@@ -157,12 +157,15 @@ export class BqIcon {
     return getBasePath(iconFileName);
   };
 
-  private loadIcon = (name: string) => {
+  private loadIcon = async (name: string) => {
     const url = this.getIconSource(name);
-    getSvgContent(url, true).then(() => {
-      this._svgContent = iconContent.get(url);
-      this.svgLoaded.emit(this._svgContent);
-    });
+    if (!url) return;
+
+    const content = await getSvgContent(url, true);
+    if (!content) return;
+
+    this._svgContent = content;
+    this.svgLoaded.emit(this._svgContent);
   };
 
   // render() function

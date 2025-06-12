@@ -2,114 +2,168 @@
 /*                             Icon request helper                            */
 /* -------------------------------------------------------------------------- */
 
-import { isNil, isString } from '../../../shared/utils';
+import { isClient, isNil } from '../../../shared/utils';
 
-const requests = new Map<string, Promise<unknown>>();
-export const iconContent = new Map<string, string>();
+const SVG_TAG = 'svg';
+const ICON_CSS_CLASS = 'bq-icon__svg';
+
+interface IconCache {
+  requests: Map<string, Promise<string>>;
+  content: Map<string, string>;
+}
+
+const cache: IconCache = {
+  requests: new Map(),
+  content: new Map(),
+};
 
 /**
- * Fetches SVG content from a given URL and optionally sanitizes it.
- * @param {string} url - The URL to fetch the SVG from.
- * @param {boolean} sanitize - Whether to sanitize the SVG content.
- * @returns {Promise<unknown>} - A promise that resolves to the SVG content.
+ * Sanitizes SVG element by setting required attributes and removing unwanted ones
+ * @param svg - The SVG element to sanitize
  */
-const fetchSvg = async (url: string, sanitize: boolean): Promise<unknown> => {
-  if (isNil(url) || typeof fetch === 'undefined' || typeof window === 'undefined') {
-    return undefined;
-  }
+const sanitizeSvgElement = (svg: SVGElement): void => {
+  const currentClass = svg.getAttribute('class') || '';
 
-  if (requests.has(url)) return requests.get(url);
+  svg.setAttribute('class', `${currentClass} ${ICON_CSS_CLASS}`.trim());
+  svg.setAttribute('part', SVG_TAG);
+  svg.removeAttribute('height');
+  svg.removeAttribute('width');
+};
+
+/**
+ * Validates element security (no scripts or event handlers)
+ * @param element - The element to validate
+ * @returns True if the element is valid, false otherwise
+ */
+const validateElement = (element: Element): boolean => {
+  if (!element || element.nodeType !== Node.ELEMENT_NODE) return false;
+  if (element.nodeName.toLowerCase() === 'script') return false;
+
+  // Check for malicious attributes using modern array methods
+  const hasUnsafeAttribute = Array.from(element.attributes).some((attr) => {
+    const value = attr.value?.toLowerCase() || '';
+    const name = attr.name.toLowerCase();
+
+    // Check for event handlers
+    if (name.startsWith('on')) return true;
+    // Check for javascript: URLs
+    if (value.includes('javascript:')) return true;
+
+    return false;
+  });
+
+  if (hasUnsafeAttribute) return false;
+
+  // Recursively validate children
+  return Array.from(element.children).every((child) => validateElement(child));
+};
+
+/**
+ * Processes SVG content with security checks and sanitization
+ * @param content - The SVG content to process
+ * @returns The processed and sanitized SVG content
+ */
+const processSvgContent = (content: string): string => {
+  if (!isClient() || isNil(content)) return '';
+
+  try {
+    const parser = document.createElement('div');
+    parser.innerHTML = content;
+
+    const svg = parser.querySelector(SVG_TAG);
+    if (!svg || !validateElement(svg)) {
+      console.warn('[BqIcon] SVG content failed security validation');
+      return '';
+    }
+
+    sanitizeSvgElement(svg);
+    return parser.innerHTML;
+  } catch (error) {
+    console.error('[BqIcon] Error processing SVG content:', error);
+    return '';
+  }
+};
+
+/**
+ * Fetches and processes SVG content from URL
+ * @param url - The URL of the SVG to fetch
+ * @param shouldSanitize - Whether to sanitize the SVG content
+ * @returns Promise that resolves to the processed SVG content
+ */
+const fetchAndProcessSvg = async (url: string, shouldSanitize = true): Promise<string> => {
+  if (!isClient()) return '';
 
   try {
     const response = await fetch(url);
 
     if (!response.ok) {
-      iconContent.set(url, '');
-      return undefined;
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
 
-    let svgContent = await response.text();
+    const content = await response.text();
 
-    if (sanitize !== false) {
-      svgContent = validateContent(svgContent);
+    if (!content.trim()) {
+      console.warn(`[BqIcon] Empty SVG content received from ${url}`);
+      return '';
     }
 
-    iconContent.set(url, svgContent);
-    return svgContent;
+    return shouldSanitize ? processSvgContent(content) : content;
   } catch (error) {
     console.error(`[BqIcon] Failed to fetch SVG from ${url}:`, error);
-    iconContent.set(url, '');
-    return undefined;
+    return '';
   }
 };
 
 /**
- * Retrieves the SVG content for a given URL, fetching and caching it if necessary.
- * @param {string} url - The URL to fetch the SVG from.
- * @param {boolean} sanitize - Whether to sanitize the SVG content.
- * @returns {Promise<unknown>} - A promise that resolves to the SVG content.
+ * Retrieves SVG content with caching, security validation, and sanitization
+ * @param url - The URL of the SVG to fetch
+ * @param sanitize - Whether to sanitize the SVG content (default: true)
+ * @returns Promise that resolves to the processed SVG content or undefined
  */
-export const getSvgContent = async (url: string, sanitize: boolean): Promise<unknown> => {
-  if (isNil(url)) return undefined;
+export const getSvgContent = async (url?: string, sanitize = true): Promise<string | undefined> => {
+  if (!isClient() || isNil(url)) return undefined;
 
-  let req = requests.get(url);
-
-  if (isNil(req)) {
-    req = fetchSvg(url, sanitize);
-    requests.set(url, req);
+  // Return cached content if available
+  if (cache.content.has(url)) {
+    const cachedContent = cache.content.get(url);
+    return cachedContent || undefined;
   }
-  return req;
+
+  // Check for pending request
+  let request = cache.requests.get(url);
+
+  if (!request) {
+    // Create new request with proper cleanup
+    request = fetchAndProcessSvg(url, sanitize).then((content) => {
+      // Cache the result (including empty strings for failed requests)
+      cache.content.set(url, content);
+      // Clean up the pending request
+      cache.requests.delete(url);
+      return content;
+    });
+
+    cache.requests.set(url, request);
+  }
+
+  return request;
 };
 
 /**
- * Validates and sanitizes the SVG content.
- * @param {string} svgContent - The SVG content to validate.
- * @returns {string} - The sanitized SVG content.
+ * Clears the icon cache - useful for testing or memory management
  */
-export const validateContent = (svgContent: string): string => {
-  if (typeof window === 'undefined' || isNil(svgContent)) return '';
-
-  const svgTag = 'svg';
-  const iconCssClass = 'bq-icon__svg';
-  const div = document.createElement('div');
-  div.innerHTML = svgContent;
-
-  const svgElm = div.querySelector(svgTag);
-
-  if (svgElm) {
-    const existingClasses = svgElm.getAttribute('class') || '';
-    svgElm.setAttribute('class', `${existingClasses} ${iconCssClass}`.trim());
-    svgElm.setAttribute('part', svgTag);
-    svgElm.removeAttribute('height');
-    svgElm.removeAttribute('width');
-
-    if (isValid(svgElm)) {
-      return div.innerHTML;
-    }
-  }
-
-  return '';
+export const clearIconCache = (): void => {
+  cache.requests.clear();
+  cache.content.clear();
 };
 
 /**
- * Checks if an HTML element is valid (i.e., does not contain scripts or event handlers).
- * @param {HTMLElement} elm - The element to check.
- * @returns {boolean} - True if the element is valid, false otherwise.
+ * Gets cache statistics for debugging
  */
-export const isValid = (elm: Element): boolean => {
-  if (!elm) return false;
-  if (elm.nodeType !== Node.ELEMENT_NODE) return false;
-  if (elm.nodeName.toLowerCase() === 'script') return false;
+export const getCacheStats = () => ({
+  pendingRequests: cache.requests.size,
+  cachedContent: cache.content.size,
+  urls: Array.from(cache.content.keys()),
+});
 
-  for (const attribute of Array.from(elm.attributes)) {
-    if (isString(attribute.value) && attribute.value.toLowerCase().startsWith('on')) {
-      return false;
-    }
-  }
-
-  for (const childNode of Array.from(elm.children) as HTMLElement[]) {
-    if (!isValid(childNode)) return false;
-  }
-
-  return true;
-};
+// Export cache for external access if needed
+export { cache as iconCache };
