@@ -138,26 +138,32 @@ export namespace Components {
     interface BqAccordion {
         /**
           * The appearance style of the Accordion
+          * @default 'filled'
          */
         "appearance": TAccordionAppearance;
         /**
           * If true, the Accordion is disabled
+          * @default false
          */
         "disabled": boolean;
         /**
           * If true, the Accordion is expanded
+          * @default false
          */
         "expanded": boolean;
         /**
           * Animation is set through JS when the browser does not support CSS calc-size() If true, the Accordion animation, will be disabled. No animation will be applied.
+          * @default false
          */
         "noAnimation": boolean;
         /**
           * If true, the Accordion expand icon is rotate 180deg when expanded
+          * @default false
          */
         "rotate": boolean;
         /**
           * The size of the Accordion
+          * @default 'medium'
          */
         "size": TAccordionSize;
     }
@@ -184,6 +190,7 @@ export namespace Components {
     interface BqAccordionGroup {
         /**
           * The appearance style of accordion to be applied to all accordions
+          * @default 'filled'
          */
         "appearance": TAccordionAppearance;
         /**
@@ -192,14 +199,17 @@ export namespace Components {
         "expandAll": boolean;
         /**
           * If true multiple accordions can be expanded at the same time
+          * @default false
          */
         "multiple": boolean;
         /**
           * Animation is set through JS when the browser does not support CSS calc-size() If true, the accordion animation, will be disabled. No animation will be applied.
+          * @default false
          */
         "noAnimation": boolean;
         /**
           * The size of accordion to be applied to all accordions
+          * @default 'medium'
          */
         "size": TAccordionSize;
     }
@@ -266,6 +276,7 @@ export namespace Components {
         "autoDismiss": boolean;
         /**
           * The corner radius of the alert component
+          * @default 's'
          */
         "border": TAlertBorderRadius;
         /**
@@ -294,10 +305,12 @@ export namespace Components {
         "sticky": boolean;
         /**
           * The length of time, in milliseconds, after which the alert will close itself. Only valid if `autoDismiss="true"`
+          * @default 3000
          */
         "time": number;
         /**
           * Type of Alert
+          * @default 'default'
          */
         "type": TAlertType;
     }
@@ -360,10 +373,12 @@ export namespace Components {
         "label": string;
         /**
           * The shape of the avatar
+          * @default 'circle'
          */
         "shape": TAvatarShape;
         /**
           * The size of the avatar
+          * @default 'medium'
          */
         "size": TAvatarSize;
     }
@@ -393,14 +408,17 @@ export namespace Components {
     interface BqBadge {
         /**
           * Badge background color. The value should be a valid value of the palette color
+          * @default 'ui--danger'
          */
         "backgroundColor"?: string;
         /**
           * The size of the badge. Relevant if badge has no content.
+          * @default 'small'
          */
         "size"?: TBadgeSize;
         /**
           * Badge number color. The value should be a valid value of the palette color
+          * @default 'text--inverse'
          */
         "textColor"?: string;
     }
@@ -422,6 +440,7 @@ export namespace Components {
     interface BqBreadcrumb {
         /**
           * The `aria-label` attribute to describe the type of navigation
+          * @default 'Breadcrumbs'
          */
         "label": string;
     }
@@ -466,6 +485,7 @@ export namespace Components {
         "href": string;
         /**
           * Where to display the link in the browser context. Relevant only if `href` is set.
+          * @default 'noreferrer noopener'
          */
         "rel": string;
         /**
@@ -520,18 +540,22 @@ export namespace Components {
     interface BqButton {
         /**
           * The appearance style to apply to the button
+          * @default 'primary'
          */
         "appearance": TButtonAppearance;
         /**
           * If `true`, it will make the button fit to its parent width.
+          * @default false
          */
         "block": boolean;
         /**
           * The corner radius of the button
+          * @default 'm'
          */
         "border": TButtonBorderRadius;
         /**
           * If true, the button will be disabled (no interaction allowed)
+          * @default false
          */
         "disabled": boolean;
         /**
@@ -544,14 +568,17 @@ export namespace Components {
         "href": string;
         /**
           * It determinate how the content should be aligned
+          * @default 'center'
          */
         "justifyContent": 'left' | 'center' | 'right';
         /**
           * If `true` it will display the button in a loading state
+          * @default false
          */
         "loading": boolean;
         /**
           * The size of the button
+          * @default 'medium'
          */
         "size": TButtonSize;
         /**
@@ -560,10 +587,12 @@ export namespace Components {
         "target": '_blank' | '_parent' | '_self' | '_top';
         /**
           * The default behavior of the button
+          * @default 'button'
          */
         "type": TButtonType;
         /**
           * The variant of button to apply on top of the appearance (applicable only to `appearance="primary"`)
+          * @default 'standard'
          */
         "variant": TButtonVariant;
     }
@@ -594,10 +623,12 @@ export namespace Components {
     interface BqCard {
         /**
           * The corner radius of the card component
+          * @default 'm'
          */
         "border": TCardBorderRadius;
         /**
           * Type of card component
+          * @default 'default'
          */
         "type": TCardType;
     }
@@ -634,6 +665,7 @@ export namespace Components {
     interface BqCheckbox {
         /**
           * If true checkbox displays background on hover
+          * @default false
          */
         "backgroundOnHover"?: boolean;
         /**
@@ -642,6 +674,7 @@ export namespace Components {
         "checked"?: boolean;
         /**
           * If true checkbox is disabled
+          * @default false
          */
         "disabled"?: boolean;
         /**
@@ -654,6 +687,7 @@ export namespace Components {
         "formValidationMessage"?: string;
         /**
           * A state that is neither checked nor unchecked
+          * @default false
          */
         "indeterminate"?: boolean;
         /**
@@ -776,22 +810,27 @@ export namespace Components {
         "clear": () => Promise<void>;
         /**
           * The clear button aria label
+          * @default 'Clear value'
          */
         "clearButtonLabel"?: string;
         /**
           * If `true`, the clear button won't be displayed
+          * @default false
          */
         "disableClear"?: boolean;
         /**
           * Indicates whether the Date picker input is disabled or not. If `true`, the Date picker is disabled and cannot be interacted with.
+          * @default false
          */
         "disabled"?: boolean;
         /**
           * Represents the distance (gutter or margin) between the Date picker panel and the input element.
+          * @default 8
          */
         "distance"?: number;
         /**
           * The first day of the week, where Sunday is 0, Monday is 1, etc
+          * @default 1
          */
         "firstDayOfWeek"?: DaysOfWeek;
         /**
@@ -804,6 +843,7 @@ export namespace Components {
         "formValidationMessage"?: string;
         /**
           * The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
+          * @default {     day: 'numeric',     month: 'short',     year: 'numeric',   }
          */
         "formatOptions": Intl.DateTimeFormatOptions;
         /**
@@ -812,6 +852,7 @@ export namespace Components {
         "isDateDisallowed"?: (date: Date) => boolean;
         /**
           * The locale for formatting dates. If not set, will use the browser's locale. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
+          * @default 'en-GB'
          */
         "locale": Intl.LocalesArgument;
         /**
@@ -828,6 +869,7 @@ export namespace Components {
         "months": number;
         /**
           * Specifies how the next/previous buttons should navigate the calendar. - single: The buttons will navigate by a single month at a time. - months: The buttons will navigate by the number of months displayed per view.
+          * @default 'single'
          */
         "monthsPerView": 'single' | 'months';
         /**
@@ -836,10 +878,12 @@ export namespace Components {
         "name": string;
         /**
           * If `true`, the Date picker panel will be visible.
+          * @default false
          */
         "open"?: boolean;
         /**
           * When set, it will override the height of the Date picker panel.
+          * @default 'auto'
          */
         "panelHeight"?: string;
         /**
@@ -848,6 +892,7 @@ export namespace Components {
         "placeholder"?: string;
         /**
           * Position of the Date picker panel
+          * @default 'bottom-end'
          */
         "placement"?: Placement;
         /**
@@ -856,14 +901,17 @@ export namespace Components {
         "required"?: boolean;
         /**
           * Whether to show days outside the month
+          * @default false
          */
         "showOutsideDays": boolean;
         /**
           * Represents the skidding between the Date picker panel and the input element.
+          * @default 0
          */
         "skidding"?: number;
         /**
           * Defines the strategy to position the Date picker panel
+          * @default 'fixed'
          */
         "strategy"?: 'fixed' | 'absolute';
         /**
@@ -872,11 +920,13 @@ export namespace Components {
         "tentative"?: string;
         /**
           * It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection
+          * @default 'single'
          */
         "type": TDatePickerType;
         /**
           * The validation status of the Select input.
           * @remarks This property is used to indicate the validation status of the select input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
+          * @default 'none'
          */
         "validationStatus": TInputValidation;
         /**
@@ -944,6 +994,7 @@ export namespace Components {
     interface BqDialog {
         /**
           * Border radius of the dialog component
+          * @default 'm'
          */
         "border": TDialogBorderRadius;
         /**
@@ -952,18 +1003,22 @@ export namespace Components {
         "cancel": () => Promise<void>;
         /**
           * If true, the backdrop overlay won't be shown when the dialog opens
+          * @default false
          */
         "disableBackdrop": boolean;
         /**
           * If true, the dialog will not close when clicking on the backdrop overlay
+          * @default false
          */
         "disableCloseClickOutside": boolean;
         /**
           * If true, the dialog will not close when the [Esc] key is press
+          * @default false
          */
         "disableCloseEscKeydown": boolean;
         /**
           * The appearance of footer
+          * @default 'standard'
          */
         "footerAppearance": TDialogFooterAppearance;
         /**
@@ -972,10 +1027,12 @@ export namespace Components {
         "hide": () => Promise<void>;
         /**
           * If true, it hides the close button
+          * @default false
          */
         "hideCloseButton": boolean;
         /**
           * If true, the dialog will be shown as open
+          * @default false
          */
         "open": boolean;
         /**
@@ -984,6 +1041,7 @@ export namespace Components {
         "show": () => Promise<void>;
         /**
           * The size of the dialog
+          * @default 'medium'
          */
         "size": TDialogSize;
     }
@@ -1012,38 +1070,47 @@ export namespace Components {
     interface BqDivider {
         /**
           * If true, the divider has a dashed pattern
+          * @default false
          */
         "dashed": boolean;
         /**
           * The default orientation of the divider
+          * @default 'horizontal'
          */
         "orientation": TDividerOrientation;
         /**
           * Set the min width of the divider's stroke when text is not centered. Value expressed in px
+          * @default 0
          */
         "strokeBasis"?: number;
         /**
           * Set the stroke color of the divider. The value should be a valid value of the palette color
+          * @default 'stroke--primary'
          */
         "strokeColor"?: string;
         /**
           * Set the gap of the divider's stroke. This is applicable when the stroke is dashed
+          * @default 7
          */
         "strokeDashGap"?: number;
         /**
           * Set the width of each dash of the divider's stroke. This is applicable when the stroke is dashed
+          * @default 12
          */
         "strokeDashWidth"?: number;
         /**
           * Set the line of the divider's stroke. This is applicable when the stroke is dashed
+          * @default 'butt'
          */
         "strokeLinecap"?: TDividerStrokeLinecap;
         /**
           * Set the thickness of the divider's stroke. Value expressed in px
+          * @default 1
          */
         "strokeThickness"?: number;
         /**
           * Set the alignment of the title on the main axis of the divider (horizontal / vertical)
+          * @default 'middle'
          */
         "titleAlignment"?: TDividerTitleAlignment;
     }
@@ -1088,14 +1155,17 @@ export namespace Components {
     interface BqDrawer {
         /**
           * If true, the drawer will not close when clicking outside the panel
+          * @default false
          */
         "closeOnClickOutside": boolean;
         /**
           * If true, the dialog will not close when the [Esc] key is pressed
+          * @default false
          */
         "closeOnEsc": boolean;
         /**
           * If true, the backdrop overlay will be shown when the drawer opens
+          * @default false
          */
         "enableBackdrop": boolean;
         /**
@@ -1108,10 +1178,12 @@ export namespace Components {
         "open": boolean;
         /**
           * @deprecated Defines the position of the drawer
+          * @default 'right'
          */
         "placement": TDrawerPlacement;
         /**
           * Defines the position of the drawer
+          * @default 'end'
          */
         "position": TDrawerPosition;
         /**
@@ -1162,22 +1234,27 @@ export namespace Components {
     interface BqDropdown {
         /**
           * If true, the dropdown panel will not lock the page body scroll when open.
+          * @default false
          */
         "disableScrollLock"?: boolean;
         /**
           * If true, the dropdown panel will be visible and won't be shown.
+          * @default false
          */
         "disabled"?: boolean;
         /**
           * Represents the distance (gutter or margin) between the panel and the trigger element.
+          * @default 4
          */
         "distance"?: number;
         /**
           * If true, the panel will remain open after a selection is made.
+          * @default false
          */
         "keepOpenOnSelect"?: boolean;
         /**
           * If true, the panel will be visible.
+          * @default false
          */
         "open"?: boolean;
         /**
@@ -1186,18 +1263,22 @@ export namespace Components {
         "panelHeight"?: string;
         /**
           * Position of the panel
+          * @default 'bottom-start'
          */
         "placement"?: Placement;
         /**
           * Whether the panel should have the same width as the trigger element
+          * @default false
          */
         "sameWidth"?: boolean;
         /**
           * Represents the skidding between the panel and the trigger element.
+          * @default 0
          */
         "skidding"?: number;
         /**
           * Defines the strategy to position the panel
+          * @default 'fixed'
          */
         "strategy"?: 'fixed' | 'absolute';
     }
@@ -1215,6 +1296,7 @@ export namespace Components {
     interface BqEmptyState {
         /**
           * The size of the empty state component
+          * @default 'medium'
          */
         "size": TEmptyStateSize;
     }
@@ -1251,6 +1333,7 @@ export namespace Components {
         "name"?: string;
         /**
           * Set the size of the SVG
+          * @default 24
          */
         "size"?: string | number;
         /**
@@ -1259,6 +1342,7 @@ export namespace Components {
         "src"?: string;
         /**
           * @deprecated It set the icon weight/style
+          * @default undefined
          */
         "weight"?: TIconWeight;
     }
@@ -1326,14 +1410,17 @@ export namespace Components {
     interface BqInput {
         /**
           * Controls whether or not the input field should be capitalized and how. Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
+          * @default 'off'
          */
         "autocapitalize": string;
         /**
           * Specifies whether or not the input field should have autocomplete enabled. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
+          * @default 'off'
          */
         "autocomplete": string;
         /**
           * Controls whether or not the input field should have autocorrect enabled. Possible values are 'on' and 'off'.
+          * @default 'off'
          */
         "autocorrect": 'on' | 'off';
         /**
@@ -1342,18 +1429,22 @@ export namespace Components {
         "autofocus": boolean;
         /**
           * The clear button aria label
+          * @default 'Clear value'
          */
         "clearButtonLabel"?: string;
         /**
           * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur.
+          * @default 0
          */
         "debounceTime"?: number;
         /**
           * If true, the clear button won't be displayed
+          * @default false
          */
         "disableClear"?: boolean;
         /**
           * Indicates whether the input is disabled or not. If `true`, the input is disabled and cannot be interacted with.
+          * @default false
          */
         "disabled"?: boolean;
         /**
@@ -1410,11 +1501,13 @@ export namespace Components {
         "step": number | 'any';
         /**
           * The type attribute specifies the type of input field to display. Possible values are 'text', 'password', 'email', 'number', 'tel', 'search', 'url', and more. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types
+          * @default 'text'
          */
         "type": TInputType;
         /**
           * The validation status of the input.
           * @remarks This property is used to indicate the validation status of the input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
+          * @default 'none'
          */
         "validationStatus": TInputValidation;
         /**
@@ -1476,6 +1569,7 @@ export namespace Components {
         "autoDismiss": boolean;
         /**
           * The corder radius of the notification component
+          * @default 's'
          */
         "border": TNotificationBorderRadius;
         /**
@@ -1500,6 +1594,7 @@ export namespace Components {
         "show": () => Promise<void>;
         /**
           * The length of time, in milliseconds, after which the notification will close itself. Only valid if `autoDismiss="true"`
+          * @default 3000
          */
         "time": number;
         /**
@@ -1508,6 +1603,7 @@ export namespace Components {
         "toast": () => Promise<void>;
         /**
           * Type of Notification
+          * @default 'info'
          */
         "type": TNotificationType;
     }
@@ -1547,14 +1643,17 @@ export namespace Components {
     interface BqOption {
         /**
           * If true, the option is disabled.
+          * @default false
          */
         "disabled"?: boolean;
         /**
           * If true, the option is hidden.
+          * @default false
          */
         "hidden": boolean;
         /**
           * If true, the option is selected and active.
+          * @default false
          */
         "selected": boolean;
         /**
@@ -1607,6 +1706,7 @@ export namespace Components {
     interface BqOptionList {
         /**
           * Aria label for the list.
+          * @default 'Options'
          */
         "ariaLabel": string;
     }
@@ -1671,30 +1771,37 @@ export namespace Components {
     interface BqPanel {
         /**
           * If true, the panel will not lock the page body scroll when open.
+          * @default false
          */
         "disableScrollLock"?: boolean;
         /**
           * Represents the distance (gutter or margin) between the panel and the trigger element.
+          * @default 4
          */
         "distance"?: number;
         /**
           * If true, the panel will be visible.
+          * @default false
          */
         "open"?: boolean;
         /**
           * Position of the panel
+          * @default 'bottom-start'
          */
         "placement"?: Placement;
         /**
           * Whether the panel should have the same width as the trigger element
+          * @default false
          */
         "sameWidth"?: boolean;
         /**
           * Represents the skidding between the panel and the trigger element.
+          * @default 0
          */
         "skidding"?: number;
         /**
           * Defines the strategy to position the panel
+          * @default 'fixed'
          */
         "strategy"?: 'fixed' | 'absolute';
     }
@@ -1722,30 +1829,37 @@ export namespace Components {
     interface BqProgress {
         /**
           * It will set the border style of the progress bar
+          * @default 'rounded'
          */
         "borderShape": TProgressBorderShape;
         /**
           * If `true`, a tooltip will be shown displaying the progress value
+          * @default false
          */
         "enableTooltip": boolean;
         /**
           * If `true` the indeterminate state of progress bar is enabled
+          * @default false
          */
         "indeterminate": boolean;
         /**
           * If `true, a label text showing the value (in percentage) will be shown
+          * @default false
          */
         "label": boolean;
         /**
           * Progress bar thickness
+          * @default 'medium'
          */
         "thickness": TProgressThickness;
         /**
           * Progress type
+          * @default 'default'
          */
         "type": TProgressType;
         /**
           * A number representing the current value of the progress bar
+          * @default 0
          */
         "value": number;
     }
@@ -1778,6 +1892,7 @@ export namespace Components {
     interface BqRadio {
         /**
           * If true radio displays background on hover
+          * @default false
          */
         "backgroundOnHover"?: boolean;
         /**
@@ -1786,6 +1901,7 @@ export namespace Components {
         "checked"?: boolean;
         /**
           * If true radio input is disabled
+          * @default false
          */
         "disabled"?: boolean;
         /**
@@ -1851,18 +1967,22 @@ export namespace Components {
     interface BqRadioGroup {
         /**
           * If true, all radio inputs in the group will display a background on hover
+          * @default false
          */
         "backgroundOnHover"?: boolean;
         /**
           * A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change
+          * @default 0
          */
         "debounceTime": number;
         /**
           * If true radio inputs are disabled
+          * @default false
          */
         "disabled"?: boolean;
         /**
           * If true displays fieldset
+          * @default false
          */
         "fieldset"?: boolean;
         /**
@@ -1871,10 +1991,12 @@ export namespace Components {
         "name": string;
         /**
           * The display orientation of the radio inputs
+          * @default 'vertical'
          */
         "orientation"?: TRadioGroupOrientation;
         /**
           * If true, the radio group is required
+          * @default false
          */
         "required"?: boolean;
         /**
@@ -1970,26 +2092,32 @@ export namespace Components {
         "clear": () => Promise<void>;
         /**
           * The clear button aria label
+          * @default 'Clear value'
          */
         "clearButtonLabel"?: string;
         /**
           * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur.
+          * @default 0
          */
         "debounceTime"?: number;
         /**
           * If true, the clear button won't be displayed
+          * @default false
          */
         "disableClear"?: boolean;
         /**
           * If true, the Select panel will not lock the page body scroll when open.
+          * @default false
          */
         "disableScrollLock"?: boolean;
         /**
           * Indicates whether the Select input is disabled or not. If `true`, the Select is disabled and cannot be interacted with.
+          * @default false
          */
         "disabled"?: boolean;
         /**
           * Represents the distance (gutter or margin) between the Select panel and the input element.
+          * @default 8
          */
         "distance"?: number;
         /**
@@ -1998,14 +2126,17 @@ export namespace Components {
         "form"?: string;
         /**
           * If true, the Select panel will remain open after a selection is made.
+          * @default false
          */
         "keepOpenOnSelect"?: boolean;
         /**
           * The maximum number of tags to display when multiple selection is enabled
+          * @default 2
          */
         "maxTagsVisible": number;
         /**
           * If true, the Select input will allow multiple selections.
+          * @default false
          */
         "multiple"?: boolean;
         /**
@@ -2014,6 +2145,7 @@ export namespace Components {
         "name": string;
         /**
           * If true, the Select panel will be visible.
+          * @default false
          */
         "open"?: boolean;
         /**
@@ -2026,6 +2158,7 @@ export namespace Components {
         "placeholder"?: string;
         /**
           * Position of the Select panel
+          * @default 'bottom'
          */
         "placement"?: Placement;
         /**
@@ -2045,19 +2178,23 @@ export namespace Components {
         "reset": (value: TSelectValue) => Promise<void>;
         /**
           * Whether the panel should have the Select same width as the input element
+          * @default true
          */
         "sameWidth"?: boolean;
         /**
           * Represents the skidding between the Select panel and the input element.
+          * @default 0
          */
         "skidding"?: number;
         /**
           * Defines the strategy to position the Select panel
+          * @default 'fixed'
          */
         "strategy"?: 'fixed' | 'absolute';
         /**
           * The validation status of the Select input.
           * @remarks This property is used to indicate the validation status of the select input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
+          * @default 'none'
          */
         "validationStatus": TInputValidation;
         /**
@@ -2104,14 +2241,17 @@ export namespace Components {
     interface BqSideMenu {
         /**
           * It sets a predefined appearance of the side menu
+          * @default 'default'
          */
         "appearance": TSideMenuAppearance;
         /**
           * If true, the container will reduce its width
+          * @default false
          */
         "collapse": boolean;
         /**
           * It sets the size of the navigation menu items
+          * @default 'medium'
          */
         "size": TSideMenuSize;
         /**
@@ -2151,14 +2291,17 @@ export namespace Components {
     interface BqSideMenuItem {
         /**
           * If true, the menu item will be shown as active/selected.
+          * @default false
          */
         "active": boolean;
         /**
           * If true, the item label and suffix will be hidden and the with will be reduce according to its parent
+          * @default false
          */
         "collapse": boolean;
         /**
           * If true, the menu item will be disabled (no interaction allowed)
+          * @default false
          */
         "disabled": boolean;
     }
@@ -2195,30 +2338,37 @@ export namespace Components {
     interface BqSlider {
         /**
           * The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change.
+          * @default 0
          */
         "debounceTime": number;
         /**
           * If `true` the slider is disabled.
+          * @default false
          */
         "disabled"?: boolean;
         /**
           * If `true`, a tooltip will be shown displaying the progress value
+          * @default false
          */
         "enableTooltip": boolean;
         /**
           * If `true` it will show the value label on a side of the slider track area
+          * @default false
          */
         "enableValueIndicator"?: boolean;
         /**
           * A number representing the amount to remain between the minimum and maximum values (only for range type).
+          * @default 0
          */
         "gap": number;
         /**
           * A number representing the max value of the slider.
+          * @default 100
          */
         "max": number;
         /**
           * A number representing the min value of the slider.
+          * @default 0
          */
         "min": number;
         /**
@@ -2227,14 +2377,17 @@ export namespace Components {
         "name": string;
         /**
           * A number representing the step of the slider. ⚠️ Please notice that the value (or list of values if the slider type is `range`) will be rounded to the nearest multiple of `step`.
+          * @default 1
          */
         "step": number;
         /**
           * If `true`, a tooltip will always display the progress value. It relies on enableTooltip and if enableTooltip is false, tooltipAlwaysVisible cannot be true.
+          * @default false
          */
         "tooltipAlwaysVisible": boolean;
         /**
           * It defines the type of slider to display
+          * @default 'single'
          */
         "type": TSliderType;
         /**
@@ -2267,14 +2420,17 @@ export namespace Components {
     interface BqSpinner {
         /**
           * If `false`, the animation on the icon element will be stopped
+          * @default true
          */
         "animation"?: boolean;
         /**
           * It defines the size of the icon element displayed
+          * @default 'medium'
          */
         "size": TSpinnerSize;
         /**
           * It defines the position of the label text
+          * @default 'none'
          */
         "textPosition": TSpinnerTextPosition;
     }
@@ -2293,6 +2449,7 @@ export namespace Components {
     interface BqStatus {
         /**
           * It defines the type of status to display
+          * @default 'neutral'
          */
         "type": TStatusType;
     }
@@ -2323,10 +2480,12 @@ export namespace Components {
     interface BqStepItem {
         /**
           * It defines prefix size
+          * @default 'medium'
          */
         "size"?: TStepsSize;
         /**
           * It defines step item appearance based on its status
+          * @default 'default'
          */
         "status"?: TStepItemStatus;
         /**
@@ -2358,10 +2517,12 @@ export namespace Components {
     interface BqSteps {
         /**
           * The color of the line that connects the steps. It should be a valid declarative color token.
+          * @default 'stroke--primary'
          */
         "dividerColor": string;
         /**
           * The size of the steps
+          * @default 'medium'
          */
         "size": TStepsSize;
         /**
@@ -2403,14 +2564,17 @@ export namespace Components {
     interface BqSwitch {
         /**
           * If true, a background will be displayed on hover
+          * @default false
          */
         "backgroundOnHover"?: boolean;
         /**
           * It indicates whether if the switch is `ON` by default (when the page loads)
+          * @default false
          */
         "checked"?: boolean;
         /**
           * If true, the switch control will be disabled and no interaction will be allowed
+          * @default false
          */
         "disabled"?: boolean;
         /**
@@ -2419,14 +2583,17 @@ export namespace Components {
         "formValidationMessage"?: string;
         /**
           * If true, the component will take the full width space available on the parent container
+          * @default false
          */
         "fullWidth"?: boolean;
         /**
           * It indicates how to to display the on/off marks inside the control, with icons or none (default)
+          * @default 'default'
          */
         "innerLabel"?: TSwitchInnerLabel;
         /**
           * It defines how to distribute the space between and around the control and the label text (https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content)
+          * @default 'start'
          */
         "justifyContent"?: TSwitchJustifyContent;
         /**
@@ -2435,10 +2602,12 @@ export namespace Components {
         "name": string;
         /**
           * If `true`, it will indicate that the user must switch `ON` the element before the owning form can be submitted
+          * @default false
          */
         "required"?: boolean;
         /**
           * If true, the order of the control and the label text will be changed
+          * @default false
          */
         "reverseOrder"?: boolean;
         /**
@@ -2506,19 +2675,23 @@ export namespace Components {
         "controls": string;
         /**
           * If true tab is disabled
+          * @default false
          */
         "disabled": boolean;
         "enableFocus": (value: boolean) => Promise<void>;
         /**
           * The direction that tab should be render
+          * @default 'horizontal'
          */
         "orientation"?: TTabOrientation;
         /**
           * The placement that tab should be render
+          * @default 'start'
          */
         "placement"?: TTabPlacement;
         /**
           * The size of the tab
+          * @default 'medium'
          */
         "size": TTabSize;
         /**
@@ -2562,22 +2735,27 @@ export namespace Components {
     interface BqTabGroup {
         /**
           * A number representing the delay value applied to bqChange event handler
+          * @default 0
          */
         "debounceTime": number;
         /**
           * If true, the underline divider below the tabs won't be shown
+          * @default false
          */
         "disableDivider": boolean;
         /**
           * The direction that tab should be render
+          * @default 'horizontal'
          */
         "orientation"?: TTabOrientation;
         /**
           * The placement that tab should be render
+          * @default 'start'
          */
         "placement"?: TTabPlacement;
         /**
           * The size of the tab
+          * @default 'medium'
          */
         "size": TTabSize;
         /**
@@ -2632,6 +2810,7 @@ export namespace Components {
         "border": TTagBorderRadius;
         /**
           * If true, the Tag can be clickable
+          * @default false
          */
         "clickable": boolean;
         /**
@@ -2640,6 +2819,7 @@ export namespace Components {
         "color": TTagColor;
         /**
           * If true, the Tag will be disabled (only if clickable = `true`, no interaction allowed)
+          * @default false
          */
         "disabled"?: boolean;
         /**
@@ -2652,10 +2832,12 @@ export namespace Components {
         "hide": () => Promise<void>;
         /**
           * If true, the Tag component can be removed
+          * @default false
          */
         "removable": boolean;
         /**
           * If true, the Tag is selected (only if clickable = `true`)
+          * @default false
          */
         "selected": boolean;
         /**
@@ -2664,10 +2846,12 @@ export namespace Components {
         "show": () => Promise<void>;
         /**
           * The size of the Tag component
+          * @default 'medium'
          */
         "size": TTagSize;
         /**
           * The variant of Tag to apply on top of the variant
+          * @default 'filled'
          */
         "variant": TTagVariant;
     }
@@ -2732,18 +2916,22 @@ export namespace Components {
     interface BqTextarea {
         /**
           * If `true`, the textarea will automatically grow and shrink to fit its contents. If `false`, the textarea will have a fixed height specified by the `rows` property.
+          * @default false
          */
         "autoGrow": boolean;
         /**
           * Controls whether or not the textarea field should be capitalized and how. Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
+          * @default 'off'
          */
         "autocapitalize": TTextareaAutoCapitalize;
         /**
           * Specifies whether or not the textarea field should have autocomplete enabled. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
+          * @default 'off'
          */
         "autocomplete": string;
         /**
           * Controls whether or not the textarea field should have autocorrect enabled. Possible values are 'on' and 'off'.
+          * @default 'off'
          */
         "autocorrect": 'on' | 'off';
         /**
@@ -2752,14 +2940,17 @@ export namespace Components {
         "autofocus": boolean;
         /**
           * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes. A value of 0 means no debouncing will occur.
+          * @default 0
          */
         "debounceTime"?: number;
         /**
           * If `true`, it will block the user's ability to resize the textarea.
+          * @default false
          */
         "disableResize"?: boolean;
         /**
           * If `true`, the user cannot interact with the textarea.
+          * @default false
          */
         "disabled": boolean;
         /**
@@ -2784,23 +2975,28 @@ export namespace Components {
         "placeholder": string;
         /**
           * If true, the textarea field cannot be modified.
+          * @default false
          */
         "readonly"?: boolean;
         /**
           * Indicates whether or not the textarea field is required to be filled out before submitting the form.
+          * @default false
          */
         "required"?: boolean;
         /**
           * The number of visible text lines for the control. It must be a positive integer.
+          * @default 5
          */
         "rows": number;
         /**
           * If true, the textarea content may be checked for spelling errors.
+          * @default false
          */
         "spellcheck": boolean;
         /**
           * The validation status of the textarea.
           * @remarks This property is used to indicate the validation status of the textarea. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The textarea has a validation error. - `'warning'`: The textarea has a validation warning. - `'success'`: The textarea has passed validation.
+          * @default 'none'
          */
         "validationStatus": TInputValidation;
         /**
@@ -2809,6 +3005,7 @@ export namespace Components {
         "value": string;
         /**
           * Specifies how the text in a text area is to be wrapped when submitted in a form
+          * @default 'soft'
          */
         "wrap": TTextareaWrap;
     }
@@ -2854,6 +3051,7 @@ export namespace Components {
     interface BqToast {
         /**
           * The corder radius of the toast component
+          * @default 's'
          */
         "border": TToastBorderRadius;
         /**
@@ -2862,6 +3060,7 @@ export namespace Components {
         "hide": () => Promise<void>;
         /**
           * If true will hide toast icon
+          * @default false
          */
         "hideIcon": boolean;
         /**
@@ -2870,6 +3069,7 @@ export namespace Components {
         "open": boolean;
         /**
           * Placement of toast
+          * @default 'bottom-center'
          */
         "placement": TToastPlacement;
         /**
@@ -2878,6 +3078,7 @@ export namespace Components {
         "show": () => Promise<void>;
         /**
           * The length of time, in milliseconds, after which the toast will close itself
+          * @default 3000
          */
         "time": number;
         /**
@@ -2886,6 +3087,7 @@ export namespace Components {
         "toast": () => Promise<void>;
         /**
           * Type of toast
+          * @default 'info'
          */
         "type": TToastType;
     }
@@ -2925,14 +3127,17 @@ export namespace Components {
     interface BqTooltip {
         /**
           * If true, the tooltip will always be visible
+          * @default false
          */
         "alwaysVisible"?: boolean;
         /**
           * Set the action when the tooltip should be displayed, on hover (default) or click
+          * @default 'hover'
          */
         "displayOn": 'click' | 'hover';
         /**
           * Distance between trigger element and tooltip
+          * @default 10
          */
         "distance"?: number;
         /**
@@ -2941,11 +3146,16 @@ export namespace Components {
         "hide": () => Promise<void>;
         /**
           * If true, the arrow on the tooltip content won't be shown
+          * @default false
          */
         "hideArrow"?: boolean;
+        /**
+          * @default 'top'
+         */
         "placement"?: Placement;
         /**
           * Whether the tooltip should have the same width as the trigger element (applicable only for content shorter than the trigger element)
+          * @default false
          */
         "sameWidth"?: boolean;
         /**
@@ -2954,6 +3164,7 @@ export namespace Components {
         "show": () => Promise<void>;
         /**
           * Indicates whether or not the tooltip is visible when the component is first rendered, and when interacting with the trigger
+          * @default false
          */
         "visible"?: boolean;
     }
@@ -5237,18 +5448,22 @@ declare namespace LocalJSX {
     interface BqAccordion {
         /**
           * The appearance style of the Accordion
+          * @default 'filled'
          */
         "appearance"?: TAccordionAppearance;
         /**
           * If true, the Accordion is disabled
+          * @default false
          */
         "disabled"?: boolean;
         /**
           * If true, the Accordion is expanded
+          * @default false
          */
         "expanded"?: boolean;
         /**
           * Animation is set through JS when the browser does not support CSS calc-size() If true, the Accordion animation, will be disabled. No animation will be applied.
+          * @default false
          */
         "noAnimation"?: boolean;
         /**
@@ -5281,10 +5496,12 @@ declare namespace LocalJSX {
         "onBqOpen"?: (event: BqAccordionCustomEvent<HTMLBqAccordionElement>) => void;
         /**
           * If true, the Accordion expand icon is rotate 180deg when expanded
+          * @default false
          */
         "rotate"?: boolean;
         /**
           * The size of the Accordion
+          * @default 'medium'
          */
         "size"?: TAccordionSize;
     }
@@ -5311,6 +5528,7 @@ declare namespace LocalJSX {
     interface BqAccordionGroup {
         /**
           * The appearance style of accordion to be applied to all accordions
+          * @default 'filled'
          */
         "appearance"?: TAccordionAppearance;
         /**
@@ -5319,14 +5537,17 @@ declare namespace LocalJSX {
         "expandAll"?: boolean;
         /**
           * If true multiple accordions can be expanded at the same time
+          * @default false
          */
         "multiple"?: boolean;
         /**
           * Animation is set through JS when the browser does not support CSS calc-size() If true, the accordion animation, will be disabled. No animation will be applied.
+          * @default false
          */
         "noAnimation"?: boolean;
         /**
           * The size of accordion to be applied to all accordions
+          * @default 'medium'
          */
         "size"?: TAccordionSize;
     }
@@ -5393,6 +5614,7 @@ declare namespace LocalJSX {
         "autoDismiss"?: boolean;
         /**
           * The corner radius of the alert component
+          * @default 's'
          */
         "border"?: TAlertBorderRadius;
         /**
@@ -5429,10 +5651,12 @@ declare namespace LocalJSX {
         "sticky"?: boolean;
         /**
           * The length of time, in milliseconds, after which the alert will close itself. Only valid if `autoDismiss="true"`
+          * @default 3000
          */
         "time"?: number;
         /**
           * Type of Alert
+          * @default 'default'
          */
         "type"?: TAlertType;
     }
@@ -5495,10 +5719,12 @@ declare namespace LocalJSX {
         "label"?: string;
         /**
           * The shape of the avatar
+          * @default 'circle'
          */
         "shape"?: TAvatarShape;
         /**
           * The size of the avatar
+          * @default 'medium'
          */
         "size"?: TAvatarSize;
     }
@@ -5528,14 +5754,17 @@ declare namespace LocalJSX {
     interface BqBadge {
         /**
           * Badge background color. The value should be a valid value of the palette color
+          * @default 'ui--danger'
          */
         "backgroundColor"?: string;
         /**
           * The size of the badge. Relevant if badge has no content.
+          * @default 'small'
          */
         "size"?: TBadgeSize;
         /**
           * Badge number color. The value should be a valid value of the palette color
+          * @default 'text--inverse'
          */
         "textColor"?: string;
     }
@@ -5557,6 +5786,7 @@ declare namespace LocalJSX {
     interface BqBreadcrumb {
         /**
           * The `aria-label` attribute to describe the type of navigation
+          * @default 'Breadcrumbs'
          */
         "label"?: string;
     }
@@ -5613,6 +5843,7 @@ declare namespace LocalJSX {
         "onBqFocus"?: (event: BqBreadcrumbItemCustomEvent<HTMLBqBreadcrumbItemElement>) => void;
         /**
           * Where to display the link in the browser context. Relevant only if `href` is set.
+          * @default 'noreferrer noopener'
          */
         "rel"?: string;
         /**
@@ -5667,18 +5898,22 @@ declare namespace LocalJSX {
     interface BqButton {
         /**
           * The appearance style to apply to the button
+          * @default 'primary'
          */
         "appearance"?: TButtonAppearance;
         /**
           * If `true`, it will make the button fit to its parent width.
+          * @default false
          */
         "block"?: boolean;
         /**
           * The corner radius of the button
+          * @default 'm'
          */
         "border"?: TButtonBorderRadius;
         /**
           * If true, the button will be disabled (no interaction allowed)
+          * @default false
          */
         "disabled"?: boolean;
         /**
@@ -5691,10 +5926,12 @@ declare namespace LocalJSX {
         "href"?: string;
         /**
           * It determinate how the content should be aligned
+          * @default 'center'
          */
         "justifyContent"?: 'left' | 'center' | 'right';
         /**
           * If `true` it will display the button in a loading state
+          * @default false
          */
         "loading"?: boolean;
         /**
@@ -5711,6 +5948,7 @@ declare namespace LocalJSX {
         "onBqFocus"?: (event: BqButtonCustomEvent<HTMLBqButtonElement>) => void;
         /**
           * The size of the button
+          * @default 'medium'
          */
         "size"?: TButtonSize;
         /**
@@ -5719,10 +5957,12 @@ declare namespace LocalJSX {
         "target"?: '_blank' | '_parent' | '_self' | '_top';
         /**
           * The default behavior of the button
+          * @default 'button'
          */
         "type"?: TButtonType;
         /**
           * The variant of button to apply on top of the appearance (applicable only to `appearance="primary"`)
+          * @default 'standard'
          */
         "variant"?: TButtonVariant;
     }
@@ -5753,10 +5993,12 @@ declare namespace LocalJSX {
     interface BqCard {
         /**
           * The corner radius of the card component
+          * @default 'm'
          */
         "border"?: TCardBorderRadius;
         /**
           * Type of card component
+          * @default 'default'
          */
         "type"?: TCardType;
     }
@@ -5793,6 +6035,7 @@ declare namespace LocalJSX {
     interface BqCheckbox {
         /**
           * If true checkbox displays background on hover
+          * @default false
          */
         "backgroundOnHover"?: boolean;
         /**
@@ -5801,6 +6044,7 @@ declare namespace LocalJSX {
         "checked"?: boolean;
         /**
           * If true checkbox is disabled
+          * @default false
          */
         "disabled"?: boolean;
         /**
@@ -5813,6 +6057,7 @@ declare namespace LocalJSX {
         "formValidationMessage"?: string;
         /**
           * A state that is neither checked nor unchecked
+          * @default false
          */
         "indeterminate"?: boolean;
         /**
@@ -5929,22 +6174,27 @@ declare namespace LocalJSX {
         "autofocus"?: boolean;
         /**
           * The clear button aria label
+          * @default 'Clear value'
          */
         "clearButtonLabel"?: string;
         /**
           * If `true`, the clear button won't be displayed
+          * @default false
          */
         "disableClear"?: boolean;
         /**
           * Indicates whether the Date picker input is disabled or not. If `true`, the Date picker is disabled and cannot be interacted with.
+          * @default false
          */
         "disabled"?: boolean;
         /**
           * Represents the distance (gutter or margin) between the Date picker panel and the input element.
+          * @default 8
          */
         "distance"?: number;
         /**
           * The first day of the week, where Sunday is 0, Monday is 1, etc
+          * @default 1
          */
         "firstDayOfWeek"?: DaysOfWeek;
         /**
@@ -5957,6 +6207,7 @@ declare namespace LocalJSX {
         "formValidationMessage"?: string;
         /**
           * The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
+          * @default {     day: 'numeric',     month: 'short',     year: 'numeric',   }
          */
         "formatOptions"?: Intl.DateTimeFormatOptions;
         /**
@@ -5965,6 +6216,7 @@ declare namespace LocalJSX {
         "isDateDisallowed"?: (date: Date) => boolean;
         /**
           * The locale for formatting dates. If not set, will use the browser's locale. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
+          * @default 'en-GB'
          */
         "locale"?: Intl.LocalesArgument;
         /**
@@ -5981,6 +6233,7 @@ declare namespace LocalJSX {
         "months"?: number;
         /**
           * Specifies how the next/previous buttons should navigate the calendar. - single: The buttons will navigate by a single month at a time. - months: The buttons will navigate by the number of months displayed per view.
+          * @default 'single'
          */
         "monthsPerView"?: 'single' | 'months';
         /**
@@ -6005,10 +6258,12 @@ declare namespace LocalJSX {
         "onBqFocus"?: (event: BqDatePickerCustomEvent<HTMLBqDatePickerElement>) => void;
         /**
           * If `true`, the Date picker panel will be visible.
+          * @default false
          */
         "open"?: boolean;
         /**
           * When set, it will override the height of the Date picker panel.
+          * @default 'auto'
          */
         "panelHeight"?: string;
         /**
@@ -6017,6 +6272,7 @@ declare namespace LocalJSX {
         "placeholder"?: string;
         /**
           * Position of the Date picker panel
+          * @default 'bottom-end'
          */
         "placement"?: Placement;
         /**
@@ -6025,14 +6281,17 @@ declare namespace LocalJSX {
         "required"?: boolean;
         /**
           * Whether to show days outside the month
+          * @default false
          */
         "showOutsideDays"?: boolean;
         /**
           * Represents the skidding between the Date picker panel and the input element.
+          * @default 0
          */
         "skidding"?: number;
         /**
           * Defines the strategy to position the Date picker panel
+          * @default 'fixed'
          */
         "strategy"?: 'fixed' | 'absolute';
         /**
@@ -6041,11 +6300,13 @@ declare namespace LocalJSX {
         "tentative"?: string;
         /**
           * It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection
+          * @default 'single'
          */
         "type"?: TDatePickerType;
         /**
           * The validation status of the Select input.
           * @remarks This property is used to indicate the validation status of the select input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
+          * @default 'none'
          */
         "validationStatus"?: TInputValidation;
         /**
@@ -6113,26 +6374,32 @@ declare namespace LocalJSX {
     interface BqDialog {
         /**
           * Border radius of the dialog component
+          * @default 'm'
          */
         "border"?: TDialogBorderRadius;
         /**
           * If true, the backdrop overlay won't be shown when the dialog opens
+          * @default false
          */
         "disableBackdrop"?: boolean;
         /**
           * If true, the dialog will not close when clicking on the backdrop overlay
+          * @default false
          */
         "disableCloseClickOutside"?: boolean;
         /**
           * If true, the dialog will not close when the [Esc] key is press
+          * @default false
          */
         "disableCloseEscKeydown"?: boolean;
         /**
           * The appearance of footer
+          * @default 'standard'
          */
         "footerAppearance"?: TDialogFooterAppearance;
         /**
           * If true, it hides the close button
+          * @default false
          */
         "hideCloseButton"?: boolean;
         /**
@@ -6157,10 +6424,12 @@ declare namespace LocalJSX {
         "onBqOpen"?: (event: BqDialogCustomEvent<void>) => void;
         /**
           * If true, the dialog will be shown as open
+          * @default false
          */
         "open"?: boolean;
         /**
           * The size of the dialog
+          * @default 'medium'
          */
         "size"?: TDialogSize;
     }
@@ -6189,38 +6458,47 @@ declare namespace LocalJSX {
     interface BqDivider {
         /**
           * If true, the divider has a dashed pattern
+          * @default false
          */
         "dashed"?: boolean;
         /**
           * The default orientation of the divider
+          * @default 'horizontal'
          */
         "orientation"?: TDividerOrientation;
         /**
           * Set the min width of the divider's stroke when text is not centered. Value expressed in px
+          * @default 0
          */
         "strokeBasis"?: number;
         /**
           * Set the stroke color of the divider. The value should be a valid value of the palette color
+          * @default 'stroke--primary'
          */
         "strokeColor"?: string;
         /**
           * Set the gap of the divider's stroke. This is applicable when the stroke is dashed
+          * @default 7
          */
         "strokeDashGap"?: number;
         /**
           * Set the width of each dash of the divider's stroke. This is applicable when the stroke is dashed
+          * @default 12
          */
         "strokeDashWidth"?: number;
         /**
           * Set the line of the divider's stroke. This is applicable when the stroke is dashed
+          * @default 'butt'
          */
         "strokeLinecap"?: TDividerStrokeLinecap;
         /**
           * Set the thickness of the divider's stroke. Value expressed in px
+          * @default 1
          */
         "strokeThickness"?: number;
         /**
           * Set the alignment of the title on the main axis of the divider (horizontal / vertical)
+          * @default 'middle'
          */
         "titleAlignment"?: TDividerTitleAlignment;
     }
@@ -6265,14 +6543,17 @@ declare namespace LocalJSX {
     interface BqDrawer {
         /**
           * If true, the drawer will not close when clicking outside the panel
+          * @default false
          */
         "closeOnClickOutside"?: boolean;
         /**
           * If true, the dialog will not close when the [Esc] key is pressed
+          * @default false
          */
         "closeOnEsc"?: boolean;
         /**
           * If true, the backdrop overlay will be shown when the drawer opens
+          * @default false
          */
         "enableBackdrop"?: boolean;
         /**
@@ -6297,10 +6578,12 @@ declare namespace LocalJSX {
         "open"?: boolean;
         /**
           * @deprecated Defines the position of the drawer
+          * @default 'right'
          */
         "placement"?: TDrawerPlacement;
         /**
           * Defines the position of the drawer
+          * @default 'end'
          */
         "position"?: TDrawerPosition;
     }
@@ -6347,18 +6630,22 @@ declare namespace LocalJSX {
     interface BqDropdown {
         /**
           * If true, the dropdown panel will not lock the page body scroll when open.
+          * @default false
          */
         "disableScrollLock"?: boolean;
         /**
           * If true, the dropdown panel will be visible and won't be shown.
+          * @default false
          */
         "disabled"?: boolean;
         /**
           * Represents the distance (gutter or margin) between the panel and the trigger element.
+          * @default 4
          */
         "distance"?: number;
         /**
           * If true, the panel will remain open after a selection is made.
+          * @default false
          */
         "keepOpenOnSelect"?: boolean;
         /**
@@ -6367,6 +6654,7 @@ declare namespace LocalJSX {
         "onBqOpen"?: (event: BqDropdownCustomEvent<{ open: boolean }>) => void;
         /**
           * If true, the panel will be visible.
+          * @default false
          */
         "open"?: boolean;
         /**
@@ -6375,18 +6663,22 @@ declare namespace LocalJSX {
         "panelHeight"?: string;
         /**
           * Position of the panel
+          * @default 'bottom-start'
          */
         "placement"?: Placement;
         /**
           * Whether the panel should have the same width as the trigger element
+          * @default false
          */
         "sameWidth"?: boolean;
         /**
           * Represents the skidding between the panel and the trigger element.
+          * @default 0
          */
         "skidding"?: number;
         /**
           * Defines the strategy to position the panel
+          * @default 'fixed'
          */
         "strategy"?: 'fixed' | 'absolute';
     }
@@ -6404,6 +6696,7 @@ declare namespace LocalJSX {
     interface BqEmptyState {
         /**
           * The size of the empty state component
+          * @default 'medium'
          */
         "size"?: TEmptyStateSize;
     }
@@ -6444,6 +6737,7 @@ declare namespace LocalJSX {
         "onSvgLoaded"?: (event: BqIconCustomEvent<any>) => void;
         /**
           * Set the size of the SVG
+          * @default 24
          */
         "size"?: string | number;
         /**
@@ -6452,6 +6746,7 @@ declare namespace LocalJSX {
         "src"?: string;
         /**
           * @deprecated It set the icon weight/style
+          * @default undefined
          */
         "weight"?: TIconWeight;
     }
@@ -6519,14 +6814,17 @@ declare namespace LocalJSX {
     interface BqInput {
         /**
           * Controls whether or not the input field should be capitalized and how. Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
+          * @default 'off'
          */
         "autocapitalize"?: string;
         /**
           * Specifies whether or not the input field should have autocomplete enabled. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
+          * @default 'off'
          */
         "autocomplete"?: string;
         /**
           * Controls whether or not the input field should have autocorrect enabled. Possible values are 'on' and 'off'.
+          * @default 'off'
          */
         "autocorrect"?: 'on' | 'off';
         /**
@@ -6535,18 +6833,22 @@ declare namespace LocalJSX {
         "autofocus"?: boolean;
         /**
           * The clear button aria label
+          * @default 'Clear value'
          */
         "clearButtonLabel"?: string;
         /**
           * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur.
+          * @default 0
          */
         "debounceTime"?: number;
         /**
           * If true, the clear button won't be displayed
+          * @default false
          */
         "disableClear"?: boolean;
         /**
           * Indicates whether the input is disabled or not. If `true`, the input is disabled and cannot be interacted with.
+          * @default false
          */
         "disabled"?: boolean;
         /**
@@ -6623,11 +6925,13 @@ declare namespace LocalJSX {
         "step"?: number | 'any';
         /**
           * The type attribute specifies the type of input field to display. Possible values are 'text', 'password', 'email', 'number', 'tel', 'search', 'url', and more. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types
+          * @default 'text'
          */
         "type"?: TInputType;
         /**
           * The validation status of the input.
           * @remarks This property is used to indicate the validation status of the input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
+          * @default 'none'
          */
         "validationStatus"?: TInputValidation;
         /**
@@ -6689,6 +6993,7 @@ declare namespace LocalJSX {
         "autoDismiss"?: boolean;
         /**
           * The corder radius of the notification component
+          * @default 's'
          */
         "border"?: TNotificationBorderRadius;
         /**
@@ -6721,10 +7026,12 @@ declare namespace LocalJSX {
         "open"?: boolean;
         /**
           * The length of time, in milliseconds, after which the notification will close itself. Only valid if `autoDismiss="true"`
+          * @default 3000
          */
         "time"?: number;
         /**
           * Type of Notification
+          * @default 'info'
          */
         "type"?: TNotificationType;
     }
@@ -6764,10 +7071,12 @@ declare namespace LocalJSX {
     interface BqOption {
         /**
           * If true, the option is disabled.
+          * @default false
          */
         "disabled"?: boolean;
         /**
           * If true, the option is hidden.
+          * @default false
          */
         "hidden"?: boolean;
         /**
@@ -6788,6 +7097,7 @@ declare namespace LocalJSX {
         "onBqFocus"?: (event: BqOptionCustomEvent<HTMLBqOptionElement>) => void;
         /**
           * If true, the option is selected and active.
+          * @default false
          */
         "selected"?: boolean;
         /**
@@ -6840,6 +7150,7 @@ declare namespace LocalJSX {
     interface BqOptionList {
         /**
           * Aria label for the list.
+          * @default 'Options'
          */
         "ariaLabel"?: string;
         /**
@@ -6908,30 +7219,37 @@ declare namespace LocalJSX {
     interface BqPanel {
         /**
           * If true, the panel will not lock the page body scroll when open.
+          * @default false
          */
         "disableScrollLock"?: boolean;
         /**
           * Represents the distance (gutter or margin) between the panel and the trigger element.
+          * @default 4
          */
         "distance"?: number;
         /**
           * If true, the panel will be visible.
+          * @default false
          */
         "open"?: boolean;
         /**
           * Position of the panel
+          * @default 'bottom-start'
          */
         "placement"?: Placement;
         /**
           * Whether the panel should have the same width as the trigger element
+          * @default false
          */
         "sameWidth"?: boolean;
         /**
           * Represents the skidding between the panel and the trigger element.
+          * @default 0
          */
         "skidding"?: number;
         /**
           * Defines the strategy to position the panel
+          * @default 'fixed'
          */
         "strategy"?: 'fixed' | 'absolute';
     }
@@ -6959,30 +7277,37 @@ declare namespace LocalJSX {
     interface BqProgress {
         /**
           * It will set the border style of the progress bar
+          * @default 'rounded'
          */
         "borderShape"?: TProgressBorderShape;
         /**
           * If `true`, a tooltip will be shown displaying the progress value
+          * @default false
          */
         "enableTooltip"?: boolean;
         /**
           * If `true` the indeterminate state of progress bar is enabled
+          * @default false
          */
         "indeterminate"?: boolean;
         /**
           * If `true, a label text showing the value (in percentage) will be shown
+          * @default false
          */
         "label"?: boolean;
         /**
           * Progress bar thickness
+          * @default 'medium'
          */
         "thickness"?: TProgressThickness;
         /**
           * Progress type
+          * @default 'default'
          */
         "type"?: TProgressType;
         /**
           * A number representing the current value of the progress bar
+          * @default 0
          */
         "value"?: number;
     }
@@ -7015,6 +7340,7 @@ declare namespace LocalJSX {
     interface BqRadio {
         /**
           * If true radio displays background on hover
+          * @default false
          */
         "backgroundOnHover"?: boolean;
         /**
@@ -7023,6 +7349,7 @@ declare namespace LocalJSX {
         "checked"?: boolean;
         /**
           * If true radio input is disabled
+          * @default false
          */
         "disabled"?: boolean;
         /**
@@ -7088,18 +7415,22 @@ declare namespace LocalJSX {
     interface BqRadioGroup {
         /**
           * If true, all radio inputs in the group will display a background on hover
+          * @default false
          */
         "backgroundOnHover"?: boolean;
         /**
           * A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change
+          * @default 0
          */
         "debounceTime"?: number;
         /**
           * If true radio inputs are disabled
+          * @default false
          */
         "disabled"?: boolean;
         /**
           * If true displays fieldset
+          * @default false
          */
         "fieldset"?: boolean;
         /**
@@ -7112,10 +7443,12 @@ declare namespace LocalJSX {
         "onBqChange"?: (event: BqRadioGroupCustomEvent<{ value: string; target: HTMLBqRadioElement }>) => void;
         /**
           * The display orientation of the radio inputs
+          * @default 'vertical'
          */
         "orientation"?: TRadioGroupOrientation;
         /**
           * If true, the radio group is required
+          * @default false
          */
         "required"?: boolean;
         /**
@@ -7205,26 +7538,32 @@ declare namespace LocalJSX {
         "autofocus"?: boolean;
         /**
           * The clear button aria label
+          * @default 'Clear value'
          */
         "clearButtonLabel"?: string;
         /**
           * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes. A value of 0 means no debouncing will occur.
+          * @default 0
          */
         "debounceTime"?: number;
         /**
           * If true, the clear button won't be displayed
+          * @default false
          */
         "disableClear"?: boolean;
         /**
           * If true, the Select panel will not lock the page body scroll when open.
+          * @default false
          */
         "disableScrollLock"?: boolean;
         /**
           * Indicates whether the Select input is disabled or not. If `true`, the Select is disabled and cannot be interacted with.
+          * @default false
          */
         "disabled"?: boolean;
         /**
           * Represents the distance (gutter or margin) between the Select panel and the input element.
+          * @default 8
          */
         "distance"?: number;
         /**
@@ -7233,14 +7572,17 @@ declare namespace LocalJSX {
         "form"?: string;
         /**
           * If true, the Select panel will remain open after a selection is made.
+          * @default false
          */
         "keepOpenOnSelect"?: boolean;
         /**
           * The maximum number of tags to display when multiple selection is enabled
+          * @default 2
          */
         "maxTagsVisible"?: number;
         /**
           * If true, the Select input will allow multiple selections.
+          * @default false
          */
         "multiple"?: boolean;
         /**
@@ -7269,6 +7611,7 @@ declare namespace LocalJSX {
         "onBqSelect"?: (event: BqSelectCustomEvent<{ value: string | number | string[]; item: HTMLBqOptionElement }>) => void;
         /**
           * If true, the Select panel will be visible.
+          * @default false
          */
         "open"?: boolean;
         /**
@@ -7281,6 +7624,7 @@ declare namespace LocalJSX {
         "placeholder"?: string;
         /**
           * Position of the Select panel
+          * @default 'bottom'
          */
         "placement"?: Placement;
         /**
@@ -7293,19 +7637,23 @@ declare namespace LocalJSX {
         "required"?: boolean;
         /**
           * Whether the panel should have the Select same width as the input element
+          * @default true
          */
         "sameWidth"?: boolean;
         /**
           * Represents the skidding between the Select panel and the input element.
+          * @default 0
          */
         "skidding"?: number;
         /**
           * Defines the strategy to position the Select panel
+          * @default 'fixed'
          */
         "strategy"?: 'fixed' | 'absolute';
         /**
           * The validation status of the Select input.
           * @remarks This property is used to indicate the validation status of the select input. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The input has a validation error. - `'warning'`: The input has a validation warning. - `'success'`: The input has passed validation.
+          * @default 'none'
          */
         "validationStatus"?: TInputValidation;
         /**
@@ -7352,10 +7700,12 @@ declare namespace LocalJSX {
     interface BqSideMenu {
         /**
           * It sets a predefined appearance of the side menu
+          * @default 'default'
          */
         "appearance"?: TSideMenuAppearance;
         /**
           * If true, the container will reduce its width
+          * @default false
          */
         "collapse"?: boolean;
         /**
@@ -7368,6 +7718,7 @@ declare namespace LocalJSX {
         "onBqSelect"?: (event: BqSideMenuCustomEvent<HTMLBqSideMenuItemElement>) => void;
         /**
           * It sets the size of the navigation menu items
+          * @default 'medium'
          */
         "size"?: TSideMenuSize;
     }
@@ -7403,14 +7754,17 @@ declare namespace LocalJSX {
     interface BqSideMenuItem {
         /**
           * If true, the menu item will be shown as active/selected.
+          * @default false
          */
         "active"?: boolean;
         /**
           * If true, the item label and suffix will be hidden and the with will be reduce according to its parent
+          * @default false
          */
         "collapse"?: boolean;
         /**
           * If true, the menu item will be disabled (no interaction allowed)
+          * @default false
          */
         "disabled"?: boolean;
         /**
@@ -7459,30 +7813,37 @@ declare namespace LocalJSX {
     interface BqSlider {
         /**
           * The amount of time, in milliseconds, to wait to trigger the `bqChange` event after each value change.
+          * @default 0
          */
         "debounceTime"?: number;
         /**
           * If `true` the slider is disabled.
+          * @default false
          */
         "disabled"?: boolean;
         /**
           * If `true`, a tooltip will be shown displaying the progress value
+          * @default false
          */
         "enableTooltip"?: boolean;
         /**
           * If `true` it will show the value label on a side of the slider track area
+          * @default false
          */
         "enableValueIndicator"?: boolean;
         /**
           * A number representing the amount to remain between the minimum and maximum values (only for range type).
+          * @default 0
          */
         "gap"?: number;
         /**
           * A number representing the max value of the slider.
+          * @default 100
          */
         "max"?: number;
         /**
           * A number representing the min value of the slider.
+          * @default 0
          */
         "min"?: number;
         /**
@@ -7503,14 +7864,17 @@ declare namespace LocalJSX {
         "onBqFocus"?: (event: BqSliderCustomEvent<HTMLBqSliderElement>) => void;
         /**
           * A number representing the step of the slider. ⚠️ Please notice that the value (or list of values if the slider type is `range`) will be rounded to the nearest multiple of `step`.
+          * @default 1
          */
         "step"?: number;
         /**
           * If `true`, a tooltip will always display the progress value. It relies on enableTooltip and if enableTooltip is false, tooltipAlwaysVisible cannot be true.
+          * @default false
          */
         "tooltipAlwaysVisible"?: boolean;
         /**
           * It defines the type of slider to display
+          * @default 'single'
          */
         "type"?: TSliderType;
         /**
@@ -7543,14 +7907,17 @@ declare namespace LocalJSX {
     interface BqSpinner {
         /**
           * If `false`, the animation on the icon element will be stopped
+          * @default true
          */
         "animation"?: boolean;
         /**
           * It defines the size of the icon element displayed
+          * @default 'medium'
          */
         "size"?: TSpinnerSize;
         /**
           * It defines the position of the label text
+          * @default 'none'
          */
         "textPosition"?: TSpinnerTextPosition;
     }
@@ -7569,6 +7936,7 @@ declare namespace LocalJSX {
     interface BqStatus {
         /**
           * It defines the type of status to display
+          * @default 'neutral'
          */
         "type"?: TStatusType;
     }
@@ -7603,10 +7971,12 @@ declare namespace LocalJSX {
         "onBqClick"?: (event: BqStepItemCustomEvent<{ target: HTMLBqStepItemElement; value: string }>) => void;
         /**
           * It defines prefix size
+          * @default 'medium'
          */
         "size"?: TStepsSize;
         /**
           * It defines step item appearance based on its status
+          * @default 'default'
          */
         "status"?: TStepItemStatus;
         /**
@@ -7638,10 +8008,12 @@ declare namespace LocalJSX {
     interface BqSteps {
         /**
           * The color of the line that connects the steps. It should be a valid declarative color token.
+          * @default 'stroke--primary'
          */
         "dividerColor"?: string;
         /**
           * The size of the steps
+          * @default 'medium'
          */
         "size"?: TStepsSize;
         /**
@@ -7683,14 +8055,17 @@ declare namespace LocalJSX {
     interface BqSwitch {
         /**
           * If true, a background will be displayed on hover
+          * @default false
          */
         "backgroundOnHover"?: boolean;
         /**
           * It indicates whether if the switch is `ON` by default (when the page loads)
+          * @default false
          */
         "checked"?: boolean;
         /**
           * If true, the switch control will be disabled and no interaction will be allowed
+          * @default false
          */
         "disabled"?: boolean;
         /**
@@ -7699,14 +8074,17 @@ declare namespace LocalJSX {
         "formValidationMessage"?: string;
         /**
           * If true, the component will take the full width space available on the parent container
+          * @default false
          */
         "fullWidth"?: boolean;
         /**
           * It indicates how to to display the on/off marks inside the control, with icons or none (default)
+          * @default 'default'
          */
         "innerLabel"?: TSwitchInnerLabel;
         /**
           * It defines how to distribute the space between and around the control and the label text (https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content)
+          * @default 'start'
          */
         "justifyContent"?: TSwitchJustifyContent;
         /**
@@ -7727,10 +8105,12 @@ declare namespace LocalJSX {
         "onBqFocus"?: (event: BqSwitchCustomEvent<HTMLBqSwitchElement>) => void;
         /**
           * If `true`, it will indicate that the user must switch `ON` the element before the owning form can be submitted
+          * @default false
          */
         "required"?: boolean;
         /**
           * If true, the order of the control and the label text will be changed
+          * @default false
          */
         "reverseOrder"?: boolean;
         /**
@@ -7786,6 +8166,7 @@ declare namespace LocalJSX {
         "controls": string;
         /**
           * If true tab is disabled
+          * @default false
          */
         "disabled"?: boolean;
         /**
@@ -7806,14 +8187,17 @@ declare namespace LocalJSX {
         "onBqKeyDown"?: (event: BqTabCustomEvent<KeyboardEvent>) => void;
         /**
           * The direction that tab should be render
+          * @default 'horizontal'
          */
         "orientation"?: TTabOrientation;
         /**
           * The placement that tab should be render
+          * @default 'start'
          */
         "placement"?: TTabPlacement;
         /**
           * The size of the tab
+          * @default 'medium'
          */
         "size"?: TTabSize;
         /**
@@ -7845,10 +8229,12 @@ declare namespace LocalJSX {
     interface BqTabGroup {
         /**
           * A number representing the delay value applied to bqChange event handler
+          * @default 0
          */
         "debounceTime"?: number;
         /**
           * If true, the underline divider below the tabs won't be shown
+          * @default false
          */
         "disableDivider"?: boolean;
         /**
@@ -7857,14 +8243,17 @@ declare namespace LocalJSX {
         "onBqChange"?: (event: BqTabGroupCustomEvent<{ target: HTMLBqTabElement; value: string }>) => void;
         /**
           * The direction that tab should be render
+          * @default 'horizontal'
          */
         "orientation"?: TTabOrientation;
         /**
           * The placement that tab should be render
+          * @default 'start'
          */
         "placement"?: TTabPlacement;
         /**
           * The size of the tab
+          * @default 'medium'
          */
         "size"?: TTabSize;
         /**
@@ -7919,6 +8308,7 @@ declare namespace LocalJSX {
         "border"?: TTagBorderRadius;
         /**
           * If true, the Tag can be clickable
+          * @default false
          */
         "clickable"?: boolean;
         /**
@@ -7927,6 +8317,7 @@ declare namespace LocalJSX {
         "color"?: TTagColor;
         /**
           * If true, the Tag will be disabled (only if clickable = `true`, no interaction allowed)
+          * @default false
          */
         "disabled"?: boolean;
         /**
@@ -7955,18 +8346,22 @@ declare namespace LocalJSX {
         "onBqOpen"?: (event: BqTagCustomEvent<any>) => void;
         /**
           * If true, the Tag component can be removed
+          * @default false
          */
         "removable"?: boolean;
         /**
           * If true, the Tag is selected (only if clickable = `true`)
+          * @default false
          */
         "selected"?: boolean;
         /**
           * The size of the Tag component
+          * @default 'medium'
          */
         "size"?: TTagSize;
         /**
           * The variant of Tag to apply on top of the variant
+          * @default 'filled'
          */
         "variant"?: TTagVariant;
     }
@@ -8031,18 +8426,22 @@ declare namespace LocalJSX {
     interface BqTextarea {
         /**
           * If `true`, the textarea will automatically grow and shrink to fit its contents. If `false`, the textarea will have a fixed height specified by the `rows` property.
+          * @default false
          */
         "autoGrow"?: boolean;
         /**
           * Controls whether or not the textarea field should be capitalized and how. Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
+          * @default 'off'
          */
         "autocapitalize"?: TTextareaAutoCapitalize;
         /**
           * Specifies whether or not the textarea field should have autocomplete enabled. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
+          * @default 'off'
          */
         "autocomplete"?: string;
         /**
           * Controls whether or not the textarea field should have autocorrect enabled. Possible values are 'on' and 'off'.
+          * @default 'off'
          */
         "autocorrect"?: 'on' | 'off';
         /**
@@ -8051,14 +8450,17 @@ declare namespace LocalJSX {
         "autofocus"?: boolean;
         /**
           * The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes. A value of 0 means no debouncing will occur.
+          * @default 0
          */
         "debounceTime"?: number;
         /**
           * If `true`, it will block the user's ability to resize the textarea.
+          * @default false
          */
         "disableResize"?: boolean;
         /**
           * If `true`, the user cannot interact with the textarea.
+          * @default false
          */
         "disabled"?: boolean;
         /**
@@ -8103,23 +8505,28 @@ declare namespace LocalJSX {
         "placeholder": string;
         /**
           * If true, the textarea field cannot be modified.
+          * @default false
          */
         "readonly"?: boolean;
         /**
           * Indicates whether or not the textarea field is required to be filled out before submitting the form.
+          * @default false
          */
         "required"?: boolean;
         /**
           * The number of visible text lines for the control. It must be a positive integer.
+          * @default 5
          */
         "rows"?: number;
         /**
           * If true, the textarea content may be checked for spelling errors.
+          * @default false
          */
         "spellcheck"?: boolean;
         /**
           * The validation status of the textarea.
           * @remarks This property is used to indicate the validation status of the textarea. It can be set to one of the following values: - `'none'`: No validation status is set. - `'error'`: The textarea has a validation error. - `'warning'`: The textarea has a validation warning. - `'success'`: The textarea has passed validation.
+          * @default 'none'
          */
         "validationStatus"?: TInputValidation;
         /**
@@ -8128,6 +8535,7 @@ declare namespace LocalJSX {
         "value"?: string;
         /**
           * Specifies how the text in a text area is to be wrapped when submitted in a form
+          * @default 'soft'
          */
         "wrap"?: TTextareaWrap;
     }
@@ -8173,10 +8581,12 @@ declare namespace LocalJSX {
     interface BqToast {
         /**
           * The corder radius of the toast component
+          * @default 's'
          */
         "border"?: TToastBorderRadius;
         /**
           * If true will hide toast icon
+          * @default false
          */
         "hideIcon"?: boolean;
         /**
@@ -8193,14 +8603,17 @@ declare namespace LocalJSX {
         "open"?: boolean;
         /**
           * Placement of toast
+          * @default 'bottom-center'
          */
         "placement"?: TToastPlacement;
         /**
           * The length of time, in milliseconds, after which the toast will close itself
+          * @default 3000
          */
         "time"?: number;
         /**
           * Type of toast
+          * @default 'info'
          */
         "type"?: TToastType;
     }
@@ -8240,27 +8653,36 @@ declare namespace LocalJSX {
     interface BqTooltip {
         /**
           * If true, the tooltip will always be visible
+          * @default false
          */
         "alwaysVisible"?: boolean;
         /**
           * Set the action when the tooltip should be displayed, on hover (default) or click
+          * @default 'hover'
          */
         "displayOn"?: 'click' | 'hover';
         /**
           * Distance between trigger element and tooltip
+          * @default 10
          */
         "distance"?: number;
         /**
           * If true, the arrow on the tooltip content won't be shown
+          * @default false
          */
         "hideArrow"?: boolean;
+        /**
+          * @default 'top'
+         */
         "placement"?: Placement;
         /**
           * Whether the tooltip should have the same width as the trigger element (applicable only for content shorter than the trigger element)
+          * @default false
          */
         "sameWidth"?: boolean;
         /**
           * Indicates whether or not the tooltip is visible when the component is first rendered, and when interacting with the trigger
+          * @default false
          */
         "visible"?: boolean;
     }
