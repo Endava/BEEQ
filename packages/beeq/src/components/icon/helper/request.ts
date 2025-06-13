@@ -120,13 +120,13 @@ const fetchAndProcessSvg = async (url: string, shouldSanitize = true): Promise<s
  * @param sanitize - Whether to sanitize the SVG content (default: true)
  * @returns Promise that resolves to the processed SVG content or undefined
  */
-export const getSvgContent = async (url?: string, sanitize = true): Promise<string | undefined> => {
+export const getSvgContent = async (url?: string, sanitize = true): Promise<string> => {
   if (!isClient() || isNil(url)) return undefined;
 
   // Return cached content if available
   if (cache.content.has(url)) {
     const cachedContent = cache.content.get(url);
-    return cachedContent || undefined;
+    return cachedContent;
   }
 
   // Check if the request is already in the cache

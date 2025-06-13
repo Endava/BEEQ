@@ -161,11 +161,15 @@ export class BqIcon {
     const url = this.getIconSource(name);
     if (!url) return;
 
-    const content = await getSvgContent(url, true);
-    if (!content) return;
+    try {
+      const content = await getSvgContent(url, true);
+      if (!content) return;
 
-    this._svgContent = content;
-    this.svgLoaded.emit(this._svgContent);
+      this._svgContent = content;
+      this.svgLoaded.emit(this._svgContent);
+    } catch (error) {
+      console.error('[BEEQ] Failed to load the icon SVG content', error);
+    }
   };
 
   // render() function
@@ -173,16 +177,17 @@ export class BqIcon {
   // ===================================
 
   render() {
+    const { color, label, name, size } = this;
     const styles = {
-      ...(this.color && { '--bq-icon--color': getColorCSSVariable(this.color) }),
-      ...(this.size && { '--bq-icon--size': `${this.size}px` }),
+      ...(color && { '--bq-icon--color': getColorCSSVariable(color) }),
+      ...(size && { '--bq-icon--size': `${size}px` }),
     };
 
     return (
       <Host style={styles}>
         <div
-          aria-label={this.label ?? `${this.name} icon`}
-          class="flex text-[color:--bq-icon--color] bs-[--bq-icon--size] is-[--bq-icon--size]"
+          aria-label={label ?? `${name} icon`}
+          class="flex text-[--bq-icon--color] bs-[--bq-icon--size] is-[--bq-icon--size]"
           innerHTML={this._svgContent}
           part="base"
           role="img"
