@@ -164,37 +164,53 @@ export default {
           selectors: [':root'],
           theme: { ...DefaultRootTheme },
         },
-        // Light mode - higher specificity to override base theme
+        // Light mode - default mode when no other mode is specified
         {
           name: 'light',
-          selectors: ['.light', '.beeq.light', '[bq-mode="light"]'],
+          selectors: [
+            // Default when no theme/mode specified
+            ':root:not([bq-theme]):not([bq-mode])',
+            // Default for BEEQ theme with no mode
+            ':root[bq-theme="beeq"]:not([bq-mode])',
+            '.beeq:not([bq-mode])',
+            // Explicit light mode
+            '[bq-mode="light"]',
+            '.light',
+          ],
           theme: { ...DefaultLightTheme },
           mode: true,
         },
-        // Dark mode - higher specificity to override base theme
+        // Dark mode - only when explicitly set
         {
           name: 'dark',
-          selectors: ['.dark', '.beeq.dark', '[bq-mode="dark"]'],
+          selectors: ['[bq-mode="dark"]', '.dark'],
           theme: { ...DefaultDarkTheme },
           mode: true,
         },
-        // Endava theme - uses :where() for low specificity
+        // Endava base theme
         {
           name: 'endava',
-          selectors: ['.endava', '[bq-theme="endava"]'],
+          selectors: ['[bq-theme="endava"]', '.endava'],
           theme: { ...EndavaRootTheme },
         },
-        // Endava light mode - higher specificity to override endava theme
+        // Endava light mode - default mode for Endava theme
         {
           name: 'endava-light',
-          selectors: ['.endava.light', '[bq-theme="endava"][bq-mode="light"]'],
+          selectors: [
+            // Default light for Endava theme when no mode specified
+            '[bq-theme="endava"]:not([bq-mode])',
+            '.endava:not([bq-mode])',
+            // Explicit light mode for Endava theme
+            '[bq-theme="endava"][bq-mode="light"]',
+            '.endava.light',
+          ],
           theme: { ...EndavaLightTheme },
           mode: true,
         },
-        // Endava dark mode - higher specificity to override endava theme
+        // Endava dark mode - only when explicitly set
         {
           name: 'endava-dark',
-          selectors: ['.endava.dark', '[bq-theme="endava"][bq-mode="dark"]'],
+          selectors: ['[bq-theme="endava"][bq-mode="dark"]', '.endava.dark'],
           theme: { ...EndavaDarkTheme },
           mode: true,
         },
