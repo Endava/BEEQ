@@ -67,17 +67,17 @@ const processSvgContent = (content: string): string => {
   if (!isClient() || isNil(content)) return '';
 
   try {
-    const parser = document.createElement('div');
-    parser.innerHTML = content;
+    const domParser = new DOMParser();
+    const doc = domParser.parseFromString(content, 'image/svg+xml');
+    const svg = doc.querySelector(SVG_TAG);
 
-    const svg = parser.querySelector(SVG_TAG);
     if (!svg || !validateElement(svg)) {
       console.warn('[BqIcon] SVG content failed security validation');
       return '';
     }
 
     sanitizeSvgElement(svg);
-    return parser.innerHTML;
+    return new XMLSerializer().serializeToString(svg);
   } catch (error) {
     console.error('[BqIcon] Error processing SVG content:', error);
     return '';
