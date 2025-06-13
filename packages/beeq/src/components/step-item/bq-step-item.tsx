@@ -171,7 +171,7 @@ export class BqStepItem {
           {/* DESCRIPTION */}
           <div
             class={{
-              'bq-step-item__content--description text-s leading-regular opacity-60': true,
+              'bq-step-item__content--description text-s leading-regular text-secondary': true,
               'opacity-60': this.isDisabled,
             }}
             part="description"

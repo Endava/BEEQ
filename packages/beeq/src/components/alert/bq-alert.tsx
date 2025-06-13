@@ -353,7 +353,7 @@ export class BqAlert {
               </div>
               {/* BODY */}
               <div
-                class={{ 'text-s leading-regular': true, '!hidden': !this.hasContent }}
+                class={{ 'text-s leading-regular text-primary': true, '!hidden': !this.hasContent }}
                 ref={(div) => (this.bodyElem = div)}
                 part="body"
               >
