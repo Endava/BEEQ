@@ -37,8 +37,18 @@ const withThemeProvider: DecoratorFunction<WebComponentsRenderer, { [x: string]:
   const body = document.querySelector('body.sb-show-main');
   if (!(body instanceof HTMLElement)) return storyFn();
 
-  body.setAttribute('bq-theme', theme || 'beeq');
-  body.setAttribute('bq-mode', mode || 'light');
+  if (theme !== 'none') {
+    body.setAttribute('bq-theme', theme || 'beeq');
+  } else {
+    body.removeAttribute('bq-theme');
+  }
+
+  if (mode !== 'none') {
+    body.setAttribute('bq-mode', mode || 'light');
+  } else {
+    body.removeAttribute('bq-mode');
+  }
+
   return storyFn();
 };
 
@@ -87,6 +97,7 @@ const preview: Preview = {
         items: [
           { value: 'beeq', title: 'Theme: BEEQ' },
           { value: 'endava', title: 'Theme: Endava' },
+          { value: 'none', title: 'Theme: None' },
         ],
         dynamicTitle: true,
       },
@@ -100,6 +111,7 @@ const preview: Preview = {
         items: [
           { value: 'light', title: '☀️ Light' },
           { value: 'dark', title: '🌘 Dark' },
+          { value: 'none', title: '🤷‍♂️ None' },
         ],
         dynamicTitle: true,
       },
