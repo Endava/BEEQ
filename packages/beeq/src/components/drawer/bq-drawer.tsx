@@ -321,7 +321,7 @@ export class BqDrawer {
         >
           <header class="flex items-center" part="header">
             <h2
-              class="flex-1 items-center justify-between font-bold leading-regular text-primary"
+              class="flex-1 items-center justify-between text-xl font-bold leading-regular text-primary"
               id="bq-drawer__title"
               part="title"
             >

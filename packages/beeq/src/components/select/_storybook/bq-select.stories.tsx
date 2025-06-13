@@ -650,7 +650,7 @@ export const ScrollableContainer: Story = {
       </p>
 
       <!-- Scrollable container with Select inside -->
-      <div class="border border-stroke-primary h-64 overflow-y-auto rounded-s bg-ui-secondary p-m">
+      <div class="border border-stroke-primary h-64 overflow-y-auto rounded-s bg-ui-secondary p-m text-primary">
         <div class="flex h-96 flex-col gap-m">
           <p>This is a scrollable container with some content...</p>
           <div class="space-y-xs">

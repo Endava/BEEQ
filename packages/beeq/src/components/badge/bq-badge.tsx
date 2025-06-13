@@ -67,10 +67,10 @@ export class BqBadge {
   // ========================
 
   /** Badge background color. The value should be a valid value of the palette color */
-  @Prop({ mutable: true, reflect: true }) backgroundColor? = 'ui--danger';
+  @Prop({ mutable: true, reflect: true }) backgroundColor?: string;
 
   /** Badge number color. The value should be a valid value of the palette color */
-  @Prop({ mutable: true, reflect: true }) textColor? = 'text--inverse';
+  @Prop({ mutable: true, reflect: true }) textColor?: string;
 
   /** The size of the badge. Relevant if badge has no content. */
   @Prop({ reflect: true, mutable: true }) size?: TBadgeSize = 'small';

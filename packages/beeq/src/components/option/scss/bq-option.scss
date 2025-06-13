@@ -13,7 +13,7 @@
 }
 
 .bq-option {
-  @apply flex cursor-pointer items-center text-[length:--bq-option--font-size] is-full;
+  @apply flex cursor-pointer items-center text-[length:--bq-option--font-size] text-primary is-full;
   @apply pe-[--bq-option--padding-end] ps-[--bq-option--padding-start] p-b-[--bq-option--paddingY] p-i-[--bq-option--paddingY];
   @apply rounded-[--bq-option--border-radius] bg-[--bq-option--background] shadow-[shadow:--bq-option--box-shadow];
   @apply border-[length:--bq-option--border-width] border-[color:--bq-option--border-color];

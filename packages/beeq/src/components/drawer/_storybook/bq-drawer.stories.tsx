@@ -73,11 +73,11 @@ const Template = (args: Args) => {
       @bqAfterClose=${args.bqAfterClose}
     >
       ${ifDefined(args.customCloseIcon) ? unsafeHTML(args.customCloseIcon) : nothing}
-      <div class="flex gap-xs" slot="title">
+      <div class="flex items-center gap-xs" slot="title">
         <bq-icon name="user-circle" weight="bold" role="img" title="Info"></bq-icon>
         Title
       </div>
-      <div class="flex items-center justify-center rounded-xs border-s border-dashed border-brand bg-red-100 bs-full">
+      <div class="flex items-center justify-center rounded-xs border-s border-dashed border-brand bg-secondary bs-full">
         Slot
       </div>
       ${!args.noFooter

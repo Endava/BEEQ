@@ -349,7 +349,7 @@ export class BqAccordion {
           </div>
           <div
             class={{
-              'flex items-center justify-center transition-transform duration-300 ease-in-out': true,
+              'flex items-center justify-center text-primary transition-transform duration-300 ease-in-out': true,
               '!hidden': this.open && !this.rotate,
               'rotate-180': this.rotate && this.open,
             }}
@@ -360,7 +360,10 @@ export class BqAccordion {
             </slot>
           </div>
           <div
-            class={{ 'flex items-center justify-center': true, '!hidden': (!this.open && !this.rotate) || this.rotate }}
+            class={{
+              'flex items-center justify-center text-primary': true,
+              '!hidden': (!this.open && !this.rotate) || this.rotate,
+            }}
             aria-hidden="true"
           >
             <slot name="collapse">
@@ -369,7 +372,7 @@ export class BqAccordion {
           </div>
         </summary>
         <div
-          class="bq-accordion__body overflow-hidden"
+          class="bq-accordion__body overflow-hidden bg-ui-primary text-primary"
           aria-labelledby="bq-accordion__header"
           role="region"
           part="panel"

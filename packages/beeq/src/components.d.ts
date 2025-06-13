@@ -408,7 +408,6 @@ export namespace Components {
     interface BqBadge {
         /**
           * Badge background color. The value should be a valid value of the palette color
-          * @default 'ui--danger'
          */
         "backgroundColor"?: string;
         /**
@@ -418,7 +417,6 @@ export namespace Components {
         "size"?: TBadgeSize;
         /**
           * Badge number color. The value should be a valid value of the palette color
-          * @default 'text--inverse'
          */
         "textColor"?: string;
     }
@@ -5754,7 +5752,6 @@ declare namespace LocalJSX {
     interface BqBadge {
         /**
           * Badge background color. The value should be a valid value of the palette color
-          * @default 'ui--danger'
          */
         "backgroundColor"?: string;
         /**
@@ -5764,7 +5761,6 @@ declare namespace LocalJSX {
         "size"?: TBadgeSize;
         /**
           * Badge number color. The value should be a valid value of the palette color
-          * @default 'text--inverse'
          */
         "textColor"?: string;
     }

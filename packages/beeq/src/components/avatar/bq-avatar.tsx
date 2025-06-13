@@ -199,7 +199,7 @@ export class BqAvatar {
         >
           {this.initials && (
             <span
-              class="absolute start-0 inline-flex items-center justify-center font-bold bs-full is-full inset-bs-0"
+              class="absolute start-0 inline-flex items-center justify-center font-bold text-primary bs-full is-full inset-bs-0"
               part="text"
             >
               {this.trimmedInitials}
