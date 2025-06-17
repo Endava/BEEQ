@@ -267,11 +267,12 @@ export class BqSlider {
     const { internals, isRangeType, maxValue, minValue } = this;
     this.value = isRangeType ? [minValue, maxValue] : minValue;
     internals?.setFormValue(isRangeType ? JSON.stringify(this.value) : this.value.toString());
+    if (isRangeType) this.el.setAttribute('value', JSON.stringify(this.value));
   };
 
   private calculatePercent = (value: number) => {
     const totalRange = Number(this.max) - Number(this.min);
-    return (value / totalRange) * 100;
+    return ((value - this.min) / totalRange) * 100;
   };
 
   private updateProgressTrack = () => {
@@ -281,7 +282,7 @@ export class BqSlider {
     // For non-range type, left starts from 0 and width is the `min` value.
     const left = this.isRangeType ? this.calculatePercent(this.minValue) : 0;
     const width = this.isRangeType
-      ? this.calculatePercent(Number(this.maxValue) - Number(this.minValue))
+      ? this.calculatePercent(Number(this.maxValue) - Number(this.minValue) + this.min)
       : this.calculatePercent(this.minValue);
 
     this.progressElem.style.insetInlineStart = `${left}%`;
