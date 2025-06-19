@@ -1,4 +1,4 @@
-import type { Args, Meta, StoryObj } from '@storybook/web-components';
+import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit-html';
 
 import mdx from './bq-button.mdx';

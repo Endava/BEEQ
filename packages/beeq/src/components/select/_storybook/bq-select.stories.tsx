@@ -1,7 +1,7 @@
-import { useArgs } from '@storybook/preview-api';
-import type { Args, Meta, StoryObj } from '@storybook/web-components';
+import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { useArgs } from 'storybook/preview-api';
 
 import mdx from './bq-select.mdx';
 import { INPUT_VALIDATION } from '../../input/bq-input.types';
@@ -115,7 +115,7 @@ type Story = StoryObj;
 const Template = (args: Args) => {
   const [, updateArgs] = useArgs();
 
-  const onSelect = (event) => {
+  const onSelect = (event: CustomEvent<{ value: string }>) => {
     updateArgs({ value: event.detail.value });
     args.bqSelect(event);
   };
