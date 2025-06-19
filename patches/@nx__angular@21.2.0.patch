@@ -1,0 +1,33 @@
+diff --git a/src/executors/utilities/ng-packagr/pre-v19/stylesheet-processor.js b/src/executors/utilities/ng-packagr/pre-v19/stylesheet-processor.js
+index f94e813f8648f117d28608138bebbd7643780188..ff9d927834b41a91ce21249c705b9821cc5a4629 100644
+--- a/src/executors/utilities/ng-packagr/pre-v19/stylesheet-processor.js
++++ b/src/executors/utilities/ng-packagr/pre-v19/stylesheet-processor.js
+@@ -12,8 +12,9 @@ const tslib_1 = require("tslib");
+ const devkit_1 = require("@nx/devkit");
+ const browserslist_1 = tslib_1.__importDefault(require("browserslist"));
+ const fs_1 = require("fs");
+-const color_1 = require("ng-packagr/src/lib/utils/color");
+ const path_1 = require("path");
++const ng_packagr_version_1 = require("../ng-packagr-version");
++const package_imports_1 = require("../package-imports");
+ const maxWorkersVariable = process.env['NG_BUILD_MAX_WORKERS'];
+ const maxThreads = typeof maxWorkersVariable === 'string' && maxWorkersVariable !== ''
+     ? +maxWorkersVariable
+@@ -76,6 +77,8 @@ class StylesheetProcessor {
+             devkit_1.workspaceRoot,
+         ]);
+         const tailwindConfigPath = findTailwindConfiguration(searchDirs);
++        const { major: ngPackagrMajorVersion } = (0, ng_packagr_version_1.getNgPackagrVersionInfo)();
++        const { colors } = (0, package_imports_1.importNgPackagrPath)('ng-packagr/src/lib/utils/color', ngPackagrMajorVersion);
+         const Piscina = getPiscina();
+         this.renderWorker = new Piscina({
+             filename: require.resolve('ng-packagr/lib/styles/stylesheet-processor-worker'),
+@@ -83,7 +86,7 @@ class StylesheetProcessor {
+             recordTiming: false,
+             env: {
+                 ...process.env,
+-                FORCE_COLOR: '' + color_1.colors.enabled,
++                FORCE_COLOR: '' + colors.enabled,
+             },
+             workerData: {
+                 postcssConfiguration,
