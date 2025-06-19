@@ -1,12 +1,3 @@
 packages:
- - 'apps/*'
- - 'packages/*'
-overrides:
-  "@custom-elements-manifest/analyzer": "$@custom-elements-manifest/analyzer"
-  "eslint": "$eslint"
-  "eslint-config-prettier": "$eslint-config-prettier"
-  "react": "$react"
-  "react-dom": "$react-dom"
-  "vite": "$vite"
-patchedDependencies:
-  "@nxext/stencil@20.0.6": "patches/@nxext__stencil@20.0.6.patch"
+  - 'apps/*'
+  - 'packages/*'

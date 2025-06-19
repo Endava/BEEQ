@@ -3,6 +3,9 @@
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "nxCloudId": "64007df8da9fd31ee8a4d06e",
   "useDaemonProcess": false,
+  "cli": {
+    "packageManager": "pnpm"
+  },
   "workspaceLayout": {
     "appsDir": "apps",
     "libsDir": "packages"
