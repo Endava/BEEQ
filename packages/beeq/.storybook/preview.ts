@@ -2,11 +2,11 @@
 // eslint-disable-next-line import-x/no-unresolved
 import './assets/css/stories.css';
 
-import { DocsContainer } from '@storybook/blocks';
-import type { DecoratorFunction } from '@storybook/csf';
-import type { Preview, WebComponentsRenderer } from '@storybook/web-components';
-import { setCustomElementsManifest } from '@storybook/web-components';
+import { DocsContainer } from '@storybook/addon-docs/blocks';
+import { setCustomElementsManifest } from '@storybook/web-components-vite';
+import type { Preview, WebComponentsRenderer } from '@storybook/web-components-vite';
 import { createElement } from 'react';
+import type { DecoratorFunction } from 'storybook/internal/csf';
 
 import { isChromatic } from './chromatic-parameters';
 /* eslint-disable @typescript-eslint/ban-ts-comment */
@@ -118,6 +118,21 @@ const preview: Preview = {
     },
   },
   parameters: {
+    a11y: {
+      options: {
+        /*
+         * Opt in to running WCAG 2.x AAA rules
+         * Note that you must explicitly re-specify the defaults (all but the last array entry)
+         * See https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#options-parameter-examples for more details
+         */
+        runOnly: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice'],
+      },
+      /*
+       * Configure test behavior
+       * See: https://storybook.js.org/docs/next/writing-tests/accessibility-testing#test-behavior
+       */
+      test: 'todo',
+    },
     controls: { expanded: true, hideNoControlsWarning: true },
     docs: {
       story: {

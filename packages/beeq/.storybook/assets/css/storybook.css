@@ -1,76 +1,99 @@
+/* Base properties */
+:root {
+  /* Typography */
+  --sb-font-family: 'Outfit', sans-serif;
+  --sb-font-size-base: 1rem;
+  --sb-font-size-lg: 1.125rem;
+
+  /* Colors */
+  --sb-color-primary: #4f46e5;
+  --sb-color-border: #6b7280;
+  --sb-color-text-muted: #a6aab3;
+
+  /* Spacing */
+  --sb-space-2: 0.5rem;
+  --sb-space-4: 1rem;
+  --sb-space-6: 1.5rem;
+
+  /* UI Elements */
+  --sb-border-radius: 0.5rem;
+  --sb-icon-size: 1rem;
+  --sb-line-height: 1.1;
+  --sb-letter-spacing: 0.05rem;
+}
+
 html,
 body {
-  font-family: '"Outfit"', sans-serif;
-  font-size: 1rem;
+  font-family: var(--sb-font-family);
+  font-size: var(--sb-font-size-base);
 }
 
+/* Search field input */
 .search-field input {
-  border-color: #6b7280;
-  border-radius: 0.5rem;
+  border-color: var(--sb-color-border);
+  border-radius: var(--sb-border-radius);
   border-width: 1px;
-  font-size: 16px;
-  min-height: 32px;
+  font-size: var(--sb-font-size-base);
+  min-block-size: 32px;
 }
 
-.search-field input:active,
-.search-field input:focus {
-  border-color: #4f46e5;
+.search-field input:is(:active, :focus) {
+  border-color: var(--sb-color-primary);
   box-shadow: none;
 }
 
+/* Sidebar navigation items */
 .sidebar-item,
-.sidebar-item a {
-  display: flex !important;
-  align-items: center !important;
-  font-family: '"Outfit"', sans-serif;
-  font-size: 1rem !important;
+.sidebar-item a,
+.sidebar-item button {
+  font-size: var(--sb-font-size-base) !important;
   font-weight: 400;
-  line-height: 1.2;
+  line-height: var(--sb-line-height);
 }
 
 .sidebar-item > span {
-  margin-top: initial !important;
+  margin-block-start: initial !important;
 }
 
 .sidebar-item > svg,
 .sidebar-item a > svg {
-  height: 16px !important;
-  width: 16px !important;
-  margin-top: 0;
+  block-size: var(--sb-icon-size) !important;
+  inline-size: var(--sb-icon-size) !important;
+  margin-block-start: 0;
 }
 
-.sidebar-item > svg[color='primary'] {
-  color: #4f46e5;
-}
-
+/* Sidebar icons */
+.sidebar-item > svg[color='primary'],
 .sidebar-item > svg[color='secondary'] {
-  color: #4f46e5;
+  color: var(--sb-color-primary);
 }
 
+/* Sidebar section headers */
 .sidebar-subheading {
-  margin-top: 16px !important;
-  margin-bottom: 6px !important;
+  margin-block: 16px 6px !important;
   font-weight: 600 !important;
-  font-size: 1.125rem !important;
+  font-size: var(--sb-font-size-lg) !important;
   line-height: 20px !important;
-  min-height: 20px !important;
-  letter-spacing: 0.05rem !important;
+  min-block-size: 20px !important;
+  letter-spacing: var(--sb-letter-spacing) !important;
   text-transform: none !important;
 }
 
 .sidebar-subheading > button {
-  color: #a6aab3;
-  font-family: '"Outfit"', sans-serif;
-  font-size: 1.125rem;
+  color: var(--sb-color-text-muted);
+  font-family: var(--sb-font-family);
+  font-size: var(--sb-font-size-lg);
 }
 
+/* Dropdown arrow icon */
 .sidebar-subheading > button:not(.sidebar-subheading-action) > span {
-  border-top: 6px solid transparent;
-  border-bottom: 6px solid transparent;
-  border-left: 6px solid;
+  border-block-start: 6px solid transparent;
+  border-block-end: 6px solid transparent;
+  border-inline-start: 6px solid;
 }
 
+/* Action button icon */
 .sidebar-subheading > button.sidebar-subheading-action > span > svg {
-  height: 16px !important;
-  width: 16px !important;
+  block-size: var(--sb-icon-size) !important;
+  inline-size: var(--sb-icon-size) !important;
 }
