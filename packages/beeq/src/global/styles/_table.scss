@@ -1,0 +1,86 @@
+/**
+ * This file contains global styles for HTML tables.
+ * These styles are applied automatically when tables with the .bq-table class are used in the light DOM.
+ */
+
+/* -------------------------------------------------------------------------- */
+/*                             BEEQ Table Styling                             */
+/* -------------------------------------------------------------------------- */
+
+.bq-table {
+  --bq-table--border-color: var(--bq-stroke--primary);
+  --bq-table--border-style: solid;
+  --bq-table--border-width: var(--bq-stroke-s); // 1px
+  --bq-table--border-radius: var(--bq-radius--m);
+  --bq-table--row-height: 3.25rem; // 52px
+  --bq-table--row-padding-block: var(--bq-spacing-xs); // 8px
+  --bq-table--row-padding-inline: var(--bq-spacing-m); // 16px
+  --bq-table--row-selected-bg: var(--bq-ui--brand-alt);
+  --bq-table--row-selected-border: var(--bq-stroke--brand);
+
+  @apply border-collapse overflow-hidden text-s is-full;
+
+  /* Table header styles */
+  thead {
+    @apply h-[--bq-table--row-height] border-0 border-solid border-[--bq-table--border-color];
+
+    border-block-end-width: var(--bq-table--border-width);
+  }
+
+  th {
+    @apply relative text-start font-semibold text-primary p-b-[--bq-table--row-padding-block] p-i-[--bq-table--row-padding-inline];
+
+    /* Add dividers between headers */
+    &::after {
+      @apply absolute bg-[--bq-table--border-color] content-empty bs-1/2 is-[--bq-table--border-width] inset-bs-[25%] inset-ie-0;
+    }
+  }
+
+  /* Table body styles */
+  tbody tr {
+    @apply relative border-0 border-solid border-[--bq-table--border-color];
+
+    border-block-end-width: var(--bq-table--border-width);
+  }
+
+  td {
+    @apply relative p-m text-start text-primary;
+  }
+
+  /* Styling for selected row - simplified approach */
+  tr.selected {
+    @apply rounded-[--bq-table--border-radius] bg-[--bq-table--row-selected-bg];
+    @apply outline outline-[length:--bq-table--border-width] outline-offset-[-1px] outline-[--bq-table--row-selected-border];
+
+    border-block-end-width: 0;
+
+    td:first-child {
+      @apply rounded-es-[--bq-table--border-radius] rounded-ss-[--bq-table--border-radius];
+    }
+
+    td:last-child {
+      @apply rounded-ee-[--bq-table--border-radius] rounded-se-[--bq-table--border-radius];
+    }
+  }
+
+  /* Compact table style */
+  &.compact th,
+  &.compact td {
+    @apply p-s;
+  }
+
+  /* Bordered table style */
+  &.bordered {
+    @apply rounded-[--bq-table--border-radius] border-s border-primary;
+  }
+
+  &.bordered th,
+  &.bordered td {
+    @apply border-s border-solid border-primary;
+  }
+}
+
+/* Responsive table container */
+.bq-table--container {
+  @apply overflow-x-auto bs-full;
+}
