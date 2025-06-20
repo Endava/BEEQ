@@ -1,4 +1,4 @@
-import type { Args, Meta, StoryObj } from '@storybook/web-components';
+import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { classMap } from 'lit/directives/class-map.js';
 import { html } from 'lit-html';
 
