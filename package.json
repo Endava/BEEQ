@@ -74,7 +74,7 @@
     "@nx/rollup": "21.2.0",
     "@nx/storybook": "21.2.0",
     "@nx/workspace": "21.2.0",
-    "@nxext/stencil": "20.0.6",
+    "@nxext/stencil": "20.1.0",
     "@rollup/plugin-url": "8.0.2",
     "@schematics/angular": "18.2.19",
     "@stencil/angular-output-target": "0.10.2",
