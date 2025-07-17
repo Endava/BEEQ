@@ -7,33 +7,65 @@
 /*                             BEEQ Table Styling                             */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * @prop --bq-table--border-color: Table border color
+ * @prop --bq-table--border-style: Table border style
+ * @prop --bq-table--border-width: Table border width
+ * @prop --bq-table--border-radius: Table border radius
+ * @prop --bq-table--cell-padding-block: Table cell padding block
+ * @prop --bq-table--cell-padding-inline: Table cell padding inline
+ * @prop --bq-table--header-divider-inset: Table header divider inset
+ * @prop --bq-table--header-height: Table header height
+ * @prop --bq-table--header-padding-block: Header padding block
+ * @prop --bq-table--header-padding-inline: Header padding inline
+ * @prop --bq-table--row-selected-bg: Row selected background
+ * @prop --bq-table--row-selected-border: Row selected border
+ */
 .bq-table {
   --bq-table--border-color: var(--bq-stroke--primary);
   --bq-table--border-style: solid;
   --bq-table--border-width: var(--bq-stroke-s); // 1px
   --bq-table--border-radius: var(--bq-radius--m);
-  --bq-table--row-height: 3.25rem; // 52px
-  --bq-table--row-padding-block: var(--bq-spacing-xs); // 8px
-  --bq-table--row-padding-inline: var(--bq-spacing-m); // 16px
+  --bq-table--cell-padding-block: var(--bq-spacing-m); // 16px
+  --bq-table--cell-padding-inline: var(--bq-spacing-m); // 16px
+  --bq-table--header-divider-inset: 25%;
+  --bq-table--header-height: 3.25rem; // 52px
+  --bq-table--header-padding-block: var(--bq-spacing-xs); // 8px
+  --bq-table--header-padding-inline: var(--bq-spacing-m); // 16px
   --bq-table--row-selected-bg: var(--bq-ui--brand-alt);
   --bq-table--row-selected-border: var(--bq-stroke--brand);
 
-  @apply border-collapse overflow-hidden text-s is-full;
+  @apply overflow-hidden text-s is-full [&:not(.bordered)]:border-collapse;
+
+  &:not(.bordered) {
+    /* Add dividers between headers only for non-bordered tables */
+    th::after {
+      @apply absolute bg-[--bq-table--border-color] content-empty bs-1/2 is-[--bq-table--border-width] inset-bs-[--bq-table--header-divider-inset] inset-ie-0;
+    }
+
+    /* Styling for selected row only for non-bordered tables */
+    tr.selected {
+      @apply rounded-[--bq-table--border-radius] outline-offset-[-1px];
+    }
+
+    tr.selected td:first-child {
+      @apply rounded-es-[--bq-table--border-radius] rounded-ss-[--bq-table--border-radius];
+    }
+
+    tr.selected td:last-child {
+      @apply rounded-ee-[--bq-table--border-radius] rounded-se-[--bq-table--border-radius];
+    }
+  }
 
   /* Table header styles */
   thead {
-    @apply h-[--bq-table--row-height] border-0 border-solid border-[--bq-table--border-color];
+    @apply h-[--bq-table--header-height] border-0 border-solid border-[--bq-table--border-color];
 
     border-block-end-width: var(--bq-table--border-width);
   }
 
   th {
-    @apply relative text-start font-semibold text-primary p-b-[--bq-table--row-padding-block] p-i-[--bq-table--row-padding-inline];
-
-    /* Add dividers between headers */
-    &::after {
-      @apply absolute bg-[--bq-table--border-color] content-empty bs-1/2 is-[--bq-table--border-width] inset-bs-[25%] inset-ie-0;
-    }
+    @apply relative text-start font-semibold text-primary p-b-[--bq-table--header-padding-block] p-i-[--bq-table--header-padding-inline];
   }
 
   /* Table body styles */
@@ -44,39 +76,49 @@
   }
 
   td {
-    @apply relative p-m text-start text-primary;
+    @apply relative text-start text-primary p-b-[--bq-table--cell-padding-block] p-i-[--bq-table--cell-padding-inline];
   }
 
-  /* Styling for selected row - simplified approach */
+  /* Styling for selected row */
   tr.selected {
-    @apply rounded-[--bq-table--border-radius] bg-[--bq-table--row-selected-bg];
-    @apply outline outline-[length:--bq-table--border-width] outline-offset-[-1px] outline-[--bq-table--row-selected-border];
+    @apply bg-[--bq-table--row-selected-bg] outline outline-[length:--bq-table--border-width] outline-offset-[-2px] outline-[--bq-table--row-selected-border];
 
     border-block-end-width: 0;
-
-    td:first-child {
-      @apply rounded-es-[--bq-table--border-radius] rounded-ss-[--bq-table--border-radius];
-    }
-
-    td:last-child {
-      @apply rounded-ee-[--bq-table--border-radius] rounded-se-[--bq-table--border-radius];
-    }
   }
 
   /* Compact table style */
-  &.compact th,
-  &.compact td {
-    @apply p-s;
+  &.compact {
+    --bq-table--cell-padding-block: var(--bq-spacing-xs2); // 4px
+    --bq-table--cell-padding-inline: var(--bq-spacing-xs2); // 4px
+    --bq-table--header-height: 2rem; // 32px
+    --bq-table--header-padding-block: var(--bq-spacing-xs2); // 4px
+    --bq-table--header-padding-inline: var(--bq-spacing-xs2); // 4px
   }
 
   /* Bordered table style */
   &.bordered {
-    @apply rounded-[--bq-table--border-radius] border-s border-primary;
-  }
+    @apply border-separate border-spacing-0 border-s border-primary;
 
-  &.bordered th,
-  &.bordered td {
-    @apply border-s border-solid border-primary;
+    th,
+    td {
+      @apply border-s border-solid border-primary;
+    }
+
+    thead th:first-child {
+      @apply rounded-ss-[--bq-table--border-radius];
+    }
+
+    thead th:last-child {
+      @apply rounded-se-[--bq-table--border-radius];
+    }
+
+    tbody tr:last-child td:first-child {
+      @apply rounded-es-[--bq-table--border-radius];
+    }
+
+    tbody tr:last-child td:last-child {
+      @apply rounded-ee-[--bq-table--border-radius];
+    }
   }
 }
 

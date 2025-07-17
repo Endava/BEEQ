@@ -1,5 +1,6 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
-import { html, nothing } from 'lit-html';
+import { html } from 'lit-html';
+import { classMap } from 'lit-html/directives/class-map.js';
 
 import mdx from './bq-table.mdx';
 
@@ -12,6 +13,8 @@ const meta: Meta = {
   },
   argTypes: {
     activeRowId: { control: 'text', table: { disable: true } },
+    bordered: { control: 'boolean', table: { disable: true } },
+    compact: { control: 'boolean', table: { disable: true } },
   },
 };
 export default meta;
@@ -117,7 +120,7 @@ const tableData: TableData[] = [
 ];
 
 const Template = (args: Args) => {
-  const { activeRowId } = args;
+  const { activeRowId, bordered, compact } = args;
 
   return html`
     <style>
@@ -133,7 +136,7 @@ const Template = (args: Args) => {
       }
     </style>
     <div class="bq-table--container">
-      <table class="bq-table">
+      <table class=${classMap({ 'bq-table': true, compact: compact, bordered: bordered })}>
         <thead>
           <tr>
             <th>User</th>
@@ -149,7 +152,7 @@ const Template = (args: Args) => {
         <tbody>
           ${tableData.map(
             (row) => html`
-              <tr class=${row.id === activeRowId ? 'selected' : nothing}>
+              <tr class=${classMap({ selected: row.id === activeRowId })}>
                 <td>
                   <div class="flex items-center gap-s">
                     <bq-avatar initials=${row.user.initials} size="small"></bq-avatar>
@@ -210,5 +213,21 @@ export const ActiveRow: Story = {
   render: Template,
   args: {
     activeRowId: '2',
+  },
+};
+
+export const Bordered: Story = {
+  render: Template,
+  args: {
+    activeRowId: '2',
+    bordered: true,
+  },
+};
+
+export const Compact: Story = {
+  render: Template,
+  args: {
+    activeRowId: '2',
+    compact: true,
   },
 };
