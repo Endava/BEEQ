@@ -145,19 +145,19 @@ importers:
         version: 18.2.19(chokidar@3.6.0)
       '@stencil/angular-output-target':
         specifier: 0.10.2
-        version: 0.10.2(@stencil/core@4.35.1)
+        version: 0.10.2(@stencil/core@4.36.1)
       '@stencil/core':
-        specifier: 4.35.1
-        version: 4.35.1
+        specifier: 4.36.1
+        version: 4.36.1
       '@stencil/react-output-target':
         specifier: 1.1.0
-        version: 1.1.0(@stencil/core@4.35.1)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 1.1.0(@stencil/core@4.36.1)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@stencil/sass':
         specifier: 3.2.2
-        version: 3.2.2(@stencil/core@4.35.1)
+        version: 3.2.2(@stencil/core@4.36.1)
       '@stencil/vue-output-target':
         specifier: 0.10.8
-        version: 0.10.8(@stencil/core@4.35.1)(vue@3.5.17(typescript@5.5.4))
+        version: 0.10.8(@stencil/core@4.36.1)(vue@3.5.17(typescript@5.5.4))
       '@storybook/addon-a11y':
         specifier: 9.0.12
         version: 9.0.12(storybook@9.0.12(@testing-library/dom@10.4.0)(prettier@3.6.2))
@@ -415,7 +415,7 @@ importers:
         version: link:../beeq
       '@stencil/react-output-target':
         specifier: ^1.0.4
-        version: 1.0.4(@stencil/core@4.35.1)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 1.0.4(@stencil/core@4.36.1)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react:
         specifier: ^18 || ^19
         version: 19.1.0
@@ -436,7 +436,7 @@ importers:
         version: link:../beeq
       '@stencil/vue-output-target':
         specifier: ^0.10.7
-        version: 0.10.7(@stencil/core@4.35.1)(vue@3.5.13(typescript@5.8.3))
+        version: 0.10.7(@stencil/core@4.36.1)(vue@3.5.13(typescript@5.8.3))
       vue:
         specifier: '>=3.3.0'
         version: 3.5.13(typescript@5.8.3)
@@ -3907,8 +3907,8 @@ packages:
     engines: {node: '>=16.0.0', npm: '>=7.10.0'}
     hasBin: true
 
-  '@stencil/core@4.35.1':
-    resolution: {integrity: sha512-u65m3TbzOtpn679gUV4Yvi8YpInhRJ62js30a7YtXief9Ej/vzrhwDE22U0w4DMWJOYwAsJl133BUaZkWwnmzg==}
+  '@stencil/core@4.36.1':
+    resolution: {integrity: sha512-LRZN1c4X+9/7kR+zG74SrcZ6XxKlilDTkDXajw3ioeDdVlJEvW5wU8Wn3BcAAnk7fjrgLZVN7ickgeuG7u0AKg==}
     engines: {node: '>=16.0.0', npm: '>=7.10.0'}
     hasBin: true
 
@@ -17129,9 +17129,9 @@ snapshots:
     dependencies:
       '@sinonjs/commons': 3.0.1
 
-  '@stencil/angular-output-target@0.10.2(@stencil/core@4.35.1)':
+  '@stencil/angular-output-target@0.10.2(@stencil/core@4.36.1)':
     dependencies:
-      '@stencil/core': 4.35.1
+      '@stencil/core': 4.36.1
 
   '@stencil/core@4.34.0':
     optionalDependencies:
@@ -17144,7 +17144,7 @@ snapshots:
       '@rollup/rollup-win32-arm64-msvc': 4.34.9
       '@rollup/rollup-win32-x64-msvc': 4.34.9
 
-  '@stencil/core@4.35.1':
+  '@stencil/core@4.36.1':
     optionalDependencies:
       '@rollup/rollup-darwin-arm64': 4.34.9
       '@rollup/rollup-darwin-x64': 4.34.9
@@ -17155,10 +17155,10 @@ snapshots:
       '@rollup/rollup-win32-arm64-msvc': 4.34.9
       '@rollup/rollup-win32-x64-msvc': 4.34.9
 
-  '@stencil/react-output-target@1.0.4(@stencil/core@4.35.1)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@stencil/react-output-target@1.0.4(@stencil/core@4.36.1)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@lit/react': 1.0.7(@types/react@19.1.8)
-      '@stencil/core': 4.35.1
+      '@stencil/core': 4.36.1
       html-react-parser: 5.2.5(@types/react@19.1.8)(react@19.1.0)
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
@@ -17167,10 +17167,10 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@stencil/react-output-target@1.1.0(@stencil/core@4.35.1)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@stencil/react-output-target@1.1.0(@stencil/core@4.36.1)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@lit/react': 1.0.7(@types/react@19.1.8)
-      '@stencil/core': 4.35.1
+      '@stencil/core': 4.36.1
       html-react-parser: 5.2.5(@types/react@19.1.8)(react@19.1.0)
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
@@ -17179,22 +17179,22 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@stencil/sass@3.2.2(@stencil/core@4.35.1)':
+  '@stencil/sass@3.2.2(@stencil/core@4.36.1)':
     dependencies:
-      '@stencil/core': 4.35.1
+      '@stencil/core': 4.36.1
       sass-embedded: 1.89.2
 
-  '@stencil/vue-output-target@0.10.7(@stencil/core@4.35.1)(vue@3.5.13(typescript@5.8.3))':
+  '@stencil/vue-output-target@0.10.7(@stencil/core@4.36.1)(vue@3.5.13(typescript@5.8.3))':
     dependencies:
       vue: 3.5.13(typescript@5.8.3)
     optionalDependencies:
-      '@stencil/core': 4.35.1
+      '@stencil/core': 4.36.1
 
-  '@stencil/vue-output-target@0.10.8(@stencil/core@4.35.1)(vue@3.5.17(typescript@5.5.4))':
+  '@stencil/vue-output-target@0.10.8(@stencil/core@4.36.1)(vue@3.5.17(typescript@5.5.4))':
     dependencies:
       vue: 3.5.17(typescript@5.5.4)
     optionalDependencies:
-      '@stencil/core': 4.35.1
+      '@stencil/core': 4.36.1
 
   '@storybook/addon-a11y@9.0.12(storybook@9.0.12(@testing-library/dom@10.4.0)(prettier@3.6.2))':
     dependencies:
