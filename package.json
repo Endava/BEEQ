@@ -169,7 +169,7 @@
       "@custom-elements-manifest/analyzer": "0.10.4",
       "jest": "29.7.0",
       "jest-environment-jsdom": "29.7.0",
-      "nx": "21.3.2",
+      "nx": "21.3.5",
       "less": "4.3.0",
       "stylus": "github:stylus/stylus#0.64.0"
     }
