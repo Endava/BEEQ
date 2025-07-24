@@ -148,8 +148,8 @@ importers:
         specifier: 4.36.1
         version: 4.36.1
       '@stencil/react-output-target':
-        specifier: 1.1.0
-        version: 1.1.0(@stencil/core@4.36.1)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        specifier: 1.2.0
+        version: 1.2.0(@stencil/core@4.36.1)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@stencil/sass':
         specifier: 3.2.2
         version: 3.2.2(@stencil/core@4.36.1)
@@ -4038,8 +4038,8 @@ packages:
       react: ^18 || ^19
       react-dom: ^18 || ^19
 
-  '@stencil/react-output-target@1.1.0':
-    resolution: {integrity: sha512-K6gB+M1Buz3MSj+FQgIkfEKYiA6VACPZjunlpfD75lcmdNCwJrzMQhzL+OC8ZvFCJqtOb8Ivd/5F1v9w26GqqA==}
+  '@stencil/react-output-target@1.2.0':
+    resolution: {integrity: sha512-xDNpWdRg897T3Diy5V2d8dZUdjhc4QJ/5JZdTVyv3/e9UICdJPfCY6eKp/dWWgYlJ9AUE6GLHOI1iePZmLY12A==}
     peerDependencies:
       '@stencil/core': '>=3 || >= 4.0.0-beta.0 || >= 4.0.0'
       react: ^18 || ^19
@@ -17633,7 +17633,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@stencil/react-output-target@1.1.0(@stencil/core@4.36.1)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@stencil/react-output-target@1.2.0(@stencil/core@4.36.1)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@lit/react': 1.0.7(@types/react@19.1.8)
       '@stencil/core': 4.36.1

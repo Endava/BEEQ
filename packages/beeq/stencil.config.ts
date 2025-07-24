@@ -99,6 +99,7 @@ export const config: Config = {
     react({
       /* ------------------------- React SSR output target ------------------------ */
       outDir: resolvePath('../beeq-react/ssr'),
+      clientModule: '@beeq/react',
       hydrateModule: '@beeq/core/dist/hydrate',
       customElementsDir,
     }),

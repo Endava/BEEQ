@@ -79,7 +79,7 @@
     "@schematics/angular": "18.2.19",
     "@stencil/angular-output-target": "0.10.2",
     "@stencil/core": "4.36.1",
-    "@stencil/react-output-target": "1.1.0",
+    "@stencil/react-output-target": "1.2.0",
     "@stencil/sass": "3.2.2",
     "@stencil/vue-output-target": "0.10.8",
     "@storybook/addon-a11y": "9.0.18",
