@@ -2,12 +2,30 @@ import { newE2EPage } from '@stencil/core/testing';
 
 import { computedStyle, setProperties } from '../../../shared/test-utils';
 
-const waitForSvgLoad = async (elem: HTMLBqIconElement) => {
-  const partSVG = elem.shadowRoot.querySelector('[part="svg"]');
-  if (!partSVG) {
-    return new Promise((resolve) => elem.addEventListener('svgLoaded', resolve));
-  }
-  return Promise.resolve();
+const waitForSvgLoad = async (elem: HTMLBqIconElement, timeout = 2000) => {
+  return new Promise((resolve, reject) => {
+    const svgLoadedHandler = () => {
+      elem.removeEventListener('svgLoaded', svgLoadedHandler);
+      resolve(true);
+    };
+    elem.addEventListener('svgLoaded', svgLoadedHandler);
+
+    // Fallback: check if SVG is already loaded
+    const checkSvg = () => {
+      const partSVG = elem.shadowRoot.querySelector('[part="svg"]');
+      if (partSVG && partSVG.innerHTML.trim()) {
+        elem.removeEventListener('svgLoaded', svgLoadedHandler);
+        resolve(true);
+      }
+    };
+    checkSvg();
+
+    // Timeout
+    setTimeout(() => {
+      elem.removeEventListener('svgLoaded', svgLoadedHandler);
+      reject(new Error('SVG did not load in time'));
+    }, timeout);
+  });
 };
 
 describe('bq-icon', () => {
