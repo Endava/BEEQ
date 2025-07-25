@@ -111,8 +111,7 @@ export class BqCard {
       <Host style={style}>
         <div
           class={{
-            'bq-card rounded-[--bq-card--borderRadius] border-[length:--bq-card--borderWidth] border-[color:--bq-card--borderColor] bg-[--bq-card--background]':
-              true,
+            'bq-card rounded-[--bq-card--borderRadius] border-[length:--bq-card--borderWidth] border-[color:--bq-card--borderColor] bg-[--bq-card--background]': true,
             'p-b-[--bq-card--padding] p-i-[--bq-card--padding]': this.type === 'default',
             // Remove padding for minimal card type
             'p-b-0 p-i-0': this.type === 'minimal',

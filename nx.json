@@ -103,10 +103,7 @@
     "releaseTagPattern": "v{version}",
     "version": {
       "conventionalCommits": true,
-      "generatorOptions": {
-        "skipLockFileUpdate": true,
-        "versionPrefix": "^"
-      }
+      "versionPrefix": "^"
     }
   },
   "generators": {

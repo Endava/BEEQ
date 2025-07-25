@@ -345,7 +345,7 @@ export class BqDatePicker {
   // Ordered by their natural call order
   // =====================================
 
-  async connectedCallback() {
+  async componentWillLoad() {
     if (!isClient() || this.isCallyLoaded) return;
 
     try {

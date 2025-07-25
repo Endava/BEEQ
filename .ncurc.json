@@ -1,4 +1,5 @@
 {
+  "format": "group",
   "install": "never",
   "interactive": true,
   "loglevel": "info",

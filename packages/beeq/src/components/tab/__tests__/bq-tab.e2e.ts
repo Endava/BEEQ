@@ -1,34 +1,21 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-import { computedStyle } from '../../../shared/test-utils';
-
-const waitForSvgLoad = async (
-  elem: HTMLBqIconElement,
-  props?: Partial<Record<keyof HTMLBqIconElement, HTMLBqIconElement[keyof HTMLBqIconElement]>>,
-) => {
-  if (props) {
-    Object.keys(props).forEach((attr) => (elem[attr] = props[attr]));
-  }
-  const partSVG = elem.shadowRoot.querySelector('[part="svg"]');
-  if (!partSVG) {
-    return new Promise((resolve) => elem.addEventListener('svgLoaded', resolve));
-  }
-  return Promise.resolve();
-};
+import { computedStyle, waitForSvgLoad } from '../../../shared/test-utils';
 
 describe('bq-tab', () => {
   it('should render', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-tab id="1"><p>Tab text</p></bq-tab>');
+    const page = await newE2EPage({
+      html: '<bq-tab id="1"><p>Tab text</p></bq-tab>',
+    });
 
     const element = await page.find('bq-tab');
-
     expect(element).toHaveClass('hydrated');
   });
 
   it('should have shadow root', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-tab id="1"><p>Tab text</p></bq-tab>');
+    const page = await newE2EPage({
+      html: '<bq-tab id="1"><p>Tab text</p></bq-tab>',
+    });
 
     const element = await page.find('bq-tab');
 
@@ -36,8 +23,9 @@ describe('bq-tab', () => {
   });
 
   it('should display text', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-tab id="1"><p>Tab text</p></bq-tab>');
+    const page = await newE2EPage({
+      html: '<bq-tab id="1"><p>Tab text</p></bq-tab>',
+    });
 
     const slotText = await page.$eval('bq-tab', (element) => {
       const slotElement = element.shadowRoot.querySelector('[part="text"] > slot');
@@ -50,8 +38,14 @@ describe('bq-tab', () => {
   });
 
   it('should display icon', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-tab id="1"><bq-icon name="check" slot="icon"></bq-icon><p>Tab text</p></bq-tab>');
+    const page = await newE2EPage({
+      html: `
+        <bq-tab id="1">
+          <bq-icon name="check" slot="icon"></bq-icon>
+          <p>Tab text</p>
+        </bq-tab>
+      `,
+    });
 
     await page.$eval('bq-icon', waitForSvgLoad);
 
@@ -70,11 +64,12 @@ describe('bq-tab', () => {
   });
 
   it('should be keyboard accessible', async () => {
-    const page = await newE2EPage();
-    await page.setContent(`
-      <bq-tab id="1"><p>Tab text</p></bq-tab>
-      <bq-tab id="2"><p>Tab text</p></bq-tab>
-    `);
+    const page = await newE2EPage({
+      html: `
+        <bq-tab id="1"><p>Tab text</p></bq-tab>
+        <bq-tab id="2"><p>Tab text</p></bq-tab>
+      `,
+    });
 
     const bqFocus = await page.spyOnEvent('bqFocus');
     const bqClick = await page.spyOnEvent('bqClick');
@@ -92,8 +87,9 @@ describe('bq-tab', () => {
   });
 
   it('should handle `disabled` property', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<bq-tab id="1" disabled><p>Tab text</p></bq-tab>');
+    const page = await newE2EPage({
+      html: '<bq-tab id="1" disabled><p>Tab text</p></bq-tab>',
+    });
 
     const bqFocus = await page.spyOnEvent('bqFocus');
     const bqClick = await page.spyOnEvent('bqClick');
@@ -111,12 +107,13 @@ describe('bq-tab', () => {
   });
 
   it('should respect design style', async () => {
-    const page = await newE2EPage();
-    await page.setContent(`
-      <bq-tab id="1" size="small"><p>Tab text</p></bq-tab>
-      <bq-tab id="2" size="medium"><p>Tab text</p></bq-tab>
-      <bq-tab id="3" size="large"><p>Tab text</p></bq-tab>
-    `);
+    const page = await newE2EPage({
+      html: `
+        <bq-tab id="1" size="small"><p>Tab text</p></bq-tab>
+        <bq-tab id="2" size="medium"><p>Tab text</p></bq-tab>
+        <bq-tab id="3" size="large"><p>Tab text</p></bq-tab>
+      `,
+    });
 
     const smallStyle = await computedStyle(page, 'bq-tab[size="small"] >>> [part="base"]', ['padding']);
     const mediumStyle = await computedStyle(page, 'bq-tab[size="medium"] >>> [part="base"]', ['padding']);

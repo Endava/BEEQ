@@ -172,8 +172,7 @@ export class BqProgress {
             {this.indeterminate && (
               <div
                 class={{
-                  'progress-bar__indeterminate absolute bg-[--bq-progress-bar--indicatorColor] bs-[--bq-progress-bar--height] is-[--bq-progress-bar--indeterminateWidth]':
-                    true,
+                  'progress-bar__indeterminate absolute bg-[--bq-progress-bar--indicatorColor] bs-[--bq-progress-bar--height] is-[--bq-progress-bar--indeterminateWidth]': true,
                   'rounded-full': this.borderShape === 'rounded',
                 }}
                 part="indeterminate"
