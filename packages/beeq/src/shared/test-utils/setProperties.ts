@@ -21,7 +21,11 @@ export const setProperties = async <T extends keyof HTMLElementTagNameMap = BqHT
   await page.$eval(
     element,
     (elementRef, attributes) => {
-      Object.entries(attributes).forEach(([attr, value]) => (elementRef[attr] = value));
+      if (attributes && typeof attributes === 'object') {
+        Object.keys(attributes).forEach((attr) => {
+          elementRef[attr] = attributes[attr];
+        });
+      }
     },
     attributes,
   );
@@ -31,8 +35,12 @@ export const setProperties = async <T extends keyof HTMLElementTagNameMap = BqHT
   return page.$eval(
     element,
     (elementRef, attributes) => {
-      const attrs = {};
-      Object.keys(attributes).forEach((attr) => (attrs[attr] = elementRef[attr]));
+      const attrs: Record<string, unknown> = {};
+      if (attributes && typeof attributes === 'object') {
+        Object.keys(attributes as object).forEach((attr) => {
+          attrs[attr] = elementRef[attr];
+        });
+      }
       return attrs;
     },
     attributes,
