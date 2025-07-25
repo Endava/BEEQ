@@ -48,7 +48,7 @@ export const waitForSvgLoad = (element: HTMLBqIconElement, options: WaitForSvgLo
     const checkIfAlreadyLoaded = () => {
       // Check if SVG is already loaded by looking for the svg element with part="svg"
       const svgElement = element.shadowRoot?.querySelector('[part="svg"]');
-      if (svgElement && svgElement.innerHTML.trim()) {
+      if (svgElement?.innerHTML.trim()) {
         cleanup();
         resolve();
         return true;
