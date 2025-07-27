@@ -26,6 +26,7 @@ describe('bq-icon', () => {
       html: '<bq-icon name="pulse"></bq-icon>',
     });
 
+    await page.waitForChanges();
     await page.$eval('bq-icon', waitForSvgLoad);
 
     const element = await page.find('bq-icon >>> [part="svg"]');
@@ -40,10 +41,10 @@ describe('bq-icon', () => {
       html: '<bq-icon name="pulse"></bq-icon>',
     });
 
+    await page.waitForChanges();
     await page.$eval('bq-icon', waitForSvgLoad);
 
     await setProperties(page, 'bq-icon', { name: 'check' });
-    // Wait for the new SVG to load after changing the name
     await page.$eval('bq-icon', waitForSvgLoad);
 
     const element = await page.find('bq-icon >>> [part="svg"]');
@@ -58,6 +59,7 @@ describe('bq-icon', () => {
       html: '<bq-icon name="pulse"></bq-icon>',
     });
 
+    await page.waitForChanges();
     await page.$eval('bq-icon', waitForSvgLoad);
 
     const style = await computedStyle(page, 'bq-icon >>> [part="base"]', ['height']);
@@ -69,6 +71,7 @@ describe('bq-icon', () => {
       html: '<bq-icon name="pulse" size="30"></bq-icon>',
     });
 
+    await page.waitForChanges();
     await page.$eval('bq-icon', waitForSvgLoad);
 
     const style = await computedStyle(page, 'bq-icon >>> [part="base"]', ['height']);
