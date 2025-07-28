@@ -1,14 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-import { computedStyle, setProperties } from '../../../shared/test-utils';
-
-const waitForSvgLoad = async (elem: HTMLBqIconElement) => {
-  const partSVG = elem.shadowRoot.querySelector('[part="svg"]');
-  if (!partSVG) {
-    return new Promise((resolve) => elem.addEventListener('svgLoaded', resolve));
-  }
-  return Promise.resolve();
-};
+import { computedStyle, setProperties, waitForSvgLoad } from '../../../shared/test-utils';
 
 describe('bq-icon', () => {
   it('should render', async () => {
@@ -17,7 +9,6 @@ describe('bq-icon', () => {
     });
 
     const element = await page.find('bq-icon');
-
     expect(element).toHaveClass('hydrated');
   });
 
@@ -27,7 +18,6 @@ describe('bq-icon', () => {
     });
 
     const element = await page.find('bq-icon');
-
     expect(element.shadowRoot).not.toBeNull();
   });
 
@@ -36,6 +26,7 @@ describe('bq-icon', () => {
       html: '<bq-icon name="pulse"></bq-icon>',
     });
 
+    await page.waitForChanges();
     await page.$eval('bq-icon', waitForSvgLoad);
 
     const element = await page.find('bq-icon >>> [part="svg"]');
@@ -50,9 +41,11 @@ describe('bq-icon', () => {
       html: '<bq-icon name="pulse"></bq-icon>',
     });
 
+    await page.waitForChanges();
+    await page.$eval('bq-icon', waitForSvgLoad);
+
     await setProperties(page, 'bq-icon', { name: 'check' });
     await page.$eval('bq-icon', waitForSvgLoad);
-    await page.waitForChanges();
 
     const element = await page.find('bq-icon >>> [part="svg"]');
     expect(element.innerHTML).toBeDefined();
@@ -66,18 +59,22 @@ describe('bq-icon', () => {
       html: '<bq-icon name="pulse"></bq-icon>',
     });
 
-    const style = await computedStyle(page, 'bq-icon >>> [part="base"]', ['height']);
+    await page.waitForChanges();
+    await page.$eval('bq-icon', waitForSvgLoad);
 
+    const style = await computedStyle(page, 'bq-icon >>> [part="base"]', ['height']);
     expect(style).toEqual({ height: '24px' });
   });
 
   it('should change size', async () => {
     const page = await newE2EPage({
-      html: '<bq-icon size="30"></bq-icon>',
+      html: '<bq-icon name="pulse" size="30"></bq-icon>',
     });
 
-    const style = await computedStyle(page, 'bq-icon >>> [part="base"]', ['height']);
+    await page.waitForChanges();
+    await page.$eval('bq-icon', waitForSvgLoad);
 
+    const style = await computedStyle(page, 'bq-icon >>> [part="base"]', ['height']);
     expect(style).toEqual({ height: '30px' });
   });
 });

@@ -359,8 +359,7 @@ export class BqSlider {
     return (
       <span
         class={{
-          [`${css} box-content block text-s font-medium leading-regular text-primary is-fit min-is-8 [font-variant:tabular-nums]`]:
-            true,
+          [`${css} box-content block text-s font-medium leading-regular text-primary is-fit min-is-8 [font-variant:tabular-nums]`]: true,
           hidden: position === 'start' ? !this.enableValueIndicator : !this.enableValueIndicator || !this.isRangeType,
         }}
         part={`label-${position}`}
@@ -386,8 +385,7 @@ export class BqSlider {
       <input
         type="range"
         class={{
-          'absolute start-0 -translate-y-1/2 cursor-pointer appearance-none bg-transparent outline-none is-full inset-bs-[50%] disabled:cursor-not-allowed':
-            true,
+          'absolute start-0 -translate-y-1/2 cursor-pointer appearance-none bg-transparent outline-none is-full inset-bs-[50%] disabled:cursor-not-allowed': true,
           'pointer-events-none': this.isRangeType,
         }}
         style={this.isRangeType ? { zIndex: zIndexValue(type) } : undefined}

@@ -149,8 +149,7 @@ export class BqPageTitle {
           {/* Sub-title */}
           <div
             class={{
-              'title-font text-[length:--subtitle-textSize] font-[--subtitle-fontWeight] leading-[--title-lineHeight] text-[color:--subtitle-textColor]':
-                true,
+              'title-font text-[length:--subtitle-textSize] font-[--subtitle-fontWeight] leading-[--title-lineHeight] text-[color:--subtitle-textColor]': true,
               hidden: !this.hasSubTitle,
             }}
             ref={(divElem) => (this.subTitleElem = divElem)}
