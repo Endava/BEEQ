@@ -2271,7 +2271,7 @@ export namespace Components {
      * @status stable
      * @dependency bq-tooltip
      * @attr {boolean} active - If `true`, the menu item will be shown as active/selected.
-     * @attr {boolean} collapse - If `true`, the item label and suffix will be hidden and the with will be reduced according to its parent.
+     * @attr {boolean} collapse - If `true`, the item label and suffix will be hidden and the `width` will be reduced according to its parent.
      * @attr {boolean} disabled - If `true`, the menu item will be disabled (no interaction allowed).
      * @event bqBlur - Handler to be called when the button loses focus.
      * @event bqClick - Handler to be called when the button gets focused.
@@ -2293,7 +2293,7 @@ export namespace Components {
          */
         "active": boolean;
         /**
-          * If true, the item label and suffix will be hidden and the with will be reduce according to its parent
+          * If true, the item label and suffix will be hidden and the `width` will be reduced according to its parent.
           * @default false
          */
         "collapse": boolean;
@@ -4753,7 +4753,7 @@ declare global {
      * @status stable
      * @dependency bq-tooltip
      * @attr {boolean} active - If `true`, the menu item will be shown as active/selected.
-     * @attr {boolean} collapse - If `true`, the item label and suffix will be hidden and the with will be reduced according to its parent.
+     * @attr {boolean} collapse - If `true`, the item label and suffix will be hidden and the `width` will be reduced according to its parent.
      * @attr {boolean} disabled - If `true`, the menu item will be disabled (no interaction allowed).
      * @event bqBlur - Handler to be called when the button loses focus.
      * @event bqClick - Handler to be called when the button gets focused.
@@ -7732,7 +7732,7 @@ declare namespace LocalJSX {
      * @status stable
      * @dependency bq-tooltip
      * @attr {boolean} active - If `true`, the menu item will be shown as active/selected.
-     * @attr {boolean} collapse - If `true`, the item label and suffix will be hidden and the with will be reduced according to its parent.
+     * @attr {boolean} collapse - If `true`, the item label and suffix will be hidden and the `width` will be reduced according to its parent.
      * @attr {boolean} disabled - If `true`, the menu item will be disabled (no interaction allowed).
      * @event bqBlur - Handler to be called when the button loses focus.
      * @event bqClick - Handler to be called when the button gets focused.
@@ -7754,7 +7754,7 @@ declare namespace LocalJSX {
          */
         "active"?: boolean;
         /**
-          * If true, the item label and suffix will be hidden and the with will be reduce according to its parent
+          * If true, the item label and suffix will be hidden and the `width` will be reduced according to its parent.
           * @default false
          */
         "collapse"?: boolean;
@@ -9817,7 +9817,7 @@ declare module "@stencil/core" {
              * @status stable
              * @dependency bq-tooltip
              * @attr {boolean} active - If `true`, the menu item will be shown as active/selected.
-             * @attr {boolean} collapse - If `true`, the item label and suffix will be hidden and the with will be reduced according to its parent.
+             * @attr {boolean} collapse - If `true`, the item label and suffix will be hidden and the `width` will be reduced according to its parent.
              * @attr {boolean} disabled - If `true`, the menu item will be disabled (no interaction allowed).
              * @event bqBlur - Handler to be called when the button loses focus.
              * @event bqClick - Handler to be called when the button gets focused.
