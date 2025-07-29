@@ -39,12 +39,9 @@ import { getTextContent } from '../../shared/utils';
  * @part trigger - The `<div>` container that holds the element which displays tooltip on hover (when the side menu is collapsed)
  *
  * @cssprop --bq-side-menu-item--bg-default - Side menu item default background color
- * @cssprop --bq-side-menu-item--bg-hover - Side menu item hover background color
  * @cssprop --bq-side-menu-item--bg-active - Side menu item active background color
  * @cssprop --bq-side-menu-item--text-default - Side menu item default text color
- * @cssprop --bq-side-menu-item--text-hover - Side menu item hover text color
  * @cssprop --bq-side-menu-item--text-active - Side menu item active text color
- * @cssprop --bq-side-menu-item--text-disabled - Side menu item disable text color
  * @cssprop --bq-side-menu-item--paddingX - Side menu item vertical padding
  * @cssprop --bq-side-menu-item--paddingY - Side menu item horizontal padding
  */
