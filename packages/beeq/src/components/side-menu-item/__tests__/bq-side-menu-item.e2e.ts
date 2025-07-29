@@ -83,6 +83,44 @@ it('should handle `active` property', async () => {
   expect(menuItemElem).toHaveClass('active');
 });
 
+it('should handle `active` state on Enter key press', async () => {
+  const page = await newE2EPage({
+    html: `
+      <bq-side-menu>
+        <bq-side-menu-item>
+          Menu item label
+        </bq-side-menu-item>
+      </bq-side-menu>
+    `,
+  });
+
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Enter');
+  await page.waitForChanges();
+
+  const menuItemElem = await page.find('bq-side-menu-item >>> .bq-side-menu__item');
+  expect(menuItemElem).toHaveClass('active');
+});
+
+it('should handle `active` state on Space key press', async () => {
+  const page = await newE2EPage({
+    html: `
+      <bq-side-menu>
+        <bq-side-menu-item>
+          Menu item label
+        </bq-side-menu-item>
+      </bq-side-menu>
+    `,
+  });
+
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Space');
+  await page.waitForChanges();
+
+  const menuItemElem = await page.find('bq-side-menu-item >>> .bq-side-menu__item');
+  expect(menuItemElem).toHaveClass('active');
+});
+
 it('should handle `disabled` property', async () => {
   const page = await newE2EPage({
     html: `
@@ -98,7 +136,7 @@ it('should handle `disabled` property', async () => {
   await page.$eval('bq-side-menu-item', async (elem: HTMLBqSideMenuItemElement) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: Property 'click' does not exist on type 'Element'.
-    elem.shadowRoot.querySelector('a[part="base"]').click();
+    elem.shadowRoot.querySelector('button[part="base"]').click();
   });
   await page.waitForChanges();
 
