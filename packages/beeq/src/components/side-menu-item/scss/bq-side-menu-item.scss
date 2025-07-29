@@ -19,10 +19,7 @@
 
   // Hover state
   @apply [&:not(.disabled)]:hover:cursor-pointer;
-
-  &:not(.disabled, .active):hover {
-    @apply hover:bg-[var(--bq-side-menu-item--bg-hover)] hover:text-m hover:text-[color:var(--bq-side-menu-item--text-hover)];
-  }
+  @apply [&:not(.disabled,.active)]:hover:text-m [&:not(.disabled,.active)]:hover:bg-hover-ui-alt [&:not(.disabled,.active)]:hover:text-hover-primary;
 }
 
 .bq-side-menu__item.active {
