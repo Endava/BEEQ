@@ -1,4 +1,4 @@
-import { Component, Element, Event, Fragment, h, Prop, State } from '@stencil/core';
+import { Component, Element, Event, h, Prop, State } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
 
 import { getTextContent } from '../../shared/utils';
@@ -20,7 +20,7 @@ import { getTextContent } from '../../shared/utils';
  * @dependency bq-tooltip
  *
  * @attr {boolean} active - If `true`, the menu item will be shown as active/selected.
- * @attr {boolean} collapse - If `true`, the item label and suffix will be hidden and the with will be reduced according to its parent.
+ * @attr {boolean} collapse - If `true`, the item label and suffix will be hidden and the `width` will be reduced according to its parent.
  * @attr {boolean} disabled - If `true`, the menu item will be disabled (no interaction allowed).
  *
  * @event bqBlur - Handler to be called when the button loses focus.
@@ -39,12 +39,9 @@ import { getTextContent } from '../../shared/utils';
  * @part trigger - The `<div>` container that holds the element which displays tooltip on hover (when the side menu is collapsed)
  *
  * @cssprop --bq-side-menu-item--bg-default - Side menu item default background color
- * @cssprop --bq-side-menu-item--bg-hover - Side menu item hover background color
  * @cssprop --bq-side-menu-item--bg-active - Side menu item active background color
  * @cssprop --bq-side-menu-item--text-default - Side menu item default text color
- * @cssprop --bq-side-menu-item--text-hover - Side menu item hover text color
  * @cssprop --bq-side-menu-item--text-active - Side menu item active text color
- * @cssprop --bq-side-menu-item--text-disabled - Side menu item disable text color
  * @cssprop --bq-side-menu-item--paddingX - Side menu item vertical padding
  * @cssprop --bq-side-menu-item--paddingY - Side menu item horizontal padding
  */
@@ -76,7 +73,7 @@ export class BqSideMenuItem {
   /** If true, the menu item will be shown as active/selected. */
   @Prop() active: boolean = false;
 
-  /** If true, the item label and suffix will be hidden and the with will be reduce according to its parent */
+  /** If true, the item label and suffix will be hidden and the `width` will be reduced according to its parent. */
   @Prop() collapse: boolean = false;
 
   /** If true, the menu item will be disabled (no interaction allowed) */
@@ -147,7 +144,7 @@ export class BqSideMenuItem {
   };
 
   handleClick = (ev: Event) => {
-    if (this.disabled) {
+    if (this.disabled || this.active) {
       ev.preventDefault();
       ev.stopPropagation();
       return;
@@ -161,38 +158,35 @@ export class BqSideMenuItem {
   // ===================================
 
   private menuItem = () => (
-    <Fragment>
-      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <a
-        class={{
-          'bq-side-menu__item': true,
-          active: this.active,
-          disabled: this.disabled,
-          'is-collapsed': this.collapse,
-        }}
-        onBlur={this.handleBlur}
-        onFocus={this.handleFocus}
-        onClick={this.handleClick}
-        aria-disabled={this.disabled ? 'true' : 'false'}
-        role="menuitem"
-        tabindex={this.disabled ? -1 : 0}
-        slot="trigger"
-        part="base"
+    <button
+      class={{
+        'bq-side-menu__item': true,
+        active: this.active,
+        disabled: this.disabled,
+        'is-collapsed': this.collapse,
+      }}
+      onBlur={this.handleBlur}
+      onFocus={this.handleFocus}
+      onClick={this.handleClick}
+      aria-disabled={this.disabled ? 'true' : 'false'}
+      role="menuitem"
+      tabindex={this.disabled ? -1 : 0}
+      slot="trigger"
+      part="base"
+    >
+      <div class="bq-side-menu__item--prefix flex items-center" part="prefix">
+        <slot name="prefix" />
+      </div>
+      <div
+        class="bq-side-menu__item--label overflow-hidden text-ellipsis whitespace-nowrap"
+        ref={(labelElem) => (this.labelElem = labelElem)}
       >
-        <div class="bq-side-menu__item--prefix flex items-center" part="prefix">
-          <slot name="prefix" />
-        </div>
-        <div
-          class="bq-side-menu__item--label overflow-hidden text-ellipsis whitespace-nowrap"
-          ref={(labelElem) => (this.labelElem = labelElem)}
-        >
-          <slot onSlotchange={this.handleSlotChange} />
-        </div>
-        <div class="bq-side-menu__item--suffix ml-auto flex items-center" part="suffix">
-          <slot name="suffix" />
-        </div>
-      </a>
-    </Fragment>
+        <slot onSlotchange={this.handleSlotChange} />
+      </div>
+      <div class="bq-side-menu__item--suffix ml-auto flex items-center" part="suffix">
+        <slot name="suffix" />
+      </div>
+    </button>
   );
 
   render() {
