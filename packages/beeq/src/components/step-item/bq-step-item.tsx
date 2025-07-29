@@ -136,7 +136,6 @@ export class BqStepItem {
     if (!iconElem || !isHTMLElement(iconElem, 'bq-icon')) return;
 
     iconElem.size = this.size === 'small' ? 24 : 32;
-    iconElem.weight = this.isCurrent ? 'fill' : 'regular';
   };
 
   // render() function
@@ -145,18 +144,20 @@ export class BqStepItem {
 
   render() {
     return (
-      <div
+      <button
+        type="button"
         class={{
-          'bq-step-item flex gap-s': true,
+          'bq-step-item flex gap-s rounded-m border-none bg-transparent p-0 pe-[--bq-steps--gap] p-b-xs2 focus-visible:focus': true,
           [`bq-step-item--${this.status}`]: true,
           'pointer-events-none opacity-60': this.isDisabled,
         }}
+        disabled={this.isDisabled}
         part="base"
       >
         <div class={`bq-step-item__prefix relative ${this.type} ${this.size} ${this.status}`}>
           <slot name="prefix" onSlotchange={this.handleIconPrefix} />
         </div>
-        <div class="bq-step-item__content">
+        <div class="bq-step-item__content items-start text-start">
           {/* TITLE */}
           <div
             class={{
@@ -179,7 +180,7 @@ export class BqStepItem {
             <slot name="description" />
           </div>
         </div>
-      </div>
+      </button>
     );
   }
 }

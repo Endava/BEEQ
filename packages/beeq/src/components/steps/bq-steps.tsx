@@ -132,7 +132,8 @@ export class BqSteps {
   // ===================================
 
   render() {
-    const dividerPaddingTop = this.size === 'small' ? 'p-bs-s' : 'p-bs-m';
+    // !Note: We use a custom padding value for the medium size to avoid misalignment between the steps and the divider.
+    const dividerPaddingTop = this.size === 'small' ? 'p-bs-m' : 'p-bs-5';
 
     return (
       <div
