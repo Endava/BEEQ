@@ -47,7 +47,9 @@ import type { TStepsSize, TStepsType } from '../steps/bq-steps.types';
 @Component({
   tag: 'bq-step-item',
   styleUrl: './scss/bq-step-item.scss',
-  shadow: true,
+  shadow: {
+    delegatesFocus: true,
+  },
 })
 export class BqStepItem {
   // Own Properties
