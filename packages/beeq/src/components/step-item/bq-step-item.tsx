@@ -94,6 +94,12 @@ export class BqStepItem {
   /** Callback handler triggered when the step item is clicked */
   @Event() bqClick: EventEmitter<HTMLBqStepItemElement>;
 
+  /** Callback handler triggered when the step item is focused */
+  @Event() bqFocus: EventEmitter<HTMLBqStepItemElement>;
+
+  /** Callback handler triggered when the step item loses focus */
+  @Event() bqBlur: EventEmitter<HTMLBqStepItemElement>;
+
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
@@ -124,6 +130,14 @@ export class BqStepItem {
   // Internal business logic.
   // These methods cannot be called from the host element.
   // =======================================================
+
+  private handleFocus = () => {
+    this.bqFocus.emit(this.el);
+  };
+
+  private handleBlur = () => {
+    this.bqBlur.emit(this.el);
+  };
 
   private handleClick = () => {
     if (this.isDisabled) return;
@@ -160,6 +174,8 @@ export class BqStepItem {
         }}
         disabled={this.isDisabled}
         onClick={this.handleClick}
+        onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
         type="button"
         part="base"
       >

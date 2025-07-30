@@ -4873,6 +4873,8 @@ declare global {
     };
     interface HTMLBqStepItemElementEventMap {
         "bqClick": HTMLBqStepItemElement;
+        "bqFocus": HTMLBqStepItemElement;
+        "bqBlur": HTMLBqStepItemElement;
     }
     /**
      * The Step Item Component is a UI element used to display a single step or stage in a process or task.
@@ -7953,9 +7955,17 @@ declare namespace LocalJSX {
      */
     interface BqStepItem {
         /**
+          * Callback handler triggered when the step item loses focus
+         */
+        "onBqBlur"?: (event: BqStepItemCustomEvent<HTMLBqStepItemElement>) => void;
+        /**
           * Callback handler triggered when the step item is clicked
          */
         "onBqClick"?: (event: BqStepItemCustomEvent<HTMLBqStepItemElement>) => void;
+        /**
+          * Callback handler triggered when the step item is focused
+         */
+        "onBqFocus"?: (event: BqStepItemCustomEvent<HTMLBqStepItemElement>) => void;
         /**
           * It defines prefix size
           * @default 'medium'
