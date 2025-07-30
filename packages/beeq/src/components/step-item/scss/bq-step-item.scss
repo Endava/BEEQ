@@ -6,8 +6,13 @@
 
 :host {
   --bq-icon--color: theme(stroke.icon.primary);
-
+  // !Note: The use of the `bg-primary` is to avoid the divider to be visible behind the step item.
   @apply bg-primary;
+}
+
+.bq-step-item {
+  @apply flex gap-s rounded-m border-none bg-transparent p-0 pe-[--bq-steps--gap] p-b-xs2 focus-visible:focus hover:bg-hover-ui-secondary;
+  @apply transition-colors duration-300;
 }
 
 .bq-step-item__prefix.dot,

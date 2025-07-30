@@ -89,8 +89,8 @@ export class BqStepItem {
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Callback handler emitted when the step item is clicked */
-  @Event() bqClick: EventEmitter<{ target: HTMLBqStepItemElement; value: string }>;
+  /** Callback handler triggered when the step item is clicked */
+  @Event() bqClick: EventEmitter<HTMLBqStepItemElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -123,13 +123,11 @@ export class BqStepItem {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private get isDisabled(): boolean {
-    return this.status === 'disabled';
-  }
+  private handleClick = () => {
+    if (this.isDisabled) return;
 
-  private get isCurrent(): boolean {
-    return this.status === 'current';
-  }
+    this.bqClick.emit(this.el);
+  };
 
   private handleIconPrefix = () => {
     const iconElem = this.el.querySelector('[slot="prefix"]');
@@ -138,6 +136,14 @@ export class BqStepItem {
     iconElem.size = this.size === 'small' ? 24 : 32;
   };
 
+  private get isDisabled(): boolean {
+    return this.status === 'disabled';
+  }
+
+  private get isCurrent(): boolean {
+    return this.status === 'current';
+  }
+
   // render() function
   // Always the last one in the class.
   // ===================================
@@ -145,13 +151,14 @@ export class BqStepItem {
   render() {
     return (
       <button
-        type="button"
         class={{
-          'bq-step-item flex gap-s rounded-m border-none bg-transparent p-0 pe-[--bq-steps--gap] p-b-xs2 focus-visible:focus': true,
+          'bq-step-item': true,
           [`bq-step-item--${this.status}`]: true,
           'pointer-events-none opacity-60': this.isDisabled,
         }}
         disabled={this.isDisabled}
+        onClick={this.handleClick}
+        type="button"
         part="base"
       >
         <div class={`bq-step-item__prefix relative ${this.type} ${this.size} ${this.status}`}>
