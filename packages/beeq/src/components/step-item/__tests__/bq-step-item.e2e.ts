@@ -82,4 +82,76 @@ describe('bq-step-item', () => {
     });
     expect(prefix).toMatch(/bq-icon/i);
   });
+
+  it('should emit bqClick event when clicked', async () => {
+    const page = await newE2EPage({
+      html: `
+        <bq-step-item status="default">
+          <span>Title</span>
+        </bq-step-item>
+      `,
+    });
+
+    const bqClick = await page.spyOnEvent('bqClick');
+
+    const element = await page.find('bq-step-item >>> [part="base"]');
+    await element.click();
+    await page.waitForChanges();
+
+    expect(bqClick).toHaveReceivedEventTimes(1);
+  });
+
+  it('should emit bqClick event on Space key press', async () => {
+    const page = await newE2EPage({
+      html: `
+        <bq-step-item status="default">
+          <span>Title</span>
+        </bq-step-item>
+      `,
+    });
+
+    const event = await page.spyOnEvent('bqClick');
+
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Space');
+    await page.waitForChanges();
+
+    expect(event).toHaveReceivedEventTimes(1);
+  });
+
+  it('should emit bqClick event on Enter key press', async () => {
+    const page = await newE2EPage({
+      html: `
+        <bq-step-item status="default">
+          <span>Title</span>
+        </bq-step-item>
+      `,
+    });
+
+    const event = await page.spyOnEvent('bqClick');
+
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Enter');
+    await page.waitForChanges();
+
+    expect(event).toHaveReceivedEventTimes(1);
+  });
+
+  it('should not emit bqClick event when disabled', async () => {
+    const page = await newE2EPage({
+      html: `
+        <bq-step-item status="disabled">
+          <span>Title</span>
+        </bq-step-item>
+      `,
+    });
+
+    const element = await page.find('bq-step-item >>> [part="base"]');
+    const event = await page.spyOnEvent('bqClick');
+
+    await element.click();
+    await page.waitForChanges();
+
+    expect(event).not.toHaveReceivedEvent();
+  });
 });
