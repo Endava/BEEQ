@@ -75,7 +75,7 @@ export const EndavaDarkTheme = {
   /** Primary */
   'bq-ui--primary': 'var(--bq-neutral-900)',
   /** Secondary */
-  'bq-ui--secondary': 'var(--bq-neutral-800)',
+  'bq-ui--secondary': 'var(--bq-neutral-950)',
   /** Tertiary */
   'bq-ui--tertiary': 'var(--bq-neutral-700)',
   /** Inverse */

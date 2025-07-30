@@ -75,7 +75,7 @@ export const EndavaLightTheme = {
   /** Primary */
   'bq-ui--primary': 'var(--bq-white)',
   /** Secondary */
-  'bq-ui--secondary': 'var(--bq-neutral-200)',
+  'bq-ui--secondary': 'var(--bq-neutral-100)',
   /** Tertiary */
   'bq-ui--tertiary': 'var(--bq-neutral-500)',
   /** Inverse */
