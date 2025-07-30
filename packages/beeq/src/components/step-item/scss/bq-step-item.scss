@@ -11,7 +11,7 @@
 }
 
 .bq-step-item {
-  @apply flex gap-s rounded-m border-none bg-transparent p-0 pe-[--bq-steps--gap] p-b-xs2 focus-visible:focus hover:bg-hover-ui-secondary;
+  @apply flex gap-s rounded-m border-none bg-transparent pe-[--bq-steps--gap] ps-0 p-b-xs2 focus-visible:focus hover:bg-hover-ui-secondary;
   @apply transition-colors duration-300;
 }
 
