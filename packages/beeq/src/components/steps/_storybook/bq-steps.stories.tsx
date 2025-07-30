@@ -20,6 +20,8 @@ const meta: Meta = {
     size: { control: 'select', options: [...STEPS_SIZE] },
     // Events
     bqClick: { action: 'bqClick', table: { disable: true } },
+    bqFocus: { action: 'bqFocus', table: { disable: true } },
+    bqBlur: { action: 'bqBlur', table: { disable: true } },
     // Not part of the public API
     children: { control: 'text', table: { disable: true } },
   },
@@ -32,7 +34,14 @@ export default meta;
 
 const Template = (args: Args) => {
   return html`
-    <bq-steps divider-color=${args['divider-color']} type=${args.type} size=${args.size} @bqClick=${args.bqClick}>
+    <bq-steps
+      divider-color=${args['divider-color']}
+      type=${args.type}
+      size=${args.size}
+      @bqClick=${args.bqClick}
+      @bqFocus=${args.bqFocus}
+      @bqBlur=${args.bqBlur}
+    >
       ${ifDefined(args.children) ? unsafeHTML(args.children) : nothing}
     </bq-steps>
   `;
