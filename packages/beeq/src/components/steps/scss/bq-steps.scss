@@ -11,7 +11,3 @@
 ::slotted(bq-step-item:not(:first-child)) {
   @apply ps-[--bq-steps--gap];
 }
-
-::slotted(bq-step-item::part(base):not(:last-child)) {
-  @apply pe-[--bq-steps--gap];
-}
