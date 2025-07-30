@@ -21,9 +21,9 @@ It should be used inside the Steps component.
 
 ## Events
 
-| Event     | Description                                            | Type                                                             |
-| --------- | ------------------------------------------------------ | ---------------------------------------------------------------- |
-| `bqClick` | Callback handler emitted when the step item is clicked | `CustomEvent<{ target: HTMLBqStepItemElement; value: string; }>` |
+| Event     | Description                                              | Type                                 |
+| --------- | -------------------------------------------------------- | ------------------------------------ |
+| `bqClick` | Callback handler triggered when the step item is clicked | `CustomEvent<HTMLBqStepItemElement>` |
 
 
 ## Slots
