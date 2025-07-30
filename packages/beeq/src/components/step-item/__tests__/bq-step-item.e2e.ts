@@ -83,6 +83,26 @@ describe('bq-step-item', () => {
     expect(prefix).toMatch(/bq-icon/i);
   });
 
+  it('should emit bqFocus and bqBlur events when focused and blurred', async () => {
+    const page = await newE2EPage({
+      html: `
+        <bq-step-item status="default">
+          <span>Title</span>
+        </bq-step-item>
+      `,
+    });
+
+    const bqFocus = await page.spyOnEvent('bqFocus');
+    const bqBlur = await page.spyOnEvent('bqBlur');
+
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Tab');
+    await page.waitForChanges();
+
+    expect(bqFocus).toHaveReceivedEventTimes(1);
+    expect(bqBlur).toHaveReceivedEventTimes(1);
+  });
+
   it('should emit bqClick event when clicked', async () => {
     const page = await newE2EPage({
       html: `
