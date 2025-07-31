@@ -47,7 +47,9 @@ import type { TStepsSize, TStepsType } from '../steps/bq-steps.types';
 @Component({
   tag: 'bq-step-item',
   styleUrl: './scss/bq-step-item.scss',
-  shadow: true,
+  shadow: {
+    delegatesFocus: true,
+  },
 })
 export class BqStepItem {
   // Own Properties
@@ -68,7 +70,7 @@ export class BqStepItem {
   @Prop({ reflect: true }) size?: TStepsSize = 'medium';
 
   /** It defines step item appearance based on its status */
-  @Prop({ reflect: true }) status?: TStepItemStatus = 'default';
+  @Prop({ reflect: true, mutable: true }) status?: TStepItemStatus = 'default';
 
   /** It defines the step item type used */
   @Prop({ reflect: true }) type?: TStepsType;
@@ -89,8 +91,14 @@ export class BqStepItem {
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Callback handler emitted when the step item is clicked */
-  @Event() bqClick: EventEmitter<{ target: HTMLBqStepItemElement; value: string }>;
+  /** Callback handler triggered when the step item is clicked */
+  @Event() bqClick: EventEmitter<HTMLBqStepItemElement>;
+
+  /** Callback handler triggered when the step item is focused */
+  @Event() bqFocus: EventEmitter<HTMLBqStepItemElement>;
+
+  /** Callback handler triggered when the step item loses focus */
+  @Event() bqBlur: EventEmitter<HTMLBqStepItemElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -123,6 +131,33 @@ export class BqStepItem {
   // These methods cannot be called from the host element.
   // =======================================================
 
+  private handleFocus = () => {
+    this.bqFocus.emit(this.el);
+  };
+
+  private handleBlur = () => {
+    this.bqBlur.emit(this.el);
+  };
+
+  private handleClick = async () => {
+    if (this.isDisabled || this.isCurrent) return;
+
+    const clickEvent = this.bqClick.emit(this.el);
+    if (clickEvent.defaultPrevented) return;
+
+    const stepsParent = this.el.closest('bq-steps') as HTMLBqStepsElement;
+    if (!stepsParent) return;
+
+    await stepsParent.setCurrentStepItem(this.el);
+  };
+
+  private handleIconPrefix = () => {
+    const iconElem = this.el.querySelector('[slot="prefix"]');
+    if (!iconElem || !isHTMLElement(iconElem, 'bq-icon')) return;
+
+    iconElem.size = this.size === 'small' ? 24 : 32;
+  };
+
   private get isDisabled(): boolean {
     return this.status === 'disabled';
   }
@@ -131,32 +166,29 @@ export class BqStepItem {
     return this.status === 'current';
   }
 
-  private handleIconPrefix = () => {
-    const iconElem = this.el.querySelector('[slot="prefix"]');
-    if (!iconElem || !isHTMLElement(iconElem, 'bq-icon')) return;
-
-    iconElem.size = this.size === 'small' ? 24 : 32;
-    iconElem.weight = this.isCurrent ? 'fill' : 'regular';
-  };
-
   // render() function
   // Always the last one in the class.
   // ===================================
 
   render() {
     return (
-      <div
+      <button
         class={{
-          'bq-step-item flex gap-s': true,
+          'bq-step-item': true,
           [`bq-step-item--${this.status}`]: true,
           'pointer-events-none opacity-60': this.isDisabled,
         }}
+        disabled={this.isDisabled}
+        onClick={this.handleClick}
+        onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
+        type="button"
         part="base"
       >
         <div class={`bq-step-item__prefix relative ${this.type} ${this.size} ${this.status}`}>
           <slot name="prefix" onSlotchange={this.handleIconPrefix} />
         </div>
-        <div class="bq-step-item__content">
+        <div class="bq-step-item__content items-start text-start">
           {/* TITLE */}
           <div
             class={{
@@ -179,7 +211,7 @@ export class BqStepItem {
             <slot name="description" />
           </div>
         </div>
-      </div>
+      </button>
     );
   }
 }

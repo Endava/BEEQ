@@ -2516,6 +2516,11 @@ export namespace Components {
          */
         "dividerColor": string;
         /**
+          * Set the current step item.
+          * @param newCurrentStep - The step item to set as current.
+         */
+        "setCurrentStepItem": (newCurrentStep: HTMLBqStepItemElement) => Promise<void>;
+        /**
           * The size of the steps
           * @default 'medium'
          */
@@ -4872,7 +4877,9 @@ declare global {
         new (): HTMLBqStatusElement;
     };
     interface HTMLBqStepItemElementEventMap {
-        "bqClick": { target: HTMLBqStepItemElement; value: string };
+        "bqClick": HTMLBqStepItemElement;
+        "bqFocus": HTMLBqStepItemElement;
+        "bqBlur": HTMLBqStepItemElement;
     }
     /**
      * The Step Item Component is a UI element used to display a single step or stage in a process or task.
@@ -7953,9 +7960,17 @@ declare namespace LocalJSX {
      */
     interface BqStepItem {
         /**
-          * Callback handler emitted when the step item is clicked
+          * Callback handler triggered when the step item loses focus
          */
-        "onBqClick"?: (event: BqStepItemCustomEvent<{ target: HTMLBqStepItemElement; value: string }>) => void;
+        "onBqBlur"?: (event: BqStepItemCustomEvent<HTMLBqStepItemElement>) => void;
+        /**
+          * Callback handler triggered when the step item is clicked
+         */
+        "onBqClick"?: (event: BqStepItemCustomEvent<HTMLBqStepItemElement>) => void;
+        /**
+          * Callback handler triggered when the step item is focused
+         */
+        "onBqFocus"?: (event: BqStepItemCustomEvent<HTMLBqStepItemElement>) => void;
         /**
           * It defines prefix size
           * @default 'medium'
