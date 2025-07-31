@@ -70,7 +70,7 @@ export class BqStepItem {
   @Prop({ reflect: true }) size?: TStepsSize = 'medium';
 
   /** It defines step item appearance based on its status */
-  @Prop({ reflect: true }) status?: TStepItemStatus = 'default';
+  @Prop({ reflect: true, mutable: true }) status?: TStepItemStatus = 'default';
 
   /** It defines the step item type used */
   @Prop({ reflect: true }) type?: TStepsType;
@@ -142,7 +142,24 @@ export class BqStepItem {
   private handleClick = () => {
     if (this.isDisabled) return;
 
-    this.bqClick.emit(this.el);
+    const clickEvent = this.bqClick.emit(this.el);
+    if (clickEvent.defaultPrevented) return;
+
+    this.setCurrentStepItem();
+  };
+
+  private setCurrentStepItem = () => {
+    const stepItemContainer = this.el.parentElement;
+    if (!stepItemContainer) return;
+
+    const currentStepItem = stepItemContainer.querySelector<HTMLBqStepItemElement>('bq-step-item[status="current"]');
+    // Ideally, only one step item should be current.
+    // So we change the status of the current step item to default.
+    if (currentStepItem && currentStepItem !== this.el) {
+      currentStepItem.status = 'default';
+    }
+    // And then we set the status of the clicked step item to current.
+    this.status = 'current';
   };
 
   private handleIconPrefix = () => {
