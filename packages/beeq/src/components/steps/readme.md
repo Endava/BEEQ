@@ -19,6 +19,25 @@ It is used to guide users through a process or task and to indicate their progre
 | `type`         | `type`          | The type of prefix element to use on the step items                                          | `"dot" \| "icon" \| "numeric"` | `undefined`         |
 
 
+## Methods
+
+### `setCurrentStepItem(newCurrentStep: HTMLBqStepItemElement) => Promise<void>`
+
+Set the current step item.
+
+#### Parameters
+
+| Name             | Type                    | Description                        |
+| ---------------- | ----------------------- | ---------------------------------- |
+| `newCurrentStep` | `HTMLBqStepItemElement` | - The step item to set as current. |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+
 ## Slots
 
 | Slot | Description    |

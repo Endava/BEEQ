@@ -1,4 +1,4 @@
-import { Component, Element, h, Prop, Watch } from '@stencil/core';
+import { Component, Element, h, Method, Prop, Watch } from '@stencil/core';
 
 import { STEPS_SIZE, STEPS_TYPE } from './bq-steps.types';
 import type { TStepsSize, TStepsType } from './bq-steps.types';
@@ -102,6 +102,20 @@ export class BqSteps {
   // Requires JSDocs for public API documentation.
   // ===============================================
 
+  /**
+   * Set the current step item.
+   * @param newCurrentStep - The step item to set as current.
+   */
+  @Method()
+  async setCurrentStepItem(newCurrentStep: HTMLBqStepItemElement): Promise<void> {
+    // Ideally, only one step item should be current.
+    // So we change the status of the current step item to default.
+    const currentStep = this.bqSteps.find((step) => step.status === 'current');
+    if (currentStep) currentStep.status = 'default';
+    // And then we set the status of the new current step item to current.
+    newCurrentStep.status = 'current';
+  }
+
   // Local methods
   // Internal business logic.
   // These methods cannot be called from the host element.
@@ -122,10 +136,6 @@ export class BqSteps {
       bqStepElem.type = this.type;
     });
   };
-
-  // private handleChange = (event) => {
-  //   this.bqChange.emit(event);
-  // }
 
   // render() function
   // Always the last one in the class.

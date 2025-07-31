@@ -2516,6 +2516,11 @@ export namespace Components {
          */
         "dividerColor": string;
         /**
+          * Set the current step item.
+          * @param newCurrentStep - The step item to set as current.
+         */
+        "setCurrentStepItem": (newCurrentStep: HTMLBqStepItemElement) => Promise<void>;
+        /**
           * The size of the steps
           * @default 'medium'
          */

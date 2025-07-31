@@ -139,27 +139,16 @@ export class BqStepItem {
     this.bqBlur.emit(this.el);
   };
 
-  private handleClick = () => {
-    if (this.isDisabled) return;
+  private handleClick = async () => {
+    if (this.isDisabled || this.isCurrent) return;
 
     const clickEvent = this.bqClick.emit(this.el);
     if (clickEvent.defaultPrevented) return;
 
-    this.setCurrentStepItem();
-  };
+    const stepsParent = this.el.closest('bq-steps') as HTMLBqStepsElement;
+    if (!stepsParent) return;
 
-  private setCurrentStepItem = () => {
-    const stepItemContainer = this.el.parentElement;
-    if (!stepItemContainer) return;
-
-    const currentStepItem = stepItemContainer.querySelector<HTMLBqStepItemElement>('bq-step-item[status="current"]');
-    // Ideally, only one step item should be current.
-    // So we change the status of the current step item to default.
-    if (currentStepItem && currentStepItem !== this.el) {
-      currentStepItem.status = 'default';
-    }
-    // And then we set the status of the clicked step item to current.
-    this.status = 'current';
+    await stepsParent.setCurrentStepItem(this.el);
   };
 
   private handleIconPrefix = () => {
