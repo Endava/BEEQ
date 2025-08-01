@@ -24,12 +24,12 @@ The radio button is a user interface element that allows users to select a singl
 
 ## Events
 
-| Event       | Description                                        | Type                              |
-| ----------- | -------------------------------------------------- | --------------------------------- |
-| `bqBlur`    | Handler to be called when the radio loses focus    | `CustomEvent<HTMLBqRadioElement>` |
-| `bqClick`   | Handler to be called when the radio state changes  | `CustomEvent<HTMLBqRadioElement>` |
-| `bqFocus`   | Handler to be called when the radio gets focus     | `CustomEvent<HTMLBqRadioElement>` |
-| `bqKeyDown` | Handler to be called when the radio key is pressed | `CustomEvent<KeyboardEvent>`      |
+| Event       | Description                                        | Type                                                          |
+| ----------- | -------------------------------------------------- | ------------------------------------------------------------- |
+| `bqBlur`    | Handler to be called when the radio loses focus    | `CustomEvent<HTMLBqRadioElement>`                             |
+| `bqClick`   | Handler to be called when the radio state changes  | `CustomEvent<{ value: string; target: HTMLBqRadioElement; }>` |
+| `bqFocus`   | Handler to be called when the radio gets focus     | `CustomEvent<HTMLBqRadioElement>`                             |
+| `bqKeyDown` | Handler to be called when the radio key is pressed | `CustomEvent<{ key: string; target: HTMLBqRadioElement; }>`   |
 
 
 ## Methods
