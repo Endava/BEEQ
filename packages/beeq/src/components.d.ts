@@ -4501,10 +4501,10 @@ declare global {
         new (): HTMLBqProgressElement;
     };
     interface HTMLBqRadioElementEventMap {
-        "bqClick": HTMLBqRadioElement;
+        "bqClick": { value: string; target: HTMLBqRadioElement };
         "bqFocus": HTMLBqRadioElement;
         "bqBlur": HTMLBqRadioElement;
-        "bqKeyDown": KeyboardEvent;
+        "bqKeyDown": { key: string; target: HTMLBqRadioElement };
     }
     /**
      * The radio button is a user interface element that allows users to select a single option.
@@ -7364,7 +7364,7 @@ declare namespace LocalJSX {
         /**
           * Handler to be called when the radio state changes
          */
-        "onBqClick"?: (event: BqRadioCustomEvent<HTMLBqRadioElement>) => void;
+        "onBqClick"?: (event: BqRadioCustomEvent<{ value: string; target: HTMLBqRadioElement }>) => void;
         /**
           * Handler to be called when the radio gets focus
          */
@@ -7372,7 +7372,7 @@ declare namespace LocalJSX {
         /**
           * Handler to be called when the radio key is pressed
          */
-        "onBqKeyDown"?: (event: BqRadioCustomEvent<KeyboardEvent>) => void;
+        "onBqKeyDown"?: (event: BqRadioCustomEvent<{ key: string; target: HTMLBqRadioElement }>) => void;
         /**
           * If `true`, it will indicate that the user must specify a value for the radio before the owning form can be submitted
          */
