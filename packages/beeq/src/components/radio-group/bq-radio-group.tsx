@@ -5,6 +5,15 @@ import { RADIO_GROUP_ORIENTATION } from './bq-radio-group.types';
 import type { TRadioGroupOrientation } from './bq-radio-group.types';
 import { debounce, isEventTargetChildOfElement, isNil, TDebounce, validatePropValue } from '../../shared/utils';
 
+const KEY_MAP = {
+  ArrowDown: 'next',
+  ArrowRight: 'next',
+  ArrowUp: 'previous',
+  ArrowLeft: 'previous',
+} as const;
+
+type Direction = (typeof KEY_MAP)[keyof typeof KEY_MAP];
+
 /**
  * The radio group is a user interface component that groups radio buttons to enable a single selection within the group.
  *
@@ -195,7 +204,7 @@ export class BqRadioGroup {
     const { target, value } = event.detail;
     if (value === this.value) return;
 
-    queueMicrotask(() => {
+    requestAnimationFrame(() => {
       if (event.defaultPrevented) return;
       this.updateRadioSelection(target);
     });
@@ -205,14 +214,7 @@ export class BqRadioGroup {
   onBqKeyDown(event: CustomEvent<{ key: string; target: HTMLBqRadioElement }>) {
     if (!isEventTargetChildOfElement(event, this.el)) return;
 
-    const KEY_MAP: Record<string, 'next' | 'previous'> = {
-      ArrowDown: 'next',
-      ArrowRight: 'next',
-      ArrowUp: 'previous',
-      ArrowLeft: 'previous',
-    };
-
-    const direction = KEY_MAP[event.detail.key];
+    const direction: Direction | undefined = KEY_MAP[event.detail.key];
     if (!direction) return;
 
     this.focusRadioInputSibling(event.detail.target, direction);
@@ -267,7 +269,7 @@ export class BqRadioGroup {
 
     // Case 1: We have a value prop set - ensure it's respected
     if (this.value) {
-      const radioWithValue = Array.from(this.radioElements).find((radio) => radio.value === this.value);
+      const radioWithValue = [...this.radioElements].find((radio) => radio.value === this.value);
       if (radioWithValue) {
         this.updateRadioSelection(radioWithValue);
         return;
@@ -275,7 +277,7 @@ export class BqRadioGroup {
     }
 
     // Case 2: No value prop, but a radio is already checked
-    const checkedRadio = Array.from(this.radioElements).find((radio) => radio.checked);
+    const checkedRadio = [...this.radioElements].find((radio) => radio.checked);
     if (checkedRadio) {
       this.updateRadioSelection(checkedRadio);
       return;
@@ -287,7 +289,7 @@ export class BqRadioGroup {
     // If none of the `INPUT` elements of a set of radio buttons specifies `CHECKED`,
     // then the user agent must check the first radio button of the set initially.
     if (this.required && !this.checkedRadio) {
-      const defaultRadio = Array.from(this.radioElements)[0];
+      const defaultRadio = [...this.radioElements][0];
       this.updateRadioSelection(defaultRadio);
     }
   };
@@ -311,15 +313,13 @@ export class BqRadioGroup {
    */
   private updateRadioProperties = (): void => {
     const { backgroundOnHover, disabled, name, required, value } = this;
-    this.radioElements.forEach((radio) => {
-      Object.assign(radio, {
-        backgroundOnHover,
-        checked: value === radio.value,
-        disabled,
-        name,
-        required,
-      });
-    });
+    for (const radio of this.radioElements) {
+      radio.backgroundOnHover = backgroundOnHover;
+      radio.checked = value === radio.value;
+      radio.disabled = disabled;
+      radio.name = name;
+      radio.required = required;
+    }
   };
 
   /**
@@ -328,8 +328,8 @@ export class BqRadioGroup {
    * @param currentTarget - The currently focused radio element
    * @param direction - The navigation direction ('next' | 'previous')
    */
-  private focusRadioInputSibling = (currentTarget: HTMLBqRadioElement, direction: 'next' | 'previous'): void => {
-    const elements = Array.from(this.radioElements);
+  private focusRadioInputSibling = (currentTarget: HTMLBqRadioElement, direction: Direction): void => {
+    const elements = [...this.radioElements];
     const currentIndex = elements.indexOf(currentTarget);
     if (currentIndex === -1) return;
 
@@ -352,13 +352,13 @@ export class BqRadioGroup {
     internals?.states.clear();
 
     if (!required || (required && !isNil(value))) {
-      // If the checkbox is not required or is checked, set the validity state to valid
+      // If the radio group is not required or has a value, set the validity state to valid
       internals?.states.add('valid');
       internals?.setValidity({});
       return;
     }
 
-    // If the checkbox is required and not checked, set the validity state to invalid
+    // If the radio group is required and has no value, set the validity state to invalid
     internals?.states.add('invalid');
     internals?.setValidity(
       { valueMissing: true },
