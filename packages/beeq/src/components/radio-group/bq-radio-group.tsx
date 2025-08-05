@@ -126,9 +126,7 @@ export class BqRadioGroup {
     }
 
     this.debouncedBqChange?.cancel();
-
-    type ChangeEvent = { value: string; target: HTMLBqRadioElement };
-    this.debouncedBqChange = debounce((event: ChangeEvent): void => {
+    this.debouncedBqChange = debounce((event: { value: string; target: HTMLBqRadioElement }): void => {
       this.bqChange?.emit(event);
     }, this.debounceTime);
   }
@@ -155,8 +153,15 @@ export class BqRadioGroup {
   handleValueChange() {
     this.updateRadioProperties();
     this.updateFormValidity();
-    // The value is not undefined because of the updateRadioProperties() call
-    this.debouncedBqChange?.({ value: this.value!, target: this.checkedRadio! });
+
+    // Find and update the checked radio based on the new value
+    const newCheckedRadio = Array.from(this.radioElements).find((radio) => radio.value === this.value);
+    if (newCheckedRadio) {
+      this.checkedRadio = newCheckedRadio;
+      this.debouncedBqChange?.({ value: this.value, target: newCheckedRadio });
+    } else {
+      this.checkedRadio = undefined;
+    }
   }
 
   // Events section
@@ -274,7 +279,7 @@ export class BqRadioGroup {
     this.focusedBqRadio = target;
     this.checkedRadio = target;
     this.value = target.value;
-    this.internals?.setFormValue(target.value ?? null);
+    this.internals?.setFormValue(this.value ?? null);
   };
 
   /**
