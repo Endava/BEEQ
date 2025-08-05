@@ -168,7 +168,6 @@ export class BqRadio {
     const bqClickEvent = this.bqClick.emit({ value: this.value, target: this.el });
     if (bqClickEvent.defaultPrevented) {
       event.stopImmediatePropagation();
-      return;
     }
   };
 
@@ -184,13 +183,30 @@ export class BqRadio {
     this.bqKeyDown.emit({ key: event.key, target: this.el });
   };
 
+  private get tabIndex() {
+    if (this.checked) return '0';
+    // Find all radios on the same radio group
+    const radioGroup = this.el.closest('bq-radio-group');
+    if (!radioGroup) return '0';
+
+    const radios = Array.from(radioGroup.querySelectorAll('bq-radio')).filter(
+      (el: HTMLBqRadioElement) => el.name === this.name && !el.disabled,
+    );
+    // If any radio is checked, and this one is not, tabindex should be -1
+    if (radios.some((el: HTMLBqRadioElement) => el.checked)) return '-1';
+    // No radio is checked, so the first one should get tabindex=0
+    if (radios.length > 0 && radios[0] === this.el) return '0';
+
+    return '-1';
+  }
+
   // render() function
   // Always the last one in the class.
   // ===================================
 
   render() {
     return (
-      <Host tabindex={this.checked ? '0' : '-1'}>
+      <Host tabindex={this.tabIndex}>
         <label
           class={{
             'bq-radio group': true,

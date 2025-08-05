@@ -1,4 +1,4 @@
-import { AttachInternals, Component, Element, Event, h, Listen, Prop, State, Watch } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, h, Host, Listen, Prop, State, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
 
 import { RADIO_GROUP_ORIENTATION } from './bq-radio-group.types';
@@ -81,6 +81,7 @@ export class BqRadioGroup {
   // =======================================
 
   @State() checkedRadio?: HTMLBqRadioElement;
+  @State() tabIndex: '0' | '-1' = '0';
 
   // Public Property API
   // ========================
@@ -147,7 +148,7 @@ export class BqRadioGroup {
 
   @Watch('required')
   handleRequiredChange() {
-    this.initializeRadioSelection();
+    this.updateFormValidity();
   }
 
   @Watch('value')
@@ -258,40 +259,8 @@ export class BqRadioGroup {
   private initializeRadioElements = (): void => {
     this.radioElements.clear();
     this.el.querySelectorAll('bq-radio').forEach((radio) => this.radioElements.add(radio));
-  };
-
-  /**
-   * Handles initial radio selection state
-   * Respects existing selections and handles unselected state properly
-   */
-  private initializeRadioSelection = (): void => {
-    if (this.radioElements.size === 0) return;
-
-    // Case 1: We have a value prop set - ensure it's respected
-    if (this.value) {
-      const radioWithValue = [...this.radioElements].find((radio) => radio.value === this.value);
-      if (radioWithValue) {
-        this.updateRadioSelection(radioWithValue);
-        return;
-      }
-    }
-
-    // Case 2: No value prop, but a radio is already checked
-    const checkedRadio = [...this.radioElements].find((radio) => radio.checked);
-    if (checkedRadio) {
-      this.updateRadioSelection(checkedRadio);
-      return;
-    }
-
-    // Case 3: No selection exists - Force one if the group is required
-    // @see: https://www.w3.org/TR/html401/interact/forms.html#radio
-    // At all times, exactly one of the radio buttons in a set is checked.
-    // If none of the `INPUT` elements of a set of radio buttons specifies `CHECKED`,
-    // then the user agent must check the first radio button of the set initially.
-    if (this.required && !this.checkedRadio) {
-      const defaultRadio = [...this.radioElements][0];
-      this.updateRadioSelection(defaultRadio);
-    }
+    // Set the tabIndex of the host element to -1 if there are no radio elements, otherwise set it to 0
+    this.tabIndex = this.radioElements.size === 0 ? '-1' : '0';
   };
 
   /**
@@ -330,6 +299,9 @@ export class BqRadioGroup {
    */
   private focusRadioInputSibling = (currentTarget: HTMLBqRadioElement, direction: Direction): void => {
     const elements = [...this.radioElements];
+    // If there is none or only one radio element, there will be no sibling to focus
+    if (elements.length <= 1) return;
+
     const currentIndex = elements.indexOf(currentTarget);
     if (currentIndex === -1) return;
 
@@ -358,13 +330,12 @@ export class BqRadioGroup {
       return;
     }
 
+    const firstRadio = Array.from(this.radioElements)[0];
+    if (!firstRadio) return;
     // If the radio group is required and has no value, set the validity state to invalid
     internals?.states.add('invalid');
-    internals?.setValidity(
-      { valueMissing: true },
-      requiredValidationMessage,
-      await Array.from(this.radioElements)[0].getNativeInput(),
-    );
+    // We need to pass the native input element to the setValidity method as anchor element
+    internals?.setValidity({ valueMissing: true }, requiredValidationMessage, await firstRadio.getNativeInput());
   };
 
   /**
@@ -383,25 +354,9 @@ export class BqRadioGroup {
     states.forEach((state) => this.internals?.states.add(state));
   };
 
-  /**
-   * Focuses the first available radio element in the group.
-   * If no radio element is available, the group is not focused.
-   */
-  private handleGroupFocus = () => {
-    if (this.radioElements.size === 0) return;
-
-    // If we have a checked radio, focus that one
-    // Otherwise focus the first non-disabled radio
-    const radioToFocus = this.checkedRadio || Array.from(this.radioElements).find((radio) => !radio.disabled);
-    if (!radioToFocus) return;
-
-    radioToFocus.vFocus();
-  };
-
   private handleSlotChange = (): void => {
     this.initializeRadioElements();
     this.updateRadioProperties();
-    this.initializeRadioSelection();
   };
 
   // render() function
@@ -410,22 +365,22 @@ export class BqRadioGroup {
 
   render() {
     return (
-      <fieldset
-        class={{ 'bq-radio-group': true, 'has-fieldset': this.fieldset }}
-        aria-controls="bq-radiogroup"
-        aria-labelledby="bq-radio-group__label"
-        onFocus={this.handleGroupFocus}
-        tabindex={this.disabled ? -1 : 0}
-        role="radiogroup"
-        part="base"
-      >
-        <legend part="label">
-          <slot id="bq-radiogroup__label" name="label" />
-        </legend>
-        <div class={`bq-radio-group--${this.orientation}`} part="group">
-          <slot id="bq-radiogroup" onSlotchange={this.handleSlotChange} />
-        </div>
-      </fieldset>
+      <Host tabindex={this.tabIndex}>
+        <fieldset
+          class={{ 'bq-radio-group': true, 'has-fieldset': this.fieldset }}
+          aria-controls="bq-radiogroup"
+          aria-labelledby="bq-radio-group__label"
+          role="radiogroup"
+          part="base"
+        >
+          <legend part="label">
+            <slot id="bq-radiogroup__label" name="label" />
+          </legend>
+          <div class={`bq-radio-group--${this.orientation}`} part="group">
+            <slot id="bq-radiogroup" onSlotchange={this.handleSlotChange} />
+          </div>
+        </fieldset>
+      </Host>
     );
   }
 }
