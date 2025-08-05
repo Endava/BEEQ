@@ -1,4 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
+import { sleep } from 'packages/beeq/src/shared/test-utils';
 
 describe('bq-radio-group', () => {
   it('should render', async () => {
@@ -157,6 +158,33 @@ describe('bq-radio-group', () => {
     await page.waitForChanges();
 
     expect(bqChange).toHaveReceivedEventTimes(1);
+  });
+
+  it('should debounce the bqChange event and emit only the final value', async () => {
+    const page = await newE2EPage({
+      html: `
+      <bq-radio-group name="test-option" debounce-time="150">
+        <bq-radio value="option1">Option 1</bq-radio>
+        <bq-radio value="option2">Option 2</bq-radio>
+        <bq-radio value="option3">Option 3</bq-radio>
+      </bq-radio-group>
+    `,
+    });
+    await page.waitForChanges();
+
+    const bqChange = await page.spyOnEvent('bqChange');
+    const radioGroup = await page.find('bq-radio-group');
+
+    await (await page.find('bq-radio[value="option1"]')).click();
+    await (await page.find('bq-radio[value="option2"]')).click();
+    await (await page.find('bq-radio[value="option3"]')).click();
+
+    await page.waitForChanges();
+    await sleep(150);
+
+    expect(bqChange).toHaveReceivedEventTimes(1);
+    expect(await radioGroup.getProperty('value')).toBe('option3');
+    expect(radioGroup).toEqualAttribute('value', 'option3');
   });
 
   it('should be keyboard accessible', async () => {
