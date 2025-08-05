@@ -1,5 +1,7 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
-import { html } from 'lit-html';
+import { html, nothing } from 'lit-html';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 
 import mdx from './bq-radio-group.mdx';
 import { RADIO_GROUP_ORIENTATION } from '../bq-radio-group.types';
@@ -18,95 +20,79 @@ const meta: Meta = {
     disabled: { control: 'boolean' },
     fieldset: { control: 'boolean' },
     name: { control: 'text' },
+    orientation: { control: 'inline-radio', options: [...RADIO_GROUP_ORIENTATION] },
+    required: { control: 'boolean' },
+    'required-validation-message': { control: 'text' },
     value: { control: 'text' },
-    orientation: { control: 'select', options: [...RADIO_GROUP_ORIENTATION] },
-    // Event handlers
+    // Events
     bqChange: { action: 'bqChange' },
+    // These events comes from the radio element children, not the radio group
     bqFocus: { action: 'bqFocus', table: { disable: true } },
     bqBlur: { action: 'bqBlur', table: { disable: true } },
+    bqClick: { action: 'bqClick', table: { disable: true } },
     // Not part of the component
-    label: { control: 'text' },
+    label: { control: 'text', table: { disable: true } },
+    children: { control: 'text', table: { disable: true } },
   },
   args: {
     'background-on-hover': false,
-    orientation: 'vertical',
-    value: 'option1',
-    disabled: false,
-    name: 'bq-radio',
-    fieldset: false,
     'debounce-time': 0,
+    disabled: false,
+    fieldset: false,
+    name: 'bq-radio',
+    orientation: 'vertical',
+    required: false,
+    'required-validation-message': undefined,
+    value: undefined,
+    // Not part of the component
+    children: `
+      <bq-radio value="option1"> Radio option 1 </bq-radio>
+      <bq-radio value="option2"> Radio option 2 </bq-radio>
+      <bq-radio value="option3"> Radio option 3 </bq-radio>
+    `,
   },
 };
 export default meta;
 
 type Story = StoryObj;
 
-const Template = (args: Args) => {
-  return html`
-    <bq-radio-group
-      ?background-on-hover=${args['background-on-hover']}
-      debounce-time=${args['debounce-time']}
-      ?disabled=${args.disabled}
-      ?fieldset=${args.fieldset}
-      name=${args.name}
-      orientation=${args.orientation}
-      value=${args.value}
-      @bqChange=${args.bqChange}
-      @bqFocus=${args.bqFocus}
-      @bqBlur=${args.bqBlur}
-    >
-      <span slot="label">${args.label}</span>
-      <bq-radio value="option1"> Radio option 1 </bq-radio>
-      <bq-radio value="option2"> Radio option 2 </bq-radio>
-      <bq-radio value="option3"> Radio option 3 </bq-radio>
-    </bq-radio-group>
-  `;
-};
+const Template = (args: Args) => html`
+  <bq-radio-group
+    ?background-on-hover=${args['background-on-hover']}
+    debounce-time=${ifDefined(args['debounce-time'])}
+    ?disabled=${args.disabled}
+    ?fieldset=${args.fieldset}
+    name=${ifDefined(args.name)}
+    orientation=${ifDefined(args.orientation)}
+    ?required=${args.required}
+    required-validation-message=${ifDefined(args['required-validation-message'])}
+    value=${ifDefined(args.value)}
+    @bqChange=${args.bqChange}
+    @bqFocus=${args.bqFocus}
+    @bqBlur=${args.bqBlur}
+    @bqClick=${args.bqClick}
+  >
+    ${args.label ? html`${unsafeHTML(args.label)}` : nothing}
+    <!-- Radio children -->
+    ${args.children ? html`${unsafeHTML(args.children)}` : nothing}
+  </bq-radio-group>
+`;
 
 export const Default: Story = {
   render: Template,
 };
 
 export const Disabled: Story = {
-  render: (args: Args) => {
-    return html`
-      <div style="display: flex; gap: 16px">
-        <bq-radio-group
-          .name=${args.name}
-          .value=${args.value}
-          .disabled=${args.disabled}
-          .orientation=${args.orientation}
-          .fieldset=${args.fieldset}
-          debounce-time=${args['debounce-time']}
-          @bqChange=${args.bqChange}
-          @bqFocus=${args.bqFocus}
-          @bqBlur=${args.bqBlur}
-        >
-          <span slot="label">${args.label}</span>
-          <bq-radio value="option1"> Radio option 1 </bq-radio>
-          <bq-radio value="option2"> Radio option 2 </bq-radio>
-          <bq-radio value="option3"> Radio option 3 </bq-radio>
-        </bq-radio-group>
-        <bq-radio-group
-          .name=${args.name + '1'}
-          .value=${args.value}
-          .orientation=${args.orientation}
-          .fieldset=${args.fieldset}
-          debounce-time=${args['debounce-time']}
-          @bqChange=${args.bqChange}
-          @bqFocus=${args.bqFocus}
-          @bqBlur=${args.bqBlur}
-        >
-          <span slot="label">${args.label}</span>
-          <bq-radio value="option1"> Radio option 1 </bq-radio>
-          <bq-radio value="option2" disabled> Radio option 2 </bq-radio>
-          <bq-radio value="option3"> Radio option 3 </bq-radio>
-        </bq-radio-group>
-      </div>
-    `;
-  },
+  render: Template,
   args: {
     disabled: true,
+  },
+};
+
+export const InitialValue: Story = {
+  render: Template,
+  args: {
+    value: 'option2',
   },
 };
 
@@ -117,20 +103,28 @@ export const Horizontal = {
   },
 };
 
+export const Label: Story = {
+  render: Template,
+  args: {
+    label: '<span slot="label">Radio group label</span>',
+  },
+};
+
 export const Fieldset = {
   render: Template,
   args: {
     fieldset: true,
-    label: 'radio group',
+    label: '<span slot="label">Radio group label</span>',
   },
 };
 
 export const WithForm: Story = {
-  render: () => {
+  render: (args: Args) => {
     const handleFormSubmit = (ev: Event) => {
       ev.preventDefault();
       const form = ev.target as HTMLFormElement;
       const formData = new FormData(form);
+      // @ts-expect-error - FormData is not iterable
       const formValues = Object.fromEntries(formData.entries());
 
       const codeElement = document.getElementById('form-data');
@@ -149,17 +143,9 @@ export const WithForm: Story = {
             <bq-input name="email" value="brad.beckett202@dontsp.am" type="email" autocomplete="organization" required>
               <label class="flex flex-grow items-center" slot="label">Email address</label>
             </bq-input>
-            <bq-radio-group
-              name="marketing-consent"
-              orientation="horizontal"
-              required-validation-message="Please, select if you would like to receive marketing emails or not"
-              value="yes"
-              required
-            >
-              <span slot="label">I would like to receive marketing emails</span>
-              <bq-radio value="yes">Yes</bq-radio>
-              <bq-radio value="no">No</bq-radio>
-            </bq-radio-group>
+            <!-- Radio group -->
+            ${Template({ ...args, value: undefined })}
+            <!-- End of radio group -->
             <div class="flex justify-end gap-x-s">
               <bq-button appearance="secondary" type="reset">Cancel</bq-button>
               <bq-button type="submit">Save</bq-button>
@@ -194,5 +180,17 @@ export const WithForm: Story = {
         });
       </script>
     `;
+  },
+  args: {
+    name: 'marketing-consent',
+    orientation: 'horizontal',
+    required: true,
+    'required-validation-message': 'Please, select if you would like to receive marketing emails or not',
+    value: undefined,
+    children: `
+      <bq-radio value="yes">Yes</bq-radio>
+      <bq-radio value="no">No</bq-radio>
+    `,
+    label: '<span slot="label">I would like to receive marketing emails</span>',
   },
 };
