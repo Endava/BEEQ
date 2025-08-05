@@ -1,7 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-import { setProperties } from '../../../shared/test-utils';
-
 describe('bq-radio-group', () => {
   it('should render', async () => {
     const page = await newE2EPage({
@@ -41,30 +39,41 @@ describe('bq-radio-group', () => {
     expect(bqRadioGroup).toEqualAttribute('value', 'option2');
   });
 
-  it('should check the first radio if required and no value or checked radio is set', async () => {
+  it('should submit the form, if required, only if a radio is checked', async () => {
     const page = await newE2EPage({
       html: `
-        <bq-radio-group name="test-option">
+      <form>
+        <bq-radio-group name="test-option" required>
           <bq-radio value="option1">Option 1</bq-radio>
           <bq-radio value="option2">Option 2</bq-radio>
           <bq-radio value="option3">Option 3</bq-radio>
         </bq-radio-group>
-      `,
+        <bq-button type="submit">Submit</bq-button>
+      </form>
+    `,
     });
     await page.waitForChanges();
 
-    const bqRadioGroup = await page.find('bq-radio-group');
-    const option1 = await page.find('bq-radio[value="option1"]');
-    const option2 = await page.find('bq-radio[value="option2"]');
-    const option3 = await page.find('bq-radio[value="option3"]');
+    const form = await page.find('form');
+    const radioGroup = await page.find('bq-radio-group');
+    const submitButton = await page.find('bq-button[type="submit"]');
+    const submitSpy = await form.spyOnEvent('submit');
 
-    await setProperties(page, 'bq-radio-group', { required: true });
+    await submitButton.click();
     await page.waitForChanges();
 
-    expect(await option1.getProperty('checked')).toBe(true);
-    expect(await option2.getProperty('checked')).toBe(false);
-    expect(await option3.getProperty('checked')).toBe(false);
-    expect(bqRadioGroup).toEqualAttribute('value', 'option1');
+    expect(submitSpy).toHaveReceivedEventTimes(0);
+    expect(radioGroup).not.toHaveAttribute('value');
+
+    const option1 = await page.find('bq-radio[value="option2"]');
+    await option1.click();
+    await page.waitForChanges();
+
+    await submitButton.click();
+    await page.waitForChanges();
+
+    expect(submitSpy).toHaveReceivedEventTimes(1);
+    expect(radioGroup).toEqualAttribute('value', 'option2');
   });
 
   it('should check a radio when the value attribute is set', async () => {
