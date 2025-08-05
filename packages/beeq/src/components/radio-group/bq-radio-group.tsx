@@ -335,7 +335,11 @@ export class BqRadioGroup {
     // If the radio group is required and has no value, set the validity state to invalid
     internals?.states.add('invalid');
     // We need to pass the native input element to the setValidity method as anchor element
-    internals?.setValidity({ valueMissing: true }, requiredValidationMessage, await firstRadio.getNativeInput());
+    internals?.setValidity(
+      { valueMissing: true },
+      requiredValidationMessage ?? 'Please select an option',
+      await firstRadio.getNativeInput(),
+    );
   };
 
   /**
