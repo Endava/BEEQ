@@ -2,14 +2,14 @@
  * Gets the next element that is not disabled
  *
  * @param {Array} elements - The array to search in
- * @param {Numebr} startAt - Position to start at
- * @param {String} direction - The direction to look on
+ * @param {number} startAt - Position to start at
+ * @param {string} direction - The direction to look on
  * @returns {Element} Next available element
  */
 
 export const getNextElement = <T extends { disabled: boolean }>(
   elements: T[],
-  startAt = 0,
+  startAt: number = 0,
   direction: 'forward' | 'backward' = 'forward',
 ): T => {
   let elementIndex = startAt;
