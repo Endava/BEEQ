@@ -79,8 +79,8 @@ importers:
         specifier: 6.0.0
         version: 6.0.0(prettier@3.6.2)(react-syntax-highlighter@15.6.1(react@19.1.1))
       '@chromatic-com/storybook':
-        specifier: 4.0.1
-        version: 4.0.1(storybook@9.1.1(@testing-library/dom@10.4.1)(prettier@3.6.2)(vite@6.2.0(@types/node@22.14.1)(jiti@2.5.0)(less@4.3.0)(sass-embedded@1.89.2)(sass@1.89.2)(terser@5.31.6)(tsx@4.20.3)(yaml@2.8.0)))
+        specifier: 4.1.0
+        version: 4.1.0(storybook@9.1.1(@testing-library/dom@10.4.1)(prettier@3.6.2)(vite@6.2.0(@types/node@22.14.1)(jiti@2.5.0)(less@4.3.0)(sass-embedded@1.89.2)(sass@1.89.2)(terser@5.31.6)(tsx@4.20.3)(yaml@2.8.0)))
       '@commitlint/cli':
         specifier: 19.8.1
         version: 19.8.1(@types/node@22.14.1)(typescript@5.5.4)
@@ -1356,11 +1356,11 @@ packages:
   '@bufbuild/protobuf@2.6.2':
     resolution: {integrity: sha512-vLu7SRY84CV/Dd+NUdgtidn2hS5hSMUC1vDBY0VcviTdgRYkU43vIz3vIFbmx14cX1r+mM7WjzE5Fl1fGEM0RQ==}
 
-  '@chromatic-com/storybook@4.0.1':
-    resolution: {integrity: sha512-GQXe5lyZl3yLewLJQyFXEpOp2h+mfN2bPrzYaOFNCJjO4Js9deKbRHTOSaiP2FRwZqDLdQwy2+SEGeXPZ94yYw==}
+  '@chromatic-com/storybook@4.1.0':
+    resolution: {integrity: sha512-B9XesFX5lQUdP81/QBTtkiYOFqEsJwQpzkZlcYPm2n/L1S/8ZabSPbz6NoY8hOJTXWZ2p7grygUlxyGy+gAvfQ==}
     engines: {node: '>=20.0.0', yarn: '>=1.22.18'}
     peerDependencies:
-      storybook: ^0.0.0-0 || ^9.0.0 || ^9.1.0-0
+      storybook: ^0.0.0-0 || ^9.0.0 || ^9.1.0-0 || ^9.2.0-0
 
   '@commitlint/cli@19.8.1':
     resolution: {integrity: sha512-LXUdNIkspyxrlV6VDHWBmCZRtkEVRpBKxi2Gtw3J54cGWhLCTouVD/Q6ZSaSvd2YaDObWK8mDjrz3TIKtaQMAA==}
@@ -13738,7 +13738,7 @@ snapshots:
 
   '@bufbuild/protobuf@2.6.2': {}
 
-  '@chromatic-com/storybook@4.0.1(storybook@9.1.1(@testing-library/dom@10.4.1)(prettier@3.6.2)(vite@6.2.0(@types/node@22.14.1)(jiti@2.5.0)(less@4.3.0)(sass-embedded@1.89.2)(sass@1.89.2)(terser@5.31.6)(tsx@4.20.3)(yaml@2.8.0)))':
+  '@chromatic-com/storybook@4.1.0(storybook@9.1.1(@testing-library/dom@10.4.1)(prettier@3.6.2)(vite@6.2.0(@types/node@22.14.1)(jiti@2.5.0)(less@4.3.0)(sass-embedded@1.89.2)(sass@1.89.2)(terser@5.31.6)(tsx@4.20.3)(yaml@2.8.0)))':
     dependencies:
       '@neoconfetti/react': 1.0.0
       chromatic: 12.2.0
