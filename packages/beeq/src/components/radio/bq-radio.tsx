@@ -193,12 +193,10 @@ export class BqRadio {
   private get tabIndex() {
     if (this.checked) return '0';
     // Find all radios on the same radio group
-    const radioGroup = this.el.closest('bq-radio-group');
+    const radioGroup = this.el.closest(`bq-radio-group[name="${this.name}"]`);
     if (!radioGroup) return '0';
 
-    const radios = Array.from(radioGroup.querySelectorAll('bq-radio')).filter(
-      (el: HTMLBqRadioElement) => el.name === this.name && !el.disabled,
-    );
+    const radios = Array.from(radioGroup.querySelectorAll('bq-radio')).filter((el: HTMLBqRadioElement) => !el.disabled);
     // If any radio is checked, and this one is not, tabindex should be -1
     if (radios.some((el: HTMLBqRadioElement) => el.checked)) return '-1';
     // No radio is checked, so the first one should get tabindex=0

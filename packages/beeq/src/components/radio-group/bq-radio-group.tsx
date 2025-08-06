@@ -138,6 +138,11 @@ export class BqRadioGroup {
     }, this.debounceTime);
   }
 
+  @Watch('disabled')
+  handleDisabledChange() {
+    this.tabIndex = this.disabled ? '-1' : '0';
+  }
+
   @Watch('backgroundOnHover')
   @Watch('disabled')
   @Watch('name')
@@ -271,8 +276,8 @@ export class BqRadioGroup {
   private initializeRadioElements = (): void => {
     this.radioElements.clear();
     this.el.querySelectorAll('bq-radio').forEach((radio) => this.radioElements.add(radio));
-    // Set the tabIndex of the host element to -1 if there are no radio elements, otherwise set it to 0
-    this.tabIndex = this.radioElements.size === 0 ? '-1' : '0';
+    // Set the tabIndex of the host element to -1 if there are no radio elements or the group is disabled, otherwise set it to 0
+    this.tabIndex = this.radioElements.size === 0 || this.disabled ? '-1' : '0';
   };
 
   /**
@@ -280,7 +285,10 @@ export class BqRadioGroup {
    * @param target - The radio element to update.
    */
   private updateRadioSelection = (target: HTMLBqRadioElement): void => {
-    this.radioElements.forEach((radio) => (radio.checked = radio === target));
+    this.radioElements.forEach((radio) => {
+      radio.checked = radio === target;
+      radio.tabIndex = radio === target ? 0 : -1;
+    });
     target.vFocus();
 
     this.focusedBqRadio = target;
@@ -380,6 +388,9 @@ export class BqRadioGroup {
           class={{ 'bq-radio-group': true, 'has-fieldset': this.fieldset }}
           aria-controls="bq-radiogroup"
           aria-labelledby="bq-radio-group__label"
+          aria-disabled={this.disabled}
+          aria-required={this.required}
+          disabled={this.disabled}
           role="radiogroup"
           part="base"
         >
