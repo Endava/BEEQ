@@ -65,13 +65,16 @@ export class BqRadio {
   // ========================
 
   /** If true radio displays background on hover */
-  @Prop({ reflect: true }) backgroundOnHover? = false;
+  @Prop({ reflect: true }) backgroundOnHover = false;
 
   /** If true radio input is checked */
-  @Prop({ reflect: true, mutable: true }) checked?: boolean;
+  @Prop({ reflect: true, mutable: true }) checked = false;
 
   /** If true radio input is disabled */
-  @Prop({ reflect: true }) disabled? = false;
+  @Prop({ reflect: true }) disabled = false;
+
+  /** @internal: Used by the radio-group parent component to force the disabled state of the radio input */
+  @Prop({ reflect: true }) forceDisabled = false;
 
   /** The form ID that the radio input is associated with */
   @Prop({ reflect: true }) formId?: string;
@@ -183,6 +186,10 @@ export class BqRadio {
     this.bqKeyDown.emit({ key: event.key, target: this.el });
   };
 
+  private get isDisabled() {
+    return this.disabled || this.forceDisabled;
+  }
+
   private get tabIndex() {
     if (this.checked) return '0';
     // Find all radios on the same radio group
@@ -210,7 +217,7 @@ export class BqRadio {
         <label
           class={{
             'bq-radio group': true,
-            'is-disabled': this.disabled,
+            'is-disabled': this.isDisabled,
             'is-checked': this.checked,
             'has-background': this.backgroundOnHover,
           }}
@@ -225,14 +232,14 @@ export class BqRadio {
               name={this.name}
               value={this.value}
               required={this.required}
-              disabled={this.disabled}
+              disabled={this.isDisabled}
               checked={this.checked}
               onBlur={this.handleOnBlur}
               onClick={this.handleClick}
               onFocus={this.handleOnFocus}
               onKeyDown={this.handleOnKeyDown}
               aria-checked={this.checked ? 'true' : 'false'}
-              aria-disabled={this.disabled ? 'true' : 'false'}
+              aria-disabled={this.isDisabled ? 'true' : 'false'}
               aria-labelledby="bq-radio__label"
               part="input"
             />

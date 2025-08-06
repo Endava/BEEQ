@@ -3,13 +3,20 @@ import type { EventEmitter } from '@stencil/core';
 
 import { RADIO_GROUP_ORIENTATION } from './bq-radio-group.types';
 import type { TRadioGroupOrientation } from './bq-radio-group.types';
-import { debounce, isEventTargetChildOfElement, isNil, TDebounce, validatePropValue } from '../../shared/utils';
+import {
+  debounce,
+  getNextElement,
+  isEventTargetChildOfElement,
+  isNil,
+  TDebounce,
+  validatePropValue,
+} from '../../shared/utils';
 
 const KEY_MAP = {
-  ArrowDown: 'next',
-  ArrowRight: 'next',
-  ArrowUp: 'previous',
-  ArrowLeft: 'previous',
+  ArrowDown: 'forward',
+  ArrowRight: 'forward',
+  ArrowUp: 'backward',
+  ArrowLeft: 'backward',
 } as const;
 
 type Direction = (typeof KEY_MAP)[keyof typeof KEY_MAP];
@@ -87,25 +94,25 @@ export class BqRadioGroup {
   // ========================
 
   /** If true, all radio inputs in the group will display a background on hover */
-  @Prop({ reflect: true }) backgroundOnHover? = false;
+  @Prop({ reflect: true }) backgroundOnHover = false;
 
   /** A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change */
   @Prop({ reflect: true, mutable: true }) debounceTime = 0;
 
   /** If true radio inputs are disabled */
-  @Prop({ reflect: true }) disabled? = false;
+  @Prop({ reflect: true }) disabled = false;
 
   /** If true displays fieldset */
-  @Prop({ reflect: true }) fieldset? = false;
+  @Prop({ reflect: true }) fieldset = false;
 
   /** Name of the HTML input form control. Submitted with the form as part of a name/value pair.  */
   @Prop({ reflect: true }) name!: string;
 
   /** The display orientation of the radio inputs */
-  @Prop({ reflect: true, mutable: true }) orientation?: TRadioGroupOrientation = 'vertical';
+  @Prop({ reflect: true, mutable: true }) orientation: TRadioGroupOrientation = 'vertical';
 
   /** If true, the radio group is required */
-  @Prop({ reflect: true }) required? = false;
+  @Prop({ reflect: true }) required = false;
 
   /** The native form validation message when the radio group is required */
   @Prop({ reflect: true }) requiredValidationMessage?: string;
@@ -290,7 +297,9 @@ export class BqRadioGroup {
     for (const radio of this.radioElements) {
       radio.backgroundOnHover = backgroundOnHover;
       radio.checked = value === radio.value;
-      radio.disabled = disabled;
+      // This will allows us to force all radio elements to be disabled
+      // while keeping the disabled state of the radio element if it was set individually by the user
+      radio.forceDisabled = disabled;
       radio.name = name;
       radio.required = required;
     }
@@ -300,7 +309,7 @@ export class BqRadioGroup {
    * Focuses the next/previous radio element in the group based on the current target.
    * Handles circular navigation and skips disabled elements.
    * @param currentTarget - The currently focused radio element
-   * @param direction - The navigation direction ('next' | 'previous')
+   * @param direction - The navigation direction ('forward' | 'backward')
    */
   private focusRadioInputSibling = (currentTarget: HTMLBqRadioElement, direction: Direction): void => {
     const elements = [...this.radioElements];
@@ -308,19 +317,11 @@ export class BqRadioGroup {
     if (elements.length <= 1) return;
 
     const currentIndex = elements.indexOf(currentTarget);
+    // If the index of the radio element target is not found, it means that it's not part of the group
     if (currentIndex === -1) return;
 
-    const increment = direction === 'next' ? 1 : -1;
-    const length = elements.length;
-    let nextIndex = currentIndex;
-
-    // While the next radio is disabled, keep incrementing the index
-    // This is to avoid focusing disabled radio inputs
-    do {
-      nextIndex = (length + (nextIndex + increment)) % length;
-    } while (elements[nextIndex].disabled && nextIndex !== currentIndex);
-
-    this.updateRadioSelection(elements[nextIndex]);
+    const nextElement = getNextElement(elements, currentIndex, direction);
+    this.updateRadioSelection(nextElement);
   };
 
   private updateFormValidity = async (): Promise<void> => {

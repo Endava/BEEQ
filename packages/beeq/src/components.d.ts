@@ -1892,16 +1892,21 @@ export namespace Components {
           * If true radio displays background on hover
           * @default false
          */
-        "backgroundOnHover"?: boolean;
+        "backgroundOnHover": boolean;
         /**
           * If true radio input is checked
+          * @default false
          */
-        "checked"?: boolean;
+        "checked": boolean;
         /**
           * If true radio input is disabled
           * @default false
          */
-        "disabled"?: boolean;
+        "disabled": boolean;
+        /**
+          * @default false
+         */
+        "forceDisabled": boolean;
         /**
           * The form ID that the radio input is associated with
          */
@@ -1967,7 +1972,7 @@ export namespace Components {
           * If true, all radio inputs in the group will display a background on hover
           * @default false
          */
-        "backgroundOnHover"?: boolean;
+        "backgroundOnHover": boolean;
         /**
           * A number representing the delay time (in milliseconds) that `bqChange` event handler gets triggered once the value change
           * @default 0
@@ -1977,12 +1982,12 @@ export namespace Components {
           * If true radio inputs are disabled
           * @default false
          */
-        "disabled"?: boolean;
+        "disabled": boolean;
         /**
           * If true displays fieldset
           * @default false
          */
-        "fieldset"?: boolean;
+        "fieldset": boolean;
         /**
           * Name of the HTML input form control. Submitted with the form as part of a name/value pair.
          */
@@ -1991,12 +1996,12 @@ export namespace Components {
           * The display orientation of the radio inputs
           * @default 'vertical'
          */
-        "orientation"?: TRadioGroupOrientation;
+        "orientation": TRadioGroupOrientation;
         /**
           * If true, the radio group is required
           * @default false
          */
-        "required"?: boolean;
+        "required": boolean;
         /**
           * The native form validation message when the radio group is required
          */
@@ -7342,6 +7347,7 @@ declare namespace LocalJSX {
         "backgroundOnHover"?: boolean;
         /**
           * If true radio input is checked
+          * @default false
          */
         "checked"?: boolean;
         /**
@@ -7349,6 +7355,10 @@ declare namespace LocalJSX {
           * @default false
          */
         "disabled"?: boolean;
+        /**
+          * @default false
+         */
+        "forceDisabled"?: boolean;
         /**
           * The form ID that the radio input is associated with
          */

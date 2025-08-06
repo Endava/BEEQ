@@ -14,7 +14,7 @@ The radio button is a user interface element that allows users to select a singl
 | Property             | Attribute             | Description                                                                                                          | Type      | Default     |
 | -------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------- | --------- | ----------- |
 | `backgroundOnHover`  | `background-on-hover` | If true radio displays background on hover                                                                           | `boolean` | `false`     |
-| `checked`            | `checked`             | If true radio input is checked                                                                                       | `boolean` | `undefined` |
+| `checked`            | `checked`             | If true radio input is checked                                                                                       | `boolean` | `false`     |
 | `disabled`           | `disabled`            | If true radio input is disabled                                                                                      | `boolean` | `false`     |
 | `formId`             | `form-id`             | The form ID that the radio input is associated with                                                                  | `string`  | `undefined` |
 | `name` _(required)_  | `name`                | Name of the HTML input form control. Submitted with the form as part of a name/value pair.                           | `string`  | `undefined` |
