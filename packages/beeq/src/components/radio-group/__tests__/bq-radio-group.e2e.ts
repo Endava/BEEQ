@@ -1,5 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { sleep } from 'packages/beeq/src/shared/test-utils';
+import { sleep } from '../../../shared/test-utils';
 
 describe('bq-radio-group', () => {
   it('should render', async () => {

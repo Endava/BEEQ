@@ -73,7 +73,7 @@ export class BqRadio {
   /** If true radio input is disabled */
   @Prop({ reflect: true }) disabled = false;
 
-  /** @internal: Used by the radio-group parent component to force the disabled state of the radio input */
+  /** @internal Used by the radio-group parent component to force the disabled state of the radio input */
   @Prop({ reflect: true }) forceDisabled = false;
 
   /** The form ID that the radio input is associated with */
