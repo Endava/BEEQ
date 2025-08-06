@@ -1,4 +1,4 @@
-import { Component, Element, Event, h, Method, Prop } from '@stencil/core';
+import { Component, Element, Event, h, Host, Method, Prop } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
 
 /**
@@ -64,14 +64,17 @@ export class BqRadio {
   // Public Property API
   // ========================
 
+  /** If true radio displays background on hover */
+  @Prop({ reflect: true }) backgroundOnHover = false;
+
   /** If true radio input is checked */
-  @Prop({ reflect: true, mutable: true }) checked?: boolean;
+  @Prop({ reflect: true, mutable: true }) checked = false;
 
   /** If true radio input is disabled */
-  @Prop({ reflect: true }) disabled? = false;
+  @Prop({ reflect: true }) disabled = false;
 
-  /** If true radio displays background on hover */
-  @Prop({ reflect: true }) backgroundOnHover? = false;
+  /** @internal Used by the radio-group parent component to force the disabled state of the radio input */
+  @Prop({ reflect: true }) forceDisabled = false;
 
   /** The form ID that the radio input is associated with */
   @Prop({ reflect: true }) formId?: string;
@@ -93,7 +96,7 @@ export class BqRadio {
   // ==============================================
 
   /** Handler to be called when the radio state changes */
-  @Event() bqClick: EventEmitter<HTMLBqRadioElement>;
+  @Event() bqClick: EventEmitter<{ value: string; target: HTMLBqRadioElement }>;
 
   /** Handler to be called when the radio gets focus */
   @Event() bqFocus: EventEmitter<HTMLBqRadioElement>;
@@ -102,7 +105,7 @@ export class BqRadio {
   @Event() bqBlur: EventEmitter<HTMLBqRadioElement>;
 
   /** Handler to be called when the radio key is pressed */
-  @Event() bqKeyDown: EventEmitter<KeyboardEvent>;
+  @Event() bqKeyDown: EventEmitter<{ key: string; target: HTMLBqRadioElement }>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -158,9 +161,17 @@ export class BqRadio {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private handleClick = () => {
-    this.checked = true;
-    this.bqClick.emit(this.el);
+  private handleClick = (event: MouseEvent) => {
+    // Prevent the native input click default behavior
+    event.preventDefault();
+    if (this.disabled) return;
+
+    // Emit the event without changing state
+    // Let the radio-group handle all state management and event propagation
+    const bqClickEvent = this.bqClick.emit({ value: this.value, target: this.el });
+    if (bqClickEvent.defaultPrevented) {
+      event.stopImmediatePropagation();
+    }
   };
 
   private handleOnFocus = () => {
@@ -172,12 +183,11 @@ export class BqRadio {
   };
 
   private handleOnKeyDown = (event: KeyboardEvent) => {
-    this.bqKeyDown.emit(event);
+    this.bqKeyDown.emit({ key: event.key, target: this.el });
   };
 
-  private get tabindex(): string {
-    // NOTE: this.checked is undefined when is not part of bq-radio-group
-    return `${-1 + +(this.checked ?? 1)}`;
+  private get isDisabled() {
+    return this.disabled || this.forceDisabled;
   }
 
   // render() function
@@ -186,46 +196,48 @@ export class BqRadio {
 
   render() {
     return (
-      <label
-        class={{
-          'bq-radio group': true,
-          'is-disabled !cursor-not-allowed': this.disabled,
-          'is-checked': this.checked,
-          'has-background': this.backgroundOnHover,
-        }}
-        part="base"
-      >
-        <div class="bq-radio__control">
-          <input
-            class="bq-radio__input"
-            ref={(element) => (this.inputElement = element)}
-            type="radio"
-            form={this.formId}
-            name={this.name}
-            value={this.value}
-            required={this.required}
-            disabled={this.disabled}
-            onBlur={this.handleOnBlur}
-            onClick={this.handleClick}
-            onFocus={this.handleOnFocus}
-            onKeyDown={this.handleOnKeyDown}
-            aria-checked={this.checked ? 'true' : 'false'}
-            aria-disabled={this.disabled ? 'true' : 'false'}
-            aria-labelledby="bq-radio__label"
-            tabindex={this.tabindex}
-            part="input"
-          />
-          <div class="bq-radio__circle" part="radio">
-            <div class="bq-radio__checked" />
-          </div>
-        </div>
-        <span
-          class="bq-radio__label group-hover:text-text-primary-hover group-[.is-disabled]:text-text-primary-disabled"
-          part="label"
+      <Host>
+        <label
+          class={{
+            'bq-radio group': true,
+            'is-disabled': this.isDisabled,
+            'is-checked': this.checked,
+            'has-background': this.backgroundOnHover,
+          }}
+          part="base"
         >
-          <slot id="bq-radio__label"></slot>
-        </span>
-      </label>
+          <div class="bq-radio__control">
+            <input
+              class="bq-radio__input"
+              ref={(element) => (this.inputElement = element)}
+              type="radio"
+              form={this.formId}
+              name={this.name}
+              value={this.value}
+              required={this.required}
+              disabled={this.isDisabled}
+              checked={this.checked}
+              onBlur={this.handleOnBlur}
+              onClick={this.handleClick}
+              onFocus={this.handleOnFocus}
+              onKeyDown={this.handleOnKeyDown}
+              aria-checked={this.checked ? 'true' : 'false'}
+              aria-disabled={this.isDisabled ? 'true' : 'false'}
+              aria-labelledby="bq-radio__label"
+              part="input"
+            />
+            <div class="bq-radio__circle" part="radio">
+              <div class="bq-radio__checked" />
+            </div>
+          </div>
+          <span
+            class="bq-radio__label group-hover:text-text-primary-hover group-[.is-disabled]:text-text-primary-disabled"
+            part="label"
+          >
+            <slot id="bq-radio__label"></slot>
+          </span>
+        </label>
+      </Host>
     );
   }
 }

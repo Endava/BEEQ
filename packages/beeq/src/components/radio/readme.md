@@ -14,7 +14,7 @@ The radio button is a user interface element that allows users to select a singl
 | Property             | Attribute             | Description                                                                                                          | Type      | Default     |
 | -------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------- | --------- | ----------- |
 | `backgroundOnHover`  | `background-on-hover` | If true radio displays background on hover                                                                           | `boolean` | `false`     |
-| `checked`            | `checked`             | If true radio input is checked                                                                                       | `boolean` | `undefined` |
+| `checked`            | `checked`             | If true radio input is checked                                                                                       | `boolean` | `false`     |
 | `disabled`           | `disabled`            | If true radio input is disabled                                                                                      | `boolean` | `false`     |
 | `formId`             | `form-id`             | The form ID that the radio input is associated with                                                                  | `string`  | `undefined` |
 | `name` _(required)_  | `name`                | Name of the HTML input form control. Submitted with the form as part of a name/value pair.                           | `string`  | `undefined` |
@@ -24,12 +24,12 @@ The radio button is a user interface element that allows users to select a singl
 
 ## Events
 
-| Event       | Description                                        | Type                              |
-| ----------- | -------------------------------------------------- | --------------------------------- |
-| `bqBlur`    | Handler to be called when the radio loses focus    | `CustomEvent<HTMLBqRadioElement>` |
-| `bqClick`   | Handler to be called when the radio state changes  | `CustomEvent<HTMLBqRadioElement>` |
-| `bqFocus`   | Handler to be called when the radio gets focus     | `CustomEvent<HTMLBqRadioElement>` |
-| `bqKeyDown` | Handler to be called when the radio key is pressed | `CustomEvent<KeyboardEvent>`      |
+| Event       | Description                                        | Type                                                          |
+| ----------- | -------------------------------------------------- | ------------------------------------------------------------- |
+| `bqBlur`    | Handler to be called when the radio loses focus    | `CustomEvent<HTMLBqRadioElement>`                             |
+| `bqClick`   | Handler to be called when the radio state changes  | `CustomEvent<{ value: string; target: HTMLBqRadioElement; }>` |
+| `bqFocus`   | Handler to be called when the radio gets focus     | `CustomEvent<HTMLBqRadioElement>`                             |
+| `bqKeyDown` | Handler to be called when the radio key is pressed | `CustomEvent<{ key: string; target: HTMLBqRadioElement; }>`   |
 
 
 ## Methods
