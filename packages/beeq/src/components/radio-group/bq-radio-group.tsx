@@ -75,7 +75,8 @@ export class BqRadioGroup {
   private initialValue?: string;
   private debouncedBqChange: TDebounce<{ value: string; target: HTMLBqRadioElement }>;
   private focusedBqRadio: HTMLBqRadioElement | null = null;
-  private readonly radioElements = new Set<HTMLBqRadioElement>();
+  private readonly radioElementsSet = new Set<HTMLBqRadioElement>();
+  private cachedRadioElements: HTMLBqRadioElement[] = [];
 
   // Reference to host HTML element
   // ===================================
@@ -141,6 +142,7 @@ export class BqRadioGroup {
   @Watch('disabled')
   handleDisabledChange() {
     this.tabIndex = this.disabled ? '-1' : '0';
+    this.updateRadioTabIndexes();
   }
 
   @Watch('backgroundOnHover')
@@ -167,7 +169,7 @@ export class BqRadioGroup {
     this.updateFormValidity();
 
     // Find and update the checked radio based on the new value
-    const newCheckedRadio = Array.from(this.radioElements).find((radio) => radio.value === this.value);
+    const newCheckedRadio = this.cachedRadioElements.find((radio) => radio.value === this.value);
     if (newCheckedRadio) {
       this.checkedRadio = newCheckedRadio;
       this.debouncedBqChange?.({ value: this.value, target: newCheckedRadio });
@@ -240,8 +242,14 @@ export class BqRadioGroup {
 
   @Listen('bqFocus', { capture: true })
   onBqFocus(event: CustomEvent<HTMLBqRadioElement>) {
-    if (!isEventTargetChildOfElement(event, this.el) || event.detail !== this.focusedBqRadio) return;
-    event.stopPropagation();
+    if (!isEventTargetChildOfElement(event, this.el)) return;
+
+    const shouldStopPropagation = this.focusedBqRadio && event.detail !== this.focusedBqRadio;
+    if (shouldStopPropagation) {
+      event.stopPropagation();
+    }
+
+    this.focusedBqRadio = event.detail;
   }
 
   @Listen('bqBlur', { capture: true })
@@ -274,10 +282,49 @@ export class BqRadioGroup {
    * This is done to avoid re-querying the host element for radio elements on every change.
    */
   private initializeRadioElements = (): void => {
-    this.radioElements.clear();
-    this.el.querySelectorAll('bq-radio').forEach((radio) => this.radioElements.add(radio));
+    this.radioElementsSet.clear();
+    this.el.querySelectorAll('bq-radio').forEach((radio) => this.radioElementsSet.add(radio));
+    // Caching the radio elements in an array for faster access and iteration
+    this.cachedRadioElements = Array.from(this.radioElementsSet);
     // Set the tabIndex of the host element to -1 if there are no radio elements or the group is disabled, otherwise set it to 0
-    this.tabIndex = this.radioElements.size === 0 || this.disabled ? '-1' : '0';
+    this.tabIndex = this.cachedRadioElements.length === 0 || this.disabled ? '-1' : '0';
+    // Set initial tabIndex for all radios
+    this.updateRadioTabIndexes();
+  };
+
+  /**
+   * Sets tabIndex for all radio elements based on current state
+   * Handles all scenarios: disabled state, checked radio, value matching, fallback to first
+   */
+  private updateRadioTabIndexes = (): void => {
+    if (this.cachedRadioElements.length === 0) return;
+
+    // If disabled, all radios get tabIndex -1
+    if (this.disabled) {
+      this.cachedRadioElements.forEach((radio) => (radio.tabIndex = -1));
+      return;
+    }
+
+    // Find which radio should be focusable
+    let focusableRadio: HTMLBqRadioElement | undefined;
+
+    // Priority 1: Currently checked radio
+    focusableRadio = this.cachedRadioElements.find((radio) => radio.checked);
+
+    // Priority 2: Radio matching current value
+    if (!focusableRadio && this.value) {
+      focusableRadio = this.cachedRadioElements.find((radio) => radio.value === this.value);
+    }
+
+    // Priority 3: First enabled radio (fallback)
+    if (!focusableRadio) {
+      focusableRadio = this.cachedRadioElements.find((radio) => !radio.disabled);
+    }
+
+    // Apply tabIndex to all radios
+    this.cachedRadioElements.forEach((radio) => {
+      radio.tabIndex = radio === focusableRadio ? 0 : -1;
+    });
   };
 
   /**
@@ -285,24 +332,32 @@ export class BqRadioGroup {
    * @param target - The radio element to update.
    */
   private updateRadioSelection = (target: HTMLBqRadioElement): void => {
-    this.radioElements.forEach((radio) => {
-      radio.checked = radio === target;
-      radio.tabIndex = radio === target ? 0 : -1;
-    });
+    // Only uncheck the previously checked radio if it's different
+    if (this.checkedRadio && this.checkedRadio !== target) {
+      this.checkedRadio.checked = false;
+      this.checkedRadio.tabIndex = -1;
+    }
+
+    target.checked = true;
+    target.tabIndex = 0;
     target.vFocus();
 
-    this.focusedBqRadio = target;
     this.checkedRadio = target;
     this.value = target.value;
     this.internals?.setFormValue(this.value ?? null);
+
+    this.updateRadioTabIndexes();
   };
 
   /**
    * Synchronizes properties of child radio elements with the group's state.
    */
   private updateRadioProperties = (): void => {
+    if (this.cachedRadioElements.length === 0) return;
+
     const { backgroundOnHover, disabled, name, required, value } = this;
-    for (const radio of this.radioElements) {
+
+    for (const radio of this.cachedRadioElements) {
       radio.backgroundOnHover = backgroundOnHover;
       radio.checked = value === radio.value;
       // This will allows us to force all radio elements to be disabled
@@ -320,15 +375,14 @@ export class BqRadioGroup {
    * @param direction - The navigation direction ('forward' | 'backward')
    */
   private focusRadioInputSibling = (currentTarget: HTMLBqRadioElement, direction: Direction): void => {
-    const elements = [...this.radioElements];
     // If there is none or only one radio element, there will be no sibling to focus
-    if (elements.length <= 1) return;
+    if (this.cachedRadioElements.length <= 1) return;
 
-    const currentIndex = elements.indexOf(currentTarget);
+    const currentIndex = this.cachedRadioElements.indexOf(currentTarget);
     // If the index of the radio element target is not found, it means that it's not part of the group
     if (currentIndex === -1) return;
 
-    const nextElement = getNextElement(elements, currentIndex, direction);
+    const nextElement = getNextElement(this.cachedRadioElements, currentIndex, direction);
     this.updateRadioSelection(nextElement);
   };
 
@@ -344,7 +398,7 @@ export class BqRadioGroup {
       return;
     }
 
-    const firstRadio = Array.from(this.radioElements)[0];
+    const firstRadio = this.cachedRadioElements[0];
     if (!firstRadio) return;
     // If the radio group is required and has no value, set the validity state to invalid
     internals?.states.add('invalid');
