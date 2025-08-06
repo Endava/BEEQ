@@ -143,19 +143,19 @@ importers:
         version: 18.2.19(chokidar@3.6.0)
       '@stencil/angular-output-target':
         specifier: 0.10.2
-        version: 0.10.2(@stencil/core@4.36.1)
+        version: 0.10.2(@stencil/core@4.36.2)
       '@stencil/core':
-        specifier: 4.36.1
-        version: 4.36.1
+        specifier: 4.36.2
+        version: 4.36.2
       '@stencil/react-output-target':
         specifier: 1.2.0
-        version: 1.2.0(@stencil/core@4.36.1)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 1.2.0(@stencil/core@4.36.2)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@stencil/sass':
         specifier: 3.2.2
-        version: 3.2.2(@stencil/core@4.36.1)
+        version: 3.2.2(@stencil/core@4.36.2)
       '@stencil/vue-output-target':
-        specifier: 0.10.8
-        version: 0.10.8(@stencil/core@4.36.1)(vue@3.5.18(typescript@5.5.4))
+        specifier: 0.11.8
+        version: 0.11.8(@stencil/core@4.36.2)(vue@3.5.18(typescript@5.5.4))
       '@storybook/addon-a11y':
         specifier: 9.1.1
         version: 9.1.1(storybook@9.1.1(@testing-library/dom@10.4.1)(prettier@3.6.2)(vite@6.2.0(@types/node@22.14.1)(jiti@2.5.0)(less@4.3.0)(sass-embedded@1.89.2)(sass@1.89.2)(terser@5.31.6)(tsx@4.20.3)(yaml@2.8.0)))
@@ -413,7 +413,7 @@ importers:
         version: link:../beeq
       '@stencil/react-output-target':
         specifier: ^1.0.4
-        version: 1.2.0(@stencil/core@4.36.1)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 1.2.0(@stencil/core@4.36.2)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react:
         specifier: ^18 || ^19
         version: 19.1.0
@@ -434,7 +434,7 @@ importers:
         version: link:../beeq
       '@stencil/vue-output-target':
         specifier: ^0.10.7
-        version: 0.10.8(@stencil/core@4.36.1)(vue@3.5.18(typescript@5.8.3))
+        version: 0.10.8(@stencil/core@4.36.2)(vue@3.5.18(typescript@5.8.3))
       vue:
         specifier: '>=3.3.0'
         version: 3.5.18(typescript@5.8.3)
@@ -3977,6 +3977,11 @@ packages:
     engines: {node: '>=16.0.0', npm: '>=7.10.0'}
     hasBin: true
 
+  '@stencil/core@4.36.2':
+    resolution: {integrity: sha512-PRFSpxNzX9Oi0Wfh02asztN9Sgev/MacfZwmd+VVyE6ZxW+a/kEpAYZhzGAmE+/aKVOGYuug7R9SulanYGxiDQ==}
+    engines: {node: '>=16.0.0', npm: '>=7.10.0'}
+    hasBin: true
+
   '@stencil/react-output-target@1.2.0':
     resolution: {integrity: sha512-xDNpWdRg897T3Diy5V2d8dZUdjhc4QJ/5JZdTVyv3/e9UICdJPfCY6eKp/dWWgYlJ9AUE6GLHOI1iePZmLY12A==}
     peerDependencies:
@@ -3992,6 +3997,18 @@ packages:
 
   '@stencil/vue-output-target@0.10.8':
     resolution: {integrity: sha512-/a20LG29xqy/lxBqo6zc1LbyS20GW9xghypZ7vYdo5fQB8jHClAQDkn+c8aykQlre5TtHiODgvr/rRDUrQKwyg==}
+    peerDependencies:
+      '@stencil/core': '>=2.0.0 || >=3 || >= 4.0.0-beta.0 || >= 4.0.0'
+      vue: ^3.4.38
+      vue-router: ^4.5.0
+    peerDependenciesMeta:
+      '@stencil/core':
+        optional: true
+      vue-router:
+        optional: true
+
+  '@stencil/vue-output-target@0.11.8':
+    resolution: {integrity: sha512-R/kQoN15irgL7NJxWaUNSmwDLfoDBZjlYaXNnW3LHlF30TYfyez6pRgD7ZglSSTVktMtCXz6ZPhg0uq59VkhOw==}
     peerDependencies:
       '@stencil/core': '>=2.0.0 || >=3 || >= 4.0.0-beta.0 || >= 4.0.0'
       vue: ^3.4.38
@@ -17298,9 +17315,9 @@ snapshots:
     dependencies:
       '@sinonjs/commons': 3.0.1
 
-  '@stencil/angular-output-target@0.10.2(@stencil/core@4.36.1)':
+  '@stencil/angular-output-target@0.10.2(@stencil/core@4.36.2)':
     dependencies:
-      '@stencil/core': 4.36.1
+      '@stencil/core': 4.36.2
 
   '@stencil/core@4.36.1':
     optionalDependencies:
@@ -17313,10 +17330,21 @@ snapshots:
       '@rollup/rollup-win32-arm64-msvc': 4.34.9
       '@rollup/rollup-win32-x64-msvc': 4.34.9
 
-  '@stencil/react-output-target@1.2.0(@stencil/core@4.36.1)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@stencil/core@4.36.2':
+    optionalDependencies:
+      '@rollup/rollup-darwin-arm64': 4.34.9
+      '@rollup/rollup-darwin-x64': 4.34.9
+      '@rollup/rollup-linux-arm64-gnu': 4.34.9
+      '@rollup/rollup-linux-arm64-musl': 4.34.9
+      '@rollup/rollup-linux-x64-gnu': 4.34.9
+      '@rollup/rollup-linux-x64-musl': 4.34.9
+      '@rollup/rollup-win32-arm64-msvc': 4.34.9
+      '@rollup/rollup-win32-x64-msvc': 4.34.9
+
+  '@stencil/react-output-target@1.2.0(@stencil/core@4.36.2)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@lit/react': 1.0.8(@types/react@19.1.8)
-      '@stencil/core': 4.36.1
+      '@stencil/core': 4.36.2
       html-react-parser: 5.2.6(@types/react@19.1.8)(react@19.1.0)
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
@@ -17325,22 +17353,22 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@stencil/sass@3.2.2(@stencil/core@4.36.1)':
+  '@stencil/sass@3.2.2(@stencil/core@4.36.2)':
     dependencies:
-      '@stencil/core': 4.36.1
+      '@stencil/core': 4.36.2
       sass-embedded: 1.89.2
 
-  '@stencil/vue-output-target@0.10.8(@stencil/core@4.36.1)(vue@3.5.18(typescript@5.5.4))':
-    dependencies:
-      vue: 3.5.18(typescript@5.5.4)
-    optionalDependencies:
-      '@stencil/core': 4.36.1
-
-  '@stencil/vue-output-target@0.10.8(@stencil/core@4.36.1)(vue@3.5.18(typescript@5.8.3))':
+  '@stencil/vue-output-target@0.10.8(@stencil/core@4.36.2)(vue@3.5.18(typescript@5.8.3))':
     dependencies:
       vue: 3.5.18(typescript@5.8.3)
     optionalDependencies:
-      '@stencil/core': 4.36.1
+      '@stencil/core': 4.36.2
+
+  '@stencil/vue-output-target@0.11.8(@stencil/core@4.36.2)(vue@3.5.18(typescript@5.5.4))':
+    dependencies:
+      vue: 3.5.18(typescript@5.5.4)
+    optionalDependencies:
+      '@stencil/core': 4.36.2
 
   '@storybook/addon-a11y@9.1.1(storybook@9.1.1(@testing-library/dom@10.4.1)(prettier@3.6.2)(vite@6.2.0(@types/node@22.14.1)(jiti@2.5.0)(less@4.3.0)(sass-embedded@1.89.2)(sass@1.89.2)(terser@5.31.6)(tsx@4.20.3)(yaml@2.8.0)))':
     dependencies:
