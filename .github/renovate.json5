@@ -1,49 +1,14 @@
 {
   $schema: "https: //docs.renovatebot.com/renovate-schema.json",
-  /**
-   * Determine assignees based on configured code owners and changes in PR
-   */
   assigneesFromCodeOwners: true,
-  /**
-   * Renovate will use `main` as thePull Request target
-   */
-  baseBranches: ["main"],
-  /**
-   * Prefix to use for all branch names made by Renovate
-   */
+  baseBranchPatterns: ["main"],
   branchPrefix: "chore/",
-  /**
-   * Configuring dependencyDashboard to true will lead
-   * to the creation of a "Dependency Dashboard" issue within the repository
-   * This issue has a list of all PRs pending, open, closed (unmerged) or in error
-   * The goal of this issue is to give visibility into all updates that Renovate is managing
-   */
   dependencyDashboard: true,
-  /**
-   * Controls if updates need manual approval from the Dependency Dashboard issue before PRs are created.
-   */
   dependencyDashboardApproval: true,
-  /**
-   * The ignoreDeps configuration field allows you to define a list of dependency names to be ignored by Renovate.
-   * Currently it supports only "exact match" dependency names
-   */
   ignoreDeps: [],
-  /**
-   * Skip any package file whose path matches one of these
-   */
   ignorePaths: ["packages/**/package.json", "tools/package.json"],
-  /**
-   * Labels to set in the Pull Request.
-   */
   labels: ["chore ⚙️", "dependencies 📦"],
-  /**
-   * Time required before a new release is considered stable
-   */
   minimumReleaseAge: "3 days",
-  /**
-   * Package rules lets you apply rules to individual packages
-   * or to groups of packages using regex pattern matching
-   */
   packageRules: [
     {
       groupName: "Angular",
@@ -120,45 +85,19 @@
       allowedVersions: "<5.6.0",
       matchPackageNames: ["typescript{/,}**"],
     },
-    /**
-     * Ignore zone.js updates for v0.15.0 and above
-     */
     {
       matchPackageNames: ["zone.js"],
       allowedVersions: "<0.15.0",
     },
-    /**
-     * Do not renovate peerDependencies versions/ranges
-     */
     {
       enabled: false,
       matchDepTypes: ["peerDependencies"],
     },
   ],
-  /**
-   * Determines how to modify or update existing ranges.
-   * pin = convert ranges to exact versions, e.g. ^1.0.0 -> 1.1.0
-   */
   rangeStrategy: "pin",
-  /**
-   * Controls when Renovate recreates a PR
-   */
   recreateWhen: "never",
-  /**
-   * Controls when Renovate rebases an existing branch
-   */
   rebaseWhen: "conflicted",
-  /**
-   * Run on the 1st day of the month
-   * {@see https://crontab.guru} for debugging cron schedules
-   */
   schedule: ["* 0 1 * *"],
-  /**
-   * Enable Semantic Commit prefixes for commits and PR titles
-   */
   semanticCommits: "enabled",
-  /**
-   * Schedule PRs to be created using EET timezone
-   */
   timezone: "Europe/Bucharest",
 }
