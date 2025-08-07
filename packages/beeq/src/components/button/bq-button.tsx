@@ -161,13 +161,13 @@ export class BqButton {
   // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Handler to be called when the button loses focus */
+  /** Handler to be called when the button loses focus. */
   @Event() bqBlur: EventEmitter<HTMLBqButtonElement>;
 
-  /** Handler to be called when the button is clicked */
+  /** Handler to be called when the button gets focus. */
   @Event() bqFocus: EventEmitter<HTMLBqButtonElement>;
 
-  /** Handler to be called when button gets focus */
+  /** Handler to be called when the button is clicked. */
   @Event() bqClick: EventEmitter<HTMLBqButtonElement>;
 
   // Component lifecycle events

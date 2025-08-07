@@ -29,11 +29,11 @@ Buttons are designed for users to take action on a page or a screen.
 
 ## Events
 
-| Event     | Description                                      | Type                               |
-| --------- | ------------------------------------------------ | ---------------------------------- |
-| `bqBlur`  | Handler to be called when the button loses focus | `CustomEvent<HTMLBqButtonElement>` |
-| `bqClick` | Handler to be called when button gets focus      | `CustomEvent<HTMLBqButtonElement>` |
-| `bqFocus` | Handler to be called when the button is clicked  | `CustomEvent<HTMLBqButtonElement>` |
+| Event     | Description                                       | Type                               |
+| --------- | ------------------------------------------------- | ---------------------------------- |
+| `bqBlur`  | Handler to be called when the button loses focus. | `CustomEvent<HTMLBqButtonElement>` |
+| `bqClick` | Handler to be called when the button is clicked.  | `CustomEvent<HTMLBqButtonElement>` |
+| `bqFocus` | Handler to be called when the button gets focus.  | `CustomEvent<HTMLBqButtonElement>` |
 
 
 ## Slots

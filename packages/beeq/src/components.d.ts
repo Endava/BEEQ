@@ -5937,15 +5937,15 @@ declare namespace LocalJSX {
          */
         "loading"?: boolean;
         /**
-          * Handler to be called when the button loses focus
+          * Handler to be called when the button loses focus.
          */
         "onBqBlur"?: (event: BqButtonCustomEvent<HTMLBqButtonElement>) => void;
         /**
-          * Handler to be called when button gets focus
+          * Handler to be called when the button is clicked.
          */
         "onBqClick"?: (event: BqButtonCustomEvent<HTMLBqButtonElement>) => void;
         /**
-          * Handler to be called when the button is clicked
+          * Handler to be called when the button gets focus.
          */
         "onBqFocus"?: (event: BqButtonCustomEvent<HTMLBqButtonElement>) => void;
         /**
