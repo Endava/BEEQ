@@ -1,0 +1,17 @@
+diff --git a/src/executors/serve/executor.js b/src/executors/serve/executor.js
+index 372793056e356b30a25c8cc34fd21b7ecf6b1339..0d2b15eaf0f88d70dbc9efdd6cd2f39df028deb6 100644
+--- a/src/executors/serve/executor.js
++++ b/src/executors/serve/executor.js
+@@ -33,9 +33,9 @@ function runExecutor(options, context) {
+         const taskCommand = 'build';
+         const projGraph = yield tslib_1.__await((0, project_graph_1.createProjectGraphAsync)());
+         const { target, dependencies } = (0, buildable_libs_utils_1.calculateProjectDependencies)(projGraph, context.root, context.projectName, context.targetName, context.configurationName);
+-        if (!(0, buildable_libs_utils_1.checkDependentProjectsHaveBeenBuilt)(context.root, context.projectName, context.targetName, dependencies)) {
+-            yield yield tslib_1.__await({ success: false });
+-        }
++        // if (!(0, buildable_libs_utils_1.checkDependentProjectsHaveBeenBuilt)(context.root, context.projectName, context.targetName, dependencies)) {
++        //     yield yield tslib_1.__await({ success: false });
++        // }
+         const flags = createStencilCompilerOptions(taskCommand, options);
+         const { strictConfig, pathCollection } = yield tslib_1.__await((0, stencil_runtime_1.initializeStencilConfig)(taskCommand, options, context, flags));
+         const config = yield tslib_1.__await((0, stencil_runtime_1.prepareConfigAndOutputargetPaths)(strictConfig, pathCollection));

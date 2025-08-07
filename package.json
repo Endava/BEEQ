@@ -171,7 +171,8 @@
       "@custom-elements-manifest/analyzer": "0.10.4"
     },
     "patchedDependencies": {
-      "@nx/angular@21.2.0": "patches/@nx__angular@21.2.0.patch"
+      "@nx/angular@21.2.0": "patches/@nx__angular@21.2.0.patch",
+      "@nxext/stencil@20.0.6": "patches/@nxext__stencil@20.0.6.patch"
     }
   },
   "volta": {
