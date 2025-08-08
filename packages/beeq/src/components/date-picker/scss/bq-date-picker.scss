@@ -196,6 +196,11 @@ calendar-month {
     @apply text-alt;
   }
 
+  &::part(today selected range-inner) {
+    /* Ensure 'today selected range-inner' keeps the intended color */
+    @apply text-primary;
+  }
+
   &::part(today range-inner) {
     @apply rounded-none;
   }
