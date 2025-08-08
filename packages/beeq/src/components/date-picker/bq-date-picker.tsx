@@ -447,7 +447,7 @@ export class BqDatePicker {
     if (this.disabled) return;
     if (!isHTMLElement(ev.target, 'input')) return;
 
-    const dateValue = new Date(ev.target.value);
+    const dateValue = new Date(ev.target.value + 'T00:00:00');
     if (!isNaN(dateValue.getTime())) {
       // We need to force the value to respect the format: yyyy-mm-dd, hence the hardcoded locale
       this.value = dateValue.toLocaleDateString('fr-CA');
@@ -473,7 +473,7 @@ export class BqDatePicker {
 
   private handleCalendarRangeStart = (ev: CustomEvent) => {
     this.hasRangeEnd = false;
-    this.tentative = new Date(ev.detail).toLocaleDateString('fr-CA');
+    this.tentative = ev.detail;
   };
 
   private handleCalendarRangeEnd = () => {
@@ -562,16 +562,16 @@ export class BqDatePicker {
     const dateFormatter = new Intl.DateTimeFormat(this.locale, this.formatOptions);
 
     if (this.type === 'range') {
-      const [start, end] = value.split('/').map((dateStr) => new Date(dateStr));
+      const [start, end] = value.split('/').map((dateStr) => new Date(dateStr + 'T00:00:00'));
       return dateFormatter.formatRange(start, end);
     }
 
     if (this.type === 'multi') {
-      const dates = value.split(' ').map((dateStr) => new Date(dateStr));
+      const dates = value.split(' ').map((dateStr) => new Date(dateStr + 'T00:00:00'));
       return dates.map((date) => dateFormatter.format(date)).join(', ');
     }
 
-    return dateFormatter.format(new Date(value));
+    return dateFormatter.format(new Date(value + 'T00:00:00'));
   };
 
   private updateFormValidity = () => {
