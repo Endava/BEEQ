@@ -358,6 +358,7 @@ export const WithForm: Story = {
       ev.preventDefault();
       const form = ev.target as HTMLFormElement;
       const formData = new FormData(form);
+      // @ts-expect-error - FormData is not iterable
       const formValues = Object.fromEntries(formData.entries());
 
       const codeElement = document.getElementById('form-data');
