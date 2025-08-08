@@ -384,7 +384,6 @@ export class BqDatePicker {
     if (this.open === open) return;
 
     this.open = open;
-    // this.setFocusedDate();
   }
 
   @Listen('click', { target: 'body', capture: true })
