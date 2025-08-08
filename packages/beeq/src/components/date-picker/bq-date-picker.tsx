@@ -152,12 +152,11 @@ export class BqDatePicker {
 
   private callyElem?: TCalendarDate;
   private inputElem?: HTMLInputElement;
+  private isInternalUpdate = false;
   private labelElem?: HTMLElement;
   private prefixElem?: HTMLElement;
   private suffixElem?: HTMLElement;
-
   private fallbackInputId = 'date-picker';
-
   // Export parts of the calendar-month component
   private readonly COMMON_EXPORT_PARTS =
     'calendar__heading,calendar__table,calendar__tr,calendar__head,calendar__week,calendar__th,calendar__td';
@@ -299,20 +298,17 @@ export class BqDatePicker {
   // =======================
 
   @Watch('value')
-  handleValueChange() {
-    const { formatDisplayValue, internals, isCallyLoaded, value } = this;
+  handleValueChange(newValue: string, oldValue: string) {
+    if (newValue === oldValue) return;
+
+    const { formatDisplayValue, internals, isCallyLoaded } = this;
     if (!isCallyLoaded) return;
 
-    internals.setFormValue(!isNil(value) ? `${value}` : undefined);
+    internals.setFormValue(!isNil(newValue) ? `${newValue}` : undefined);
     this.updateFormValidity();
 
-    if (Array.isArray(value)) {
-      this.hasValue = value.some((val) => val.length > 0);
-      return;
-    }
-
-    this.hasValue = isDefined(value);
-    this.displayDate = formatDisplayValue(value);
+    this.hasValue = isDefined(newValue);
+    this.displayDate = formatDisplayValue(newValue);
 
     this.setFocusedDate();
   }
@@ -356,9 +352,15 @@ export class BqDatePicker {
     }
   }
 
-  async componentDidLoad() {
+  componentDidLoad() {
     this.handleSlotChange();
-    this.handleValueChange();
+    this.handleValueChange(this.value, undefined);
+  }
+
+  componentDidRender() {
+    if (this.isInternalUpdate) {
+      this.isInternalUpdate = false;
+    }
   }
 
   formAssociatedCallback() {
@@ -376,10 +378,12 @@ export class BqDatePicker {
 
   @Listen('bqOpen', { capture: true })
   handleOpenChange(ev: CustomEvent<{ open: boolean }>) {
-    if (!ev.composedPath().includes(this.el)) return;
+    if (!isEventTargetChildOfElement(ev, this.el)) return;
 
-    this.open = ev.detail.open;
-    this.setFocusedDate();
+    const { open } = ev.detail;
+    if (this.open === open) return;
+
+    this.open = open;
   }
 
   @Listen('click', { target: 'body', capture: true })
@@ -387,12 +391,9 @@ export class BqDatePicker {
     const { open, type, hasRangeEnd } = this;
     if (!open || type !== 'range' || ev.button !== 0) return;
     if (isEventTargetChildOfElement(ev, this.el) || hasRangeEnd) return;
-    if (isEventTargetChildOfElement(ev, this.el)) return;
 
-    if (!hasRangeEnd) {
-      this.tentative = undefined;
-      this.hasRangeEnd = false;
-    }
+    this.tentative = undefined;
+    this.hasRangeEnd = false;
   }
 
   // Public methods API
@@ -437,17 +438,22 @@ export class BqDatePicker {
   private setFocusedDate = () => {
     const { callyElem, formatFocusedDate, isCallyLoaded, value } = this;
     if (!(callyElem && isCallyLoaded)) return;
-    // We need to set the focused date in the calendar component via a ref
-    // because it doesn't work when passed as a prop (the Cally element does not re-render)
-    this.focusedDate = value ? formatFocusedDate(value) : new Date().toLocaleDateString('fr-CA');
-    this.callyElem.focusedDate = this.focusedDate;
+
+    const nextFocused = value ? formatFocusedDate(value) : new Date().toLocaleDateString('fr-CA');
+    if (this.focusedDate === nextFocused) return;
+
+    this.focusedDate = nextFocused;
+    if (callyElem.focusedDate !== this.focusedDate) {
+      // We need to set the focused date in the calendar component via a ref
+      // because it doesn't work when passed as a prop (the Cally element does not re-render)
+      callyElem.focusedDate = this.focusedDate;
+    }
   };
 
   private handleChange = (ev: Event) => {
-    if (this.disabled) return;
-    if (!isHTMLElement(ev.target, 'input')) return;
+    if (this.disabled || !isHTMLElement(ev.target, 'input')) return;
 
-    const dateValue = new Date(ev.target.value);
+    const dateValue = new Date(ev.target.value + 'T00:00:00');
     if (!isNaN(dateValue.getTime())) {
       // We need to force the value to respect the format: yyyy-mm-dd, hence the hardcoded locale
       this.value = dateValue.toLocaleDateString('fr-CA');
@@ -458,22 +464,32 @@ export class BqDatePicker {
   };
 
   private handleCalendarChange = (ev: Event) => {
-    const { value } = ev.target as unknown as { value: string };
+    if (this.isInternalUpdate) return;
+
+    const shouldStayOpen = this.type === 'multi';
+    const value = (ev.target as unknown as { value: string }).value;
+
+    if (this.value === value) {
+      this.open = shouldStayOpen;
+      return;
+    }
+
+    this.isInternalUpdate = true;
 
     this.value = value;
-    this.displayDate = this.formatDisplayValue(this.value);
+    this.displayDate = this.formatDisplayValue(value);
     this.inputElem.value = this.displayDate;
     this.inputElem.focus();
 
-    this.internals.setFormValue(`${this.value}`);
+    this.internals.setFormValue(value);
     this.bqChange.emit({ value: this.value, el: this.el });
 
-    this.open = this.type === 'multi';
+    this.open = shouldStayOpen;
   };
 
   private handleCalendarRangeStart = (ev: CustomEvent) => {
     this.hasRangeEnd = false;
-    this.tentative = new Date(ev.detail).toLocaleDateString('fr-CA');
+    this.tentative = ev.detail;
   };
 
   private handleCalendarRangeEnd = () => {
@@ -562,16 +578,16 @@ export class BqDatePicker {
     const dateFormatter = new Intl.DateTimeFormat(this.locale, this.formatOptions);
 
     if (this.type === 'range') {
-      const [start, end] = value.split('/').map((dateStr) => new Date(dateStr));
+      const [start, end] = value.split('/').map((dateStr) => new Date(dateStr + 'T00:00:00'));
       return dateFormatter.formatRange(start, end);
     }
 
     if (this.type === 'multi') {
-      const dates = value.split(' ').map((dateStr) => new Date(dateStr));
+      const dates = value.split(' ').map((dateStr) => new Date(dateStr + 'T00:00:00'));
       return dates.map((date) => dateFormatter.format(date)).join(', ');
     }
 
-    return dateFormatter.format(new Date(value));
+    return dateFormatter.format(new Date(value + 'T00:00:00'));
   };
 
   private updateFormValidity = () => {
@@ -583,7 +599,11 @@ export class BqDatePicker {
     if (required && (!value || value.toString().trim() === '')) {
       // Set validity state to invalid
       internals?.states.add('invalid');
-      internals?.setValidity({ valueMissing: true }, formValidationMessage, inputElem);
+      internals?.setValidity(
+        { valueMissing: true },
+        formValidationMessage ?? 'Please, input or select a valid date',
+        inputElem,
+      );
       return;
     }
 

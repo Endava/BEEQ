@@ -6,6 +6,6 @@ export default {
       'always',
       ['feat', 'fix', 'test', 'docs', 'style', 'chore', 'perf', 'refactor', 'revert', 'ci', 'build', 'wip', 'release'],
     ],
-    'body-max-line-length': [2, 'always', 300],
+    'body-max-line-length': [2, 'always', 500],
   },
 };
