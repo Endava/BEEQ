@@ -22,6 +22,17 @@ The Tooltip component is a small pop-up box that appears when a user hovers over
 | `visible`       | `visible`        | Indicates whether or not the tooltip is visible when the component is first rendered, and when interacting with the trigger          | `boolean`                                                                                                                                                            | `false`   |
 
 
+## Events
+
+| Event        | Description                                     | Type                                |
+| ------------ | ----------------------------------------------- | ----------------------------------- |
+| `bqClick`    | Emitted when the tooltip trigger is clicked     | `CustomEvent<HTMLBqTooltipElement>` |
+| `bqFocusIn`  | Emitted when the tooltip trigger is focused in  | `CustomEvent<HTMLBqTooltipElement>` |
+| `bqFocusOut` | Emitted when the tooltip trigger is focused out | `CustomEvent<HTMLBqTooltipElement>` |
+| `bqHoverIn`  | Emitted when the tooltip trigger is hovered in  | `CustomEvent<HTMLBqTooltipElement>` |
+| `bqHoverOut` | Emitted when the tooltip trigger is hovered out | `CustomEvent<HTMLBqTooltipElement>` |
+
+
 ## Methods
 
 ### `hide() => Promise<void>`
