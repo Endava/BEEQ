@@ -1,4 +1,5 @@
-import { Component, Element, h, Listen, Method, Prop, Watch } from '@stencil/core';
+import { Component, Element, Event, h, Listen, Method, Prop, Watch } from '@stencil/core';
+import type { EventEmitter } from '@stencil/core';
 
 import type { Placement } from '../../services/interfaces';
 import { FloatingUI } from '../../services/libraries';
@@ -122,9 +123,25 @@ export class BqTooltip {
       strategy: 'fixed',
     });
   }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
+
+  /** Emitted when the tooltip trigger is clicked */
+  @Event() bqClick: EventEmitter<HTMLBqTooltipElement>;
+
+  /** Emitted when the tooltip trigger is focused in */
+  @Event() bqFocusIn: EventEmitter<HTMLBqTooltipElement>;
+
+  /** Emitted when the tooltip trigger is focused out */
+  @Event() bqFocusOut: EventEmitter<HTMLBqTooltipElement>;
+
+  /** Emitted when the tooltip trigger is hovered in */
+  @Event() bqHoverIn: EventEmitter<HTMLBqTooltipElement>;
+
+  /** Emitted when the tooltip trigger is hovered out */
+  @Event() bqHoverOut: EventEmitter<HTMLBqTooltipElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order
@@ -205,26 +222,46 @@ export class BqTooltip {
 
   private handleTriggerMouseOver = async () => {
     if (this.displayOn !== 'hover') return;
+
+    const hoverEvent = this.bqHoverIn.emit(this.el);
+    if (hoverEvent.defaultPrevented) return;
+
     await this.show();
   };
 
   private handleTriggerMouseLeave = async () => {
     if (this.displayOn !== 'hover') return;
+
+    const hoverEvent = this.bqHoverOut.emit(this.el);
+    if (hoverEvent.defaultPrevented) return;
+
     await this.hide();
   };
 
   private handleTriggerOnClick = async () => {
     if (this.displayOn !== 'click') return;
+
+    const clickEvent = this.bqClick.emit(this.el);
+    if (clickEvent.defaultPrevented) return;
+
     await (this.visible ? this.hide() : this.show());
   };
 
   private handleTriggerFocusin = async () => {
     if (this.visible || this.displayOn === 'click') return;
+
+    const focusEvent = this.bqFocusIn.emit(this.el);
+    if (focusEvent.defaultPrevented) return;
+
     await this.show();
   };
 
   private handleTriggerFocusout = async () => {
     if (!this.visible || this.displayOn === 'click') return;
+
+    const focusEvent = this.bqFocusOut.emit(this.el);
+    if (focusEvent.defaultPrevented) return;
+
     await this.hide();
   };
 

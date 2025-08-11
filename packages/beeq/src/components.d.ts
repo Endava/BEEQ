@@ -3282,6 +3282,10 @@ export interface BqToastCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLBqToastElement;
 }
+export interface BqTooltipCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLBqTooltipElement;
+}
 declare global {
     interface HTMLBqAccordionElementEventMap {
         "bqBlur": HTMLBqAccordionElement;
@@ -5293,6 +5297,13 @@ declare global {
         prototype: HTMLBqToastElement;
         new (): HTMLBqToastElement;
     };
+    interface HTMLBqTooltipElementEventMap {
+        "bqClick": HTMLBqTooltipElement;
+        "bqFocusIn": HTMLBqTooltipElement;
+        "bqFocusOut": HTMLBqTooltipElement;
+        "bqHoverIn": HTMLBqTooltipElement;
+        "bqHoverOut": HTMLBqTooltipElement;
+    }
     /**
      * The Tooltip component is a small pop-up box that appears when a user hovers over or clicks on an element, providing additional information or context.
      * @example How to use it
@@ -5327,6 +5338,14 @@ declare global {
      * @cssprop --bq-tooltip--z-index: Tooltip z-index
      */
     interface HTMLBqTooltipElement extends Components.BqTooltip, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLBqTooltipElementEventMap>(type: K, listener: (this: HTMLBqTooltipElement, ev: BqTooltipCustomEvent<HTMLBqTooltipElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLBqTooltipElementEventMap>(type: K, listener: (this: HTMLBqTooltipElement, ev: BqTooltipCustomEvent<HTMLBqTooltipElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLBqTooltipElement: {
         prototype: HTMLBqTooltipElement;
@@ -8683,6 +8702,26 @@ declare namespace LocalJSX {
           * @default false
          */
         "hideArrow"?: boolean;
+        /**
+          * Emitted when the tooltip trigger is clicked
+         */
+        "onBqClick"?: (event: BqTooltipCustomEvent<HTMLBqTooltipElement>) => void;
+        /**
+          * Emitted when the tooltip trigger is focused in
+         */
+        "onBqFocusIn"?: (event: BqTooltipCustomEvent<HTMLBqTooltipElement>) => void;
+        /**
+          * Emitted when the tooltip trigger is focused out
+         */
+        "onBqFocusOut"?: (event: BqTooltipCustomEvent<HTMLBqTooltipElement>) => void;
+        /**
+          * Emitted when the tooltip trigger is hovered in
+         */
+        "onBqHoverIn"?: (event: BqTooltipCustomEvent<HTMLBqTooltipElement>) => void;
+        /**
+          * Emitted when the tooltip trigger is hovered out
+         */
+        "onBqHoverOut"?: (event: BqTooltipCustomEvent<HTMLBqTooltipElement>) => void;
         /**
           * @default 'top'
          */
