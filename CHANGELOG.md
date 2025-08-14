@@ -1,3 +1,59 @@
+## 1.10.0 (2025-08-14)
+
+### Features ⚡️
+
+- **Dropdown, Select:** lock document body scroll when the overlay panel is open ([#1483](https://github.com/Endava/BEEQ/pull/1483))
+- **Table:** add styles for native HTML table elements ([#1493](https://github.com/Endava/BEEQ/pull/1493))
+- **Tooltip:** hide the tooltip when the user scrolls the page unless `alwaysVisible` is enabled ([#1482](https://github.com/Endava/BEEQ/pull/1482))
+- **Tooltip:** enable prevention of behaviour for click, focus, and hover events ([#1507](https://github.com/Endava/BEEQ/pull/1507))
+
+### Bug Fixes 🐞
+
+- **BEEQ Tailwind CSS:** improve specificity and default behavior for light and dark modes ([#1486](https://github.com/Endava/BEEQ/pull/1486))
+- **Date Picker:** ensure consistent date selection regardless the time zone ([#1506](https://github.com/Endava/BEEQ/pull/1506))
+- **Radio group:** allow radio group to be focused when no radio element is checked ([#1503](https://github.com/Endava/BEEQ/pull/1503))
+- **Side Menu Item:** active selection not triggered on Enter or Space key pressing ([#1501](https://github.com/Endava/BEEQ/pull/1501))
+- **Slider:** fix progress tracker when min is negative ([#1487](https://github.com/Endava/BEEQ/pull/1487))
+- **Steps, Step Item:** improve accessibility and interaction behaviour ([#1502](https://github.com/Endava/BEEQ/pull/1502))
+
+### Refactor 🛠️
+
+- **BEEQ Tailwind CSS:** replace external plugin `tailwindcss-theme-swapper` with a custom plugin implementation ([#1481](https://github.com/Endava/BEEQ/pull/1481))
+- **Icon:** improve SVG fetching and processing with caching and security validation ([#1485](https://github.com/Endava/BEEQ/pull/1485))
+
+### Documentation 📚
+
+- **Button:** update event handler description for `bqClick` and `bqFocus` ([69cc906](https://github.com/Endava/BEEQ/commit/69cc906))
+
+### Chore ⚙️
+
+- **CI:** update CircleCI configuration to enable back NX Cloud ([1c408c2](https://github.com/Endava/BEEQ/commit/1c408c2))
+- **deps:** replace deprecated `cem-plugin-expanded-types` with `@wc-toolkit/type-parser` ([#1478](https://github.com/Endava/BEEQ/pull/1478))
+- **deps:** upgrade NX packages to v21.0.3 and update project configurations ([#1479](https://github.com/Endava/BEEQ/pull/1479))
+- **deps:** update storybook to v8.6.14 ([#1480](https://github.com/Endava/BEEQ/pull/1480))
+- **deps:** update @stencil/core to v4.34.0 and @stencil/react-output-target to v1.0.4 ([#1484](https://github.com/Endava/BEEQ/pull/1484))
+- **deps:** update Nx to v21.2.0 ([#1488](https://github.com/Endava/BEEQ/pull/1488))
+- **deps:** update Storybook to v9.0.12 (major) ([#1489](https://github.com/Endava/BEEQ/pull/1489))
+- **deps:** update dependency autoprefixer to v10.4.21 ([#1491](https://github.com/Endava/BEEQ/pull/1491))
+- **deps:** update stencil ([#1490](https://github.com/Endava/BEEQ/pull/1490))
+- **deps:** update dependency @nxext/stencil to v20.1.0 ([#1492](https://github.com/Endava/BEEQ/pull/1492))
+- **deps:** update dependency @nxext/stencil to v21 ([#1494](https://github.com/Endava/BEEQ/pull/1494))
+- **deps:** update project dev dependencies ([#1497](https://github.com/Endava/BEEQ/pull/1497))
+- **deps:** update Nx dependencies to v21.3.11 ([fa76ceb](https://github.com/Endava/BEEQ/commit/fa76ceb))
+- **deps:** update Storybook dependencies to v9.1.1 ([f09f78c](https://github.com/Endava/BEEQ/commit/f09f78c))
+- **deps:** update @stencil/core to v4.36.2 and @stencil/vue-output-target to v0.11.8 ([b8c1c7c](https://github.com/Endava/BEEQ/commit/b8c1c7c))
+- **deps:** update React dependencies v19.1.1 ([321df9b](https://github.com/Endava/BEEQ/commit/321df9b))
+- **deps:** update @chromatic-com/storybook to v4.1.0 ([e7634b2](https://github.com/Endava/BEEQ/commit/e7634b2))
+- **deps:** update dependency @stencil/vue-output-target to v0.11.8 ([50e6caa](https://github.com/Endava/BEEQ/commit/50e6caa))
+- **deps:** add back missing `@eslint/js` and `@typescript-eslint/parser` dependencies ([bbfae12](https://github.com/Endava/BEEQ/commit/bbfae12))
+- **deps:** upgrade Angular and related dependencies to v20.x ([#1508](https://github.com/Endava/BEEQ/pull/1508))
+
+### ❤️ Thank You
+
+- Bogdan Bosca @endv-bogdanb
+- Dabiel González Ramos @dgonzalezr
+- Dabiel González Ramos
+
 ## 1.9.0 (2025-04-29)
 
 ### Features ⚡️
