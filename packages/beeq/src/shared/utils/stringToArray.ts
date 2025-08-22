@@ -1,3 +1,4 @@
+import { isDefined } from './isDefined';
 import { isString } from './isString';
 
 /**
@@ -8,7 +9,7 @@ import { isString } from './isString';
  * @throws {Error} If the input string is not a valid JSON array
  */
 export const stringToArray = (value: string | string[]): string[] => {
-  if (isString(value)) {
+  if (isString(value) && isDefined(value)) {
     try {
       return Array.from(JSON.parse(String(value)));
     } catch (error) {

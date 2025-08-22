@@ -416,7 +416,7 @@ export class BqSelect {
   // =======================================================
 
   private initMultipleValue = () => {
-    if (!this.multiple) return;
+    if (!this.multiple || !isDefined(this.value)) return;
 
     this.value = Array.isArray(this.value) ? this.value : Array.from(JSON.parse(String(this.value)));
   };
@@ -588,8 +588,10 @@ export class BqSelect {
     const checkedItem = options.find((item) => item.value === value);
     const displayValue = checkedItem ? this.getOptionLabel(checkedItem) : '';
 
-    inputElem.value = displayValue;
     this.displayValue = displayValue;
+    if (inputElem) {
+      inputElem.value = displayValue;
+    }
   };
 
   private getOptionLabel = (item: HTMLBqOptionElement) => {
