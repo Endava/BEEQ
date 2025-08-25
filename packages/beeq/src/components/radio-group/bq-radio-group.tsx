@@ -6,6 +6,7 @@ import type { TRadioGroupOrientation } from './bq-radio-group.types';
 import {
   debounce,
   getNextElement,
+  isDefined,
   isEventTargetChildOfElement,
   isNil,
   TDebounce,
@@ -185,6 +186,9 @@ export class BqRadioGroup {
   /** Handler to be called when the radio state changes */
   @Event() bqChange: EventEmitter<{ value: string; target: HTMLBqRadioElement }>;
 
+  /** Handler to be called when the radio loses focus */
+  @Event() bqBlur: EventEmitter<HTMLBqRadioElement>;
+
   // Component lifecycle events
   // Ordered by their natural call order
   // =====================================
@@ -244,25 +248,29 @@ export class BqRadioGroup {
   onBqFocus(event: CustomEvent<HTMLBqRadioElement>) {
     if (!isEventTargetChildOfElement(event, this.el)) return;
 
-    const shouldStopPropagation = this.focusedBqRadio && event.detail !== this.focusedBqRadio;
+    const shouldStopPropagation = isDefined(this.focusedBqRadio);
+    this.focusedBqRadio = event.detail;
+
     if (shouldStopPropagation) {
       event.stopPropagation();
     }
-
-    this.focusedBqRadio = event.detail;
   }
 
   @Listen('bqBlur', { capture: true })
   onBqBlur(event: CustomEvent<HTMLBqRadioElement>) {
     if (!isEventTargetChildOfElement(event, this.el)) return;
 
-    const shouldStopPropagation = this.focusedBqRadio && event.detail !== this.focusedBqRadio;
-    if (shouldStopPropagation) {
-      event.stopPropagation();
-      return;
-    }
+    // NOTE: if focusedBqRadio is nil that means the event occured from this component
+    if (isNil(this.focusedBqRadio)) return;
 
-    this.focusedBqRadio = null;
+    event.stopPropagation();
+
+    requestAnimationFrame(() => {
+      if (this.focusedBqRadio !== event.detail) return;
+
+      this.focusedBqRadio = null;
+      this.bqBlur.emit(event.detail);
+    });
   }
 
   // Public methods API
