@@ -28,6 +28,7 @@ The radio group is a user interface component that groups radio buttons to enabl
 
 | Event      | Description                                       | Type                                                          |
 | ---------- | ------------------------------------------------- | ------------------------------------------------------------- |
+| `bqBlur`   | Handler to be called when the radio loses focus   | `CustomEvent<HTMLBqRadioElement>`                             |
 | `bqChange` | Handler to be called when the radio state changes | `CustomEvent<{ value: string; target: HTMLBqRadioElement; }>` |
 
 

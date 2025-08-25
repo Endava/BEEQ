@@ -4557,6 +4557,7 @@ declare global {
     };
     interface HTMLBqRadioGroupElementEventMap {
         "bqChange": { value: string; target: HTMLBqRadioElement };
+        "bqBlur": HTMLBqRadioElement;
     }
     /**
      * The radio group is a user interface component that groups radio buttons to enable a single selection within the group.
@@ -7463,6 +7464,10 @@ declare namespace LocalJSX {
           * Name of the HTML input form control. Submitted with the form as part of a name/value pair.
          */
         "name": string;
+        /**
+          * Handler to be called when the radio loses focus
+         */
+        "onBqBlur"?: (event: BqRadioGroupCustomEvent<HTMLBqRadioElement>) => void;
         /**
           * Handler to be called when the radio state changes
          */
