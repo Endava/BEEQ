@@ -79,7 +79,7 @@
     "@rollup/plugin-url": "8.0.2",
     "@schematics/angular": "20.2.0",
     "@stencil/angular-output-target": "1.1.1",
-    "@stencil/core": "4.36.2",
+    "@stencil/core": "4.36.3",
     "@stencil/react-output-target": "1.2.0",
     "@stencil/sass": "3.2.2",
     "@stencil/vue-output-target": "0.11.8",
