@@ -106,7 +106,7 @@
     "autoprefixer": "10.4.21",
     "babel-jest": "29.7.0",
     "cem-plugin-jsdoc-example": "0.0.9",
-    "chromatic": "11.28.2",
+    "chromatic": "11.29.0",
     "core-js": "3.44.0",
     "custom-element-vs-code-integration": "1.5.0",
     "decompress": "4.2.1",
