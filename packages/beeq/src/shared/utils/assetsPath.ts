@@ -24,16 +24,14 @@ export const setBasePath = (path: string): void => {
 export const getBasePath = (subpath: string = ''): string => {
   if (!beeqBasePath) {
     const configScript = findConfigScript();
-    const fallbackScript = configScript ? null : findFallbackScript();
+    // Get the path from the config script that uses the data-beeq attribute
+    const configPath = configScript?.getAttribute(DATA_BEEQ_ATTRIBUTE);
 
-    const script = configScript || fallbackScript;
-    if (script) {
-      const path = configScript ? script.getAttribute(DATA_BEEQ_ATTRIBUTE) : getScriptPath(script);
-      setBasePath(`${path}/${DEFAULT_SVG_PATH}`);
-    } else {
-      // Fallback: use the default path
-      setBasePath(`./${DEFAULT_SVG_PATH}`);
-    }
+    const fallbackScript = findFallbackScript();
+    // If no data-beeq attribute is found, use the script path
+    const fallbackPath = fallbackScript ? `${getScriptPath(fallbackScript)}/${DEFAULT_SVG_PATH}` : '';
+
+    setBasePath(configPath || fallbackPath);
   }
 
   // Return the base path without a trailing slash. If one exists, append the subpath separated by a slash.
