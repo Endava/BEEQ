@@ -9,6 +9,16 @@ module.exports = [
     ignores: ['**/src/components.ts'],
   },
   {
+    files: ['**/*.ts', '**/*.tsx'],
+    languageOptions: {
+      parser: tsESLint.parser,
+      parserOptions: {
+        project: './tsconfig.lib.json',
+        tsconfigRootDir: __dirname,
+      },
+    },
+  },
+  {
     rules: {
       '@typescript-eslint/ban-ts-comment': 'off',
       '@typescript-eslint/no-explicit-any': 'off',

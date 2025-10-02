@@ -2,9 +2,20 @@ const { fixupPluginRules } = require('@eslint/compat');
 const nxESLint = require('@nx/eslint-plugin');
 const angularESLint = require('@angular-eslint/eslint-plugin');
 const jsoncParser = require('jsonc-eslint-parser');
+const tsESLint = require('typescript-eslint');
 
 /** @type { import("eslint").Linter.Config[] } */
 module.exports = [
+  {
+    files: ['**/*.ts'],
+    languageOptions: {
+      parser: tsESLint.parser,
+      parserOptions: {
+        project: './tsconfig.lib.json',
+        tsconfigRootDir: __dirname,
+      },
+    },
+  },
   {
     files: ['*.ts'],
     plugins: {
