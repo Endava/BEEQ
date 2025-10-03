@@ -430,7 +430,7 @@ importers:
   packages/beeq-tailwindcss:
     dependencies:
       tailwindcss:
-        specifier: ^3.4.17
+        specifier: ^3 || ^4
         version: 3.4.17(ts-node@10.9.2(@swc/core@1.13.2(@swc/helpers@0.5.17))(@types/node@22.14.1)(typescript@5.8.3))
 
   packages/beeq-vue:

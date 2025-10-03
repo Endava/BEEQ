@@ -7,7 +7,7 @@
   "module": "./index.esm.js",
   "types": "./src/index.d.ts",
   "peerDependencies": {
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^3 || ^4"
   },
   "repository": {
     "type": "git",
