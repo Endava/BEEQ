@@ -6,11 +6,17 @@ const tsESLint = require('typescript-eslint');
 module.exports = [
   ...tsESLint.configs.recommended,
   {
+    files: ['**/*.ts', '**/*.tsx'],
     languageOptions: {
+      parser: tsESLint.parser,
       parserOptions: {
+        project: './tsconfig.lib.json',
+        tsconfigRootDir: __dirname,
         sourceType: 'module',
       },
     },
+  },
+  {
     rules: {
       '@typescript-eslint/ban-ts-comment': 'off',
       '@typescript-eslint/no-explicit-any': 'off',

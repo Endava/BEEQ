@@ -14,6 +14,18 @@ module.exports = [
     files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
   },
   {
+    files: ['**/*.ts', '**/*.tsx'],
+    languageOptions: {
+      parser: tsESLint.parser,
+      parserOptions: {
+        project: './tsconfig.lib.json',
+        tsconfigRootDir: __dirname,
+      },
+      sourceType: 'module',
+    },
+  },
+  {
+    files: ['**/*.js', '**/*.jsx'],
     languageOptions: {
       sourceType: 'module',
     },
