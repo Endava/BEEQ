@@ -1,3 +1,40 @@
+## 1.11.0 (2025-10-06)
+
+### Features ⚡️
+
+- **Beeq Tailwind CSS:** custom `flattenColorPalette` for Tailwind CSS v4 compatibility ([#1533](https://github.com/Endava/BEEQ/pull/1533))
+
+### Bug Fixes 🐞
+
+- **Assets Path:** use the `data-beeq` path value as it is, if provided ([#1532](https://github.com/Endava/BEEQ/pull/1532))
+- **Radio Group:** make sure that bqFocus and bqBlur are emitted only once ([#1511](https://github.com/Endava/BEEQ/pull/1511))
+- **Select:** enhance value initialisation and ensure input element exists before updates ([#1510](https://github.com/Endava/BEEQ/pull/1510))
+
+### Chore ⚙️
+
+- **deps:** update angular dependencies to v20.2.x ([#1512](https://github.com/Endava/BEEQ/pull/1512))
+- **deps:** update angular eslint to v20.2.0 ([#1513](https://github.com/Endava/BEEQ/pull/1513))
+- **deps:** update storybook to v9.1.3 ([#1514](https://github.com/Endava/BEEQ/pull/1514))
+- **deps:** update nx to v21.4.1 ([#1515](https://github.com/Endava/BEEQ/pull/1515))
+- **deps:** update dependency chromatic to v13 ([#1525](https://github.com/Endava/BEEQ/pull/1525))
+- **deps:** update dependency @chromatic-com/storybook to v4.1.1 ([#1516](https://github.com/Endava/BEEQ/pull/1516))
+- **deps:** update dependency @stencil/core to v4.36.3 ([#1517](https://github.com/Endava/BEEQ/pull/1517))
+- **deps:** update dependency @eslint/js to v9.34.0 ([#1520](https://github.com/Endava/BEEQ/pull/1520))
+- **deps:** update dependency tsx to v4.20.4 ([#1518](https://github.com/Endava/BEEQ/pull/1518))
+- **deps:** update dependency vue to v3.5.20 ([#1519](https://github.com/Endava/BEEQ/pull/1519))
+- **deps:** update dependency stylelint to v16.23.1 ([#1523](https://github.com/Endava/BEEQ/pull/1523))
+- **deps:** update eslint ([#1524](https://github.com/Endava/BEEQ/pull/1524))
+- **deps:** update dependency vite to v6.3.5 ([#1522](https://github.com/Endava/BEEQ/pull/1522))
+- **deps:** update angular ([#1526](https://github.com/Endava/BEEQ/pull/1526))
+- **deps:** update storybook to v9.1.4 ([#1528](https://github.com/Endava/BEEQ/pull/1528))
+- **deps:** update dependency eslint-plugin-storybook to v9.1.4 ([#1527](https://github.com/Endava/BEEQ/pull/1527))
+
+### ❤️ Thank You
+
+- Bogdan Bosca @endv-bogdanb
+- Dabiel González Ramos @dgonzalezr
+- Dabiel Gonzalez-Ramos @dgonzalezr
+
 ## 1.10.0 (2025-08-14)
 
 ### Features ⚡️

@@ -409,13 +409,13 @@ importers:
         specifier: '>=14.0.0'
         version: 20.1.7(@angular/compiler@20.1.7)(rxjs@7.8.2)(zone.js@0.15.1)
       '@beeq/core':
-        specifier: ^1.10.0
+        specifier: ^1.11.0
         version: link:../beeq
 
   packages/beeq-react:
     dependencies:
       '@beeq/core':
-        specifier: ^1.10.0
+        specifier: ^1.11.0
         version: link:../beeq
       '@stencil/react-output-target':
         specifier: ^1.0.4
@@ -436,7 +436,7 @@ importers:
   packages/beeq-vue:
     dependencies:
       '@beeq/core':
-        specifier: ^1.10.0
+        specifier: ^1.11.0
         version: link:../beeq
       '@stencil/vue-output-target':
         specifier: ^0.11.8
