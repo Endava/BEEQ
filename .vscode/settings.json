@@ -1,57 +1,53 @@
 {
   "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "biomejs.biome"
   },
-  "cssVariables.blacklistFolders": [
-    "dist",
-    "node_modules",
-    "out-tsc",
-    "tmp",
-  ],
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "[scss]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "angular.enable-strict-mode-prompt": false,
+  "biome.enabled": true,
   "css.validate": false,
+  "cssVariables.blacklistFolders": ["dist", "node_modules", "out-tsc", "tmp"],
   "commentAnchors.tags.anchors": {
     "!TO BE REMOVED": {
       "iconColor": "red",
       "highlightColor": "#F44336",
       "scope": "workspace"
-    },
+    }
   },
   "commentAnchors.workspace.excludeFiles": "**/{node_modules,.cache,.nx,.stencil,.git,.idea,target,out,build,dist,bin,tmp,obj,vendor}/**/*",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
+  },
+  "editor.defaultFormatter": "biomejs.biome",
   "editor.formatOnSave": true,
   "files.associations": {
-    "*.json5": "json5",
+    "*.json5": "json5"
   },
   "html.customData": ["./packages/beeq/cem/beeq.html-custom-data.json"],
   "less.validate": false,
   "scss.validate": false,
-  "stylelint.validate": [
-    "css",
-    "less",
-    "scss",
-    "postcss"
-  ],
+  "stylelint.validate": ["css", "less", "scss", "postcss"],
   "sonarlint.connectedMode.project": {
     "connectionId": "Endava",
     "projectKey": "Endava_bee-q"

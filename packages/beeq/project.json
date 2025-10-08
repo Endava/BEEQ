@@ -156,12 +156,17 @@
         "noStackTrace": true
       }
     },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm exec biome format {projectRoot}"
+      }
+    },
     "lint": {
-      "executor": "@nx/eslint:lint",
+      "executor": "nx:run-commands",
       "dependsOn": [{ "target": "stylelint" }],
       "options": {
-        "cache": true,
-        "lintFilePatterns": ["{projectRoot}/**/*.{ts,tsx}", "{projectRoot}/package.json", "{projectRoot}/project.json"]
+        "command": "pnpm exec biome lint {projectRoot}"
       }
     },
     "stylelint": {
