@@ -95,8 +95,9 @@ const Template = (args: Args) => html`
       @bqAfterHide=${args.bqAfterHide}
     >
       ${args.type === 'default' ? html`<bq-icon name="star" slot="icon"></bq-icon>` : nothing} Title
-      ${!args.sticky
-        ? html`
+      ${
+        !args.sticky
+          ? html`
             <span slot="body">
               Description
               <a class="bq-link" href="https://example.com">Link</a>
@@ -106,7 +107,8 @@ const Template = (args: Args) => html`
               <bq-button appearance="link" size="small"> Button </bq-button>
             </div>
           `
-        : nothing}
+          : nothing
+      }
     </bq-alert>
   </div>
 `;

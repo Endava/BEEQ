@@ -191,12 +191,13 @@ const Template = (args: Args) => {
       @bqClear=${args.customTags ? onClear : args.bqClear}
       @bqFocus=${args.bqFocus}
     >
-      ${args.customTags
-        ? html`${args.options
-            .filter((option) => args.value.includes(option.value))
-            .map((option, index) => {
-              if (index < args['max-tags-visible'] || args['max-tags-visible'] < 0) {
-                return html`<bq-tag
+      ${
+        args.customTags
+          ? html`${args.options
+              .filter((option) => args.value.includes(option.value))
+              .map((option, index) => {
+                if (index < args['max-tags-visible'] || args['max-tags-visible'] < 0) {
+                  return html`<bq-tag
                   key=${option.value}
                   size="xsmall"
                   variant="filled"
@@ -206,8 +207,8 @@ const Template = (args: Args) => {
                   <bq-icon name=${option.icon} slot="prefix"></bq-icon>
                   ${option.value}
                 </bq-tag>`;
-              } else if (index === args['max-tags-visible']) {
-                return html`
+                } else if (index === args['max-tags-visible']) {
+                  return html`
                   <bq-tag
                     key="more"
                     size="xsmall"
@@ -218,21 +219,24 @@ const Template = (args: Args) => {
                     +${args.value.length - index}
                   </bq-tag>
                 `;
-              }
-              return nothing;
-            })}`
-        : nothing}
+                }
+                return nothing;
+              })}`
+          : nothing
+      }
       ${!args.noLabel ? label : nothing}
       ${args.prefix ? html`<bq-icon name="user-circle" slot="prefix"></bq-icon>` : nothing}
       ${args.suffix ? html`<bq-icon name="arrow-down" slot="suffix"></bq-icon>` : nothing}
-      ${!args.noHelperText
-        ? html`
+      ${
+        !args.noHelperText
+          ? html`
             <span class="flex items-center gap-xs" slot="helper-text">
               <bq-icon name="star"></bq-icon>
               Helper text
             </span>
           `
-        : nothing}
+          : nothing
+      }
       ${args.options.map(
         (option) => html`
           <bq-option value=${option.value}>

@@ -146,14 +146,16 @@ const Template = (args: Args) => {
       ${!args.noLabel ? label : nothing}
       ${args.prefix ? html`<bq-icon name="user-circle" slot="prefix"></bq-icon>` : nothing}
       ${args.suffix ? html`<bq-icon name="gear" slot="suffix"></bq-icon>` : nothing}
-      ${!args.noHelperText
-        ? html`
+      ${
+        !args.noHelperText
+          ? html`
             <span class="flex items-center gap-xs" slot="helper-text">
               <bq-icon name="star"></bq-icon>
               Helper text
             </span>
           `
-        : nothing}
+          : nothing
+      }
     </bq-input>
   `;
 };

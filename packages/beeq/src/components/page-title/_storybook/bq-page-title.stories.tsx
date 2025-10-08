@@ -31,8 +31,9 @@ const Template = (args: Args) => {
 
   return html`
     <bq-page-title>
-      ${args['have-back-navigation']
-        ? html`
+      ${
+        args['have-back-navigation']
+          ? html`
             <bq-button appearance="link" slot="back">
               <bq-icon
                 color="text--primary"
@@ -43,7 +44,8 @@ const Template = (args: Args) => {
               ></bq-icon>
             </bq-button>
           `
-        : nothing}
+          : nothing
+      }
       ${args.title} ${args['sub-title'] ? html`<div slot="sub-title">${args['sub-title']}</div>` : nothing}
       ${args.actions ? html`<div class="${actionsSlotClass}" slot="suffix">${unsafeHTML(args.actions)}</div>` : nothing}
     </bq-page-title>

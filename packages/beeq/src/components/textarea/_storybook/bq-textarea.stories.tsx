@@ -98,14 +98,16 @@ const Template = (args: Args) => html`
     @bqInput=${args.bqInput}
   >
     <label slot="label">Label</label>
-    ${!args.noHelperText
-      ? html`
+    ${
+      !args.noHelperText
+        ? html`
           <span class="flex items-center gap-xs" slot="helper-text">
             <bq-icon name="star"></bq-icon>
             Helper text
           </span>
         `
-      : nothing}
+        : nothing
+    }
   </bq-textarea>
 `;
 

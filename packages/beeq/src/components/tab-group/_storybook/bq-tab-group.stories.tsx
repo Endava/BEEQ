@@ -71,9 +71,11 @@ const Template = (args: Args) => {
           (tab, index) => html`
             <bq-tab tab-id=${tab.id} ?disabled=${tab.disabled}>
               ${tab.label}
-              ${args.icons
-                ? html`<bq-icon name="${args.icons[index % args.icons.length]}" slot="icon"></bq-icon>`
-                : null}
+              ${
+                args.icons
+                  ? html`<bq-icon name="${args.icons[index % args.icons.length]}" slot="icon"></bq-icon>`
+                  : null
+              }
             </bq-tab>
           `,
         )}

@@ -12,11 +12,7 @@ interface MockHTMLBqIconElement {
 }
 
 const createMockElement = (
-  options: {
-    hasSvg?: boolean;
-    svgContent?: string;
-    shadowRoot?: boolean;
-  } = {},
+  options: { hasSvg?: boolean; svgContent?: string; shadowRoot?: boolean } = {},
 ): MockHTMLBqIconElement => {
   const { hasSvg = false, svgContent = '<path>test</path>', shadowRoot = true } = options;
 
