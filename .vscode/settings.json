@@ -1,4 +1,7 @@
 {
+  "[css]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
   "[html]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
@@ -25,16 +28,16 @@
   },
   "angular.enable-strict-mode-prompt": false,
   "biome.enabled": true,
-  "css.validate": false,
-  "cssVariables.blacklistFolders": ["dist", "node_modules", "out-tsc", "tmp"],
   "commentAnchors.tags.anchors": {
     "!TO BE REMOVED": {
-      "iconColor": "red",
       "highlightColor": "#F44336",
+      "iconColor": "red",
       "scope": "workspace"
     }
   },
   "commentAnchors.workspace.excludeFiles": "**/{node_modules,.cache,.nx,.stencil,.git,.idea,target,out,build,dist,bin,tmp,obj,vendor}/**/*",
+  "css.validate": false,
+  "cssVariables.blacklistFolders": ["dist", "node_modules", "out-tsc", "tmp"],
   "editor.codeActionsOnSave": {
     "source.fixAll.biome": "explicit",
     "source.organizeImports.biome": "explicit"
@@ -47,9 +50,9 @@
   "html.customData": ["./packages/beeq/cem/beeq.html-custom-data.json"],
   "less.validate": false,
   "scss.validate": false,
-  "stylelint.validate": ["css", "less", "scss", "postcss"],
   "sonarlint.connectedMode.project": {
     "connectionId": "Endava",
     "projectKey": "Endava_bee-q"
-  }
+  },
+  "stylelint.validate": ["css", "less", "scss", "postcss"]
 }
