@@ -121,7 +121,7 @@
       "continuous": true
     },
     "icons": {
-      "executor": "@beeq/tools:icons",
+      "executor": "../../tools:icons",
       "outputs": ["{options.downloadPath}", "{options.extractToPath}"],
       "options": {
         "assetsFolder": "assets",

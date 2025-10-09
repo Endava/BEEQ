@@ -9,7 +9,7 @@
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/tools",
+        "outputPath": ".",
         "main": "packages/tools/src/index.ts",
         "tsConfig": "packages/tools/tsconfig.lib.json",
         "assets": [

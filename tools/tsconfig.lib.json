@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../dist/tools",
+    "outDir": ".",
     "declaration": true,
     "types": ["node"]
   },
