@@ -12,29 +12,6 @@
     }
   ],
   "javascript": { "jsxRuntime": "reactClassic" },
-  "assist": {
-    "actions": {
-      "source": {
-        "useSortedAttributes": "on",
-        "organizeImports": {
-          "level": "on",
-          "options": {
-            "groups": [
-              ":NODE:",
-              ":BLANK_LINE:",
-              ":PACKAGE:",
-              ":BLANK_LINE:",
-              ":ALIAS:",
-              ["../**"],
-              ["./**"],
-              ":BLANK_LINE:",
-              ["./index"]
-            ]
-          }
-        }
-      }
-    }
-  },
   "linter": {
     "enabled": true,
     "rules": {

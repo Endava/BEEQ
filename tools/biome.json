@@ -3,58 +3,5 @@
   "extends": "//",
   "files": {
     "includes": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.json", "**/*.mjs"]
-  },
-  "assist": {
-    "enabled": true,
-    "actions": {
-      "source": {
-        "organizeImports": {
-          "level": "on",
-          "options": {
-            "groups": [":NODE:", ":BLANK_LINE:", ":PACKAGE:", ":BLANK_LINE:", ":ALIAS:", ["../**"], ["./**"]]
-          }
-        }
-      }
-    }
-  },
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "recommended": true,
-      "complexity": {
-        "noExcessiveCognitiveComplexity": "warn",
-        "noUselessConstructor": "error"
-      },
-      "correctness": {
-        "noUnusedImports": "error",
-        "noUnusedVariables": "error",
-        "noUnusedPrivateClassMembers": "warn"
-      },
-      "style": {
-        "useImportType": "error",
-        "useNodejsImportProtocol": "error",
-        "useNamingConvention": {
-          "level": "warn",
-          "options": {
-            "strictCase": false,
-            "conventions": [
-              {
-                "selector": { "kind": "class" },
-                "formats": ["PascalCase"]
-              },
-              {
-                "selector": { "kind": "interface" },
-                "formats": ["PascalCase"]
-              },
-              {
-                "selector": { "kind": "typeAlias" },
-                "formats": ["PascalCase"]
-              }
-            ]
-          }
-        }
-      },
-      "suspicious": { "noExplicitAny": "warn" }
-    }
   }
 }
