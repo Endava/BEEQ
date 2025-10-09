@@ -1,5 +1,5 @@
-import { Component, Element, Event, h, Host, Listen, Prop, State } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, h, Listen, Prop, State } from '@stencil/core';
 
 import { hasSlotContent } from '../../shared/utils';
 
@@ -187,26 +187,28 @@ export class BqOption {
         aria-selected={this.selected ? 'true' : 'false'}
         role="option"
       >
-        <div
+        <button
           class={{
             'bq-option': true,
             disabled: this.disabled,
             active: !this.disabled && this.selected,
           }}
           onBlur={this.onBlur}
-          onFocus={this.onFocus}
           onClick={this.onClick}
-          tabindex={this.isDisabledOrHidden ? '-1' : '0'}
-          role="button"
+          onFocus={this.onFocus}
           part="base"
+          tabindex={this.isDisabledOrHidden ? '-1' : '0'}
+          type="button"
         >
           <span
             class={{
               'bq-option__prefix me-[--bq-option--gap-start] flex items-center': true,
               '!hidden': !this.hasPrefix,
             }}
-            ref={(elem) => (this.prefixElem = elem)}
             part="prefix"
+            ref={(elem) => {
+              this.prefixElem = elem;
+            }}
           >
             <slot name="prefix" onSlotchange={this.handleSlotChange} />
           </span>
@@ -215,15 +217,17 @@ export class BqOption {
           </span>
           <span
             class={{
-              'bq-option__suffix ml-auto ms-[--bq-option--gap-end] flex items-center': true,
+              'bq-option__suffix ms-[--bq-option--gap-end] ml-auto flex items-center': true,
               '!hidden': !this.hasSuffix,
             }}
-            ref={(elem) => (this.suffixElem = elem)}
             part="suffix"
+            ref={(elem) => {
+              this.suffixElem = elem;
+            }}
           >
             <slot name="suffix" onSlotchange={this.handleSlotChange} />
           </span>
-        </div>
+        </button>
       </Host>
     );
   }

@@ -13,6 +13,7 @@
 }
 
 .bq-option {
+  @apply bg-none border-none text-inherit; // Button styles reset
   @apply flex cursor-pointer items-center text-[length:--bq-option--font-size] text-primary is-full;
   @apply pe-[--bq-option--padding-end] ps-[--bq-option--padding-start] p-b-[--bq-option--paddingY] p-i-[--bq-option--paddingY];
   @apply rounded-[--bq-option--border-radius] bg-[--bq-option--background] shadow-[shadow:--bq-option--box-shadow];
@@ -20,13 +21,13 @@
   // Transition
   @apply transition-colors duration-150 ease-in-out;
   // Focus
-  @apply [&:not(.disabled)]:focus-visible:focus;
+  @apply active:focus-visible:focus;
   // Hover
-  @apply [&:not(.disabled)]:hover:bg-hover-ui-secondary;
+  @apply active:hover:bg-hover-ui-secondary;
   // Active
-  @apply [&.active:not(.disabled)]:bg-ui-brand-alt [&.active:not(.disabled)]:text-brand;
+  @apply active:bg-ui-brand-alt active:text-brand;
   // Disabled
-  @apply [&.disabled]:cursor-not-allowed [&.disabled]:opacity-60;
+  @apply active:cursor-not-allowed active:opacity-60;
 
   border-style: var(--bq-option--border-style);
 }

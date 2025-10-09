@@ -75,7 +75,7 @@ describe('bq-progress', () => {
     const uiDangerToken = await page.evaluate(() =>
       getComputedStyle(document.documentElement).getPropertyValue('--bq-ui--danger'),
     );
-    const indicatorColor = await page.$eval('bq-progress', (elm: any) =>
+    const indicatorColor = await page.$eval('bq-progress', (elm: HTMLBqProgressElement) =>
       getComputedStyle(elm.shadowRoot.querySelector('[part="progress-bar"]')).getPropertyValue(
         '--bq-progress-bar--indicatorColor',
       ),
@@ -91,7 +91,7 @@ describe('bq-progress', () => {
     const uiLargeThicknessToken = await page.evaluate(() =>
       getComputedStyle(document.documentElement).getPropertyValue('--bq-spacing-xs'),
     );
-    const indicatorThickness = await page.$eval('bq-progress', (elm: any) =>
+    const indicatorThickness = await page.$eval('bq-progress', (elm: HTMLBqProgressElement) =>
       getComputedStyle(elm.shadowRoot.querySelector('[part="progress-bar"]')).getPropertyValue(
         '--bq-progress-bar--height',
       ),

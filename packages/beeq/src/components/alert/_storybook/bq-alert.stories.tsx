@@ -118,7 +118,7 @@ const TemplateSticky = (args: Args) => html`
     ?auto-dismiss=${args['auto-dismiss']}
     ?disable-close=${args['disable-close']}
     ?hide-icon=${args['hide-icon']}
-    ?sticky=${args['sticky']}
+    ?sticky=${args.sticky}
     border=${ifDefined(args.border)}
     ?open=${args.open}
     time=${ifDefined(args.time)}
@@ -212,7 +212,7 @@ export const WithTrigger: Story = {
             ?auto-dismiss=${args['auto-dismiss']}
             ?disable-close=${args['disable-close']}
             ?hide-icon=${args['hide-icon']}
-            ?sticky=${args['sticky']}
+            ?sticky=${args.sticky}
             border=${args.border}
             ?open=${args.open}
             time=${args.time}

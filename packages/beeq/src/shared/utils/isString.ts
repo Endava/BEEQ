@@ -10,6 +10,6 @@ export const isString = (value: unknown): value is string => {
     (type === 'object' &&
       value != null &&
       !Array.isArray(value) &&
-      Object.prototype.toString.call(value) == '[object String]')
+      Object.prototype.toString.call(value) === '[object String]')
   );
 };

@@ -1,8 +1,8 @@
 import { Component, Element, h, Method, Prop, Watch } from '@stencil/core';
 
-import { STEPS_SIZE, STEPS_TYPE } from './bq-steps.types';
-import type { TStepsSize, TStepsType } from './bq-steps.types';
 import { validatePropValue } from '../../shared/utils';
+import type { TStepsSize, TStepsType } from './bq-steps.types';
+import { STEPS_SIZE, STEPS_TYPE } from './bq-steps.types';
 
 /**
  * The Steps Component is a UI element used to display a series of steps or stages in a process or task.
@@ -148,15 +148,17 @@ export class BqSteps {
     return (
       <div
         class="relative flex w-full items-start justify-between"
-        ref={(div) => (this.stepElem = div)}
         part="container"
+        ref={(div) => {
+          this.stepElem = div;
+        }}
       >
         <slot />
         <bq-divider
-          class={`absolute -z-10 p-i-s inset-ie-0 inset-is-0 ${dividerPaddingTop}`}
+          class={`-z-10 absolute inset-ie-0 inset-is-0 p-i-s ${dividerPaddingTop}`}
+          exportparts="base:divider-base,dash-start:divider-dash-start,dash-end:divider-dash-end"
           strokeColor={this.dividerColor}
           strokeThickness={2}
-          exportparts="base:divider-base,dash-start:divider-dash-start,dash-end:divider-dash-end"
         />
       </div>
     );

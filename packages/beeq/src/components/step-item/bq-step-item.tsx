@@ -1,11 +1,11 @@
-import { Component, Element, Event, h, Prop, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { Component, Element, Event, h, Prop, Watch } from '@stencil/core';
 
-import { STEP_ITEM_STATUS } from './bq-step-item.types';
-import type { TStepItemStatus } from './bq-step-item.types';
 import { isHTMLElement, validatePropValue } from '../../shared/utils';
-import { STEPS_SIZE } from '../steps/bq-steps.types';
 import type { TStepsSize, TStepsType } from '../steps/bq-steps.types';
+import { STEPS_SIZE } from '../steps/bq-steps.types';
+import type { TStepItemStatus } from './bq-step-item.types';
+import { STEP_ITEM_STATUS } from './bq-step-item.types';
 
 /**
  * The Step Item Component is a UI element used to display a single step or stage in a process or task.
@@ -145,7 +145,7 @@ export class BqStepItem {
     const clickEvent = this.bqClick.emit(this.el);
     if (clickEvent.defaultPrevented) return;
 
-    const stepsParent = this.el.closest('bq-steps') as HTMLBqStepsElement;
+    const stepsParent = this.el.closest('bq-steps');
     if (!stepsParent) return;
 
     await stepsParent.setCurrentStepItem(this.el);
@@ -179,11 +179,11 @@ export class BqStepItem {
           'pointer-events-none opacity-60': this.isDisabled,
         }}
         disabled={this.isDisabled}
+        onBlur={this.handleBlur}
         onClick={this.handleClick}
         onFocus={this.handleFocus}
-        onBlur={this.handleBlur}
-        type="button"
         part="base"
+        type="button"
       >
         <div class={`bq-step-item__prefix relative ${this.type} ${this.size} ${this.status}`}>
           <slot name="prefix" onSlotchange={this.handleIconPrefix} />
@@ -192,7 +192,7 @@ export class BqStepItem {
           {/* TITLE */}
           <div
             class={{
-              'bq-step-item__content--title pe-xs3 text-m leading-regular text-primary': true,
+              'bq-step-item__content--title pe-xs3 text-m text-primary leading-regular': true,
               'pointer-events-none': this.isDisabled,
               'text-brand': this.isCurrent,
             }}
@@ -203,7 +203,7 @@ export class BqStepItem {
           {/* DESCRIPTION */}
           <div
             class={{
-              'bq-step-item__content--description text-s leading-regular text-secondary': true,
+              'bq-step-item__content--description text-s text-secondary leading-regular': true,
               'opacity-60': this.isDisabled,
             }}
             part="description"

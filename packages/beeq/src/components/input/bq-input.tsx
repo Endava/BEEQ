@@ -1,8 +1,8 @@
-import { AttachInternals, Component, Element, Event, h, Prop, State, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, h, Prop, State, Watch } from '@stencil/core';
 
+import { debounce, hasSlotContent, isDefined, isHTMLElement, isNil, type TDebounce } from '../../shared/utils';
 import type { TInputType, TInputValidation, TInputValue } from './bq-input.types';
-import { debounce, hasSlotContent, isDefined, isHTMLElement, isNil, TDebounce } from '../../shared/utils';
 
 /**
  * The Input component is a fundamental user interface element that allows users to input data by typing it into a text field.
@@ -425,11 +425,13 @@ export class BqInput {
       <div class="bq-input" part="base">
         {/* Label */}
         <label
-          class={{ 'bq-input--label': true, '!hidden': !this.hasLabel }}
           aria-label={this.name || this.fallbackInputId}
+          class={{ 'bq-input--label': true, '!hidden': !this.hasLabel }}
           htmlFor={this.name || this.fallbackInputId}
-          ref={(labelElem) => (this.labelElem = labelElem)}
           part="label"
+          ref={(labelElem) => {
+            this.labelElem = labelElem;
+          }}
         >
           <slot name="label" onSlotchange={this.handleSlotChange} />
         </label>
@@ -445,65 +447,70 @@ export class BqInput {
           {/* Prefix */}
           <span
             class={{ 'bq-input--control__prefix': true, '!hidden': !this.hasPrefix }}
-            ref={(spanElem) => (this.prefixElem = spanElem)}
             part="prefix"
+            ref={(spanElem) => {
+              this.prefixElem = spanElem;
+            }}
           >
             <slot name="prefix" onSlotchange={this.handleSlotChange} />
           </span>
           {/* HTML Input */}
           <input
-            id={this.name || this.fallbackInputId}
-            class="bq-input--control__input"
             aria-disabled={this.disabled ? 'true' : 'false'}
             autoCapitalize={this.autocapitalize}
             autoComplete={this.autocomplete}
             autoCorrect={this.autocorrect}
+            class="bq-input--control__input"
             disabled={this.disabled}
             form={this.form}
+            id={this.name || this.fallbackInputId}
             inputMode={this.inputmode}
             max={this.max}
             maxLength={this.maxlength}
             min={this.min}
             minLength={this.minlength}
             name={this.name}
-            pattern={this.pattern}
-            placeholder={this.placeholder}
-            ref={(inputElem) => (this.inputElem = inputElem)}
-            readOnly={this.readonly}
-            required={this.required}
-            step={this.step}
-            type={this.type}
-            value={this.value}
-            part="input"
-            // Events
             onBlur={this.handleBlur}
             onChange={this.handleChange}
             onFocus={this.handleFocus}
             onInput={this.handleInput}
+            part="input"
+            pattern={this.pattern}
+            placeholder={this.placeholder}
+            readOnly={this.readonly}
+            ref={(inputElem) => {
+              this.inputElem = inputElem;
+            }}
+            required={this.required}
+            step={this.step}
+            type={this.type}
+            value={this.value}
           />
           {/* Clear Button */}
           {this.hasValue && !this.disabled && !this.disableClear && (
             // The clear button will be visible as long as the input has a value
             // and the parent group is hovered or has focus-within
             <bq-button
-              class="bq-input--control__clear ms-[--bq-input--gap] hidden"
               appearance="text"
               aria-label={this.clearButtonLabel}
-              size="small"
+              class="bq-input--control__clear ms-[--bq-input--gap] hidden"
+              exportparts="button"
               onBqClick={this.handleClearClick}
               part="clear-btn"
-              exportparts="button"
+              size="small"
             >
               <slot name="clear-icon">
-                <bq-icon name="x-circle" class="flex" />
+                <bq-icon class="flex" name="x-circle" />
               </slot>
             </bq-button>
           )}
           {/* Suffix */}
           <span
             class={{ 'bq-input--control__suffix': true, '!hidden': !this.hasSuffix }}
-            ref={(spanElem) => (this.suffixElem = spanElem)}
             part="suffix"
+            ref={(spanElem) => {
+              this.suffixElem = spanElem;
+            }}
           >
             <slot name="suffix" onSlotchange={this.handleSlotChange} />
           </span>
@@ -514,8 +521,10 @@ export class BqInput {
             [`bq-input--helper-text validation-${this.validationStatus}`]: true,
             '!hidden': !this.hasHelperText,
           }}
-          ref={(divElem) => (this.helperTextElem = divElem)}
           part="helper-text"
+          ref={(divElem) => {
+            this.helperTextElem = divElem;
+          }}
         >
           <slot name="helper-text" onSlotchange={this.handleSlotChange} />
         </div>

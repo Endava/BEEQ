@@ -1,9 +1,9 @@
-import { AttachInternals, Component, Element, Event, h, Prop, State, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, h, Prop, State, Watch } from '@stencil/core';
 
-import type { TTextareaAutoCapitalize, TTextareaWrap } from './bq-textarea.types';
-import { debounce, hasSlotContent, isHTMLElement, isNil, TDebounce } from '../../shared/utils';
+import { debounce, hasSlotContent, isHTMLElement, isNil, type TDebounce } from '../../shared/utils';
 import type { TInputValidation } from '../input/bq-input.types';
+import type { TTextareaAutoCapitalize, TTextareaWrap } from './bq-textarea.types';
 
 /**
  * The Textarea component is a multi-line text input control that is often used in a form to collect user inputs like comments or reviews.
@@ -373,41 +373,45 @@ export class BqTextarea {
     return (
       <div class="bq-textarea flex flex-auto flex-col" part="base">
         <label
+          aria-label={this.name ?? this.fallbackId}
           class={{ 'bq-textarea__label': true, '!hidden': !this.hasLabel }}
           htmlFor={this.name ?? this.fallbackId}
-          aria-label={this.name ?? this.fallbackId}
-          ref={(label: HTMLLabelElement) => (this.labelElem = label)}
           part="label"
+          ref={(label: HTMLLabelElement) => {
+            this.labelElem = label;
+          }}
         >
           <slot name="label" onSlotchange={this.handleSlotChange} />
         </label>
         <textarea
-          id={this.name ?? this.fallbackId}
+          autocapitalize={this.autocapitalize}
+          autocomplete={this.autocomplete}
+          autocorrect={this.autocorrect}
+          autofocus={this.autofocus}
           class={{
             'bq-textarea__input': true,
             'resize-none': this.disableResize,
             [`validation-${this.validationStatus}`]: true,
           }}
-          autocapitalize={this.autocapitalize}
-          autocomplete={this.autocomplete}
-          autocorrect={this.autocorrect}
-          autofocus={this.autofocus}
           disabled={this.disabled}
           form={this.form}
+          id={this.name ?? this.fallbackId}
           maxLength={this.maxlength > 0 ? this.maxlength : undefined}
           name={this.name}
-          placeholder={this.placeholder}
-          readOnly={this.readonly}
-          required={this.required}
-          rows={this.rows}
-          spellcheck={this.spellcheck}
-          wrap={this.wrap}
-          ref={(elem: HTMLTextAreaElement) => (this.textarea = elem)}
           onBlur={this.handleBlur}
           onChange={this.handleChange}
           onFocus={this.handleFocus}
           onInput={this.handleInput}
           part="input"
+          placeholder={this.placeholder}
+          readOnly={this.readonly}
+          ref={(elem: HTMLTextAreaElement) => {
+            this.textarea = elem;
+          }}
+          required={this.required}
+          rows={this.rows}
+          spellcheck={this.spellcheck}
+          wrap={this.wrap}
         >
           {this.value}
         </textarea>
@@ -421,8 +425,10 @@ export class BqTextarea {
         >
           <span
             class="bq-textarea__helper--text"
-            ref={(span: HTMLElement) => (this.helperTextElem = span)}
             part="helper-text"
+            ref={(span: HTMLElement) => {
+              this.helperTextElem = span;
+            }}
           >
             <slot name="helper-text" onSlotchange={this.handleSlotChange} />
           </span>

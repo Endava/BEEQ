@@ -77,7 +77,7 @@ describe('bq-slider', () => {
     const maxRangeInput = await page.find('bq-slider >>> input[part="input-max"]');
 
     const difference = Math.abs(
-      parseInt(maxRangeInput.getAttribute('value')) - parseInt(minRangeInput.getAttribute('value')),
+      parseInt(maxRangeInput.getAttribute('value'), 10) - parseInt(minRangeInput.getAttribute('value'), 10),
     );
 
     expect(difference).toEqual(gap);

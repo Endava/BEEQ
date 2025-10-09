@@ -1,8 +1,8 @@
 import { Component, Element, h, Prop, Watch } from '@stencil/core';
 
-import { STATUS_TYPE } from './bq-status.types';
-import type { TStatusType } from './bq-status.types';
 import { validatePropValue } from '../../shared/utils';
+import type { TStatusType } from './bq-status.types';
+import { STATUS_TYPE } from './bq-status.types';
 
 /**
  * The Status Component is a UI element that represents the current state or condition of an item, task, or process.
@@ -88,9 +88,9 @@ export class BqStatus {
   render() {
     return (
       <div class="bq-status inline-flex items-center gap-xs" part="base" role="status">
-        <bq-badge class={`bq-status__circle rounded-full ${this.type}`} size="medium" part="circle" role="img" />
+        <bq-badge class={`bq-status__circle rounded-full ${this.type}`} part="circle" size="medium" />
         <div
-          class="bq-status__text text-s font-medium leading-regular text-primary max-bs-[20px] p-b-0 p-i-0 m-b-0 m-i-0"
+          class="bq-status__text max-bs-[20px] m-b-0 m-i-0 p-b-0 p-i-0 font-medium text-primary text-s leading-regular"
           part="text"
         >
           <slot />

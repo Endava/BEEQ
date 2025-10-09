@@ -135,7 +135,7 @@ it('should handle `disabled` property', async () => {
 
   await page.$eval('bq-side-menu-item', async (elem: HTMLBqSideMenuItemElement) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore: Property 'click' does not exist on type 'Element'.
+    // @ts-expect-error: Property 'click' does not exist on type 'Element'.
     elem.shadowRoot.querySelector('button[part="base"]').click();
   });
   await page.waitForChanges();

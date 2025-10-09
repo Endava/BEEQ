@@ -18,6 +18,7 @@
     "**/*.stories.ts",
     "**/*.stories.tsx",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    "src/**/*.d.ts"
   ]
 }

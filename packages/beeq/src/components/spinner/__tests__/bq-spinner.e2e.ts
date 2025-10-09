@@ -122,7 +122,7 @@ describe('bq-spinner', () => {
     });
 
     const getLineHeightValue = (fontSize: string): string => {
-      return `${(150 * parseInt(fontSize)) / 100}px`;
+      return `${(150 * parseInt(fontSize, 10)) / 100}px`;
     };
 
     const sizeStyleProps = ['width', 'height'] as const;

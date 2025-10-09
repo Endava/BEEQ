@@ -1,4 +1,4 @@
-import { ValueAccessorConfig } from '@stencil/angular-output-target';
+import type { ValueAccessorConfig } from '@stencil/angular-output-target';
 
 /**
  * This lets you define which components should be integrated with ngModel (i.e. form components).

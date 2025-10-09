@@ -3,8 +3,8 @@ import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { useArgs } from 'storybook/preview-api';
 
-import mdx from './bq-select.mdx';
 import { INPUT_VALIDATION } from '../../input/bq-input.types';
+import mdx from './bq-select.mdx';
 
 const meta: Meta = {
   title: 'Components/Select',
@@ -519,7 +519,9 @@ export const CustomFiltering: Story = {
       const query = event.detail.value;
 
       // Remove loading/no-results states if they exist
-      select.querySelectorAll('bq-option[data-temp]').forEach((option: HTMLBqOptionElement) => option.remove());
+      select.querySelectorAll('bq-option[data-temp]').forEach((option: HTMLBqOptionElement) => {
+        option.remove();
+      });
 
       if (!query) {
         showAllOptions(select);
@@ -545,7 +547,9 @@ export const CustomFiltering: Story = {
         const filteredOptions = await fetchFilteredOptions(query);
 
         // Remove loading state
-        select.querySelectorAll('bq-option[data-temp]').forEach((option) => option.remove());
+        select.querySelectorAll('bq-option[data-temp]').forEach((option) => {
+          option.remove();
+        });
 
         if (filteredOptions.length === 0) {
           select.insertAdjacentHTML(
@@ -575,7 +579,9 @@ export const CustomFiltering: Story = {
         }
       } catch (error) {
         console.error('Error fetching options:', error);
-        select.querySelectorAll('bq-option[data-temp]').forEach((option) => option.remove());
+        select.querySelectorAll('bq-option[data-temp]').forEach((option) => {
+          option.remove();
+        });
         select.insertAdjacentHTML(
           'beforeend',
           `
@@ -595,7 +601,9 @@ export const CustomFiltering: Story = {
       // Show all options again
       showAllOptions(select);
       // Remove any temporary options (loading/no results)
-      select.querySelectorAll('bq-option[data-temp]').forEach((option) => option.remove());
+      select.querySelectorAll('bq-option[data-temp]').forEach((option) => {
+        option.remove();
+      });
       // Call the original bqSelect handler
       args.bqSelect(event);
       // Clear the input value after selection

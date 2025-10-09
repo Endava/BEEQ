@@ -40,7 +40,7 @@
     "rules": {
       "recommended": true,
       "a11y": { "useSemanticElements": "off" },
-      "correctness": { "noUnusedImports": "off" },
+      "correctness": { "noUnusedImports": "off", "noUnusedPrivateClassMembers": "off" },
       "nursery": { "useSortedClasses": "error" },
       "style": { "useImportType": "error", "useNodejsImportProtocol": "error" }
     }

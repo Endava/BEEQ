@@ -1,5 +1,5 @@
-import { Component, Element, Event, h, Prop, State } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { Component, Element, Event, h, Prop, State } from '@stencil/core';
 
 import { getTextContent } from '../../shared/utils';
 
@@ -159,6 +159,7 @@ export class BqSideMenuItem {
 
   private menuItem = () => (
     <button
+      aria-disabled={this.disabled ? 'true' : 'false'}
       class={{
         'bq-side-menu__item': true,
         active: this.active,
@@ -166,20 +167,22 @@ export class BqSideMenuItem {
         'is-collapsed': this.collapse,
       }}
       onBlur={this.handleBlur}
-      onFocus={this.handleFocus}
       onClick={this.handleClick}
-      aria-disabled={this.disabled ? 'true' : 'false'}
-      role="menuitem"
-      tabindex={this.disabled ? -1 : 0}
-      slot="trigger"
+      onFocus={this.handleFocus}
       part="base"
+      role="menuitem"
+      slot="trigger"
+      tabindex={this.disabled ? -1 : 0}
+      type="button"
     >
       <div class="bq-side-menu__item--prefix flex items-center" part="prefix">
         <slot name="prefix" />
       </div>
       <div
         class="bq-side-menu__item--label overflow-hidden text-ellipsis whitespace-nowrap"
-        ref={(labelElem) => (this.labelElem = labelElem)}
+        ref={(labelElem) => {
+          this.labelElem = labelElem;
+        }}
       >
         <slot onSlotchange={this.handleSlotChange} />
       </div>
@@ -193,7 +196,7 @@ export class BqSideMenuItem {
     return !this.collapse ? (
       this.menuItem()
     ) : (
-      <bq-tooltip class="bq-side-menu__item--tooltip block" placement="right" exportparts="trigger, panel">
+      <bq-tooltip class="bq-side-menu__item--tooltip block" exportparts="trigger, panel" placement="right">
         {this.textContent}
         {this.menuItem()}
       </bq-tooltip>

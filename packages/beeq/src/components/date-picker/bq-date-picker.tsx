@@ -1,9 +1,6 @@
-import { AttachInternals, Component, Element, Event, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
-import { DATE_PICKER_TYPE } from './bq-date-picker.types';
-import type { DaysOfWeek, TCalendarDate, TDatePickerType } from './bq-date-picker.types';
-import { isCallyLibraryLoaded, loadCallyLibrary } from './helper/callyLibrary';
 import type { Placement } from '../../services/interfaces';
 import {
   hasSlotContent,
@@ -15,6 +12,9 @@ import {
   validatePropValue,
 } from '../../shared/utils';
 import type { TInputValidation } from '../input/bq-input.types';
+import type { DaysOfWeek, TCalendarDate, TDatePickerType } from './bq-date-picker.types';
+import { DATE_PICKER_TYPE } from './bq-date-picker.types';
+import { isCallyLibraryLoaded, loadCallyLibrary } from './helper/callyLibrary';
 
 /**
  * The Date Picker is a intuitive UI element component allows users to select dates from a visual calendar interface, providing an intuitive way to input date information.
@@ -453,8 +453,8 @@ export class BqDatePicker {
   private handleChange = (ev: Event) => {
     if (this.disabled || !isHTMLElement(ev.target, 'input')) return;
 
-    const dateValue = new Date(ev.target.value + 'T00:00:00');
-    if (!isNaN(dateValue.getTime())) {
+    const dateValue = new Date(`${ev.target.value}T00:00:00`);
+    if (!Number.isNaN(dateValue.getTime())) {
       // We need to force the value to respect the format: yyyy-mm-dd, hence the hardcoded locale
       this.value = dateValue.toLocaleDateString('fr-CA');
       this.displayDate = this.formatDisplayValue(this.value);
@@ -522,9 +522,9 @@ export class BqDatePicker {
 
     return (
       <calendar-month
-        offset={offset}
         class={className}
         exportparts={`${this.COMMON_EXPORT_PARTS},${this.BUTTON_EXPORT_PARTS}`}
+        offset={offset}
       />
     );
   };
@@ -578,16 +578,16 @@ export class BqDatePicker {
     const dateFormatter = new Intl.DateTimeFormat(this.locale, this.formatOptions);
 
     if (this.type === 'range') {
-      const [start, end] = value.split('/').map((dateStr) => new Date(dateStr + 'T00:00:00'));
+      const [start, end] = value.split('/').map((dateStr) => new Date(`${dateStr}T00:00:00`));
       return dateFormatter.formatRange(start, end);
     }
 
     if (this.type === 'multi') {
-      const dates = value.split(' ').map((dateStr) => new Date(dateStr + 'T00:00:00'));
+      const dates = value.split(' ').map((dateStr) => new Date(`${dateStr}T00:00:00`));
       return dates.map((date) => dateFormatter.format(date)).join(', ');
     }
 
-    return dateFormatter.format(new Date(value + 'T00:00:00'));
+    return dateFormatter.format(new Date(`${value}T00:00:00`));
   };
 
   private updateFormValidity = () => {
@@ -635,26 +635,28 @@ export class BqDatePicker {
       <div class="bq-date-picker" part="base">
         {/* Label */}
         <label
-          id={labelId}
-          class={{ 'bq-date-picker__label': true, '!hidden': !this.hasLabel }}
           aria-label={this.name || this.fallbackInputId}
+          class={{ 'bq-date-picker__label': true, '!hidden': !this.hasLabel }}
           htmlFor={this.name || this.fallbackInputId}
-          ref={(labelElem: HTMLSpanElement) => (this.labelElem = labelElem)}
+          id={labelId}
           part="label"
+          ref={(labelElem: HTMLSpanElement) => {
+            this.labelElem = labelElem;
+          }}
         >
           <slot name="label" onSlotchange={this.handleSlotChange} />
         </label>
         {/* Select date picker dropdown */}
         <bq-dropdown
-          class="bq-date-picker__dropdown is-full [&::part(panel)]:p-m [&::part(panel)]:is-auto"
+          class="bq-date-picker__dropdown is-full [&::part(panel)]:is-auto [&::part(panel)]:p-m"
           disabled={this.disabled}
           distance={this.distance}
+          exportparts="panel"
           open={this.open}
           panelHeight={this.panelHeight}
           placement={this.placement}
           skidding={this.skidding}
           strategy={this.strategy}
-          exportparts="panel"
         >
           {/* Input control group */}
           <div
@@ -669,85 +671,93 @@ export class BqDatePicker {
             {/* Prefix */}
             <span
               class={{ 'bq-date-picker__control--prefix': true, '!hidden': !this.hasPrefix }}
-              ref={(spanElem: HTMLSpanElement) => (this.prefixElem = spanElem)}
               part="prefix"
+              ref={(spanElem: HTMLSpanElement) => {
+                this.prefixElem = spanElem;
+              }}
             >
               <slot name="prefix" onSlotchange={this.handleSlotChange} />
             </span>
             {/* HTML Input */}
             <input
-              id={this.name || this.fallbackInputId}
-              class="bq-date-picker__control--input"
-              autoComplete="off"
-              autoCapitalize="off"
-              aria-disabled={this.disabled ? 'true' : 'false'}
               aria-controls={`${this.name}`}
+              aria-disabled={this.disabled ? 'true' : 'false'}
               aria-haspopup="dialog"
+              autoCapitalize="off"
+              autoComplete="off"
+              class="bq-date-picker__control--input"
               disabled={this.disabled}
               form={this.form}
+              id={this.name || this.fallbackInputId}
               name={this.name}
+              onBlur={this.handleBlur}
+              onChange={this.handleChange}
+              onFocus={this.handleFocus}
+              part="input"
               placeholder={this.placeholder}
               readonly={this.type !== 'single'}
-              ref={(inputElem: HTMLInputElement) => (this.inputElem = inputElem)}
+              ref={(inputElem: HTMLInputElement) => {
+                this.inputElem = inputElem;
+              }}
               required={this.required}
+              // Events
               spellcheck={false}
               type="text"
               value={this.displayDate}
-              part="input"
-              // Events
-              onBlur={this.handleBlur}
-              onFocus={this.handleFocus}
-              onChange={this.handleChange}
             />
             {/* Clear Button */}
             {this.hasValue && !this.disabled && !this.disableClear && (
               // The clear button will be visible as long as the input has a value
               // and the parent group is hovered or has focus-within
               <bq-button
-                class="bq-date-picker__control--clear ms-[--bq-date-picker--gap] hidden"
                 appearance="text"
                 aria-label={this.clearButtonLabel}
-                size="small"
+                class="bq-date-picker__control--clear ms-[--bq-date-picker--gap] hidden"
+                exportparts="button"
                 onBqClick={this.handleClearClick}
                 part="clear-btn"
-                exportparts="button"
+                size="small"
               >
                 <slot name="clear-icon">
-                  <bq-icon name="x-circle" class="flex" />
+                  <bq-icon class="flex" name="x-circle" />
                 </slot>
               </bq-button>
             )}
             {/* Suffix */}
             <span
               class="bq-date-picker__control--suffix"
-              ref={(spanElem: HTMLSpanElement) => (this.suffixElem = spanElem)}
               part="suffix"
+              ref={(spanElem: HTMLSpanElement) => {
+                this.suffixElem = spanElem;
+              }}
             >
               <slot name="suffix" onSlotchange={this.handleSlotChange}>
-                <bq-icon name="calendar-blank" class="flex" />
+                <bq-icon class="flex" name="calendar-blank" />
               </slot>
             </span>
           </div>
           {this.isCallyLoaded && (
             <CallyCalendar
+              exportparts="container:calendar__container,header:calendar__header,button:calendar__button,previous:calendar__previous,next:calendar__next,disabled:calendar__disabled,heading:calendar__heading"
+              firstDayOfWeek={this.firstDayOfWeek}
               isDateDisallowed={this.isDateDisallowed}
               locale={this.locale as string}
-              value={this.value}
-              min={this.min}
               max={this.max}
+              min={this.min}
               months={this.months}
-              tentative={this.tentative}
-              pageBy={this.monthsPerView}
-              firstDayOfWeek={this.firstDayOfWeek}
-              showOutsideDays={this.showOutsideDays}
               onChange={this.handleCalendarChange}
-              onRangestart={this.handleCalendarRangeStart}
               onRangeend={this.handleCalendarRangeEnd}
-              exportparts="container:calendar__container,header:calendar__header,button:calendar__button,previous:calendar__previous,next:calendar__next,disabled:calendar__disabled,heading:calendar__heading"
-              ref={(elem: TCalendarDate) => (this.callyElem = elem)}
+              onRangestart={this.handleCalendarRangeStart}
+              pageBy={this.monthsPerView}
+              ref={(elem: TCalendarDate) => {
+                this.callyElem = elem;
+              }}
+              showOutsideDays={this.showOutsideDays}
+              tentative={this.tentative}
+              value={this.value}
             >
-              <bq-icon color="text--primary" slot="previous" name="caret-left" label="Previous" />
-              <bq-icon color="text--primary" slot="next" name="caret-right" label="Next" />
+              <bq-icon color="text--primary" label="Previous" name="caret-left" slot="previous" />
+              <bq-icon color="text--primary" label="Next" name="caret-right" slot="next" />
 
               <div class="flex flex-wrap justify-center gap-[--bq-spacing-m]">{this.generateCalendarMonths()}</div>
             </CallyCalendar>

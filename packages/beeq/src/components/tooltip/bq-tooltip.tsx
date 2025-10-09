@@ -1,5 +1,5 @@
-import { Component, Element, Event, h, Listen, Method, Prop, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { Component, Element, Event, h, Listen, Method, Prop, Watch } from '@stencil/core';
 
 import type { Placement } from '../../services/interfaces';
 import { FloatingUI } from '../../services/libraries';
@@ -287,28 +287,40 @@ export class BqTooltip {
     return (
       <div class="bq-tooltip relative" part="base">
         {/* TRIGGER */}
-        <div
+        <button
           class="bq-tooltip--trigger"
-          onMouseOver={this.handleTriggerMouseOver}
-          onMouseLeave={this.handleTriggerMouseLeave}
           onClick={this.handleTriggerOnClick}
-          onFocusinCapture={this.handleTriggerFocusin}
+          onFocus={this.handleTriggerFocusin}
           onFocusoutCapture={this.handleTriggerFocusout}
-          ref={(el) => (this.trigger = el)}
+          onMouseLeave={this.handleTriggerMouseLeave}
+          onMouseOver={this.handleTriggerMouseOver}
           part="trigger"
+          ref={(el) => {
+            this.trigger = el;
+          }}
+          type="button"
         >
           <slot name="trigger" />
-        </div>
+        </button>
         {/* PANEL */}
         <div
-          class="bq-tooltip--panel"
           aria-hidden={this.isHidden}
+          class="bq-tooltip--panel"
           hidden={this.isHidden}
-          role="tooltip"
-          ref={(el) => (this.panel = el)}
           part="panel"
+          ref={(el) => {
+            this.panel = el;
+          }}
+          role="tooltip"
         >
-          {!this.hideArrow && <div class="bq-tooltip--arrow" ref={(el) => (this.arrow = el)} />}
+          {!this.hideArrow && (
+            <div
+              class="bq-tooltip--arrow"
+              ref={(el) => {
+                this.arrow = el;
+              }}
+            />
+          )}
           <slot />
         </div>
       </div>

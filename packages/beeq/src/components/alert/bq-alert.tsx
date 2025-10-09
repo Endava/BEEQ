@@ -1,9 +1,9 @@
-import { Component, Element, Event, h, Host, Method, Prop, State, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, h, Method, Prop, State, Watch } from '@stencil/core';
 
-import { ALERT_TYPE } from './bq-alert.types';
+import { debounce, enter, hasSlotContent, leave, type TDebounce, validatePropValue } from '../../shared/utils';
 import type { TAlertBorderRadius, TAlertType } from './bq-alert.types';
-import { debounce, enter, hasSlotContent, leave, TDebounce, validatePropValue } from '../../shared/utils';
+import { ALERT_TYPE } from './bq-alert.types';
 
 /**
  * The Alert is a user interface component used to convey important information to the user in a clear and concise manner.
@@ -292,34 +292,33 @@ export class BqAlert {
 
     return (
       <Host
-        style={style}
-        class={{ 'is-sticky': this.sticky }}
         aria-hidden={!this.open ? 'true' : 'false'}
+        class={{ 'is-sticky': this.sticky }}
         hidden={!this.open ? 'true' : 'false'}
         role="alert"
+        style={style}
       >
         <div
-          class={{
-            [`bq-alert bq-alert__${this.type}`]: true,
-            'is-sticky': this.sticky,
-          }}
+          class={{ [`bq-alert bq-alert__${this.type}`]: true, 'is-sticky': this.sticky }}
           data-transition-enter="transition ease-out duration-300"
-          data-transition-enter-start="opacity-0"
           data-transition-enter-end="opacity-100"
+          data-transition-enter-start="opacity-0"
           data-transition-leave="transition ease-in duration-200"
-          data-transition-leave-start="opacity-100"
           data-transition-leave-end="opacity-0"
-          ref={(div) => (this.alertElement = div)}
+          data-transition-leave-start="opacity-100"
           part="wrapper"
+          ref={(div) => {
+            this.alertElement = div;
+          }}
         >
           {/* CLOSE BUTTON */}
           {!this.disableClose && (
             <bq-button
-              class="bq-alert__close absolute end-5 focus-visible:focus [&::part(label)]:inline-flex"
               appearance="text"
-              size="small"
-              onClick={this.hide.bind(this)}
+              class="bq-alert__close focus-visible:focus absolute end-5 [&::part(label)]:inline-flex"
+              onBqClick={this.hide}
               part="btn-close"
+              size="small"
             >
               <slot name="btn-close">
                 <bq-icon name="x" />
@@ -335,7 +334,7 @@ export class BqAlert {
             part="icon-outline"
           >
             <slot name="icon">
-              {this.type !== 'default' && <bq-icon name={this.iconName} part="icon" exportparts="base,svg" />}
+              {this.type !== 'default' && <bq-icon exportparts="base,svg" name={this.iconName} part="icon" />}
             </slot>
           </div>
           {/* MAIN */}
@@ -344,7 +343,7 @@ export class BqAlert {
               {/* TITLE */}
               <div
                 class={{
-                  'title-font font-semibold leading-regular text-primary': true,
+                  'title-font font-semibold text-primary leading-regular': true,
                   'flex items-center': this.sticky,
                 }}
                 part="title"
@@ -353,9 +352,11 @@ export class BqAlert {
               </div>
               {/* BODY */}
               <div
-                class={{ 'text-s leading-regular text-primary': true, '!hidden': !this.hasContent }}
-                ref={(div) => (this.bodyElem = div)}
+                class={{ 'text-primary text-s leading-regular': true, '!hidden': !this.hasContent }}
                 part="body"
+                ref={(div) => {
+                  this.bodyElem = div;
+                }}
               >
                 <slot name="body" onSlotchange={this.handleSlotChange} />
               </div>
@@ -363,8 +364,10 @@ export class BqAlert {
             {/* FOOTER */}
             <div
               class={{ 'flex items-start gap-xs': true, '!hidden': !this.hasFooter }}
-              ref={(div) => (this.footerElem = div)}
               part="footer"
+              ref={(div) => {
+                this.footerElem = div;
+              }}
             >
               <slot name="footer" onSlotchange={this.handleSlotChange} />
             </div>

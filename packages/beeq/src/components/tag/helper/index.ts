@@ -1,4 +1,4 @@
-import { TAG_COLOR, TAG_SIZE, TAG_VARIANT, TTagColor, TTagSize, TTagVariant } from '../bq-tag.types';
+import { TAG_COLOR, TAG_SIZE, TAG_VARIANT, type TTagColor, type TTagSize, type TTagVariant } from '../bq-tag.types';
 
 /**
  * Function to determine the icon size based on the provided tag size.

@@ -5,12 +5,12 @@ import {
   flip,
   hide,
   offset,
-  ReferenceElement,
+  type ReferenceElement,
   shift,
   size,
 } from '@floating-ui/dom';
 
-import { FloatingUIOptions } from '../../interfaces';
+import type { FloatingUIOptions } from '../../interfaces';
 
 export class FloatingUI {
   panel: HTMLElement;

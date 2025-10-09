@@ -1,9 +1,9 @@
-import { Component, Event, h, Host, Prop, State, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { Component, Event, Host, h, Prop, State, Watch } from '@stencil/core';
 
+import { getBasePath, getColorCSSVariable, isNil } from '../../shared/utils';
 import type { TIconWeight } from './bq-icon.types';
 import { getSvgContent } from './helper/request';
-import { getBasePath, getColorCSSVariable, isNil } from '../../shared/utils';
 
 /**
  * The Icon component is an image that provides a visual representation of an object, action, or concept displayed on the screen.
@@ -187,7 +187,7 @@ export class BqIcon {
       <Host style={styles}>
         <div
           aria-label={label ?? `${name} icon`}
-          class="flex text-[--bq-icon--color] bs-[--bq-icon--size] is-[--bq-icon--size]"
+          class="bs-[--bq-icon--size] is-[--bq-icon--size] flex text-[--bq-icon--color]"
           innerHTML={this._svgContent}
           part="base"
           role="img"

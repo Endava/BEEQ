@@ -1,8 +1,8 @@
-import { AttachInternals, Component, Element, Event, h, Host, Method, Prop, State, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, Host, h, Method, Prop, State, Watch } from '@stencil/core';
 
-import type { TSwitchInnerLabel, TSwitchJustifyContent } from './bq-switch.types';
 import { getTextContent, isNil } from '../../shared/utils';
+import type { TSwitchInnerLabel, TSwitchJustifyContent } from './bq-switch.types';
 
 /**
  * Toggle switches are digital on/off switches.
@@ -285,45 +285,39 @@ export class BqSwitch {
         <label class={{ 'bq-switch group': true, ...labelCssClasses }} part="base">
           {/* Hidden native HTML input */}
           <input
-            class="bq-switch--input peer sr-only !bs-[--bq-switch--dot-size] !is-[--bq-switch--width] peer-checked:invisible"
-            type="checkbox"
-            checked={this.checked}
-            disabled={this.disabled}
-            required={this.required}
-            name={!isNil(this.name) ? this.name : undefined}
-            aria-label={this.name}
             aria-checked={this.checked ? 'true' : 'false'}
             aria-disabled={this.disabled ? 'true' : 'false'}
+            aria-label={this.name}
+            checked={this.checked}
+            class="bq-switch--input peer !bs-[--bq-switch--dot-size] !is-[--bq-switch--width] sr-only peer-checked:invisible"
+            disabled={this.disabled}
+            name={!isNil(this.name) ? this.name : undefined}
             onBlur={this.handleOnBlur}
             onChange={this.handleChange}
             onFocus={this.handleOnFocus}
-            ref={(input) => (this.inputElem = input)}
+            ref={(input) => {
+              this.inputElem = input;
+            }}
+            required={this.required}
             role="switch"
+            type="checkbox"
             value={this.value}
           />
           {/* Control */}
           <div
-            class="bq-switch--control relative box-border flex justify-between rounded-full bg-ui-tertiary transition duration-300 bs-[--bq-switch--height] is-[--bq-switch--width] p-b-xs2 p-i-xs2 group-[&.is-checked]:bg-ui-brand"
+            class="bq-switch--control bs-[--bq-switch--height] is-[--bq-switch--width] relative box-border flex justify-between rounded-full bg-ui-tertiary p-b-xs2 p-i-xs2 transition duration-300 group-[&.is-checked]:bg-ui-brand"
             part="control"
           >
             {this.innerLabel === 'icon' && (
-              <bq-icon
-                class="bq-switch--control__icon on"
-                name="check"
-                color="icon--alt"
-                role="img"
-                title="On"
-                part="icon-on"
-              />
+              <bq-icon class="bq-switch--control__icon on" color="icon--alt" name="check" part="icon-on" title="On" />
             )}
             {this.innerLabel === 'icon' && (
               <bq-icon
                 class="bq-switch--control__icon off"
-                name="x"
                 color="icon--inverse"
-                role="img"
-                title="Off"
+                name="x"
                 part="icon-off"
+                title="Off"
               />
             )}
             {/* Dot */}
@@ -332,12 +326,14 @@ export class BqSwitch {
           {/* Label */}
           <span
             class={{
-              'bq-switch--label text-m font-medium leading-regular text-primary transition-colors duration-300': true,
+              'bq-switch--label font-medium text-m text-primary leading-regular transition-colors duration-300': true,
               'ms-s': this.hasLabel && !this.reverseOrder,
               'me-s': this.hasLabel && this.reverseOrder,
             }}
-            ref={(span) => (this.labelElem = span)}
             part="label"
+            ref={(span) => {
+              this.labelElem = span;
+            }}
           >
             <slot onSlotchange={this.handleSlotChange} />
           </span>

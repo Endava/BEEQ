@@ -1,8 +1,8 @@
-import { Component, Element, h, Host, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Host, h, Prop, State, Watch } from '@stencil/core';
 
-import { AVATAR_SHAPE, AVATAR_SIZE } from './bq-avatar.types';
-import type { TAvatarShape, TAvatarSize } from './bq-avatar.types';
 import { validatePropValue } from '../../shared/utils';
+import type { TAvatarShape, TAvatarSize } from './bq-avatar.types';
+import { AVATAR_SHAPE, AVATAR_SIZE } from './bq-avatar.types';
 
 /**
  * The Avatar component is a simple and customizable element that displays an image or initials in a circular or square shape.
@@ -184,6 +184,7 @@ export class BqAvatar {
     return (
       <Host>
         <div
+          aria-label={this.label}
           class={{
             'bq-avatar': true,
             [`size--${this.size}`]: true,
@@ -193,13 +194,12 @@ export class BqAvatar {
             'rounded-[--bq-avatar--border-radius-squareM]':
               this.shape === 'square' && (this.size === 'medium' || this.size === 'large'),
           }}
-          aria-label={this.label}
-          role="img"
           part="base"
+          role="img"
         >
           {this.initials && (
             <span
-              class="absolute start-0 inline-flex items-center justify-center font-bold text-primary bs-full is-full inset-bs-0"
+              class="bs-full is-full absolute inset-bs-0 start-0 inline-flex items-center justify-center font-bold text-primary"
               part="text"
             >
               {this.trimmedInitials}
@@ -207,19 +207,19 @@ export class BqAvatar {
           )}
           {this.image && !this.hasError && (
             <img
-              class="absolute start-0 object-cover bs-full is-full inset-bs-0"
               alt={this.altText ?? undefined}
-              src={this.image}
+              class="bs-full is-full absolute inset-bs-0 start-0 object-cover"
               onError={this.onImageError}
               part="img"
+              src={this.image}
             />
           )}
         </div>
         <div
           class={{
             'absolute flex items-center justify-center': true,
-            'start-[--bq-avatar--badge-left-square] inset-bs-[--bq-avatar--badge-top-square]': this.shape === 'square',
-            'start-[--bq-avatar--badge-left-circle] inset-bs-[--bq-avatar--badge-top-circle]': this.shape === 'circle',
+            'inset-bs-[--bq-avatar--badge-top-square] start-[--bq-avatar--badge-left-square]': this.shape === 'square',
+            'inset-bs-[--bq-avatar--badge-top-circle] start-[--bq-avatar--badge-left-circle]': this.shape === 'circle',
           }}
           part="badge"
         >

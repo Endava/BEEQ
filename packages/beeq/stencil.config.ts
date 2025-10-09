@@ -1,14 +1,14 @@
-import { resolve } from 'path';
+import { resolve } from 'node:path';
 
 import { angularOutputTarget as angular } from '@stencil/angular-output-target';
 import type { Config } from '@stencil/core';
 import { reactOutputTarget as react } from '@stencil/react-output-target';
 import { sass } from '@stencil/sass';
 import { vueOutputTarget as vue } from '@stencil/vue-output-target';
-import tailwind, { PluginConfigOpts, tailwindHMR } from 'stencil-tailwind-plugin';
+import tailwind, { type PluginConfigOpts, tailwindHMR } from 'stencil-tailwind-plugin';
 
-import { angularValueAccessorBindings, generateCustomElementsJson, vueComponentModels } from './src/tools';
 import tailwindConf from '../../tailwind.config';
+import { angularValueAccessorBindings, generateCustomElementsJson, vueComponentModels } from './src/tools';
 
 const namespace = 'beeq';
 const componentCorePackage = `@${namespace}/core`;

@@ -1,4 +1,4 @@
-import { Component, Element, h, Host, Prop } from '@stencil/core';
+import { Component, Element, Host, h, Prop } from '@stencil/core';
 
 /**
  * The Breadcrumb is used to wraps a series of breadcrumb items to indicate the current page's location within a navigational hierarchy.
@@ -124,12 +124,26 @@ export class BqBreadcrumb {
   render() {
     return (
       <Host>
-        <nav class="flex items-center" aria-label={this.label} ref={(elem) => (this.navElem = elem)} part="navigation">
+        <nav
+          aria-label={this.label}
+          class="flex items-center"
+          part="navigation"
+          ref={(elem) => {
+            this.navElem = elem;
+          }}
+        >
           <slot onSlotchange={this.handleSlotChange}></slot>
         </nav>
-        <span hidden aria-hidden="true" ref={(element) => (this.spanElem = element)} part="separator">
+        <span
+          aria-hidden="true"
+          hidden
+          part="separator"
+          ref={(element) => {
+            this.spanElem = element;
+          }}
+        >
           <slot name="separator">
-            <span class="flex items-center justify-center is-3">/</span>
+            <span class="is-3 flex items-center justify-center">/</span>
           </slot>
         </span>
       </Host>

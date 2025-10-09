@@ -90,7 +90,7 @@ describe('bq-option', () => {
 
     await page.$eval('bq-option', async (elem: HTMLBqOptionElement) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore: Property 'click' does not exist on type 'Element'.
+      // @ts-expect-error: Property 'click' does not exist on type 'Element'.
       elem.shadowRoot.querySelector('div[part="base"]').click();
     });
     await page.waitForChanges();

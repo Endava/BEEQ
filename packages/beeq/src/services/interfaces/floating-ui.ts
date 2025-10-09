@@ -1,5 +1,4 @@
-// eslint-disable-next-line import-x/namespace
-import { Placement, Strategy } from '@floating-ui/core';
+import type { Placement, Strategy } from '@floating-ui/core';
 
 export interface FloatingUIOptions {
   distance?: number;

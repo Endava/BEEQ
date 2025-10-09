@@ -1,5 +1,5 @@
-import { Component, Element, Event, h, Listen, Prop, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { Component, Element, Event, h, Listen, Prop, Watch } from '@stencil/core';
 
 import type { Placement } from '../../services/interfaces';
 import { isEventTargetChildOfElement } from '../../shared/utils';
@@ -147,7 +147,13 @@ export class BqDropdown {
 
   componentDidLoad() {
     this.triggerElem = this.el.querySelector('[slot="trigger"]');
+    this.triggerElem?.addEventListener('click', this.togglePanel);
+
     this.handleDisabledChange();
+  }
+
+  disconnectedCallback() {
+    this.triggerElem?.removeEventListener('click', this.togglePanel);
   }
 
   // Listeners
@@ -204,8 +210,8 @@ export class BqDropdown {
   // =======================================================
 
   private togglePanel = (): void => {
-    // Don't toggle the panel if the component is disabled or the trigger element is disabled
-    if (this.disabled || this.triggerElem?.hasAttribute('disabled')) return;
+    const isDisabled = this.disabled || this.triggerElem?.hasAttribute('disabled');
+    if (isDisabled) return;
 
     this.open = !this.open;
   };
@@ -223,29 +229,27 @@ export class BqDropdown {
       <div class="bq-dropdown" part="base">
         {/* TRIGGER CONTAINER */}
         <div
-          class="bq-dropdown__trigger block"
           aria-controls={this.dropdownPanelId}
           aria-haspopup="true"
-          onClick={this.togglePanel}
+          class="bq-dropdown__trigger block"
           part="trigger"
         >
           <slot name="trigger" />
         </div>
         {/* PANEL */}
         <bq-panel
-          style={style}
-          id={this.dropdownPanelId}
           class="bq-dropdown__panel"
           disableScrollLock={this.disableScrollLock}
           distance={this.distance}
-          placement={this.placement}
+          exportparts="panel"
+          id={this.dropdownPanelId}
           open={this.open}
+          part="dropdown"
+          placement={this.placement}
           sameWidth={this.sameWidth}
           skidding={this.skidding}
           strategy={this.strategy}
-          role="group"
-          part="dropdown"
-          exportparts="panel"
+          style={style}
         >
           <slot />
         </bq-panel>

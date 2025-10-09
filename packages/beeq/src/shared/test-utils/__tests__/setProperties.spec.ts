@@ -1,4 +1,5 @@
-import StencilCoreTesting, { E2EPage } from '@stencil/core/testing';
+import StencilCoreTesting, { type E2EPage } from '@stencil/core/testing';
+
 import { setProperties } from '..';
 
 /**
@@ -29,8 +30,9 @@ describe.skip(setProperties.name, () => {
 
     const page = await StencilCoreTesting.newE2EPage();
 
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    (page.$eval as jest.Mock).mockImplementationOnce((_: unknown, fn: Function, ...args) => fn(element, ...args));
+    (page.$eval as jest.Mock).mockImplementationOnce(
+      (_: unknown, fn: (...args: unknown[]) => unknown, ...args: unknown[]) => fn(element, ...args),
+    );
 
     await setProperties(page, 'a', { href: 'test-href', id: 'test-id' });
 
@@ -42,8 +44,9 @@ describe.skip(setProperties.name, () => {
 
     const page = await StencilCoreTesting.newE2EPage();
 
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    (page.$eval as jest.Mock).mockImplementation((_: unknown, fn: Function, ...args) => fn(element, ...args));
+    (page.$eval as jest.Mock).mockImplementation(
+      (_: unknown, fn: (...args: unknown[]) => unknown, ...args: unknown[]) => fn(element, ...args),
+    );
 
     expect(await setProperties(page, 'div', { title: 'test-title', id: 'test-id' })).toEqual({
       title: 'test-title',

@@ -1,4 +1,4 @@
-import { ReferenceElement } from '@floating-ui/dom';
+import type { ReferenceElement } from '@floating-ui/dom';
 import { Component, Element, h, Prop, Watch } from '@stencil/core';
 
 import type { Placement } from '../../services/interfaces';
@@ -197,11 +197,13 @@ export class BqPanel {
   render() {
     return (
       <div
-        class="bq-panel"
-        ref={(el) => (this.panel = el)}
         aria-hidden={!this.open ? 'true' : 'false'}
+        class="bq-panel"
         hidden={!this.open}
         part="panel"
+        ref={(el) => {
+          this.panel = el;
+        }}
       >
         <slot />
       </div>

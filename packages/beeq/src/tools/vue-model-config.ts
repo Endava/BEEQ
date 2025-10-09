@@ -1,4 +1,4 @@
-import { ComponentModelConfig } from '@stencil/vue-output-target';
+import type { ComponentModelConfig } from '@stencil/vue-output-target';
 
 export const vueComponentModels: ComponentModelConfig[] = [
   {

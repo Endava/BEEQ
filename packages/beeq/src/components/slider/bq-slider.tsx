@@ -1,8 +1,8 @@
-import { AttachInternals, Component, Element, Event, h, Prop, State, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, h, Prop, State, Watch } from '@stencil/core';
 
+import { clamp, debounce, isNil, isString, type TDebounce } from '../../shared/utils';
 import type { TSliderType, TSliderValue } from './bq-slider.types';
-import { clamp, debounce, isNil, isString, TDebounce } from '../../shared/utils';
 
 /**
  * Sliders provide a visual representation of adjustable content, enabling users to change values by dragging a handle along a horizontal track.
@@ -359,7 +359,7 @@ export class BqSlider {
     return (
       <span
         class={{
-          [`${css} box-content block text-s font-medium leading-regular text-primary is-fit min-is-8 [font-variant:tabular-nums]`]: true,
+          [`${css} is-fit min-is-8 box-content block font-medium text-primary text-s leading-regular [font-variant:tabular-nums]`]: true,
           hidden: position === 'start' ? !this.enableValueIndicator : !this.enableValueIndicator || !this.isRangeType,
         }}
         part={`label-${position}`}
@@ -383,25 +383,25 @@ export class BqSlider {
 
     return (
       <input
-        type="range"
         class={{
-          'absolute start-0 -translate-y-1/2 cursor-pointer appearance-none bg-transparent outline-none is-full inset-bs-[50%] disabled:cursor-not-allowed': true,
+          '-translate-y-1/2 is-full absolute inset-bs-[50%] start-0 cursor-pointer appearance-none bg-transparent outline-none disabled:cursor-not-allowed': true,
           'pointer-events-none': this.isRangeType,
         }}
-        style={this.isRangeType ? { zIndex: zIndexValue(type) } : undefined}
         disabled={this.disabled}
-        min={this.min}
         max={this.max}
+        min={this.min}
         name={this.name}
-        step={this.step}
-        ref={refCallback}
-        onInput={(ev) => this.handleInputChange(type, ev)}
         onBlur={this.handleBlur}
         onFocus={this.handleFocus}
+        onInput={(ev) => this.handleInputChange(type, ev)}
         onMouseDown={this.handleMouseDown}
         onMouseUp={this.handleMouseUp}
-        value={value}
         part={`input-${type}`}
+        ref={refCallback}
+        step={this.step}
+        style={this.isRangeType ? { zIndex: zIndexValue(type) } : undefined}
+        type="range"
+        value={value}
       />
     );
   };
@@ -412,17 +412,17 @@ export class BqSlider {
     refCallback: (elem: HTMLBqTooltipElement) => void,
   ): HTMLBqTooltipElement => (
     <bq-tooltip
+      alwaysVisible={true}
       class={{
         'absolute [&::part(panel)]:absolute': true,
         hidden: !this.isTooltipAlwaysVisible,
       }}
-      exportparts="base,trigger,panel"
-      alwaysVisible={true}
       distance={this.enableValueIndicator ? 6 : 16}
-      style={{ insetInlineStart: `${thumbPosition}px`, fontVariant: 'tabular-nums' }}
+      exportparts="base,trigger,panel"
       ref={refCallback}
+      style={{ insetInlineStart: `${thumbPosition}px`, fontVariant: 'tabular-nums' }}
     >
-      <div class="absolute bs-1 is-1" slot="trigger" />
+      <div class="bs-1 is-1 absolute" slot="trigger" />
       {value.toFixed(this.decimalCount)}
     </bq-tooltip>
   );
@@ -435,36 +435,49 @@ export class BqSlider {
     return (
       <div
         aria-disabled={this.disabled ? 'true' : 'false'}
-        class={{ 'flex is-full': true, 'cursor-not-allowed opacity-60': this.disabled }}
+        class={{ 'is-full flex': true, 'cursor-not-allowed opacity-60': this.disabled }}
         part="base"
       >
         {/* LABEL (start) */}
         {this.renderLabel(this.minValue, 'start', 'me-xs text-end')}
         {/* SLIDER */}
-        <div class="relative is-full" part="container">
+        <div class="is-full relative" part="container">
           {/* TRACK AREA */}
           <span
-            class="absolute start-0 -translate-y-1/2 rounded-xs bg-[--bq-slider--trackarea-color] bs-1 is-full inset-bs-[50%]"
-            ref={(elem) => (this.trackElem = elem)}
+            class="-translate-y-1/2 bs-1 is-full absolute inset-bs-[50%] start-0 rounded-xs bg-[--bq-slider--trackarea-color]"
             part="track-area"
+            ref={(elem) => {
+              this.trackElem = elem;
+            }}
           />
           {/* PROGRESS AREA */}
           <span
-            class="absolute -translate-y-1/2 rounded-xs bg-[--bq-slider--progress-color] bs-1 is-[50%] inset-bs-[50%]"
-            ref={(elem) => (this.progressElem = elem)}
+            class="-translate-y-1/2 bs-1 is-[50%] absolute inset-bs-[50%] rounded-xs bg-[--bq-slider--progress-color]"
             part="progress-area"
+            ref={(elem) => {
+              this.progressElem = elem;
+            }}
           />
           {/* TOOLTIP on top of the value or min value (if the slider type is `range`) */}
           {this.enableTooltip &&
-            this.renderTooltip(this.minValue, this.minThumbPosition, (elem) => (this.minTooltipElem = elem))}
+            this.renderTooltip(this.minValue, this.minThumbPosition, (elem) => {
+              this.minTooltipElem = elem;
+            })}
           {/* INPUT (Min), used on single type */}
-          {this.renderInput('min', this.minValue, (input) => (this.inputMinElem = input))}
+          {this.renderInput('min', this.minValue, (input) => {
+            this.inputMinElem = input;
+          })}
           {/* TOOLTIP on top of the max value (if the slider type is `range`) */}
           {this.enableTooltip &&
             this.isRangeType &&
-            this.renderTooltip(this.maxValue, this.maxThumbPosition, (elem) => (this.maxTooltipElem = elem))}
+            this.renderTooltip(this.maxValue, this.maxThumbPosition, (elem) => {
+              this.maxTooltipElem = elem;
+            })}
           {/* INPUT (Max) */}
-          {this.isRangeType && this.renderInput('max', this.maxValue, (input) => (this.inputMaxElem = input))}
+          {this.isRangeType &&
+            this.renderInput('max', this.maxValue, (input) => {
+              this.inputMaxElem = input;
+            })}
         </div>
         {/* LABEL (end) */}
         {this.renderLabel(this.maxValue, 'end', 'ms-xs text-start')}

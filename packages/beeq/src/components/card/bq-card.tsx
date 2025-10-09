@@ -1,8 +1,8 @@
-import { Component, Element, h, Host, Prop, Watch } from '@stencil/core';
+import { Component, Element, Host, h, Prop, Watch } from '@stencil/core';
 
-import { CARD_TYPE } from './bq-card.types';
-import type { TCardBorderRadius, TCardType } from './bq-card.types';
 import { validatePropValue } from '../../shared/utils';
+import type { TCardBorderRadius, TCardType } from './bq-card.types';
+import { CARD_TYPE } from './bq-card.types';
 
 /**
  * The Card component serves as a versatile container designed for flexible content presentation within user interfaces.
@@ -111,7 +111,7 @@ export class BqCard {
       <Host style={style}>
         <div
           class={{
-            'bq-card rounded-[--bq-card--borderRadius] border-[length:--bq-card--borderWidth] border-[color:--bq-card--borderColor] bg-[--bq-card--background]': true,
+            'bq-card rounded-[--bq-card--borderRadius] border-[color:--bq-card--borderColor] border-[length:--bq-card--borderWidth] bg-[--bq-card--background]': true,
             'p-b-[--bq-card--padding] p-i-[--bq-card--padding]': this.type === 'default',
             // Remove padding for minimal card type
             'p-b-0 p-i-0': this.type === 'minimal',

@@ -1,13 +1,13 @@
-import { Component, Element, h, Host, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Host, h, Prop, State, Watch } from '@stencil/core';
 
+import { getColorCSSVariable, getTextContent, hasSlotContent, isNil, validatePropValue } from '../../shared/utils';
+import type { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from './bq-divider.types';
 import {
   DIVIDER_ORIENTATION,
   DIVIDER_ORIENTATION_ENUM,
   DIVIDER_STROKE_LINECAP,
   DIVIDER_TITLE_ALIGNMENT,
 } from './bq-divider.types';
-import type { TDividerOrientation, TDividerStrokeLinecap, TDividerTitleAlignment } from './bq-divider.types';
-import { getColorCSSVariable, getTextContent, hasSlotContent, isNil, validatePropValue } from '../../shared/utils';
 
 /**
  * The Divider component is used to visually separate content in a layout.
@@ -191,11 +191,12 @@ export class BqDivider {
             'gap-0': !this.hasTitle,
           }}
           part="base"
-          ref={(div) => (this.titleElem = div)}
-          role="separator"
-          aria-orientation={this.orientation}
+          ref={(div) => {
+            this.titleElem = div;
+          }}
         >
           <svg
+            aria-hidden="true"
             class={{
               'bq-divider--stroke start': true,
               '!hidden': this.strokeBasis === 0 && this.titleAlignment === 'start',
@@ -206,6 +207,7 @@ export class BqDivider {
           </svg>
           <slot onSlotchange={this.handleSlotChange} />
           <svg
+            aria-hidden="true"
             class={{
               'bq-divider--stroke end': true,
               '!hidden': !this.hasTitle || (this.strokeBasis === 0 && this.titleAlignment === 'end'),

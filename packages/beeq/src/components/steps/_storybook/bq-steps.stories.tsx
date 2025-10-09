@@ -1,10 +1,10 @@
-import { Args, Meta, StoryObj } from '@storybook/web-components-vite';
+import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 
-import mdx from './bq-steps.mdx';
 import { STEPS_SIZE, STEPS_TYPE } from '../bq-steps.types';
+import mdx from './bq-steps.mdx';
 
 const meta: Meta = {
   title: 'Components/Steps',
