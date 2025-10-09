@@ -1,9 +1,9 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit-html';
 
-import mdx from './bq-button.mdx';
 import { isChromatic, skipSnapshotParameters } from '../../../../.storybook/chromatic-parameters';
 import { BUTTON_APPEARANCE, BUTTON_BORDER_RADIUS, BUTTON_SIZE, BUTTON_TYPE, BUTTON_VARIANT } from '../bq-button.types';
+import mdx from './bq-button.mdx';
 
 const meta: Meta = {
   title: 'Components/Button',

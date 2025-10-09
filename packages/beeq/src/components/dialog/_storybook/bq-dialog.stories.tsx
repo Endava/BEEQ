@@ -3,8 +3,8 @@ import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 
-import mdx from './bq-dialog.mdx';
 import { DIALOG_BORDER_RADIUS, DIALOG_FOOTER_APPEARANCE, DIALOG_SIZE } from '../bq-dialog.types';
+import mdx from './bq-dialog.mdx';
 
 const meta: Meta = {
   title: 'Components/Dialog',

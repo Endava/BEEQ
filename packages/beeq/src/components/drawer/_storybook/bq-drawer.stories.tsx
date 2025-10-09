@@ -3,8 +3,8 @@ import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 
-import mdx from './bq-drawer.mdx';
 import { DRAWER_POSITIONS } from '../bq-drawer.types';
+import mdx from './bq-drawer.mdx';
 
 const meta: Meta = {
   title: 'Components/Drawer',

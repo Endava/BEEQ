@@ -2,9 +2,9 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-import mdx from './bq-textarea.mdx';
 import { INPUT_VALIDATION } from '../../input/bq-input.types';
 import { TEXTAREA_AUTO_CAPITALIZE, TEXTAREA_WRAP } from '../bq-textarea.types';
+import mdx from './bq-textarea.mdx';
 
 const meta: Meta = {
   title: 'Components/Textarea',
@@ -188,6 +188,7 @@ export const WithForm: Story = {
       ev.preventDefault();
       const form = ev.target as HTMLFormElement;
       const formData = new FormData(form);
+      // @ts-expect-error - FormData is not iterable
       const formValues = Object.fromEntries(formData.entries());
 
       const codeElement = document.getElementById('form-data');

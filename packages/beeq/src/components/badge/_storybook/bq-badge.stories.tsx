@@ -1,8 +1,8 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit-html';
 
-import mdx from './bq-badge.mdx';
 import { BADGE_SIZE } from '../bq-badge.types';
+import mdx from './bq-badge.mdx';
 
 const meta: Meta = {
   title: 'Components/Badge',

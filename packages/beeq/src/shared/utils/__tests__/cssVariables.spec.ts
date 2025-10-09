@@ -1,4 +1,5 @@
 import jsdom from 'jsdom';
+
 import { getColorCSSVariable } from '..';
 
 // Helper function to setup JSDOM and global variables

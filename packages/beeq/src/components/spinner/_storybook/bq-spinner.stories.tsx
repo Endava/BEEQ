@@ -1,9 +1,9 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit-html';
 
-import mdx from './bq-spinner.mdx';
 import { isChromatic, skipSnapshotParameters } from '../../../../.storybook/chromatic-parameters';
 import { SPINNER_SIZE, SPINNER_TEXT_POSITION } from '../bq-spinner.types';
+import mdx from './bq-spinner.mdx';
 
 const meta: Meta = {
   title: 'Components/Spinner',

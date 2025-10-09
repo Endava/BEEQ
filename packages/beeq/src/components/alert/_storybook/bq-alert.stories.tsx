@@ -2,8 +2,8 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-import mdx from './bq-alert.mdx';
 import { ALERT_BORDER_RADIUS, ALERT_TYPE } from '../bq-alert.types';
+import mdx from './bq-alert.mdx';
 
 const meta: Meta = {
   title: 'Components/Alert',

@@ -2,8 +2,8 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-import mdx from './bq-tooltip.mdx';
 import { TOOLTIP_PLACEMENT } from '../bq-tooltip.types';
+import mdx from './bq-tooltip.mdx';
 
 const meta: Meta = {
   title: 'Components/Tooltip',
@@ -47,7 +47,7 @@ const Template = (args: Args) => html`
     display-on=${ifDefined(args['display-on'])}
     ?hide-arrow=${args['hide-arrow']}
     placement=${ifDefined(args.placement)}
-    same-width=${ifDefined(args['same-width'])}
+    ?same-width=${args['same-width']}
     ?visible=${args.visible}
   >
     ${args.text}

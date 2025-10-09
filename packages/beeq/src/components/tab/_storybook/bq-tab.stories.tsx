@@ -1,8 +1,8 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit-html';
 
-import mdx from './bq-tab.mdx';
 import { TAB_ORIENTATION, TAB_PLACEMENT, TAB_SIZE } from '../bq-tab.types';
+import mdx from './bq-tab.mdx';
 
 const meta: Meta = {
   title: 'Components/Tabs/Tab',

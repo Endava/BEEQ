@@ -3,8 +3,8 @@ import { classMap } from 'lit/directives/class-map.js';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-import mdx from './bq-divider.mdx';
 import { DIVIDER_ORIENTATION, DIVIDER_STROKE_LINECAP, DIVIDER_TITLE_ALIGNMENT } from '../bq-divider.types';
+import mdx from './bq-divider.mdx';
 
 const meta: Meta = {
   title: 'Components/Divider',

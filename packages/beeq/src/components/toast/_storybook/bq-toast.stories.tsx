@@ -1,10 +1,10 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit-html';
 
-import mdx from './bq-toast.mdx';
 import { skipSnapshotParameters } from '../../../../.storybook/chromatic-parameters';
 import { getRandomFromArray } from '../../../shared/utils';
 import { TOAST_BORDER_RADIUS, TOAST_PLACEMENT, TOAST_TYPE } from '../bq-toast.types';
+import mdx from './bq-toast.mdx';
 
 const meta: Meta = {
   title: 'Components/Toast',

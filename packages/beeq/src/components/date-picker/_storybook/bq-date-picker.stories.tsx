@@ -2,9 +2,9 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-import mdx from './bq-date-picker.mdx';
 import { INPUT_VALIDATION } from '../../input/bq-input.types';
 import { DATE_PICKER_TYPE } from '../bq-date-picker.types';
+import mdx from './bq-date-picker.mdx';
 
 const meta: Meta = {
   title: 'Components/Date picker',

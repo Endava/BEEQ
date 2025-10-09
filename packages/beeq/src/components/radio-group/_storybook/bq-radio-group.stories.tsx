@@ -3,8 +3,8 @@ import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 
-import mdx from './bq-radio-group.mdx';
 import { RADIO_GROUP_ORIENTATION } from '../bq-radio-group.types';
+import mdx from './bq-radio-group.mdx';
 
 const meta: Meta = {
   title: 'Components/Radio Group',

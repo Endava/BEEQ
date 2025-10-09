@@ -1,9 +1,9 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit-html';
 
-import mdx from './bq-progress.mdx';
 import { isChromatic, skipSnapshotParameters } from '../../../../.storybook/chromatic-parameters';
 import { PROGRESS_BORDER_SHAPE, PROGRESS_THICKNESS, PROGRESS_TYPE } from '../bq-progress.types';
+import mdx from './bq-progress.mdx';
 
 const meta: Meta = {
   title: 'Components/Progress',

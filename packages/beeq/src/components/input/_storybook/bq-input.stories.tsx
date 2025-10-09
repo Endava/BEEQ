@@ -2,8 +2,8 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-import mdx from './bq-input.mdx';
 import { INPUT_TYPE, INPUT_VALIDATION } from '../bq-input.types';
+import mdx from './bq-input.mdx';
 
 const meta: Meta = {
   title: 'Components/Input',
