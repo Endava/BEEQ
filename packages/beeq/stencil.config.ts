@@ -126,6 +126,7 @@ export const config: Config = {
   },
   testing: {
     browserHeadless: 'shell',
+    browserArgs: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
   },
   preamble: 'Built by Endavans\n© https://beeq.design - Apache 2 License.',
   watchIgnoredRegex: /(custom-elements\.)((d\.ts)|(json))$/g,

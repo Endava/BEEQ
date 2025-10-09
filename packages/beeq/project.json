@@ -140,7 +140,12 @@
         "projectType": "library",
         "tsConfig": "packages/beeq/tsconfig.lib.json",
         "configPath": "packages/beeq/stencil.config.ts",
-        "outputPath": "dist/beeq"
+        "outputPath": "dist/beeq",
+        "detectOpenHandles": true,
+        "forceExit": false,
+        "testTimeout": 10000,
+        "runInBand": true,
+        "maxWorkers": 1
       }
     },
     "e2e": {
@@ -160,7 +165,7 @@
       "executor": "nx:run-commands",
       "dependsOn": [{ "target": "stylelint" }],
       "options": {
-        "command": "pnpm exec biome check {projectRoot}"
+        "command": "pnpm exec biome check {projectRoot} --max-diagnostics=none"
       }
     },
     "format": {

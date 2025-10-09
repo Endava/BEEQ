@@ -128,8 +128,8 @@ jobs:
           command: pnpm dlx nx-cloud start-ci-run --distribute-on="3 linux-medium-plus-js" --with-env-vars="NX_VERBOSE_LOGGING NX_BRANCH"
       # Run all Nx commands
       - run:
-          name: 🩺 Run Linters
-          command: pnpm exec nx affected -t lint --exclude='*,!tag:core' --parallel --base=$NX_BASE --head=$NX_HEAD --verbose
+          name: 🩺 Run Linter, Formatter, and Import Sorting
+          command: pnpm exec nx affected -t check --exclude='*,!tag:core' --parallel --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 🧰 Run Unit Tests
           command: pnpm exec nx affected -t test --exclude='*,!tag:core' --parallel --base=$NX_BASE --head=$NX_HEAD --ci --verbose
