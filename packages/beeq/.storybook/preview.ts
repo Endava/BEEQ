@@ -1,5 +1,3 @@
-// eslint-disable no-unused-disable
-// eslint-disable-next-line import-x/no-unresolved
 import './assets/css/stories.css';
 
 import { DocsContainer, type DocsContainerProps } from '@storybook/addon-docs/blocks';

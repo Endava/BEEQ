@@ -17,8 +17,7 @@
       "!{projectRoot}/**/*.spec.ts",
       "!{projectRoot}/**/*.stories.tsx",
       "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/jest.config.ts",
-      "!{projectRoot}/.eslintrc.json"
+      "!{projectRoot}/jest.config.ts"
     ]
   },
   "targets": {
