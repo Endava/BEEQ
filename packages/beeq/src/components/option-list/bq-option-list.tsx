@@ -1,5 +1,5 @@
-import { Component, Element, Event, h, Listen, Prop } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { Component, Element, Event, h, Listen, Prop } from '@stencil/core';
 
 import { isEventTargetChildOfElement, isHTMLElement } from '../../shared/utils';
 

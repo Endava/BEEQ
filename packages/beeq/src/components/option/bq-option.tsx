@@ -121,6 +121,8 @@ export class BqOption {
   @Listen('keydown')
   onKeyDown(event: KeyboardEvent) {
     if (event.key !== 'Enter') return;
+    // Prevent the default behavior to avoid triggering a synthetic click event
+    event.preventDefault();
     this.bqEnter.emit(this.el);
   }
 
@@ -190,9 +192,9 @@ export class BqOption {
         <button
           class={{
             'bq-option': true,
-            disabled: this.disabled,
             active: !this.disabled && this.selected,
           }}
+          disabled={this.disabled}
           onBlur={this.onBlur}
           onClick={this.onClick}
           onFocus={this.onFocus}

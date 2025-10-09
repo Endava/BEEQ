@@ -13,26 +13,25 @@
 }
 
 .bq-option {
-  @apply bg-none border-none text-inherit; // Button styles reset
   @apply flex cursor-pointer items-center text-[length:--bq-option--font-size] text-primary is-full;
-  @apply pe-[--bq-option--padding-end] ps-[--bq-option--padding-start] p-b-[--bq-option--paddingY] p-i-[--bq-option--paddingY];
+  @apply p-b-[--bq-option--paddingY] p-i-[--bq-option--paddingY];
   @apply rounded-[--bq-option--border-radius] bg-[--bq-option--background] shadow-[shadow:--bq-option--box-shadow];
   @apply border-[length:--bq-option--border-width] border-[color:--bq-option--border-color];
   // Transition
   @apply transition-colors duration-150 ease-in-out;
   // Focus
-  @apply active:focus-visible:focus;
+  @apply enabled:focus-visible:focus;
   // Hover
-  @apply active:hover:bg-hover-ui-secondary;
+  @apply enabled:hover:bg-hover-ui-secondary;
   // Active
-  @apply active:bg-ui-brand-alt active:text-brand;
+  @apply enabled:[&.active]:bg-ui-brand-alt enabled:[&.active]:text-brand;
   // Disabled
-  @apply active:cursor-not-allowed active:opacity-60;
+  @apply disabled:cursor-not-allowed disabled:opacity-60;
 
   border-style: var(--bq-option--border-style);
 }
 
 .bq-option__label {
-  @apply inline-block flex-auto overflow-hidden text-ellipsis whitespace-nowrap;
+  @apply inline-block flex-auto overflow-hidden text-ellipsis text-start whitespace-nowrap;
   @apply pe-[--bq-option-label--padding-end] ps-[--bq-option-label--padding-start];
 }
