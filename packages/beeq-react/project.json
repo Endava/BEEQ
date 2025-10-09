@@ -18,11 +18,10 @@
       },
       "dependsOn": [{ "dependencies": true, "target": "build" }]
     },
-    "lint": {
-      "executor": "@nx/eslint:lint",
+    "check": {
+      "executor": "nx:run-commands",
       "options": {
-        "cache": true,
-        "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/package.json", "{projectRoot}/project.json"]
+        "command": "pnpm exec biome check {projectRoot}"
       }
     }
   }
