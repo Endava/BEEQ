@@ -1,5 +1,5 @@
-import { resolve } from 'path';
-import { promises as fs } from 'fs';
+import { promises as fs } from 'node:fs';
+import { resolve } from 'node:path';
 
 ['module', 'standalone'].forEach((type) => {
   fixValueAccessorPath(type);
