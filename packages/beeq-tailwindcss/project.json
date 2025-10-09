@@ -27,11 +27,17 @@
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
+      "executor": "nx:run-commands",
       "dependsOn": ["build"],
       "options": {
-        "cache": true,
-        "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/package.json", "{projectRoot}/project.json"]
+        "command": "pnpm exec biome lint {projectRoot}"
+      }
+    },
+    "check": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "options": {
+        "command": "pnpm exec biome check {projectRoot}"
       }
     }
   }
