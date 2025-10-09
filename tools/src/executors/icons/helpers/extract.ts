@@ -1,6 +1,7 @@
+import { basename, join } from 'node:path';
+
 import * as decompress from 'decompress';
 import { copy, remove } from 'fs-extra';
-import { join, basename } from 'node:path';
 
 interface IExtractIcons {
   assetsFolder: string;

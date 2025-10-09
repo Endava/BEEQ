@@ -1,7 +1,7 @@
 import { createSpinner } from 'nanospinner';
-import { downloadIcons, extractIcons } from './helpers';
 
-import { IconsExecutorSchema } from './schema';
+import { downloadIcons, extractIcons } from './helpers';
+import type { IconsExecutorSchema } from './schema';
 
 export default async function runExecutor({
   assetsFolder,
