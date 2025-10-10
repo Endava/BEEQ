@@ -287,28 +287,35 @@ export class BqTooltip {
     return (
       <div class="bq-tooltip relative" part="base">
         {/* TRIGGER */}
-        <button
+        {/**
+         * NOTE: We could use a native HTML button as trigger container, but it causes issues with
+         * certain interactive elements inside the trigger slot (e.g., buttons, links, inputs...).
+         * This is because nested interactive elements are not allowed inside a button.
+         * Also, that will force the user to focus twice to reach the inner interactive element.
+         */}
+        {/** biome-ignore lint/a11y/noStaticElementInteractions: bypass the "Static Elements should not be interactive." rule */}
+        {/** biome-ignore lint/a11y/useKeyWithClickEvents: bypass the "Enforce to have the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard event." rule */}
+        <div
           class="bq-tooltip--trigger"
           onClick={this.handleTriggerOnClick}
-          onFocus={this.handleTriggerFocusin}
-          onFocusoutCapture={this.handleTriggerFocusout}
+          onFocusin={this.handleTriggerFocusin}
+          onFocusout={this.handleTriggerFocusout}
+          onMouseEnter={this.handleTriggerMouseOver}
           onMouseLeave={this.handleTriggerMouseLeave}
-          onMouseOver={this.handleTriggerMouseOver}
           part="trigger"
-          ref={(el) => {
+          ref={(el: HTMLDivElement) => {
             this.trigger = el;
           }}
-          type="button"
         >
           <slot name="trigger" />
-        </button>
+        </div>
         {/* PANEL */}
         <div
           aria-hidden={this.isHidden}
           class="bq-tooltip--panel"
           hidden={this.isHidden}
           part="panel"
-          ref={(el) => {
+          ref={(el: HTMLDivElement) => {
             this.panel = el;
           }}
           role="tooltip"
@@ -316,7 +323,7 @@ export class BqTooltip {
           {!this.hideArrow && (
             <div
               class="bq-tooltip--arrow"
-              ref={(el) => {
+              ref={(el: HTMLDivElement) => {
                 this.arrow = el;
               }}
             />
