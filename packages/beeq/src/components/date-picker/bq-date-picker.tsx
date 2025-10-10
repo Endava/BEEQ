@@ -612,7 +612,7 @@ export class BqDatePicker {
     internals?.setValidity({});
   };
 
-  private get CalendarType() {
+  private get calendarType() {
     const componentTypes = {
       single: 'calendar-date',
       multi: 'calendar-multi',
@@ -628,7 +628,7 @@ export class BqDatePicker {
   // ===================================
 
   render() {
-    const CallyCalendar = this.CalendarType;
+    const CallyCalendar = this.calendarType;
     const labelId = `bq-date-picker__label-${this.name || this.fallbackInputId}`;
 
     return (

@@ -14,11 +14,10 @@ import { setProperties } from '..';
  */
 describe.skip(setProperties.name, () => {
   beforeEach(() => {
-    jest
-      .spyOn(StencilCoreTesting, 'newE2EPage')
-      .mockImplementationOnce(() =>
-        Promise.resolve({ $eval: jest.fn(), waitForChanges: () => Promise.resolve() } as unknown as E2EPage),
-      );
+    jest.spyOn(StencilCoreTesting, 'newE2EPage').mockImplementationOnce(() =>
+      // biome-ignore lint/style/useNamingConvention: Mocking E2EPage interface properties
+      Promise.resolve({ $eval: jest.fn(), waitForChanges: () => Promise.resolve() } as unknown as E2EPage),
+    );
   });
 
   afterEach(() => {

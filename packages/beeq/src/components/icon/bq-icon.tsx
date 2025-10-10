@@ -48,7 +48,7 @@ export class BqIcon {
   // Inlined decorator, alphabetical order
   // =======================================
 
-  @State() private _svgContent: string;
+  @State() private svgContent: string;
 
   // Public Property API
   // ========================
@@ -165,8 +165,8 @@ export class BqIcon {
       const content = await getSvgContent(url, true);
       if (!content) return;
 
-      this._svgContent = content;
-      this.svgLoaded.emit(this._svgContent);
+      this.svgContent = content;
+      this.svgLoaded.emit(this.svgContent);
     } catch (error) {
       console.error('[BEEQ] Failed to load the icon SVG content', error);
     }
@@ -188,7 +188,7 @@ export class BqIcon {
         <div
           aria-label={label ?? `${name} icon`}
           class="bs-[--bq-icon--size] is-[--bq-icon--size] flex text-[--bq-icon--color]"
-          innerHTML={this._svgContent}
+          innerHTML={this.svgContent}
           part="base"
           role="img"
         />

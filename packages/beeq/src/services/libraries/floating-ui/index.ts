@@ -4,6 +4,7 @@ import {
   computePosition,
   flip,
   hide,
+  type MiddlewareData,
   offset,
   type ReferenceElement,
   shift,
@@ -61,34 +62,9 @@ export class FloatingUI {
           ],
         });
 
-        Object.assign(this.panel.style, {
-          top: '0',
-          left: '0',
-          transform: `translate(${this.roundByDPR(x)}px,${this.roundByDPR(y)}px)`,
-        });
-
-        if (this.options.arrow) {
-          const { x: arrowX, y: arrowY } = middlewareData.arrow;
-          const staticSide = {
-            top: 'bottom',
-            right: 'left',
-            bottom: 'top',
-            left: 'right',
-          }[placement.split('-')[0]];
-
-          Object.assign(this.options.arrow.style, {
-            left: arrowX != null ? `${arrowX}px` : '',
-            top: arrowY != null ? `${arrowY}px` : '',
-            right: '',
-            bottom: '',
-            [staticSide]: '-4px',
-          });
-        }
-
-        const { referenceHidden } = middlewareData.hide;
-        Object.assign(this.panel.style, {
-          visibility: referenceHidden ? 'hidden' : 'visible',
-        });
+        this.applyPanelPosition(x, y);
+        this.applyArrowPosition(placement, middlewareData);
+        this.applyVisibility(middlewareData);
       })();
     });
   }
@@ -107,6 +83,41 @@ export class FloatingUI {
         return {};
       },
     };
+  }
+
+  private applyPanelPosition(x: number, y: number) {
+    Object.assign(this.panel.style, {
+      top: '0',
+      left: '0',
+      transform: `translate(${this.roundByDPR(x)}px,${this.roundByDPR(y)}px)`,
+    });
+  }
+
+  private applyArrowPosition(placement: string, middlewareData: MiddlewareData) {
+    if (!this.options.arrow) return;
+
+    const { x: arrowX, y: arrowY } = middlewareData.arrow;
+    const staticSide = {
+      top: 'bottom',
+      right: 'left',
+      bottom: 'top',
+      left: 'right',
+    }[placement.split('-')[0]];
+
+    Object.assign(this.options.arrow.style, {
+      left: arrowX != null ? `${arrowX}px` : '',
+      top: arrowY != null ? `${arrowY}px` : '',
+      right: '',
+      bottom: '',
+      [staticSide]: '-4px',
+    });
+  }
+
+  private applyVisibility(middlewareData: MiddlewareData) {
+    const { referenceHidden } = middlewareData.hide;
+    Object.assign(this.panel.style, {
+      visibility: referenceHidden ? 'hidden' : 'visible',
+    });
   }
 
   private roundByDPR(value: number) {
