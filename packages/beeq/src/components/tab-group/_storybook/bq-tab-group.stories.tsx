@@ -2,8 +2,8 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { classMap } from 'lit/directives/class-map.js';
 import { html } from 'lit-html';
 
-import mdx from './bq-tab-group.mdx';
 import { TAB_ORIENTATION, TAB_PLACEMENT, TAB_SIZE } from '../../tab/bq-tab.types';
+import mdx from './bq-tab-group.mdx';
 
 const meta: Meta = {
   title: 'Components/Tabs',
@@ -71,9 +71,11 @@ const Template = (args: Args) => {
           (tab, index) => html`
             <bq-tab tab-id=${tab.id} ?disabled=${tab.disabled}>
               ${tab.label}
-              ${args.icons
-                ? html`<bq-icon name="${args.icons[index % args.icons.length]}" slot="icon"></bq-icon>`
-                : null}
+              ${
+                args.icons
+                  ? html`<bq-icon name="${args.icons[index % args.icons.length]}" slot="icon"></bq-icon>`
+                  : null
+              }
             </bq-tab>
           `,
         )}

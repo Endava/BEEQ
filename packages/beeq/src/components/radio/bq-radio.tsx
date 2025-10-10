@@ -1,5 +1,5 @@
-import { Component, Element, Event, h, Host, Method, Prop } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, h, Method, Prop } from '@stencil/core';
 
 /**
  * The radio button is a user interface element that allows users to select a single option.
@@ -208,23 +208,25 @@ export class BqRadio {
         >
           <div class="bq-radio__control">
             <input
+              aria-checked={this.checked ? 'true' : 'false'}
+              aria-disabled={this.isDisabled ? 'true' : 'false'}
+              aria-labelledby="bq-radio__label"
+              checked={this.checked}
               class="bq-radio__input"
-              ref={(element) => (this.inputElement = element)}
-              type="radio"
+              disabled={this.isDisabled}
               form={this.formId}
               name={this.name}
-              value={this.value}
-              required={this.required}
-              disabled={this.isDisabled}
-              checked={this.checked}
               onBlur={this.handleOnBlur}
               onClick={this.handleClick}
               onFocus={this.handleOnFocus}
               onKeyDown={this.handleOnKeyDown}
-              aria-checked={this.checked ? 'true' : 'false'}
-              aria-disabled={this.isDisabled ? 'true' : 'false'}
-              aria-labelledby="bq-radio__label"
               part="input"
+              ref={(element) => {
+                this.inputElement = element;
+              }}
+              required={this.required}
+              type="radio"
+              value={this.value}
             />
             <div class="bq-radio__circle" part="radio">
               <div class="bq-radio__checked" />

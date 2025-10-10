@@ -1,0 +1,25 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.2.5/schema.json",
+  "extends": "//",
+  "files": {
+    "includes": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.json", "**/*.jsonc"]
+  },
+  "overrides": [
+    {
+      "includes": ["src/components.d.ts"],
+      "linter": { "enabled": false },
+      "formatter": { "enabled": false }
+    }
+  ],
+  "javascript": { "jsxRuntime": "reactClassic" },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "a11y": { "useSemanticElements": "off" },
+      "correctness": { "noUnusedImports": "off", "noUnusedPrivateClassMembers": "off" },
+      "nursery": { "useSortedClasses": "error" },
+      "style": { "useImportType": "error", "useNodejsImportProtocol": "error" }
+    }
+  }
+}

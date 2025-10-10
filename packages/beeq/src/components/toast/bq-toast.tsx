@@ -1,9 +1,9 @@
-import { Component, Element, Event, h, Host, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
-import { TOAST_PLACEMENT, TOAST_TYPE } from './bq-toast.types';
+import { debounce, isClient, type TDebounce, validatePropValue } from '../../shared/utils';
 import type { TToastBorderRadius, TToastPlacement, TToastType } from './bq-toast.types';
-import { debounce, isClient, TDebounce, validatePropValue } from '../../shared/utils';
+import { TOAST_PLACEMENT, TOAST_TYPE } from './bq-toast.types';
 
 const TOAST_PORTAL_SELECTOR = 'bq-toast-portal';
 
@@ -155,8 +155,7 @@ export class BqToast {
   connectedCallback() {
     if (!isClient()) return;
 
-    const { toastPortal } = this;
-    if (!toastPortal) {
+    if (this.toastPortal) {
       this.toastPortal = Object.assign(document.createElement('div'), { className: TOAST_PORTAL_SELECTOR });
     }
   }
@@ -271,16 +270,16 @@ export class BqToast {
 
     return (
       <Host
-        style={style}
-        class={{ 'is-hidden': !this.open }}
         aria-hidden={!this.open ? 'true' : 'false'}
+        class={{ 'is-hidden': !this.open }}
         hidden={!this.open ? 'true' : 'false'}
         role="status"
+        style={style}
       >
         <output class="bq-toast" part="wrapper">
           <div class={{ [`bq-toast--icon ${this.type}`]: true, '!hidden': this.hideIcon }} part="icon">
             <slot name="icon">
-              <bq-icon name={this.iconName} size="24" slot="icon" exportparts="base,svg" />
+              <bq-icon exportparts="base,svg" name={this.iconName} size="24" slot="icon" />
             </slot>
           </div>
           <slot />

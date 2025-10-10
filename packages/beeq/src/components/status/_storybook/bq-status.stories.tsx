@@ -1,8 +1,8 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit-html';
 
-import mdx from './bq-status.mdx';
 import { STATUS_TYPE } from '../bq-status.types';
+import mdx from './bq-status.mdx';
 
 const meta: Meta = {
   title: 'Components/Status',

@@ -127,7 +127,7 @@ export default {
     },
   },
   plugins: [
-    plugin(function ({ addBase, addComponents, theme }) {
+    plugin(({ addBase, addComponents, theme }) => {
       addBase({
         // CSS variables
         ':root, ::backdrop': { ...CSS_COLORS },

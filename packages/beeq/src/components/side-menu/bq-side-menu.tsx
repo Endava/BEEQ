@@ -1,8 +1,8 @@
-import { Component, Event, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { Component, Event, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
-import type { TSideMenuAppearance, TSideMenuSize } from './bq-side-menu.types';
 import { isClient, isHTMLElement } from '../../shared/utils';
+import type { TSideMenuAppearance, TSideMenuSize } from './bq-side-menu.types';
 
 /**
  *The default side menu serves as a versatile container for organizing and displaying navigation elements,
@@ -136,9 +136,9 @@ export class BqSideMenu {
     const { target: item } = event;
     if (!isHTMLElement(item, 'bq-side-menu-item')) return;
 
-    this.menuItems.forEach(
-      (menuItem: HTMLBqSideMenuItemElement) => (menuItem.active = !menuItem.disabled && menuItem === item),
-    );
+    this.menuItems.forEach((menuItem: HTMLBqSideMenuItemElement) => {
+      menuItem.active = !menuItem.disabled && menuItem === item;
+    });
     this.bqSelect.emit(item);
   }
 
@@ -172,7 +172,9 @@ export class BqSideMenu {
   private handleCollapse = () => {
     if (!this.menuItems.length) return;
 
-    this.menuItems.forEach((menuItem: HTMLBqSideMenuItemElement) => (menuItem.collapse = this.collapse));
+    this.menuItems.forEach((menuItem: HTMLBqSideMenuItemElement) => {
+      menuItem.collapse = this.collapse;
+    });
     if (this.collapse) {
       this.collapseDocumentBody();
     } else {
@@ -212,16 +214,16 @@ export class BqSideMenu {
         {/* Navigation content */}
         <nav
           class="bq-side-menu--nav flex flex-col gap-y-xs px-xs pt-xs2"
-          ref={(navElem) => (this.menuElem = navElem)}
-          // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
-          role="menu"
           part="nav"
+          ref={(navElem) => {
+            this.menuElem = navElem;
+          }}
         >
           <slot />
         </nav>
         {/* Footer */}
         <div
-          class="bq-side-menu--footer sticky flex justify-center bg-[var(--bq-side-menu--bg-color)] p-xs inset-be-0 m-bs-[auto]"
+          class="bq-side-menu--footer sticky inset-be-0 m-bs-[auto] flex justify-center bg-[var(--bq-side-menu--bg-color)] p-xs"
           part="footer"
         >
           <slot name="footer"></slot>

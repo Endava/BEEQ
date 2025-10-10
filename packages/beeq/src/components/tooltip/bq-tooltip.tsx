@@ -1,5 +1,5 @@
-import { Component, Element, Event, h, Listen, Method, Prop, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { Component, Element, Event, h, Listen, Method, Prop, Watch } from '@stencil/core';
 
 import type { Placement } from '../../services/interfaces';
 import { FloatingUI } from '../../services/libraries';
@@ -287,28 +287,47 @@ export class BqTooltip {
     return (
       <div class="bq-tooltip relative" part="base">
         {/* TRIGGER */}
+        {/**
+         * NOTE: We could use a native HTML button as trigger container, but it causes issues with
+         * certain interactive elements inside the trigger slot (e.g., buttons, links, inputs...).
+         * This is because nested interactive elements are not allowed inside a button.
+         * Also, that will force the user to focus twice to reach the inner interactive element.
+         */}
+        {/** biome-ignore lint/a11y/noStaticElementInteractions: bypass the "Static Elements should not be interactive." rule */}
+        {/** biome-ignore lint/a11y/useKeyWithClickEvents: bypass the "Enforce to have the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard event." rule */}
         <div
           class="bq-tooltip--trigger"
-          onMouseOver={this.handleTriggerMouseOver}
-          onMouseLeave={this.handleTriggerMouseLeave}
           onClick={this.handleTriggerOnClick}
-          onFocusinCapture={this.handleTriggerFocusin}
-          onFocusoutCapture={this.handleTriggerFocusout}
-          ref={(el) => (this.trigger = el)}
+          onFocusin={this.handleTriggerFocusin}
+          onFocusout={this.handleTriggerFocusout}
+          onMouseEnter={this.handleTriggerMouseOver}
+          onMouseLeave={this.handleTriggerMouseLeave}
           part="trigger"
+          ref={(el: HTMLDivElement) => {
+            this.trigger = el;
+          }}
         >
           <slot name="trigger" />
         </div>
         {/* PANEL */}
         <div
-          class="bq-tooltip--panel"
           aria-hidden={this.isHidden}
+          class="bq-tooltip--panel"
           hidden={this.isHidden}
-          role="tooltip"
-          ref={(el) => (this.panel = el)}
           part="panel"
+          ref={(el: HTMLDivElement) => {
+            this.panel = el;
+          }}
+          role="tooltip"
         >
-          {!this.hideArrow && <div class="bq-tooltip--arrow" ref={(el) => (this.arrow = el)} />}
+          {!this.hideArrow && (
+            <div
+              class="bq-tooltip--arrow"
+              ref={(el: HTMLDivElement) => {
+                this.arrow = el;
+              }}
+            />
+          )}
           <slot />
         </div>
       </div>

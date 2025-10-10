@@ -3,8 +3,8 @@ import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { useArgs } from 'storybook/preview-api';
 
-import mdx from './bq-select.mdx';
 import { INPUT_VALIDATION } from '../../input/bq-input.types';
+import mdx from './bq-select.mdx';
 
 const meta: Meta = {
   title: 'Components/Select',
@@ -191,12 +191,13 @@ const Template = (args: Args) => {
       @bqClear=${args.customTags ? onClear : args.bqClear}
       @bqFocus=${args.bqFocus}
     >
-      ${args.customTags
-        ? html`${args.options
-            .filter((option) => args.value.includes(option.value))
-            .map((option, index) => {
-              if (index < args['max-tags-visible'] || args['max-tags-visible'] < 0) {
-                return html`<bq-tag
+      ${
+        args.customTags
+          ? html`${args.options
+              .filter((option) => args.value.includes(option.value))
+              .map((option, index) => {
+                if (index < args['max-tags-visible'] || args['max-tags-visible'] < 0) {
+                  return html`<bq-tag
                   key=${option.value}
                   size="xsmall"
                   variant="filled"
@@ -206,8 +207,8 @@ const Template = (args: Args) => {
                   <bq-icon name=${option.icon} slot="prefix"></bq-icon>
                   ${option.value}
                 </bq-tag>`;
-              } else if (index === args['max-tags-visible']) {
-                return html`
+                } else if (index === args['max-tags-visible']) {
+                  return html`
                   <bq-tag
                     key="more"
                     size="xsmall"
@@ -218,21 +219,24 @@ const Template = (args: Args) => {
                     +${args.value.length - index}
                   </bq-tag>
                 `;
-              }
-              return nothing;
-            })}`
-        : nothing}
+                }
+                return nothing;
+              })}`
+          : nothing
+      }
       ${!args.noLabel ? label : nothing}
       ${args.prefix ? html`<bq-icon name="user-circle" slot="prefix"></bq-icon>` : nothing}
       ${args.suffix ? html`<bq-icon name="arrow-down" slot="suffix"></bq-icon>` : nothing}
-      ${!args.noHelperText
-        ? html`
+      ${
+        !args.noHelperText
+          ? html`
             <span class="flex items-center gap-xs" slot="helper-text">
               <bq-icon name="star"></bq-icon>
               Helper text
             </span>
           `
-        : nothing}
+          : nothing
+      }
       ${args.options.map(
         (option) => html`
           <bq-option value=${option.value}>
@@ -515,7 +519,9 @@ export const CustomFiltering: Story = {
       const query = event.detail.value;
 
       // Remove loading/no-results states if they exist
-      select.querySelectorAll('bq-option[data-temp]').forEach((option: HTMLBqOptionElement) => option.remove());
+      select.querySelectorAll('bq-option[data-temp]').forEach((option: HTMLBqOptionElement) => {
+        option.remove();
+      });
 
       if (!query) {
         showAllOptions(select);
@@ -541,7 +547,9 @@ export const CustomFiltering: Story = {
         const filteredOptions = await fetchFilteredOptions(query);
 
         // Remove loading state
-        select.querySelectorAll('bq-option[data-temp]').forEach((option) => option.remove());
+        select.querySelectorAll('bq-option[data-temp]').forEach((option) => {
+          option.remove();
+        });
 
         if (filteredOptions.length === 0) {
           select.insertAdjacentHTML(
@@ -571,7 +579,9 @@ export const CustomFiltering: Story = {
         }
       } catch (error) {
         console.error('Error fetching options:', error);
-        select.querySelectorAll('bq-option[data-temp]').forEach((option) => option.remove());
+        select.querySelectorAll('bq-option[data-temp]').forEach((option) => {
+          option.remove();
+        });
         select.insertAdjacentHTML(
           'beforeend',
           `
@@ -591,7 +601,9 @@ export const CustomFiltering: Story = {
       // Show all options again
       showAllOptions(select);
       // Remove any temporary options (loading/no results)
-      select.querySelectorAll('bq-option[data-temp]').forEach((option) => option.remove());
+      select.querySelectorAll('bq-option[data-temp]').forEach((option) => {
+        option.remove();
+      });
       // Call the original bqSelect handler
       args.bqSelect(event);
       // Clear the input value after selection

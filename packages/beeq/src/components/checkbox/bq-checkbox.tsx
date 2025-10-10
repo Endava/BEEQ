@@ -1,5 +1,5 @@
-import { AttachInternals, Component, Element, Event, h, Method, Prop, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, h, Method, Prop, Watch } from '@stencil/core';
 
 import { isNil } from '../../shared/utils';
 
@@ -259,6 +259,7 @@ export class BqCheckbox {
   render() {
     return (
       <label
+        aria-label={this.name || 'checkbox'}
         class={{
           'bq-checkbox group': true,
           'is-checked': this.checked,
@@ -266,34 +267,35 @@ export class BqCheckbox {
           'is-disabled !cursor-not-allowed': this.disabled,
           'has-background': this.backgroundOnHover,
         }}
-        aria-label={this.name || 'checkbox'}
         part="base"
       >
         <div
-          class="bq-checkbox__control relative box-border flex items-center justify-center bs-[--bq-checkbox--size] is-[--bq-checkbox--size] p-b-xs3 p-i-xs3"
+          class="bq-checkbox__control bs-[--bq-checkbox--size] is-[--bq-checkbox--size] relative box-border flex items-center justify-center p-b-xs3 p-i-xs3"
           part="control"
         >
           <input
-            type="checkbox"
-            class="bq-checkbox__input pointer-events-none absolute opacity-0 p-b-0 p-i-0 m-b-0 m-i-0"
-            name={!isNil(this.name) ? this.name : undefined}
-            checked={this.checked}
-            disabled={this.disabled}
-            indeterminate={this.indeterminate}
-            form={this.formId}
-            required={this.required}
-            value={this.value}
             aria-checked={this.checked ? 'true' : 'false'}
             aria-disabled={this.disabled ? 'true' : 'false'}
-            ref={(input: HTMLInputElement) => (this.inputElem = input)}
+            checked={this.checked}
+            class="bq-checkbox__input pointer-events-none absolute m-b-0 m-i-0 p-b-0 p-i-0 opacity-0"
+            disabled={this.disabled}
+            form={this.formId}
+            indeterminate={this.indeterminate}
+            name={!isNil(this.name) ? this.name : undefined}
             onBlur={this.handleOnBlur}
             onChange={this.handleChange}
             onFocus={this.handleOnFocus}
             part="input"
+            ref={(input: HTMLInputElement) => {
+              this.inputElem = input;
+            }}
+            required={this.required}
             tabindex="0"
+            type="checkbox"
+            value={this.value}
           />
           <span
-            class="bq-checkbox__checkbox relative box-border flex items-center justify-center bs-full is-[--bq-checkbox--size]"
+            class="bq-checkbox__checkbox bs-full is-[--bq-checkbox--size] relative box-border flex items-center justify-center"
             part="checkbox"
           >
             {/*
@@ -302,43 +304,45 @@ export class BqCheckbox {
              */}
             {this.checked && (
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="absolute text-neutral-white bs-full is-full"
+                aria-hidden="true"
+                class="bs-full is-full absolute text-neutral-white"
                 viewBox="0 0 256 256"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <path fill="none" d="M0 0h256v256H0z" />
+                <path d="M0 0h256v256H0z" fill="none" />
                 <path
+                  d="M216 72 104 184l-56-56"
                   fill="none"
                   stroke="currentColor"
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="32"
-                  d="M216 72 104 184l-56-56"
                 />
               </svg>
             )}
             {!this.checked && this.indeterminate && (
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="absolute text-neutral-white bs-full is-full"
-                viewBox="0 0 256 256"
+                aria-hidden="true"
+                class="bs-full is-full absolute text-neutral-white"
                 fill="currentColor"
+                viewBox="0 0 256 256"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <path fill="none" d="M0 0h256v256H0z" />
+                <path d="M0 0h256v256H0z" fill="none" />
                 <path
+                  d="M40 128h176"
                   fill="none"
                   stroke="currentColor"
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="32"
-                  d="M40 128h176"
                 />
               </svg>
             )}
           </span>
         </div>
         <span
-          class="bq-checkbox__label ps-xs text-start font-medium leading-regular text-primary group-hover-[&:not(.is-disabled)]:text-hover-primary group-[.is-disabled]:opacity-60"
+          class="bq-checkbox__label ps-xs text-start font-medium text-primary leading-regular group-hover-[&:not(.is-disabled)]:text-hover-primary group-[.is-disabled]:opacity-60"
           part="label"
         >
           <slot />

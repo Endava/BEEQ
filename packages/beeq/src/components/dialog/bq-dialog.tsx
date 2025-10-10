@@ -1,9 +1,9 @@
-import { Component, Element, Event, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { Component, Element, Event, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
-import { DIALOG_FOOTER_APPEARANCE, DIALOG_SIZE } from './bq-dialog.types';
-import type { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from './bq-dialog.types';
 import { enter, hasSlotContent, leave, validatePropValue } from '../../shared/utils';
+import type { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from './bq-dialog.types';
+import { DIALOG_FOOTER_APPEARANCE, DIALOG_SIZE } from './bq-dialog.types';
 
 /**
  * The Dialog component is used to display additional content or prompt a user for action.
@@ -316,32 +316,34 @@ export class BqDialog {
 
     return (
       <dialog
-        style={style}
+        aria-labelledby="bq-dialog--title"
+        aria-modal="true"
         class={{
           [`bq-dialog hidden ${this.size} m-auto focus-visible:outline-none`]: true,
           'inset-be-[50%] inset-bs-[50%]': this.disableBackdrop,
         }}
         data-transition-enter="transition ease-in duration-300"
-        data-transition-enter-start="opacity-0 scale-90"
         data-transition-enter-end="opacity-100 scale-100"
+        data-transition-enter-start="opacity-0 scale-90"
         data-transition-leave="transition ease-out duration-300"
-        data-transition-leave-start="opacity-100 scale-100"
         data-transition-leave-end="opacity-0 scale-90"
+        data-transition-leave-start="opacity-100 scale-100"
         inert={this.open ? undefined : true}
-        ref={(dialogElem) => (this.dialogElem = dialogElem)}
-        aria-modal="true"
-        aria-labelledby="bq-dialog--title"
         part="dialog"
+        ref={(dialogElem) => {
+          this.dialogElem = dialogElem;
+        }}
+        style={style}
       >
         <main class="flex flex-col gap-[--bq-dialog--title-body-gap] overflow-hidden" part="content">
           <header class="bq-dialog--header" part="header">
-            <div id="bq-dialog--title" class="bq-dialog--title flex flex-1 items-center justify-between" part="title">
+            <div class="bq-dialog--title flex flex-1 items-center justify-between" id="bq-dialog--title" part="title">
               <slot name="title" />
             </div>
             <slot name="button-close">
               {!this.hideCloseButton && (
-                <bq-button class="bq-dialog--close" appearance="text" size="small">
-                  <bq-icon class="cursor-pointer" name="x" role="img" title="Close" />
+                <bq-button appearance="text" class="bq-dialog--close" size="small">
+                  <bq-icon class="cursor-pointer" name="x" title="Close" />
                 </bq-button>
               )}
             </slot>
@@ -352,8 +354,10 @@ export class BqDialog {
               'overflow-y-auto p-i-[--bq-dialog--padding]': this.hasContent,
               '!p-be-[--bq-dialog--padding]': !this.hasFooter,
             }}
-            ref={(mainElem) => (this.contentElem = mainElem)}
             part="body"
+            ref={(mainElem) => {
+              this.contentElem = mainElem;
+            }}
           >
             <slot onSlotchange={this.handleSlotChange} />
           </div>
@@ -362,10 +366,12 @@ export class BqDialog {
           class={{
             '!hidden': !this.hasFooter,
             'bq-dialog--footer': this.hasFooter,
-            'bg-ui-alt !p-b-s': this.footerAppearance === 'highlight',
+            '!p-b-s bg-ui-alt': this.footerAppearance === 'highlight',
           }}
-          ref={(footerElem) => (this.footerElem = footerElem)}
           part="footer"
+          ref={(footerElem) => {
+            this.footerElem = footerElem;
+          }}
         >
           <slot name="footer" onSlotchange={this.handleSlotChange} />
         </footer>

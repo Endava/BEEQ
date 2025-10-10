@@ -1,9 +1,9 @@
-import { Component, Element, Event, h, Method, Prop, State, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { Component, Element, Event, h, Method, Prop, State, Watch } from '@stencil/core';
 
-import { TAB_ORIENTATION, TAB_PLACEMENT, TAB_SIZE } from './bq-tab.types';
-import type { TTabOrientation, TTabPlacement, TTabSize } from './bq-tab.types';
 import { hasSlotContent, validatePropValue } from '../../shared/utils';
+import type { TTabOrientation, TTabPlacement, TTabSize } from './bq-tab.types';
+import { TAB_ORIENTATION, TAB_PLACEMENT, TAB_SIZE } from './bq-tab.types';
 
 /**
  * The tab is a user interface element that allows users to navigate between different sections of a page.
@@ -225,27 +225,36 @@ export class BqTab {
   render() {
     return (
       <button
-        ref={(el) => (this.buttonElement = el)}
+        aria-controls={this.controls}
+        aria-disabled={this.disabled ? 'true' : 'false'}
+        aria-selected={this.active ? 'true' : 'false'}
         class={{
           [`bq-tab bq-tab--${this.size} bq-tab--${this.orientation}-${this.placement}`]: true,
           'text-brand': this.active,
           'text-primary': !this.active,
         }}
+        disabled={this.disabled}
         id={this.tabId}
         onBlur={this.handleOnBlur}
         onClick={this.handleClick}
         onFocus={this.handleOnFocus}
         onKeyDown={this.handleOnKeyDown}
-        disabled={this.disabled}
-        role="tab"
-        aria-controls={this.controls}
-        aria-disabled={this.disabled ? 'true' : 'false'}
-        aria-selected={this.active ? 'true' : 'false'}
-        tabindex={this.tabindex}
         part="base"
+        ref={(el) => {
+          this.buttonElement = el;
+        }}
+        role="tab"
+        tabindex={this.tabindex}
+        type="button"
       >
         <div class="flex items-center justify-center" part="content">
-          <div class="flex" ref={(span: HTMLSpanElement) => (this.iconElement = span)} part="icon">
+          <div
+            class="flex"
+            part="icon"
+            ref={(span: HTMLSpanElement) => {
+              this.iconElement = span;
+            }}
+          >
             <slot name="icon" onSlotchange={this.handleIconSlotChange} />
           </div>
           <div class={{ 'line-clamp-1': true, 'ms-[--bq-tab--label-icon-gap]': this.hasIcon }} part="text">

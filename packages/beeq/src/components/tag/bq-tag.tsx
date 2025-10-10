@@ -1,10 +1,10 @@
-import { Component, Element, Event, h, Host, Method, Prop, State, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, h, Method, Prop, State, Watch } from '@stencil/core';
 
-import { TAG_COLOR, TAG_SIZE, TAG_VARIANT } from './bq-tag.types';
-import type { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from './bq-tag.types';
-import { iconSize, textColor } from './helper';
 import { getColorCSSVariable, hasSlotContent, validatePropValue } from '../../shared/utils';
+import type { TTagBorderRadius, TTagColor, TTagSize, TTagVariant } from './bq-tag.types';
+import { TAG_COLOR, TAG_SIZE, TAG_VARIANT } from './bq-tag.types';
+import { iconSize, textColor } from './helper';
 
 /**
  * The Tag Component is a UI element used to label and categorize content within an application.
@@ -258,7 +258,7 @@ export class BqTag {
     };
 
     return (
-      <Host style={style} aria-hidden={this.isHidden ? 'true' : 'false'} hidden={this.isHidden ? 'true' : 'false'}>
+      <Host aria-hidden={this.isHidden ? 'true' : 'false'} hidden={this.isHidden ? 'true' : 'false'} style={style}>
         <button
           class={{
             [`bq-tag bq-tag__${this.size}`]: true,
@@ -274,13 +274,16 @@ export class BqTag {
           onBlur={this.handleBlur}
           onClick={this.handleClick}
           onFocus={this.handleFocus}
-          tabindex={this.isClickable ? 0 : -1}
           part="wrapper"
+          tabindex={this.isClickable ? 0 : -1}
+          type="button"
         >
           <span
             class={{ 'bq-tag__prefix inline-flex': true, '!hidden': !this.hasPrefix }}
-            ref={(spanElem) => (this.prefixElem = spanElem)}
             part="prefix"
+            ref={(spanElem) => {
+              this.prefixElem = spanElem;
+            }}
           >
             <slot name="prefix" onSlotchange={this.handleSlotChange} />
           </span>
@@ -295,11 +298,17 @@ export class BqTag {
             <slot />
           </div>
           {this.isRemovable && !this.disabled && (
-            <bq-button class="bq-tag__close" appearance="text" size="small" onClick={this.handleHide} part="btn-close">
+            <bq-button
+              appearance="text"
+              class="bq-tag__close"
+              onBqClick={this.handleHide}
+              part="btn-close"
+              size="small"
+            >
               <bq-icon
-                size={iconSize(this.size)}
-                name="x-circle"
                 color={this.color && !this.hasCustomColor ? textColor(this.color)[this.variant] : 'text--primary'}
+                name="x-circle"
+                size={iconSize(this.size)}
               />
             </bq-button>
           )}

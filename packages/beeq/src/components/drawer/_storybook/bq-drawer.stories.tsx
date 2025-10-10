@@ -3,8 +3,8 @@ import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 
-import mdx from './bq-drawer.mdx';
 import { DRAWER_POSITIONS } from '../bq-drawer.types';
+import mdx from './bq-drawer.mdx';
 
 const meta: Meta = {
   title: 'Components/Drawer',
@@ -80,15 +80,17 @@ const Template = (args: Args) => {
       <div class="flex items-center justify-center rounded-xs border-s border-dashed border-brand bg-secondary bs-full">
         Slot
       </div>
-      ${!args.noFooter
-        ? html`
+      ${
+        !args.noFooter
+          ? html`
             ${customFooterDivider}
             <div class="flex flex-1 justify-center gap-xs" slot="footer">
               <bq-button appearance="primary" block size="small"> Button </bq-button>
               <bq-button appearance="link" block size="small"> Button </bq-button>
             </div>
           `
-        : nothing}
+          : nothing
+      }
     </bq-drawer>
   `;
 };

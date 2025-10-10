@@ -1,7 +1,7 @@
-import { AttachInternals, Component, Element, Event, h, Host, Prop, State, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, Host, h, Prop, State, Watch } from '@stencil/core';
 
-import { BUTTON_APPEARANCE, BUTTON_SIZE, BUTTON_TYPE, BUTTON_VARIANT } from './bq-button.types';
+import { hasSlotContent, isClient, isDefined, isNil, validatePropValue } from '../../shared/utils';
 import type {
   TButtonAppearance,
   TButtonBorderRadius,
@@ -9,7 +9,7 @@ import type {
   TButtonType,
   TButtonVariant,
 } from './bq-button.types';
-import { hasSlotContent, isClient, isDefined, isNil, validatePropValue } from '../../shared/utils';
+import { BUTTON_APPEARANCE, BUTTON_SIZE, BUTTON_TYPE, BUTTON_VARIANT } from './bq-button.types';
 
 /**
  * Buttons are designed for users to take action on a page or a screen.
@@ -276,6 +276,7 @@ export class BqButton {
     return (
       <Host style={style}>
         <TagElem
+          aria-disabled={this.disabled ? 'true' : 'false'}
           class={{
             'bq-button': true,
             [`bq-button--${this.appearance}`]: true,
@@ -288,26 +289,37 @@ export class BqButton {
             'has-suffix': this.hasSuffix,
             loading: this.loading,
           }}
-          aria-disabled={this.disabled ? 'true' : 'false'}
           disabled={this.disabled}
           download={isLink ? this.download : undefined}
           href={isLink ? this.href : undefined}
+          onBlur={this.handleBlur}
+          onClick={this.handleClick}
+          onFocus={this.handleFocus}
           part="button"
           rel={isLink && this.target ? 'noreferrer noopener' : undefined}
+          tabIndex={this.disabled ? -1 : 0}
           target={isLink ? this.target : undefined}
           type={this.type}
-          tabIndex={this.disabled ? -1 : 0}
-          onBlur={this.handleBlur}
-          onFocus={this.handleFocus}
-          onClick={this.handleClick}
         >
-          <span class="bq-button__prefix" ref={(spanElem) => (this.prefixElem = spanElem)} part="prefix">
+          <span
+            class="bq-button__prefix"
+            part="prefix"
+            ref={(spanElem) => {
+              this.prefixElem = spanElem;
+            }}
+          >
             <slot name="prefix" onSlotchange={this.handleSlotChange} />
           </span>
           <span class="bq-button__label" part="label">
             <slot />
           </span>
-          <span class="bq-button__suffix" ref={(spanElem) => (this.suffixElem = spanElem)} part="suffix">
+          <span
+            class="bq-button__suffix"
+            part="suffix"
+            ref={(spanElem) => {
+              this.suffixElem = spanElem;
+            }}
+          >
             <slot name="suffix" onSlotchange={this.handleSlotChange} />
           </span>
           {this.loading && <bq-icon class="bq-button__loader" name="spinner-gap" />}

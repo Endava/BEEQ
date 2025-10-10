@@ -8,15 +8,11 @@ interface MockHTMLBqIconElement {
   };
   addEventListener: jest.Mock;
   removeEventListener: jest.Mock;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 const createMockElement = (
-  options: {
-    hasSvg?: boolean;
-    svgContent?: string;
-    shadowRoot?: boolean;
-  } = {},
+  options: { hasSvg?: boolean; svgContent?: string; shadowRoot?: boolean } = {},
 ): MockHTMLBqIconElement => {
   const { hasSvg = false, svgContent = '<path>test</path>', shadowRoot = true } = options;
 
@@ -57,7 +53,7 @@ describe('waitForSvgLoad', () => {
   it('should resolve immediately when SVG is already loaded', async () => {
     const mockElement = createMockElement({ hasSvg: true });
 
-    const promise = waitForSvgLoad(mockElement as any);
+    const promise = waitForSvgLoad(mockElement as unknown as HTMLBqIconElement);
 
     jest.advanceTimersByTime(100);
 
@@ -75,7 +71,7 @@ describe('waitForSvgLoad', () => {
       }
     });
 
-    const promise = waitForSvgLoad(mockElement as any);
+    const promise = waitForSvgLoad(mockElement as unknown as HTMLBqIconElement);
 
     // Simulate SVG loading
     setTimeout(() => {
@@ -93,7 +89,7 @@ describe('waitForSvgLoad', () => {
     const mockElement = createMockElement({ hasSvg: true });
     const properties = { name: 'check', size: 24 };
 
-    await waitForSvgLoad(mockElement as any, { properties });
+    await waitForSvgLoad(mockElement as unknown as HTMLBqIconElement, { properties });
 
     expect(mockElement.name).toBe('check');
     expect(mockElement.size).toBe(24);
@@ -103,7 +99,7 @@ describe('waitForSvgLoad', () => {
     const mockElement = createMockElement({ hasSvg: false });
     const customTimeout = 5000;
 
-    const promise = waitForSvgLoad(mockElement as any, { timeout: customTimeout });
+    const promise = waitForSvgLoad(mockElement as unknown as HTMLBqIconElement, { timeout: customTimeout });
 
     jest.advanceTimersByTime(customTimeout);
 
@@ -113,7 +109,7 @@ describe('waitForSvgLoad', () => {
   it('should reject when timeout is reached', async () => {
     const mockElement = createMockElement({ hasSvg: false });
 
-    const promise = waitForSvgLoad(mockElement as any);
+    const promise = waitForSvgLoad(mockElement as unknown as HTMLBqIconElement);
 
     jest.advanceTimersByTime(15000); // Default timeout
 
@@ -124,7 +120,7 @@ describe('waitForSvgLoad', () => {
   it('should handle element without shadow root', async () => {
     const mockElement = createMockElement({ shadowRoot: false });
 
-    const promise = waitForSvgLoad(mockElement as any);
+    const promise = waitForSvgLoad(mockElement as unknown as HTMLBqIconElement);
 
     jest.advanceTimersByTime(15000);
 
@@ -141,7 +137,7 @@ describe('waitForSvgLoad', () => {
       }
     });
 
-    const promise = waitForSvgLoad(mockElement as any);
+    const promise = waitForSvgLoad(mockElement as unknown as HTMLBqIconElement);
 
     // Simulate SVG loading with content
     setTimeout(() => {
@@ -169,7 +165,7 @@ describe('waitForSvgLoad', () => {
       }
     });
 
-    const promise = waitForSvgLoad(mockElement as any);
+    const promise = waitForSvgLoad(mockElement as unknown as HTMLBqIconElement);
 
     // Simulate multiple event calls
     setTimeout(() => {
@@ -186,7 +182,7 @@ describe('waitForSvgLoad', () => {
   it('should clean up event listeners on timeout', async () => {
     const mockElement = createMockElement({ hasSvg: false });
 
-    const promise = waitForSvgLoad(mockElement as any, { timeout: 1000 });
+    const promise = waitForSvgLoad(mockElement as unknown as HTMLBqIconElement, { timeout: 1000 });
 
     jest.advanceTimersByTime(1000);
 
@@ -204,7 +200,7 @@ describe('waitForSvgLoad', () => {
       }
     });
 
-    const promise = waitForSvgLoad(mockElement as any, {
+    const promise = waitForSvgLoad(mockElement as unknown as HTMLBqIconElement, {
       properties: { name: 'new-icon' },
     });
 
@@ -230,9 +226,9 @@ describe('waitForSvgLoad', () => {
     const mockElement = createMockElement({ hasSvg: true });
 
     const promises = [
-      waitForSvgLoad(mockElement as any),
-      waitForSvgLoad(mockElement as any),
-      waitForSvgLoad(mockElement as any),
+      waitForSvgLoad(mockElement as unknown as HTMLBqIconElement),
+      waitForSvgLoad(mockElement as unknown as HTMLBqIconElement),
+      waitForSvgLoad(mockElement as unknown as HTMLBqIconElement),
     ];
 
     jest.advanceTimersByTime(100);

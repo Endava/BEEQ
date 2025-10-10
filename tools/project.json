@@ -9,7 +9,7 @@
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/tools",
+        "outputPath": ".",
         "main": "packages/tools/src/index.ts",
         "tsConfig": "packages/tools/tsconfig.lib.json",
         "assets": [
@@ -38,9 +38,15 @@
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
+      "executor": "nx:run-commands",
       "options": {
-        "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/package.json"]
+        "command": "pnpm exec biome lint {projectRoot}"
+      }
+    },
+    "check": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm exec biome check {projectRoot}"
       }
     }
   }

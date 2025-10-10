@@ -1,4 +1,5 @@
-import StencilCoreTesting, { E2EPage } from '@stencil/core/testing';
+import StencilCoreTesting, { type E2EPage } from '@stencil/core/testing';
+
 import { setProperties } from '..';
 
 /**
@@ -13,11 +14,10 @@ import { setProperties } from '..';
  */
 describe.skip(setProperties.name, () => {
   beforeEach(() => {
-    jest
-      .spyOn(StencilCoreTesting, 'newE2EPage')
-      .mockImplementationOnce(() =>
-        Promise.resolve({ $eval: jest.fn(), waitForChanges: () => Promise.resolve() } as unknown as E2EPage),
-      );
+    jest.spyOn(StencilCoreTesting, 'newE2EPage').mockImplementationOnce(() =>
+      // biome-ignore lint/style/useNamingConvention: Mocking E2EPage interface properties
+      Promise.resolve({ $eval: jest.fn(), waitForChanges: () => Promise.resolve() } as unknown as E2EPage),
+    );
   });
 
   afterEach(() => {
@@ -29,8 +29,9 @@ describe.skip(setProperties.name, () => {
 
     const page = await StencilCoreTesting.newE2EPage();
 
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    (page.$eval as jest.Mock).mockImplementationOnce((_: unknown, fn: Function, ...args) => fn(element, ...args));
+    (page.$eval as jest.Mock).mockImplementationOnce(
+      (_: unknown, fn: (...args: unknown[]) => unknown, ...args: unknown[]) => fn(element, ...args),
+    );
 
     await setProperties(page, 'a', { href: 'test-href', id: 'test-id' });
 
@@ -42,8 +43,9 @@ describe.skip(setProperties.name, () => {
 
     const page = await StencilCoreTesting.newE2EPage();
 
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    (page.$eval as jest.Mock).mockImplementation((_: unknown, fn: Function, ...args) => fn(element, ...args));
+    (page.$eval as jest.Mock).mockImplementation(
+      (_: unknown, fn: (...args: unknown[]) => unknown, ...args: unknown[]) => fn(element, ...args),
+    );
 
     expect(await setProperties(page, 'div', { title: 'test-title', id: 'test-id' })).toEqual({
       title: 'test-title',

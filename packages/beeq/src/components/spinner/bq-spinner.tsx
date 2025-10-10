@@ -1,7 +1,5 @@
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 
-import { SPINNER_SIZE, SPINNER_TEXT_POSITION } from './bq-spinner.types';
-import type { TSpinnerSize, TSpinnerTextPosition } from './bq-spinner.types';
 import {
   getCSSVariableValue,
   getTextContent,
@@ -10,6 +8,8 @@ import {
   isNil,
   validatePropValue,
 } from '../../shared/utils';
+import type { TSpinnerSize, TSpinnerTextPosition } from './bq-spinner.types';
+import { SPINNER_SIZE, SPINNER_TEXT_POSITION } from './bq-spinner.types';
 
 /**
  * Spinners are designed for users to display data loading.
@@ -178,17 +178,14 @@ export class BqSpinner {
   private setIconSize(): void {
     if (!this.hasIconSlot || !this.bqIcon) return;
 
-    this.bqIcon.size = parseInt(getCSSVariableValue(`bq-spinner--size-${this.size}`, this.el)).toString();
+    this.bqIcon.size = parseInt(getCSSVariableValue(`bq-spinner--size-${this.size}`, this.el), 10).toString();
   }
 
   private get bqIcon(): HTMLBqIconElement | null {
     if (!this.hasIconSlot) return null;
 
     const slot = this.iconSlotElem.querySelector('slot');
-
-    return [...slot.assignedElements({ flatten: true })].filter((el: Element) =>
-      isHTMLElement(el, 'bq-icon'),
-    )[0] as HTMLBqIconElement;
+    return [...slot.assignedElements({ flatten: true })].filter((el: Element) => isHTMLElement(el, 'bq-icon'))[0];
   }
 
   // render() function
@@ -207,41 +204,41 @@ export class BqSpinner {
       >
         {!this.hasIconSlot && (
           <div
-            class={`bq-spinner--loader ${this.size} relative text-[--bq-spinner--color]`}
             aria-label="Loading..."
+            class={`bq-spinner--loader ${this.size} relative text-[--bq-spinner--color]`}
             role="status"
           >
-            <svg class="bs-full is-full" fill="currentColor" viewBox="0 0 48 48">
+            <svg aria-hidden="true" class="bs-full is-full" fill="currentColor" viewBox="0 0 48 48">
               <path
-                fill="currentColor"
                 d="M10.27 7.637c-.937-1.117-.798-2.796.415-3.605a24 24 0 0 1 37.09 23.249c-.2 1.444-1.65 2.301-3.064 1.944-1.414-.356-2.25-1.793-2.096-3.242A18.72 18.72 0 0 0 14.102 8.11c-1.237.77-2.895.643-3.832-.474Z"
+                fill="currentColor"
               />
               <path
-                fill="currentColor"
                 d="M48 24c0 13.255-10.745 24-24 24S0 37.255 0 24 10.745 0 24 0s24 10.745 24 24ZM5.28 24c0 10.339 8.381 18.72 18.72 18.72 10.339 0 18.72-8.381 18.72-18.72 0-10.339-8.381-18.72-18.72-18.72C13.661 5.28 5.28 13.661 5.28 24Z"
+                fill="currentColor"
                 opacity=".1"
               />
             </svg>
           </div>
         )}
         <span
-          class={{
-            'bq-spinner--icon': true,
-            flex: this.hasIconSlot,
-            '!hidden': !this.hasIconSlot,
-          }}
-          ref={(spanElem) => (this.iconSlotElem = spanElem)}
+          class={{ 'bq-spinner--icon': true, flex: this.hasIconSlot, '!hidden': !this.hasIconSlot }}
           part="custom-icon"
+          ref={(spanElem) => {
+            this.iconSlotElem = spanElem;
+          }}
         >
           <slot name="icon" onSlotchange={this.handleIconSlotChange} />
         </span>
         <span
           class={{
-            'bq-spinner--text font-medium leading-regular text-primary': true,
+            'bq-spinner--text font-medium text-primary leading-regular': true,
             '!hidden': !this.isTextDisplayed,
           }}
           part="text"
-          ref={(spanElem) => (this.slotElem = spanElem)}
+          ref={(spanElem) => {
+            this.slotElem = spanElem;
+          }}
         >
           <slot onSlotchange={this.handleSlotChange} />
         </span>

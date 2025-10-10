@@ -1,9 +1,17 @@
-import { Component, Element, Event, h, Host, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
-import { NOTIFICATION_TYPE } from './bq-notification.types';
+import {
+  debounce,
+  enter,
+  hasSlotContent,
+  isClient,
+  leave,
+  type TDebounce,
+  validatePropValue,
+} from '../../shared/utils';
 import type { TNotificationBorderRadius, TNotificationType } from './bq-notification.types';
-import { debounce, enter, hasSlotContent, isClient, leave, TDebounce, validatePropValue } from '../../shared/utils';
+import { NOTIFICATION_TYPE } from './bq-notification.types';
 
 const NOTIFICATION_PORTAL_SELECTOR = 'bq-notification-portal';
 
@@ -312,31 +320,33 @@ export class BqNotification {
 
     return (
       <Host
-        style={style}
-        class={{ 'is-hidden': !this.open }}
         aria-hidden={!this.open ? 'true' : 'false'}
+        class={{ 'is-hidden': !this.open }}
         hidden={!this.open ? 'true' : 'false'}
         role="alert"
+        style={style}
       >
         <div
           class="bq-notification"
           data-transition-enter="transform transition ease-out duration-300"
-          data-transition-enter-start="translate-y-xs opacity-0 sm:translate-y-0 sm:translate-x-s"
           data-transition-enter-end="translate-y-0 opacity-100 sm:translate-x-0"
+          data-transition-enter-start="translate-y-xs opacity-0 sm:translate-y-0 sm:translate-x-s"
           data-transition-leave="transform transition ease-in duration-100"
-          data-transition-leave-start="translate-y-0 opacity-100 sm:translate-x-0"
           data-transition-leave-end="-translate-y-xs opacity-0 sm:translate-y-0 sm:translate-x-s"
-          ref={(div) => (this.notificationElem = div)}
+          data-transition-leave-start="translate-y-0 opacity-100 sm:translate-x-0"
           part="wrapper"
+          ref={(div) => {
+            this.notificationElem = div;
+          }}
         >
           {/* CLOSE BUTTON */}
           {!this.disableClose && (
             <bq-button
-              class="notification--close absolute inset-ie-5 [&::part(label)]:inline-flex"
               appearance="text"
-              size="small"
-              onClick={() => this.hide()}
+              class="notification--close absolute inset-ie-5 [&::part(label)]:inline-flex"
+              onBqClick={() => this.hide()}
               part="btn-close"
+              size="small"
             >
               <slot name="btn-close">
                 <bq-icon name="x" />
@@ -353,7 +363,7 @@ export class BqNotification {
             part="icon-outline"
           >
             <slot name="icon">
-              <bq-icon name={this.iconName} part="icon" exportparts="base,svg" />
+              <bq-icon exportparts="base,svg" name={this.iconName} part="icon" />
             </slot>
           </div>
           {/* MAIN */}
@@ -366,8 +376,10 @@ export class BqNotification {
               {/* BODY */}
               <div
                 class={{ 'text-s leading-regular': true, '!hidden': !this.hasContent }}
-                ref={(div) => (this.bodyElem = div)}
                 part="body"
+                ref={(div) => {
+                  this.bodyElem = div;
+                }}
               >
                 <slot name="body" onSlotchange={this.handleSlotChange} />
               </div>
@@ -375,8 +387,10 @@ export class BqNotification {
             {/* FOOTER */}
             <div
               class={{ 'flex items-start gap-xs': true, '!hidden': !this.hasFooter }}
-              ref={(div) => (this.footerElem = div)}
               part="footer"
+              ref={(div) => {
+                this.footerElem = div;
+              }}
             >
               <slot name="footer" onSlotchange={this.handleSlotChange} />
             </div>

@@ -31,8 +31,7 @@ describe('props - validatePropValue', () => {
   });
 
   it('should warn that property is not correct', () => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
+    // @ts-expect-error: Type '"test"' is not assignable to type '"small" | "medium" | "large"'
     el.size = 'test';
     validatePropValue(ACCEPTED_VALUES, 'small', el, 'size');
 

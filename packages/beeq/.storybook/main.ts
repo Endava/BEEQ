@@ -1,5 +1,5 @@
 import { createRequire } from 'node:module';
-import { dirname, join } from 'path';
+import { dirname, join } from 'node:path';
 
 import type { StorybookConfig } from '@storybook/web-components-vite';
 

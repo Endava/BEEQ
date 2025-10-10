@@ -2,8 +2,8 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-import mdx from './bq-input.mdx';
 import { INPUT_TYPE, INPUT_VALIDATION } from '../bq-input.types';
+import mdx from './bq-input.mdx';
 
 const meta: Meta = {
   title: 'Components/Input',
@@ -146,14 +146,16 @@ const Template = (args: Args) => {
       ${!args.noLabel ? label : nothing}
       ${args.prefix ? html`<bq-icon name="user-circle" slot="prefix"></bq-icon>` : nothing}
       ${args.suffix ? html`<bq-icon name="gear" slot="suffix"></bq-icon>` : nothing}
-      ${!args.noHelperText
-        ? html`
+      ${
+        !args.noHelperText
+          ? html`
             <span class="flex items-center gap-xs" slot="helper-text">
               <bq-icon name="star"></bq-icon>
               Helper text
             </span>
           `
-        : nothing}
+          : nothing
+      }
     </bq-input>
   `;
 };

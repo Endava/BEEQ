@@ -52,7 +52,7 @@ describe('bq-option-list', () => {
     const page = await newE2EPage({
       html: `
         <bq-option-list>
-          <bq-option></bq-option>
+          <bq-option>Option</bq-option>
         </bq-option-list>
       `,
     });

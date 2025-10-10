@@ -2,12 +2,11 @@
   "recommendations": [
     "aaron-bond.better-comments",
     "bierner.lit-html",
+    "biomejs.biome",
     "bradlc.vscode-tailwindcss",
-    "dbaeumer.vscode-eslint",
     "donjayamanne.githistory",
     "eamodio.gitlens",
     "ecmel.vscode-html-css",
-    "esbenp.prettier-vscode",
     "fdom.stencil-snippets",
     "mrmlnc.vscode-scss",
     "ms-vsliveshare.vsliveshare",

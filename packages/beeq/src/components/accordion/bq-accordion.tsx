@@ -1,10 +1,11 @@
-import { Component, Element, Event, h, Listen, Prop, State, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { Component, Element, Event, h, Listen, Prop, State, Watch } from '@stencil/core';
 
-import { ACCORDION_APPEARANCE, ACCORDION_SIZE } from './bq-accordion.types';
-import type { TAccordionAppearance, TAccordionSize } from './bq-accordion.types';
-import { Accordion } from './helper';
 import { hasSlotContent, validatePropValue } from '../../shared/utils';
+import type { TAccordionAppearance, TAccordionSize } from './bq-accordion.types';
+import { ACCORDION_APPEARANCE, ACCORDION_SIZE } from './bq-accordion.types';
+import { Accordion } from './helper';
+
 /**
  * The Accordion is a UI component that allows users to toggle between showing and hiding content sections. It provides a collapsible functionality, where only one section can be expanded at a time, while the others remain collapsed.
  *
@@ -313,27 +314,31 @@ export class BqAccordion {
           'no-animation': this.noAnimation,
           disabled: this.disabled,
         }}
-        ref={(detailsElem: HTMLDetailsElement) => (this.detailsElem = detailsElem)}
         open={this.open}
         part="base"
+        ref={(detailsElem: HTMLDetailsElement) => {
+          this.detailsElem = detailsElem;
+        }}
       >
         <summary
-          id="bq-accordion__header"
+          aria-controls="bq-accordion__content"
+          aria-disabled={this.disabled ? 'true' : 'false'}
+          aria-expanded={this.expanded ? 'true' : 'false'}
           class="bq-accordion__header"
+          id="bq-accordion__header"
+          onBlur={this.handleBlur}
           onClick={this.handleClick}
           onFocus={this.handleFocus}
-          onBlur={this.handleBlur}
-          aria-expanded={this.expanded ? 'true' : 'false'}
-          aria-disabled={this.disabled ? 'true' : 'false'}
-          aria-controls="bq-accordion__content"
-          tabindex={this.disabled ? -1 : 0}
-          role="button"
           part="header"
+          role="button"
+          tabindex={this.disabled ? -1 : 0}
         >
           <div
-            ref={(element) => (this.prefixElem = element)}
             class={{ 'bq-accordion__header--prefix': true, '!hidden': !this.hasPrefix }}
             part="prefix"
+            ref={(element) => {
+              this.prefixElem = element;
+            }}
           >
             <slot name="prefix" onSlotchange={this.handleSlotChange} />
           </div>
@@ -341,30 +346,32 @@ export class BqAccordion {
             <slot name="header" />
           </div>
           <div
-            ref={(element) => (this.suffixElem = element)}
             class={{ 'bq-accordion__header--suffix': true, '!hidden': !this.hasSuffix }}
             part="suffix"
+            ref={(element) => {
+              this.suffixElem = element;
+            }}
           >
             <slot name="suffix" onSlotchange={this.handleSlotChange} />
           </div>
           <div
+            aria-hidden="true"
             class={{
               'flex items-center justify-center text-primary transition-transform duration-300 ease-in-out': true,
               '!hidden': this.open && !this.rotate,
               'rotate-180': this.rotate && this.open,
             }}
-            aria-hidden="true"
           >
             <slot name="expand">
               <bq-icon name="plus" />
             </slot>
           </div>
           <div
+            aria-hidden="true"
             class={{
               'flex items-center justify-center text-primary': true,
               '!hidden': (!this.open && !this.rotate) || this.rotate,
             }}
-            aria-hidden="true"
           >
             <slot name="collapse">
               <bq-icon name="minus" />
@@ -372,12 +379,12 @@ export class BqAccordion {
           </div>
         </summary>
         <div
-          class="bq-accordion__body overflow-hidden bg-ui-primary text-primary"
           aria-labelledby="bq-accordion__header"
-          role="region"
+          class="bq-accordion__body overflow-hidden bg-ui-primary text-primary"
           part="panel"
+          role="region"
         >
-          <slot id="bq-accordion__content" class="bq-accordion__content block" />
+          <slot class="bq-accordion__content block" id="bq-accordion__content" />
         </div>
       </details>
     );

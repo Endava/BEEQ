@@ -97,7 +97,7 @@ export class BqOptionGroup {
             <slot name="header-prefix" />
           </span>
           <span
-            class="bq-option-group__label inline-block overflow-hidden text-ellipsis whitespace-nowrap is-auto"
+            class="bq-option-group__label is-auto inline-block overflow-hidden text-ellipsis whitespace-nowrap"
             part="label"
           >
             <slot name="header-label" />
@@ -107,10 +107,10 @@ export class BqOptionGroup {
           </span>
         </legend>
         <div
-          class="bq-option-group__container flex flex-col gap-[--bq-option-group--gapY-list]"
-          role="group"
           aria-label="Options"
+          class="bq-option-group__container flex flex-col gap-[--bq-option-group--gapY-list]"
           part="group"
+          role="group"
         >
           <slot />
         </div>

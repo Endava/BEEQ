@@ -89,9 +89,10 @@ describe('bq-option', () => {
     const bqClick = await page.spyOnEvent('bqClick');
 
     await page.$eval('bq-option', async (elem: HTMLBqOptionElement) => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore: Property 'click' does not exist on type 'Element'.
-      elem.shadowRoot.querySelector('div[part="base"]').click();
+      const button = elem.shadowRoot?.querySelector('button[part="base"]');
+      if (button instanceof HTMLButtonElement) {
+        button.click();
+      }
     });
     await page.waitForChanges();
 
@@ -144,7 +145,7 @@ describe('bq-option', () => {
       html: '<bq-option selected="true">Option 1</bq-option>',
     });
 
-    const bqOption = await page.find('bq-option >>> div');
+    const bqOption = await page.find('bq-option >>> button[part="base"]');
 
     expect(bqOption).toHaveClass('active');
   });

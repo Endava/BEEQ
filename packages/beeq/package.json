@@ -9,9 +9,7 @@
   "collection": "./dist/collection/collection-manifest.json",
   "collection:main": "./dist/collection/index.js",
   "unpkg": "./dist/beeq/beeq.esm.js",
-  "files": [
-    "dist/"
-  ],
+  "files": ["dist/"],
   "dependencies": {
     "@floating-ui/core": "^1.6.9",
     "@floating-ui/dom": "^1.6.13",

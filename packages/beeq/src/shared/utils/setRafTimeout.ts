@@ -6,8 +6,7 @@
  * @param {Any[]} args - The arguments of func.
  * @returns {void}
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const setRafTimeout = <TFunc extends (...args: any[]) => void>(
+export const setRafTimeout = <TFunc extends (...args: unknown[]) => void>(
   func: TFunc,
   wait: number,
   ...args: Parameters<TFunc>

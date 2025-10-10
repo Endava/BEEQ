@@ -1,6 +1,7 @@
-import { AttachInternals, Component, Element, Event, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
+import type { BqTagCustomEvent } from '../..';
 import type { Placement } from '../../services/interfaces';
 import {
   debounce,
@@ -9,7 +10,7 @@ import {
   isHTMLElement,
   isNil,
   stringToArray,
-  TDebounce,
+  type TDebounce,
 } from '../../shared/utils';
 import type { TInputValidation } from '../input/bq-input.types';
 
@@ -536,7 +537,9 @@ export class BqSelect {
   };
 
   private resetOptionsVisibility = () => {
-    this.options.forEach((item: HTMLBqOptionElement) => (item.hidden = false));
+    this.options.forEach((item: HTMLBqOptionElement) => {
+      item.hidden = false;
+    });
   };
 
   private syncItemsFromValue = () => {
@@ -613,19 +616,19 @@ export class BqSelect {
       if (index < this.maxTagsVisible || this.maxTagsVisible < 0) {
         return (
           <bq-tag
+            exportparts="wrapper:tag__base,prefix:tag__prefix,text:tag__text,btn-close:tag__btn-close"
             key={item.value}
-            removable
-            size="xsmall"
-            variant="filled"
+            // Prevent the tag from closing the panel when clicked
+            onBqClick={(ev: BqTagCustomEvent<HTMLBqTagElement>) => ev.stopPropagation()}
             onBqClose={(event) => {
               // NOTE: prevents triggering bqClose on parent
               event.stopPropagation();
               this.handleTagRemove(item);
             }}
-            // Prevent the tag from closing the panel when clicked
-            onClick={(ev: MouseEvent) => ev.stopPropagation()}
-            exportparts="wrapper:tag__base,prefix:tag__prefix,text:tag__text,btn-close:tag__btn-close"
             part="tag"
+            removable
+            size="xsmall"
+            variant="filled"
           >
             {this.getOptionLabel(item)}
           </bq-tag>
@@ -633,11 +636,11 @@ export class BqSelect {
       } else if (index === this.maxTagsVisible) {
         return (
           <bq-tag
+            exportparts="wrapper:tag__base,prefix:tag__prefix,text:tag__text,btn-close:tag__btn-close"
             key="more"
+            part="tag"
             size="xsmall"
             variant="filled"
-            exportparts="wrapper:tag__base,prefix:tag__prefix,text:tag__text,btn-close:tag__btn-close"
-            part="tag"
           >
             +{this.selectedOptions.length - index}
           </bq-tag>
@@ -671,21 +674,24 @@ export class BqSelect {
       <div class="bq-select" part="base">
         {/* Label */}
         <label
-          id={labelId}
-          class={{ 'bq-select__label': true, '!hidden': !this.hasLabel }}
           aria-label={this.name || this.fallbackInputId}
+          class={{ 'bq-select__label': true, '!hidden': !this.hasLabel }}
           htmlFor={this.name || this.fallbackInputId}
-          ref={(labelElem: HTMLSpanElement) => (this.labelElem = labelElem)}
+          id={labelId}
           part="label"
+          ref={(labelElem: HTMLSpanElement) => {
+            this.labelElem = labelElem;
+          }}
         >
           <slot name="label" onSlotchange={this.handleSlotChange} />
         </label>
         {/* Select dropdown */}
         <bq-dropdown
           class="bq-select__dropdown w-full"
-          disableScrollLock={this.disableScrollLock}
           disabled={this.disabled}
+          disableScrollLock={this.disableScrollLock}
           distance={this.distance}
+          exportparts="panel"
           keepOpenOnSelect={this.keepOpenOnSelect}
           open={this.open}
           panelHeight={this.panelHeight}
@@ -693,7 +699,6 @@ export class BqSelect {
           sameWidth={this.sameWidth}
           skidding={this.skidding}
           strategy={this.strategy}
-          exportparts="panel"
         >
           {/* Input control group */}
           <div
@@ -708,8 +713,10 @@ export class BqSelect {
             {/* Prefix */}
             <span
               class={{ 'bq-select__control--prefix': true, '!hidden': !this.hasPrefix }}
-              ref={(spanElem: HTMLSpanElement) => (this.prefixElem = spanElem)}
               part="prefix"
+              ref={(spanElem: HTMLSpanElement) => {
+                this.prefixElem = spanElem;
+              }}
             >
               <slot name="prefix" onSlotchange={this.handleSlotChange} />
             </span>
@@ -722,30 +729,32 @@ export class BqSelect {
               )}
               {/* HTML Input */}
               <input
-                id={this.name || this.fallbackInputId}
-                class="bq-select__control--input flex-grow is-full"
-                autoComplete="off"
-                autoCapitalize="off"
-                aria-disabled={this.disabled ? 'true' : 'false'}
                 aria-controls={`bq-options-${this.name}`}
+                aria-disabled={this.disabled ? 'true' : 'false'}
                 aria-expanded={this.open ? 'true' : 'false'}
                 aria-haspopup="listbox"
+                autoCapitalize="off"
+                autoComplete="off"
+                class="bq-select__control--input is-full flex-grow"
                 disabled={this.disabled}
                 form={this.form}
+                id={this.name || this.fallbackInputId}
                 name={this.name}
-                placeholder={this.displayPlaceholder}
-                ref={(inputElem: HTMLInputElement) => (this.inputElem = inputElem)}
-                readOnly={this.readonly}
-                required={this.required}
-                role="combobox"
-                spellcheck={false}
-                type="text"
-                value={this.displayValue}
-                part="input"
-                // Events
                 onBlur={this.handleBlur}
                 onFocus={this.handleFocus}
                 onInput={this.handleInput}
+                part="input"
+                placeholder={this.displayPlaceholder}
+                readOnly={this.readonly}
+                ref={(inputElem: HTMLInputElement) => {
+                  this.inputElem = inputElem;
+                }}
+                required={this.required}
+                role="combobox"
+                // Events
+                spellcheck={false}
+                type="text"
+                value={this.displayValue}
               />
             </div>
             {/* Clear Button */}
@@ -753,36 +762,38 @@ export class BqSelect {
               // The clear button will be visible as long as the input has a value
               // and the parent group is hovered or has focus-within
               <bq-button
-                class="bq-select__control--clear ms-[--bq-select--gap]"
                 appearance="text"
                 aria-label={this.clearButtonLabel}
-                size="small"
+                class="bq-select__control--clear ms-[--bq-select--gap]"
+                exportparts="button"
                 onBqClick={this.handleClearClick}
                 part="clear-btn"
-                exportparts="button"
+                size="small"
                 tabIndex={-1}
               >
                 <slot name="clear-icon">
-                  <bq-icon name="x-circle" class="flex" />
+                  <bq-icon class="flex" name="x-circle" />
                 </slot>
               </bq-button>
             )}
             {/* Suffix */}
             <span
               class={{ 'bq-select__control--suffix': true, 'rotate-180': this.open, 'rotate-0': !this.open }}
-              ref={(spanElem: HTMLSpanElement) => (this.suffixElem = spanElem)}
               part="suffix"
+              ref={(spanElem: HTMLSpanElement) => {
+                this.suffixElem = spanElem;
+              }}
             >
               <slot name="suffix" onSlotchange={this.handleSlotChange}>
-                <bq-icon name="caret-down" class="flex" />
+                <bq-icon class="flex" name="caret-down" />
               </slot>
             </span>
           </div>
           <bq-option-list
-            id={`bq-options-${this.name}`}
-            onBqSelect={this.handleSelect}
             aria-expanded={this.open ? 'true' : 'false'}
             exportparts="base:option-list"
+            id={`bq-options-${this.name}`}
+            onBqSelect={this.handleSelect}
             role="listbox"
           >
             <slot />
@@ -794,8 +805,10 @@ export class BqSelect {
             [`bq-select__helper-text validation-${this.validationStatus}`]: true,
             '!hidden': !this.hasHelperText,
           }}
-          ref={(divElem: HTMLDivElement) => (this.helperTextElem = divElem)}
           part="helper-text"
+          ref={(divElem: HTMLDivElement) => {
+            this.helperTextElem = divElem;
+          }}
         >
           <slot name="helper-text" onSlotchange={this.handleSlotChange} />
         </div>

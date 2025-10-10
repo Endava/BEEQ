@@ -1,17 +1,17 @@
-import { AttachInternals, Component, Element, Event, h, Host, Listen, Prop, State, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, Host, h, Listen, Prop, State, Watch } from '@stencil/core';
 
-import { RADIO_GROUP_ORIENTATION } from './bq-radio-group.types';
-import type { TRadioGroupOrientation } from './bq-radio-group.types';
 import {
   debounce,
   getNextElement,
   isDefined,
   isEventTargetChildOfElement,
   isNil,
-  TDebounce,
+  type TDebounce,
   validatePropValue,
 } from '../../shared/utils';
+import type { TRadioGroupOrientation } from './bq-radio-group.types';
+import { RADIO_GROUP_ORIENTATION } from './bq-radio-group.types';
 
 const KEY_MAP = {
   ArrowDown: 'forward',
@@ -260,7 +260,7 @@ export class BqRadioGroup {
   onBqBlur(event: CustomEvent<HTMLBqRadioElement>) {
     if (!isEventTargetChildOfElement(event, this.el)) return;
 
-    // NOTE: if focusedBqRadio is nil that means the event occured from this component
+    // NOTE: if focusedBqRadio is nil that means the event occurred from this component
     if (isNil(this.focusedBqRadio)) return;
 
     event.stopPropagation();
@@ -291,7 +291,9 @@ export class BqRadioGroup {
    */
   private initializeRadioElements = (): void => {
     this.radioElementsSet.clear();
-    this.el.querySelectorAll('bq-radio').forEach((radio) => this.radioElementsSet.add(radio));
+    this.el.querySelectorAll('bq-radio').forEach((radio) => {
+      this.radioElementsSet.add(radio);
+    });
     // Caching the radio elements in an array for faster access and iteration
     this.cachedRadioElements = Array.from(this.radioElementsSet);
     // Set the tabIndex of the host element to -1 if there are no radio elements or the group is disabled, otherwise set it to 0
@@ -309,7 +311,9 @@ export class BqRadioGroup {
 
     // If disabled, all radios get tabIndex -1
     if (this.disabled) {
-      this.cachedRadioElements.forEach((radio) => (radio.tabIndex = -1));
+      this.cachedRadioElements.forEach((radio) => {
+        radio.tabIndex = -1;
+      });
       return;
     }
 
@@ -431,7 +435,9 @@ export class BqRadioGroup {
 
     // Update states
     this.internals?.states.clear();
-    states.forEach((state) => this.internals?.states.add(state));
+    states.forEach((state) => {
+      this.internals?.states.add(state);
+    });
   };
 
   private handleSlotChange = (): void => {
@@ -447,13 +453,11 @@ export class BqRadioGroup {
     return (
       <Host tabindex={this.tabIndex}>
         <fieldset
-          class={{ 'bq-radio-group': true, 'has-fieldset': this.fieldset }}
           aria-controls="bq-radiogroup"
-          aria-labelledby="bq-radio-group__label"
           aria-disabled={this.disabled}
-          aria-required={this.required}
+          aria-labelledby="bq-radio-group__label"
+          class={{ 'bq-radio-group': true, 'has-fieldset': this.fieldset }}
           disabled={this.disabled}
-          role="radiogroup"
           part="base"
         >
           <legend part="label">

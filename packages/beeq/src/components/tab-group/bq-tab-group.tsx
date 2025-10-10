@@ -1,9 +1,9 @@
-import { Component, Element, Event, h, Host, Listen, Prop, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, h, Listen, Prop, Watch } from '@stencil/core';
 
-import { debounce, getNextElement, isHTMLElement, isNil, TDebounce, validatePropValue } from '../../shared/utils';
-import { TAB_ORIENTATION, TAB_PLACEMENT, TAB_SIZE } from '../tab/bq-tab.types';
+import { debounce, getNextElement, isHTMLElement, isNil, type TDebounce, validatePropValue } from '../../shared/utils';
 import type { TTabOrientation, TTabPlacement, TTabSize } from '../tab/bq-tab.types';
+import { TAB_ORIENTATION, TAB_PLACEMENT, TAB_SIZE } from '../tab/bq-tab.types';
 
 /**
  * The tab group is a user interface element that allows users wrap a set of tab items.
@@ -145,7 +145,9 @@ export class BqTabGroup {
   @Listen('bqClick', { passive: true })
   onBqClick(event: CustomEvent<HTMLBqTabElement>) {
     const { detail: target } = event;
-    this.bqTabElements.forEach((bqTabElement) => (bqTabElement.active = bqTabElement === target));
+    this.bqTabElements.forEach((bqTabElement) => {
+      bqTabElement.active = bqTabElement === target;
+    });
     this.debouncedBqChange({ value: target.tabId, target });
     this.selectTab(target);
   }
@@ -255,7 +257,7 @@ export class BqTabGroup {
       <Host class={{ 'inline-block': this.orientation === 'vertical' }}>
         <div
           class={{
-            [`bq-tab-group bq-tab-group--${this.orientation}-${this.placement} flex is-full`]: true,
+            [`bq-tab-group bq-tab-group--${this.orientation}-${this.placement} is-full flex`]: true,
             'no-divider': this.disableDivider,
           }}
           part="base"
@@ -265,8 +267,8 @@ export class BqTabGroup {
               'bq-tab-group--container flex overflow-x-auto': true,
               'flex-col': this.orientation !== 'horizontal',
             }}
-            role="tablist"
             part="tabs"
+            role="tablist"
           >
             <slot />
           </div>

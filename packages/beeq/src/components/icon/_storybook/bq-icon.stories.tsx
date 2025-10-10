@@ -3,8 +3,8 @@ import { html } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { repeat } from 'lit-html/directives/repeat.js';
 
-import mdx from './bq-icon.mdx';
 import { ICON_WEIGHT } from '../bq-icon.types';
+import mdx from './bq-icon.mdx';
 
 const meta: Meta = {
   title: 'Components/Icon',

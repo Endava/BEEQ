@@ -1,8 +1,8 @@
-import { Component, Element, h, Host, Prop, Watch } from '@stencil/core';
+import { Component, Element, Host, h, Prop, Watch } from '@stencil/core';
 
-import { PROGRESS_BORDER_SHAPE, PROGRESS_THICKNESS, PROGRESS_TYPE } from './bq-progress.types';
-import type { TProgressBorderShape, TProgressThickness, TProgressType } from './bq-progress.types';
 import { validatePropValue } from '../../shared/utils';
+import type { TProgressBorderShape, TProgressThickness, TProgressType } from './bq-progress.types';
+import { PROGRESS_BORDER_SHAPE, PROGRESS_THICKNESS, PROGRESS_TYPE } from './bq-progress.types';
 
 /**
  * The progress bar is a user interface component that visually represents the completion status of a task or process.
@@ -147,32 +147,32 @@ export class BqProgress {
     return (
       <Host style={style}>
         <div class="flex items-center" part="wrapper">
-          <div class="relative flex items-center is-full" part="progress">
+          <div class="is-full relative flex items-center" part="progress">
             <progress
               class={{
                 [`progress-bar progress-bar__${this.type} ${this.thickness}`]: true,
                 'progress-bar__border-shape rounded-full': this.borderShape === 'rounded',
               }}
-              value={this.indeterminate ? undefined : this.value}
               max="100"
               part="progress-bar"
+              value={this.indeterminate ? undefined : this.value}
             />
             {this.enableTooltip && !this.indeterminate && (
               <bq-tooltip
-                class="absolute [&::part(panel)]:absolute"
-                exportparts="base,trigger,panel"
                 alwaysVisible={true}
+                class="absolute [&::part(panel)]:absolute"
                 distance={16}
+                exportparts="base,trigger,panel"
                 style={{ insetInlineStart: `${this.value}%`, fontVariant: 'tabular-nums' }}
               >
-                <div class="absolute bs-1 is-1" slot="trigger"></div>
+                <div class="bs-1 is-1 absolute" slot="trigger"></div>
                 {this.value}
               </bq-tooltip>
             )}
             {this.indeterminate && (
               <div
                 class={{
-                  'progress-bar__indeterminate absolute bg-[--bq-progress-bar--indicatorColor] bs-[--bq-progress-bar--height] is-[--bq-progress-bar--indeterminateWidth]': true,
+                  'progress-bar__indeterminate bs-[--bq-progress-bar--height] is-[--bq-progress-bar--indeterminateWidth] absolute bg-[--bq-progress-bar--indicatorColor]': true,
                   'rounded-full': this.borderShape === 'rounded',
                 }}
                 part="indeterminate"
@@ -185,10 +185,10 @@ export class BqProgress {
               'ms-xs font-medium leading-regular': true,
               'text-primary': this.type !== 'error',
               'text-danger': this.type === 'error',
-              'invisible ms-0 is-0': !this.label || this.indeterminate,
+              'is-0 invisible ms-0': !this.label || this.indeterminate,
             }}
-            style={{ fontVariant: 'tabular-nums' }}
             part="label"
+            style={{ fontVariant: 'tabular-nums' }}
           >
             <span>{this.value}%</span>
           </div>

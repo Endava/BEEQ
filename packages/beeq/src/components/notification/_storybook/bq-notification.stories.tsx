@@ -1,9 +1,9 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 
-import mdx from './bq-notification.mdx';
 import { getRandomFromArray } from '../../../shared/utils';
 import { NOTIFICATION_BORDER_RADIUS, NOTIFICATION_TYPE } from '../bq-notification.types';
+import mdx from './bq-notification.mdx';
 
 const meta: Meta = {
   title: 'Components/Notification',
@@ -183,8 +183,7 @@ export const Stacked: Story = {
       notification.addEventListener('bqAfterClose', args.bqAfterClose);
 
       document.body.append(notification);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return (notification as any).toast();
+      return (notification as HTMLBqNotificationElement).toast();
     };
 
     return html`

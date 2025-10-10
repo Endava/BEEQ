@@ -62,7 +62,9 @@ export class Accordion {
     // When the animation is complete, call onAnimationFinish()
     this.animation.onfinish = () => this.onAnimationFinish(false);
     // If the animation is cancelled, isClosing variable is set to false
-    this.animation.oncancel = () => (this.isClosing = false);
+    this.animation.oncancel = () => {
+      this.isClosing = false;
+    };
   }
 
   // Expands the accordion
@@ -85,7 +87,9 @@ export class Accordion {
     // When the animation is complete, call onAnimationFinish()
     this.animation.onfinish = () => this.onAnimationFinish(true);
     // If the animation is cancelled, isExpanding variable is set to false
-    this.animation.oncancel = () => (this.isExpanding = false);
+    this.animation.oncancel = () => {
+      this.isExpanding = false;
+    };
   }
 
   // Handles the end of the animation

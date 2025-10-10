@@ -2,8 +2,8 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-import mdx from './bq-switch.mdx';
 import { SWITCH_INNER_LABEL, SWITCH_JUSTIFY_CONTENT } from '../bq-switch.types';
+import mdx from './bq-switch.mdx';
 
 const meta: Meta = {
   title: 'Components/Switch',
@@ -134,6 +134,7 @@ export const WithForm: Story = {
       ev.preventDefault();
       const form = ev.target as HTMLFormElement;
       const formData = new FormData(form);
+      // @ts-expect-error - FormData is not iterable
       const formValues = Object.fromEntries(formData.entries());
 
       const codeElement = document.getElementById('form-data');

@@ -2,7 +2,7 @@ import plugin from 'tailwindcss/plugin';
 
 import { blendColor, flattenColorPalette } from '../helpers';
 
-export const ColorMix = plugin(function ({ matchUtilities, theme }) {
+export const ColorMix = plugin(({ matchUtilities, theme }) => {
   matchUtilities(
     {
       // Background `hover` state blend color

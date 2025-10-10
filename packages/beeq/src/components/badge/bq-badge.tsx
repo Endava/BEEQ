@@ -1,8 +1,8 @@
-import { Component, Element, h, Host, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Host, h, Prop, State, Watch } from '@stencil/core';
 
-import { BADGE_SIZE } from './bq-badge.types';
-import type { TBadgeSize } from './bq-badge.types';
 import { getColorCSSVariable, getTextContent, isNil, validatePropValue } from '../../shared/utils';
+import type { TBadgeSize } from './bq-badge.types';
+import { BADGE_SIZE } from './bq-badge.types';
 
 /**
  * The Badge component is a visual indicator that can be added to various elements within a user interface.
@@ -163,7 +163,13 @@ export class BqBadge {
           }}
           part="base"
         >
-          <span ref={(element) => (this.spanElement = element)} class="text-xs font-bold leading-small" part="number">
+          <span
+            class="font-bold text-xs leading-small"
+            part="number"
+            ref={(element) => {
+              this.spanElement = element;
+            }}
+          >
             <slot onSlotchange={this.handleSlotChange}></slot>
           </span>
         </div>

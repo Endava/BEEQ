@@ -2,8 +2,8 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-import mdx from './bq-alert.mdx';
 import { ALERT_BORDER_RADIUS, ALERT_TYPE } from '../bq-alert.types';
+import mdx from './bq-alert.mdx';
 
 const meta: Meta = {
   title: 'Components/Alert',
@@ -95,8 +95,9 @@ const Template = (args: Args) => html`
       @bqAfterHide=${args.bqAfterHide}
     >
       ${args.type === 'default' ? html`<bq-icon name="star" slot="icon"></bq-icon>` : nothing} Title
-      ${!args.sticky
-        ? html`
+      ${
+        !args.sticky
+          ? html`
             <span slot="body">
               Description
               <a class="bq-link" href="https://example.com">Link</a>
@@ -106,7 +107,8 @@ const Template = (args: Args) => html`
               <bq-button appearance="link" size="small"> Button </bq-button>
             </div>
           `
-        : nothing}
+          : nothing
+      }
     </bq-alert>
   </div>
 `;
@@ -116,7 +118,7 @@ const TemplateSticky = (args: Args) => html`
     ?auto-dismiss=${args['auto-dismiss']}
     ?disable-close=${args['disable-close']}
     ?hide-icon=${args['hide-icon']}
-    ?sticky=${args['sticky']}
+    ?sticky=${args.sticky}
     border=${ifDefined(args.border)}
     ?open=${args.open}
     time=${ifDefined(args.time)}
@@ -210,7 +212,7 @@ export const WithTrigger: Story = {
             ?auto-dismiss=${args['auto-dismiss']}
             ?disable-close=${args['disable-close']}
             ?hide-icon=${args['hide-icon']}
-            ?sticky=${args['sticky']}
+            ?sticky=${args.sticky}
             border=${args.border}
             ?open=${args.open}
             time=${args.time}

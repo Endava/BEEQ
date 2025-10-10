@@ -123,8 +123,10 @@ export class BqPageTitle {
         {/* Back navigation button */}
         <div
           class={{ flex: true, '!hidden': !this.haveBackNavigation }}
-          ref={(divElem) => (this.backNavigationElem = divElem)}
           part="back"
+          ref={(divElem) => {
+            this.backNavigationElem = divElem;
+          }}
         >
           <slot name="back" onSlotchange={this.handleSlotChange} />
         </div>
@@ -132,7 +134,7 @@ export class BqPageTitle {
           <div class="flex items-center gap-xs" part="title-suffix">
             {/* Title */}
             <h1
-              class="title-font text-[length:--title-textSize] font-[--title-fontWeight] leading-[--title-lineHeight] text-[color:--title-textColor]"
+              class="title-font font-[--title-fontWeight] text-[color:--title-textColor] text-[length:--title-textSize] leading-[--title-lineHeight]"
               part="title"
             >
               <slot />
@@ -140,8 +142,10 @@ export class BqPageTitle {
             {/* Suffix */}
             <div
               class={{ 'flex flex-grow gap-xs p-b-xs2 p-i-xs2': true, '!hidden': !this.hasSuffix }}
-              ref={(divElem) => (this.suffixElem = divElem)}
               part="suffix"
+              ref={(divElem) => {
+                this.suffixElem = divElem;
+              }}
             >
               <slot name="suffix" onSlotchange={this.handleSlotChange} />
             </div>
@@ -149,11 +153,13 @@ export class BqPageTitle {
           {/* Sub-title */}
           <div
             class={{
-              'title-font text-[length:--subtitle-textSize] font-[--subtitle-fontWeight] leading-[--title-lineHeight] text-[color:--subtitle-textColor]': true,
+              'title-font font-[--subtitle-fontWeight] text-[color:--subtitle-textColor] text-[length:--subtitle-textSize] leading-[--title-lineHeight]': true,
               hidden: !this.hasSubTitle,
             }}
-            ref={(divElem) => (this.subTitleElem = divElem)}
             part="sub-title"
+            ref={(divElem) => {
+              this.subTitleElem = divElem;
+            }}
           >
             <slot name="sub-title" onSlotchange={this.handleSlotChange} />
           </div>

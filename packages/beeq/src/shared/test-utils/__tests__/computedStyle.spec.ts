@@ -1,4 +1,5 @@
-import StencilCoreTesting, { E2EPage } from '@stencil/core/testing';
+import StencilCoreTesting, { type E2EPage } from '@stencil/core/testing';
+
 import { computedStyle } from '..';
 
 /**
@@ -15,8 +16,7 @@ describe.skip(computedStyle.name, () => {
   beforeEach(() => {
     jest.spyOn(StencilCoreTesting, 'newE2EPage').mockImplementationOnce(() =>
       Promise.resolve({
-        // eslint-disable-next-line @typescript-eslint/ban-types
-        evaluate: (fn: Function, ...arg) => {
+        evaluate: (fn: (...args: unknown[]) => unknown, ...arg: unknown[]) => {
           return fn(...arg);
         },
       } as E2EPage),

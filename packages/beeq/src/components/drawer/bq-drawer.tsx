@@ -1,9 +1,9 @@
-import { Component, Element, Event, h, Host, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
-import { DRAWER_PLACEMENT, DRAWER_POSITIONS } from './bq-drawer.types';
-import type { TDrawerPlacement, TDrawerPosition } from './bq-drawer.types';
 import { enter, hasSlotContent, isNil, leave, validatePropValue } from '../../shared/utils';
+import type { TDrawerPlacement, TDrawerPosition } from './bq-drawer.types';
+import { DRAWER_PLACEMENT, DRAWER_POSITIONS } from './bq-drawer.types';
 
 /**
  * The Drawer component provides a sliding panel interface commonly used for navigation or presenting additional content without taking up significant screen space.
@@ -297,12 +297,15 @@ export class BqDrawer {
               'pointer-events-none': !this.open,
               'opacity-60': this.open,
             }}
-            tabIndex={-1}
             part="backdrop"
+            tabIndex={-1}
           />
         )}
         {/* DRAWER PANEL */}
         <div
+          aria-hidden={!this.open ? 'true' : 'false'}
+          aria-labelledby="bq-drawer__title"
+          aria-modal="true"
           class={{
             [`bq-drawer transition-all duration-300 ease-in-out ${this.position || this.placement}`]: true,
             '-start-[--bq-drawer--width]': this.isPositionStart,
@@ -310,17 +313,16 @@ export class BqDrawer {
             'start-0': this.open && this.isPositionStart,
             'end-0': this.open && this.isPositionEnd,
           }}
-          ref={(div) => (this.drawerElem = div)}
-          aria-hidden={!this.open ? 'true' : 'false'}
-          aria-labelledby="bq-drawer__title"
-          aria-modal="true"
           hidden={!this.open}
           part="panel"
+          ref={(div) => {
+            this.drawerElem = div;
+          }}
           role="dialog"
         >
           <header class="flex items-center" part="header">
             <h2
-              class="flex-1 items-center justify-between text-xl font-bold leading-regular text-primary"
+              class="flex-1 items-center justify-between font-bold text-primary text-xl leading-regular"
               id="bq-drawer__title"
               part="title"
             >
@@ -328,15 +330,15 @@ export class BqDrawer {
             </h2>
             <div class="flex" part="button-close">
               <bq-button
-                class="[&::part(button)]:rounded-s [&::part(button)]:border-0 [&::part(button)]:bs-fit [&::part(button)]:p-b-0 [&::part(button)]:p-i-0 [&::part(label)]:inline-flex"
                 appearance="text"
+                class="[&::part(button)]:bs-fit [&::part(button)]:rounded-s [&::part(button)]:border-0 [&::part(button)]:p-b-0 [&::part(button)]:p-i-0 [&::part(label)]:inline-flex"
+                exportparts="button:button-close__btn,label:button-close__label"
+                onBqClick={this.hide}
                 size="small"
                 slot="button-close"
-                exportparts="button:button-close__btn,label:button-close__label"
-                onClick={this.hide.bind(this)}
               >
                 <slot name="button-close">
-                  <bq-icon name="x-bold" role="img" title="Close" />
+                  <bq-icon name="x-bold" title="Close" />
                 </slot>
               </bq-button>
             </div>
@@ -349,8 +351,10 @@ export class BqDrawer {
               block: true,
               '!hidden': !this.hasFooter,
             }}
-            ref={(footerElem) => (this.footerElem = footerElem)}
             part="footer"
+            ref={(footerElem) => {
+              this.footerElem = footerElem;
+            }}
           >
             <slot name="footer-divider">
               <bq-divider class="mb-m block" dashed />

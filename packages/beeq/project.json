@@ -17,8 +17,7 @@
       "!{projectRoot}/**/*.spec.ts",
       "!{projectRoot}/**/*.stories.tsx",
       "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/jest.config.ts",
-      "!{projectRoot}/.eslintrc.json"
+      "!{projectRoot}/jest.config.ts"
     ]
   },
   "targets": {
@@ -121,7 +120,7 @@
       "continuous": true
     },
     "icons": {
-      "executor": "@beeq/tools:icons",
+      "executor": "../../tools:icons",
       "outputs": ["{options.downloadPath}", "{options.extractToPath}"],
       "options": {
         "assetsFolder": "assets",
@@ -140,7 +139,12 @@
         "projectType": "library",
         "tsConfig": "packages/beeq/tsconfig.lib.json",
         "configPath": "packages/beeq/stencil.config.ts",
-        "outputPath": "dist/beeq"
+        "outputPath": "dist/beeq",
+        "detectOpenHandles": true,
+        "forceExit": false,
+        "testTimeout": 10000,
+        "runInBand": true,
+        "maxWorkers": 1
       }
     },
     "e2e": {
@@ -156,12 +160,24 @@
         "noStackTrace": true
       }
     },
-    "lint": {
-      "executor": "@nx/eslint:lint",
+    "check": {
+      "executor": "nx:run-commands",
       "dependsOn": [{ "target": "stylelint" }],
       "options": {
-        "cache": true,
-        "lintFilePatterns": ["{projectRoot}/**/*.{ts,tsx}", "{projectRoot}/package.json", "{projectRoot}/project.json"]
+        "command": "pnpm exec biome check {projectRoot} --max-diagnostics=none"
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm exec biome format {projectRoot}"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "dependsOn": [{ "target": "stylelint" }],
+      "options": {
+        "command": "pnpm exec biome lint {projectRoot}"
       }
     },
     "stylelint": {

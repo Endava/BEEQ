@@ -1,8 +1,8 @@
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 
-import { EMPTY_STATE_SIZE, SIZE_TO_VALUE_MAP } from './bq-empty-state.types';
-import type { TEmptyStateSize } from './bq-empty-state.types';
 import { hasSlotContent, validatePropValue } from '../../shared/utils';
+import type { TEmptyStateSize } from './bq-empty-state.types';
+import { EMPTY_STATE_SIZE, SIZE_TO_VALUE_MAP } from './bq-empty-state.types';
 
 /**
  * An Empty State is a UI component displayed when there is no data or content available, often used in dynamic or inactive application states.
@@ -125,12 +125,12 @@ export class BqEmptyState {
           part="thumbnail"
         >
           <slot name="thumbnail">
-            <bq-icon size={this.iconSize} name="database" part="icon" exportparts="base,svg" />
+            <bq-icon exportparts="base,svg" name="database" part="icon" size={this.iconSize} />
           </slot>
         </div>
         <div
           class={{
-            'font-bold leading-regular text-primary': true,
+            'font-bold text-primary leading-regular': true,
             'text-m': this.size === 'small',
             'text-l': this.size === 'medium',
             'text-xxl2': this.size === 'large',
@@ -152,12 +152,20 @@ export class BqEmptyState {
             'm-be-l': this.size === 'medium' && this.hasFooter,
             'm-be-xl': this.size === 'large' && this.hasFooter,
           }}
-          ref={(div) => (this.bodyElem = div)}
           part="body"
+          ref={(div) => {
+            this.bodyElem = div;
+          }}
         >
           <slot name="body" onSlotchange={this.handleSlotChange} />
         </div>
-        <div class="flex items-start gap-xs" ref={(div) => (this.footerElem = div)} part="footer">
+        <div
+          class="flex items-start gap-xs"
+          part="footer"
+          ref={(div) => {
+            this.footerElem = div;
+          }}
+        >
           <slot name="footer" onSlotchange={this.handleSlotChange} />
         </div>
       </div>

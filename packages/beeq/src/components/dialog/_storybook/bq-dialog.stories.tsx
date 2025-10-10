@@ -3,8 +3,8 @@ import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 
-import mdx from './bq-dialog.mdx';
 import { DIALOG_BORDER_RADIUS, DIALOG_FOOTER_APPEARANCE, DIALOG_SIZE } from '../bq-dialog.types';
+import mdx from './bq-dialog.mdx';
 
 const meta: Meta = {
   title: 'Components/Dialog',
@@ -81,24 +81,28 @@ const Template = (args: Args) => {
         <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
         Title
       </h5>
-      ${!args.noContent
-        ? html`
+      ${
+        !args.noContent
+          ? html`
             <p>
               Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
               industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
               scrambled it to make a type specimen book.
             </p>
           `
-        : nothing}
-      ${!args.noFooter
-        ? html`
+          : nothing
+      }
+      ${
+        !args.noFooter
+          ? html`
             <div class="flex gap-xs" slot="footer">
               <bq-button appearance="link"> Button </bq-button>
               <bq-button variant="ghost"> Button </bq-button>
               <bq-button variant="standard" slot="footer"> Button </bq-button>
             </div>
           `
-        : nothing}
+          : nothing
+      }
     </bq-dialog>
   `;
 };

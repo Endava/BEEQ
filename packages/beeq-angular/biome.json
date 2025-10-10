@@ -1,0 +1,13 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.2.5/schema.json",
+  "extends": "//",
+  "files": {
+    "includes": ["**/*.ts"]
+  },
+  "linter": {
+    "rules": {
+      "complexity": { "noStaticOnlyClass": "off" },
+      "correctness": { "useHookAtTopLevel": "error" }
+    }
+  }
+}

@@ -1,8 +1,7 @@
 import { isNil } from './isNil';
 import { setRafTimeout } from './setRafTimeout';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type TFunction = (...args: any[]) => unknown;
+export type TFunction = (...args: unknown[]) => unknown;
 
 type TDebounceFnReturn<T> = T extends unknown[] ? (...params: T) => void : (param: T) => void;
 export type TDebounce<T> = TDebounceFnReturn<T> & { cancel: () => void } extends infer U ? U : never;
@@ -17,12 +16,13 @@ export type TDebounce<T> = TDebounceFnReturn<T> & { cancel: () => void } extends
  * @return {Function} The new debounced function.
  */
 export const debounce = <TFunc extends TFunction>(func: TFunc, wait = 0, immediate = false) => {
-  let cancel: () => void | undefined;
+  let cancel: (() => void) | undefined;
 
   function debounceHandler(...args: Parameters<typeof func>) {
     cancel?.();
 
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    // We're doing this on purpose to capture and preserve the `this` context
+    // biome-ignore lint/complexity/noUselessThisAlias: <see above>
     const context = this;
 
     function timeoutHandler(fn: TFunc, context: unknown, ...args: Parameters<typeof fn>) {

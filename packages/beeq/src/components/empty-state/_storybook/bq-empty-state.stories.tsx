@@ -1,8 +1,8 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit-html';
 
-import mdx from './bq-empty-state.mdx';
 import { EMPTY_STATE_SIZE } from '../bq-empty-state.types';
+import mdx from './bq-empty-state.mdx';
 
 const meta: Meta = {
   title: 'Components/Empty state',

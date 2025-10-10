@@ -1,5 +1,5 @@
-import { Component, Element, Event, h, Prop } from '@stencil/core';
 import type { EventEmitter } from '@stencil/core';
+import { Component, Element, Event, h, Prop } from '@stencil/core';
 
 import { isDefined } from '../../shared/utils';
 
@@ -139,12 +139,12 @@ export class BqBreadcrumbItem {
         <TagElem
           class="breadcrumb-item"
           href={isLink ? this.href : undefined}
+          onBlur={this.onBlur}
+          onClick={this.onClick}
+          onFocus={this.onFocus}
+          part="item"
           rel={isLink && this.target ? 'noreferrer noopener' : undefined}
           target={isLink ? this.target : undefined}
-          onBlur={this.onBlur}
-          onFocus={this.onFocus}
-          onClick={this.onClick}
-          part="item"
         >
           <span class="flex items-center gap-xs2" part="content">
             <slot></slot>

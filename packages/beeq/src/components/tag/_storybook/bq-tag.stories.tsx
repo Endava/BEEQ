@@ -2,8 +2,8 @@ import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
-import mdx from './bq-tag.mdx';
 import { TAG_BORDER_RADIUS, TAG_COLOR, TAG_SIZE, TAG_VARIANT } from '../bq-tag.types';
+import mdx from './bq-tag.mdx';
 
 const meta: Meta = {
   title: 'Components/Tag',

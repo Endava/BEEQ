@@ -7,7 +7,7 @@
  */
 
 import { CommonModule, DOCUMENT } from '@angular/common';
-import { APP_INITIALIZER, ModuleWithProviders, NgModule, NgZone } from '@angular/core';
+import { APP_INITIALIZER, type ModuleWithProviders, NgModule, NgZone } from '@angular/core';
 import { defineCustomElements } from '@beeq/core/dist/loader';
 
 import { DIRECTIVES } from './directives';

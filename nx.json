@@ -21,17 +21,26 @@
       "default",
       "!{projectRoot}/**/*.spec.ts",
       "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/jest.config.ts",
-      "!{projectRoot}/eslint.config.js"
+      "!{projectRoot}/jest.config.ts"
     ]
   },
   "targetDefaults": {
     "cem": { "cache": true },
     "icons": { "cache": true },
-    "lint": { "cache": true },
     "stylelint": { "cache": true },
     "prepare-storybook": { "cache": true },
     "prebuild": { "cache": true },
+    "check": {
+      "cache": true,
+      "inputs": [
+        "default",
+        "^default",
+        "{workspaceRoot}/biome.json",
+        {
+          "externalDependencies": ["@biomejs/biome"]
+        }
+      ]
+    },
     "test": {
       "cache": true,
       "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"]
@@ -57,10 +66,6 @@
     "storybook-build-css": {
       "cache": true,
       "dependsOn": [{ "target": "build", "projects": "beeq-tailwindcss" }]
-    },
-    "@nx/eslint:lint": {
-      "cache": true,
-      "inputs": ["default", "{workspaceRoot}/eslint.config.js"]
     },
     "nx-release-publish": {
       "options": {

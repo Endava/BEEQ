@@ -9,8 +9,7 @@ interface IHTMLSlotElement extends HTMLSlotElement {
 }
 
 interface IHTMLElement extends HTMLElement {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  querySelectorAll: jest.Mock<any, Parameters<HTMLElement['querySelectorAll']>>;
+  querySelectorAll: jest.Mock<ReturnType<HTMLElement['querySelectorAll']>, Parameters<HTMLElement['querySelectorAll']>>;
   querySelector: jest.Mock<ReturnType<HTMLElement['querySelector']>, Parameters<HTMLElement['querySelector']>>;
 }
 
@@ -122,17 +121,17 @@ describe('slot', () => {
     });
 
     it('should return true if slot is present', () => {
-      element.querySelectorAll.mockImplementationOnce(() => [makeSlot('test-slot')]);
+      element.querySelectorAll.mockImplementationOnce(() => [makeSlot('test-slot')] as unknown as NodeListOf<Element>);
       expect(hasSlot(element, 'test-slot')).toBe(true);
     });
 
     it('should return false if slot with given name is not present', () => {
-      element.querySelectorAll.mockImplementationOnce(() => [makeSlot('test')]);
+      element.querySelectorAll.mockImplementationOnce(() => [makeSlot('test')] as unknown as NodeListOf<Element>);
       expect(hasSlot(element, 'test-slot')).toBe(false);
     });
 
     it('should return false if slot is not present', () => {
-      element.querySelectorAll.mockImplementationOnce(() => []);
+      element.querySelectorAll.mockImplementationOnce(() => [] as unknown as NodeListOf<Element>);
       expect(hasSlot(element, 'test-slot')).toBe(false);
     });
   });

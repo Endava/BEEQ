@@ -1,7 +1,8 @@
 import plugin from 'tailwindcss/plugin';
+
 import { flattenColorPalette } from '../helpers';
 
-export const LogicalProperties = plugin(function ({ matchUtilities, theme }) {
+export const LogicalProperties = plugin(({ matchUtilities, theme }) => {
   matchUtilities(
     {
       // Logical Border Width properties
