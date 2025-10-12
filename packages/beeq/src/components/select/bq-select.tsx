@@ -477,18 +477,24 @@ export class BqSelect {
 
     this.debounceQuery?.cancel();
 
-    if (!isDefined(value)) {
+    const trimmedValue = value?.trim();
+    if (!isDefined(trimmedValue)) {
       this.clear();
-    } else {
-      this.debounceQuery = debounce(() => {
-        this.options.forEach((item: HTMLBqOptionElement) => {
-          const itemLabel = this.getOptionLabel(item).toLowerCase();
-          item.hidden = !itemLabel.includes(value);
-        });
-      }, this.debounceTime);
-
-      this.debounceQuery();
+      return;
     }
+
+    this.debounceQuery = debounce(() => {
+      this.options.forEach((item: HTMLBqOptionElement) => {
+        const optionLabel = this.getOptionLabel(item)?.toLowerCase();
+        const optionValue = item.value?.toLowerCase();
+        // Show item if EITHER label OR value matches
+        const matches =
+          optionLabel.includes(trimmedValue.toLowerCase()) || optionValue.includes(trimmedValue.toLowerCase());
+        item.hidden = !matches;
+      });
+    }, this.debounceTime);
+
+    this.debounceQuery();
 
     // The panel will close once a selection is made
     // so we need to make sure it's open when the user is typing and the query is not empty
@@ -574,7 +580,7 @@ export class BqSelect {
       if (multiple && Array.isArray(value)) {
         option.selected = value.includes(option.value);
       } else {
-        option.selected = option.value.toLowerCase() === lowerCaseValue;
+        option.selected = option.value?.toLowerCase() === lowerCaseValue;
       }
     });
   };
