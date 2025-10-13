@@ -117,7 +117,7 @@ describe('bq-accordion', () => {
 
     expect(smallHeaderStyle).toEqual({ borderRadius: '4px', padding: '8px 12px' });
     expect(smallPanelStyle).toEqual({ borderRadius: '0px 0px 4px 4px', padding: '12px' });
-    expect(mediumHeaderStyle).toEqual({ borderRadius: '4px', padding: '12px 16px' });
-    expect(mediumPanelStyle).toEqual({ borderRadius: '0px 0px 4px 4px', padding: '16px' });
+    expect(mediumHeaderStyle).toEqual({ borderRadius: '12px', padding: '12px 16px' });
+    expect(mediumPanelStyle).toEqual({ borderRadius: '0px 0px 12px 12px', padding: '16px' });
   });
 });
