@@ -63,7 +63,7 @@
 }
 
 .text-above,
-.text-bellow {
+.text-below {
   @apply flex-col items-center;
 
   &.has-text {
@@ -82,7 +82,7 @@
   }
 }
 
-.text-bellow {
+.text-below {
   .bq-spinner--loader,
   .bq-spinner--icon {
     @apply order-1;

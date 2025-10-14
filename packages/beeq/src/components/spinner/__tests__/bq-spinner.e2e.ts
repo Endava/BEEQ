@@ -54,8 +54,8 @@ describe('bq-spinner', () => {
     const shadowDOMElem = 'bq-spinner >>> .bq-spinner';
     expect(await page.find(shadowDOMElem)).toHaveClass('text-above');
 
-    await setProperties(page, 'bq-spinner', { textPosition: 'bellow' });
-    expect(await page.find(shadowDOMElem)).toHaveClass('text-bellow');
+    await setProperties(page, 'bq-spinner', { textPosition: 'below' });
+    expect(await page.find(shadowDOMElem)).toHaveClass('text-below');
 
     await setProperties(page, 'bq-spinner', { textPosition: 'left' });
     expect(await page.find(shadowDOMElem)).toHaveClass('text-left');
@@ -95,7 +95,7 @@ describe('bq-spinner', () => {
     const console: jest.Mock<void, string[]> = jest.fn();
     page.on('console', (message) => console(message.type(), message.text()));
 
-    // @ts-expect-error we're testing that component is handling invalid properties
+    // @ts-expect-error we're testing that the component is handling invalid properties
     expect(await setProperties(page, 'bq-spinner', { size: 'invalid', textPosition: 'invalid' })).toEqual({
       size: 'medium',
       textPosition: 'none',
@@ -108,16 +108,16 @@ describe('bq-spinner', () => {
     );
     expect(console).toHaveBeenCalledWith(
       'warn',
-      '[BQ-SPINNER] Please notice that "textPosition" should be one of none|left|right|above|bellow',
+      '[BQ-SPINNER] Please notice that "textPosition" should be one of none|left|right|above|below',
     );
   });
 
   it('should respect design style', async () => {
     const page = await newE2EPage({
       html: `
-        <bq-spinner size="small" text-position="bellow"></bq-spinner>
-        <bq-spinner size="medium" text-position="bellow"></bq-spinner>
-        <bq-spinner size="large" text-position="bellow"></bq-spinner>
+        <bq-spinner size="small" text-position="below"></bq-spinner>
+        <bq-spinner size="medium" text-position="below"></bq-spinner>
+        <bq-spinner size="large" text-position="below"></bq-spinner>
       `,
     });
 
