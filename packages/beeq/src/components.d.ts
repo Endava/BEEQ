@@ -2119,10 +2119,6 @@ export namespace Components {
          */
         "disabled"?: boolean;
         /**
-          * The select option display value, it can be used to override default displayed value
-         */
-        "displayValue"?: string;
-        /**
           * Represents the distance (gutter or margin) between the Select panel and the input element.
           * @default 8
          */
@@ -7596,10 +7592,6 @@ declare namespace LocalJSX {
           * @default false
          */
         "disabled"?: boolean;
-        /**
-          * The select option display value, it can be used to override default displayed value
-         */
-        "displayValue"?: string;
         /**
           * Represents the distance (gutter or margin) between the Select panel and the input element.
           * @default 8

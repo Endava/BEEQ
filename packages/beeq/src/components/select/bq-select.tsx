@@ -154,6 +154,7 @@ export class BqSelect {
   // Inlined decorator, alphabetical order
   // =======================================
 
+  @State() displayValue?: string;
   @State() hasHelperText = false;
   @State() selectedOptions: HTMLBqOptionElement[] = [];
 
@@ -248,9 +249,6 @@ export class BqSelect {
 
   /** The select input value, it can be used to reset the field to a previous value */
   @Prop({ reflect: true, mutable: true }) value: TSelectValue;
-
-  /** The select option display value, it can be used to override default displayed value */
-  @Prop({ reflect: true, mutable: true }) displayValue?: string;
 
   // Prop lifecycle events
   // =======================
