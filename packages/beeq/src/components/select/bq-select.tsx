@@ -608,6 +608,10 @@ export class BqSelect {
   private getOptionLabel = (item: HTMLBqOptionElement) => {
     if (!item) return '';
 
+    if (item.displayValue) {
+      return item.displayValue.trim();
+    }
+
     const defaultSlot = item.shadowRoot?.querySelector('slot:not([name])');
     if (!defaultSlot) {
       return item.innerText.trim();
