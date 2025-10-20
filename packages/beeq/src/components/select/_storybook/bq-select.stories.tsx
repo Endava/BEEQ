@@ -1,6 +1,7 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import { useArgs } from 'storybook/preview-api';
 
 import { INPUT_VALIDATION } from '../../input/bq-input.types';
@@ -96,16 +97,32 @@ const meta: Meta = {
     customTags: false,
     value: undefined,
     // Not part of the public API, so we don't want to expose it in the docs
-    options: [
-      { label: 'Running', value: 'running', icon: 'sneaker-move' },
-      { label: 'Hiking', value: 'hiking', icon: 'boot' },
-      { label: 'Biking', value: 'biking', icon: 'person-simple-bike' },
-      { label: 'Swimming', value: 'swimming', icon: 'swimming-pool' },
-      { label: 'Pizza', value: 'pizza', icon: 'pizza' },
-      { label: 'Hamburger', value: 'hamburger', icon: 'hamburger' },
-      { label: 'Cookie', value: 'cookie', icon: 'cookie' },
-      { label: 'Ice-cream', value: 'ice-cream', icon: 'ice-cream' },
-    ],
+    options: `
+      <bq-option value="running">
+        <bq-icon slot="prefix" name="sneaker-move"></bq-icon> Running
+      </bq-option>
+      <bq-option value="hiking">
+        <bq-icon slot="prefix" name="boot"></bq-icon> Hiking
+      </bq-option>
+      <bq-option value="biking">
+        <bq-icon slot="prefix" name="person-simple-bike"></bq-icon> Biking
+      </bq-option>
+      <bq-option value="swimming">
+        <bq-icon slot="prefix" name="swimming-pool"></bq-icon> Swimming
+      </bq-option>
+      <bq-option value="pizza">
+        <bq-icon slot="prefix" name="pizza"></bq-icon> Pizza
+      </bq-option>
+      <bq-option value="hamburger">
+        <bq-icon slot="prefix" name="hamburger"></bq-icon> Hamburger
+      </bq-option>
+      <bq-option value="cookie">
+        <bq-icon slot="prefix" name="cookie"></bq-icon> Cookie
+      </bq-option>
+      <bq-option value="ice-cream">
+        <bq-icon slot="prefix" name="ice-cream"></bq-icon> Ice-cream
+      </bq-option>
+    `,
   },
 };
 export default meta;
@@ -237,13 +254,7 @@ const Template = (args: Args) => {
           `
           : nothing
       }
-      ${args.options.map(
-        (option) => html`
-          <bq-option value=${option.value}>
-            <bq-icon slot="prefix" name=${option.icon}></bq-icon> ${option.label}
-          </bq-option>
-        `,
-      )}
+      ${ifDefined(args.options) ? html`${unsafeHTML(args.options)}` : nothing}
     </bq-select>
   `;
 };
@@ -377,6 +388,74 @@ export const NoHelperText: Story = {
   args: {
     noHelperText: true,
     prefix: true,
+  },
+};
+
+export const MultilineOptions: Story = {
+  render: Template,
+  args: {
+    options: `
+      <bq-option value="hiking">
+        <bq-icon slot="prefix" name="boot"></bq-icon>
+        <div class="flex flex-col">
+          Hiking
+          <span class="text-secondary text-s">Take your time and enjoy the nature</span>
+        </div>
+      </bq-option>
+      <bq-option value="running">
+        <bq-icon slot="prefix" name="sneaker-move"></bq-icon>
+        <div class="flex flex-col">
+          Running
+          <span class="text-secondary text-s">Get your heart rate up and burn some calories</span>
+        </div>
+      </bq-option>
+      <bq-option value="biking">
+        <bq-icon slot="prefix" name="person-simple-bike"></bq-icon>
+        <div class="flex flex-col">
+          Biking
+          <span class="text-secondary text-s">Biking is a great way to stay in shape</span>
+        </div>
+      </bq-option>
+    `,
+  },
+};
+
+export const DisplayValue: Story = {
+  render: Template,
+  args: {
+    placeholder: 'Select a payment method',
+    readonly: true,
+    options: `
+      <bq-option value="visa-1234" display-value="Visa •••• 1234">
+        <div class="flex flex-col gap-xs2">
+          <div class="flex items-center gap-xs">
+            <bq-icon name="credit-card" size="20"></bq-icon>
+            <span class="font-semibold">Visa ending in 1234</span>
+          </div>
+          <span class="text-secondary text-s ps-[28px]">Expires 12/2025</span>
+          <span class="text-secondary text-xs ps-[28px]">John Doe</span>
+        </div>
+      </bq-option>
+      <bq-option value="mastercard-5678" display-value="Mastercard •••• 5678">
+        <div class="flex flex-col gap-xs2">
+          <div class="flex items-center gap-xs">
+            <bq-icon name="credit-card" size="20"></bq-icon>
+            <span class="font-semibold">Mastercard ending in 5678</span>
+          </div>
+          <span class="text-secondary text-s ps-[28px]">Expires 08/2026</span>
+          <span class="text-secondary text-xs ps-[28px]">Jane Smith</span>
+        </div>
+      </bq-option>
+      <bq-option value="paypal" display-value="PayPal">
+        <div class="flex flex-col gap-xs2">
+          <div class="flex items-center gap-xs">
+            <bq-icon name="paypal-logo" size="20"></bq-icon>
+            <span class="font-semibold">Pay with PayPal</span>
+          </div>
+          <span class="text-secondary text-s ps-[28px]">john.doe@email.com</span>
+        </div>
+      </bq-option>
+    `,
   },
 };
 
