@@ -12,12 +12,13 @@ It can be an element of the navigation system that allows users to select differ
 
 ## Properties
 
-| Property   | Attribute  | Description                                                                     | Type      | Default     |
-| ---------- | ---------- | ------------------------------------------------------------------------------- | --------- | ----------- |
-| `disabled` | `disabled` | If true, the option is disabled.                                                | `boolean` | `false`     |
-| `hidden`   | `hidden`   | If true, the option is hidden.                                                  | `boolean` | `false`     |
-| `selected` | `selected` | If true, the option is selected and active.                                     | `boolean` | `false`     |
-| `value`    | `value`    | A string representing the value of the option. Can be used to identify the item | `string`  | `undefined` |
+| Property       | Attribute       | Description                                                                              | Type      | Default     |
+| -------------- | --------------- | ---------------------------------------------------------------------------------------- | --------- | ----------- |
+| `disabled`     | `disabled`      | If true, the option is disabled.                                                         | `boolean` | `false`     |
+| `displayValue` | `display-value` | The display value of the option. It can be used to override the default displayed value. | `string`  | `undefined` |
+| `hidden`       | `hidden`        | If true, the option is hidden.                                                           | `boolean` | `false`     |
+| `selected`     | `selected`      | If true, the option is selected and active.                                              | `boolean` | `false`     |
+| `value`        | `value`         | A string representing the value of the option. Can be used to identify the item          | `string`  | `undefined` |
 
 
 ## Events

@@ -1645,6 +1645,10 @@ export namespace Components {
          */
         "disabled"?: boolean;
         /**
+          * The display value of the option. It can be used to override the default displayed value.
+         */
+        "displayValue"?: string;
+        /**
           * If true, the option is hidden.
           * @default false
          */
@@ -7096,6 +7100,10 @@ declare namespace LocalJSX {
           * @default false
          */
         "disabled"?: boolean;
+        /**
+          * The display value of the option. It can be used to override the default displayed value.
+         */
+        "displayValue"?: string;
         /**
           * If true, the option is hidden.
           * @default false

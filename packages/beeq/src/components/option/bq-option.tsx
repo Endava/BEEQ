@@ -82,11 +82,14 @@ export class BqOption {
   /** If true, the option is disabled. */
   @Prop({ reflect: true }) disabled?: boolean = false;
 
-  /** A string representing the value of the option. Can be used to identify the item */
-  @Prop({ reflect: true }) value?: string;
+  /** The display value of the option. It can be used to override the default displayed value. */
+  @Prop({ reflect: true }) displayValue?: string;
 
   /** If true, the option is selected and active. */
   @Prop({ reflect: true }) selected: boolean = false;
+
+  /** A string representing the value of the option. Can be used to identify the item */
+  @Prop({ reflect: true }) value?: string;
 
   // Prop lifecycle events
   // =======================
