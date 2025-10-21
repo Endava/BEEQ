@@ -453,13 +453,33 @@ export class BqDatePicker {
   private handleChange = (ev: Event) => {
     if (this.disabled || !isHTMLElement(ev.target, 'input')) return;
 
-    const dateValue = new Date(`${ev.target.value}T00:00:00`);
-    if (!Number.isNaN(dateValue.getTime())) {
-      // We need to force the value to respect the format: yyyy-mm-dd, hence the hardcoded locale
-      this.value = dateValue.toLocaleDateString('fr-CA');
-      this.displayDate = this.formatDisplayValue(this.value);
-      this.internals.setFormValue(`${this.value}`);
+    const inputValue = ev.target.value.trim();
+    if (!inputValue) {
+      this.clearValue();
       this.bqChange.emit({ value: this.value, el: this.el });
+      return;
+    }
+
+    // Try to parse as date (append time once for consistency)
+    const dateValue = new Date(`${inputValue}T00:00:00`);
+    const isValidDate = !Number.isNaN(dateValue.getTime());
+
+    if (isValidDate) {
+      // Valid date: normalize to ISO format and update component state
+      const isoDate = dateValue.toLocaleDateString('fr-CA');
+      this.value = isoDate;
+      this.displayDate = this.formatDisplayValue(isoDate);
+      this.internals.setFormValue(isoDate);
+      this.updateFormValidity();
+      // Emit change event with the valid ISO date
+      this.bqChange.emit({ value: this.value, el: this.el });
+    } else {
+      // Invalid date: don't update component value to avoid side effects
+      // Clear form value to indicate invalid state
+      this.internals.setFormValue(undefined);
+      this.updateFormValidity();
+      // Emit the raw invalid input so consumers can handle validation
+      this.bqChange.emit({ value: inputValue, el: this.el });
     }
   };
 
@@ -500,15 +520,20 @@ export class BqDatePicker {
     if (this.disabled) return;
 
     this.inputElem.value = '';
-    this.value = this.inputElem.value;
+    this.clearValue();
     this.hasRangeEnd = false;
 
     this.bqClear.emit(this.el);
     this.bqChange.emit({ value: this.value, el: this.el });
-    this.internals.setFormValue(undefined);
     this.inputElem.focus();
 
     ev.stopPropagation();
+  };
+
+  private clearValue = () => {
+    this.value = undefined;
+    this.displayDate = undefined;
+    this.internals.setFormValue(undefined);
   };
 
   private handleSlotChange = () => {
