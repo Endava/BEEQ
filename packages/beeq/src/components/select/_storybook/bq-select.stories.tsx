@@ -129,6 +129,18 @@ export default meta;
 
 type Story = StoryObj;
 
+// Options data for stories that needs an object representation of the options
+const defaultOptionsData = [
+  { value: 'running', label: 'Running', icon: 'sneaker-move' },
+  { value: 'hiking', label: 'Hiking', icon: 'boot' },
+  { value: 'biking', label: 'Biking', icon: 'person-simple-bike' },
+  { value: 'swimming', label: 'Swimming', icon: 'swimming-pool' },
+  { value: 'pizza', label: 'Pizza', icon: 'pizza' },
+  { value: 'hamburger', label: 'Hamburger', icon: 'hamburger' },
+  { value: 'cookie', label: 'Cookie', icon: 'cookie' },
+  { value: 'ice-cream', label: 'Ice-cream', icon: 'ice-cream' },
+];
+
 const Template = (args: Args) => {
   const [, updateArgs] = useArgs();
 
@@ -210,7 +222,7 @@ const Template = (args: Args) => {
     >
       ${
         args.customTags
-          ? html`${args.options
+          ? html`${defaultOptionsData
               .filter((option) => args.value.includes(option.value))
               .map((option, index) => {
                 if (index < args['max-tags-visible'] || args['max-tags-visible'] < 0) {
@@ -577,7 +589,7 @@ export const CustomFiltering: Story = {
     // Simulate an API call with a delay
     const fetchFilteredOptions = async (query: string) => {
       await new Promise((resolve) => setTimeout(resolve, 500));
-      return args.options.filter(
+      return defaultOptionsData.filter(
         (option) =>
           option.label.toLowerCase().includes(query.toLowerCase()) ??
           option.value.toLowerCase().includes(query.toLowerCase()),
@@ -642,7 +654,7 @@ export const CustomFiltering: Story = {
         } else {
           // Show only filtered options and highlight matching text
           select.querySelectorAll('bq-option:not([data-temp])').forEach((option: HTMLBqOptionElement) => {
-            const matchingOption = filteredOptions.find((item: HTMLBqOptionElement) => item.value === option.value);
+            const matchingOption = filteredOptions.find((item) => item.value === option.value);
             if (matchingOption) {
               option.hidden = false;
               // Create regex that matches the query with case insensitivity
