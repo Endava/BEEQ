@@ -28,6 +28,9 @@
   },
   "angular.enable-strict-mode-prompt": false,
   "biome.enabled": true,
+  "chat.instructionsFilesLocations": {
+    ".github/instructions": true
+  },
   "commentAnchors.tags.anchors": {
     "!TO BE REMOVED": {
       "highlightColor": "#F44336",
@@ -47,6 +50,23 @@
   "files.associations": {
     "*.json5": "json5"
   },
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "text": "Generate a concise, informative commit message using the Conventional Commit format: <type>(<Scope>): <subject>\n\n<body>\n\n<footer>"
+    },
+    {
+      "text": "Types: 'feat', 'fix', 'test', 'docs', 'style', 'chore', 'perf', 'refactor', 'revert', 'ci', 'build', 'wip', 'release'. Use these to indicate the kind of change."
+    },
+    {
+      "text": "Scope: Specify the part of the codebase affected, starting with a capitalized letter (e.g., Api, Ui, Auth). Omit if the change is broad or system-wide."
+    },
+    {
+      "text": "Subject: Write a short, imperative mood description of the change (e.g., 'add ...', not 'added ...'). Keep it under 70 characters. Do not end with a period. Start with a lowercase letter."
+    },
+    {
+      "text": "Body: Provide more detailed explanatory text, if necessary. Wrap at 500 characters. Explain what and why, not how. Always use bullets for multiple points."
+    }
+  ],
   "html.customData": ["./packages/beeq/cem/beeq.html-custom-data.json"],
   "less.validate": false,
   "scss.validate": false,
