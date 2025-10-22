@@ -766,6 +766,8 @@ export namespace Components {
      * @attr {"single" | "multi" | "range"} type - It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection.
      * @attr {"error" | "none" | "success" | "warning"} validation-status - The validation status of the Select input.
      * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value.
+     * @attr {boolean} allowHeaderViewToggle - Enable custom header to toggle views.
+     * @attr {"day" | "month" | "year" | "decade" } calendarView - Panel type  when the panel opens.
      * @method clear - Clears the selected value.
      * @event bqBlur - Callback handler emitted when the input loses focus.
      * @event bqChange - Callback handler emitted when the input value has changed and the input loses focus.
@@ -797,9 +799,18 @@ export namespace Components {
      */
     interface BqDatePicker {
         /**
+          * Enable custom header to toggle views
+          * @default false
+         */
+        "allowHeaderViewToggle": boolean;
+        /**
           * If `true`, the Date picker input will be focused on component render
          */
         "autofocus": boolean;
+        /**
+          * @default 'days'
+         */
+        "calendarView": 'days' | 'months' | 'years' | 'decades';
         /**
           * Clears the selected value.
           * @return 
@@ -3837,6 +3848,8 @@ declare global {
      * @attr {"single" | "multi" | "range"} type - It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection.
      * @attr {"error" | "none" | "success" | "warning"} validation-status - The validation status of the Select input.
      * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value.
+     * @attr {boolean} allowHeaderViewToggle - Enable custom header to toggle views.
+     * @attr {"day" | "month" | "year" | "decade" } calendarView - Panel type  when the panel opens.
      * @method clear - Clears the selected value.
      * @event bqBlur - Callback handler emitted when the input loses focus.
      * @event bqChange - Callback handler emitted when the input value has changed and the input loses focus.
@@ -6164,6 +6177,8 @@ declare namespace LocalJSX {
      * @attr {"single" | "multi" | "range"} type - It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection.
      * @attr {"error" | "none" | "success" | "warning"} validation-status - The validation status of the Select input.
      * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value.
+     * @attr {boolean} allowHeaderViewToggle - Enable custom header to toggle views.
+     * @attr {"day" | "month" | "year" | "decade" } calendarView - Panel type  when the panel opens.
      * @method clear - Clears the selected value.
      * @event bqBlur - Callback handler emitted when the input loses focus.
      * @event bqChange - Callback handler emitted when the input value has changed and the input loses focus.
@@ -6195,9 +6210,18 @@ declare namespace LocalJSX {
      */
     interface BqDatePicker {
         /**
+          * Enable custom header to toggle views
+          * @default false
+         */
+        "allowHeaderViewToggle"?: boolean;
+        /**
           * If `true`, the Date picker input will be focused on component render
          */
         "autofocus"?: boolean;
+        /**
+          * @default 'days'
+         */
+        "calendarView"?: 'days' | 'months' | 'years' | 'decades';
         /**
           * The clear button aria label
           * @default 'Clear value'
@@ -9219,6 +9243,8 @@ declare module "@stencil/core" {
              * @attr {"single" | "multi" | "range"} type - It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection.
              * @attr {"error" | "none" | "success" | "warning"} validation-status - The validation status of the Select input.
              * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value.
+             * @attr {boolean} allowHeaderViewToggle - Enable custom header to toggle views.
+             * @attr {"day" | "month" | "year" | "decade" } calendarView - Panel type  when the panel opens.
              * @method clear - Clears the selected value.
              * @event bqBlur - Callback handler emitted when the input loses focus.
              * @event bqChange - Callback handler emitted when the input value has changed and the input loses focus.

@@ -134,15 +134,15 @@
 bq-icon,
 ::slotted(bq-icon) {
   --bq-icon--size: var(--bq-date-picker--icon-size) !important;
+
+  margin: 4px;
 }
 
 /* -------------------------------------------------------------------------- */
 /*                         Customize Cally date picker                         */
 /* -------------------------------------------------------------------------- */
 
-calendar-date,
-calendar-range,
-calendar-multi {
+calendar-date {
   &::part(header) {
     @apply justify-center gap-s;
   }
@@ -158,6 +158,14 @@ calendar-multi {
 
   &::part(container) {
     @apply bg-[--bq-date-picker--background-color] p-b-0 p-i-0;
+  }
+
+  &::part(previous) {
+    padding: 0;
+  }
+
+  &::part(next) {
+    padding: 0;
   }
 }
 
@@ -223,5 +231,46 @@ calendar-month {
 
   &::part(range-start range-end) {
     @apply rounded-s;
+  }
+
+  &::part(heading) {
+    display: none !important;
+  }
+}
+/* -------------------------------------------------------------------------- */
+/*                             Month & Year Picker                            */
+/* -------------------------------------------------------------------------- */
+
+.bq-date-picker__heading-btn,
+.bq-date-picker__date-btn {
+  /* Heading buttons used to switch month / year views. */
+  @apply inline-flex items-center justify-center gap-xs font-default;
+  @apply text-[length:--bq-date-picker--text-size] text-[color:--bq-date-picker--text-color];
+  @apply cursor-pointer rounded-s border-0 bg-transparent transition-colors duration-200 p-b-xs p-i-xs;
+
+  /* Hover / focus states follow the design system tokens */
+  @apply focus-visible:focus hover:bg-hover-ui-primary;
+
+  /* Disabled visual state */
+  &:disabled,
+  .disabled & {
+    @apply cursor-not-allowed;
+  }
+}
+
+.bq-date-picker__date-btn {
+  /* Make the button square using the date size token from the calendar */
+  @apply flex items-center justify-center;
+  @apply rounded-s bg-transparent text-[color:--bq-date-picker--text-color] transition-colors duration-200;
+  @apply enabled:hover:bg-hover-secondary disabled:cursor-not-allowed;
+  @apply h-[var(--bq-button--large-height)] w-[var(--bq-button--large-height)];
+}
+
+.bq-date-picker_custom_container {
+  @apply grid grid-cols-3 gap-[--bq-date-picker--gap] p-[var(--bq-date-picker--gap)];
+
+  /* Show a subtle focus ring when any child receives focus */
+  &:focus-within {
+    @apply ring ring-[color:--bq-focus] ring-offset-0;
   }
 }
