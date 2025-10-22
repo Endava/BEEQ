@@ -100,6 +100,8 @@ describe('bq-date-picker', () => {
     const datePicker = await page.find('bq-date-picker');
     const value = await datePicker.getProperty('value');
     expect(value).toBe('2024-05-30');
+  });
+
   it('should toggle views when heading is clicked if allow-header-view-toggle is true', async () => {
     const page = await newE2EPage({
       html: '<bq-date-picker open allow-header-view-toggle calendarView="days"></bq-date-picker>',
@@ -114,7 +116,7 @@ describe('bq-date-picker', () => {
     // Click 1 → months
     await headingBtn.click();
     await page.waitForChanges();
-    let monthsContainer = await page.find('bq-date-picker >>> .bq-date-picker_custom_container');
+    const monthsContainer = await page.find('bq-date-picker >>> .bq-date-picker_custom_container');
     dayGridMonth = await page.find('bq-date-picker >>> calendar-month');
     expect(monthsContainer).not.toBeNull();
     expect(dayGridMonth).toBeNull();
