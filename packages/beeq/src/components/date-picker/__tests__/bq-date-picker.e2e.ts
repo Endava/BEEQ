@@ -73,4 +73,32 @@ describe('bq-date-picker', () => {
 
     expect(calendarMonthElement.length).toEqual(4);
   });
+
+  it('should clamp input value to min when below range', async () => {
+    const page = await newE2EPage({
+      html: '<bq-date-picker type="single" min="2024-05-20" max="2024-05-30"></bq-date-picker>',
+    });
+
+    await page.type('bq-date-picker >>> input', '2024-05-10');
+    await page.keyboard.press('Tab');
+    await page.waitForChanges();
+
+    const datePicker = await page.find('bq-date-picker');
+    const value = await datePicker.getProperty('value');
+    expect(value).toBe('2024-05-20');
+  });
+
+  it('should clamp input value to max when above range', async () => {
+    const page = await newE2EPage({
+      html: '<bq-date-picker type="single" min="2024-05-20" max="2024-05-30"></bq-date-picker>',
+    });
+
+    await page.type('bq-date-picker >>> input', '2024-06-10');
+    await page.keyboard.press('Tab');
+    await page.waitForChanges();
+
+    const datePicker = await page.find('bq-date-picker');
+    const value = await datePicker.getProperty('value');
+    expect(value).toBe('2024-05-30');
+  });
 });

@@ -9,6 +9,7 @@ import {
   isEventTargetChildOfElement,
   isHTMLElement,
   isNil,
+  parseDateInput,
   validatePropValue,
 } from '../../shared/utils';
 import type { TInputValidation } from '../input/bq-input.types';
@@ -157,6 +158,7 @@ export class BqDatePicker {
   private prefixElem?: HTMLElement;
   private suffixElem?: HTMLElement;
   private fallbackInputId = 'date-picker';
+  private readonly LOCALE_DATE = 'fr-CA';
   // Export parts of the calendar-month component
   private readonly COMMON_EXPORT_PARTS =
     'calendar__heading,calendar__table,calendar__tr,calendar__head,calendar__week,calendar__th,calendar__td';
@@ -439,7 +441,7 @@ export class BqDatePicker {
     const { callyElem, formatFocusedDate, isCallyLoaded, value } = this;
     if (!(callyElem && isCallyLoaded)) return;
 
-    const nextFocused = value ? formatFocusedDate(value) : new Date().toLocaleDateString('fr-CA');
+    const nextFocused = value ? formatFocusedDate(value) : new Date().toLocaleDateString(this.LOCALE_DATE);
     if (this.focusedDate === nextFocused) return;
 
     this.focusedDate = nextFocused;
@@ -448,6 +450,13 @@ export class BqDatePicker {
       // because it doesn't work when passed as a prop (the Cally element does not re-render)
       callyElem.focusedDate = this.focusedDate;
     }
+  };
+
+  private clampDateToRange = (dateStr: string): string => {
+    if (this.min && dateStr < this.min) return this.min;
+    if (this.max && dateStr > this.max) return this.max;
+
+    return dateStr;
   };
 
   private handleChange = (ev: Event) => {
@@ -460,27 +469,34 @@ export class BqDatePicker {
       return;
     }
 
-    // Try to parse as date (append time once for consistency)
-    const dateValue = new Date(`${inputValue}T00:00:00`);
-    const isValidDate = !Number.isNaN(dateValue.getTime());
-
-    if (isValidDate) {
-      // Valid date: normalize to ISO format and update component state
-      const isoDate = dateValue.toLocaleDateString('fr-CA');
-      this.value = isoDate;
-      this.displayDate = this.formatDisplayValue(isoDate);
-      this.internals.setFormValue(isoDate);
-      this.updateFormValidity();
-      // Emit change event with the valid ISO date
-      this.bqChange.emit({ value: this.value, el: this.el });
-    } else {
+    // Try to parse as date with locale awareness
+    const dateValue = parseDateInput(inputValue, this.locale);
+    if (!dateValue) {
       // Invalid date: don't update component value to avoid side effects
-      // Clear form value to indicate invalid state
       this.internals.setFormValue(undefined);
       this.updateFormValidity();
-      // Emit the raw invalid input so consumers can handle validation
       this.bqChange.emit({ value: inputValue, el: this.el });
+      return;
     }
+
+    // Check if date is disallowed
+    if (this.isDateDisallowed?.(dateValue)) {
+      this.internals.setFormValue(undefined);
+      this.updateFormValidity();
+      this.bqChange.emit({ value: inputValue, el: this.el });
+      return;
+    }
+
+    // Valid date: normalize to ISO format and clamp to range if needed
+    // Note: clamping is done based on string comparison of ISO dates and only when min/max are set
+    let isoDate = dateValue.toLocaleDateString(this.LOCALE_DATE);
+    isoDate = this.clampDateToRange(isoDate);
+
+    this.value = isoDate;
+    this.displayDate = this.formatDisplayValue(isoDate);
+    this.internals.setFormValue(isoDate);
+    this.updateFormValidity();
+    this.bqChange.emit({ value: this.value, el: this.el });
   };
 
   private handleCalendarChange = (ev: Event) => {
@@ -621,6 +637,7 @@ export class BqDatePicker {
     // Clear the validity state
     internals?.states.clear();
 
+    // Check if value is required but missing
     if (required && (!value || value.toString().trim() === '')) {
       // Set validity state to invalid
       internals?.states.add('invalid');
@@ -632,7 +649,7 @@ export class BqDatePicker {
       return;
     }
 
-    // Set validity state to valid if textarea has value or is not required
+    // Set validity state to valid if the input has value or is not required
     internals?.states.add('valid');
     internals?.setValidity({});
   };
@@ -660,16 +677,15 @@ export class BqDatePicker {
       <div class="bq-date-picker" part="base">
         {/* Label */}
         <label
-          aria-label={this.name || this.fallbackInputId}
+          aria-labelledby={labelId}
           class={{ 'bq-date-picker__label': true, '!hidden': !this.hasLabel }}
           htmlFor={this.name || this.fallbackInputId}
-          id={labelId}
           part="label"
           ref={(labelElem: HTMLSpanElement) => {
             this.labelElem = labelElem;
           }}
         >
-          <slot name="label" onSlotchange={this.handleSlotChange} />
+          <slot id={labelId} name="label" onSlotchange={this.handleSlotChange} />
         </label>
         {/* Select date picker dropdown */}
         <bq-dropdown
@@ -706,7 +722,9 @@ export class BqDatePicker {
             {/* HTML Input */}
             <input
               aria-controls={`${this.name}`}
+              aria-describedby={this.hasLabel ? labelId : null}
               aria-disabled={this.disabled ? 'true' : 'false'}
+              aria-invalid={this.validationStatus === 'error' ? 'true' : 'false'}
               aria-haspopup="dialog"
               autoCapitalize="off"
               autoComplete="off"
@@ -725,7 +743,6 @@ export class BqDatePicker {
                 this.inputElem = inputElem;
               }}
               required={this.required}
-              // Events
               spellcheck={false}
               type="text"
               value={this.displayDate}
@@ -763,6 +780,8 @@ export class BqDatePicker {
           </div>
           {this.isCallyLoaded && (
             <CallyCalendar
+              aria-labelledby={labelId}
+              aria-modal="true"
               exportparts="container:calendar__container,header:calendar__header,button:calendar__button,previous:calendar__previous,next:calendar__next,disabled:calendar__disabled,heading:calendar__heading"
               firstDayOfWeek={this.firstDayOfWeek}
               isDateDisallowed={this.isDateDisallowed}
@@ -777,6 +796,7 @@ export class BqDatePicker {
               ref={(elem: TCalendarDate) => {
                 this.callyElem = elem;
               }}
+              role="dialog"
               showOutsideDays={this.showOutsideDays}
               tentative={this.tentative}
               value={this.value}
