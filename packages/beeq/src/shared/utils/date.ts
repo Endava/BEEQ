@@ -11,7 +11,7 @@ interface DatePattern {
  */
 const DATE_PATTERNS: DatePattern[] = [
   {
-    regex: /(\d{1,2})\s+([a-z]+)\s+(\d{4})/i,
+    regex: /^(\d{1,2})\s+([a-z]+)\s+(\d{4})$/i,
     parse: (m, months) => ({
       day: +m[1],
       month: months[m[2].toLowerCase()],
@@ -19,14 +19,14 @@ const DATE_PATTERNS: DatePattern[] = [
     }),
   },
   {
-    regex: /(\d{1,2})[\s\-/](\d{1,2})[\s\-/](\d{4})/,
+    regex: /^(\d{1,2})[\s\-/](\d{1,2})[\s\-/](\d{4})$/,
     parse: (m) => {
       const { day, month } = parseNumericDate(+m[1], +m[2]);
       return { day, month, year: +m[3] };
     },
   },
   {
-    regex: /([a-z]+)\s+(\d{1,2}),?\s+(\d{4})/i,
+    regex: /^([a-z]+)\s+(\d{1,2}),?\s+(\d{4})$/i,
     parse: (m, months) => ({
       month: months[m[1].toLowerCase()],
       day: +m[2],
