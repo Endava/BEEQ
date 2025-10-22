@@ -1,6 +1,7 @@
 export * from './assetsPath';
 export * from './clamp';
 export * from './cssVariables';
+export * from './date';
 export * from './debounce';
 export * from './event';
 export * from './getNextElement';
