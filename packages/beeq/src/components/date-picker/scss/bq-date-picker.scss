@@ -248,18 +248,18 @@ calendar-month {
   @apply text-[length:--bq-date-picker--text-size] text-[color:--bq-date-picker--text-color];
   @apply cursor-pointer rounded-s border-0 bg-transparent transition-colors duration-200 p-b-xs p-i-xs;
 
-  /* Hover / focus states follow the design system tokens */
-  @apply focus-visible:focus hover:bg-hover-ui-primary;
-
+  /* Hover / focus states */
+  &:not(.disabled):not(:disabled) {
+    @apply focus-visible:focus hover:bg-hover-ui-primary;
+  }
   /* Disabled visual state */
   &:disabled,
   .disabled & {
-    @apply cursor-not-allowed;
+    @apply cursor-text;
   }
 }
 
 .bq-date-picker__date-btn {
-  /* Make the button square using the date size token from the calendar */
   @apply flex items-center justify-center;
   @apply rounded-s bg-transparent text-[color:--bq-date-picker--text-color] transition-colors duration-200;
   @apply enabled:hover:bg-hover-secondary disabled:cursor-not-allowed;

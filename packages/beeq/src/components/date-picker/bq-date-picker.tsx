@@ -564,6 +564,14 @@ export class BqDatePicker {
     this.hasSuffix = hasSlotContent(this.suffixElem);
   };
 
+  /** Gets the numeric focused year from focusedDate/value/today */
+  private getFocusedYear = (): number => {
+    const base = this.focusedDate || this.formatFocusedDate(this.value) || new Date().toLocaleDateString('fr-CA'); // YYYY-MM-DD
+    const yearStr = base.slice(0, 4);
+    const yearNum = parseInt(yearStr, 10);
+    return Number.isNaN(yearNum) ? new Date().getFullYear() : yearNum;
+  };
+
   private handleHeadingClick = () => {
     // Only allow toggling when enabled
     if (!this.allowHeaderViewToggle) return;
@@ -577,8 +585,8 @@ export class BqDatePicker {
     }
   };
 
+  // Build first day of selected month in focused year and update calendar
   private handleMonthSelect = (monthIndex: number) => {
-    // Build first day of selected month in focused year and update calendar
     const year = this.focusedDate ? this.focusedDate.slice(0, 4) : new Date().getFullYear().toString();
     const month = String(monthIndex + 1).padStart(2, '0');
     const newFocused = `${year}-${month}-01`;
@@ -589,16 +597,8 @@ export class BqDatePicker {
     this.calendarView = 'days';
   };
 
-  /** Gets the numeric focused year from focusedDate/value/today */
-  private getFocusedYear = (): number => {
-    const base = this.focusedDate || this.formatFocusedDate(this.value) || new Date().toLocaleDateString('fr-CA'); // YYYY-MM-DD
-    const yearStr = base.slice(0, 4);
-    const yearNum = parseInt(yearStr, 10);
-    return isNaN(yearNum) ? new Date().getFullYear() : yearNum;
-  };
-
-  /** Select a year from the years grid and move to months view */
-  private handleYearGridSelect = (year: number) => {
+  // Select a year from the years grid and move to months view
+  private handleYearSelect = (year: number) => {
     const base = this.focusedDate || this.formatFocusedDate(this.value) || new Date().toLocaleDateString('fr-CA');
     const monthDay = base.slice(5) || '01-01';
     const nextFocused = `${year}-${monthDay}`;
@@ -607,6 +607,18 @@ export class BqDatePicker {
       this.callyElem.focusedDate = nextFocused;
     }
     this.calendarView = 'months';
+  };
+
+  // Select a decade (start year) and move to years view anchored at that decade
+  private handleDecadeSelect = (decadeStart: number) => {
+    const base = this.focusedDate || this.formatFocusedDate(this.value) || new Date().toLocaleDateString('fr-CA');
+    const monthDay = base.slice(5) || '01-01';
+    const nextFocused = `${decadeStart}-${monthDay}`;
+    this.focusedDate = nextFocused;
+    if (this.callyElem) {
+      this.callyElem.focusedDate = nextFocused;
+    }
+    this.calendarView = 'years';
   };
 
   /** Shift the currently focused date by a number of years, preserving month/day */
@@ -673,41 +685,28 @@ export class BqDatePicker {
     return Math.floor(year / 10) * 10;
   };
 
-  /** Select a decade (start year) and move to years view anchored at that decade */
-  private handleDecadeSelect = (decadeStart: number) => {
-    const base = this.focusedDate || this.formatFocusedDate(this.value) || new Date().toLocaleDateString('fr-CA');
-    const monthDay = base.slice(5) || '01-01';
-    const nextFocused = `${decadeStart}-${monthDay}`;
-    this.focusedDate = nextFocused;
-    if (this.callyElem) {
-      this.callyElem.focusedDate = nextFocused;
-    }
-    this.calendarView = 'years';
-  };
-
   /** Get the heading title based on the current view */
   private getHeadingTitle = (): string => {
     const baseStr = this.focusedDate || this.formatFocusedDate(this.value) || new Date().toLocaleDateString('fr-CA');
     const baseDate = new Date(baseStr + 'T00:00:00');
 
     if (this.calendarView === 'days') {
-      // Month Year
+      // Sets Heading to "Month Year" (e.g., "January 2024")
       return new Intl.DateTimeFormat(this.locale as string, { month: 'long', year: 'numeric' }).format(baseDate);
     }
 
     if (this.calendarView === 'months') {
-      // Year
+      // Sets Heading to "Year" (e.g., "2024")
       return `${this.getFocusedYear()}`;
     }
 
     if (this.calendarView === 'years') {
-      // StartingYear-EndingYear (12-year window)
+      // Sets Heading to a years range "StartingYear-EndingYear" (12 years) (e.g., "2020-2031")
       const start = this.getFocusedYear();
       const end = start + 11;
       return `${start}-${end}`;
     }
-
-    // decades view: StartingDecade-EndingDecade (12 decades → 120 years)
+    // Sets Heading to a years range "StartingDecade-EndingDecade" (12 Decades) (e.g., "2020-2131")
     const startDecade = this.getStartDecade();
     const endYear = startDecade + 119;
     return `${startDecade}-${endYear}`;
@@ -825,15 +824,11 @@ export class BqDatePicker {
   // ===================================
 
   render() {
-<<<<<<< HEAD
     const CallyCalendar = this.calendarType;
-=======
-    const CallyCalendar = this.CalendarType;
     const monthNames = Array.from({ length: 12 }, (_, i) =>
       new Intl.DateTimeFormat(this.locale as string, { month: 'short' }).format(new Date(2020, i, 1)),
     );
 
->>>>>>> 5bf4da4 (feat(bq-date-picker): extend component with custom calendar views)
     const labelId = `bq-date-picker__label-${this.name || this.fallbackInputId}`;
 
     return (
@@ -964,11 +959,9 @@ export class BqDatePicker {
               tentative={this.tentative}
               value={this.value}
             >
-<<<<<<< HEAD
-              <bq-icon color="text--primary" label="Previous" name="caret-left" slot="previous" />
-              <bq-icon color="text--primary" label="Next" name="caret-right" slot="next" />
-=======
               <bq-icon
+                // Temporary role
+                role="button"
                 color="text--primary"
                 slot="previous"
                 name="caret-left"
@@ -976,6 +969,7 @@ export class BqDatePicker {
                 onClick={this.handlePrevClick}
               />
               <bq-icon
+                role="button"
                 color="text--primary"
                 slot="next"
                 name="caret-right"
@@ -993,11 +987,8 @@ export class BqDatePicker {
                   {this.getHeadingTitle()}
                 </button>
               </div>
->>>>>>> 5bf4da4 (feat(bq-date-picker): extend component with custom calendar views)
 
-              {this.calendarView === 'days' && (
-                <div class="flex flex-wrap justify-center gap-[--bq-spacing-m]">{this.generateCalendarMonths()}</div>
-              )}
+              {this.calendarView === 'days' && <div>{this.generateCalendarMonths()}</div>}
 
               {this.calendarView === 'months' && (
                 <div class="bq-date-picker_custom_container">
@@ -1011,7 +1002,7 @@ export class BqDatePicker {
               {this.calendarView === 'years' && (
                 <div class="bq-date-picker_custom_container">
                   {Array.from({ length: 12 }, (_, i) => this.getFocusedYear() + i).map((y) => (
-                    <button type="button" class="bq-date-picker__date-btn" onClick={() => this.handleYearGridSelect(y)}>
+                    <button type="button" class="bq-date-picker__date-btn" onClick={() => this.handleYearSelect(y)}>
                       {y}
                     </button>
                   ))}
