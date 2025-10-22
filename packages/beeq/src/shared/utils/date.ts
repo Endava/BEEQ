@@ -1,15 +1,15 @@
 /**
  * Date parsing pattern definition
  */
-interface DatePattern {
+type TDatePattern = {
   regex: RegExp;
   parse: (match: RegExpExecArray, monthMap: Record<string, number>) => { day: number; month: number; year: number };
-}
+};
 
 /**
  * Static date parsing patterns
  */
-const DATE_PATTERNS: DatePattern[] = [
+const DATE_PATTERNS: TDatePattern[] = [
   {
     regex: /^(\d{1,2})\s+([a-z]+)\s+(\d{4})$/i,
     parse: (m, months) => ({
