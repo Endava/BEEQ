@@ -53,6 +53,12 @@ const meta: Meta = {
     'show-outside-days': { control: 'boolean' },
     skidding: { control: 'number' },
     strategy: { control: 'select', options: ['fixed', 'absolute'] },
+
+    allowHeaderViewToggle: { control: 'boolean' },
+    calendarView: {
+      control: 'select',
+      options: ['days', 'months', 'years', 'decades'],
+    },
     tentative: { control: 'text' },
     type: { control: 'select', options: [...DATE_PICKER_TYPE] },
     'validation-status': { control: 'select', options: [...INPUT_VALIDATION] },
@@ -96,6 +102,8 @@ const meta: Meta = {
     'show-outside-days': false,
     skidding: 0,
     strategy: 'absolute',
+    allowHeaderViewToggle: true,
+    calendarView: 'days',
     tentative: undefined,
     type: 'single',
     'validation-status': 'none',
@@ -179,6 +187,8 @@ const Template = (args: Args) => {
       ?show-outside-days=${args['show-outside-days']}
       skidding=${ifDefined(args.skidding)}
       strategy=${ifDefined(args.strategy)}
+      .allowHeaderViewToggle=${args.allowHeaderViewToggle}
+      .calendarView=${args.calendarView}
       tentative=${ifDefined(args.tentative)}
       type=${ifDefined(args.type)}
       validation-status=${ifDefined(args['validation-status'])}

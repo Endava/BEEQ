@@ -73,4 +73,52 @@ describe('bq-date-picker', () => {
 
     expect(calendarMonthElement.length).toEqual(4);
   });
+
+  it('should toggle views when heading is clicked if allow-header-view-toggle is true', async () => {
+    const page = await newE2EPage({
+      html: '<bq-date-picker open allow-header-view-toggle calendarView="days"></bq-date-picker>',
+    });
+
+    const headingBtn = await page.find('bq-date-picker >>> .bq-date-picker__heading-btn');
+    expect(headingBtn).not.toBeNull();
+    // Initially: days grid exists
+    let dayGridMonth = await page.find('bq-date-picker >>> calendar-month');
+    expect(dayGridMonth).not.toBeNull();
+
+    // Click 1 → months
+    await headingBtn.click();
+    await page.waitForChanges();
+    let monthsContainer = await page.find('bq-date-picker >>> .bq-date-picker_custom_container');
+    dayGridMonth = await page.find('bq-date-picker >>> calendar-month');
+    expect(monthsContainer).not.toBeNull();
+    expect(dayGridMonth).toBeNull();
+
+    // Click 2 → years
+    await headingBtn.click();
+    await page.waitForChanges();
+    const yearsContainer = await page.find('bq-date-picker >>> .bq-date-picker_custom_container');
+    expect(yearsContainer).not.toBeNull();
+
+    // Click 3 → decades
+    await headingBtn.click();
+    await page.waitForChanges();
+    const decadesContainer = await page.find('bq-date-picker >>> .bq-date-picker_custom_container');
+    expect(decadesContainer).not.toBeNull();
+  });
+
+  it('should not toggle views when heading is clicked if allow-header-view-toggle is false', async () => {
+    const page = await newE2EPage({ html: '<bq-date-picker open calendarView="days"></bq-date-picker>' });
+
+    const headingBtn = await page.find('bq-date-picker >>> .bq-date-picker__heading-btn');
+    expect(await headingBtn.getProperty('disabled')).toBe(true);
+
+    const dayGridMonth = await page.find('bq-date-picker >>> calendar-month');
+    expect(dayGridMonth).not.toBeNull();
+
+    await headingBtn.click();
+    await page.waitForChanges();
+
+    const stillDayGrid = await page.find('bq-date-picker >>> calendar-month');
+    expect(stillDayGrid).not.toBeNull();
+  });
 });
