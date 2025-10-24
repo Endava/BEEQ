@@ -128,7 +128,7 @@ export const WithFooter: Story = {
   render: Template,
   args: {
     footerContent: `
-      <div class="" slot="footer">
+      <div slot="footer">
         <bq-button appearance="text" slot="footer">
           <bq-icon name="bell"></bq-icon>
         </bq-button>
