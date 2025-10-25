@@ -54,7 +54,7 @@
     "@babel/core": "7.28.0",
     "@babel/preset-react": "7.27.1",
     "@beeq/storybook-addon-html": "6.0.0",
-    "@biomejs/biome": "2.2.5",
+    "@biomejs/biome": "2.2.7",
     "@chromatic-com/storybook": "4.1.1",
     "@commitlint/cli": "19.8.1",
     "@commitlint/config-angular": "19.8.1",
