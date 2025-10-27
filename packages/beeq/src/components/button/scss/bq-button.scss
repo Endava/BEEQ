@@ -14,6 +14,13 @@
     @apply disabled:cursor-not-allowed disabled:opacity-60;
     // `FOCUS` state
     @apply focus-visible:focus;
+    // Internal workaround to allow overriding icon color via CSS variables from slotted bq-buttons
+    // @see: packages/beeq/src/components/side-menu/scss/bq-side-menu.scss
+    @apply [&_::slotted(bq-icon)]:[--bq-icon--color:_var(--bq-button--icon-color,_currentColor)];
+    // On hover, update the icon color if custom property is defined
+    &:hover:not(:disabled) ::slotted(bq-icon) {
+      --bq-icon--color: var(--bq-button-hover--icon-color, var(--bq-button--icon-color, currentColor));
+    }
   }
 }
 
