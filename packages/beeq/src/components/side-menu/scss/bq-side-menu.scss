@@ -62,7 +62,8 @@
 
   .bq-side-menu--footer ::slotted([slot='footer']) {
     --bq-ui--secondary: theme(colors.transparent);
-    --bq-text--primary: theme(textColor.inverse);
+    --bq-button--icon-color: theme(textColor.alt);
+    --bq-button-hover--icon-color: theme(textColor.primary);
   }
 }
 
@@ -82,6 +83,7 @@
 
   .bq-side-menu--footer ::slotted([slot='footer']) {
     --bq-ui--secondary: theme(colors.transparent);
-    --bq-text--primary: theme(textColor.inverse);
+    --bq-button--icon-color: theme(textColor.inverse);
+    --bq-button-hover--icon-color: theme(textColor.primary);
   }
 }
