@@ -1357,7 +1357,6 @@ export namespace Components {
      * @dependency bq-icon
      * @attr {string} autocapitalize - Controls whether or not the input field should be capitalized and how.
      * @attr {string} autocomplete - Specifies whether or not the input field should have autocomplete enabled.
-     * @attr {string} autocorrect - Controls whether or not the input field should have autocorrect enabled.
      * @attr {boolean} autofocus - If true, the input will be focused on component render.
      * @attr {string} clear-button-label - The clear button aria label.
      * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
@@ -1407,22 +1406,20 @@ export namespace Components {
      */
     interface BqInput {
         /**
-          * Controls whether or not the input field should be capitalized and how. Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
+          * Controls whether or not the input field should be capitalized and how. Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'.
+          * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
           * @default 'off'
          */
         "autocapitalize": string;
         /**
-          * Specifies whether or not the input field should have autocomplete enabled. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
+          * Specifies whether or not the input field should have autocomplete enabled.
+          * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
           * @default 'off'
          */
         "autocomplete": string;
         /**
-          * Controls whether or not the input field should have autocorrect enabled. Possible values are 'on' and 'off'.
-          * @default 'off'
-         */
-        "autocorrect": 'on' | 'off';
-        /**
           * If true, the input will be focused on component render
+          * @default false
          */
         "autofocus": boolean;
         /**
@@ -1478,7 +1475,8 @@ export namespace Components {
          */
         "name": string;
         /**
-          * Specifies a regular expression the form control's value should match. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern
+          * Specifies a regular expression the form control's value should match.
+          * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern
          */
         "pattern"?: string;
         /**
@@ -1494,11 +1492,13 @@ export namespace Components {
          */
         "required"?: boolean;
         /**
-          * A number that specifies the granularity that the value must adhere to. Valid for date, month, week, time, datetime-local, number, and range. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
+          * A number that specifies the granularity that the value must adhere to. Valid for date, month, week, time, datetime-local, number, and range.
+          * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
          */
         "step": number | 'any';
         /**
-          * The type attribute specifies the type of input field to display. Possible values are 'text', 'password', 'email', 'number', 'tel', 'search', 'url', and more. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types
+          * The type attribute specifies the type of input field to display. Possible values are 'text', 'password', 'email', 'number', 'tel', 'search', 'url', and more.
+          * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types
           * @default 'text'
          */
         "type": TInputType;
@@ -2880,7 +2880,6 @@ export namespace Components {
      * @status stable
      * @attr {string} autocapitalize - Controls whether or not the textarea field should be capitalized and how.
      * @attr {string} autocomplete - Specifies whether or not the textarea field should have autocomplete enabled.
-     * @attr {string} autocorrect - Controls whether or not the textarea field should have autocorrect enabled.
      * @attr {boolean} autofocus - If `true`, the textarea will be focused on component render.
      * @attr {boolean} auto-grow - If `true`, the textarea will automatically grow and shrink to fit its contents.
      * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes.
@@ -2929,22 +2928,20 @@ export namespace Components {
          */
         "autoGrow": boolean;
         /**
-          * Controls whether or not the textarea field should be capitalized and how. Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
+          * Controls whether or not the textarea field should be capitalized and how. Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'.
+          * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
           * @default 'off'
          */
         "autocapitalize": TTextareaAutoCapitalize;
         /**
-          * Specifies whether or not the textarea field should have autocomplete enabled. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
+          * Specifies whether or not the textarea field should have autocomplete enabled.
+          * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
           * @default 'off'
          */
         "autocomplete": string;
         /**
-          * Controls whether or not the textarea field should have autocorrect enabled. Possible values are 'on' and 'off'.
-          * @default 'off'
-         */
-        "autocorrect": 'on' | 'off';
-        /**
           * If true, the textarea will be focused on component render
+          * @default false
          */
         "autofocus": boolean;
         /**
@@ -4173,7 +4170,6 @@ declare global {
      * @dependency bq-icon
      * @attr {string} autocapitalize - Controls whether or not the input field should be capitalized and how.
      * @attr {string} autocomplete - Specifies whether or not the input field should have autocomplete enabled.
-     * @attr {string} autocorrect - Controls whether or not the input field should have autocorrect enabled.
      * @attr {boolean} autofocus - If true, the input will be focused on component render.
      * @attr {string} clear-button-label - The clear button aria label.
      * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
@@ -5189,7 +5185,6 @@ declare global {
      * @status stable
      * @attr {string} autocapitalize - Controls whether or not the textarea field should be capitalized and how.
      * @attr {string} autocomplete - Specifies whether or not the textarea field should have autocomplete enabled.
-     * @attr {string} autocorrect - Controls whether or not the textarea field should have autocorrect enabled.
      * @attr {boolean} autofocus - If `true`, the textarea will be focused on component render.
      * @attr {boolean} auto-grow - If `true`, the textarea will automatically grow and shrink to fit its contents.
      * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes.
@@ -6789,7 +6784,6 @@ declare namespace LocalJSX {
      * @dependency bq-icon
      * @attr {string} autocapitalize - Controls whether or not the input field should be capitalized and how.
      * @attr {string} autocomplete - Specifies whether or not the input field should have autocomplete enabled.
-     * @attr {string} autocorrect - Controls whether or not the input field should have autocorrect enabled.
      * @attr {boolean} autofocus - If true, the input will be focused on component render.
      * @attr {string} clear-button-label - The clear button aria label.
      * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
@@ -6839,22 +6833,20 @@ declare namespace LocalJSX {
      */
     interface BqInput {
         /**
-          * Controls whether or not the input field should be capitalized and how. Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
+          * Controls whether or not the input field should be capitalized and how. Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'.
+          * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
           * @default 'off'
          */
         "autocapitalize"?: string;
         /**
-          * Specifies whether or not the input field should have autocomplete enabled. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
+          * Specifies whether or not the input field should have autocomplete enabled.
+          * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
           * @default 'off'
          */
         "autocomplete"?: string;
         /**
-          * Controls whether or not the input field should have autocorrect enabled. Possible values are 'on' and 'off'.
-          * @default 'off'
-         */
-        "autocorrect"?: 'on' | 'off';
-        /**
           * If true, the input will be focused on component render
+          * @default false
          */
         "autofocus"?: boolean;
         /**
@@ -6930,7 +6922,8 @@ declare namespace LocalJSX {
          */
         "onBqInput"?: (event: BqInputCustomEvent<{ value: string | number | string[]; el: HTMLBqInputElement }>) => void;
         /**
-          * Specifies a regular expression the form control's value should match. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern
+          * Specifies a regular expression the form control's value should match.
+          * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern
          */
         "pattern"?: string;
         /**
@@ -6946,11 +6939,13 @@ declare namespace LocalJSX {
          */
         "required"?: boolean;
         /**
-          * A number that specifies the granularity that the value must adhere to. Valid for date, month, week, time, datetime-local, number, and range. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
+          * A number that specifies the granularity that the value must adhere to. Valid for date, month, week, time, datetime-local, number, and range.
+          * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
          */
         "step"?: number | 'any';
         /**
-          * The type attribute specifies the type of input field to display. Possible values are 'text', 'password', 'email', 'number', 'tel', 'search', 'url', and more. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types
+          * The type attribute specifies the type of input field to display. Possible values are 'text', 'password', 'email', 'number', 'tel', 'search', 'url', and more.
+          * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types
           * @default 'text'
          */
         "type"?: TInputType;
@@ -8425,7 +8420,6 @@ declare namespace LocalJSX {
      * @status stable
      * @attr {string} autocapitalize - Controls whether or not the textarea field should be capitalized and how.
      * @attr {string} autocomplete - Specifies whether or not the textarea field should have autocomplete enabled.
-     * @attr {string} autocorrect - Controls whether or not the textarea field should have autocorrect enabled.
      * @attr {boolean} autofocus - If `true`, the textarea will be focused on component render.
      * @attr {boolean} auto-grow - If `true`, the textarea will automatically grow and shrink to fit its contents.
      * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes.
@@ -8474,22 +8468,20 @@ declare namespace LocalJSX {
          */
         "autoGrow"?: boolean;
         /**
-          * Controls whether or not the textarea field should be capitalized and how. Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
+          * Controls whether or not the textarea field should be capitalized and how. Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'.
+          * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
           * @default 'off'
          */
         "autocapitalize"?: TTextareaAutoCapitalize;
         /**
-          * Specifies whether or not the textarea field should have autocomplete enabled. See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
+          * Specifies whether or not the textarea field should have autocomplete enabled.
+          * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
           * @default 'off'
          */
         "autocomplete"?: string;
         /**
-          * Controls whether or not the textarea field should have autocorrect enabled. Possible values are 'on' and 'off'.
-          * @default 'off'
-         */
-        "autocorrect"?: 'on' | 'off';
-        /**
           * If true, the textarea will be focused on component render
+          * @default false
          */
         "autofocus"?: boolean;
         /**
@@ -9454,7 +9446,6 @@ declare module "@stencil/core" {
              * @dependency bq-icon
              * @attr {string} autocapitalize - Controls whether or not the input field should be capitalized and how.
              * @attr {string} autocomplete - Specifies whether or not the input field should have autocomplete enabled.
-             * @attr {string} autocorrect - Controls whether or not the input field should have autocorrect enabled.
              * @attr {boolean} autofocus - If true, the input will be focused on component render.
              * @attr {string} clear-button-label - The clear button aria label.
              * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
@@ -10161,7 +10152,6 @@ declare module "@stencil/core" {
              * @status stable
              * @attr {string} autocapitalize - Controls whether or not the textarea field should be capitalized and how.
              * @attr {string} autocomplete - Specifies whether or not the textarea field should have autocomplete enabled.
-             * @attr {string} autocorrect - Controls whether or not the textarea field should have autocorrect enabled.
              * @attr {boolean} autofocus - If `true`, the textarea will be focused on component render.
              * @attr {boolean} auto-grow - If `true`, the textarea will automatically grow and shrink to fit its contents.
              * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes.
