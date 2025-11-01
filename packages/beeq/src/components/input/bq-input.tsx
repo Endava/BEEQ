@@ -21,7 +21,6 @@ import type { TInputType, TInputValidation, TInputValue } from './bq-input.types
  *
  * @attr {string} autocapitalize - Controls whether or not the input field should be capitalized and how.
  * @attr {string} autocomplete - Specifies whether or not the input field should have autocomplete enabled.
- * @attr {string} autocorrect - Controls whether or not the input field should have autocorrect enabled.
  * @attr {boolean} autofocus - If true, the input will be focused on component render.
  * @attr {string} clear-button-label - The clear button aria label.
  * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the input value changes.
@@ -130,24 +129,20 @@ export class BqInput {
   /**
    * Controls whether or not the input field should be capitalized and how.
    * Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'.
-   * See: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
    */
   @Prop({ reflect: true }) autocapitalize: string = 'off';
 
   /**
    * Specifies whether or not the input field should have autocomplete enabled.
-   * See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
    */
   @Prop({ reflect: true }) autocomplete: string = 'off';
 
-  /**
-   * Controls whether or not the input field should have autocorrect enabled.
-   * Possible values are 'on' and 'off'.
-   */
-  @Prop({ reflect: true }) autocorrect: 'on' | 'off' = 'off';
-
   /** If true, the input will be focused on component render */
-  @Prop({ reflect: true }) autofocus: boolean;
+  @Prop({ reflect: true }) autofocus: boolean = false;
 
   /** The clear button aria label */
   @Prop({ reflect: true }) clearButtonLabel? = 'Clear value';
@@ -203,7 +198,8 @@ export class BqInput {
 
   /**
    * Specifies a regular expression the form control's value should match.
-   * See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern
    */
   @Prop({ reflect: true }) pattern?: string;
 
@@ -219,14 +215,16 @@ export class BqInput {
   /**
    * A number that specifies the granularity that the value must adhere to.
    * Valid for date, month, week, time, datetime-local, number, and range.
-   * See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
    */
   @Prop({ reflect: true }) step: number | 'any';
 
   /**
    * The type attribute specifies the type of input field to display.
    * Possible values are 'text', 'password', 'email', 'number', 'tel', 'search', 'url', and more.
-   * See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types
    */
   @Prop({ reflect: true }) type: TInputType = 'text';
 
@@ -457,9 +455,9 @@ export class BqInput {
           {/* HTML Input */}
           <input
             aria-disabled={this.disabled ? 'true' : 'false'}
-            autoCapitalize={this.autocapitalize}
-            autoComplete={this.autocomplete}
-            autoCorrect={this.autocorrect}
+            autocapitalize={this.autocapitalize}
+            autocomplete={this.autocomplete}
+            autofocus={this.autofocus}
             class="bq-input--control__input"
             disabled={this.disabled}
             form={this.form}

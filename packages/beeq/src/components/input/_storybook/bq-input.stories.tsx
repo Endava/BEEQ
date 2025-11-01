@@ -16,7 +16,6 @@ const meta: Meta = {
   argTypes: {
     autocapitalize: { control: 'text' },
     autocomplete: { control: 'text' },
-    autocorrect: { control: 'inline-radio', options: ['on', 'off'] },
     autofocus: { control: 'boolean' },
     'clear-button-label': { control: 'text' },
     'debounce-time': { control: 'number' },
@@ -52,7 +51,6 @@ const meta: Meta = {
   args: {
     autocapitalize: 'off',
     autocomplete: 'off',
-    autocorrect: 'off',
     autofocus: false,
     'clear-button-label': 'Clear value',
     'disable-clear': false,
@@ -116,7 +114,6 @@ const Template = (args: Args) => {
     <bq-input
       autocapitalize=${ifDefined(args.autocapitalize)}
       autocomplete=${ifDefined(args.autocomplete)}
-      autocorrect=${ifDefined(args.autocorrect)}
       ?autofocus=${args.autofocus}
       clear-button-label=${args['clear-button-label']}
       debounce-time=${args['debounce-time']}
