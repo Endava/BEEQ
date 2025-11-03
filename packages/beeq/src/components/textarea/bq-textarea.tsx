@@ -24,7 +24,6 @@ import type { TTextareaAutoCapitalize, TTextareaWrap } from './bq-textarea.types
  *
  * @attr {string} autocapitalize - Controls whether or not the textarea field should be capitalized and how.
  * @attr {string} autocomplete - Specifies whether or not the textarea field should have autocomplete enabled.
- * @attr {string} autocorrect - Controls whether or not the textarea field should have autocorrect enabled.
  * @attr {boolean} autofocus - If `true`, the textarea will be focused on component render.
  * @attr {boolean} auto-grow - If `true`, the textarea will automatically grow and shrink to fit its contents.
  * @attr {number} debounce-time - The amount of time, in milliseconds, to wait before emitting the `bqInput` event after the textarea value changes.
@@ -116,24 +115,20 @@ export class BqTextarea {
   /**
    * Controls whether or not the textarea field should be capitalized and how.
    * Possible values are 'off', 'none', 'on', 'sentences', 'words', and 'characters'.
-   * See: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize
    */
   @Prop({ reflect: true }) autocapitalize: TTextareaAutoCapitalize = 'off';
 
   /**
    * Specifies whether or not the textarea field should have autocomplete enabled.
-   * See: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
    */
   @Prop({ reflect: true }) autocomplete: string = 'off';
 
-  /**
-   * Controls whether or not the textarea field should have autocorrect enabled.
-   * Possible values are 'on' and 'off'.
-   */
-  @Prop({ reflect: true }) autocorrect: 'on' | 'off' = 'off';
-
   /** If true, the textarea will be focused on component render */
-  @Prop({ reflect: true }) autofocus: boolean;
+  @Prop({ reflect: true }) autofocus: boolean = false;
 
   /**
    * If `true`, the textarea will automatically grow and shrink to fit its contents.
@@ -182,6 +177,7 @@ export class BqTextarea {
 
   /** If true, the textarea content may be checked for spelling errors. */
   @Prop({ reflect: true }) spellcheck: boolean = false;
+
   /**
    * The validation status of the textarea.
    *
@@ -386,7 +382,6 @@ export class BqTextarea {
         <textarea
           autocapitalize={this.autocapitalize}
           autocomplete={this.autocomplete}
-          autocorrect={this.autocorrect}
           autofocus={this.autofocus}
           class={{
             'bq-textarea__input': true,

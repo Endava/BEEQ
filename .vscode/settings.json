@@ -74,5 +74,11 @@
     "connectionId": "Endava",
     "projectKey": "Endava_bee-q"
   },
-  "stylelint.validate": ["css", "less", "scss", "postcss"]
+  "stylelint.validate": [
+    "css",
+    "less",
+    "scss",
+    "postcss"
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

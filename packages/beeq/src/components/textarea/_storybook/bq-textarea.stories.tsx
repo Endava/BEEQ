@@ -17,7 +17,6 @@ const meta: Meta = {
   argTypes: {
     autocapitalize: { control: 'select', options: [...TEXTAREA_AUTO_CAPITALIZE] },
     autocomplete: { control: 'text' },
-    autocorrect: { control: 'inline-radio', options: ['on', 'off'] },
     autofocus: { control: 'boolean' },
     'auto-grow': { control: 'boolean' },
     'debounce-time': { control: 'number' },
@@ -46,7 +45,6 @@ const meta: Meta = {
   args: {
     autocapitalize: 'off',
     autocomplete: 'off',
-    autocorrect: 'off',
     autofocus: false,
     'auto-grow': false,
     'debounce-time': 0,
@@ -74,7 +72,6 @@ const Template = (args: Args) => html`
   <bq-textarea
     autocapitalize=${ifDefined(args.autocapitalize)}
     autocomplete=${ifDefined(args.autocomplete)}
-    autocorrect=${ifDefined(args.autocorrect)}
     ?autofocus=${args.autofocus}
     ?auto-grow=${args['auto-grow']}
     debounce-time=${ifDefined(args['debounce-time'])}
