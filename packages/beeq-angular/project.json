@@ -18,7 +18,8 @@
       "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/beeq-angular"],
       "options": {
-        "project": "{projectRoot}/ng-package.json"
+        "project": "{projectRoot}/ng-package.json",
+        "tsConfig": "{projectRoot}/tsconfig.lib.json"
       },
       "configurations": {
         "production": {

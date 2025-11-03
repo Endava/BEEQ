@@ -48,7 +48,7 @@
     "@angular-devkit/build-angular": "20.3.8",
     "@angular-devkit/core": "20.3.8",
     "@angular-devkit/schematics": "20.3.8",
-    "@angular/cli": "20.2.1",
+    "@angular/cli": "20.3.8",
     "@angular/compiler-cli": "20.3.9",
     "@angular/language-service": "20.3.9",
     "@babel/core": "7.28.0",
