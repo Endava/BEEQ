@@ -249,7 +249,7 @@ calendar-month {
   @apply cursor-pointer rounded-s border-0 bg-transparent transition-colors duration-200 p-b-xs p-i-xs;
 
   /* Hover / focus states */
-  &:not(.disabled):not(:disabled) {
+  &:not(.disabled, :disabled) {
     @apply focus-visible:focus hover:bg-hover-ui-primary;
   }
   /* Disabled visual state */
