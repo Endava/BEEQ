@@ -1,8 +1,13 @@
 import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import type { StorybookConfig } from '@storybook/web-components-vite';
 
+// biome-ignore-start lint/style/useNamingConvention: Storybook has become fully ESM, thus CJS constants (require, __dirname, __filename) will not be defined.
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+// biome-ignore-end lint/style/useNamingConvention: Storybook has become fully ESM, thus CJS constants (require, __dirname, __filename) will not be defined.
 const require = createRequire(import.meta.url);
 
 export default {
