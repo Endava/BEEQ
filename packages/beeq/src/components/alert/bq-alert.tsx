@@ -316,7 +316,7 @@ export class BqAlert {
             <bq-button
               appearance="text"
               class="bq-alert__close focus-visible:focus absolute end-5 [&::part(label)]:inline-flex"
-              onBqClick={this.hide}
+              onBqClick={() => this.hide()}
               part="btn-close"
               size="small"
             >
