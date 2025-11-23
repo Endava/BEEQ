@@ -3,7 +3,11 @@
  */
 type TDatePattern = {
   regex: RegExp;
-  parse: (match: RegExpExecArray, monthMap: Record<string, number>) => { day: number; month: number; year: number };
+  parse: (
+    match: RegExpExecArray,
+    monthMap: Record<string, number>,
+    locale?: Intl.LocalesArgument,
+  ) => { day: number; month: number; year: number };
 };
 
 /**
@@ -22,8 +26,8 @@ const DATE_PATTERNS: TDatePattern[] = [
   {
     // Matches "05/30/2024", "30-05-2024", "30.05.2024", "05.30.2024" (with heuristic for day/month)
     regex: /^(\d{1,2})[\s\-/.](\d{1,2})[\s\-/.](\d{4})$/,
-    parse: (m) => {
-      const { day, month } = parseNumericDate(+m[1], +m[2]);
+    parse: (m, _, locale) => {
+      const { day, month } = parseNumericDate(+m[1], +m[2], locale);
       return { day, month, year: +m[3] };
     },
   },
@@ -34,6 +38,15 @@ const DATE_PATTERNS: TDatePattern[] = [
       month: months[m[1].toLowerCase()],
       day: +m[2],
       year: +m[3],
+    }),
+  },
+  {
+    // Matches "2024-05-30" (ISO format without parsing as Date first)
+    regex: /^(\d{4})-(\d{2})-(\d{2})$/,
+    parse: (m) => ({
+      year: +m[1],
+      month: +m[2] - 1,
+      day: +m[3],
     }),
   },
 ];
@@ -68,21 +81,43 @@ const getMonthNamesForLocale = (locale: Intl.LocalesArgument): Record<string, nu
 
 /**
  * Parses day-month-year or month-day-year numeric date format
- * Uses heuristic: if first number > 12, treat as DD/MM/YYYY, otherwise MM/DD/YYYY
+ * Uses heuristic: if any number > 12, treat it as day, otherwise defaults to locale preference
+ * @param {number} first - The first numeric part (day or month)
+ * @param {number} second - The second numeric part (month or day)
+ * @param {Intl.LocalesArgument} locale - The locale for determining format preference
+ * @returns {{day: number, month: number}} Object with day and month (0-based)
  */
-const parseNumericDate = (first: number, second: number): { day: number; month: number } => {
-  if (first > 12) {
-    return { day: first, month: second - 1 };
-  }
-  if (second > 12) {
+const parseNumericDate = (
+  first: number,
+  second: number,
+  locale: Intl.LocalesArgument = 'en-GB',
+): { day: number; month: number } => {
+  // If first number > 12, it must be the day (DD/MM format)
+  if (first > 12) return { day: first, month: second - 1 };
+
+  // If second number > 12, it must be the day (MM/DD format)
+  if (second > 12) return { day: second, month: first - 1 };
+
+  // Both numbers <= 12: ambiguous case
+  // Use locale to determine format preference
+  const localeStr = typeof locale === 'string' ? locale : locale?.[0] || 'en-GB';
+  const usesMMDD = ['en-US', 'en-CA'].some((l) => localeStr.startsWith(l));
+
+  if (usesMMDD) {
+    // US/Canada format: MM/DD
     return { day: second, month: first - 1 };
   }
-  // Ambiguous case: default to DD/MM/YYYY (European format)
+
+  // Default to DD/MM (European/most of world format)
   return { day: first, month: second - 1 };
 };
 
 /**
  * Validates that a date is actually valid (not auto-corrected by Date constructor)
+ * @param {number} day - Day of the month
+ * @param {number} month - Month (0-based)
+ * @param {number} year - Full year
+ * @returns {boolean} True if the date is valid
  */
 const isDateValid = (day: number, month: number, year: number): boolean => {
   const date = new Date(year, month, day);
@@ -91,6 +126,10 @@ const isDateValid = (day: number, month: number, year: number): boolean => {
 
 /**
  * Validates and creates a Date object from day, month, and year
+ * @param {number} day - Day of the month
+ * @param {number} month - Month (0-based)
+ * @param {number} year - Full year
+ * @returns {Date | null} Valid Date object or null if invalid
  */
 const createValidDate = (day: number, month: number, year: number): Date | null => {
   if (month === undefined || !day || !year) return null;
@@ -101,15 +140,14 @@ const createValidDate = (day: number, month: number, year: number): Date | null 
 
 /**
  * Parses various date input formats and returns a Date object
- *
  * Supports:
  * - ISO format: "2024-05-30"
  * - Text format: "30 May 2024", "May 30, 2024", "30 January 2024", "January 1, 1970" (locale-aware)
  * - Numeric formats: "30/05/2024", "05-30-2024", "30.05.2024", "05.30.2024" (with heuristic for day/month)
  *
- * @param inputValue - The date string to parse
- * @param locale - The locale for month name recognition (defaults to 'en-GB')
- * @returns Parsed Date object or null if parsing fails
+ * @param {string} inputValue - The date string to parse
+ * @param {Intl.LocalesArgument} locale - The locale for month name recognition (defaults to 'en-GB')
+ * @returns {Date | null} Parsed Date object or null if parsing fails
  */
 export const parseDateInput = (inputValue: string, locale: Intl.LocalesArgument = 'en-GB'): Date | null => {
   if (!inputValue?.trim()) return null;
@@ -124,7 +162,7 @@ export const parseDateInput = (inputValue: string, locale: Intl.LocalesArgument 
     const match = regex.exec(inputValue);
     if (!match) continue;
 
-    const { day, month, year } = parse(match, monthMap);
+    const { day, month, year } = parse(match, monthMap, locale);
     const date = createValidDate(day, month, year);
     if (date) return date;
   }
@@ -134,9 +172,8 @@ export const parseDateInput = (inputValue: string, locale: Intl.LocalesArgument 
 
 /**
  * Validates if a string is in ISO date format (YYYY-MM-DD) with actual valid date values
- *
- * @param dateStr - The date string to validate
- * @returns True if the date string is valid in ISO format and represents an actual valid date
+ * @param {string} dateStr - The date string to validate
+ * @returns {boolean} True if the date string is valid in ISO format and represents an actual valid date
  */
 export const isValidISODate = (dateStr: string): boolean => {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return false;
