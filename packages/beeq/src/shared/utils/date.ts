@@ -38,10 +38,20 @@ const DATE_PATTERNS: TDatePattern[] = [
   },
 ];
 
+const monthNamesCache = new Map<string, Record<string, number>>();
+
 /**
  * Gets localized month names for the given locale (both short and long forms)
+ * Caches results for performance
+ * @param {Intl.LocalesArgument} locale - The locale identifier, e.g., 'en-GB', 'fr-FR', etc.
+ * @returns {Record<string, number>} Mapping of month names to month indices
  */
 const getMonthNamesForLocale = (locale: Intl.LocalesArgument): Record<string, number> => {
+  const cacheKey = typeof locale === 'string' ? locale : JSON.stringify(locale);
+
+  const cachedMonthNames = monthNamesCache.get(cacheKey);
+  if (cachedMonthNames) return cachedMonthNames;
+
   const monthMap: Record<string, number> = {};
   const shortFormatter = new Intl.DateTimeFormat(locale, { month: 'short' });
   const longFormatter = new Intl.DateTimeFormat(locale, { month: 'long' });
@@ -52,6 +62,7 @@ const getMonthNamesForLocale = (locale: Intl.LocalesArgument): Record<string, nu
     monthMap[longFormatter.format(date).toLowerCase()] = month;
   }
 
+  monthNamesCache.set(cacheKey, monthMap);
   return monthMap;
 };
 
