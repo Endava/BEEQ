@@ -98,6 +98,16 @@ describe('parseDateInput', () => {
       const result = parseDateInput('05/15/2024');
       expect(result).toEqual(new Date(2024, 4, 15));
     });
+
+    it('should parse "30.05.2024" (DD.MM.YYYY) format', () => {
+      const result = parseDateInput('30.05.2024');
+      expect(result).toEqual(new Date(2024, 4, 30));
+    });
+
+    it('should parse "05.30.2024" (MM.DD.YYYY) format', () => {
+      const result = parseDateInput('05.30.2024');
+      expect(result).toEqual(new Date(2024, 4, 30));
+    });
   });
 
   describe('invalid input handling', () => {
