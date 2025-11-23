@@ -11,6 +11,7 @@ type TDatePattern = {
  */
 const DATE_PATTERNS: TDatePattern[] = [
   {
+    // Matches "30 May 2024" or "30 January 2024"
     regex: /^(\d{1,2})\s+([a-z]+)\s+(\d{4})$/i,
     parse: (m, months) => ({
       day: +m[1],
@@ -19,13 +20,15 @@ const DATE_PATTERNS: TDatePattern[] = [
     }),
   },
   {
-    regex: /^(\d{1,2})[\s\-/](\d{1,2})[\s\-/](\d{4})$/,
+    // Matches "05/30/2024", "30-05-2024", "30.05.2024", "05.30.2024" (with heuristic for day/month)
+    regex: /^(\d{1,2})[\s\-/.](\d{1,2})[\s\-/.](\d{4})$/,
     parse: (m) => {
       const { day, month } = parseNumericDate(+m[1], +m[2]);
       return { day, month, year: +m[3] };
     },
   },
   {
+    // Matches "May 30, 2024" or "January 1, 1970" (with optional comma)
     regex: /^([a-z]+)\s+(\d{1,2}),?\s+(\d{4})$/i,
     parse: (m, months) => ({
       month: months[m[1].toLowerCase()],
@@ -91,7 +94,7 @@ const createValidDate = (day: number, month: number, year: number): Date | null 
  * Supports:
  * - ISO format: "2024-05-30"
  * - Text format: "30 May 2024", "May 30, 2024", "30 January 2024", "January 1, 1970" (locale-aware)
- * - Numeric formats: "30/05/2024", "05-30-2024"
+ * - Numeric formats: "30/05/2024", "05-30-2024", "30.05.2024", "05.30.2024" (with heuristic for day/month)
  *
  * @param inputValue - The date string to parse
  * @param locale - The locale for month name recognition (defaults to 'en-GB')
