@@ -98,6 +98,24 @@ describe('parseDateInput', () => {
       const result = parseDateInput('05/15/2024');
       expect(result).toEqual(new Date(2024, 4, 15));
     });
+
+    it('should parse "30.05.2024" (DD.MM.YYYY) format', () => {
+      const result = parseDateInput('30.05.2024');
+      expect(result).toEqual(new Date(2024, 4, 30));
+    });
+
+    it('should parse "05.30.2024" (MM.DD.YYYY) format', () => {
+      const result = parseDateInput('05.30.2024');
+      expect(result).toEqual(new Date(2024, 4, 30));
+    });
+
+    it('should take locale into account for ambiguous numeric dates', () => {
+      const resultUK = parseDateInput('04/05/2024', 'en-GB'); // DD/MM/YYYY
+      const resultUS = parseDateInput('04/05/2024', 'en-US'); // MM/DD/YYYY
+
+      expect(resultUK).toEqual(new Date(2024, 4, 4)); // 4th May
+      expect(resultUS).toEqual(new Date(2024, 3, 5)); // 5th April
+    });
   });
 
   describe('invalid input handling', () => {
