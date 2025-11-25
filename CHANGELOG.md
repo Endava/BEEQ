@@ -1,3 +1,42 @@
+## 1.11.1 (2025-11-25)
+
+### Features ⚡️
+
+- **Datepicker:** add support for dot-separated date formats (DD.MM.YYYY / MM.DD.YYYY) ([#1558](https://github.com/Endava/BEEQ/pull/1558))
+- **Option:** add `displayValue` prop to `bq-option` component ([#1531](https://github.com/Endava/BEEQ/pull/1531))
+
+### Bug Fixes 🐞
+
+- **Accordion:** update medium size corner radius according to design spec ([#1537](https://github.com/Endava/BEEQ/pull/1537))
+- **Alert, Drawer:** ensure hide method is called correctly on close button click (regression) ([c38282b](https://github.com/Endava/BEEQ/commit/c38282b))
+- **Date picker:** clamp input value to the closest of the min/max allowed date value (when applicable) ([#1546](https://github.com/Endava/BEEQ/pull/1546))
+- **Datepicker:** trigger change event for invalid date format values as well ([#1544](https://github.com/Endava/BEEQ/pull/1544))
+- **Select:** search filter matches label/value, case-insensitive ([#1538](https://github.com/Endava/BEEQ/pull/1538))
+- **Side Menu:** slotted button icons in the footer are not visible on hover for brand/inverse variants ([#1547](https://github.com/Endava/BEEQ/pull/1547))
+- **Spinner:** correct spelling of 'below' in types value ([#1543](https://github.com/Endava/BEEQ/pull/1543))
+
+### Chore ⚙️
+
+- migrate from ESLint and Prettier to Biome for linting, formatting, and import sorting ([#1536](https://github.com/Endava/BEEQ/pull/1536))
+- **Copilot Instructions:** add comprehensive GitHub Copilot guidelines for development and testing ([4960620](https://github.com/Endava/BEEQ/commit/4960620))
+- **deps:** update dependency @biomejs/biome to v2.2.7 ([#1548](https://github.com/Endava/BEEQ/pull/1548))
+- **deps:** update react to v19.2.0 ([#1550](https://github.com/Endava/BEEQ/pull/1550))
+- **deps:** update types react to v19.2.2 ([#1549](https://github.com/Endava/BEEQ/pull/1549))
+- **deps:** update nx to v22 (major) ([#1551](https://github.com/Endava/BEEQ/pull/1551))
+- **deps:** update storybook to v10 (major) ([#1552](https://github.com/Endava/BEEQ/pull/1552))
+- **deps:** update dependency @biomejs/biome to v2.3.5 ([#1555](https://github.com/Endava/BEEQ/pull/1555))
+- **deps:** update nx to v22.1.1 ([#1554](https://github.com/Endava/BEEQ/pull/1554))
+- **deps:** update @stencil/core to v4.38.3 and @stencil/sass to v3.2.3 ([#1556](https://github.com/Endava/BEEQ/pull/1556))
+- **deps:** update angular ([#1559](https://github.com/Endava/BEEQ/pull/1559))
+- **deps:** update types react ([#1561](https://github.com/Endava/BEEQ/pull/1561))
+- **deps:** update dependency tailwindcss to v3.4.18 ([#1560](https://github.com/Endava/BEEQ/pull/1560))
+
+### ❤️ Thank You
+
+- Bogdan Bosca @endv-bogdanb
+- Dabiel González Ramos
+- Dabiel Gonzalez-Ramos @dgonzalezr
+
 ## 1.11.0 (2025-10-06)
 
 ### Features ⚡️
