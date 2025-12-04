@@ -183,7 +183,9 @@ export class BqTag {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private handleHide = () => {
+  private handleHide = (event?: MouseEvent) => {
+    event?.stopPropagation();
+
     if (!this.isRemovable) return;
 
     const ev = this.bqClose.emit(this.el);
@@ -298,13 +300,8 @@ export class BqTag {
             <slot />
           </div>
           {this.isRemovable && !this.disabled && (
-            <bq-button
-              appearance="text"
-              class="bq-tag__close"
-              onBqClick={this.handleHide}
-              part="btn-close"
-              size="small"
-            >
+            // biome-ignore lint/a11y/noStaticElementInteractions: `onClick` will behave better than the custom `bqClick` inside the shadow DOM
+            <bq-button appearance="text" class="bq-tag__close" onClick={this.handleHide} part="btn-close" size="small">
               <bq-icon
                 color={this.color && !this.hasCustomColor ? textColor(this.color)[this.variant] : 'text--primary'}
                 name="x-circle"
