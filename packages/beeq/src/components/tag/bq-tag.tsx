@@ -25,7 +25,7 @@ import { iconSize, textColor } from './helper';
  * @attr {boolean} clickable - If `true`, the Tag can be clickable
  * @attr {"error" | "gray" | "info" | "success" | "warning"} color - The color style of the Tag
  * @attr {boolean} disabled - If `true`, the Tag will be disabled (only if clickable = `true`, no interaction allowed)
- * @attr {boolean} hidden - If `true`, the Tag component will hidden (only if removable = `true`)
+ * @attr {boolean} hidden - If `true`, the Tag component will be hidden
  * @attr {boolean} removable - If `true`, the Tag component can be removed
  * @attr {boolean} selected - If `true`, the Tag is selected (only if clickable = `true`)
  * @attr {"xsmall" | "small" | "medium"} size - The size of the Tag component
@@ -100,7 +100,7 @@ export class BqTag {
   /** If true, the Tag will be disabled (only if clickable = `true`, no interaction allowed) */
   @Prop({ reflect: true }) disabled?: boolean = false;
 
-  /** If true, the Tag component will hidden */
+  /** If true, the Tag component will be hidden */
   @Prop({ reflect: true, mutable: true }) hidden: boolean;
 
   /** If true, the Tag component can be removed */
@@ -169,7 +169,7 @@ export class BqTag {
   /** Method to be called to remove the tag component */
   @Method()
   async hide(): Promise<void> {
-    this.handleHide();
+    this.handleClose();
   }
 
   /** Method to be called to show the tag component */
@@ -183,9 +183,9 @@ export class BqTag {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private handleHide = (event?: MouseEvent) => {
+  private handleClose = (event?: MouseEvent) => {
     event?.stopPropagation();
-
+    // Only allow closing/hiding if the tag is removable (have the close button)
     if (!this.isRemovable) return;
 
     const ev = this.bqClose.emit(this.el);
@@ -195,6 +195,7 @@ export class BqTag {
   };
 
   private handleShow = () => {
+    // Only allow showing after closing if the tag is removable (have the close button)
     if (!this.isRemovable) return;
 
     const ev = this.bqOpen.emit(this.el);
@@ -282,13 +283,13 @@ export class BqTag {
   render() {
     // Decide the tag element based on whether it's clickable or not for better semantics and accessibility
     const TagElement = this.isClickable ? 'button' : 'div';
-    const hiddenValue = this.hidden ? 'true' : 'false';
+    const ariaHidden = this.hidden ? 'true' : 'false';
 
     return (
-      <Host aria-hidden={hiddenValue} hidden={hiddenValue} style={this.computedHostClasses}>
+      <Host aria-hidden={ariaHidden} hidden={this.hidden || undefined} style={this.computedHostClasses}>
         <TagElement
           class={this.computeWrapperClasses}
-          disabled={this.disabled}
+          disabled={this.isClickable ? this.disabled : undefined}
           part="wrapper"
           {...this.computeButtonInteractiveProps}
         >
@@ -313,7 +314,7 @@ export class BqTag {
           </div>
           {this.isRemovable && !this.disabled && (
             // biome-ignore lint/a11y/noStaticElementInteractions: `onClick` will behave better than the custom `bqClick` inside the shadow DOM
-            <bq-button appearance="text" class="bq-tag__close" onClick={this.handleHide} part="btn-close" size="small">
+            <bq-button appearance="text" class="bq-tag__close" onClick={this.handleClose} part="btn-close" size="small">
               <bq-icon
                 color={this.color && !this.hasCustomColor ? textColor(this.color)[this.variant] : 'text--primary'}
                 name="x-circle"
