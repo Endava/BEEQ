@@ -1,3 +1,19 @@
+## 1.11.2 (2025-12-04)
+
+### Bug Fixes 🐞
+
+- **Tag:** unresponsive close click for removable variant, and allow hidden unconditionally ([#1563](https://github.com/Endava/BEEQ/pull/1563))
+
+### Chore ⚙️
+
+- **deps:** update angular ([#1562](https://github.com/Endava/BEEQ/pull/1562))
+- **deps:** update react to v19.2.1 ([#1564](https://github.com/Endava/BEEQ/pull/1564))
+- **deps:** update dependency @types/react to v19.2.7 ([#1565](https://github.com/Endava/BEEQ/pull/1565))
+
+### ❤️ Thank You
+
+- Dabiel Gonzalez-Ramos @dgonzalezr
+
 ## 1.11.1 (2025-11-25)
 
 ### Features ⚡️
