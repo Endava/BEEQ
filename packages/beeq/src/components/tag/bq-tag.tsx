@@ -247,38 +247,54 @@ export class BqTag {
     return this.color !== undefined ? !TAG_COLOR.includes(this.color) : false;
   }
 
-  // render() function
-  // Always the last one in the class.
-  // ===================================
-
-  render() {
-    const style = {
+  private get computedHostClasses() {
+    return {
       '--bq-tag--icon-prefix-size': `${iconSize(this.size)}px`,
       ...(this.border && { '--bq-tag--border-radius': `var(--bq-radius--${this.border})` }),
       ...(this.color && { '--bq-tag--background-color': getColorCSSVariable(this.color) ?? this.color }),
       ...(this.hasCustomColor && { '--bq-text--primary': `var(--bq-text--alt)` }),
     };
+  }
+
+  private get computeWrapperClasses() {
+    return {
+      [`bq-tag bq-tag__${this.size}`]: true,
+      [`bq-tag__${this.color || 'default'} bq-tag__${this.variant}`]: !this.hasCustomColor,
+      'is-clickable': this.isClickable,
+      'is-removable': this.removable,
+      active: this.isClickable && this.selected,
+      'has-border': !!this.border,
+    };
+  }
+
+  private get computeButtonInteractiveProps() {
+    if (!this.isClickable) return {};
+
+    return {
+      onClick: this.handleClick,
+      onBlur: this.handleBlur,
+      onFocus: this.handleFocus,
+      tabindex: 0,
+      type: 'button',
+    };
+  }
+
+  // render() function
+  // Always the last one in the class.
+  // ===================================
+
+  render() {
+    // Decide the tag element based on whether it's clickable or not for better semantics and accessibility
+    const TagElement = this.isClickable ? 'button' : 'div';
+    const hiddenValue = this.isHidden ? 'true' : 'false';
 
     return (
-      <Host aria-hidden={this.isHidden ? 'true' : 'false'} hidden={this.isHidden ? 'true' : 'false'} style={style}>
-        <button
-          class={{
-            [`bq-tag bq-tag__${this.size}`]: true,
-            [`bq-tag__${this.color || 'default'} bq-tag__${this.variant}`]: !this.hasCustomColor,
-            'is-clickable': this.isClickable,
-            'is-removable': this.removable,
-            // Active/Selected state when clickable
-            active: this.isClickable && this.selected,
-            // Fixed border radius
-            'has-border': !!this.border,
-          }}
+      <Host aria-hidden={hiddenValue} hidden={hiddenValue} style={this.computedHostClasses}>
+        <TagElement
+          class={this.computeWrapperClasses}
           disabled={this.disabled}
-          onBlur={this.handleBlur}
-          onClick={this.handleClick}
-          onFocus={this.handleFocus}
           part="wrapper"
-          tabindex={this.isClickable ? 0 : -1}
-          type="button"
+          {...this.computeButtonInteractiveProps}
         >
           <span
             class={{ 'bq-tag__prefix inline-flex': true, '!hidden': !this.hasPrefix }}
@@ -309,7 +325,7 @@ export class BqTag {
               />
             </bq-button>
           )}
-        </button>
+        </TagElement>
       </Host>
     );
   }
