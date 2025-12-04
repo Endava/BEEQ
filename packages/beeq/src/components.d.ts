@@ -2787,7 +2787,7 @@ export namespace Components {
      * @attr {boolean} clickable - If `true`, the Tag can be clickable
      * @attr {"error" | "gray" | "info" | "success" | "warning"} color - The color style of the Tag
      * @attr {boolean} disabled - If `true`, the Tag will be disabled (only if clickable = `true`, no interaction allowed)
-     * @attr {boolean} hidden - If `true`, the Tag component will hidden (only if removable = `true`)
+     * @attr {boolean} hidden - If `true`, the Tag component will be hidden
      * @attr {boolean} removable - If `true`, the Tag component can be removed
      * @attr {boolean} selected - If `true`, the Tag is selected (only if clickable = `true`)
      * @attr {"xsmall" | "small" | "medium"} size - The size of the Tag component
@@ -2832,7 +2832,7 @@ export namespace Components {
          */
         "disabled"?: boolean;
         /**
-          * If true, the Tag component will hidden (only if removable = `true`)
+          * If true, the Tag component will be hidden
          */
         "hidden": boolean;
         /**
@@ -5123,7 +5123,7 @@ declare global {
      * @attr {boolean} clickable - If `true`, the Tag can be clickable
      * @attr {"error" | "gray" | "info" | "success" | "warning"} color - The color style of the Tag
      * @attr {boolean} disabled - If `true`, the Tag will be disabled (only if clickable = `true`, no interaction allowed)
-     * @attr {boolean} hidden - If `true`, the Tag component will hidden (only if removable = `true`)
+     * @attr {boolean} hidden - If `true`, the Tag component will be hidden
      * @attr {boolean} removable - If `true`, the Tag component can be removed
      * @attr {boolean} selected - If `true`, the Tag is selected (only if clickable = `true`)
      * @attr {"xsmall" | "small" | "medium"} size - The size of the Tag component
@@ -8315,7 +8315,7 @@ declare namespace LocalJSX {
      * @attr {boolean} clickable - If `true`, the Tag can be clickable
      * @attr {"error" | "gray" | "info" | "success" | "warning"} color - The color style of the Tag
      * @attr {boolean} disabled - If `true`, the Tag will be disabled (only if clickable = `true`, no interaction allowed)
-     * @attr {boolean} hidden - If `true`, the Tag component will hidden (only if removable = `true`)
+     * @attr {boolean} hidden - If `true`, the Tag component will be hidden
      * @attr {boolean} removable - If `true`, the Tag component can be removed
      * @attr {boolean} selected - If `true`, the Tag is selected (only if clickable = `true`)
      * @attr {"xsmall" | "small" | "medium"} size - The size of the Tag component
@@ -8360,7 +8360,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * If true, the Tag component will hidden (only if removable = `true`)
+          * If true, the Tag component will be hidden
          */
         "hidden"?: boolean;
         /**
@@ -10110,7 +10110,7 @@ declare module "@stencil/core" {
              * @attr {boolean} clickable - If `true`, the Tag can be clickable
              * @attr {"error" | "gray" | "info" | "success" | "warning"} color - The color style of the Tag
              * @attr {boolean} disabled - If `true`, the Tag will be disabled (only if clickable = `true`, no interaction allowed)
-             * @attr {boolean} hidden - If `true`, the Tag component will hidden (only if removable = `true`)
+             * @attr {boolean} hidden - If `true`, the Tag component will be hidden
              * @attr {boolean} removable - If `true`, the Tag component can be removed
              * @attr {boolean} selected - If `true`, the Tag is selected (only if clickable = `true`)
              * @attr {"xsmall" | "small" | "medium"} size - The size of the Tag component

@@ -18,7 +18,7 @@ Tags are commonly used to label items with keywords or categories, making it eas
 | `clickable` | `clickable` | If true, the Tag can be clickable                                                      | `boolean`                                                | `false`     |
 | `color`     | `color`     | The color style of the Tag                                                             | `"error" \| "gray" \| "info" \| "success" \| "warning"`  | `undefined` |
 | `disabled`  | `disabled`  | If true, the Tag will be disabled (only if clickable = `true`, no interaction allowed) | `boolean`                                                | `false`     |
-| `hidden`    | `hidden`    | If true, the Tag component will hidden (only if removable = `true`)                    | `boolean`                                                | `undefined` |
+| `hidden`    | `hidden`    | If true, the Tag component will be hidden                                              | `boolean`                                                | `undefined` |
 | `removable` | `removable` | If true, the Tag component can be removed                                              | `boolean`                                                | `false`     |
 | `selected`  | `selected`  | If true, the Tag is selected (only if clickable = `true`)                              | `boolean`                                                | `false`     |
 | `size`      | `size`      | The size of the Tag component                                                          | `"medium" \| "small" \| "xsmall"`                        | `'medium'`  |
