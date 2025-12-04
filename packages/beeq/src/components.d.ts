@@ -2832,7 +2832,7 @@ export namespace Components {
          */
         "disabled"?: boolean;
         /**
-          * If true, the Tag component will hidden (only if removable = `true`)
+          * If true, the Tag component will hidden
          */
         "hidden": boolean;
         /**
@@ -8360,7 +8360,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * If true, the Tag component will hidden (only if removable = `true`)
+          * If true, the Tag component will hidden
          */
         "hidden"?: boolean;
         /**

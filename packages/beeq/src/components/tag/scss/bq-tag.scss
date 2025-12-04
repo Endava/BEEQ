@@ -8,7 +8,7 @@
   @apply relative inline-block;
 }
 
-:host([removable][hidden]) {
+:host([hidden]) {
   @apply hidden;
 }
 

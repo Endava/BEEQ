@@ -100,7 +100,7 @@ export class BqTag {
   /** If true, the Tag will be disabled (only if clickable = `true`, no interaction allowed) */
   @Prop({ reflect: true }) disabled?: boolean = false;
 
-  /** If true, the Tag component will hidden (only if removable = `true`) */
+  /** If true, the Tag component will hidden */
   @Prop({ reflect: true, mutable: true }) hidden: boolean;
 
   /** If true, the Tag component can be removed */
@@ -239,10 +239,6 @@ export class BqTag {
     return this.removable && !this.isClickable;
   }
 
-  private get isHidden(): boolean {
-    return this.isRemovable && this.hidden;
-  }
-
   private get hasCustomColor(): boolean {
     return this.color !== undefined ? !TAG_COLOR.includes(this.color) : false;
   }
@@ -286,7 +282,7 @@ export class BqTag {
   render() {
     // Decide the tag element based on whether it's clickable or not for better semantics and accessibility
     const TagElement = this.isClickable ? 'button' : 'div';
-    const hiddenValue = this.isHidden ? 'true' : 'false';
+    const hiddenValue = this.hidden ? 'true' : 'false';
 
     return (
       <Host aria-hidden={hiddenValue} hidden={hiddenValue} style={this.computedHostClasses}>
