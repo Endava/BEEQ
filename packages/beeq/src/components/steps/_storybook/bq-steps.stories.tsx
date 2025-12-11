@@ -3,7 +3,7 @@ import { html, nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 
-import { STEPS_SIZE, STEPS_TYPE } from '../bq-steps.types';
+import { STEPS_ORIENTATION, STEPS_SIZE, STEPS_TYPE } from '../bq-steps.types';
 import mdx from './bq-steps.mdx';
 
 const meta: Meta = {
@@ -16,6 +16,7 @@ const meta: Meta = {
   },
   argTypes: {
     'divider-color': { control: 'text' },
+    orientation: { control: 'select', options: [...STEPS_ORIENTATION] },
     type: { control: 'select', options: [...STEPS_TYPE] },
     size: { control: 'select', options: [...STEPS_SIZE] },
     // Events
@@ -27,6 +28,7 @@ const meta: Meta = {
   },
   args: {
     'divider-color': 'stroke--primary',
+    orientation: 'horizontal',
     size: 'medium',
   },
 };
@@ -35,12 +37,14 @@ export default meta;
 const Template = (args: Args) => {
   return html`
     <bq-steps
+      orientation=${args.orientation}
       divider-color=${args['divider-color']}
       type=${args.type}
       size=${args.size}
       @bqClick=${args.bqClick}
       @bqFocus=${args.bqFocus}
       @bqBlur=${args.bqBlur}
+      style=${args.orientation === 'vertical' ? 'height: 95vh;' : ''}
     >
       ${ifDefined(args.children) ? unsafeHTML(args.children) : nothing}
     </bq-steps>

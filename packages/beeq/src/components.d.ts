@@ -27,7 +27,7 @@ import { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-si
 import { TSliderType, TSliderValue } from "./components/slider/bq-slider.types";
 import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 import { TStatusType } from "./components/status/bq-status.types";
-import { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
+import { TStepsOrientation, TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
 import { TStepItemStatus } from "./components/step-item/bq-step-item.types";
 import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-switch.types";
 import { TTabOrientation, TTabPlacement, TTabSize } from "./components/tab/bq-tab.types";
@@ -56,7 +56,7 @@ export { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-si
 export { TSliderType, TSliderValue } from "./components/slider/bq-slider.types";
 export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 export { TStatusType } from "./components/status/bq-status.types";
-export { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
+export { TStepsOrientation, TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
 export { TStepItemStatus } from "./components/step-item/bq-step-item.types";
 export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-switch.types";
 export { TTabOrientation, TTabPlacement, TTabSize } from "./components/tab/bq-tab.types";
@@ -2495,6 +2495,10 @@ export namespace Components {
          */
         "isLast"?: boolean;
         /**
+          * @default 'horizontal'
+         */
+        "orientation"?: TStepsOrientation;
+        /**
           * It defines prefix size
           * @default 'medium'
          */
@@ -2536,6 +2540,11 @@ export namespace Components {
           * @default 'stroke--primary'
          */
         "dividerColor": string;
+        /**
+          * The orientation of the steps
+          * @default 'horizontal'
+         */
+        "orientation": TStepsOrientation;
         /**
           * Set the current step item.
           * @param newCurrentStep - The step item to set as current.
@@ -8036,6 +8045,10 @@ declare namespace LocalJSX {
          */
         "onBqFocus"?: (event: BqStepItemCustomEvent<HTMLBqStepItemElement>) => void;
         /**
+          * @default 'horizontal'
+         */
+        "orientation"?: TStepsOrientation;
+        /**
           * It defines prefix size
           * @default 'medium'
          */
@@ -8077,6 +8090,11 @@ declare namespace LocalJSX {
           * @default 'stroke--primary'
          */
         "dividerColor"?: string;
+        /**
+          * The orientation of the steps
+          * @default 'horizontal'
+         */
+        "orientation"?: TStepsOrientation;
         /**
           * The size of the steps
           * @default 'medium'
