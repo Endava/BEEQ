@@ -63,22 +63,31 @@ describe('bq-steps', () => {
       `,
     });
 
+    await page.waitForChanges();
+
     const steps = await page.findAll('bq-step-item');
     expect(steps).toHaveLength(2);
 
     const step1 = steps[0];
     const step2 = steps[1];
 
-    await step1.click();
+    expect(step1.getAttribute('status')).toBe('default');
+    expect(step2.getAttribute('status')).toBe('default');
+
+    page.$eval('bq-step-item', (item) => {
+      (item as HTMLElement).shadowRoot.querySelector('button')?.click();
+    });
     await page.waitForChanges();
 
     expect(step1.getAttribute('status')).toBe('current');
     expect(step2.getAttribute('status')).toBe('default');
 
-    await step2.click();
+    page.$eval('bq-steps bq-step-item:nth-child(2)', (item) => {
+      (item as HTMLElement).shadowRoot.querySelector('button')?.click();
+    });
     await page.waitForChanges();
 
-    expect(step2.getAttribute('status')).toBe('current');
     expect(step1.getAttribute('status')).toBe('default');
+    expect(step2.getAttribute('status')).toBe('current');
   });
 });
