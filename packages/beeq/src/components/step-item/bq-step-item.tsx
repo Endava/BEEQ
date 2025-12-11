@@ -73,7 +73,7 @@ export class BqStepItem {
   @Prop({ reflect: true }) dividerColor: string = 'stroke--primary';
 
   /** @internal It defines if the step item is the last one */
-  @Prop({ reflect: true }) isLast?: boolean = false;
+  @Prop() isLast?: boolean = false;
 
   /** It defines prefix size */
   @Prop({ reflect: true }) size?: TStepsSize = 'medium';

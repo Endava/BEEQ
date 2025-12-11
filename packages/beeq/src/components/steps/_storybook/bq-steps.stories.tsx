@@ -136,7 +136,7 @@ export const Numbers: StoryObj = {
         <span slot="description">Description</span>
       </bq-step-item>
       <bq-step-item status="disabled">
-        <span aria-label="Step 4" slot="prefix">4</span>
+        <span aria-label="Step 5" slot="prefix">5</span>
         <span>Title</span>
         <span slot="description">Description</span>
       </bq-step-item>
