@@ -3,7 +3,7 @@ import { Component, Element, Event, h, Prop, Watch } from '@stencil/core';
 
 import { isHTMLElement, validatePropValue } from '../../shared/utils';
 import type { TStepsOrientation, TStepsSize, TStepsType } from '../steps/bq-steps.types';
-import { STEPS_SIZE } from '../steps/bq-steps.types';
+import { STEPS_ORIENTATION, STEPS_SIZE } from '../steps/bq-steps.types';
 import type { TStepItemStatus } from './bq-step-item.types';
 import { STEP_ITEM_STATUS } from './bq-step-item.types';
 
@@ -76,7 +76,7 @@ export class BqStepItem {
   /** @internal It defines if the step item is the last one */
   @Prop({ reflect: true }) isLast?: boolean = false;
 
-  /** @internal It defines the orientation of the step item */
+  /** It defines the orientation of the step item */
   @Prop({ reflect: true }) orientation?: TStepsOrientation = 'horizontal';
 
   /** It defines prefix size */
@@ -94,6 +94,7 @@ export class BqStepItem {
   @Watch('size')
   @Watch('status')
   checkPropValues() {
+    validatePropValue(STEPS_ORIENTATION, 'horizontal', this.el, 'orientation');
     validatePropValue(STEPS_SIZE, 'medium', this.el, 'size');
     validatePropValue(STEP_ITEM_STATUS, 'default', this.el, 'status');
 
