@@ -24,6 +24,7 @@ import { STEPS_ORIENTATION, STEPS_SIZE, STEPS_TYPE } from './bq-steps.types';
  * @dependency bq-divider
  *
  * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
+ * @attr {"horizontal" | "vertical"} orientation - The orientation of the steps
  * @attr {"medium" | "small"} size - The size of the steps
  * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
  *

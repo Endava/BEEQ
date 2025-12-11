@@ -24,6 +24,7 @@ import { STEP_ITEM_STATUS } from './bq-step-item.types';
  * @status stable
  *
  * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
+ * @attr {"horizontal" | "vertical"} orientation - The orientation of the step item
  * @attr {"small" | "medium"} size - It defines prefix size
  * @attr {"completed" | "current" | "error" | "default" | "disabled"} status - It defines step item appearance based on its status
  * @attr {"numeric" | "icon" | "dot"} type - It defines the step item type used
