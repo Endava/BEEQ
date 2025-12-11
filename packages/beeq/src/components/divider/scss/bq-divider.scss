@@ -5,7 +5,11 @@
 @import './bq-divider.variables';
 
 :host {
-  @apply block is-full;
+  @apply inline-flex;
+}
+
+:host([orientation='horizontal']) {
+  @apply is-full;
 }
 
 :host([orientation='vertical']) {
@@ -29,10 +33,14 @@
   @apply flex-grow-0 basis-[--bq-divider--stroke-basis];
 }
 
+.bq-divider--horizontal {
+  @apply flex-grow;
+}
+
 .bq-divider--vertical {
-  @apply flex-col items-center gap-[--bq-divider--title-marginX] is-full;
+  @apply bs-full flex-col items-center gap-[--bq-divider--title-marginX];
 
   .bq-divider--stroke {
-    @apply bs-full is-[--bq-divider--stroke-thickness];
+    @apply is-[--bq-divider--stroke-thickness];
   }
 }
