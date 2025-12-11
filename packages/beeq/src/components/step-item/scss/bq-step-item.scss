@@ -6,8 +6,6 @@
 
 :host {
   --bq-icon--color: theme(stroke.icon.primary);
-  // !Note: The use of the `bg-primary` is to avoid the divider to be visible behind the step item.
-  @apply bg-primary;
 }
 
 .bq-step-item {

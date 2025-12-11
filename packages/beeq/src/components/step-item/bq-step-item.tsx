@@ -66,6 +66,12 @@ export class BqStepItem {
   // Public Property API
   // ========================
 
+  /** The color of the line that connects the steps. It should be a valid declarative color token. */
+  @Prop({ reflect: true }) dividerColor: string = 'stroke--primary';
+
+  /** @internal It defines if the step item is the last one */
+  @Prop({ reflect: true }) isLast?: boolean = false;
+
   /** It defines prefix size */
   @Prop({ reflect: true }) size?: TStepsSize = 'medium';
 
@@ -172,46 +178,59 @@ export class BqStepItem {
 
   render() {
     return (
-      <button
-        class={{
-          'bq-step-item': true,
-          [`bq-step-item--${this.status}`]: true,
-          'pointer-events-none opacity-60': this.isDisabled,
-        }}
-        disabled={this.isDisabled}
-        onBlur={this.handleBlur}
-        onClick={this.handleClick}
-        onFocus={this.handleFocus}
-        part="base"
-        type="button"
-      >
-        <div class={`bq-step-item__prefix relative ${this.type} ${this.size} ${this.status}`}>
-          <slot name="prefix" onSlotchange={this.handleIconPrefix} />
-        </div>
-        <div class="bq-step-item__content items-start text-start">
-          {/* TITLE */}
-          <div
-            class={{
-              'bq-step-item__content--title pe-xs3 text-m text-primary leading-regular': true,
-              'pointer-events-none': this.isDisabled,
-              'text-brand': this.isCurrent,
-            }}
-            part="title"
-          >
-            <slot />
+      <div class="flex" role="listitem">
+        <button
+          class={{
+            'bq-step-item': true,
+            [`bq-step-item--${this.status}`]: true,
+            'pointer-events-none opacity-60': this.isDisabled,
+          }}
+          disabled={this.isDisabled}
+          onBlur={this.handleBlur}
+          onClick={this.handleClick}
+          onFocus={this.handleFocus}
+          aria-current={this.isCurrent ? 'step' : undefined}
+          type="button"
+          part="base"
+        >
+          <div class={`bq-step-item__prefix relative ${this.type} ${this.size} ${this.status}`}>
+            <slot name="prefix" onSlotchange={this.handleIconPrefix} />
           </div>
-          {/* DESCRIPTION */}
-          <div
-            class={{
-              'bq-step-item__content--description text-s text-secondary leading-regular': true,
-              'opacity-60': this.isDisabled,
-            }}
-            part="description"
-          >
-            <slot name="description" />
+          <div class="bq-step-item__content items-start text-start">
+            {/* TITLE */}
+            <div
+              class={{
+                'bq-step-item__content--title pe-xs3 text-m text-primary leading-regular': true,
+                'pointer-events-none': this.isDisabled,
+                'text-brand': this.isCurrent,
+              }}
+              part="title"
+            >
+              <slot />
+            </div>
+            {/* DESCRIPTION */}
+            <div
+              class={{
+                'bq-step-item__content--description text-s text-secondary leading-regular': true,
+                'opacity-60': this.isDisabled,
+              }}
+              part="description"
+            >
+              <slot name="description" />
+            </div>
           </div>
-        </div>
-      </button>
+        </button>
+        {!this.isLast && (
+          // biome-ignore lint/a11y/noAriaHiddenOnFocusable: The <bq-divider> is not focusable and is only decorative
+          <bq-divider
+            class="[&::part(base)]:m-m"
+            exportparts="base:divider-base,dash-start:divider-dash-start,dash-end:divider-dash-end"
+            strokeColor={this.dividerColor}
+            strokeThickness={2}
+            aria-hidden="true"
+          />
+        )}
+      </div>
     );
   }
 }

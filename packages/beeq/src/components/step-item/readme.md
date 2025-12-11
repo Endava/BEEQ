@@ -12,11 +12,12 @@ It should be used inside the Steps component.
 
 ## Properties
 
-| Property | Attribute | Description                                         | Type                                                             | Default     |
-| -------- | --------- | --------------------------------------------------- | ---------------------------------------------------------------- | ----------- |
-| `size`   | `size`    | It defines prefix size                              | `"medium" \| "small"`                                            | `'medium'`  |
-| `status` | `status`  | It defines step item appearance based on its status | `"completed" \| "current" \| "default" \| "disabled" \| "error"` | `'default'` |
-| `type`   | `type`    | It defines the step item type used                  | `"dot" \| "icon" \| "numeric"`                                   | `undefined` |
+| Property       | Attribute       | Description                                                                                  | Type                                                             | Default             |
+| -------------- | --------------- | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | ------------------- |
+| `dividerColor` | `divider-color` | The color of the line that connects the steps. It should be a valid declarative color token. | `string`                                                         | `'stroke--primary'` |
+| `size`         | `size`          | It defines prefix size                                                                       | `"medium" \| "small"`                                            | `'medium'`          |
+| `status`       | `status`        | It defines step item appearance based on its status                                          | `"completed" \| "current" \| "default" \| "disabled" \| "error"` | `'default'`         |
+| `type`         | `type`          | It defines the step item type used                                                           | `"dot" \| "icon" \| "numeric"`                                   | `undefined`         |
 
 
 ## Events
@@ -45,6 +46,19 @@ It should be used inside the Steps component.
 | `"description"` | The component's description.  |
 | `"title"`       | The component's title.        |
 
+
+## Dependencies
+
+### Depends on
+
+- [bq-divider](../divider)
+
+### Graph
+```mermaid
+graph TD;
+  bq-step-item --> bq-divider
+  style bq-step-item fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 
