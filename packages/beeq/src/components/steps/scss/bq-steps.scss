@@ -5,9 +5,9 @@
 @import './bq-steps.variables';
 
 :host {
-  @apply block;
+  @apply box-border inline-flex;
 }
 
-::slotted(bq-step-item:not(:first-child)) {
-  @apply ps-[--bq-steps--gap];
+:host([orientation='vertical']) {
+  @apply flex bs-full;
 }

@@ -27,7 +27,7 @@ import { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-si
 import { TSliderType, TSliderValue } from "./components/slider/bq-slider.types";
 import { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 import { TStatusType } from "./components/status/bq-status.types";
-import { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
+import { TStepsOrientation, TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
 import { TStepItemStatus } from "./components/step-item/bq-step-item.types";
 import { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-switch.types";
 import { TTabOrientation, TTabPlacement, TTabSize } from "./components/tab/bq-tab.types";
@@ -56,7 +56,7 @@ export { TSideMenuAppearance, TSideMenuSize } from "./components/side-menu/bq-si
 export { TSliderType, TSliderValue } from "./components/slider/bq-slider.types";
 export { TSpinnerSize, TSpinnerTextPosition } from "./components/spinner/bq-spinner.types";
 export { TStatusType } from "./components/status/bq-status.types";
-export { TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
+export { TStepsOrientation, TStepsSize, TStepsType } from "./components/steps/bq-steps.types";
 export { TStepItemStatus } from "./components/step-item/bq-step-item.types";
 export { TSwitchInnerLabel, TSwitchJustifyContent } from "./components/switch/bq-switch.types";
 export { TTabOrientation, TTabPlacement, TTabSize } from "./components/tab/bq-tab.types";
@@ -2470,10 +2470,14 @@ export namespace Components {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
      * @status stable
+     * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
+     * @attr {"horizontal" | "vertical"} orientation - The orientation of the step item
      * @attr {"small" | "medium"} size - It defines prefix size
      * @attr {"completed" | "current" | "error" | "default" | "disabled"} status - It defines step item appearance based on its status
      * @attr {"numeric" | "icon" | "dot"} type - It defines the step item type used
      * @event bqClick - Callback handler emitted when the step item is clicked
+     * @event bqFocus - Callback handler emitted when the step item is focused
+     * @event bqBlur - Callback handler emitted when the step item loses focus
      * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
      * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
      * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
@@ -2482,6 +2486,20 @@ export namespace Components {
      * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
      */
     interface BqStepItem {
+        /**
+          * The color of the line that connects the steps. It should be a valid declarative color token.
+          * @default 'stroke--primary'
+         */
+        "dividerColor": string;
+        /**
+          * @default false
+         */
+        "isLast"?: boolean;
+        /**
+          * It defines the orientation of the step item
+          * @default 'horizontal'
+         */
+        "orientation"?: TStepsOrientation;
         /**
           * It defines prefix size
           * @default 'medium'
@@ -2513,6 +2531,7 @@ export namespace Components {
      * @status stable
      * @dependency bq-divider
      * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
+     * @attr {"horizontal" | "vertical"} orientation - The orientation of the steps
      * @attr {"medium" | "small"} size - The size of the steps
      * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
      * @cssprop --bq-steps--divider-color - Divider color
@@ -2524,6 +2543,11 @@ export namespace Components {
           * @default 'stroke--primary'
          */
         "dividerColor": string;
+        /**
+          * The orientation of the steps
+          * @default 'horizontal'
+         */
+        "orientation": TStepsOrientation;
         /**
           * Set the current step item.
           * @param newCurrentStep - The step item to set as current.
@@ -4904,10 +4928,14 @@ declare global {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
      * @status stable
+     * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
+     * @attr {"horizontal" | "vertical"} orientation - The orientation of the step item
      * @attr {"small" | "medium"} size - It defines prefix size
      * @attr {"completed" | "current" | "error" | "default" | "disabled"} status - It defines step item appearance based on its status
      * @attr {"numeric" | "icon" | "dot"} type - It defines the step item type used
      * @event bqClick - Callback handler emitted when the step item is clicked
+     * @event bqFocus - Callback handler emitted when the step item is focused
+     * @event bqBlur - Callback handler emitted when the step item loses focus
      * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
      * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
      * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
@@ -4945,6 +4973,7 @@ declare global {
      * @status stable
      * @dependency bq-divider
      * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
+     * @attr {"horizontal" | "vertical"} orientation - The orientation of the steps
      * @attr {"medium" | "small"} size - The size of the steps
      * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
      * @cssprop --bq-steps--divider-color - Divider color
@@ -7984,10 +8013,14 @@ declare namespace LocalJSX {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
      * @status stable
+     * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
+     * @attr {"horizontal" | "vertical"} orientation - The orientation of the step item
      * @attr {"small" | "medium"} size - It defines prefix size
      * @attr {"completed" | "current" | "error" | "default" | "disabled"} status - It defines step item appearance based on its status
      * @attr {"numeric" | "icon" | "dot"} type - It defines the step item type used
      * @event bqClick - Callback handler emitted when the step item is clicked
+     * @event bqFocus - Callback handler emitted when the step item is focused
+     * @event bqBlur - Callback handler emitted when the step item loses focus
      * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
      * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
      * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
@@ -7996,6 +8029,15 @@ declare namespace LocalJSX {
      * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
      */
     interface BqStepItem {
+        /**
+          * The color of the line that connects the steps. It should be a valid declarative color token.
+          * @default 'stroke--primary'
+         */
+        "dividerColor"?: string;
+        /**
+          * @default false
+         */
+        "isLast"?: boolean;
         /**
           * Callback handler triggered when the step item loses focus
          */
@@ -8008,6 +8050,11 @@ declare namespace LocalJSX {
           * Callback handler triggered when the step item is focused
          */
         "onBqFocus"?: (event: BqStepItemCustomEvent<HTMLBqStepItemElement>) => void;
+        /**
+          * It defines the orientation of the step item
+          * @default 'horizontal'
+         */
+        "orientation"?: TStepsOrientation;
         /**
           * It defines prefix size
           * @default 'medium'
@@ -8039,6 +8086,7 @@ declare namespace LocalJSX {
      * @status stable
      * @dependency bq-divider
      * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
+     * @attr {"horizontal" | "vertical"} orientation - The orientation of the steps
      * @attr {"medium" | "small"} size - The size of the steps
      * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
      * @cssprop --bq-steps--divider-color - Divider color
@@ -8050,6 +8098,11 @@ declare namespace LocalJSX {
           * @default 'stroke--primary'
          */
         "dividerColor"?: string;
+        /**
+          * The orientation of the steps
+          * @default 'horizontal'
+         */
+        "orientation"?: TStepsOrientation;
         /**
           * The size of the steps
           * @default 'medium'
@@ -9969,10 +10022,14 @@ declare module "@stencil/core" {
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
              * @status stable
+             * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
+             * @attr {"horizontal" | "vertical"} orientation - The orientation of the step item
              * @attr {"small" | "medium"} size - It defines prefix size
              * @attr {"completed" | "current" | "error" | "default" | "disabled"} status - It defines step item appearance based on its status
              * @attr {"numeric" | "icon" | "dot"} type - It defines the step item type used
              * @event bqClick - Callback handler emitted when the step item is clicked
+             * @event bqFocus - Callback handler emitted when the step item is focused
+             * @event bqBlur - Callback handler emitted when the step item loses focus
              * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
              * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
              * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
@@ -9997,6 +10054,7 @@ declare module "@stencil/core" {
              * @status stable
              * @dependency bq-divider
              * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
+             * @attr {"horizontal" | "vertical"} orientation - The orientation of the steps
              * @attr {"medium" | "small"} size - The size of the steps
              * @attr {"numeric" | "icon" | "dot"} type - The type of prefix element to use on the step items
              * @cssprop --bq-steps--divider-color - Divider color

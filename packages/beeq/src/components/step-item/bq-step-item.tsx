@@ -2,8 +2,8 @@ import type { EventEmitter } from '@stencil/core';
 import { Component, Element, Event, h, Prop, Watch } from '@stencil/core';
 
 import { isHTMLElement, validatePropValue } from '../../shared/utils';
-import type { TStepsSize, TStepsType } from '../steps/bq-steps.types';
-import { STEPS_SIZE } from '../steps/bq-steps.types';
+import type { TStepsOrientation, TStepsSize, TStepsType } from '../steps/bq-steps.types';
+import { STEPS_ORIENTATION, STEPS_SIZE } from '../steps/bq-steps.types';
 import type { TStepItemStatus } from './bq-step-item.types';
 import { STEP_ITEM_STATUS } from './bq-step-item.types';
 
@@ -23,11 +23,15 @@ import { STEP_ITEM_STATUS } from './bq-step-item.types';
  * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
  * @status stable
  *
+ * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
+ * @attr {"horizontal" | "vertical"} orientation - The orientation of the step item
  * @attr {"small" | "medium"} size - It defines prefix size
  * @attr {"completed" | "current" | "error" | "default" | "disabled"} status - It defines step item appearance based on its status
  * @attr {"numeric" | "icon" | "dot"} type - It defines the step item type used
  *
  * @event bqClick - Callback handler emitted when the step item is clicked
+ * @event bqFocus - Callback handler emitted when the step item is focused
+ * @event bqBlur - Callback handler emitted when the step item loses focus
  *
  * @slot - The step item content
  * @slot prefix - The step item prefix
@@ -66,6 +70,15 @@ export class BqStepItem {
   // Public Property API
   // ========================
 
+  /** The color of the line that connects the steps. It should be a valid declarative color token. */
+  @Prop({ reflect: true }) dividerColor: string = 'stroke--primary';
+
+  /** @internal It defines if the step item is the last one */
+  @Prop({ reflect: true }) isLast?: boolean = false;
+
+  /** It defines the orientation of the step item */
+  @Prop({ reflect: true }) orientation?: TStepsOrientation = 'horizontal';
+
   /** It defines prefix size */
   @Prop({ reflect: true }) size?: TStepsSize = 'medium';
 
@@ -81,6 +94,7 @@ export class BqStepItem {
   @Watch('size')
   @Watch('status')
   checkPropValues() {
+    validatePropValue(STEPS_ORIENTATION, 'horizontal', this.el, 'orientation');
     validatePropValue(STEPS_SIZE, 'medium', this.el, 'size');
     validatePropValue(STEP_ITEM_STATUS, 'default', this.el, 'status');
 
@@ -171,47 +185,66 @@ export class BqStepItem {
   // ===================================
 
   render() {
+    const isVertical = this.orientation === 'vertical';
+
     return (
-      <button
-        class={{
-          'bq-step-item': true,
-          [`bq-step-item--${this.status}`]: true,
-          'pointer-events-none opacity-60': this.isDisabled,
-        }}
-        disabled={this.isDisabled}
-        onBlur={this.handleBlur}
-        onClick={this.handleClick}
-        onFocus={this.handleFocus}
-        part="base"
-        type="button"
-      >
-        <div class={`bq-step-item__prefix relative ${this.type} ${this.size} ${this.status}`}>
-          <slot name="prefix" onSlotchange={this.handleIconPrefix} />
-        </div>
-        <div class="bq-step-item__content items-start text-start">
-          {/* TITLE */}
-          <div
-            class={{
-              'bq-step-item__content--title pe-xs3 text-m text-primary leading-regular': true,
-              'pointer-events-none': this.isDisabled,
-              'text-brand': this.isCurrent,
-            }}
-            part="title"
-          >
-            <slot />
+      <div class={{ 'inline-flex': true, 'flex-row': !isVertical, 'flex-col': isVertical }} role="listitem">
+        <button
+          class={{
+            'bq-step-item': true,
+            [`bq-step-item--${this.status}`]: true,
+            'pointer-events-none opacity-60': this.isDisabled,
+          }}
+          disabled={this.isDisabled}
+          onBlur={this.handleBlur}
+          onClick={this.handleClick}
+          onFocus={this.handleFocus}
+          aria-current={this.isCurrent ? 'step' : undefined}
+          type="button"
+          part="base"
+        >
+          <div class={`bq-step-item__prefix relative ${this.type} ${this.size} ${this.status}`}>
+            <slot name="prefix" onSlotchange={this.handleIconPrefix} />
           </div>
-          {/* DESCRIPTION */}
-          <div
-            class={{
-              'bq-step-item__content--description text-s text-secondary leading-regular': true,
-              'opacity-60': this.isDisabled,
-            }}
-            part="description"
-          >
-            <slot name="description" />
+          <div class="bq-step-item__content items-start text-start">
+            {/* TITLE */}
+            <div
+              class={{
+                'bq-step-item__content--title pe-xs3 text-m text-primary leading-regular': true,
+                'pointer-events-none': this.isDisabled,
+                'text-brand': this.isCurrent,
+              }}
+              part="title"
+            >
+              <slot />
+            </div>
+            {/* DESCRIPTION */}
+            <div
+              class={{
+                'bq-step-item__content--description text-s text-secondary leading-regular': true,
+                'opacity-60': this.isDisabled,
+              }}
+              part="description"
+            >
+              <slot name="description" />
+            </div>
           </div>
-        </div>
-      </button>
+        </button>
+        {!this.isLast && (
+          // biome-ignore lint/a11y/noAriaHiddenOnFocusable: The <bq-divider> is not focusable and is only decorative
+          <bq-divider
+            class={{
+              '[&::part(base)]:self-start [&::part(base)]:p-m': true,
+              '[&::part(base)]:p-s': isVertical && this.size === 'small',
+            }}
+            exportparts="base:divider-base,dash-start:divider-dash-start,dash-end:divider-dash-end"
+            orientation={this.orientation}
+            strokeColor={this.dividerColor}
+            strokeThickness={2}
+            aria-hidden="true"
+          />
+        )}
+      </div>
     );
   }
 }
