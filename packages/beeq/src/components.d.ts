@@ -2483,6 +2483,15 @@ export namespace Components {
      */
     interface BqStepItem {
         /**
+          * The color of the line that connects the steps. It should be a valid declarative color token.
+          * @default 'stroke--primary'
+         */
+        "dividerColor": string;
+        /**
+          * @default false
+         */
+        "isLast"?: boolean;
+        /**
           * It defines prefix size
           * @default 'medium'
          */
@@ -7996,6 +8005,15 @@ declare namespace LocalJSX {
      * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
      */
     interface BqStepItem {
+        /**
+          * The color of the line that connects the steps. It should be a valid declarative color token.
+          * @default 'stroke--primary'
+         */
+        "dividerColor"?: string;
+        /**
+          * @default false
+         */
+        "isLast"?: boolean;
         /**
           * Callback handler triggered when the step item loses focus
          */
