@@ -2470,10 +2470,13 @@ export namespace Components {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
      * @status stable
+     * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
      * @attr {"small" | "medium"} size - It defines prefix size
      * @attr {"completed" | "current" | "error" | "default" | "disabled"} status - It defines step item appearance based on its status
      * @attr {"numeric" | "icon" | "dot"} type - It defines the step item type used
      * @event bqClick - Callback handler emitted when the step item is clicked
+     * @event bqFocus - Callback handler emitted when the step item is focused
+     * @event bqBlur - Callback handler emitted when the step item loses focus
      * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
      * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
      * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
@@ -4913,10 +4916,13 @@ declare global {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
      * @status stable
+     * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
      * @attr {"small" | "medium"} size - It defines prefix size
      * @attr {"completed" | "current" | "error" | "default" | "disabled"} status - It defines step item appearance based on its status
      * @attr {"numeric" | "icon" | "dot"} type - It defines the step item type used
      * @event bqClick - Callback handler emitted when the step item is clicked
+     * @event bqFocus - Callback handler emitted when the step item is focused
+     * @event bqBlur - Callback handler emitted when the step item loses focus
      * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
      * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
      * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
@@ -7993,10 +7999,13 @@ declare namespace LocalJSX {
      * ```
      * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
      * @status stable
+     * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
      * @attr {"small" | "medium"} size - It defines prefix size
      * @attr {"completed" | "current" | "error" | "default" | "disabled"} status - It defines step item appearance based on its status
      * @attr {"numeric" | "icon" | "dot"} type - It defines the step item type used
      * @event bqClick - Callback handler emitted when the step item is clicked
+     * @event bqFocus - Callback handler emitted when the step item is focused
+     * @event bqBlur - Callback handler emitted when the step item loses focus
      * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
      * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
      * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
@@ -9987,10 +9996,13 @@ declare module "@stencil/core" {
              * ```
              * @documentation https://www.beeq.design/3d466e231/p/896b66-stepper
              * @status stable
+             * @attr {string} divider-color - The color of the line that connects the steps. It should be a valid declarative color token.
              * @attr {"small" | "medium"} size - It defines prefix size
              * @attr {"completed" | "current" | "error" | "default" | "disabled"} status - It defines step item appearance based on its status
              * @attr {"numeric" | "icon" | "dot"} type - It defines the step item type used
              * @event bqClick - Callback handler emitted when the step item is clicked
+             * @event bqFocus - Callback handler emitted when the step item is focused
+             * @event bqBlur - Callback handler emitted when the step item loses focus
              * @cssprop --bq-step-item--prefix-color - Color of the prefix icon
              * @cssprop --bq-step-item--prefix-color-current - Color of the prefix icon when current
              * @cssprop --bq-step-item--prefix-color-completed - Color of the prefix icon when completed
