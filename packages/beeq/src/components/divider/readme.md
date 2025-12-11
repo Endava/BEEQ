@@ -45,13 +45,13 @@ The Divider component is used to visually separate content in a layout.
 ### Used by
 
  - [bq-drawer](../drawer)
- - [bq-steps](../steps)
+ - [bq-step-item](../step-item)
 
 ### Graph
 ```mermaid
 graph TD;
   bq-drawer --> bq-divider
-  bq-steps --> bq-divider
+  bq-step-item --> bq-divider
   style bq-divider fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

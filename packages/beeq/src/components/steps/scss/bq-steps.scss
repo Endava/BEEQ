@@ -7,7 +7,3 @@
 :host {
   @apply block;
 }
-
-::slotted(bq-step-item:not(:first-child)) {
-  @apply ps-[--bq-steps--gap];
-}

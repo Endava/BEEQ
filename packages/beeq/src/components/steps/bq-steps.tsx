@@ -72,6 +72,7 @@ export class BqSteps {
   // Prop lifecycle events
   // =======================
 
+  @Watch('dividerColor')
   @Watch('type')
   @Watch('size')
   checkPropValues() {
@@ -110,7 +111,7 @@ export class BqSteps {
   async setCurrentStepItem(newCurrentStep: HTMLBqStepItemElement): Promise<void> {
     // Ideally, only one step item should be current.
     // So we change the status of the current step item to default.
-    const currentStep = this.bqSteps.find((step) => step.status === 'current');
+    const currentStep = this.bqSteps.find((step: HTMLBqStepItemElement) => step.status === 'current');
     if (currentStep) currentStep.status = 'default';
     // And then we set the status of the new current step item to current.
     newCurrentStep.status = 'current';
@@ -126,40 +127,38 @@ export class BqSteps {
 
     const slot = this.stepElem.querySelector('slot');
     return [...slot.assignedElements({ flatten: true })].filter(
-      (el: HTMLBqSideMenuItemElement) => el.tagName.toLowerCase() === 'bq-step-item',
-    ) as [HTMLBqSideMenuItemElement];
+      (el: HTMLBqStepItemElement) => el.tagName.toLowerCase() === 'bq-step-item',
+    ) as [HTMLBqStepItemElement];
   }
 
   private setStepItemProps = () => {
     this.bqSteps.forEach((bqStepElem: HTMLBqStepItemElement) => {
+      bqStepElem.isLast = bqStepElem === this.lastStepItem;
+      bqStepElem.dividerColor = this.dividerColor;
       bqStepElem.size = this.size;
       bqStepElem.type = this.type;
     });
   };
+
+  private get lastStepItem(): HTMLBqStepItemElement | undefined {
+    return this.bqSteps.at(-1);
+  }
 
   // render() function
   // Always the last one in the class.
   // ===================================
 
   render() {
-    // !Note: We use a custom padding value for the medium size to avoid misalignment between the steps and the divider.
-    const dividerPaddingTop = this.size === 'small' ? 'p-bs-m' : 'p-bs-5';
-
     return (
       <div
         class="relative flex w-full items-start justify-between"
         part="container"
+        role="list"
         ref={(div) => {
           this.stepElem = div;
         }}
       >
         <slot />
-        <bq-divider
-          class={`-z-10 absolute inset-ie-0 inset-is-0 p-i-s ${dividerPaddingTop}`}
-          exportparts="base:divider-base,dash-start:divider-dash-start,dash-end:divider-dash-end"
-          strokeColor={this.dividerColor}
-          strokeThickness={2}
-        />
       </div>
     );
   }
