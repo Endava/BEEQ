@@ -1,8 +1,8 @@
 import { Component, Element, h, Method, Prop, Watch } from '@stencil/core';
 
 import { validatePropValue } from '../../shared/utils';
-import type { TStepsSize, TStepsType } from './bq-steps.types';
-import { STEPS_SIZE, STEPS_TYPE } from './bq-steps.types';
+import type { TStepsOrientation, TStepsSize, TStepsType } from './bq-steps.types';
+import { STEPS_ORIENTATION, STEPS_SIZE, STEPS_TYPE } from './bq-steps.types';
 
 /**
  * The Steps Component is a UI element used to display a series of steps or stages in a process or task.
@@ -63,6 +63,9 @@ export class BqSteps {
   /** The color of the line that connects the steps. It should be a valid declarative color token. */
   @Prop({ reflect: true }) dividerColor: string = 'stroke--primary';
 
+  /** The orientation of the steps */
+  @Prop({ reflect: true }) orientation: TStepsOrientation = 'horizontal';
+
   /** The size of the steps */
   @Prop({ reflect: true }) size: TStepsSize = 'medium';
 
@@ -73,9 +76,11 @@ export class BqSteps {
   // =======================
 
   @Watch('dividerColor')
+  @Watch('orientation')
   @Watch('type')
   @Watch('size')
   checkPropValues() {
+    validatePropValue(STEPS_ORIENTATION, 'horizontal', this.el, 'orientation');
     validatePropValue(STEPS_SIZE, 'medium', this.el, 'size');
     validatePropValue(STEPS_TYPE, 'numeric', this.el, 'type');
 
@@ -135,6 +140,7 @@ export class BqSteps {
     this.bqSteps.forEach((bqStepElem: HTMLBqStepItemElement) => {
       bqStepElem.isLast = bqStepElem === this.lastStepItem;
       bqStepElem.dividerColor = this.dividerColor;
+      bqStepElem.orientation = this.orientation;
       bqStepElem.size = this.size;
       bqStepElem.type = this.type;
     });
@@ -151,7 +157,11 @@ export class BqSteps {
   render() {
     return (
       <div
-        class="relative flex w-full items-start justify-between"
+        class={{
+          'relative inline-flex items-start justify-between': true,
+          'is-full flex-row': this.orientation === 'horizontal',
+          'bs-full flex-col': this.orientation === 'vertical',
+        }}
         part="container"
         role="list"
         ref={(div) => {

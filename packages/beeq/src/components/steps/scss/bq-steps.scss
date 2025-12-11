@@ -5,5 +5,9 @@
 @import './bq-steps.variables';
 
 :host {
-  @apply block;
+  @apply box-border inline-flex;
+}
+
+:host([orientation='vertical']) {
+  @apply flex bs-full;
 }
