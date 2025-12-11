@@ -34,7 +34,7 @@ describe('bq-step-item', () => {
 
     const text = await page.$eval('bq-step-item', (element) => {
       const slotElement = element.shadowRoot.querySelector('.bq-step-item__content--title').querySelector('slot');
-      const assignedElements = (slotElement as HTMLSlotElement).assignedElements({ flatten: true })[0];
+      const assignedElements = slotElement.assignedElements({ flatten: true })[0];
 
       return assignedElements.textContent;
     });
