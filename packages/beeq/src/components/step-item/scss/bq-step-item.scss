@@ -6,6 +6,16 @@
 
 :host {
   --bq-icon--color: theme(stroke.icon.primary);
+
+  @apply box-border inline-flex;
+}
+
+:host([orientation='vertical']) {
+  @apply flex flex-1;
+}
+
+:host([orientation='vertical'][is-last]) {
+  @apply flex-[0_0_auto];
 }
 
 .bq-step-item {

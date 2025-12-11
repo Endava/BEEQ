@@ -2,7 +2,7 @@ import type { EventEmitter } from '@stencil/core';
 import { Component, Element, Event, h, Prop, Watch } from '@stencil/core';
 
 import { isHTMLElement, validatePropValue } from '../../shared/utils';
-import type { TStepsSize, TStepsType } from '../steps/bq-steps.types';
+import type { TStepsOrientation, TStepsSize, TStepsType } from '../steps/bq-steps.types';
 import { STEPS_SIZE } from '../steps/bq-steps.types';
 import type { TStepItemStatus } from './bq-step-item.types';
 import { STEP_ITEM_STATUS } from './bq-step-item.types';
@@ -73,7 +73,10 @@ export class BqStepItem {
   @Prop({ reflect: true }) dividerColor: string = 'stroke--primary';
 
   /** @internal It defines if the step item is the last one */
-  @Prop() isLast?: boolean = false;
+  @Prop({ reflect: true }) isLast?: boolean = false;
+
+  /** @internal It defines the orientation of the step item */
+  @Prop({ reflect: true }) orientation?: TStepsOrientation = 'horizontal';
 
   /** It defines prefix size */
   @Prop({ reflect: true }) size?: TStepsSize = 'medium';
@@ -180,8 +183,10 @@ export class BqStepItem {
   // ===================================
 
   render() {
+    const isVertical = this.orientation === 'vertical';
+
     return (
-      <div class="flex" role="listitem">
+      <div class={{ 'inline-flex': true, 'flex-row': !isVertical, 'flex-col': isVertical }} role="listitem">
         <button
           class={{
             'bq-step-item': true,
@@ -226,8 +231,12 @@ export class BqStepItem {
         {!this.isLast && (
           // biome-ignore lint/a11y/noAriaHiddenOnFocusable: The <bq-divider> is not focusable and is only decorative
           <bq-divider
-            class="[&::part(base)]:m-m"
+            class={{
+              '[&::part(base)]:self-start [&::part(base)]:p-m': true,
+              '[&::part(base)]:p-s': isVertical && this.size === 'small',
+            }}
             exportparts="base:divider-base,dash-start:divider-dash-start,dash-end:divider-dash-end"
+            orientation={this.orientation}
             strokeColor={this.dividerColor}
             strokeThickness={2}
             aria-hidden="true"
