@@ -753,10 +753,10 @@ export class BqDatePicker {
               // and the parent group is hovered or has focus-within
               <bq-button
                 appearance="text"
-                aria-label={this.clearButtonLabel}
                 border="s"
                 class="bq-date-picker__control--clear [&::part(button)]:bs-auto ms-[--bq-date-picker--gap] hidden"
                 exportparts="button"
+                label={this.clearButtonLabel}
                 onBqClick={this.handleClearClick}
                 onlyIcon
                 part="clear-btn"
