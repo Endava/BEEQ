@@ -93,7 +93,7 @@
 
 .bq-date-picker__control--input {
   @apply flex-auto cursor-inherit select-none appearance-none bg-inherit font-inherit text-[length:inherit] text-inherit;
-  @apply border-none min-bs-[--bq-date-picker--icon-size] min-is-0 p-b-0 p-i-0 m-b-0 m-i-0 focus:outline-none focus-visible:outline-none;
+  @apply border-none min-is-0 p-b-0 p-i-0 m-b-0 m-i-0 focus:outline-none focus-visible:outline-none;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -107,7 +107,7 @@
   --bq-ring-offset-width: initial;
   --bq-ring-color-focus: initial;
 
-  @apply rounded-xs border-none bs-auto p-b-0 p-i-0;
+  @apply border-none p-0;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -131,10 +131,10 @@
 /*                         Slotted and internal icons                         */
 /* -------------------------------------------------------------------------- */
 
-bq-icon,
-::slotted(bq-icon) {
-  --bq-icon--size: var(--bq-date-picker--icon-size) !important;
-}
+// bq-icon,
+// ::slotted(bq-icon) {
+//   --bq-icon--size: var(--bq-date-picker--icon-size) !important;
+// }
 
 /* -------------------------------------------------------------------------- */
 /*                         Customize Cally date picker                         */

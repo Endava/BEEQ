@@ -754,14 +754,16 @@ export class BqDatePicker {
               <bq-button
                 appearance="text"
                 aria-label={this.clearButtonLabel}
-                class="bq-date-picker__control--clear ms-[--bq-date-picker--gap] hidden"
+                border="s"
+                class="bq-date-picker__control--clear [&::part(button)]:bs-auto ms-[--bq-date-picker--gap] hidden"
                 exportparts="button"
                 onBqClick={this.handleClearClick}
+                onlyIcon
                 part="clear-btn"
                 size="small"
               >
                 <slot name="clear-icon">
-                  <bq-icon class="flex" name="x-circle" />
+                  <bq-icon aria-hidden="true" class="flex" name="x-circle" />
                 </slot>
               </bq-button>
             )}
