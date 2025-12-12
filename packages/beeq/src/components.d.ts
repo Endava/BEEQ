@@ -511,6 +511,7 @@ export namespace Components {
      * @attr {string} href - When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`
      * @attr {"left" | "center" | "right"} justify-content - It determinate how the content should be aligned
      * @attr {boolean} loading - If `true` it will display the button in a loading state
+     * @attr {boolean} only-icon - If `true` it will display the button as an icon-only button with aspect ratio 1:1 (square dimensions)
      * @attr {"small" | "medium" | "large"} size - The size of the button
      * @attr {"_blank" | "_parent" | "_self" | "_top"} target - Where to display the linked URL, as the name for a browsing context (a `tab`, `window`, or `<iframe>`)
      * @attr {"button" | "submit" | "reset"} type - The default behavior of the button
@@ -537,22 +538,22 @@ export namespace Components {
           * The appearance style to apply to the button
           * @default 'primary'
          */
-        "appearance": TButtonAppearance;
+        "appearance"?: TButtonAppearance;
         /**
           * If `true`, it will make the button fit to its parent width.
           * @default false
          */
-        "block": boolean;
+        "block"?: boolean;
         /**
           * The corner radius of the button
           * @default 'm'
          */
-        "border": TButtonBorderRadius;
+        "border"?: TButtonBorderRadius;
         /**
           * If true, the button will be disabled (no interaction allowed)
           * @default false
          */
-        "disabled": boolean;
+        "disabled"?: boolean;
         /**
           * Tells the browser to treat the linked URL as a download. Only used when `href` is set. Details: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-download
          */
@@ -560,36 +561,41 @@ export namespace Components {
         /**
           * When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`
          */
-        "href": string;
+        "href"?: string;
         /**
           * It determinate how the content should be aligned
           * @default 'center'
          */
-        "justifyContent": 'left' | 'center' | 'right';
+        "justifyContent"?: 'left' | 'center' | 'right';
         /**
           * If `true` it will display the button in a loading state
           * @default false
          */
-        "loading": boolean;
+        "loading"?: boolean;
+        /**
+          * If `true` it will display the button as an icon-only button with aspect ratio 1:1 (square dimensions)
+          * @default false
+         */
+        "onlyIcon"?: boolean;
         /**
           * The size of the button
           * @default 'medium'
          */
-        "size": TButtonSize;
+        "size"?: TButtonSize;
         /**
           * Where to display the linked URL, as the name for a browsing context (a `tab`, `window`, or `<iframe>`) Details: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-target
          */
-        "target": '_blank' | '_parent' | '_self' | '_top';
+        "target"?: '_blank' | '_parent' | '_self' | '_top';
         /**
           * The default behavior of the button
           * @default 'button'
          */
-        "type": TButtonType;
+        "type"?: TButtonType;
         /**
           * The variant of button to apply on top of the appearance (applicable only to `appearance="primary"`)
           * @default 'standard'
          */
-        "variant": TButtonVariant;
+        "variant"?: TButtonVariant;
     }
     /**
      * The Card component serves as a versatile container designed for flexible content presentation within user interfaces.
@@ -3679,6 +3685,7 @@ declare global {
      * @attr {string} href - When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`
      * @attr {"left" | "center" | "right"} justify-content - It determinate how the content should be aligned
      * @attr {boolean} loading - If `true` it will display the button in a loading state
+     * @attr {boolean} only-icon - If `true` it will display the button as an icon-only button with aspect ratio 1:1 (square dimensions)
      * @attr {"small" | "medium" | "large"} size - The size of the button
      * @attr {"_blank" | "_parent" | "_self" | "_top"} target - Where to display the linked URL, as the name for a browsing context (a `tab`, `window`, or `<iframe>`)
      * @attr {"button" | "submit" | "reset"} type - The default behavior of the button
@@ -5915,6 +5922,7 @@ declare namespace LocalJSX {
      * @attr {string} href - When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`
      * @attr {"left" | "center" | "right"} justify-content - It determinate how the content should be aligned
      * @attr {boolean} loading - If `true` it will display the button in a loading state
+     * @attr {boolean} only-icon - If `true` it will display the button as an icon-only button with aspect ratio 1:1 (square dimensions)
      * @attr {"small" | "medium" | "large"} size - The size of the button
      * @attr {"_blank" | "_parent" | "_self" | "_top"} target - Where to display the linked URL, as the name for a browsing context (a `tab`, `window`, or `<iframe>`)
      * @attr {"button" | "submit" | "reset"} type - The default behavior of the button
@@ -5987,6 +5995,11 @@ declare namespace LocalJSX {
           * Handler to be called when the button gets focus.
          */
         "onBqFocus"?: (event: BqButtonCustomEvent<HTMLBqButtonElement>) => void;
+        /**
+          * If `true` it will display the button as an icon-only button with aspect ratio 1:1 (square dimensions)
+          * @default false
+         */
+        "onlyIcon"?: boolean;
         /**
           * The size of the button
           * @default 'medium'
@@ -9121,6 +9134,7 @@ declare module "@stencil/core" {
              * @attr {string} href - When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`
              * @attr {"left" | "center" | "right"} justify-content - It determinate how the content should be aligned
              * @attr {boolean} loading - If `true` it will display the button in a loading state
+             * @attr {boolean} only-icon - If `true` it will display the button as an icon-only button with aspect ratio 1:1 (square dimensions)
              * @attr {"small" | "medium" | "large"} size - The size of the button
              * @attr {"_blank" | "_parent" | "_self" | "_top"} target - Where to display the linked URL, as the name for a browsing context (a `tab`, `window`, or `<iframe>`)
              * @attr {"button" | "submit" | "reset"} type - The default behavior of the button

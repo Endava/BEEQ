@@ -35,6 +35,7 @@ import { BUTTON_APPEARANCE, BUTTON_SIZE, BUTTON_TYPE, BUTTON_VARIANT } from './b
  * @attr {string} href - When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`
  * @attr {"left" | "center" | "right"} justify-content - It determinate how the content should be aligned
  * @attr {boolean} loading - If `true` it will display the button in a loading state
+ * @attr {boolean} only-icon - If `true` it will display the button as an icon-only button with aspect ratio 1:1 (square dimensions)
  * @attr {"small" | "medium" | "large"} size - The size of the button
  * @attr {"_blank" | "_parent" | "_self" | "_top"} target - Where to display the linked URL, as the name for a browsing context (a `tab`, `window`, or `<iframe>`)
  * @attr {"button" | "submit" | "reset"} type - The default behavior of the button
@@ -57,15 +58,12 @@ import { BUTTON_APPEARANCE, BUTTON_SIZE, BUTTON_TYPE, BUTTON_VARIANT } from './b
  * @cssprop --bq-button--border-radius - Button border radius
  * @cssprop --bq-button--border-style - Button border style
  * @cssprop --bq-button--border-width - Button border width
- * @cssprop --bq-button--small-height - Button small height
  * @cssprop --bq-button--small-paddingX - Button small padding block (top and bottom)
  * @cssprop --bq-button--small-paddingY - Button small padding inline (left and right)
  * @cssprop --bq-button--small-font-size - Button small font size
- * @cssprop --bq-button--medium-height - Button medium height
  * @cssprop --bq-button--medium-paddingX - Button medium padding block (top and bottom)
  * @cssprop --bq-button--medium-paddingY - Button medium padding inline (left and right)
  * @cssprop --bq-button--medium-font-size - Button medium font size
- * @cssprop --bq-button--large-height - Button large height
  * @cssprop --bq-button--large-paddingX - Button large padding block (top and bottom)
  * @cssprop --bq-button--large-paddingY - Button large padding inline (left and right)
  * @cssprop --bq-button--large-font-size - Button large font size
@@ -102,16 +100,16 @@ export class BqButton {
   // ========================
 
   /** The appearance style to apply to the button */
-  @Prop({ reflect: true }) appearance: TButtonAppearance = 'primary';
+  @Prop({ reflect: true }) appearance?: TButtonAppearance = 'primary';
 
   /** If `true`, it will make the button fit to its parent width. */
-  @Prop({ reflect: true }) block: boolean = false;
+  @Prop({ reflect: true }) block?: boolean = false;
 
   /** The corner radius of the button */
-  @Prop({ reflect: true }) border: TButtonBorderRadius = 'm';
+  @Prop({ reflect: true }) border?: TButtonBorderRadius = 'm';
 
   /** If true, the button will be disabled (no interaction allowed) */
-  @Prop() disabled = false;
+  @Prop() disabled?: boolean = false;
 
   /**
    * Tells the browser to treat the linked URL as a download. Only used when `href` is set.
@@ -120,28 +118,31 @@ export class BqButton {
   @Prop() download?: string;
 
   /** When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>` */
-  @Prop({ reflect: true }) href: string;
+  @Prop({ reflect: true }) href?: string;
 
   /** It determinate how the content should be aligned */
-  @Prop({ reflect: true }) justifyContent: 'left' | 'center' | 'right' = 'center';
+  @Prop({ reflect: true }) justifyContent?: 'left' | 'center' | 'right' = 'center';
 
   /** If `true` it will display the button in a loading state */
-  @Prop() loading = false;
+  @Prop() loading?: boolean = false;
+
+  /** If `true` it will display the button as an icon-only button with aspect ratio 1:1 (square dimensions) */
+  @Prop() onlyIcon?: boolean = false;
 
   /** The size of the button */
-  @Prop({ reflect: true }) size: TButtonSize = 'medium';
+  @Prop({ reflect: true }) size?: TButtonSize = 'medium';
 
   /**
    * Where to display the linked URL, as the name for a browsing context (a `tab`, `window`, or `<iframe>`)
    * Details: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-target
    */
-  @Prop({ reflect: true }) target: '_blank' | '_parent' | '_self' | '_top';
+  @Prop({ reflect: true }) target?: '_blank' | '_parent' | '_self' | '_top';
 
   /** The default behavior of the button */
-  @Prop({ reflect: true }) type: TButtonType = 'button';
+  @Prop({ reflect: true }) type?: TButtonType = 'button';
 
   /** The variant of button to apply on top of the appearance (applicable only to `appearance="primary"`) */
-  @Prop({ reflect: true }) variant: TButtonVariant = 'standard';
+  @Prop({ reflect: true }) variant?: TButtonVariant = 'standard';
 
   // Prop lifecycle events
   // =======================
@@ -288,6 +289,7 @@ export class BqButton {
             'has-prefix': this.hasPrefix,
             'has-suffix': this.hasSuffix,
             loading: this.loading,
+            'only-icon': this.onlyIcon,
           }}
           disabled={this.disabled}
           download={isLink ? this.download : undefined}
