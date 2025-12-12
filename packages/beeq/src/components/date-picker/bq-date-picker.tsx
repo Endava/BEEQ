@@ -754,7 +754,7 @@ export class BqDatePicker {
               <bq-button
                 appearance="text"
                 border="s"
-                class="bq-date-picker__control--clear [&::part(button)]:bs-auto ms-[--bq-date-picker--gap] hidden"
+                class="bq-date-picker__control--clear ms-[--bq-date-picker--gap] hidden [&::part(button)]:border-none [&::part(button)]:p-0"
                 exportparts="button"
                 label={this.clearButtonLabel}
                 onBqClick={this.handleClearClick}
