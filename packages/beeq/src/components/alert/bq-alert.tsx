@@ -53,7 +53,7 @@ import { ALERT_TYPE } from './bq-alert.types';
  *
  * @part base - The `<div>` container of the predefined bq-icon component
  * @part body - The container `<div>` that wraps the alert description content
- * @part btn-close - The `bq-button` used to close the alert
+ * @part btn-close - The native button of the `bq-button` used to close the alert
  * @part content - The container `<div>` that wraps all the alert content (title, description, footer)
  * @part footer - The container `<div>` that wraps the alert footer content
  * @part icon - The `<bq-icon>` element used to render a predefined icon based on the alert type (info, success, warning, error, default)
@@ -316,11 +316,10 @@ export class BqAlert {
             <bq-button
               appearance="text"
               class="absolute end-s [&::part(label)]:inline-flex"
-              exportparts="button:button_close"
+              exportparts="button:btn-close"
               label="Close alert"
               onBqClick={() => this.hide()}
               onlyIcon
-              part="btn-close"
               size="small"
             >
               <slot name="btn-close">
