@@ -314,8 +314,18 @@ export class BqTag {
           </div>
           {this.isRemovable && !this.disabled && (
             // biome-ignore lint/a11y/noStaticElementInteractions: `onClick` will behave better than the custom `bqClick` inside the shadow DOM
-            <bq-button appearance="text" class="bq-tag__close" onClick={this.handleClose} part="btn-close" size="small">
+            <bq-button
+              appearance="text"
+              border="s"
+              class="bq-tag__close [&::part(button)]:border-none [&::part(button)]:p-0"
+              label="Close"
+              onClick={this.handleClose}
+              onlyIcon
+              part="btn-close"
+              size="small"
+            >
               <bq-icon
+                aria-hidden="true"
                 color={this.color && !this.hasCustomColor ? textColor(this.color)[this.variant] : 'text--primary'}
                 name="x-circle"
                 size={iconSize(this.size)}

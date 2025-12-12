@@ -101,9 +101,9 @@
 
 /* ------------------------------ Close button ------------------------------ */
 
-.bq-tag__close::part(button) {
-  @apply pointer-events-none border-0 bs-fit p-b-0 p-i-0;
-}
+// .bq-tag__close::part(button) {
+//   @apply pointer-events-none border-0 bs-fit p-b-0 p-i-0;
+// }
 
 /* --------------- Apply the right size to the bq-icon prefix --------------- */
 
