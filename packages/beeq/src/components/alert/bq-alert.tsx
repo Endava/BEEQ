@@ -315,6 +315,7 @@ export class BqAlert {
           {!this.disableClose && (
             <bq-button
               appearance="text"
+              border="s"
               class="absolute end-s [&::part(label)]:inline-flex"
               exportparts="button:btn-close"
               label="Close alert"
