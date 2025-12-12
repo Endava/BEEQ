@@ -21,6 +21,7 @@ const meta: Meta = {
     disabled: { control: 'boolean' },
     href: { control: 'text' },
     'justify-content': { control: 'select', options: ['left', 'center', 'right'] },
+    label: { control: 'text' },
     loading: { control: 'boolean' },
     'only-icon': { control: 'boolean' },
     size: { control: 'select', options: [...BUTTON_SIZE] },
@@ -43,6 +44,7 @@ const meta: Meta = {
     disabled: false,
     href: undefined,
     'justify-content': 'center',
+    label: undefined,
     loading: false,
     'only-icon': false,
     size: 'medium',
@@ -67,6 +69,7 @@ const Template = (args: Args) => {
       ?disabled=${args.disabled}
       href=${args.href}
       justify-content=${args['justify-content']}
+      label=${args.label}
       ?loading=${loading}
       ?only-icon=${args['only-icon']}
       size=${args.size}
@@ -139,7 +142,7 @@ export const IconLeft: Story = {
   render: Template,
   args: {
     buttonText: 'Previous step',
-    buttonPrefix: `<bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>`,
+    buttonPrefix: `<bq-icon aria-hidden="true" name="arrow-circle-left" slot="prefix"></bq-icon>`,
   },
 };
 
@@ -147,14 +150,15 @@ export const IconRight: Story = {
   render: Template,
   args: {
     buttonText: 'Next step',
-    buttonSuffix: `<bq-icon name="arrow-circle-right" slot="suffix"></bq-icon>`,
+    buttonSuffix: `<bq-icon aria-hidden="true" name="arrow-circle-right" slot="suffix"></bq-icon>`,
   },
 };
 
 export const OnlyIcon: Story = {
   render: Template,
   args: {
+    buttonText: `<bq-icon aria-hidden="true" name="bell-ringing"></bq-icon>`,
+    label: 'Notifications',
     'only-icon': true,
-    buttonText: `<bq-icon name="bell-ringing"></bq-icon>`,
   },
 };

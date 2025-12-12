@@ -123,10 +123,13 @@ export class BqButton {
   /** It determinate how the content should be aligned */
   @Prop({ reflect: true }) justifyContent?: 'left' | 'center' | 'right' = 'center';
 
+  /** Text  used for accessibility purposes, specially screen readers, to describe the button action */
+  @Prop({ reflect: true }) label?: string;
+
   /** If `true` it will display the button in a loading state */
   @Prop() loading?: boolean = false;
 
-  /** If `true` it will display the button as an icon-only button with aspect ratio 1:1 (square dimensions) */
+  /** If `true` it will display the button as an icon-only button with aspect ratio 1:1 (square dimensions). Make sure to set the `label` prop for accessibility purposes. */
   @Prop() onlyIcon?: boolean = false;
 
   /** The size of the button */
@@ -158,6 +161,15 @@ export class BqButton {
     validatePropValue(BUTTON_VARIANT, 'standard', this.el, 'variant');
   }
 
+  @Watch('onlyIcon')
+  handleOnlyIconPropChange() {
+    if (!this.onlyIcon || !isNil(this.label)) return;
+
+    console.warn(
+      '⚠️ [BqButton]: When using `only-icon` attribute (`onlyIcon` prop), it is required to set the `label` prop for accessibility reasons.',
+    );
+  }
+
   // Events section
   // Requires JSDocs for public API documentation
   // ==============================================
@@ -177,6 +189,7 @@ export class BqButton {
 
   componentWillLoad() {
     this.checkPropValues();
+    this.handleOnlyIconPropChange();
   }
 
   componentDidLoad() {
@@ -278,6 +291,7 @@ export class BqButton {
       <Host style={style}>
         <TagElem
           aria-disabled={this.disabled ? 'true' : 'false'}
+          aria-label={this.label ?? undefined}
           class={{
             'bq-button': true,
             [`bq-button--${this.appearance}`]: true,

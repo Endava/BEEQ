@@ -568,12 +568,16 @@ export namespace Components {
          */
         "justifyContent"?: 'left' | 'center' | 'right';
         /**
+          * Text  used for accessibility purposes, specially screen readers, to describe the button action
+         */
+        "label"?: string;
+        /**
           * If `true` it will display the button in a loading state
           * @default false
          */
         "loading"?: boolean;
         /**
-          * If `true` it will display the button as an icon-only button with aspect ratio 1:1 (square dimensions)
+          * If `true` it will display the button as an icon-only button with aspect ratio 1:1 (square dimensions). Make sure to set the `label` prop for accessibility purposes.
           * @default false
          */
         "onlyIcon"?: boolean;
@@ -5979,6 +5983,10 @@ declare namespace LocalJSX {
          */
         "justifyContent"?: 'left' | 'center' | 'right';
         /**
+          * Text  used for accessibility purposes, specially screen readers, to describe the button action
+         */
+        "label"?: string;
+        /**
           * If `true` it will display the button in a loading state
           * @default false
          */
@@ -5996,7 +6004,7 @@ declare namespace LocalJSX {
          */
         "onBqFocus"?: (event: BqButtonCustomEvent<HTMLBqButtonElement>) => void;
         /**
-          * If `true` it will display the button as an icon-only button with aspect ratio 1:1 (square dimensions)
+          * If `true` it will display the button as an icon-only button with aspect ratio 1:1 (square dimensions). Make sure to set the `label` prop for accessibility purposes.
           * @default false
          */
         "onlyIcon"?: boolean;
