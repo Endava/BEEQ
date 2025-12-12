@@ -102,15 +102,15 @@
 /* -------------------------------------------------------------------------- */
 
 .small {
-  @apply text-[length:--bq-button--small-font-size] bs-[--bq-button--small-height] p-b-[--bq-button--small-paddingY] p-i-[--bq-button--small-paddingX];
+  @apply text-[length:--bq-button--small-font-size] p-b-[--bq-button--small-paddingY] p-i-[--bq-button--small-paddingX];
 }
 
 .medium {
-  @apply text-[length:--bq-button--medium-font-size] bs-[--bq-button--medium-height] p-b-[--bq-button--medium-paddingY] p-i-[--bq-button--medium-paddingX];
+  @apply text-[length:--bq-button--medium-font-size] p-b-[--bq-button--medium-paddingY] p-i-[--bq-button--medium-paddingX];
 }
 
 .large {
-  @apply text-[length:--bq-button--large-font-size] bs-[--bq-button--large-height] p-b-[--bq-button--large-paddingY] p-i-[--bq-button--large-paddingX];
+  @apply text-[length:--bq-button--large-font-size] p-b-[--bq-button--large-paddingY] p-i-[--bq-button--large-paddingX];
 }
 
 /* -------------------------------------------------------------------------- */

@@ -522,15 +522,12 @@ export namespace Components {
      * @cssprop --bq-button--border-radius - Button border radius
      * @cssprop --bq-button--border-style - Button border style
      * @cssprop --bq-button--border-width - Button border width
-     * @cssprop --bq-button--small-height - Button small height
      * @cssprop --bq-button--small-paddingX - Button small padding block (top and bottom)
      * @cssprop --bq-button--small-paddingY - Button small padding inline (left and right)
      * @cssprop --bq-button--small-font-size - Button small font size
-     * @cssprop --bq-button--medium-height - Button medium height
      * @cssprop --bq-button--medium-paddingX - Button medium padding block (top and bottom)
      * @cssprop --bq-button--medium-paddingY - Button medium padding inline (left and right)
      * @cssprop --bq-button--medium-font-size - Button medium font size
-     * @cssprop --bq-button--large-height - Button large height
      * @cssprop --bq-button--large-paddingX - Button large padding block (top and bottom)
      * @cssprop --bq-button--large-paddingY - Button large padding inline (left and right)
      * @cssprop --bq-button--large-font-size - Button large font size
@@ -3693,15 +3690,12 @@ declare global {
      * @cssprop --bq-button--border-radius - Button border radius
      * @cssprop --bq-button--border-style - Button border style
      * @cssprop --bq-button--border-width - Button border width
-     * @cssprop --bq-button--small-height - Button small height
      * @cssprop --bq-button--small-paddingX - Button small padding block (top and bottom)
      * @cssprop --bq-button--small-paddingY - Button small padding inline (left and right)
      * @cssprop --bq-button--small-font-size - Button small font size
-     * @cssprop --bq-button--medium-height - Button medium height
      * @cssprop --bq-button--medium-paddingX - Button medium padding block (top and bottom)
      * @cssprop --bq-button--medium-paddingY - Button medium padding inline (left and right)
      * @cssprop --bq-button--medium-font-size - Button medium font size
-     * @cssprop --bq-button--large-height - Button large height
      * @cssprop --bq-button--large-paddingX - Button large padding block (top and bottom)
      * @cssprop --bq-button--large-paddingY - Button large padding inline (left and right)
      * @cssprop --bq-button--large-font-size - Button large font size
@@ -5932,15 +5926,12 @@ declare namespace LocalJSX {
      * @cssprop --bq-button--border-radius - Button border radius
      * @cssprop --bq-button--border-style - Button border style
      * @cssprop --bq-button--border-width - Button border width
-     * @cssprop --bq-button--small-height - Button small height
      * @cssprop --bq-button--small-paddingX - Button small padding block (top and bottom)
      * @cssprop --bq-button--small-paddingY - Button small padding inline (left and right)
      * @cssprop --bq-button--small-font-size - Button small font size
-     * @cssprop --bq-button--medium-height - Button medium height
      * @cssprop --bq-button--medium-paddingX - Button medium padding block (top and bottom)
      * @cssprop --bq-button--medium-paddingY - Button medium padding inline (left and right)
      * @cssprop --bq-button--medium-font-size - Button medium font size
-     * @cssprop --bq-button--large-height - Button large height
      * @cssprop --bq-button--large-paddingX - Button large padding block (top and bottom)
      * @cssprop --bq-button--large-paddingY - Button large padding inline (left and right)
      * @cssprop --bq-button--large-font-size - Button large font size
@@ -9141,15 +9132,12 @@ declare module "@stencil/core" {
              * @cssprop --bq-button--border-radius - Button border radius
              * @cssprop --bq-button--border-style - Button border style
              * @cssprop --bq-button--border-width - Button border width
-             * @cssprop --bq-button--small-height - Button small height
              * @cssprop --bq-button--small-paddingX - Button small padding block (top and bottom)
              * @cssprop --bq-button--small-paddingY - Button small padding inline (left and right)
              * @cssprop --bq-button--small-font-size - Button small font size
-             * @cssprop --bq-button--medium-height - Button medium height
              * @cssprop --bq-button--medium-paddingX - Button medium padding block (top and bottom)
              * @cssprop --bq-button--medium-paddingY - Button medium padding inline (left and right)
              * @cssprop --bq-button--medium-font-size - Button medium font size
-             * @cssprop --bq-button--large-height - Button large height
              * @cssprop --bq-button--large-paddingX - Button large padding block (top and bottom)
              * @cssprop --bq-button--large-paddingY - Button large padding inline (left and right)
              * @cssprop --bq-button--large-font-size - Button large font size
