@@ -315,13 +315,16 @@ export class BqAlert {
           {!this.disableClose && (
             <bq-button
               appearance="text"
-              class="bq-alert__close focus-visible:focus absolute end-5 [&::part(label)]:inline-flex"
+              class="absolute end-s [&::part(label)]:inline-flex"
+              exportparts="button:button_close"
+              label="Close alert"
               onBqClick={() => this.hide()}
+              onlyIcon
               part="btn-close"
               size="small"
             >
               <slot name="btn-close">
-                <bq-icon name="x" />
+                <bq-icon name="x" size={16} aria-hidden="true" />
               </slot>
             </bq-button>
           )}
