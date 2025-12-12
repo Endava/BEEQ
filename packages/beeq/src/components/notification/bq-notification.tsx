@@ -343,13 +343,16 @@ export class BqNotification {
           {!this.disableClose && (
             <bq-button
               appearance="text"
-              class="notification--close absolute inset-ie-5 [&::part(label)]:inline-flex"
+              border="s"
+              class="absolute inset-ie-m [&::part(button)]:p-0"
+              label="Close"
               onBqClick={() => this.hide()}
+              onlyIcon
               part="btn-close"
               size="small"
             >
               <slot name="btn-close">
-                <bq-icon name="x" />
+                <bq-icon aria-hidden="true" name="x" />
               </slot>
             </bq-button>
           )}
