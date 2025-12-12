@@ -87,7 +87,7 @@ describe('bq-alert', () => {
       html: `<bq-alert type="info">Alert title</bq-alert>`,
     });
 
-    const iconHolder = await page.find('bq-alert >>> [part="btn-close"]');
+    const iconHolder = await page.find('bq-alert >>> bq-button');
     expect(iconHolder).not.toBeNull();
   });
 

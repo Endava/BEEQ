@@ -331,14 +331,17 @@ export class BqDrawer {
             <div class="flex" part="button-close">
               <bq-button
                 appearance="text"
-                class="[&::part(button)]:bs-fit [&::part(button)]:rounded-s [&::part(button)]:border-0 [&::part(button)]:p-b-0 [&::part(button)]:p-i-0 [&::part(label)]:inline-flex"
+                border="s"
+                class="[&::part(label)]:inline-flex"
                 exportparts="button:button-close__btn,label:button-close__label"
+                label="Close"
                 onBqClick={() => this.hide()}
+                onlyIcon
                 size="small"
                 slot="button-close"
               >
                 <slot name="button-close">
-                  <bq-icon name="x-bold" title="Close" />
+                  <bq-icon aria-hidden="true" name="x-bold" title="Close" />
                 </slot>
               </bq-button>
             </div>

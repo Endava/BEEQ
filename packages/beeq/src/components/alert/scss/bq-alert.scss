@@ -75,10 +75,3 @@
     @apply text-[color:--bq-alert--icon-color-warning];
   }
 }
-
-/**
- * Tweak the close bq-button styles so it remain small without extra padding
- */
-.bq-alert__close::part(button) {
-  @apply rounded-s border-0 bs-fit p-b-0 p-i-0;
-}

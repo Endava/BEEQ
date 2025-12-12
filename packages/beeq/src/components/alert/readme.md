@@ -74,7 +74,7 @@ Type: `Promise<void>`
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------- |
 | `"base"`         | The `<div>` container of the predefined bq-icon component                                                                 |
 | `"body"`         | The container `<div>` that wraps the alert description content                                                            |
-| `"btn-close"`    | The `bq-button` used to close the alert                                                                                   |
+| `"btn-close"`    | The native button of the `bq-button` used to close the alert                                                              |
 | `"content"`      | The container `<div>` that wraps all the alert content (title, description, footer)                                       |
 | `"footer"`       | The container `<div>` that wraps the alert footer content                                                                 |
 | `"icon"`         | The `<bq-icon>` element used to render a predefined icon based on the alert type (info, success, warning, error, default) |

@@ -8,15 +8,12 @@
    * @prop --bq-button--border-radius - Button border radius
    * @prop --bq-button--border-style - Button border style
    * @prop --bq-button--border-width - Button border width
-   * @prop --bq-button--small-height - Button small height
    * @prop --bq-button--small-paddingX - Button small padding block (top and bottom)
    * @prop --bq-button--small-paddingY - Button small padding inline (left and right)
    * @prop --bq-button--small-font-size - Button small font size
-   * @prop --bq-button--medium-height - Button medium height
    * @prop --bq-button--medium-paddingX - Button medium padding block (top and bottom)
    * @prop --bq-button--medium-paddingY - Button medium padding inline (left and right)
    * @prop --bq-button--medium-font-size - Button medium font size
-   * @prop --bq-button--large-height - Button large height
    * @prop --bq-button--large-paddingX - Button large padding block (top and bottom)
    * @prop --bq-button--large-paddingY - Button large padding inline (left and right)
    * @prop --bq-button--large-font-size - Button large font size
@@ -26,17 +23,14 @@
   --bq-button--border-style: solid;
   --bq-button--border-width: theme(borderWidth.0);
 
-  --bq-button--small-height: 32px;
   --bq-button--small-paddingX: theme(spacing.xs);
   --bq-button--small-paddingY: theme(spacing.xs2);
   --bq-button--small-font-size: theme(fontSize.m);
 
-  --bq-button--medium-height: 48px;
   --bq-button--medium-paddingX: theme(spacing.m);
   --bq-button--medium-paddingY: theme(spacing.s);
   --bq-button--medium-font-size: theme(fontSize.m);
 
-  --bq-button--large-height: 56px;
   --bq-button--large-paddingX: theme(spacing.l);
   --bq-button--large-paddingY: theme(spacing.m);
   --bq-button--large-font-size: theme(fontSize.m);

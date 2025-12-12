@@ -342,8 +342,8 @@ export class BqDialog {
             </div>
             <slot name="button-close">
               {!this.hideCloseButton && (
-                <bq-button appearance="text" class="bq-dialog--close" size="small">
-                  <bq-icon class="cursor-pointer" name="x" title="Close" />
+                <bq-button appearance="text" class="bq-dialog--close" size="small" onlyIcon label="Close">
+                  <bq-icon name="x" title="Close" aria-hidden="true" />
                 </bq-button>
               )}
             </slot>

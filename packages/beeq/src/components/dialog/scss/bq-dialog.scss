@@ -57,15 +57,3 @@
 .bq-dialog--footer {
   @apply sticky flex items-center justify-end gap-xs is-full p-b-[--bq-dialog--padding] p-bs-0 p-i-[--bq-dialog--padding] inset-bs-[100%];
 }
-
-/* --------------------------- Dialog close button -------------------------- */
-
-.bq-dialog--close {
-  --bq-radius--m: theme(borderRadius.s);
-  --bq-button--small-paddingX: theme(spacing.xs2);
-  --bq-button--small-paddingY: theme(spacing.xs2);
-
-  &::part(button) {
-    @apply border-none;
-  }
-}
