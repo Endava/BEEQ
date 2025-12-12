@@ -16,6 +16,25 @@ import type { TInputValidation } from '../input/bq-input.types';
 import type { DaysOfWeek, TCalendarDate, TDatePickerType } from './bq-date-picker.types';
 import { DATE_PICKER_TYPE } from './bq-date-picker.types';
 import { isCallyLibraryLoaded, loadCallyLibrary } from './helper/callyLibrary';
+import {
+  formatDisplayValue,
+  formatFocusedDate,
+  getFocusedYear,
+  getHeadingTitle,
+  getStartDecade,
+  shiftFocusedDateMonths,
+  shiftFocusedDateYears,
+  clampDateToRange,
+  
+} from './bq-date-picker.utils';
+import {
+  CalendarPanel,
+  DatePickerClearButton,
+  DatePickerInput,
+  DatePickerLabel,
+  DatePickerPrefix,
+  DatePickerSuffix,
+} from './bq-date-picker-views';
 
 /**
  * The Date Picker is a intuitive UI element component allows users to select dates from a visual calendar interface, providing an intuitive way to input date information.
@@ -54,64 +73,62 @@ import { isCallyLibraryLoaded, loadCallyLibrary } from './helper/callyLibrary';
  * @attr {boolean} disabled - Indicates whether the Date picker input is disabled or not.
  * @attr {number} distance - Represents the distance (gutter or margin) between the Date picker panel and the input element.
  * @attr {0 | 1 | 2 | 3 | 4 | 5 | 6} first-day-of-week - The first day of the week, where Sunday is 0, Monday is 1, etc.
- * @attr {Intl.DateTimeFormatOptions} format-options - The options to use when formatting the displayed value. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
+ * @attr {Intl.DateTimeFormatOptions} format-options - The options to use when formatting the displayed value.
  * @attr {string} form - The ID of the form that the Date picker input belongs to.
  * @attr {string} form-validation-message - The native form validation message (mandatory if `required` is set).
  * @attr {function} is-date-disallowed - A function that takes a date and returns true if the date should not be selectable.
- * @attr {Intl.LocalesArgument} locale - The locale for formatting dates. If not set, will use the browser's locale. Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
+ * @attr {Intl.LocalesArgument} locale - The locale for formatting dates.
  * @attr {string} max - The latest date that can be selected.
  * @attr {string} min - The earliest date that can be selected.
  * @attr {number} months - Number of months to show when range is `true`.
  * @attr {string} name - The Date picker input name.
  * @attr {boolean} open - If `true`, the Date picker panel will be visible.
  * @attr {string} panel-height - When set, it will override the height of the Date picker panel.
- * @attr {"top" | "right" | "bottom" | "left" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"} placement - Position of the Date picker panel.
- * @attr {boolean} required - Indicates whether or not the Date picker input is required to be filled out before submitting the form.
+ * @attr {Placement} placement - Position of the Date picker panel.
+ * @attr {boolean} required - Indicates whether or not the Date picker input is required.
  * @attr {number} skidding - Represents the skidding between the Date picker panel and the input element.
  * @attr {boolean} show-outside-days - Whether to show days outside the month.
  * @attr {string} strategy - Defines the strategy to position the Date picker panel.
- * @attr {string} tentative - The date that is tentatively selected, e.g. the start of a range selection.
- * @attr {"single" | "multi" | "range"} type - It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection.
- * @attr {"error" | "none" | "success" | "warning"} validation-status - The validation status of the Select input.
- * @attr {string} value - The select input value represents the currently selected date or range and can be used to reset the field to a previous value.
+ * @attr {string} tentative - The date that is tentatively selected.
+ * @attr {TDatePickerType} type - It defines how the calendar will behave.
+ * @attr {TInputValidation} validation-status - The validation status of the Select input.
+ * @attr {string} value - The select input value.
  * @attr {boolean} allowHeaderViewToggle - Enable custom header to toggle views.
- * @attr {"day" | "month" | "year" | "decade" } calendarView - Panel type  when the panel opens.
+ * @attr {string} calendarView - Panel type when the panel opens.
  *
  * @method clear - Clears the selected value.
  *
  * @event bqBlur - Callback handler emitted when the input loses focus.
- * @event bqChange - Callback handler emitted when the input value has changed and the input loses focus.
+ * @event bqChange - Callback handler emitted when the input value has changed.
  * @event bqClear - Callback handler emitted when the input value has been cleared.
  * @event bqFocus - Callback handler emitted when the input has received focus.
  *
  * @part base - The component's base wrapper.
  * @part button - The native HTML button used under the hood in the clear button.
  * @part calendar__button - Any button used in the calendar-month component.
- * @part calendar__button - Any button within the calendar-range component.
  * @part calendar__container - The calendar-range container for the entire component.
  * @part calendar__day - The buttons corresponding to each day in the calendar-month grid.
- * @part calendar__disabled - A button that is disabled due to min/max on the calendar-range component.
+ * @part calendar__disabled - A button that is disabled due to min/max.
  * @part calendar__disallowed - Any day that has been disallowed via isDateDisallowed.
  * @part calendar__head - The calendar-month table's header row.
  * @part calendar__header - The calendar-range container for the heading and buttons.
- * @part calendar__heading - The calendar-month heading container that labels the month.
- * @part calendar__heading - The calendar-range heading containing the month and year.
- * @part calendar__next - The next page button on the calendar-range component.
+ * @part calendar__heading - The calendar-month heading container.
+ * @part calendar__next - The next page button.
  * @part calendar__outside - Any days which are outside the current month.
- * @part calendar__previous - The previous page button on the calendar-range component.
+ * @part calendar__previous - The previous page button.
  * @part calendar__range-end - The day at the end of a date range.
  * @part calendar__range-inner - Any days between the start and end of a date range.
  * @part calendar__range-start - The day at the start of a date range.
  * @part calendar__selected - Any days which are selected.
- * @part calendar__table - The calendar-month <table> element.
+ * @part calendar__table - The calendar-month table element.
  * @part calendar__td - The calendar-month table's body cells.
  * @part calendar__th - The calendar-month table's header cells.
  * @part calendar__today - The Today's day.
- * @part calendar__tr - Any row within the table on the calendar-month component.
+ * @part calendar__tr - Any row within the table.
  * @part calendar__week - The calendar-month table's body rows.
  * @part clear-btn - The clear button.
  * @part control - The input control wrapper.
- * @part input - The native HTML input element used under the hood.
+ * @part input - The native HTML input element.
  * @part label - The label slot container.
  * @part panel - The date picker panel container
  * @part prefix - The prefix slot container.
@@ -124,30 +141,28 @@ import { isCallyLibraryLoaded, loadCallyLibrary } from './helper/callyLibrary';
  * @cssprop --bq-date-picker--border-radius - Date picker border radius.
  * @cssprop --bq-date-picker--border-style - Date picker border style.
  * @cssprop --bq-date-picker--border-width - Date picker border width.
- * @cssprop --bq-date-picker--currentDate-border-color - Date picker border color for current date.
- * @cssprop --bq-date-picker--currentDate-border-width - Date picker border width for current date.
+ * @cssprop --bq-date-picker--currentDate-border-color - Border color for current date.
+ * @cssprop --bq-date-picker--currentDate-border-width - Border width for current date.
  * @cssprop --bq-date-picker--day-size - Date picker button day size.
- * @cssprop --bq-date-picker--gap - Gap between Date picker content and prefix/suffix.
- * @cssprop --bq-date-picker--icon-size - Icon size to use in prefix/suffix and clear button.
- * @cssprop --bq-date-picker--label-margin-bottom - Date picker label margin bottom.
- * @cssprop --bq-date-picker--label-text-color - Date picker label text color.
- * @cssprop --bq-date-picker--label-text-size - Date picker label text size.
- * @cssprop --bq-date-picker--padding-end - Date picker padding end.
- * @cssprop --bq-date-picker--padding-start - Date picker padding start.
- * @cssprop --bq-date-picker--paddingY - Date picker padding top and bottom.
- * @cssprop --bq-date-picker--range-background-color - Background color for the selected date range in the date picker.
- * @cssprop --bq-date-picker--range-inner-background-color - Background color for the selected dates inside the date range in the date picker.
- * @cssprop --bq-date-picker--text-color - Date picker text color.
- * @cssprop --bq-date-picker--text-placeholder-color - Date picker placeholder text color.
- * @cssprop --bq-date-picker--text-size - Date picker text size.
+ * @cssprop --bq-date-picker--gap - Gap between content and prefix/suffix.
+ * @cssprop --bq-date-picker--icon-size - Icon size.
+ * @cssprop --bq-date-picker--label-margin-bottom - Label margin bottom.
+ * @cssprop --bq-date-picker--label-text-color - Label text color.
+ * @cssprop --bq-date-picker--label-text-size - Label text size.
+ * @cssprop --bq-date-picker--padding-end - Padding end.
+ * @cssprop --bq-date-picker--padding-start - Padding start.
+ * @cssprop --bq-date-picker--paddingY - Padding top and bottom.
+ * @cssprop --bq-date-picker--range-background-color - Range background color.
+ * @cssprop --bq-date-picker--range-inner-background-color - Range inner background color.
+ * @cssprop --bq-date-picker--text-color - Text color.
+ * @cssprop --bq-date-picker--text-placeholder-color - Placeholder text color.
+ * @cssprop --bq-date-picker--text-size - Text size.
  */
 @Component({
   tag: 'bq-date-picker',
   styleUrl: './scss/bq-date-picker.scss',
   formAssociated: true,
-  shadow: {
-    delegatesFocus: true,
-  },
+  shadow: { delegatesFocus: true },
 })
 export class BqDatePicker {
   // Own Properties
@@ -161,7 +176,6 @@ export class BqDatePicker {
   private suffixElem?: HTMLElement;
   private fallbackInputId = 'date-picker';
   private readonly LOCALE_DATE = 'fr-CA';
-  // Export parts of the calendar-month component
   private readonly COMMON_EXPORT_PARTS =
     'calendar__heading,calendar__table,calendar__tr,calendar__head,calendar__week,calendar__th,calendar__td';
   private readonly BUTTON_EXPORT_PARTS =
@@ -174,7 +188,6 @@ export class BqDatePicker {
   @Element() el!: HTMLBqDatePickerElement;
 
   // State() variables
-  // Inlined decorator, alphabetical order
   // =======================================
 
   @State() isCallyLoaded = false;
@@ -189,117 +202,35 @@ export class BqDatePicker {
   // Public Property API
   // ========================
 
-  /** If `true`, the Date picker input will be focused on component render */
   @Prop({ reflect: true }) autofocus: boolean;
-
-  /** Enable custom header to toggle views */
   @Prop({ reflect: true }) allowHeaderViewToggle: boolean = false;
-
-  /** The clear button aria label */
   @Prop({ reflect: true }) clearButtonLabel? = 'Clear value';
-
-  /** If `true`, the clear button won't be displayed */
   @Prop({ reflect: true }) disableClear? = false;
-
-  /**
-   * Indicates whether the Date picker input is disabled or not.
-   * If `true`, the Date picker is disabled and cannot be interacted with.
-   */
   @Prop({ mutable: true }) disabled?: boolean = false;
-
-  /** Represents the distance (gutter or margin) between the Date picker panel and the input element. */
   @Prop({ reflect: true }) distance?: number = 8;
-
-  /** The first day of the week, where Sunday is 0, Monday is 1, etc */
   @Prop({ reflect: true }) firstDayOfWeek?: DaysOfWeek = 1;
-
   @Prop({ reflect: true, mutable: true }) calendarView: 'days' | 'months' | 'years' | 'decades' = 'days';
-  /** The options to use when formatting the displayed value.
-   * Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat#using_options
-   */
-  @Prop() formatOptions: Intl.DateTimeFormatOptions = {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  };
-
-  /** The ID of the form that the Date picker input belongs to. */
+  @Prop() formatOptions: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' };
   @Prop({ reflect: true }) form?: string;
-
-  /** The native form validation message (mandatory if `required` is set) */
   @Prop({ mutable: true }) formValidationMessage?: string;
-
-  /** A function that takes a date and returns true if the date should not be selectable */
   @Prop({ reflect: true }) isDateDisallowed?: (date: Date) => boolean;
-
-  /** The locale for formatting dates. If not set, will use the browser's locale.
-   * Details: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument
-   */
   @Prop({ reflect: true }) locale: Intl.LocalesArgument = 'en-GB';
-
-  /** The latest date that can be selected */
   @Prop({ reflect: true }) max?: string;
-
-  /** The earliest date that can be selected */
   @Prop({ reflect: true }) min?: string;
-
-  /** Number of months to show when range is `true` */
   @Prop({ reflect: true }) months: number;
-
-  /**
-   * Specifies how the next/previous buttons should navigate the calendar.
-   * - single: The buttons will navigate by a single month at a time.
-   * - months: The buttons will navigate by the number of months displayed per view.
-   */
   @Prop({ reflect: true }) monthsPerView: 'single' | 'months' = 'single';
-
-  /** The Date picker input name. */
   @Prop({ reflect: true }) name!: string;
-
-  /** If `true`, the Date picker panel will be visible. */
   @Prop({ reflect: true, mutable: true }) open?: boolean = false;
-
-  /** When set, it will override the height of the Date picker panel. */
   @Prop({ reflect: true, mutable: true }) panelHeight?: string = 'auto';
-
-  /** The Date picker input placeholder text value */
   @Prop({ reflect: true }) placeholder?: string;
-
-  /** Position of the Date picker panel */
   @Prop({ reflect: true }) placement?: Placement = 'bottom-end';
-
-  /** Indicates whether or not the Date picker input is required to be filled out before submitting the form. */
   @Prop({ reflect: true }) required?: boolean;
-
-  /** Represents the skidding between the Date picker panel and the input element. */
   @Prop({ reflect: true }) skidding?: number = 0;
-
-  /** Whether to show days outside the month */
   @Prop({ reflect: true }) showOutsideDays: boolean = false;
-
-  /** Defines the strategy to position the Date picker panel */
   @Prop({ reflect: true }) strategy?: 'fixed' | 'absolute' = 'fixed';
-
-  /** The date that is tentatively selected e.g. the start of a range selection  */
   @Prop({ reflect: true, mutable: true }) tentative?: string;
-
-  /** It defines how the calendar will behave, allowing single date selection, range selection, or multiple date selection */
   @Prop({ reflect: true }) type: TDatePickerType = 'single';
-
-  /**
-   * The validation status of the Select input.
-   *
-   * @remarks
-   * This property is used to indicate the validation status of the select input. It can be set to one of the following values:
-   * - `'none'`: No validation status is set.
-   * - `'error'`: The input has a validation error.
-   * - `'warning'`: The input has a validation warning.
-   * - `'success'`: The input has passed validation.
-   */
   @Prop({ reflect: true }) validationStatus: TInputValidation = 'none';
-
-  /** The select input value represents the currently selected date or range and can be used to reset the field to a previous value.
-   * All dates are expected in ISO-8601 format (YYYY-MM-DD). */
   @Prop({ reflect: true, mutable: true }) value: string;
 
   // Prop lifecycle events
@@ -308,16 +239,12 @@ export class BqDatePicker {
   @Watch('value')
   handleValueChange(newValue: string, oldValue: string) {
     if (newValue === oldValue) return;
+    if (!this.isCallyLoaded) return;
 
-    const { formatDisplayValue, internals, isCallyLoaded } = this;
-    if (!isCallyLoaded) return;
-
-    internals.setFormValue(!isNil(newValue) ? `${newValue}` : undefined);
+    this.internals.setFormValue(!isNil(newValue) ? `${newValue}` : undefined);
     this.updateFormValidity();
-
     this.hasValue = isDefined(newValue);
-    this.displayDate = formatDisplayValue(newValue);
-
+    this.displayDate = formatDisplayValue(newValue, this.type, this.locale, this.formatOptions);
     this.setFocusedDate();
   }
 
@@ -327,31 +254,18 @@ export class BqDatePicker {
   }
 
   // Events section
-  // Requires JSDocs for public API documentation
   // ==============================================
 
-  /** Callback handler emitted when the input loses focus */
   @Event() bqBlur!: EventEmitter<HTMLBqDatePickerElement>;
-
-  /**
-   * Callback handler emitted when the input value has changed and the input loses focus.
-   * This handler is called whenever the user finishes typing or pasting text into the input field and then clicks outside of the input field.
-   */
   @Event() bqChange!: EventEmitter<{ value: string; el: HTMLBqDatePickerElement }>;
-
-  /** Callback handler emitted when the input value has been cleared */
   @Event() bqClear!: EventEmitter<HTMLBqDatePickerElement>;
-
-  /** Callback handler emitted when the input has received focus */
   @Event() bqFocus!: EventEmitter<HTMLBqDatePickerElement>;
 
   // Component lifecycle events
-  // Ordered by their natural call order
   // =====================================
 
   async componentWillLoad() {
     if (!isClient() || this.isCallyLoaded) return;
-
     try {
       await loadCallyLibrary();
       this.isCallyLoaded = isCallyLibraryLoaded();
@@ -366,9 +280,7 @@ export class BqDatePicker {
   }
 
   componentDidRender() {
-    if (this.isInternalUpdate) {
-      this.isInternalUpdate = false;
-    }
+    if (this.isInternalUpdate) this.isInternalUpdate = false;
   }
 
   formAssociatedCallback() {
@@ -377,7 +289,6 @@ export class BqDatePicker {
 
   formResetCallback() {
     if (isNil(this.value)) return;
-
     this.clear();
   }
 
@@ -387,82 +298,48 @@ export class BqDatePicker {
   @Listen('bqOpen', { capture: true })
   handleOpenChange(ev: CustomEvent<{ open: boolean }>) {
     if (!isEventTargetChildOfElement(ev, this.el)) return;
-
-    const { open } = ev.detail;
-    if (this.open === open) return;
-
-    this.open = open;
+    if (this.open === ev.detail.open) return;
+    this.open = ev.detail.open;
   }
 
   @Listen('click', { target: 'body', capture: true })
   handleClickOutside(ev: MouseEvent) {
-    const { open, type, hasRangeEnd } = this;
-    if (!open || type !== 'range' || ev.button !== 0) return;
-    if (isEventTargetChildOfElement(ev, this.el) || hasRangeEnd) return;
-
+    if (!this.open || this.type !== 'range' || ev.button !== 0) return;
+    if (isEventTargetChildOfElement(ev, this.el) || this.hasRangeEnd) return;
     this.tentative = undefined;
     this.hasRangeEnd = false;
   }
 
   // Public methods API
-  // These methods are exposed on the host element.
-  // Always use two lines.
-  // Public Methods must be async.
-  // Requires JSDocs for public API documentation.
   // ===============================================
 
-  /**
-   * Clears the selected value.
-   *
-   * @return {Promise<void>}
-   * @memberof BqInput
-   */
   @Method()
   async clear(): Promise<void> {
     if (this.disabled) return;
-
     this.value = undefined;
     this.internals.setFormValue(undefined);
     this.bqClear.emit(this.el);
   }
 
   // Local methods
-  // Internal business logic.
-  // These methods cannot be called from the host element.
   // =======================================================
 
   private handleBlur = () => {
-    if (this.disabled) return;
-
-    this.bqBlur.emit(this.el);
+    if (!this.disabled) this.bqBlur.emit(this.el);
   };
 
   private handleFocus = () => {
-    if (this.disabled) return;
-
-    this.bqFocus.emit(this.el);
+    if (!this.disabled) this.bqFocus.emit(this.el);
   };
 
   private setFocusedDate = () => {
-    const { callyElem, formatFocusedDate, isCallyLoaded, value } = this;
-    if (!(callyElem && isCallyLoaded)) return;
-
-    const nextFocused = value ? formatFocusedDate(value) : new Date().toLocaleDateString(this.LOCALE_DATE);
+    if (!this.callyElem || !this.isCallyLoaded) return;
+    const nextFocused = this.value ? formatFocusedDate(this.value) : new Date().toLocaleDateString(this.LOCALE_DATE);
     if (this.focusedDate === nextFocused) return;
-
     this.focusedDate = nextFocused;
-    if (callyElem.focusedDate !== this.focusedDate) {
-      // We need to set the focused date in the calendar component via a ref
-      // because it doesn't work when passed as a prop (the Cally element does not re-render)
-      callyElem.focusedDate = this.focusedDate;
+    if (this.callyElem.focusedDate !== this.focusedDate) {
+      this.callyElem.focusedDate = this.focusedDate;
     }
-  };
-
-  private clampDateToRange = (dateStr: string): string => {
-    if (this.min && dateStr < this.min) return this.min;
-    if (this.max && dateStr > this.max) return this.max;
-
-    return dateStr;
   };
 
   private handleChange = (ev: Event) => {
@@ -475,31 +352,18 @@ export class BqDatePicker {
       return;
     }
 
-    // Try to parse as date with locale awareness
     const dateValue = parseDateInput(inputValue, this.locale);
-    if (!dateValue) {
-      // Invalid date: don't update component value to avoid side effects
+    if (!dateValue || this.isDateDisallowed?.(dateValue)) {
       this.internals.setFormValue(undefined);
       this.updateFormValidity();
       this.bqChange.emit({ value: inputValue, el: this.el });
       return;
     }
 
-    // Check if date is disallowed
-    if (this.isDateDisallowed?.(dateValue)) {
-      this.internals.setFormValue(undefined);
-      this.updateFormValidity();
-      this.bqChange.emit({ value: inputValue, el: this.el });
-      return;
-    }
-
-    // Valid date: normalize to ISO format and clamp to range if needed
-    // Note: clamping is done based on string comparison of ISO dates and only when min/max are set
     let isoDate = dateValue.toLocaleDateString(this.LOCALE_DATE);
-    isoDate = this.clampDateToRange(isoDate);
-
+    isoDate = clampDateToRange(isoDate, this.min, this.max);
     this.value = isoDate;
-    this.displayDate = this.formatDisplayValue(isoDate);
+    this.displayDate = formatDisplayValue(isoDate, this.type, this.locale, this.formatOptions);
     this.internals.setFormValue(isoDate);
     this.updateFormValidity();
     this.bqChange.emit({ value: this.value, el: this.el });
@@ -507,25 +371,19 @@ export class BqDatePicker {
 
   private handleCalendarChange = (ev: Event) => {
     if (this.isInternalUpdate) return;
-
     const shouldStayOpen = this.type === 'multi';
     const value = (ev.target as unknown as { value: string }).value;
-
     if (this.value === value) {
       this.open = shouldStayOpen;
       return;
     }
-
     this.isInternalUpdate = true;
-
     this.value = value;
-    this.displayDate = this.formatDisplayValue(value);
+    this.displayDate = formatDisplayValue(value, this.type, this.locale, this.formatOptions);
     this.inputElem.value = this.displayDate;
     this.inputElem.focus();
-
     this.internals.setFormValue(value);
     this.bqChange.emit({ value: this.value, el: this.el });
-
     this.open = shouldStayOpen;
   };
 
@@ -540,15 +398,12 @@ export class BqDatePicker {
 
   private handleClearClick = (ev: CustomEvent) => {
     if (this.disabled) return;
-
     this.inputElem.value = '';
     this.clearValue();
     this.hasRangeEnd = false;
-
     this.bqClear.emit(this.el);
     this.bqChange.emit({ value: this.value, el: this.el });
     this.inputElem.focus();
-
     ev.stopPropagation();
   };
 
@@ -564,288 +419,107 @@ export class BqDatePicker {
     this.hasSuffix = hasSlotContent(this.suffixElem);
   };
 
-  /** Gets the numeric focused year from focusedDate/value/today */
-  private getFocusedYear = (): number => {
-    const base = this.focusedDate || this.formatFocusedDate(this.value) || new Date().toLocaleDateString('fr-CA'); // YYYY-MM-DD
-    const yearStr = base.slice(0, 4);
-    const yearNum = parseInt(yearStr, 10);
-    return Number.isNaN(yearNum) ? new Date().getFullYear() : yearNum;
-  };
-
   private handleHeadingClick = () => {
-    // Only allow toggling when enabled
     if (!this.allowHeaderViewToggle) return;
-
-    if (this.calendarView === 'days') {
-      this.calendarView = 'months';
-    } else if (this.calendarView === 'months') {
-      this.calendarView = 'years';
-    } else if (this.calendarView === 'years') {
-      this.calendarView = 'decades';
-    }
+    const viewOrder = { days: 'months', months: 'years', years: 'decades' } as const;
+    this.calendarView = viewOrder[this.calendarView] || this.calendarView;
   };
 
-  // Build first day of selected month in focused year and update calendar
   private handleMonthSelect = (monthIndex: number) => {
-    const year = this.focusedDate ? this.focusedDate.slice(0, 4) : new Date().getFullYear().toString();
-    const month = String(monthIndex + 1).padStart(2, '0');
-    const newFocused = `${year}-${month}-01`;
-    this.focusedDate = newFocused;
-    if (this.callyElem) {
-      this.callyElem.focusedDate = newFocused;
-    }
+    const year = this.focusedDate?.slice(0, 4) || new Date().getFullYear().toString();
+    this.updateFocusedDate(`${year}-${String(monthIndex + 1).padStart(2, '0')}-01`);
     this.calendarView = 'days';
   };
 
-  // Select a year from the years grid and move to months view
   private handleYearSelect = (year: number) => {
-    const base = this.focusedDate || this.formatFocusedDate(this.value) || new Date().toLocaleDateString('fr-CA');
-    const monthDay = base.slice(5) || '01-01';
-    const nextFocused = `${year}-${monthDay}`;
-    this.focusedDate = nextFocused;
-    if (this.callyElem) {
-      this.callyElem.focusedDate = nextFocused;
-    }
+    const monthDay = (this.focusedDate || formatFocusedDate(this.value))?.slice(5) || '01-01';
+    this.updateFocusedDate(`${year}-${monthDay}`);
     this.calendarView = 'months';
   };
 
-  // Select a decade (start year) and move to years view anchored at that decade
   private handleDecadeSelect = (decadeStart: number) => {
-    const base = this.focusedDate || this.formatFocusedDate(this.value) || new Date().toLocaleDateString('fr-CA');
-    const monthDay = base.slice(5) || '01-01';
-    const nextFocused = `${decadeStart}-${monthDay}`;
-    this.focusedDate = nextFocused;
-    if (this.callyElem) {
-      this.callyElem.focusedDate = nextFocused;
-    }
+    const monthDay = (this.focusedDate || formatFocusedDate(this.value))?.slice(5) || '01-01';
+    this.updateFocusedDate(`${decadeStart}-${monthDay}`);
     this.calendarView = 'years';
   };
 
-  /** Shift the currently focused date by a number of years, preserving month/day */
-  private shiftFocusedDateYears = (deltaYears: number) => {
-    const base = this.focusedDate || this.formatFocusedDate(this.value) || new Date().toLocaleDateString('fr-CA');
-    const [y, m, d] = base.split('-').map((p) => parseInt(p, 10));
-    const next = new Date(y, (m || 1) - 1, d || 1);
-    next.setFullYear(next.getFullYear() + deltaYears);
-    const nextFocused = `${next.getFullYear()}-${String(next.getMonth() + 1).padStart(2, '0')}-${String(next.getDate()).padStart(2, '0')}`;
-    this.focusedDate = nextFocused;
-    if (this.callyElem) {
-      this.callyElem.focusedDate = nextFocused;
-    }
-  };
-
-  private shiftFocusedDateMonths = (deltaMonths: number) => {
-    const base = this.focusedDate || this.formatFocusedDate(this.value) || new Date().toLocaleDateString('fr-CA');
-    const [y, m, d] = base.split('-').map((p) => parseInt(p, 10));
-    const next = new Date(y, (m || 1) - 1, d || 1);
-    next.setMonth(next.getMonth() + deltaMonths);
-    const nextFocused = `${next.getFullYear()}-${String(next.getMonth() + 1).padStart(2, '0')}-${String(next.getDate()).padStart(2, '0')}`;
-    this.focusedDate = nextFocused;
-    if (this.callyElem) {
-      this.callyElem.focusedDate = nextFocused;
-    }
-  };
-
-  /** Handle click on previous control; intercept when not in days view */
   private handlePrevClick = (ev: MouseEvent) => {
     ev.preventDefault();
     ev.stopPropagation();
-    if (this.calendarView === 'days') {
-      const step = this.monthsPerView === 'months' ? this.months || 1 : 1;
-      this.shiftFocusedDateMonths(-step);
-    } else if (this.calendarView === 'months') {
-      this.shiftFocusedDateYears(-1);
-    } else if (this.calendarView === 'years') {
-      this.shiftFocusedDateYears(-12);
-    } else if (this.calendarView === 'decades') {
-      this.shiftFocusedDateYears(-120);
-    }
+    this.navigateCalendar(-1);
   };
 
-  /** Handle click on next control; intercept when not in days view */
   private handleNextClick = (ev: MouseEvent) => {
     ev.preventDefault();
     ev.stopPropagation();
-
-    if (this.calendarView === 'days') {
-      const step = this.monthsPerView === 'months' ? this.months || 1 : 1;
-      this.shiftFocusedDateMonths(step);
-    } else if (this.calendarView === 'months') {
-      this.shiftFocusedDateYears(1);
-    } else if (this.calendarView === 'years') {
-      this.shiftFocusedDateYears(12);
-    } else if (this.calendarView === 'decades') {
-      this.shiftFocusedDateYears(120);
-    }
+    this.navigateCalendar(1);
   };
 
-  /** Compute the starting year of the current decade based on the focused year */
-  private getStartDecade = (): number => {
-    const year = this.getFocusedYear();
-    return Math.floor(year / 10) * 10;
+  private navigateCalendar = (direction: 1 | -1) => {
+    const step = this.monthsPerView === 'months' ? this.months || 1 : 1;
+    const shifts = { days: step, months: 1, years: 12, decades: 120 };
+    const shiftFn = this.calendarView === 'days' ? shiftFocusedDateMonths : shiftFocusedDateYears;
+    this.updateFocusedDate(shiftFn(this.focusedDate, this.value, direction * shifts[this.calendarView]));
   };
 
-  /** Get the heading title based on the current view */
-  private getHeadingTitle = (): string => {
-    const baseStr = this.focusedDate || this.formatFocusedDate(this.value) || new Date().toLocaleDateString('fr-CA');
-    const baseDate = new Date(baseStr + 'T00:00:00');
-
-    if (this.calendarView === 'days') {
-      // Sets Heading to "Month Year" (e.g., "January 2024")
-      return new Intl.DateTimeFormat(this.locale as string, { month: 'long', year: 'numeric' }).format(baseDate);
-    }
-
-    if (this.calendarView === 'months') {
-      // Sets Heading to "Year" (e.g., "2024")
-      return `${this.getFocusedYear()}`;
-    }
-
-    if (this.calendarView === 'years') {
-      // Sets Heading to a years range "StartingYear-EndingYear" (12 years) (e.g., "2020-2031")
-      const start = this.getFocusedYear();
-      const end = start + 11;
-      return `${start}-${end}`;
-    }
-    // Sets Heading to a years range "StartingDecade-EndingDecade" (12 Decades) (e.g., "2020-2131")
-    const startDecade = this.getStartDecade();
-    const endYear = startDecade + 119;
-    return `${startDecade}-${endYear}`;
-  };
-
-  private generateCalendarMonth = (offset?: number, className = ''): Element | null => {
-    if (!this.isCallyLoaded) return null;
-
-    return (
-      <calendar-month
-        class={className}
-        exportparts={`${this.COMMON_EXPORT_PARTS},${this.BUTTON_EXPORT_PARTS}`}
-        offset={offset}
-      />
-    );
-  };
-
-  /**
-   * Generates an array of Elements representing the calendar months.
-   *
-   * If the type of the date picker is 'range' or 'multi' and the number of months is specified,
-   * it generates an array of calendar months with the specified length. Each month will have an offset
-   * and a class name based on its position in the array. The offset is used to determine the month to display,
-   * and the class name is used for responsive design.
-   *
-   * If the type of the date picker is not 'range' or 'multi', or if the number of months is not specified,
-   * it generates an array with a single calendar month.
-   *
-   * @returns {Element[]} An array of elements representing the calendar months.
-   */
-  private generateCalendarMonths = (): Element[] => {
-    if (!this.isCallyLoaded) return [];
-
-    if (this.type === 'range' || (this.type === 'multi' && this.months)) {
-      return Array.from({ length: this.months }, (_, i) => {
-        const offset = i > 0 ? i : undefined;
-        const className = offset ? 'hidden sm:block' : '';
-        return this.generateCalendarMonth(offset, className);
-      });
-    }
-
-    return [this.generateCalendarMonth()];
-  };
-
-  /**
-   * Extracts and returns the first date part from a given string.
-   * When the type of the date picker is 'range' or 'multi', the first or initial date part of the value
-   * should be the focused date in the calendar.
-   *
-   * @param value - The value to be processed, can be a string.
-   * @returns The extracted last date portion of the value.
-   */
-  private formatFocusedDate = (value: string): string | undefined => {
-    if (!value) return undefined;
-
-    const dateRegex = /\b\d{4}-\d{2}-\d{2}\b/;
-    const match = dateRegex.exec(value);
-    return match ? match[0] : undefined;
-  };
-
-  private formatDisplayValue = (value: string): string | undefined => {
-    if (!value) return undefined;
-
-    const dateFormatter = new Intl.DateTimeFormat(this.locale, this.formatOptions);
-
-    if (this.type === 'range') {
-      const [start, end] = value.split('/').map((dateStr) => new Date(`${dateStr}T00:00:00`));
-      return dateFormatter.formatRange(start, end);
-    }
-
-    if (this.type === 'multi') {
-      const dates = value.split(' ').map((dateStr) => new Date(`${dateStr}T00:00:00`));
-      return dates.map((date) => dateFormatter.format(date)).join(', ');
-    }
-
-    return dateFormatter.format(new Date(`${value}T00:00:00`));
+  private updateFocusedDate = (newFocused: string) => {
+    this.focusedDate = newFocused;
+    if (this.callyElem) this.callyElem.focusedDate = newFocused;
   };
 
   private updateFormValidity = () => {
-    const { formValidationMessage, internals, required, value, inputElem } = this;
-
-    // Clear the validity state
-    internals?.states.clear();
-
-    // Check if value is required but missing
-    if (required && (!value || value.toString().trim() === '')) {
-      // Set validity state to invalid
-      internals?.states.add('invalid');
-      internals?.setValidity(
+    this.internals?.states.clear();
+    if (this.required && (!this.value || this.value.toString().trim() === '')) {
+      this.internals?.states.add('invalid');
+      this.internals?.setValidity(
         { valueMissing: true },
-        formValidationMessage ?? 'Please, input or select a valid date',
-        inputElem,
+        this.formValidationMessage ?? 'Please, input or select a valid date',
+        this.inputElem,
       );
       return;
     }
-
-    // Set validity state to valid if the input has value or is not required
-    internals?.states.add('valid');
-    internals?.setValidity({});
+    this.internals?.states.add('valid');
+    this.internals?.setValidity({});
   };
 
   private get calendarType() {
-    const componentTypes = {
-      single: 'calendar-date',
-      multi: 'calendar-multi',
-      range: 'calendar-range',
-    } as const;
-
-    // Return the corresponding component type, based on the type prop value
-    return componentTypes[this.type] || componentTypes.single;
+    return { single: 'calendar-date', multi: 'calendar-multi', range: 'calendar-range' }[this.type] || 'calendar-date';
   }
 
+  private get labelId() {
+    return `bq-date-picker__label-${this.name || this.fallbackInputId}`;
+  }
+
+  private getCalendarMonths = (): Element[] => {
+    if (!this.isCallyLoaded) return [];
+
+    const exportParts = `${this.COMMON_EXPORT_PARTS},${this.BUTTON_EXPORT_PARTS}`;
+
+    if ((this.type === 'range' || this.type === 'multi') && this.months) {
+      return Array.from({ length: this.months }, (_, i) => {
+        const offset = i > 0 ? i : undefined;
+        const className = offset ? 'hidden sm:block' : '';
+        return <calendar-month class={className} exportparts={exportParts} offset={offset} />;
+      });
+    }
+
+    return [<calendar-month exportparts={exportParts} />];
+  };
+
   // render() function
-  // Always the last one in the class.
   // ===================================
 
   render() {
-    const CallyCalendar = this.calendarType;
-    const monthNames = Array.from({ length: 12 }, (_, i) =>
-      new Intl.DateTimeFormat(this.locale as string, { month: 'short' }).format(new Date(2020, i, 1)),
-    );
-
-    const labelId = `bq-date-picker__label-${this.name || this.fallbackInputId}`;
-
     return (
       <div class="bq-date-picker" part="base">
-        {/* Label */}
-        <label
-          aria-labelledby={labelId}
-          class={{ 'bq-date-picker__label': true, '!hidden': !this.hasLabel }}
-          htmlFor={this.name || this.fallbackInputId}
-          part="label"
-          ref={(labelElem: HTMLSpanElement) => {
-            this.labelElem = labelElem;
-          }}
-        >
-          <slot id={labelId} name="label" onSlotchange={this.handleSlotChange} />
-        </label>
-        {/* Select date picker dropdown */}
+        <DatePickerLabel
+          labelId={this.labelId}
+          name={this.name}
+          fallbackInputId={this.fallbackInputId}
+          hasLabel={this.hasLabel}
+          onSlotChange={this.handleSlotChange}
+          setLabelRef={(el) => (this.labelElem = el)}
+        />
         <bq-dropdown
           class="bq-date-picker__dropdown is-full [&::part(panel)]:is-auto [&::part(panel)]:p-m"
           disabled={this.disabled}
@@ -857,7 +531,6 @@ export class BqDatePicker {
           skidding={this.skidding}
           strategy={this.strategy}
         >
-          {/* Input control group */}
           <div
             class={{
               'bq-date-picker__control': true,
@@ -867,161 +540,71 @@ export class BqDatePicker {
             part="control"
             slot="trigger"
           >
-            {/* Prefix */}
-            <span
-              class={{ 'bq-date-picker__control--prefix': true, '!hidden': !this.hasPrefix }}
-              part="prefix"
-              ref={(spanElem: HTMLSpanElement) => {
-                this.prefixElem = spanElem;
-              }}
-            >
-              <slot name="prefix" onSlotchange={this.handleSlotChange} />
-            </span>
-            {/* HTML Input */}
-            <input
-              aria-controls={`${this.name}`}
-              aria-describedby={this.hasLabel ? labelId : null}
-              aria-disabled={this.disabled ? 'true' : 'false'}
-              aria-invalid={this.validationStatus === 'error' ? 'true' : 'false'}
-              aria-haspopup="dialog"
-              autoCapitalize="off"
-              autoComplete="off"
-              class="bq-date-picker__control--input"
-              disabled={this.disabled}
-              form={this.form}
-              id={this.name || this.fallbackInputId}
+            <DatePickerPrefix
+              hasPrefix={this.hasPrefix}
+              onSlotChange={this.handleSlotChange}
+              setPrefixRef={(el) => (this.prefixElem = el)}
+            />
+            <DatePickerInput
               name={this.name}
+              fallbackInputId={this.fallbackInputId}
+              labelId={this.labelId}
+              hasLabel={this.hasLabel}
+              disabled={this.disabled}
+              validationStatus={this.validationStatus}
+              form={this.form}
+              placeholder={this.placeholder}
+              required={this.required}
+              type={this.type}
+              displayDate={this.displayDate}
               onBlur={this.handleBlur}
               onChange={this.handleChange}
               onFocus={this.handleFocus}
-              part="input"
-              placeholder={this.placeholder}
-              readonly={this.type !== 'single'}
-              ref={(inputElem: HTMLInputElement) => {
-                this.inputElem = inputElem;
-              }}
-              required={this.required}
-              spellcheck={false}
-              type="text"
-              value={this.displayDate}
+              setInputRef={(el) => (this.inputElem = el)}
             />
-            {/* Clear Button */}
-            {this.hasValue && !this.disabled && !this.disableClear && (
-              // The clear button will be visible as long as the input has a value
-              // and the parent group is hovered or has focus-within
-              <bq-button
-                appearance="text"
-                aria-label={this.clearButtonLabel}
-                class="bq-date-picker__control--clear ms-[--bq-date-picker--gap] hidden"
-                exportparts="button"
-                onBqClick={this.handleClearClick}
-                part="clear-btn"
-                size="small"
-              >
-                <slot name="clear-icon">
-                  <bq-icon class="flex" name="x-circle" />
-                </slot>
-              </bq-button>
-            )}
-            {/* Suffix */}
-            <span
-              class="bq-date-picker__control--suffix"
-              part="suffix"
-              ref={(spanElem: HTMLSpanElement) => {
-                this.suffixElem = spanElem;
-              }}
-            >
-              <slot name="suffix" onSlotchange={this.handleSlotChange}>
-                <bq-icon class="flex" name="calendar-blank" />
-              </slot>
-            </span>
+            <DatePickerClearButton
+              hasValue={this.hasValue}
+              disabled={this.disabled}
+              disableClear={this.disableClear}
+              clearButtonLabel={this.clearButtonLabel}
+              onClearClick={this.handleClearClick}
+            />
+            <DatePickerSuffix
+              onSlotChange={this.handleSlotChange}
+              setSuffixRef={(el) => (this.suffixElem = el)}
+            />
           </div>
           {this.isCallyLoaded && (
-            <CallyCalendar
-              aria-labelledby={labelId}
-              aria-modal="true"
-              exportparts="container:calendar__container,header:calendar__header,button:calendar__button,previous:calendar__previous,next:calendar__next,disabled:calendar__disabled,heading:calendar__heading"
+            <CalendarPanel
+              calendarType={this.calendarType}
+              labelId={this.labelId}
               firstDayOfWeek={this.firstDayOfWeek}
               isDateDisallowed={this.isDateDisallowed}
-              locale={this.locale as string}
+              locale={this.locale}
               max={this.max}
               min={this.min}
               months={this.months}
-              onChange={this.handleCalendarChange}
-              onRangeend={this.handleCalendarRangeEnd}
-              onRangestart={this.handleCalendarRangeStart}
-              pageBy={this.monthsPerView}
-              ref={(elem: TCalendarDate) => {
-                this.callyElem = elem;
-              }}
-              role="dialog"
+              monthsPerView={this.monthsPerView}
               showOutsideDays={this.showOutsideDays}
               tentative={this.tentative}
               value={this.value}
-            >
-              <bq-icon
-                // Temporary role
-                role="button"
-                color="text--primary"
-                slot="previous"
-                name="caret-left"
-                label="Previous"
-                onClick={this.handlePrevClick}
-              />
-              <bq-icon
-                role="button"
-                color="text--primary"
-                slot="next"
-                name="caret-right"
-                label="Next"
-                onClick={this.handleNextClick}
-              />
-              <div slot="heading">
-                <button
-                  type="button"
-                  part="calendar__heading"
-                  class="bq-date-picker__heading-btn"
-                  disabled={!this.allowHeaderViewToggle}
-                  onClick={this.handleHeadingClick}
-                >
-                  {this.getHeadingTitle()}
-                </button>
-              </div>
-
-              {this.calendarView === 'days' && <div>{this.generateCalendarMonths()}</div>}
-
-              {this.calendarView === 'months' && (
-                <div class="bq-date-picker_custom_container">
-                  {monthNames.map((m, i) => (
-                    <button type="button" class="bq-date-picker__date-btn" onClick={() => this.handleMonthSelect(i)}>
-                      {m}
-                    </button>
-                  ))}
-                </div>
-              )}
-              {this.calendarView === 'years' && (
-                <div class="bq-date-picker_custom_container">
-                  {Array.from({ length: 12 }, (_, i) => this.getFocusedYear() + i).map((y) => (
-                    <button type="button" class="bq-date-picker__date-btn" onClick={() => this.handleYearSelect(y)}>
-                      {y}
-                    </button>
-                  ))}
-                </div>
-              )}
-              {this.calendarView === 'decades' && (
-                <div class="bq-date-picker_custom_container">
-                  {Array.from({ length: 12 }, (_, i) => this.getStartDecade() + i * 10).map((dStart) => (
-                    <button
-                      type="button"
-                      class="bq-date-picker__date-btn"
-                      onClick={() => this.handleDecadeSelect(dStart)}
-                    >
-                      {`${dStart}–${dStart + 9}`}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </CallyCalendar>
+              calendarView={this.calendarView}
+              allowHeaderViewToggle={this.allowHeaderViewToggle}
+              headingTitle={getHeadingTitle(this.calendarView, this.focusedDate, this.value, this.locale)}
+              focusedYear={getFocusedYear(this.focusedDate, this.value)}
+              startDecade={getStartDecade(getFocusedYear(this.focusedDate, this.value))}
+              calendarMonths={this.getCalendarMonths()}
+              onCalendarChange={this.handleCalendarChange}
+              onRangeEnd={this.handleCalendarRangeEnd}
+              onRangeStart={this.handleCalendarRangeStart}
+              onPrevClick={this.handlePrevClick}
+              onNextClick={this.handleNextClick}
+              onHeadingClick={this.handleHeadingClick}
+              onMonthSelect={this.handleMonthSelect}
+              onYearSelect={this.handleYearSelect}
+              onDecadeSelect={this.handleDecadeSelect}
+              setCallyRef={(el) => (this.callyElem = el)}
+            />
           )}
         </bq-dropdown>
       </div>
