@@ -231,7 +231,6 @@ export class BqStepItem {
           </div>
         </button>
         {!this.isLast && (
-          // biome-ignore lint/a11y/noAriaHiddenOnFocusable: The <bq-divider> is not focusable and is only decorative
           <bq-divider
             class={{
               '[&::part(base)]:self-start [&::part(base)]:p-m': true,

@@ -1,5 +1,6 @@
 import type { Args, Meta, StoryObj } from '@storybook/web-components-vite';
-import { html } from 'lit-html';
+import { html, nothing } from 'lit-html';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 
 import { isChromatic, skipSnapshotParameters } from '../../../../.storybook/chromatic-parameters';
 import { BUTTON_APPEARANCE, BUTTON_BORDER_RADIUS, BUTTON_SIZE, BUTTON_TYPE, BUTTON_VARIANT } from '../bq-button.types';
@@ -20,17 +21,21 @@ const meta: Meta = {
     disabled: { control: 'boolean' },
     href: { control: 'text' },
     'justify-content': { control: 'select', options: ['left', 'center', 'right'] },
+    label: { control: 'text' },
     loading: { control: 'boolean' },
+    'only-icon': { control: 'boolean' },
     size: { control: 'select', options: [...BUTTON_SIZE] },
     target: { control: 'select', options: ['_blank', '_parent', '_self', '_top'] },
     type: { control: 'select', options: [...BUTTON_TYPE] },
     variant: { control: 'select', options: [...BUTTON_VARIANT] },
-    // This control is not part of the component
-    buttonText: { control: 'text', table: { disable: true } },
     // Event handlers
     bqBlur: { action: 'bqBlur' },
     bqFocus: { action: 'bqFocus' },
     bqClick: { action: 'bqClick' },
+    // This control is not part of the component
+    buttonText: { control: 'text', table: { disable: true } },
+    buttonPrefix: { control: 'text', table: { disable: true } },
+    buttonSuffix: { control: 'text', table: { disable: true } },
   },
   args: {
     appearance: 'primary',
@@ -39,7 +44,9 @@ const meta: Meta = {
     disabled: false,
     href: undefined,
     'justify-content': 'center',
+    label: undefined,
     loading: false,
+    'only-icon': false,
     size: 'medium',
     target: undefined,
     type: 'button',
@@ -62,7 +69,9 @@ const Template = (args: Args) => {
       ?disabled=${args.disabled}
       href=${args.href}
       justify-content=${args['justify-content']}
+      label=${args.label}
       ?loading=${loading}
+      ?only-icon=${args['only-icon']}
       size=${args.size}
       target=${args.target}
       type=${args.type}
@@ -71,7 +80,9 @@ const Template = (args: Args) => {
       @bqClick=${args.bqClick}
       @bqFocus=${args.bqFocus}
     >
-      ${args.buttonText}
+      ${args.buttonPrefix ? unsafeHTML(args.buttonPrefix) : nothing}
+      ${args.buttonText ? unsafeHTML(args.buttonText) : nothing}
+      ${args.buttonSuffix ? unsafeHTML(args.buttonSuffix) : nothing}
     </bq-button>
   `;
 };
@@ -128,87 +139,26 @@ export const Block: Story = {
 };
 
 export const IconLeft: Story = {
-  render: (args) => {
-    // In Chromatic environment, make sure loading is false
-    const loading = isChromatic() ? false : args.loading;
-
-    return html`
-      <bq-button
-        appearance=${args.appearance}
-        ?block=${args.block}
-        border=${args.border}
-        ?disabled=${args.disabled}
-        href=${args.href}
-        justify-content=${args['justify-content']}
-        ?loading=${loading}
-        size=${args.size}
-        target=${args.target}
-        type=${args.type}
-        variant=${args.variant}
-        @bqBlur=${args.bqBlur}
-        @bqClick=${args.bqClick}
-        @bqFocus=${args.bqFocus}
-      >
-        <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>
-        Go back
-      </bq-button>
-    `;
+  render: Template,
+  args: {
+    buttonText: 'Previous step',
+    buttonPrefix: `<bq-icon aria-hidden="true" name="arrow-circle-left" slot="prefix"></bq-icon>`,
   },
 };
 
 export const IconRight: Story = {
-  render: (args) => {
-    // In Chromatic environment, make sure loading is false
-    const loading = isChromatic() ? false : args.loading;
-
-    return html`
-      <bq-button
-        appearance=${args.appearance}
-        border=${args.border}
-        ?block=${args.block}
-        ?disabled=${args.disabled}
-        href=${args.href}
-        justify-content=${args['justify-content']}
-        ?loading=${loading}
-        size=${args.size}
-        target=${args.target}
-        type=${args.type}
-        variant=${args.variant}
-        @bqBlur=${args.bqBlur}
-        @bqClick=${args.bqClick}
-        @bqFocus=${args.bqFocus}
-      >
-        Next step
-        <bq-icon name="arrow-circle-right" slot="suffix"></bq-icon>
-      </bq-button>
-    `;
+  render: Template,
+  args: {
+    buttonText: 'Next step',
+    buttonSuffix: `<bq-icon aria-hidden="true" name="arrow-circle-right" slot="suffix"></bq-icon>`,
   },
 };
 
 export const OnlyIcon: Story = {
-  render: (args) => {
-    // In Chromatic environment, make sure loading is false
-    const loading = isChromatic() ? false : args.loading;
-
-    return html`
-      <bq-button
-        appearance=${args.appearance}
-        border=${args.border}
-        ?block=${args.block}
-        ?disabled=${args.disabled}
-        href=${args.href}
-        justify-content=${args['justify-content']}
-        ?loading=${loading}
-        size=${args.size}
-        target=${args.target}
-        type=${args.type}
-        variant=${args.variant}
-        @bqBlur=${args.bqBlur}
-        @bqClick=${args.bqClick}
-        @bqFocus=${args.bqFocus}
-      >
-        <bq-icon name="bell-ringing"></bq-icon>
-      </bq-button>
-    `;
+  render: Template,
+  args: {
+    buttonText: `<bq-icon aria-hidden="true" name="bell-ringing"></bq-icon>`,
+    label: 'Notifications',
+    'only-icon': true,
   },
 };

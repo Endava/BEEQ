@@ -490,15 +490,17 @@ export class BqInput {
             // and the parent group is hovered or has focus-within
             <bq-button
               appearance="text"
-              aria-label={this.clearButtonLabel}
-              class="bq-input--control__clear ms-[--bq-input--gap] hidden"
+              border="s"
+              class="bq-input--control__clear ms-[--bq-date-picker--gap] hidden [&::part(button)]:border-none [&::part(button)]:p-0"
               exportparts="button"
+              label={this.clearButtonLabel}
               onBqClick={this.handleClearClick}
+              onlyIcon
               part="clear-btn"
               size="small"
             >
               <slot name="clear-icon">
-                <bq-icon class="flex" name="x-circle" />
+                <bq-icon aria-hidden="true" class="flex" name="x-circle" />
               </slot>
             </bq-button>
           )}

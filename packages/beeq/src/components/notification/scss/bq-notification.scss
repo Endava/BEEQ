@@ -43,13 +43,6 @@
 }
 
 /**
- * Tweak the close bq-button styles so it remain small without extra padding
- */
-.notification--close::part(button) {
-  @apply rounded-s border-0 bs-fit p-b-0 p-i-0;
-}
-
-/**
  * Here we guarantee that if the footer actions are wrapped in a div container from the consumer side,
  * the styles get applied to the that wrapping container directly
  */
