@@ -91,7 +91,7 @@
     "@types/eslint-config-prettier": "6.11.3",
     "@types/jest": "29.5.14",
     "@types/mdx": "2.0.13",
-    "@types/node": "22.14.1",
+    "@types/node": "22.19.3",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
     "@wc-toolkit/jsdoc-tags": "1.1.0",
@@ -159,7 +159,7 @@
     }
   },
   "volta": {
-    "node": "22.16.0",
+    "node": "22.21.1",
     "pnpm": "10.13.1"
   }
 }
