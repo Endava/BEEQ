@@ -260,8 +260,8 @@ importers:
         specifier: 22.3.3
         version: 22.3.3(@swc-node/register@1.11.1(@swc/core@1.14.0(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.3))(@swc/core@1.14.0(@swc/helpers@0.5.17))
       nx-stylelint:
-        specifier: 18.0.0
-        version: 18.0.0(nx@22.3.3(@swc-node/register@1.11.1(@swc/core@1.14.0(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.3))(@swc/core@1.14.0(@swc/helpers@0.5.17)))(stylelint-config-standard-scss@14.0.0(postcss@8.5.6)(stylelint@16.23.1(typescript@5.9.3)))(stylelint-config-standard@37.0.0(stylelint@16.23.1(typescript@5.9.3)))(stylelint@16.23.1(typescript@5.9.3))(typescript@5.9.3)
+        specifier: 18.0.2
+        version: 18.0.2(nx@22.3.3(@swc-node/register@1.11.1(@swc/core@1.14.0(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.3))(@swc/core@1.14.0(@swc/helpers@0.5.17)))(stylelint-config-standard-scss@14.0.0(postcss@8.5.6)(stylelint@16.23.1(typescript@5.9.3)))(stylelint-config-standard@37.0.0(stylelint@16.23.1(typescript@5.9.3)))(stylelint@16.23.1(typescript@5.9.3))(typescript@5.9.3)
       plop:
         specifier: 4.0.1
         version: 4.0.1(@types/node@22.19.3)
@@ -8624,8 +8624,8 @@ packages:
   nwsapi@2.2.22:
     resolution: {integrity: sha512-ujSMe1OWVn55euT1ihwCI1ZcAaAU3nxUiDwfDQldc51ZXaB9m2AyOn6/jh1BLe2t/G8xd6uKG1UBF2aZJeg2SQ==}
 
-  nx-stylelint@18.0.0:
-    resolution: {integrity: sha512-q3SivGO9FFugQ0UhhVXNxfuvo/wyXgogmYe7IvaXqqDyS4N+wZ3l4JERKsEe0X16W5lykRys/2zzIoCpqoKlSw==}
+  nx-stylelint@18.0.2:
+    resolution: {integrity: sha512-eTNHKUYD8sRUBKC8is3ZwldXDNaZcN8P2gZsEtEXiLVYByQEUpXU7m33q9wI4F2Y/2bXa0MWcVht919mN7CBbg==}
     engines: {node: ^18.13.0 || ^20.9.0 || >=22.0.0}
     peerDependencies:
       stylelint: ^16.0.0
@@ -22627,7 +22627,7 @@ snapshots:
 
   nwsapi@2.2.22: {}
 
-  nx-stylelint@18.0.0(nx@22.3.3(@swc-node/register@1.11.1(@swc/core@1.14.0(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.3))(@swc/core@1.14.0(@swc/helpers@0.5.17)))(stylelint-config-standard-scss@14.0.0(postcss@8.5.6)(stylelint@16.23.1(typescript@5.9.3)))(stylelint-config-standard@37.0.0(stylelint@16.23.1(typescript@5.9.3)))(stylelint@16.23.1(typescript@5.9.3))(typescript@5.9.3):
+  nx-stylelint@18.0.2(nx@22.3.3(@swc-node/register@1.11.1(@swc/core@1.14.0(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.3))(@swc/core@1.14.0(@swc/helpers@0.5.17)))(stylelint-config-standard-scss@14.0.0(postcss@8.5.6)(stylelint@16.23.1(typescript@5.9.3)))(stylelint-config-standard@37.0.0(stylelint@16.23.1(typescript@5.9.3)))(stylelint@16.23.1(typescript@5.9.3))(typescript@5.9.3):
     dependencies:
       '@nx/devkit': 22.3.3(nx@22.3.3(@swc-node/register@1.11.1(@swc/core@1.14.0(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.3))(@swc/core@1.14.0(@swc/helpers@0.5.17)))
       cosmiconfig: 9.0.0(typescript@5.9.3)
