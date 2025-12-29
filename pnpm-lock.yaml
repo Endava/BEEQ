@@ -198,8 +198,8 @@ importers:
         specifier: 1.1.0
         version: 1.1.0
       autoprefixer:
-        specifier: 10.4.21
-        version: 10.4.21(postcss@8.5.6)
+        specifier: 10.4.23
+        version: 10.4.23(postcss@8.5.6)
       babel-jest:
         specifier: 29.7.0
         version: 29.7.0(@babel/core@7.28.0)
@@ -5108,6 +5108,13 @@ packages:
     peerDependencies:
       postcss: ^8.1.0
 
+  autoprefixer@10.4.23:
+    resolution: {integrity: sha512-YYTXSFulfwytnjAPlw8QHncHJmlvFKtczb8InXaAx9Q0LbfDnfEYDE55omerIJKihhmU61Ft+cAOSzQVaBUmeA==}
+    engines: {node: ^10 || ^12 || >=14}
+    hasBin: true
+    peerDependencies:
+      postcss: ^8.1.0
+
   available-typed-arrays@1.0.7:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
@@ -6757,6 +6764,9 @@ packages:
 
   fraction.js@4.3.7:
     resolution: {integrity: sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==}
+
+  fraction.js@5.3.4:
+    resolution: {integrity: sha512-1X1NTtiJphryn/uLQz3whtY6jK3fTqoE3ohKs0tT+Ujr1W59oopxmoEh7Lu5p6vBaPbgoM0bzveAW4Qi5RyWDQ==}
 
   fresh@0.5.2:
     resolution: {integrity: sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q==}
@@ -15961,7 +15971,7 @@ snapshots:
       '@rollup/plugin-json': 6.1.0(rollup@4.54.0)
       '@rollup/plugin-node-resolve': 15.3.1(rollup@4.54.0)
       '@rollup/plugin-typescript': 12.3.0(rollup@4.54.0)(tslib@2.8.1)(typescript@5.9.3)
-      autoprefixer: 10.4.21(postcss@8.5.6)
+      autoprefixer: 10.4.23(postcss@8.5.6)
       picocolors: 1.1.1
       picomatch: 4.0.2
       postcss: 8.5.6
@@ -15992,7 +16002,7 @@ snapshots:
       '@rollup/plugin-json': 6.1.0(rollup@4.54.0)
       '@rollup/plugin-node-resolve': 15.3.1(rollup@4.54.0)
       '@rollup/plugin-typescript': 12.3.0(rollup@4.54.0)(tslib@2.8.1)(typescript@5.9.3)
-      autoprefixer: 10.4.21(postcss@8.5.6)
+      autoprefixer: 10.4.23(postcss@8.5.6)
       picocolors: 1.1.1
       picomatch: 4.0.2
       postcss: 8.5.6
@@ -16025,7 +16035,7 @@ snapshots:
       '@rspack/core': 1.6.8(@swc/helpers@0.5.17)
       '@rspack/dev-server': 1.1.4(@rspack/core@1.6.8(@swc/helpers@0.5.17))(@types/express@4.17.25)(webpack@5.104.1(@swc/core@1.14.0(@swc/helpers@0.5.17))(esbuild@0.27.2))
       '@rspack/plugin-react-refresh': 1.5.3(react-refresh@0.18.0)
-      autoprefixer: 10.4.21(postcss@8.5.6)
+      autoprefixer: 10.4.23(postcss@8.5.6)
       browserslist: 4.28.1
       css-loader: 6.11.0(@rspack/core@1.6.8(@swc/helpers@0.5.17))(webpack@5.104.1(@swc/core@1.14.0(@swc/helpers@0.5.17))(esbuild@0.27.2))
       enquirer: 2.3.6
@@ -16085,7 +16095,7 @@ snapshots:
       '@rspack/core': 1.6.8(@swc/helpers@0.5.17)
       '@rspack/dev-server': 1.1.4(@rspack/core@1.6.8(@swc/helpers@0.5.17))(@types/express@4.17.25)(webpack@5.104.1(@swc/core@1.14.0(@swc/helpers@0.5.17))(esbuild@0.27.2))
       '@rspack/plugin-react-refresh': 1.5.3(react-refresh@0.18.0)
-      autoprefixer: 10.4.21(postcss@8.5.6)
+      autoprefixer: 10.4.23(postcss@8.5.6)
       browserslist: 4.28.1
       css-loader: 6.11.0(@rspack/core@1.6.8(@swc/helpers@0.5.17))(webpack@5.104.1(@swc/core@1.14.0(@swc/helpers@0.5.17))(esbuild@0.27.2))
       enquirer: 2.3.6
@@ -16312,7 +16322,7 @@ snapshots:
       '@nx/js': 21.6.10(@babel/traverse@7.28.5)(@swc-node/register@1.11.1(@swc/core@1.14.0(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.3))(@swc/core@1.14.0(@swc/helpers@0.5.17))(nx@22.3.3(@swc-node/register@1.11.1(@swc/core@1.14.0(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.3))(@swc/core@1.14.0(@swc/helpers@0.5.17)))
       '@phenomnomnominal/tsquery': 5.0.1(typescript@5.9.3)
       ajv: 8.17.1
-      autoprefixer: 10.4.21(postcss@8.5.6)
+      autoprefixer: 10.4.23(postcss@8.5.6)
       babel-loader: 9.2.1(@babel/core@7.28.0)(webpack@5.104.1(@swc/core@1.14.0(@swc/helpers@0.5.17))(esbuild@0.27.2))
       browserslist: 4.28.1
       copy-webpack-plugin: 10.2.4(webpack@5.104.1(@swc/core@1.14.0(@swc/helpers@0.5.17))(esbuild@0.27.2))
@@ -16374,7 +16384,7 @@ snapshots:
       '@nx/js': 22.3.3(@babel/traverse@7.28.5)(@swc-node/register@1.11.1(@swc/core@1.14.0(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.3))(@swc/core@1.14.0(@swc/helpers@0.5.17))(nx@22.3.3(@swc-node/register@1.11.1(@swc/core@1.14.0(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.3))(@swc/core@1.14.0(@swc/helpers@0.5.17)))
       '@phenomnomnominal/tsquery': 5.0.1(typescript@5.9.3)
       ajv: 8.17.1
-      autoprefixer: 10.4.21(postcss@8.5.6)
+      autoprefixer: 10.4.23(postcss@8.5.6)
       babel-loader: 9.2.1(@babel/core@7.28.0)(webpack@5.104.1(@swc/core@1.14.0(@swc/helpers@0.5.17))(esbuild@0.27.2))
       browserslist: 4.28.1
       copy-webpack-plugin: 10.2.4(webpack@5.104.1(@swc/core@1.14.0(@swc/helpers@0.5.17))(esbuild@0.27.2))
@@ -18233,6 +18243,15 @@ snapshots:
       caniuse-lite: 1.0.30001761
       fraction.js: 4.3.7
       normalize-range: 0.1.2
+      picocolors: 1.1.1
+      postcss: 8.5.6
+      postcss-value-parser: 4.2.0
+
+  autoprefixer@10.4.23(postcss@8.5.6):
+    dependencies:
+      browserslist: 4.28.1
+      caniuse-lite: 1.0.30001761
+      fraction.js: 5.3.4
       picocolors: 1.1.1
       postcss: 8.5.6
       postcss-value-parser: 4.2.0
@@ -20238,6 +20257,8 @@ snapshots:
   forwarded@0.2.0: {}
 
   fraction.js@4.3.7: {}
+
+  fraction.js@5.3.4: {}
 
   fresh@0.5.2: {}
 
@@ -23646,7 +23667,7 @@ snapshots:
       '@csstools/postcss-text-decoration-shorthand': 4.0.3(postcss@8.5.6)
       '@csstools/postcss-trigonometric-functions': 4.0.9(postcss@8.5.6)
       '@csstools/postcss-unset-value': 4.0.0(postcss@8.5.6)
-      autoprefixer: 10.4.21(postcss@8.5.6)
+      autoprefixer: 10.4.23(postcss@8.5.6)
       browserslist: 4.28.1
       css-blank-pseudo: 7.0.1(postcss@8.5.6)
       css-has-pseudo: 7.0.3(postcss@8.5.6)
@@ -24758,7 +24779,7 @@ snapshots:
 
   stencil-tailwind-plugin@1.8.0(tailwindcss@3.4.19(tsx@4.20.4)(yaml@2.8.2))(ts-node@10.9.2(@swc/core@1.14.0(@swc/helpers@0.5.17))(@types/node@22.19.3)(typescript@5.9.3))(typescript@5.9.3):
     dependencies:
-      autoprefixer: 10.4.21(postcss@8.5.6)
+      autoprefixer: 10.4.23(postcss@8.5.6)
       chalk: 4.1.2
       cssnano: 5.1.15(postcss@8.5.6)
       fs-extra: 10.1.0
