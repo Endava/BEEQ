@@ -24,7 +24,7 @@ jobs:
       VOLTA_FEATURE_PNPM: 1
     steps:
       - name: 🛎 Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
