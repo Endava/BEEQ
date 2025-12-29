@@ -100,7 +100,7 @@
     "babel-jest": "29.7.0",
     "cem-plugin-jsdoc-example": "0.0.9",
     "chromatic": "13.3.4",
-    "core-js": "3.44.0",
+    "core-js": "3.47.0",
     "custom-element-vs-code-integration": "1.5.0",
     "decompress": "4.2.1",
     "fs-extra": "11.3.3",
