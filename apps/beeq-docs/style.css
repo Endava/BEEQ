@@ -1,0 +1,32 @@
+:root {
+  --navbar-height: 4.5rem; /* 72px (including padding) */
+}
+
+#navbar {
+  margin-block: 0.5rem; /* 8px */
+
+  .nav-logo {
+    height: 3rem; /* 48px */
+  }
+}
+
+#sidebar-content {
+  @media (width >= 1024px) {
+    top: var(--navbar-height) !important;
+    height: calc(100vh - var(--navbar-height)) !important;
+  }
+}
+
+/* ------------------------------ Main content ------------------------------ */
+
+.almond-layout {
+  top: 8rem ; /* 128px */
+
+  @media (width >= 1024px) {
+    top: var(--navbar-height);
+  }
+}
+
+#content-area {
+  max-width: 53rem; /* 848px */
+}
