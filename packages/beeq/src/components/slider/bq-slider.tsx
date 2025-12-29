@@ -384,7 +384,7 @@ export class BqSlider {
     return (
       <input
         class={{
-          '-translate-y-1/2 is-full absolute inset-bs-[50%] start-0 cursor-pointer appearance-none bg-transparent outline-none disabled:cursor-not-allowed': true,
+          'is-full absolute inset-bs-[50%] start-0 -translate-y-1/2 cursor-pointer appearance-none bg-transparent outline-none disabled:cursor-not-allowed': true,
           'pointer-events-none': this.isRangeType,
         }}
         disabled={this.disabled}
@@ -444,7 +444,7 @@ export class BqSlider {
         <div class="is-full relative" part="container">
           {/* TRACK AREA */}
           <span
-            class="-translate-y-1/2 bs-1 is-full absolute inset-bs-[50%] start-0 rounded-xs bg-[--bq-slider--trackarea-color]"
+            class="bs-1 is-full absolute inset-bs-[50%] start-0 -translate-y-1/2 rounded-xs bg-[--bq-slider--trackarea-color]"
             part="track-area"
             ref={(elem) => {
               this.trackElem = elem;
@@ -452,7 +452,7 @@ export class BqSlider {
           />
           {/* PROGRESS AREA */}
           <span
-            class="-translate-y-1/2 bs-1 is-[50%] absolute inset-bs-[50%] rounded-xs bg-[--bq-slider--progress-color]"
+            class="bs-1 is-[50%] absolute inset-bs-[50%] -translate-y-1/2 rounded-xs bg-[--bq-slider--progress-color]"
             part="progress-area"
             ref={(elem) => {
               this.progressElem = elem;
