@@ -216,8 +216,8 @@ importers:
         specifier: 13.3.4
         version: 13.3.4
       core-js:
-        specifier: 3.44.0
-        version: 3.44.0
+        specifier: 3.47.0
+        version: 3.47.0
       custom-element-vs-code-integration:
         specifier: 1.5.0
         version: 1.5.0(prettier@3.7.4)
@@ -5729,8 +5729,8 @@ packages:
   core-js-compat@3.47.0:
     resolution: {integrity: sha512-IGfuznZ/n7Kp9+nypamBhvwdwLsW6KC8IOaURw2doAK5e98AG3acVLdh0woOnEqCfUtS+Vu882JE4k/DAm3ItQ==}
 
-  core-js@3.44.0:
-    resolution: {integrity: sha512-aFCtd4l6GvAXwVEh3XbbVqJGHDJt0OZRa+5ePGx3LLwi12WfexqQxcsohb2wgsa/92xtl19Hd66G/L+TaAxDMw==}
+  core-js@3.47.0:
+    resolution: {integrity: sha512-c3Q2VVkGAUyupsjRnaNX6u8Dq2vAdzm9iuPj5FW0fRxzlxgq9Q39MDq10IvmQSpLgHQNyQzQmOo6bgGHmH3NNg==}
 
   core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
@@ -18880,7 +18880,7 @@ snapshots:
     dependencies:
       browserslist: 4.28.1
 
-  core-js@3.44.0: {}
+  core-js@3.47.0: {}
 
   core-util-is@1.0.3: {}
 
