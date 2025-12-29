@@ -137,7 +137,7 @@
     "vite": "6.3.5",
     "vite-plugin-turbosnap": "1.0.3",
     "vite-tsconfig-paths": "5.1.4",
-    "vue": "3.5.20"
+    "vue": "3.5.26"
   },
   "engines": {
     "node": ">=22.0.0",
