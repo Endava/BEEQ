@@ -11,6 +11,7 @@
     "type": "Git",
     "url": "https://github.com/Endava/BEEQ"
   },
+  "customElements": "packages/beeq/cem/custom-elements.json",
   "scripts": {
     "prepare": "husky",
     "pre-commit": "run-s lint:branch-name lint:staged",
