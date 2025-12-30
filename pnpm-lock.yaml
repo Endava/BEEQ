@@ -324,8 +324,8 @@ importers:
         specifier: 1.0.3
         version: 1.0.3
       vite-tsconfig-paths:
-        specifier: 5.1.4
-        version: 5.1.4(typescript@5.9.3)(vite@7.3.0(@types/node@22.19.3)(jiti@2.6.1)(less@4.5.1)(sass-embedded@1.97.1)(sass@1.97.1)(terser@5.44.0)(tsx@4.20.4)(yaml@2.8.2))
+        specifier: 6.0.3
+        version: 6.0.3(typescript@5.9.3)(vite@7.3.0(@types/node@22.19.3)(jiti@2.6.1)(less@4.5.1)(sass-embedded@1.97.1)(sass@1.97.1)(terser@5.44.0)(tsx@4.20.4)(yaml@2.8.2))
       vitest:
         specifier: 4.0.16
         version: 4.0.16(@types/node@22.19.3)(jiti@2.6.1)(jsdom@26.1.0)(less@4.5.1)(sass-embedded@1.97.1)(sass@1.97.1)(terser@5.44.0)(tsx@4.20.4)(yaml@2.8.2)
@@ -11244,8 +11244,8 @@ packages:
   vite-plugin-turbosnap@1.0.3:
     resolution: {integrity: sha512-p4D8CFVhZS412SyQX125qxyzOgIFouwOcvjZWk6bQbNPR1wtaEzFT6jZxAjf1dejlGqa6fqHcuCvQea6EWUkUA==}
 
-  vite-tsconfig-paths@5.1.4:
-    resolution: {integrity: sha512-cYj0LRuLV2c2sMqhqhGpaO3LretdtMn/BVX4cPLanIZuwwrkVl+lK84E/miEXkCHWXuq65rhNN4rXsBcOB3S4w==}
+  vite-tsconfig-paths@6.0.3:
+    resolution: {integrity: sha512-7bL7FPX/DSviaZGYUKowWF1AiDVWjMjxNbE8lyaVGDezkedWqfGhlnQ4BZXre0ZN5P4kAgIJfAlgFDVyjrCIyg==}
     peerDependencies:
       vite: '*'
     peerDependenciesMeta:
@@ -25561,7 +25561,7 @@ snapshots:
 
   vite-plugin-turbosnap@1.0.3: {}
 
-  vite-tsconfig-paths@5.1.4(typescript@5.9.3)(vite@7.3.0(@types/node@22.19.3)(jiti@2.6.1)(less@4.5.1)(sass-embedded@1.97.1)(sass@1.97.1)(terser@5.44.0)(tsx@4.20.4)(yaml@2.8.2)):
+  vite-tsconfig-paths@6.0.3(typescript@5.9.3)(vite@7.3.0(@types/node@22.19.3)(jiti@2.6.1)(less@4.5.1)(sass-embedded@1.97.1)(sass@1.97.1)(terser@5.44.0)(tsx@4.20.4)(yaml@2.8.2)):
     dependencies:
       debug: 4.4.3
       globrex: 0.1.2
