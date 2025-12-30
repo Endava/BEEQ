@@ -193,4 +193,108 @@ describe('bq-select', () => {
     expect(displayTags).toHaveLength(1);
     expect(displayTags[0]).toEqualText('Option 3');
   });
+
+  it('should remove a selected option when backspace is pressed and no writing is done', async () => {
+    const page = await newE2EPage({
+      html: `
+        <bq-select multiple>
+          <bq-option value="1">Option 1</bq-option>
+          <bq-option value="2">Option 2</bq-option>
+          <bq-option value="3">Option 3</bq-option>
+        </bq-select>
+      `,
+    });
+
+    await setProperties(page, 'bq-select', { value: JSON.stringify(['1', '2']) });
+    expect(await page.findAll(`bq-select bq-option[selected]`)).toHaveLength(2);
+
+    const inputElem = await page.find('bq-select >>> input');
+    await inputElem.press('Backspace');
+    await page.waitForChanges();
+
+    expect(await page.findAll(`bq-select bq-option[selected]`)).toHaveLength(1);
+    const displayTags = await page.findAll('bq-select >>> bq-tag');
+    expect(displayTags).toHaveLength(1);
+    expect(displayTags[0]).toEqualText('Option 1');
+  });
+
+  it('should not remove a selected option when backspace is pressed and writing is done', async () => {
+    const page = await newE2EPage({
+      html: `
+        <bq-select multiple>
+          <bq-option value="1">Option 1</bq-option>
+          <bq-option value="2">Option 2</bq-option>
+          <bq-option value="3">Option 3</bq-option>
+        </bq-select>
+      `,
+    });
+
+    await setProperties(page, 'bq-select', { value: JSON.stringify(['1', '2']) });
+    expect(await page.findAll(`bq-select bq-option[selected]`)).toHaveLength(2);
+
+    const inputElem = await page.find('bq-select >>> input');
+    await inputElem.type('Option 3');
+    await page.waitForChanges();
+
+    await inputElem.press('Backspace');
+    await inputElem.press('Backspace');
+    await page.waitForChanges();
+
+    const displayTags = await page.findAll('bq-select >>> bq-tag');
+    expect(displayTags).toHaveLength(2);
+    expect(displayTags[0]).toEqualText('Option 1');
+    expect(displayTags[1]).toEqualText('Option 2');
+
+    const inputValue = await inputElem.getProperty('value');
+    expect(inputValue).toEqual('Option');
+  });
+
+  it('should remove multiple tags one at a time when backspace is pressed repeatedly', async () => {
+    const page = await newE2EPage({
+      html: `
+      <bq-select multiple>
+        <bq-option value="1">Option 1</bq-option>
+        <bq-option value="2">Option 2</bq-option>
+        <bq-option value="3">Option 3</bq-option>
+      </bq-select>
+    `,
+    });
+
+    await setProperties(page, 'bq-select', { value: JSON.stringify(['1', '2', '3']) });
+    expect(await page.findAll(`bq-select bq-option[selected]`)).toHaveLength(3);
+
+    const inputElem = await page.find('bq-select >>> input');
+
+    // First backspace removes Option 3
+    await inputElem.press('Backspace');
+    await page.waitForChanges();
+    expect(await page.findAll('bq-select >>> bq-tag')).toHaveLength(2);
+
+    // Second backspace removes Option 2
+    await inputElem.press('Backspace');
+    await page.waitForChanges();
+    expect(await page.findAll('bq-select >>> bq-tag')).toHaveLength(1);
+
+    const displayTags = await page.findAll('bq-select >>> bq-tag');
+    expect(displayTags).toHaveLength(1);
+    expect(displayTags[0]).toEqualText('Option 1');
+  });
+
+  it('should not throw error when backspace is pressed with no selected options', async () => {
+    const page = await newE2EPage({
+      html: `
+      <bq-select multiple>
+        <bq-option value="1">Option 1</bq-option>
+        <bq-option value="2">Option 2</bq-option>
+      </bq-select>
+    `,
+    });
+
+    const inputElem = await page.find('bq-select >>> input');
+    await inputElem.press('Backspace');
+    await page.waitForChanges();
+
+    // Should not throw, and no tags should exist
+    expect(await page.findAll('bq-select >>> bq-tag')).toHaveLength(0);
+  });
 });
