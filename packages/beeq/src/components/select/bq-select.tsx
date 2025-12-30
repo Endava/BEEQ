@@ -479,6 +479,13 @@ export class BqSelect {
 
     const trimmedValue = value?.trim();
     if (!isDefined(trimmedValue)) {
+      // For multi-select, just reset options visibility without clearing selections
+      // This prevents backspace from removing selected tags when only clearing search text
+      if (this.multiple) {
+        this.resetOptionsVisibility();
+        return;
+      }
+
       this.clear();
       return;
     }
@@ -501,6 +508,18 @@ export class BqSelect {
     // The panel will close once a selection is made
     // so we need to make sure it's open when the user is typing and the query is not empty
     this.open = true;
+  };
+
+  private handleKeydown = (ev: KeyboardEvent) => {
+    if (this.disabled || ev.key !== 'Backspace' || !this.multiple) return;
+
+    // Only remove tags if input value is empty (no writing) and there are selected options
+    if (this.inputElem?.value === '' && this.selectedOptions.length > 0) {
+      ev.preventDefault();
+      // Remove one selected option at a time starting from the last one
+      const lastOption = this.selectedOptions[this.selectedOptions.length - 1];
+      this.handleTagRemove(lastOption);
+    }
   };
 
   private handleInput = (ev: Event) => {
@@ -786,6 +805,7 @@ export class BqSelect {
                 onBlur={this.handleBlur}
                 onFocus={this.handleFocus}
                 onInput={this.handleInput}
+                onKeyDown={this.handleKeydown}
                 part="input"
                 placeholder={this.displayPlaceholder}
                 readOnly={this.readonly}
