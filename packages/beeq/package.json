@@ -8,6 +8,7 @@
   "types": "./dist/types/index.d.ts",
   "collection": "./dist/collection/collection-manifest.json",
   "collection:main": "./dist/collection/index.js",
+  "customElements": "./custom-elements.json",
   "unpkg": "./dist/beeq/beeq.esm.js",
   "files": ["dist/"],
   "dependencies": {

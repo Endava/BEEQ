@@ -1,5 +1,5 @@
 ---
-description: Enforces strict StencilJS component structure, naming, and documentation rules for all components in the design system. Ensures consistency, maintainability, and best practices across the codebase, following the Golazo Design System and Nx monorepo guidelines.
+description: Enforces strict StencilJS component structure, naming, and documentation rules for all components in the design system. Ensures consistency, maintainability, and best practices across the codebase, following the BEEQ Design System and Nx monorepo guidelines.
 applyTo: packages/beeq/src/components/**/*.tsx
 ---
 
