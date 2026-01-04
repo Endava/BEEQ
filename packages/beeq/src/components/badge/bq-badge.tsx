@@ -1,4 +1,4 @@
-import { Component, Element, Host, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Host, Prop, State, Watch } from '@stencil/core';
 
 import { getColorCSSVariable, getTextContent, isNil, validatePropValue } from '../../shared/utils';
 import type { TBadgeSize } from './bq-badge.types';

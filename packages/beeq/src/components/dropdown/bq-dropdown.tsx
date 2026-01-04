@@ -1,5 +1,5 @@
 import type { EventEmitter } from '@stencil/core';
-import { Component, Element, Event, h, Listen, Prop, Watch } from '@stencil/core';
+import { Component, Element, Event, Listen, Prop, Watch } from '@stencil/core';
 
 import type { Placement } from '../../services/interfaces';
 import { isEventTargetChildOfElement } from '../../shared/utils';

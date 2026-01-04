@@ -1,5 +1,5 @@
 import type { EventEmitter } from '@stencil/core';
-import { Component, Element, Event, h, Prop, Watch } from '@stencil/core';
+import { Component, Element, Event, Prop, Watch } from '@stencil/core';
 
 import { isHTMLElement, validatePropValue } from '../../shared/utils';
 import type { TStepsOrientation, TStepsSize, TStepsType } from '../steps/bq-steps.types';

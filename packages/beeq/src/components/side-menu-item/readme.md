@@ -48,19 +48,6 @@ Represents the default side menu item for standard navigation elements, providin
 | `"trigger"` | The `<div>` container that holds the element which displays tooltip on hover (when the side menu is collapsed) |
 
 
-## Dependencies
-
-### Depends on
-
-- [bq-tooltip](../tooltip)
-
-### Graph
-```mermaid
-graph TD;
-  bq-side-menu-item --> bq-tooltip
-  style bq-side-menu-item fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

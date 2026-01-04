@@ -1,4 +1,4 @@
-import { Component, Element, h } from '@stencil/core';
+import { Component, Element } from '@stencil/core';
 
 /**
  * The option group component is a container for multiple option elements.

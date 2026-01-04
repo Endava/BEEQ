@@ -37,19 +37,6 @@ An Empty State is a UI component displayed when there is no data or content avai
 | `"wrapper"`   | The wrapper container `<div>` of the element inside the shadow DOM                                                 |
 
 
-## Dependencies
-
-### Depends on
-
-- [bq-icon](../icon)
-
-### Graph
-```mermaid
-graph TD;
-  bq-empty-state --> bq-icon
-  style bq-empty-state fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

@@ -1,5 +1,5 @@
 import type { EventEmitter } from '@stencil/core';
-import { AttachInternals, Component, Element, Event, Host, h, Listen, Prop, State, Watch } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, Host, Listen, Prop, State, Watch } from '@stencil/core';
 
 import {
   debounce,

@@ -36,19 +36,6 @@ The Panel component is a versatile and essential element used to wrap and displa
 | `"panel"` | The `<div>` element used to display and style the panel |
 
 
-## Dependencies
-
-### Used by
-
- - [bq-dropdown](../dropdown)
-
-### Graph
-```mermaid
-graph TD;
-  bq-dropdown --> bq-panel
-  style bq-panel fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

@@ -1,4 +1,4 @@
-import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Prop, State, Watch } from '@stencil/core';
 
 import {
   getCSSVariableValue,

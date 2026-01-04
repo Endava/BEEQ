@@ -85,22 +85,6 @@ Type: `Promise<void>`
 | `"wrapper"`      | The wrapper container `<div>` of the element inside the shadow DOM                                                        |
 
 
-## Dependencies
-
-### Depends on
-
-- [bq-button](../button)
-- [bq-icon](../icon)
-
-### Graph
-```mermaid
-graph TD;
-  bq-alert --> bq-button
-  bq-alert --> bq-icon
-  bq-button --> bq-icon
-  style bq-alert fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
