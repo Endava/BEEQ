@@ -91,19 +91,6 @@ Type: `Promise<void>`
 | `"label"`    | HTML `<span>` element that holds the label text                   |
 
 
-## Dependencies
-
-### Depends on
-
-- [bq-icon](../icon)
-
-### Graph
-```mermaid
-graph TD;
-  bq-switch --> bq-icon
-  style bq-switch fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

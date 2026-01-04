@@ -80,24 +80,6 @@ Type: `Promise<void>`
 | `"title"`               | The `<div>` that holds the title content.                     |
 
 
-## Dependencies
-
-### Depends on
-
-- [bq-button](../button)
-- [bq-icon](../icon)
-- [bq-divider](../divider)
-
-### Graph
-```mermaid
-graph TD;
-  bq-drawer --> bq-button
-  bq-drawer --> bq-icon
-  bq-drawer --> bq-divider
-  bq-button --> bq-icon
-  style bq-drawer fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

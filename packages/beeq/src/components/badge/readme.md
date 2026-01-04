@@ -34,19 +34,6 @@ It is typically used to highlight important or relevant information, such as ale
 | `"number"` | The component's internal wrapper that holds the slot.  |
 
 
-## Dependencies
-
-### Used by
-
- - [bq-status](../status)
-
-### Graph
-```mermaid
-graph TD;
-  bq-status --> bq-badge
-  style bq-badge fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
