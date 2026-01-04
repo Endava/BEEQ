@@ -1,5 +1,5 @@
 import type { EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, h, Method, Prop, State, Watch } from '@stencil/core';
 
 import { hasSlotContent, validatePropValue } from '../../shared/utils';
 import type { TTabOrientation, TTabPlacement, TTabSize } from './bq-tab.types';

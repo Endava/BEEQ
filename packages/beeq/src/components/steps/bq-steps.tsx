@@ -1,4 +1,4 @@
-import { Component, Element, Method, Prop, Watch } from '@stencil/core';
+import { Component, Element, h, Method, Prop, Watch } from '@stencil/core';
 
 import { validatePropValue } from '../../shared/utils';
 import type { TStepsOrientation, TStepsSize, TStepsType } from './bq-steps.types';

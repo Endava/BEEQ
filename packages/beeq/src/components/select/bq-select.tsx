@@ -1,5 +1,5 @@
 import type { EventEmitter } from '@stencil/core';
-import { AttachInternals, Component, Element, Event, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
 import type { BqTagCustomEvent } from '../..';
 import type { Placement } from '../../services/interfaces';

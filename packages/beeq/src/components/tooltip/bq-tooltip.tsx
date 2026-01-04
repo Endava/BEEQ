@@ -1,5 +1,5 @@
 import type { EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Listen, Method, Prop, Watch } from '@stencil/core';
+import { Component, Element, Event, h, Listen, Method, Prop, Watch } from '@stencil/core';
 
 import type { Placement } from '../../services/interfaces';
 import { FloatingUI } from '../../services/libraries';

@@ -1,5 +1,5 @@
 import type { EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, Host, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
 import { enter, hasSlotContent, isNil, leave, validatePropValue } from '../../shared/utils';
 import type { TDrawerPlacement, TDrawerPosition } from './bq-drawer.types';

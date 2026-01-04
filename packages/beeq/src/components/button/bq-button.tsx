@@ -1,5 +1,5 @@
 import type { EventEmitter } from '@stencil/core';
-import { AttachInternals, Component, Element, Event, Host, Prop, State, Watch } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, Host, h, Prop, State, Watch } from '@stencil/core';
 
 import { hasSlotContent, isClient, isDefined, isNil, validatePropValue } from '../../shared/utils';
 import type {

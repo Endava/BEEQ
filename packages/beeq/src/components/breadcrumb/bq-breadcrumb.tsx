@@ -1,4 +1,4 @@
-import { Component, Element, Host, Prop } from '@stencil/core';
+import { Component, Element, Host, h, Prop } from '@stencil/core';
 
 /**
  * The Breadcrumb is used to wraps a series of breadcrumb items to indicate the current page's location within a navigational hierarchy.
