@@ -32,6 +32,19 @@ The Status Component is a UI element that represents the current state or condit
 | `"text"`   | The `<div>` container that holds the text label of the status component. |
 
 
+## Dependencies
+
+### Depends on
+
+- [bq-badge](../badge)
+
+### Graph
+```mermaid
+graph TD;
+  bq-status --> bq-badge
+  style bq-status fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

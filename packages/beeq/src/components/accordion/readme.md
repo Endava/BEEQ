@@ -58,6 +58,19 @@ The Accordion is a UI component that allows users to toggle between showing and 
 | `"text"`   | The `<div>` that holds the accordion header text content |
 
 
+## Dependencies
+
+### Depends on
+
+- [bq-icon](../icon)
+
+### Graph
+```mermaid
+graph TD;
+  bq-accordion --> bq-icon
+  style bq-accordion fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

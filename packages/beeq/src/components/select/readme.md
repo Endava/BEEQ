@@ -114,6 +114,31 @@ Type: `Promise<void>`
 | `"tags"`           | The tags container of the BqTags for multiple selection.                                               |
 
 
+## Dependencies
+
+### Depends on
+
+- [bq-tag](../tag)
+- [bq-dropdown](../dropdown)
+- [bq-button](../button)
+- [bq-icon](../icon)
+- [bq-option-list](../option-list)
+
+### Graph
+```mermaid
+graph TD;
+  bq-select --> bq-tag
+  bq-select --> bq-dropdown
+  bq-select --> bq-button
+  bq-select --> bq-icon
+  bq-select --> bq-option-list
+  bq-tag --> bq-button
+  bq-tag --> bq-icon
+  bq-button --> bq-icon
+  bq-dropdown --> bq-panel
+  style bq-select fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

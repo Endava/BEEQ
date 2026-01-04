@@ -36,6 +36,19 @@ The progress bar is a user interface component that visually represents the comp
 | `"wrapper"`       | The component wrapper container inside the shadow DOM                                                   |
 
 
+## Dependencies
+
+### Depends on
+
+- [bq-tooltip](../tooltip)
+
+### Graph
+```mermaid
+graph TD;
+  bq-progress --> bq-tooltip
+  style bq-progress fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

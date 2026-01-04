@@ -57,6 +57,38 @@ Buttons are designed for users to take action on a page or a screen.
 | `"suffix"` | The `<span>` tag element that acts as suffix container.       |
 
 
+## Dependencies
+
+### Used by
+
+ - [bq-alert](../alert)
+ - [bq-date-picker](../date-picker)
+ - [bq-dialog](../dialog)
+ - [bq-drawer](../drawer)
+ - [bq-input](../input)
+ - [bq-notification](../notification)
+ - [bq-select](../select)
+ - [bq-tag](../tag)
+
+### Depends on
+
+- [bq-icon](../icon)
+
+### Graph
+```mermaid
+graph TD;
+  bq-button --> bq-icon
+  bq-alert --> bq-button
+  bq-date-picker --> bq-button
+  bq-dialog --> bq-button
+  bq-drawer --> bq-button
+  bq-input --> bq-button
+  bq-notification --> bq-button
+  bq-select --> bq-button
+  bq-tag --> bq-button
+  style bq-button fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

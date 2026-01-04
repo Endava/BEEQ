@@ -76,10 +76,24 @@ Type: `Promise<void>`
 | Part          | Description                                              |
 | ------------- | -------------------------------------------------------- |
 | `"base"`      | The `<div>` container of the internal bq-icon component. |
+| `"icon"`      |                                                          |
 | `"icon-info"` | The `<div>` container that holds the icon component.     |
 | `"svg"`       | The `<svg>` element of the internal bq-icon component.   |
 | `"wrapper"`   | The component's internal wrapper inside the shadow DOM.  |
 
+
+## Dependencies
+
+### Depends on
+
+- [bq-icon](../icon)
+
+### Graph
+```mermaid
+graph TD;
+  bq-toast --> bq-icon
+  style bq-toast fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

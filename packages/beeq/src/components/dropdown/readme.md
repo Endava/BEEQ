@@ -51,6 +51,26 @@ They provide an efficient way to save space and present a long list of options i
 | `"trigger"`  | The `<div>` element that hosts the trigger element.                                      |
 
 
+## Dependencies
+
+### Used by
+
+ - [bq-date-picker](../date-picker)
+ - [bq-select](../select)
+
+### Depends on
+
+- [bq-panel](../panel)
+
+### Graph
+```mermaid
+graph TD;
+  bq-dropdown --> bq-panel
+  bq-date-picker --> bq-dropdown
+  bq-select --> bq-dropdown
+  style bq-dropdown fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

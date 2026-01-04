@@ -77,6 +77,27 @@ Type: `Promise<void>`
 | `"wrapper"`   | The wrapper container `<div>` of the element inside the shadow DOM.                        |
 
 
+## Dependencies
+
+### Used by
+
+ - [bq-select](../select)
+
+### Depends on
+
+- [bq-button](../button)
+- [bq-icon](../icon)
+
+### Graph
+```mermaid
+graph TD;
+  bq-tag --> bq-button
+  bq-tag --> bq-icon
+  bq-button --> bq-icon
+  bq-select --> bq-tag
+  style bq-tag fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

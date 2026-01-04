@@ -48,6 +48,19 @@ It should be used inside the Steps component.
 | `"title"`       | The component's title.        |
 
 
+## Dependencies
+
+### Depends on
+
+- [bq-divider](../divider)
+
+### Graph
+```mermaid
+graph TD;
+  bq-step-item --> bq-divider
+  style bq-step-item fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

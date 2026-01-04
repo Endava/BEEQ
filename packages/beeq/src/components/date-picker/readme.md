@@ -102,6 +102,25 @@ Type: `Promise<void>`
 | `"suffix"`                | The suffix slot container.                                                |
 
 
+## Dependencies
+
+### Depends on
+
+- [bq-dropdown](../dropdown)
+- [bq-button](../button)
+- [bq-icon](../icon)
+
+### Graph
+```mermaid
+graph TD;
+  bq-date-picker --> bq-dropdown
+  bq-date-picker --> bq-button
+  bq-date-picker --> bq-icon
+  bq-dropdown --> bq-panel
+  bq-button --> bq-icon
+  style bq-date-picker fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

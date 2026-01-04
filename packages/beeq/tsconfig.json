@@ -4,6 +4,7 @@
     "declaration": true,
     "jsx": "react",
     "jsxFactory": "h",
+    "jsxFragmentFactory": "h.Fragment",
     "moduleResolution": "bundler"
   }
 }

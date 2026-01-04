@@ -40,6 +40,21 @@ The Divider component is used to visually separate content in a layout.
 | `"dash-start-line"` | The component's internal line component of the divider's stroke.                 |
 
 
+## Dependencies
+
+### Used by
+
+ - [bq-drawer](../drawer)
+ - [bq-step-item](../step-item)
+
+### Graph
+```mermaid
+graph TD;
+  bq-drawer --> bq-divider
+  bq-step-item --> bq-divider
+  style bq-divider fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

@@ -50,6 +50,19 @@ Sliders provide a visual representation of adjustable content, enabling users to
 | `"track-area"`    | The track area of the slider.                                                                                          |
 
 
+## Dependencies
+
+### Depends on
+
+- [bq-tooltip](../tooltip)
+
+### Graph
+```mermaid
+graph TD;
+  bq-slider --> bq-tooltip
+  style bq-slider fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
