@@ -134,5 +134,6 @@ export const config: Config = {
     openBrowser: false,
     port: 8001,
     reloadStrategy: 'pageReload',
+    strictPort: true,
   },
 };
