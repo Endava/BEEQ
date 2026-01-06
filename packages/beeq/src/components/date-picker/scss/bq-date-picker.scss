@@ -213,4 +213,8 @@ calendar-month {
   &::part(range-start range-end) {
     @apply rounded-s;
   }
+
+  &::part(table) {
+    @apply border-spacing-0 text-[length:_inherit];
+  }
 }
