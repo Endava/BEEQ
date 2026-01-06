@@ -15,7 +15,7 @@ import {
 import type { TInputValidation } from '../input/bq-input.types';
 import type { DaysOfWeek, TCalendarDate, TDatePickerType } from './bq-date-picker.types';
 import { DATE_PICKER_TYPE } from './bq-date-picker.types';
-import { isCallyLibraryLoaded, loadCallyLibrary } from './helper/callyLibrary';
+import { isCallyLibraryLoaded, loadCallyLibrary } from './libs/callyLibrary';
 
 /**
  * The Date Picker is a intuitive UI element component allows users to select dates from a visual calendar interface, providing an intuitive way to input date information.
