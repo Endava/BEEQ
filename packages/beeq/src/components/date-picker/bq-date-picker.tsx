@@ -15,6 +15,12 @@ import {
 import type { TInputValidation } from '../input/bq-input.types';
 import type { DaysOfWeek, TCalendarDate, TDatePickerType } from './bq-date-picker.types';
 import { DATE_PICKER_TYPE } from './bq-date-picker.types';
+import {
+  CALENDAR_CONTAINER_EXPORT_PARTS,
+  CALENDAR_MONTH_EXPORT_PARTS,
+  DEFAULT_INPUT_ID,
+  ISO_DATE_LOCALE,
+} from './helper/constants';
 import { isCallyLibraryLoaded, loadCallyLibrary } from './libs/callyLibrary';
 
 /**
@@ -157,13 +163,6 @@ export class BqDatePicker {
   private labelElem?: HTMLElement;
   private prefixElem?: HTMLElement;
   private suffixElem?: HTMLElement;
-  private fallbackInputId = 'date-picker';
-  private readonly LOCALE_DATE = 'fr-CA';
-  // Export parts of the calendar-month component
-  private readonly COMMON_EXPORT_PARTS =
-    'calendar__heading,calendar__table,calendar__tr,calendar__head,calendar__week,calendar__th,calendar__td';
-  private readonly BUTTON_EXPORT_PARTS =
-    'calendar__button,calendar__day,calendar__selected,calendar__today,calendar__disallowed,calendar__outside,calendar__range-start,calendar__range-end,calendar__range-inner';
 
   // Reference to host HTML element
   // ===================================
@@ -441,7 +440,7 @@ export class BqDatePicker {
     const { callyElem, formatFocusedDate, isCallyLoaded, value } = this;
     if (!(callyElem && isCallyLoaded)) return;
 
-    const nextFocused = value ? formatFocusedDate(value) : new Date().toLocaleDateString(this.LOCALE_DATE);
+    const nextFocused = value ? formatFocusedDate(value) : new Date().toLocaleDateString(ISO_DATE_LOCALE);
     if (this.focusedDate === nextFocused) return;
 
     this.focusedDate = nextFocused;
@@ -489,7 +488,7 @@ export class BqDatePicker {
 
     // Valid date: normalize to ISO format and clamp to range if needed
     // Note: clamping is done based on string comparison of ISO dates and only when min/max are set
-    let isoDate = dateValue.toLocaleDateString(this.LOCALE_DATE);
+    let isoDate = dateValue.toLocaleDateString(ISO_DATE_LOCALE);
     isoDate = this.clampDateToRange(isoDate);
 
     this.value = isoDate;
@@ -561,13 +560,7 @@ export class BqDatePicker {
   private generateCalendarMonth = (offset?: number, className = ''): Element | null => {
     if (!this.isCallyLoaded) return null;
 
-    return (
-      <calendar-month
-        class={className}
-        exportparts={`${this.COMMON_EXPORT_PARTS},${this.BUTTON_EXPORT_PARTS}`}
-        offset={offset}
-      />
-    );
+    return <calendar-month class={className} exportparts={CALENDAR_MONTH_EXPORT_PARTS} offset={offset} />;
   };
 
   /**
@@ -671,7 +664,7 @@ export class BqDatePicker {
 
   render() {
     const CallyCalendar = this.calendarType;
-    const labelId = `bq-date-picker__label-${this.name || this.fallbackInputId}`;
+    const labelId = `bq-date-picker__label-${this.name || DEFAULT_INPUT_ID}`;
 
     return (
       <div class="bq-date-picker" part="base">
@@ -679,7 +672,7 @@ export class BqDatePicker {
         <label
           aria-labelledby={labelId}
           class={{ 'bq-date-picker__label': true, '!hidden': !this.hasLabel }}
-          htmlFor={this.name || this.fallbackInputId}
+          htmlFor={this.name || DEFAULT_INPUT_ID}
           part="label"
           ref={(labelElem: HTMLSpanElement) => {
             this.labelElem = labelElem;
@@ -731,7 +724,7 @@ export class BqDatePicker {
               class="bq-date-picker__control--input"
               disabled={this.disabled}
               form={this.form}
-              id={this.name || this.fallbackInputId}
+              id={this.name || DEFAULT_INPUT_ID}
               name={this.name}
               onBlur={this.handleBlur}
               onChange={this.handleChange}
@@ -784,7 +777,7 @@ export class BqDatePicker {
             <CallyCalendar
               aria-labelledby={labelId}
               aria-modal="true"
-              exportparts="container:calendar__container,header:calendar__header,button:calendar__button,previous:calendar__previous,next:calendar__next,disabled:calendar__disabled,heading:calendar__heading"
+              exportparts={CALENDAR_CONTAINER_EXPORT_PARTS}
               firstDayOfWeek={this.firstDayOfWeek}
               isDateDisallowed={this.isDateDisallowed}
               locale={this.locale as string}

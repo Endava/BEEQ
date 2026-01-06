@@ -1,8 +1,4 @@
-import { ISO_DATE_LOCALE } from './dateConstants';
-
-/**
- * Date parsing pattern definition
- */
+/** Date parsing pattern definition */
 type TDatePattern = {
   regex: RegExp;
   parse: (
@@ -11,6 +7,9 @@ type TDatePattern = {
     locale?: Intl.LocalesArgument,
   ) => { day: number; month: number; year: number };
 };
+
+/** French Canadian locale used for ISO date formatting (YYYY-MM-DD) */
+const ISO_DATE_LOCALE = 'fr-CA';
 
 /**
  * Static date parsing patterns
