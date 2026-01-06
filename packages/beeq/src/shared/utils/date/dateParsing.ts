@@ -1,3 +1,5 @@
+import { ISO_DATE_LOCALE } from './dateConstants';
+
 /**
  * Date parsing pattern definition
  */
@@ -149,7 +151,7 @@ const createValidDate = (day: number, month: number, year: number): Date | null 
  * @param {Intl.LocalesArgument} locale - The locale for month name recognition (defaults to 'en-GB')
  * @returns {Date | null} Parsed Date object or null if parsing fails
  */
-export const parseDateInput = (inputValue: string, locale: Intl.LocalesArgument = 'en-GB'): Date | null => {
+const parseDateInput = (inputValue: string, locale: Intl.LocalesArgument = 'en-GB'): Date | null => {
   if (!inputValue?.trim()) return null;
 
   // Try ISO format first
@@ -175,7 +177,7 @@ export const parseDateInput = (inputValue: string, locale: Intl.LocalesArgument 
  * @param {string} dateStr - The date string to validate
  * @returns {boolean} True if the date string is valid in ISO format and represents an actual valid date
  */
-export const isValidISODate = (dateStr: string): boolean => {
+const isValidISODate = (dateStr: string): boolean => {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return false;
 
   const [yearStr, monthStr, dayStr] = dateStr.split('-');
@@ -185,3 +187,22 @@ export const isValidISODate = (dateStr: string): boolean => {
 
   return isDateValid(day, month, year);
 };
+
+/**
+ * Converts a Date object to ISO format string (YYYY-MM-DD).
+ * @param date - The date to convert
+ * @returns ISO formatted date string
+ */
+const toISODateString = (date: Date): string => {
+  return date.toLocaleDateString(ISO_DATE_LOCALE);
+};
+
+/**
+ * Gets today's date in ISO format.
+ * @returns Today's date as YYYY-MM-DD string
+ */
+const getTodayISO = (): string => {
+  return new Date().toLocaleDateString(ISO_DATE_LOCALE);
+};
+
+export { parseDateInput, isValidISODate, toISODateString, getTodayISO };
