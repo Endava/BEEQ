@@ -412,9 +412,7 @@ export class BqDatePicker {
 
   /**
    * Clears the selected value.
-   *
-   * @return {Promise<void>}
-   * @memberof BqInput
+   * @returns {Promise<void>}
    */
   @Method()
   async clear(): Promise<void> {
@@ -430,21 +428,34 @@ export class BqDatePicker {
   // These methods cannot be called from the host element.
   // =======================================================
 
-  private handleBlur = () => {
+  /**
+   * Handles the blur event for the date picker input.
+   * @returns {void}
+   */
+  private handleBlur = (): void => {
     if (this.disabled) return;
 
     this.bqBlur.emit(this.el);
   };
 
-  private handleFocus = () => {
+  /**
+   * Handles the focus event for the date picker input.
+   * @returns {void}
+   */
+  private handleFocus = (): void => {
     if (this.disabled) return;
 
     this.bqFocus.emit(this.el);
   };
 
-  private setFocusedDate = () => {
+  /**
+   * Updates the focused date in the calendar component.
+   * Falls back to today's date if no value is set.
+   * @returns {void}
+   */
+  private setFocusedDate = (): void => {
     const { callyElem, isCallyLoaded, value } = this;
-    if (!(callyElem && isCallyLoaded)) return;
+    if (!callyElem || !isCallyLoaded) return;
 
     const nextFocused = value ? extractFocusedDate(value) : getTodayISO();
     if (this.focusedDate === nextFocused) return;
@@ -457,7 +468,13 @@ export class BqDatePicker {
     }
   };
 
-  private handleChange = (ev: Event) => {
+  /**
+   * Handles user input changes with locale-aware date parsing.
+   * Validates against disallowed dates and min/max constraints.
+   * @param {Event} ev - The change event.
+   * @returns {void}
+   */
+  private handleChange = (ev: Event): void => {
     if (this.disabled || !isHTMLElement(ev.target, 'input')) return;
 
     const inputValue = ev.target.value.trim();
@@ -497,7 +514,12 @@ export class BqDatePicker {
     this.bqChange.emit({ value: this.value, el: this.el });
   };
 
-  private handleCalendarChange = (ev: Event) => {
+  /**
+   * Handles the change event when the user selects a date in the calendar component.
+   * @param {Event} ev - The change event.
+   * @returns {void}
+   */
+  private handleCalendarChange = (ev: Event): void => {
     if (this.isInternalUpdate) return;
 
     const shouldStayOpen = this.type === 'multi';
@@ -521,16 +543,30 @@ export class BqDatePicker {
     this.open = shouldStayOpen;
   };
 
-  private handleCalendarRangeStart = (ev: CustomEvent) => {
+  /**
+   * Handles the range start event when the user starts selecting a date range
+   * @param {CustomEvent} ev - The range start event.
+   * @returns {void}
+   */
+  private handleCalendarRangeStart = (ev: CustomEvent): void => {
     this.hasRangeEnd = false;
     this.tentative = ev.detail;
   };
 
-  private handleCalendarRangeEnd = () => {
+  /**
+   * Handles the range end event when the user finishes selecting a date range
+   * @returns {void}
+   */
+  private handleCalendarRangeEnd = (): void => {
     this.hasRangeEnd = true;
   };
 
-  private handleClearClick = (ev: CustomEvent) => {
+  /**
+   * Handles the clear click event when the user clicks the clear button
+   * @param {CustomEvent} ev - The clear click event.
+   * @returns {void}
+   */
+  private handleClearClick = (ev: CustomEvent): void => {
     if (this.disabled) return;
 
     this.inputElem.value = '';
@@ -544,19 +580,33 @@ export class BqDatePicker {
     ev.stopPropagation();
   };
 
-  private clearValue = () => {
+  /**
+   * Clears the value of the date picker input.
+   * @returns {void}
+   */
+  private clearValue = (): void => {
     this.value = undefined;
     this.displayDate = undefined;
     this.internals.setFormValue(undefined);
   };
 
-  private handleSlotChange = () => {
+  /**
+   * Handles the slot change event when the slots content changes
+   * @returns {void}
+   */
+  private handleSlotChange = (): void => {
     this.hasLabel = hasSlotContent(this.labelElem);
     this.hasPrefix = hasSlotContent(this.prefixElem);
     this.hasSuffix = hasSlotContent(this.suffixElem);
   };
 
-  private generateCalendarMonth = (offset?: number, className = ''): Element | null => {
+  /**
+   * Generates a calendar month element
+   * @param {number} offset - The offset of the calendar month.
+   * @param {string} className - The class name of the calendar month.
+   * @returns {Element | null} The calendar month element.
+   */
+  private generateCalendarMonth = (offset?: number, className: string = ''): Element | null => {
     if (!this.isCallyLoaded) return null;
 
     return <calendar-month class={className} exportparts={CALENDAR_MONTH_EXPORT_PARTS} offset={offset} />;
@@ -589,7 +639,11 @@ export class BqDatePicker {
     return [this.generateCalendarMonth()];
   };
 
-  private updateFormValidity = () => {
+  /**
+   * Updates the form validity of the date picker input.
+   * @returns {void}
+   */
+  private updateFormValidity = (): void => {
     const { formValidationMessage, internals, required, value, inputElem } = this;
 
     updateFormValidity({
@@ -602,9 +656,14 @@ export class BqDatePicker {
     });
   };
 
-  private get calendarType() {
-    // Return the corresponding component type, based on the type prop value
-    return CALENDAR_TYPE_MAP[this.type] || CALENDAR_TYPE_MAP.single;
+  /**
+   * Returns the Cally calendar component tag name based on the picker type.
+   * Maps 'single' → 'calendar-date', 'multi' → 'calendar-multi', 'range' → 'calendar-range'
+   *
+   * @returns The Cally calendar component tag name.
+   */
+  private get calendarType(): (typeof CALENDAR_TYPE_MAP)[TDatePickerType] {
+    return CALENDAR_TYPE_MAP[this.type] ?? CALENDAR_TYPE_MAP.single;
   }
 
   // render() function

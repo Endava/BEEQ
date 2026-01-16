@@ -809,8 +809,7 @@ export namespace Components {
         "autofocus": boolean;
         /**
           * Clears the selected value.
-          * @return 
-          * @memberof BqInput
+          * @returns
          */
         "clear": () => Promise<void>;
         /**
