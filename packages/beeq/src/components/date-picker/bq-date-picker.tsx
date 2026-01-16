@@ -3,6 +3,10 @@ import { AttachInternals, Component, Element, Event, h, Listen, Method, Prop, St
 
 import type { Placement } from '../../services/interfaces';
 import {
+  clampDateToRange,
+  extractFocusedDate,
+  formatDisplayValue,
+  getTodayISO,
   hasSlotContent,
   isClient,
   isDefined,
@@ -10,6 +14,8 @@ import {
   isHTMLElement,
   isNil,
   parseDateInput,
+  toISODateString,
+  updateFormValidity,
   validatePropValue,
 } from '../../shared/utils';
 import type { TInputValidation } from '../input/bq-input.types';
@@ -18,8 +24,8 @@ import { DATE_PICKER_TYPE } from './bq-date-picker.types';
 import {
   CALENDAR_CONTAINER_EXPORT_PARTS,
   CALENDAR_MONTH_EXPORT_PARTS,
+  CALENDAR_TYPE_MAP,
   DEFAULT_INPUT_ID,
-  ISO_DATE_LOCALE,
 } from './helper/constants';
 import { isCallyLibraryLoaded, loadCallyLibrary } from './libs/callyLibrary';
 
@@ -302,14 +308,14 @@ export class BqDatePicker {
   handleValueChange(newValue: string, oldValue: string) {
     if (newValue === oldValue) return;
 
-    const { formatDisplayValue, internals, isCallyLoaded } = this;
+    const { formatOptions, internals, isCallyLoaded, locale, type } = this;
     if (!isCallyLoaded) return;
 
     internals.setFormValue(!isNil(newValue) ? `${newValue}` : undefined);
     this.updateFormValidity();
 
     this.hasValue = isDefined(newValue);
-    this.displayDate = formatDisplayValue(newValue);
+    this.displayDate = formatDisplayValue(newValue, type, locale, formatOptions);
 
     this.setFocusedDate();
   }
@@ -437,10 +443,10 @@ export class BqDatePicker {
   };
 
   private setFocusedDate = () => {
-    const { callyElem, formatFocusedDate, isCallyLoaded, value } = this;
+    const { callyElem, isCallyLoaded, value } = this;
     if (!(callyElem && isCallyLoaded)) return;
 
-    const nextFocused = value ? formatFocusedDate(value) : new Date().toLocaleDateString(ISO_DATE_LOCALE);
+    const nextFocused = value ? extractFocusedDate(value) : getTodayISO();
     if (this.focusedDate === nextFocused) return;
 
     this.focusedDate = nextFocused;
@@ -449,13 +455,6 @@ export class BqDatePicker {
       // because it doesn't work when passed as a prop (the Cally element does not re-render)
       callyElem.focusedDate = this.focusedDate;
     }
-  };
-
-  private clampDateToRange = (dateStr: string): string => {
-    if (this.min && dateStr < this.min) return this.min;
-    if (this.max && dateStr > this.max) return this.max;
-
-    return dateStr;
   };
 
   private handleChange = (ev: Event) => {
@@ -488,11 +487,11 @@ export class BqDatePicker {
 
     // Valid date: normalize to ISO format and clamp to range if needed
     // Note: clamping is done based on string comparison of ISO dates and only when min/max are set
-    let isoDate = dateValue.toLocaleDateString(ISO_DATE_LOCALE);
-    isoDate = this.clampDateToRange(isoDate);
+    let isoDate = toISODateString(dateValue);
+    isoDate = clampDateToRange(isoDate, this.min, this.max);
 
     this.value = isoDate;
-    this.displayDate = this.formatDisplayValue(isoDate);
+    this.displayDate = formatDisplayValue(isoDate, this.type, this.locale, this.formatOptions);
     this.internals.setFormValue(isoDate);
     this.updateFormValidity();
     this.bqChange.emit({ value: this.value, el: this.el });
@@ -512,7 +511,7 @@ export class BqDatePicker {
     this.isInternalUpdate = true;
 
     this.value = value;
-    this.displayDate = this.formatDisplayValue(value);
+    this.displayDate = formatDisplayValue(value, this.type, this.locale, this.formatOptions);
     this.inputElem.value = this.displayDate;
     this.inputElem.focus();
 
@@ -590,72 +589,22 @@ export class BqDatePicker {
     return [this.generateCalendarMonth()];
   };
 
-  /**
-   * Extracts and returns the first date part from a given string.
-   * When the type of the date picker is 'range' or 'multi', the first or initial date part of the value
-   * should be the focused date in the calendar.
-   *
-   * @param value - The value to be processed, can be a string.
-   * @returns The extracted last date portion of the value.
-   */
-  private formatFocusedDate = (value: string): string | undefined => {
-    if (!value) return undefined;
-
-    const dateRegex = /\b\d{4}-\d{2}-\d{2}\b/;
-    const match = dateRegex.exec(value);
-    return match ? match[0] : undefined;
-  };
-
-  private formatDisplayValue = (value: string): string | undefined => {
-    if (!value) return undefined;
-
-    const dateFormatter = new Intl.DateTimeFormat(this.locale, this.formatOptions);
-
-    if (this.type === 'range') {
-      const [start, end] = value.split('/').map((dateStr) => new Date(`${dateStr}T00:00:00`));
-      return dateFormatter.formatRange(start, end);
-    }
-
-    if (this.type === 'multi') {
-      const dates = value.split(' ').map((dateStr) => new Date(`${dateStr}T00:00:00`));
-      return dates.map((date) => dateFormatter.format(date)).join(', ');
-    }
-
-    return dateFormatter.format(new Date(`${value}T00:00:00`));
-  };
-
   private updateFormValidity = () => {
     const { formValidationMessage, internals, required, value, inputElem } = this;
 
-    // Clear the validity state
-    internals?.states.clear();
-
-    // Check if value is required but missing
-    if (required && (!value || value.toString().trim() === '')) {
-      // Set validity state to invalid
-      internals?.states.add('invalid');
-      internals?.setValidity(
-        { valueMissing: true },
-        formValidationMessage ?? 'Please, input or select a valid date',
-        inputElem,
-      );
-      return;
-    }
-
-    // Set validity state to valid if the input has value or is not required
-    internals?.states.add('valid');
-    internals?.setValidity({});
+    updateFormValidity({
+      internals,
+      required,
+      value,
+      inputElem,
+      validationMessage: formValidationMessage,
+      defaultMessage: 'Please, input or select a valid date',
+    });
   };
 
   private get calendarType() {
-    const componentTypes = {
-      single: 'calendar-date',
-      multi: 'calendar-multi',
-      range: 'calendar-range',
-    } as const;
-
     // Return the corresponding component type, based on the type prop value
-    return componentTypes[this.type] || componentTypes.single;
+    return CALENDAR_TYPE_MAP[this.type] || CALENDAR_TYPE_MAP.single;
   }
 
   // render() function
