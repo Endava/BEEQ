@@ -1,5 +1,4 @@
-/** French Canadian locale used for ISO date formatting (YYYY-MM-DD) */
-const ISO_DATE_LOCALE = 'fr-CA';
+import { ISO_DATE_LOCALE } from '../../../shared/utils/date';
 
 /** Default fallback input ID */
 const DEFAULT_INPUT_ID = 'date-picker';
