@@ -1,3 +1,5 @@
+import { isDefined } from './isDefined';
+
 type FormValidityOptions = {
   /** The ElementInternals instance */
   internals?: ElementInternals;
@@ -17,7 +19,7 @@ type FormValidityOptions = {
  * Updates form validity state for form-associated custom elements.
  * Handles the required field validation and sets appropriate validity states.
  *
- * @param {TFormValidityOptions} options - Validation options
+ * @param {FormValidityOptions} options - Validation options
  * @param options.internals - The ElementInternals instance
  * @param {boolean} options.required - Whether the field is required
  * @param {string | string[] | number} options.value - The current field value
@@ -39,9 +41,7 @@ const updateFormValidity = ({
   internals.states.clear();
 
   // Check if value is required but missing
-  const isEmpty = !value || (typeof value === 'string' && value.trim() === '');
-
-  if (required && isEmpty) {
+  if (required && !isDefined(value)) {
     // Set validity state to invalid
     internals.states.add('invalid');
     internals.setValidity({ valueMissing: true }, validationMessage ?? defaultMessage, inputElem);

@@ -46,15 +46,20 @@ const formatDisplayValue = (
 
   if (type === 'range') {
     const [start, end] = value.split('/').map((dateStr) => new Date(`${dateStr}T00:00:00`));
+    if (!start || !end || Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) return undefined;
+
     return dateFormatter.formatRange(start, end);
   }
 
   if (type === 'multi') {
     const dates = value.split(' ').map((dateStr) => new Date(`${dateStr}T00:00:00`));
+    if (dates.some((d) => Number.isNaN(d.getTime()))) return undefined;
+
     return dates.map((date) => dateFormatter.format(date)).join(', ');
   }
 
-  return dateFormatter.format(new Date(`${value}T00:00:00`));
+  const singleDate = new Date(`${value}T00:00:00`);
+  return Number.isNaN(singleDate.getTime()) ? undefined : dateFormatter.format(singleDate);
 };
 
 /**
