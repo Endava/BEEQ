@@ -27,8 +27,9 @@ type ScriptConfig = {
  * @param {Object} config - Script configuration
  * @param {string} config.type - The type of the script
  * @param {string} config.src - The source URL of the script
- * @param {Object} [config.attributes] - Additional attributes to set on the script element
- * @returns {Promise<void>}
+ * @param {Record<string, string>} [config.attributes] - Additional attributes to set on the script element
+ * @returns Promise that resolves when the script is loaded
+ * @throws {Error} If the script fails to load
  */
 const loadScript = ({ type, src, attributes = {} }: ScriptConfig): Promise<void> => {
   return new Promise<void>((resolve, reject) => {
