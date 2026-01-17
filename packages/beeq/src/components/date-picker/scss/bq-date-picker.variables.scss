@@ -35,7 +35,7 @@
   --bq-date-picker--border-width: theme(borderWidth.s);
   --bq-date-picker--currentDate-border-color: theme(stroke.brand);
   --bq-date-picker--currentDate-border-width: theme(borderWidth.m);
-  --bq-date-picker--day-size: theme(spacing.xl);
+  --bq-date-picker--day-size: 2.25rem; // 36px
   --bq-date-picker--gap: theme(spacing.xs);
   --bq-date-picker--icon-size: 24px;
   --bq-date-picker--label-margin-bottom: theme(spacing.xs);

@@ -4,6 +4,7 @@ export * from './cssVariables';
 export * from './date';
 export * from './debounce';
 export * from './event';
+export * from './form';
 export * from './getNextElement';
 export * from './getRandom';
 export * from './isClient';

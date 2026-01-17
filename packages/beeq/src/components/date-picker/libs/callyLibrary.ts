@@ -4,14 +4,14 @@
 
 const CALLY_SCRIPT_ATTRIBUTE = 'data-cally-library';
 //❗ Make sure to update the version here when the library releases a new version
-const CALLY_LIB_VERSION = '0.8.0';
+const CALLY_LIB_VERSION = '0.9.0';
 /**
  * ❗ Make sure to update the hash here if the `CALLY_LIB_VERSION` is updated
  * This hash is used to ensure the integrity of the library when loading it
  * from a CDN.
- * @see https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity
+ * @see https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Subresource_Integrity#tools_for_generating_sri_hashes
  */
-const CALLY_LIB_HASH = 'sha384-giuY/f8D3+ehgOTmQMr4HvrreOITDmvXsZuDCJ1csQ+3dURHA24NqRd8lkSI6uGF';
+const CALLY_LIB_HASH = 'sha384-pM/XA9cWLgX65JRL+wCO7uw2DIwVqcK1WlITykq2OZYbP5vuMspYj0K29Ka6UyFU';
 
 let isLibraryLoaded = false;
 
