@@ -65,9 +65,9 @@ const isCallyLibraryLoaded = (): boolean => {
  * @throws {Error} If the library fails to load
  * @return {Promise<void>}
  */
-const loadCallyLibrary = async (): Promise<void> => {
+const loadCallyLibrary = (): Promise<void> => {
   // Already loaded, return immediately
-  if (isLibraryLoaded) return;
+  if (isLibraryLoaded) return Promise.resolve();
 
   // If a load is already in progress, wait for it to complete
   if (loadingPromise !== null) return loadingPromise;
@@ -75,7 +75,7 @@ const loadCallyLibrary = async (): Promise<void> => {
   // Check if script already exists in DOM (e.g., from a previous session or external source)
   if (document.querySelector(`script[${CALLY_SCRIPT_ATTRIBUTE}]`) !== null) {
     isLibraryLoaded = true;
-    return;
+    return Promise.resolve();
   }
 
   // Start loading and store the promise so concurrent calls can await it
