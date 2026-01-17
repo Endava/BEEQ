@@ -62,6 +62,14 @@ describe('callyLibrary', () => {
       querySelectorSpy.mockReturnValue(document.createElement('script'));
       expect(isCallyLibraryLoaded()).toBe(true);
     });
+
+    it('should return true from isCallyLibraryLoaded after successful load', async () => {
+      const loadPromise = loadCallyLibrary();
+      mockScript.onload?.(new Event('load'));
+      await loadPromise;
+
+      expect(isCallyLibraryLoaded()).toBe(true);
+    });
   });
 
   describe('loadCallyLibrary', () => {
@@ -200,6 +208,17 @@ describe('callyLibrary', () => {
       await Promise.all([promise1, promise2, promise3]);
 
       expect(results).toEqual([true, true, true]);
+    });
+
+    it('should return the same promise instance for concurrent calls', async () => {
+      const promise1 = loadCallyLibrary();
+      const promise2 = loadCallyLibrary();
+
+      // Verify they're the same promise reference
+      expect(promise1).toBe(promise2);
+
+      mockScript.onload?.(new Event('load'));
+      await Promise.all([promise1, promise2]);
     });
 
     it('should reject all concurrent promises when load fails', async () => {
