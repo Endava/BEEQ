@@ -1,5 +1,6 @@
 import type { EventEmitter } from '@stencil/core';
-import { AttachInternals, Component, Element, Event, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import type { JSX } from '@stencil/core/internal';
 
 import type { Placement } from '../../services/interfaces';
 import {
@@ -604,9 +605,9 @@ export class BqDatePicker {
    * Generates a calendar month element
    * @param {number} offset - The offset of the calendar month.
    * @param {string} className - The class name of the calendar month.
-   * @returns {Element | null} The calendar month element.
+   * @returns {JSX.Element | null} The calendar month element.
    */
-  private generateCalendarMonth = (offset?: number, className: string = ''): Element | null => {
+  private generateCalendarMonth = (offset?: number, className: string = ''): JSX.Element | null => {
     if (!this.isCallyLoaded) return null;
 
     return <calendar-month class={className} exportparts={CALENDAR_MONTH_EXPORT_PARTS} offset={offset} />;
@@ -623,9 +624,9 @@ export class BqDatePicker {
    * If the type of the date picker is not 'range' or 'multi', or if the number of months is not specified,
    * it generates an array with a single calendar month.
    *
-   * @returns {Element[]} An array of elements representing the calendar months.
+   * @returns {JSX.Element[]} An array of elements representing the calendar months.
    */
-  private generateCalendarMonths = (): Element[] => {
+  private generateCalendarMonths = (): JSX.Element[] => {
     if (!this.isCallyLoaded) return [];
 
     if (this.type === 'range' || (this.type === 'multi' && this.months)) {

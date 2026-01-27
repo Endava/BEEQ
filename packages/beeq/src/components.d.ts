@@ -5973,6 +5973,10 @@ declare namespace LocalJSX {
          */
         "download"?: string;
         /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
+        /**
           * When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`
          */
         "href"?: string;
@@ -5990,6 +5994,10 @@ declare namespace LocalJSX {
           * @default false
          */
         "loading"?: boolean;
+        /**
+          * The name of the element, used when submitting an HTML form.
+         */
+        "name"?: string;
         /**
           * Handler to be called when the button loses focus.
          */
@@ -6108,6 +6116,10 @@ declare namespace LocalJSX {
           * @default false
          */
         "disabled"?: boolean;
+        /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
         /**
           * The form ID that the checkbox is associated with
          */
@@ -7504,6 +7516,10 @@ declare namespace LocalJSX {
          */
         "fieldset"?: boolean;
         /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
+        /**
           * Name of the HTML input form control. Submitted with the form as part of a name/value pair.
          */
         "name": string;
@@ -7903,6 +7919,10 @@ declare namespace LocalJSX {
          */
         "enableValueIndicator"?: boolean;
         /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
+        /**
           * A number representing the amount to remain between the minimum and maximum values (only for range type).
           * @default 0
          */
@@ -8171,6 +8191,10 @@ declare namespace LocalJSX {
           * @default false
          */
         "disabled"?: boolean;
+        /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
         /**
           * The native form validation message
          */
