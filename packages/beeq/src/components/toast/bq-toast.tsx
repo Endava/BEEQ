@@ -1,5 +1,5 @@
 import type { EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, Host, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
 import { debounce, isClient, type TDebounce, validatePropValue } from '../../shared/utils';
 import type { TToastBorderRadius, TToastPlacement, TToastType } from './bq-toast.types';

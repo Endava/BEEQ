@@ -1,5 +1,5 @@
 import type { EventEmitter } from '@stencil/core';
-import { Component, Event, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, Event, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
 import { isClient, isHTMLElement } from '../../shared/utils';
 import type { TSideMenuAppearance, TSideMenuSize } from './bq-side-menu.types';

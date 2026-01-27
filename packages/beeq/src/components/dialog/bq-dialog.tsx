@@ -1,5 +1,5 @@
 import type { EventEmitter } from '@stencil/core';
-import { Component, Element, Event, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
 import { enter, hasSlotContent, leave, validatePropValue } from '../../shared/utils';
 import type { TDialogBorderRadius, TDialogFooterAppearance, TDialogSize } from './bq-dialog.types';

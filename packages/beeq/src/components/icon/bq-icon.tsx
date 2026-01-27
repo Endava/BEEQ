@@ -1,5 +1,5 @@
 import type { EventEmitter } from '@stencil/core';
-import { Component, Event, Host, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Event, Host, Prop, State, Watch } from '@stencil/core';
 
 import { getBasePath, getColorCSSVariable, isNil } from '../../shared/utils';
 import type { TIconWeight } from './bq-icon.types';

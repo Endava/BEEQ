@@ -1,5 +1,6 @@
 import type { EventEmitter } from '@stencil/core';
-import { AttachInternals, Component, Element, Event, h, Prop, State, Watch } from '@stencil/core';
+import { AttachInternals, Component, Element, Event, Prop, State, Watch } from '@stencil/core';
+import type { JSX } from '@stencil/core/internal';
 
 import { clamp, debounce, isNil, isString, type TDebounce } from '../../shared/utils';
 import type { TSliderType, TSliderValue } from './bq-slider.types';
@@ -410,7 +411,7 @@ export class BqSlider {
     value: number,
     thumbPosition: number,
     refCallback: (elem: HTMLBqTooltipElement) => void,
-  ): HTMLBqTooltipElement => (
+  ): JSX.Element => (
     <bq-tooltip
       alwaysVisible={true}
       class={{
