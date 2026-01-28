@@ -1,4 +1,65 @@
-## 1.11.2 (2025-12-04)
+## 1.12.0 (2026-01-28)
+
+### Features ⚡️
+
+- **Button:** add support for icon-only button variant with aspect-ratio 1:1 (square) ([#1570](https://github.com/Endava/BEEQ/pull/1570))
+- **Steps, Step Item:** add `orientation` property and support for vertical layout ([#1566](https://github.com/Endava/BEEQ/pull/1566))
+
+### Bug Fixes 🐞
+
+- **Datepicker:** prevent Cally library loading race condition with singleton promise pattern ([#1604](https://github.com/Endava/BEEQ/pull/1604))
+- **Select:** prevent tag removal on backspace in multiselect when the input is not empty ([#1597](https://github.com/Endava/BEEQ/pull/1597))
+
+### Refactor 🛠️
+
+- **Datepicker:** improve performance and scalability with utilities, and update the Cally library ([#1603](https://github.com/Endava/BEEQ/pull/1603))
+
+### Chore ⚙️
+
+- connect to context7 MCP for up to date docs for LLMs ([c7f62170](https://github.com/Endava/BEEQ/commit/c7f62170))
+- **deps:** update dependency @stencil/core to v4.40.1 ([#1567](https://github.com/Endava/BEEQ/pull/1567))
+- **deps:** update node.js to v22.21.1 ([#1572](https://github.com/Endava/BEEQ/pull/1572))
+- **deps:** update pnpm to v10.26.2 ([#1574](https://github.com/Endava/BEEQ/pull/1574))
+- **deps:** update nx to v22.3.3 ([#1573](https://github.com/Endava/BEEQ/pull/1573))
+- **deps:** update dependency nx-stylelint to v18.0.2 ([#1577](https://github.com/Endava/BEEQ/pull/1577))
+- **deps:** update react to v19.2.3 ([#1580](https://github.com/Endava/BEEQ/pull/1580))
+- **deps:** update storybook to v10.1.10 ([#1575](https://github.com/Endava/BEEQ/pull/1575))
+- **deps:** update dependency @testing-library/react to v16.3.1 ([#1576](https://github.com/Endava/BEEQ/pull/1576))
+- **deps:** remove leftover prettier dependencies ([#1581](https://github.com/Endava/BEEQ/pull/1581))
+- **deps:** update actions/cache action to v5 ([#1585](https://github.com/Endava/BEEQ/pull/1585))
+- **deps:** update actions/checkout action to v6 ([#1586](https://github.com/Endava/BEEQ/pull/1586))
+- **deps:** update node.js to v24 ([#1587](https://github.com/Endava/BEEQ/pull/1587))
+- **deps:** update dependency tailwindcss to v3.4.19 ([#1584](https://github.com/Endava/BEEQ/pull/1584))
+- **deps:** update dependency autoprefixer to v10.4.23 ([#1583](https://github.com/Endava/BEEQ/pull/1583))
+- **deps:** update dependency vue to v3.5.26 ([#1578](https://github.com/Endava/BEEQ/pull/1578))
+- **deps:** update lit to v3.3.2 ([#1579](https://github.com/Endava/BEEQ/pull/1579))
+- **deps:** update dependency @biomejs/biome to v2.3.10 ([#1582](https://github.com/Endava/BEEQ/pull/1582))
+- **deps:** update angular to v21 (major) ([#1568](https://github.com/Endava/BEEQ/pull/1568))
+- **deps:** update dependency @wc-toolkit/type-parser to v1.2.0 ([#1588](https://github.com/Endava/BEEQ/pull/1588))
+- **deps:** update dependency puppeteer to v24.34.0 ([#1590](https://github.com/Endava/BEEQ/pull/1590))
+- **deps:** update commitlint to v20 (major) ([#1593](https://github.com/Endava/BEEQ/pull/1593))
+- **deps:** update dependency vite to v7 ([#1595](https://github.com/Endava/BEEQ/pull/1595))
+- **deps:** update dependency fs-extra to v11.3.3 ([#1592](https://github.com/Endava/BEEQ/pull/1592))
+- **deps:** update swc ([#1591](https://github.com/Endava/BEEQ/pull/1591))
+- **deps:** update dependency core-js to v3.47.0 ([#1589](https://github.com/Endava/BEEQ/pull/1589))
+- **deps:** update dependency vite-tsconfig-paths to v6 ([#1596](https://github.com/Endava/BEEQ/pull/1596))
+- **deps:** update dependency @stencil/core to v4.41.0 ([#1601](https://github.com/Endava/BEEQ/pull/1601))
+- **deps:** update dependency tsx to v4.21.0 ([#1599](https://github.com/Endava/BEEQ/pull/1599))
+- **deps:** update dependency stylelint to v16.26.1 ([#1598](https://github.com/Endava/BEEQ/pull/1598))
+- **deps:** update stencil ([#1607](https://github.com/Endava/BEEQ/pull/1607))
+- **deps:** update commitlint to v20.3.1 ([#1609](https://github.com/Endava/BEEQ/pull/1609))
+- **deps:** update storybook to v10.1.11 ([#1605](https://github.com/Endava/BEEQ/pull/1605))
+- **deps:** update dependency @chromatic-com/storybook to v5 ([#1608](https://github.com/Endava/BEEQ/pull/1608))
+- **deps:** update angular to v21.1.0 ([#1606](https://github.com/Endava/BEEQ/pull/1606))
+- **deps:** update nx to v22.4.1 ([#1610](https://github.com/Endava/BEEQ/pull/1610))
+- **deps:** update storybook to v10.2.0 ([#1612](https://github.com/Endava/BEEQ/pull/1612))
+- **deps:** update `@stencil/core` to v4.41.3 and output targets ([#1611](https://github.com/Endava/BEEQ/pull/1611))
+
+### ❤️ Thank You
+
+- Dabiel Gonzalez-Ramos @dgonzalezr
+
+## [1.11.2](https://github.com/Endava/BEEQ/compare/v1.11.1...v1.11.2) (2025-12-04)
 
 ### Bug Fixes 🐞
 
@@ -14,7 +75,7 @@
 
 - Dabiel Gonzalez-Ramos @dgonzalezr
 
-## 1.11.1 (2025-11-25)
+## [1.11.1](https://github.com/Endava/BEEQ/compare/v1.11.0...v1.11.1) (2025-11-25)
 
 ### Features ⚡️
 
@@ -53,7 +114,7 @@
 - Dabiel González Ramos
 - Dabiel Gonzalez-Ramos @dgonzalezr
 
-## 1.11.0 (2025-10-06)
+## [1.11.0](https://github.com/Endava/BEEQ/compare/v1.10.0...v1.11.0) (2025-10-06)
 
 ### Features ⚡️
 
@@ -90,7 +151,7 @@
 - Dabiel González Ramos @dgonzalezr
 - Dabiel Gonzalez-Ramos @dgonzalezr
 
-## 1.10.0 (2025-08-14)
+## [1.10.0](https://github.com/Endava/BEEQ/compare/v1.9.0...v1.10.0) (2025-08-14)
 
 ### Features ⚡️
 
@@ -146,7 +207,7 @@
 - Dabiel González Ramos @dgonzalezr
 - Dabiel González Ramos
 
-## 1.9.0 (2025-04-29)
+## [1.9.0](https://github.com/Endava/BEEQ/compare/v1.8.4...v1.9.0) (2025-04-29)
 
 ### Features ⚡️
 
