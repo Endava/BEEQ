@@ -1,6 +1,6 @@
 {
   "name": "@beeq/vue",
-  "version": "1.12.0",
+  "version": "1.12.1",
   "license": "Apache-2.0",
   "description": "Vue specific wrapper for BEEQ Design System components",
   "main": "./src/index.js",

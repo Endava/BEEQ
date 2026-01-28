@@ -1,3 +1,13 @@
+## 1.12.1 (2026-01-28)
+
+### Chore ⚙️
+
+- **deps:** update peer dependencies and sync pnpm lock file ([f531a644](https://github.com/Endava/BEEQ/commit/f531a644))
+
+### ❤️ Thank You
+
+- Dabiel Gonzalez-Ramos
+
 ## 1.12.0 (2026-01-28)
 
 ### Features ⚡️
