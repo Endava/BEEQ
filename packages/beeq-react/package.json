@@ -7,8 +7,8 @@
   "module": "./src/index.js",
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@beeq/core": "^1.11.0",
-    "@stencil/react-output-target": "^1.0.4"
+    "@beeq/core": "^1.12.0",
+    "@stencil/react-output-target": "^1.4.0"
   },
   "peerDependencies": {
     "react": "^18 || ^19",

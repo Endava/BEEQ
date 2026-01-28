@@ -7,7 +7,7 @@
   "module": "dist/esm2015/index.js",
   "types": "index.d.ts",
   "dependencies": {
-    "@beeq/core": "^1.11.0"
+    "@beeq/core": "^1.12.0"
   },
   "peerDependencies": {
     "@angular/common": ">=14.0.0",
