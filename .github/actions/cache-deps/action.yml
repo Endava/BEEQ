@@ -18,6 +18,5 @@ runs:
         path: node_modules
         key: ${{ runner.os }}-node-modules-${{ hashFiles('pnpm-lock.yaml') }}
     - name: 📦 Install dependencies
-      if: steps.cache.outputs.cache-hit != 'true' || inputs.caching != 'true'
       run: pnpm install --frozen-lockfile
       shell: bash
