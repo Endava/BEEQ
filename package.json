@@ -109,7 +109,7 @@
     "jest": "29.7.0",
     "jest-cli": "29.7.0",
     "jest-environment-jsdom": "29.7.0",
-    "jsdom": "26.1.0",
+    "jsdom": "27.4.0",
     "lint-staged": "15.4.3",
     "lit": "3.3.2",
     "lit-html": "3.3.2",
