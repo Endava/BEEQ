@@ -138,8 +138,8 @@ importers:
         specifier: 4.41.3
         version: 4.41.3
       '@stencil/react-output-target':
-        specifier: 1.3.3
-        version: 1.3.3(@stencil/core@4.41.3)(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        specifier: 1.4.0
+        version: 1.4.0(@stencil/core@4.41.3)(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@stencil/sass':
         specifier: 3.2.3
         version: 3.2.3(@stencil/core@4.41.3)
@@ -3917,13 +3917,6 @@ packages:
     resolution: {integrity: sha512-zQ/7/hwsJBKYz0CzN3LyKJ3JdnNTdsYMY+futdyodTLkPNlPeRWVF1EI5syaBb09W+ay/T+TsYbPMXbXgG/3qQ==}
     engines: {node: '>=16.0.0', npm: '>=7.10.0'}
     hasBin: true
-
-  '@stencil/react-output-target@1.3.3':
-    resolution: {integrity: sha512-2PvmxIldVEqubFUW0vVKydTjWfEvsxw5o5Zq8Pj8txRKTqKzijnmtmkRMu6k+2Oro/639bHX9rOgimHswLmEmA==}
-    peerDependencies:
-      '@stencil/core': '>=3 || >= 4.0.0-beta.0 || >= 4.0.0'
-      react: ^18 || ^19
-      react-dom: ^18 || ^19
 
   '@stencil/react-output-target@1.4.0':
     resolution: {integrity: sha512-7ucOcQMCe3pNMeOhL3vpd+TmUB97qSQsoW4xnY8Z+3wQRW3FXMbKB5FNMfm8GAY2h4Ln8fZ426AG0LCZ3uwKIw==}
@@ -17137,18 +17130,6 @@ snapshots:
       '@rollup/rollup-linux-x64-musl': 4.34.9
       '@rollup/rollup-win32-arm64-msvc': 4.34.9
       '@rollup/rollup-win32-x64-msvc': 4.34.9
-
-  '@stencil/react-output-target@1.3.3(@stencil/core@4.41.3)(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
-    dependencies:
-      '@lit/react': 1.0.8(@types/react@19.2.7)
-      '@stencil/core': 4.41.3
-      html-react-parser: 5.2.13(@types/react@19.2.7)(react@19.2.3)
-      react: 19.2.3
-      react-dom: 19.2.3(react@19.2.3)
-      react-style-stringify: 1.2.0
-      ts-morph: 22.0.0
-    transitivePeerDependencies:
-      - '@types/react'
 
   '@stencil/react-output-target@1.4.0(@stencil/core@4.41.3)(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
