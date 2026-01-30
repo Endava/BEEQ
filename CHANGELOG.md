@@ -1,3 +1,24 @@
+## 1.12.2 (2026-01-30)
+
+### Bug Fixes 🐞
+
+- **Styles:** turn off constructable stylesheets ([76587610](https://github.com/Endava/BEEQ/commit/76587610))
+
+### Chore ⚙️
+
+- **GitHub publish action:** remove condition for dependency installation ([ad1d14cd](https://github.com/Endava/BEEQ/commit/ad1d14cd))
+- **deps:** update angular to v21.1.1 ([#1616](https://github.com/Endava/BEEQ/pull/1616))
+- **deps:** update dependency @stencil/react-output-target to v1.4.0 ([#1615](https://github.com/Endava/BEEQ/pull/1615))
+- **deps:** update react to v19.2.4 ([#1613](https://github.com/Endava/BEEQ/pull/1613))
+- **deps:** update storybook to v10.2.1 ([#1614](https://github.com/Endava/BEEQ/pull/1614))
+- **deps:** update nx to v22.4.2 ([#1617](https://github.com/Endava/BEEQ/pull/1617))
+- **deps:** update angular to v21.1.2 ([#1618](https://github.com/Endava/BEEQ/pull/1618))
+- **deps:** update nx to v22.4.3 ([#1619](https://github.com/Endava/BEEQ/pull/1619))
+
+### ❤️ Thank You
+
+- Dabiel Gonzalez-Ramos
+
 ## 1.12.1 (2026-01-28)
 
 ### Chore ⚙️
