@@ -2,8 +2,9 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "declaration": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "@stencil/core",
+    "jsx": "react",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "h.Fragment",
     "moduleResolution": "bundler"
   }
 }

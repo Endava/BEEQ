@@ -1,4 +1,4 @@
-import { Component, Element, Host, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Host, h, Prop, State, Watch } from '@stencil/core';
 
 import { validatePropValue } from '../../shared/utils';
 import type { TAvatarShape, TAvatarSize } from './bq-avatar.types';

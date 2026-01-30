@@ -1,4 +1,4 @@
-import { Component, Element, Listen, Prop, Watch } from '@stencil/core';
+import { Component, Element, h, Listen, Prop, Watch } from '@stencil/core';
 
 import { isHTMLElement, isNil } from '../../shared/utils';
 import type { TAccordionAppearance, TAccordionSize } from '../accordion/bq-accordion.types';

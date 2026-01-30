@@ -120,7 +120,6 @@ export const config: Config = {
      * Details:
      * https://stenciljs.com/docs/config-extras
      */
-    addGlobalStyleToComponents: false,
     enableImportInjection: true,
     experimentalScopedSlotChanges: true,
     experimentalSlotFixes: true,
