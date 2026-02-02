@@ -1,4 +1,3 @@
-import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -8,11 +7,10 @@ import type { StorybookConfig } from '@storybook/web-components-vite';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 // biome-ignore-end lint/style/useNamingConvention: Storybook has become fully ESM, thus CJS constants (require, __dirname, __filename) will not be defined.
-const require = createRequire(import.meta.url);
 
 export default {
   framework: {
-    name: getAbsolutePath('@storybook/web-components-vite'),
+    name: '@storybook/web-components-vite',
     options: {
       builder: {
         viteConfigPath: join(__dirname, '../vite.config.mts').replace(/\\/g, '/'),
@@ -20,12 +18,7 @@ export default {
     },
   },
   stories: ['../src/_storybook/**/*.mdx', '../src/**/*.stories.@(ts|tsx)'],
-  addons: [
-    getAbsolutePath('@storybook/addon-docs'),
-    getAbsolutePath('@storybook/addon-a11y'),
-    // getAbsolutePath('@beeq/storybook-addon-html'),
-    getAbsolutePath('@chromatic-com/storybook'),
-  ],
+  addons: ['@storybook/addon-docs', '@beeq/storybook-addon-html', '@storybook/addon-a11y', '@chromatic-com/storybook'],
   staticDirs: [
     { from: '../../../dist/beeq/www/assets', to: '/assets' },
     { from: '../../../dist/beeq/www/scripts', to: '/scripts' },
@@ -54,7 +47,3 @@ export default {
     </script>
   `,
 } satisfies StorybookConfig;
-
-function getAbsolutePath(value: string): string {
-  return dirname(require.resolve(join(value, 'package.json')));
-}

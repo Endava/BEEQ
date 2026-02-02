@@ -75,8 +75,8 @@ importers:
         specifier: 7.27.1
         version: 7.27.1(@babel/core@7.28.0)
       '@beeq/storybook-addon-html':
-        specifier: 6.0.0
-        version: 6.0.0(prettier@3.8.1)(react-syntax-highlighter@15.6.1(react@19.2.4))
+        specifier: 7.0.0
+        version: 7.0.0(storybook@10.2.1(@testing-library/dom@10.4.1)(prettier@3.8.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
       '@biomejs/biome':
         specifier: 2.3.10
         version: 2.3.10
@@ -1359,11 +1359,10 @@ packages:
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
 
-  '@beeq/storybook-addon-html@6.0.0':
-    resolution: {integrity: sha512-OhpLp8AHV6qEh/+Sb8kLka/I3hluvt79C+XSKv6HwG2LRldD5EgegAVGE4ZLqM2afr8JHYrHLmEKrqH7brZd1w==}
+  '@beeq/storybook-addon-html@7.0.0':
+    resolution: {integrity: sha512-QG108kGA/bpmK5JfMssZqKuTi3fMtBzHtCuiathAdOnBzecc5Tjr+2uXE97t4R/IRrEu4F4/CrRnmtF+eGe7nw==}
     peerDependencies:
-      prettier: ^3.0.3
-      react-syntax-highlighter: ^15.0.0
+      storybook: 10.2.1
 
   '@biomejs/biome@2.3.10':
     resolution: {integrity: sha512-/uWSUd1MHX2fjqNLHNL6zLYWBbrJeG412/8H7ESuK8ewoRoMPUgHDebqKrPTx/5n6f17Xzqc9hdg3MEqA5hXnQ==}
@@ -13397,10 +13396,9 @@ snapshots:
 
   '@bcoe/v8-coverage@0.2.3': {}
 
-  '@beeq/storybook-addon-html@6.0.0(prettier@3.8.1)(react-syntax-highlighter@15.6.1(react@19.2.4))':
+  '@beeq/storybook-addon-html@7.0.0(storybook@10.2.1(@testing-library/dom@10.4.1)(prettier@3.8.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))':
     dependencies:
-      prettier: 3.8.1
-      react-syntax-highlighter: 15.6.1(react@19.2.4)
+      storybook: 10.2.1(@testing-library/dom@10.4.1)(prettier@3.8.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
 
   '@biomejs/biome@2.3.10':
     optionalDependencies:
