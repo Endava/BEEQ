@@ -5430,6 +5430,8 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    type OneOf<K extends string, T> = { [P in K]: T } | { [P in `attr:${K}`]: T } | { [P in `prop:${K}`]: T };
+
     /**
      * The Accordion is a UI component that allows users to toggle between showing and hiding content sections. It provides a collapsible functionality, where only one section can be expanded at a time, while the others remain collapsed.
      * @example How to use it
@@ -8830,49 +8832,441 @@ declare namespace LocalJSX {
          */
         "visible"?: boolean;
     }
+
+    interface BqAccordionAttributes {
+        "appearance": TAccordionAppearance;
+        "disabled": boolean;
+        "expanded": boolean;
+        "noAnimation": boolean;
+        "rotate": boolean;
+        "size": TAccordionSize;
+    }
+    interface BqAccordionGroupAttributes {
+        "appearance": TAccordionAppearance;
+        "expandAll": boolean;
+        "noAnimation": boolean;
+        "multiple": boolean;
+        "size": TAccordionSize;
+    }
+    interface BqAlertAttributes {
+        "autoDismiss": boolean;
+        "border": TAlertBorderRadius;
+        "disableClose": boolean;
+        "hideIcon": boolean;
+        "open": boolean;
+        "time": number;
+        "type": TAlertType;
+        "sticky": boolean;
+    }
+    interface BqAvatarAttributes {
+        "altText": string;
+        "image": string;
+        "label": string;
+        "initials": string;
+        "shape": TAvatarShape;
+        "size": TAvatarSize;
+    }
+    interface BqBadgeAttributes {
+        "backgroundColor": string;
+        "textColor": string;
+        "size": TBadgeSize;
+    }
+    interface BqBreadcrumbAttributes {
+        "label": string;
+    }
+    interface BqBreadcrumbItemAttributes {
+        "href": string;
+        "target": '_blank' | '_parent' | '_self' | '_top';
+        "rel": string;
+    }
+    interface BqButtonAttributes {
+        "appearance": TButtonAppearance;
+        "block": boolean;
+        "border": TButtonBorderRadius;
+        "disabled": boolean;
+        "download": string;
+        "href": string;
+        "justifyContent": 'left' | 'center' | 'right';
+        "label": string;
+        "loading": boolean;
+        "onlyIcon": boolean;
+        "size": TButtonSize;
+        "target": '_blank' | '_parent' | '_self' | '_top';
+        "type": TButtonType;
+        "variant": TButtonVariant;
+    }
+    interface BqCardAttributes {
+        "type": TCardType;
+        "border": TCardBorderRadius;
+    }
+    interface BqCheckboxAttributes {
+        "backgroundOnHover": boolean;
+        "formId": string;
+        "formValidationMessage": string;
+        "checked": boolean;
+        "disabled": boolean;
+        "indeterminate": boolean;
+        "name": string;
+        "required": boolean;
+        "value": string;
+    }
+    interface BqDatePickerAttributes {
+        "autofocus": boolean;
+        "clearButtonLabel": string;
+        "disableClear": boolean;
+        "disabled": boolean;
+        "distance": number;
+        "firstDayOfWeek": DaysOfWeek;
+        "form": string;
+        "formValidationMessage": string;
+        "locale": Intl.LocalesArgument;
+        "max": string;
+        "min": string;
+        "months": number;
+        "monthsPerView": 'single' | 'months';
+        "name": string;
+        "open": boolean;
+        "panelHeight": string;
+        "placeholder": string;
+        "placement": Placement;
+        "required": boolean;
+        "skidding": number;
+        "showOutsideDays": boolean;
+        "strategy": 'fixed' | 'absolute';
+        "tentative": string;
+        "type": TDatePickerType;
+        "validationStatus": TInputValidation;
+        "value": string;
+    }
+    interface BqDialogAttributes {
+        "border": TDialogBorderRadius;
+        "disableBackdrop": boolean;
+        "disableCloseEscKeydown": boolean;
+        "disableCloseClickOutside": boolean;
+        "footerAppearance": TDialogFooterAppearance;
+        "hideCloseButton": boolean;
+        "open": boolean;
+        "size": TDialogSize;
+    }
+    interface BqDividerAttributes {
+        "dashed": boolean;
+        "orientation": TDividerOrientation;
+        "strokeColor": string;
+        "titleAlignment": TDividerTitleAlignment;
+        "strokeDashWidth": number;
+        "strokeDashGap": number;
+        "strokeThickness": number;
+        "strokeBasis": number;
+        "strokeLinecap": TDividerStrokeLinecap;
+    }
+    interface BqDrawerAttributes {
+        "enableBackdrop": boolean;
+        "closeOnClickOutside": boolean;
+        "closeOnEsc": boolean;
+        "open": boolean;
+        "placement": TDrawerPlacement;
+        "position": TDrawerPosition;
+    }
+    interface BqDropdownAttributes {
+        "disableScrollLock": boolean;
+        "disabled": boolean;
+        "distance": number;
+        "keepOpenOnSelect": boolean;
+        "placement": Placement;
+        "open": boolean;
+        "panelHeight": string;
+        "sameWidth": boolean;
+        "skidding": number;
+        "strategy": 'fixed' | 'absolute';
+    }
+    interface BqEmptyStateAttributes {
+        "size": TEmptyStateSize;
+    }
+    interface BqIconAttributes {
+        "label": string;
+        "color": string;
+        "name": string;
+        "size": string;
+        "src": string;
+        "weight": TIconWeight;
+    }
+    interface BqInputAttributes {
+        "autocapitalize": string;
+        "autocomplete": string;
+        "autofocus": boolean;
+        "clearButtonLabel": string;
+        "debounceTime": number;
+        "disabled": boolean;
+        "disableClear": boolean;
+        "form": string;
+        "formValidationMessage": string;
+        "inputmode": string;
+        "max": string;
+        "maxlength": number;
+        "min": string;
+        "minlength": number;
+        "name": string;
+        "pattern": string;
+        "placeholder": string;
+        "readonly": boolean;
+        "required": boolean;
+        "step": string;
+        "type": TInputType;
+        "validationStatus": TInputValidation;
+        "value": string;
+    }
+    interface BqNotificationAttributes {
+        "autoDismiss": boolean;
+        "border": TNotificationBorderRadius;
+        "disableClose": boolean;
+        "hideIcon": boolean;
+        "open": boolean;
+        "time": number;
+        "type": TNotificationType;
+    }
+    interface BqOptionAttributes {
+        "hidden": boolean;
+        "disabled": boolean;
+        "displayValue": string;
+        "selected": boolean;
+        "value": string;
+    }
+    interface BqOptionListAttributes {
+        "ariaLabel": string;
+    }
+    interface BqPanelAttributes {
+        "disableScrollLock": boolean;
+        "distance": number;
+        "placement": Placement;
+        "open": boolean;
+        "sameWidth": boolean;
+        "skidding": number;
+        "strategy": 'fixed' | 'absolute';
+    }
+    interface BqProgressAttributes {
+        "borderShape": TProgressBorderShape;
+        "enableTooltip": boolean;
+        "indeterminate": boolean;
+        "label": boolean;
+        "thickness": TProgressThickness;
+        "type": TProgressType;
+        "value": number;
+    }
+    interface BqRadioAttributes {
+        "backgroundOnHover": boolean;
+        "checked": boolean;
+        "disabled": boolean;
+        "forceDisabled": boolean;
+        "formId": string;
+        "name": string;
+        "required": boolean;
+        "value": string;
+    }
+    interface BqRadioGroupAttributes {
+        "backgroundOnHover": boolean;
+        "debounceTime": number;
+        "disabled": boolean;
+        "fieldset": boolean;
+        "name": string;
+        "orientation": TRadioGroupOrientation;
+        "required": boolean;
+        "requiredValidationMessage": string;
+        "value": string;
+    }
+    interface BqSelectAttributes {
+        "autofocus": boolean;
+        "clearButtonLabel": string;
+        "debounceTime": number;
+        "disableScrollLock": boolean;
+        "disabled": boolean;
+        "disableClear": boolean;
+        "distance": number;
+        "form": string;
+        "keepOpenOnSelect": boolean;
+        "name": string;
+        "maxTagsVisible": number;
+        "multiple": boolean;
+        "open": boolean;
+        "panelHeight": string;
+        "placeholder": string;
+        "placement": Placement;
+        "readonly": boolean;
+        "required": boolean;
+        "sameWidth": boolean;
+        "skidding": number;
+        "strategy": 'fixed' | 'absolute';
+        "validationStatus": TInputValidation;
+        "value": TSelectValue;
+    }
+    interface BqSideMenuAttributes {
+        "appearance": TSideMenuAppearance;
+        "collapse": boolean;
+        "size": TSideMenuSize;
+    }
+    interface BqSideMenuItemAttributes {
+        "active": boolean;
+        "collapse": boolean;
+        "disabled": boolean;
+    }
+    interface BqSliderAttributes {
+        "debounceTime": number;
+        "disabled": boolean;
+        "enableValueIndicator": boolean;
+        "gap": number;
+        "max": number;
+        "min": number;
+        "name": string;
+        "step": number;
+        "type": TSliderType;
+        "value": string;
+        "enableTooltip": boolean;
+        "tooltipAlwaysVisible": boolean;
+    }
+    interface BqSpinnerAttributes {
+        "animation": boolean;
+        "textPosition": TSpinnerTextPosition;
+        "size": TSpinnerSize;
+    }
+    interface BqStatusAttributes {
+        "type": TStatusType;
+    }
+    interface BqStepItemAttributes {
+        "dividerColor": string;
+        "isLast": boolean;
+        "orientation": TStepsOrientation;
+        "size": TStepsSize;
+        "status": TStepItemStatus;
+        "type": TStepsType;
+    }
+    interface BqStepsAttributes {
+        "dividerColor": string;
+        "orientation": TStepsOrientation;
+        "size": TStepsSize;
+        "type": TStepsType;
+    }
+    interface BqSwitchAttributes {
+        "backgroundOnHover": boolean;
+        "checked": boolean;
+        "disabled": boolean;
+        "formValidationMessage": string;
+        "fullWidth": boolean;
+        "innerLabel": TSwitchInnerLabel;
+        "justifyContent": TSwitchJustifyContent;
+        "name": string;
+        "required": boolean;
+        "reverseOrder": boolean;
+        "value": string;
+    }
+    interface BqTabAttributes {
+        "active": boolean;
+        "controls": string;
+        "disabled": boolean;
+        "orientation": TTabOrientation;
+        "placement": TTabPlacement;
+        "size": TTabSize;
+        "tabId": string;
+    }
+    interface BqTabGroupAttributes {
+        "debounceTime": number;
+        "disableDivider": boolean;
+        "orientation": TTabOrientation;
+        "placement": TTabPlacement;
+        "size": TTabSize;
+        "value": string;
+    }
+    interface BqTagAttributes {
+        "border": TTagBorderRadius;
+        "clickable": boolean;
+        "color": TTagColor;
+        "disabled": boolean;
+        "hidden": boolean;
+        "removable": boolean;
+        "selected": boolean;
+        "size": TTagSize;
+        "variant": TTagVariant;
+    }
+    interface BqTextareaAttributes {
+        "autocapitalize": TTextareaAutoCapitalize;
+        "autocomplete": string;
+        "autofocus": boolean;
+        "autoGrow": boolean;
+        "debounceTime": number;
+        "disabled": boolean;
+        "disableResize": boolean;
+        "form": string;
+        "formValidationMessage": string;
+        "maxlength": number;
+        "name": string;
+        "placeholder": string;
+        "readonly": boolean;
+        "required": boolean;
+        "rows": number;
+        "spellcheck": boolean;
+        "validationStatus": TInputValidation;
+        "value": string;
+        "wrap": TTextareaWrap;
+    }
+    interface BqToastAttributes {
+        "border": TToastBorderRadius;
+        "type": TToastType;
+        "placement": TToastPlacement;
+        "hideIcon": boolean;
+        "open": boolean;
+        "time": number;
+    }
+    interface BqTooltipAttributes {
+        "alwaysVisible": boolean;
+        "distance": number;
+        "hideArrow": boolean;
+        "placement": Placement;
+        "sameWidth": boolean;
+        "displayOn": 'click' | 'hover';
+        "visible": boolean;
+    }
+
     interface IntrinsicElements {
-        "bq-accordion": BqAccordion;
-        "bq-accordion-group": BqAccordionGroup;
-        "bq-alert": BqAlert;
-        "bq-avatar": BqAvatar;
-        "bq-badge": BqBadge;
-        "bq-breadcrumb": BqBreadcrumb;
-        "bq-breadcrumb-item": BqBreadcrumbItem;
-        "bq-button": BqButton;
-        "bq-card": BqCard;
-        "bq-checkbox": BqCheckbox;
-        "bq-date-picker": BqDatePicker;
-        "bq-dialog": BqDialog;
-        "bq-divider": BqDivider;
-        "bq-drawer": BqDrawer;
-        "bq-dropdown": BqDropdown;
-        "bq-empty-state": BqEmptyState;
-        "bq-icon": BqIcon;
-        "bq-input": BqInput;
-        "bq-notification": BqNotification;
-        "bq-option": BqOption;
+        "bq-accordion": Omit<BqAccordion, keyof BqAccordionAttributes> & { [K in keyof BqAccordion & keyof BqAccordionAttributes]?: BqAccordion[K] } & { [K in keyof BqAccordion & keyof BqAccordionAttributes as `attr:${K}`]?: BqAccordionAttributes[K] } & { [K in keyof BqAccordion & keyof BqAccordionAttributes as `prop:${K}`]?: BqAccordion[K] };
+        "bq-accordion-group": Omit<BqAccordionGroup, keyof BqAccordionGroupAttributes> & { [K in keyof BqAccordionGroup & keyof BqAccordionGroupAttributes]?: BqAccordionGroup[K] } & { [K in keyof BqAccordionGroup & keyof BqAccordionGroupAttributes as `attr:${K}`]?: BqAccordionGroupAttributes[K] } & { [K in keyof BqAccordionGroup & keyof BqAccordionGroupAttributes as `prop:${K}`]?: BqAccordionGroup[K] };
+        "bq-alert": Omit<BqAlert, keyof BqAlertAttributes> & { [K in keyof BqAlert & keyof BqAlertAttributes]?: BqAlert[K] } & { [K in keyof BqAlert & keyof BqAlertAttributes as `attr:${K}`]?: BqAlertAttributes[K] } & { [K in keyof BqAlert & keyof BqAlertAttributes as `prop:${K}`]?: BqAlert[K] };
+        "bq-avatar": Omit<BqAvatar, keyof BqAvatarAttributes> & { [K in keyof BqAvatar & keyof BqAvatarAttributes]?: BqAvatar[K] } & { [K in keyof BqAvatar & keyof BqAvatarAttributes as `attr:${K}`]?: BqAvatarAttributes[K] } & { [K in keyof BqAvatar & keyof BqAvatarAttributes as `prop:${K}`]?: BqAvatar[K] };
+        "bq-badge": Omit<BqBadge, keyof BqBadgeAttributes> & { [K in keyof BqBadge & keyof BqBadgeAttributes]?: BqBadge[K] } & { [K in keyof BqBadge & keyof BqBadgeAttributes as `attr:${K}`]?: BqBadgeAttributes[K] } & { [K in keyof BqBadge & keyof BqBadgeAttributes as `prop:${K}`]?: BqBadge[K] };
+        "bq-breadcrumb": Omit<BqBreadcrumb, keyof BqBreadcrumbAttributes> & { [K in keyof BqBreadcrumb & keyof BqBreadcrumbAttributes]?: BqBreadcrumb[K] } & { [K in keyof BqBreadcrumb & keyof BqBreadcrumbAttributes as `attr:${K}`]?: BqBreadcrumbAttributes[K] } & { [K in keyof BqBreadcrumb & keyof BqBreadcrumbAttributes as `prop:${K}`]?: BqBreadcrumb[K] };
+        "bq-breadcrumb-item": Omit<BqBreadcrumbItem, keyof BqBreadcrumbItemAttributes> & { [K in keyof BqBreadcrumbItem & keyof BqBreadcrumbItemAttributes]?: BqBreadcrumbItem[K] } & { [K in keyof BqBreadcrumbItem & keyof BqBreadcrumbItemAttributes as `attr:${K}`]?: BqBreadcrumbItemAttributes[K] } & { [K in keyof BqBreadcrumbItem & keyof BqBreadcrumbItemAttributes as `prop:${K}`]?: BqBreadcrumbItem[K] };
+        "bq-button": Omit<BqButton, keyof BqButtonAttributes> & { [K in keyof BqButton & keyof BqButtonAttributes]?: BqButton[K] } & { [K in keyof BqButton & keyof BqButtonAttributes as `attr:${K}`]?: BqButtonAttributes[K] } & { [K in keyof BqButton & keyof BqButtonAttributes as `prop:${K}`]?: BqButton[K] };
+        "bq-card": Omit<BqCard, keyof BqCardAttributes> & { [K in keyof BqCard & keyof BqCardAttributes]?: BqCard[K] } & { [K in keyof BqCard & keyof BqCardAttributes as `attr:${K}`]?: BqCardAttributes[K] } & { [K in keyof BqCard & keyof BqCardAttributes as `prop:${K}`]?: BqCard[K] };
+        "bq-checkbox": Omit<BqCheckbox, keyof BqCheckboxAttributes> & { [K in keyof BqCheckbox & keyof BqCheckboxAttributes]?: BqCheckbox[K] } & { [K in keyof BqCheckbox & keyof BqCheckboxAttributes as `attr:${K}`]?: BqCheckboxAttributes[K] } & { [K in keyof BqCheckbox & keyof BqCheckboxAttributes as `prop:${K}`]?: BqCheckbox[K] } & OneOf<"name", BqCheckbox["name"]> & OneOf<"value", BqCheckbox["value"]>;
+        "bq-date-picker": Omit<BqDatePicker, keyof BqDatePickerAttributes> & { [K in keyof BqDatePicker & keyof BqDatePickerAttributes]?: BqDatePicker[K] } & { [K in keyof BqDatePicker & keyof BqDatePickerAttributes as `attr:${K}`]?: BqDatePickerAttributes[K] } & { [K in keyof BqDatePicker & keyof BqDatePickerAttributes as `prop:${K}`]?: BqDatePicker[K] } & OneOf<"name", BqDatePicker["name"]>;
+        "bq-dialog": Omit<BqDialog, keyof BqDialogAttributes> & { [K in keyof BqDialog & keyof BqDialogAttributes]?: BqDialog[K] } & { [K in keyof BqDialog & keyof BqDialogAttributes as `attr:${K}`]?: BqDialogAttributes[K] } & { [K in keyof BqDialog & keyof BqDialogAttributes as `prop:${K}`]?: BqDialog[K] };
+        "bq-divider": Omit<BqDivider, keyof BqDividerAttributes> & { [K in keyof BqDivider & keyof BqDividerAttributes]?: BqDivider[K] } & { [K in keyof BqDivider & keyof BqDividerAttributes as `attr:${K}`]?: BqDividerAttributes[K] } & { [K in keyof BqDivider & keyof BqDividerAttributes as `prop:${K}`]?: BqDivider[K] };
+        "bq-drawer": Omit<BqDrawer, keyof BqDrawerAttributes> & { [K in keyof BqDrawer & keyof BqDrawerAttributes]?: BqDrawer[K] } & { [K in keyof BqDrawer & keyof BqDrawerAttributes as `attr:${K}`]?: BqDrawerAttributes[K] } & { [K in keyof BqDrawer & keyof BqDrawerAttributes as `prop:${K}`]?: BqDrawer[K] };
+        "bq-dropdown": Omit<BqDropdown, keyof BqDropdownAttributes> & { [K in keyof BqDropdown & keyof BqDropdownAttributes]?: BqDropdown[K] } & { [K in keyof BqDropdown & keyof BqDropdownAttributes as `attr:${K}`]?: BqDropdownAttributes[K] } & { [K in keyof BqDropdown & keyof BqDropdownAttributes as `prop:${K}`]?: BqDropdown[K] };
+        "bq-empty-state": Omit<BqEmptyState, keyof BqEmptyStateAttributes> & { [K in keyof BqEmptyState & keyof BqEmptyStateAttributes]?: BqEmptyState[K] } & { [K in keyof BqEmptyState & keyof BqEmptyStateAttributes as `attr:${K}`]?: BqEmptyStateAttributes[K] } & { [K in keyof BqEmptyState & keyof BqEmptyStateAttributes as `prop:${K}`]?: BqEmptyState[K] };
+        "bq-icon": Omit<BqIcon, keyof BqIconAttributes> & { [K in keyof BqIcon & keyof BqIconAttributes]?: BqIcon[K] } & { [K in keyof BqIcon & keyof BqIconAttributes as `attr:${K}`]?: BqIconAttributes[K] } & { [K in keyof BqIcon & keyof BqIconAttributes as `prop:${K}`]?: BqIcon[K] };
+        "bq-input": Omit<BqInput, keyof BqInputAttributes> & { [K in keyof BqInput & keyof BqInputAttributes]?: BqInput[K] } & { [K in keyof BqInput & keyof BqInputAttributes as `attr:${K}`]?: BqInputAttributes[K] } & { [K in keyof BqInput & keyof BqInputAttributes as `prop:${K}`]?: BqInput[K] } & OneOf<"name", BqInput["name"]>;
+        "bq-notification": Omit<BqNotification, keyof BqNotificationAttributes> & { [K in keyof BqNotification & keyof BqNotificationAttributes]?: BqNotification[K] } & { [K in keyof BqNotification & keyof BqNotificationAttributes as `attr:${K}`]?: BqNotificationAttributes[K] } & { [K in keyof BqNotification & keyof BqNotificationAttributes as `prop:${K}`]?: BqNotification[K] };
+        "bq-option": Omit<BqOption, keyof BqOptionAttributes> & { [K in keyof BqOption & keyof BqOptionAttributes]?: BqOption[K] } & { [K in keyof BqOption & keyof BqOptionAttributes as `attr:${K}`]?: BqOptionAttributes[K] } & { [K in keyof BqOption & keyof BqOptionAttributes as `prop:${K}`]?: BqOption[K] };
         "bq-option-group": BqOptionGroup;
-        "bq-option-list": BqOptionList;
+        "bq-option-list": Omit<BqOptionList, keyof BqOptionListAttributes> & { [K in keyof BqOptionList & keyof BqOptionListAttributes]?: BqOptionList[K] } & { [K in keyof BqOptionList & keyof BqOptionListAttributes as `attr:${K}`]?: BqOptionListAttributes[K] } & { [K in keyof BqOptionList & keyof BqOptionListAttributes as `prop:${K}`]?: BqOptionList[K] };
         "bq-page-title": BqPageTitle;
-        "bq-panel": BqPanel;
-        "bq-progress": BqProgress;
-        "bq-radio": BqRadio;
-        "bq-radio-group": BqRadioGroup;
-        "bq-select": BqSelect;
-        "bq-side-menu": BqSideMenu;
-        "bq-side-menu-item": BqSideMenuItem;
-        "bq-slider": BqSlider;
-        "bq-spinner": BqSpinner;
-        "bq-status": BqStatus;
-        "bq-step-item": BqStepItem;
-        "bq-steps": BqSteps;
-        "bq-switch": BqSwitch;
-        "bq-tab": BqTab;
-        "bq-tab-group": BqTabGroup;
-        "bq-tag": BqTag;
-        "bq-textarea": BqTextarea;
-        "bq-toast": BqToast;
-        "bq-tooltip": BqTooltip;
+        "bq-panel": Omit<BqPanel, keyof BqPanelAttributes> & { [K in keyof BqPanel & keyof BqPanelAttributes]?: BqPanel[K] } & { [K in keyof BqPanel & keyof BqPanelAttributes as `attr:${K}`]?: BqPanelAttributes[K] } & { [K in keyof BqPanel & keyof BqPanelAttributes as `prop:${K}`]?: BqPanel[K] };
+        "bq-progress": Omit<BqProgress, keyof BqProgressAttributes> & { [K in keyof BqProgress & keyof BqProgressAttributes]?: BqProgress[K] } & { [K in keyof BqProgress & keyof BqProgressAttributes as `attr:${K}`]?: BqProgressAttributes[K] } & { [K in keyof BqProgress & keyof BqProgressAttributes as `prop:${K}`]?: BqProgress[K] };
+        "bq-radio": Omit<BqRadio, keyof BqRadioAttributes> & { [K in keyof BqRadio & keyof BqRadioAttributes]?: BqRadio[K] } & { [K in keyof BqRadio & keyof BqRadioAttributes as `attr:${K}`]?: BqRadioAttributes[K] } & { [K in keyof BqRadio & keyof BqRadioAttributes as `prop:${K}`]?: BqRadio[K] } & OneOf<"name", BqRadio["name"]> & OneOf<"value", BqRadio["value"]>;
+        "bq-radio-group": Omit<BqRadioGroup, keyof BqRadioGroupAttributes> & { [K in keyof BqRadioGroup & keyof BqRadioGroupAttributes]?: BqRadioGroup[K] } & { [K in keyof BqRadioGroup & keyof BqRadioGroupAttributes as `attr:${K}`]?: BqRadioGroupAttributes[K] } & { [K in keyof BqRadioGroup & keyof BqRadioGroupAttributes as `prop:${K}`]?: BqRadioGroup[K] } & OneOf<"name", BqRadioGroup["name"]>;
+        "bq-select": Omit<BqSelect, keyof BqSelectAttributes> & { [K in keyof BqSelect & keyof BqSelectAttributes]?: BqSelect[K] } & { [K in keyof BqSelect & keyof BqSelectAttributes as `attr:${K}`]?: BqSelectAttributes[K] } & { [K in keyof BqSelect & keyof BqSelectAttributes as `prop:${K}`]?: BqSelect[K] } & OneOf<"name", BqSelect["name"]>;
+        "bq-side-menu": Omit<BqSideMenu, keyof BqSideMenuAttributes> & { [K in keyof BqSideMenu & keyof BqSideMenuAttributes]?: BqSideMenu[K] } & { [K in keyof BqSideMenu & keyof BqSideMenuAttributes as `attr:${K}`]?: BqSideMenuAttributes[K] } & { [K in keyof BqSideMenu & keyof BqSideMenuAttributes as `prop:${K}`]?: BqSideMenu[K] };
+        "bq-side-menu-item": Omit<BqSideMenuItem, keyof BqSideMenuItemAttributes> & { [K in keyof BqSideMenuItem & keyof BqSideMenuItemAttributes]?: BqSideMenuItem[K] } & { [K in keyof BqSideMenuItem & keyof BqSideMenuItemAttributes as `attr:${K}`]?: BqSideMenuItemAttributes[K] } & { [K in keyof BqSideMenuItem & keyof BqSideMenuItemAttributes as `prop:${K}`]?: BqSideMenuItem[K] };
+        "bq-slider": Omit<BqSlider, keyof BqSliderAttributes> & { [K in keyof BqSlider & keyof BqSliderAttributes]?: BqSlider[K] } & { [K in keyof BqSlider & keyof BqSliderAttributes as `attr:${K}`]?: BqSliderAttributes[K] } & { [K in keyof BqSlider & keyof BqSliderAttributes as `prop:${K}`]?: BqSlider[K] };
+        "bq-spinner": Omit<BqSpinner, keyof BqSpinnerAttributes> & { [K in keyof BqSpinner & keyof BqSpinnerAttributes]?: BqSpinner[K] } & { [K in keyof BqSpinner & keyof BqSpinnerAttributes as `attr:${K}`]?: BqSpinnerAttributes[K] } & { [K in keyof BqSpinner & keyof BqSpinnerAttributes as `prop:${K}`]?: BqSpinner[K] };
+        "bq-status": Omit<BqStatus, keyof BqStatusAttributes> & { [K in keyof BqStatus & keyof BqStatusAttributes]?: BqStatus[K] } & { [K in keyof BqStatus & keyof BqStatusAttributes as `attr:${K}`]?: BqStatusAttributes[K] } & { [K in keyof BqStatus & keyof BqStatusAttributes as `prop:${K}`]?: BqStatus[K] };
+        "bq-step-item": Omit<BqStepItem, keyof BqStepItemAttributes> & { [K in keyof BqStepItem & keyof BqStepItemAttributes]?: BqStepItem[K] } & { [K in keyof BqStepItem & keyof BqStepItemAttributes as `attr:${K}`]?: BqStepItemAttributes[K] } & { [K in keyof BqStepItem & keyof BqStepItemAttributes as `prop:${K}`]?: BqStepItem[K] };
+        "bq-steps": Omit<BqSteps, keyof BqStepsAttributes> & { [K in keyof BqSteps & keyof BqStepsAttributes]?: BqSteps[K] } & { [K in keyof BqSteps & keyof BqStepsAttributes as `attr:${K}`]?: BqStepsAttributes[K] } & { [K in keyof BqSteps & keyof BqStepsAttributes as `prop:${K}`]?: BqSteps[K] };
+        "bq-switch": Omit<BqSwitch, keyof BqSwitchAttributes> & { [K in keyof BqSwitch & keyof BqSwitchAttributes]?: BqSwitch[K] } & { [K in keyof BqSwitch & keyof BqSwitchAttributes as `attr:${K}`]?: BqSwitchAttributes[K] } & { [K in keyof BqSwitch & keyof BqSwitchAttributes as `prop:${K}`]?: BqSwitch[K] } & OneOf<"name", BqSwitch["name"]>;
+        "bq-tab": Omit<BqTab, keyof BqTabAttributes> & { [K in keyof BqTab & keyof BqTabAttributes]?: BqTab[K] } & { [K in keyof BqTab & keyof BqTabAttributes as `attr:${K}`]?: BqTabAttributes[K] } & { [K in keyof BqTab & keyof BqTabAttributes as `prop:${K}`]?: BqTab[K] } & OneOf<"controls", BqTab["controls"]> & OneOf<"tabId", BqTab["tabId"]>;
+        "bq-tab-group": Omit<BqTabGroup, keyof BqTabGroupAttributes> & { [K in keyof BqTabGroup & keyof BqTabGroupAttributes]?: BqTabGroup[K] } & { [K in keyof BqTabGroup & keyof BqTabGroupAttributes as `attr:${K}`]?: BqTabGroupAttributes[K] } & { [K in keyof BqTabGroup & keyof BqTabGroupAttributes as `prop:${K}`]?: BqTabGroup[K] };
+        "bq-tag": Omit<BqTag, keyof BqTagAttributes> & { [K in keyof BqTag & keyof BqTagAttributes]?: BqTag[K] } & { [K in keyof BqTag & keyof BqTagAttributes as `attr:${K}`]?: BqTagAttributes[K] } & { [K in keyof BqTag & keyof BqTagAttributes as `prop:${K}`]?: BqTag[K] };
+        "bq-textarea": Omit<BqTextarea, keyof BqTextareaAttributes> & { [K in keyof BqTextarea & keyof BqTextareaAttributes]?: BqTextarea[K] } & { [K in keyof BqTextarea & keyof BqTextareaAttributes as `attr:${K}`]?: BqTextareaAttributes[K] } & { [K in keyof BqTextarea & keyof BqTextareaAttributes as `prop:${K}`]?: BqTextarea[K] } & OneOf<"name", BqTextarea["name"]> & OneOf<"placeholder", BqTextarea["placeholder"]>;
+        "bq-toast": Omit<BqToast, keyof BqToastAttributes> & { [K in keyof BqToast & keyof BqToastAttributes]?: BqToast[K] } & { [K in keyof BqToast & keyof BqToastAttributes as `attr:${K}`]?: BqToastAttributes[K] } & { [K in keyof BqToast & keyof BqToastAttributes as `prop:${K}`]?: BqToast[K] };
+        "bq-tooltip": Omit<BqTooltip, keyof BqTooltipAttributes> & { [K in keyof BqTooltip & keyof BqTooltipAttributes]?: BqTooltip[K] } & { [K in keyof BqTooltip & keyof BqTooltipAttributes as `attr:${K}`]?: BqTooltipAttributes[K] } & { [K in keyof BqTooltip & keyof BqTooltipAttributes as `prop:${K}`]?: BqTooltip[K] };
     }
 }
 export { LocalJSX as JSX };
@@ -8950,7 +9344,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-accordion--panel-medium-ghost-padding-start - Accordion medium ghost panel start padding
              * @cssprop --bq-accordion--panel-medium-ghost-padding-end - Accordion medium ghost panel end padding
              */
-            "bq-accordion": LocalJSX.BqAccordion & JSXBase.HTMLAttributes<HTMLBqAccordionElement>;
+            "bq-accordion": LocalJSX.IntrinsicElements["bq-accordion"] & JSXBase.HTMLAttributes<HTMLBqAccordionElement>;
             /**
              * The accordion group component is a container for multiple accordion elements.
              * It allows to manage the appearance and size of all accordions at once.
@@ -8971,7 +9365,7 @@ declare module "@stencil/core" {
              * @attr {"small" | "medium"} [size="medium"] - The size of accordion to be applied to all accordions
              * @cssprop --bq-accordion-group--gap - Accordion group distance between elements
              */
-            "bq-accordion-group": LocalJSX.BqAccordionGroup & JSXBase.HTMLAttributes<HTMLBqAccordionGroupElement>;
+            "bq-accordion-group": LocalJSX.IntrinsicElements["bq-accordion-group"] & JSXBase.HTMLAttributes<HTMLBqAccordionGroupElement>;
             /**
              * The Alert is a user interface component used to convey important information to the user in a clear and concise manner.
              * It can be used to notify users of success, failure, warning, or any other type of information that needs to be brought to their attention.
@@ -9028,7 +9422,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-alert--padding - The alert padding
              * @cssprop --bq-alert--min-width - The alert min width
              */
-            "bq-alert": LocalJSX.BqAlert & JSXBase.HTMLAttributes<HTMLBqAlertElement>;
+            "bq-alert": LocalJSX.IntrinsicElements["bq-alert"] & JSXBase.HTMLAttributes<HTMLBqAlertElement>;
             /**
              * The Avatar component is a simple and customizable element that displays an image or initials in a circular or square shape.
              * This component is useful for displaying user profile pictures or any other image that represents a person or an entity.
@@ -9069,7 +9463,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-avatar--badge-top-circle - Badge top position shape circle
              * @cssprop --bq-avatar--badge-left-circle - Badge left position shape circle
              */
-            "bq-avatar": LocalJSX.BqAvatar & JSXBase.HTMLAttributes<HTMLBqAvatarElement>;
+            "bq-avatar": LocalJSX.IntrinsicElements["bq-avatar"] & JSXBase.HTMLAttributes<HTMLBqAvatarElement>;
             /**
              * The Badge component is a visual indicator that can be added to various elements within a user interface.
              * It is typically used to highlight important or relevant information, such as alerts, notifications, or statuses.
@@ -9093,7 +9487,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-badge--size-large - The badge large size
              * @cssprop --bq-badge--text-color - The badge text color
              */
-            "bq-badge": LocalJSX.BqBadge & JSXBase.HTMLAttributes<HTMLBqBadgeElement>;
+            "bq-badge": LocalJSX.IntrinsicElements["bq-badge"] & JSXBase.HTMLAttributes<HTMLBqBadgeElement>;
             /**
              * The Breadcrumb is used to wraps a series of breadcrumb items to indicate the current page's location within a navigational hierarchy.
              * @example How to use it
@@ -9109,7 +9503,7 @@ declare module "@stencil/core" {
              * @status stable
              * @attr {string} label - The `aria-label` attribute to describe the type of navigation
              */
-            "bq-breadcrumb": LocalJSX.BqBreadcrumb & JSXBase.HTMLAttributes<HTMLBqBreadcrumbElement>;
+            "bq-breadcrumb": LocalJSX.IntrinsicElements["bq-breadcrumb"] & JSXBase.HTMLAttributes<HTMLBqBreadcrumbElement>;
             /**
              * The Breadcrumb Item helps users understand their current location within a website or application's hierarchical structure.
              * @example How to use it
@@ -9144,7 +9538,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-breadcrumb-item--padding-start-separator - Padding start of the breadcrumb item separator
              * @cssprop --bq-breadcrumb-item--padding-end-separator - Padding end of the breadcrumb item separator
              */
-            "bq-breadcrumb-item": LocalJSX.BqBreadcrumbItem & JSXBase.HTMLAttributes<HTMLBqBreadcrumbItemElement>;
+            "bq-breadcrumb-item": LocalJSX.IntrinsicElements["bq-breadcrumb-item"] & JSXBase.HTMLAttributes<HTMLBqBreadcrumbItemElement>;
             /**
              * Buttons are designed for users to take action on a page or a screen.
              * @example How to use it
@@ -9187,7 +9581,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-button--large-paddingY - Button large padding inline (left and right)
              * @cssprop --bq-button--large-font-size - Button large font size
              */
-            "bq-button": LocalJSX.BqButton & JSXBase.HTMLAttributes<HTMLBqButtonElement>;
+            "bq-button": LocalJSX.IntrinsicElements["bq-button"] & JSXBase.HTMLAttributes<HTMLBqButtonElement>;
             /**
              * The Card component serves as a versatile container designed for flexible content presentation within user interfaces.
              * Its structure accommodates various styles, allowing users to customize and adapt it according to their design preferences.
@@ -9212,7 +9606,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-card--paddingMinimal - Minimal card padding
              * @cssprop --bq-card--background - Card background color
              */
-            "bq-card": LocalJSX.BqCard & JSXBase.HTMLAttributes<HTMLBqCardElement>;
+            "bq-card": LocalJSX.IntrinsicElements["bq-card"] & JSXBase.HTMLAttributes<HTMLBqCardElement>;
             /**
              * The checkbox is a UI component that allows users to select one or more options from a list of choices.
              * It is commonly used in forms, surveys, and settings pages.
@@ -9243,7 +9637,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-checkbox--border-radius - Checkbox border radius
              * @cssprop --bq-checkbox--border-width - Checkbox border width
              */
-            "bq-checkbox": LocalJSX.BqCheckbox & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
+            "bq-checkbox": LocalJSX.IntrinsicElements["bq-checkbox"] & JSXBase.HTMLAttributes<HTMLBqCheckboxElement>;
             /**
              * The Date Picker is a intuitive UI element component allows users to select dates from a visual calendar interface, providing an intuitive way to input date information.
              * @example How to use it
@@ -9326,7 +9720,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-date-picker--text-placeholder-color - Date picker placeholder text color.
              * @cssprop --bq-date-picker--text-size - Date picker text size.
              */
-            "bq-date-picker": LocalJSX.BqDatePicker & JSXBase.HTMLAttributes<HTMLBqDatePickerElement>;
+            "bq-date-picker": LocalJSX.IntrinsicElements["bq-date-picker"] & JSXBase.HTMLAttributes<HTMLBqDatePickerElement>;
             /**
              * The Dialog component is used to display additional content or prompt a user for action.
              * It provides a way to display additional information, options, or controls in a separate, non-obstructive interface element.
@@ -9384,7 +9778,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-dialog--width-large - Dialog large width
              * @cssprop --bq-dialog-z-index - Dialog z-index applied when opened
              */
-            "bq-dialog": LocalJSX.BqDialog & JSXBase.HTMLAttributes<HTMLBqDialogElement>;
+            "bq-dialog": LocalJSX.IntrinsicElements["bq-dialog"] & JSXBase.HTMLAttributes<HTMLBqDialogElement>;
             /**
              * The Divider component is used to visually separate content in a layout.
              * @example How to use it
@@ -9407,7 +9801,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-divider--color - Divider color
              * @cssprop --bq-divider--title-marginX - Divider space between title and delimiters
              */
-            "bq-divider": LocalJSX.BqDivider & JSXBase.HTMLAttributes<HTMLBqDividerElement>;
+            "bq-divider": LocalJSX.IntrinsicElements["bq-divider"] & JSXBase.HTMLAttributes<HTMLBqDividerElement>;
             /**
              * The Drawer component provides a sliding panel interface commonly used for navigation or presenting additional content without taking up significant screen space.
              * @example How to use it
@@ -9446,7 +9840,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-drawer--paddingY - Padding top and bottom of the drawer
              * @cssprop --bq-drawer--zIndex - Z-index of the drawer component
              */
-            "bq-drawer": LocalJSX.BqDrawer & JSXBase.HTMLAttributes<HTMLBqDrawerElement>;
+            "bq-drawer": LocalJSX.IntrinsicElements["bq-drawer"] & JSXBase.HTMLAttributes<HTMLBqDrawerElement>;
             /**
              * The Dropdown Component is commonly used when presenting a list of selectable options that are too numerous to fit comfortably on the screen.
              * They provide an efficient way to save space and present a long list of options in a compact and organized manner.
@@ -9487,7 +9881,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-panel--width - Panel width
              * @cssprop --bq-panel-z-index - Panel z-index applied when opened
              */
-            "bq-dropdown": LocalJSX.BqDropdown & JSXBase.HTMLAttributes<HTMLBqDropdownElement>;
+            "bq-dropdown": LocalJSX.IntrinsicElements["bq-dropdown"] & JSXBase.HTMLAttributes<HTMLBqDropdownElement>;
             /**
              * An Empty State is a UI component displayed when there is no data or content available, often used in dynamic or inactive application states.
              * @example How to use it
@@ -9499,7 +9893,7 @@ declare module "@stencil/core" {
              * @dependency bq-icon
              * @attr {"large" | "medium" | "small"} size - The size of the empty state component
              */
-            "bq-empty-state": LocalJSX.BqEmptyState & JSXBase.HTMLAttributes<HTMLBqEmptyStateElement>;
+            "bq-empty-state": LocalJSX.IntrinsicElements["bq-empty-state"] & JSXBase.HTMLAttributes<HTMLBqEmptyStateElement>;
             /**
              * The Icon component is an image that provides a visual representation of an object, action, or concept displayed on the screen.
              * It is a small graphical element that is used to enhance the user interface and improve user experience.
@@ -9518,7 +9912,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-icon--color - The stroke color of the SVG.
              * @cssprop --bq-icon--size - The size of the SVG.
              */
-            "bq-icon": LocalJSX.BqIcon & JSXBase.HTMLAttributes<HTMLBqIconElement>;
+            "bq-icon": LocalJSX.IntrinsicElements["bq-icon"] & JSXBase.HTMLAttributes<HTMLBqIconElement>;
             /**
              * The Input component is a fundamental user interface element that allows users to input data by typing it into a text field.
              * It is commonly used in web and mobile applications for various purposes, such as collecting user information, search inputs, and login forms.
@@ -9579,7 +9973,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-input--text-size - Input text size
              * @cssprop --bq-input--text-placeholder-color - Input placeholder text color
              */
-            "bq-input": LocalJSX.BqInput & JSXBase.HTMLAttributes<HTMLBqInputElement>;
+            "bq-input": LocalJSX.IntrinsicElements["bq-input"] & JSXBase.HTMLAttributes<HTMLBqInputElement>;
             /**
              * The Notification component is a user interface element used to provide information or alerts to users in a non-intrusive manner.
              * @example How to use it
@@ -9627,7 +10021,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-notification--padding - The notification padding
              * @cssprop --bq-notification--min-width - The notification min width
              */
-            "bq-notification": LocalJSX.BqNotification & JSXBase.HTMLAttributes<HTMLBqNotificationElement>;
+            "bq-notification": LocalJSX.IntrinsicElements["bq-notification"] & JSXBase.HTMLAttributes<HTMLBqNotificationElement>;
             /**
              * An option refers to a specific choice that appears in a list of selectable items that can be opened or closed by the user.
              * It can be an element of the navigation system that allows users to select different sections or pages within an application or it can be used within a dropdown list.
@@ -9661,7 +10055,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-option--padding-start - option label padding start
              * @cssprop --bq-option--padding-end - option label padding end
              */
-            "bq-option": LocalJSX.BqOption & JSXBase.HTMLAttributes<HTMLBqOptionElement>;
+            "bq-option": LocalJSX.IntrinsicElements["bq-option"] & JSXBase.HTMLAttributes<HTMLBqOptionElement>;
             /**
              * The option group component is a container for multiple option elements.
              * It allows to manage the appearance and size of all options at once.
@@ -9686,7 +10080,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-option-group--label-text-padding-end - option group text within label padding start
              * @cssprop --bq-option-group--container-padding-start - option group container padding start
              */
-            "bq-option-group": LocalJSX.BqOptionGroup & JSXBase.HTMLAttributes<HTMLBqOptionGroupElement>;
+            "bq-option-group": LocalJSX.IntrinsicElements["bq-option-group"] & JSXBase.HTMLAttributes<HTMLBqOptionGroupElement>;
             /**
              * The option list component is a container for multiple option elements.
              * It allows to manage the appearance and size of all options at once.
@@ -9703,7 +10097,7 @@ declare module "@stencil/core" {
              * @attr {string} aria-label - Aria label for the list.
              * @cssprop --bq-option-group--gapY-list - Option group gap between items Y axis
              */
-            "bq-option-list": LocalJSX.BqOptionList & JSXBase.HTMLAttributes<HTMLBqOptionListElement>;
+            "bq-option-list": LocalJSX.IntrinsicElements["bq-option-list"] & JSXBase.HTMLAttributes<HTMLBqOptionListElement>;
             /**
              * The Page Title component is a versatile and essential element used to display the main title of a page or section within an application.
              * @example How to use it
@@ -9734,7 +10128,7 @@ declare module "@stencil/core" {
              * @cssprop --title-textColor - Page title color for title
              * @cssprop --title-textSize - Page title text size for title
              */
-            "bq-page-title": LocalJSX.BqPageTitle & JSXBase.HTMLAttributes<HTMLBqPageTitleElement>;
+            "bq-page-title": LocalJSX.IntrinsicElements["bq-page-title"] & JSXBase.HTMLAttributes<HTMLBqPageTitleElement>;
             /**
              * The Panel component is a versatile and essential element used to wrap and display content in a floating panel.
              * @example How to use it
@@ -9761,7 +10155,7 @@ declare module "@stencil/core" {
              * @prop --bq-panel--width - Panel width
              * @prop --bq-panel-z-index - Panel z-index applied when opened
              */
-            "bq-panel": LocalJSX.BqPanel & JSXBase.HTMLAttributes<HTMLBqPanelElement>;
+            "bq-panel": LocalJSX.IntrinsicElements["bq-panel"] & JSXBase.HTMLAttributes<HTMLBqPanelElement>;
             /**
              * The progress bar is a user interface component that visually represents the completion status of a task or process.
              * @example How to use it
@@ -9783,7 +10177,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-progress-bar--indicatorColor - The progress bar color (inside the track area)
              * @cssprop --bq-progress-bar--trackColor - The progress bar track area (the grey one)
              */
-            "bq-progress": LocalJSX.BqProgress & JSXBase.HTMLAttributes<HTMLBqProgressElement>;
+            "bq-progress": LocalJSX.IntrinsicElements["bq-progress"] & JSXBase.HTMLAttributes<HTMLBqProgressElement>;
             /**
              * The radio button is a user interface element that allows users to select a single option.
              * @example How to use it
@@ -9810,7 +10204,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-radio--size - Radio size
              * @cssprop --bq-radio--border-width - Radio border width
              */
-            "bq-radio": LocalJSX.BqRadio & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
+            "bq-radio": LocalJSX.IntrinsicElements["bq-radio"] & JSXBase.HTMLAttributes<HTMLBqRadioElement>;
             /**
              * The radio group is a user interface component that groups radio buttons to enable a single selection within the group.
              * @example How to use it
@@ -9838,7 +10232,7 @@ declare module "@stencil/core" {
              * @method vBlur - Remove focus from the native `<input>` HTML element used under the hood
              * @event bqChange - Handler to be called when the radio state changes
              */
-            "bq-radio-group": LocalJSX.BqRadioGroup & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
+            "bq-radio-group": LocalJSX.IntrinsicElements["bq-radio-group"] & JSXBase.HTMLAttributes<HTMLBqRadioGroupElement>;
             /**
              * The select input component lets users choose from a predefined list, commonly used in forms for easy data selection.
              * @example How to use it
@@ -9910,7 +10304,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-select--text-size - Select text size
              * @cssprop --bq-select--text-placeholder-color - Select placeholder text color
              */
-            "bq-select": LocalJSX.BqSelect & JSXBase.HTMLAttributes<HTMLBqSelectElement>;
+            "bq-select": LocalJSX.IntrinsicElements["bq-select"] & JSXBase.HTMLAttributes<HTMLBqSelectElement>;
             /**
              * The default side menu serves as a versatile container for organizing and displaying navigation elements,
              *  with default side menu items providing a clean and straightforward way to represent individual menu options.
@@ -9947,7 +10341,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-side-menu--brand-color - Side menu logo color
              * @cssprop --bq-side-menu--border-color - Side menu border color
              */
-            "bq-side-menu": LocalJSX.BqSideMenu & JSXBase.HTMLAttributes<HTMLBqSideMenuElement>;
+            "bq-side-menu": LocalJSX.IntrinsicElements["bq-side-menu"] & JSXBase.HTMLAttributes<HTMLBqSideMenuElement>;
             /**
              * Represents the default side menu item for standard navigation elements, providing a clean and straightforward way to display menu options.
              * @example How to use it
@@ -9974,7 +10368,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-side-menu-item--paddingX - Side menu item vertical padding
              * @cssprop --bq-side-menu-item--paddingY - Side menu item horizontal padding
              */
-            "bq-side-menu-item": LocalJSX.BqSideMenuItem & JSXBase.HTMLAttributes<HTMLBqSideMenuItemElement>;
+            "bq-side-menu-item": LocalJSX.IntrinsicElements["bq-side-menu-item"] & JSXBase.HTMLAttributes<HTMLBqSideMenuItemElement>;
             /**
              * Sliders provide a visual representation of adjustable content, enabling users to change values by dragging a handle along a horizontal track.
              * @example How to use it
@@ -10005,7 +10399,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-slider--progress-color - Slider progress background color
              * @cssprop --bq-slider--trackarea-color - Slider track background color
              */
-            "bq-slider": LocalJSX.BqSlider & JSXBase.HTMLAttributes<HTMLBqSliderElement>;
+            "bq-slider": LocalJSX.IntrinsicElements["bq-slider"] & JSXBase.HTMLAttributes<HTMLBqSliderElement>;
             /**
              * Spinners are designed for users to display data loading.
              * @example How to use it
@@ -10028,7 +10422,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-spinner--small-text-fontSize - Spinner small text font size
              * @cssprop --bq-spinner--text-lineHeight - Spinner text line height
              */
-            "bq-spinner": LocalJSX.BqSpinner & JSXBase.HTMLAttributes<HTMLBqSpinnerElement>;
+            "bq-spinner": LocalJSX.IntrinsicElements["bq-spinner"] & JSXBase.HTMLAttributes<HTMLBqSpinnerElement>;
             /**
              * The Status Component is a UI element that represents the current state or condition of an item, task, or process.
              * @example How to use it
@@ -10041,7 +10435,7 @@ declare module "@stencil/core" {
              * @attr {"alert" | "danger" | "info" | "neutral" | "success"} type - It defines the type of status to display.
              * @cssprop --bq-status-circ - Status circle size.
              */
-            "bq-status": LocalJSX.BqStatus & JSXBase.HTMLAttributes<HTMLBqStatusElement>;
+            "bq-status": LocalJSX.IntrinsicElements["bq-status"] & JSXBase.HTMLAttributes<HTMLBqStatusElement>;
             /**
              * The Step Item Component is a UI element used to display a single step or stage in a process or task.
              * It should be used inside the Steps component.
@@ -10070,7 +10464,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-step-item--prefix-num-size - Size of the prefix number
              * @cssprop --bq-step-item--prefix-num-bg-color - Background color of the prefix number
              */
-            "bq-step-item": LocalJSX.BqStepItem & JSXBase.HTMLAttributes<HTMLBqStepItemElement>;
+            "bq-step-item": LocalJSX.IntrinsicElements["bq-step-item"] & JSXBase.HTMLAttributes<HTMLBqStepItemElement>;
             /**
              * The Steps Component is a UI element used to display a series of steps or stages in a process or task.
              * It is used to guide users through a process or task and to indicate their progress.
@@ -10093,7 +10487,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-steps--divider-color - Divider color
              * @cssprop --bq-steps--gap - Gap between steps
              */
-            "bq-steps": LocalJSX.BqSteps & JSXBase.HTMLAttributes<HTMLBqStepsElement>;
+            "bq-steps": LocalJSX.IntrinsicElements["bq-steps"] & JSXBase.HTMLAttributes<HTMLBqStepsElement>;
             /**
              * Toggle switches are digital on/off switches.
              * They should provide immediate results, giving users the freedom to control their preferences as needed.
@@ -10125,7 +10519,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-switch--width - Switch width
              * @cssprop --bq-switch--dot-size - Switch dot size
              */
-            "bq-switch": LocalJSX.BqSwitch & JSXBase.HTMLAttributes<HTMLBqSwitchElement>;
+            "bq-switch": LocalJSX.IntrinsicElements["bq-switch"] & JSXBase.HTMLAttributes<HTMLBqSwitchElement>;
             /**
              * The tab is a user interface element that allows users to navigate between different sections of a page.
              * It should be used inside `<bq-tab-group>` component.
@@ -10163,7 +10557,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-tab--padding-vertical-medium - Vertical padding for medium tab
              * @cssprop --bq-tab--padding-vertical-small - Vertical padding for small tab
              */
-            "bq-tab": LocalJSX.BqTab & JSXBase.HTMLAttributes<HTMLBqTabElement>;
+            "bq-tab": LocalJSX.IntrinsicElements["bq-tab"] & JSXBase.HTMLAttributes<HTMLBqTabElement>;
             /**
              * The tab group is a user interface element that allows users wrap a set of tab items.
              * @example How to use it
@@ -10185,7 +10579,7 @@ declare module "@stencil/core" {
              * @attr {string} value - A string representing the id of the selected tab.
              * @event bqChange - Handler to be called when the tab value changes
              */
-            "bq-tab-group": LocalJSX.BqTabGroup & JSXBase.HTMLAttributes<HTMLBqTabGroupElement>;
+            "bq-tab-group": LocalJSX.IntrinsicElements["bq-tab-group"] & JSXBase.HTMLAttributes<HTMLBqTabGroupElement>;
             /**
              * The Tag Component is a UI element used to label and categorize content within an application.
              * Tags are commonly used to label items with keywords or categories, making it easier to find and organize content.
@@ -10226,7 +10620,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-tag--medium-padding-x - Tag medium padding horizontal
              * @cssprop --bq-tag--medium-padding-y - Tag medium padding vertical
              */
-            "bq-tag": LocalJSX.BqTag & JSXBase.HTMLAttributes<HTMLBqTagElement>;
+            "bq-tag": LocalJSX.IntrinsicElements["bq-tag"] & JSXBase.HTMLAttributes<HTMLBqTagElement>;
             /**
              * The Textarea component is a multi-line text input control that is often used in a form to collect user inputs like comments or reviews.
              * @example How to use it
@@ -10284,7 +10678,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-textarea--text-size - Textarea text size
              * @cssprop --bq-textarea--text-placeholder-color - Textarea placeholder text color
              */
-            "bq-textarea": LocalJSX.BqTextarea & JSXBase.HTMLAttributes<HTMLBqTextareaElement>;
+            "bq-textarea": LocalJSX.IntrinsicElements["bq-textarea"] & JSXBase.HTMLAttributes<HTMLBqTextareaElement>;
             /**
              * Toasts are time-based components used to display short messages.
              * Commonly used for errors, confirmations, or progress updates.
@@ -10324,7 +10718,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-toast--icon-color-loading - Toast icon color when type is 'loading'
              * @cssprop --bq-toast--icon-color-custom - Toast icon color when type is 'custom'
              */
-            "bq-toast": LocalJSX.BqToast & JSXBase.HTMLAttributes<HTMLBqToastElement>;
+            "bq-toast": LocalJSX.IntrinsicElements["bq-toast"] & JSXBase.HTMLAttributes<HTMLBqToastElement>;
             /**
              * The Tooltip component is a small pop-up box that appears when a user hovers over or clicks on an element, providing additional information or context.
              * @example How to use it
@@ -10358,7 +10752,7 @@ declare module "@stencil/core" {
              * @cssprop --bq-tooltip--border-width - Tooltip border width
              * @cssprop --bq-tooltip--z-index: Tooltip z-index
              */
-            "bq-tooltip": LocalJSX.BqTooltip & JSXBase.HTMLAttributes<HTMLBqTooltipElement>;
+            "bq-tooltip": LocalJSX.IntrinsicElements["bq-tooltip"] & JSXBase.HTMLAttributes<HTMLBqTooltipElement>;
         }
     }
 }
