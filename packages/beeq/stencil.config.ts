@@ -49,6 +49,8 @@ export const config: Config = {
      * @see packages/beeq/.storybook/custom-elements.json
      */
     { type: 'docs-custom', generator: generateCustomElementsJson },
+    // NOTE: enable the standard custom-elements.json output target once it's stable and supports the features we need (e.g. right path in a monorepo, CSS properties, etc.)
+    // { type: 'docs-custom-elements-manifest', file: `beeq/cem/cem.json` },
     {
       type: 'dist',
       copy: [
