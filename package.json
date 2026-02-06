@@ -97,7 +97,7 @@
     "@types/react-dom": "19.2.3",
     "@wc-toolkit/jsdoc-tags": "1.1.0",
     "@wc-toolkit/type-parser": "1.2.0",
-    "autoprefixer": "10.4.23",
+    "autoprefixer": "10.4.24",
     "babel-jest": "29.7.0",
     "cem-plugin-jsdoc-example": "0.0.9",
     "chromatic": "13.3.4",
