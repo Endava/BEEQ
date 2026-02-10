@@ -7,7 +7,6 @@ on:
 
 env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 
 permissions:
@@ -47,11 +46,6 @@ jobs:
       - name: ⏳ Build
         run: pnpm build
         shell: bash
-
-      - name: 👀 Check NPM credentials
-        run: |
-          echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" >> .npmrc
-          pnpm whoami
 
       - name: 🚀 Publish BEEQ to NPM registry
         run: pnpm exec nx release publish --parallel=5 --output-style=stream
