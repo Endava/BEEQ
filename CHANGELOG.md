@@ -1,4 +1,26 @@
-## 1.12.2 (2026-01-30)
+## 1.12.3 (2026-02-10)
+
+### Documentation 📚
+
+- **Storybook:** enable back HTML story code preview ([997494e8](https://github.com/Endava/BEEQ/commit/997494e8))
+
+### Chore ⚙️
+
+- enhance `esm-loader.js` to dynamically load ESM modules based on version from CDN URL ([1a487926](https://github.com/Endava/BEEQ/commit/1a487926))
+- **deps:** update dependency @stencil/core to v4.42.0 ([#1621](https://github.com/Endava/BEEQ/pull/1621))
+- **deps:** update dependency autoprefixer to v10.4.24 ([#1620](https://github.com/Endava/BEEQ/pull/1620))
+- **deps:** update storybook to v10.2.4 ([#1622](https://github.com/Endava/BEEQ/pull/1622))
+- **deps:** update storybook to v10.2.7 ([#1623](https://github.com/Endava/BEEQ/pull/1623))
+
+### Revert 🔄
+
+- tsconfig change to new jsxImportSource alternative and remove the `h` import ([63651f8b](https://github.com/Endava/BEEQ/commit/63651f8b))
+
+### ❤️ Thank You
+
+- Dabiel Gonzalez-Ramos
+
+## [1.12.2](https://github.com/Endava/BEEQ/compare/v1.12.1...v1.12.2) (2026-01-30)
 
 ### Bug Fixes 🐞
 
@@ -19,7 +41,7 @@
 
 - Dabiel Gonzalez-Ramos
 
-## 1.12.1 (2026-01-28)
+## [1.12.1](https://github.com/Endava/BEEQ/compare/v1.12.0...v1.12.1) (2026-01-28)
 
 ### Chore ⚙️
 
@@ -29,7 +51,7 @@
 
 - Dabiel Gonzalez-Ramos
 
-## 1.12.0 (2026-01-28)
+## [1.12.0](https://github.com/Endava/BEEQ/compare/v1.11.2...v1.12.0) (2026-01-28)
 
 ### Features ⚡️
 

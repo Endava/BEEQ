@@ -1,6 +1,6 @@
 {
   "name": "@beeq/angular",
-  "version": "1.12.2",
+  "version": "1.12.3",
   "license": "Apache-2.0",
   "description": "Angular specific wrapper for BEEQ Design System components",
   "main": "dist/esm2015/index.js",
