@@ -1,0 +1,89 @@
+---
+title: "Introduction"
+description: 'BEEQ represents the initials of "Building Excellence, Enhancing Quality", embodying its core principles. This design system is meticulously crafted to elevate standards and enhance the quality of every element within a project.'
+mode: "center"
+---
+
+import { CodeLivePreview } from '/snippets/code-live-preview.jsx';
+
+<img src="/images/cover.svg" alt="BEEQ Design System" className="w-full mx-auto h-auto" />
+
+BEEQ Design System is a comprehensive set of standards, guidelines, and best practices that help our team design and build consistent, high-quality products. It includes a library of reusable components, a detailed style guide, and design tools and resources to streamline our design and development process.
+
+The primary purpose of BEEQ  is to provide a unified foundation for design and development teams. It serves as a comprehensive toolkit, streamlining the creation process and promoting a shared language across various components
+
+## **Who benefits and how to get started**
+
+BEEQ is built for **designers, developers, product managers, and teams everywhere** who want to deliver consistent, high-quality digital experiences—whether at Endava or beyond. As an open-source design system, BEEQ offers reusable components, thoughtful guidelines, and a collaborative community, making it easier for anyone to build scalable, accessible products.
+
+Ready to begin? Check out our [Getting Started](https://www.beeq.design/3d466e231/p/3352a6) guide for step-by-step instructions, setup tips, and usage examples. Whether you’re integrating BEEQ into a new project or want to contribute, you’ll find everything you need to jump in.
+
+## **What is a design system?**
+
+A design system is a set of standards and guidelines that define the visual and interactive elements of a product or brand. It helps to ensure that all products are consistent and cohesive, and it makes it easier for designers and developers to create new products or features.
+
+**A design system is an important tool for creating high-quality, consistent products that provide a seamless and cohesive user experience.**
+
+Design systems are often used to improve the consistency of a company's products and to streamline the design and development process. With a set of reusable components and a clear set of design principles, a design system can help ensure that products are designed and built consistently, which can improve the user experience and increase customer satisfaction. It can also make it easier for new team members to get up to speed and contribute to projects.
+
+>### 💪 Benefits
+>
+>There are several benefits to using a design system:
+>
+> * **Consistency:** BEEQ makes sure everything looks the same, so your project has a nice, unified style.
+> * **Efficiency:** It helps you work faster by giving you ready-to-use parts, so you don't have to start from scratch every time.
+> * **Scalability:** Built with scalability in mind, BEEQ adapts seamlessly to projects of various sizes, from prototypes to enterprise-level applications.
+> * **User-Centric:** BEEQ helps you make designs that not only work but also look good and make users happy.
+
+## **What makes BEEQ different?**
+
+**BEEQ stands out from other UI component libraries** in several key ways:
+
+* **White-label and open-source:**BEEQ is specifically designed as a white-label system, making it highly customisable for different brands and products without imposing any particular style or branding. This flexibility is less common in libraries that enforce opinionated designs.
+* **Framework-agnostic core:**BEEQ’s components are built as standard web components (using [StencilJS](https://stenciljs.com/)), meaning the same core can be used across *any* major frontend framework—Angular, React, Vue—thanks to dedicated wrappers for each environment. Many popular libraries are often tied to only one framework (e.g., Material UI for React), while BEEQ is truly cross-framework.
+* **Accelerated consistency:**The system’s design guidelines and component library promote consistent UI/UX across large teams and multiple projects, no matter the frontend technology. Combined with its white-label nature, this enables organisations to roll out branded experiences at scale and speed.
+* **Tailored for enterprise workflows:**The BEEQ monorepo includes tailored tooling ([NX](https://nx.dev/), [Volta](https://volta.sh/), [PNPM](https://pnpm.io/)) and integrated style presets like [Tailwind CSS](http://tailwindcss.com/), making modern development practices and streamlined CI/CD pipelines easy to adopt.
+* **Extensive documentation and developer experience:**Comprehensive docs, Storybook demos, and clear API design make BEEQ easy to adopt, extend, and maintain. The design system is as much about enabling *good process* (including clear contribution flows and robust testing) as about the components themselves.
+* **Transparent, community-driven development:**BEEQ welcomes contributions and is actively managed through open-source practices, with documented branching strategies and regular releases.
+
+| **Feature** | **BEEQ** | **Typical UI Libraries** |
+| --- | --- | --- |
+| Branding | Easily white-label | Often opinionated |
+| Framework Support | Core + wrappers for all | Usually tied to one |
+| Design Philosophy | Consistency + flexibility | Usually “one-size-fits-most” |
+| Tooling | Monorepo, modern tools | Varies, often basic |
+| Integration | Tailwind, Storybook | Varies |
+| Community | Open-source, welcoming | Varies |
+| Enterprise Suitability | High (scalability) | Varies |
+
+## **Where to find help**
+
+Need assistance or want to contribute?
+
+* For suggestions, issues, or improvements, visit our [GitHub Issues](https://github.com/Endava/BEEQ/issues) page or get in touch via email: [beeq@endava.com](mailto: beeq@endava.com).
+* For documentation feedback, use the feedback button on any page.
+
+Your feedback and participation help BEEQ grow—**don't hesitate to reach out or get involved**!
+
+<CodeLivePreview code={`<bq-button appearance="primary">
+  Click me
+  <bq-icon name="plus" slot="suffix"></bq-icon>
+</bq-button>`}>
+  <CodeGroup>
+    ```mdx HTML
+    <bq-button appearance="primary">
+      Click me
+      <bq-icon name="plus" slot="suffix"></bq-icon>
+    </bq-button>
+    ```
+
+    ```mdx React
+    import { BqButton, BqIcon } from "@beeq/react";
+
+    <BqButton appearance="primary">
+      Click me
+      <BqIcon name="plus" slot="suffix" />
+    </BqButton>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
