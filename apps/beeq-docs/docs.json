@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
+  "theme": "almond",
   "name": "BEEQ Design System",
   "description": "BEEQ is a white-label open-source design system created at Endava that accelerates the building of digital products with the goal of providing a UI Library of components and guidelines to help designers and developers produce high-quality solutions.",
   "favicon": "/favicon.svg",
@@ -33,15 +33,86 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Getting started",
+        "tab": "Docs",
         "groups": [
           {
-            "group": "Getting started",
+            "group": "Get started",
+            "root": "getting-started/overview",
             "pages": [
-              "overview",
-              "index",
-              "faq",
-              "contributing"
+              "getting-started/overview",
+              "getting-started/developer-onboarding",
+              "getting-started/designer-onboarding",
+              "getting-started/installation"
+            ]
+          },
+          {
+            "group": "Foundations",
+            "root": "foundations/overview",
+            "pages": [
+              "foundations/overview",
+              "foundations/colors",
+              "foundations/typography",
+              "foundations/spacing",
+              "foundations/grid",
+              "foundations/icons"
+            ]
+          },
+          {
+            "group": "Components",
+            "root": "components/overview",
+            "pages": [
+              "components/overview",
+              {
+                "group": "Inputs",
+                "pages": [
+                  "components/input",
+                  "components/select",
+                  "components/textarea",
+                  "components/checkbox",
+                  "components/radio-button",
+                  "components/switch"
+                ]
+              },
+              {
+                "group": "Feedback",
+                "pages": [
+                  "components/alert",
+                  "components/toast",
+                  "components/notification",
+                  "components/spinner",
+                  "components/progress"
+                ]
+              },
+              {
+                "group": "Navigation",
+                "pages": [
+                  "components/breadcrumb",
+                  "components/tabs",
+                  "components/dropdown",
+                  "components/side-menu",
+                  "components/stepper"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Theming & customization",
+            "root": "theming/overview",
+            "pages": [
+              "theming/overview",
+              "theming/global-css-variables",
+              "theming/styles",
+              "theming/custom-theme"
+            ]
+          },
+          {
+            "group": "Patterns & guidance",
+            "root": "guidance/overview",
+            "pages": [
+              "guidance/overview",
+              "guidance/accessibility",
+              "guidance/content-guidelines",
+              "guidance/best-practices"
             ]
           }
         ]
