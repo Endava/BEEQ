@@ -1,0 +1,19 @@
+{
+  "extends": ["../../.stylelintrc.json"],
+  "overrides": [
+    {
+      "files": ["**/*.css"],
+      "extends": ["stylelint-config-standard"],
+      "rules": {
+        "comment-empty-line-before": null,
+        "custom-property-empty-line-before": null,
+        "custom-property-pattern": null,
+        "no-descending-specificity": null,
+        "no-invalid-position-at-import-rule": null,
+        "max-nesting-depth": 3,
+        "value-keyword-case": null,
+        "selector-class-pattern": null
+      }
+    }
+  ]
+}

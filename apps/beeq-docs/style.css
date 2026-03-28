@@ -1,32 +1,108 @@
-:root {
-  --navbar-height: 4.5rem; /* 72px (including padding) */
+@import url("https://esm.sh/@beeq/core/dist/beeq/beeq.css") layer(beeq);
+
+body {
+  font-family: var(--bq-font-family);
 }
 
-#navbar {
-  margin-block: 0.5rem; /* 8px */
+body,
+.prose {
+  color: var(--bq-text--primary) !important;
+  line-height: var(--bq-font-line-height--regular) !important;
+  font-size: var(--bq-font-size--m) !important;
+  max-width: none; /* Allow full width for better readability in docs */
+}
 
-  .nav-logo {
-    height: 3rem; /* 48px */
+/* ---------------------------------- Logo ---------------------------------- */
+
+.nav-logo {
+  height: 2.5rem; /* 40px */
+}
+
+/* --------------------------------- NavBar --------------------------------- */
+
+.navbar-link {
+  a[href="https://storybook.beeq.design"] {
+    color: var(--bq-magenta-500);
+
+     &:hover {
+      color: color-mix(in srgb, var(--bq-magenta-500), var(--bq-active) 20%);
+    }
+
+    svg {
+      background-color: currentcolor;
+      fill: currentcolor;
+    }
+  }
+
+  a[href="https://githu.com/Endava/BEEQ"] > div {
+    color: var(--bq-text--primary);
+
+    &:hover {
+      color: color-mix(in oklab, var(--bq-text--primary), var(--bq-active) 20%);
+    }
+
+    svg {
+      background-color: currentcolor;
+      fill: currentcolor;
+    }
   }
 }
 
 #sidebar-content {
-  @media (width >= 1024px) {
-    top: var(--navbar-height) !important;
-    height: calc(100vh - var(--navbar-height)) !important;
+  li[data-title="Introduction"] > button > svg  {
+    display: none;
   }
 }
 
 /* ------------------------------ Main content ------------------------------ */
 
-.almond-layout {
-  top: 8rem ; /* 128px */
+#content-area {
+  width: 100%;
+  max-width: 64rem /* 1024px */;
+}
 
-  @media (width >= 1024px) {
-    top: var(--navbar-height);
+.card[role="link"] {
+  color: var(--bq-text--primary);
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+
+  &:hover,
+  &:focus-visible {
+    background-color: var(--bq-ui--brand-alt);
+    transform: scale(1.05);
   }
 }
 
-#content-area {
-  max-width: 53rem; /* 848px */
+/* ------------------------------ CodeLivePreview ------------------------------ */
+
+.code-live-preview {
+  border: 1px solid var(--bq-stroke--primary);
+  border-radius: var(--bq-radius--l);
+  overflow: hidden;
+  margin: var(--bq-spacing-m) 0;
+
+  .preview {
+    background-color: var(--bq-bg--primary);
+    padding: var(--bq-spacing-l);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 5rem; /* 80px */
+  }
+
+  .code {
+    .code-group {
+      margin: 0;
+      border-color: unset;
+      border-style: unset;
+      border-start-start-radius: 0;
+      border-start-end-radius: 0;
+      padding: unset;
+
+      [data-component-part="code-block-root"] {
+        border-radius: 0 !important;
+      }
+    }
+  }
 }
