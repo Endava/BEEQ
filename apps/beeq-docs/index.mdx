@@ -2,27 +2,37 @@
 title: "Overview"
 description: '"Building Excellence, Enhancing Quality" - BEEQ is Endava’s design system and web component library for building consistent, accessible digital products. It brings together framework-agnostic UI components, design foundations, and implementation guidance to help teams move faster and stay aligned.'
 ---
-<img src="/images/hero-image-light.svg" alt="BEEQ Design System" className="block w-full mx-auto h-auto dark:hidden" />
-<img src="/images/hero-image-dark.svg" alt="BEEQ Design System" className="hidden w-full mx-auto h-auto dark:block" />
+
+<img
+  src="/images/hero-image-light.svg"
+  alt="BEEQ Design System"
+  className="block w-full h-auto dark:hidden mx-auto"
+/>
+
+<img
+  src="/images/hero-image-dark.svg"
+  alt="BEEQ Design System"
+  className="hidden w-full h-auto dark:block mx-auto"
+/>
 
 ## Choose your path
 
 Whether you are setting up a new project, exploring components, integrating BEEQ with your framework, or customizing the design system, start with the section that matches your needs.
 
 <CardGroup cols={2}>
-  <Card title="Get started" icon="rocket" iconType="duotone" color="var(--bq-icon--brand)" href="/getting-started/introduction">
+  <Card title="Get started" color="var(--bq-icon--brand)" icon="rocket" iconType="duotone" href="/getting-started/introduction">
     Set up BEEQ in your project and follow the recommended onboarding path.
   </Card>
 
-  <Card title="Components" icon="puzzle" iconType="duotone" color="var(--bq-icon--brand)" href="/components/overview">
+  <Card title="Components" color="var(--bq-icon--brand)" icon="puzzle" iconType="duotone" href="/components/overview">
     Explore production-ready UI components, patterns, and usage guidance.
   </Card>
 
-  <Card title="Framework Guides" icon="layer-group" iconType="duotone" color="var(--bq-icon--brand)" href="/guides/frameworks/overview">
+  <Card title="Framework Guides" color="var(--bq-icon--brand)" icon="layer-group" iconType="duotone" href="/guides/frameworks/overview">
     Use BEEQ with Angular, React, Vue, or plain HTML.
   </Card>
 
-  <Card title="Theming" icon="palette" iconType="duotone" color="var(--bq-icon--brand)" href="/theming/overview">
+  <Card title="Theming" color="var(--bq-icon--brand)" icon="palette" iconType="duotone" href="/theming/overview">
     Customize styles with CSS variables, tokens, and theme options.
   </Card>
 </CardGroup>
@@ -31,49 +41,43 @@ Whether you are setting up a new project, exploring components, integrating BEEQ
 
 BEEQ combines reusable UI components, design foundations, and practical guidance in one shared system. It helps designers and developers create consistent experiences, reduce duplication, and work with a common language across products and teams.
 
-The component library is built with StencilJS and delivered as native HTML custom elements, making it portable across modern web environments. Styling and customization are designed to work cleanly with TailwindCSS-based workflows.
+The component library is built with StencilJS and delivered as native HTML custom elements, making it portable across modern web environments. Styling and customization are designed to work cleanly with Tailwind CSS-based workflows.
 
 ## What is a design system?
 
 A design system is a shared set of components, standards, and guidelines that helps teams design and build products more consistently. It improves reuse, supports accessibility, and makes collaboration between design and development more effective.
 
 <Tip>
-There are several benefits to using BEEQ as your design system:
+  There are several benefits to using BEEQ as your design system:
 
- * **Consistency:** BEEQ makes sure everything looks the same, so your project has a nice, unified style.
- * **Efficiency:** It helps you work faster by giving you ready-to-use parts, so you don't have to start from scratch every time.
- * **Scalability:** Built with scalability in mind, BEEQ adapts seamlessly to projects of various sizes, from prototypes to enterprise-level applications.
- * **User-Centric:** BEEQ helps you make designs that not only work but also look good and make users happy.
+  - **Consistency:** BEEQ makes sure everything looks the same, so your project has a nice, unified style.
+  - **Efficiency:** It helps you work faster by giving you ready-to-use parts, so you don't have to start from scratch every time.
+  - **Scalability:** Built with scalability in mind, BEEQ adapts seamlessly to projects of various sizes, from prototypes to enterprise-level applications.
+  - **User-Centric:** BEEQ helps you make designs that not only work but also look good and make users happy.
 </Tip>
 
 ## What makes BEEQ different?
 
 BEEQ stands out from other UI component libraries in several key ways:
 
-- **White-label and open-source**<br />
-  BEEQ is specifically designed as a white-label system, making it highly customizable for different brands and products without imposing any particular style or branding. This flexibility is less common in libraries that enforce opinionated designs.
-
-- **Framework-agnostic core**<br />
-  BEEQ’s components are built as standard web components (using [StencilJS](https://stenciljs.com/)), meaning the same core can be used across *any* major frontend framework—Angular, React, Vue—thanks to dedicated wrappers for each environment. Many popular libraries are often tied to only one framework (e.g., Material UI for React), while BEEQ is truly cross-framework.
-
-
-- **Accelerated consistency**<br />
-  The system’s design guidelines and component library promote consistent UI/UX across large teams and multiple projects, no matter the frontend technology. Combined with its white-label nature, this enables organisations to roll out branded experiences at scale and speed.
-
-- **Tailored for enterprise workflows**<br />
-  The BEEQ monorepo includes tailored tooling ([NX](https://nx.dev/), [Volta](https://volta.sh/), [PNPM](https://pnpm.io/)) and integrated style presets like [Tailwind CSS](http://tailwindcss.com/), making modern development practices and streamlined CI/CD pipelines easy to adopt.
-
-- **Extensive documentation and developer experience**<br />
-  Comprehensive docs, Storybook demos, and clear API design make BEEQ easy to adopt, extend, and maintain. The design system is as much about enabling *good process* (including clear contribution flows and robust testing) as about the components themselves.
-
-- **Transparent, community-driven development**<br />
-  BEEQ welcomes contributions and is actively managed through open-source practices, with documented branching strategies and regular releases.
+- **White-label and open-source**\
+   BEEQ is specifically designed as a white-label system, making it highly customizable for different brands and products without imposing any particular style or branding. This flexibility is less common in libraries that enforce opinionated designs.
+- **Framework-agnostic core**\
+   BEEQ’s components are built as standard web components (using [StencilJS](https://stenciljs.com/)), meaning the same core can be used across _any_ major frontend framework—Angular, React, Vue—thanks to dedicated wrappers for each environment. Many popular libraries are often tied to only one framework (e.g., Material UI for React), while BEEQ is truly cross-framework.
+- **Accelerated consistency**\
+   The system’s design guidelines and component library promote consistent UI/UX across large teams and multiple projects, no matter the front-end technology. Combined with its white-label nature, this enables organizations to roll out branded experiences at scale and speed.
+- **Tailored for enterprise workflows**\
+   The BEEQ monorepo includes tailored tooling ([NX](https://nx.dev/), [Volta](https://volta.sh/), [PNPM](https://pnpm.io/)) and integrated style presets like [Tailwind CSS](http://tailwindcss.com/), making modern development practices and streamlined CI/CD pipelines easy to adopt.
+- **Extensive documentation and developer experience**\
+   Comprehensive docs, Storybook demos, and clear API design make BEEQ easy to adopt, extend, and maintain. The design system is as much about enabling _good process_ (including clear contribution flows and robust testing) as about the components themselves.
+- **Transparent, community-driven development**\
+   BEEQ welcomes contributions and is actively managed through open-source practices, with documented branching strategies and regular releases.
 
 | **Feature** | **BEEQ** | **Typical UI Libraries** |
 | --- | --- | --- |
 | Branding | Easily white-label | Often opinionated |
-| Framework Support | Core + wrappers for all | Usually tied to one |
-| Design Philosophy | Consistency + flexibility | Usually “one-size-fits-most” |
+| Framework Support | Core \+ wrappers for all | Usually tied to one |
+| Design Philosophy | Consistency \+ flexibility | Usually “one-size-fits-most” |
 | Tooling | Monorepo, modern tools | Varies, often basic |
 | Integration | Tailwind, Storybook | Varies |
 | Community | Open-source, welcoming | Varies |
@@ -83,7 +87,7 @@ BEEQ stands out from other UI component libraries in several key ways:
 
 Need assistance or want to contribute?
 
-* For suggestions, issues, or improvements, visit our [GitHub Issues](https://github.com/Endava/BEEQ/issues) page or get in touch via email: [beeq@endava.com](mailto:beeq@endava.com).
-* For documentation feedback, use the feedback button on any page.
+- For suggestions, issues, or improvements, visit our [GitHub Issues](https://github.com/Endava/BEEQ/issues) page or get in touch via email: [beeq@endava.com](mailto:beeq@endava.com).
+- For documentation feedback, use the feedback button on any page.
 
 Your feedback and participation help BEEQ grow—**don’t hesitate to reach out or get involved**! 💪
