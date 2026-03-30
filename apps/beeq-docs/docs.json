@@ -33,21 +33,29 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Docs",
+        "tab": "Guides",
         "groups": [
           {
             "group": "Get started",
-            "root": "getting-started/overview",
             "pages": [
-              "getting-started/overview",
-              "getting-started/developer-onboarding",
-              "getting-started/designer-onboarding",
+              "getting-started/introduction",
+              "getting-started/for-designers",
+              "getting-started/for-developers",
               "getting-started/installation"
             ]
           },
           {
+            "group": "Framework guides",
+            "pages": [
+              "guides/frameworks/angular",
+              "guides/frameworks/react",
+              "guides/frameworks/next.js",
+              "guides/frameworks/vue",
+              "guides/frameworks/html-web-components"
+            ]
+          },
+          {
             "group": "Foundations",
-            "root": "foundations/overview",
             "pages": [
               "foundations/overview",
               "foundations/colors",
@@ -58,61 +66,48 @@
             ]
           },
           {
-            "group": "Components",
-            "root": "components/overview",
-            "pages": [
-              "components/overview",
-              {
-                "group": "Inputs",
-                "pages": [
-                  "components/input",
-                  "components/select",
-                  "components/textarea",
-                  "components/checkbox",
-                  "components/radio-button",
-                  "components/switch"
-                ]
-              },
-              {
-                "group": "Feedback",
-                "pages": [
-                  "components/alert",
-                  "components/toast",
-                  "components/notification",
-                  "components/spinner",
-                  "components/progress"
-                ]
-              },
-              {
-                "group": "Navigation",
-                "pages": [
-                  "components/breadcrumb",
-                  "components/tabs",
-                  "components/dropdown",
-                  "components/side-menu",
-                  "components/stepper"
-                ]
-              }
-            ]
-          },
-          {
             "group": "Theming & customization",
-            "root": "theming/overview",
             "pages": [
               "theming/overview",
               "theming/global-css-variables",
               "theming/styles",
               "theming/custom-theme"
             ]
+          }
+        ]
+      },
+      {
+        "tab": "Components",
+        "groups": [
+          {
+            "group": "Inputs",
+            "pages": [
+              "components/input",
+              "components/select",
+              "components/textarea",
+              "components/checkbox",
+              "components/radio-button",
+              "components/switch"
+            ]
           },
           {
-            "group": "Patterns & guidance",
-            "root": "guidance/overview",
+            "group": "Feedback",
             "pages": [
-              "guidance/overview",
-              "guidance/accessibility",
-              "guidance/content-guidelines",
-              "guidance/best-practices"
+              "components/alert",
+              "components/toast",
+              "components/notification",
+              "components/spinner",
+              "components/progress"
+            ]
+          },
+          {
+            "group": "Navigation",
+            "pages": [
+              "components/breadcrumb",
+              "components/tabs",
+              "components/dropdown",
+              "components/side-menu",
+              "components/stepper"
             ]
           }
         ]
