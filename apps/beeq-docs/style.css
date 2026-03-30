@@ -61,6 +61,7 @@ body,
   max-width: 64rem /* 1024px */;
 }
 
+.card-tile,
 .card[role="link"] {
   color: var(--bq-text--primary);
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, transform;
