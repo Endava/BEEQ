@@ -1,5 +1,10 @@
 @import url("https://esm.sh/@beeq/core/dist/beeq/beeq.css") layer(beeq);
 
+:root {
+  --bq-transition-function: cubic-bezier(0.4, 0, 0.2, 1);
+  --bq-transition-duration: 300ms;
+}
+
 body {
   font-family: var(--bq-font-family);
 }
@@ -54,6 +59,25 @@ body,
   }
 }
 
+.pagination-next,
+.pagination-prev {
+  color: var(--bq-text--primary);
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, transform;
+  transition-timing-function: var(--bq-transition-function);
+  transition-duration: var(--bq-transition-duration);
+
+  &:hover {
+    border-color: var(--bq-stroke--brand);
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    outline-color: var(--bq-stroke--brand);
+    outline-offset: 2px;
+    transform: translateY(-2px);
+  }
+}
+
 /* ------------------------------ Main content ------------------------------ */
 
 #content-area {
@@ -65,8 +89,8 @@ body,
 .card[role="link"] {
   color: var(--bq-text--primary);
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, transform;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 300ms;
+  transition-timing-function: var(--bq-transition-function);
+  transition-duration: var(--bq-transition-duration);
 
   &:hover,
   &:focus-visible {
