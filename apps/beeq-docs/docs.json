@@ -80,6 +80,13 @@
         "tab": "Components",
         "groups": [
           {
+            "group": "Actions",
+            "pages": [
+              "components/button",
+              "components/dropdown"
+            ]
+          },
+          {
             "group": "Inputs",
             "pages": [
               "components/input",
