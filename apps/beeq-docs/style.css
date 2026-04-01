@@ -102,18 +102,27 @@ body,
 /* ------------------------------ CodeLivePreview ------------------------------ */
 
 .code-live-preview {
-  border: 1px solid var(--bq-stroke--primary);
-  border-radius: var(--bq-radius--l);
+  container-type: inline-size;
+  container-name: code-preview;
+  border: var(--bq-stroke-s) solid var(--bq-stroke--primary);
+  border-radius: 1rem; /* 16px */
   overflow: hidden;
   margin: var(--bq-spacing-m) 0;
 
   .preview {
     background-color: var(--bq-bg--primary);
-    padding: var(--bq-spacing-l);
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+    gap: var(--bq-spacing-m);
+    padding: var(--bq-spacing-l);
     min-height: 5rem; /* 80px */
+
+    /* Switch to row layout on larger screens for better use of horizontal space */
+    @container code-preview (min-width: 40rem) {
+      flex-direction: row;
+    }
   }
 
   .code {

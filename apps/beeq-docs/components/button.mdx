@@ -1,0 +1,760 @@
+---
+title: Button
+description: "Buttons trigger actions in the current context. Button labels express what action will occur when the user interacts with it."
+---
+
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Button component overview">
+  <img className="block dark:hidden" src="./images/button-overview-light.svg" alt="BEEQ Button component overview" />
+  <img className="hidden dark:block" src="./images/button-overview-dark.svg" alt="BEEQ Button component overview" />
+</Frame>
+
+Buttons trigger actions in the current context — saving, submitting, confirming, or moving forward in a flow.
+Use emphasis to communicate priority: each view should have one clear primary action, while secondary actions should be visually lower in emphasis.
+
+<Note>
+  Use a link button for navigation when the intent is simply to move to another page. See the [Link](#link) variant.
+</Note>
+
+---
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use buttons when
+    </span>
+    - The user is taking an action in the current context
+    - The action changes data, state, or progress
+    - The action needs clear visual priority
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use buttons when
+    </span>
+    - The user is navigating to another page with no side-effect
+    - Several actions compete for equal importance
+    - A text link is sufficient
+  </Card>
+</CardGroup>
+
+---
+
+## Button patterns
+
+Some patterns below are standalone `bq-button` usages, while others are composite interactions built from buttons and related components.
+
+<CardGroup cols={3}>
+  <Card title="Button">A standard button initiates a single action or event.</Card>
+  <Card title="Menu Button">Toggles a menu of options without surfacing a primary action.</Card>
+  <Card title="Split Button">Lets someone take one of several related actions. The dominant action is the label; alternatives are in a menu.</Card>
+  <Card title="Icon Only">The most compact type, used for supplementary actions like "Bookmark" or "Star."</Card>
+  <Card title="Segmented Button">Helps people select options, switch views, or sort elements.</Card>
+  <Card title="Floating Button">Floating action buttons (FABs) help people take primary actions.</Card>
+</CardGroup>
+
+---
+
+## Anatomy
+
+<Frame caption="Button anatomy">
+  <img src="./images/button-anatomy.svg" alt="Button anatomy: 1. Container, 2. Icon, 3. Label" />
+</Frame>
+
+A button can contain a label and optional leading or trailing icons.
+The label should always communicate the action clearly. Icons should reinforce meaning, not replace it — unless the action is universally understood and an accessible `label` prop is provided.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Container | The interactive surface wrapping all content |
+| **2** | Icon | Optional `prefix` or `suffix` slot content |
+| **3** | Label | The primary communicator of the action |
+
+---
+
+## Variants
+
+`appearance` defines the base style of the button. `variant` modifies supported appearances — `ghost` applies to both primary and secondary buttons, while `danger` is reserved for destructive actions on the primary appearance.
+
+### Primary
+
+The highest priority action in a view. Only one per screen or section.
+
+<CodeLivePreview code={`<bq-button>Primary button</bq-button>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-button>Primary button</bq-button>
+    ```
+    ```jsx React icon="react"
+    import { BqButton } from "@beeq/react";
+
+    <BqButton>Primary button</BqButton>
+    ```
+    ```html Angular icon="angular"
+    <!-- Standalone: import { BqButton } from "@beeq/angular/standalone" -->
+    <!-- Modules: components are available after importing BeeQModule -->
+
+    <bq-button>Primary button</bq-button>
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqButton } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqButton>Primary button</BqButton>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  You don't need to specify any property that uses its default value. The default appearance is `primary` with variant `standard`.
+</Tip>
+
+Primary also supports `ghost` and `danger` variants:
+
+- **Danger**: reserved for actions that may result in critical or irreversible consequences, such as deleting important data or confirming a high-risk operation.
+- **Ghost**: a more subtle style for for secondary or less prominent actions that don't require immediate attention.
+
+<CodeLivePreview code={`<bq-button>Primary standard</bq-button>\n<bq-button variant="ghost">Primary ghost</bq-button>\n<bq-button variant="danger">Primary danger</bq-button>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-button>Primary standard</bq-button>
+    <bq-button variant="ghost">Primary ghost</bq-button>
+    <bq-button variant="danger">Primary danger</bq-button>
+    ```
+    ```jsx React icon="react"
+    import { BqButton } from "@beeq/react";
+
+    <BqButton>Primary standard</BqButton>
+    <BqButton variant="ghost">Primary ghost</BqButton>
+    <BqButton variant="danger">Primary danger</BqButton>
+    ```
+    ```html Angular icon="angular"
+    <bq-button>Primary standard</bq-button>
+    <bq-button variant="ghost">Primary ghost</bq-button>
+    <bq-button variant="danger">Primary danger</bq-button>
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqButton } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqButton>Primary standard</BqButton>
+      <BqButton variant="ghost">Primary ghost</BqButton>
+      <BqButton variant="danger">Primary danger</BqButton>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Secondary
+
+Lower-emphasis actions. Can stand alone or pair with a primary button to perform secondary actions. Supports the `ghost` variant.
+
+<CodeLivePreview code={`<bq-button appearance="secondary">Secondary</bq-button>\n<bq-button appearance="secondary" variant="ghost">Secondary ghost</bq-button>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-button appearance="secondary">Secondary</bq-button>
+    <bq-button appearance="secondary" variant="ghost">Secondary ghost</bq-button>
+    ```
+    ```jsx React icon="react"
+    import { BqButton } from "@beeq/react";
+
+    <BqButton appearance="secondary">Secondary</BqButton>
+    <BqButton appearance="secondary" variant="ghost">Secondary ghost</BqButton>
+    ```
+    ```html Angular icon="angular"
+    <bq-button appearance="secondary">Secondary</bq-button>
+    <bq-button appearance="secondary" variant="ghost">Secondary ghost</bq-button>
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqButton } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqButton appearance="secondary">Secondary</BqButton>
+      <BqButton appearance="secondary" variant="ghost">Secondary ghost</BqButton>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Link
+
+Renders as an `<a>` element under the hood when `href` is provided. Still action-oriented, not for plain navigation.
+
+<CodeLivePreview code={`<bq-button appearance="link" href="https://www.example.com" target="_blank">Link button</bq-button>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-button appearance="link" href="https://www.example.com" target="_blank">
+      Link button
+    </bq-button>
+    ```
+    ```jsx React icon="react"
+    import { BqButton } from "@beeq/react";
+
+    <BqButton appearance="link" href="https://www.example.com" target="_blank">
+      Link button
+    </BqButton>
+    ```
+    ```html Angular icon="angular"
+    <bq-button appearance="link" href="https://www.example.com" target="_blank">
+      Link button
+    </bq-button>
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqButton } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqButton appearance="link" href="https://www.example.com" target="_blank">
+        Link button
+      </BqButton>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Warning>
+  When using the Link button, always provide a `href` value.
+</Warning>
+
+### Text
+
+No background or border. Suitable for inline actions, subtle calls to action, or options within a form.
+
+<CodeLivePreview code={`<bq-button appearance="text">Text button</bq-button>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-button appearance="text">Text button</bq-button>
+    ```
+    ```jsx React icon="react"
+    import { BqButton } from "@beeq/react";
+
+    <BqButton appearance="text">Text button</BqButton>
+    ```
+    ```html Angular icon="angular"
+    <bq-button appearance="text">Text button</bq-button>
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqButton } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqButton appearance="text">Text button</BqButton>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+---
+
+## Size and shape
+
+### Sizes
+
+Choose the size that best matches the context. Medium is the default and preferred size for most interfaces.
+
+| Size | When to use |
+|---|---|
+| **Small** | When space is limited or the action is less significant |
+| **Medium** | Default — suitable for most interfaces |
+| **Large** | To increase the significance of an action; use sparingly |
+
+<CodeLivePreview code={`<bq-button size="small">Small</bq-button>\n<bq-button size="medium">Medium</bq-button>\n<bq-button size="large">Large</bq-button>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-button size="small">Small</bq-button>
+    <bq-button size="medium">Medium</bq-button>
+    <bq-button size="large">Large</bq-button>
+    ```
+    ```jsx React icon="react"
+    import { BqButton } from "@beeq/react";
+
+    <BqButton size="small">Small</BqButton>
+    <BqButton size="medium">Medium</BqButton>
+    <BqButton size="large">Large</BqButton>
+    ```
+    ```html Angular  icon="angular"
+    <bq-button size="small">Small</bq-button>
+    <bq-button size="medium">Medium</bq-button>
+    <bq-button size="large">Large</bq-button>
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqButton } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqButton size="small">Small</BqButton>
+      <BqButton size="medium">Medium</BqButton>
+      <BqButton size="large">Large</BqButton>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Full width
+
+Use the `block` attribute to make the button stretch to its parent width.
+
+<CodeLivePreview code={`<bq-button block>Full width button</bq-button>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-button block>Full width button</bq-button>
+    ```
+    ```jsx React icon="react"
+    import { BqButton } from "@beeq/react";
+
+    <BqButton block>Full width button</BqButton>
+    ```
+    ```html Angular icon="angular"
+    <bq-button block>Full width button</bq-button>
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqButton } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqButton block>Full width button</BqButton>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Border radius
+
+Use the `border` property to control the corner radius.
+
+<CodeLivePreview code={`<bq-button border="full">Primary</bq-button>\n<bq-button variant="ghost" border="full">Ghost</bq-button>\n<bq-button variant="danger" border="full">Danger</bq-button>\n<bq-button appearance="secondary" border="full">Secondary</bq-button>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-button border="full">Primary</bq-button>
+    <bq-button variant="ghost" border="full">Ghost</bq-button>
+    <bq-button variant="danger" border="full">Danger</bq-button>
+    <bq-button appearance="secondary" border="full">Secondary</bq-button>
+    ```
+    ```jsx React icon="react"
+    import { BqButton } from "@beeq/react";
+
+    <BqButton border="full">Primary</BqButton>
+    <BqButton variant="ghost" border="full">Ghost</BqButton>
+    <BqButton variant="danger" border="full">Danger</BqButton>
+    <BqButton appearance="secondary" border="full">Secondary</BqButton>
+    ```
+    ```html Angular icon="angular"
+    <bq-button border="full">Primary</bq-button>
+    <bq-button variant="ghost" border="full">Ghost</bq-button>
+    <bq-button variant="danger" border="full">Danger</bq-button>
+    <bq-button appearance="secondary" border="full">Secondary</bq-button>
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqButton } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqButton border="full">Primary</BqButton>
+      <BqButton variant="ghost" border="full">Ghost</BqButton>
+      <BqButton variant="danger" border="full">Danger</BqButton>
+      <BqButton appearance="secondary" border="full">Secondary</BqButton>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+---
+
+## States
+
+For each button appearance and variant, there are five visual states: **enabled**, **hover**, **active**, **focus**, and **disabled**.
+
+<Frame caption="Button states across all variants">
+  <img src="./images/button-states.svg" alt="Button states: enabled, hover, active, focus, disabled" />
+</Frame>
+
+### Disabled
+
+The `disabled` attribute can be applied to any button variation. When disabled, no interaction is allowed and the `bqClick` event won't fire.
+
+<CodeLivePreview code={`<bq-button disabled>Primary</bq-button>\n<bq-button variant="ghost" disabled>Ghost</bq-button>\n<bq-button variant="danger" disabled>Danger</bq-button>\n<bq-button appearance="secondary" disabled>Secondary</bq-button>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-button disabled>Primary</bq-button>
+    <bq-button variant="ghost" disabled>Ghost</bq-button>
+    <bq-button variant="danger" disabled>Danger</bq-button>
+    <bq-button appearance="secondary" disabled>Secondary</bq-button>
+    ```
+    ```jsx React icon="react"
+    import { BqButton } from "@beeq/react";
+
+    <BqButton disabled>Primary</BqButton>
+    <BqButton variant="ghost" disabled>Ghost</BqButton>
+    <BqButton variant="danger" disabled>Danger</BqButton>
+    <BqButton appearance="secondary" disabled>Secondary</BqButton>
+    ```
+    ```html Angular icon="angular"
+    <bq-button disabled>Primary</bq-button>
+    <bq-button variant="ghost" disabled>Ghost</bq-button>
+    <bq-button variant="danger" disabled>Danger</bq-button>
+    <bq-button appearance="secondary" disabled>Secondary</bq-button>
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqButton } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqButton disabled>Primary</BqButton>
+      <BqButton variant="ghost" disabled>Ghost</BqButton>
+      <BqButton variant="danger" disabled>Danger</BqButton>
+      <BqButton appearance="secondary" disabled>Secondary</BqButton>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Warning>
+  Avoid disabled buttons when possible. If an action is unavailable, prefer keeping the button discoverable and explain what is required to proceed.
+</Warning>
+
+### Loading
+
+Use the `loading` attribute to indicate something is being processed. Pair with `disabled` to prevent duplicate actions.
+
+<CodeLivePreview code={`<bq-button loading>Loading</bq-button>\n<bq-button loading disabled>Loading disabled</bq-button>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-button loading>Loading</bq-button>
+    <bq-button loading disabled>Loading disabled</bq-button>
+    ```
+    ```jsx React icon="react"
+    import { BqButton } from "@beeq/react";
+
+    <BqButton loading>Loading</BqButton>
+    <BqButton loading disabled>Loading disabled</BqButton>
+    ```
+    ```html Angular icon="angular"
+    <bq-button loading>Loading</bq-button>
+    <bq-button loading disabled>Loading disabled</bq-button>
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqButton } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqButton loading>Loading</BqButton>
+      <BqButton loading disabled>Loading disabled</BqButton>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+---
+
+## Icons
+
+### Leading and trailing icons
+
+Use the `prefix` or `suffix` slot to add icons. Icons should reinforce the label — never use them for decoration only.
+
+<CodeLivePreview code={`<bq-button>\n  <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>\n  Go back\n</bq-button>\n<bq-button>\n  Next step\n  <bq-icon name="arrow-circle-right" slot="suffix"></bq-icon>\n</bq-button>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-button>
+      <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>
+      Go back
+    </bq-button>
+
+    <bq-button>
+      Next step
+      <bq-icon name="arrow-circle-right" slot="suffix"></bq-icon>
+    </bq-button>
+    ```
+    ```jsx React icon="react"
+    import { BqButton, BqIcon } from "@beeq/react";
+
+    <BqButton>
+      <BqIcon name="arrow-circle-left" slot="prefix" />
+      Go back
+    </BqButton>
+
+    <BqButton>
+      Next step
+      <BqIcon name="arrow-circle-right" slot="suffix" />
+    </BqButton>
+    ```
+    ```html Angular icon="angular"
+    <!-- import { BqButton, BqIcon } from "@beeq/angular/standalone" -->
+
+    <bq-button>
+      <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>
+      Go back
+    </bq-button>
+
+    <bq-button>
+      Next step
+      <bq-icon name="arrow-circle-right" slot="suffix"></bq-icon>
+    </bq-button>
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqButton, BqIcon } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqButton>
+        <BqIcon name="arrow-circle-left" slot="prefix" />
+        Go back
+      </BqButton>
+
+      <BqButton>
+        Next step
+        <BqIcon name="arrow-circle-right" slot="suffix" />
+      </BqButton>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Icon-only buttons
+
+Use icon-only buttons only for common, easily recognized actions.
+Always provide a `label` so assistive technologies can announce the action correctly.
+
+<CodeLivePreview code={`<bq-button only-icon label="Notifications">\n  <bq-icon name="bell-ringing"></bq-icon>\n</bq-button>\n<bq-button only-icon variant="ghost" label="Notifications">\n  <bq-icon name="bell-ringing"></bq-icon>\n</bq-button>\n<bq-button only-icon appearance="secondary" label="Notifications">\n  <bq-icon name="bell-ringing"></bq-icon>\n</bq-button>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-button only-icon label="Notifications">
+      <bq-icon name="bell-ringing"></bq-icon>
+    </bq-button>
+    <bq-button only-icon variant="ghost" label="Notifications">
+      <bq-icon name="bell-ringing"></bq-icon>
+    </bq-button>
+    <bq-button only-icon appearance="secondary" label="Notifications">
+      <bq-icon name="bell-ringing"></bq-icon>
+    </bq-button>
+    ```
+    ```jsx React icon="react"
+    import { BqButton, BqIcon } from "@beeq/react";
+
+    <BqButton onlyIcon label="Notifications">
+      <BqIcon name="bell-ringing" />
+    </BqButton>
+    <BqButton onlyIcon variant="ghost" label="Notifications">
+      <BqIcon name="bell-ringing" />
+    </BqButton>
+    <BqButton onlyIcon appearance="secondary" label="Notifications">
+      <BqIcon name="bell-ringing" />
+    </BqButton>
+    ```
+    ```html Angular icon="angular"
+    <bq-button only-icon label="Notifications">
+      <bq-icon name="bell-ringing"></bq-icon>
+    </bq-button>
+    <bq-button only-icon variant="ghost" label="Notifications">
+      <bq-icon name="bell-ringing"></bq-icon>
+    </bq-button>
+    <bq-button only-icon appearance="secondary" label="Notifications">
+      <bq-icon name="bell-ringing"></bq-icon>
+    </bq-button>
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqButton, BqIcon } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqButton only-icon label="Notifications">
+        <BqIcon name="bell-ringing" />
+      </BqButton>
+      <BqButton only-icon variant="ghost" label="Notifications">
+        <BqIcon name="bell-ringing" />
+      </BqButton>
+      <BqButton only-icon appearance="secondary" label="Notifications">
+        <BqIcon name="bell-ringing" />
+      </BqButton>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Warning>
+  Do not use `prefix` or `suffix` slots for icon-only buttons. Pass the icon as the default slot and always set the `label` prop.
+</Warning>
+
+---
+
+## Content guidelines
+
+### Label guidelines
+
+| Guideline | Rule |
+|---|---|
+| **Be concise** | 1–2 words, max 4 words, under 20 characters. No punctuation. |
+| **Use verbs** | Labels should describe the action: "Save", "Delete", "Submit" — not nouns or adjectives. |
+| **Sentence case** | Never use ALL CAPS to emphasize a button. |
+| **No wrapping** | Labels must never break to multiple lines. |
+| **No emoji** | Keep labels functional and utilitarian. No emoji or exclamation points. |
+
+---
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Keep button labels succinct — 1 or 2 words, no longer than 4, under 20 characters.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Never let button labels wrap to multiple lines or lose their button shape.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Pair a primary button with a secondary button for alternative actions.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Don't place multiple primary buttons together — it dilutes the visual hierarchy.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Keep emphasis aligned with task priority — one primary action per view.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Don't use icons as decoration. Every icon should reinforce the label meaning.
+  </Card>
+</CardGroup>
+
+---
+
+## Accessibility
+
+- **Use descriptive labels** — labeling buttons properly lets users know what will happen, reduces errors, and increases confidence.
+- **Icon-only buttons** — always set the `label` prop to provide a text alternative for assistive technologies.
+- **Keyboard navigation** — buttons are focusable and activated with <kbd>Enter</kbd> or <kbd>Space</kbd> by default.
+- **Avoid disabled states** — disabled buttons are invisible to screen readers. Where possible, keep the button discoverable and explain what is required to proceed.
+- **Correct semantics** — use `<bq-button>` for actions and links for navigation.
+
+---
+
+## API reference
+
+### Properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `appearance` | `appearance` | The appearance style to apply to the button | `'primary'` \| `'secondary'` \| `'link'` \| `'text'` | `'primary'` |
+| `block` | `block` | If `true`, makes the button fit to its parent width | `boolean` | `false` |
+| `border` | `border` | The corner radius of the button | `'none'` \| `'xs2'` \| `'xs'` \| `'s'` \| `'m'` \| `'l'` \| `'full'` | `'m'` |
+| `disabled` | `disabled` | If `true`, the button will be disabled | `boolean` | `false` |
+| `download` | `download` | Tells the browser to treat the linked URL as a download. Only used when `href` is set | `string` | `undefined` |
+| `href` | `href` | When set, renders an `<a>` instead of a `<button>` | `string` | `undefined` |
+| `justifyContent` | `justify-content` | How the content should be aligned | `'left'` \| `'center'` \| `'right'` | `'center'` |
+| `label` | `label` | Accessible label for screen readers, especially for icon-only buttons | `string` | `undefined` |
+| `loading` | `loading` | If `true`, displays the button in a loading state | `boolean` | `false` |
+| `onlyIcon` | `only-icon` | If `true`, renders the button as icon-only with 1:1 aspect ratio | `boolean` | `false` |
+| `size` | `size` | The size of the button | `'small'` \| `'medium'` \| `'large'` | `'medium'` |
+| `target` | `target` | Where to display the linked URL | `'_blank'` \| `'_parent'` \| `'_self'` \| `'_top'` | `undefined` |
+| `type` | `type` | The default behavior of the button | `'button'` \| `'submit'` \| `'reset'` | `'button'` |
+| `variant` | `variant` | The variant on top of appearance (primary and secondary only) | `'standard'` \| `'ghost'` \| `'danger'` | `'standard'` |
+
+### Events
+
+| Event | Description | Type |
+|---|---|---|
+| `bqBlur` | Fires when the button loses focus | `CustomEvent<HTMLBqButtonElement>` |
+| `bqFocus` | Fires when the button receives focus | `CustomEvent<HTMLBqButtonElement>` |
+| `bqClick` | Fires when the button is clicked | `CustomEvent<HTMLBqButtonElement>` |
+
+<Note>
+  - In React, prefix events with `on`: `onBqClick`, `onBqFocus`, `onBqBlur`.
+  - In Angular, use the event binding syntax: `(bqClick)`, `(bqFocus)`, `(bqBlur)`.
+  - In Vue, use the `@` shorthand: `@bqClick`, `@bqFocus`, `@bqBlur`.
+</Note>
+
+### Slots
+
+| Slot | Description |
+|---|---|
+| *(default)* | The button label content |
+| `prefix` | Content displayed before the button label |
+| `suffix` | Content displayed after the button label |
+
+### Shadow parts
+
+| Part | Description |
+|---|---|
+| `button` | The native `<button>` or `<a>` element |
+| `label` | The `<span>` rendering the button text |
+| `prefix` | The prefix container |
+| `suffix` | The suffix container |
+
+### CSS custom properties
+
+<Expandable title="View all CSS variables" defaultOpen={true}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-button--border-color` | Border color | `transparent` |
+  | `--bq-button--border-radius` | Border radius | `var(--bq-radius--m)` |
+  | `--bq-button--border-style` | Border style | `solid` |
+  | `--bq-button--border-width` | Border width | `0` |
+  | `--bq-button--small-paddingX` | Small size padding block | `var(--bq-spacing-xs)` |
+  | `--bq-button--small-paddingY` | Small size padding inline | `var(--bq-spacing-xs2)` |
+  | `--bq-button--small-font-size` | Small size font size | `var(--bq-font-size--m)` |
+  | `--bq-button--medium-paddingX` | Medium size padding block | `var(--bq-spacing-m)` |
+  | `--bq-button--medium-paddingY` | Medium size padding inline | `var(--bq-spacing-s)` |
+  | `--bq-button--medium-font-size` | Medium size font size | `var(--bq-font-size--m)` |
+  | `--bq-button--large-paddingX` | Large size padding block | `var(--bq-spacing-l)` |
+  | `--bq-button--large-paddingY` | Large size padding inline | `var(--bq-spacing-m)` |
+  | `--bq-button--large-font-size` | Large size font size | `var(--bq-font-size--m)` |
+</Expandable>
+
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+---
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-button--primary">
+    Explore all button configurations in Storybook
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/nicobees/BEEQ/tree/main/packages/beeq/src/components/button">
+    View the component source on GitHub
+  </Card>
+</CardGroup>
