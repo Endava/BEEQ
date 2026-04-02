@@ -1,0 +1,485 @@
+---
+title: React
+description: Use BEEQ in React through the React wrapper for better prop binding, custom event support, and a smoother developer experience.
+---
+
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+BEEQ works best in React through `@beeq/react`, the official React wrapper around BEEQ web components.
+
+It gives you React-friendly components such as `BqButton`, `BqInput`, and `BqCard`, so you can work with props, events, and slots in a way that feels much closer to a native React library.
+
+If you are starting a new React project, **we recommend using a modern setup such as Vite**. If you are working in a server-rendered React framework like Next.js, use the dedicated framework guide instead, since client-side setup and asset handling may differ.
+
+<Columns cols={3}>
+  <Card title="Real props">
+    Pass component properties in a React-friendly way, including richer values such as arrays and objects.
+  </Card>
+  <Card title="Custom events">
+    Listen to BEEQ events through `onBq...` handlers instead of wiring DOM listeners by hand.
+  </Card>
+  <Card title="Native-feeling DX">
+    Work with PascalCase components such as `BqButton`, `BqInput`, and `BqCard`.
+  </Card>
+</Columns>
+
+<Check>
+  In the standard React integration flow, you do not need to manually import the BEEQ ESM bundle or call `defineCustomElements()` yourself.
+</Check>
+
+## Get started
+
+You can add BEEQ to an existing React project in a few steps:
+
+<Steps>
+  <Step title="Check your project setup" titleSize="h3">
+    Make sure your project already has:
+
+    - `react` and `react-dom` version `18` or `19`
+    - Node.js `18+`
+    - a React application setup such as Vite
+
+    If you already have a React app running, you can usually add BEEQ without changing your overall project structure.
+  </Step>
+
+  <Step title="Install the packages" titleSize="h3">
+    Install both the core package and the React wrapper:
+
+    ```bash
+    npm install @beeq/core @beeq/react
+    ```
+
+    What each package gives you:
+
+    - `@beeq/core` includes the web components, styles, icons, and shared types
+    - `@beeq/react` provides the React wrappers used in your application code
+  </Step>
+
+  <Step title="Add the global styles" titleSize="h3">
+    Import the BEEQ stylesheet once in your application's main CSS or SCSS file, then make sure that stylesheet is loaded from your app entry point.
+
+    <CodeGroup>
+      ```css src/index.css
+      @import "@beeq/core/dist/beeq/beeq.css";
+      ```
+
+      ```tsx src/main.tsx
+      import React from "react";
+      import ReactDOM from "react-dom/client";
+      import App from "./App";
+      import "./index.css";
+
+      ReactDOM.createRoot(document.getElementById("root")!).render(
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>,
+      );
+      ```
+    </CodeGroup>
+
+    <Tip>
+      If you use Sass or another CSS preprocessor, keep the full file extension in the import path.
+    </Tip>
+  </Step>
+
+  <Step title="Configure icons" titleSize="h3">
+    Many BEEQ components rely on SVG icons. Your application needs to serve the SVG files and tell BEEQ where to find them.
+
+    <Warning>
+      Be aware that **there are over 9k SVG files**, which can slow down your development or bundling time.
+      If your app only needs a smaller subset, consider [copying only the icons you actually use](#copy-svg-icons-manually) rather than the full SVG folder.
+    </Warning>
+
+    <Tabs>
+      <Tab title="Vite">
+        If you are using Vite, install the static copy plugin:
+
+        ```bash
+        npm install -D vite-plugin-static-copy
+        ```
+
+        Then copy the BEEQ SVG files from `node_modules` into your build output and set the base path during app startup.
+
+        <CodeGroup>
+          ```ts vite.config.ts highlight={3,8-15}
+          import { defineConfig } from "vite";
+          import react from "@vitejs/plugin-react";
+          import { viteStaticCopy } from "vite-plugin-static-copy";
+
+          export default defineConfig({
+            plugins: [
+              react(),
+              viteStaticCopy({
+                targets: [
+                  {
+                    src: "./node_modules/@beeq/core/dist/beeq/svg/*",
+                    dest: "icons/svg",
+                  },
+                ],
+              }),
+            ],
+          });
+          ```
+
+          ```tsx src/main.tsx highlight={3,7}
+          import React from "react";
+          import ReactDOM from "react-dom/client";
+          import { setBasePath } from "@beeq/core";
+          import App from "./App";
+          import "./index.css";
+
+          setBasePath("/icons/svg");
+
+          ReactDOM.createRoot(document.getElementById("root")!).render(
+            <React.StrictMode>
+              <App />
+            </React.StrictMode>,
+          );
+          ```
+        </CodeGroup>
+
+        <Tip>
+          Use the public URL that matches where your app serves the SVG files. In most React apps, an absolute path such as `/icons/svg` is safer than a relative path.
+        </Tip>
+      </Tab>
+
+      <Tab title="CDN or existing icon source">
+        If your project already serves icons from another location, you can point BEEQ there instead:
+
+        ```ts
+        import { setBasePath } from "@beeq/core";
+
+        setBasePath("https://cdn.jsdelivr.net/npm/heroicons@2.1.5/24/outline");
+        ```
+
+        Make sure the icon names you use in `BqIcon` match the icon set you provide.
+      </Tab>
+
+      <Tab title="Copy only the icons you need">
+        If you don't need the full set of 9k+ icons, you can copy only the ones you actually use into your project. This can speed up development and bundling time.
+
+        You can do this manually by copying specific SVG files from `node_modules/@beeq/core/dist/beeq/svg` to a public folder in your app, then calling `setBasePath()` with the URL that matches where those files are served.
+
+        For example, if you only need `caret-down.svg`, `hand-waving.svg`, `thumbs-up.svg`, `user.svg`, and `x-circle.svg`, copy those files to `public/svg` and call:
+
+        ```ts
+        import { setBasePath } from "@beeq/core";
+
+        setBasePath("/svg");
+        ```
+
+        <Tip>
+          There are components that rely on specific icons, so make sure to include any icons used by the components you use. For example, `BqButton` uses `caret-down.svg` for dropdown buttons, and `BqInput` uses `x-circle.svg` for the clear button.
+          Keep the file names unchanged when copying, since BEEQ looks for specific icon names based on the file names.
+        </Tip>
+
+        If you want to automate this process, you can write a custom Vite plugin to copy only the icons you need during development and build. The key steps are:
+        1. Copy the SVG files from `node_modules/@beeq/core/dist/beeq/svg` to a public location in your app
+        2. Call `setBasePath()` with the URL that matches where those files are served
+
+        <CodeGroup>
+          ```ts vite.copyIcons.ts expandable
+          import { resolve, join } from 'node:path';
+          import { mkdir, copyFile, access } from 'node:fs/promises';
+          import type { Plugin } from 'vite';
+
+          interface CopyIconsOptions {
+            iconNames: string[];
+            outputPath?: string;
+            sourceDir?: string;
+          }
+
+          // Custom plugin to copy specific SVG icons
+          function copyBeeqIcons(options: CopyIconsOptions): Plugin {
+            const { iconNames, outputPath = 'icons', sourceDir = 'node_modules/@beeq/core/dist/beeq/svg' } = options;
+
+            return {
+              name: 'copy-beeq-icons',
+              async buildStart() {
+                const targetDir = resolve('public', outputPath);
+
+                try {
+                  // Ensure target directory exists
+                  await mkdir(targetDir, { recursive: true });
+
+                  // Copy icons concurrently for better performance
+                  const results = await Promise.allSettled(
+                    iconNames.map(async (iconName) => {
+                      const fileName = iconName.endsWith('.svg') ? iconName : `${iconName}.svg`;
+                      const sourcePath = resolve(sourceDir, fileName);
+                      const targetPath = join(targetDir, fileName);
+
+                      try {
+                        await access(sourcePath);
+                        await copyFile(sourcePath, targetPath);
+
+                        console.log(`✓ Copied ${fileName} to ${outputPath}/`);
+                        return { success: true, fileName };
+                      } catch {
+                        console.warn(`⚠ Icon not found: ${fileName}`);
+                        return { success: false, fileName };
+                      }
+                    }),
+                  );
+
+                  const successful = results.filter((r) => r.status === 'fulfilled').length;;
+                  console.log(`📦 Successfully copied ${successful}/${iconNames.length} icons to ${outputPath}/`);
+                } catch (error) {
+                  console.error('❌ Failed to copy icons:', error);
+                  throw error;
+                }
+              },
+            };
+          }
+
+          export { copyBeeqIcons };
+
+          ```
+          ```ts vite.config.ts focus={3,8-11}
+          import react from '@vitejs/plugin-react';
+          import { defineConfig } from 'vite';
+          import { copyBeeqIcons } from './vite.copyIcons';
+
+          export default defineConfig({
+            plugins: [
+              react(),
+              copyBeeqIcons({
+                iconNames: ['caret-down', 'hand-waving', 'thumbs-up', 'user', 'x-circle'],
+                outputPath: 'svg',
+              }),
+            ],
+          });
+          ```
+          ```tsx src/main.tsx focus={7}
+          import React from "react";
+          import ReactDOM from "react-dom/client";
+          import { setBasePath } from "@beeq/core";
+          import App from "./App";
+          import "./index.css";
+
+          setBasePath("/svg");
+
+          ReactDOM.createRoot(document.getElementById("root")!).render(
+            <React.StrictMode>
+              <App />
+            </React.StrictMode>,
+          );
+          ```
+        </CodeGroup>
+      </Tab>
+    </Tabs>
+  </Step>
+
+  <Step title="Render your first component" titleSize="h3">
+    Once styles and icons are configured, you can import and use BEEQ components like any other React component:
+
+    ```tsx
+    import { BqButton, BqIcon } from "@beeq/react";
+
+    export default function App() {
+      return (
+        <BqButton onBqClick={() => console.log("Clicked")}>
+          Save changes
+          <BqIcon name="floppy-disk" slot="suffix" />
+        </BqButton>
+      );
+    }
+    ```
+  </Step>
+</Steps>
+That is enough to get started.
+
+## How BEEQ maps into React
+
+<Columns cols={2}>
+  <Card title="PascalCase components">
+    Import components from `@beeq/react` and use them as `BqButton`, `BqInput`, and `BqCard`.
+  </Card>
+  <Card title="React prop names">
+    Use JavaScript prop names such as `onlyIcon`, `debounceTime`, and `justifyContent` instead of kebab-case HTML attributes.
+  </Card>
+  <Card title="Custom event handlers">
+    BEEQ events map to React props such as `onBqClick`, `onBqInput`, and `onBqChange`.
+  </Card>
+  <Card title="Slots still use slot">
+    Pass `slot` to child elements when placing content into prefix, suffix, and other BEEQ slots.
+  </Card>
+</Columns>
+
+## React usage patterns
+
+### Import components in PascalCase
+
+Import BEEQ components from `@beeq/react` and use them as PascalCase React components:
+```tsx
+import { BqButton, BqInput, BqCard } from "@beeq/react";
+```
+
+### Use React prop names
+
+Always use the JavaScript prop name in React instead of the HTML attribute name.
+
+Examples:
+- only-icon → onlyIcon
+- debounce-time → debounceTime
+- justify-content → justifyContent
+
+```tsx focus={1,6-8,10}
+import { BqButton, BqIcon, BqInput } from "@beeq/react";
+
+export function Example() {
+  return (
+    <>
+      <BqButton onlyIcon label="Notifications">
+        <BqIcon name="bell-ringing" />
+      </BqButton>
+
+      <BqInput debounceTime={250} placeholder="Search" />
+    </>
+  );
+}
+```
+
+### Use `on...` handlers for BEEQ events
+
+BEEQ custom events become React-style event props by adding the `on` prefix:
+	•	bqClick → onBqClick
+	•	bqInput → onBqInput
+	•	bqChange → onBqChange
+	•	bqFocus → onBqFocus
+
+```tsx highlight={11}
+import { useState } from "react";
+import { BqIcon, BqInput } from "@beeq/react";
+
+export function NameField() {
+  const [name, setName] = useState("");
+
+  return (
+    <BqInput
+      placeholder="How should we call you?"
+      debounceTime={250}
+      onBqInput={(event) => setName(String(event.detail.value))}
+    >
+      <BqIcon name="user" slot="prefix" />
+    </BqInput>
+  );
+}
+```
+
+### Slots still use the slot prop
+
+To place content into BEEQ slots in React, pass slot to the child element:
+
+<CodeLivePreview code={`
+<bq-button>
+  Save changes
+  <bq-icon name="floppy-disk" slot="suffix" />
+</bq-button>
+`}>
+  <CodeGroup>
+    ```tsx highlight={7}
+    import { BqButton, BqIcon } from "@beeq/react";
+
+    export function ContinueButton() {
+      return (
+        <BqButton>
+          Save changes
+          <BqIcon name="floppy-disk" slot="suffix" />
+        </BqButton>
+      );
+    }
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+
+## Complete example
+
+This example puts a few common pieces together: styles, input handling, icons, and button events.
+
+```tsx
+import { useState } from "react";
+import { BqButton, BqCard, BqIcon, BqInput } from "@beeq/react";
+
+export default function App() {
+  const [count, setCount] = useState(0);
+  const [name, setName] = useState("");
+
+  return (
+    <BqCard>
+      <h1>Hello, {name || "stranger"}!</h1>
+
+      <BqInput
+        placeholder="How should we call you?"
+        debounceTime={250}
+        onBqInput={(event) => setName(String(event.detail.value))}
+      >
+        <BqIcon name="user" slot="prefix" />
+      </BqInput>
+
+      <BqButton onBqClick={() => setCount((current) => current + 1)}>
+        Give a thumbs up
+        <BqIcon name="thumbs-up" slot="suffix" />
+      </BqButton>
+
+      <p>Total of thumbs: {count}</p>
+    </BqCard>
+  );
+}
+```
+
+## Typescript notes
+
+BEEQ also exports useful types from `@beeq/core`, including custom event types:
+
+```ts
+import type { BqInputCustomEvent } from "@beeq/core";
+```
+
+In many cases you will not need to annotate those types manually, especially when using inline handlers, because the React wrapper already provides enough type information for common cases.
+
+Use explicit event types when:
+
+- you want stronger typing in extracted handlers
+- you are working with more complex event payloads
+- you want clearer autocomplete in larger components
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Styles are missing">
+    Make sure `@beeq/core/dist/beeq/beeq.css` is imported once in your app's main stylesheet, and that the stylesheet is actually loaded by your entry file.
+  </Accordion>
+  <Accordion title="Icons are not rendering">
+    Check both of these:
+
+    - the SVG files are being served by your app
+    - `setBasePath()` points to the same public URL where those files are available
+  </Accordion>
+  <Accordion title="Event handlers are not firing">
+    Use wrapper components from `@beeq/react` and the `onBq...` props. If you render raw custom elements directly in React, event handling becomes less predictable.
+  </Accordion>
+  <Accordion title="Props are not working as expected">
+    Make sure you are using the React prop names (camelCase) instead of the HTML attribute
+
+    Use the React prop name, not the HTML attribute name. For example, use `onlyIcon` instead of `only-icon`, `debounceTime` instead of `debounce-time`, and `justifyContent` instead of `justify-content`.
+  </Accordion>
+  <Accordion title="I'm using a server-rendered React framework">
+    Use the dedicated framework guide. Those setups often need client-only initialization or different handling for assets and hydration.
+  </Accordion>
+</AccordionGroup>
+
+## Next steps
+
+<Columns cols={3}>
+  <Card title="Explore components" href="/components/button">
+    Start with a real component page to see props, events, slots, and framework examples.
+  </Card>
+  <Card title="Customize the theme" href="/theming/overview">
+    Review theming options if your product needs brand customization.
+  </Card>
+  <Card title="Open Storybook" href="https://storybook.beeq.design">
+    Explore component states and interactions in the live component library.
+  </Card>
+</Columns>
