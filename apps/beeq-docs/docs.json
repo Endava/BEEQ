@@ -87,34 +87,61 @@
             ]
           },
           {
-            "group": "Inputs",
+            "group": "Data Display",
             "pages": [
-              "components/input",
-              "components/select",
-              "components/textarea",
-              "components/checkbox",
-              "components/radio-button",
-              "components/switch"
+              "components/accordion",
+              "components/avatar",
+              "components/badge",
+              "components/icon",
+              "components/option",
+              "components/status",
+              "components/table",
+              "components/tag"
             ]
           },
           {
             "group": "Feedback",
             "pages": [
               "components/alert",
-              "components/toast",
+              "components/dialog",
+              "components/drawer",
+              "components/empty-state",
               "components/notification",
+              "components/progress",
               "components/spinner",
-              "components/progress"
+              "components/toast",
+              "components/tooltip"
+            ]
+          },
+          {
+            "group": "Form Controls",
+            "pages": [
+              "components/checkbox",
+              "components/date-picker",
+              "components/input",
+              "components/radio",
+              "components/select",
+              "components/slider",
+              "components/switch",
+              "components/textarea"
+            ]
+          },
+          {
+            "group": "Layout",
+            "pages": [
+              "components/card",
+              "components/divider",
+              "components/page-title",
+              "components/panel"
             ]
           },
           {
             "group": "Navigation",
             "pages": [
               "components/breadcrumb",
-              "components/tabs",
-              "components/dropdown",
               "components/side-menu",
-              "components/stepper"
+              "components/steps",
+              "components/tab"
             ]
           }
         ]
