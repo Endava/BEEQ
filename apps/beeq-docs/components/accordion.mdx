@@ -173,90 +173,68 @@ Use the `expanded` attribute when a section should start open — for example wh
 
 ## Appearance
 
-### Filled (default)
-
-The `filled` appearance adds a background color to the header, giving accordions a contained look. This is the default.
+Two appearance values are available:
+- **filled**: (default) adds a background color to the header for a contained look
+- **ghost**: removes the background for a minimal style that blends with surrounding content.
 
 <Tip>
-  Since the default value of the `appearance` attribute/property is `filled`, there's no need to explicitly set it on the component when you want to use the filled appearance.
+  Since `filled` is the default, there's no need to explicitly set `appearance="filled"` on the component.
 </Tip>
 
 <CodeLivePreview code={`
-  <bq-accordion appearance="filled" expanded>
-    <span slot="header">Filled accordion</span>
-    <p>This accordion uses the default filled appearance.</p>
-  </bq-accordion>
-`}>
-  <CodeGroup>
-    ```html HTML icon="html5"
-    <bq-accordion appearance="filled" expanded>
-      <span slot="header">Filled accordion</span>
-      <p>This accordion uses the default filled appearance.</p>
+  <div class="flex flex-col gap-4 w-full">
+    <bq-accordion expanded>
+      <span slot="header">Filled (default)</span>
+      <p>The header has a background color in the filled appearance.</p>
     </bq-accordion>
-    ```
-
-    ```jsx React icon="react"
-    import { BqAccordion } from "@beeq/react";
-
-    <BqAccordion appearance="filled" expanded>
-      <span slot="header">Filled accordion</span>
-      <p>This accordion uses the default filled appearance.</p>
-    </BqAccordion>
-    ```
-
-    ```html Angular icon="angular"
-    <bq-accordion appearance="filled" expanded>
-      <span slot="header">Filled accordion</span>
-      <p>This accordion uses the default filled appearance.</p>
-    </bq-accordion>
-    ```
-
-    ```vue Vue icon="vuejs"
-    <script setup lang="ts">
-    import { BqAccordion } from "@beeq/vue";
-    </script>
-
-    <template>
-      <BqAccordion appearance="filled" expanded>
-        <span slot="header">Filled accordion</span>
-        <p>This accordion uses the default filled appearance.</p>
-      </BqAccordion>
-    </template>
-    ```
-  </CodeGroup>
-</CodeLivePreview>
-
-### Ghost
-
-The `ghost` appearance removes the header background, presenting a minimal, borderless look that blends with the surrounding content.
-
-<CodeLivePreview code={`
-  <bq-accordion appearance="ghost" expanded>
-    <span slot="header">Ghost accordion</span>
-    <p>This accordion uses the ghost appearance — no background on the header.</p>
-  </bq-accordion>
-`}>
-  <CodeGroup>
-    ```html HTML icon="html5"
     <bq-accordion appearance="ghost" expanded>
-      <span slot="header">Ghost accordion</span>
-      <p>This accordion uses the ghost appearance — no background on the header.</p>
+      <span slot="header">Ghost</span>
+      <p>The header has no background in the ghost appearance.</p>
+    </bq-accordion>
+  </div>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <!-- Filled: default, no need to set appearance explicitly -->
+    <bq-accordion expanded>
+      <span slot="header">Filled (default)</span>
+      <p>The header has a background color in the filled appearance.</p>
+    </bq-accordion>
+
+    <!-- Ghost: minimal, no header background -->
+    <bq-accordion appearance="ghost" expanded>
+      <span slot="header">Ghost</span>
+      <p>The header has no background in the ghost appearance.</p>
     </bq-accordion>
     ```
 
     ```jsx React icon="react"
     import { BqAccordion } from "@beeq/react";
 
+    {/* Filled: default */}
+    <BqAccordion expanded>
+      <span slot="header">Filled (default)</span>
+      <p>The header has a background color in the filled appearance.</p>
+    </BqAccordion>
+
+    {/* Ghost */}
     <BqAccordion appearance="ghost" expanded>
-      <span slot="header">Ghost accordion</span>
-      <p>This accordion uses the ghost appearance — no background on the header.</p>
+      <span slot="header">Ghost</span>
+      <p>The header has no background in the ghost appearance.</p>
     </BqAccordion>
     ```
 
     ```html Angular icon="angular"
+    <!-- Filled: default -->
+    <bq-accordion expanded>
+      <span slot="header">Filled (default)</span>
+      <p>The header has a background color in the filled appearance.</p>
+    </bq-accordion>
+
+    <!-- Ghost -->
     <bq-accordion appearance="ghost" expanded>
-      <span slot="header">Ghost accordion</span>
-      <p>This accordion uses the ghost appearance — no background on the header.</p>
+      <span slot="header">Ghost</span>
+      <p>The header has no background in the ghost appearance.</p>
     </bq-accordion>
     ```
 
@@ -266,9 +244,16 @@ The `ghost` appearance removes the header background, presenting a minimal, bord
     </script>
 
     <template>
+      <!-- Filled: default -->
+      <BqAccordion expanded>
+        <span slot="header">Filled (default)</span>
+        <p>The header has a background color in the filled appearance.</p>
+      </BqAccordion>
+
+      <!-- Ghost -->
       <BqAccordion appearance="ghost" expanded>
-        <span slot="header">Ghost accordion</span>
-        <p>This accordion uses the ghost appearance — no background on the header.</p>
+        <span slot="header">Ghost</span>
+        <p>The header has no background in the ghost appearance.</p>
       </BqAccordion>
     </template>
     ```
@@ -563,248 +548,59 @@ Allow multiple sections to stay open when people may need to review, reference, 
   </CodeGroup>
 </CodeLivePreview>
 
-### Expand all
+<Tip>
+  Use `expand-all` attribute (`expandAll` prop) on the group to open every accordion simultaneously — useful for print views or when people need to scan all content at once.
+</Tip>
 
-Use `expand-all` on the group to open every accordion at once — useful for print views or when people need to scan all content.
+## Header slots
+
+Use the `prefix` slot for adding elements like icons or avatars before the header text, and the `suffix` slot for elements after the text.
+These provide additional context to help people scan and understand the sections.
 
 <CodeLivePreview code={`
-  <bq-accordion-group expand-all>
+  <bq-accordion-group>
     <bq-accordion>
-      <span slot="header">Section one</span>
-      <p>Content for section one.</p>
+      <bq-icon name="heart" slot="prefix"></bq-icon>
+      <span slot="header">With prefix icon</span>
+      <p>The header includes an icon in the prefix slot before the title text.</p>
     </bq-accordion>
     <bq-accordion>
-      <span slot="header">Section two</span>
-      <p>Content for section two.</p>
+      <bq-avatar
+        size="xsmall"
+        image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
+        slot="prefix"
+      ></bq-avatar>
+      <span slot="header">With prefix avatar</span>
+      <p>The prefix slot also accepts an avatar for person-related sections.</p>
     </bq-accordion>
     <bq-accordion>
-      <span slot="header">Section three</span>
-      <p>Content for section three.</p>
+      <span slot="header">With suffix icon</span>
+      <bq-icon name="gear" slot="suffix"></bq-icon>
+      <p>The header includes an icon in the suffix slot after the title text.</p>
     </bq-accordion>
   </bq-accordion-group>
 `}>
   <CodeGroup>
     ```html HTML icon="html5"
-    <bq-accordion-group expand-all>
-      <bq-accordion>
-        <span slot="header">Section one</span>
-        <p>Content for section one.</p>
-      </bq-accordion>
-      <bq-accordion>
-        <span slot="header">Section two</span>
-        <p>Content for section two.</p>
-      </bq-accordion>
-      <bq-accordion>
-        <span slot="header">Section three</span>
-        <p>Content for section three.</p>
-      </bq-accordion>
-    </bq-accordion-group>
-    ```
-
-    ```jsx React icon="react"
-    import { BqAccordion, BqAccordionGroup } from "@beeq/react";
-
-    <BqAccordionGroup expandAll>
-      <BqAccordion>
-        <span slot="header">Section one</span>
-        <p>Content for section one.</p>
-      </BqAccordion>
-      <BqAccordion>
-        <span slot="header">Section two</span>
-        <p>Content for section two.</p>
-      </BqAccordion>
-      <BqAccordion>
-        <span slot="header">Section three</span>
-        <p>Content for section three.</p>
-      </BqAccordion>
-    </BqAccordionGroup>
-    ```
-
-    ```html Angular icon="angular"
-    <bq-accordion-group expand-all>
-      <bq-accordion>
-        <span slot="header">Section one</span>
-        <p>Content for section one.</p>
-      </bq-accordion>
-      <bq-accordion>
-        <span slot="header">Section two</span>
-        <p>Content for section two.</p>
-      </bq-accordion>
-      <bq-accordion>
-        <span slot="header">Section three</span>
-        <p>Content for section three.</p>
-      </bq-accordion>
-    </bq-accordion-group>
-    ```
-
-    ```vue Vue icon="vuejs"
-    <script setup lang="ts">
-    import { BqAccordion, BqAccordionGroup } from "@beeq/vue";
-    </script>
-
-    <template>
-      <BqAccordionGroup expandAll>
-        <BqAccordion>
-          <span slot="header">Section one</span>
-          <p>Content for section one.</p>
-        </BqAccordion>
-        <BqAccordion>
-          <span slot="header">Section two</span>
-          <p>Content for section two.</p>
-        </BqAccordion>
-        <BqAccordion>
-          <span slot="header">Section three</span>
-          <p>Content for section three.</p>
-        </BqAccordion>
-      </BqAccordionGroup>
-    </template>
-    ```
-  </CodeGroup>
-</CodeLivePreview>
-
-## Header slots
-
-### Prefix icon
-
-Use the `prefix` slot to add an icon before the header text, providing a visual cue about the section's content.
-
-<CodeLivePreview code={`
-  <bq-accordion>
-    <bq-icon name="heart" slot="prefix"></bq-icon>
-    <span slot="header">With prefix icon</span>
-    <p>The header includes an icon in the prefix slot before the title text.</p>
-  </bq-accordion>
-`}>
-  <CodeGroup>
-    ```html HTML icon="html5"
+    <!-- Prefix icon -->
     <bq-accordion>
       <bq-icon name="heart" slot="prefix"></bq-icon>
       <span slot="header">With prefix icon</span>
       <p>The header includes an icon in the prefix slot before the title text.</p>
     </bq-accordion>
-    ```
 
-    ```jsx React icon="react"
-    import { BqAccordion, BqIcon } from "@beeq/react";
-
-    <BqAccordion>
-      <BqIcon name="heart" slot="prefix" />
-      <span slot="header">With prefix icon</span>
-      <p>The header includes an icon in the prefix slot before the title text.</p>
-    </BqAccordion>
-    ```
-
-    ```html Angular icon="angular"
-    <bq-accordion>
-      <bq-icon name="heart" slot="prefix"></bq-icon>
-      <span slot="header">With prefix icon</span>
-      <p>The header includes an icon in the prefix slot before the title text.</p>
-    </bq-accordion>
-    ```
-
-    ```vue Vue icon="vuejs"
-    <script setup lang="ts">
-    import { BqAccordion, BqIcon } from "@beeq/vue";
-    </script>
-
-    <template>
-      <BqAccordion>
-        <BqIcon name="heart" slot="prefix" />
-        <span slot="header">With prefix icon</span>
-        <p>The header includes an icon in the prefix slot before the title text.</p>
-      </BqAccordion>
-    </template>
-    ```
-  </CodeGroup>
-</CodeLivePreview>
-
-### Prefix avatar
-
-The `prefix` slot also accepts an avatar, useful for person-related sections such as profiles or team members.
-
-<CodeLivePreview code={`
-  <bq-accordion>
-    <bq-avatar
-      size="xsmall"
-      image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
-      slot="prefix"
-    ></bq-avatar>
-    <span slot="header">With avatar</span>
-    <p>The header includes an avatar in the prefix slot.</p>
-  </bq-accordion>
-`}>
-  <CodeGroup>
-    ```html HTML icon="html5"
+    <!-- Prefix avatar -->
     <bq-accordion>
       <bq-avatar
         size="xsmall"
         image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
         slot="prefix"
       ></bq-avatar>
-      <span slot="header">With avatar</span>
-      <p>The header includes an avatar in the prefix slot.</p>
+      <span slot="header">With prefix avatar</span>
+      <p>The prefix slot also accepts an avatar for person-related sections.</p>
     </bq-accordion>
-    ```
 
-    ```jsx React icon="react"
-    import { BqAccordion, BqAvatar } from "@beeq/react";
-
-    <BqAccordion>
-      <BqAvatar
-        size="xsmall"
-        image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
-        slot="prefix"
-      />
-      <span slot="header">With avatar</span>
-      <p>The header includes an avatar in the prefix slot.</p>
-    </BqAccordion>
-    ```
-
-    ```html Angular icon="angular"
-    <bq-accordion>
-      <bq-avatar
-        size="xsmall"
-        image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
-        slot="prefix"
-      ></bq-avatar>
-      <span slot="header">With avatar</span>
-      <p>The header includes an avatar in the prefix slot.</p>
-    </bq-accordion>
-    ```
-
-    ```vue Vue icon="vuejs"
-    <script setup lang="ts">
-    import { BqAccordion, BqAvatar } from "@beeq/vue";
-    </script>
-
-    <template>
-      <BqAccordion>
-        <BqAvatar
-          size="xsmall"
-          image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
-          slot="prefix"
-        />
-        <span slot="header">With avatar</span>
-        <p>The header includes an avatar in the prefix slot.</p>
-      </BqAccordion>
-    </template>
-    ```
-  </CodeGroup>
-</CodeLivePreview>
-
-### Suffix icon
-
-Use the `suffix` slot to add an icon after the header text, for example a settings gear or status indicator.
-
-<CodeLivePreview code={`
-  <bq-accordion>
-    <span slot="header">With suffix icon</span>
-    <bq-icon name="gear" slot="suffix"></bq-icon>
-    <p>The header includes an icon in the suffix slot after the title text.</p>
-  </bq-accordion>
-`}>
-  <CodeGroup>
-    ```html HTML icon="html5"
+    <!-- Suffix icon -->
     <bq-accordion>
       <span slot="header">With suffix icon</span>
       <bq-icon name="gear" slot="suffix"></bq-icon>
@@ -813,8 +609,27 @@ Use the `suffix` slot to add an icon after the header text, for example a settin
     ```
 
     ```jsx React icon="react"
-    import { BqAccordion, BqIcon } from "@beeq/react";
+    import { BqAccordion, BqAvatar, BqIcon } from "@beeq/react";
 
+    {/* Prefix icon */}
+    <BqAccordion>
+      <BqIcon name="heart" slot="prefix" />
+      <span slot="header">With prefix icon</span>
+      <p>The header includes an icon in the prefix slot before the title text.</p>
+    </BqAccordion>
+
+    {/* Prefix avatar */}
+    <BqAccordion>
+      <BqAvatar
+        size="xsmall"
+        image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
+        slot="prefix"
+      />
+      <span slot="header">With prefix avatar</span>
+      <p>The prefix slot also accepts an avatar for person-related sections.</p>
+    </BqAccordion>
+
+    {/* Suffix icon */}
     <BqAccordion>
       <span slot="header">With suffix icon</span>
       <BqIcon name="gear" slot="suffix" />
@@ -823,6 +638,25 @@ Use the `suffix` slot to add an icon after the header text, for example a settin
     ```
 
     ```html Angular icon="angular"
+    <!-- Prefix icon -->
+    <bq-accordion>
+      <bq-icon name="heart" slot="prefix"></bq-icon>
+      <span slot="header">With prefix icon</span>
+      <p>The header includes an icon in the prefix slot before the title text.</p>
+    </bq-accordion>
+
+    <!-- Prefix avatar -->
+    <bq-accordion>
+      <bq-avatar
+        size="xsmall"
+        image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
+        slot="prefix"
+      ></bq-avatar>
+      <span slot="header">With prefix avatar</span>
+      <p>The prefix slot also accepts an avatar for person-related sections.</p>
+    </bq-accordion>
+
+    <!-- Suffix icon -->
     <bq-accordion>
       <span slot="header">With suffix icon</span>
       <bq-icon name="gear" slot="suffix"></bq-icon>
@@ -832,10 +666,29 @@ Use the `suffix` slot to add an icon after the header text, for example a settin
 
     ```vue Vue icon="vuejs"
     <script setup lang="ts">
-    import { BqAccordion, BqIcon } from "@beeq/vue";
+    import { BqAccordion, BqAvatar, BqIcon } from "@beeq/vue";
     </script>
 
     <template>
+      <!-- Prefix icon -->
+      <BqAccordion>
+        <BqIcon name="heart" slot="prefix" />
+        <span slot="header">With prefix icon</span>
+        <p>The header includes an icon in the prefix slot before the title text.</p>
+      </BqAccordion>
+
+      <!-- Prefix avatar -->
+      <BqAccordion>
+        <BqAvatar
+          size="xsmall"
+          image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
+          slot="prefix"
+        />
+        <span slot="header">With prefix avatar</span>
+        <p>The prefix slot also accepts an avatar for person-related sections.</p>
+      </BqAccordion>
+
+      <!-- Suffix icon -->
       <BqAccordion>
         <span slot="header">With suffix icon</span>
         <BqIcon name="gear" slot="suffix" />
@@ -986,8 +839,6 @@ Add the `no-animation` attribute to disable this and make the panel appear/disap
   You can also set `no-animation` on `bq-accordion-group` to disable animation for all child accordions at once.
 </Tip>
 
----
-
 ## Custom expand/collapse icons
 
 The accordion provides two separate slots — `expand` and `collapse` — to replace the default plus/minus icons.
@@ -1031,7 +882,6 @@ Alternatively, combine a single icon in the `expand` slot with the `rotate` prop
       <span slot="header">Custom icon with rotation</span>
       <p>This accordion uses a single caret icon that rotates 180° when expanded.</p>
     </bq-accordion>
-
     ```
 
     ```jsx React icon="react"
@@ -1469,8 +1319,8 @@ Developers can [rely on the exposed shadow DOM parts](https://www.beeq.design/3d
 
   #### Group
 
-  | Variable                         | Description                           | Default              |
-  | -------------------------------- | ------------------------------------- | -------------------- |
+  | Variable                         | Description                            | Default               |
+  | -------------------------------- | -------------------------------------- | --------------------- |
   | `--bq-accordion-group--gap`      | Gap between accordion items in a group | `theme('spacing.xs')` |
 
 </Expandable>
