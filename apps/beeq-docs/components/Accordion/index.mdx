@@ -1,0 +1,1494 @@
+---
+title: Accordion
+description: Accordions let users show and hide sections of related content on a page.
+---
+
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Accordion component overview">
+  <img className="block dark:hidden" src="./images/accordion-overview-light.svg" />
+  <img className="hidden dark:block" src="./images/accordion-overview-dark.svg" />
+</Frame>
+
+Accordions organize related content into collapsible sections. Each section has a header that reveals or hides its panel content, helping people scan headings first and open only the information they need.
+
+<Note>
+  Use `bq-accordion-group` to wrap multiple `bq-accordion` items when you need to coordinate their behavior — for example, collapsing one when another opens.
+</Note>
+
+## At a glance
+
+- **Best for:** FAQs, advanced settings, grouped secondary information, and long pages where not every section needs to stay open.
+- **Use with care:** If people need to compare sections side by side or keep several sections visible while working, an accordion may add friction.
+- **Related components:** Use [tabs](/components/tabs) when content belongs to a small set of peer views, or a simple show/hide pattern when only one section needs to expand.
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use accordions when
+    </span>
+
+    * Related content can be grouped into clearly labeled sections
+    * Page length or visual density needs to be reduced without removing content
+    * People benefit from scanning headings before deciding what to open
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use accordions when
+    </span>
+
+    * People need to compare content across sections at the same time
+    * The content is short enough to show fully without harming readability
+    * Most sections are likely to be opened during the same task
+  </Card>
+</CardGroup>
+
+## Anatomy
+
+<Frame caption="Accordion anatomy">
+  <img className="block dark:hidden" src="./images/accordion-anatomy-light.svg" alt="Accordion anatomy" />
+  <img className="hidden dark:block" src="./images/accordion-anatomy-dark.svg" alt="Accordion anatomy" />
+</Frame>
+
+Each accordion item includes a clickable header and a collapsible panel. The header should set clear expectations about what the panel contains.
+
+| Part  | Element         | Description                                                                                         |
+| ----- | --------------- | --------------------------------------------------------------------------------------------------- |
+| **1** | Container       | The outer wrapper for the entire accordion item                                                     |
+| **2** | Header          | The clickable trigger that toggles the panel open/closed                                            |
+| **3** | Panel           | The collapsible area containing the body content                                                    |
+| **4** | Prefix          | An optional suffix like an icon or avatar before the header text for additional context             |
+| **5** | Suffix          | An optional prefix for additional context after the header text (less common than prefix)           |
+| **6** | Expand/Collapse | Icon indicating the current state of the panel and providing a visual affordance for interactivity  |
+
+## Common usage patterns
+
+The examples below cover the most common ways to use accordions in BEEQ. Start with a single accordion item when sections are independent, and use an accordion group when items should behave as one coordinated set.
+
+### Default (collapsed)
+
+Accordion items are collapsed by default. This works best when the heading alone gives enough context for someone to decide whether opening the section is worth it.
+
+<CodeLivePreview code={`
+  <bq-accordion>
+    <span slot="header">Accordion title</span>
+    <p>This is the accordion panel content. It is hidden by default and revealed when the header is clicked.</p>
+  </bq-accordion>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-accordion>
+      <span slot="header">Accordion title</span>
+      <p>This is the accordion panel content. It is hidden by default and revealed when the header is clicked.</p>
+    </bq-accordion>
+    ```
+
+    ```jsx React icon="react"
+    import { BqAccordion } from "@beeq/react";
+
+    <BqAccordion>
+      <span slot="header">Accordion title</span>
+      <p>This is the accordion panel content. It is hidden by default and revealed when the header is clicked.</p>
+    </BqAccordion>
+    ```
+
+    ```html Angular icon="angular"
+    <!-- Standalone: import { BqAccordion } from "@beeq/angular/standalone" -->
+    <!-- Modules: components are available after importing BeeQModule -->
+
+    <bq-accordion>
+      <span slot="header">Accordion title</span>
+      <p>This is the accordion panel content. It is hidden by default and revealed when the header is clicked.</p>
+    </bq-accordion>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqAccordion } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqAccordion>
+        <span slot="header">Accordion title</span>
+        <p>This is the accordion panel content. It is hidden by default and revealed when the header is clicked.</p>
+      </BqAccordion>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Expanded by default
+
+Use the `expanded` attribute when a section should start open — for example when the first item contains the most important information or when one section is expected to be reviewed first.
+
+<CodeLivePreview code={`
+  <bq-accordion expanded>
+    <span slot="header">Expanded by default</span>
+    <p>This panel is visible when the component first renders.</p>
+  </bq-accordion>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-accordion expanded>
+      <span slot="header">Expanded by default</span>
+      <p>This panel is visible when the component first renders.</p>
+    </bq-accordion>
+    ```
+
+    ```jsx React icon="react"
+    import { BqAccordion } from "@beeq/react";
+
+    <BqAccordion expanded>
+      <span slot="header">Expanded by default</span>
+      <p>This panel is visible when the component first renders.</p>
+    </BqAccordion>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-accordion expanded>
+      <span slot="header">Expanded by default</span>
+      <p>This panel is visible when the component first renders.</p>
+    </bq-accordion>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqAccordion } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqAccordion expanded>
+        <span slot="header">Expanded by default</span>
+        <p>This panel is visible when the component first renders.</p>
+      </BqAccordion>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Appearance
+
+### Filled (default)
+
+The `filled` appearance adds a background color to the header, giving accordions a contained look. This is the default.
+
+<Tip>
+  Since the default value of the `appearance` attribute/property is `filled`, there's no need to explicitly set it on the component when you want to use the filled appearance.
+</Tip>
+
+<CodeLivePreview code={`
+  <bq-accordion appearance="filled" expanded>
+    <span slot="header">Filled accordion</span>
+    <p>This accordion uses the default filled appearance.</p>
+  </bq-accordion>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-accordion appearance="filled" expanded>
+      <span slot="header">Filled accordion</span>
+      <p>This accordion uses the default filled appearance.</p>
+    </bq-accordion>
+    ```
+
+    ```jsx React icon="react"
+    import { BqAccordion } from "@beeq/react";
+
+    <BqAccordion appearance="filled" expanded>
+      <span slot="header">Filled accordion</span>
+      <p>This accordion uses the default filled appearance.</p>
+    </BqAccordion>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-accordion appearance="filled" expanded>
+      <span slot="header">Filled accordion</span>
+      <p>This accordion uses the default filled appearance.</p>
+    </bq-accordion>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqAccordion } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqAccordion appearance="filled" expanded>
+        <span slot="header">Filled accordion</span>
+        <p>This accordion uses the default filled appearance.</p>
+      </BqAccordion>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Ghost
+
+The `ghost` appearance removes the header background, presenting a minimal, borderless look that blends with the surrounding content.
+
+<CodeLivePreview code={`
+  <bq-accordion appearance="ghost" expanded>
+    <span slot="header">Ghost accordion</span>
+    <p>This accordion uses the ghost appearance — no background on the header.</p>
+  </bq-accordion>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-accordion appearance="ghost" expanded>
+      <span slot="header">Ghost accordion</span>
+      <p>This accordion uses the ghost appearance — no background on the header.</p>
+    </bq-accordion>
+    ```
+
+    ```jsx React icon="react"
+    import { BqAccordion } from "@beeq/react";
+
+    <BqAccordion appearance="ghost" expanded>
+      <span slot="header">Ghost accordion</span>
+      <p>This accordion uses the ghost appearance — no background on the header.</p>
+    </BqAccordion>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-accordion appearance="ghost" expanded>
+      <span slot="header">Ghost accordion</span>
+      <p>This accordion uses the ghost appearance — no background on the header.</p>
+    </bq-accordion>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqAccordion } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqAccordion appearance="ghost" expanded>
+        <span slot="header">Ghost accordion</span>
+        <p>This accordion uses the ghost appearance — no background on the header.</p>
+      </BqAccordion>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Size
+
+Accordions support two sizes: `medium` (default) and `small`.
+The `small` size uses more compact padding and a smaller border radius, giving it a tighter look.
+
+<CodeLivePreview code={`
+  <div class="flex flex-col gap-4 w-full">
+    <bq-accordion size="medium" expanded>
+      <span slot="header">Medium accordion (default)</span>
+      <p>This is the medium size — more padding, suitable for most use cases.</p>
+    </bq-accordion>
+    <bq-accordion size="small" expanded>
+      <span slot="header">Small accordion</span>
+      <p>This is the small size — compact padding for dense layouts and using small border radius.</p>
+    </bq-accordion>
+  </div>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-accordion size="medium" expanded>
+      <span slot="header">Medium accordion (default)</span>
+      <p>This is the medium size — more padding, suitable for most use cases.</p>
+    </bq-accordion>
+
+    <bq-accordion size="small" expanded>
+      <span slot="header">Small accordion</span>
+      <p>This is the small size — compact padding for dense layouts and using small border radius.</p>
+    </bq-accordion>
+    ```
+
+    ```jsx React icon="react"
+    import { BqAccordion } from "@beeq/react";
+
+    <BqAccordion size="medium" expanded>
+      <span slot="header">Medium accordion (default)</span>
+      <p>This is the medium size — more padding, suitable for most use cases.</p>
+    </BqAccordion>
+
+    <BqAccordion size="small" expanded>
+      <span slot="header">Small accordion</span>
+      <p>This is the small size — compact padding for dense layouts and using small border radius.</p>
+    </BqAccordion>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-accordion size="medium" expanded>
+      <span slot="header">Medium accordion (default)</span>
+      <p>This is the medium size — more padding, suitable for most use cases.</p>
+    </bq-accordion>
+
+    <bq-accordion size="small" expanded>
+      <span slot="header">Small accordion</span>
+      <p>This is the small size — compact padding for dense layouts and using small border radius.</p>
+    </bq-accordion>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqAccordion } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqAccordion size="medium" expanded>
+        <span slot="header">Medium accordion (default)</span>
+        <p>This is the medium size — more padding, suitable for most use cases.</p>
+      </BqAccordion>
+
+      <BqAccordion size="small" expanded>
+        <span slot="header">Small accordion</span>
+        <p>This is the small size — compact padding for dense layouts and using small border radius.</p>
+      </BqAccordion>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Note>
+  Use the `small` size in dense layouts or sidebars where space is limited.
+</Note>
+
+## Group
+
+Wrap related `bq-accordion` items inside `bq-accordion-group` when they should behave as a coordinated set. By default, only one item can stay open at a time. Add the `multiple` attribute when people may need to keep several sections open while reading or working.
+
+The group also lets you set `appearance`, `size`, and `no-animation` once and have them cascade to all child accordions.
+
+<Note>
+  Attributes/Properties set in the group can be overridden by setting them directly on an individual accordion item.
+</Note>
+
+### Single open (default group behavior)
+
+Use the default group behavior when the sections are mutually exclusive or when keeping only one panel open helps reduce distraction.
+
+<CodeLivePreview code={`
+  <bq-accordion-group>
+    <bq-accordion>
+      <span slot="header">Section one</span>
+      <p>Content for section one.</p>
+    </bq-accordion>
+    <bq-accordion>
+      <span slot="header">Section two</span>
+      <p>Content for section two.</p>
+    </bq-accordion>
+    <bq-accordion>
+      <span slot="header">Section three</span>
+      <p>Content for section three.</p>
+    </bq-accordion>
+  </bq-accordion-group>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-accordion-group>
+      <bq-accordion>
+        <span slot="header">Section one</span>
+        <p>Content for section one.</p>
+      </bq-accordion>
+      <bq-accordion>
+        <span slot="header">Section two</span>
+        <p>Content for section two.</p>
+      </bq-accordion>
+      <bq-accordion>
+        <span slot="header">Section three</span>
+        <p>Content for section three.</p>
+      </bq-accordion>
+    </bq-accordion-group>
+    ```
+
+    ```jsx React icon="react"
+    import { BqAccordion, BqAccordionGroup } from "@beeq/react";
+
+    <BqAccordionGroup>
+      <BqAccordion>
+        <span slot="header">Section one</span>
+        <p>Content for section one.</p>
+      </BqAccordion>
+      <BqAccordion>
+        <span slot="header">Section two</span>
+        <p>Content for section two.</p>
+      </BqAccordion>
+      <BqAccordion>
+        <span slot="header">Section three</span>
+        <p>Content for section three.</p>
+      </BqAccordion>
+    </BqAccordionGroup>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-accordion-group>
+      <bq-accordion>
+        <span slot="header">Section one</span>
+        <p>Content for section one.</p>
+      </bq-accordion>
+      <bq-accordion>
+        <span slot="header">Section two</span>
+        <p>Content for section two.</p>
+      </bq-accordion>
+      <bq-accordion>
+        <span slot="header">Section three</span>
+        <p>Content for section three.</p>
+      </bq-accordion>
+    </bq-accordion-group>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqAccordion, BqAccordionGroup } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqAccordionGroup>
+        <BqAccordion>
+          <span slot="header">Section one</span>
+          <p>Content for section one.</p>
+        </BqAccordion>
+        <BqAccordion>
+          <span slot="header">Section two</span>
+          <p>Content for section two.</p>
+        </BqAccordion>
+        <BqAccordion>
+          <span slot="header">Section three</span>
+          <p>Content for section three.</p>
+        </BqAccordion>
+      </BqAccordionGroup>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Multiple open
+
+Allow multiple sections to stay open when people may need to review, reference, or complete information across several panels at once.
+
+<CodeLivePreview code={`
+  <bq-accordion-group multiple>
+    <bq-accordion expanded>
+      <span slot="header">Section one</span>
+      <p>Content for section one.</p>
+    </bq-accordion>
+    <bq-accordion expanded>
+      <span slot="header">Section two</span>
+      <p>Content for section two.</p>
+    </bq-accordion>
+    <bq-accordion>
+      <span slot="header">Section three</span>
+      <p>Content for section three.</p>
+    </bq-accordion>
+  </bq-accordion-group>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-accordion-group multiple>
+      <bq-accordion expanded>
+        <span slot="header">Section one</span>
+        <p>Content for section one.</p>
+      </bq-accordion>
+      <bq-accordion expanded>
+        <span slot="header">Section two</span>
+        <p>Content for section two.</p>
+      </bq-accordion>
+      <bq-accordion>
+        <span slot="header">Section three</span>
+        <p>Content for section three.</p>
+      </bq-accordion>
+    </bq-accordion-group>
+    ```
+
+    ```jsx React icon="react"
+    import { BqAccordion, BqAccordionGroup } from "@beeq/react";
+
+    <BqAccordionGroup multiple>
+      <BqAccordion expanded>
+        <span slot="header">Section one</span>
+        <p>Content for section one.</p>
+      </BqAccordion>
+      <BqAccordion expanded>
+        <span slot="header">Section two</span>
+        <p>Content for section two.</p>
+      </BqAccordion>
+      <BqAccordion>
+        <span slot="header">Section three</span>
+        <p>Content for section three.</p>
+      </BqAccordion>
+    </BqAccordionGroup>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-accordion-group multiple>
+      <bq-accordion expanded>
+        <span slot="header">Section one</span>
+        <p>Content for section one.</p>
+      </bq-accordion>
+      <bq-accordion expanded>
+        <span slot="header">Section two</span>
+        <p>Content for section two.</p>
+      </bq-accordion>
+      <bq-accordion>
+        <span slot="header">Section three</span>
+        <p>Content for section three.</p>
+      </bq-accordion>
+    </bq-accordion-group>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqAccordion, BqAccordionGroup } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqAccordionGroup multiple>
+        <BqAccordion expanded>
+          <span slot="header">Section one</span>
+          <p>Content for section one.</p>
+        </BqAccordion>
+        <BqAccordion expanded>
+          <span slot="header">Section two</span>
+          <p>Content for section two.</p>
+        </BqAccordion>
+        <BqAccordion>
+          <span slot="header">Section three</span>
+          <p>Content for section three.</p>
+        </BqAccordion>
+      </BqAccordionGroup>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Expand all
+
+Use `expand-all` on the group to open every accordion at once — useful for print views or when people need to scan all content.
+
+<CodeLivePreview code={`
+  <bq-accordion-group expand-all>
+    <bq-accordion>
+      <span slot="header">Section one</span>
+      <p>Content for section one.</p>
+    </bq-accordion>
+    <bq-accordion>
+      <span slot="header">Section two</span>
+      <p>Content for section two.</p>
+    </bq-accordion>
+    <bq-accordion>
+      <span slot="header">Section three</span>
+      <p>Content for section three.</p>
+    </bq-accordion>
+  </bq-accordion-group>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-accordion-group expand-all>
+      <bq-accordion>
+        <span slot="header">Section one</span>
+        <p>Content for section one.</p>
+      </bq-accordion>
+      <bq-accordion>
+        <span slot="header">Section two</span>
+        <p>Content for section two.</p>
+      </bq-accordion>
+      <bq-accordion>
+        <span slot="header">Section three</span>
+        <p>Content for section three.</p>
+      </bq-accordion>
+    </bq-accordion-group>
+    ```
+
+    ```jsx React icon="react"
+    import { BqAccordion, BqAccordionGroup } from "@beeq/react";
+
+    <BqAccordionGroup expandAll>
+      <BqAccordion>
+        <span slot="header">Section one</span>
+        <p>Content for section one.</p>
+      </BqAccordion>
+      <BqAccordion>
+        <span slot="header">Section two</span>
+        <p>Content for section two.</p>
+      </BqAccordion>
+      <BqAccordion>
+        <span slot="header">Section three</span>
+        <p>Content for section three.</p>
+      </BqAccordion>
+    </BqAccordionGroup>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-accordion-group expand-all>
+      <bq-accordion>
+        <span slot="header">Section one</span>
+        <p>Content for section one.</p>
+      </bq-accordion>
+      <bq-accordion>
+        <span slot="header">Section two</span>
+        <p>Content for section two.</p>
+      </bq-accordion>
+      <bq-accordion>
+        <span slot="header">Section three</span>
+        <p>Content for section three.</p>
+      </bq-accordion>
+    </bq-accordion-group>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqAccordion, BqAccordionGroup } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqAccordionGroup expandAll>
+        <BqAccordion>
+          <span slot="header">Section one</span>
+          <p>Content for section one.</p>
+        </BqAccordion>
+        <BqAccordion>
+          <span slot="header">Section two</span>
+          <p>Content for section two.</p>
+        </BqAccordion>
+        <BqAccordion>
+          <span slot="header">Section three</span>
+          <p>Content for section three.</p>
+        </BqAccordion>
+      </BqAccordionGroup>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Header slots
+
+### Prefix icon
+
+Use the `prefix` slot to add an icon before the header text, providing a visual cue about the section's content.
+
+<CodeLivePreview code={`
+  <bq-accordion>
+    <bq-icon name="heart" slot="prefix"></bq-icon>
+    <span slot="header">With prefix icon</span>
+    <p>The header includes an icon in the prefix slot before the title text.</p>
+  </bq-accordion>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-accordion>
+      <bq-icon name="heart" slot="prefix"></bq-icon>
+      <span slot="header">With prefix icon</span>
+      <p>The header includes an icon in the prefix slot before the title text.</p>
+    </bq-accordion>
+    ```
+
+    ```jsx React icon="react"
+    import { BqAccordion, BqIcon } from "@beeq/react";
+
+    <BqAccordion>
+      <BqIcon name="heart" slot="prefix" />
+      <span slot="header">With prefix icon</span>
+      <p>The header includes an icon in the prefix slot before the title text.</p>
+    </BqAccordion>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-accordion>
+      <bq-icon name="heart" slot="prefix"></bq-icon>
+      <span slot="header">With prefix icon</span>
+      <p>The header includes an icon in the prefix slot before the title text.</p>
+    </bq-accordion>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqAccordion, BqIcon } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqAccordion>
+        <BqIcon name="heart" slot="prefix" />
+        <span slot="header">With prefix icon</span>
+        <p>The header includes an icon in the prefix slot before the title text.</p>
+      </BqAccordion>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Prefix avatar
+
+The `prefix` slot also accepts an avatar, useful for person-related sections such as profiles or team members.
+
+<CodeLivePreview code={`
+  <bq-accordion>
+    <bq-avatar
+      size="xsmall"
+      image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
+      slot="prefix"
+    ></bq-avatar>
+    <span slot="header">With avatar</span>
+    <p>The header includes an avatar in the prefix slot.</p>
+  </bq-accordion>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-accordion>
+      <bq-avatar
+        size="xsmall"
+        image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
+        slot="prefix"
+      ></bq-avatar>
+      <span slot="header">With avatar</span>
+      <p>The header includes an avatar in the prefix slot.</p>
+    </bq-accordion>
+    ```
+
+    ```jsx React icon="react"
+    import { BqAccordion, BqAvatar } from "@beeq/react";
+
+    <BqAccordion>
+      <BqAvatar
+        size="xsmall"
+        image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
+        slot="prefix"
+      />
+      <span slot="header">With avatar</span>
+      <p>The header includes an avatar in the prefix slot.</p>
+    </BqAccordion>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-accordion>
+      <bq-avatar
+        size="xsmall"
+        image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
+        slot="prefix"
+      ></bq-avatar>
+      <span slot="header">With avatar</span>
+      <p>The header includes an avatar in the prefix slot.</p>
+    </bq-accordion>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqAccordion, BqAvatar } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqAccordion>
+        <BqAvatar
+          size="xsmall"
+          image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
+          slot="prefix"
+        />
+        <span slot="header">With avatar</span>
+        <p>The header includes an avatar in the prefix slot.</p>
+      </BqAccordion>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Suffix icon
+
+Use the `suffix` slot to add an icon after the header text, for example a settings gear or status indicator.
+
+<CodeLivePreview code={`
+  <bq-accordion>
+    <span slot="header">With suffix icon</span>
+    <bq-icon name="gear" slot="suffix"></bq-icon>
+    <p>The header includes an icon in the suffix slot after the title text.</p>
+  </bq-accordion>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-accordion>
+      <span slot="header">With suffix icon</span>
+      <bq-icon name="gear" slot="suffix"></bq-icon>
+      <p>The header includes an icon in the suffix slot after the title text.</p>
+    </bq-accordion>
+    ```
+
+    ```jsx React icon="react"
+    import { BqAccordion, BqIcon } from "@beeq/react";
+
+    <BqAccordion>
+      <span slot="header">With suffix icon</span>
+      <BqIcon name="gear" slot="suffix" />
+      <p>The header includes an icon in the suffix slot after the title text.</p>
+    </BqAccordion>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-accordion>
+      <span slot="header">With suffix icon</span>
+      <bq-icon name="gear" slot="suffix"></bq-icon>
+      <p>The header includes an icon in the suffix slot after the title text.</p>
+    </bq-accordion>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqAccordion, BqIcon } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqAccordion>
+        <span slot="header">With suffix icon</span>
+        <BqIcon name="gear" slot="suffix" />
+        <p>The header includes an icon in the suffix slot after the title text.</p>
+      </BqAccordion>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## States
+
+### Disabled
+
+Use `disabled` only when a section is temporarily unavailable. The header will not respond to interaction and the `bqOpen` / `bqClose` events will not fire.
+
+<CodeLivePreview code={`
+  <bq-accordion disabled>
+    <span slot="header">Disabled accordion</span>
+    <p>This content cannot be accessed while the accordion is disabled.</p>
+  </bq-accordion>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-accordion disabled>
+      <span slot="header">Disabled accordion</span>
+      <p>This content cannot be accessed while the accordion is disabled.</p>
+    </bq-accordion>
+    ```
+
+    ```jsx React icon="react"
+    import { BqAccordion } from "@beeq/react";
+
+    <BqAccordion disabled>
+      <span slot="header">Disabled accordion</span>
+      <p>This content cannot be accessed while the accordion is disabled.</p>
+    </BqAccordion>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-accordion disabled>
+      <span slot="header">Disabled accordion</span>
+      <p>This content cannot be accessed while the accordion is disabled.</p>
+    </bq-accordion>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqAccordion } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqAccordion disabled>
+        <span slot="header">Disabled accordion</span>
+        <p>This content cannot be accessed while the accordion is disabled.</p>
+      </BqAccordion>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Animation
+
+By default, accordions animate the panel open and closed with a smooth height transition.
+Add the `no-animation` attribute to disable this and make the panel appear/disappear instantly.
+
+<CodeLivePreview code={`
+  <div class="flex flex-col gap-4 w-full">
+    <bq-accordion expanded>
+      <span slot="header">With animation (default)</span>
+      <p>The panel slides open and closed smoothly.</p>
+    </bq-accordion>
+    <bq-accordion no-animation expanded>
+      <span slot="header">No animation</span>
+      <p>The panel appears and disappears instantly.</p>
+    </bq-accordion>
+  </div>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <!-- Default: animated -->
+    <bq-accordion>
+      <span slot="header">With animation (default)</span>
+      <p>The panel slides open and closed smoothly.</p>
+    </bq-accordion>
+
+    <!-- Instant: no animation -->
+    <bq-accordion no-animation>
+      <span slot="header">No animation</span>
+      <p>The panel appears and disappears instantly.</p>
+    </bq-accordion>
+    ```
+
+    ```jsx React icon="react"
+    import { BqAccordion } from "@beeq/react";
+
+    {/* Default: animated */}
+    <BqAccordion>
+      <span slot="header">With animation (default)</span>
+      <p>The panel slides open and closed smoothly.</p>
+    </BqAccordion>
+
+    {/* Instant: no animation */}
+    <BqAccordion noAnimation>
+      <span slot="header">No animation</span>
+      <p>The panel appears and disappears instantly.</p>
+    </BqAccordion>
+    ```
+
+    ```html Angular icon="angular"
+    <!-- Default: animated -->
+    <bq-accordion>
+      <span slot="header">With animation (default)</span>
+      <p>The panel slides open and closed smoothly.</p>
+    </bq-accordion>
+
+    <!-- Instant: no animation -->
+    <bq-accordion no-animation>
+      <span slot="header">No animation</span>
+      <p>The panel appears and disappears instantly.</p>
+    </bq-accordion>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqAccordion } from "@beeq/vue";
+    </script>
+
+    <template>
+      <!-- Default: animated -->
+      <BqAccordion>
+        <span slot="header">With animation (default)</span>
+        <p>The panel slides open and closed smoothly.</p>
+      </BqAccordion>
+
+      <!-- Instant: no animation -->
+      <BqAccordion noAnimation>
+        <span slot="header">No animation</span>
+        <p>The panel appears and disappears instantly.</p>
+      </BqAccordion>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  Use `no-animation` when reduced motion is a concern, or as a fallback for users who have `prefers-reduced-motion` set.
+  You can also set `no-animation` on `bq-accordion-group` to disable animation for all child accordions at once.
+</Tip>
+
+---
+
+## Custom expand/collapse icons
+
+The accordion provides two separate slots — `expand` and `collapse` — to replace the default plus/minus icons.
+Use `expand` for the icon shown when the panel is closed and `collapse` for the icon shown when the panel is open.
+
+Alternatively, combine a single icon in the `expand` slot with the `rotate` prop, which rotates the icon 180° when the accordion opens.
+
+<Note>
+  When using a single custom icon with `rotate`, make sure the icon is designed to be recognizable in both orientations (e.g., a caret or arrow)
+  and **it's place in the `expand` slot**, as the rotation is applied to that icon when the accordion is expanded.
+</Note>
+
+<CodeLivePreview code={`
+    <bq-accordion-group>
+      <bq-accordion>
+        <bq-icon name="folder-simple" slot="expand"></bq-icon>
+        <bq-icon name="folder-open" slot="collapse"></bq-icon>
+        <span slot="header">Custom icons for expand and collapse</span>
+        <p>This accordion shows an open folder when expanded and a closed folder when collapsed.</p>
+      </bq-accordion>
+      <bq-accordion rotate>
+        <bq-icon name="caret-up" slot="expand"></bq-icon>
+        <span slot="header">Custom icon with rotation</span>
+        <p>This accordion uses a single caret icon that rotates 180° when expanded.</p>
+      </bq-accordion>
+    </bq-accordion-group>
+  `}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <!-- Two separate icons: different icon for each state -->
+    <bq-accordion>
+      <bq-icon name="folder-simple" slot="expand"></bq-icon>
+      <bq-icon name="folder-open" slot="collapse"></bq-icon>
+      <span slot="header">Custom icons for expand and collapse</span>
+      <p>This accordion shows an open folder when expanded and a closed folder when collapsed.</p>
+    </bq-accordion>
+
+    <!-- Single icon + rotate: the icon flips 180° on expand -->
+    <bq-accordion rotate>
+      <bq-icon name="caret-up" slot="expand"></bq-icon>
+      <span slot="header">Custom icon with rotation</span>
+      <p>This accordion uses a single caret icon that rotates 180° when expanded.</p>
+    </bq-accordion>
+
+    ```
+
+    ```jsx React icon="react"
+    import { BqAccordion, BqIcon } from "@beeq/react";
+
+    {/* Two separate icons */}
+    <BqAccordion>
+      <BqIcon name="folder-simple" slot="expand" />
+      <BqIcon name="folder-open" slot="collapse" />
+      <span slot="header">Custom icons for expand and collapse</span>
+      <p>This accordion shows an open folder when expanded and a closed folder when collapsed.</p>
+    </BqAccordion>
+
+    {/* Single icon + rotate */}
+    <BqAccordion rotate>
+      <BqIcon name="caret-up" slot="expand" />
+      <span slot="header">Custom icon with rotation</span>
+      <p>This accordion uses a single caret icon that rotates 180° when expanded.</p>
+    </BqAccordion>
+    ```
+
+    ```html Angular icon="angular"
+    <!-- Two separate icons -->
+    <bq-accordion>
+      <bq-icon name="folder-simple" slot="expand"></bq-icon>
+      <bq-icon name="folder-open" slot="collapse"></bq-icon>
+      <span slot="header">Custom icons for expand and collapse</span>
+      <p>This accordion shows an open folder when expanded and a closed folder when collapsed.</p>
+    </bq-accordion>
+
+    <!-- Single icon + rotate -->
+    <bq-accordion rotate>
+      <bq-icon name="caret-up" slot="expand"></bq-icon>
+      <span slot="header">Custom icon with rotation</span>
+      <p>This accordion uses a single caret icon that rotates 180° when expanded.</p>
+    </bq-accordion>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqAccordion, BqIcon } from "@beeq/vue";
+    </script>
+
+    <template>
+      <!-- Two separate icons -->
+      <BqAccordion>
+        <BqIcon name="folder-simple" slot="expand" />
+        <BqIcon name="folder-open" slot="collapse" />
+        <span slot="header">Custom icons for expand and collapse</span>
+        <p>This accordion shows an open folder when expanded and a closed folder when collapsed.</p>
+      </BqAccordion>
+
+      <!-- Single icon + rotate -->
+      <BqAccordion rotate>
+        <BqIcon name="caret-up" slot="expand" />
+        <span slot="header">Custom icon with rotation</span>
+        <p>This accordion uses a single caret icon that rotates 180° when expanded.</p>
+      </BqAccordion>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Custom header layout
+
+Sometimes customizations are needed to meet some requirements.
+For example, having the collapse/expand indicator in front instead of at the end (current position).
+Developers can [rely on the exposed shadow DOM parts](https://www.beeq.design/3d466e231/p/6733bc) of the components to target elements inside it and tweak not only the look & feel but also the layout.
+
+<Note>
+ In the example below, we **define a custom CSS class** that targets the header part to reverse the order of the header content and the expand icon, and also applies flexbox styles to space out the header content.
+ Then, assuming the custom CSS file is imported in the project, we apply the custom class to the accordion to achieve the desired header layout.
+</Note>
+
+<CodeLivePreview code={`
+  <style>
+    .my-accordion {
+      &::part(header) {
+        flex-direction: row-reverse;
+      }
+
+      div[slot="header"] {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  </style>
+  <bq-accordion-group appearance="ghost">
+    <bq-accordion class="my-accordion" rotate>
+      <bq-icon name="caret-down" slot="expand"></bq-icon>
+      <div slot="header">
+        <span>Order summary</span>
+        <span>$123.99</span>
+      </div>
+      <p>This is an example of a custom header layout using the header slot and CSS part selectors to move the expand icon to the end and space out the header content.</p>
+    </bq-accordion>
+    <bq-accordion class="my-accordion" rotate expanded>
+      <bq-icon name="caret-down" slot="expand"></bq-icon>
+      <div slot="header">
+        <span>Order summary</span>
+        <span>$123.99</span>
+      </div>
+      <p>This is an example of a custom header layout using the header slot and CSS part selectors to move the expand icon to the end and space out the header content.</p>
+    </bq-accordion>
+  </bq-accordion-group>
+`}>
+  <CodeGroup>
+    ```css CSS icon="css"
+    .my-accordion {
+      &::part(header) {
+        flex-direction: row-reverse;
+      }
+      div[slot="header"] {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+    ```
+
+    ```html HTML icon="html5"
+    <bq-accordion-group appearance="ghost">
+      <bq-accordion class="my-accordion" rotate>
+        <bq-icon name="caret-down" slot="expand"></bq-icon>
+        <div slot="header">
+          <span>Order summary</span>
+          <span>$123.99</span>
+        </div>
+        <p>This is an example of a custom header layout using the header slot and CSS part selectors to move the expand icon to the end and space out the header content.</p>
+      </bq-accordion>
+      <bq-accordion class="my-accordion" rotate>
+        <bq-icon name="caret-down" slot="expand"></bq-icon>
+        <div slot="header">
+          <span>Order summary</span>
+          <span>$123.99</span>
+        </div>
+        <p>This is an example of a custom header layout using the header slot and CSS part selectors to move the expand icon to the end and space out the header content.</p>
+      </bq-accordion>
+    </bq-accordion-group>
+    ```
+
+    ```jsx React icon="react"
+    import { BqAccordion, BqAccordionGroup, BqIcon } from "@beeq/react";
+    import "./my-accordion.css";
+
+    <BqAccordionGroup appearance="ghost">
+      <BqAccordion className="my-accordion" rotate>
+        <BqIcon name="caret-down" slot="expand" />
+        <div slot="header">
+          <span>Order summary</span>
+          <span>$123.99</span>
+        </div>
+        <p>This is an example of a custom header layout using the header slot and CSS part selectors to move the expand icon to the end and space out the header content.</p>
+      </BqAccordion>
+      <BqAccordion className="my-accordion" rotate>
+        <BqIcon name="caret-down" slot="expand" />
+        <div slot="header">
+          <span>Order summary</span>
+          <span>$123.99</span>
+        </div>
+        <p>This is an example of a custom header layout using the header slot and CSS part selectors to move the expand icon to the end and space out the header content.</p>
+      </BqAccordion>
+    </BqAccordionGroup>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-accordion-group appearance="ghost">
+      <bq-accordion class="my-accordion" rotate>
+        <bq-icon name="caret-down" slot="expand"></bq-icon>
+        <div slot="header">
+          <span>Order summary</span>
+          <span>$123.99</span>
+        </div>
+        <p>This is an example of a custom header layout using the header slot and CSS part selectors to move the expand icon to the end and space out the header content.</p>
+      </bq-accordion>
+      <bq-accordion class="my-accordion" rotate>
+        <bq-icon name="caret-down" slot="expand"></bq-icon>
+        <div slot="header">
+          <span>Order summary</span>
+          <span>$123.99</span>
+        </div>
+        <p>This is an example of a custom header layout using the header slot and CSS part selectors to move the expand icon to the end and space out the header content.</p>
+      </bq-accordion>
+    </bq-accordion-group>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <template>
+      <BqAccordionGroup appearance="ghost">
+        <BqAccordion class="my-accordion" rotate>
+          <BqIcon name="caret-down" slot="expand" />
+          <div slot="header">
+            <span>Order summary</span>
+            <span>$123.99</span>
+          </div>
+          <p>This is an example of a custom header layout using the header slot and CSS part selectors to move the expand icon to the end and space out the header content.</p>
+        </BqAccordion>
+        <BqAccordion class="my-accordion" rotate expanded>
+          <BqIcon name="caret-down" slot="expand" />
+          <div slot="header">
+            <span>Order summary</span>
+            <span>$123.99</span>
+          </div>
+          <p>This is an example of a custom header layout using the header slot and CSS part selectors to move the expand icon to the end and space out the header content.</p>
+        </BqAccordion>
+      </BqAccordionGroup>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+
+    Write header labels that clearly describe the content inside. People should be able to predict what they will find before opening the section.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+
+    Do not nest accordions inside accordion panels. It creates unclear hierarchy and makes interaction patterns harder to follow.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+
+    Use `bq-accordion-group` when items belong together and their open/close behavior should be coordinated.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+
+    Do not hide critical content inside accordions. If the information is essential to the page, it should usually remain visible.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+
+    Consider `no-animation` or a reduced-motion strategy for workflows where motion may distract or overwhelm.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not use an accordion when a simpler show/hide pattern or a tab group would communicate the structure more clearly.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+- **Keyboard navigation** — the header is a focusable button and can be activated with <kbd>Enter</kbd> or <kbd>Space</kbd>.
+- **Clear headings** — header labels should describe the panel content clearly enough to be understood before expansion.
+- **ARIA support** — the header exposes `aria-expanded`, and the panel visibility is reflected for assistive technologies.
+- **Disabled state** — disabled accordions are removed from the tab order, so use this state sparingly and explain unavailable content when possible.
+- **Reduced motion** — use `no-animation` when motion should be minimized, or respect the user's `prefers-reduced-motion` setting.
+
+## API reference
+
+### `bq-accordion` properties
+
+| Property      | Attribute      | Description                                                                  | Type                       | Default    |
+| ------------- | -------------- | ---------------------------------------------------------------------------- | -------------------------- | ---------- |
+| `appearance`  | `appearance`   | The appearance style of the accordion                                        | `'filled'` \| `'ghost'`   | `'filled'` |
+| `disabled`    | `disabled`     | If `true`, the accordion header is not interactive                           | `boolean`                  | `false`    |
+| `expanded`    | `expanded`     | If `true`, the accordion panel is expanded                                   | `boolean`                  | `false`    |
+| `noAnimation` | `no-animation` | If `true`, disables the open/close animation                                 | `boolean`                  | `false`    |
+| `rotate`      | `rotate`       | If `true`, the expand icon rotates 180° when expanded instead of swapping    | `boolean`                  | `false`    |
+| `size`        | `size`         | The size of the accordion                                                    | `'small'` \| `'medium'`   | `'medium'` |
+
+### `bq-accordion-group` properties
+
+| Property      | Attribute      | Description                                                                   | Type                       | Default    |
+| ------------- | -------------- | ----------------------------------------------------------------------------- | -------------------------- | ---------- |
+| `appearance`  | `appearance`   | Appearance style applied to all child accordions                              | `'filled'` \| `'ghost'`   | `'filled'` |
+| `expandAll`   | `expand-all`   | If `true`, all child accordions are expanded                                  | `boolean`                  | `false`    |
+| `noAnimation` | `no-animation` | If `true`, disables animation on all child accordions                         | `boolean`                  | `false`    |
+| `multiple`    | `multiple`     | If `true`, multiple accordion items can be expanded at the same time          | `boolean`                  | `false`    |
+| `size`        | `size`         | Size applied to all child accordions                                          | `'small'` \| `'medium'`   | `'medium'` |
+
+### Events
+
+| Event          | Description                                           | Type                                    |
+| -------------- | ----------------------------------------------------- | --------------------------------------- |
+| `bqBlur`       | Fires when the accordion loses focus                  | `CustomEvent<HTMLBqAccordionElement>`   |
+| `bqClick`      | Fires when the accordion header is clicked            | `CustomEvent<HTMLBqAccordionElement>`   |
+| `bqFocus`      | Fires when the accordion gets focus                   | `CustomEvent<HTMLBqAccordionElement>`   |
+| `bqOpen`       | Fires when the accordion panel starts to open         | `CustomEvent<HTMLBqAccordionElement>`   |
+| `bqAfterOpen`  | Fires after the open transition has completed         | `CustomEvent<HTMLBqAccordionElement>`   |
+| `bqClose`      | Fires when the accordion panel starts to close        | `CustomEvent<HTMLBqAccordionElement>`   |
+| `bqAfterClose` | Fires after the close transition has completed        | `CustomEvent<HTMLBqAccordionElement>`   |
+
+<Note>
+  * In React, prefix events with `on`: `onBqBlur`, `onBqClick`, `onBqFocus`, `onBqOpen`, `onBqClose`, `onBqAfterOpen`, `onBqAfterClose`.
+  * In Angular, use the event binding syntax: `(bqBlur)`, `(bqClick)`, `(bqFocus)`, `(bqOpen)`, `(bqClose)`, etc.
+  * In Vue, use the `@` shorthand: `@bq-blur`, `@bq-click`, `@bq-focus`, `@bq-open`, `@bq-close`, etc.
+</Note>
+
+### Slots
+
+#### `bq-accordion`
+
+| Slot        | Description                                                                |
+| ----------- | -------------------------------------------------------------------------- |
+| *(default)* | The panel body content shown when the accordion is expanded                |
+| `collapse`  | Custom icon shown when the accordion is expanded (clicking will collapse)  |
+| `expand`    | Custom icon shown when the accordion is collapsed (clicking will expand)   |
+| `header`    | The accordion header label (the clickable trigger)                         |
+| `prefix`    | Content before the header text — icon or avatar                            |
+| `suffix`    | Content after the header text — icon or status indicator                   |
+
+#### `bq-accordion-group`
+
+| Slot        | Description                                      |
+| ----------- | ------------------------------------------------ |
+| *(default)* | One or more `bq-accordion` elements              |
+
+### Shadow parts
+
+#### `bq-accordion`
+
+| Part      | Description                                              |
+| --------- | -------------------------------------------------------- |
+| `base`    | The `<details>` element wrapping the accordion           |
+| `header`  | The `<summary>` element — the clickable header           |
+| `panel`   | The `<div>` containing the panel body content            |
+| `prefix`  | The `<div>` wrapping the prefix slot content             |
+| `suffix`  | The `<div>` wrapping the suffix slot content             |
+| `text`    | The `<div>` wrapping the header text slot content        |
+
+#### `bq-accordion-group`
+
+| Part      | Description                                              |
+| --------- | -------------------------------------------------------- |
+| `base`    | The wrapper `<div>` for the accordion group              |
+
+### CSS custom properties
+
+<Expandable title="View all CSS variables" defaultOpen={false}>
+
+  #### Size
+
+  | Variable                                   | Description                                       | Default                      |
+  | ------------------------------------------ | ------------------------------------------------- | ---------------------------- |
+  | `--bq-accordion--small-padding-y`          | Small vertical padding                            | `theme('spacing.xs')`        |
+  | `--bq-accordion--small-padding-start`      | Small start padding                               | `theme('spacing.s')`         |
+  | `--bq-accordion--small-padding-end`        | Small end padding                                 | `theme('spacing.s')`         |
+  | `--bq-accordion--small-gap`                | Small gap between prefix, title, and suffix       | `theme('spacing.xs')`        |
+  | `--bq-accordion--small-radius`             | Small border radius                               | `theme('borderRadius.xs')`   |
+  | `--bq-accordion--medium-padding-y`         | Medium vertical padding                           | `theme('spacing.s')`         |
+  | `--bq-accordion--medium-padding-start`     | Medium start padding                              | `theme('spacing.m')`         |
+  | `--bq-accordion--medium-padding-end`       | Medium end padding                                | `theme('spacing.m')`         |
+  | `--bq-accordion--medium-gap`               | Medium gap between prefix, title, and suffix      | `theme('spacing.m')`         |
+  | `--bq-accordion--medium-radius`            | Medium border radius                              | `theme('borderRadius.xs')`   |
+
+  #### Border (collapsed state)
+
+  | Variable                                   | Description                       | Default           |
+  | ------------------------------------------ | --------------------------------- | ----------------- |
+  | `--bq-accordion--collapsed-border-color`   | Collapsed border color            | `transparent`     |
+  | `--bq-accordion--collapsed-border-style`   | Collapsed border style            | `none`            |
+  | `--bq-accordion--collapsed-border-width`   | Collapsed border width            | `unset`           |
+
+  #### Border (expanded state)
+
+  | Variable                                   | Description                       | Default           |
+  | ------------------------------------------ | --------------------------------- | ----------------- |
+  | `--bq-accordion--expanded-border-color`    | Expanded border color             | `transparent`     |
+  | `--bq-accordion--expanded-border-style`    | Expanded border style             | `none`            |
+  | `--bq-accordion--expanded-border-width`    | Expanded border width             | `unset`           |
+
+  #### Filled appearance
+
+  | Variable                                              | Description                                | Default                          |
+  | ----------------------------------------------------- | ------------------------------------------ | -------------------------------- |
+  | `--bq-accordion--filled-collapsed-background`         | Filled collapsed header background         | `theme('colors.ui.secondary')`   |
+  | `--bq-accordion--filled-collapsed-text-color`         | Filled collapsed header text color         | `theme('colors.text.primary')`   |
+  | `--bq-accordion--filled-expanded-background`          | Filled expanded header background          | `theme('colors.ui.brand-alt')`   |
+  | `--bq-accordion--filled-expanded-text-color`          | Filled expanded header text color          | `theme('colors.text.primary')`   |
+
+  #### Ghost appearance
+
+  | Variable                                              | Description                                | Default                          |
+  | ----------------------------------------------------- | ------------------------------------------ | -------------------------------- |
+  | `--bq-accordion--ghost-collapsed-background`          | Ghost collapsed header background          | `transparent`                    |
+  | `--bq-accordion--ghost-collapsed-text-color`          | Ghost collapsed header text color          | `theme('colors.text.primary')`   |
+  | `--bq-accordion--ghost-expanded-background`           | Ghost expanded header background           | `transparent`                    |
+  | `--bq-accordion--ghost-expanded-text-color`           | Ghost expanded header text color           | `theme('colors.text.brand')`     |
+
+  #### Panel — filled
+
+  | Variable                                              | Description                                | Default                          |
+  | ----------------------------------------------------- | ------------------------------------------ | -------------------------------- |
+  | `--bq-accordion--panel-filled-border-color`           | Filled panel border color                  | `theme('colors.stroke.primary')` |
+  | `--bq-accordion--panel-filled-border-style`           | Filled panel border style                  | `solid`                          |
+  | `--bq-accordion--panel-filled-border-width`           | Filled panel border width                  | `1px`                            |
+  | `--bq-accordion--panel-small-filled-padding-y`        | Small filled panel vertical padding        | `theme('spacing.s')`             |
+  | `--bq-accordion--panel-small-filled-padding-start`    | Small filled panel start padding           | `theme('spacing.s')`             |
+  | `--bq-accordion--panel-small-filled-padding-end`      | Small filled panel end padding             | `theme('spacing.s')`             |
+  | `--bq-accordion--panel-medium-filled-padding-y`       | Medium filled panel vertical padding       | `theme('spacing.m')`             |
+  | `--bq-accordion--panel-medium-filled-padding-start`   | Medium filled panel start padding          | `theme('spacing.m')`             |
+  | `--bq-accordion--panel-medium-filled-padding-end`     | Medium filled panel end padding            | `theme('spacing.m')`             |
+
+  #### Panel — ghost
+
+  | Variable                                              | Description                                | Default                          |
+  | ----------------------------------------------------- | ------------------------------------------ | -------------------------------- |
+  | `--bq-accordion--panel-ghost-border-color`            | Ghost panel border color                   | `theme('colors.stroke.primary')` |
+  | `--bq-accordion--panel-ghost-border-style`            | Ghost panel border style                   | `solid`                          |
+  | `--bq-accordion--panel-ghost-border-width`            | Ghost panel border width                   | `1px`                            |
+  | `--bq-accordion--panel-small-ghost-padding-y`         | Small ghost panel vertical padding         | `theme('spacing.s')`             |
+  | `--bq-accordion--panel-small-ghost-padding-start`     | Small ghost panel start padding            | `theme('spacing.s')`             |
+  | `--bq-accordion--panel-small-ghost-padding-end`       | Small ghost panel end padding              | `theme('spacing.s')`             |
+  | `--bq-accordion--panel-medium-ghost-padding-y`        | Medium ghost panel vertical padding        | `theme('spacing.m')`             |
+  | `--bq-accordion--panel-medium-ghost-padding-start`    | Medium ghost panel start padding           | `theme('spacing.m')`             |
+  | `--bq-accordion--panel-medium-ghost-padding-end`      | Medium ghost panel end padding             | `theme('spacing.m')`             |
+
+  #### Group
+
+  | Variable                         | Description                           | Default              |
+  | -------------------------------- | ------------------------------------- | -------------------- |
+  | `--bq-accordion-group--gap`      | Gap between accordion items in a group | `theme('spacing.xs')` |
+
+</Expandable>
+
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+## Resources
+
+Use Storybook to test behavior and states interactively, or review the source if you need implementation details.
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-accordion--default">
+    Explore all accordion configurations in Storybook
+  </Card>
+
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/accordion">
+    View the component source on GitHub
+  </Card>
+</CardGroup>
