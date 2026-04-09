@@ -145,7 +145,7 @@
     "node": ">=22.0.0",
     "pnpm": ">=10.0.0"
   },
-  "packageManager": "pnpm@10.26.2",
+  "packageManager": "pnpm@10.33.0",
   "pnpm": {
     "overrides": {
       "@angular-devkit/build-angular": "21.2.6",
@@ -164,6 +164,6 @@
   },
   "volta": {
     "node": "24.14.1",
-    "pnpm": "10.26.2"
+    "pnpm": "10.33.0"
   }
 }
