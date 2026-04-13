@@ -53,4 +53,4 @@ const updateFormValidity = ({
   internals.setValidity({});
 };
 
-export { updateFormValidity, type FormValidityOptions };
+export { type FormValidityOptions, updateFormValidity };
