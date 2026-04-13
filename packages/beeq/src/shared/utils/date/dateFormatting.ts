@@ -92,4 +92,4 @@ const clampDateToRange = (dateStr: string, min?: string, max?: string): string =
   return dateStr;
 };
 
-export { formatDisplayValue, extractFocusedDate, clampDateToRange };
+export { clampDateToRange, extractFocusedDate, formatDisplayValue };

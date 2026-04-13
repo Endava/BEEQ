@@ -9,4 +9,5 @@ export interface FloatingUIOptions {
   skidding?: number;
   onPositionChange?: (placement: Placement) => void;
 }
+
 export type { Placement };

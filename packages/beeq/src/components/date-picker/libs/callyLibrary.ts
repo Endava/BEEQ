@@ -102,4 +102,4 @@ const loadCallyLibrary = (): Promise<void> => {
   return loadingPromise;
 };
 
-export { loadCallyLibrary, isCallyLibraryLoaded };
+export { isCallyLibraryLoaded, loadCallyLibrary };

@@ -204,4 +204,4 @@ const getTodayISO = (): string => {
   return new Date().toLocaleDateString(ISO_DATE_LOCALE);
 };
 
-export { parseDateInput, isValidISODate, toISODateString, getTodayISO, ISO_DATE_LOCALE };
+export { getTodayISO, ISO_DATE_LOCALE, isValidISODate, parseDateInput, toISODateString };
