@@ -101,7 +101,6 @@
     "lint-staged": "17.0.7",
     "lit": "3.3.2",
     "lit-html": "3.3.2",
-    "mint": "4.2.457",
     "nanospinner": "1.2.2",
     "ng-packagr": "22.0.0",
     "node-fetch": "3.3.2",
