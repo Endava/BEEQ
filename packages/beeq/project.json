@@ -140,16 +140,11 @@
       }
     },
     "e2e": {
-      "executor": "@nxext/stencil:e2e",
-      "outputs": ["{options.outputPath}"],
+      "executor": "nx:run-commands",
+      "dependsOn": [{ "target": "build", "projects": "beeq-tailwindcss" }],
       "options": {
-        "projectType": "library",
-        "tsConfig": "packages/beeq/tsconfig.lib.json",
-        "configPath": "packages/beeq/stencil.config.ts",
-        "outputPath": "dist/beeq",
-        "runInBand": true,
-        "noBuild": true,
-        "noStackTrace": true
+        "command": "pnpm exec vitest run --project e2e",
+        "cwd": "packages/beeq"
       }
     },
     "check": {
