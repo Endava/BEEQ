@@ -131,28 +131,12 @@
         "sourceUrl": "https://github.com/phosphor-icons/core/archive/refs/heads"
       }
     },
-    "spec": {
+    "test": {
       "executor": "nx:run-commands",
       "dependsOn": [{ "target": "build", "projects": "beeq-tailwindcss" }],
       "options": {
         "command": "pnpm exec vitest run --project spec",
         "cwd": "packages/beeq"
-      }
-    },
-    "test": {
-      "executor": "@nxext/stencil:test",
-      "outputs": ["{options.outputPath}"],
-      "dependsOn": [{ "target": "build", "projects": "beeq-tailwindcss" }],
-      "options": {
-        "projectType": "library",
-        "tsConfig": "packages/beeq/tsconfig.lib.json",
-        "configPath": "packages/beeq/stencil.config.ts",
-        "outputPath": "dist/beeq",
-        "detectOpenHandles": true,
-        "forceExit": false,
-        "testTimeout": 10000,
-        "runInBand": true,
-        "maxWorkers": 1
       }
     },
     "e2e": {
