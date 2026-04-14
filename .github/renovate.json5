@@ -134,6 +134,13 @@
       enabled: false,
       matchDepTypes: ["peerDependencies"],
     },
+    /**
+     * Do not renovate engines versions/ranges
+     */
+    {
+      enabled: false,
+      matchDepTypes: ["engines"],
+    }
   ],
   /**
    * Determines how to modify or update existing ranges.
