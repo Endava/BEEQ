@@ -1,49 +1,42 @@
-import type { E2EPage } from '@stencil/core/testing';
-
 /**
- * Enhances page to retrieve element style by a given selector
- * @param {E2EPage} page - stencil instance of puppeteer page
- * @param {String} selector - selector to be passed to querySelector, it supports stencil `>>>` selector
- * @returns {Object} style declaration
+ * Retrieves computed CSS styles for an element, with support for shadow DOM piercing via `>>>` selector.
+ * Works directly with the DOM (designed for browser-mode e2e tests).
+ *
+ * @param {string} selector - CSS selector, supports `>>>` to pierce into shadow DOM
+ * @param {ReadonlyArray<T>} [filter] - Optional list of CSS property names to return
+ * @returns {Pick<CSSStyleDeclaration, T>} The computed style (filtered if specified)
  */
 export const computedStyle = <T extends keyof CSSStyleDeclaration>(
-  page: E2EPage,
   selector: string,
   filter?: ReadonlyArray<T>,
-): Promise<Pick<CSSStyleDeclaration, T>> => {
-  return page.evaluate(
-    (querySelector: string, filter?: Array<T>) => {
-      const [lightDomSelector, shadowDomSelector] = querySelector.split('>>>');
+): Pick<CSSStyleDeclaration, T> => {
+  const [lightDomSelector, shadowDomSelector] = selector.split('>>>').map((s) => s.trim());
 
-      let element = document.querySelector(lightDomSelector);
+  let element: Element | null = document.querySelector(lightDomSelector);
 
-      if (!element) {
-        throw new Error(`Could not find element ${lightDomSelector}`);
-      }
+  if (!element) {
+    throw new Error(`Could not find element ${lightDomSelector}`);
+  }
 
-      if (shadowDomSelector) {
-        element = element.shadowRoot.querySelector(shadowDomSelector);
+  if (shadowDomSelector) {
+    element = element.shadowRoot?.querySelector(shadowDomSelector) ?? null;
 
-        if (!element) {
-          throw new Error(`Could not find element ${shadowDomSelector}`);
-        }
-      }
+    if (!element) {
+      throw new Error(`Could not find element ${shadowDomSelector}`);
+    }
+  }
 
-      const style = getComputedStyle(element);
+  const style = getComputedStyle(element);
 
-      if (filter) {
-        return filter.reduce(
-          (acc, key) => {
-            acc[key] = style[key];
-            return acc;
-          },
-          {} as Pick<CSSStyleDeclaration, T>,
-        );
-      }
+  if (filter) {
+    return filter.reduce(
+      (acc, key) => {
+        acc[key] = style[key];
+        return acc;
+      },
+      {} as Pick<CSSStyleDeclaration, T>,
+    );
+  }
 
-      return JSON.parse(JSON.stringify(style));
-    },
-    selector,
-    filter,
-  );
+  return JSON.parse(JSON.stringify(style));
 };

@@ -2,23 +2,12 @@ import { afterEach, describe, expect, it, vi } from '@stencil/vitest';
 
 import { computedStyle } from '..';
 
-/** Minimal mock matching the subset of E2EPage used by computedStyle */
-interface MockPage {
-  evaluate: (fn: (...args: unknown[]) => unknown, ...args: unknown[]) => unknown;
-}
-
 describe(computedStyle.name, () => {
-  // Create a minimal page mock that mirrors what the tests were doing:
-  // page.evaluate(fn, ...args) just calls fn(...args) synchronously
-  const mockPage: MockPage = {
-    evaluate: (fn: (...args: unknown[]) => unknown, ...args: unknown[]) => fn(...args),
-  };
-
   afterEach(() => {
     vi.restoreAllMocks();
   });
 
-  it('should return element style', async () => {
+  it('should return element style', () => {
     vi.spyOn(document, 'querySelector').mockImplementationOnce(() => {
       const div = document.createElement('div');
       div.attachShadow({ mode: 'open' });
@@ -26,12 +15,12 @@ describe(computedStyle.name, () => {
     });
     vi.spyOn(globalThis, 'getComputedStyle').mockImplementationOnce(() => ({ width: '20px' }) as CSSStyleDeclaration);
 
-    expect(await computedStyle(mockPage as Parameters<typeof computedStyle>[0], 'bq-component')).toStrictEqual({
+    expect(computedStyle('bq-component')).toStrictEqual({
       width: '20px',
     });
   });
 
-  it('should return shadow element style', async () => {
+  it('should return shadow element style', () => {
     vi.spyOn(document, 'querySelector').mockImplementationOnce(() => {
       const div = document.createElement('div');
       const shadowRoot = div.attachShadow({ mode: 'open' });
@@ -40,12 +29,12 @@ describe(computedStyle.name, () => {
     });
     vi.spyOn(globalThis, 'getComputedStyle').mockImplementationOnce(() => ({ width: '30px' }) as CSSStyleDeclaration);
 
-    expect(await computedStyle(mockPage as Parameters<typeof computedStyle>[0], 'bq-component >>> div')).toStrictEqual({
+    expect(computedStyle('bq-component >>> div')).toStrictEqual({
       width: '30px',
     });
   });
 
-  it('should filter element style', async () => {
+  it('should filter element style', () => {
     vi.spyOn(document, 'querySelector').mockImplementationOnce(() => {
       const div = document.createElement('div');
       div.attachShadow({ mode: 'open' });
@@ -55,12 +44,10 @@ describe(computedStyle.name, () => {
       () => ({ width: '20px', height: '30px' }) as CSSStyleDeclaration,
     );
 
-    expect(
-      await computedStyle(mockPage as Parameters<typeof computedStyle>[0], 'bq-component', ['width']),
-    ).toStrictEqual({ width: '20px' });
+    expect(computedStyle('bq-component', ['width'])).toStrictEqual({ width: '20px' });
   });
 
-  it('should filter empty object if filter is []', async () => {
+  it('should filter empty object if filter is []', () => {
     vi.spyOn(document, 'querySelector').mockImplementationOnce(() => {
       const div = document.createElement('div');
       div.attachShadow({ mode: 'open' });
@@ -70,18 +57,16 @@ describe(computedStyle.name, () => {
       () => ({ width: '20px', height: '30px' }) as CSSStyleDeclaration,
     );
 
-    expect(await computedStyle(mockPage as Parameters<typeof computedStyle>[0], 'bq-component', [])).toStrictEqual({});
+    expect(computedStyle('bq-component', [])).toStrictEqual({});
   });
 
-  it('should throw error if element is not found', async () => {
+  it('should throw error if element is not found', () => {
     vi.spyOn(document, 'querySelector').mockImplementationOnce(() => null);
 
-    expect(() => computedStyle(mockPage as Parameters<typeof computedStyle>[0], 'bq-component')).toThrow(
-      'Could not find element bq-component',
-    );
+    expect(() => computedStyle('bq-component')).toThrow('Could not find element bq-component');
   });
 
-  it('should throw error if element is not found in shadow dom', async () => {
+  it('should throw error if element is not found in shadow dom', () => {
     vi.spyOn(document, 'querySelector').mockImplementationOnce(() => {
       const div = document.createElement('div');
       const shadowRoot = div.attachShadow({ mode: 'open' });
@@ -89,8 +74,6 @@ describe(computedStyle.name, () => {
       return div;
     });
 
-    expect(() => computedStyle(mockPage as Parameters<typeof computedStyle>[0], 'bq-component >>> span')).toThrow(
-      'Could not find element  span',
-    );
+    expect(() => computedStyle('bq-component >>> span')).toThrow('Could not find element span');
   });
 });
