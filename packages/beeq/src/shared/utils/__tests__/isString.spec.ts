@@ -1,3 +1,5 @@
+import { describe, expect, it } from '@stencil/vitest';
+
 import { isString } from '..';
 
 describe('isString', () => {
@@ -15,5 +17,25 @@ describe('isString', () => {
 
   it('returns false if value is an Array', () => {
     expect(isString(['Value 1', 2, 'Value'])).toBe(false);
+  });
+
+  it('returns true if value is a boxed String object', () => {
+    expect(isString(Object('boxed'))).toBe(true);
+  });
+
+  it('returns false if value is a number', () => {
+    expect(isString(42)).toBe(false);
+  });
+
+  it('returns false if value is null', () => {
+    expect(isString(null)).toBe(false);
+  });
+
+  it('returns false if value is undefined', () => {
+    expect(isString(undefined)).toBe(false);
+  });
+
+  it('returns false if value is a boolean', () => {
+    expect(isString(true)).toBe(false);
   });
 });

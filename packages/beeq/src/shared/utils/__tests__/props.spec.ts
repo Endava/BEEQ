@@ -1,3 +1,5 @@
+import { afterEach, beforeEach, describe, expect, it, vi } from '@stencil/vitest';
+
 import { validatePropValue } from '..';
 
 const ACCEPTED_VALUES = ['small', 'medium', 'large'] as const;
@@ -11,9 +13,9 @@ describe('props - validatePropValue', () => {
   const el = document.createElement('div') as unknown as ICustomElement;
 
   beforeEach(() => {
-    global.console.log = jest.fn();
-    global.console.warn = jest.fn();
-    global.console.error = jest.fn();
+    global.console.log = vi.fn();
+    global.console.warn = vi.fn();
+    global.console.error = vi.fn();
     el.size = 'medium';
   });
 

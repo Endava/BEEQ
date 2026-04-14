@@ -1,3 +1,5 @@
+import { describe, expect, it } from '@stencil/vitest';
+
 import { isNil } from '..';
 
 describe(isNil.name, () => {
@@ -11,7 +13,7 @@ describe(isNil.name, () => {
 
   it('returns false if value is string', () => {
     expect(isNil('')).toBe(false);
-    expect(isNil(new String(''))).toBe(false);
+    expect(isNil(``)).toBe(false);
   });
 
   it('returns false if value is number', () => {

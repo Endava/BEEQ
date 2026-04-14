@@ -1,3 +1,5 @@
+import { describe, expect, it } from '@stencil/vitest';
+
 import { getNextElement } from '..';
 
 function makeTestArray(length: number, disabled = false) {
