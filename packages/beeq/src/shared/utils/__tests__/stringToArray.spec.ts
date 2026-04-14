@@ -1,3 +1,5 @@
+import { describe, expect, it } from '@stencil/vitest';
+
 import { stringToArray } from '../stringToArray';
 
 describe('stringToArray', () => {

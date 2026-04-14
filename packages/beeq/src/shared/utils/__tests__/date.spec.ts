@@ -1,3 +1,5 @@
+import { describe, expect, it } from '@stencil/vitest';
+
 import { isValidISODate, parseDateInput } from '../date';
 
 describe('parseDateInput', () => {

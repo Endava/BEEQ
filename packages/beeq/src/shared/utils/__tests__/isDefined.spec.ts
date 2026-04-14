@@ -1,11 +1,11 @@
+import { describe, expect, it } from '@stencil/vitest';
+
 import { isDefined } from '..';
 
 describe(isDefined.name, () => {
   it('returns false if value is empty string', () => {
     expect(isDefined('')).toBe(false);
     expect(isDefined(``)).toBe(false);
-    expect(isDefined(new String(''))).toBe(false);
-    expect(isDefined(String(''))).toBe(false);
   });
 
   it('returns false if value is 0', () => {

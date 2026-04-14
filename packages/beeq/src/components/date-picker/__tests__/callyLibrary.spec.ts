@@ -1,3 +1,5 @@
+import { afterEach, beforeEach, describe, expect, it, vi } from '@stencil/vitest';
+
 type CallyLibraryModule = typeof import('../libs/callyLibrary');
 
 type MockScriptElement = {
@@ -5,22 +7,22 @@ type MockScriptElement = {
   src: string;
   onload: ((ev: Event) => void) | null;
   onerror: ((ev: Event) => void) | null;
-  setAttribute: jest.Mock;
+  setAttribute: ReturnType<typeof vi.fn>;
 };
 
 describe('callyLibrary', () => {
   let mockScript: MockScriptElement;
-  let appendChildSpy: jest.SpyInstance;
-  let querySelectorSpy: jest.SpyInstance;
-  let createElementSpy: jest.SpyInstance;
+  let appendChildSpy: ReturnType<typeof vi.spyOn>;
+  let querySelectorSpy: ReturnType<typeof vi.spyOn>;
+  let createElementSpy: ReturnType<typeof vi.spyOn>;
 
-  // We need dynamic imports here because jest.resetModules() doesn't reset already-imported modules
+  // We need dynamic imports here because vi.resetModules() doesn't reset already-imported modules
   let loadCallyLibrary: CallyLibraryModule['loadCallyLibrary'];
   let isCallyLibraryLoaded: CallyLibraryModule['isCallyLibraryLoaded'];
 
   beforeEach(async () => {
     // Reset module state between tests
-    jest.resetModules();
+    vi.resetModules();
 
     // Create a mock script element
     mockScript = {
@@ -28,19 +30,17 @@ describe('callyLibrary', () => {
       src: '',
       onload: null,
       onerror: null,
-      setAttribute: jest.fn(),
+      setAttribute: vi.fn(),
     };
 
     // Mock document.createElement
-    createElementSpy = jest
-      .spyOn(document, 'createElement')
-      .mockReturnValue(mockScript as unknown as HTMLScriptElement);
+    createElementSpy = vi.spyOn(document, 'createElement').mockReturnValue(mockScript as unknown as HTMLScriptElement);
 
     // Mock document.head.appendChild
-    appendChildSpy = jest.spyOn(document.head, 'appendChild').mockImplementation((node) => node);
+    appendChildSpy = vi.spyOn(document.head, 'appendChild').mockImplementation((node) => node);
 
     // Mock document.querySelector - default to no script found
-    querySelectorSpy = jest.spyOn(document, 'querySelector').mockReturnValue(null);
+    querySelectorSpy = vi.spyOn(document, 'querySelector').mockReturnValue(null);
 
     // Dynamically import the module AFTER mocks are set up
     const module = await import('../libs/callyLibrary');
@@ -49,7 +49,7 @@ describe('callyLibrary', () => {
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   describe('isCallyLibraryLoaded', () => {

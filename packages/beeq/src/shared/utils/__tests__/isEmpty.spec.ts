@@ -1,3 +1,5 @@
+import { describe, expect, it } from '@stencil/vitest';
+
 import { isEmpty } from '..';
 
 describe(isEmpty.name, () => {
