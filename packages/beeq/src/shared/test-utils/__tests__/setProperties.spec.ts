@@ -1,30 +1,39 @@
-import type { E2EPage } from '@stencil/core/testing';
+import { afterEach, beforeEach, describe, expect, it, vi } from '@stencil/vitest';
 
 import { setProperties } from '..';
 
+/** Minimal mock matching the subset of E2EPage used by setProperties */
+interface MockPage {
+  // biome-ignore lint/style/useNamingConvention: Mocking E2EPage interface properties
+  $eval: ReturnType<typeof vi.fn>;
+  waitForChanges: ReturnType<typeof vi.fn>;
+}
+
 describe(setProperties.name, () => {
-  let mockPage: E2EPage;
+  let mockPage: MockPage;
+  let page: Parameters<typeof setProperties>[0];
 
   beforeEach(() => {
     mockPage = {
       // biome-ignore lint/style/useNamingConvention: Mocking E2EPage interface properties
-      $eval: jest.fn(),
-      waitForChanges: jest.fn().mockResolvedValue(undefined),
-    } as unknown as E2EPage;
+      $eval: vi.fn(),
+      waitForChanges: vi.fn().mockResolvedValue(undefined),
+    };
+    page = mockPage as unknown as Parameters<typeof setProperties>[0];
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('should set attributes', async () => {
     const element = {};
 
-    (mockPage.$eval as jest.Mock).mockImplementationOnce(
-      (_: unknown, fn: (...args: unknown[]) => unknown, ...args: unknown[]) => fn(element, ...args),
+    mockPage.$eval.mockImplementationOnce((_: unknown, fn: (...args: unknown[]) => unknown, ...args: unknown[]) =>
+      fn(element, ...args),
     );
 
-    await setProperties(mockPage, 'a', { href: 'test-href', id: 'test-id' });
+    await setProperties(page, 'a', { href: 'test-href', id: 'test-id' });
 
     expect(element).toEqual({ href: 'test-href', id: 'test-id' });
   });
@@ -32,11 +41,11 @@ describe(setProperties.name, () => {
   it('should return attributes', async () => {
     const element = {};
 
-    (mockPage.$eval as jest.Mock).mockImplementation(
-      (_: unknown, fn: (...args: unknown[]) => unknown, ...args: unknown[]) => fn(element, ...args),
+    mockPage.$eval.mockImplementation((_: unknown, fn: (...args: unknown[]) => unknown, ...args: unknown[]) =>
+      fn(element, ...args),
     );
 
-    expect(await setProperties(mockPage, 'div', { title: 'test-title', id: 'test-id' })).toEqual({
+    expect(await setProperties(page, 'div', { title: 'test-title', id: 'test-id' })).toEqual({
       title: 'test-title',
       id: 'test-id',
     });
