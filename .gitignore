@@ -5,10 +5,12 @@
 !.nx/workflows
 .nx/*
 .stencil
+__screenshots__
 chromatic-diagnostics.json
 dist
 out-tsc
 tmp/**
+.vitest-attachments
 www
 
 # source files to ignore
