@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from '@stencil/vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { getColorCSSVariable } from '..';
 

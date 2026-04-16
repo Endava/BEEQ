@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from '@stencil/vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { getInnerHTML, getTextContent, hasSlot, hasSlotContent } from '../slot';
 
