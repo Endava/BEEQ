@@ -232,7 +232,8 @@ describe('bq-alert', () => {
     );
 
     const iconOutline = root.shadowRoot.querySelector('[part="icon-outline"]');
-    expect(iconOutline.classList.contains('!hidden')).toBe(true);
+    expect(iconOutline).not.toBeNull();
+    expect(iconOutline).toHaveClass('!hidden');
   });
 
   it('should close when the close button is clicked', async () => {
