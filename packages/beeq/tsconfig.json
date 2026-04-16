@@ -6,6 +6,6 @@
     "jsxFactory": "h",
     "jsxFragmentFactory": "h.Fragment",
     "moduleResolution": "bundler",
-    "types": ["vitest/globals", "@vitest/browser/matchers", "@stencil/vitest/globals"]
+    "types": ["vitest/globals", "@vitest/browser/matchers", "@stencil/vitest/globals", "@types/node"]
   }
 }

@@ -19,7 +19,7 @@ function serveBeeqSvg(): Plugin {
       server.middlewares.use((req, res, next) => {
         if (!req.url?.startsWith('/svg/') || !req.url.endsWith('.svg')) return next();
 
-        const filePath = resolve(SVG_DIR, req.url.slice(5));
+        const filePath = resolve(SVG_DIR, req.url.slice(5)).replace(/\\/g, '/');
         // Prevent path traversal
         if (!filePath.startsWith(SVG_DIR)) return next();
 
