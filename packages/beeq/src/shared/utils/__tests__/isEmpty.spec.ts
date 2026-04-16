@@ -1,4 +1,4 @@
-import { describe, expect, it } from '@stencil/vitest';
+import { describe, expect, it } from 'vitest';
 
 import { isEmpty } from '..';
 

@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from '@stencil/vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { computedStyle } from '..';
 
