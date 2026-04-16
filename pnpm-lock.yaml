@@ -276,6 +276,9 @@ importers:
       nx-stylelint:
         specifier: 18.0.2
         version: 18.0.2(nx@22.6.5(@swc-node/register@1.11.1(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@swc/core@1.15.18(@swc/helpers@0.5.18))(@swc/types@0.1.26)(typescript@5.9.3))(@swc/core@1.15.18(@swc/helpers@0.5.18)))(stylelint-config-standard-scss@14.0.0(postcss@8.5.6)(stylelint@16.26.1(typescript@5.9.3)))(stylelint-config-standard@37.0.0(stylelint@16.26.1(typescript@5.9.3)))(stylelint@16.26.1(typescript@5.9.3))(typescript@5.9.3)
+      playwright:
+        specifier: 1.59.1
+        version: 1.59.1
       plop:
         specifier: 4.0.1
         version: 4.0.1(@types/node@22.19.3)
