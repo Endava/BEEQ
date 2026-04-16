@@ -31,7 +31,7 @@
     "clean": "run-s clean:*",
     "clean:build": "pnpm dlx rimraf .stencil dist",
     "clean:modules": "pnpm dlx rimraf ./node_modules ./**/node_modules ./packages/**/node_modules",
-    "postinstall": "node node_modules/puppeteer/install.mjs",
+    "postinstall": "pnpm exec playwright install chromium",
     "g": "plop --cwd tools/src/generators/plop"
   },
   "dependencies": {
