@@ -112,11 +112,11 @@
       }
     },
     "cem": {
-      "command": "pmp exec cem analyze --config {projectRoot}/cem.config.mjs",
+      "command": "pnpm exec cem analyze --config {projectRoot}/cem.config.mjs",
       "outputs": ["{projectRoot}/custom-elements.json"]
     },
     "cem-dev": {
-      "command": "pmp exec cem analyze --config {projectRoot}/cem.config.mjs --watch",
+      "command": "pnpm exec cem analyze --config {projectRoot}/cem.config.mjs --watch",
       "continuous": true
     },
     "icons": {
@@ -143,7 +143,7 @@
       "executor": "nx:run-commands",
       "dependsOn": [{ "target": "build", "projects": "beeq-tailwindcss" }],
       "options": {
-        "command": "pnpm exec vitest run --project e2e",
+        "commands": ["pnpm exec playwright install chromium", "pnpm exec vitest run --project e2e"],
         "cwd": "packages/beeq"
       }
     },

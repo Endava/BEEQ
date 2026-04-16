@@ -14,6 +14,7 @@ document.head.appendChild(script);
 // Adjust according to your build output of choice
 beforeAll(async () => {
   // Load the lazy-loader for this project
+  // @ts-expect-error - E2E tests run after build, so the file is guaranteed to exist. The error is due to the fact that the file doesn't exist at compile time.
   await import('../../dist/beeq/dist/beeq/beeq.esm.js');
 });
 

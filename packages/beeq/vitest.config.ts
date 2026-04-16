@@ -44,7 +44,7 @@ export default defineVitestConfig({
           name: 'spec',
           include: ['src/**/*.spec.{ts,tsx}'],
           environment: 'stencil',
-          setupFiles: [resolvePath('./vitest-setup.ts')],
+          setupFiles: [resolvePath('./vitest-spec-setup.ts')],
         },
       },
       {
@@ -54,7 +54,7 @@ export default defineVitestConfig({
         test: {
           name: 'e2e',
           include: ['src/**/*.e2e.tsx'],
-          setupFiles: [resolvePath('./vitest-setup.ts')],
+          setupFiles: [resolvePath('./vitest-e2e-setup.ts')],
           browser: {
             enabled: true,
             provider: playwright(),
