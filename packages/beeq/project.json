@@ -112,11 +112,11 @@
       }
     },
     "cem": {
-      "command": "./node_modules/.bin/cem analyze --config {projectRoot}/cem.config.mjs",
+      "command": "pmp exec cem analyze --config {projectRoot}/cem.config.mjs",
       "outputs": ["{projectRoot}/custom-elements.json"]
     },
     "cem-dev": {
-      "command": "./node_modules/.bin/cem analyze --config {projectRoot}/cem.config.mjs --watch",
+      "command": "pmp exec cem analyze --config {projectRoot}/cem.config.mjs --watch",
       "continuous": true
     },
     "icons": {
