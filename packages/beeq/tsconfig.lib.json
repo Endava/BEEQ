@@ -15,7 +15,9 @@
     "**/*.stories.ts",
     "**/*.stories.js",
     "**/*.stories.jsx",
-    "**/*.stories.tsx"
+    "**/*.stories.tsx",
+    "vitest-e2e-setup.ts",
+    "vitest-spec-setup.ts"
   ],
   "include": ["../../tailwind.config.ts", "**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.mjs"]
 }
