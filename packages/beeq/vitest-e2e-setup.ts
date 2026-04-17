@@ -1,3 +1,6 @@
+/// <reference types="vitest/globals" />
+/// <reference types="@stencil/vitest/globals" />
+
 import { beforeAll } from 'vitest';
 // Load global styles (design tokens, CSS custom properties, etc.)
 // This is needed for browser-mode e2e tests so :root variables resolve correctly.
