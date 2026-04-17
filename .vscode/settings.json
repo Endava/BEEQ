@@ -68,7 +68,7 @@
     }
   ],
   "html.customData": ["./packages/beeq/cem/beeq.html-custom-data.json"],
-  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "js/ts.tsdk.promptToUseWorkspaceVersion": true,
   "less.validate": false,
   "scss.validate": false,
   "sonarlint.connectedMode.project": {
