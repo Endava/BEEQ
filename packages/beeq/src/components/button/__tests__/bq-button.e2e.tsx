@@ -41,7 +41,7 @@ describe('bq-button', () => {
 
     const prefixSlot = (root as HTMLBqButtonElement).shadowRoot?.querySelector<HTMLSlotElement>('slot[name="prefix"]');
 
-    expect(getTextContent(prefixSlot)).toBe('Prefix text');
+    expect(getTextContent(prefixSlot, { recurse: true })).toBe('Prefix text');
   });
 
   it('should render suffix element', async () => {
@@ -55,7 +55,7 @@ describe('bq-button', () => {
 
     const suffixSlot = (root as HTMLBqButtonElement).shadowRoot?.querySelector<HTMLSlotElement>('slot[name="suffix"]');
 
-    expect(getTextContent(suffixSlot)).toBe('Suffix text');
+    expect(getTextContent(suffixSlot, { recurse: true })).toBe('Suffix text');
   });
 
   it('should render loading indicator', async () => {
