@@ -1,5 +1,6 @@
 import { h } from '@stencil/core';
 import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
+import { userEvent } from 'vitest/browser';
 
 describe('bq-breadcrumb-item', () => {
   it('should render', async () => {
@@ -36,5 +37,34 @@ describe('bq-breadcrumb-item', () => {
     const element = root.shadowRoot.querySelector('.breadcrumb-item');
 
     expect(element?.tagName.toLowerCase()).toBe('a');
+  });
+
+  it('should apply `target` and `rel` to anchor items', async () => {
+    const { root } = await render(
+      <bq-breadcrumb-item href="https://example.com/" rel="external" target="_blank">
+        Home
+      </bq-breadcrumb-item>,
+    );
+
+    const element = root.shadowRoot?.querySelector('.breadcrumb-item') as HTMLAnchorElement;
+
+    expect(element.target).toBe('_blank');
+    expect(element.rel).toBe('noreferrer noopener');
+  });
+
+  it('should emit focus, click, and blur events', async () => {
+    const { root, spyOnEvent } = await render(<bq-breadcrumb-item>Home</bq-breadcrumb-item>);
+
+    const bqFocus = spyOnEvent('bqFocus');
+    const bqClick = spyOnEvent('bqClick');
+    const bqBlur = spyOnEvent('bqBlur');
+    const element = root.shadowRoot?.querySelector('.breadcrumb-item') as HTMLButtonElement;
+
+    await userEvent.click(element);
+    await userEvent.tab();
+
+    expect(bqFocus).toHaveReceivedEventTimes(1);
+    expect(bqClick).toHaveReceivedEventTimes(1);
+    expect(bqBlur).toHaveReceivedEventTimes(1);
   });
 });

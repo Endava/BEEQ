@@ -1,8 +1,14 @@
 import { h } from '@stencil/core';
-import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
+import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
+
+import { getTextContent } from '../../../shared/utils/slot';
 
 const getDrawerPanel = (drawer: HTMLBqDrawerElement) =>
   drawer.shadowRoot?.querySelector('[part="panel"]') as HTMLDivElement;
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
 
 describe('bq-drawer', () => {
   it('should render', async () => {
@@ -61,9 +67,8 @@ describe('bq-drawer', () => {
     await waitForStable(root);
 
     const titleSlot = root.shadowRoot?.querySelector('slot[name="title"]') as HTMLSlotElement;
-    const titleElement = titleSlot.assignedElements({ flatten: true })[0];
 
-    expect(titleElement.textContent?.trim()).toBe('Drawer Title');
+    expect(getTextContent(titleSlot, { recurse: true })).toBe('Drawer Title');
   });
 
   it('should render basic body drawer slot', async () => {
@@ -140,7 +145,7 @@ describe('bq-drawer', () => {
     expect(closedDrawer).toHaveAttribute('hidden');
   });
 
-  it('should close on "Escape"', async () => {
+  it('should close on "Escape" by default', async () => {
     const { root } = await render(
       <bq-drawer open>
         <div slot="title">Drawer Title</div>
@@ -155,5 +160,76 @@ describe('bq-drawer', () => {
     await afterClose;
 
     expect(getDrawerPanel(root).getAttribute('aria-hidden')).toBe('true');
+  });
+
+  it('should not close on "Escape" when closeOnEsc is true', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-drawer closeOnEsc open>
+        <div slot="title">Drawer Title</div>
+      </bq-drawer>,
+    );
+
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await waitForChanges();
+
+    expect(getDrawerPanel(root).getAttribute('aria-hidden')).toBe('false');
+  });
+
+  it('should apply the position class to the drawer panel', async () => {
+    const { root } = await render(<bq-drawer position="start" />);
+
+    expect(getDrawerPanel(root).classList.contains('start')).toBe(true);
+  });
+
+  it('should render a backdrop when enableBackdrop is true', async () => {
+    const { root } = await render(<bq-drawer enableBackdrop open />);
+
+    expect(root.shadowRoot?.querySelector('[part="backdrop"]')).not.toBeNull();
+  });
+
+  it('should not close on outside click when closeOnClickOutside is true', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-drawer closeOnClickOutside open>
+        <div slot="title">Drawer Title</div>
+      </bq-drawer>,
+    );
+
+    const panel = getDrawerPanel(root);
+    vi.spyOn(panel, 'getBoundingClientRect').mockReturnValue({
+      top: 0,
+      right: 100,
+      bottom: 100,
+      left: 0,
+      width: 100,
+      height: 100,
+      x: 0,
+      y: 0,
+      toJSON: () => ({}),
+    } as DOMRect);
+
+    window.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, button: 0, clientX: 200, clientY: 50 }));
+    await waitForChanges();
+
+    expect(panel.getAttribute('aria-hidden')).toBe('false');
+  });
+
+  it('should not show when bqOpen is defaultPrevented', async () => {
+    const { root, waitForChanges } = await render(<bq-drawer />);
+
+    root.addEventListener('bqOpen', (event) => event.preventDefault(), { once: true });
+    await root.show();
+    await waitForChanges();
+
+    expect(getDrawerPanel(root).getAttribute('aria-hidden')).toBe('true');
+  });
+
+  it('should not hide when bqClose is defaultPrevented', async () => {
+    const { root, waitForChanges } = await render(<bq-drawer open />);
+
+    root.addEventListener('bqClose', (event) => event.preventDefault(), { once: true });
+    await root.hide();
+    await waitForChanges();
+
+    expect(getDrawerPanel(root).getAttribute('aria-hidden')).toBe('false');
   });
 });

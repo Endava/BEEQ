@@ -1,7 +1,11 @@
 import { h } from '@stencil/core';
-import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
+import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
 
 describe('bq-card', () => {
   it('should render', async () => {
@@ -36,5 +40,24 @@ describe('bq-card', () => {
     const minimalStyle = computedStyle('bq-card[type="minimal"] >>> [part="wrapper"]', styleProps);
 
     expect(minimalStyle).toEqual({ padding: '0px' });
+  });
+
+  it('should apply the selected border radius as an inline CSS variable', async () => {
+    const { root } = await render(<bq-card border="full" />);
+
+    expect(root.style.getPropertyValue('--bq-card--borderRadius')).toBe('var(--bq-radius--full)');
+  });
+
+  it('should handle invalid type values', async () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+    const { root, waitForChanges } = await render(<bq-card type="minimal" />);
+
+    root.type = 'invalid' as HTMLBqCardElement['type'];
+
+    await waitForChanges();
+
+    expect(root.type).toBe('default');
+    expect(warnSpy).toHaveBeenCalledTimes(1);
+    expect(warnSpy).toHaveBeenCalledWith('[BQ-CARD] Please notice that "type" should be one of default|minimal');
   });
 });

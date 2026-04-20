@@ -1,6 +1,7 @@
 import { h } from '@stencil/core';
 import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
 import { userEvent } from 'vitest/browser';
+import { getTextContent } from '../../../shared/utils/slot';
 
 describe('bq-breadcrumb', () => {
   it('should render', async () => {
@@ -93,6 +94,43 @@ describe('bq-breadcrumb', () => {
     expect(separator).not.toBeNull();
     expect(firstItemSeparators).toHaveLength(1);
     expect(firstItemSeparators[0].tagName.toLowerCase()).toBe('bq-icon');
+  });
+
+  it('should set a default aria-label on the navigation element', async () => {
+    const { root } = await render(<bq-breadcrumb />);
+
+    const nav = root.shadowRoot?.querySelector('nav');
+
+    expect(nav?.getAttribute('aria-label')).toBe('Breadcrumbs');
+  });
+
+  it('should set a custom aria-label on the navigation element', async () => {
+    const { root } = await render(<bq-breadcrumb label="Page trail" />);
+
+    const nav = root.shadowRoot?.querySelector('nav');
+
+    expect(nav?.getAttribute('aria-label')).toBe('Page trail');
+  });
+
+  it('should render the default separator for all non-last items', async () => {
+    const { root } = await render(
+      <bq-breadcrumb>
+        <bq-breadcrumb-item>Home</bq-breadcrumb-item>
+        <bq-breadcrumb-item>Library</bq-breadcrumb-item>
+        <bq-breadcrumb-item>Current</bq-breadcrumb-item>
+      </bq-breadcrumb>,
+    );
+
+    await waitForStable(root);
+
+    const items = root.querySelectorAll('bq-breadcrumb-item');
+    const firstSeparatorSlot = items[0].shadowRoot?.querySelector('slot[name="separator"]') as HTMLSlotElement;
+    const secondSeparatorSlot = items[1].shadowRoot?.querySelector('slot[name="separator"]') as HTMLSlotElement;
+    const lastSeparatorSlot = items[2].shadowRoot?.querySelector('slot[name="separator"]') as HTMLSlotElement;
+
+    expect(getTextContent(firstSeparatorSlot, { recurse: true })).toBe('/');
+    expect(getTextContent(secondSeparatorSlot, { recurse: true })).toBe('/');
+    expect(getTextContent(lastSeparatorSlot, { recurse: true })).toBe('');
   });
 
   it('should set `aria-current` only on the last item', async () => {

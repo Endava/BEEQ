@@ -3,6 +3,7 @@ import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
 import { userEvent } from 'vitest/browser';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
+import { getTextContent } from '../../../shared/utils/slot';
 
 const getCheckboxInput = (checkbox: HTMLBqCheckboxElement) =>
   checkbox.shadowRoot?.querySelector('[part="input"]') as HTMLInputElement;
@@ -36,9 +37,8 @@ describe('bq-checkbox', () => {
     await waitForStable(root);
 
     const slotElement = root.shadowRoot?.querySelector('slot') as HTMLSlotElement;
-    const assignedElement = slotElement.assignedElements({ flatten: true })[0];
 
-    expect(assignedElement.textContent?.trim()).toBe('Label');
+    expect(getTextContent(slotElement, { recurse: true })).toBe('Label');
   });
 
   it('should be keyboard accessible', async () => {
@@ -95,6 +95,80 @@ describe('bq-checkbox', () => {
     await waitForStable(root);
 
     expect(getCheckboxMark(root).innerHTML).not.toBe('');
+  });
+
+  it('should apply the hover background class', async () => {
+    const { root } = await render(<bq-checkbox backgroundOnHover>Label</bq-checkbox>);
+
+    expect(getCheckboxBase(root).classList.contains('has-background')).toBe(true);
+  });
+
+  it('should set checked to false when indeterminate is enabled', async () => {
+    const { root, waitForChanges } = await render(<bq-checkbox checked>Label</bq-checkbox>);
+
+    root.indeterminate = true;
+    await waitForChanges();
+
+    expect(root.checked).toBe(false);
+    expect(getCheckboxInput(root).indeterminate).toBe(true);
+  });
+
+  it('should not allow interaction when disabled', async () => {
+    const { spyOnEvent } = await render(
+      <div>
+        <bq-checkbox disabled>Disabled</bq-checkbox>
+        <bq-checkbox>Enabled</bq-checkbox>
+      </div>,
+    );
+
+    const bqFocus = spyOnEvent('bqFocus');
+    const bqChange = spyOnEvent('bqChange');
+    const checkboxes = document.querySelectorAll('bq-checkbox') as NodeListOf<HTMLBqCheckboxElement>;
+    const disabledCheckbox = checkboxes[0];
+    const enabledCheckbox = checkboxes[1];
+    const enabledCheckboxInput = getCheckboxInput(enabledCheckbox);
+
+    await userEvent.tab();
+
+    expect(disabledCheckbox.checked).toBeFalsy();
+    expect(bqChange).toHaveReceivedEventTimes(0);
+    expect(bqFocus).toHaveReceivedEventTimes(1);
+    expect(
+      document.activeElement === enabledCheckbox || enabledCheckbox.shadowRoot?.activeElement === enabledCheckboxInput,
+    ).toBe(true);
+  });
+
+  it('should participate in forms, reset, and required validation', async () => {
+    const { waitForChanges } = await render(
+      <form>
+        <bq-checkbox formValidationMessage="Please accept the terms" name="terms" required value="accepted">
+          Accept terms
+        </bq-checkbox>
+      </form>,
+    );
+
+    const form = document.querySelector('form') as HTMLFormElement;
+    const checkbox = form.querySelector('bq-checkbox') as HTMLBqCheckboxElement;
+
+    await waitForStable(checkbox);
+
+    expect(form.checkValidity()).toBe(false);
+
+    await userEvent.click(getCheckboxBase(checkbox));
+    await waitForChanges();
+
+    const formData = new FormData(form);
+
+    expect(checkbox.checked).toBe(true);
+    expect(form.checkValidity()).toBe(true);
+    expect(formData.get('terms')).toBe('on');
+
+    form.reset();
+    await waitForChanges();
+
+    expect(checkbox.checked).toBe(false);
+    expect(checkbox.indeterminate).toBe(false);
+    expect(form.checkValidity()).toBe(false);
   });
 
   it('should expose `vClick`, `vFocus`, and `vBlur` methods', async () => {
