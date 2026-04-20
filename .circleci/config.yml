@@ -132,13 +132,13 @@ jobs:
           command: pnpm exec nx affected -t check --exclude='*,!tag:core' --parallel --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 🧰 Run Unit Tests
-          command: pnpm exec nx affected -t test --exclude='*,!tag:core' --parallel --base=$NX_BASE --head=$NX_HEAD --ci --verbose
+          command: pnpm exec nx affected -t test --exclude='*,!tag:core' --parallel --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: ⏳ Build Libraries
           command: pnpm exec nx affected -t build --exclude='*,!tag:publishable' --parallel --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 🧪 Run E2E Tests
-          command: pnpm exec nx affected -t e2e --exclude='*,!tag:core' --parallel --base=$NX_BASE --head=$NX_HEAD --ci --code-coverage --verbose
+          command: pnpm exec nx affected -t e2e --exclude='*,!tag:core' --parallel --base=$NX_BASE --head=$NX_HEAD --verbose
       - run:
           name: 📚 Build Storybook
           command: pnpm exec nx run beeq:storybook-build --output-style=stream --verbose
