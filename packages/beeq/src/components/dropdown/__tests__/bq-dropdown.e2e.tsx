@@ -1,9 +1,13 @@
 import { h } from '@stencil/core';
-import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
+import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
 import { userEvent } from 'vitest/browser';
 
 const getDropdownPanelHost = (dropdown: HTMLBqDropdownElement) =>
-  dropdown.shadowRoot?.querySelector('.bq-dropdown__panel') as HTMLBqPanelElement;
+  dropdown.shadowRoot?.querySelector<HTMLBqPanelElement>('.bq-dropdown__panel');
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
 
 describe('bq-dropdown', () => {
   it('should render', async () => {
@@ -25,13 +29,14 @@ describe('bq-dropdown', () => {
         <div>Some content in panel</div>
       </bq-dropdown>,
     );
+    const dropdown = root as HTMLBqDropdownElement;
 
-    const button = root.querySelector('bq-button') as HTMLBqButtonElement;
+    const button = root.querySelector('bq-button');
 
     await userEvent.click(button);
     await waitForChanges();
 
-    const dropdownPanel = getDropdownPanelHost(root);
+    const dropdownPanel = getDropdownPanelHost(dropdown);
 
     expect(dropdownPanel).toHaveAttribute('open');
   });
@@ -43,10 +48,11 @@ describe('bq-dropdown', () => {
         <div>Some content in panel</div>
       </bq-dropdown>,
     );
+    const dropdown = root as HTMLBqDropdownElement;
 
     await waitForStable(root);
 
-    const dropdownPanel = getDropdownPanelHost(root);
+    const dropdownPanel = getDropdownPanelHost(dropdown);
 
     expect(dropdownPanel).toHaveAttribute('open');
   });
@@ -58,8 +64,9 @@ describe('bq-dropdown', () => {
         <div>Some content in panel</div>
       </bq-dropdown>,
     );
+    const dropdown = root as HTMLBqDropdownElement;
 
-    const dropdownPanel = getDropdownPanelHost(root);
+    const dropdownPanel = getDropdownPanelHost(dropdown);
 
     expect(dropdownPanel).toHaveAttribute('open');
 
@@ -76,13 +83,15 @@ describe('bq-dropdown', () => {
         <div>Some content in panel</div>
       </bq-dropdown>,
     );
+    const dropdown = root as HTMLBqDropdownElement;
 
-    root.placement = 'bottom';
+    dropdown.placement = 'bottom';
     await waitForChanges();
 
-    const dropdownPanel = getDropdownPanelHost(root);
+    const dropdownPanel = getDropdownPanelHost(dropdown);
 
-    expect(dropdownPanel).toHaveAttribute('placement', 'bottom');
+    expect(dropdownPanel).toHaveAttribute('placement');
+    expect(dropdownPanel).toEqualAttribute('placement', 'bottom');
   });
 
   it('should not open when disabled', async () => {
@@ -92,13 +101,14 @@ describe('bq-dropdown', () => {
         <div>Some content in panel</div>
       </bq-dropdown>,
     );
+    const dropdown = root as HTMLBqDropdownElement;
 
     const button = root.querySelector('bq-button') as HTMLBqButtonElement;
 
     await userEvent.click(button);
     await waitForChanges();
 
-    const dropdownPanel = getDropdownPanelHost(root);
+    const dropdownPanel = getDropdownPanelHost(dropdown);
 
     expect(dropdownPanel).not.toHaveAttribute('open');
   });
@@ -128,11 +138,12 @@ describe('bq-dropdown', () => {
         <div>Some content in panel</div>
       </bq-dropdown>,
     );
+    const dropdown = root as HTMLBqDropdownElement;
 
     root.dispatchEvent(new CustomEvent('bqSelect', { bubbles: true, composed: true }));
     await waitForChanges();
 
-    expect(getDropdownPanelHost(root)).not.toHaveAttribute('open');
+    expect(getDropdownPanelHost(dropdown)).not.toHaveAttribute('open');
   });
 
   it('should stay open on `bqSelect` when keepOpenOnSelect is true', async () => {
@@ -142,11 +153,12 @@ describe('bq-dropdown', () => {
         <div>Some content in panel</div>
       </bq-dropdown>,
     );
+    const dropdown = root as HTMLBqDropdownElement;
 
     root.dispatchEvent(new CustomEvent('bqSelect', { bubbles: true, composed: true }));
     await waitForChanges();
 
-    expect(getDropdownPanelHost(root)).toHaveAttribute('open');
+    expect(getDropdownPanelHost(dropdown)).toHaveAttribute('open');
   });
 
   it('should close when clicking outside', async () => {
@@ -179,7 +191,7 @@ describe('bq-dropdown', () => {
 
     await waitForStable(root);
 
-    const panel = root.shadowRoot?.querySelector('bq-panel') as HTMLBqPanelElement;
+    const panel = root.shadowRoot?.querySelector<HTMLBqPanelElement>('bq-panel');
 
     expect(panel).toHaveAttribute('same-width');
     expect(panel.style.getPropertyValue('--bq-panel--height')).toBe('240px');

@@ -1,6 +1,10 @@
 import { h } from '@stencil/core';
-import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
+import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
 import { userEvent } from 'vitest/browser';
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
 
 describe('bq-breadcrumb-item', () => {
   it('should render', async () => {
@@ -46,7 +50,7 @@ describe('bq-breadcrumb-item', () => {
       </bq-breadcrumb-item>,
     );
 
-    const element = root.shadowRoot?.querySelector('.breadcrumb-item') as HTMLAnchorElement;
+    const element = root.shadowRoot?.querySelector<HTMLAnchorElement>('.breadcrumb-item');
 
     expect(element.target).toBe('_blank');
     expect(element.rel).toBe('noreferrer noopener');
@@ -54,11 +58,11 @@ describe('bq-breadcrumb-item', () => {
 
   it('should emit focus, click, and blur events', async () => {
     const { root, spyOnEvent } = await render(<bq-breadcrumb-item>Home</bq-breadcrumb-item>);
+    const element = root.shadowRoot?.querySelector<HTMLButtonElement>('.breadcrumb-item');
 
     const bqFocus = spyOnEvent('bqFocus');
     const bqClick = spyOnEvent('bqClick');
     const bqBlur = spyOnEvent('bqBlur');
-    const element = root.shadowRoot?.querySelector('.breadcrumb-item') as HTMLButtonElement;
 
     await userEvent.click(element);
     await userEvent.tab();

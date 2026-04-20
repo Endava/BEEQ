@@ -4,7 +4,7 @@ import { afterEach, describe, expect, it, render, vi, waitForStable } from '@ste
 import { getTextContent } from '../../../shared/utils/slot';
 
 const getDialogPanel = (dialog: HTMLBqDialogElement) =>
-  dialog.shadowRoot?.querySelector('[part="dialog"]') as HTMLDialogElement;
+  dialog.shadowRoot?.querySelector<HTMLDialogElement>('[part="dialog"]');
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -32,8 +32,7 @@ describe('bq-dialog', () => {
 
     await waitForStable(root);
 
-    const titleSlot = root.shadowRoot?.querySelector('slot[name="title"]') as HTMLSlotElement;
-
+    const titleSlot = root.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="title"]');
     expect(getTextContent(titleSlot, { recurse: true })).toBe('Dialog Title');
   });
 
@@ -46,8 +45,7 @@ describe('bq-dialog', () => {
 
     await waitForStable(root);
 
-    const contentSlot = root.shadowRoot?.querySelector('slot:not([name])') as HTMLSlotElement;
-
+    const contentSlot = root.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
     expect(getTextContent(contentSlot, { recurse: true })).toBe(
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
     );
@@ -59,28 +57,29 @@ describe('bq-dialog', () => {
         <h3 slot="title">Dialog Title</h3>
       </bq-dialog>,
     );
+    const dialog = root as HTMLBqDialogElement;
 
-    const dialog = getDialogPanel(root);
+    const panel = getDialogPanel(dialog);
 
-    expect(dialog.hasAttribute('open')).toBe(false);
+    expect(panel.hasAttribute('open')).toBe(false);
 
     const afterOpen = new Promise<void>((resolve) =>
       root.addEventListener('bqAfterOpen', () => resolve(), { once: true }),
     );
 
-    await root.show();
+    await dialog.show();
     await afterOpen;
 
-    expect(dialog).toHaveAttribute('open');
+    expect(panel).toHaveAttribute('open');
 
     const afterClose = new Promise<void>((resolve) =>
       root.addEventListener('bqAfterClose', () => resolve(), { once: true }),
     );
 
-    await root.hide();
+    await dialog.hide();
     await afterClose;
 
-    expect(dialog.hasAttribute('open')).toBe(false);
+    expect(panel.hasAttribute('open')).toBe(false);
   });
 
   it('should cancel on "Escape"', async () => {
@@ -89,12 +88,13 @@ describe('bq-dialog', () => {
         <h3 slot="title">Dialog Title</h3>
       </bq-dialog>,
     );
+    const dialog = root as HTMLBqDialogElement;
 
     await waitForStable(root);
 
-    const dialog = getDialogPanel(root);
+    const panel = getDialogPanel(dialog);
 
-    expect(dialog).toHaveAttribute('open');
+    expect(panel).toHaveAttribute('open');
 
     const afterClose = new Promise<void>((resolve) =>
       root.addEventListener('bqAfterClose', () => resolve(), { once: true }),
@@ -103,7 +103,7 @@ describe('bq-dialog', () => {
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     await afterClose;
 
-    expect(dialog.hasAttribute('open')).toBe(false);
+    expect(panel.hasAttribute('open')).toBe(false);
   });
 
   it('should not cancel on "Escape" when disableCloseEscKeydown is true', async () => {
@@ -112,20 +112,21 @@ describe('bq-dialog', () => {
         <h3 slot="title">Dialog Title</h3>
       </bq-dialog>,
     );
+    const dialog = root as HTMLBqDialogElement;
 
     await waitForStable(root);
 
-    const dialog = getDialogPanel(root);
+    const panel = getDialogPanel(dialog);
 
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }));
     await waitForChanges();
 
-    expect(dialog).toHaveAttribute('open');
+    expect(panel).toHaveAttribute('open');
 
     const afterClose = new Promise<void>((resolve) =>
       root.addEventListener('bqAfterClose', () => resolve(), { once: true }),
     );
-    root.open = false;
+    dialog.open = false;
     await afterClose;
   });
 
@@ -135,11 +136,12 @@ describe('bq-dialog', () => {
         <h3 slot="title">Dialog Title</h3>
       </bq-dialog>,
     );
+    const dialog = root as HTMLBqDialogElement;
 
     await waitForStable(root);
 
-    const dialog = getDialogPanel(root);
-    vi.spyOn(dialog, 'getBoundingClientRect').mockReturnValue({
+    const panel = getDialogPanel(dialog);
+    vi.spyOn(panel, 'getBoundingClientRect').mockReturnValue({
       top: 0,
       right: 100,
       bottom: 100,
@@ -154,12 +156,12 @@ describe('bq-dialog', () => {
     window.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, button: 0, clientX: 200, clientY: 200 }));
     await waitForChanges();
 
-    expect(dialog).toHaveAttribute('open');
+    expect(panel).toHaveAttribute('open');
 
     const afterClose = new Promise<void>((resolve) =>
       root.addEventListener('bqAfterClose', () => resolve(), { once: true }),
     );
-    root.open = false;
+    dialog.open = false;
     await afterClose;
   });
 
@@ -171,48 +173,52 @@ describe('bq-dialog', () => {
 
   it('should apply the size class to the dialog panel', async () => {
     const { root } = await render(<bq-dialog size="small" />);
+    const dialog = root as HTMLBqDialogElement;
 
-    const dialog = getDialogPanel(root);
+    const panel = getDialogPanel(dialog);
 
-    expect(dialog.classList.contains('small')).toBe(true);
+    expect(panel.classList.contains('small')).toBe(true);
   });
 
   it('should handle invalid size values', async () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
     const { root, waitForChanges } = await render(<bq-dialog size="medium" />);
+    const dialog = root as HTMLBqDialogElement;
 
-    root.size = 'invalid' as HTMLBqDialogElement['size'];
+    dialog.size = 'invalid' as HTMLBqDialogElement['size'];
     await waitForChanges();
 
-    expect(root.size).toBe('large');
+    expect(dialog.size).toBe('large');
     expect(warnSpy).toHaveBeenCalledWith('[BQ-DIALOG] Please notice that "size" should be one of small|medium|large');
   });
 
   it('should not show when bqOpen is defaultPrevented', async () => {
     const { root, waitForChanges } = await render(<bq-dialog />);
+    const dialog = root as HTMLBqDialogElement;
 
     root.addEventListener('bqOpen', (event) => event.preventDefault(), { once: true });
-    await root.show();
+    await dialog.show();
     await waitForChanges();
 
-    expect(getDialogPanel(root).hasAttribute('open')).toBe(false);
+    expect(getDialogPanel(dialog).hasAttribute('open')).toBe(false);
   });
 
   it('should not hide when bqClose is defaultPrevented', async () => {
     const { root, waitForChanges } = await render(<bq-dialog open />);
+    const dialog = root as HTMLBqDialogElement;
 
     await waitForStable(root);
 
     root.addEventListener('bqClose', (event) => event.preventDefault(), { once: true });
-    await root.hide();
+    await dialog.hide();
     await waitForChanges();
 
-    expect(getDialogPanel(root)).toHaveAttribute('open');
+    expect(getDialogPanel(dialog)).toHaveAttribute('open');
 
     const afterClose = new Promise<void>((resolve) =>
       root.addEventListener('bqAfterClose', () => resolve(), { once: true }),
     );
-    root.open = false;
+    dialog.open = false;
     await afterClose;
   });
 });

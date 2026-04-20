@@ -30,8 +30,7 @@ describe('bq-divider', () => {
 
     await waitForStable(root);
 
-    const slotElement = root.shadowRoot?.querySelector('slot') as HTMLSlotElement;
-
+    const slotElement = root.shadowRoot?.querySelector<HTMLSlotElement>('slot');
     expect(getTextContent(slotElement, { recurse: true })).toBe('Label');
   });
 
@@ -42,17 +41,18 @@ describe('bq-divider', () => {
         Divider
       </bq-divider>,
     );
+    const divider = root as HTMLBqDividerElement;
 
-    root.orientation = 'invalid' as HTMLBqDividerElement['orientation'];
-    root.titleAlignment = 'invalid' as HTMLBqDividerElement['titleAlignment'];
-    root.strokeLinecap = 'invalid' as HTMLBqDividerElement['strokeLinecap'];
+    divider.orientation = 'invalid' as HTMLBqDividerElement['orientation'];
+    divider.titleAlignment = 'invalid' as HTMLBqDividerElement['titleAlignment'];
+    divider.strokeLinecap = 'invalid' as HTMLBqDividerElement['strokeLinecap'];
 
     await waitForChanges();
 
     expect({
-      orientation: root.orientation,
-      titleAlignment: root.titleAlignment,
-      strokeLinecap: root.strokeLinecap,
+      orientation: divider.orientation,
+      titleAlignment: divider.titleAlignment,
+      strokeLinecap: divider.strokeLinecap,
     }).toEqual({
       orientation: 'horizontal',
       titleAlignment: 'middle',
@@ -98,7 +98,7 @@ describe('bq-divider', () => {
 
     await waitForStable(root);
 
-    const slotElement = root.shadowRoot?.querySelector('slot') as HTMLSlotElement;
+    const slotElement = root.shadowRoot?.querySelector<HTMLSlotElement>('slot');
 
     expect(getTextContent(slotElement, { recurse: true })).toBe('Section title');
   });

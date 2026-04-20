@@ -1,8 +1,12 @@
 import { h } from '@stencil/core';
-import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
+import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
 import { userEvent } from 'vitest/browser';
 
 import { getTextContent } from '../../../shared/utils/slot';
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
 
 describe('bq-breadcrumb', () => {
   it('should render', async () => {
@@ -125,13 +129,13 @@ describe('bq-breadcrumb', () => {
     await waitForStable(root);
 
     const items = root.querySelectorAll('bq-breadcrumb-item');
-    const firstSeparatorSlot = items[0].shadowRoot?.querySelector('slot[name="separator"]') as HTMLSlotElement;
-    const secondSeparatorSlot = items[1].shadowRoot?.querySelector('slot[name="separator"]') as HTMLSlotElement;
-    const lastSeparatorSlot = items[2].shadowRoot?.querySelector('slot[name="separator"]') as HTMLSlotElement;
+    const firstSeparatorSlot = items[0].shadowRoot?.querySelector('slot[name="separator"]');
+    const secondSeparatorSlot = items[1].shadowRoot?.querySelector('slot[name="separator"]');
+    const lastSeparatorSlot = items[2].shadowRoot?.querySelector('slot[name="separator"]');
 
-    expect(getTextContent(firstSeparatorSlot, { recurse: true })).toBe('/');
-    expect(getTextContent(secondSeparatorSlot, { recurse: true })).toBe('/');
-    expect(getTextContent(lastSeparatorSlot, { recurse: true })).toBe('');
+    expect(getTextContent(firstSeparatorSlot as HTMLSlotElement, { recurse: true })).toBe('/');
+    expect(getTextContent(secondSeparatorSlot as HTMLSlotElement, { recurse: true })).toBe('/');
+    expect(getTextContent(lastSeparatorSlot as HTMLSlotElement, { recurse: true })).toBe('');
   });
 
   it('should set `aria-current` only on the last item', async () => {
