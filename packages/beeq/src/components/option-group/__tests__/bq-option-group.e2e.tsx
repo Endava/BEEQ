@@ -1,6 +1,5 @@
 import { h } from '@stencil/core';
 import { describe, expect, it, render } from '@stencil/vitest';
-import { aw } from 'node_modules/vitest/dist/chunks/reporters.d.BwkR0iL5';
 
 describe('bq-option-group', () => {
   it('should render', async () => {

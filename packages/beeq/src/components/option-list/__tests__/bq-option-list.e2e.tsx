@@ -1,6 +1,5 @@
 import { h } from '@stencil/core';
 import { describe, expect, it, render } from '@stencil/vitest';
-import { userEvent } from 'vitest/browser';
 
 describe('bq-option-list', () => {
   it('should render', async () => {
