@@ -70,12 +70,13 @@ describe('bq-badge', () => {
   it('should handle invalid size values', async () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
     const { root, waitForChanges } = await render(<bq-badge size="medium" />);
+    const badge = root as HTMLBqBadgeElement;
 
-    root.size = 'invalid' as HTMLBqBadgeElement['size'];
+    badge.size = 'invalid' as HTMLBqBadgeElement['size'];
 
     await waitForChanges();
 
-    expect(root.size).toBe('small');
+    expect(badge.size).toBe('small');
     expect(warnSpy).toHaveBeenCalledTimes(1);
     expect(warnSpy).toHaveBeenCalledWith('[BQ-BADGE] Please notice that "size" should be one of small|medium');
   });
