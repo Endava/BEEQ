@@ -4,8 +4,8 @@ import { userEvent } from 'vitest/browser';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
 
-const getInput = (element: HTMLBqRadioElement) => element.shadowRoot?.querySelector('input') as HTMLInputElement;
-const getSlot = (element: HTMLBqRadioElement) => element.shadowRoot?.querySelector('slot') as HTMLSlotElement;
+const getInput = (element: HTMLBqRadioElement) => element.shadowRoot?.querySelector<HTMLInputElement>('input');
+const getSlot = (element: HTMLBqRadioElement) => element.shadowRoot?.querySelector<HTMLSlotElement>('slot');
 
 describe('bq-radio', () => {
   it('should render', async () => {

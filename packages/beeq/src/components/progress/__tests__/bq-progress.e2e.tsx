@@ -2,12 +2,13 @@ import { h } from '@stencil/core';
 import { describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
 
 const getLabel = (element: HTMLBqProgressElement) =>
-  element.shadowRoot?.querySelector('[part="label"]') as HTMLDivElement;
+  element.shadowRoot?.querySelector<HTMLDivElement>('[part="label"]');
 const getProgressBar = (element: HTMLBqProgressElement) =>
-  element.shadowRoot?.querySelector('[part="progress-bar"]') as HTMLProgressElement;
-const getTooltip = (element: HTMLBqProgressElement) => element.shadowRoot?.querySelector('bq-tooltip');
+  element.shadowRoot?.querySelector<HTMLProgressElement>('[part="progress-bar"]');
+const getTooltip = (element: HTMLBqProgressElement) =>
+  element.shadowRoot?.querySelector<HTMLBqTooltipElement>('bq-tooltip');
 const getIndeterminate = (element: HTMLBqProgressElement) =>
-  element.shadowRoot?.querySelector('[part="indeterminate"]');
+  element.shadowRoot?.querySelector<HTMLDivElement>('[part="indeterminate"]');
 
 describe('bq-progress', () => {
   it('should render', async () => {

@@ -3,9 +3,9 @@ import { describe, expect, it, render, vi, waitForStable } from '@stencil/vitest
 import { userEvent } from 'vitest/browser';
 
 const getRadio = (element: ParentNode, value: string) =>
-  element.querySelector(`bq-radio[value="${value}"]`) as HTMLBqRadioElement;
+  element.querySelector<HTMLBqRadioElement>(`bq-radio[value="${value}"]`);
 const getLabelSlot = (element: HTMLBqRadioGroupElement) =>
-  element.shadowRoot?.querySelector('slot[name="label"]') as HTMLSlotElement;
+  element.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="label"]');
 
 describe('bq-radio-group', () => {
   it('should render', async () => {
@@ -61,7 +61,7 @@ describe('bq-radio-group', () => {
       </form>,
     );
     const form = root as HTMLFormElement;
-    const radioGroup = form.querySelector('bq-radio-group') as HTMLBqRadioGroupElement;
+    const radioGroup = form.querySelector<HTMLBqRadioGroupElement>('bq-radio-group');
 
     await waitForStable(radioGroup);
 
@@ -85,7 +85,7 @@ describe('bq-radio-group', () => {
       </form>,
     );
     const form = root as HTMLFormElement;
-    const radioGroup = form.querySelector('bq-radio-group') as HTMLBqRadioGroupElement;
+    const radioGroup = form.querySelector<HTMLBqRadioGroupElement>('bq-radio-group');
 
     await waitForStable(radioGroup);
     await getRadio(form, 'option2').vClick();

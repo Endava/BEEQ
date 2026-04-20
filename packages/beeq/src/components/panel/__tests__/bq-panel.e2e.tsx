@@ -4,8 +4,8 @@ import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
 import { getTextContent } from '../../../shared/utils/slot';
 
-const getPanel = (element: HTMLElement) => element.shadowRoot?.querySelector('[part="panel"]') as HTMLDivElement;
-const getSlot = (element: HTMLElement) => element.shadowRoot?.querySelector('slot') as HTMLSlotElement;
+const getPanel = (element: HTMLElement) => element.shadowRoot?.querySelector<HTMLDivElement>('[part="panel"]');
+const getSlot = (element: HTMLElement) => element.shadowRoot?.querySelector<HTMLSlotElement>('slot');
 
 describe('bq-panel', () => {
   it('should render', async () => {
