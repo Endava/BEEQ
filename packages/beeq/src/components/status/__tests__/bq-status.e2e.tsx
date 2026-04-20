@@ -10,25 +10,25 @@ afterEach(() => {
 
 describe('bq-status', () => {
   it('should render', async () => {
-    const { root } = await render(h('bq-status', null, 'Neutral status'));
+    const { root } = await render(<bq-status>Neutral status</bq-status>);
 
     expect(root).not.toBeNull();
   });
 
   it('should have shadow root', async () => {
-    const { root } = await render(h('bq-status', null, 'Neutral status'));
+    const { root } = await render(<bq-status>Neutral status</bq-status>);
 
     expect(root.shadowRoot).not.toBeNull();
   });
 
   it('should display status text', async () => {
-    const { root } = await render(h('bq-status', null, 'Neutral status'));
+    const { root } = await render(<bq-status>Neutral status</bq-status>);
 
     expect(root.textContent?.trim()).toBe('Neutral status');
   });
 
   it('should handle status type', async () => {
-    const { root, waitForChanges } = await render(h('bq-status', null, 'Neutral status'));
+    const { root, waitForChanges } = await render(<bq-status>Neutral status</bq-status>);
 
     root.type = 'danger';
     await waitForChanges();
@@ -39,7 +39,7 @@ describe('bq-status', () => {
 
   it('should handle invalid status type', async () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
-    const { root, waitForChanges } = await render(h('bq-status', null, 'Neutral status'));
+    const { root, waitForChanges } = await render(<bq-status>Neutral status</bq-status>);
 
     root.type = 'invalid-status' as HTMLBqStatusElement['type'];
     await waitForChanges();
@@ -53,7 +53,7 @@ describe('bq-status', () => {
   });
 
   it('should respect design height', async () => {
-    await render(h('bq-status', null, 'Neutral status'));
+    await render(<bq-status>Neutral status</bq-status>);
 
     const style = computedStyle('bq-status >>> [part="base"]', ['height']);
 
@@ -61,7 +61,7 @@ describe('bq-status', () => {
   });
 
   it('should have status as circle', async () => {
-    await render(h('bq-status', null, 'Neutral status'));
+    await render(<bq-status>Neutral status</bq-status>);
 
     const style = computedStyle('bq-status >>> [part="circle"]', ['borderRadius']);
 
@@ -69,10 +69,34 @@ describe('bq-status', () => {
   });
 
   it('should respect design space between status and text', async () => {
-    await render(h('bq-status', null, 'Neutral status'));
+    await render(<bq-status>Neutral status</bq-status>);
 
     const style = computedStyle('bq-status >>> [part="base"]', ['gap']);
 
     expect(style).toEqual({ gap: '8px' });
+  });
+
+  it('should expose role status for assistive technology', async () => {
+    const { root } = await render(<bq-status>Neutral status</bq-status>);
+
+    expect(root.shadowRoot?.querySelector('[part="base"]')).toHaveAttribute('role', 'status');
+  });
+
+  it('should apply classes for the supported status types', async () => {
+    const { root, waitForChanges } = await render(<bq-status>Neutral status</bq-status>);
+
+    const circle = root.shadowRoot?.querySelector('[part="circle"]');
+
+    root.type = 'alert';
+    await waitForChanges();
+    expect(circle).toHaveClass('alert');
+
+    root.type = 'info';
+    await waitForChanges();
+    expect(circle).toHaveClass('info');
+
+    root.type = 'success';
+    await waitForChanges();
+    expect(circle).toHaveClass('success');
   });
 });

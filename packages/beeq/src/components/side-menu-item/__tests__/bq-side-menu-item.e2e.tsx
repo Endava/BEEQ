@@ -1,6 +1,7 @@
 import { h } from '@stencil/core';
 import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
 import { userEvent } from 'vitest/browser';
+import { getTextContent } from '../../../shared/utils/slot';
 
 const getMenuButton = (item: HTMLBqSideMenuItemElement) =>
   item.shadowRoot?.querySelector('[part="base"]') as HTMLButtonElement;
@@ -128,9 +129,8 @@ describe('bq-side-menu-item', () => {
     await waitForStable(root);
 
     const slotElement = root.shadowRoot?.querySelector('slot[name="prefix"]') as HTMLSlotElement;
-    const assignedElement = slotElement.assignedElements({ flatten: true })[0];
 
-    expect(assignedElement.textContent?.trim()).toBe('Prefix');
+    expect(getTextContent(slotElement, { recurse: true })).toBe('Prefix');
   });
 
   it('should render suffix element', async () => {
@@ -144,8 +144,30 @@ describe('bq-side-menu-item', () => {
     await waitForStable(root);
 
     const slotElement = root.shadowRoot?.querySelector('slot[name="suffix"]') as HTMLSlotElement;
-    const assignedElement = slotElement.assignedElements({ flatten: true })[0];
 
-    expect(assignedElement.textContent?.trim()).toBe('Suffix');
+    expect(getTextContent(slotElement, { recurse: true })).toBe('Suffix');
+  });
+
+  it('should expose role menuitem for accessibility', async () => {
+    const { root } = await render(<bq-side-menu-item>Menu item label</bq-side-menu-item>);
+
+    expect(getMenuButton(root)).toHaveAttribute('role', 'menuitem');
+  });
+
+  it('should render collapsed state in isolation', async () => {
+    const { root } = await render(
+      <bq-side-menu-item collapse>
+        <span slot="suffix">Suffix</span>
+        Menu item label
+      </bq-side-menu-item>,
+    );
+
+    await waitForStable(root);
+
+    const tooltip = root.shadowRoot?.querySelector('bq-tooltip');
+
+    expect(tooltip).not.toBeNull();
+    expect(getMenuButton(root)).toHaveClass('is-collapsed');
+    expect(tooltip?.textContent?.trim()).toContain('Menu item label');
   });
 });

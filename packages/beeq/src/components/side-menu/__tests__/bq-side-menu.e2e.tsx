@@ -1,6 +1,7 @@
 import { h } from '@stencil/core';
 import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
 import { userEvent } from 'vitest/browser';
+import { computedStyle } from '../../../shared/test-utils/computedStyle';
 
 const getMenuItemButton = (item: HTMLBqSideMenuItemElement) =>
   item.shadowRoot?.querySelector('[part="base"]') as HTMLButtonElement;
@@ -26,11 +27,12 @@ describe('bq-side-menu', () => {
   });
 
   it('should collapse and expand through the public method', async () => {
-    const { root, waitForChanges } = await render(
+    const { root, spyOnEvent, waitForChanges } = await render(
       <bq-side-menu>
         <bq-side-menu-item>Dashboard</bq-side-menu-item>
       </bq-side-menu>,
     );
+    const bqCollapse = spyOnEvent('bqCollapse');
     const menuItem = root.querySelector('bq-side-menu-item') as HTMLBqSideMenuItemElement;
 
     await root.toggleCollapse();
@@ -38,12 +40,15 @@ describe('bq-side-menu', () => {
 
     expect(root).toHaveAttribute('collapse');
     expect(menuItem.collapse).toBe(true);
+    expect(bqCollapse).toHaveReceivedEventTimes(1);
+    expect(bqCollapse.events[0].detail.collapse).toBe(true);
 
     await root.toggleCollapse();
     await waitForChanges();
 
     expect(root).not.toHaveAttribute('collapse');
     expect(menuItem.collapse).toBe(false);
+    expect(bqCollapse).toHaveReceivedEventTimes(2);
   });
 
   it('should render navigation menu items', async () => {
@@ -103,5 +108,47 @@ describe('bq-side-menu', () => {
 
     expect(tooltip).not.toBeNull();
     expect(tooltip?.textContent?.trim()).toContain('Dashboard');
+  });
+
+  it('should manage body classes based on collapse state', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-side-menu>
+        <bq-side-menu-item>Dashboard</bq-side-menu-item>
+      </bq-side-menu>,
+    );
+
+    await waitForStable(root);
+
+    expect(document.body).toHaveClass('bq-body--side-menu');
+    expect(document.body).toHaveClass('bq-body--side-menu__expand');
+
+    await root.toggleCollapse();
+    await waitForChanges();
+
+    expect(document.body).toHaveClass('bq-body--side-menu__collapse');
+    expect(document.body).not.toHaveClass('bq-body--side-menu__expand');
+  });
+
+  it('should apply appearance styles', async () => {
+    await render(<bq-side-menu appearance="brand" />);
+
+    const style = computedStyle('bq-side-menu[appearance="brand"] >>> [part="base"]', ['backgroundColor']);
+
+    expect(style.backgroundColor).not.toBe('');
+  });
+
+  it('should apply size styles to slotted items', async () => {
+    const { root } = await render(
+      <bq-side-menu size="small">
+        <bq-side-menu-item>Dashboard</bq-side-menu-item>
+      </bq-side-menu>,
+    );
+
+    await waitForStable(root);
+
+    const item = root.querySelector('bq-side-menu-item') as HTMLBqSideMenuItemElement;
+    const paddingY = getComputedStyle(item).getPropertyValue('--bq-side-menu-item--paddingY').trim();
+
+    expect(paddingY).toBe('0.75rem');
   });
 });

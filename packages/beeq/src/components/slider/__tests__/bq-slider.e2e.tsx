@@ -1,5 +1,6 @@
 import { h } from '@stencil/core';
 import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
+import { userEvent } from 'vitest/browser';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
 
@@ -92,6 +93,65 @@ describe('bq-slider', () => {
     await waitForChanges();
 
     expect(bqChange).toHaveReceivedEventTimes(1);
+  });
+
+  it('should emit bqFocus and bqBlur when enabled', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(<bq-slider value={30} />);
+
+    const bqFocus = spyOnEvent('bqFocus');
+    const bqBlur = spyOnEvent('bqBlur');
+    const [input] = getRangeInputs(root);
+
+    input.focus();
+    input.blur();
+    await waitForChanges();
+
+    expect(bqFocus).toHaveReceivedEventTimes(1);
+    expect(bqBlur).toHaveReceivedEventTimes(1);
+  });
+
+  it('should render tooltips when enabled and keep them visible when configured', async () => {
+    const { root } = await render(<bq-slider enableTooltip tooltipAlwaysVisible type="range" value="[30,70]" />);
+
+    await waitForStable(root);
+
+    const tooltips = root.shadowRoot?.querySelectorAll('bq-tooltip') ?? [];
+
+    expect(tooltips).toHaveLength(2);
+    expect(tooltips[0]).not.toHaveClass('hidden');
+    expect(tooltips[1]).not.toHaveClass('hidden');
+  });
+
+  it('should round values to the nearest step', async () => {
+    const { root, waitForChanges } = await render(<bq-slider step={5} value={33} />);
+
+    await waitForChanges();
+
+    const [input] = getRangeInputs(root);
+
+    expect(input.getAttribute('value')).toBe('35');
+  });
+
+  it('should apply min and max boundaries to the range input', async () => {
+    const { root } = await render(<bq-slider max={100} min={10} value={30} />);
+
+    const [input] = getRangeInputs(root);
+
+    expect(input.min).toBe('10');
+    expect(input.max).toBe('100');
+  });
+
+  it('should participate in forms by setting the form value', async () => {
+    await render(
+      <form>
+        <bq-slider name="volume" value={30} />
+      </form>,
+    );
+
+    const form = document.querySelector('form') as HTMLFormElement;
+    const formData = new FormData(form);
+
+    expect(formData.get('volume')).toBe('30');
   });
 
   it('should respect debounceTime when emitting bqChange', async () => {

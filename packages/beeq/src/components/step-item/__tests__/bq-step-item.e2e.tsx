@@ -1,68 +1,61 @@
 import { h } from '@stencil/core';
 import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
 import { userEvent } from 'vitest/browser';
+import { getTextContent } from '../../../shared/utils/slot';
 
 const getStepButton = (step: HTMLBqStepItemElement) =>
   step.shadowRoot?.querySelector('[part="base"]') as HTMLButtonElement;
 
 describe('bq-step-item', () => {
   it('should render', async () => {
-    const { root } = await render(h('bq-step-item', null));
+    const { root } = await render(<bq-step-item />);
 
     expect(root).not.toBeNull();
   });
 
   it('should have shadow root', async () => {
-    const { root } = await render(h('bq-step-item', null));
+    const { root } = await render(<bq-step-item />);
 
     expect(root.shadowRoot).not.toBeNull();
   });
 
   it('should display text title', async () => {
     const { root } = await render(
-      h(
-        'bq-step-item',
-        { type: 'numeric', status: 'default' },
-        h('span', null, 'Title'),
-        h('span', { slot: 'description' }, 'Description for step item'),
-      ),
+      <bq-step-item status="default" type="numeric">
+        <span>Title</span>
+        <span slot="description">Description for step item</span>
+      </bq-step-item>,
     );
 
     await waitForStable(root);
 
     const slotElement = root.shadowRoot?.querySelector('[part="title"] slot') as HTMLSlotElement;
-    const assignedElement = slotElement.assignedElements({ flatten: true })[0];
 
-    expect(assignedElement.textContent?.trim()).toBe('Title');
+    expect(getTextContent(slotElement, { recurse: true })).toBe('Title');
   });
 
   it('should display description', async () => {
     const { root } = await render(
-      h(
-        'bq-step-item',
-        { type: 'numeric', status: 'default' },
-        h('span', null, 'Title'),
-        h('span', { slot: 'description' }, 'Description for step item'),
-      ),
+      <bq-step-item status="default" type="numeric">
+        <span>Title</span>
+        <span slot="description">Description for step item</span>
+      </bq-step-item>,
     );
 
     await waitForStable(root);
 
     const slotElement = root.shadowRoot?.querySelector('slot[name="description"]') as HTMLSlotElement;
-    const assignedElement = slotElement.assignedElements({ flatten: true })[0];
 
-    expect(assignedElement.textContent?.trim()).toBe('Description for step item');
+    expect(getTextContent(slotElement, { recurse: true })).toBe('Description for step item');
   });
 
   it('should display icon prefix', async () => {
     const { root } = await render(
-      h(
-        'bq-step-item',
-        { status: 'default' },
-        h('bq-icon', { slot: 'prefix', name: 'circle' }),
-        h('span', null, 'Title'),
-        h('span', { slot: 'description' }, 'Description'),
-      ),
+      <bq-step-item status="default">
+        <bq-icon name="circle" slot="prefix" />
+        <span>Title</span>
+        <span slot="description">Description</span>
+      </bq-step-item>,
     );
 
     await waitForStable(root);
@@ -75,7 +68,12 @@ describe('bq-step-item', () => {
 
   it('should emit bqFocus and bqBlur events when focused and blurred', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
-      h('div', null, h('bq-step-item', { status: 'default' }, h('span', null, 'Title')), h('button', null, 'Next')),
+      <div>
+        <bq-step-item status="default">
+          <span>Title</span>
+        </bq-step-item>
+        <button type="button">Next</button>
+      </div>,
     );
 
     const bqFocus = spyOnEvent('bqFocus');
@@ -94,7 +92,11 @@ describe('bq-step-item', () => {
 
   it('should emit bqClick event when clicked', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
-      h('bq-steps', null, h('bq-step-item', { status: 'default' }, h('span', null, 'Title'))),
+      <bq-steps>
+        <bq-step-item status="default">
+          <span>Title</span>
+        </bq-step-item>
+      </bq-steps>,
     );
 
     const bqClick = spyOnEvent('bqClick');
@@ -108,7 +110,11 @@ describe('bq-step-item', () => {
 
   it('should emit bqClick event on Space key press', async () => {
     const { spyOnEvent, waitForChanges } = await render(
-      h('bq-steps', null, h('bq-step-item', { status: 'default' }, h('span', null, 'Title'))),
+      <bq-steps>
+        <bq-step-item status="default">
+          <span>Title</span>
+        </bq-step-item>
+      </bq-steps>,
     );
 
     const bqClick = spyOnEvent('bqClick');
@@ -122,7 +128,11 @@ describe('bq-step-item', () => {
 
   it('should emit bqClick event on Enter key press', async () => {
     const { spyOnEvent, waitForChanges } = await render(
-      h('bq-steps', null, h('bq-step-item', { status: 'default' }, h('span', null, 'Title'))),
+      <bq-steps>
+        <bq-step-item status="default">
+          <span>Title</span>
+        </bq-step-item>
+      </bq-steps>,
     );
 
     const bqClick = spyOnEvent('bqClick');
@@ -136,7 +146,11 @@ describe('bq-step-item', () => {
 
   it('should not emit bqClick event when disabled', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(
-      h('bq-steps', null, h('bq-step-item', { status: 'disabled' }, h('span', null, 'Title'))),
+      <bq-steps>
+        <bq-step-item status="disabled">
+          <span>Title</span>
+        </bq-step-item>
+      </bq-steps>,
     );
 
     const bqClick = spyOnEvent('bqClick');
@@ -149,5 +163,47 @@ describe('bq-step-item', () => {
     await waitForChanges();
 
     expect(bqClick).not.toHaveReceivedEvent();
+  });
+
+  it('should set aria-current when status is current', async () => {
+    const { root } = await render(
+      <bq-step-item status="current">
+        <span>Title</span>
+      </bq-step-item>,
+    );
+
+    expect(getStepButton(root)).toHaveAttribute('aria-current', 'step');
+  });
+
+  it('should apply status classes', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-step-item status="current">
+        <span>Title</span>
+      </bq-step-item>,
+    );
+
+    const stepButton = getStepButton(root);
+
+    expect(stepButton).toHaveClass('bq-step-item--current');
+
+    root.status = 'completed';
+    await waitForChanges();
+
+    expect(stepButton).toHaveClass('bq-step-item--completed');
+  });
+
+  it('should hide the divider when it is the last item', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-step-item>
+        <span>Title</span>
+      </bq-step-item>,
+    );
+
+    expect(root.shadowRoot?.querySelector('bq-divider')).not.toBeNull();
+
+    root.isLast = true;
+    await waitForChanges();
+
+    expect(root.shadowRoot?.querySelector('bq-divider')).toBeNull();
   });
 });

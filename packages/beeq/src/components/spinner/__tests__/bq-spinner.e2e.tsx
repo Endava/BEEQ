@@ -9,27 +9,32 @@ afterEach(() => {
 
 describe('bq-spinner', () => {
   it('should render', async () => {
-    const { root } = await render(h('bq-spinner', null));
+    const { root } = await render(<bq-spinner />);
 
     expect(root).not.toBeNull();
   });
 
   it('should have shadow root', async () => {
-    const { root } = await render(h('bq-spinner', null));
+    const { root } = await render(<bq-spinner />);
 
     expect(root.shadowRoot).not.toBeNull();
   });
 
   it('should handle `animation` property', async () => {
-    const { root } = await render(h('bq-spinner', { animation: true }));
+    const { root, waitForChanges } = await render(<bq-spinner animation />);
 
     const element = root.shadowRoot?.querySelector('.bq-spinner');
 
     expect(element).toHaveClass('is-animated');
+
+    root.animation = false;
+    await waitForChanges();
+
+    expect(element).not.toHaveClass('is-animated');
   });
 
   it('should handle `size` property', async () => {
-    const { root, waitForChanges } = await render(h('bq-spinner', null));
+    const { root, waitForChanges } = await render(<bq-spinner />);
 
     const loader = () => root.shadowRoot?.querySelector('.bq-spinner--loader');
 
@@ -45,7 +50,7 @@ describe('bq-spinner', () => {
   });
 
   it('should handle `text-position` property', async () => {
-    const { root, waitForChanges } = await render(h('bq-spinner', { textPosition: 'above' }));
+    const { root, waitForChanges } = await render(<bq-spinner textPosition="above" />);
 
     const spinner = () => root.shadowRoot?.querySelector('.bq-spinner');
     const spinnerText = () => root.shadowRoot?.querySelector('.bq-spinner--text');
@@ -72,7 +77,11 @@ describe('bq-spinner', () => {
   });
 
   it('should render icon slot element', async () => {
-    const { root } = await render(h('bq-spinner', null, h('bq-icon', { name: 'spinner-gap', slot: 'icon' })));
+    const { root } = await render(
+      <bq-spinner>
+        <bq-icon name="spinner-gap" slot="icon" />
+      </bq-spinner>,
+    );
 
     await waitForStable(root);
 
@@ -86,7 +95,7 @@ describe('bq-spinner', () => {
 
   it('should handle invalid properties', async () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
-    const { root, waitForChanges } = await render(h('bq-spinner', null));
+    const { root, waitForChanges } = await render(<bq-spinner />);
 
     root.size = 'invalid' as HTMLBqSpinnerElement['size'];
     root.textPosition = 'invalid' as HTMLBqSpinnerElement['textPosition'];
@@ -109,13 +118,11 @@ describe('bq-spinner', () => {
 
   it('should respect design style', async () => {
     await render(
-      h(
-        'div',
-        null,
-        h('bq-spinner', { size: 'small', textPosition: 'below' }),
-        h('bq-spinner', { size: 'medium', textPosition: 'below' }),
-        h('bq-spinner', { size: 'large', textPosition: 'below' }),
-      ),
+      <div>
+        <bq-spinner size="small" textPosition="below" />
+        <bq-spinner size="medium" textPosition="below" />
+        <bq-spinner size="large" textPosition="below" />
+      </div>,
     );
 
     const getLineHeightValue = (fontSize: string): string => {
