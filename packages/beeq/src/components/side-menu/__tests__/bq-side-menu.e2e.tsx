@@ -1,6 +1,7 @@
 import { h } from '@stencil/core';
 import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
 import { userEvent } from 'vitest/browser';
+
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
 
 const getMenuItemButton = (item: HTMLBqSideMenuItemElement) =>
