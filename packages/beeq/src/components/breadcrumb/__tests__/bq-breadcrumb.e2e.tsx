@@ -1,6 +1,7 @@
 import { h } from '@stencil/core';
 import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
 import { userEvent } from 'vitest/browser';
+
 import { getTextContent } from '../../../shared/utils/slot';
 
 describe('bq-breadcrumb', () => {
