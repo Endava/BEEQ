@@ -7,7 +7,7 @@ afterEach(() => {
 });
 
 const getStepButton = (step: HTMLBqStepItemElement) =>
-  step.shadowRoot?.querySelector('[part="base"]') as HTMLButtonElement;
+  step.shadowRoot?.querySelector<HTMLButtonElement>('[part="base"]');
 
 describe('bq-steps', () => {
   it('should render', async () => {
@@ -95,6 +95,7 @@ describe('bq-steps', () => {
 
     await waitForStable(root);
 
+    const steps = root as HTMLBqStepsElement;
     const [step1, step2] = root.querySelectorAll('bq-step-item') as NodeListOf<HTMLBqStepItemElement>;
 
     expect(step1.orientation).toBe('vertical');
@@ -103,7 +104,7 @@ describe('bq-steps', () => {
     expect(step1.dividerColor).toBe('stroke--brand');
     expect(step2.isLast).toBe(true);
 
-    await root.setCurrentStepItem(step2);
+    await steps.setCurrentStepItem(step2);
     await waitForChanges();
 
     expect(step1.status).toBe('default');
@@ -122,16 +123,17 @@ describe('bq-steps', () => {
   it('should handle invalid props', async () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
     const { root, waitForChanges } = await render(<bq-steps orientation="vertical" size="small" type="dot" />);
+    const steps = root as HTMLBqStepsElement;
 
-    root.orientation = 'invalid' as HTMLBqStepsElement['orientation'];
-    root.size = 'invalid' as HTMLBqStepsElement['size'];
-    root.type = 'invalid' as HTMLBqStepsElement['type'];
+    steps.orientation = 'invalid' as HTMLBqStepsElement['orientation'];
+    steps.size = 'invalid' as HTMLBqStepsElement['size'];
+    steps.type = 'invalid' as HTMLBqStepsElement['type'];
     await waitForChanges();
 
     expect({
-      orientation: root.orientation,
-      size: root.size,
-      type: root.type,
+      orientation: steps.orientation,
+      size: steps.size,
+      type: steps.type,
     }).toEqual({
       orientation: 'horizontal',
       size: 'medium',
@@ -142,5 +144,32 @@ describe('bq-steps', () => {
     );
     expect(warnSpy).toHaveBeenCalledWith('[BQ-STEPS] Please notice that "size" should be one of medium|small');
     expect(warnSpy).toHaveBeenCalledWith('[BQ-STEPS] Please notice that "type" should be one of numeric|icon|dot');
+  });
+
+  it('should propagate dividerColor changes to child step items', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-steps dividerColor="stroke--primary" type="dot">
+        <bq-step-item status="default">
+          <span>First</span>
+        </bq-step-item>
+        <bq-step-item status="default">
+          <span>Second</span>
+        </bq-step-item>
+      </bq-steps>,
+    );
+    const steps = root as HTMLBqStepsElement;
+
+    await waitForChanges();
+
+    const [step1, step2] = root.querySelectorAll('bq-step-item') as NodeListOf<HTMLBqStepItemElement>;
+
+    expect(step1.dividerColor).toBe('stroke--primary');
+    expect(step2.dividerColor).toBe('stroke--primary');
+
+    steps.dividerColor = 'stroke--brand';
+    await waitForChanges();
+
+    expect(step1.dividerColor).toBe('stroke--brand');
+    expect(step2.dividerColor).toBe('stroke--brand');
   });
 });

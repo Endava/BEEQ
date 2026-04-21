@@ -1,11 +1,15 @@
 import { h } from '@stencil/core';
-import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
+import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
 import { userEvent } from 'vitest/browser';
 
 import { getTextContent } from '../../../shared/utils/slot';
 
+afterEach(() => {
+  vi.restoreAllMocks();
+});
+
 const getMenuButton = (item: HTMLBqSideMenuItemElement) =>
-  item.shadowRoot?.querySelector('[part="base"]') as HTMLButtonElement;
+  item.shadowRoot?.querySelector<HTMLButtonElement>('[part="base"]');
 
 describe('bq-side-menu-item', () => {
   it('should render', async () => {
@@ -30,16 +34,17 @@ describe('bq-side-menu-item', () => {
 
   it('should emit bqClick when clicked', async () => {
     const { root, spyOnEvent, waitForChanges } = await render(<bq-side-menu-item>Menu item label</bq-side-menu-item>);
+    const item = root as HTMLBqSideMenuItemElement;
     const bqClick = spyOnEvent('bqClick');
 
-    await userEvent.click(getMenuButton(root));
+    await userEvent.click(getMenuButton(item));
     await waitForChanges();
 
     expect(bqClick).toHaveReceivedEventTimes(1);
   });
 
   it('should emit bqFocus and bqBlur when tabbed through', async () => {
-    const { spyOnEvent, waitForChanges } = await render(
+    const { root, waitForChanges } = await render(
       <div>
         <bq-side-menu-item>
           <bq-icon name="user" size="18" slot="prefix" />
@@ -48,22 +53,27 @@ describe('bq-side-menu-item', () => {
         <button type="button">Next</button>
       </div>,
     );
-    const bqFocus = spyOnEvent('bqFocus');
-    const bqBlur = spyOnEvent('bqBlur');
+
+    const item = root.querySelector('bq-side-menu-item') as HTMLBqSideMenuItemElement;
+    const bqFocusSpy = vi.fn();
+    const bqBlurSpy = vi.fn();
+    item.addEventListener('bqFocus', bqFocusSpy);
+    item.addEventListener('bqBlur', bqBlurSpy);
 
     await userEvent.tab();
     await userEvent.tab();
     await waitForChanges();
 
-    expect(bqFocus).toHaveReceivedEventTimes(1);
-    expect(bqBlur).toHaveReceivedEventTimes(1);
+    expect(bqFocusSpy).toHaveBeenCalledTimes(1);
+    expect(bqBlurSpy).toHaveBeenCalledTimes(1);
     expect(document.activeElement?.tagName.toLowerCase()).toBe('button');
   });
 
   it('should apply the active class when active is true', async () => {
     const { root } = await render(<bq-side-menu-item active>Menu item label</bq-side-menu-item>);
+    const item = root as HTMLBqSideMenuItemElement;
 
-    expect(getMenuButton(root)).toHaveClass('active');
+    expect(getMenuButton(item)).toHaveClass('active');
   });
 
   it('should become active on Enter key press inside side menu', async () => {
@@ -100,10 +110,11 @@ describe('bq-side-menu-item', () => {
     const { root, spyOnEvent, waitForChanges } = await render(
       <bq-side-menu-item disabled>Menu item label</bq-side-menu-item>,
     );
+    const item = root as HTMLBqSideMenuItemElement;
     const bqFocus = spyOnEvent('bqFocus');
     const bqBlur = spyOnEvent('bqBlur');
     const bqClick = spyOnEvent('bqClick');
-    const button = getMenuButton(root);
+    const button = getMenuButton(item);
 
     expect(button.getAttribute('aria-disabled')).toBe('true');
     expect(button.tabIndex).toBe(-1);
@@ -122,14 +133,13 @@ describe('bq-side-menu-item', () => {
   it('should render prefix element', async () => {
     const { root } = await render(
       <bq-side-menu-item>
-        <span slot="prefix">Prefix</span>
-        Dashboard
+        <span slot="prefix">Prefix</span> Dashboard
       </bq-side-menu-item>,
     );
 
     await waitForStable(root);
 
-    const slotElement = root.shadowRoot?.querySelector('slot[name="prefix"]') as HTMLSlotElement;
+    const slotElement = root.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="prefix"]');
 
     expect(getTextContent(slotElement, { recurse: true })).toBe('Prefix');
   });
@@ -144,31 +154,32 @@ describe('bq-side-menu-item', () => {
 
     await waitForStable(root);
 
-    const slotElement = root.shadowRoot?.querySelector('slot[name="suffix"]') as HTMLSlotElement;
+    const slotElement = root.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="suffix"]');
 
     expect(getTextContent(slotElement, { recurse: true })).toBe('Suffix');
   });
 
   it('should expose role menuitem for accessibility', async () => {
     const { root } = await render(<bq-side-menu-item>Menu item label</bq-side-menu-item>);
+    const item = root as HTMLBqSideMenuItemElement;
 
-    expect(getMenuButton(root)).toHaveAttribute('role', 'menuitem');
+    expect(getMenuButton(item)).toEqualAttribute('role', 'menuitem');
   });
 
   it('should render collapsed state in isolation', async () => {
     const { root } = await render(
       <bq-side-menu-item collapse>
-        <span slot="suffix">Suffix</span>
-        Menu item label
+        <span slot="suffix">Suffix</span> Menu item label
       </bq-side-menu-item>,
     );
+    const item = root as HTMLBqSideMenuItemElement;
 
     await waitForStable(root);
 
-    const tooltip = root.shadowRoot?.querySelector('bq-tooltip');
+    const tooltip = item.shadowRoot?.querySelector('bq-tooltip');
 
     expect(tooltip).not.toBeNull();
-    expect(getMenuButton(root)).toHaveClass('is-collapsed');
+    expect(getMenuButton(item)).toHaveClass('is-collapsed');
     expect(tooltip?.textContent?.trim()).toContain('Menu item label');
   });
 });

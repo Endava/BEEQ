@@ -22,12 +22,13 @@ describe('bq-spinner', () => {
 
   it('should handle `animation` property', async () => {
     const { root, waitForChanges } = await render(<bq-spinner animation />);
+    const spinner = root as HTMLBqSpinnerElement;
 
-    const element = root.shadowRoot?.querySelector('.bq-spinner');
+    const element = spinner.shadowRoot?.querySelector('.bq-spinner');
 
     expect(element).toHaveClass('is-animated');
 
-    root.animation = false;
+    spinner.animation = false;
     await waitForChanges();
 
     expect(element).not.toHaveClass('is-animated');
@@ -35,45 +36,47 @@ describe('bq-spinner', () => {
 
   it('should handle `size` property', async () => {
     const { root, waitForChanges } = await render(<bq-spinner />);
+    const spinner = root as HTMLBqSpinnerElement;
 
-    const loader = () => root.shadowRoot?.querySelector('.bq-spinner--loader');
+    const loader = () => spinner.shadowRoot?.querySelector('.bq-spinner--loader');
 
     expect(loader()).toHaveClass('medium');
 
-    root.size = 'large';
+    spinner.size = 'large';
     await waitForChanges();
     expect(loader()).toHaveClass('large');
 
-    root.size = 'small';
+    spinner.size = 'small';
     await waitForChanges();
     expect(loader()).toHaveClass('small');
   });
 
   it('should handle `text-position` property', async () => {
     const { root, waitForChanges } = await render(<bq-spinner textPosition="above" />);
+    const spinner = root as HTMLBqSpinnerElement;
 
-    const spinner = () => root.shadowRoot?.querySelector('.bq-spinner');
-    const spinnerText = () => root.shadowRoot?.querySelector('.bq-spinner--text');
+    const spinnerEl = () => spinner.shadowRoot?.querySelector('.bq-spinner');
+    const spinnerText = () => spinner.shadowRoot?.querySelector('.bq-spinner--text');
 
-    expect(spinner()).toHaveClass('text-above');
+    expect(spinnerEl()).toHaveClass('text-above');
 
-    root.textPosition = 'below';
+    spinner.textPosition = 'below';
     await waitForChanges();
-    expect(spinner()).toHaveClass('text-below');
+    expect(spinnerEl()).toHaveClass('text-below');
 
-    root.textPosition = 'left';
+    spinner.textPosition = 'left';
     await waitForChanges();
-    expect(spinner()).toHaveClass('text-left');
+    expect(spinnerEl()).toHaveClass('text-left');
 
-    root.textPosition = 'right';
+    spinner.textPosition = 'right';
     await waitForChanges();
-    expect(spinner()).toHaveClass('text-right');
+    expect(spinnerEl()).toHaveClass('text-right');
 
-    root.textPosition = 'none';
+    spinner.textPosition = 'none';
     await waitForChanges();
 
     expect(spinnerText()).toHaveClass('!hidden');
-    expect(spinner()).toHaveClass('text-none');
+    expect(spinnerEl()).toHaveClass('text-none');
   });
 
   it('should render icon slot element', async () => {
@@ -85,8 +88,8 @@ describe('bq-spinner', () => {
 
     await waitForStable(root);
 
-    const spinnerIcon = root.shadowRoot?.querySelector('.bq-spinner--icon');
-    const slotElement = root.shadowRoot?.querySelector('slot[name="icon"]') as HTMLSlotElement;
+    const spinnerIcon = root.shadowRoot?.querySelector<HTMLSlotElement>('.bq-spinner--icon');
+    const slotElement = root.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="icon"]');
     const iconSlotElements = slotElement.assignedElements({ flatten: true });
 
     expect(spinnerIcon).not.toHaveClass('hidden');
@@ -96,14 +99,15 @@ describe('bq-spinner', () => {
   it('should handle invalid properties', async () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
     const { root, waitForChanges } = await render(<bq-spinner />);
+    const spinner = root as HTMLBqSpinnerElement;
 
-    root.size = 'invalid' as HTMLBqSpinnerElement['size'];
-    root.textPosition = 'invalid' as HTMLBqSpinnerElement['textPosition'];
+    spinner.size = 'invalid' as HTMLBqSpinnerElement['size'];
+    spinner.textPosition = 'invalid' as HTMLBqSpinnerElement['textPosition'];
     await waitForChanges();
 
     expect({
-      size: root.size,
-      textPosition: root.textPosition,
+      size: spinner.size,
+      textPosition: spinner.textPosition,
     }).toEqual({
       size: 'medium',
       textPosition: 'none',
@@ -154,5 +158,23 @@ describe('bq-spinner', () => {
     expect(smallTextStyle).toEqual(textStyleExpected);
     expect(mediumTextStyle).toEqual(textStyleExpected);
     expect(largeTextStyle).toEqual(textStyleExpected);
+  });
+
+  it('should render default slot text content', async () => {
+    const { root } = await render(
+      <bq-spinner textPosition="below">
+        <span>Loading...</span>
+      </bq-spinner>,
+    );
+
+    await waitForStable(root);
+
+    const textEl = root.shadowRoot?.querySelector<HTMLElement>('[part="text"]');
+    const slot = textEl?.querySelector<HTMLSlotElement>('slot');
+    const assigned = slot.assignedElements({ flatten: true });
+
+    expect(textEl).not.toHaveClass('!hidden');
+    expect(assigned).toHaveLength(1);
+    expect(assigned[0].textContent).toBe('Loading...');
   });
 });

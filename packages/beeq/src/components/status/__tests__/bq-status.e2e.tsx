@@ -29,23 +29,25 @@ describe('bq-status', () => {
 
   it('should handle status type', async () => {
     const { root, waitForChanges } = await render(<bq-status>Neutral status</bq-status>);
+    const status = root as HTMLBqStatusElement;
 
-    root.type = 'danger';
+    status.type = 'danger';
     await waitForChanges();
 
-    expect(root.type).toBe('danger');
-    expect(root.shadowRoot?.querySelector('[part="circle"]')).toHaveClass('danger');
+    expect(status.type).toBe('danger');
+    expect(status.shadowRoot?.querySelector('[part="circle"]')).toHaveClass('danger');
   });
 
   it('should handle invalid status type', async () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
     const { root, waitForChanges } = await render(<bq-status>Neutral status</bq-status>);
+    const status = root as HTMLBqStatusElement;
 
-    root.type = 'invalid-status' as HTMLBqStatusElement['type'];
+    status.type = 'invalid-status' as HTMLBqStatusElement['type'];
     await waitForChanges();
 
-    expect(root.type).toBe('neutral');
-    expect(root.shadowRoot?.querySelector('[part="circle"]')).toHaveClass('neutral');
+    expect(status.type).toBe('neutral');
+    expect(status.shadowRoot?.querySelector('[part="circle"]')).toHaveClass('neutral');
     expect(warnSpy).toHaveBeenCalledTimes(1);
     expect(warnSpy).toHaveBeenCalledWith(
       `[BQ-STATUS] Please notice that "type" should be one of ${STATUS_TYPE.join('|')}`,
@@ -79,23 +81,24 @@ describe('bq-status', () => {
   it('should expose role status for assistive technology', async () => {
     const { root } = await render(<bq-status>Neutral status</bq-status>);
 
-    expect(root.shadowRoot?.querySelector('[part="base"]')).toHaveAttribute('role', 'status');
+    expect(root.shadowRoot?.querySelector('[part="base"]')).toEqualAttribute('role', 'status');
   });
 
   it('should apply classes for the supported status types', async () => {
     const { root, waitForChanges } = await render(<bq-status>Neutral status</bq-status>);
+    const status = root as HTMLBqStatusElement;
 
-    const circle = root.shadowRoot?.querySelector('[part="circle"]');
+    const circle = status.shadowRoot?.querySelector('[part="circle"]');
 
-    root.type = 'alert';
+    status.type = 'alert';
     await waitForChanges();
     expect(circle).toHaveClass('alert');
 
-    root.type = 'info';
+    status.type = 'info';
     await waitForChanges();
     expect(circle).toHaveClass('info');
 
-    root.type = 'success';
+    status.type = 'success';
     await waitForChanges();
     expect(circle).toHaveClass('success');
   });

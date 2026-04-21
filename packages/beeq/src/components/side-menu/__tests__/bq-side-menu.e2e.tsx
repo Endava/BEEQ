@@ -1,11 +1,15 @@
 import { h } from '@stencil/core';
-import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
+import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
 import { userEvent } from 'vitest/browser';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
 
+afterEach(() => {
+  vi.restoreAllMocks();
+});
+
 const getMenuItemButton = (item: HTMLBqSideMenuItemElement) =>
-  item.shadowRoot?.querySelector('[part="base"]') as HTMLButtonElement;
+  item.shadowRoot?.querySelector<HTMLButtonElement>('[part="base"]');
 
 describe('bq-side-menu', () => {
   it('should render', async () => {
@@ -23,8 +27,8 @@ describe('bq-side-menu', () => {
   it('should render with default values', async () => {
     const { root } = await render(<bq-side-menu />);
 
-    expect(root).toHaveAttribute('appearance', 'default');
-    expect(root).toHaveAttribute('size', 'medium');
+    expect(root).toEqualAttribute('appearance', 'default');
+    expect(root).toEqualAttribute('size', 'medium');
   });
 
   it('should collapse and expand through the public method', async () => {
@@ -33,26 +37,48 @@ describe('bq-side-menu', () => {
         <bq-side-menu-item>Dashboard</bq-side-menu-item>
       </bq-side-menu>,
     );
-    const bqCollapse = spyOnEvent('bqCollapse');
-    const menuItem = root.querySelector('bq-side-menu-item') as HTMLBqSideMenuItemElement;
+    const bqSideMenu = root as HTMLBqSideMenuElement;
+    const asideElement = bqSideMenu.shadowRoot.querySelector<HTMLElement>('[part="base"]');
 
-    await root.toggleCollapse();
+    const bqCollapse = spyOnEvent('bqCollapse');
+
+    await bqSideMenu.toggleCollapse();
     await waitForChanges();
 
-    expect(root).toHaveAttribute('collapse');
-    expect(menuItem.collapse).toBe(true);
+    expect(bqSideMenu).toHaveAttribute('collapse');
+    expect(asideElement).toHaveClass('is-collapsed');
     expect(bqCollapse).toHaveReceivedEventTimes(1);
     expect(bqCollapse.events[0].detail.collapse).toBe(true);
 
-    await root.toggleCollapse();
+    await bqSideMenu.toggleCollapse();
     await waitForChanges();
 
-    expect(root).not.toHaveAttribute('collapse');
-    expect(menuItem.collapse).toBe(false);
+    expect(bqSideMenu).not.toHaveAttribute('collapse');
+    expect(asideElement).not.toHaveClass('is-collapsed');
     expect(bqCollapse).toHaveReceivedEventTimes(2);
   });
 
-  it('should render navigation menu items', async () => {
+  it('should manage body classes based on collapse state', async () => {
+    const { root, waitForChanges } = await render(
+      <bq-side-menu>
+        <bq-side-menu-item>Dashboard</bq-side-menu-item>
+      </bq-side-menu>,
+    );
+    const bqSideMenu = root as HTMLBqSideMenuElement;
+
+    await waitForStable(bqSideMenu);
+
+    expect(document.body).toHaveClass('bq-body--side-menu');
+    expect(document.body).toHaveClass('bq-body--side-menu__expand');
+
+    await bqSideMenu.toggleCollapse();
+    await waitForChanges();
+
+    expect(document.body).toHaveClass('bq-body--side-menu__collapse');
+    expect(document.body).not.toHaveClass('bq-body--side-menu__expand');
+  });
+
+  it('should assign navigation menu items to the default slot', async () => {
     const { root } = await render(
       <bq-side-menu>
         <bq-side-menu-item active>
@@ -67,7 +93,12 @@ describe('bq-side-menu', () => {
       </bq-side-menu>,
     );
 
-    expect(root.querySelectorAll('bq-side-menu-item')).toHaveLength(2);
+    await waitForStable(root);
+
+    const defaultSlot = root.shadowRoot?.querySelector<HTMLSlotElement>('[part="nav"] slot:not([name])');
+    const assigned = defaultSlot?.assignedElements({ flatten: true });
+
+    expect(assigned).toHaveLength(2);
   });
 
   it('should emit bqSelect and activate the clicked item', async () => {
@@ -78,9 +109,7 @@ describe('bq-side-menu', () => {
       </bq-side-menu>,
     );
     const bqSelect = spyOnEvent('bqSelect');
-    const [firstItem, secondItem] = Array.from(
-      root.querySelectorAll('bq-side-menu-item'),
-    ) as HTMLBqSideMenuItemElement[];
+    const [firstItem, secondItem] = Array.from(root.querySelectorAll<HTMLBqSideMenuItemElement>('bq-side-menu-item'));
 
     await userEvent.click(getMenuItemButton(secondItem));
     await waitForChanges();
@@ -101,7 +130,7 @@ describe('bq-side-menu', () => {
         </bq-side-menu-item>
       </bq-side-menu>,
     );
-    const menuItem = root.querySelector('bq-side-menu-item') as HTMLBqSideMenuItemElement;
+    const menuItem = root.querySelector<HTMLBqSideMenuItemElement>('bq-side-menu-item');
 
     await waitForStable(menuItem);
 
@@ -109,25 +138,6 @@ describe('bq-side-menu', () => {
 
     expect(tooltip).not.toBeNull();
     expect(tooltip?.textContent?.trim()).toContain('Dashboard');
-  });
-
-  it('should manage body classes based on collapse state', async () => {
-    const { root, waitForChanges } = await render(
-      <bq-side-menu>
-        <bq-side-menu-item>Dashboard</bq-side-menu-item>
-      </bq-side-menu>,
-    );
-
-    await waitForStable(root);
-
-    expect(document.body).toHaveClass('bq-body--side-menu');
-    expect(document.body).toHaveClass('bq-body--side-menu__expand');
-
-    await root.toggleCollapse();
-    await waitForChanges();
-
-    expect(document.body).toHaveClass('bq-body--side-menu__collapse');
-    expect(document.body).not.toHaveClass('bq-body--side-menu__expand');
   });
 
   it('should apply appearance styles', async () => {
@@ -151,5 +161,55 @@ describe('bq-side-menu', () => {
     const paddingY = getComputedStyle(item).getPropertyValue('--bq-side-menu-item--paddingY').trim();
 
     expect(paddingY).toBe('0.75rem');
+  });
+
+  it('should render slotted logo content', async () => {
+    const { root } = await render(
+      <bq-side-menu>
+        <div slot="logo">My Logo</div>
+      </bq-side-menu>,
+    );
+
+    await waitForStable(root);
+
+    const logoSlot = root.shadowRoot?.querySelector<HTMLSlotElement>('[part="logo"] slot[name="logo"]');
+    const assigned = logoSlot.assignedElements({ flatten: true });
+
+    expect(assigned).toHaveLength(1);
+    expect(assigned[0].textContent).toBe('My Logo');
+  });
+
+  it('should render slotted footer content', async () => {
+    const { root } = await render(
+      <bq-side-menu>
+        <span slot="footer">Footer content</span>
+      </bq-side-menu>,
+    );
+
+    await waitForStable(root);
+
+    const footerSlot = root.shadowRoot?.querySelector<HTMLSlotElement>('[part="footer"] slot[name="footer"]');
+    const assigned = footerSlot.assignedElements({ flatten: true });
+
+    expect(assigned).toHaveLength(1);
+    expect(assigned[0].textContent).toBe('Footer content');
+  });
+
+  it('should remove body classes when disconnected', async () => {
+    const { root } = await render(
+      <bq-side-menu>
+        <bq-side-menu-item>Dashboard</bq-side-menu-item>
+      </bq-side-menu>,
+    );
+
+    await waitForStable(root);
+
+    expect(document.body).toHaveClass('bq-body--side-menu');
+
+    root.remove();
+
+    expect(document.body).not.toHaveClass('bq-body--side-menu');
+    expect(document.body).not.toHaveClass('bq-body--side-menu__expand');
+    expect(document.body).not.toHaveClass('bq-body--side-menu__collapse');
   });
 });
