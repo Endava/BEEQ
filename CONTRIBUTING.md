@@ -68,7 +68,9 @@ For running the project in your local development environment please [follow the
 
 ### <a name="code-formatting"></a> Code formatting
 
-**Follow the style you see used in the repository!** Consistency with the rest of the project always trumps other considerations. BEEQ uses [Biome](https://biomejs.dev/) for linting and code formatting, so please make sure it is configured in your IDE/editor.
+**Try to follow the existing style in the repository as closely as possible.** Keeping things consistent with the rest of the project is more important than following generic preferences.
+
+BEEQ uses [Biome](https://biomejs.dev/) for linting and formatting, so it’s worth setting that up in your IDE or code editor before you start.
 
 You can verify code quality with:
 
