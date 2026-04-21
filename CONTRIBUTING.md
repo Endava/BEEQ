@@ -68,7 +68,20 @@ For running the project in your local development environment please [follow the
 
 ### <a name="code-formatting"></a> Code formatting
 
-**Follow the style you see used in the repository!** Consistency with the rest of the project always trumps other considerations. It doesn't matter what you choose for your daily code implementation or if you have your style but, please, **make sure to have configured [Prettier](https://prettier.io/)** on your IDE/Code Editor.
+**Follow the style you see used in the repository!** Consistency with the rest of the project always trumps other considerations. BEEQ uses [Biome](https://biomejs.dev/) for linting and code formatting, so please make sure it is configured in your IDE/editor.
+
+You can verify code quality with:
+
+```bash
+# Check affected publishable projects
+pnpm exec nx affected -t check --exclude='*,!tag:publishable' --parallel
+
+# Check the core package
+pnpm exec nx run beeq:check
+
+# Autofix supported issues
+pnpm exec nx run beeq:check --write
+```
 
 ### <a name="branching-strategy"></a> Branching strategy
 
@@ -181,8 +194,7 @@ Similarly, a Deprecation section should start with "DEPRECATED: " followed by a 
 We would like all our contributors to have the same experience while developing for BEEQ, hence here is a list of Extensions we primarily use with [Visual Studio Code](https://code.visualstudio.com/) and recommend everyone to installed in their local environment:
 
 - Recommended
-  - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-  - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+  - [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.biome)
   - [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
   - [SonarLint](https://marketplace.visualstudio.com/items?itemName=SonarSource.sonarlint-vscode)
   - [NX Console](https://marketplace.visualstudio.com/items?itemName=nrwl.angular-console)
