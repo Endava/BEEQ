@@ -206,14 +206,14 @@ export class BqSideMenu {
 
   render() {
     return (
-      <aside class={{ 'bq-side-menu overflow-y-auto': true, 'is-collapsed': this.collapse }} part="base">
+      <aside class={{ 'bq-side-menu': true, 'is-collapsed': this.collapse }} part="base">
         {/* Company logo and name */}
         <div class={{ 'bq-side-menu--logo': true, 'is-collapsed': this.collapse }} part="logo">
           <slot name="logo" />
         </div>
         {/* Navigation content */}
         <nav
-          class="bq-side-menu--nav flex flex-col gap-y-xs px-xs pt-xs2"
+          class="bq-side-menu--nav flex flex-1 flex-col gap-y-xs overflow-y-auto p-bs-xs p-i-xs"
           part="nav"
           ref={(navElem) => {
             this.menuElem = navElem;
@@ -223,7 +223,7 @@ export class BqSideMenu {
         </nav>
         {/* Footer */}
         <div
-          class="bq-side-menu--footer sticky inset-be-0 m-bs-[auto] flex justify-center bg-[var(--bq-side-menu--bg-color)] p-xs"
+          class="bq-side-menu--footer sticky inset-be-0 m-bs-[auto] flex justify-center bg-[--bq-side-menu--bg-color] p-xs"
           part="footer"
         >
           <slot name="footer"></slot>
