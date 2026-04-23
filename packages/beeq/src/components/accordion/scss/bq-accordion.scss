@@ -5,7 +5,7 @@
 @import './bq-accordion.variables';
 
 :host {
-  @apply block;
+  @apply block w-full;
 }
 
 .bq-accordion:not(.no-animation) {
