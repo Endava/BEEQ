@@ -153,7 +153,7 @@ export class BqTooltip {
       placement: this.placement,
       distance: this.distance,
       sameWidth: this.sameWidth,
-      strategy: 'fixed',
+      strategy: 'absolute',
       skidding: 0,
     });
   }
@@ -161,6 +161,7 @@ export class BqTooltip {
   disconnectedCallback() {
     this.floatingUI?.destroy();
   }
+
   // Listeners
   // ==============
 
@@ -184,7 +185,7 @@ export class BqTooltip {
     this.hide();
   }
 
-  @Listen('scroll', { target: 'document', passive: true })
+  @Listen('scroll', { target: 'document', passive: true, capture: true })
   handleDocumentScroll() {
     // Early returns for performance optimization
     if (this.alwaysVisible || !this.visible) return;
