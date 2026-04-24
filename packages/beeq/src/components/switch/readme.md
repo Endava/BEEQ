@@ -74,9 +74,11 @@ Type: `Promise<void>`
 
 ## Slots
 
-| Slot | Description           |
-| ---- | --------------------- |
-|      | The switch label text |
+| Slot         | Description                                                                                                                                |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+|              | The switch label text                                                                                                                      |
+| `"icon-off"` | Custom content to be displayed as the `OFF` mark inside the control. It will be displayed when the `inner-label` property is set to `icon` |
+| `"icon-on"`  | Custom content to be displayed as the `ON` mark inside the control. It will be displayed when the `inner-label` property is set to `icon`  |
 
 
 ## Shadow Parts

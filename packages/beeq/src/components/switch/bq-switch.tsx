@@ -37,6 +37,8 @@ import type { TSwitchInnerLabel, TSwitchJustifyContent } from './bq-switch.types
  * @event bqBlur - Handler to be called when the switch loses focus
  *
  * @slot - The switch label text
+ * @slot icon-on - Custom content to be displayed as the `ON` mark inside the control. It will be displayed when the `inner-label` property is set to `icon`
+ * @slot icon-off - Custom content to be displayed as the `OFF` mark inside the control. It will be displayed when the `inner-label` property is set to `icon`
  *
  * @part base - HTML `<label>` root container
  * @part control - HTML `<div>` element for the custom control
@@ -295,18 +297,16 @@ export class BqSwitch {
             class="bq-switch--control bs-[--bq-switch--height] is-[--bq-switch--width] relative box-border flex justify-between rounded-full bg-ui-tertiary p-b-xs2 p-i-xs2 transition duration-300 group-[&.is-checked]:bg-ui-brand"
             part="control"
           >
-            {this.innerLabel === 'icon' && (
-              <bq-icon class="bq-switch--control__icon on" color="icon--alt" name="check" part="icon-on" title="On" />
-            )}
-            {this.innerLabel === 'icon' && (
-              <bq-icon
-                class="bq-switch--control__icon off"
-                color="icon--inverse"
-                name="x"
-                part="icon-off"
-                title="Off"
-              />
-            )}
+            <slot class="text-icon-alt" name="icon-on">
+              {this.innerLabel === 'icon' && (
+                <bq-icon class="bq-switch--control__icon on" name="check" part="icon-on" title="On" />
+              )}
+            </slot>
+            <slot class="text-icon-inverse" name="icon-off">
+              {this.innerLabel === 'icon' && (
+                <bq-icon class="bq-switch--control__icon off" name="x" part="icon-off" title="Off" />
+              )}
+            </slot>
             {/* Dot */}
             <div class="bq-switch--control__dot" part="dot" />
           </div>
