@@ -1,0 +1,445 @@
+---
+title: Page title
+description: "Page titles help people understand where they are in a product and can surface related navigation, context, and actions."
+---
+
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+Page titles introduce the current page or section and can include supporting navigation, secondary context, and related actions. They work best when the title is clear, concise, and immediately confirms location.
+
+<Note>
+  `bq-page-title` is slot-based. Use the default slot for the main title, `back` for navigation, `sub-title` for supporting text, and `suffix` for related actions.
+</Note>
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use page titles when
+    </span>
+    - The page needs a clear H1-level title
+    - People benefit from a back action or secondary context near the title
+    - Related page-level actions should stay close to the heading
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use page titles when
+    </span>
+    - A section label or smaller heading is enough
+    - Several competing actions would overload the title area
+    - The title repeats information that is already obvious from surrounding context
+  </Card>
+</CardGroup>
+
+## Anatomy
+
+Page titles are made of a title and optional supporting slots. Depending on the page, they can also include a back action, subtitle, and trailing actions.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Back | Optional slot used for back navigation |
+| **2** | Title | The main page heading rendered as an `h1` |
+| **3** | Suffix | Optional slot for page-level actions |
+| **4** | Sub-title | Optional supporting text shown below the title row |
+
+## Common usage patterns
+
+The examples below cover the most common page title compositions in BEEQ.
+
+### Default
+
+Use the default variant when the title alone provides enough context.
+
+<CodeLivePreview
+  code={`
+  <style>
+    .page-title--default {
+      width: 100%;
+    }
+  </style>
+  <bq-page-title class="page-title--default">
+    Title
+  </bq-page-title>`}
+>
+  <CodeGroup>
+    ```css CSS icon="css"
+      .page-title--default {
+        width: 100%;
+      }
+    ```
+
+    ```html HTML icon="html5"
+    <bq-page-title class="page-title--default">
+      Title
+    </bq-page-title>
+    ```
+
+    ```jsx React icon="react"
+    import { BqPageTitle } from "@beeq/react";
+
+    <BqPageTitle className="page-title--default">
+      Title
+    </BqPageTitle>
+    ```
+
+    ```html Angular icon="angular"
+    <!-- Standalone: import { BqPageTitle } from "@beeq/angular/standalone" -->
+    <!-- Modules: components are available after importing BeeQModule -->
+
+    <bq-page-title class="page-title--default">
+      Title
+    </bq-page-title>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqPageTitle } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqPageTitle class="page-title--default">
+        Title
+      </BqPageTitle>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Title + Back
+
+Use a back action when the page is part of a flow or nested navigation path.
+
+<CodeLivePreview
+  code={`
+  <style>
+    .page-title--back {
+      width: 100%;
+    }
+  </style>
+  <bq-page-title class="page-title--back">
+    <bq-button appearance="link" slot="back" only-icon>
+      <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
+    </bq-button>
+    Title
+  </bq-page-title>`}
+>
+  <CodeGroup>
+    ```css CSS icon="css"
+      .page-title--back {
+        width: 100%;
+      }
+    ```
+
+    ```html HTML icon="html5"
+    <bq-page-title class="page-title--back">
+      <bq-button appearance="link" slot="back" only-icon>
+        <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
+      </bq-button>
+      Title
+    </bq-page-title>
+    ```
+
+    ```jsx React icon="react"
+    import { BqButton, BqIcon, BqPageTitle } from "@beeq/react";
+
+    <BqPageTitle className="page-title--back">
+      <BqButton appearance="link" slot="back" only-icon>
+        <BqIcon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page" />
+      </BqButton>
+      Title
+    </BqPageTitle>
+    ```
+
+    ```html Angular icon="angular"
+    <!-- Standalone: import { BqButton, BqIcon, BqPageTitle } from "@beeq/angular/standalone" -->
+
+    <bq-page-title class="page-title--back">
+      <bq-button appearance="link" slot="back" only-icon>
+        <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
+      </bq-button>
+      Title
+    </bq-page-title>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqButton, BqIcon, BqPageTitle } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqPageTitle class="page-title--back">
+        <BqButton appearance="link" slot="back" only-icon>
+          <BqIcon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page" />
+        </BqButton>
+        Title
+      </BqPageTitle>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Title + Back + Subtitle
+
+Add a subtitle when people need a little more context before acting.
+
+<CodeLivePreview
+  code={`
+  <style>
+    .page-title--with-subtitle {
+      width: 100%;
+    }
+  </style>
+  <bq-page-title class="page-title--with-subtitle">
+    <bq-button appearance="link" slot="back" only-icon>
+      <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
+    </bq-button>
+    Title
+    <div slot="sub-title">Sub-title</div>
+  </bq-page-title>`}
+>
+  <CodeGroup>
+    ```css CSS icon="css"
+      .page-title--with-subtitle {
+        width: 100%;
+      }
+    ```
+
+    ```html HTML icon="html5"
+    <bq-page-title class="page-title--with-subtitle">
+      <bq-button appearance="link" slot="back" only-icon>
+        <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
+      </bq-button>
+      Title
+      <div slot="sub-title">Sub-title</div>
+    </bq-page-title>
+    ```
+
+    ```jsx React icon="react"
+    import { BqButton, BqIcon, BqPageTitle } from "@beeq/react";
+
+    <BqPageTitle className="page-title--with-subtitle">
+      <BqButton appearance="link" slot="back" only-icon>
+        <BqIcon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page" />
+      </BqButton>
+      Title
+      <div slot="sub-title">Sub-title</div>
+    </BqPageTitle>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-page-title class="page-title--with-subtitle">
+      <bq-button appearance="link" slot="back" only-icon>
+        <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
+      </bq-button>
+      Title
+      <div slot="sub-title">Sub-title</div>
+    </bq-page-title>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqButton, BqIcon, BqPageTitle } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqPageTitle class="page-title--with-subtitle">
+        <BqButton appearance="link" slot="back" only-icon>
+          <BqIcon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page" />
+        </BqButton>
+        Title
+        <div slot="sub-title">Sub-title</div>
+      </BqPageTitle>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Title + Back + Subtitle + Actions
+
+Use the suffix slot when the title area needs page-level actions such as edit, save, or download.
+
+<CodeLivePreview
+  code={`
+  <style>
+    .page-title--actions {
+      width: 100%;
+
+      & [slot="suffix"] {
+        display: flex;
+        flex-grow: 1;
+        justify-content: end;
+      }
+
+      & [slot="suffix"] bq-icon {
+        padding: var(--bq-spacing-xs2);
+      }
+    }
+  </style>
+  <bq-page-title class="page-title--actions">
+    <bq-button appearance="link" slot="back" only-icon>
+      <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
+    </bq-button>
+    Title
+    <div slot="sub-title">Sub-title</div>
+    <div slot="suffix">
+      <bq-icon
+        color="text--brand"
+        name="pencil-simple"
+        weight="bold"
+      ></bq-icon>
+      <bq-icon
+        color="text--brand"
+        name="download-simple"
+        weight="bold"
+      ></bq-icon>
+    </div>
+  </bq-page-title>`}
+>
+  <CodeGroup>
+    ```css CSS icon="css"
+      .page-title--actions {
+        width: 100%;
+
+        & [slot="suffix"] {
+          display: flex;
+          flex-grow: 1;
+          justify-content: end;
+        }
+
+        & [slot="suffix"] bq-icon {
+          padding: var(--bq-spacing-xs2);
+        }
+      }
+    ```
+
+    ```html HTML icon="html5"
+    <bq-page-title class="page-title--actions">
+      <bq-button appearance="link" slot="back" only-icon>
+        <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
+      </bq-button>
+      Title
+      <div slot="sub-title">Sub-title</div>
+      <div slot="suffix">
+        <bq-icon name="pen" title="Edit"></bq-icon>
+        <bq-icon name="floppy-disk" title="Save"></bq-icon>
+        <bq-icon name="download-simple" title="Download"></bq-icon>
+      </div>
+    </bq-page-title>
+    ```
+
+    ```jsx React icon="react"
+    import { BqButton, BqIcon, BqPageTitle } from "@beeq/react";
+
+    <BqPageTitle className="page-title--actions">
+      <BqButton appearance="link" slot="back" only-icon>
+        <BqIcon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page" />
+      </BqButton>
+      Title
+      <div slot="sub-title">Sub-title</div>
+      <div slot="suffix">
+        <BqIcon name="pen" title="Edit" />
+        <BqIcon name="floppy-disk" title="Save" />
+        <BqIcon name="download-simple" title="Download" />
+      </div>
+    </BqPageTitle>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-page-title class="page-title--actions">
+      <bq-button appearance="link" slot="back" only-icon>
+        <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
+      </bq-button>
+      Title
+      <div slot="sub-title">Sub-title</div>
+      <div slot="suffix">
+        <bq-icon name="pen" title="Edit"></bq-icon>
+        <bq-icon name="floppy-disk" title="Save"></bq-icon>
+        <bq-icon name="download-simple" title="Download"></bq-icon>
+      </div>
+    </bq-page-title>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqButton, BqIcon, BqPageTitle } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqPageTitle class="page-title--actions">
+        <BqButton appearance="link" slot="back" only-icon>
+          <BqIcon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page" />
+        </BqButton>
+        Title
+        <div slot="sub-title">Sub-title</div>
+        <div slot="suffix">
+          <BqIcon name="pen" title="Edit" />
+          <BqIcon name="floppy-disk" title="Save" />
+          <BqIcon name="download-simple" title="Download" />
+        </div>
+      </BqPageTitle>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## API reference
+
+### Slots
+
+| Slot | Description |
+|---|---|
+| *(default)* | The main page title content |
+| `back` | Optional back navigation action |
+| `sub-title` | Optional supporting text shown below the title row |
+| `suffix` | Optional trailing actions shown beside the title |
+
+<Note>
+  Please note that the component is **slot-based**, utilizing `prefix` and `suffix` slots to accommodate various developer needs. The provided examples are for informational purposes only and should be adapted as necessary to fit specific requirements.
+</Note>
+
+### Shadow parts
+
+| Part | Description |
+|---|---|
+| `base` | The outer wrapper of the component |
+| `back` | The container for the back slot |
+| `content` | The main title and subtitle container |
+| `title-suffix` | The row containing the title and suffix |
+| `title` | The `h1` title element |
+| `suffix` | The container for the suffix slot |
+| `sub-title` | The container for the subtitle slot |
+| `wrapper` | The wrapper container `<div>` of the element inside the shadow DOM. |
+
+### CSS custom properties
+
+<Expandable title="View all CSS variables" defaultOpen={true}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--paddingY` | Vertical padding of the page title wrapper | `theme('spacing.xl')` |
+  | `--subtitle-borderBlockEnd` | Border below the page title area | `1px solid theme('stroke.primary')` |
+  | `--subtitle-fontWeight` | Subtitle font weight | `theme('fontWeight.medium')` |
+  | `--subtitle-textColor` | Subtitle text color | `theme('textColor.secondary')` |
+  | `--subtitle-textSize` | Subtitle font size | `theme('fontSize.l')` |
+  | `--title-fontWeight` | Title font weight | `theme('fontWeight.bold')` |
+  | `--title-lineHeight` | Title line height | `theme('lineHeight.regular')` |
+  | `--title-textColor` | Title text color | `theme('textColor.primary')` |
+  | `--title-textSize` | Title font size | `theme('fontSize.xxl')` |
+</Expandable>
+
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-page-title--overview">
+    Explore page title configurations in Storybook
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/page-title">
+    View the component source on GitHub
+  </Card>
+</CardGroup>
