@@ -1,4 +1,4 @@
-@import url("https://esm.sh/@beeq/core@1.12.14-beta.0/dist/beeq/beeq.css") layer(beeq);
+@import url("https://esm.sh/@beeq/core@beta/dist/beeq/beeq.css") layer(beeq);
 
 :root {
   --bq-transition-function: cubic-bezier(0.4, 0, 0.2, 1);

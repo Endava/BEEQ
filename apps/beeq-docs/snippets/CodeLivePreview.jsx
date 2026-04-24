@@ -41,7 +41,7 @@ export const CodeLivePreview = ({ code, children, height }) => {
 
     const script = document.createElement('script');
     script.type = 'module';
-    script.src = 'https://esm.sh/@beeq/core@1.12.14-beta.0/dist/beeq/beeq.esm.js';
+    script.src = 'https://esm.sh/@beeq/core@beta/dist/beeq/beeq.esm.js';
     script.dataset.beeq = 'https://esm.sh/@beeq/core/dist/beeq/svg';
     document.head.appendChild(script);
   }, []);
