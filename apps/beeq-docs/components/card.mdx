@@ -6,7 +6,8 @@ description: "Cards serve as surfaces for displaying content and actions centere
 import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
 <Frame className="px-4 py-4" caption="Card component overview">
-  <img src="https://placeholdit.com/600x400" alt="Placeholder for the Card overview image" />
+  <img className="block dark:hidden" src="/components/images/card/card-overview-light.svg" alt="BEEQ Card component overview" />
+  <img className="hidden dark:block" src="/components/images/card/card-overview-dark.svg" alt="BEEQ Card component overview" />
 </Frame>
 
 Cards group related content and actions into a single scannable surface. Use them to present highlights, supporting details, or compact summaries without forcing a rigid internal layout.
@@ -64,8 +65,9 @@ The Card pattern can support multiple presentation styles depending on the conte
 
 ## Anatomy
 
-<Frame className="px-4 py-4" caption="Card anatomy">
-  <img src="https://placeholdit.com/600x400" alt="Placeholder for the Card anatomy image" />
+<Frame className="px-4 py-4" caption="Card component overview">
+  <img className="block dark:hidden" src="/components/images/card/card-overview-light.svg" alt="BEEQ Card component overview" />
+  <img className="hidden dark:block" src="/components/images/card/card-overview-dark.svg" alt="BEEQ Card component overview" />
 </Frame>
 
 Cards are flexible containers, so their anatomy can vary depending on the content. In most cases, a card includes a container, an optional visual element, a content area, and optional supporting actions.
