@@ -64,7 +64,6 @@ export class BqSwitch {
 
   private labelElem: HTMLSpanElement;
   private inputElem: HTMLInputElement;
-  private prevCheckedValue: boolean;
 
   // Reference to host HTML element
   // ===================================
@@ -130,7 +129,7 @@ export class BqSwitch {
   // ==============================================
 
   /** Handler to be called when the switch state changes */
-  @Event() bqChange: EventEmitter<{ checked: boolean }>;
+  @Event({ cancelable: true }) bqChange: EventEmitter<{ checked: boolean }>;
 
   /** Handler to be called when the switch gets focus */
   @Event() bqFocus: EventEmitter<HTMLBqSwitchElement>;
@@ -142,24 +141,8 @@ export class BqSwitch {
   // Ordered by their natural call order
   // =====================================
 
-  componentWillLoad() {
-    this.prevCheckedValue = this.checked;
-  }
-
   componentDidLoad() {
     this.handleSlotChange();
-  }
-
-  componentDidUpdate() {
-    /**
-     * We need to trigger the `bqChange` immediately after the first update happens
-     * so the checked attribute get applied, otherwise, a delay will happen
-     * between the event emits and when the checked attribute value gets reflected in the element host.
-     */
-    if (this.checked !== this.prevCheckedValue) {
-      this.bqChange.emit({ checked: this.checked });
-      this.prevCheckedValue = this.checked;
-    }
   }
 
   formAssociatedCallback() {
@@ -218,6 +201,10 @@ export class BqSwitch {
   // =======================================================
 
   private handleChange = () => {
+    const newChecked = !this.checked;
+    const event = this.bqChange.emit({ checked: newChecked });
+    if (event.defaultPrevented) return;
+
     this.checked = !this.checked;
     this.inputElem.setAttribute('checked', `${this.checked}`);
     this.setFormValue(this.checked);
