@@ -145,10 +145,3 @@ body,
     }
   }
 }
-
-/* ------------------------ Components custom styles ------------------------ */
-
-bq-accordion-group,
-bq-accordion {
-  width: 100%;
-}
