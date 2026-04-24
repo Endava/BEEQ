@@ -5,11 +5,6 @@
   --bq-transition-duration: 300ms;
 }
 
-:root {
-  --bq-transition-function: cubic-bezier(0.4, 0, 0.2, 1);
-  --bq-transition-duration: 300ms;
-}
-
 body {
   font-family: var(--bq-font-family);
 }
