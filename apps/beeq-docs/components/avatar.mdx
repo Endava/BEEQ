@@ -6,23 +6,8 @@ description: Avatars represent a person, team, or entity using a profile image o
 import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
 <Frame className="px-4 py-4" caption="Avatar component overview">
-  <div className="flex flex-wrap items-center gap-4">
-    <bq-avatar label="Avatar component label" initials="BQ" size="small"></bq-avatar>
-    <bq-avatar
-      alt-text="User profile"
-      image="https://i.pravatar.cc/500"
-      label="Avatar component label"
-      size="medium"
-    ></bq-avatar>
-    <bq-avatar
-      alt-text="User profile"
-      image="https://i.pravatar.cc/500"
-      label="Avatar component label"
-      size="medium"
-    >
-      <bq-badge slot="badge" size="medium" background-color="ui--success"></bq-badge>
-    </bq-avatar>
-  </div>
+  <img className="block dark:hidden" src="/components/images/avatar/avatar-overview-light.svg" alt="BEEQ Avatar component overview" />
+  <img className="hidden dark:block" src="/components/images/avatar/avatar-overview-dark.svg" alt="BEEQ Avatar component overview" />
 </Frame>
 
 Avatars help people identify users, teams, or entities at a glance. Use them in places where identity matters, such as lists, comments, ownership indicators, profile surfaces, contact cards, and people pickers.
@@ -74,6 +59,11 @@ These common contexts come directly from the original design guidance and can he
 </CardGroup>
 
 ## Anatomy
+
+<Frame className="px-4 py-4" caption="Avatar component overview">
+  <img className="block dark:hidden" src="/components/images/avatar/avatar-overview-light.svg" alt="BEEQ Avatar component overview" />
+  <img className="hidden dark:block" src="/components/images/avatar/avatar-overview-dark.svg" alt="BEEQ Avatar component overview" />
+</Frame>
 
 An avatar is a single visual surface that shows either an image or initials, with optional badge content layered on top.
 
