@@ -131,8 +131,7 @@
             "pages": [
               "components/card",
               "components/divider",
-              "components/page-title",
-              "components/panel"
+              "components/page-title"
             ]
           },
           {
