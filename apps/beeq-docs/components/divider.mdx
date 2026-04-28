@@ -1,0 +1,675 @@
+---
+title: Divider
+description: A divider is a UI component used to visually separate or divide different sections or elements of a user interface. This can help create a clear and organized layout, and improve the overall readability of the interface.
+---
+
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+A divider is a UI component used to visually separate or divide different sections or elements of a user interface. This can help create a clear and organized layout, and improve the overall readability of the interface.
+
+## Overview
+
+<Frame className="px-4 py-4" caption="Divider component overview">
+  <div style={{ display: "flex", gap: "24px", justifyContent: "center", overflowX: "auto" }}>
+    <img
+      src="https://placeholdit.com/600x400"
+      alt="Placeholder for the Divider overview image"
+      style={{ height: "200px", width: "400px" }}
+    />
+    <img
+      src="https://placeholdit.com/600x400"
+      alt="Placeholder for the Divider overview image"
+      style={{ height: "200px", width: "400px" }}
+    />
+  </div>
+</Frame>
+
+## Types
+
+<div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px", marginBottom: "60px" }}>
+  <div>
+    <h3>Line (horizontal)</h3>
+    <p>The horizontal divider line serves as a visual element to separate content or components, enhancing clarity and organization within the user interface. It's applied to create distinct sections and improve the overall visual hierarchy.</p>
+  </div>
+  <Frame className="px-4 py-4">
+    <img
+      src="https://placeholdit.com/600x400"
+      alt="Line horizontal divider example"
+      style={{ height: "200px", width: "400px" }}
+    />
+  </Frame>
+</div>
+
+<div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px", marginBottom: "60px" }}>
+  <div>
+    <h3>Dashed line</h3>
+    <p>The horizontal dashed divider line is employed for visual separation between content or components. Its usage introduces a stylistic variation, offering a distinctive aesthetic touch while maintaining clear divisions within the user interface.</p>
+  </div>
+  <Frame className="px-4 py-4">
+    <img
+      src="https://placeholdit.com/600x400"
+      alt="Dashed line divider example"
+      style={{ height: "200px", width: "400px" }}
+    />
+  </Frame>
+</div>
+
+<div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px" }}>
+  <div>
+    <h3>Line (vertical)</h3>
+    <p>Similar to the horizontal line, a vertical line serves as an efficient solution for separating content blocks positioned side by side.</p>
+  </div>
+  <Frame className="px-4 py-4">
+    <img
+      src="https://placeholdit.com/600x400"
+      alt="Line vertical divider example"
+      style={{ height: "200px", width: "400px" }}
+    />
+  </Frame>
+</div>
+
+## Usage guidelines
+
+In a design system, dividers serve to visually separate content and provide a clear hierarchy.
+
+### When to use
+
+Use dividers when you want to create a visual distinction between content sections, promoting a clearer and more organized layout. They are particularly useful for distinguishing different elements within a user interface.
+
+### When not to use
+
+Dividers should be avoided in scenarios where visual separation is unnecessary or can lead to clutter.
+
+<div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px", marginTop: "40px", marginBottom: "60px" }}>
+  <div>
+    <Frame className="px-4 py-4">
+      <img
+        src="https://placeholdit.com/600x400"
+        alt="Horizontal divider example"
+        style={{ height: "300px", width: "100%" }}
+      />
+    </Frame>
+    <h3 style={{ marginTop: "16px" }}>Horizontal divider</h3>
+    <p>The horizontal divider line serves as a visual element to separate content or components, enhancing clarity and organization within the user interface. It is applied to create distinct sections and improve the overall visual hierarchy.</p>
+  </div>
+  <div>
+    <Frame className="px-4 py-4">
+      <img
+        src="https://placeholdit.com/600x400"
+        alt="Vertical divider example"
+        style={{ height: "300px", width: "100%" }}
+      />
+    </Frame>
+    <h3 style={{ marginTop: "16px" }}>Vertical divider</h3>
+    <p>The vertical divider in the design system is utilized to visually separate and organize content or components in a vertical arrangement. A vertical divider proves useful for organizing content on a larger screen, serving to separate paragraph text from video or image media.</p>
+  </div>
+</div>
+
+<div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px", marginBottom: "60px" }}>
+  <div>
+    <Frame className="px-4 py-4">
+      <img
+        src="https://placeholdit.com/600x400"
+        alt="Full divider example"
+        style={{ height: "300px", width: "100%" }}
+      />
+    </Frame>
+    <h3 style={{ marginTop: "16px" }}>Full divider</h3>
+    <p>Full-bleed dividers extend across the entire layout when additional white space is insufficient, and there are no anchor elements like images or icons to establish distinct content groups.</p>
+  </div>
+  <div>
+    <Frame className="px-4 py-4">
+      <img
+        src="https://placeholdit.com/600x400"
+        alt="Inset divider example"
+        style={{ height: "300px", width: "100%" }}
+      />
+    </Frame>
+    <h3 style={{ marginTop: "16px" }}>Inset divider</h3>
+    <p>Inset dividers are commonly employed to distinguish rich lists, particularly those featuring visual anchors. This combination establishes clear borders between content groups, enhancing user scanning of lists.</p>
+  </div>
+</div>
+
+<div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px", marginTop: "40px", marginBottom: "60px" }}>
+  <div>
+    <Frame className="px-4 py-4">
+      <img
+        src="https://placeholdit.com/600x400"
+        alt="List divider example"
+        style={{ height: "300px", width: "100%" }}
+      />
+    </Frame>
+    <h3 style={{ marginTop: "16px" }}>List</h3>
+    <p>They contribute to a clearer structure, making it easier for users to identify distinct list items at a glance.</p>
+  </div>
+  <div>
+    <Frame className="px-4 py-4">
+      <img
+        src="https://placeholdit.com/600x400"
+        alt="Title divider example"
+        style={{ height: "300px", width: "100%" }}
+      />
+    </Frame>
+    <h3 style={{ marginTop: "16px" }}>Title</h3>
+    <p>Using a divider to separate the title from the rest of the web page's content is a practical approach to visually delineate different sections and improve the overall layout.</p>
+  </div>
+</div>
+
+<div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px", marginTop: "40px", marginBottom: "60px" }}>
+  <div>
+    <Frame className="px-4 py-4">
+      <img
+        src="https://placeholdit.com/600x400"
+        alt="Divide element example"
+        style={{ height: "300px", width: "100%" }}
+      />
+    </Frame>
+    <h3 style={{ marginTop: "16px" }}>Divide element</h3>
+    <p>As a best practice, applying a divider to outline elements in design is recommended. For instance, in an email inbox with substantial text content, utilizing a divider can visually separate each email, enhancing clarity and organization.</p>
+  </div>
+  <div>
+    <Frame className="px-4 py-4">
+      <img
+        src="https://placeholdit.com/600x400"
+        alt="Divide group example"
+        style={{ height: "300px", width: "100%" }}
+      />
+    </Frame>
+    <h3 style={{ marginTop: "16px" }}>Divide group</h3>
+    <p>For a clearer representation of elements dependent on specific categories or criteria, the divider plays a crucial role in delineating sections.</p>
+  </div>
+</div>
+
+<div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px", marginTop: "40px", marginBottom: "60px" }}>
+  <div>
+    <Frame className="px-4 py-4">
+      <img
+        src="https://placeholdit.com/600x400"
+        alt="Divide elements in a table example"
+        style={{ height: "300px", width: "100%" }}
+      />
+    </Frame>
+    <h3 style={{ marginTop: "16px" }}>Divide elements in a table</h3>
+    <p>As a best practice, applying a divider to outline elements in design is recommended. For instance, in an email inbox with substantial text content, utilizing a divider can visually separate each email, enhancing clarity and organization.</p>
+  </div>
+</div>
+
+## Accessibility
+
+Dividers primarily serve as decorative elements and are not subject to specific accessibility requirements.
+
+Dividers should be excluded from screen reader accessibility considerations.
+
+## Keywords
+
+`divider`, `separator`
+
+## Design
+
+### Anatomy
+
+<Frame className="px-4 py-4" caption="Divider anatomy">
+  <div style={{ minHeight: "260px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+    <img
+      src="https://placeholdit.com/1000x320"
+      alt="Divider anatomy placeholder"
+      style={{ width: "100%", height: "auto" }}
+    />
+  </div>
+</Frame>
+
+<div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "16px", color: "var(--bq-color-text)" }}>
+  <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "28px", height: "28px", borderRadius: "999px", backgroundColor: "#5c51f5", color: "white", fontWeight: 700 }}>1</span>
+  <span>Stroke / Divider</span>
+</div>
+
+### Sizing
+
+<div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px", alignItems: "center", marginBottom: "40px" }}>
+  <div>
+    <p>The best approach for sizing dividers is typically to use a thin and subtle line, often around 1px, to maintain a minimal and unnoticeable visual separation between elements.</p>
+  </div>
+  <Frame className="px-4 py-4">
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "220px" }}>
+      <img
+        src="https://placeholdit.com/800x220"
+        alt="Divider sizing example"
+        style={{ width: "100%", height: "auto" }}
+      />
+    </div>
+  </Frame>
+</div>
+
+### Variants
+
+<div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px", alignItems: "center", marginBottom: "40px" }}>
+  <div>
+    <p>The divider with a label serves to create and categorize existing components, providing an option to name or label them. This helps in quick scanning, allowing users to easily identify elements related to particular categories or subcategories.</p>
+  </div>
+  <Frame className="px-4 py-4">
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "220px" }}>
+      <img
+        src="https://placeholdit.com/800x220"
+        alt="Divider variants example"
+        style={{ width: "100%", height: "auto" }}
+      />
+    </div>
+  </Frame>
+</div>
+
+## Code
+
+## Usage
+
+### Default
+
+Use the default divider when you need to visually separate sections or content within your user interface.
+
+<CodeLivePreview code={`<bq-divider>\n  <p style="margin: 0; white-space: nowrap;">Default divider</p>\n</bq-divider>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-divider>
+      <p style="margin: 0; white-space: nowrap;">Default divider</p>
+    </bq-divider>
+    ```
+    ```css CSS icon="css3"
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    ```
+    ```jsx React icon="react"
+    import { BqDivider } from "@beeq/react";
+
+    <BqDivider>
+      <p style={{ margin: 0, whiteSpace: "nowrap" }}>Default divider</p>
+    </BqDivider>
+    ```
+    ```html Angular icon="angular"
+    <!-- Standalone: import { BqDivider } from "@beeq/angular/standalone" -->
+    <!-- Modules: components are available after importing BeeQModule -->
+
+    <bq-divider>
+      <p style="margin: 0; white-space: nowrap;">Default divider</p>
+    </bq-divider>
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDivider } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDivider>
+        <p style="margin: 0; white-space: nowrap;">Default divider</p>
+      </BqDivider>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Horizontal
+
+Integrate the horizontal divider by using the `orientation="horizontal"` attribute when you want to create a visual break or distinction between elements along the horizontal axis. This type of divider enhances the overall clarity and structure of your user interface.
+
+<CodeLivePreview code={`<bq-divider orientation="horizontal">\n  <p style="margin: 0; white-space: nowrap;">Horizontal divider</p>\n</bq-divider>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-divider orientation="horizontal">
+      <p style="margin: 0; white-space: nowrap;">Horizontal divider</p>
+    </bq-divider>
+    ```
+    ```css CSS icon="css3"
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    ```
+    ```jsx React icon="react"
+    import { BqDivider } from "@beeq/react";
+
+    <BqDivider orientation="horizontal">
+      <p style={{ margin: 0, whiteSpace: "nowrap" }}>Horizontal divider</p>
+    </BqDivider>
+    ```
+    ```html Angular icon="angular"
+    <bq-divider orientation="horizontal">
+      <p style="margin: 0; white-space: nowrap;">Horizontal divider</p>
+    </bq-divider>
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDivider } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDivider orientation="horizontal">
+        <p style="margin: 0; white-space: nowrap;">Horizontal divider</p>
+      </BqDivider>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Vertical
+
+Use the `orientation="vertical"` attribute when you want to create a visual break between elements along the vertical axis. Use it when you need to create distinct columns or sections within your layout, providing a clear delineation between different components, and ensuring a well-structured design.
+
+<CodeLivePreview code={`<div style="display: flex; align-items: center; justify-content: center; min-height: 120px; gap: 16px;">\n  <span>Left</span>\n  <bq-divider orientation="vertical">\n    <p style="margin: 0; white-space: nowrap;">Vertical divider</p>\n  </bq-divider>\n  <span>Right</span>\n</div>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <div style="display: flex; align-items: center; justify-content: center; min-height: 120px; gap: 16px;">
+      <span>Left</span>
+      <bq-divider orientation="vertical">
+        <p style="margin: 0; white-space: nowrap;">Vertical divider</p>
+      </bq-divider>
+      <span>Right</span>
+    </div>
+    ```
+    ```css CSS icon="css3"
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    ```
+    ```jsx React icon="react"
+    import { BqDivider } from "@beeq/react";
+
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: 120, gap: 16 }}>
+      <span>Left</span>
+      <BqDivider orientation="vertical">
+        <p style={{ margin: 0, whiteSpace: "nowrap" }}>Vertical divider</p>
+      </BqDivider>
+      <span>Right</span>
+    </div>
+    ```
+    ```html Angular icon="angular"
+    <div style="display: flex; align-items: center; justify-content: center; min-height: 120px; gap: 16px;">
+      <span>Left</span>
+      <bq-divider orientation="vertical">
+        <p style="margin: 0; white-space: nowrap;">Vertical divider</p>
+      </bq-divider>
+      <span>Right</span>
+    </div>
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDivider } from "@beeq/vue";
+    </script>
+
+    <template>
+      <div style="display: flex; align-items: center; justify-content: center; min-height: 120px; gap: 16px;">
+        <span>Left</span>
+        <BqDivider orientation="vertical">
+          <p style="margin: 0; white-space: nowrap;">Vertical divider</p>
+        </BqDivider>
+        <span>Right</span>
+      </div>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Dashed line
+
+Opt for the `dashed` attribute, when you want to introduce a more subtle and stylistic separation between elements. This divider, characterized by its dashed line pattern, adds a touch of sophistication to your layout. Use it to create a visual break without overpowering the design, offering a delicate and modern approach to content separation in your application.
+
+<CodeLivePreview code={`<bq-divider dashed stroke-dash-width="12" stroke-dash-gap="7" stroke-linecap="butt"></bq-divider>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-divider
+      dashed
+      stroke-dash-width="12"
+      stroke-dash-gap="7"
+      stroke-linecap="butt"
+    ></bq-divider>
+    ```
+    ```css CSS icon="css3"
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    ```
+    ```jsx React icon="react"
+    import { BqDivider } from "@beeq/react";
+
+    <BqDivider dashed strokeDashWidth={12} strokeDashGap={7} strokeLinecap="butt" />
+    ```
+    ```html Angular icon="angular"
+    <bq-divider
+      dashed
+      stroke-dash-width="12"
+      stroke-dash-gap="7"
+      stroke-linecap="butt"
+    ></bq-divider>
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDivider } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDivider dashed :stroke-dash-width="12" :stroke-dash-gap="7" stroke-linecap="butt" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  Explore enhanced customization options with attributes like `stroke-dash-width`, `stroke-dash-gap`, and `stroke-linecap` when utilizing the dashed line divider. Tailor the appearance of the divider to match your design preferences, adjusting the dash pattern, gap width, and line cap style for a distinctive and refined visual effect in your application.
+</Tip>
+
+### No title
+
+Opt for this divider variant when you require a clean separation between sections without the need for additional text. It enhances layout organization while upholding a minimalist design aesthetic.
+
+<CodeLivePreview code={`<bq-divider></bq-divider>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-divider></bq-divider>
+    ```
+    ```css CSS icon="css3"
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    ```
+    ```jsx React icon="react"
+    import { BqDivider } from "@beeq/react";
+
+    <BqDivider />
+    ```
+    ```html Angular icon="angular"
+    <bq-divider></bq-divider>
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDivider } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDivider />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Text start
+
+Use the `title-alignment="start"` attribute to your divider when you want to initiate a visual break at the beginning of a text section. Ideal for enhancing content structure, this divider allows you to cleanly separate text, providing a polished and organized layout.
+
+<CodeLivePreview code={`<bq-divider title-alignment="start">\n  <p style="margin: 0; white-space: nowrap;">Text Start</p>\n</bq-divider>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-divider title-alignment="start">
+      <p style="margin: 0; white-space: nowrap;">Text Start</p>
+    </bq-divider>
+    ```
+    ```css CSS icon="css3"
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    ```
+    ```jsx React icon="react"
+    import { BqDivider } from "@beeq/react";
+
+    <BqDivider titleAlignment="start">
+      <p style={{ margin: 0, whiteSpace: "nowrap" }}>Text Start</p>
+    </BqDivider>
+    ```
+    ```html Angular icon="angular"
+    <bq-divider title-alignment="start">
+      <p style="margin: 0; white-space: nowrap;">Text Start</p>
+    </bq-divider>
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDivider } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDivider titleAlignment="start">
+        <p style="margin: 0; white-space: nowrap;">Text Start</p>
+      </BqDivider>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Text middle
+
+Use the `title-alignment="middle"` attribute to your divider when you want to initiate a visual break middle of a text section. This divider aids in maintaining a clear and structured layout, effectively delineating content within your user interface.
+
+<CodeLivePreview code={`<bq-divider title-alignment="middle">\n  <p style="margin: 0; white-space: nowrap;">Text Middle</p>\n</bq-divider>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-divider title-alignment="middle">
+      <p style="margin: 0; white-space: nowrap;">Text Middle</p>
+    </bq-divider>
+    ```
+    ```css CSS icon="css3"
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    ```
+    ```jsx React icon="react"
+    import { BqDivider } from "@beeq/react";
+
+    <BqDivider titleAlignment="middle">
+      <p style={{ margin: 0, whiteSpace: "nowrap" }}>Text Middle</p>
+    </BqDivider>
+    ```
+    ```html Angular icon="angular"
+    <bq-divider title-alignment="middle">
+      <p style="margin: 0; white-space: nowrap;">Text Middle</p>
+    </bq-divider>
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDivider } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDivider titleAlignment="middle">
+        <p style="margin: 0; white-space: nowrap;">Text Middle</p>
+      </BqDivider>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Text end
+
+Use the `title-alignment="end"` attribute for situations where you wish to conclude a text section with a subtle visual break at the end of your text. By seamlessly integrating into your design, this divider ensures a polished and organized appearance, contributing to an enhanced user experience.
+
+<CodeLivePreview code={`<bq-divider title-alignment="end">\n  <p style="margin: 0; white-space: nowrap;">Text End</p>\n</bq-divider>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-divider title-alignment="end">
+      <p style="margin: 0; white-space: nowrap;">Text End</p>
+    </bq-divider>
+    ```
+    ```css CSS icon="css3"
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    ```
+    ```jsx React icon="react"
+    import { BqDivider } from "@beeq/react";
+
+    <BqDivider titleAlignment="end">
+      <p style={{ margin: 0, whiteSpace: "nowrap" }}>Text End</p>
+    </BqDivider>
+    ```
+    ```html Angular icon="angular"
+    <bq-divider title-alignment="end">
+      <p style="margin: 0; white-space: nowrap;">Text End</p>
+    </bq-divider>
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDivider } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDivider titleAlignment="end">
+        <p style="margin: 0; white-space: nowrap;">Text End</p>
+      </BqDivider>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  Consider refining the appearance of your divider by leveraging the optional attributes `stroke-thickness` and `stroke-basis` within the divider component. Tailor the `stroke-thickness` to adjust the line's width, and use `stroke-basis` to enhance the baseline for a more visually appealing design. Experiment with these attributes to achieve the desired aesthetic and optimize the divider's impact on your overall layout.
+</Tip>
+
+## Properties/attributes
+
+| Property | Attribute | Description | Type | Default |
+| --- | --- | --- | --- | --- |
+| **dashed** | **dashed** | If true, the divider has a dashed pattern | `boolean` | `false` |
+| **orientation** | **orientation** | The default orientation of the divider | `horizontal` `vertical` | `horizontal` |
+| **strokeBasis** | **stroke-basis** | Set the min width of the divider's stroke when the text is not centered. (*the value expressed in px)* | `number` | `0` |
+| **strokeColor** | **stroke-color** | Set the stroke color of the divider *(the value should be a valid value of the palette color).* | `string` | `stroke--primary` |
+| **strokeDashGap** | **stroke-dash-gap** | Set the gap of the divider's stroke. This is applicable when the stroke is dashed | `number` | `7` |
+| **strokeDashWidth** | **stroke-dash-width** | Set the width of each dash of the divider's stroke. This is applicable when the stroke is dashed | `number` | `12` |
+| **strokeLinecap** | **stroke-linecap** | Set the line of the divider's stroke. This is applicable when the stroke is dashed | `butt` `round` `square` | `butt` |
+| **strokeThickness** | **stroke-thickness** | Set the thickness of the divider's stroke *(the value expressed in px)*. | `number` | `1` |
+| **titleAlignment** | **title-alignment** | Set the alignment of the title on the main axis of the divider (horizontal/vertical) | `end` `middle` `start` | `middle` |
+
+## Shadow DOM parts
+
+| Part | Description |
+| --- | --- |
+| **base** | The component's internal wrapper. |
+| **dash-end** | The component's internal svg wrapper for the end line of the divider's stroke. |
+| **dash-end-line** | The component's internal line component of the divider's stroke. |
+| **dash-start** | The component's internal svg wrapper for the start line of the divider's stroke. |
+| **dash-start-line** | The component's internal line component of the divider's stroke. |
+
+## Custom CSS properties
+
+```css
+/**
+ * @prop --bq-divider--color: Divider color
+ * @prop --bq-divider--title-marginX: Divider space between title and delimiters
+ */
+
+--bq-divider--color: theme(stroke.primary);
+--bq-divider--title-marginX: theme(spacing.m);
+```
+
+## Storybook
+
+[Link to Storybook](https://storybook.beeq.design/?path=/story/components-divider--default)
