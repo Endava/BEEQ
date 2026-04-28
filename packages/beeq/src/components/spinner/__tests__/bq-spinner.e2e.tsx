@@ -2,6 +2,7 @@ import { h } from '@stencil/core';
 import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
+import { getTextContent } from '../../../shared/utils/slot';
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -175,6 +176,6 @@ describe('bq-spinner', () => {
 
     expect(textEl).not.toHaveClass('!hidden');
     expect(assigned).toHaveLength(1);
-    expect(assigned[0].textContent).toBe('Loading...');
+    expect(getTextContent(slot, { recurse: true })).toBe('Loading...');
   });
 });

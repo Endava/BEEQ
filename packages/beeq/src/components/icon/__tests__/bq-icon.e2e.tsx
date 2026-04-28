@@ -17,6 +17,8 @@ describe('bq-icon', () => {
   it('should display icon', async () => {
     const { root } = await render(<bq-icon name="pulse" />);
 
+    await waitForStable(root);
+
     const element = root.shadowRoot?.querySelector<Element>('[part="svg"]');
     expect(element?.innerHTML).toBeDefined();
     expect(element?.innerHTML).toEqualHtml(`
@@ -28,15 +30,18 @@ describe('bq-icon', () => {
     const { root, waitForChanges } = await render(<bq-icon name="pulse" />);
 
     await waitForStable(root);
+
     root.setAttribute('name', 'check');
+
     await waitForChanges();
+    await waitForStable(root);
 
     const element = root.shadowRoot?.querySelector<Element>('[part="svg"]');
 
     expect(element?.innerHTML).toBeDefined();
     expect(element?.innerHTML).toEqualHtml(`
-          <path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path>
-        `);
+      <path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path>
+    `);
   });
 
   it('should respect design style', async () => {

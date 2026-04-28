@@ -1,6 +1,8 @@
 import { h } from '@stencil/core';
 import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
 
+import { getTextContent } from '../../../shared/utils/slot';
+
 describe('bq-empty-state', () => {
   it('should render', async () => {
     const { root } = await render(<bq-empty-state />);
@@ -21,9 +23,8 @@ describe('bq-empty-state', () => {
     );
 
     const slot = root.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="body"]');
-    const assignedText = slot?.assignedElements({ flatten: true })[0].textContent?.trim();
 
-    expect(assignedText).toBe(bodyText);
+    expect(getTextContent(slot, { recurse: true })).toBe(bodyText);
   });
 
   it('should render footer slot content', async () => {
@@ -35,9 +36,8 @@ describe('bq-empty-state', () => {
     );
 
     const slot = root.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="footer"]');
-    const assignedText = slot?.assignedElements({ flatten: true })[0].textContent?.trim();
 
-    expect(assignedText).toBe(footerText);
+    expect(getTextContent(slot, { recurse: true })).toBe(footerText);
   });
 
   it('should render a custom thumbnail via thumbnail slot', async () => {

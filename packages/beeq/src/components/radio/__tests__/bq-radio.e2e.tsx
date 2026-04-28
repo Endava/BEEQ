@@ -3,35 +3,35 @@ import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
 import { userEvent } from 'vitest/browser';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
+import { getTextContent } from '../../../shared/utils/slot';
 
 const getInput = (element: HTMLBqRadioElement) => element.shadowRoot?.querySelector<HTMLInputElement>('input');
-const getSlot = (element: HTMLBqRadioElement) => element.shadowRoot?.querySelector<HTMLSlotElement>('slot');
 
 describe('bq-radio', () => {
   it('should render', async () => {
-    const { root } = await render(<bq-radio />);
+    const { root } = await render(<bq-radio name="test-option" value="test-value" />);
 
     expect(root).not.toBeNull();
   });
 
   it('should have shadow root', async () => {
-    const { root } = await render(<bq-radio />);
+    const { root } = await render(<bq-radio name="test-option" value="test-value" />);
 
     expect(root.shadowRoot).not.toBeNull();
   });
 
   it('should display the slotted label', async () => {
     const { root } = await render(
-      <bq-radio>
+      <bq-radio name="test-option" value="test-value">
         <span>Label</span>
       </bq-radio>,
     );
+    const bqRadio = root as HTMLBqRadioElement;
 
-    await waitForStable(root);
+    await waitForStable(bqRadio);
 
-    const assignedElement = getSlot(root).assignedElements({ flatten: true })[0];
-
-    expect(assignedElement.textContent?.trim()).toBe('Label');
+    const labelSlot = bqRadio.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
+    expect(getTextContent(labelSlot, { recurse: true })).toBe('Label');
   });
 
   it('should handle checked state correctly', async () => {
@@ -42,21 +42,21 @@ describe('bq-radio', () => {
     );
     const bqRadio = root as HTMLBqRadioElement;
 
-    const input = getInput(root);
+    const input = getInput(bqRadio);
 
-    expect(root).not.toHaveAttribute('checked');
+    expect(bqRadio).not.toHaveAttribute('checked');
     expect(input.checked).toBe(false);
 
     bqRadio.checked = true;
     await waitForChanges();
 
-    expect(root).toHaveAttribute('checked');
+    expect(bqRadio).toHaveAttribute('checked');
     expect(input.checked).toBe(true);
 
     bqRadio.checked = false;
     await waitForChanges();
 
-    expect(root).not.toHaveAttribute('checked');
+    expect(bqRadio).not.toHaveAttribute('checked');
     expect(input.checked).toBe(false);
   });
 
@@ -91,8 +91,9 @@ describe('bq-radio', () => {
         Test Label
       </bq-radio>,
     );
+    const bqRadio = root as HTMLBqRadioElement;
     const bqClick = spyOnEvent('bqClick');
-    const input = getInput(root);
+    const input = getInput(bqRadio);
 
     expect(input).toBeDisabled();
 
@@ -108,9 +109,10 @@ describe('bq-radio', () => {
         Test Label
       </bq-radio>,
     );
+    const bqRadio = root as HTMLBqRadioElement;
 
-    expect(getInput(root)).toBeDisabled();
-    expect(getInput(root).getAttribute('aria-disabled')).toBe('true');
+    expect(getInput(bqRadio)).toBeDisabled();
+    expect(getInput(bqRadio).getAttribute('aria-disabled')).toBe('true');
   });
 
   it('should emit bqFocus and bqBlur through the native input', async () => {
@@ -119,9 +121,10 @@ describe('bq-radio', () => {
         Test Label
       </bq-radio>,
     );
+    const bqRadio = root as HTMLBqRadioElement;
     const bqFocus = spyOnEvent('bqFocus');
     const bqBlur = spyOnEvent('bqBlur');
-    const input = getInput(root);
+    const input = getInput(bqRadio);
 
     input.focus();
     input.blur();
@@ -137,8 +140,9 @@ describe('bq-radio', () => {
         Test Label
       </bq-radio>,
     );
+    const bqRadio = root as HTMLBqRadioElement;
 
-    const input = getInput(root);
+    const input = getInput(bqRadio);
 
     expect(input.getAttribute('form')).toBe('my-form');
     expect(input.getAttribute('name')).toBe('test-option');
@@ -154,7 +158,7 @@ describe('bq-radio', () => {
     );
     const bqRadio = root as HTMLBqRadioElement;
 
-    expect(await bqRadio.getNativeInput()).toBe(getInput(root));
+    expect(await bqRadio.getNativeInput()).toBe(getInput(bqRadio));
   });
 
   it('should not emit bqFocus when disabled', async () => {
@@ -163,9 +167,10 @@ describe('bq-radio', () => {
         Test Label
       </bq-radio>,
     );
+    const bqRadio = root as HTMLBqRadioElement;
     const bqFocus = spyOnEvent('bqFocus');
 
-    getInput(root).focus();
+    getInput(bqRadio).focus();
     await waitForChanges();
 
     expect(bqFocus).toHaveReceivedEventTimes(0);
@@ -177,12 +182,13 @@ describe('bq-radio', () => {
         Test Label
       </bq-radio>,
     );
+    const bqRadio = root as HTMLBqRadioElement;
     const bqFocus = spyOnEvent('bqFocus');
     const bqClick = spyOnEvent('bqClick');
     const bqBlur = spyOnEvent('bqBlur');
     const bqKeyDown = spyOnEvent('bqKeyDown');
 
-    getInput(root).focus();
+    getInput(bqRadio).focus();
     await userEvent.keyboard('0');
     await waitForChanges();
 
@@ -190,6 +196,22 @@ describe('bq-radio', () => {
     expect(bqClick).toHaveReceivedEventTimes(0);
     expect(bqBlur).toHaveReceivedEventTimes(0);
     expect(bqKeyDown).toHaveReceivedEventTimes(1);
+  });
+
+  it('should remove focus from the native input via vBlur', async () => {
+    const { root, spyOnEvent, waitForChanges } = await render(
+      <bq-radio name="test-option" value="test-value">
+        Test Label
+      </bq-radio>,
+    );
+    const bqRadio = root as HTMLBqRadioElement;
+    const bqBlur = spyOnEvent('bqBlur');
+
+    await bqRadio.vFocus();
+    await bqRadio.vBlur();
+    await waitForChanges();
+
+    expect(bqBlur).toHaveReceivedEventTimes(1);
   });
 
   it('should respect the expected design styles', async () => {

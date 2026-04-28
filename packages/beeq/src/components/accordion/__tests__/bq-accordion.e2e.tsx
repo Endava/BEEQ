@@ -3,6 +3,7 @@ import { describe, expect, it, render, waitForStable } from '@stencil/vitest';
 import { userEvent } from 'vitest/browser';
 
 import { computedStyle } from '../../../shared/test-utils/computedStyle';
+import { getTextContent } from '../../../shared/utils/slot';
 
 const HEADER_TEXT = 'Test text';
 
@@ -25,10 +26,8 @@ describe('bq-accordion', () => {
     );
 
     const slot = root.shadowRoot.querySelector('slot[name="header"]') as HTMLSlotElement;
-    const headerText = slot.assignedElements({ flatten: true })[0].textContent;
 
-    expect(headerText?.trim()).toBe(HEADER_TEXT);
-    expect(headerText).not.toBeNull();
+    expect(getTextContent(slot, { recurse: true })).toBe(HEADER_TEXT);
   });
 
   it('should render prefix', async () => {
@@ -40,10 +39,8 @@ describe('bq-accordion', () => {
     );
 
     const slot = root.shadowRoot.querySelector('slot[name="prefix"]') as HTMLSlotElement;
-    const prefixText = slot.assignedElements({ flatten: true })[0].textContent;
 
-    expect(prefixText?.trim()).toBe('Test prefix');
-    expect(prefixText).not.toBeNull();
+    expect(getTextContent(slot, { recurse: true })).toBe('Test prefix');
   });
 
   it('should render suffix', async () => {
@@ -55,10 +52,8 @@ describe('bq-accordion', () => {
     );
 
     const slot = root.shadowRoot.querySelector('slot[name="suffix"]') as HTMLSlotElement;
-    const suffixText = slot.assignedElements({ flatten: true })[0].textContent;
 
-    expect(suffixText?.trim()).toBe('Test suffix');
-    expect(suffixText).not.toBeNull();
+    expect(getTextContent(slot, { recurse: true })).toBe('Test suffix');
   });
 
   it('should be open if expanded prop is provided', async () => {

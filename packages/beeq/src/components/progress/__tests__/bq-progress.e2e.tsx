@@ -26,10 +26,11 @@ describe('bq-progress', () => {
   it('should render the progress bar with label', async () => {
     const value = 60;
     const { root } = await render(<bq-progress label value={value} />);
+    const bqProgress = root as HTMLBqProgressElement;
 
-    await waitForStable(root);
+    await waitForStable(bqProgress);
 
-    const label = getLabel(root);
+    const label = getLabel(bqProgress);
 
     expect(label).not.toBeNull();
     expect(label.getAttribute('aria-hidden')).toBe('false');
@@ -38,10 +39,11 @@ describe('bq-progress', () => {
 
   it('should render the progress bar without label', async () => {
     const { root } = await render(<bq-progress value={60} />);
+    const bqProgress = root as HTMLBqProgressElement;
 
-    await waitForStable(root);
+    await waitForStable(bqProgress);
 
-    const label = getLabel(root);
+    const label = getLabel(bqProgress);
 
     expect(label.getAttribute('aria-hidden')).toBe('true');
     expect(label).toHaveClass('invisible');
@@ -50,35 +52,41 @@ describe('bq-progress', () => {
   it('should render the progress bar with tooltip', async () => {
     const value = 60;
     const { root } = await render(<bq-progress enableTooltip value={value} />);
+    const bqProgress = root as HTMLBqProgressElement;
 
-    await waitForStable(root);
+    await waitForStable(bqProgress);
 
-    expect(getTooltip(root)).not.toBeNull();
-    expect(getTooltip(root)?.textContent?.trim()).toBe(`${value}`);
+    const tooltip = getTooltip(bqProgress);
+
+    expect(tooltip).not.toBeNull();
+    expect(tooltip.textContent?.trim()).toBe(`${value}`);
   });
 
   it('should render the progress bar without tooltip', async () => {
     const { root } = await render(<bq-progress value={60} />);
+    const tooltip = root as HTMLBqProgressElement;
 
-    expect(getTooltip(root)).toBeNull();
+    expect(getTooltip(tooltip)).toBeNull();
   });
 
   it('should render the error type styles', async () => {
     const { root } = await render(<bq-progress label type="error" value={60} />);
+    const bqProgress = root as HTMLBqProgressElement;
 
-    await waitForStable(root);
+    await waitForStable(bqProgress);
 
-    expect(getProgressBar(root)).toHaveClass('progress-bar__error');
-    expect(getLabel(root)).toHaveClass('text-danger');
-    expect(root.style.getPropertyValue('--bq-progress-bar--indicatorColor')).toBe('var(--bq-ui--danger)');
+    expect(getProgressBar(bqProgress)).toHaveClass('progress-bar__error');
+    expect(getLabel(bqProgress)).toHaveClass('text-danger');
+    expect(bqProgress.style.getPropertyValue('--bq-progress-bar--indicatorColor')).toBe('var(--bq-ui--danger)');
   });
 
   it('should render the large thickness styles', async () => {
     const { root } = await render(<bq-progress thickness="large" value={60} />);
+    const bqProgress = root as HTMLBqProgressElement;
 
-    await waitForStable(root);
+    await waitForStable(bqProgress);
 
-    expect(root.style.getPropertyValue('--bq-progress-bar--height')).toBe('var(--bq-spacing-xs)');
+    expect(bqProgress.style.getPropertyValue('--bq-progress-bar--height')).toBe('var(--bq-spacing-xs)');
   });
 
   it('should clamp the value to the supported range', async () => {
@@ -96,30 +104,34 @@ describe('bq-progress', () => {
 
   it('should render the indeterminate state', async () => {
     const { root } = await render(<bq-progress indeterminate value={60} />);
+    const bqProgress = root as HTMLBqProgressElement;
 
-    await waitForStable(root);
+    await waitForStable(bqProgress);
 
-    expect(getProgressBar(root)).not.toHaveAttribute('value');
-    expect(getIndeterminate(root)).not.toBeNull();
-    expect(getLabel(root).getAttribute('aria-hidden')).toBe('true');
+    expect(getProgressBar(bqProgress)).not.toHaveAttribute('value');
+    expect(getIndeterminate(bqProgress)).not.toBeNull();
+    expect(getLabel(bqProgress).getAttribute('aria-hidden')).toBe('true');
   });
 
   it('should render the rounded border shape', async () => {
     const { root } = await render(<bq-progress borderShape="rounded" value={60} />);
+    const bqProgress = root as HTMLBqProgressElement;
 
-    expect(getProgressBar(root)).toHaveClass('progress-bar__border-shape');
+    expect(getProgressBar(bqProgress)).toHaveClass('progress-bar__border-shape');
   });
 
   it('should render the square border shape without rounded styles', async () => {
     const { root } = await render(<bq-progress borderShape="square" value={60} />);
+    const bqProgress = root as HTMLBqProgressElement;
 
-    expect(getProgressBar(root)).not.toHaveClass('progress-bar__border-shape');
+    expect(getProgressBar(bqProgress)).not.toHaveClass('progress-bar__border-shape');
   });
 
   it('should not render tooltip content for indeterminate progress', async () => {
     const { root } = await render(<bq-progress enableTooltip indeterminate value={60} />);
+    const bqProgress = root as HTMLBqProgressElement;
 
-    expect(getTooltip(root)).toBeNull();
+    expect(getTooltip(bqProgress)).toBeNull();
   });
 
   it('should update the label text when the value changes', async () => {
@@ -129,7 +141,7 @@ describe('bq-progress', () => {
     bqProgress.value = 75;
     await waitForChanges();
 
-    expect(getLabel(root).textContent?.trim()).toBe('75%');
+    expect(getLabel(bqProgress).textContent?.trim()).toBe('75%');
   });
 
   it('should fallback invalid prop values to defaults', async () => {

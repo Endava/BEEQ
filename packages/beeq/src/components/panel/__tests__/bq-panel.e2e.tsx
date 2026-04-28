@@ -42,6 +42,16 @@ describe('bq-panel', () => {
     expect(getTextContent(getSlot(root))).toBe('Panel content');
   });
 
+  it('should reflect the disableScrollLock property', async () => {
+    const { root } = await render(
+      <bq-panel disableScrollLock open>
+        Some content
+      </bq-panel>,
+    );
+
+    expect(root).toHaveAttribute('disable-scroll-lock');
+  });
+
   it('should reflect positioning-related properties', async () => {
     const { root } = await render(
       <bq-panel distance={12} open placement="top-end" sameWidth skidding={8} strategy="absolute">
@@ -49,11 +59,11 @@ describe('bq-panel', () => {
       </bq-panel>,
     );
 
-    expect(root).toHaveAttribute('distance', '12');
-    expect(root).toHaveAttribute('placement', 'top-end');
+    expect(root).toEqualAttribute('distance', '12');
+    expect(root).toEqualAttribute('placement', 'top-end');
     expect(root).toHaveAttribute('same-width');
-    expect(root).toHaveAttribute('skidding', '8');
-    expect(root).toHaveAttribute('strategy', 'absolute');
+    expect(root).toEqualAttribute('skidding', '8');
+    expect(root).toEqualAttribute('strategy', 'absolute');
   });
 
   it('should respect the expected design styles', async () => {

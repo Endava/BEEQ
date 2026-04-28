@@ -1,7 +1,7 @@
 import { h } from '@stencil/core';
 import { describe, expect, it, render } from '@stencil/vitest';
 
-import { getTextContent } from '../../../shared/utils';
+import { getTextContent } from '../../../shared/utils/slot';
 
 describe('bq-page-title', () => {
   it('should render', async () => {
