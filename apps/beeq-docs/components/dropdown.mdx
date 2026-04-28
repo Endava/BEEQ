@@ -1,0 +1,1520 @@
+---
+title: Dropdown
+description: Dropdowns provide users with a compact and organized list of options, actions, or destinations from a trigger.
+---
+
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Dropdown component overview">
+  <img className="block dark:hidden" src="/components/images/dropdown/dropdown-overview-light.svg" alt="BEEQ Dropdown component overview" />
+  <img className="hidden dark:block" src="/components/images/dropdown/dropdown-overview-dark.svg" alt="BEEQ Dropdown component overview" />
+</Frame>
+
+The Dropdown Component is a UI element used to provide users with a list of options in a compact and organized manner. Dropdowns are commonly used in navigation menus, forms, and other interactive elements where users need to select from a list of options.
+
+<Note>
+  `bq-dropdown` needs two slots: `trigger` for the element users interact with, and the default slot for the panel content. It uses `bq-panel` under the hood and commonly contains `bq-option-list`, `bq-option`, and `bq-option-group`.
+</Note>
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use dropdowns when
+    </span>
+    - You have more than 3 options and need to keep the interface compact
+    - Users need a list of available actions, destinations, or values from a trigger
+    - The choices are related and can be scanned after opening the panel
+    - You need a menu, select-like surface, or contextual action list without taking over the page
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use dropdowns when
+    </span>
+    - You have less than 3 options that can stay visible on the page
+    - The options are critical and should not be hidden behind an extra interaction
+    - The panel would cover important content, links, buttons, or other active controls
+    - The list is too long, unclear, or better handled by search, filters, tabs, or a full page flow
+  </Card>
+</CardGroup>
+
+## Dropdown types
+
+Dropdowns support compact action menus and panel-based selection patterns.
+
+<CardGroup cols={2}>
+  <Card title="Dropdown">
+    A dropdown is useful for providing users with a list of options in a compact and organized manner. It is primarily used to initiate an action or direct the user to a new page or modal.
+  </Card>
+  <Card title="Dropdown panel">
+    Serves as a menu presenting a list of available items or actions for users to freely apply or use. The panel slot can host single-select or multi-select forms when the interaction needs it.
+  </Card>
+  <Card title="Single select">
+    Enables users to choose one item from a predefined list. Selected choices should be visibly highlighted so users can understand the current value.
+  </Card>
+  <Card title="Multi-select">
+    Allows users to apply more than one choice from the same panel. Use `keep-open-on-select` when the dropdown should remain open after each selection.
+  </Card>
+</CardGroup>
+
+## Anatomy
+
+<Frame caption="Dropdown anatomy">
+  <img className="block dark:hidden" src="/components/images/dropdown/dropdown-anatomy-light.svg" alt="Dropdown anatomy" />
+  <img className="hidden dark:block" src="/components/images/dropdown/dropdown-anatomy-dark.svg" alt="Dropdown anatomy" />
+</Frame>
+
+A dropdown is composed of a trigger and a floating panel. The trigger can be a button, avatar, icon button, or another appropriate interactive element. The panel contains the options or custom content users can act on.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Trigger | The slotted element that opens and closes the dropdown |
+| **2** | Chevron or cue | Optional visual indicator that communicates whether the dropdown is open or closed |
+| **3** | Panel | The floating surface rendered by `bq-panel` under the hood |
+| **4** | Option list | A structured list of choices, usually built with `bq-option-list` |
+| **5** | Option | Individual action, destination, or value inside the panel |
+
+## Common usage patterns
+
+### Default
+
+The trigger can be any appropriate interactive element, but in most cases a `bq-button` with a `bq-icon` works well for navigation, selection, or action menus. Use the `open` attribute when you need to control the visible state.
+
+<CodeLivePreview code={`
+  <style>
+    .dropdown-default {
+      position: relative;
+      z-index: 12;
+    }
+  </style>
+  <bq-dropdown class="dropdown-default" open placement="bottom-start">
+    <bq-button slot="trigger">
+      Dropdown
+      <bq-icon name="caret-down" slot="suffix"></bq-icon>
+    </bq-button>
+
+    <bq-option-list>
+      <bq-option value="users">
+        <bq-icon name="users" slot="prefix"></bq-icon>
+        <span>Users</span>
+      </bq-option>
+
+      <bq-option value="profile">
+        <bq-icon name="user" slot="prefix"></bq-icon>
+        <span>My profile</span>
+      </bq-option>
+
+      <bq-option value="dashboard">
+        <bq-icon name="sliders" slot="prefix"></bq-icon>
+        <span>Dashboard</span>
+      </bq-option>
+
+      <bq-option value="settings">
+        <bq-icon name="gear" slot="prefix"></bq-icon>
+        <span>Settings</span>
+      </bq-option>
+
+      <bq-option value="logout">
+        <span>Logout</span>
+        <bq-icon name="sign-out" slot="suffix"></bq-icon>
+      </bq-option>
+    </bq-option-list>
+  </bq-dropdown>
+`}>
+  <CodeGroup>
+    ```css CSS icon="css"
+    .dropdown-default {
+      position: relative;
+      z-index: 12;
+    }
+    ```
+
+    ```html HTML icon="html5"
+    <bq-dropdown class="dropdown-default" open placement="bottom-start">
+      <bq-button slot="trigger">
+        Dropdown
+        <bq-icon name="caret-down" slot="suffix"></bq-icon>
+      </bq-button>
+
+      <bq-option-list>
+        <bq-option value="users">
+          <bq-icon name="users" slot="prefix"></bq-icon>
+          <span>Users</span>
+        </bq-option>
+
+        <bq-option value="profile">
+          <bq-icon name="user" slot="prefix"></bq-icon>
+          <span>My profile</span>
+        </bq-option>
+
+        <bq-option value="dashboard">
+          <bq-icon name="sliders" slot="prefix"></bq-icon>
+          <span>Dashboard</span>
+        </bq-option>
+
+        <bq-option value="settings">
+          <bq-icon name="gear" slot="prefix"></bq-icon>
+          <span>Settings</span>
+        </bq-option>
+
+        <bq-option value="logout">
+          <span>Logout</span>
+          <bq-icon name="sign-out" slot="suffix"></bq-icon>
+        </bq-option>
+      </bq-option-list>
+    </bq-dropdown>
+    ```
+
+    ```jsx React icon="react"
+    import { BqButton, BqDropdown, BqIcon, BqOption, BqOptionList } from "@beeq/react";
+
+    <BqDropdown className="dropdown-default" open placement="bottom-start">
+      <BqButton slot="trigger">
+        Dropdown
+        <BqIcon name="caret-down" slot="suffix" />
+      </BqButton>
+
+      <BqOptionList>
+        <BqOption value="users">
+          <BqIcon name="users" slot="prefix" />
+          <span>Users</span>
+        </BqOption>
+
+        <BqOption value="profile">
+          <BqIcon name="user" slot="prefix" />
+          <span>My profile</span>
+        </BqOption>
+
+        <BqOption value="dashboard">
+          <BqIcon name="sliders" slot="prefix" />
+          <span>Dashboard</span>
+        </BqOption>
+
+        <BqOption value="settings">
+          <BqIcon name="gear" slot="prefix" />
+          <span>Settings</span>
+        </BqOption>
+
+        <BqOption value="logout">
+          <span>Logout</span>
+          <BqIcon name="sign-out" slot="suffix" />
+        </BqOption>
+      </BqOptionList>
+    </BqDropdown>
+    ```
+
+    ```html Angular icon="angular"
+    <!-- Standalone: import { BqButton, BqDropdown, BqIcon, BqOption, BqOptionList } from "@beeq/angular/standalone" -->
+    <!-- Modules: components are available after importing BeeQModule -->
+
+    <bq-dropdown class="dropdown-default" open placement="bottom-start">
+      <bq-button slot="trigger">
+        Dropdown
+        <bq-icon name="caret-down" slot="suffix"></bq-icon>
+      </bq-button>
+
+      <bq-option-list>
+        <bq-option value="users">
+          <bq-icon name="users" slot="prefix"></bq-icon>
+          <span>Users</span>
+        </bq-option>
+
+        <bq-option value="profile">
+          <bq-icon name="user" slot="prefix"></bq-icon>
+          <span>My profile</span>
+        </bq-option>
+
+        <bq-option value="dashboard">
+          <bq-icon name="sliders" slot="prefix"></bq-icon>
+          <span>Dashboard</span>
+        </bq-option>
+
+        <bq-option value="settings">
+          <bq-icon name="gear" slot="prefix"></bq-icon>
+          <span>Settings</span>
+        </bq-option>
+
+        <bq-option value="logout">
+          <span>Logout</span>
+          <bq-icon name="sign-out" slot="suffix"></bq-icon>
+        </bq-option>
+      </bq-option-list>
+    </bq-dropdown>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqButton, BqDropdown, BqIcon, BqOption, BqOptionList } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDropdown class="dropdown-default" open placement="bottom-start">
+        <BqButton slot="trigger">
+          Dropdown
+          <BqIcon name="caret-down" slot="suffix" />
+        </BqButton>
+
+        <BqOptionList>
+          <BqOption value="users">
+            <BqIcon name="users" slot="prefix" />
+            <span>Users</span>
+          </BqOption>
+
+          <BqOption value="profile">
+            <BqIcon name="user" slot="prefix" />
+            <span>My profile</span>
+          </BqOption>
+
+          <BqOption value="dashboard">
+            <BqIcon name="sliders" slot="prefix" />
+            <span>Dashboard</span>
+          </BqOption>
+
+          <BqOption value="settings">
+            <BqIcon name="gear" slot="prefix" />
+            <span>Settings</span>
+          </BqOption>
+
+          <BqOption value="logout">
+            <span>Logout</span>
+            <BqIcon name="sign-out" slot="suffix" />
+          </BqOption>
+        </BqOptionList>
+      </BqDropdown>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  The dropdown automatically prevents page scrolling while the panel is open. Set `disable-scroll-lock` when the surrounding experience needs background scrolling, and remember that a dropdown inside a scrollable area closes when that area scrolls.
+</Tip>
+
+### Placement
+
+Use the `placement` attribute when you need fine-grained control over the panel position. `bottom-start` anchors the panel to the start side of the trigger, while `bottom-end` aligns it to the end side.
+
+<CodeLivePreview code={`
+  <style>
+    .dropdown-placement {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: var(--bq-spacing-m);
+      place-items: center;
+      padding: var(--bq-spacing-xxl3) var(--bq-spacing-m);
+    }
+
+    @media (min-width: 640px) {
+      .dropdown-placement {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+  </style>
+
+  <div class="dropdown-placement">
+    <bq-dropdown open placement="bottom-start">
+      <bq-button slot="trigger">
+        Bottom start
+        <bq-icon name="caret-down" slot="suffix"></bq-icon>
+      </bq-button>
+
+      <bq-option-list>
+        <bq-option value="users">
+          <bq-icon name="users" slot="prefix"></bq-icon>
+          <span>Users</span>
+        </bq-option>
+        <bq-option value="profile">
+          <bq-icon name="user" slot="prefix"></bq-icon>
+          <span>My profile</span>
+        </bq-option>
+        <bq-option value="dashboard">
+          <bq-icon name="sliders" slot="prefix"></bq-icon>
+          <span>Dashboard</span>
+        </bq-option>
+      </bq-option-list>
+    </bq-dropdown>
+
+    <bq-dropdown open placement="bottom-end">
+      <bq-button slot="trigger">
+        Bottom end
+        <bq-icon name="caret-down" slot="suffix"></bq-icon>
+      </bq-button>
+
+      <bq-option-list>
+        <bq-option value="users">
+          <bq-icon name="users" slot="prefix"></bq-icon>
+          <span>Users</span>
+        </bq-option>
+        <bq-option value="profile">
+          <bq-icon name="user" slot="prefix"></bq-icon>
+          <span>My profile</span>
+        </bq-option>
+        <bq-option value="dashboard">
+          <bq-icon name="sliders" slot="prefix"></bq-icon>
+          <span>Dashboard</span>
+        </bq-option>
+      </bq-option-list>
+    </bq-dropdown>
+  </div>
+`}>
+  <CodeGroup>
+    ```css CSS icon="css"
+    .dropdown-placement {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: var(--bq-spacing-m);
+      place-items: center;
+      padding: var(--bq-spacing-xxl3) var(--bq-spacing-m);
+    }
+
+    @media (min-width: 640px) {
+      .dropdown-placement {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    ```
+
+    ```html HTML icon="html5"
+    <div class="dropdown-placement">
+      <bq-dropdown open placement="bottom-start">
+        <bq-button slot="trigger">
+          Bottom start
+          <bq-icon name="caret-down" slot="suffix"></bq-icon>
+        </bq-button>
+
+        <bq-option-list>
+          <bq-option value="users">
+            <bq-icon name="users" slot="prefix"></bq-icon>
+            <span>Users</span>
+          </bq-option>
+          <bq-option value="profile">
+            <bq-icon name="user" slot="prefix"></bq-icon>
+            <span>My profile</span>
+          </bq-option>
+          <bq-option value="dashboard">
+            <bq-icon name="sliders" slot="prefix"></bq-icon>
+            <span>Dashboard</span>
+          </bq-option>
+        </bq-option-list>
+      </bq-dropdown>
+
+      <bq-dropdown open placement="bottom-end">
+        <bq-button slot="trigger">
+          Bottom end
+          <bq-icon name="caret-down" slot="suffix"></bq-icon>
+        </bq-button>
+
+        <bq-option-list>
+          <bq-option value="users">
+            <bq-icon name="users" slot="prefix"></bq-icon>
+            <span>Users</span>
+          </bq-option>
+          <bq-option value="profile">
+            <bq-icon name="user" slot="prefix"></bq-icon>
+            <span>My profile</span>
+          </bq-option>
+          <bq-option value="dashboard">
+            <bq-icon name="sliders" slot="prefix"></bq-icon>
+            <span>Dashboard</span>
+          </bq-option>
+        </bq-option-list>
+      </bq-dropdown>
+    </div>
+    ```
+
+    ```jsx React icon="react"
+    import { BqButton, BqDropdown, BqIcon, BqOption, BqOptionList } from "@beeq/react";
+
+    <div className="dropdown-placement">
+      <BqDropdown open placement="bottom-start">
+        <BqButton slot="trigger">
+          Bottom start
+          <BqIcon name="caret-down" slot="suffix" />
+        </BqButton>
+
+        <BqOptionList>
+          <BqOption value="users">
+            <BqIcon name="users" slot="prefix" />
+            <span>Users</span>
+          </BqOption>
+          <BqOption value="profile">
+            <BqIcon name="user" slot="prefix" />
+            <span>My profile</span>
+          </BqOption>
+          <BqOption value="dashboard">
+            <BqIcon name="sliders" slot="prefix" />
+            <span>Dashboard</span>
+          </BqOption>
+        </BqOptionList>
+      </BqDropdown>
+
+      <BqDropdown open placement="bottom-end">
+        <BqButton slot="trigger">
+          Bottom end
+          <BqIcon name="caret-down" slot="suffix" />
+        </BqButton>
+
+        <BqOptionList>
+          <BqOption value="users">
+            <BqIcon name="users" slot="prefix" />
+            <span>Users</span>
+          </BqOption>
+          <BqOption value="profile">
+            <BqIcon name="user" slot="prefix" />
+            <span>My profile</span>
+          </BqOption>
+          <BqOption value="dashboard">
+            <BqIcon name="sliders" slot="prefix" />
+            <span>Dashboard</span>
+          </BqOption>
+        </BqOptionList>
+      </BqDropdown>
+    </div>
+    ```
+
+    ```html Angular icon="angular"
+    <div class="dropdown-placement">
+      <bq-dropdown open placement="bottom-start">
+        <bq-button slot="trigger">
+          Bottom start
+          <bq-icon name="caret-down" slot="suffix"></bq-icon>
+        </bq-button>
+
+        <bq-option-list>
+          <bq-option value="users">
+            <bq-icon name="users" slot="prefix"></bq-icon>
+            <span>Users</span>
+          </bq-option>
+          <bq-option value="profile">
+            <bq-icon name="user" slot="prefix"></bq-icon>
+            <span>My profile</span>
+          </bq-option>
+          <bq-option value="dashboard">
+            <bq-icon name="sliders" slot="prefix"></bq-icon>
+            <span>Dashboard</span>
+          </bq-option>
+        </bq-option-list>
+      </bq-dropdown>
+
+      <bq-dropdown open placement="bottom-end">
+        <bq-button slot="trigger">
+          Bottom end
+          <bq-icon name="caret-down" slot="suffix"></bq-icon>
+        </bq-button>
+
+        <bq-option-list>
+          <bq-option value="users">
+            <bq-icon name="users" slot="prefix"></bq-icon>
+            <span>Users</span>
+          </bq-option>
+          <bq-option value="profile">
+            <bq-icon name="user" slot="prefix"></bq-icon>
+            <span>My profile</span>
+          </bq-option>
+          <bq-option value="dashboard">
+            <bq-icon name="sliders" slot="prefix"></bq-icon>
+            <span>Dashboard</span>
+          </bq-option>
+        </bq-option-list>
+      </bq-dropdown>
+    </div>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqButton, BqDropdown, BqIcon, BqOption, BqOptionList } from "@beeq/vue";
+    </script>
+
+    <template>
+      <div class="dropdown-placement">
+        <BqDropdown open placement="bottom-start">
+          <BqButton slot="trigger">
+            Bottom start
+            <BqIcon name="caret-down" slot="suffix" />
+          </BqButton>
+
+          <BqOptionList>
+            <BqOption value="users">
+              <BqIcon name="users" slot="prefix" />
+              <span>Users</span>
+            </BqOption>
+            <BqOption value="profile">
+              <BqIcon name="user" slot="prefix" />
+              <span>My profile</span>
+            </BqOption>
+            <BqOption value="dashboard">
+              <BqIcon name="sliders" slot="prefix" />
+              <span>Dashboard</span>
+            </BqOption>
+          </BqOptionList>
+        </BqDropdown>
+
+        <BqDropdown open placement="bottom-end">
+          <BqButton slot="trigger">
+            Bottom end
+            <BqIcon name="caret-down" slot="suffix" />
+          </BqButton>
+
+          <BqOptionList>
+            <BqOption value="users">
+              <BqIcon name="users" slot="prefix" />
+              <span>Users</span>
+            </BqOption>
+            <BqOption value="profile">
+              <BqIcon name="user" slot="prefix" />
+              <span>My profile</span>
+            </BqOption>
+            <BqOption value="dashboard">
+              <BqIcon name="sliders" slot="prefix" />
+              <span>Dashboard</span>
+            </BqOption>
+          </BqOptionList>
+        </BqDropdown>
+      </div>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Custom trigger
+
+Use a custom trigger when the dropdown needs a more specific visual entry point, such as an icon-only action menu or a profile avatar menu. The trigger must remain understandable and accessible.
+
+<CodeLivePreview code={`
+  <style>
+    .dropdown-custom {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: var(--bq-spacing-m);
+      place-items: center;
+      padding: var(--bq-spacing-xxl3) var(--bq-spacing-m);
+    }
+
+    @media (min-width: 640px) {
+      .dropdown-custom {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+  </style>
+
+  <div class="dropdown-custom">
+    <bq-dropdown open placement="bottom">
+      <bq-button appearance="secondary" size="medium" type="button" variant="standard" slot="trigger">
+        <bq-icon name="dots-three-vertical"></bq-icon>
+      </bq-button>
+
+      <bq-option-list>
+        <bq-option value="edit">
+          <bq-icon name="pencil-simple" slot="prefix"></bq-icon>
+          <span>Edit</span>
+        </bq-option>
+        <bq-option value="duplicate">
+          <bq-icon name="copy" slot="prefix"></bq-icon>
+          <span>Duplicate</span>
+        </bq-option>
+        <bq-option value="archive">
+          <bq-icon name="archive" slot="prefix"></bq-icon>
+          <span>Archive</span>
+        </bq-option>
+      </bq-option-list>
+    </bq-dropdown>
+
+    <bq-dropdown open placement="bottom">
+      <bq-avatar
+        alt-text="User profile"
+        image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
+        initials="BQ"
+        label="User profile menu"
+        slot="trigger"
+      ></bq-avatar>
+
+      <bq-option-list>
+        <bq-option value="profile">
+          <bq-icon name="user" slot="prefix"></bq-icon>
+          <span>My profile</span>
+        </bq-option>
+        <bq-option value="settings">
+          <bq-icon name="gear" slot="prefix"></bq-icon>
+          <span>Settings</span>
+        </bq-option>
+        <bq-option value="logout">
+          <span>Logout</span>
+          <bq-icon name="sign-out" slot="suffix"></bq-icon>
+        </bq-option>
+      </bq-option-list>
+    </bq-dropdown>
+  </div>
+`}>
+  <CodeGroup>
+    ```css CSS icon="css"
+    .dropdown-custom {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: var(--bq-spacing-m);
+      place-items: center;
+      padding: var(--bq-spacing-xxl3) var(--bq-spacing-m);
+    }
+
+    @media (min-width: 640px) {
+      .dropdown-custom {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    ```
+
+    ```html HTML icon="html5"
+    <div class="dropdown-custom">
+      <bq-dropdown open placement="bottom">
+        <bq-button appearance="secondary" size="medium" type="button" variant="standard" slot="trigger">
+          <bq-icon name="dots-three-vertical"></bq-icon>
+        </bq-button>
+
+        <bq-option-list>
+          <bq-option value="edit">
+            <bq-icon name="pencil-simple" slot="prefix"></bq-icon>
+            <span>Edit</span>
+          </bq-option>
+          <bq-option value="duplicate">
+            <bq-icon name="copy" slot="prefix"></bq-icon>
+            <span>Duplicate</span>
+          </bq-option>
+          <bq-option value="archive">
+            <bq-icon name="archive" slot="prefix"></bq-icon>
+            <span>Archive</span>
+          </bq-option>
+        </bq-option-list>
+      </bq-dropdown>
+
+      <bq-dropdown open placement="bottom">
+        <bq-avatar
+          alt-text="User profile"
+          image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
+          initials="BQ"
+          label="User profile menu"
+          slot="trigger"
+        ></bq-avatar>
+
+        <bq-option-list>
+          <bq-option value="profile">
+            <bq-icon name="user" slot="prefix"></bq-icon>
+            <span>My profile</span>
+          </bq-option>
+          <bq-option value="settings">
+            <bq-icon name="gear" slot="prefix"></bq-icon>
+            <span>Settings</span>
+          </bq-option>
+          <bq-option value="logout">
+            <span>Logout</span>
+            <bq-icon name="sign-out" slot="suffix"></bq-icon>
+          </bq-option>
+        </bq-option-list>
+      </bq-dropdown>
+    </div>
+    ```
+
+    ```jsx React icon="react"
+    import { BqAvatar, BqButton, BqDropdown, BqIcon, BqOption, BqOptionList } from "@beeq/react";
+
+    <div className="dropdown-custom">
+      <BqDropdown open placement="bottom">
+        <BqButton appearance="secondary" size="medium" type="button" variant="standard" slot="trigger">
+          <BqIcon name="dots-three-vertical" />
+        </BqButton>
+
+        <BqOptionList>
+          <BqOption value="edit">
+            <BqIcon name="pencil-simple" slot="prefix" />
+            <span>Edit</span>
+          </BqOption>
+          <BqOption value="duplicate">
+            <BqIcon name="copy" slot="prefix" />
+            <span>Duplicate</span>
+          </BqOption>
+          <BqOption value="archive">
+            <BqIcon name="archive" slot="prefix" />
+            <span>Archive</span>
+          </BqOption>
+        </BqOptionList>
+      </BqDropdown>
+
+      <BqDropdown open placement="bottom">
+        <BqAvatar
+          altText="User profile"
+          image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
+          initials="BQ"
+          label="User profile menu"
+          slot="trigger"
+        />
+
+        <BqOptionList>
+          <BqOption value="profile">
+            <BqIcon name="user" slot="prefix" />
+            <span>My profile</span>
+          </BqOption>
+          <BqOption value="settings">
+            <BqIcon name="gear" slot="prefix" />
+            <span>Settings</span>
+          </BqOption>
+          <BqOption value="logout">
+            <span>Logout</span>
+            <BqIcon name="sign-out" slot="suffix" />
+          </BqOption>
+        </BqOptionList>
+      </BqDropdown>
+    </div>
+    ```
+
+    ```html Angular icon="angular"
+    <div class="dropdown-custom">
+      <bq-dropdown open placement="bottom">
+        <bq-button appearance="secondary" size="medium" type="button" variant="standard" slot="trigger">
+          <bq-icon name="dots-three-vertical"></bq-icon>
+        </bq-button>
+
+        <bq-option-list>
+          <bq-option value="edit">
+            <bq-icon name="pencil-simple" slot="prefix"></bq-icon>
+            <span>Edit</span>
+          </bq-option>
+          <bq-option value="duplicate">
+            <bq-icon name="copy" slot="prefix"></bq-icon>
+            <span>Duplicate</span>
+          </bq-option>
+          <bq-option value="archive">
+            <bq-icon name="archive" slot="prefix"></bq-icon>
+            <span>Archive</span>
+          </bq-option>
+        </bq-option-list>
+      </bq-dropdown>
+
+      <bq-dropdown open placement="bottom">
+        <bq-avatar
+          alt-text="User profile"
+          image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
+          initials="BQ"
+          label="User profile menu"
+          slot="trigger"
+        ></bq-avatar>
+
+        <bq-option-list>
+          <bq-option value="profile">
+            <bq-icon name="user" slot="prefix"></bq-icon>
+            <span>My profile</span>
+          </bq-option>
+          <bq-option value="settings">
+            <bq-icon name="gear" slot="prefix"></bq-icon>
+            <span>Settings</span>
+          </bq-option>
+          <bq-option value="logout">
+            <span>Logout</span>
+            <bq-icon name="sign-out" slot="suffix"></bq-icon>
+          </bq-option>
+        </bq-option-list>
+      </bq-dropdown>
+    </div>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqAvatar, BqButton, BqDropdown, BqIcon, BqOption, BqOptionList } from "@beeq/vue";
+    </script>
+
+    <template>
+      <div class="dropdown-custom">
+        <BqDropdown open placement="bottom">
+          <BqButton appearance="secondary" size="medium" type="button" variant="standard" slot="trigger">
+            <BqIcon name="dots-three-vertical" />
+          </BqButton>
+
+          <BqOptionList>
+            <BqOption value="edit">
+              <BqIcon name="pencil-simple" slot="prefix" />
+              <span>Edit</span>
+            </BqOption>
+            <BqOption value="duplicate">
+              <BqIcon name="copy" slot="prefix" />
+              <span>Duplicate</span>
+            </BqOption>
+            <BqOption value="archive">
+              <BqIcon name="archive" slot="prefix" />
+              <span>Archive</span>
+            </BqOption>
+          </BqOptionList>
+        </BqDropdown>
+
+        <BqDropdown open placement="bottom">
+          <BqAvatar
+            alt-text="User profile"
+            image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
+            initials="BQ"
+            label="User profile menu"
+            slot="trigger"
+          />
+
+          <BqOptionList>
+            <BqOption value="profile">
+              <BqIcon name="user" slot="prefix" />
+              <span>My profile</span>
+            </BqOption>
+            <BqOption value="settings">
+              <BqIcon name="gear" slot="prefix" />
+              <span>Settings</span>
+            </BqOption>
+            <BqOption value="logout">
+              <span>Logout</span>
+              <BqIcon name="sign-out" slot="suffix" />
+            </BqOption>
+          </BqOptionList>
+        </BqDropdown>
+      </div>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Keep open
+
+Use `keep-open-on-select` when the dropdown should stay open after a selection is made, enabling users to make multiple selections or navigate through related options without reopening the panel each time.
+
+<CodeLivePreview code={`
+  <bq-dropdown open keep-open-on-select>
+    <bq-button slot="trigger">
+      Dropdown
+      <bq-icon name="caret-down" slot="suffix"></bq-icon>
+    </bq-button>
+
+    <bq-option-list>
+      <bq-option value="users">
+        <bq-icon name="users" slot="prefix"></bq-icon>
+        <span>Users</span>
+      </bq-option>
+      <bq-option value="profile">
+        <bq-icon name="user" slot="prefix"></bq-icon>
+        <span>My profile</span>
+      </bq-option>
+      <bq-option value="dashboard">
+        <bq-icon name="sliders" slot="prefix"></bq-icon>
+        <span>Dashboard</span>
+      </bq-option>
+      <bq-option value="settings">
+        <bq-icon name="gear" slot="prefix"></bq-icon>
+        <span>Settings</span>
+      </bq-option>
+      <bq-option value="logout">
+        <span>Logout</span>
+        <bq-icon name="sign-out" slot="suffix"></bq-icon>
+      </bq-option>
+    </bq-option-list>
+  </bq-dropdown>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-dropdown open keep-open-on-select>
+      <bq-button slot="trigger">
+        Dropdown
+        <bq-icon name="caret-down" slot="suffix"></bq-icon>
+      </bq-button>
+
+      <bq-option-list>
+        <bq-option value="users">
+          <bq-icon name="users" slot="prefix"></bq-icon>
+          <span>Users</span>
+        </bq-option>
+        <bq-option value="profile">
+          <bq-icon name="user" slot="prefix"></bq-icon>
+          <span>My profile</span>
+        </bq-option>
+        <bq-option value="dashboard">
+          <bq-icon name="sliders" slot="prefix"></bq-icon>
+          <span>Dashboard</span>
+        </bq-option>
+        <bq-option value="settings">
+          <bq-icon name="gear" slot="prefix"></bq-icon>
+          <span>Settings</span>
+        </bq-option>
+        <bq-option value="logout">
+          <span>Logout</span>
+          <bq-icon name="sign-out" slot="suffix"></bq-icon>
+        </bq-option>
+      </bq-option-list>
+    </bq-dropdown>
+    ```
+
+    ```jsx React icon="react"
+    import { BqButton, BqDropdown, BqIcon, BqOption, BqOptionList } from "@beeq/react";
+
+    <BqDropdown open keepOpenOnSelect>
+      <BqButton slot="trigger">
+        Dropdown
+        <BqIcon name="caret-down" slot="suffix" />
+      </BqButton>
+
+      <BqOptionList>
+        <BqOption value="users">
+          <BqIcon name="users" slot="prefix" />
+          <span>Users</span>
+        </BqOption>
+        <BqOption value="profile">
+          <BqIcon name="user" slot="prefix" />
+          <span>My profile</span>
+        </BqOption>
+        <BqOption value="dashboard">
+          <BqIcon name="sliders" slot="prefix" />
+          <span>Dashboard</span>
+        </BqOption>
+        <BqOption value="settings">
+          <BqIcon name="gear" slot="prefix" />
+          <span>Settings</span>
+        </BqOption>
+        <BqOption value="logout">
+          <span>Logout</span>
+          <BqIcon name="sign-out" slot="suffix" />
+        </BqOption>
+      </BqOptionList>
+    </BqDropdown>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-dropdown open keep-open-on-select>
+      <bq-button slot="trigger">
+        Dropdown
+        <bq-icon name="caret-down" slot="suffix"></bq-icon>
+      </bq-button>
+
+      <bq-option-list>
+        <bq-option value="users">
+          <bq-icon name="users" slot="prefix"></bq-icon>
+          <span>Users</span>
+        </bq-option>
+        <bq-option value="profile">
+          <bq-icon name="user" slot="prefix"></bq-icon>
+          <span>My profile</span>
+        </bq-option>
+        <bq-option value="dashboard">
+          <bq-icon name="sliders" slot="prefix"></bq-icon>
+          <span>Dashboard</span>
+        </bq-option>
+        <bq-option value="settings">
+          <bq-icon name="gear" slot="prefix"></bq-icon>
+          <span>Settings</span>
+        </bq-option>
+        <bq-option value="logout">
+          <span>Logout</span>
+          <bq-icon name="sign-out" slot="suffix"></bq-icon>
+        </bq-option>
+      </bq-option-list>
+    </bq-dropdown>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqButton, BqDropdown, BqIcon, BqOption, BqOptionList } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDropdown open keep-open-on-select>
+        <BqButton slot="trigger">
+          Dropdown
+          <BqIcon name="caret-down" slot="suffix" />
+        </BqButton>
+
+        <BqOptionList>
+          <BqOption value="users">
+            <BqIcon name="users" slot="prefix" />
+            <span>Users</span>
+          </BqOption>
+          <BqOption value="profile">
+            <BqIcon name="user" slot="prefix" />
+            <span>My profile</span>
+          </BqOption>
+          <BqOption value="dashboard">
+            <BqIcon name="sliders" slot="prefix" />
+            <span>Dashboard</span>
+          </BqOption>
+          <BqOption value="settings">
+            <BqIcon name="gear" slot="prefix" />
+            <span>Settings</span>
+          </BqOption>
+          <BqOption value="logout">
+            <span>Logout</span>
+            <BqIcon name="sign-out" slot="suffix" />
+          </BqOption>
+        </BqOptionList>
+      </BqDropdown>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Note>
+  If `keep-open-on-select` is set, the dropdown will remain open after a selection is made.
+</Note>
+
+### With option group
+
+Use option groups when you need to categorize and group options under specific headers. This gives users a clearer structure when the dropdown contains several related sets of choices.
+
+<CodeLivePreview code={`
+  <bq-dropdown open>
+    <bq-button slot="trigger">
+      Dropdown
+      <bq-icon name="caret-down" slot="suffix"></bq-icon>
+    </bq-button>
+
+    <bq-option-list>
+      <bq-option-group>
+        <span slot="header-label">Configuration</span>
+
+        <bq-option value="users">
+          <bq-icon name="users" slot="prefix"></bq-icon>
+          <span>Users</span>
+        </bq-option>
+
+        <bq-option value="profile">
+          <bq-icon name="user" slot="prefix"></bq-icon>
+          <span>My profile</span>
+        </bq-option>
+
+        <bq-option value="settings">
+          <bq-icon name="gear" slot="prefix"></bq-icon>
+          <span>Settings</span>
+        </bq-option>
+      </bq-option-group>
+    </bq-option-list>
+  </bq-dropdown>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-dropdown open>
+      <bq-button slot="trigger">
+        Dropdown
+        <bq-icon name="caret-down" slot="suffix"></bq-icon>
+      </bq-button>
+
+      <bq-option-list>
+        <bq-option-group>
+          <span slot="header-label">Configuration</span>
+
+          <bq-option value="users">
+            <bq-icon name="users" slot="prefix"></bq-icon>
+            <span>Users</span>
+          </bq-option>
+
+          <bq-option value="profile">
+            <bq-icon name="user" slot="prefix"></bq-icon>
+            <span>My profile</span>
+          </bq-option>
+
+          <bq-option value="settings">
+            <bq-icon name="gear" slot="prefix"></bq-icon>
+            <span>Settings</span>
+          </bq-option>
+        </bq-option-group>
+      </bq-option-list>
+    </bq-dropdown>
+    ```
+
+    ```jsx React icon="react"
+    import { BqButton, BqDropdown, BqIcon, BqOption, BqOptionGroup, BqOptionList } from "@beeq/react";
+
+    <BqDropdown open>
+      <BqButton slot="trigger">
+        Dropdown
+        <BqIcon name="caret-down" slot="suffix" />
+      </BqButton>
+
+      <BqOptionList>
+        <BqOptionGroup>
+          <span slot="header-label">Configuration</span>
+
+          <BqOption value="users">
+            <BqIcon name="users" slot="prefix" />
+            <span>Users</span>
+          </BqOption>
+
+          <BqOption value="profile">
+            <BqIcon name="user" slot="prefix" />
+            <span>My profile</span>
+          </BqOption>
+
+          <BqOption value="settings">
+            <BqIcon name="gear" slot="prefix" />
+            <span>Settings</span>
+          </BqOption>
+        </BqOptionGroup>
+      </BqOptionList>
+    </BqDropdown>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-dropdown open>
+      <bq-button slot="trigger">
+        Dropdown
+        <bq-icon name="caret-down" slot="suffix"></bq-icon>
+      </bq-button>
+
+      <bq-option-list>
+        <bq-option-group>
+          <span slot="header-label">Configuration</span>
+
+          <bq-option value="users">
+            <bq-icon name="users" slot="prefix"></bq-icon>
+            <span>Users</span>
+          </bq-option>
+
+          <bq-option value="profile">
+            <bq-icon name="user" slot="prefix"></bq-icon>
+            <span>My profile</span>
+          </bq-option>
+
+          <bq-option value="settings">
+            <bq-icon name="gear" slot="prefix"></bq-icon>
+            <span>Settings</span>
+          </bq-option>
+        </bq-option-group>
+      </bq-option-list>
+    </bq-dropdown>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqButton, BqDropdown, BqIcon, BqOption, BqOptionGroup, BqOptionList } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDropdown open>
+        <BqButton slot="trigger">
+          Dropdown
+          <BqIcon name="caret-down" slot="suffix" />
+        </BqButton>
+
+        <BqOptionList>
+          <BqOptionGroup>
+            <span slot="header-label">Configuration</span>
+
+            <BqOption value="users">
+              <BqIcon name="users" slot="prefix" />
+              <span>Users</span>
+            </BqOption>
+
+            <BqOption value="profile">
+              <BqIcon name="user" slot="prefix" />
+              <span>My profile</span>
+            </BqOption>
+
+            <BqOption value="settings">
+              <BqIcon name="gear" slot="prefix" />
+              <span>Settings</span>
+            </BqOption>
+          </BqOptionGroup>
+        </BqOptionList>
+      </BqDropdown>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Panel size
+
+Use `same-width` when the panel should match the trigger width. Use `panel-height` to override the panel height when the option list needs a predictable scroll area.
+
+<CodeLivePreview code={`
+  <style>
+    .dropdown-panel {
+      width: 100%;
+      max-width: 18rem;
+    }
+  </style>
+  <bq-dropdown class="dropdown-panel" open same-width panel-height="12rem">
+    <bq-button slot="trigger">
+      Select destination
+      <bq-icon name="caret-down" slot="suffix"></bq-icon>
+    </bq-button>
+
+    <bq-option-list>
+      <bq-option value="dashboard">
+        <bq-icon name="sliders" slot="prefix"></bq-icon>
+        <span>Dashboard</span>
+      </bq-option>
+      <bq-option value="reports">
+        <bq-icon name="chart-donut" slot="prefix"></bq-icon>
+        <span>Reports</span>
+      </bq-option>
+      <bq-option value="analytics">
+        <bq-icon name="chart-donut" slot="prefix"></bq-icon>
+        <span>Analytics</span>
+      </bq-option>
+      <bq-option value="settings">
+        <bq-icon name="gear" slot="prefix"></bq-icon>
+        <span>Settings</span>
+      </bq-option>
+      <bq-option value="billing">
+        <bq-icon name="credit-card" slot="prefix"></bq-icon>
+        <span>Billing</span>
+      </bq-option>
+    </bq-option-list>
+  </bq-dropdown>
+`}>
+  <CodeGroup>
+    ```css CSS icon="css"
+    .dropdown-panel {
+      width: 100%;
+      max-width: 18rem;
+    }
+    ```
+
+    ```html HTML icon="html5"
+    <bq-dropdown class="dropdown-panel" open same-width panel-height="12rem">
+      <bq-button slot="trigger">
+        Select destination
+        <bq-icon name="caret-down" slot="suffix"></bq-icon>
+      </bq-button>
+
+      <bq-option-list>
+        <bq-option value="dashboard">
+          <bq-icon name="sliders" slot="prefix"></bq-icon>
+          <span>Dashboard</span>
+        </bq-option>
+        <bq-option value="reports">
+          <bq-icon name="chart-donut" slot="prefix"></bq-icon>
+          <span>Reports</span>
+        </bq-option>
+        <bq-option value="analytics">
+          <bq-icon name="chart-donut" slot="prefix"></bq-icon>
+          <span>Analytics</span>
+        </bq-option>
+        <bq-option value="settings">
+          <bq-icon name="gear" slot="prefix"></bq-icon>
+          <span>Settings</span>
+        </bq-option>
+        <bq-option value="billing">
+          <bq-icon name="credit-card" slot="prefix"></bq-icon>
+          <span>Billing</span>
+        </bq-option>
+      </bq-option-list>
+    </bq-dropdown>
+    ```
+
+    ```jsx React icon="react"
+    import { BqButton, BqDropdown, BqIcon, BqOption, BqOptionList } from "@beeq/react";
+
+    <BqDropdown className="dropdown-panel" open sameWidth panelHeight="12rem">
+      <BqButton slot="trigger">
+        Select destination
+        <BqIcon name="caret-down" slot="suffix" />
+      </BqButton>
+
+      <BqOptionList>
+        <BqOption value="dashboard">
+          <BqIcon name="sliders" slot="prefix" />
+          <span>Dashboard</span>
+        </BqOption>
+        <BqOption value="reports">
+          <BqIcon name="chart-donut" slot="prefix" />
+          <span>Reports</span>
+        </BqOption>
+        <BqOption value="analytics">
+          <BqIcon name="chart-donut" slot="prefix" />
+          <span>Analytics</span>
+        </BqOption>
+        <BqOption value="settings">
+          <BqIcon name="gear" slot="prefix" />
+          <span>Settings</span>
+        </BqOption>
+        <BqOption value="billing">
+          <BqIcon name="credit-card" slot="prefix" />
+          <span>Billing</span>
+        </BqOption>
+      </BqOptionList>
+    </BqDropdown>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-dropdown class="dropdown-panel" open same-width panel-height="12rem">
+      <bq-button slot="trigger">
+        Select destination
+        <bq-icon name="caret-down" slot="suffix"></bq-icon>
+      </bq-button>
+
+      <bq-option-list>
+        <bq-option value="dashboard">
+          <bq-icon name="sliders" slot="prefix"></bq-icon>
+          <span>Dashboard</span>
+        </bq-option>
+        <bq-option value="reports">
+          <bq-icon name="chart-donut" slot="prefix"></bq-icon>
+          <span>Reports</span>
+        </bq-option>
+        <bq-option value="analytics">
+          <bq-icon name="chart-donut" slot="prefix"></bq-icon>
+          <span>Analytics</span>
+        </bq-option>
+        <bq-option value="settings">
+          <bq-icon name="gear" slot="prefix"></bq-icon>
+          <span>Settings</span>
+        </bq-option>
+        <bq-option value="billing">
+          <bq-icon name="credit-card" slot="prefix"></bq-icon>
+          <span>Billing</span>
+        </bq-option>
+      </bq-option-list>
+    </bq-dropdown>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqButton, BqDropdown, BqIcon, BqOption, BqOptionList } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDropdown class="dropdown-panel" open same-width panel-height="12rem">
+        <BqButton slot="trigger">
+          Select destination
+          <BqIcon name="caret-down" slot="suffix" />
+        </BqButton>
+
+        <BqOptionList>
+          <BqOption value="dashboard">
+            <BqIcon name="sliders" slot="prefix" />
+            <span>Dashboard</span>
+          </BqOption>
+          <BqOption value="reports">
+            <BqIcon name="chart-donut" slot="prefix" />
+            <span>Reports</span>
+          </BqOption>
+          <BqOption value="analytics">
+            <BqIcon name="chart-donut" slot="prefix" />
+            <span>Analytics</span>
+          </BqOption>
+          <BqOption value="settings">
+            <BqIcon name="gear" slot="prefix" />
+            <span>Settings</span>
+          </BqOption>
+          <BqOption value="billing">
+            <BqIcon name="credit-card" slot="prefix" />
+            <span>Billing</span>
+          </BqOption>
+        </BqOptionList>
+      </BqDropdown>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card title="Use a clear trigger">
+    Use a button to open the menu, and make sure the trigger label clearly defines the dropdown purpose for readability and accessibility.
+  </Card>
+  <Card title="Avoid link-style triggers">
+    Avoid using a link button for the dropdown panel. A dropdown opens a surface first; it should not look like direct navigation unless the trigger itself navigates.
+  </Card>
+  <Card title="Use chevrons accurately">
+    Use the upward-pointing chevron when the dropdown is active and the downward-pointing chevron when it is in the default state.
+  </Card>
+  <Card title="Avoid misleading chevrons">
+    Do not use the active chevron state when the dropdown is closed, because it can visually confuse users about the current state.
+  </Card>
+  <Card title="Keep labels concise">
+    Dropdown labels and options should use clear, concise language so users can quickly understand the context and meaning.
+  </Card>
+  <Card title="Order the data">
+    Arrange dropdown panel data alphabetically or by a meaningful semantic order so users can find the needed option faster.
+  </Card>
+  <Card title="Keep the panel focused">
+    Do not include irrelevant options or too many items at once. If users need search, filtering, or comparison, use a more suitable pattern.
+  </Card>
+  <Card title="Protect the page context">
+    Do not use dropdowns in a way that interferes with other elements, covers important content, or blocks nearby interactions.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+- The dropdown trigger should be reachable with <kbd>Tab</kbd> and expose a clear accessible label.
+- Users should be able to open the dropdown with <kbd>Enter</kbd> or <kbd>Space</kbd> when the trigger is focused.
+- In selectable lists, users should be able to move between options with arrow keys and select the focused option with <kbd>Enter</kbd> or <kbd>Space</kbd>.
+- Pressing <kbd>Esc</kbd> closes the dropdown, and <kbd>Tab</kbd> closes it when focus leaves the component.
+- For multi-select patterns, selection and deselection should remain visible and predictable.
+- Do not rely on icons alone. Pair icon-only triggers with accessible labels and keep option text readable.
+
+## API reference
+
+### Properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `disableScrollLock` | `disable-scroll-lock` | If `true`, the dropdown panel will not lock the page body scroll when open | `boolean` | `false` |
+| `disabled` | `disabled` | If `true`, the dropdown panel will not be shown | `boolean` | `false` |
+| `distance` | `distance` | Represents the distance, gutter, or margin between the panel and the trigger element | `number` | `4` |
+| `keepOpenOnSelect` | `keep-open-on-select` | If `true`, the panel will remain open after a selection is made | `boolean` | `false` |
+| `open` | `open` | If `true`, the panel will be visible | `boolean` | `false` |
+| `panelHeight` | `panel-height` | When set, it overrides the height of the dropdown panel | `string` | `undefined` |
+| `placement` | `placement` | Position of the panel | `'top'` \| `'right'` \| `'bottom'` \| `'left'` \| `'top-start'` \| `'top-end'` \| `'right-start'` \| `'right-end'` \| `'bottom-start'` \| `'bottom-end'` \| `'left-start'` \| `'left-end'` | `'bottom-start'` |
+| `sameWidth` | `same-width` | Whether the panel should have the same width as the trigger element | `boolean` | `false` |
+| `skidding` | `skidding` | Represents the skidding between the panel and the trigger element | `number` | `0` |
+| `strategy` | `strategy` | Defines the positioning strategy | `'fixed'` \| `'absolute'` | `'fixed'` |
+
+### Events
+
+| Event | Description | Type |
+|---|---|---|
+| `bqOpen` | Emitted when the dropdown panel is opened or closed | `CustomEvent<{ open: boolean }>` |
+
+### Slots
+
+| Slot | Description |
+|---|---|
+| *(default)* | The content of the dropdown panel |
+| `trigger` | The trigger element that opens the dropdown panel |
+
+### Shadow parts
+
+| Part | Description |
+|---|---|
+| `base` | The component's internal wrapper |
+| `trigger` | The `<div>` element that hosts the trigger element |
+| `dropdown` | The `bq-panel` element used under the hood to display the dropdown panel |
+| `panel` | The `<div>` element used to display and style the panel inside the `bq-panel` element |
+
+### CSS custom properties
+
+<Expandable title="View all CSS variables" defaultOpen={true}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-panel--background` | Panel background color | `theme(backgroundColor.ui.primary)` |
+  | `--bq-panel--border-color` | Panel border color | `theme(stroke.transparent)` |
+  | `--bq-panel--border-radius` | Panel border radius | `theme(borderRadius.s)` |
+  | `--bq-panel--border-style` | Panel border style | `none` |
+  | `--bq-panel--border-width` | Panel border width | `unset` |
+  | `--bq-panel--box-shadow` | Panel box shadow | `theme(boxShadow.m)` |
+  | `--bq-panel--paddingY` | Vertical padding | `theme(spacing.xs)` |
+  | `--bq-panel--padding-start` | Start padding | `theme(spacing.xs)` |
+  | `--bq-panel--padding-end` | End padding | `theme(spacing.xs)` |
+  | `--bq-panel--height` | Panel max height | `50vh` |
+  | `--bq-panel--width` | Panel width | `320px` |
+  | `--bq-panel-z-index` | Panel z-index applied when opened | `10` |
+</Expandable>
+
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Storybook" icon="code" href="https://storybook.beeq.design/?path=/story/components-dropdown--default">
+    Explore Dropdown examples in Storybook
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/dropdown">
+    View the dropdown component source on GitHub
+  </Card>
+</CardGroup>
