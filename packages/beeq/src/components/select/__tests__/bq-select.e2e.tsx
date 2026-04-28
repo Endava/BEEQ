@@ -330,7 +330,9 @@ describe('bq-select', () => {
     const betaOption = root.querySelector<HTMLBqOptionElement>('bq-option[value="beta"]');
 
     await userEvent.click(input);
-    await userEvent.type(input, 'alp');
+    // Use fill instead of type to set the value atomically, ensuring exactly 1 bqInput
+    // event fires regardless of debounce timing across character keystrokes
+    await userEvent.fill(input, 'alp');
     await waitForChanges();
 
     expect(bqInput).toHaveReceivedEventTimes(1);

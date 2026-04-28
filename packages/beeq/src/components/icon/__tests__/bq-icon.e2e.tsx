@@ -15,9 +15,20 @@ describe('bq-icon', () => {
   });
 
   it('should display icon', async () => {
-    const { root } = await render(<bq-icon name="pulse" />);
+    const { root, waitForChanges } = await render(<bq-icon />);
 
-    await waitForStable(root);
+    // Register a native Promise BEFORE setting the attribute — spyOnEvent / waitForStable do not
+    // await the async SVG network fetch, so we need an explicit signal that the load finished
+    const svgLoadedPromise = new Promise<void>((resolve) => {
+      root.addEventListener('svgLoaded', () => resolve(), { once: true });
+    });
+
+    root.setAttribute('name', 'pulse');
+    await waitForChanges();
+    await svgLoadedPromise;
+    // svgLoaded fires synchronously after `this.svgContent = content`, which only QUEUES
+    // a Stencil re-render — the DOM update hasn't happened yet. Flush the pending render:
+    await waitForChanges();
 
     const element = root.shadowRoot?.querySelector<Element>('[part="svg"]');
     expect(element?.innerHTML).toBeDefined();
@@ -86,13 +97,17 @@ describe('bq-icon', () => {
   });
 
   it('should emit `svgLoaded` event when the SVG content is loaded', async () => {
-    // Render without a name so no SVG is fetched yet, then spy before triggering load
     const { root, spyOnEvent, waitForChanges } = await render(<bq-icon />);
     const svgLoaded = spyOnEvent('svgLoaded');
 
+    // Register a native Promise as well so we can await the actual load completion
+    const svgLoadedPromise = new Promise<void>((resolve) => {
+      root.addEventListener('svgLoaded', () => resolve(), { once: true });
+    });
+
     root.setAttribute('name', 'pulse');
     await waitForChanges();
-    await waitForStable(root);
+    await svgLoadedPromise;
 
     expect(svgLoaded).toHaveReceivedEvent();
   });
