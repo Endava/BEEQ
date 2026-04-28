@@ -1,6 +1,8 @@
 import { h } from '@stencil/core';
 import { describe, expect, it, render } from '@stencil/vitest';
 
+import { getTextContent } from '../../../shared/utils';
+
 describe('bq-option-group', () => {
   it('should render', async () => {
     const { root } = await render(<bq-option-group />);
@@ -26,12 +28,9 @@ describe('bq-option-group', () => {
       </bq-option-group>,
     );
 
-    const slotElement = root.shadowRoot?.querySelector('slot[name="header-prefix"]') as HTMLSlotElement | null;
+    const slotElement = root.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="header-prefix"]');
 
-    const assignedElement = slotElement?.assignedElements({ flatten: true })[0];
-    const prefixText = assignedElement?.textContent?.trim();
-
-    expect(prefixText).toBe('Prefix text');
+    expect(getTextContent(slotElement, { recurse: true })).toBe('Prefix text');
   });
 
   it('should render suffix element', async () => {
@@ -46,12 +45,9 @@ describe('bq-option-group', () => {
       </bq-option-group>,
     );
 
-    const slotElement = root.shadowRoot?.querySelector('slot[name="header-suffix"]') as HTMLSlotElement | null;
+    const slotElement = root.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="header-suffix"]');
 
-    const assignedElement = slotElement?.assignedElements({ flatten: true })[0];
-    const suffixText = assignedElement?.textContent?.trim();
-
-    expect(suffixText).toBe('Suffix text');
+    expect(getTextContent(slotElement, { recurse: true })).toBe('Suffix text');
   });
 
   it('should render label text', async () => {
@@ -66,11 +62,32 @@ describe('bq-option-group', () => {
       </bq-option-group>,
     );
 
-    const slotElement = root.shadowRoot?.querySelector('slot[name="header-label"]') as HTMLSlotElement | null;
+    const slotElement = root.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="header-label"]');
 
-    const assignedElement = slotElement?.assignedElements({ flatten: true })[0];
-    const suffixText = assignedElement?.textContent?.trim();
+    expect(getTextContent(slotElement, { recurse: true })).toBe('Food');
+  });
 
-    expect(suffixText).toBe('Food');
+  it('should render default slot with option items', async () => {
+    const { root } = await render(
+      <bq-option-group>
+        <span slot="header-label">Food</span>
+        <bq-option value="pizza">Pizza</bq-option>
+        <bq-option value="burger">Burger</bq-option>
+      </bq-option-group>,
+    );
+
+    const defaultSlot = root.shadowRoot?.querySelector<HTMLSlotElement>('slot:not([name])');
+    const assignedElements = defaultSlot?.assignedElements({ flatten: true });
+
+    expect(assignedElements?.length).toBe(2);
+  });
+
+  it('should have group role and aria-label on the container', async () => {
+    const { root } = await render(<bq-option-group />);
+
+    const container = root.shadowRoot?.querySelector<HTMLElement>('.bq-option-group__container');
+
+    expect(container).toEqualAttribute('role', 'group');
+    expect(container).toEqualAttribute('aria-label', 'Options');
   });
 });
