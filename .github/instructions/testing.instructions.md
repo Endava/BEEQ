@@ -140,10 +140,6 @@ root.open = true;
 await waitForChanges();
 ```
 
-or prefer using `setProps`
-
-
-
 ### Shadow DOM Helpers
 
 Define typed shadow-DOM accessors outside the `describe` block for reuse across tests:
@@ -193,6 +189,19 @@ await waitForStable(root);
 | `expect(el).not.toHaveAttribute('attr')` | attribute absence |
 
 > **Do not** use `toHaveAttribute('attr', value)` with two arguments — it is not supported. Use `toEqualAttribute` instead.
+
+```tsx
+// ✅ correct
+expect(el).toHaveAttribute('attr'); // presence check
+expect(el).toEqualAttribute('attr', value); // presence + value check
+expect(el).not.toHaveAttribute('attr'); // absence check
+
+// ❌ wrong — toHaveAttribute does not support value checks with 2 arguments
+expect(el).toHaveAttribute('attr', value);
+
+// ❌ wrong — manual getAttribute checks are verbose and less readable
+expect(element.getAttribute('aria-hidden')).toBe('true');
+```
 
 ### Event Spying
 
