@@ -36,18 +36,14 @@ describe('bq-divider', () => {
 
   it('should handle invalid properties', async () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
-    const { root, waitForChanges } = await render(
+    const { root, setProps } = await render(
       <bq-divider orientation="vertical" strokeLinecap="square" titleAlignment="start">
         Divider
       </bq-divider>,
     );
     const divider = root as HTMLBqDividerElement;
 
-    divider.orientation = 'invalid' as HTMLBqDividerElement['orientation'];
-    divider.titleAlignment = 'invalid' as HTMLBqDividerElement['titleAlignment'];
-    divider.strokeLinecap = 'invalid' as HTMLBqDividerElement['strokeLinecap'];
-
-    await waitForChanges();
+    await setProps({ orientation: 'invalid', titleAlignment: 'invalid', strokeLinecap: 'invalid' });
 
     expect({
       orientation: divider.orientation,
@@ -83,10 +79,9 @@ describe('bq-divider', () => {
 
   it('should apply the vertical orientation class', async () => {
     const { root } = await render(<bq-divider orientation="vertical" />);
-
     const base = root.shadowRoot?.querySelector('[part="base"]');
 
-    expect(base?.classList.contains('bq-divider--vertical')).toBe(true);
+    expect(base).toHaveClass('bq-divider--vertical');
   });
 
   it('should render title slot content', async () => {
@@ -110,6 +105,6 @@ describe('bq-divider', () => {
 
     const line = root.shadowRoot?.querySelector('[part="dash-start-line"]');
 
-    expect(line?.getAttribute('stroke-dasharray')).toBe('9, 3');
+    expect(line).toEqualAttribute('stroke-dasharray', '9, 3');
   });
 });

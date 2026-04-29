@@ -67,22 +67,21 @@ describe('bq-accordion', () => {
     expect(details.hasAttribute('open')).toBe(true);
 
     const header = details.querySelector('.bq-accordion__header');
-    expect(header.getAttribute('aria-expanded')).toBe('true');
+    expect(header).toEqualAttribute('aria-expanded', 'true');
   });
 
   it('should be collapsed when disabled', async () => {
-    const { root, waitForChanges } = await render(
+    const { root, setProps } = await render(
       <bq-accordion expanded>
         <span slot="header">{HEADER_TEXT}</span>
       </bq-accordion>,
     );
 
-    (root as HTMLBqAccordionElement).disabled = true;
-    await waitForChanges();
+    await setProps({ disabled: true });
 
     const summary = root.shadowRoot.querySelector('[part="base"] summary');
-    expect(summary.getAttribute('aria-disabled')).toBe('true');
-    expect(summary.getAttribute('aria-expanded')).toBe('false');
+    expect(summary).toEqualAttribute('aria-disabled', 'true');
+    expect(summary).toEqualAttribute('aria-expanded', 'false');
   });
 
   it('should emit bqFocus when the component receives focus', async () => {

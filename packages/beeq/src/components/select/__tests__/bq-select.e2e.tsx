@@ -135,7 +135,7 @@ describe('bq-select', () => {
   });
 
   it('should render tags for multiple selected options', async () => {
-    const { root, waitForChanges } = await render(
+    const { root, setProps } = await render(
       <bq-select name="bq-select" multiple>
         <bq-option value="1">Option 1</bq-option>
         <bq-option value="2">Option 2</bq-option>
@@ -144,8 +144,7 @@ describe('bq-select', () => {
     );
     const select = root as HTMLBqSelectElement;
 
-    select.value = ['1', '2'];
-    await waitForChanges();
+    await setProps({ value: ['1', '2'] });
 
     const selectedValueElements = root.querySelectorAll('bq-option[selected]');
     const displayTags = select.shadowRoot?.querySelectorAll('bq-tag') ?? [];
@@ -157,7 +156,7 @@ describe('bq-select', () => {
   });
 
   it('should rerender when value changes externally', async () => {
-    const { root, waitForChanges } = await render(
+    const { root, setProps, waitForChanges } = await render(
       <bq-select name="bq-select" multiple>
         <bq-option value="1">Option 1</bq-option>
         <bq-option value="2">Option 2</bq-option>
@@ -166,11 +165,11 @@ describe('bq-select', () => {
     );
     const select = root as HTMLBqSelectElement;
 
-    select.value = ['1', '2'];
+    await setProps({ value: ['1', '2'] });
     await waitForChanges();
     expect(root.querySelectorAll('bq-option[selected]')).toHaveLength(2);
 
-    select.value = ['3'];
+    await setProps({ value: ['3'] });
     await waitForChanges();
 
     const displayTags = select.shadowRoot?.querySelectorAll('bq-tag') ?? [];
@@ -181,7 +180,7 @@ describe('bq-select', () => {
   });
 
   it('should remove the last selected option on Backspace when the input is empty', async () => {
-    const { root, waitForChanges } = await render(
+    const { root, setProps, waitForChanges } = await render(
       <bq-select name="bq-select" multiple>
         <bq-option value="1">Option 1</bq-option>
         <bq-option value="2">Option 2</bq-option>
@@ -190,8 +189,7 @@ describe('bq-select', () => {
     );
     const select = root as HTMLBqSelectElement;
 
-    select.value = ['1', '2'];
-    await waitForChanges();
+    await setProps({ value: ['1', '2'] });
 
     const input = getInput(select);
     await userEvent.click(input);
@@ -206,7 +204,7 @@ describe('bq-select', () => {
   });
 
   it('should keep selected options when Backspace is used while typing', async () => {
-    const { root, waitForChanges } = await render(
+    const { root, setProps, waitForChanges } = await render(
       <bq-select name="bq-select" multiple>
         <bq-option value="1">Option 1</bq-option>
         <bq-option value="2">Option 2</bq-option>
@@ -215,8 +213,7 @@ describe('bq-select', () => {
     );
     const select = root as HTMLBqSelectElement;
 
-    select.value = ['1', '2'];
-    await waitForChanges();
+    await setProps({ value: ['1', '2'] });
 
     const input = getInput(select);
     await userEvent.click(input);
@@ -396,7 +393,7 @@ describe('bq-select', () => {
   });
 
   it('should render overflow tag when maxTagsVisible is exceeded', async () => {
-    const { root, waitForChanges } = await render(
+    const { root, setProps } = await render(
       <bq-select name="bq-select" maxTagsVisible={1} multiple>
         <bq-option value="1">Option 1</bq-option>
         <bq-option value="2">Option 2</bq-option>
@@ -405,8 +402,7 @@ describe('bq-select', () => {
     );
     const select = root as HTMLBqSelectElement;
 
-    select.value = ['1', '2', '3'];
-    await waitForChanges();
+    await setProps({ value: ['1', '2', '3'] });
 
     const displayTags = select.shadowRoot?.querySelectorAll('bq-tag') ?? [];
 
@@ -446,7 +442,7 @@ describe('bq-select', () => {
   });
 
   it('should remove multiple tags one at a time when backspace is pressed repeatedly', async () => {
-    const { root, waitForChanges } = await render(
+    const { root, setProps, waitForChanges } = await render(
       <bq-select name="bq-select" multiple>
         <bq-option value="1">Option 1</bq-option>
         <bq-option value="2">Option 2</bq-option>
@@ -455,8 +451,7 @@ describe('bq-select', () => {
     );
     const select = root as HTMLBqSelectElement;
 
-    select.value = ['1', '2', '3'];
-    await waitForChanges();
+    await setProps({ value: ['1', '2', '3'] });
 
     const input = getInput(select);
     await userEvent.click(input);

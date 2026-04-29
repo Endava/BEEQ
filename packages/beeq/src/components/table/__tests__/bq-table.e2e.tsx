@@ -33,7 +33,7 @@ describe('bq-table', () => {
     const { root } = await render(mkTable());
     expect(root).not.toBeNull();
     expect(root.tagName.toLowerCase()).toBe('table');
-    expect(root.classList.contains('bq-table')).toBe(true);
+    expect(root).toHaveClass('bq-table');
   });
 
   it('should render thead, tbody, th and td elements', async () => {

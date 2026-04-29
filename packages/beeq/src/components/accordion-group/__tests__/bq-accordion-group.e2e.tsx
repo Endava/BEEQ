@@ -55,7 +55,7 @@ describe('bq-accordion-group', () => {
   });
 
   it('should change appearance to all accordions', async () => {
-    const { root, waitForChanges } = await render(
+    const { root, setProps } = await render(
       <bq-accordion-group>
         <bq-accordion />
         <bq-accordion />
@@ -63,16 +63,15 @@ describe('bq-accordion-group', () => {
       </bq-accordion-group>,
     );
 
-    expect(document.querySelectorAll('bq-accordion[appearance="ghost"]')).toHaveLength(0);
+    expect(root.querySelectorAll('bq-accordion[appearance="ghost"]')).toHaveLength(0);
 
-    (root as HTMLBqAccordionGroupElement).appearance = 'ghost';
-    await waitForChanges();
+    await setProps({ appearance: 'ghost' });
 
-    expect(document.querySelectorAll('bq-accordion[appearance="ghost"]')).toHaveLength(3);
+    expect(root.querySelectorAll('bq-accordion[appearance="ghost"]')).toHaveLength(3);
   });
 
   it('should change size to all accordions', async () => {
-    const { root, waitForChanges } = await render(
+    const { root, setProps } = await render(
       <bq-accordion-group>
         <bq-accordion />
         <bq-accordion />
@@ -80,12 +79,11 @@ describe('bq-accordion-group', () => {
       </bq-accordion-group>,
     );
 
-    expect(document.querySelectorAll('bq-accordion[size="small"]')).toHaveLength(0);
+    expect(root.querySelectorAll('bq-accordion[size="small"]')).toHaveLength(0);
 
-    (root as HTMLBqAccordionGroupElement).size = 'small';
-    await waitForChanges();
+    await setProps({ size: 'small' });
 
-    expect(document.querySelectorAll('bq-accordion[size="small"]')).toHaveLength(3);
+    expect(root.querySelectorAll('bq-accordion[size="small"]')).toHaveLength(3);
   });
 
   it('should emit bqClick on accordion click', async () => {

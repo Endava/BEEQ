@@ -29,7 +29,7 @@ describe('bq-badge', () => {
     const badge = root.shadowRoot.querySelector('.bq-badge') as HTMLDivElement;
     const style = computedStyle('bq-badge >>> .bq-badge', ['height', 'width']);
 
-    expect(badge.classList.contains('size--small')).toBe(true);
+    expect(badge).toHaveClass('size--small');
     expect(style).toEqual({ height: '8px', width: '8px' });
   });
 
@@ -41,7 +41,7 @@ describe('bq-badge', () => {
     const badge = root.shadowRoot.querySelector('.bq-badge') as HTMLDivElement;
     const style = computedStyle('bq-badge >>> .bq-badge', ['height', 'width']);
 
-    expect(badge.classList.contains('size--medium')).toBe(true);
+    expect(badge).toHaveClass('size--medium');
     expect(style).toEqual({ height: '12px', width: '12px' });
   });
 
@@ -53,9 +53,9 @@ describe('bq-badge', () => {
     const badge = root.shadowRoot.querySelector('.bq-badge') as HTMLDivElement;
     const numberSlot = badge.querySelector('slot') as HTMLSlotElement;
 
-    expect(badge.classList.contains('digit')).toBe(true);
+    expect(badge).toHaveClass('digit');
     expect(getTextContent(numberSlot, { recurse: true })).toBe('2');
-    expect(badge.classList.contains('p-i-xs2')).toBe(false);
+    expect(badge).not.toHaveClass('p-i-xs2');
   });
 
   it('should apply inline CSS variables from color props', async () => {
@@ -69,14 +69,13 @@ describe('bq-badge', () => {
 
   it('should handle invalid size values', async () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
-    const { root, waitForChanges } = await render(<bq-badge size="medium" />);
+    const { root, setProps } = await render(<bq-badge size="medium" />);
     const badge = root as HTMLBqBadgeElement;
 
-    badge.size = 'invalid' as HTMLBqBadgeElement['size'];
-
-    await waitForChanges();
+    await setProps({ size: 'invalid' as HTMLBqBadgeElement['size'] });
 
     expect(badge.size).toBe('small');
+    expect(badge).toEqualAttribute('size', 'small');
     expect(warnSpy).toHaveBeenCalledTimes(1);
     expect(warnSpy).toHaveBeenCalledWith('[BQ-BADGE] Please notice that "size" should be one of small|medium');
   });
@@ -90,7 +89,7 @@ describe('bq-badge', () => {
     const numberSlot = badge.querySelector('slot') as HTMLSlotElement;
 
     expect(getTextContent(numberSlot, { recurse: true })).toBe('12');
-    expect(badge.classList.contains('digit')).toBe(true);
-    expect(badge.classList.contains('p-i-xs2')).toBe(true);
+    expect(badge).toHaveClass('digit');
+    expect(badge).toHaveClass('p-i-xs2');
   });
 });

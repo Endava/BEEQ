@@ -186,11 +186,11 @@ describe('bq-step-item', () => {
     );
     const stepItem = root as HTMLBqStepItemElement;
 
-    expect(getStepButton(stepItem)).toHaveAttribute('aria-current', 'step');
+    expect(getStepButton(stepItem)).toEqualAttribute('aria-current', 'step');
   });
 
   it('should apply status classes', async () => {
-    const { root, waitForChanges } = await render(
+    const { root, setProps } = await render(
       <bq-step-item status="current">
         <span>Title</span>
       </bq-step-item>,
@@ -201,14 +201,13 @@ describe('bq-step-item', () => {
 
     expect(stepButton).toHaveClass('bq-step-item--current');
 
-    stepItem.status = 'completed';
-    await waitForChanges();
+    await setProps({ status: 'completed' });
 
     expect(stepButton).toHaveClass('bq-step-item--completed');
   });
 
   it('should hide the divider when it is the last item', async () => {
-    const { root, waitForChanges } = await render(
+    const { root, setProps } = await render(
       <bq-step-item>
         <span>Title</span>
       </bq-step-item>,
@@ -217,14 +216,13 @@ describe('bq-step-item', () => {
 
     expect(stepItem.shadowRoot?.querySelector('bq-divider')).not.toBeNull();
 
-    stepItem.isLast = true;
-    await waitForChanges();
+    await setProps({ isLast: true });
 
     expect(stepItem.shadowRoot?.querySelector('bq-divider')).toBeNull();
   });
 
   it('should apply the type class to the prefix element', async () => {
-    const { root, waitForChanges } = await render(
+    const { root, setProps } = await render(
       <bq-step-item status="default" type="dot">
         <span>Title</span>
       </bq-step-item>,
@@ -235,8 +233,7 @@ describe('bq-step-item', () => {
 
     expect(prefixEl).toHaveClass('dot');
 
-    stepItem.type = 'numeric';
-    await waitForChanges();
+    await setProps({ type: 'numeric' });
 
     expect(prefixEl).not.toHaveClass('dot');
     expect(prefixEl).toHaveClass('numeric');
@@ -264,8 +261,8 @@ describe('bq-step-item', () => {
     );
     const stepItem = root as HTMLBqStepItemElement;
 
-    const divider = stepItem.shadowRoot?.querySelector('bq-divider') as HTMLBqDividerElement;
+    const divider = stepItem.shadowRoot?.querySelector<HTMLBqDividerElement>('bq-divider');
 
-    expect(divider).toHaveAttribute('stroke-color', 'stroke--brand');
+    expect(divider).toEqualAttribute('stroke-color', 'stroke--brand');
   });
 });

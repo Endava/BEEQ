@@ -127,15 +127,14 @@ describe('bq-checkbox', () => {
   });
 
   it('should set checked to false when indeterminate is enabled', async () => {
-    const { root, waitForChanges } = await render(
+    const { root, setProps } = await render(
       <bq-checkbox name="checkbox" value="test" checked>
         Label
       </bq-checkbox>,
     );
     const checkbox = root as HTMLBqCheckboxElement;
 
-    checkbox.indeterminate = true;
-    await waitForChanges();
+    await setProps({ indeterminate: true });
 
     expect(checkbox.checked).toBe(false);
     expect((getCheckboxInput(checkbox) as HTMLInputElement).indeterminate).toBe(true);

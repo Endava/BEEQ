@@ -63,7 +63,7 @@ describe('bq-steps', () => {
 
     await waitForChanges();
 
-    const [step1, step2] = root.querySelectorAll('bq-step-item') as NodeListOf<HTMLBqStepItemElement>;
+    const [step1, step2] = Array.from(root.querySelectorAll('bq-step-item'));
 
     expect(step1.status).toBe('default');
     expect(step2.status).toBe('default');
@@ -96,7 +96,7 @@ describe('bq-steps', () => {
     await waitForStable(root);
 
     const steps = root as HTMLBqStepsElement;
-    const [step1, step2] = root.querySelectorAll('bq-step-item') as NodeListOf<HTMLBqStepItemElement>;
+    const [step1, step2] = Array.from(steps.querySelectorAll('bq-step-item'));
 
     expect(step1.orientation).toBe('vertical');
     expect(step1.size).toBe('small');
@@ -122,13 +122,10 @@ describe('bq-steps', () => {
 
   it('should handle invalid props', async () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
-    const { root, waitForChanges } = await render(<bq-steps orientation="vertical" size="small" type="dot" />);
+    const { root, setProps } = await render(<bq-steps orientation="vertical" size="small" type="dot" />);
     const steps = root as HTMLBqStepsElement;
 
-    steps.orientation = 'invalid' as HTMLBqStepsElement['orientation'];
-    steps.size = 'invalid' as HTMLBqStepsElement['size'];
-    steps.type = 'invalid' as HTMLBqStepsElement['type'];
-    await waitForChanges();
+    await setProps({ orientation: 'invalid', size: 'invalid', type: 'invalid' });
 
     expect({
       orientation: steps.orientation,
@@ -147,7 +144,7 @@ describe('bq-steps', () => {
   });
 
   it('should propagate dividerColor changes to child step items', async () => {
-    const { root, waitForChanges } = await render(
+    const { root, setProps, waitForChanges } = await render(
       <bq-steps dividerColor="stroke--primary" type="dot">
         <bq-step-item status="default">
           <span>First</span>
@@ -161,13 +158,12 @@ describe('bq-steps', () => {
 
     await waitForChanges();
 
-    const [step1, step2] = root.querySelectorAll('bq-step-item') as NodeListOf<HTMLBqStepItemElement>;
+    const [step1, step2] = Array.from(steps.querySelectorAll('bq-step-item'));
 
     expect(step1.dividerColor).toBe('stroke--primary');
     expect(step2.dividerColor).toBe('stroke--primary');
 
-    steps.dividerColor = 'stroke--brand';
-    await waitForChanges();
+    await setProps({ dividerColor: 'stroke--brand' });
 
     expect(step1.dividerColor).toBe('stroke--brand');
     expect(step2.dividerColor).toBe('stroke--brand');

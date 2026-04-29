@@ -61,8 +61,8 @@ describe('bq-input', () => {
 
   it('should write and emit change event', async () => {
     const inputValue = 'Hello';
-
     const { root, spyOnEvent, waitForChanges } = await render(<bq-input name="bq-input"></bq-input>);
+    const bqInput = root as HTMLBqInputElement;
 
     const nativeInput = root.shadowRoot?.querySelector<HTMLInputElement>('.bq-input--control__input');
     const bqChange = spyOnEvent('bqChange');
@@ -71,16 +71,17 @@ describe('bq-input', () => {
     nativeInput?.blur();
     await waitForChanges();
 
-    expect((root as HTMLBqInputElement).value).toBe(inputValue);
+    expect(bqInput.value).toBe(inputValue);
     expect(bqChange).toHaveReceivedEventTimes(1);
   });
 
   it('should write and emit input event', async () => {
     const inputValue = 'Hello';
     const { root, spyOnEvent, waitForChanges } = await render(<bq-input name="bq-input"></bq-input>);
+    const bqInput = root as HTMLBqInputElement;
 
     const nativeInput = root.shadowRoot?.querySelector<HTMLInputElement>('.bq-input--control__input');
-    const bqInput = spyOnEvent('bqInput');
+    const bqInputEvent = spyOnEvent('bqInput');
 
     nativeInput?.blur();
     await waitForChanges();
@@ -90,8 +91,8 @@ describe('bq-input', () => {
       await waitForChanges();
     }
 
-    expect((root as HTMLBqInputElement).value).toBe(inputValue);
-    expect(bqInput).toHaveReceivedEventTimes(inputValue.length);
+    expect(bqInput.value).toBe(inputValue);
+    expect(bqInputEvent).toHaveReceivedEventTimes(inputValue.length);
   });
 
   it('should clear the value and emit clear event', async () => {
@@ -99,11 +100,12 @@ describe('bq-input', () => {
     const { root, spyOnEvent, waitForChanges } = await render(
       <bq-input name="bq-input" value={`${inputValue}`}></bq-input>,
     );
+    const bqInput = root as HTMLBqInputElement;
 
     const bqClear = spyOnEvent('bqClear');
 
     const nativeInput = root.shadowRoot?.querySelector<HTMLInputElement>('.bq-input--control__input');
-    expect((root as HTMLBqInputElement).value).toBe(inputValue);
+    expect(bqInput.value).toBe(inputValue);
 
     nativeInput?.focus();
     await waitForChanges();
@@ -112,7 +114,7 @@ describe('bq-input', () => {
     await userEvent.click(clearBtnElem);
 
     expect(bqClear).toHaveReceivedEventTimes(1);
-    expect((root as HTMLBqInputElement).value).toEqual('');
+    expect(bqInput.value).toEqual('');
   });
 
   it('should emit `bqFocus` when the input receives focus', async () => {

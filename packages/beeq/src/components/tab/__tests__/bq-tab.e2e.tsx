@@ -60,8 +60,8 @@ describe('bq-tab', () => {
 
     const btn = root.shadowRoot.querySelector('[part="base"]');
 
-    expect(root.hasAttribute('active')).toBe(true);
-    expect(btn.getAttribute('aria-selected')).toBe('true');
+    expect(root).toHaveAttribute('active');
+    expect(btn).toEqualAttribute('aria-selected', 'true');
   });
 
   it('should emit bqClick when tab is clicked', async () => {
@@ -126,7 +126,7 @@ describe('bq-tab', () => {
 
     const btn = root.shadowRoot.querySelector('[part="base"]');
 
-    expect(btn.getAttribute('aria-controls')).toBe('panel-1');
+    expect(btn).toEqualAttribute('aria-controls', 'panel-1');
   });
 
   it('should emit bqKeyDown when a key is pressed', async () => {
@@ -178,8 +178,8 @@ describe('bq-tab', () => {
     const btn = root.shadowRoot.querySelector<HTMLButtonElement>('[part="base"]');
     // The disabled attribute on the inner button prevents real user interaction.
     // bq-tab has no explicit guard in handleClick — the browser's disabled state handles it.
-    expect(btn.disabled).toBe(true);
-    expect(btn.getAttribute('aria-disabled')).toBe('true');
+    expect(btn).toHaveAttribute('disabled');
+    expect(btn).toEqualAttribute('aria-disabled', 'true');
   });
 
   it('should respect design style', async () => {

@@ -36,7 +36,7 @@ describe('bq-progress', () => {
     const label = getLabel(bqProgress);
 
     expect(label).not.toBeNull();
-    expect(label.getAttribute('aria-hidden')).toBe('false');
+    expect(label).toEqualAttribute('aria-hidden', 'false');
     expect(label.textContent?.trim()).toBe(`${value}%`);
   });
 
@@ -48,7 +48,7 @@ describe('bq-progress', () => {
 
     const label = getLabel(bqProgress);
 
-    expect(label.getAttribute('aria-hidden')).toBe('true');
+    expect(label).toEqualAttribute('aria-hidden', 'true');
     expect(label).toHaveClass('invisible');
   });
 
@@ -93,15 +93,13 @@ describe('bq-progress', () => {
   });
 
   it('should clamp the value to the supported range', async () => {
-    const { root, waitForChanges } = await render(<bq-progress value={60} />);
+    const { root, setProps } = await render(<bq-progress value={60} />);
     const bqProgress = root as HTMLBqProgressElement;
 
-    bqProgress.value = 120;
-    await waitForChanges();
+    await setProps({ value: 120 });
     expect(bqProgress.value).toBe(100);
 
-    bqProgress.value = -5;
-    await waitForChanges();
+    await setProps({ value: -5 });
     expect(bqProgress.value).toBe(0);
   });
 
@@ -138,27 +136,20 @@ describe('bq-progress', () => {
   });
 
   it('should update the label text when the value changes', async () => {
-    const { root, waitForChanges } = await render(<bq-progress label value={10} />);
+    const { root, setProps } = await render(<bq-progress label value={10} />);
     const bqProgress = root as HTMLBqProgressElement;
 
-    bqProgress.value = 75;
-    await waitForChanges();
+    await setProps({ value: 75 });
 
     expect(getLabel(bqProgress).textContent?.trim()).toBe('75%');
   });
 
   it('should fallback invalid prop values to defaults', async () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
-    const { root, waitForChanges } = await render(<bq-progress />);
+    const { root, setProps } = await render(<bq-progress />);
     const bqProgress = root as HTMLBqProgressElement;
 
-    // @ts-expect-error testing invalid prop handling
-    bqProgress.borderShape = 'invalid';
-    // @ts-expect-error testing invalid prop handling
-    bqProgress.thickness = 'invalid';
-    // @ts-expect-error testing invalid prop handling
-    bqProgress.type = 'invalid';
-    await waitForChanges();
+    await setProps({ borderShape: 'invalid', thickness: 'invalid', type: 'invalid' });
 
     expect(bqProgress.borderShape).toBe('rounded');
     expect(bqProgress.thickness).toBe('medium');

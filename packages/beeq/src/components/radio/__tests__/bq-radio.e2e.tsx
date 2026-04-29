@@ -35,7 +35,7 @@ describe('bq-radio', () => {
   });
 
   it('should handle checked state correctly', async () => {
-    const { root, waitForChanges } = await render(
+    const { root, setProps } = await render(
       <bq-radio name="test-option" value="test-value">
         Test Label
       </bq-radio>,
@@ -47,14 +47,12 @@ describe('bq-radio', () => {
     expect(bqRadio).not.toHaveAttribute('checked');
     expect(input.checked).toBe(false);
 
-    bqRadio.checked = true;
-    await waitForChanges();
+    await setProps({ checked: true });
 
     expect(bqRadio).toHaveAttribute('checked');
     expect(input.checked).toBe(true);
 
-    bqRadio.checked = false;
-    await waitForChanges();
+    await setProps({ checked: false });
 
     expect(bqRadio).not.toHaveAttribute('checked');
     expect(input.checked).toBe(false);
@@ -112,7 +110,7 @@ describe('bq-radio', () => {
     const bqRadio = root as HTMLBqRadioElement;
 
     expect(getInput(bqRadio)).toBeDisabled();
-    expect(getInput(bqRadio).getAttribute('aria-disabled')).toBe('true');
+    expect(getInput(bqRadio)).toEqualAttribute('aria-disabled', 'true');
   });
 
   it('should emit bqFocus and bqBlur through the native input', async () => {
@@ -144,8 +142,10 @@ describe('bq-radio', () => {
 
     const input = getInput(bqRadio);
 
-    expect(input.getAttribute('form')).toBe('my-form');
-    expect(input.getAttribute('name')).toBe('test-option');
+    expect(input).toEqualAttributes({
+      form: 'my-form',
+      name: 'test-option',
+    });
     expect(input.required).toBe(true);
     expect(input.value).toBe('test-value');
   });

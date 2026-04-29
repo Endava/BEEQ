@@ -19,31 +19,33 @@ const mkTooltip = () => (
 // userEvent.unhover() doesn't help — it targets document.body center, same coordinates.
 // Vitest exposes no API to move the cursor to arbitrary coords, so we use CDP directly.
 const moveOff = () => cdp().send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: 0, y: 0 });
+let unmountFn: (() => void) | undefined;
+
+afterEach(async () => {
+  await moveOff();
+  unmountFn?.();
+  unmountFn = undefined;
+});
 
 describe('bq-tooltip', () => {
-  let unmountFn: (() => void) | undefined;
-
-  afterEach(async () => {
-    await moveOff();
-    unmountFn?.();
-    unmountFn = undefined;
-  });
-
   it('should render', async () => {
     const { root, unmount } = await render(mkTooltip());
     unmountFn = unmount;
+
     expect(root.querySelector('bq-tooltip')).not.toBeNull();
   });
 
   it('should have shadow root', async () => {
     const { root, unmount } = await render(mkTooltip());
     unmountFn = unmount;
-    expect(root.querySelector('bq-tooltip').shadowRoot).not.toBeNull();
+
+    expect(root.querySelector('bq-tooltip')).toHaveShadowRoot();
   });
 
   it('should be hidden by default', async () => {
     const { root, unmount } = await render(mkTooltip());
     unmountFn = unmount;
+
     const panel = root.querySelector('bq-tooltip').shadowRoot.querySelector('[part="panel"]');
     expect(panel).toHaveAttribute('hidden');
   });
@@ -66,6 +68,7 @@ describe('bq-tooltip', () => {
   it('should not be visible on hover if defaultPrevented', async () => {
     const { root, unmount, spyOnEvent, waitForChanges } = await render(mkTooltip());
     unmountFn = unmount;
+
     const tooltip = root.querySelector('bq-tooltip');
     const bqHoverIn = spyOnEvent('bqHoverIn');
     const panel = tooltip.shadowRoot.querySelector('[part="panel"]');
@@ -82,6 +85,7 @@ describe('bq-tooltip', () => {
   it('should hide on mouse out', async () => {
     const { root, unmount, waitForChanges } = await render(mkTooltip());
     unmountFn = unmount;
+
     const tooltip = root.querySelector('bq-tooltip');
     const panel = tooltip.shadowRoot.querySelector('[part="panel"]');
     const trigger = tooltip.shadowRoot.querySelector('[part="trigger"]');
@@ -100,6 +104,7 @@ describe('bq-tooltip', () => {
   it('should emit bqHoverIn and bqHoverOut events', async () => {
     const { root, unmount, spyOnEvent, waitForChanges } = await render(mkTooltip());
     unmountFn = unmount;
+
     const tooltip = root.querySelector('bq-tooltip');
     const bqHoverIn = spyOnEvent('bqHoverIn');
     const bqHoverOut = spyOnEvent('bqHoverOut');
@@ -117,6 +122,7 @@ describe('bq-tooltip', () => {
   it('should be visible only on click if specified', async () => {
     const { root, unmount, waitForChanges } = await render(mkTooltip());
     unmountFn = unmount;
+
     const tooltip = root.querySelector('bq-tooltip') as HTMLBqTooltipElement;
     const panel = tooltip.shadowRoot.querySelector('[part="panel"]');
     const trigger = tooltip.shadowRoot.querySelector('[part="trigger"]');
@@ -139,6 +145,7 @@ describe('bq-tooltip', () => {
   it('should not be visible on click if defaultPrevented', async () => {
     const { root, unmount, waitForChanges } = await render(mkTooltip());
     unmountFn = unmount;
+
     const tooltip = root.querySelector('bq-tooltip') as HTMLBqTooltipElement;
     const panel = tooltip.shadowRoot.querySelector('[part="panel"]');
     const trigger = tooltip.shadowRoot.querySelector('[part="trigger"]');
@@ -157,6 +164,7 @@ describe('bq-tooltip', () => {
   it('should toggle visibility on repeated clicks when displayOn is click', async () => {
     const { root, unmount, waitForChanges } = await render(mkTooltip());
     unmountFn = unmount;
+
     const tooltip = root.querySelector('bq-tooltip') as HTMLBqTooltipElement;
     const panel = tooltip.shadowRoot.querySelector('[part="panel"]');
     const trigger = tooltip.shadowRoot.querySelector('[part="trigger"]');
@@ -219,6 +227,7 @@ describe('bq-tooltip', () => {
       </div>,
     );
     unmountFn = unmount;
+
     const tooltip = root.querySelector('bq-tooltip');
     const trigger = tooltip.shadowRoot.querySelector('[part="trigger"]');
 
@@ -240,6 +249,7 @@ describe('bq-tooltip', () => {
       </div>,
     );
     unmountFn = unmount;
+
     const panel = root.querySelector('bq-tooltip').shadowRoot.querySelector('[part="panel"]');
     expect(panel).not.toHaveAttribute('hidden');
   });
@@ -254,6 +264,7 @@ describe('bq-tooltip', () => {
       </div>,
     );
     unmountFn = unmount;
+
     const tooltip = root.querySelector('bq-tooltip') as HTMLBqTooltipElement;
     const panel = tooltip.shadowRoot.querySelector('[part="panel"]');
 

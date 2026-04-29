@@ -21,19 +21,17 @@ describe('bq-panel', () => {
   });
 
   it('should toggle panel visibility semantics with the open property', async () => {
-    const { root, waitForChanges } = await render(<bq-panel>Some content</bq-panel>);
-    const bqPanel = root as HTMLBqPanelElement;
+    const { root, setProps } = await render(<bq-panel>Some content</bq-panel>);
 
     const panel = getPanel(root);
 
     expect(panel.hidden).toBe(true);
-    expect(panel.getAttribute('aria-hidden')).toBe('true');
+    expect(panel).toEqualAttribute('aria-hidden', 'true');
 
-    bqPanel.open = true;
-    await waitForChanges();
+    await setProps({ open: true });
 
     expect(panel.hidden).toBe(false);
-    expect(panel.getAttribute('aria-hidden')).toBe('false');
+    expect(panel).toEqualAttribute('aria-hidden', 'false');
   });
 
   it('should render slotted content when open', async () => {
@@ -59,11 +57,13 @@ describe('bq-panel', () => {
       </bq-panel>,
     );
 
-    expect(root).toEqualAttribute('distance', '12');
-    expect(root).toEqualAttribute('placement', 'top-end');
-    expect(root).toHaveAttribute('same-width');
-    expect(root).toEqualAttribute('skidding', '8');
-    expect(root).toEqualAttribute('strategy', 'absolute');
+    expect(root).toEqualAttributes({
+      distance: '12',
+      placement: 'top-end',
+      'same-width': '',
+      skidding: '8',
+      strategy: 'absolute',
+    });
   });
 
   it('should respect the expected design styles', async () => {

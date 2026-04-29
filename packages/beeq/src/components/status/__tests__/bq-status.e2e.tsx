@@ -28,11 +28,10 @@ describe('bq-status', () => {
   });
 
   it('should handle status type', async () => {
-    const { root, waitForChanges } = await render(<bq-status>Neutral status</bq-status>);
+    const { root, setProps } = await render(<bq-status>Neutral status</bq-status>);
     const status = root as HTMLBqStatusElement;
 
-    status.type = 'danger';
-    await waitForChanges();
+    await setProps({ type: 'danger' });
 
     expect(status.type).toBe('danger');
     expect(status.shadowRoot?.querySelector('[part="circle"]')).toHaveClass('danger');
@@ -40,11 +39,10 @@ describe('bq-status', () => {
 
   it('should handle invalid status type', async () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
-    const { root, waitForChanges } = await render(<bq-status>Neutral status</bq-status>);
+    const { root, setProps } = await render(<bq-status>Neutral status</bq-status>);
     const status = root as HTMLBqStatusElement;
 
-    status.type = 'invalid-status' as HTMLBqStatusElement['type'];
-    await waitForChanges();
+    await setProps({ type: 'invalid-status' as HTMLBqStatusElement['type'] });
 
     expect(status.type).toBe('neutral');
     expect(status.shadowRoot?.querySelector('[part="circle"]')).toHaveClass('neutral');
@@ -85,21 +83,18 @@ describe('bq-status', () => {
   });
 
   it('should apply classes for the supported status types', async () => {
-    const { root, waitForChanges } = await render(<bq-status>Neutral status</bq-status>);
+    const { root, setProps } = await render(<bq-status>Neutral status</bq-status>);
     const status = root as HTMLBqStatusElement;
 
     const circle = status.shadowRoot?.querySelector('[part="circle"]');
 
-    status.type = 'alert';
-    await waitForChanges();
+    await setProps({ type: 'alert' });
     expect(circle).toHaveClass('alert');
 
-    status.type = 'info';
-    await waitForChanges();
+    await setProps({ type: 'info' });
     expect(circle).toHaveClass('info');
 
-    status.type = 'success';
-    await waitForChanges();
+    await setProps({ type: 'success' });
     expect(circle).toHaveClass('success');
   });
 });

@@ -104,10 +104,9 @@ describe('bq-tab-group', () => {
   });
 
   it('should change active tab when value is updated externally', async () => {
-    const { root, waitForChanges } = await render(mkGroup());
+    const { root, setProps } = await render(mkGroup());
 
-    (root as HTMLBqTabGroupElement).value = '3';
-    await waitForChanges();
+    await setProps({ value: '3' });
 
     const activeTab = root.querySelector('bq-tab[active]');
 
@@ -172,12 +171,11 @@ describe('bq-tab-group', () => {
 
     const base = root.shadowRoot.querySelector('[part="base"]');
 
-    expect(base.classList.contains('no-divider')).toBe(true);
+    expect(base).toHaveClass('no-divider');
   });
 
   it('should render with vertical orientation', async () => {
     const { root } = await render(mkGroup('1', { orientation: 'vertical' }));
-
     const base = root.shadowRoot.querySelector('[part="base"]');
 
     expect(base.className).toContain('bq-tab-group--vertical');

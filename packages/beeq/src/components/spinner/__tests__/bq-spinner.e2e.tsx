@@ -22,38 +22,35 @@ describe('bq-spinner', () => {
   });
 
   it('should handle `animation` property', async () => {
-    const { root, waitForChanges } = await render(<bq-spinner animation />);
+    const { root, setProps } = await render(<bq-spinner animation />);
     const spinner = root as HTMLBqSpinnerElement;
 
     const element = spinner.shadowRoot?.querySelector('.bq-spinner');
 
     expect(element).toHaveClass('is-animated');
 
-    spinner.animation = false;
-    await waitForChanges();
+    await setProps({ animation: false });
 
     expect(element).not.toHaveClass('is-animated');
   });
 
   it('should handle `size` property', async () => {
-    const { root, waitForChanges } = await render(<bq-spinner />);
+    const { root, setProps } = await render(<bq-spinner />);
     const spinner = root as HTMLBqSpinnerElement;
 
     const loader = () => spinner.shadowRoot?.querySelector('.bq-spinner--loader');
 
     expect(loader()).toHaveClass('medium');
 
-    spinner.size = 'large';
-    await waitForChanges();
+    await setProps({ size: 'large' });
     expect(loader()).toHaveClass('large');
 
-    spinner.size = 'small';
-    await waitForChanges();
+    await setProps({ size: 'small' });
     expect(loader()).toHaveClass('small');
   });
 
   it('should handle `text-position` property', async () => {
-    const { root, waitForChanges } = await render(<bq-spinner textPosition="above" />);
+    const { root, setProps } = await render(<bq-spinner textPosition="above" />);
     const spinner = root as HTMLBqSpinnerElement;
 
     const spinnerEl = () => spinner.shadowRoot?.querySelector('.bq-spinner');
@@ -61,20 +58,16 @@ describe('bq-spinner', () => {
 
     expect(spinnerEl()).toHaveClass('text-above');
 
-    spinner.textPosition = 'below';
-    await waitForChanges();
+    await setProps({ textPosition: 'below' });
     expect(spinnerEl()).toHaveClass('text-below');
 
-    spinner.textPosition = 'left';
-    await waitForChanges();
+    await setProps({ textPosition: 'left' });
     expect(spinnerEl()).toHaveClass('text-left');
 
-    spinner.textPosition = 'right';
-    await waitForChanges();
+    await setProps({ textPosition: 'right' });
     expect(spinnerEl()).toHaveClass('text-right');
 
-    spinner.textPosition = 'none';
-    await waitForChanges();
+    await setProps({ textPosition: 'none' });
 
     expect(spinnerText()).toHaveClass('!hidden');
     expect(spinnerEl()).toHaveClass('text-none');
@@ -99,12 +92,10 @@ describe('bq-spinner', () => {
 
   it('should handle invalid properties', async () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
-    const { root, waitForChanges } = await render(<bq-spinner />);
+    const { root, setProps } = await render(<bq-spinner />);
     const spinner = root as HTMLBqSpinnerElement;
 
-    spinner.size = 'invalid' as HTMLBqSpinnerElement['size'];
-    spinner.textPosition = 'invalid' as HTMLBqSpinnerElement['textPosition'];
-    await waitForChanges();
+    await setProps({ size: 'invalid', textPosition: 'invalid' });
 
     expect({
       size: spinner.size,

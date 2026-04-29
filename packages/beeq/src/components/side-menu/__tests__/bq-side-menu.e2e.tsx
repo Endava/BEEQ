@@ -196,7 +196,7 @@ describe('bq-side-menu', () => {
   });
 
   it('should remove body classes when disconnected', async () => {
-    const { root } = await render(
+    const { root, unmount } = await render(
       <bq-side-menu>
         <bq-side-menu-item>Dashboard</bq-side-menu-item>
       </bq-side-menu>,
@@ -206,7 +206,7 @@ describe('bq-side-menu', () => {
 
     expect(document.body).toHaveClass('bq-body--side-menu');
 
-    root.remove();
+    unmount();
 
     expect(document.body).not.toHaveClass('bq-body--side-menu');
     expect(document.body).not.toHaveClass('bq-body--side-menu__expand');

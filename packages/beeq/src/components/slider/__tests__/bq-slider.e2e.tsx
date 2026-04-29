@@ -34,7 +34,7 @@ describe('bq-slider', () => {
     const base = slider.shadowRoot?.querySelector('[part="base"]');
     const inputs = getRangeInputs(slider);
 
-    expect(base?.getAttribute('aria-disabled')).toBe('true');
+    expect(base).toEqualAttribute('aria-disabled', 'true');
     expect(inputs).toHaveLength(2);
     expect(inputs[0]).toBeDisabled();
     expect(inputs[1]).toBeDisabled();
@@ -50,11 +50,10 @@ describe('bq-slider', () => {
   });
 
   it('should handle enableValueIndicator property', async () => {
-    const { root, waitForChanges } = await render(<bq-slider type="range" value="[30,70]" />);
+    const { root, setProps } = await render(<bq-slider type="range" value="[30,70]" />);
     const slider = root as HTMLBqSliderElement;
 
-    slider.enableValueIndicator = true;
-    await waitForChanges();
+    await setProps({ enableValueIndicator: true });
 
     const leftLabel = slider.shadowRoot?.querySelector('[part="label-start"]');
     const rightLabel = slider.shadowRoot?.querySelector('[part="label-end"]');
@@ -66,13 +65,10 @@ describe('bq-slider', () => {
   });
 
   it('should keep the configured gap between range values', async () => {
-    const { root, waitForChanges } = await render(
-      <bq-slider gap={10} max={100} min={0} type="range" value="[30,70]" />,
-    );
+    const { root, setProps } = await render(<bq-slider gap={10} max={100} min={0} type="range" value="[30,70]" />);
     const slider = root as HTMLBqSliderElement;
 
-    slider.value = [55, 60];
-    await waitForChanges();
+    await setProps({ value: [55, 60] });
 
     const [minInput, maxInput] = getRangeInputs(slider);
     const difference = Math.abs(Number(maxInput.getAttribute('value')) - Number(minInput.getAttribute('value')));
@@ -81,25 +77,21 @@ describe('bq-slider', () => {
   });
 
   it('should switch between single and range types', async () => {
-    const { root, waitForChanges } = await render(<bq-slider type="single" value={30} />);
+    const { root, setProps } = await render(<bq-slider type="single" value={30} />);
     const slider = root as HTMLBqSliderElement;
 
     expect(getRangeInputs(slider)).toHaveLength(1);
 
-    slider.type = 'range';
-    slider.value = [30, 70];
-    await waitForChanges();
+    await setProps({ type: 'range', value: [30, 70] });
 
     expect(getRangeInputs(slider)).toHaveLength(2);
   });
 
   it('should emit bqChange when value changes', async () => {
-    const { root, spyOnEvent, waitForChanges } = await render(<bq-slider value={30} />);
-    const slider = root as HTMLBqSliderElement;
+    const { setProps, spyOnEvent } = await render(<bq-slider value={30} />);
     const bqChange = spyOnEvent('bqChange');
 
-    slider.value = 50;
-    await waitForChanges();
+    await setProps({ value: 50 });
 
     expect(bqChange).toHaveReceivedEventTimes(1);
   });
@@ -141,7 +133,7 @@ describe('bq-slider', () => {
 
     const [input] = getRangeInputs(slider);
 
-    expect(input.getAttribute('value')).toBe('35');
+    expect(input).toEqualAttribute('value', '35');
   });
 
   it('should apply min and max boundaries to the range input', async () => {
@@ -149,9 +141,7 @@ describe('bq-slider', () => {
     const slider = root as HTMLBqSliderElement;
 
     const [input] = getRangeInputs(slider);
-
-    expect(input.min).toBe('10');
-    expect(input.max).toBe('100');
+    expect(input).toEqualAttributes({ min: '10', max: '100' });
   });
 
   it('should participate in forms by setting the form value', async () => {
@@ -168,13 +158,11 @@ describe('bq-slider', () => {
   });
 
   it('should respect debounceTime when emitting bqChange', async () => {
-    const { root, spyOnEvent, waitForChanges } = await render(<bq-slider debounceTime={250} value={30} />);
-    const slider = root as HTMLBqSliderElement;
+    const { setProps, spyOnEvent } = await render(<bq-slider debounceTime={250} value={30} />);
 
     const bqChange = spyOnEvent('bqChange');
 
-    slider.value = 50;
-    await waitForChanges();
+    await setProps({ value: 50 });
     await sleep(300);
 
     expect(bqChange).toHaveReceivedEventTimes(1);

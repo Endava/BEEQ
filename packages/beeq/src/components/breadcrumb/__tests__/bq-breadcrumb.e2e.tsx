@@ -103,18 +103,15 @@ describe('bq-breadcrumb', () => {
 
   it('should set a default aria-label on the navigation element', async () => {
     const { root } = await render(<bq-breadcrumb />);
-
     const nav = root.shadowRoot?.querySelector('nav');
-
-    expect(nav?.getAttribute('aria-label')).toBe('Breadcrumbs');
+    expect(nav).toEqualAttribute('aria-label', 'Breadcrumbs');
   });
 
   it('should set a custom aria-label on the navigation element', async () => {
     const { root } = await render(<bq-breadcrumb label="Page trail" />);
-
     const nav = root.shadowRoot?.querySelector('nav');
 
-    expect(nav?.getAttribute('aria-label')).toBe('Page trail');
+    expect(nav).toEqualAttribute('aria-label', 'Page trail');
   });
 
   it('should render the default separator for all non-last items', async () => {
@@ -150,7 +147,7 @@ describe('bq-breadcrumb', () => {
 
     const items = root.querySelectorAll('bq-breadcrumb-item');
 
-    expect(items[0].getAttribute('aria-current')).toBe('');
-    expect(items[1].getAttribute('aria-current')).toBe('page');
+    expect(items[0]).toEqualAttribute('aria-current', '');
+    expect(items[1]).toEqualAttribute('aria-current', 'page');
   });
 });

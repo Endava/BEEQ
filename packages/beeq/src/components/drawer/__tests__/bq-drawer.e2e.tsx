@@ -34,7 +34,7 @@ describe('bq-drawer', () => {
 
     const element = getDrawerPanel(drawer);
 
-    expect(element.getAttribute('aria-hidden')).toBe('true');
+    expect(element).toEqualAttribute('aria-hidden', 'true');
   });
 
   it('should render as hidden with `open="false"`', async () => {
@@ -43,7 +43,7 @@ describe('bq-drawer', () => {
 
     const element = getDrawerPanel(drawer);
 
-    expect(element.getAttribute('aria-hidden')).toBe('true');
+    expect(element).toEqualAttribute('aria-hidden', 'true');
   });
 
   it('should render as open', async () => {
@@ -52,7 +52,7 @@ describe('bq-drawer', () => {
 
     const element = getDrawerPanel(drawer);
 
-    expect(element.getAttribute('aria-hidden')).toBe('false');
+    expect(element).toEqualAttribute('aria-hidden', 'false');
     expect(element).not.toHaveClass('hidden');
   });
 
@@ -62,7 +62,7 @@ describe('bq-drawer', () => {
 
     const element = getDrawerPanel(drawer);
 
-    expect(element.getAttribute('aria-hidden')).toBe('false');
+    expect(element).toEqualAttribute('aria-hidden', 'false');
     expect(element).not.toHaveClass('hidden');
   });
 
@@ -114,7 +114,7 @@ describe('bq-drawer', () => {
 
     const closedDrawer = getDrawerPanel(drawer);
 
-    expect(closedDrawer.getAttribute('aria-hidden')).toBe('true');
+    expect(closedDrawer).toEqualAttribute('aria-hidden', 'true');
     expect(closedDrawer).toHaveAttribute('hidden');
 
     const afterOpen = new Promise<void>((resolve) =>
@@ -126,7 +126,7 @@ describe('bq-drawer', () => {
 
     const openDrawer = getDrawerPanel(drawer);
 
-    expect(openDrawer.getAttribute('aria-hidden')).toBe('false');
+    expect(openDrawer).toEqualAttribute('aria-hidden', 'false');
     expect(openDrawer).not.toHaveAttribute('hidden');
   });
 
@@ -152,7 +152,7 @@ describe('bq-drawer', () => {
 
     const closedDrawer = getDrawerPanel(drawer);
 
-    expect(closedDrawer.getAttribute('aria-hidden')).toBe('true');
+    expect(closedDrawer).toEqualAttribute('aria-hidden', 'true');
     expect(closedDrawer).toHaveAttribute('hidden');
   });
 
@@ -171,7 +171,7 @@ describe('bq-drawer', () => {
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     await afterClose;
 
-    expect(getDrawerPanel(drawer).getAttribute('aria-hidden')).toBe('true');
+    expect(getDrawerPanel(drawer)).toEqualAttribute('aria-hidden', 'true');
   });
 
   it('should not close on "Escape" when closeOnEsc is true', async () => {
@@ -187,7 +187,7 @@ describe('bq-drawer', () => {
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     await waitForChanges();
 
-    expect(getDrawerPanel(drawer).getAttribute('aria-hidden')).toBe('false');
+    expect(getDrawerPanel(drawer)).toEqualAttribute('aria-hidden', 'false');
   });
 
   it('should apply the position class to the drawer panel', async () => {
@@ -227,7 +227,7 @@ describe('bq-drawer', () => {
     window.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, button: 0, clientX: 200, clientY: 50 }));
     await waitForChanges();
 
-    expect(panel.getAttribute('aria-hidden')).toBe('false');
+    expect(panel).toEqualAttribute('aria-hidden', 'false');
   });
 
   it('should not show when bqOpen is defaultPrevented', async () => {
@@ -238,7 +238,7 @@ describe('bq-drawer', () => {
     await drawer.show();
     await waitForChanges();
 
-    expect(getDrawerPanel(drawer).getAttribute('aria-hidden')).toBe('true');
+    expect(getDrawerPanel(drawer)).toEqualAttribute('aria-hidden', 'true');
   });
 
   it('should not hide when bqClose is defaultPrevented', async () => {
@@ -249,6 +249,6 @@ describe('bq-drawer', () => {
     await drawer.hide();
     await waitForChanges();
 
-    expect(getDrawerPanel(drawer).getAttribute('aria-hidden')).toBe('false');
+    expect(getDrawerPanel(drawer)).toEqualAttribute('aria-hidden', 'false');
   });
 });

@@ -194,17 +194,16 @@ describe('bq-date-picker', () => {
     const control = root.shadowRoot?.querySelector('[part="control"]');
     const input = getDatePickerInput(datePicker);
 
-    expect(control?.classList.contains('validation-error')).toBe(true);
-    expect(input.getAttribute('aria-invalid')).toBe('true');
+    expect(control).toHaveClass('validation-error');
+    expect(input).toEqualAttribute('aria-invalid', 'true');
   });
 
   it('should handle invalid type values', async () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
-    const { root, waitForChanges } = await render(<bq-date-picker name="date-picker" type="range" />);
+    const { root, setProps } = await render(<bq-date-picker name="date-picker" type="range" />);
     const datePicker = root as HTMLBqDatePickerElement;
 
-    datePicker.type = 'invalid' as HTMLBqDatePickerElement['type'];
-    await waitForChanges();
+    await setProps({ type: 'invalid' });
 
     expect(datePicker.type).toBe('single');
     expect(warnSpy).toHaveBeenCalledTimes(1);

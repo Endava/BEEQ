@@ -20,27 +20,27 @@ describe('bq-tag', () => {
   it('should render as hidden', async () => {
     const { root } = await render(<bq-tag removable hidden />);
 
-    expect(root.getAttribute('aria-hidden')).toBe('true');
+    expect(root).toEqualAttribute('aria-hidden', 'true');
   });
 
   it('should render as hidden with `hidden="true"`', async () => {
     const { root } = await render(<bq-tag removable hidden={true} />);
 
-    expect(root.getAttribute('aria-hidden')).toBe('true');
+    expect(root).toEqualAttribute('aria-hidden', 'true');
   });
 
   it('should render as open', async () => {
     const { root } = await render(<bq-tag />);
 
-    expect(root.getAttribute('aria-hidden')).toBe('false');
-    expect(root.classList.contains('is-hidden')).toBe(false);
+    expect(root).toEqualAttribute('aria-hidden', 'false');
+    expect(root).not.toHaveClass('is-hidden');
   });
 
   it('should render as open with `hidden="false"`', async () => {
     const { root } = await render(<bq-tag hidden={false} />);
 
-    expect(root.getAttribute('aria-hidden')).toBe('false');
-    expect(root.classList.contains('is-hidden')).toBe(false);
+    expect(root).toEqualAttribute('aria-hidden', 'false');
+    expect(root).not.toHaveClass('is-hidden');
   });
 
   it('should render a removable tag component', async () => {
@@ -76,8 +76,8 @@ describe('bq-tag', () => {
     await userEvent.click(closeBtn);
     await waitForChanges();
 
-    expect(root.getAttribute('aria-hidden')).toBe('true');
-    expect(root.hasAttribute('hidden')).toBe(true);
+    expect(root).toEqualAttribute('aria-hidden', 'true');
+    expect(root).toHaveAttribute('hidden');
   });
 
   it('should emit bqClose when close button is clicked', async () => {
@@ -99,7 +99,7 @@ describe('bq-tag', () => {
     await userEvent.click(closeBtn);
     await waitForChanges();
 
-    expect(root.getAttribute('aria-hidden')).toBe('false');
+    expect(root).toEqualAttribute('aria-hidden', 'false');
   });
 
   it('should show and hide via public methods', async () => {
@@ -108,11 +108,11 @@ describe('bq-tag', () => {
 
     await tag.hide();
     await waitForChanges();
-    expect(root.getAttribute('aria-hidden')).toBe('true');
+    expect(root).toEqualAttribute('aria-hidden', 'true');
 
     await tag.show();
     await waitForChanges();
-    expect(root.getAttribute('aria-hidden')).toBe('false');
+    expect(root).toEqualAttribute('aria-hidden', 'false');
   });
 
   it('should emit bqOpen when show() is called', async () => {
@@ -164,30 +164,33 @@ describe('bq-tag', () => {
         Tag
       </bq-tag>,
     );
-    const wrapper = root.shadowRoot.querySelector<HTMLButtonElement>('[part="wrapper"]');
+    const tag = root as HTMLBqTagElement;
+    const wrapper = tag.shadowRoot.querySelector<HTMLButtonElement>('[part="wrapper"]');
 
     expect(wrapper.disabled).toBe(true);
-    expect((root as HTMLBqTagElement).selected).toBe(false);
+    expect(tag.selected).toBe(false);
 
     // userEvent.click refuses to click a disabled button (Playwright actionability check).
     // Dispatch natively to verify the component's own guard (not the browser's).
     wrapper.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     await waitForChanges();
 
-    expect((root as HTMLBqTagElement).selected).toBe(false);
+    expect(tag.selected).toBe(false);
   });
 
   it('should render as a button element when clickable', async () => {
     const { root } = await render(<bq-tag clickable>Tag</bq-tag>);
-    const wrapper = root.shadowRoot.querySelector('[part="wrapper"]');
+    const tag = root as HTMLBqTagElement;
 
+    const wrapper = tag.shadowRoot.querySelector('[part="wrapper"]');
     expect(wrapper.tagName.toLowerCase()).toBe('button');
   });
 
   it('should render as a div element when not clickable', async () => {
     const { root } = await render(<bq-tag>Tag</bq-tag>);
-    const wrapper = root.shadowRoot.querySelector('[part="wrapper"]');
+    const tag = root as HTMLBqTagElement;
 
+    const wrapper = tag.shadowRoot.querySelector('[part="wrapper"]');
     expect(wrapper.tagName.toLowerCase()).toBe('div');
   });
 

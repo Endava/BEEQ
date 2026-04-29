@@ -77,7 +77,7 @@ describe('bq-dropdown', () => {
   });
 
   it('should change placement value', async () => {
-    const { root, waitForChanges } = await render(
+    const { root, setProps } = await render(
       <bq-dropdown>
         <bq-button slot="trigger">Open</bq-button>
         <div>Some content in panel</div>
@@ -85,8 +85,7 @@ describe('bq-dropdown', () => {
     );
     const dropdown = root as HTMLBqDropdownElement;
 
-    dropdown.placement = 'bottom';
-    await waitForChanges();
+    await setProps({ placement: 'bottom' });
 
     const dropdownPanel = getDropdownPanelHost(dropdown);
 
@@ -122,7 +121,7 @@ describe('bq-dropdown', () => {
     );
 
     const bqOpen = spyOnEvent('bqOpen');
-    const button = root.querySelector('bq-button') as HTMLBqButtonElement;
+    const button = root.querySelector<HTMLBqButtonElement>('bq-button');
 
     await userEvent.click(button);
     await waitForChanges();
@@ -172,8 +171,8 @@ describe('bq-dropdown', () => {
       </div>,
     );
 
-    const dropdown = root.querySelector('bq-dropdown') as HTMLBqDropdownElement;
-    const outsideButton = root.querySelector('button') as HTMLButtonElement;
+    const dropdown = root.querySelector<HTMLBqDropdownElement>('bq-dropdown');
+    const outsideButton = root.querySelector<HTMLButtonElement>('button');
 
     await userEvent.click(outsideButton);
     await waitForChanges();

@@ -73,7 +73,7 @@ describe('bq-button', () => {
 
     const innerBtn = getButtonElement(root as HTMLBqButtonElement);
 
-    expect(innerBtn.classList.contains('bq-button--secondary')).toBe(true);
+    expect(innerBtn).toHaveClass('bq-button--secondary');
   });
 
   it('should apply variant class to inner button', async () => {
@@ -81,7 +81,7 @@ describe('bq-button', () => {
 
     const innerBtn = getButtonElement(root as HTMLBqButtonElement);
 
-    expect(innerBtn.classList.contains('danger')).toBe(true);
+    expect(innerBtn).toHaveClass('danger');
   });
 
   it('should apply `block` class when `block` prop is set', async () => {
@@ -89,7 +89,7 @@ describe('bq-button', () => {
 
     const innerBtn = getButtonElement(root as HTMLBqButtonElement);
 
-    expect(innerBtn.classList.contains('block')).toBe(true);
+    expect(innerBtn).toHaveClass('block');
   });
 
   it('should apply `only-icon` class when `only-icon` prop is set', async () => {
@@ -101,7 +101,7 @@ describe('bq-button', () => {
 
     const innerBtn = getButtonElement(root as HTMLBqButtonElement);
 
-    expect(innerBtn.classList.contains('only-icon')).toBe(true);
+    expect(innerBtn).toHaveClass('only-icon');
   });
 
   it('should apply justifyContent class to inner button', async () => {
@@ -109,7 +109,7 @@ describe('bq-button', () => {
 
     const innerBtn = getButtonElement(root as HTMLBqButtonElement);
 
-    expect(innerBtn.classList.contains('content-left')).toBe(true);
+    expect(innerBtn).toHaveClass('content-left');
   });
 
   it('should set `rel` when `target` is set on a link button', async () => {
@@ -127,19 +127,14 @@ describe('bq-button', () => {
 
   it('should handle invalid properties', async () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
-    const { root, waitForChanges } = await render(
+    const { root, setProps } = await render(
       <bq-button size="small" appearance="secondary" type="submit" variant="ghost">
         Button
       </bq-button>,
     );
 
     const btn = root as HTMLBqButtonElement;
-    btn.type = 'invalid' as HTMLBqButtonElement['type'];
-    btn.size = 'invalid' as HTMLBqButtonElement['size'];
-    btn.variant = 'invalid' as HTMLBqButtonElement['variant'];
-    btn.appearance = 'invalid' as HTMLBqButtonElement['appearance'];
-
-    await waitForChanges();
+    await setProps({ type: 'invalid', size: 'invalid', variant: 'invalid', appearance: 'invalid' });
 
     expect({
       type: btn.type,
@@ -231,7 +226,7 @@ describe('bq-button', () => {
     innerButton.dispatchEvent(new MouseEvent('click', { bubbles: true }));
 
     expect(innerButton).toBeDisabled();
-    expect(innerButton.getAttribute('aria-disabled')).toBe('true');
+    expect(innerButton).toEqualAttribute('aria-disabled', 'true');
 
     expect(bqFocus).toHaveReceivedEventTimes(0);
     expect(bqClick).toHaveReceivedEventTimes(0);

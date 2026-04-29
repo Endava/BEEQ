@@ -313,7 +313,7 @@ describe('bq-radio-group', () => {
 
   it('should fallback invalid orientation values to vertical', async () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
-    const { root, waitForChanges } = await render(
+    const { root, setProps } = await render(
       <bq-radio-group name="test-option" orientation="horizontal">
         <bq-radio name="test-option" value="option1">
           Option 1
@@ -322,9 +322,7 @@ describe('bq-radio-group', () => {
     );
     const bqRadioGroup = root as HTMLBqRadioGroupElement;
 
-    // @ts-expect-error testing invalid prop handling
-    bqRadioGroup.orientation = 'invalid';
-    await waitForChanges();
+    await setProps({ orientation: 'invalid' });
 
     expect(bqRadioGroup.orientation).toBe('vertical');
     expect(bqRadioGroup.shadowRoot?.querySelector('[part="group"]')).toHaveClass('bq-radio-group--vertical');

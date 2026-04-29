@@ -50,12 +50,10 @@ describe('bq-card', () => {
 
   it('should handle invalid type values', async () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
-    const { root, waitForChanges } = await render(<bq-card type="minimal" />);
+    const { root, setProps } = await render(<bq-card type="minimal" />);
     const card = root as HTMLBqCardElement;
 
-    card.type = 'invalid' as HTMLBqCardElement['type'];
-
-    await waitForChanges();
+    await setProps({ type: 'invalid' });
 
     expect(card.type).toBe('default');
     expect(warnSpy).toHaveBeenCalledTimes(1);

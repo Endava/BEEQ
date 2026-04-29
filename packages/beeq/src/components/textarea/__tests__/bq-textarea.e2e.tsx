@@ -99,13 +99,12 @@ describe('bq-textarea', () => {
   it('should show and count all characters', async () => {
     const value = 'Hello';
     const maxlength = 100;
-    const { root, waitForChanges } = await render(
+    const { root, setProps } = await render(
       <bq-textarea maxlength={maxlength} name="textarea" placeholder="Placeholder..." />,
     );
     const counterElem = root.shadowRoot.querySelector<HTMLElement>('.bq-textarea__helper--counter');
 
-    (root as HTMLBqTextareaElement).value = value;
-    await waitForChanges();
+    await setProps({ value });
 
     expect(counterElem.innerText).toBe(`${value.length}/${maxlength}`);
   });
@@ -113,13 +112,12 @@ describe('bq-textarea', () => {
   it('should truncate text longer than maxlength', async () => {
     const value = 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.';
     const maxlength = 10;
-    const { root, waitForChanges } = await render(
+    const { root, setProps } = await render(
       <bq-textarea maxlength={maxlength} name="textarea" placeholder="Placeholder..." />,
     );
     const nativeTextarea = root.shadowRoot.querySelector<HTMLTextAreaElement>('.bq-textarea__input');
 
-    (root as HTMLBqTextareaElement).value = value;
-    await waitForChanges();
+    await setProps({ value });
 
     expect(nativeTextarea.value).toBe(value.substring(0, maxlength));
   });

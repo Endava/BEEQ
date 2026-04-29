@@ -72,7 +72,7 @@ describe('bq-avatar', () => {
     const { root } = await render(<bq-avatar initials="JS" label="John Doe profile picture" />);
 
     const base = root.shadowRoot.querySelector('[part="base"]');
-    expect(base.getAttribute('aria-label')).toBe('John Doe profile picture');
+    expect(base).toEqualAttribute('aria-label', 'John Doe profile picture');
   });
 
   it('should respect design style', async () => {

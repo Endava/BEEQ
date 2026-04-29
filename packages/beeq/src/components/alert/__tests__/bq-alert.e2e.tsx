@@ -15,26 +15,26 @@ describe('bq-alert', () => {
 
   it('should render as hidden', async () => {
     const { root } = await render(<bq-alert />);
-    expect(root.getAttribute('aria-hidden')).toBe('true');
-    expect(root.classList.contains('is-hidden')).toBe(true);
+    expect(root).toEqualAttribute('aria-hidden', 'true');
+    expect(root).toHaveClass('is-hidden');
   });
 
   it('should render as hidden with `open="false"`', async () => {
     const { root } = await render(<bq-alert open={false} />);
-    expect(root.getAttribute('aria-hidden')).toBe('true');
-    expect(root.classList.contains('is-hidden')).toBe(true);
+    expect(root).toEqualAttribute('aria-hidden', 'true');
+    expect(root).toHaveClass('is-hidden');
   });
 
   it('should render as open', async () => {
     const { root } = await render(<bq-alert open />);
-    expect(root.getAttribute('aria-hidden')).toBe('false');
-    expect(root.classList.contains('is-hidden')).toBe(false);
+    expect(root).toEqualAttribute('aria-hidden', 'false');
+    expect(root).not.toHaveClass('is-hidden');
   });
 
   it('should render as open with `open="true"`', async () => {
     const { root } = await render(<bq-alert open={true} />);
-    expect(root.getAttribute('aria-hidden')).toBe('false');
-    expect(root.classList.contains('is-hidden')).toBe(false);
+    expect(root).toEqualAttribute('aria-hidden', 'false');
+    expect(root).not.toHaveClass('is-hidden');
   });
 
   it('should render basic alert', async () => {
@@ -98,8 +98,8 @@ describe('bq-alert', () => {
     await afterShow;
 
     expect(root).not.toHaveClass('is-hidden');
-    expect(root.getAttribute('aria-hidden')).toBe('false');
-    expect(root.getAttribute('hidden')).toBe('false');
+    expect(root).toEqualAttribute('aria-hidden', 'false');
+    expect(root).toEqualAttribute('hidden', 'false');
   });
 
   it('should call hide() method', async () => {
@@ -109,7 +109,7 @@ describe('bq-alert', () => {
       </bq-alert>,
     );
 
-    expect(root.getAttribute('aria-hidden')).toBe('false');
+    expect(root).toEqualAttribute('aria-hidden', 'false');
     expect(root).not.toHaveClass('is-hidden');
 
     // Register listener before calling hide() to capture the bqAfterHide event
@@ -187,7 +187,7 @@ describe('bq-alert', () => {
 
     await (root as HTMLBqAlertElement).show();
 
-    expect(root.getAttribute('aria-hidden')).toBe('true');
+    expect(root).toEqualAttribute('aria-hidden', 'true');
     expect(root).toHaveClass('is-hidden');
   });
 
@@ -246,7 +246,7 @@ describe('bq-alert', () => {
     await userEvent.click(closeButton);
     await afterHide;
 
-    expect(root.getAttribute('aria-hidden')).toBe('true');
+    expect(root).toEqualAttribute('aria-hidden', 'true');
     expect(root).toHaveClass('is-hidden');
   });
 });
