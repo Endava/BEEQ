@@ -40,8 +40,7 @@ describe('bq-alert', () => {
   it('should render basic alert', async () => {
     const { root } = await render(
       <bq-alert>
-        Alert title
-        <span slot="body">You have a new alert message</span>
+        Alert title<span slot="body">You have a new alert message</span>
       </bq-alert>,
     );
 
@@ -85,8 +84,7 @@ describe('bq-alert', () => {
   it('should call show() method', async () => {
     const { root } = await render(
       <bq-alert>
-        Alert title
-        <span slot="body">You have a new alert message</span>
+        Alert title<span slot="body">You have a new alert message</span>
       </bq-alert>,
     );
 
@@ -107,8 +105,7 @@ describe('bq-alert', () => {
   it('should call hide() method', async () => {
     const { root } = await render(
       <bq-alert open>
-        Alert title
-        <span slot="body">You have a new alert message</span>
+        Alert title<span slot="body">You have a new alert message</span>
       </bq-alert>,
     );
 
@@ -132,8 +129,7 @@ describe('bq-alert', () => {
   it('should emit bqShow and bqAfterShow events in order when show() is called', async () => {
     const { root, spyOnEvent } = await render(
       <bq-alert>
-        Alert title
-        <span slot="body">You have a new alert message</span>
+        Alert title<span slot="body">You have a new alert message</span>
       </bq-alert>,
     );
 
@@ -158,8 +154,7 @@ describe('bq-alert', () => {
   it('should emit bqHide and bqAfterHide events in order when hide() is called', async () => {
     const { root, spyOnEvent } = await render(
       <bq-alert open>
-        Alert title
-        <span slot="body">You have a new alert message</span>
+        Alert title<span slot="body">You have a new alert message</span>
       </bq-alert>,
     );
 
@@ -184,8 +179,7 @@ describe('bq-alert', () => {
   it('should not show the alert when bqShow event is prevented', async () => {
     const { root } = await render(
       <bq-alert>
-        Alert title
-        <span slot="body">You have a new alert message</span>
+        Alert title<span slot="body">You have a new alert message</span>
       </bq-alert>,
     );
 
@@ -200,8 +194,7 @@ describe('bq-alert', () => {
   it('should not hide the alert when bqHide event is prevented', async () => {
     const { root } = await render(
       <bq-alert open>
-        Alert title
-        <span slot="body">You have a new alert message</span>
+        Alert title<span slot="body">You have a new alert message</span>
       </bq-alert>,
     );
 

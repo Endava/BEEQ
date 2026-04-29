@@ -6,8 +6,8 @@ import { getTextContent } from '../../../shared/utils/slot';
 const getDrawerPanel = (drawer: HTMLBqDrawerElement) =>
   drawer.shadowRoot?.querySelector<HTMLDivElement>('[part="panel"]');
 
-// TODO: Remove once the deprecated `placement` prop is removed from bq-drawer
 beforeEach(() => {
+  // !Note: Remove once the deprecated `placement` prop is removed from bq-drawer
   vi.spyOn(console, 'warn').mockImplementation(() => {});
 });
 

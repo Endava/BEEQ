@@ -147,8 +147,7 @@ describe('bq-side-menu-item', () => {
   it('should render suffix element', async () => {
     const { root } = await render(
       <bq-side-menu-item>
-        <span slot="suffix">Suffix</span>
-        Dashboard
+        <span slot="suffix">Suffix</span> Dashboard
       </bq-side-menu-item>,
     );
 
