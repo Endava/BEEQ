@@ -67,6 +67,20 @@ Beyond the baseline, every test should cover:
 - **Accessibility**: test `aria-*` attributes, keyboard navigation, and focus/blur behavior where applicable
 - **Design style**: use `computedStyle` to verify critical CSS custom properties or computed values
 
+### Check if a component has a shadow root
+
+Always use `toHaveShadowRoot()` for checking shadow root presence instead of directly accessing `shadowRoot`:
+
+```tsx
+// ✅ correct
+const { root } = await render(<bq-accordion />);
+expect(root).toHaveShadowRoot();
+
+// ❌ wrong
+const { root } = await render(<bq-accordion />);
+expect(root.shadowRoot).not.toBeNull();
+```
+
 ### Element Casting
 
 Always cast `root` to the concrete element type before passing it to typed helper functions:
@@ -101,6 +115,34 @@ const input = bqToggle.shadowRoot?.querySelector<HTMLInputElement>('input');
 const input = bqToggle.shadowRoot?.querySelector('input');
 const input = bqToggle.shadowRoot?.querySelector('input') as HTMLInputElement;
 ```
+
+### Update component's props
+
+Always update props using the `setProps` utility from `@stencil/vitest` instead of directly setting attributes on `root`. This ensures proper re-rendering and state updates:
+
+```tsx
+// ✅ preferred — use setProps for proper re-rendering
+const { root, setProps } = await render(<bq-drawer />);
+
+await setProps({ open: true });
+
+// ✅ also correct
+const { root, waitForChanges } = await render(<bq-drawer />);
+const bqDrawer = root as HTMLBqDrawerElement;
+
+bqDrawer.open = true;
+await waitForChanges();
+
+// ❌ wrong
+const { root, waitForChanges } = await render(<bq-drawer />);
+
+root.open = true;
+await waitForChanges();
+```
+
+or prefer using `setProps`
+
+
 
 ### Shadow DOM Helpers
 
