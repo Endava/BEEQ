@@ -24,7 +24,7 @@ jobs:
           fetch-depth: 0
 
       - name: 🛠 Setup Volta
-        uses: volta-cli/action@v4
+        uses: volta-cli/action@v5
 
       - name: 🔎 Check Node and PNPM versions
         run: |
