@@ -64,5 +64,18 @@ export default defineVitestConfig({
         },
       },
     ],
+    coverage: {
+      provider: 'istanbul',
+      reportsDirectory: resolvePath('coverage'),
+      reporter: ['text', 'html', 'lcov'],
+      include: ['src/shared/test-utils/**/*.{ts,tsx}', 'src/shared/utils/**/*.{ts,tsx}'],
+      exclude: [
+        'src/**/*.{spec,e2e}.{ts,tsx}',
+        'src/**/*.stories.tsx',
+        'src/components.d.ts',
+        'src/global.d.ts',
+        'src/index.ts',
+      ],
+    },
   },
 });

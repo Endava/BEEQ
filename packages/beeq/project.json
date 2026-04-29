@@ -135,14 +135,14 @@
       "executor": "nx:run-commands",
       "dependsOn": [{ "target": "build", "projects": "beeq-tailwindcss" }],
       "options": {
-        "command": "pnpm exec vitest run --project spec",
+        "command": "pnpm exec vitest run --project spec --coverage",
         "cwd": "packages/beeq"
       }
     },
     "e2e": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["pnpm exec vitest run --project e2e"],
+        "command": "pnpm exec vitest run --project e2e",
         "cwd": "packages/beeq"
       }
     },
@@ -172,7 +172,8 @@
       "dependsOn": [{ "target": "build", "projects": "beeq-tailwindcss" }],
       "options": {
         "lintFilePatterns": ["{projectRoot}/**/*.css", "{projectRoot}/**/*.scss"],
-        "configFile": "packages/beeq/.stylelintrc.json"
+        "configFile": "packages/beeq/.stylelintrc.json",
+        "ignorePath": ".gitignore"
       }
     },
     "prepare-storybook": {

@@ -7,6 +7,7 @@
 .stencil
 __screenshots__
 chromatic-diagnostics.json
+coverage
 dist
 out-tsc
 tmp/**
