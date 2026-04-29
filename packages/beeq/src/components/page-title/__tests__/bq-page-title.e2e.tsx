@@ -13,7 +13,7 @@ describe('bq-page-title', () => {
   it('should have shadow root', async () => {
     const { root } = await render(<bq-page-title>Title</bq-page-title>);
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should render title text', async () => {

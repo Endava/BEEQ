@@ -13,7 +13,7 @@ describe('bq-option-group', () => {
   it('should have shadow root', async () => {
     const { root } = await render(<bq-option-group />);
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should render prefix element', async () => {

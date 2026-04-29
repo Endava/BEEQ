@@ -11,7 +11,7 @@ describe('bq-icon', () => {
 
   it('should have shadow root', async () => {
     const { root } = await render(<bq-icon />);
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should display icon', async () => {
@@ -38,11 +38,11 @@ describe('bq-icon', () => {
   });
 
   it('should handle `name` property change', async () => {
-    const { root, waitForChanges } = await render(<bq-icon name="pulse" />);
+    const { root, setProps, waitForChanges } = await render(<bq-icon name="pulse" />);
 
     await waitForStable(root);
 
-    root.setAttribute('name', 'check');
+    await setProps({ name: 'check' });
 
     await waitForChanges();
     await waitForStable(root);
@@ -97,7 +97,7 @@ describe('bq-icon', () => {
   });
 
   it('should emit `svgLoaded` event when the SVG content is loaded', async () => {
-    const { root, spyOnEvent, waitForChanges } = await render(<bq-icon />);
+    const { root, setProps, spyOnEvent, waitForChanges } = await render(<bq-icon />);
     const svgLoaded = spyOnEvent('svgLoaded');
 
     // Register a native Promise as well so we can await the actual load completion
@@ -105,7 +105,7 @@ describe('bq-icon', () => {
       root.addEventListener('svgLoaded', () => resolve(), { once: true });
     });
 
-    root.setAttribute('name', 'pulse');
+    await setProps({ name: 'pulse' });
     await waitForChanges();
     await svgLoadedPromise;
 

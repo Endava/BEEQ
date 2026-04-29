@@ -19,7 +19,7 @@ describe('bq-radio-group', () => {
   it('should have shadow root', async () => {
     const { root } = await render(<bq-radio-group name="test-option" />);
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should set the value when a radio is clicked', async () => {

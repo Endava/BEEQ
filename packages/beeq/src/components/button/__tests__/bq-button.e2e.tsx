@@ -20,7 +20,7 @@ describe('bq-button', () => {
 
   it('should have shadow root', async () => {
     const { root } = await render(<bq-button>Button</bq-button>);
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should render <a> tag', async () => {

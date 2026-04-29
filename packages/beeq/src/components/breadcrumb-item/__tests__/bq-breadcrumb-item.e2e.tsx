@@ -16,7 +16,7 @@ describe('bq-breadcrumb-item', () => {
   it('should have shadow root', async () => {
     const { root } = await render(<bq-breadcrumb-item />);
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should display text', async () => {

@@ -41,7 +41,7 @@ describe('bq-date-picker', () => {
   it('should have shadow root', async () => {
     const { root } = await render(<bq-date-picker name="date-picker" />);
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should render with date picker panel opened', async () => {

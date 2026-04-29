@@ -37,7 +37,7 @@ describe('bq-tab-group', () => {
   it('should have shadow root', async () => {
     const { root } = await render(mkGroup());
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should propagate size to all child tabs', async () => {

@@ -9,7 +9,7 @@ describe('bq-option-list', () => {
 
   it('should have shadow root', async () => {
     const { root } = await render(<bq-option-list />);
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should have role="listbox"', async () => {

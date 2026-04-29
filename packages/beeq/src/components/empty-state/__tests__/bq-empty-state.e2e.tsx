@@ -11,7 +11,7 @@ describe('bq-empty-state', () => {
 
   it('should have shadow root', async () => {
     const { root } = await render(<bq-empty-state />);
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should render body slot content', async () => {

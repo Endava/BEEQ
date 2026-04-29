@@ -24,7 +24,7 @@ describe('bq-switch', () => {
   it('should have shadow root', async () => {
     const { root } = await render(<bq-switch name="bq-switch" />);
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should load checked', async () => {

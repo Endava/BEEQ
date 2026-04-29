@@ -17,7 +17,7 @@ describe('bq-card', () => {
   it('should have shadow root', async () => {
     const { root } = await render(<bq-card />);
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should render default type', async () => {

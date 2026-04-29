@@ -23,7 +23,7 @@ describe('bq-checkbox', () => {
   it('should have shadow root', async () => {
     const { root } = await render(<bq-checkbox name="checkbox" value="test" />);
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should display text', async () => {

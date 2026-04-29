@@ -21,7 +21,7 @@ describe('bq-slider', () => {
   it('should have shadow root', async () => {
     const { root } = await render(<bq-slider value={30} />);
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should handle disabled property', async () => {

@@ -22,7 +22,7 @@ describe('bq-tab', () => {
       </bq-tab>,
     );
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should display text content', async () => {

@@ -21,7 +21,7 @@ describe('bq-side-menu', () => {
   it('should have shadow root', async () => {
     const { root } = await render(<bq-side-menu />);
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should render with default values', async () => {

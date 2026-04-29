@@ -1,5 +1,5 @@
 import { h } from '@stencil/core';
-import { describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
+import { afterEach, describe, expect, it, render, vi, waitForStable } from '@stencil/vitest';
 
 const getLabel = (element: HTMLBqProgressElement) =>
   element.shadowRoot?.querySelector<HTMLDivElement>('[part="label"]');
@@ -11,6 +11,10 @@ const getIndeterminate = (element: HTMLBqProgressElement) =>
   element.shadowRoot?.querySelector<HTMLDivElement>('[part="indeterminate"]');
 
 describe('bq-progress', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it('should render', async () => {
     const { root } = await render(<bq-progress />);
 
@@ -19,8 +23,7 @@ describe('bq-progress', () => {
 
   it('should have shadow root', async () => {
     const { root } = await render(<bq-progress />);
-
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should render the progress bar with label', async () => {

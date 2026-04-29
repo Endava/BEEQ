@@ -18,7 +18,7 @@ describe('bq-status', () => {
   it('should have shadow root', async () => {
     const { root } = await render(<bq-status>Neutral status</bq-status>);
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should display status text', async () => {

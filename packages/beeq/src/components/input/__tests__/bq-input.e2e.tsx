@@ -10,7 +10,7 @@ describe('bq-input', () => {
 
   it('should have shadow root', async () => {
     const { root } = await render(<bq-input name="bq-input" />);
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should render with prefix icon', async () => {

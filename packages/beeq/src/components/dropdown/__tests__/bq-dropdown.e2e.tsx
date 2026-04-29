@@ -19,7 +19,7 @@ describe('bq-dropdown', () => {
   it('should have shadow root', async () => {
     const { root } = await render(<bq-dropdown />);
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should be visible on click', async () => {

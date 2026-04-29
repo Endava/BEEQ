@@ -17,7 +17,7 @@ describe('bq-panel', () => {
   it('should have shadow root', async () => {
     const { root } = await render(<bq-panel />);
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should toggle panel visibility semantics with the open property', async () => {

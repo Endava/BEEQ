@@ -18,7 +18,7 @@ describe('bq-breadcrumb', () => {
   it('should have shadow root', async () => {
     const { root } = await render(<bq-breadcrumb />);
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should trigger bqClick on breadcrumb item click', async () => {

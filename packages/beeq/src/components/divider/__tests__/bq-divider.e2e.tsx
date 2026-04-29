@@ -18,7 +18,7 @@ describe('bq-divider', () => {
   it('should have shadow root', async () => {
     const { root } = await render(<bq-divider />);
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should render label', async () => {

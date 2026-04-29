@@ -22,7 +22,7 @@ describe('bq-accordion-group', () => {
       </bq-accordion-group>,
     );
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should expand all accordions', async () => {

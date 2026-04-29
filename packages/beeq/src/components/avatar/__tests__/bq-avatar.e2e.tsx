@@ -11,7 +11,7 @@ describe('bq-avatar', () => {
 
   it('should have shadow root', async () => {
     const { root } = await render(<bq-avatar />);
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should render initials', async () => {

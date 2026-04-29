@@ -25,7 +25,7 @@ describe('bq-drawer', () => {
   it('should have shadow root', async () => {
     const { root } = await render(<bq-drawer />);
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should render as hidden', async () => {

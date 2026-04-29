@@ -12,7 +12,7 @@ describe('bq-textarea', () => {
   it('should have shadow root', async () => {
     const { root } = await render(<bq-textarea name="textarea" placeholder="Placeholder..." />);
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should display value', async () => {

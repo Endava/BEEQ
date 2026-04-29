@@ -17,7 +17,7 @@ describe('bq-radio', () => {
   it('should have shadow root', async () => {
     const { root } = await render(<bq-radio name="test-option" value="test-value" />);
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should display the slotted label', async () => {

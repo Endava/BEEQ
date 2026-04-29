@@ -18,7 +18,7 @@ describe('bq-badge', () => {
   it('should have shadow root', async () => {
     const { root } = await render(<bq-badge />);
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should have small size', async () => {

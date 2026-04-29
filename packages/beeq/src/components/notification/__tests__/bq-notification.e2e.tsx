@@ -11,7 +11,7 @@ describe('bq-notification', () => {
   it('should have shadow root', async () => {
     const { root } = await render(<bq-notification />);
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should render as hidden by default', async () => {

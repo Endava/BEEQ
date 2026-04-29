@@ -13,7 +13,7 @@ describe('bq-option', () => {
   it('should have shadow root', async () => {
     const { root } = await render(<bq-option>Option label</bq-option>);
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should have role="option"', async () => {

@@ -15,7 +15,7 @@ describe('bq-accordion', () => {
 
   it('should have shadow root', async () => {
     const { root } = await render(<bq-accordion />);
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should display header text', async () => {

@@ -21,7 +21,7 @@ describe('bq-step-item', () => {
   it('should have shadow root', async () => {
     const { root } = await render(<bq-step-item />);
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should display text title', async () => {

@@ -27,7 +27,7 @@ describe('bq-steps', () => {
   it('should have shadow root', async () => {
     const { root } = await render(<bq-steps type="numeric" size="medium" />);
 
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot();
   });
 
   it('should render the correct number of steps', async () => {
