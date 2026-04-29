@@ -293,7 +293,7 @@ export class BqTextarea {
   };
 
   private handleChange = (ev: Event) => {
-    if (this.disabled) return;
+    if (this.disabled || this.readonly) return;
 
     if (!isHTMLElement(ev.target, 'textarea')) return;
     this.value = ev.target.value;
@@ -304,7 +304,7 @@ export class BqTextarea {
   };
 
   private handleInput = (ev: Event) => {
-    if (this.disabled) return;
+    if (this.disabled || this.readonly) return;
 
     this.debounceBqInput?.cancel();
 

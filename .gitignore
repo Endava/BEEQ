@@ -2,13 +2,17 @@
 
 # compiled output
 .nx/*
-.stencil
-!.nx/workflows
 !.nx/nxw.js
-/dist
-/out-tsc
-/tmp/**
+!.nx/workflows
+.stencil
+__screenshots__
 chromatic-diagnostics.json
+coverage
+dist
+out-tsc
+tmp/**
+.vitest-attachments
+www
 
 # source files to ignore
 .angular

@@ -28,6 +28,7 @@ export const config: Config = {
   enableCache: true,
   cacheDir: resolvePath('../../.stencil'),
   sourceMap: true,
+  tsconfig: resolvePath('./tsconfig.lib.json'),
   globalStyle: resolvePath('./src/global/styles/default.scss'),
   plugins: [
     sass({
