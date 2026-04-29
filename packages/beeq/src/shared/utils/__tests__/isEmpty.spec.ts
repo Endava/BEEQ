@@ -35,4 +35,12 @@ describe(isEmpty.name, () => {
     const map = new Map([[false, 0]]);
     expect(isEmpty(map)).toBe(false);
   });
+
+  it('should return true for null', () => {
+    expect(isEmpty(null)).toBe(true);
+  });
+
+  it('should return true for undefined', () => {
+    expect(isEmpty(undefined)).toBe(true);
+  });
 });

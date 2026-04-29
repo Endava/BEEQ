@@ -79,4 +79,14 @@ describe(debounce.name, () => {
     expect(fn.cancel).not.toThrow();
     expect(fn.cancel).not.toThrowError(new TypeError('cancel is not a function'));
   });
+
+  it('should use default wait and immediate values when not provided', () => {
+    const spy = vi.fn<(...args: string[]) => void>();
+
+    const fn = debounce(spy);
+    fn('default-args');
+    vi.advanceTimersByTime(1);
+
+    expect(spy).toHaveBeenCalledWith('default-args');
+  });
 });

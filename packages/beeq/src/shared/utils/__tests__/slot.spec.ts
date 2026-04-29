@@ -96,6 +96,11 @@ describe('slot', () => {
       expect(getTextContent(slot)).toBe('');
     });
 
+    it('should return empty string for an element node with no children', () => {
+      slot.assignedNodes.mockImplementationOnce(() => [document.createElement('span')]);
+      expect(getTextContent(slot, { recurse: true })).toBe('');
+    });
+
     it('should only go 1 level if recurse is false', () => {
       slot.assignedNodes.mockImplementationOnce(() => {
         const wrapper = document.createElement('div');
@@ -191,6 +196,10 @@ describe('slot', () => {
         return slot;
       });
       expect(hasSlotContent(element)).toBe(false);
+    });
+
+    it('should return false when the element itself is null', () => {
+      expect(hasSlotContent(null as unknown as HTMLElement)).toBe(false);
     });
   });
 });

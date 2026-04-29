@@ -9,7 +9,7 @@ const CSSVALUEPREFIX = '--bq-';
  * @return {string} The corresponding CSS custom property variable
  */
 export function getColorCSSVariable(colorName: string): string | undefined {
-  if (!isClient) return undefined;
+  if (!isClient()) return undefined;
 
   const token = `${CSSVALUEPREFIX}${colorName}`;
   const value = getComputedStyle(document.documentElement).getPropertyValue(token);
