@@ -74,7 +74,7 @@
     "@stencil/core": "4.43.3",
     "@stencil/react-output-target": "1.5.0",
     "@stencil/sass": "3.2.3",
-    "@stencil/vitest": "1.11.1",
+    "@stencil/vitest": "1.11.6",
     "@stencil/vue-output-target": "0.13.1",
     "@storybook/addon-a11y": "10.3.5",
     "@storybook/addon-docs": "10.3.5",
@@ -90,7 +90,8 @@
     "@types/node": "22.19.3",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
-    "@vitest/browser-playwright": "4.1.4",
+    "@vitest/browser-playwright": "4.1.5",
+    "@vitest/coverage-istanbul": "4.1.5",
     "@wc-toolkit/jsdoc-tags": "1.1.0",
     "@wc-toolkit/type-parser": "1.2.0",
     "autoprefixer": "10.4.24",
@@ -128,8 +129,8 @@
     "typescript": "5.9.3",
     "vite": "7.3.0",
     "vite-plugin-turbosnap": "1.0.3",
-    "vite-tsconfig-paths": "6.0.3",
-    "vitest": "4.1.4",
+    "vite-tsconfig-paths": "6.1.1",
+    "vitest": "4.1.5",
     "vue": "3.5.32"
   },
   "engines": {
@@ -150,7 +151,7 @@
       "nx": "22.6.5",
       "postcss": "8.5.12",
       "storybook": "10.3.5",
-      "vitest": "4.1.4"
+      "vitest": "4.1.5"
     }
   },
   "volta": {
