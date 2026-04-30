@@ -425,11 +425,13 @@ Enable the `removable` attribute for tags that users can remove. This is useful 
     <bq-tag removable color="gray" variant="outline">Gray</bq-tag>
   </div>
   <script>
-    document.querySelectorAll('.tag-row--removable bq-tag').forEach((tag) => {
-      tag.addEventListener('bqClose', () => {
-        window.setTimeout(() => tag.show(), 1500);
+    (() => { // isolate scope for demo purposes
+      document.querySelectorAll('.tag-row--removable bq-tag').forEach((tag) => {
+        tag.addEventListener('bqClose', () => {
+          window.setTimeout(() => tag.show(), 1500);
+        });
       });
-    });
+    })();
   </script>
 `}>
   <CodeGroup>
@@ -454,11 +456,11 @@ Enable the `removable` attribute for tags that users can remove. This is useful 
 
     ```js JavaScript icon="js"
     <script>
-      document.querySelectorAll('.tag-row--removable bq-tag').forEach((tag) => {
-        tag.addEventListener('bqClose', () => {
-          window.setTimeout(() => tag.show(), 1500);
+        document.querySelectorAll('.tag-row--removable bq-tag').forEach((tag) => {
+          tag.addEventListener('bqClose', () => {
+            window.setTimeout(() => tag.show(), 1500);
+          });
         });
-      });
     </script>
     ```
 
