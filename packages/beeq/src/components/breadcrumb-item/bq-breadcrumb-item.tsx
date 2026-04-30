@@ -87,13 +87,13 @@ export class BqBreadcrumbItem {
   // ==============================================
 
   /** Handler to be called when item loses focus */
-  @Event() bqBlur: EventEmitter<HTMLBqBreadcrumbItemElement>;
+  @Event({ bubbles: true, composed: true }) bqBlur: EventEmitter<HTMLBqBreadcrumbItemElement>;
 
   /** Handler to be called when item is focused */
-  @Event() bqFocus: EventEmitter<HTMLBqBreadcrumbItemElement>;
+  @Event({ bubbles: true, composed: true }) bqFocus: EventEmitter<HTMLBqBreadcrumbItemElement>;
 
   /** Handler to be called when item is clicked */
-  @Event() bqClick: EventEmitter<HTMLBqBreadcrumbItemElement>;
+  @Event({ bubbles: true, composed: true }) bqClick: EventEmitter<HTMLBqBreadcrumbItemElement>;
 
   // Component lifecycle events
   // Ordered by their natural call order

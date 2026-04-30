@@ -25,7 +25,7 @@ export class FloatingUI {
     this.options = {
       distance: 20,
       placement: 'bottom',
-      strategy: 'fixed',
+      strategy: 'absolute',
       sameWidth: false,
       ...options,
     };

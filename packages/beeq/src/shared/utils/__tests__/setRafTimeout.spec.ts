@@ -1,77 +1,74 @@
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
 import { setRafTimeout } from '..';
 
 describe(setRafTimeout.name, () => {
   beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
 
-    jest.spyOn(globalThis, 'requestAnimationFrame').mockImplementation((callback) => {
+    vi.spyOn(globalThis, 'requestAnimationFrame').mockImplementation((callback) => {
       return setTimeout(() => {
         callback(performance.now());
       }, 0) as unknown as number;
     });
 
-    jest.spyOn(globalThis, 'cancelAnimationFrame').mockImplementation((timer) => {
+    vi.spyOn(globalThis, 'cancelAnimationFrame').mockImplementation((timer) => {
       clearTimeout(timer);
     });
   });
 
   afterEach(() => {
-    (globalThis.requestAnimationFrame as unknown as jest.SpyInstance).mockRestore();
-    (globalThis.cancelAnimationFrame as unknown as jest.SpyInstance).mockRestore();
-    jest.useRealTimers();
+    vi.resetAllMocks();
+    vi.useRealTimers();
   });
 
   it('should call the function after time pass', () => {
-    const spy = jest.fn<void, string[]>();
+    const spy = vi.fn<(...args: string[]) => void>();
 
     setRafTimeout(spy, 250, 'test value');
 
-    jest.advanceTimersByTime(251);
+    vi.advanceTimersByTime(251);
 
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith('test value');
   });
 
   it('should cancel the function call', () => {
-    const spy = jest.fn<void, string[]>();
+    const spy = vi.fn<(...args: string[]) => void>();
 
     const cancel = setRafTimeout(spy, 250, 'test-value');
 
-    jest.advanceTimersByTime(249);
+    vi.advanceTimersByTime(249);
     cancel();
-    jest.advanceTimersByTime(250);
+    vi.advanceTimersByTime(250);
 
     expect(spy).toHaveBeenCalledTimes(0);
   });
 
   it('should use setTimeout if wait is 0', () => {
-    jest.spyOn(globalThis, 'setTimeout');
-    const spy = jest.fn<void, string[]>();
+    vi.spyOn(globalThis, 'setTimeout');
+    const spy = vi.fn<(...args: string[]) => void>();
 
     setRafTimeout(spy, 0, 'test value');
 
-    jest.advanceTimersByTime(250);
+    vi.advanceTimersByTime(250);
 
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith('test value');
-    expect(globalThis.setTimeout as unknown as jest.SpyInstance).toHaveBeenCalledTimes(1);
-
-    (globalThis.setTimeout as unknown as jest.SpyInstance).mockRestore();
+    expect(globalThis.setTimeout).toHaveBeenCalledTimes(1);
   });
 
   it('should cancel setTimeout if wait is 0', () => {
-    jest.spyOn(globalThis, 'setTimeout');
-    const spy = jest.fn<void, string[]>();
+    vi.spyOn(globalThis, 'clearTimeout');
+    const spy = vi.fn<(...args: string[]) => void>();
 
     const cancel = setRafTimeout(spy, 0, 'test value');
 
     cancel();
 
-    jest.advanceTimersByTime(250);
+    vi.advanceTimersByTime(250);
 
     expect(spy).toHaveBeenCalledTimes(0);
-    expect(globalThis.setTimeout as unknown as jest.SpyInstance).toHaveBeenCalledTimes(1);
-
-    (globalThis.setTimeout as unknown as jest.SpyInstance).mockRestore();
+    expect(globalThis.clearTimeout).toHaveBeenCalledTimes(1);
   });
 });

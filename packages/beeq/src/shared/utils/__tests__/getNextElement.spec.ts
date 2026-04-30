@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import { getNextElement } from '..';
 
 function makeTestArray(length: number, disabled = false) {
@@ -26,5 +28,12 @@ describe(getNextElement.name, () => {
     const arr = makeTestArray(3, true);
     arr[1].disabled = false;
     expect(getNextElement(arr, 1, 'forward')).toStrictEqual(arr[1]);
+  });
+
+  it('should use default startAt=0 and direction=forward when not provided', () => {
+    const arr = makeTestArray(3);
+    // No args: startAt defaults to 0, direction defaults to 'forward'
+    // First element forward from index 0 is index 1
+    expect(getNextElement(arr)).toStrictEqual(arr[1]);
   });
 });

@@ -1,16 +1,15 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import { getInnerHTML, getTextContent, hasSlot, hasSlotContent } from '../slot';
 
 interface IHTMLSlotElement extends HTMLSlotElement {
-  assignedElements: jest.Mock<
-    ReturnType<HTMLSlotElement['assignedElements']>,
-    Parameters<HTMLSlotElement['assignedElements']>
-  >;
-  assignedNodes: jest.Mock<ReturnType<HTMLSlotElement['assignedNodes']>, Parameters<HTMLSlotElement['assignedNodes']>>;
+  assignedElements: ReturnType<typeof vi.fn<HTMLSlotElement['assignedElements']>>;
+  assignedNodes: ReturnType<typeof vi.fn<HTMLSlotElement['assignedNodes']>>;
 }
 
 interface IHTMLElement extends HTMLElement {
-  querySelectorAll: jest.Mock<ReturnType<HTMLElement['querySelectorAll']>, Parameters<HTMLElement['querySelectorAll']>>;
-  querySelector: jest.Mock<ReturnType<HTMLElement['querySelector']>, Parameters<HTMLElement['querySelector']>>;
+  querySelectorAll: ReturnType<typeof vi.fn<HTMLElement['querySelectorAll']>>;
+  querySelector: ReturnType<typeof vi.fn<HTMLElement['querySelector']>>;
 }
 
 function makeSlot(slotName?: string): IHTMLSlotElement {
@@ -18,8 +17,8 @@ function makeSlot(slotName?: string): IHTMLSlotElement {
   if (slotName) {
     slot.slot = slotName;
   }
-  slot.assignedNodes = jest.fn();
-  slot.assignedElements = jest.fn();
+  slot.assignedNodes = vi.fn();
+  slot.assignedElements = vi.fn();
   return slot;
 }
 
@@ -48,6 +47,11 @@ describe('slot', () => {
 
     it('should ignore other nodes', () => {
       slot.assignedNodes.mockImplementationOnce(() => [document.createAttribute('test_attr')]);
+      expect(getInnerHTML(slot)).toEqual('');
+    });
+
+    it('should return empty string if no nodes are assigned', () => {
+      slot.assignedNodes.mockImplementationOnce(() => []);
       expect(getInnerHTML(slot)).toEqual('');
     });
   });
@@ -92,6 +96,11 @@ describe('slot', () => {
       expect(getTextContent(slot)).toBe('');
     });
 
+    it('should return empty string for an element node with no children', () => {
+      slot.assignedNodes.mockImplementationOnce(() => [document.createElement('span')]);
+      expect(getTextContent(slot, { recurse: true })).toBe('');
+    });
+
     it('should only go 1 level if recurse is false', () => {
       slot.assignedNodes.mockImplementationOnce(() => {
         const wrapper = document.createElement('div');
@@ -111,13 +120,18 @@ describe('slot', () => {
       });
       expect(getTextContent(slot, { recurse: true, maxLevel: 3 })).toBe('2nd level  3rd level  1st level');
     });
+
+    it('should return empty string if no nodes are assigned', () => {
+      slot.assignedNodes.mockImplementationOnce(() => []);
+      expect(getTextContent(slot)).toBe('');
+    });
   });
 
   describe('slot - hasSlot', () => {
     let element: IHTMLElement;
 
     beforeEach(() => {
-      element = { ...document.createElement('div'), querySelectorAll: jest.fn(), querySelector: jest.fn() };
+      element = { ...document.createElement('div'), querySelectorAll: vi.fn(), querySelector: vi.fn() };
     });
 
     it('should return true if slot is present', () => {
@@ -140,7 +154,7 @@ describe('slot', () => {
     let element: IHTMLElement;
 
     beforeEach(() => {
-      element = { ...document.createElement('div'), querySelectorAll: jest.fn(), querySelector: jest.fn() };
+      element = { ...document.createElement('div'), querySelectorAll: vi.fn(), querySelector: vi.fn() };
     });
 
     it('should return true if slot has html element', () => {
@@ -182,6 +196,10 @@ describe('slot', () => {
         return slot;
       });
       expect(hasSlotContent(element)).toBe(false);
+    });
+
+    it('should return false when the element itself is null', () => {
+      expect(hasSlotContent(null as unknown as HTMLElement)).toBe(false);
     });
   });
 });

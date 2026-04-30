@@ -1,13 +1,15 @@
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
 import { waitForSvgLoad } from '../waitForSvgLoad';
 
 interface MockHTMLBqIconElement {
   name?: string;
   size?: string | number;
   shadowRoot?: {
-    querySelector: jest.Mock;
+    querySelector: ReturnType<typeof vi.fn>;
   };
-  addEventListener: jest.Mock;
-  removeEventListener: jest.Mock;
+  addEventListener: ReturnType<typeof vi.fn>;
+  removeEventListener: ReturnType<typeof vi.fn>;
   [key: string]: unknown;
 }
 
@@ -24,7 +26,7 @@ const createMockElement = (
 
   const mockShadowRoot = shadowRoot
     ? {
-        querySelector: jest.fn().mockImplementation((selector: string) => {
+        querySelector: vi.fn().mockImplementation((selector: string) => {
           if (selector === '[part="svg"]') {
             return mockSvgElement;
           }
@@ -35,19 +37,19 @@ const createMockElement = (
 
   return {
     shadowRoot: mockShadowRoot,
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
   };
 };
 
 describe('waitForSvgLoad', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
-    jest.useFakeTimers();
+    vi.clearAllMocks();
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('should resolve immediately when SVG is already loaded', async () => {
@@ -55,7 +57,7 @@ describe('waitForSvgLoad', () => {
 
     const promise = waitForSvgLoad(mockElement as unknown as HTMLBqIconElement);
 
-    jest.advanceTimersByTime(100);
+    vi.advanceTimersByTime(100);
 
     await expect(promise).resolves.toBeUndefined();
     expect(mockElement.addEventListener).not.toHaveBeenCalled();
@@ -78,7 +80,7 @@ describe('waitForSvgLoad', () => {
       svgLoadedCallback();
     }, 100);
 
-    jest.advanceTimersByTime(200);
+    vi.advanceTimersByTime(200);
 
     await expect(promise).resolves.toBeUndefined();
     expect(mockElement.addEventListener).toHaveBeenCalledWith('svgLoaded', expect.any(Function));
@@ -101,7 +103,7 @@ describe('waitForSvgLoad', () => {
 
     const promise = waitForSvgLoad(mockElement as unknown as HTMLBqIconElement, { timeout: customTimeout });
 
-    jest.advanceTimersByTime(customTimeout);
+    vi.advanceTimersByTime(customTimeout);
 
     await expect(promise).rejects.toThrow(`SVG did not load within ${customTimeout}ms`);
   });
@@ -111,7 +113,7 @@ describe('waitForSvgLoad', () => {
 
     const promise = waitForSvgLoad(mockElement as unknown as HTMLBqIconElement);
 
-    jest.advanceTimersByTime(15000); // Default timeout
+    vi.advanceTimersByTime(15000); // Default timeout
 
     await expect(promise).rejects.toThrow('SVG did not load within 15000ms');
     expect(mockElement.removeEventListener).toHaveBeenCalled();
@@ -122,7 +124,7 @@ describe('waitForSvgLoad', () => {
 
     const promise = waitForSvgLoad(mockElement as unknown as HTMLBqIconElement);
 
-    jest.advanceTimersByTime(15000);
+    vi.advanceTimersByTime(15000);
 
     await expect(promise).rejects.toThrow('SVG did not load within 15000ms');
   });
@@ -150,7 +152,7 @@ describe('waitForSvgLoad', () => {
       svgLoadedCallback();
     }, 100);
 
-    jest.advanceTimersByTime(200);
+    vi.advanceTimersByTime(200);
 
     await expect(promise).resolves.toBeUndefined();
   });
@@ -173,7 +175,7 @@ describe('waitForSvgLoad', () => {
       svgLoadedCallback(); // Second call should be ignored
     }, 100);
 
-    jest.advanceTimersByTime(200);
+    vi.advanceTimersByTime(200);
 
     await expect(promise).resolves.toBeUndefined();
     expect(mockElement.removeEventListener).toHaveBeenCalledTimes(1);
@@ -184,7 +186,7 @@ describe('waitForSvgLoad', () => {
 
     const promise = waitForSvgLoad(mockElement as unknown as HTMLBqIconElement, { timeout: 1000 });
 
-    jest.advanceTimersByTime(1000);
+    vi.advanceTimersByTime(1000);
 
     await expect(promise).rejects.toThrow();
     expect(mockElement.removeEventListener).toHaveBeenCalledWith('svgLoaded', expect.any(Function));
@@ -216,7 +218,7 @@ describe('waitForSvgLoad', () => {
       svgLoadedCallback();
     }, 100);
 
-    jest.advanceTimersByTime(200);
+    vi.advanceTimersByTime(200);
 
     await expect(promise).resolves.toBeUndefined();
     expect(mockElement.name).toBe('new-icon');
@@ -231,7 +233,7 @@ describe('waitForSvgLoad', () => {
       waitForSvgLoad(mockElement as unknown as HTMLBqIconElement),
     ];
 
-    jest.advanceTimersByTime(100);
+    vi.advanceTimersByTime(100);
 
     await expect(Promise.all(promises)).resolves.toEqual([undefined, undefined, undefined]);
   });

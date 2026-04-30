@@ -41,7 +41,7 @@ export const CodeLivePreview = ({ code, children, height }) => {
 
     const script = document.createElement('script');
     script.type = 'module';
-    script.src = 'https://esm.sh/@beeq/core/dist/beeq/beeq.esm.js';
+    script.src = 'https://esm.sh/@beeq/core@beta/dist/beeq/beeq.esm.js';
     script.dataset.beeq = 'https://esm.sh/@beeq/core/dist/beeq/svg';
     document.head.appendChild(script);
   }, []);
@@ -69,6 +69,7 @@ export const CodeLivePreview = ({ code, children, height }) => {
         className="preview"
         ref={previewRef}
         // biome-ignore lint/style/useNamingConvention: `__html` is required for dangerouslySetInnerHTML
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: This is a controlled use of dangerouslySetInnerHTML for rendering code snippets in documentation.
         dangerouslySetInnerHTML={{ __html: code }}
         style={{ minHeight: height }}
       />

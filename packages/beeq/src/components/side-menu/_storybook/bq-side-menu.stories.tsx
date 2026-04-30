@@ -43,7 +43,7 @@ const Template = (args: Args) => html`
     @bqCollapse=${args.bqCollapse}
     @bqSelect=${args.bqSelect}
   >
-    <div class="flex items-center gap-s py-6 pl-s" slot="logo">
+    <div class="flex items-center gap-s p-b-m" slot="logo">
       <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 1080 1080" class="h-10 w-10">
         <path
           fill="currentColor"
