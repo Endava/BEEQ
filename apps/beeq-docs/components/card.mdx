@@ -1,8 +1,9 @@
 ---
 title: Card
-description: "Cards serve as surfaces for displaying content and actions centered around a specific topic, ensuring easy scanning of pertinent and actionable information."
+description: Cards are flexible containers that group related content and actions into a single scannable unit.
 ---
 
+import { CardTile } from '/snippets/CardTile.jsx';
 import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
 <Frame className="px-4 py-4" caption="Card component overview">
@@ -13,7 +14,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 Cards group related content and actions into a single scannable surface. Use them to present highlights, supporting details, or compact summaries without forcing a rigid internal layout.
 
 <Note>
-  `bq-card` does not provide a default content layout. The project integrating the component is responsible for arranging the content inside it.
+  `bq-card` does not enforce an internal layout. **You decide how to structure the content inside** — this flexibility supports everything from simple text blocks to rich data displays with icons, metrics, and actions.
 </Note>
 
 ## When to use
@@ -37,38 +38,30 @@ Cards group related content and actions into a single scannable surface. Use the
     </span>
 
     * You are presenting a single piece of information that does not need additional structure or supporting elements
-    * The content does not benefit from a structured card layout
+    * The content is a deeply interactive workflow — a form, a wizard, or a data table — where a card would act as a passive wrapper around something that deserves its own full-page context
     * The design calls for a more fluid and continuous display instead of separated content blocks
   </Card>
 </CardGroup>
 
 ## Card patterns
 
-The Card pattern can support multiple presentation styles depending on the content you need to surface.
+The Card pattern can support multiple presentation styles depending on the content you're presenting.
 
 <CardGroup cols={3}>
   <Card title="Mini card">
-    Mini cards are employed when there is a need for a condensed presentation of information, such as summaries or quick references.
-    These smaller card variants are useful in scenarios where space is limited, and designers want to maintain a compact and visually appealing layout while still conveying essential details.
+    A compact layout for tight spaces — ideal for quick stats, summaries, or navigation links where a full-size card would feel heavy.
   </Card>
 
   <Card title="Card list">
-    Card lists are utilized to organize and display a series of related cards in a structured manner, allowing users to browse through a collection of content or items.
-    This design pattern is beneficial when presenting information that follows a consistent format, making it easy for users to scan and navigate through the list.
+    Multiple cards of the same type arranged in a grid or column — works well for scannable collections like articles, products, or team members.
   </Card>
 
   <Card title="Card with title and description">
-    The card title and description are essential components within a card, serving to provide users with key information about the content or item featured in the card.
-    The title succinctly conveys the main topic, while the description offers additional context or details.
+    A structured card with a heading and supporting text — use when the card needs to explain something or guide users toward a next step.
   </Card>
 </CardGroup>
 
 ## Anatomy
-
-<Frame className="px-4 py-4" caption="Card component overview">
-  <img className="block dark:hidden" src="/components/images/card/card-overview-light.svg" alt="BEEQ Card component overview" />
-  <img className="hidden dark:block" src="/components/images/card/card-overview-dark.svg" alt="BEEQ Card component overview" />
-</Frame>
 
 Cards are flexible containers, so their anatomy can vary depending on the content. In most cases, a card includes a container, an optional visual element, a content area, and optional supporting actions.
 
@@ -79,214 +72,193 @@ Cards are flexible containers, so their anatomy can vary depending on the conten
 | **3** | Content area | The main body containing the title, description, metrics, or supporting text |
 | **4** | Actions | Optional buttons or links used when the card includes follow-up actions |
 
-## Common usage patterns
+## Design guidelines
 
-The examples below reflect the most common ways to build with `bq-card` today.
+### Alignment
 
-### Default card
+<CardGroup cols={2}>
+  <CardTile
+    title="Horizontal group (default)"
+    imageLightSrc="/components/images/card/card-alignment-horizontal-light.svg"
+    imageDarkSrc="/components/images/card/card-alignment-horizontal-dark.svg"
+  >
+    Arrange cards side by side, flowing left to right. This is the default layout for card groups and works best when each card has a similar amount of content.
+  </CardTile>
 
-Use this card design for displaying basic information with a title, numerical values, and average resolutions.
+  <CardTile
+    title="Stacked (narrow viewports)"
+    imageLightSrc="/components/images/card/card-alignment-vertical-light.svg"
+    imageDarkSrc="/components/images/card/card-alignment-vertical-dark.svg"
+  >
+    When horizontal space is limited — narrow viewports or sidebars — the group should stack vertically. Keep card widths consistent within the group so users can scan without re-learning the layout on each item.
+  </CardTile>
+</CardGroup>
 
-<CodeLivePreview
-  code={`
+### Typography
+
+Establish a clear hierarchy inside each card by following this order:
+
+<Steps>
+  <Step title="Primary value">
+    Bold or larger text for the headline — a title, metric, or name. This is what users read first.
+  </Step>
+  <Step title="Supporting detail">
+    Secondary-weight or muted text for context — a description, timestamp, or label.
+  </Step>
+  <Step title="Action">
+    A brand-colored link or button at the bottom. Keep it to one primary action per card.
+  </Step>
+</Steps>
+
+Avoid using more than two distinct text styles in a single card to keep the layout readable.
+
+### States
+
+<Note>
+  `bq-card` has no built-in hover, active, or focus visual feedback — it is a static container by design. Interactive children such as buttons and links carry their own state styles. When a whole card represents a navigable destination, wrap it in a semantic `<a>` element rather than relying on a click handler on the card surface (see [Accessibility](#accessibility) for details).
+</Note>
+
+## Usage
+
+The examples below show the most common card layouts, each with a live preview and code for HTML, React, Angular, and Vue.
+
+### Default content
+
+A card with icon, title, description, and a call-to-action — use when users need context before deciding to act.
+
+<CodeLivePreview code={`
   <style>
-    .card--default {
-      width: 100%;
+    @scope (.card--default) {
       max-width: 24rem;
+      width: 100%;
 
-      & .card-wrapper {
+      &::part(wrapper) {
         display: flex;
         flex-direction: column;
-        gap: 1.5rem;
+        gap: var(--bq-spacing-m);
       }
 
-      & .title-section {
-        display: flex;
-        align-items: center;
-        gap: var(--bq-spacing-xs2);
+      h6 {
+        font-size: var(--bq-font-size--l);
+        font-weight: var(--bq-font-weight--bold);
       }
 
-      & .color-title {
-        color: var(--bq-text--secondary);
-      }
-
-      & h4 {
-        font-size: var(--bq-font-size--xxl);
+      p {
+        margin-block-start: var(--bq-spacing-m);
       }
     }
   </style>
   <bq-card class="card--default">
-    <div class="card-wrapper">
-      <div>
-        <div class="title-section">
-          <span class="color-title">Title</span>
-          <bq-icon color="text--brand" size="16" name="star" weight="bold"></bq-icon>
-        </div>
-        <h4>194</h4>
-      </div>
-      <div>
-        <p>
-          <span class="font-bold">120</span>
-          days
-        </p>
-        <p class="color-title">avg resolution</p>
-      </div>
-      <div>
-        <p>
-          <span class="font-bold">120</span>
-          days
-        </p>
-        <p class="color-title">avg resolution</p>
-      </div>
+    <div class="header">
+      <bq-icon color="text--brand" size="56" name="star-bold"></bq-icon>
     </div>
-  </bq-card>`}
->
+    <div class="body">
+      <h6>Designing with Intelligence: The AI-Driven Future</h6>
+      <p>
+        Uncover the synergy between design and artificial intelligence, where smart algorithms enhance user interfaces. Discover how AI-driven insights, automation, and personalization...
+      </p>
+    </div>
+    <div class="footer">
+      <bq-button appearance="link">Read more...</bq-button>
+    </div>
+  </bq-card>
+`}>
   <CodeGroup>
     ```css CSS icon="css"
-      .card--default {
-        width: 100%;
-        max-width: 24rem;
+    @scope (.card--default) {
+      max-width: 24rem;
+      width: 100%;
 
-        & .card-wrapper {
-          display: flex;
-          flex-direction: column;
-          gap: 1.5rem;
-        }
-
-        & .title-section {
-          display: flex;
-          align-items: center;
-          gap: var(--bq-spacing-xs2);
-        }
-
-        & .color-title {
-          color: var(--bq-text--secondary);
-        }
-
-        & h4 {
-          font-size: var(--bq-font-size--xxl);
-        }
+      &::part(wrapper) {
+        display: flex;
+        flex-direction: column;
+        gap: var(--bq-spacing-m);
       }
+
+      h6 {
+        font-size: var(--bq-font-size--m);
+        font-weight: var(--bq-font-weight--bold);
+      }
+
+      p {
+        margin-block-start: var(--bq-spacing-m);
+      }
+    }
     ```
 
     ```html HTML icon="html5"
     <bq-card class="card--default">
-      <div class="card-wrapper">
-        <div>
-          <div class="title-section">
-            <span class="color-title">Title</span>
-            <bq-icon color="text--brand" size="16" name="star" weight="bold"></bq-icon>
-          </div>
-          <h4>194</h4>
-        </div>
-        <div>
-          <p>
-            <span class="font-bold">120</span>
-            days
-          </p>
-          <p class="color-title">avg resolution</p>
-        </div>
-        <div>
-          <p>
-            <span class="font-bold">120</span>
-            days
-          </p>
-          <p class="color-title">avg resolution</p>
-        </div>
+      <div class="header">
+        <bq-icon color="text--brand" size="56" name="star-bold"></bq-icon>
+      </div>
+      <div class="body">
+        <h6>Designing with Intelligence: The AI-Driven Future</h6>
+        <p>
+          Uncover the synergy between design and artificial intelligence, where smart algorithms enhance user interfaces. Discover how AI-driven insights, automation, and personalization...
+        </p>
+      </div>
+      <div class="footer">
+        <bq-button appearance="link">Read more...</bq-button>
       </div>
     </bq-card>
     ```
 
     ```jsx React icon="react"
-    import { BqCard, BqIcon } from "@beeq/react";
+    import { BqButton, BqCard, BqIcon } from "@beeq/react";
 
     <BqCard className="card--default">
-      <div className="card-wrapper">
-        <div>
-          <div className="title-section">
-            <span className="color-title">Title</span>
-            <BqIcon color="text--brand" size="16" name="star" weight="bold" />
-          </div>
-          <h4>194</h4>
-        </div>
-        <div>
-          <p>
-            <span className="font-bold">120</span>
-            days
-          </p>
-          <p className="color-title">avg resolution</p>
-        </div>
-        <div>
-          <p>
-            <span className="font-bold">120</span>
-            days
-          </p>
-          <p className="color-title">avg resolution</p>
-        </div>
+      <div className="header">
+        <BqIcon color="text--brand" size="56" name="star-bold" />
+      </div>
+      <div className="body">
+        <h6>Designing with Intelligence: The AI-Driven Future</h6>
+        <p>
+          Uncover the synergy between design and artificial intelligence, where smart algorithms enhance user interfaces. Discover how AI-driven insights, automation, and personalization...
+        </p>
+      </div>
+      <div className="footer">
+        <BqButton appearance="link">Read more...</BqButton>
       </div>
     </BqCard>
     ```
 
     ```html Angular icon="angular"
-    <!-- Standalone: import { BqCard, BqIcon } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
+    <!-- Standalone: import { BqButton, BqCard, BqIcon } from "@beeq/angular/standalone" -->
 
     <bq-card class="card--default">
-      <div class="card-wrapper">
-        <div>
-          <div class="title-section">
-            <span class="color-title">Title</span>
-            <bq-icon color="text--brand" size="16" name="star" weight="bold"></bq-icon>
-          </div>
-          <h4>194</h4>
+        <div class="header">
+          <bq-icon color="text--brand" size="56" name="star-bold"></bq-icon>
         </div>
-        <div>
+        <div class="body">
+          <h6>Designing with Intelligence: The AI-Driven Future</h6>
           <p>
-            <span class="font-bold">120</span>
-            days
+            Uncover the synergy between design and artificial intelligence, where smart algorithms enhance user interfaces. Discover how AI-driven insights, automation, and personalization...
           </p>
-          <p class="color-title">avg resolution</p>
         </div>
-        <div>
-          <p>
-            <span class="font-bold">120</span>
-            days
-          </p>
-          <p class="color-title">avg resolution</p>
+        <div class="footer">
+          <bq-button appearance="link">Read more...</bq-button>
         </div>
-      </div>
-    </bq-card>
+      </bq-card>
     ```
 
     ```vue Vue icon="vuejs"
     <script setup lang="ts">
-    import { BqCard, BqIcon } from "@beeq/vue";
+    import { BqButton, BqCard, BqIcon } from "@beeq/vue";
     </script>
 
     <template>
       <BqCard class="card--default">
-        <div class="card-wrapper">
-          <div>
-            <div class="title-section">
-              <span class="color-title">Title</span>
-              <BqIcon color="text--brand" size="16" name="star" weight="bold" />
-            </div>
-            <h4>194</h4>
-          </div>
-          <div>
-            <p>
-              <span class="font-bold">120</span>
-              days
-            </p>
-            <p class="color-title">avg resolution</p>
-          </div>
-          <div>
-            <p>
-              <span class="font-bold">120</span>
-              days
-            </p>
-            <p class="color-title">avg resolution</p>
-          </div>
+        <div class="header">
+          <BqIcon color="text--brand" size="56" name="star-bold" />
+        </div>
+        <div class="body">
+          <h6>Designing with Intelligence: The AI-Driven Future</h6>
+          <p>
+            Uncover the synergy between design and artificial intelligence, where smart algorithms enhance user interfaces. Discover how AI-driven insights, automation, and personalization...
+          </p>
+        </div>
+        <div class="footer">
+          <BqButton appearance="link">Read more...</BqButton>
         </div>
       </BqCard>
     </template>
@@ -294,121 +266,112 @@ Use this card design for displaying basic information with a title, numerical va
   </CodeGroup>
 </CodeLivePreview>
 
-### Feature highlights
+### Card list
 
-Use this card variant to showcase key features or highlights with corresponding icons and brief descriptions.
+Use a card list when you have a collection of items that share the same structure — product catalogs, article feeds, team directories. The repeated layout helps users scan and compare entries quickly without having to re-learn the pattern on each card.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    .card--highlights {
+    @scope (.card--highlights) {
       width: 100%;
       max-width: 24rem;
 
-      & .card-wrapper {
+      &::part(wrapper) {
         display: flex;
         flex-direction: column;
         gap: var(--bq-spacing-m);
-        font-weight: var(--bq-font-weight--medium);
       }
 
       & h6 {
-        font-size: var(--bq-font-size--m);
-        font-weight: var(--bq-font-weight--medium);
+        font-size: var(--bq-font-size--l);
+        font-weight: var(--bq-font-weight--bold);
       }
 
-      & .info-section {
+      & section {
         display: flex;
         flex-direction: column;
         gap: var(--bq-spacing-s);
-      }
 
-      & .item-section {
-        display: flex;
-        align-items: center;
-        gap: var(--bq-spacing-xs);
+        & .item {
+          display: flex;
+          gap: var(--bq-spacing-s);
+        }
       }
     }
   </style>
   <bq-card class="card--highlights">
-    <div class="card-wrapper">
-      <h6>Title</h6>
-      <div class="info-section">
-        <div class="item-section">
-          <bq-icon name="star-bold"></bq-icon>
-          Lorem Ipsum is simply dummy text
-        </div>
-        <div class="item-section">
-          <bq-icon name="star-bold"></bq-icon>
-          Lorem Ipsum is simply dummy text
-        </div>
-        <div class="item-section">
-          <bq-icon name="star-bold"></bq-icon>
-          Lorem Ipsum is simply dummy text
-        </div>
-        <div class="item-section">
-          <bq-icon name="star-bold"></bq-icon>
-          Lorem Ipsum is simply dummy text
-        </div>
+    <h6>Title</h6>
+    <section>
+      <div class="item">
+        <bq-icon name="star-bold"></bq-icon>
+        Lorem Ipsum is simply dummy text
       </div>
-    </div>
-  </bq-card>`}
->
+      <div class="item">
+        <bq-icon name="star-bold"></bq-icon>
+        Lorem Ipsum is simply dummy text
+      </div>
+      <div class="item">
+        <bq-icon name="star-bold"></bq-icon>
+        Lorem Ipsum is simply dummy text
+      </div>
+      <div class="item">
+        <bq-icon name="star-bold"></bq-icon>
+        Lorem Ipsum is simply dummy text
+      </div>
+    </section>
+  </bq-card>
+`}>
   <CodeGroup>
     ```css CSS icon="css"
-      .card--highlights {
-        width: 100%;
-        max-width: 24rem;
+    @scope (.card--highlights) {
+      width: 100%;
+      max-width: 24rem;
 
-        & .card-wrapper {
+      &::part(wrapper) {
+        display: flex;
+        flex-direction: column;
+        gap: var(--bq-spacing-m);
+      }
+
+      & h6 {
+        font-size: var(--bq-font-size--l);
+        font-weight: var(--bq-font-weight--bold);
+      }
+
+      & section {
+        display: flex;
+        flex-direction: column;
+        gap: var(--bq-spacing-s);
+
+        & .item {
           display: flex;
-          flex-direction: column;
-          gap: var(--bq-spacing-m);
-          font-weight: var(--bq-font-weight--medium);
-        }
-
-        & h6 {
-          font-size: var(--bq-font-size--m);
-          font-weight: var(--bq-font-weight--medium);
-        }
-
-        & .info-section {
-          display: flex;
-          flex-direction: column;
           gap: var(--bq-spacing-s);
         }
-
-        & .item-section {
-          display: flex;
-          align-items: center;
-          gap: var(--bq-spacing-xs);
-        }
       }
+    }
     ```
 
     ```html HTML icon="html5"
     <bq-card class="card--highlights">
-      <div class="card-wrapper">
-        <h6>Title</h6>
-        <div class="info-section">
-          <div class="item-section">
-            <bq-icon name="star-bold"></bq-icon>
-            Lorem Ipsum is simply dummy text
-          </div>
-          <div class="item-section">
-            <bq-icon name="star-bold"></bq-icon>
-            Lorem Ipsum is simply dummy text
-          </div>
-          <div class="item-section">
-            <bq-icon name="star-bold"></bq-icon>
-            Lorem Ipsum is simply dummy text
-          </div>
-          <div class="item-section">
-            <bq-icon name="star-bold"></bq-icon>
-            Lorem Ipsum is simply dummy text
-          </div>
+      <h6>Title</h6>
+      <section>
+        <div class="item">
+          <bq-icon name="star-bold"></bq-icon>
+          Lorem Ipsum is simply dummy text
         </div>
-      </div>
+        <div class="item">
+          <bq-icon name="star-bold"></bq-icon>
+          Lorem Ipsum is simply dummy text
+        </div>
+        <div class="item">
+          <bq-icon name="star-bold"></bq-icon>
+          Lorem Ipsum is simply dummy text
+        </div>
+        <div class="item">
+          <bq-icon name="star-bold"></bq-icon>
+          Lorem Ipsum is simply dummy text
+        </div>
+      </section>
     </bq-card>
     ```
 
@@ -416,53 +379,49 @@ Use this card variant to showcase key features or highlights with corresponding 
     import { BqCard, BqIcon } from "@beeq/react";
 
     <BqCard className="card--highlights">
-      <div className="card-wrapper">
-        <h6>Title</h6>
-        <div className="info-section">
-          <div className="item-section">
-            <BqIcon name="star-bold" />
-            Lorem Ipsum is simply dummy text
-          </div>
-          <div className="item-section">
-            <BqIcon name="star-bold" />
-            Lorem Ipsum is simply dummy text
-          </div>
-          <div className="item-section">
-            <BqIcon name="star-bold" />
-            Lorem Ipsum is simply dummy text
-          </div>
-          <div className="item-section">
-            <BqIcon name="star-bold" />
-            Lorem Ipsum is simply dummy text
-          </div>
+      <h6>Title</h6>
+      <section>
+        <div className="item">
+          <BqIcon name="star-bold" />
+          Lorem Ipsum is simply dummy text
         </div>
-      </div>
+        <div className="item">
+          <BqIcon name="star-bold" />
+          Lorem Ipsum is simply dummy text
+        </div>
+        <div className="item">
+          <BqIcon name="star-bold" />
+          Lorem Ipsum is simply dummy text
+        </div>
+        <div className="item">
+          <BqIcon name="star-bold" />
+          Lorem Ipsum is simply dummy text
+        </div>
+      </section>
     </BqCard>
     ```
 
     ```html Angular icon="angular"
     <bq-card class="card--highlights">
-      <div class="card-wrapper">
-        <h6>Title</h6>
-        <div class="info-section">
-          <div class="item-section">
-            <bq-icon name="star-bold"></bq-icon>
-            Lorem Ipsum is simply dummy text
-          </div>
-          <div class="item-section">
-            <bq-icon name="star-bold"></bq-icon>
-            Lorem Ipsum is simply dummy text
-          </div>
-          <div class="item-section">
-            <bq-icon name="star-bold"></bq-icon>
-            Lorem Ipsum is simply dummy text
-          </div>
-          <div class="item-section">
-            <bq-icon name="star-bold"></bq-icon>
-            Lorem Ipsum is simply dummy text
-          </div>
+      <h6>Title</h6>
+      <section>
+        <div class="item">
+          <bq-icon name="star-bold"></bq-icon>
+          Lorem Ipsum is simply dummy text
         </div>
-      </div>
+        <div class="item">
+          <bq-icon name="star-bold"></bq-icon>
+          Lorem Ipsum is simply dummy text
+        </div>
+        <div class="item">
+          <bq-icon name="star-bold"></bq-icon>
+          Lorem Ipsum is simply dummy text
+        </div>
+        <div class="item">
+          <bq-icon name="star-bold"></bq-icon>
+          Lorem Ipsum is simply dummy text
+        </div>
+      </section>
     </bq-card>
     ```
 
@@ -473,27 +432,25 @@ Use this card variant to showcase key features or highlights with corresponding 
 
     <template>
       <BqCard class="card--highlights">
-        <div class="card-wrapper">
-          <h6>Title</h6>
-          <div class="info-section">
-            <div class="item-section">
-              <BqIcon name="star-bold" />
-              Lorem Ipsum is simply dummy text
-            </div>
-            <div class="item-section">
-              <BqIcon name="star-bold" />
-              Lorem Ipsum is simply dummy text
-            </div>
-            <div class="item-section">
-              <BqIcon name="star-bold" />
-              Lorem Ipsum is simply dummy text
-            </div>
-            <div class="item-section">
-              <BqIcon name="star-bold" />
-              Lorem Ipsum is simply dummy text
-            </div>
+        <h6>Title</h6>
+        <section>
+          <div class="item">
+            <BqIcon name="star-bold" />
+            Lorem Ipsum is simply dummy text
           </div>
-        </div>
+          <div class="item">
+            <BqIcon name="star-bold" />
+            Lorem Ipsum is simply dummy text
+          </div>
+          <div class="item">
+            <BqIcon name="star-bold" />
+            Lorem Ipsum is simply dummy text
+          </div>
+          <div class="item">
+            <BqIcon name="star-bold" />
+            Lorem Ipsum is simply dummy text
+          </div>
+        </section>
       </BqCard>
     </template>
     ```
@@ -502,112 +459,124 @@ Use this card variant to showcase key features or highlights with corresponding 
 
 ### Performance overview
 
-Employ this card type to present performance metrics along with icons, titles, and percentage changes compared to the previous month.
-<CodeLivePreview
-  code={`
+A KPI card combining an icon, headline value, and trend indicator — ideal for analytics dashboards and executive reports.
+
+<CodeLivePreview code={`
   <style>
-    .card--overview {
+    @scope (.card--overview) {
       width: 100%;
       max-width: 24rem;
 
-      & .card-wrapper {
+      &::part(wrapper) {
         display: flex;
         gap: var(--bq-spacing-m);
-      }
-
-      & .title-section {
-        display: flex;
-        align-items: center;
-        gap: var(--bq-spacing-xs2);
-      }
-
-      & .info-section {
-        display: flex;
-        align-items: flex-end;
-        gap: var(--bq-spacing-xs);
-      }
-
-      & .color-title {
-        color: var(--bq-text--secondary);
-      }
-
-      & .color-success {
-        color: var(--bq-text--success);
       }
 
       & h4 {
         font-size: var(--bq-font-size--xxl);
       }
+
+      & .card--body {
+        display: flex;
+        flex-direction: column;
+        gap: var(--bq-spacing-xs2);
+      }
+
+      & .body__top {
+        display: flex;
+        align-items: center;
+        gap: var(--bq-spacing-xs2);
+      }
+
+      & .body__bottom {
+        display: flex;
+        align-items: flex-end;
+        gap: var(--bq-spacing-xs);
+      }
+
+      & .text-secondary {
+        color: var(--bq-text--secondary);
+      }
+
+      & .text-success {
+        color: var(--bq-text--success);
+      }
     }
   </style>
   <bq-card class="card--overview">
-    <div class="card-wrapper">
+    <div class="card-thumbnail">
       <bq-icon color="text--brand" size="56" name="star-bold"></bq-icon>
-      <div>
-        <div class="title-section">
-          <span class="color-title">Title</span>
-          <bq-icon color="text--brand" size="16" name="star" weight="bold"></bq-icon>
-        </div>
-        <div class="info-section">
-          <h4>194</h4>
-          <span class="color-success">+24%</span>
-          <span class="color-title">than last mo.</span>
-        </div>
+    </div>
+    <div class="card--body">
+      <div class="body__top">
+        <span class="text-secondary">Title</span>
+        <bq-icon color="text--brand" size="16" name="star-bold"></bq-icon>
+      </div>
+      <div class="body__bottom">
+        <h4>194</h4>
+        <span class="text-success">+24%</span>
+        <span class="text-secondary">than last mo.</span>
       </div>
     </div>
-  </bq-card>`}
->
+  </bq-card>
+`}>
   <CodeGroup>
-    ```css CSS icon="css"
-      .card--overview {
-        width: 100%;
-        max-width: 24rem;
+    ```css CSS icon="css" expandable
+    @scope (.card--overview) {
+      width: 100%;
+      max-width: 24rem;
 
-        & .card-wrapper {
-          display: flex;
-          gap: var(--bq-spacing-m);
-        }
-
-        & .title-section {
-          display: flex;
-          align-items: center;
-          gap: var(--bq-spacing-xs2);
-        }
-
-        & .info-section {
-          display: flex;
-          align-items: flex-end;
-          gap: var(--bq-spacing-xs);
-        }
-
-        & .color-title {
-          color: var(--bq-text--secondary);
-        }
-
-        & .color-success {
-          color: var(--bq-text--success);
-        }
-
-        & h4 {
-          font-size: var(--bq-font-size--xxl);
-        }
+      &::part(wrapper) {
+        display: flex;
+        gap: var(--bq-spacing-m);
       }
+
+      & h4 {
+        font-size: var(--bq-font-size--xxl);
+      }
+
+      & .card--body {
+        display: flex;
+        flex-direction: column;
+        gap: var(--bq-spacing-xs2);
+      }
+
+      & .body__top {
+        display: flex;
+        align-items: center;
+        gap: var(--bq-spacing-xs2);
+      }
+
+      & .body__bottom {
+        display: flex;
+        align-items: flex-end;
+        gap: var(--bq-spacing-xs);
+      }
+
+      & .text-secondary {
+        color: var(--bq-text--secondary);
+      }
+
+      & .text-success {
+        color: var(--bq-text--success);
+      }
+    }
     ```
 
     ```html HTML icon="html5"
     <bq-card class="card--overview">
-      <div class="card-wrapper">
+      <div class="card-thumbnail">
         <bq-icon color="text--brand" size="56" name="star-bold"></bq-icon>
-        <div>
-          <div class="title-section">
-            <span class="color-title">Title</span>
-            <bq-icon color="text--brand" size="16" name="star" weight="bold"></bq-icon>
-          </div>
-          <div class="info-section">
-            <h4>194</h4>
-            <span class="color-success">+24%</span>
-            <span class="color-title">than last mo.</span>
-          </div>
+      </div>
+      <div class="card--body">
+        <div class="body__top">
+          <span class="text-secondary">Title</span>
+          <bq-icon color="text--brand" size="16" name="star-bold"></bq-icon>
+        </div>
+        <div class="body__bottom">
+          <h4>194</h4>
+          <span class="text-success">+24%</span>
+          <span class="text-secondary">than last mo.</span>
         </div>
       </div>
     </bq-card>
@@ -617,18 +586,18 @@ Employ this card type to present performance metrics along with icons, titles, a
     import { BqCard, BqIcon } from "@beeq/react";
 
     <BqCard className="card--overview">
-      <div className="card-wrapper">
+      <div className="card-thumbnail">
         <BqIcon color="text--brand" size="56" name="star-bold" />
-        <div>
-          <div className="title-section">
-            <span className="color-title">Title</span>
-            <BqIcon color="text--brand" size="16" name="star" weight="bold" />
-          </div>
-          <div className="info-section">
-            <h4>194</h4>
-            <span className="color-success">+24%</span>
-            <span className="color-title">than last mo.</span>
-          </div>
+      </div>
+      <div className="card--body">
+        <div className="body__top">
+          <span className="text-secondary">Title</span>
+          <BqIcon color="text--brand" size="16" name="star-bold" />
+        </div>
+        <div className="body__bottom">
+          <h4>194</h4>
+          <span className="text-success">+24%</span>
+          <span className="text-secondary">than last mo.</span>
         </div>
       </div>
     </BqCard>
@@ -636,18 +605,18 @@ Employ this card type to present performance metrics along with icons, titles, a
 
     ```html Angular icon="angular"
     <bq-card class="card--overview">
-      <div class="card-wrapper">
+      <div class="card-thumbnail">
         <bq-icon color="text--brand" size="56" name="star-bold"></bq-icon>
-        <div>
-          <div class="title-section">
-            <span class="color-title">Title</span>
-            <bq-icon color="text--brand" size="16" name="star" weight="bold"></bq-icon>
-          </div>
-          <div class="info-section">
-            <h4>194</h4>
-            <span class="color-success">+24%</span>
-            <span class="color-title">than last mo.</span>
-          </div>
+      </div>
+      <div class="card--body">
+        <div class="body__top">
+          <span class="text-secondary">Title</span>
+          <bq-icon color="text--brand" size="16" name="star-bold"></bq-icon>
+        </div>
+        <div class="body__bottom">
+          <h4>194</h4>
+          <span class="text-success">+24%</span>
+          <span class="text-secondary">than last mo.</span>
         </div>
       </div>
     </bq-card>
@@ -660,166 +629,19 @@ Employ this card type to present performance metrics along with icons, titles, a
 
     <template>
       <BqCard class="card--overview">
-        <div class="card-wrapper">
+        <div class="card-thumbnail">
           <BqIcon color="text--brand" size="56" name="star-bold" />
-          <div>
-            <div class="title-section">
-              <span class="color-title">Title</span>
-              <BqIcon color="text--brand" size="16" name="star" weight="bold" />
-            </div>
-            <div class="info-section">
-              <h4>194</h4>
-              <span class="color-success">+24%</span>
-              <span class="color-title">than last mo.</span>
-            </div>
+        </div>
+        <div class="card--body">
+          <div class="body__top">
+            <span class="text-secondary">Title</span>
+            <BqIcon color="text--brand" size="16" name="star-bold" />
           </div>
-        </div>
-      </BqCard>
-    </template>
-    ```
-  </CodeGroup>
-</CodeLivePreview>
-
-### Detailed content
-
-Use a card with title, description, and a supporting action when users need more context before taking the next step.
-
-<CodeLivePreview
-  code={`
-  <style>
-    .card--detailed {
-      width: 100%;
-      max-width: 24rem;
-
-      & .card-wrapper {
-        display: flex;
-        flex-direction: column;
-        gap: var(--bq-spacing-m);
-      }
-
-      & .info-section {
-        display: flex;
-        flex-direction: column;
-        gap: var(--bq-spacing-xs2);
-      }
-
-      & .title-section {
-        font-size: var(--bq-font-size--m);
-        font-weight: var(--bq-font-weight--medium);
-      }
-
-      & .color-title {
-        color: var(--bq-text--secondary);
-      }
-    }
-  </style>
-  <bq-card class="card--detailed">
-    <div class="card-wrapper">
-      <bq-icon color="text--brand" size="56" name="star" weight="bold"></bq-icon>
-      <div class="info-section">
-        <div class="title-section">Title</div>
-        <p class="color-title">
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-        </p>
-      </div>
-      <bq-button appearance="link">Button</bq-button>
-    </div>
-  </bq-card>`}
->
-  <CodeGroup>
-    ```css CSS icon="css"
-      .card--detailed {
-        width: 100%;
-        max-width: 24rem;
-
-        & .card-wrapper {
-          display: flex;
-          flex-direction: column;
-          gap: var(--bq-spacing-m);
-        }
-
-        & .info-section {
-          display: flex;
-          flex-direction: column;
-          gap: var(--bq-spacing-xs2);
-        }
-
-        & .title-section {
-          font-size: var(--bq-font-size--m);
-          font-weight: var(--bq-font-weight--medium);
-        }
-
-        & .color-title {
-          color: var(--bq-text--secondary);
-        }
-      }
-    ```
-
-    ```html HTML icon="html5"
-    <bq-card class="card--detailed">
-      <div class="card-wrapper">
-        <bq-icon color="text--brand" size="56" name="star" weight="bold"></bq-icon>
-        <div class="info-section">
-          <div class="title-section">Title</div>
-          <p class="color-title">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-          </p>
-        </div>
-        <bq-button appearance="link">Button</bq-button>
-      </div>
-    </bq-card>
-    ```
-
-    ```jsx React icon="react"
-    import { BqButton, BqCard, BqIcon } from "@beeq/react";
-
-    <BqCard className="card--detailed">
-      <div className="card-wrapper">
-        <BqIcon color="text--brand" size="56" name="star" weight="bold" />
-        <div className="info-section">
-          <div className="title-section">Title</div>
-          <p className="color-title">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-          </p>
-        </div>
-        <BqButton appearance="link">Button</BqButton>
-      </div>
-    </BqCard>
-    ```
-
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqButton, BqCard, BqIcon } from "@beeq/angular/standalone" -->
-
-    <bq-card class="card--detailed">
-      <div class="card-wrapper">
-        <bq-icon color="text--brand" size="56" name="star" weight="bold"></bq-icon>
-        <div class="info-section">
-          <div class="title-section">Title</div>
-          <p class="color-title">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-          </p>
-        </div>
-        <bq-button appearance="link">Button</bq-button>
-      </div>
-    </bq-card>
-    ```
-
-    ```vue Vue icon="vuejs"
-    <script setup lang="ts">
-    import { BqButton, BqCard, BqIcon } from "@beeq/vue";
-    </script>
-
-    <template>
-      <BqCard class="card--detailed">
-        <div class="card-wrapper">
-          <BqIcon color="text--brand" size="56" name="star" weight="bold" />
-          <div class="info-section">
-            <div class="title-section">Title</div>
-            <p class="color-title">
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-            </p>
+          <div class="body__bottom">
+            <h4>194</h4>
+            <span class="text-success">+24%</span>
+            <span class="text-secondary">than last mo.</span>
           </div>
-          <BqButton appearance="link">Button</BqButton>
         </div>
       </BqCard>
     </template>
@@ -829,37 +651,35 @@ Use a card with title, description, and a supporting action when users need more
 
 ### Mini card
 
-Use the minimal card type when you need a condensed presentation of information such as summaries or quick references.
+A compact horizontal card using `type="minimal"` that removes built-in padding, letting you create visually distinct inner zones — like the branded left panel shown here.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    .card--mini {
+    @scope (.card--mini) {
       width: 100%;
       max-width: 24rem;
 
-      & .card-wrapper {
+      &::part(wrapper) {
         display: flex;
-        width: 100%;
+        overflow: clip;
       }
 
-      & .card-left-spot {
+      & .content--start {
         display: flex;
+        align-items: center;
         padding: var(--bq-spacing-l);
         background-color: var(--bq-background--brand);
-        border-top-left-radius: var(--bq-card--borderRadius);
-        border-bottom-left-radius: var(--bq-card--borderRadius);
       }
 
-      & .card-right-spot {
-        width: 100%;
+      & .content--end {
         display: flex;
+        flex: 1;
         align-items: center;
         justify-content: space-between;
         padding: var(--bq-card--paddingMinimal);
       }
 
-      & .info-section {
+      & .body {
         display: flex;
         flex-direction: column;
         padding-left: 0.5rem;
@@ -871,93 +691,90 @@ Use the minimal card type when you need a condensed presentation of information 
       }
 
       & p {
+        font-size: var(--bq-font-size--xs);
         color: var(--bq-text--secondary);
       }
 
-      & .right-icon {
+      & .decorator {
         padding: var(--bq-card--paddingMinimal);
       }
     }
   </style>
   <bq-card type="minimal" class="card--mini">
-    <div class="card-wrapper">
-      <div class="card-left-spot">
-        <bq-icon color="text--alt" size="24" name="star" weight="bold"></bq-icon>
+    <div class="content--start">
+      <bq-icon color="text--alt" name="graduation-cap-bold"></bq-icon>
+    </div>
+    <div class="content--end">
+      <div class="body">
+        <h6>Disciplines</h6>
+        <p>Explore the extensive range of disciplines available at our university.</p>
       </div>
-      <div class="card-right-spot">
-        <div class="info-section">
-          <h6>Title</h6>
-          <p>description</p>
-        </div>
-        <div class="right-icon">
-          <bq-icon color="text--brand" size="24" name="star" weight="bold"></bq-icon>
-        </div>
+      <div class="decorator">
+        <bq-icon color="text--brand" name="arrow-square-out"></bq-icon>
       </div>
     </div>
-  </bq-card>`}
->
+  </bq-card>
+`}>
   <CodeGroup>
-    ```css CSS icon="css"
-      .card--mini {
-        width: 100%;
-        max-width: 24rem;
+    ```css CSS icon="css" expandable
+    @scope (.card--mini) {
+      width: 100%;
+      max-width: 24rem;
 
-        & .card-wrapper {
-          display: flex;
-          width: 100%;
-        }
-
-        & .card-left-spot {
-          display: flex;
-          padding: var(--bq-spacing-l);
-          background-color: var(--bq-background--brand);
-          border-top-left-radius: var(--bq-card--borderRadius);
-          border-bottom-left-radius: var(--bq-card--borderRadius);
-        }
-
-        & .card-right-spot {
-          width: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: var(--bq-card--paddingMinimal);
-        }
-
-        & .info-section {
-          display: flex;
-          flex-direction: column;
-          padding-left: 0.5rem;
-        }
-
-        & h6 {
-          font-size: var(--bq-font-size--m);
-          font-weight: var(--bq-font-weight--medium);
-        }
-
-        & p {
-          color: var(--bq-text--secondary);
-        }
-
-        & .right-icon {
-          padding: var(--bq-card--paddingMinimal);
-        }
+      &::part(wrapper) {
+        display: flex;
+        overflow: clip;
       }
+
+      & .content--start {
+        display: flex;
+        align-items: center;
+        padding: var(--bq-spacing-l);
+        background-color: var(--bq-background--brand);
+      }
+
+      & .content--end {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--bq-card--paddingMinimal);
+      }
+
+      & .body {
+        display: flex;
+        flex-direction: column;
+        padding-left: 0.5rem;
+      }
+
+      & h6 {
+        font-size: var(--bq-font-size--m);
+        font-weight: var(--bq-font-weight--medium);
+      }
+
+      & p {
+        font-size: var(--bq-font-size--xs);
+        color: var(--bq-text--secondary);
+      }
+
+      & .decorator {
+        padding: var(--bq-card--paddingMinimal);
+      }
+    }
     ```
 
     ```html HTML icon="html5"
     <bq-card type="minimal" class="card--mini">
-      <div class="card-wrapper">
-        <div class="card-left-spot">
-          <bq-icon color="text--alt" size="24" name="star" weight="bold"></bq-icon>
+      <div class="content--start">
+        <bq-icon color="text--alt" name="graduation-cap-bold"></bq-icon>
+      </div>
+      <div class="content--end">
+        <div class="body">
+          <h6>Disciplines</h6>
+          <p>Explore the extensive range of disciplines available at our university.</p>
         </div>
-        <div class="card-right-spot">
-          <div class="info-section">
-            <h6>Title</h6>
-            <p>description</p>
-          </div>
-          <div class="right-icon">
-            <bq-icon color="text--brand" size="24" name="star" weight="bold"></bq-icon>
-          </div>
+        <div class="decorator">
+          <bq-icon color="text--brand" name="arrow-square-out"></bq-icon>
         </div>
       </div>
     </bq-card>
@@ -967,18 +784,16 @@ Use the minimal card type when you need a condensed presentation of information 
     import { BqCard, BqIcon } from "@beeq/react";
 
     <BqCard type="minimal" className="card--mini">
-      <div className="card-wrapper">
-        <div className="card-left-spot">
-          <BqIcon color="text--alt" size="24" name="star" weight="bold" />
+      <div className="content--start">
+        <BqIcon color="text--alt" name="graduation-cap-bold" />
+      </div>
+      <div className="content--end">
+        <div className="body">
+          <h6>Title</h6>
+          <p>description</p>
         </div>
-        <div className="card-right-spot">
-          <div className="info-section">
-            <h6>Title</h6>
-            <p>description</p>
-          </div>
-          <div className="right-icon">
-            <BqIcon color="text--brand" size="24" name="star" weight="bold" />
-          </div>
+        <div className="decorator">
+          <BqIcon color="text--brand" name="arrow-square-out" />
         </div>
       </div>
     </BqCard>
@@ -986,18 +801,16 @@ Use the minimal card type when you need a condensed presentation of information 
 
     ```html Angular icon="angular"
     <bq-card type="minimal" class="card--mini">
-      <div class="card-wrapper">
-        <div class="card-left-spot">
-          <bq-icon color="text--alt" size="24" name="star" weight="bold"></bq-icon>
+      <div class="content--start">
+        <bq-icon color="text--alt" name="graduation-cap-bold"></bq-icon>
+      </div>
+      <div class="content--end">
+        <div class="body">
+          <h6>Disciplines</h6>
+          <p>Explore the extensive range of disciplines available at our university.</p>
         </div>
-        <div class="card-right-spot">
-          <div class="info-section">
-            <h6>Title</h6>
-            <p>description</p>
-          </div>
-          <div class="right-icon">
-            <bq-icon color="text--brand" size="24" name="star" weight="bold"></bq-icon>
-          </div>
+        <div class="decorator">
+          <bq-icon color="text--brand" name="arrow-square-out"></bq-icon>
         </div>
       </div>
     </bq-card>
@@ -1010,18 +823,16 @@ Use the minimal card type when you need a condensed presentation of information 
 
     <template>
       <BqCard type="minimal" class="card--mini">
-        <div class="card-wrapper">
-          <div class="card-left-spot">
-            <BqIcon color="text--alt" size="24" name="star" weight="bold" />
+        <div class="content--start">
+          <BqIcon color="text--alt" name="graduation-cap-bold" />
+        </div>
+        <div class="content--end">
+          <div class="body">
+            <h6>Disciplines</h6>
+            <p>Explore the extensive range of disciplines available at our university.</p>
           </div>
-          <div class="card-right-spot">
-            <div class="info-section">
-              <h6>Title</h6>
-              <p>description</p>
-            </div>
-            <div class="right-icon">
-              <BqIcon color="text--brand" size="24" name="star" weight="bold" />
-            </div>
+          <div class="decorator">
+            <BqIcon color="text--brand" name="arrow-square-out" />
           </div>
         </div>
       </BqCard>
@@ -1030,56 +841,71 @@ Use the minimal card type when you need a condensed presentation of information 
   </CodeGroup>
 </CodeLivePreview>
 
-## Component options
+## Options
 
 ### Types
 
-`type` defines the card padding behavior:
+`type` is a layout decision that controls whether the card applies its own internal padding or leaves spacing entirely up to you.
 
-| Type | When to use |
-|---|---|
-| **default** | Use for most cards when the component should provide its own internal padding |
-| **minimal** | Use when the content inside the card needs full control over spacing, such as mini cards or media-led layouts |
+| Type | Padding | When to use |
+|---|---|---|
+| **default** | Built-in (`var(--bq-spacing-l)`) | Most cards — content sits comfortably inside without extra wrapper elements |
+| **minimal** | None | When you need full control over inner layout, such as a branded color block flush with the card edge |
 
 <Tip>
-  `default` is the standard option and applies the component's built-in padding automatically.
+  Reach for `type="minimal"` only when your design requires content to bleed to the card edge. For everything else, `default` keeps spacing consistent automatically.
 </Tip>
 
-### Border radius
-
-Use the `border` property to control the card corner radius.
-
-<CodeLivePreview
-  code={`<div class="grid gap-4 md:grid-cols-3">
-  <bq-card border="none"><div>Border none</div></bq-card>
-  <bq-card border="m"><div>Border medium</div></bq-card>
-  <bq-card border="full"><div>Border full</div></bq-card>
-</div>`}
->
+<CodeLivePreview code={`
+  <style>
+    @scope (.card--types) {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+      gap: var(--bq-spacing-m);
+    }
+  </style>
+  <div class="card--types">
+    <bq-card type="default">
+      <p>Default — built-in padding applied automatically</p>
+    </bq-card>
+    <bq-card type="minimal">
+      <p>Minimal — no padding, you control the spacing</p>
+    </bq-card>
+  </div>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
-    <div class="grid gap-4 md:grid-cols-3">
-      <bq-card border="none"><div>Border none</div></bq-card>
-      <bq-card border="m"><div>Border medium</div></bq-card>
-      <bq-card border="full"><div>Border full</div></bq-card>
+    <div class="type-grid">
+      <bq-card type="default">
+        <p>Default — built-in padding applied automatically</p>
+      </bq-card>
+      <bq-card type="minimal">
+        <p>Minimal — no padding, you control the spacing</p>
+      </bq-card>
     </div>
     ```
 
     ```jsx React icon="react"
     import { BqCard } from "@beeq/react";
 
-    <div className="grid gap-4 md:grid-cols-3">
-      <BqCard border="none"><div>Border none</div></BqCard>
-      <BqCard border="m"><div>Border medium</div></BqCard>
-      <BqCard border="full"><div>Border full</div></BqCard>
+    <div className="type-grid">
+      <BqCard type="default">
+        <p>Default — built-in padding applied automatically</p>
+      </BqCard>
+      <BqCard type="minimal">
+        <p>Minimal — no padding, you control the spacing</p>
+      </BqCard>
     </div>
     ```
 
     ```html Angular icon="angular"
-    <div class="grid gap-4 md:grid-cols-3">
-      <bq-card border="none"><div>Border none</div></bq-card>
-      <bq-card border="m"><div>Border medium</div></bq-card>
-      <bq-card border="full"><div>Border full</div></bq-card>
+    <div class="type-grid">
+      <bq-card type="default">
+        <p>Default — built-in padding applied automatically</p>
+      </bq-card>
+      <bq-card type="minimal">
+        <p>Minimal — no padding, you control the spacing</p>
+      </bq-card>
     </div>
     ```
 
@@ -1089,15 +915,180 @@ Use the `border` property to control the card corner radius.
     </script>
 
     <template>
-      <div class="grid gap-4 md:grid-cols-3">
-        <BqCard border="none"><div>Border none</div></BqCard>
-        <BqCard border="m"><div>Border medium</div></BqCard>
-        <BqCard border="full"><div>Border full</div></BqCard>
+      <div class="type-grid">
+        <BqCard type="default">
+          <p>Default — built-in padding applied automatically</p>
+        </BqCard>
+        <BqCard type="minimal">
+          <p>Minimal — no padding, you control the spacing</p>
+        </BqCard>
       </div>
     </template>
     ```
   </CodeGroup>
 </CodeLivePreview>
+
+### Border radius
+
+Use the `border` property to control the card corner radius.
+
+<CodeLivePreview code={`
+  <style>
+    @scope (.card--borders) {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+      gap: var(--bq-spacing-m);
+
+      & bq-card {
+        width: 100%;
+
+        &::part(wrapper) {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        & span {
+          font-size: var(--bq-font-size--s);
+          color: var(--bq-text--secondary);
+        }
+      }
+    }
+  </style>
+  <div class="card--borders">
+    <bq-card border="none">
+      <span>border="none"</span>
+    </bq-card>
+    <bq-card border="xs2">
+      <span>border="xs2"</span>
+    </bq-card>
+    <bq-card border="xs">
+      <span>border="xs"</span>
+    </bq-card>
+    <bq-card border="s">
+      <span>border="s"</span>
+    </bq-card>
+    <bq-card border="m">
+      <span>border="m"</span>
+    </bq-card>
+    <bq-card border="l">
+      <span>border="l"</span>
+    </bq-card>
+    <bq-card border="full">
+      <span>border="full"</span>
+    </bq-card>
+  </div>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-card border="none">
+      <span>border="none"</span>
+    </bq-card>
+    <bq-card border="xs2">
+      <span>border="xs2"</span>
+    </bq-card>
+    <bq-card border="xs">
+      <span>border="xs"</span>
+    </bq-card>
+    <bq-card border="s">
+      <span>border="s"</span>
+    </bq-card>
+    <bq-card border="m">
+      <span>border="m"</span>
+    </bq-card>
+    <bq-card border="l">
+      <span>border="l"</span>
+    </bq-card>
+    <bq-card border="full">
+      <span>border="full"</span>
+    </bq-card>
+    ```
+
+    ```jsx React icon="react"
+    import { BqCard } from "@beeq/react";
+
+    <BqCard border="none">
+      <span>border="none"</span>
+    </BqCard>
+    <BqCard border="xs2">
+      <span>border="xs2"</span>
+    </BqCard>
+    <BqCard border="xs">
+      <span>border="xs"</span>
+    </BqCard>
+    <BqCard border="s">
+      <span>border="s"</span>
+    </BqCard>
+    <BqCard border="m">
+      <span>border="m"</span>
+    </BqCard>
+    <BqCard border="l">
+      <span>border="l"</span>
+    </BqCard>
+    <BqCard border="full">
+      <span>border="full"</span>
+    </BqCard>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-card border="none">
+      <span>border="none"</span>
+    </bq-card>
+    <bq-card border="xs2">
+      <span>border="xs2"</span>
+    </bq-card>
+    <bq-card border="xs">
+      <span>border="xs"</span>
+    </bq-card>
+    <bq-card border="s">
+      <span>border="s"</span>
+    </bq-card>
+    <bq-card border="m">
+      <span>border="m"</span>
+    </bq-card>
+    <bq-card border="l">
+      <span>border="l"</span>
+    </bq-card>
+    <bq-card border="full">
+      <span>border="full"</span>
+    </bq-card>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqCard } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqCard border="none">
+        <span>border="none"</span>
+      </BqCard>
+      <BqCard border="xs2">
+        <span>border="xs2"</span>
+      </BqCard>
+      <BqCard border="xs">
+        <span>border="xs"</span>
+      </BqCard>
+      <BqCard border="s">
+        <span>border="s"</span>
+      </BqCard>
+      <BqCard border="m">
+        <span>border="m"</span>
+      </BqCard>
+      <BqCard border="l">
+        <span>border="l"</span>
+      </BqCard>
+      <BqCard border="full">
+        <span>border="full"</span>
+      </BqCard>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  Use `--bq-card--borderColor`, `--bq-card--borderStyle`, and `--bq-card--borderWidth` together on the `wrapper` shadow part to add a visible card border. By default, all three resolve to values that produce no visible border.
+</Tip>
 
 ## Best practices
 
@@ -1107,7 +1098,7 @@ Use the `border` property to control the card corner radius.
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Keep cards within the same group visually consistent so they remain easy to scan and compare.
+    Keep cards within the same group visually consistent — same size, same internal layout — so users can scan and compare them quickly.
   </Card>
 
   <Card>
@@ -1115,7 +1106,7 @@ Use the `border` property to control the card corner radius.
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Mix unrelated card layouts in the same context when people are expected to compare them quickly.
+    Mix unrelated card layouts in the same group when users are expected to compare items — inconsistency makes scanning harder.
   </Card>
 
   <Card>
@@ -1123,7 +1114,7 @@ Use the `border` property to control the card corner radius.
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Keep content concise and prioritize the most useful information first.
+    Limit each card to one primary topic or action. If a card is trying to do too much, consider splitting the content or using a dedicated page.
   </Card>
 
   <Card>
@@ -1131,17 +1122,256 @@ Use the `border` property to control the card corner radius.
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Overload a card with long descriptions when a simpler layout or dedicated page would work better.
+    Overload a card with long descriptions or multiple unrelated actions — if the content needs more room, a dedicated page or panel is a better fit.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Lead with the most important information. Place the primary value — a number, a name, or a status — at the top so users see it at a glance before reading further.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Nest cards inside other cards. It creates visual confusion and makes hierarchy hard to follow — use a different layout pattern instead.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Choose icons that match the card's content — a wallet for finance, a chart for analytics. Users should be able to identify the card's purpose from the icon at a glance.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Use icons as pure decoration. An icon that has no connection to the card's content adds visual noise without adding meaning.
   </Card>
 </CardGroup>
 
 ## Accessibility
 
-- Provide descriptive alt text for images within cards.
-- Implement proper heading structures so card content remains easy to scan and understand.
-- Ensure that interactive elements within cards are navigable using keyboard controls.
-- Maintain sufficient color contrast between the card background, text, and supporting UI elements.
-- Regularly test card implementations with accessibility tools to identify and address potential issues.
+- **Images** — provide descriptive `alt` text for any images inside a card so screen readers can convey what the image shows.
+- **Headings** — use a proper heading hierarchy within the card so assistive technologies can navigate the content structure correctly.
+- **Keyboard navigation** — ensure all interactive elements inside a card (buttons, links) are reachable and operable with the keyboard alone.
+- **Color contrast** — maintain sufficient contrast between the card background, text, and UI elements so content remains readable for all users.
+
+### Navigation
+
+When a card represents a link destination (for example, an article or product), wrap it in a semantic `<a>` element. `bq-card` is a non-interactive container and does not handle click or keyboard events on its own.
+
+<CodeLivePreview code={`
+  <style>
+    @scope (.card-link) {
+      border-radius: var(--bq-radius--m);
+      text-decoration: none;
+      cursor: pointer;
+
+      &:hover {
+        & .card--mini::part(wrapper) {
+          transform: translateY(-2px);
+          box-shadow: var(--bq-box-shadow--m);
+        }
+      }
+
+      &:focus-visible {
+        outline-offset: 2px;
+        outline: 2px solid var(--bq-focus);
+      }
+
+      .card--mini {
+        width: 100%;
+        max-width: 24rem;
+
+        &::part(wrapper) {
+          display: flex;
+          overflow: clip;
+          transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+        }
+
+        & .content--start {
+          display: flex;
+          align-items: center;
+          padding: var(--bq-spacing-l);
+          background-color: var(--bq-background--brand);
+        }
+
+        & .content--end {
+          display: flex;
+          flex: 1;
+          align-items: center;
+          justify-content: space-between;
+          padding: var(--bq-card--paddingMinimal);
+        }
+
+        & .body {
+          display: flex;
+          flex-direction: column;
+          padding-left: 0.5rem;
+        }
+
+        & h6 {
+          font-size: var(--bq-font-size--m);
+          font-weight: var(--bq-font-weight--medium);
+        }
+
+        & p {
+          font-size: var(--bq-font-size--xs);
+          color: var(--bq-text--secondary);
+        }
+
+        & .decorator {
+          padding: var(--bq-card--paddingMinimal);
+        }
+      }
+
+    }
+  </style>
+  <a href="https://example.com/article" class="card-link">
+    <bq-card type="minimal" class="card--mini">
+      <div class="content--start">
+        <bq-icon color="text--alt" name="graduation-cap-bold"></bq-icon>
+      </div>
+      <div class="content--end">
+        <div class="body">
+          <h6>Disciplines</h6>
+          <p>Explore the extensive range of disciplines available at our university.</p>
+        </div>
+        <div class="decorator">
+          <bq-icon color="text--brand" name="arrow-square-out"></bq-icon>
+        </div>
+      </div>
+    </bq-card>
+  </a>
+`}>
+  <CodeGroup>
+    ```css CSS icon="css" expandable
+    @scope (.card-link) {
+      border-radius: var(--bq-radius--m);
+      text-decoration: none;
+      cursor: pointer;
+
+      &:hover {
+        & .card--mini::part(wrapper) {
+          transform: translateY(-0.125rem);
+          box-shadow: var(--bq-box-shadow--m);
+        }
+      }
+
+      &:focus-visible {
+        outline-offset: 2px;
+        outline: 2px solid var(--bq-focus);
+      }
+
+      .card--mini {
+        width: 100%;
+        max-width: 24rem;
+
+        &::part(wrapper) {
+          display: flex;
+          overflow: clip;
+          transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+        }
+
+        /** Same as the [Mini card example](#mini-card) */
+      }
+    }
+    ```
+
+    ```html HTML icon="html5"
+    <a href="https://example.com/article" class="card-link">
+      <bq-card type="minimal" class="card--mini">
+        <div class="content--start">
+          <bq-icon color="text--alt" name="graduation-cap-bold"></bq-icon>
+        </div>
+        <div class="content--end">
+          <div class="body">
+            <h6>Disciplines</h6>
+            <p>Explore the extensive range of disciplines available at our university.</p>
+          </div>
+          <div class="decorator">
+            <bq-icon color="text--brand" name="arrow-square-out"></bq-icon>
+          </div>
+        </div>
+      </bq-card>
+    </a>
+    ```
+
+    ```jsx React icon="react"
+    import { BqCard, BqIcon } from "@beeq/react";
+
+    <a href="https://example.com/article" className="card-link">
+      <BqCard type="minimal" className="card--mini">
+        <div className="content--start">
+          <BqIcon color="text--alt" name="graduation-cap-bold" />
+        </div>
+        <div className="content--end">
+          <div className="body">
+            <h6>Disciplines</h6>
+            <p>Explore the extensive range of disciplines available at our university.</p>
+          </div>
+          <div className="decorator">
+            <BqIcon color="text--brand" name="arrow-square-out" />
+          </div>
+        </div>
+      </BqCard>
+    </a>
+    ```
+
+    ```html Angular icon="angular"
+    <a href="https://example.com/article" class="card-link">
+      <bq-card type="minimal" class="card--mini">
+        <div class="content--start">
+          <bq-icon color="text--alt" name="graduation-cap-bold"></bq-icon>
+        </div>
+        <div class="content--end">
+          <div class="body">
+            <h6>Disciplines</h6>
+            <p>Explore the extensive range of disciplines available at our university.</p>
+          </div>
+          <div class="decorator">
+            <bq-icon color="text--brand" name="arrow-square-out"></bq-icon>
+          </div>
+        </div>
+      </bq-card>
+    </a>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqCard, BqIcon } from "@beeq/vue";
+    </script>
+
+    <template>
+      <a href="https://example.com/article" class="card-link">
+        <BqCard type="minimal" class="card--mini">
+          <div class="content--start">
+            <BqIcon color="text--alt" name="graduation-cap-bold" />
+          </div>
+          <div class="content--end">
+            <div class="body">
+              <h6>Disciplines</h6>
+              <p>Explore the extensive range of disciplines available at our university.</p>
+            </div>
+            <div class="decorator">
+              <BqIcon color="text--brand" name="arrow-square-out" />
+            </div>
+          </div>
+        </BqCard>
+      </a>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
 
 ## API reference
 
@@ -1166,7 +1396,7 @@ Use the `border` property to control the card corner radius.
 
 ### CSS custom properties
 
-<Expandable title="View all CSS variables" defaultOpen={true}>
+<Expandable title="CSS variables" defaultOpen={true}>
   | Variable | Description | Default |
   |---|---|---|
   | `--bq-card--borderColor` | Card border color | `transparent` |
