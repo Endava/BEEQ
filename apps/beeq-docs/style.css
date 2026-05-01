@@ -88,6 +88,10 @@ body,
 .card-tile,
 .card[role="link"] {
   color: var(--bq-text--primary);
+}
+
+.card-tile.link,
+.card[role="link"] {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, transform;
   transition-timing-function: var(--bq-transition-function);
   transition-duration: var(--bq-transition-duration);
@@ -97,6 +101,10 @@ body,
     background-color: var(--bq-ui--brand-alt);
     transform: scale(1.05);
   }
+}
+
+[data-name="frame"] {
+  background-color: var(--bq-background--tertiary) !important;
 }
 
 /* ------------------------------ CodeLivePreview ------------------------------ */
@@ -110,7 +118,7 @@ body,
   margin: var(--bq-spacing-m) 0;
 
   .preview {
-    background-color: var(--bq-bg--primary);
+    background-color: var(--bq-background--primary);
     display: flex;
     align-items: center;
     justify-content: center;
