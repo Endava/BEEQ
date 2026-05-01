@@ -3,6 +3,7 @@ title: Avatar
 description: Avatars represent a person, team, or entity using a profile image or initials.
 ---
 
+import { CardTile } from '/snippets/CardTile.jsx';
 import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
 <Frame className="px-4 py-4" caption="Avatar component overview">
@@ -41,7 +42,7 @@ Avatars help people identify users, teams, or entities at a glance. Use them in 
 
 ## Avatar patterns
 
-These common contexts come directly from the original design guidance and can help teams decide where avatars add the most value.
+These are the most common contexts where avatars add meaningful value. Use them as a reference when deciding whether an avatar fits the layout.
 
 <CardGroup cols={2}>
   <Card title="Contact details">
@@ -60,9 +61,9 @@ These common contexts come directly from the original design guidance and can he
 
 ## Anatomy
 
-<Frame className="px-4 py-4" caption="Avatar component overview">
-  <img className="block dark:hidden" src="/components/images/avatar/avatar-overview-light.svg" alt="BEEQ Avatar component overview" />
-  <img className="hidden dark:block" src="/components/images/avatar/avatar-overview-dark.svg" alt="BEEQ Avatar component overview" />
+<Frame className="px-4 py-4" caption="Avatar component anatomy">
+  <img className="block dark:hidden" src="/components/images/avatar/avatar-anatomy-light.svg" alt="BEEQ Avatar component anatomy" />
+  <img className="hidden dark:block" src="/components/images/avatar/avatar-anatomy-dark.svg" alt="BEEQ Avatar component anatomy" />
 </Frame>
 
 An avatar is a single visual surface that shows either an image or initials, with optional badge content layered on top.
@@ -73,7 +74,57 @@ An avatar is a single visual surface that shows either an image or initials, wit
 | **2** | Visual | The displayed image (`img` part) or initials (`text` part) |
 | **3** | Badge | Optional content placed in the `badge` slot |
 
-## Variants
+## Design guidelines
+
+### Shape
+
+<CardGroup cols={2}>
+  <CardTile
+    title="Circle — for people"
+    imageLightSrc="/components/images/avatar/avatar-shape-circle-light.svg"
+    imageDarkSrc="/components/images/avatar/avatar-shape-circle-dark.svg"
+  >
+    Use `circle` when the avatar represents an individual person, such as a user profile, comment author, or chat participant. The round shape signals human identity at a glance.
+  </CardTile>
+  <CardTile
+    title="Square — for entities"
+    imageLightSrc="/components/images/avatar/avatar-shape-circle-light.svg"
+    imageDarkSrc="/components/images/avatar/avatar-shape-circle-dark.svg"
+  >
+    Use `square` when the avatar represents a team, brand, organization, or system entity. The sharper edge fits non-personal identity and aligns with logo conventions.
+  </CardTile>
+</CardGroup>
+
+<Tip>
+  Avatar shape can be further customized by adjusting the border-radius tokens (`--bq-avatar--border-radius-*`), allowing the shape to match the overall product aesthetic.
+</Tip>
+
+### Initials
+
+Pass the full intended initials (e.g. `"JD"` for John Doe) and let the component handle trimming. The component automatically caps the visible characters based on `size`:
+
+<Steps>
+  <Step title="xsmall">
+    Shows **1 character** — only the first initial fits at 24px.
+  </Step>
+  <Step title="small">
+    Shows **2 characters** — first and last initial, the most common pattern.
+  </Step>
+  <Step title="medium">
+    Shows **3 characters** — suits slightly longer abbreviations or team codes.
+  </Step>
+  <Step title="large">
+    Shows **4 characters** — maximum at 64px; useful for multi-word team names.
+  </Step>
+</Steps>
+
+### Image and initials together
+
+<Note>
+  Always pass both `image` and `initials` when showing a photo. If the image fails to load, the component automatically falls back to the initials — no extra logic required on your side.
+</Note>
+
+## Usage
 
 Avatar supports two primary variants: `Text` for initials and `Image` for profile photos or logos.
 
@@ -81,16 +132,15 @@ Avatar supports two primary variants: `Text` for initials and `Image` for profil
 
 Use initials when no uploaded image is available or when the interface is intentionally compact. Pass short values rather than full names; the component trims the visible text based on the selected `size`.
 
-<CodeLivePreview code={`<bq-avatar
-  initials="BQ"
-  label="Avatar component label"
-></bq-avatar>`}>
+<CodeLivePreview code={`
+  <bq-avatar
+    initials="BQ"
+    label="Avatar component label"
+  ></bq-avatar>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
-    <bq-avatar
-      initials="BQ"
-      label="Avatar component label"
-    ></bq-avatar>
+    <bq-avatar initials="BQ" label="Avatar component label"></bq-avatar>
     ```
 
     ```jsx React icon="react"
@@ -121,16 +171,22 @@ Use initials when no uploaded image is available or when the interface is intent
   </CodeGroup>
 </CodeLivePreview>
 
+<Tip>
+  When using the `Text` variant, you can customise the avatar background color via the `--bq-avatar-background` CSS custom property. For example: `bq-avatar { --bq-avatar-background: var(--bq-ui--success); }`
+</Tip>
+
 ### Image
 
 When a profile photo or logo is available, pass both `image` and `initials`. The image is shown first, while initials remain a built-in fallback if the image fails to load.
 
-<CodeLivePreview code={`<bq-avatar
-  alt-text="User profile"
-  image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
-  initials="BQ"
-  label="Avatar component label"
-></bq-avatar>`}>
+<CodeLivePreview code={`
+  <bq-avatar
+    alt-text="User profile"
+    image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
+    initials="BQ"
+    label="Avatar component label"
+  ></bq-avatar>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-avatar
@@ -168,7 +224,7 @@ When a profile photo or logo is available, pass both `image` and `initials`. The
 
     <template>
       <BqAvatar
-        alt-text="User profile"
+        altText="User profile"
         image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
         initials="BQ"
         label="Avatar component label"
@@ -178,15 +234,15 @@ When a profile photo or logo is available, pass both `image` and `initials`. The
   </CodeGroup>
 </CodeLivePreview>
 
-## Common usage patterns
+## Options
 
-### Shapes and sizes
+### Shape and size
 
-Avatar supports four sizes and two shapes. Keep shape and size consistent within the same list or group so the UI feels intentional and easy to scan.
+Avatar supports four sizes (`xsmall`, `small`, `medium`, `large`) and two shapes (`circle`, `square`). Choose size based on context: `small` works well in dense lists and inline layouts; `large` suits profile headers and contact cards where identity is the focal point. Keep shape and size consistent within the same group so the UI feels intentional and easy to scan.
 
 <CodeLivePreview code={`
   <style>
-    .avatar--sizes {
+    @scope (.avatar--sizes) {
       display: flex;
       align-items: center;
       gap: var(--bq-spacing-m);
@@ -201,42 +257,27 @@ Avatar supports four sizes and two shapes. Keep shape and size consistent within
   </div>
 `}>
   <CodeGroup>
-    ```css CSS icon="css"
-      .avatar--sizes {
-        display: flex;
-        align-items: center;
-        gap: var(--bq-spacing-m);
-        flex-wrap: wrap;
-      }
-    ```
-
     ```html HTML icon="html5"
-    <div class="avatar--sizes">
-      <bq-avatar label="Extra small avatar" initials="B" size="xsmall"></bq-avatar>
-      <bq-avatar label="Small avatar" initials="BQ" size="small"></bq-avatar>
-      <bq-avatar label="Medium square avatar" initials="BQ" shape="square" size="medium"></bq-avatar>
-      <bq-avatar label="Large square avatar" initials="BQ" shape="square" size="large"></bq-avatar>
-    </div>
+    <bq-avatar label="Extra small avatar" initials="B" size="xsmall"></bq-avatar>
+    <bq-avatar label="Small avatar" initials="BQ" size="small"></bq-avatar>
+    <bq-avatar label="Medium square avatar" initials="BQ" shape="square" size="medium"></bq-avatar>
+    <bq-avatar label="Large square avatar" initials="BQ" shape="square" size="large"></bq-avatar>
     ```
 
     ```jsx React icon="react"
     import { BqAvatar } from "@beeq/react";
 
-    <div className="avatar--sizes">
-      <BqAvatar label="Extra small avatar" initials="B" size="xsmall" />
-      <BqAvatar label="Small avatar" initials="BQ" size="small" />
-      <BqAvatar label="Medium square avatar" initials="BQ" shape="square" size="medium" />
-      <BqAvatar label="Large square avatar" initials="BQ" shape="square" size="large" />
-    </div>
+    <BqAvatar label="Extra small avatar" initials="B" size="xsmall" />
+    <BqAvatar label="Small avatar" initials="BQ" size="small" />
+    <BqAvatar label="Medium square avatar" initials="BQ" shape="square" size="medium" />
+    <BqAvatar label="Large square avatar" initials="BQ" shape="square" size="large" />
     ```
 
     ```html Angular icon="angular"
-    <div class="avatar--sizes">
-      <bq-avatar label="Extra small avatar" initials="B" size="xsmall"></bq-avatar>
-      <bq-avatar label="Small avatar" initials="BQ" size="small"></bq-avatar>
-      <bq-avatar label="Medium square avatar" initials="BQ" shape="square" size="medium"></bq-avatar>
-      <bq-avatar label="Large square avatar" initials="BQ" shape="square" size="large"></bq-avatar>
-    </div>
+    <bq-avatar label="Extra small avatar" initials="B" size="xsmall"></bq-avatar>
+    <bq-avatar label="Small avatar" initials="BQ" size="small"></bq-avatar>
+    <bq-avatar label="Medium square avatar" initials="BQ" shape="square" size="medium"></bq-avatar>
+    <bq-avatar label="Large square avatar" initials="BQ" shape="square" size="large"></bq-avatar>
     ```
 
     ```vue Vue icon="vuejs"
@@ -245,12 +286,10 @@ Avatar supports four sizes and two shapes. Keep shape and size consistent within
     </script>
 
     <template>
-      <div class="avatar--sizes">
-        <BqAvatar label="Extra small avatar" initials="B" size="xsmall" />
-        <BqAvatar label="Small avatar" initials="BQ" size="small" />
-        <BqAvatar label="Medium square avatar" initials="BQ" shape="square" size="medium" />
-        <BqAvatar label="Large square avatar" initials="BQ" shape="square" size="large" />
-      </div>
+      <BqAvatar label="Extra small avatar" initials="B" size="xsmall" />
+      <BqAvatar label="Small avatar" initials="BQ" size="small" />
+      <BqAvatar label="Medium square avatar" initials="BQ" shape="square" size="medium" />
+      <BqAvatar label="Large square avatar" initials="BQ" shape="square" size="large" />
     </template>
     ```
   </CodeGroup>
@@ -260,19 +299,33 @@ Avatar supports four sizes and two shapes. Keep shape and size consistent within
 
 Use a grouped avatar pattern when you need to represent multiple participants in a compact space, such as shared ownership, collaborators, or team members. Keep the same size and shape across the whole group.
 
+<Tip>
+  Avatar grouping is not a built-in feature — the component renders avatars independently. A few lines of CSS are all you need to create an overlapping stack, as shown in the example below.
+</Tip>
+
 <CodeLivePreview code={`
   <style>
-    .avatar--group {
+    @scope (.avatar--group) {
       display: flex;
       align-items: center;
-    }
 
-    .avatar--group bq-avatar {
-      margin-inline-start: calc(var(--bq-spacing-s) * -1);
-    }
+      & bq-avatar {
+        cursor: pointer;
+        margin-inline-start: calc(var(--bq-spacing-xs) * -1);
 
-    .avatar--group bq-avatar:first-child {
-      margin-inline-start: 0;
+        &::part(base) {
+          transition: scale 0.25s ease-in-out;
+        }
+
+        &::part(base):hover {
+          scale: 1.2;
+          z-index: 1;
+        }
+
+        &:first-child {
+          margin-inline-start: 0;
+        }
+      }
     }
   </style>
   <div class="avatar--group">
@@ -280,31 +333,48 @@ Use a grouped avatar pattern when you need to represent multiple participants in
       alt-text="User profile"
       image="https://i.pravatar.cc/500?img=12"
       label="Olivia Bennett"
-      size="small"
     ></bq-avatar>
     <bq-avatar
       alt-text="User profile"
       image="https://i.pravatar.cc/500?img=32"
       label="Liam Carter"
-      size="small"
     ></bq-avatar>
-    <bq-avatar initials="BQ" label="BEEQ team" size="small"></bq-avatar>
+    <bq-avatar
+      alt-text="User profile"
+      image="https://i.pravatar.cc/500?img=52"
+      label="Emma Wilson"
+    ></bq-avatar>
+    <bq-avatar
+      alt-text="User profile"
+      image="https://i.pravatar.cc/500?img=10"
+      label="Noah Davis"
+    ></bq-avatar>
   </div>
 `}>
   <CodeGroup>
     ```css CSS icon="css"
-      .avatar--group {
-        display: flex;
-        align-items: center;
-      }
+    .avatar--group {
+      display: flex;
+      align-items: center;
 
-      .avatar--group bq-avatar {
-        margin-inline-start: calc(var(--bq-spacing-s) * -1);
-      }
+      & bq-avatar {
+        cursor: pointer;
+        margin-inline-start: calc(var(--bq-spacing-xs) * -1);
 
-      .avatar--group bq-avatar:first-child {
-        margin-inline-start: 0;
+        &::part(base) {
+          transition: scale 0.25s ease-in-out;
+        }
+
+        &::part(base):hover {
+          scale: 1.2;
+          z-index: 1;
+        }
+
+        &:first-child {
+          margin-inline-start: 0;
+        }
       }
+    }
     ```
 
     ```html HTML icon="html5"
@@ -371,13 +441,13 @@ Use a grouped avatar pattern when you need to represent multiple participants in
     <template>
       <div class="avatar--group">
         <BqAvatar
-          alt-text="User profile"
+          altText="User profile"
           image="https://i.pravatar.cc/500?img=12"
           label="Olivia Bennett"
           size="small"
         />
         <BqAvatar
-          alt-text="User profile"
+          altText="User profile"
           image="https://i.pravatar.cc/500?img=32"
           label="Liam Carter"
           size="small"
@@ -394,51 +464,32 @@ Use a grouped avatar pattern when you need to represent multiple participants in
 Use the `badge` slot when the avatar needs a compact status or count indicator. `bq-badge` is the most common choice.
 
 <CodeLivePreview code={`
-  <style>
-    .avatar--with-badge {
-      display: flex;
-      align-items: center;
-      gap: var(--bq-spacing-m);
-      flex-wrap: wrap;
-    }
-  </style>
-  <div class="avatar--with-badge">
-    <bq-avatar
-      alt-text="User profile"
-      image="https://i.pravatar.cc/500"
-      label="Avatar component label"
-    >
-      <bq-badge slot="badge" size="medium" background-color="ui--tertiary"></bq-badge>
-    </bq-avatar>
+  <bq-avatar
+    alt-text="User profile"
+    image="https://i.pravatar.cc/500"
+    label="Avatar component label"
+  >
+    <bq-badge slot="badge" size="medium" background-color="ui--tertiary"></bq-badge>
+  </bq-avatar>
 
-    <bq-avatar
-      alt-text="User profile"
-      image="https://i.pravatar.cc/500"
-      label="Avatar component label"
-    >
-      <bq-badge slot="badge" size="medium" background-color="ui--success"></bq-badge>
-    </bq-avatar>
+  <bq-avatar
+    alt-text="User profile"
+    image="https://i.pravatar.cc/500"
+    label="Avatar component label"
+  >
+    <bq-badge slot="badge" size="medium" background-color="ui--success"></bq-badge>
+  </bq-avatar>
 
-    <bq-avatar
-      alt-text="User profile"
-      image="https://i.pravatar.cc/500"
-      label="Avatar component label"
-    >
-      <bq-badge slot="badge">16</bq-badge>
-    </bq-avatar>
-  </div>
+  <bq-avatar
+    alt-text="User profile"
+    image="https://i.pravatar.cc/500"
+    label="Avatar component label"
+  >
+    <bq-badge slot="badge">16</bq-badge>
+  </bq-avatar>
 `}>
   <CodeGroup>
-    ```css CSS icon="css"
-      .avatar--with-badge {
-        display: flex;
-        align-items: center;
-        gap: var(--bq-spacing-m);
-        flex-wrap: wrap;
-      }
-    ```
-
-    ```html HTML icon="html5"
+    ```html HTML icon="html5" expandable
     <!-- Offline user -->
     <bq-avatar
       alt-text="User profile"
@@ -467,7 +518,7 @@ Use the `badge` slot when the avatar needs a compact status or count indicator. 
     </bq-avatar>
     ```
 
-    ```jsx React icon="react"
+    ```jsx React icon="react" expandable
     import { BqAvatar, BqBadge } from "@beeq/react";
 
     <div className="avatar--with-badge">
@@ -500,7 +551,7 @@ Use the `badge` slot when the avatar needs a compact status or count indicator. 
     </div>
     ```
 
-    ```html Angular icon="angular"
+    ```html Angular icon="angular" expandable
     <div class="avatar--with-badge">
       <!-- Offline user -->
       <bq-avatar
@@ -531,7 +582,7 @@ Use the `badge` slot when the avatar needs a compact status or count indicator. 
     </div>
     ```
 
-    ```vue Vue icon="vuejs"
+    ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
     import { BqAvatar, BqBadge } from "@beeq/vue";
     </script>
@@ -540,7 +591,7 @@ Use the `badge` slot when the avatar needs a compact status or count indicator. 
       <div class="avatar--with-badge">
         <!-- Offline user -->
         <BqAvatar
-          alt-text="User profile"
+          altText="User profile"
           image="https://i.pravatar.cc/500"
           label="Avatar component label"
         >
@@ -549,7 +600,7 @@ Use the `badge` slot when the avatar needs a compact status or count indicator. 
 
         <!-- Online user -->
         <BqAvatar
-          alt-text="User profile"
+          altText="User profile"
           image="https://i.pravatar.cc/500"
           label="Avatar component label"
         >
@@ -558,7 +609,7 @@ Use the `badge` slot when the avatar needs a compact status or count indicator. 
 
         <!-- Unread notifications -->
         <BqAvatar
-          alt-text="User profile"
+          altText="User profile"
           image="https://i.pravatar.cc/500"
           label="Avatar component label"
         >
@@ -648,9 +699,11 @@ Use the `badge` slot when the avatar needs a compact status or count indicator. 
 
 ## Accessibility
 
-Provide a descriptive `label` so assistive technologies can announce who or what the avatar represents. When the avatar uses an image, also pass `alt-text` to describe the image itself and keep `initials` short so the fallback remains readable if the image cannot load.
+The component automatically applies `role="img"` and `aria-label` to its root element. You do not need to add ARIA attributes manually — just provide a descriptive `label` and the component handles the rest.
 
-If the avatar appears alongside other components such as names, links, or buttons, make sure the surrounding pattern is still clear and accessible as a whole.
+When the avatar displays an image, also pass `alt-text` to describe what the image shows. Keep `initials` short so the text fallback remains readable if the image cannot load.
+
+If the avatar appears alongside other interactive elements such as names, links, or buttons, make sure the surrounding pattern is accessible as a whole — the avatar's built-in label describes the avatar itself, not the composite component around it.
 
 ## API reference
 
@@ -682,7 +735,7 @@ If the avatar appears alongside other components such as names, links, or button
 
 ### CSS custom properties
 
-<Expandable title="View all CSS variables" defaultOpen={true}>
+<Expandable title="CSS variables" defaultOpen={true}>
   | Variable | Description | Default |
   |---|---|---|
   | `--bq-avatar-background` | Avatar background color | `theme('backgroundColor.ui.alt')` |
