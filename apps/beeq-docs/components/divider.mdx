@@ -265,33 +265,44 @@ Dividers should be excluded from screen reader accessibility considerations.
 
 Use the default divider when you need to visually separate sections or content within your user interface.
 
-<CodeLivePreview code={`<bq-divider>\n  <p style="margin: 0; white-space: nowrap;">Default divider</p>\n</bq-divider>`}>
+<CodeLivePreview code={`<style>
+@scope (.divider-default) {
+  p {
+    margin: 0;
+    white-space: nowrap;
+  }
+}
+</style>
+<bq-divider class="divider-default">
+  <p>Default divider</p>
+</bq-divider>`}>
   <CodeGroup>
     ```html HTML icon="html5"
-    <bq-divider>
-      <p style="margin: 0; white-space: nowrap;">Default divider</p>
+    <bq-divider class="divider-default">
+      <p>Default divider</p>
     </bq-divider>
     ```
-    ```css CSS icon="css3"
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    ```css CSS icon="css"
+    @scope (.divider-default) {
+      p {
+        margin: 0;
+        white-space: nowrap;
+      }
     }
     ```
     ```jsx React icon="react"
     import { BqDivider } from "@beeq/react";
 
-    <BqDivider>
-      <p style={{ margin: 0, whiteSpace: "nowrap" }}>Default divider</p>
+    <BqDivider className="divider-default">
+      <p>Default divider</p>
     </BqDivider>
     ```
     ```html Angular icon="angular"
     <!-- Standalone: import { BqDivider } from "@beeq/angular/standalone" -->
     <!-- Modules: components are available after importing BeeQModule -->
 
-    <bq-divider>
-      <p style="margin: 0; white-space: nowrap;">Default divider</p>
+    <bq-divider class="divider-default">
+      <p>Default divider</p>
     </bq-divider>
     ```
     ```vue Vue icon="vuejs"
@@ -300,8 +311,8 @@ Use the default divider when you need to visually separate sections or content w
     </script>
 
     <template>
-      <BqDivider>
-        <p style="margin: 0; white-space: nowrap;">Default divider</p>
+      <BqDivider class="divider-default">
+        <p>Default divider</p>
       </BqDivider>
     </template>
     ```
@@ -312,30 +323,41 @@ Use the default divider when you need to visually separate sections or content w
 
 Integrate the horizontal divider by using the `orientation="horizontal"` attribute when you want to create a visual break or distinction between elements along the horizontal axis. This type of divider enhances the overall clarity and structure of your user interface.
 
-<CodeLivePreview code={`<bq-divider orientation="horizontal">\n  <p style="margin: 0; white-space: nowrap;">Horizontal divider</p>\n</bq-divider>`}>
+<CodeLivePreview code={`<style>
+@scope (.divider-horizontal) {
+  p {
+    margin: 0;
+    white-space: nowrap;
+  }
+}
+</style>
+<bq-divider class="divider-horizontal" orientation="horizontal">
+  <p>Horizontal divider</p>
+</bq-divider>`}>
   <CodeGroup>
     ```html HTML icon="html5"
-    <bq-divider orientation="horizontal">
-      <p style="margin: 0; white-space: nowrap;">Horizontal divider</p>
+    <bq-divider class="divider-horizontal" orientation="horizontal">
+      <p>Horizontal divider</p>
     </bq-divider>
     ```
-    ```css CSS icon="css3"
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    ```css CSS icon="css"
+    @scope (.divider-horizontal) {
+      p {
+        margin: 0;
+        white-space: nowrap;
+      }
     }
     ```
     ```jsx React icon="react"
     import { BqDivider } from "@beeq/react";
 
-    <BqDivider orientation="horizontal">
-      <p style={{ margin: 0, whiteSpace: "nowrap" }}>Horizontal divider</p>
+    <BqDivider className="divider-horizontal" orientation="horizontal">
+      <p>Horizontal divider</p>
     </BqDivider>
     ```
     ```html Angular icon="angular"
-    <bq-divider orientation="horizontal">
-      <p style="margin: 0; white-space: nowrap;">Horizontal divider</p>
+    <bq-divider class="divider-horizontal" orientation="horizontal">
+      <p>Horizontal divider</p>
     </bq-divider>
     ```
     ```vue Vue icon="vuejs"
@@ -344,8 +366,8 @@ Integrate the horizontal divider by using the `orientation="horizontal"` attribu
     </script>
 
     <template>
-      <BqDivider orientation="horizontal">
-        <p style="margin: 0; white-space: nowrap;">Horizontal divider</p>
+      <BqDivider class="divider-horizontal" orientation="horizontal">
+        <p>Horizontal divider</p>
       </BqDivider>
     </template>
     ```
@@ -356,40 +378,71 @@ Integrate the horizontal divider by using the `orientation="horizontal"` attribu
 
 Use the `orientation="vertical"` attribute when you want to create a visual break between elements along the vertical axis. Use it when you need to create distinct columns or sections within your layout, providing a clear delineation between different components, and ensuring a well-structured design.
 
-<CodeLivePreview code={`<div style="display: flex; align-items: center; justify-content: center; min-height: 120px; gap: 16px;">\n  <span>Left</span>\n  <bq-divider orientation="vertical">\n    <p style="margin: 0; white-space: nowrap;">Vertical divider</p>\n  </bq-divider>\n  <span>Right</span>\n</div>`}>
+<CodeLivePreview code={`<style>
+@scope (.divider-vertical) {
+  :scope {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    gap: 16px;
+  }
+
+  p {
+    margin: 0;
+    white-space: nowrap;
+  }
+}
+</style>
+<div class="divider-vertical">
+  <span>Left</span>
+  <bq-divider orientation="vertical">
+    <p>Vertical divider</p>
+  </bq-divider>
+  <span>Right</span>
+</div>`}>
   <CodeGroup>
     ```html HTML icon="html5"
-    <div style="display: flex; align-items: center; justify-content: center; min-height: 120px; gap: 16px;">
+    <div class="divider-vertical">
       <span>Left</span>
       <bq-divider orientation="vertical">
-        <p style="margin: 0; white-space: nowrap;">Vertical divider</p>
+        <p>Vertical divider</p>
       </bq-divider>
       <span>Right</span>
     </div>
     ```
-    ```css CSS icon="css3"
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    ```css CSS icon="css"
+    @scope (.divider-vertical) {
+      :scope {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 120px;
+        gap: 16px;
+      }
+
+      p {
+        margin: 0;
+        white-space: nowrap;
+      }
     }
     ```
     ```jsx React icon="react"
     import { BqDivider } from "@beeq/react";
 
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: 120, gap: 16 }}>
+    <div className="divider-vertical">
       <span>Left</span>
       <BqDivider orientation="vertical">
-        <p style={{ margin: 0, whiteSpace: "nowrap" }}>Vertical divider</p>
+        <p>Vertical divider</p>
       </BqDivider>
       <span>Right</span>
     </div>
     ```
     ```html Angular icon="angular"
-    <div style="display: flex; align-items: center; justify-content: center; min-height: 120px; gap: 16px;">
+    <div class="divider-vertical">
       <span>Left</span>
       <bq-divider orientation="vertical">
-        <p style="margin: 0; white-space: nowrap;">Vertical divider</p>
+        <p>Vertical divider</p>
       </bq-divider>
       <span>Right</span>
     </div>
@@ -400,10 +453,10 @@ Use the `orientation="vertical"` attribute when you want to create a visual brea
     </script>
 
     <template>
-      <div style="display: flex; align-items: center; justify-content: center; min-height: 120px; gap: 16px;">
+      <div class="divider-vertical">
         <span>Left</span>
         <BqDivider orientation="vertical">
-          <p style="margin: 0; white-space: nowrap;">Vertical divider</p>
+          <p>Vertical divider</p>
         </BqDivider>
         <span>Right</span>
       </div>
@@ -416,30 +469,51 @@ Use the `orientation="vertical"` attribute when you want to create a visual brea
 
 Opt for the `dashed` attribute, when you want to introduce a more subtle and stylistic separation between elements. This divider, characterized by its dashed line pattern, adds a touch of sophistication to your layout. Use it to create a visual break without overpowering the design, offering a delicate and modern approach to content separation in your application.
 
-<CodeLivePreview code={`<bq-divider dashed stroke-dash-width="12" stroke-dash-gap="7" stroke-linecap="butt"></bq-divider>`}>
+<CodeLivePreview code={`<style>
+@scope (.divider-dashed) {
+  :scope {
+    width: 100%;
+  }
+}
+</style>
+<bq-divider
+  class="divider-dashed"
+  dashed
+  stroke-dash-width="12"
+  stroke-dash-gap="7"
+  stroke-linecap="butt"
+></bq-divider>`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-divider
+      class="divider-dashed"
       dashed
       stroke-dash-width="12"
       stroke-dash-gap="7"
       stroke-linecap="butt"
     ></bq-divider>
     ```
-    ```css CSS icon="css3"
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    ```css CSS icon="css"
+    @scope (.divider-dashed) {
+      :scope {
+        width: 100%;
+      }
     }
     ```
     ```jsx React icon="react"
     import { BqDivider } from "@beeq/react";
 
-    <BqDivider dashed strokeDashWidth={12} strokeDashGap={7} strokeLinecap="butt" />
+    <BqDivider
+      className="divider-dashed"
+      dashed
+      strokeDashWidth={12}
+      strokeDashGap={7}
+      strokeLinecap="butt"
+    />
     ```
     ```html Angular icon="angular"
     <bq-divider
+      class="divider-dashed"
       dashed
       stroke-dash-width="12"
       stroke-dash-gap="7"
@@ -452,7 +526,13 @@ Opt for the `dashed` attribute, when you want to introduce a more subtle and sty
     </script>
 
     <template>
-      <BqDivider dashed :stroke-dash-width="12" :stroke-dash-gap="7" stroke-linecap="butt" />
+      <BqDivider
+        class="divider-dashed"
+        dashed
+        :stroke-dash-width="12"
+        :stroke-dash-gap="7"
+        stroke-linecap="butt"
+      />
     </template>
     ```
   </CodeGroup>
@@ -466,25 +546,32 @@ Opt for the `dashed` attribute, when you want to introduce a more subtle and sty
 
 Opt for this divider variant when you require a clean separation between sections without the need for additional text. It enhances layout organization while upholding a minimalist design aesthetic.
 
-<CodeLivePreview code={`<bq-divider></bq-divider>`}>
+<CodeLivePreview code={`<style>
+@scope (.divider-no-title) {
+  :scope {
+    width: 100%;
+  }
+}
+</style>
+<bq-divider class="divider-no-title"></bq-divider>`}>
   <CodeGroup>
     ```html HTML icon="html5"
-    <bq-divider></bq-divider>
+    <bq-divider class="divider-no-title"></bq-divider>
     ```
-    ```css CSS icon="css3"
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    ```css CSS icon="css"
+    @scope (.divider-no-title) {
+      :scope {
+        width: 100%;
+      }
     }
     ```
     ```jsx React icon="react"
     import { BqDivider } from "@beeq/react";
 
-    <BqDivider />
+    <BqDivider className="divider-no-title" />
     ```
     ```html Angular icon="angular"
-    <bq-divider></bq-divider>
+    <bq-divider class="divider-no-title"></bq-divider>
     ```
     ```vue Vue icon="vuejs"
     <script setup lang="ts">
@@ -492,7 +579,7 @@ Opt for this divider variant when you require a clean separation between section
     </script>
 
     <template>
-      <BqDivider />
+      <BqDivider class="divider-no-title" />
     </template>
     ```
   </CodeGroup>
@@ -502,30 +589,41 @@ Opt for this divider variant when you require a clean separation between section
 
 Use the `title-alignment="start"` attribute to your divider when you want to initiate a visual break at the beginning of a text section. Ideal for enhancing content structure, this divider allows you to cleanly separate text, providing a polished and organized layout.
 
-<CodeLivePreview code={`<bq-divider title-alignment="start">\n  <p style="margin: 0; white-space: nowrap;">Text Start</p>\n</bq-divider>`}>
+<CodeLivePreview code={`<style>
+@scope (.divider-text-start) {
+  p {
+    margin: 0;
+    white-space: nowrap;
+  }
+}
+</style>
+<bq-divider class="divider-text-start" title-alignment="start">
+  <p>Text Start</p>
+</bq-divider>`}>
   <CodeGroup>
     ```html HTML icon="html5"
-    <bq-divider title-alignment="start">
-      <p style="margin: 0; white-space: nowrap;">Text Start</p>
+    <bq-divider class="divider-text-start" title-alignment="start">
+      <p>Text Start</p>
     </bq-divider>
     ```
-    ```css CSS icon="css3"
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    ```css CSS icon="css"
+    @scope (.divider-text-start) {
+      p {
+        margin: 0;
+        white-space: nowrap;
+      }
     }
     ```
     ```jsx React icon="react"
     import { BqDivider } from "@beeq/react";
 
-    <BqDivider titleAlignment="start">
-      <p style={{ margin: 0, whiteSpace: "nowrap" }}>Text Start</p>
+    <BqDivider className="divider-text-start" titleAlignment="start">
+      <p>Text Start</p>
     </BqDivider>
     ```
     ```html Angular icon="angular"
-    <bq-divider title-alignment="start">
-      <p style="margin: 0; white-space: nowrap;">Text Start</p>
+    <bq-divider class="divider-text-start" title-alignment="start">
+      <p>Text Start</p>
     </bq-divider>
     ```
     ```vue Vue icon="vuejs"
@@ -534,8 +632,8 @@ Use the `title-alignment="start"` attribute to your divider when you want to ini
     </script>
 
     <template>
-      <BqDivider titleAlignment="start">
-        <p style="margin: 0; white-space: nowrap;">Text Start</p>
+      <BqDivider class="divider-text-start" titleAlignment="start">
+        <p>Text Start</p>
       </BqDivider>
     </template>
     ```
@@ -546,30 +644,41 @@ Use the `title-alignment="start"` attribute to your divider when you want to ini
 
 Use the `title-alignment="middle"` attribute to your divider when you want to initiate a visual break middle of a text section. This divider aids in maintaining a clear and structured layout, effectively delineating content within your user interface.
 
-<CodeLivePreview code={`<bq-divider title-alignment="middle">\n  <p style="margin: 0; white-space: nowrap;">Text Middle</p>\n</bq-divider>`}>
+<CodeLivePreview code={`<style>
+@scope (.divider-text-middle) {
+  p {
+    margin: 0;
+    white-space: nowrap;
+  }
+}
+</style>
+<bq-divider class="divider-text-middle" title-alignment="middle">
+  <p>Text Middle</p>
+</bq-divider>`}>
   <CodeGroup>
     ```html HTML icon="html5"
-    <bq-divider title-alignment="middle">
-      <p style="margin: 0; white-space: nowrap;">Text Middle</p>
+    <bq-divider class="divider-text-middle" title-alignment="middle">
+      <p>Text Middle</p>
     </bq-divider>
     ```
-    ```css CSS icon="css3"
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    ```css CSS icon="css"
+    @scope (.divider-text-middle) {
+      p {
+        margin: 0;
+        white-space: nowrap;
+      }
     }
     ```
     ```jsx React icon="react"
     import { BqDivider } from "@beeq/react";
 
-    <BqDivider titleAlignment="middle">
-      <p style={{ margin: 0, whiteSpace: "nowrap" }}>Text Middle</p>
+    <BqDivider className="divider-text-middle" titleAlignment="middle">
+      <p>Text Middle</p>
     </BqDivider>
     ```
     ```html Angular icon="angular"
-    <bq-divider title-alignment="middle">
-      <p style="margin: 0; white-space: nowrap;">Text Middle</p>
+    <bq-divider class="divider-text-middle" title-alignment="middle">
+      <p>Text Middle</p>
     </bq-divider>
     ```
     ```vue Vue icon="vuejs"
@@ -578,8 +687,8 @@ Use the `title-alignment="middle"` attribute to your divider when you want to in
     </script>
 
     <template>
-      <BqDivider titleAlignment="middle">
-        <p style="margin: 0; white-space: nowrap;">Text Middle</p>
+      <BqDivider class="divider-text-middle" titleAlignment="middle">
+        <p>Text Middle</p>
       </BqDivider>
     </template>
     ```
@@ -590,30 +699,41 @@ Use the `title-alignment="middle"` attribute to your divider when you want to in
 
 Use the `title-alignment="end"` attribute for situations where you wish to conclude a text section with a subtle visual break at the end of your text. By seamlessly integrating into your design, this divider ensures a polished and organized appearance, contributing to an enhanced user experience.
 
-<CodeLivePreview code={`<bq-divider title-alignment="end">\n  <p style="margin: 0; white-space: nowrap;">Text End</p>\n</bq-divider>`}>
+<CodeLivePreview code={`<style>
+@scope (.divider-text-end) {
+  p {
+    margin: 0;
+    white-space: nowrap;
+  }
+}
+</style>
+<bq-divider class="divider-text-end" title-alignment="end">
+  <p>Text End</p>
+</bq-divider>`}>
   <CodeGroup>
     ```html HTML icon="html5"
-    <bq-divider title-alignment="end">
-      <p style="margin: 0; white-space: nowrap;">Text End</p>
+    <bq-divider class="divider-text-end" title-alignment="end">
+      <p>Text End</p>
     </bq-divider>
     ```
-    ```css CSS icon="css3"
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    ```css CSS icon="css"
+    @scope (.divider-text-end) {
+      p {
+        margin: 0;
+        white-space: nowrap;
+      }
     }
     ```
     ```jsx React icon="react"
     import { BqDivider } from "@beeq/react";
 
-    <BqDivider titleAlignment="end">
-      <p style={{ margin: 0, whiteSpace: "nowrap" }}>Text End</p>
+    <BqDivider className="divider-text-end" titleAlignment="end">
+      <p>Text End</p>
     </BqDivider>
     ```
     ```html Angular icon="angular"
-    <bq-divider title-alignment="end">
-      <p style="margin: 0; white-space: nowrap;">Text End</p>
+    <bq-divider class="divider-text-end" title-alignment="end">
+      <p>Text End</p>
     </bq-divider>
     ```
     ```vue Vue icon="vuejs"
@@ -622,8 +742,8 @@ Use the `title-alignment="end"` attribute for situations where you wish to concl
     </script>
 
     <template>
-      <BqDivider titleAlignment="end">
-        <p style="margin: 0; white-space: nowrap;">Text End</p>
+      <BqDivider class="divider-text-end" titleAlignment="end">
+        <p>Text End</p>
       </BqDivider>
     </template>
     ```
