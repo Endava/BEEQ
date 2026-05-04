@@ -5,7 +5,7 @@
 @import './bq-side-menu.variables';
 
 :host {
-  @apply flex overflow-hidden;
+  @apply flex overflow-clip;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -16,6 +16,9 @@
   @apply fixed flex h-dynamic-vh grow flex-col bg-[--bq-side-menu--bg-color] is-[--bq-side-menu--width] inset-bs-0 inset-is-0;
   @apply border-0 border-e-s border-solid border-[color:--bq-side-menu--border-color];
   @apply transition-[background-color,width] duration-150;
+}
+
+.bq-side-menu--nav {
   @include hide-scrollbar;
 }
 
@@ -30,6 +33,14 @@
 .bq-side-menu--logo {
   @apply sticky top-0 z-[1] p-xs;
   @apply box-content flex items-center bg-[--bq-side-menu--bg-color] text-[color:--bq-side-menu--brand-color];
+}
+
+/* -------------------------------------------------------------------------- */
+/*                              Footer container                              */
+/* -------------------------------------------------------------------------- */
+
+.bq-side-menu--footer {
+  box-shadow: var(--bq-side-menu--footer-box-shadow);
 }
 
 /* -------------------------------------------------------------------------- */

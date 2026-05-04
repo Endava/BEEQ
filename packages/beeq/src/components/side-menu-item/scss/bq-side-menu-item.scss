@@ -9,10 +9,10 @@
 }
 
 .bq-side-menu__item {
-  @apply flex flex-grow items-center gap-x-s rounded-s border-none px-[var(--bq-side-menu-item--paddingX)] py-[var(--bq-side-menu-item--paddingY)] no-underline transition-colors duration-150;
+  @apply flex flex-grow items-center gap-x-s rounded-s border-none px-[--bq-side-menu-item--paddingX] py-[--bq-side-menu-item--paddingY] no-underline transition-colors duration-150;
 
   // Default state
-  @apply bg-[var(--bq-side-menu-item--bg-default)] text-m text-[color:var(--bq-side-menu-item--text-default)];
+  @apply bg-[--bq-side-menu-item--bg-default] text-m text-[color:--bq-side-menu-item--text-default];
 
   // Focus state
   @apply [&:not(.disabled)]:focus-visible:focus;
@@ -24,7 +24,7 @@
 
 .bq-side-menu__item.active {
   // Active state
-  @apply bg-[var(--bq-side-menu-item--bg-active)] text-m text-[color:var(--bq-side-menu-item--text-active)];
+  @apply bg-[--bq-side-menu-item--bg-active] text-m text-[color:--bq-side-menu-item--text-active];
 }
 
 .bq-side-menu__item.disabled {
@@ -32,6 +32,9 @@
 }
 
 .bq-side-menu__item.is-collapsed {
+  // Decrease the vertical padding (start and end) to make the item more compact when the side menu is collapsed
+  --bq-side-menu-item--paddingX: theme(space.m);
+
   @apply justify-center gap-0;
 
   .bq-side-menu__item--label,
