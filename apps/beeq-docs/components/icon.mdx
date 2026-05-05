@@ -1,6 +1,6 @@
 ---
 title: Icon
-description: "The icon is a graphical symbol or representation designed to convey a specific concept or action, providing a visual element that aids users in quickly understanding and interacting with various components or features within a digital interface."
+description: Icons provide compact visual cues that help people recognize actions, statuses, navigation, and meaning across an interface.
 ---
 
 import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
@@ -10,10 +10,10 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
   <img className="hidden dark:block" src="/components/images/icon/icon-overview-dark.svg" alt="BEEQ Icon component overview" />
 </Frame>
 
-Icons provide visual cues that help users quickly understand actions, statuses, navigation, and meaning across an interface. They play a crucial role in enhancing the user experience by offering concise metaphorical communication while maintaining a cohesive design language throughout the system.
+Icons help people scan and understand an interface faster. Use them to support actions, labels, and status cues, but keep them purposeful so they clarify meaning instead of adding noise.
 
 <Note>
-  BEEQ icons are based on the [Phosphor icons library](https://phosphoricons.com/), a flexible open-source icon family licensed under MIT. Before using named icons in an app, make sure your SVG assets are served from a public path and configured with `setBasePath()`.
+  Named BEEQ icons are loaded from SVG files. Before using them in an app, make sure those assets are publicly available and that you configure `setBasePath()` to point to that directory.
 </Note>
 
 ## When to use
@@ -24,55 +24,75 @@ Icons provide visual cues that help users quickly understand actions, statuses, 
       <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Use icons when
     </span>
-    - You need clear and concise visual communication
-    - An action, status, or concept benefits from a familiar visual cue
-    - The icon emphasizes key information without replacing necessary text
-    - Consistent iconography improves scanning and recognition across the UI
+    - A familiar visual cue helps users recognize an action, concept, or state faster
+    - The icon supports visible text, navigation, or status information
+    - Consistent iconography improves scanning across repeated UI patterns
+    - You need a compact visual element inside buttons, inputs, lists, or messages
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Do not use icons when
     </span>
-    - They add visual noise without improving clarity
-    - The meaning is too ambiguous to stand on its own
-    - Several icon styles are mixed in the same interface
-    - Color or icon shape would become the only way to understand important information
+    - The meaning is unclear without extra explanation
+    - Several icon styles would be mixed in the same interface
+    - The icon would become the only way to understand important information
+    - Extra icons would add clutter without improving comprehension
   </Card>
 </CardGroup>
 
-## Icon types
+## Patterns
 
-The design system supports multiple icon styles, but the most common visual distinction is between outlined and filled icons.
+The icon guidance distinguishes between two common visual styles.
 
 <CardGroup cols={2}>
   <Card title="Outlined">
-    Outline icons serve as minimalist visual cues, providing a sleek and clean appearance in digital interfaces. Their usage follows a consistent design language and helps reduce visual noise in general-purpose UI.
+    Outlined icons work well for general-purpose UI because they feel lighter and reduce visual noise.
   </Card>
   <Card title="Filled">
-    Filled icons are useful for specific actions or elements that require more emphasis or interaction. Use them thoughtfully for moments like favorites, ratings, or selected states where stronger visual weight helps.
+    Filled icons add emphasis and are useful for selected states, favorites, ratings, and other moments that need stronger visual weight.
   </Card>
 </CardGroup>
 
 ## Anatomy
 
-<Frame caption="Icon anatomy">
-  <img className="block dark:hidden" src="/components/images/icon/icon-anatomy-light.svg" alt="Icon anatomy" />
-  <img className="hidden dark:block" src="/components/images/icon/icon-anatomy-dark.svg" alt="Icon anatomy" />
+<Frame className="px-4 py-4" caption="Icon component anatomy">
+  <img className="block dark:hidden" src="/components/images/icon/icon-anatomy-light.svg" alt="BEEQ Icon component anatomy" />
+  <img className="hidden dark:block" src="/components/images/icon/icon-anatomy-dark.svg" alt="BEEQ Icon component anatomy" />
 </Frame>
 
-`bq-icon` renders a small shadow-DOM wrapper and injects a sanitized SVG into it. The component itself stays intentionally simple so it can be reused inside buttons, alerts, inputs, menus, and other higher-level components.
+`bq-icon` keeps its structure intentionally small so it can be reused inside many higher-level components. It loads an SVG and renders it inside a shadow-DOM wrapper.
 
 | Part | Element | Description |
 |---|---|---|
-| **1** | Base | The component's internal wrapper that holds the icon SVG content |
-| **2** | SVG | The rendered `<svg>` element inside the component |
+| **1** | Base | The internal wrapper that holds the rendered icon |
+| **2** | SVG | The injected `<svg>` element used for the icon graphic |
 
-## Common usage patterns
+## Design guidelines
+
+Use icons deliberately so they reinforce meaning without becoming decoration for its own sake.
+
+<Steps>
+  <Step title="Start with meaning">
+    Choose an icon only when the metaphor is widely recognizable. If the symbol is ambiguous, pair it with visible text.
+  </Step>
+  <Step title="Match size to context">
+    Smaller icons work for supporting cues, while medium icons are the standard choice for most interface controls. Larger icons should be reserved for moments like empty states or strong emphasis.
+  </Step>
+  <Step title="Keep alignment and color consistent">
+    Center icons visually with nearby text and use colors that match the meaning already established across the product.
+  </Step>
+</Steps>
+
+<Note>
+  The older icon guidance recommends not using small icons as the only interactive target. If the icon triggers an action, make sure the clickable area is comfortably large, or use an icon button pattern instead.
+</Note>
+
+## Usage
 
 ### Default
 
-Use the default icon when you want a concise and flexible visual element for navigation bars, toolbars, buttons, menus, and inline UI cues.
+Use the default icon when you need a simple visual cue inside navigation, actions, messages, or supporting UI text.
 
 <CodeLivePreview code={`<bq-icon name="bell-ringing"></bq-icon>`}>
   <CodeGroup>
@@ -106,32 +126,34 @@ Use the default icon when you want a concise and flexible visual element for nav
 </CodeLivePreview>
 
 <Tip>
-  The default icon size is `24px`, so you only need to set `size` when you want something smaller or larger.
+  The default icon size is `24px`, which is the standard medium size in the older design guidance.
 </Tip>
 
 ### Size
 
-Maintain a proportional relationship between the size of icons and surrounding text or controls. Increase size for emphasis; reduce it only when the icon remains legible and easy to target.
+Adjust `size` when the icon needs to match the surrounding text or visual emphasis more closely.
 
 <CodeLivePreview code={`
   <style>
-    .icon--sizes {
-      display: flex;
-      align-items: flex-end;
-      gap: var(--bq-spacing-l);
-      flex-wrap: wrap;
-    }
+    @scope {
+      .icon {
+        display: flex;
+        align-items: flex-end;
+        gap: var(--bq-spacing-l);
+        flex-wrap: wrap;
+      }
 
-    .icon--sizes > span {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--bq-spacing-xs2);
-      font-size: var(--bq-font-size--s);
-      color: var(--bq-text--secondary);
+      .icon > span {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--bq-spacing-xs2);
+        font-size: var(--bq-font-size--s);
+        color: var(--bq-text--secondary);
+      }
     }
   </style>
-  <div class="icon--sizes">
+  <div class="icon">
     <span><bq-icon name="bell-ringing" size="16"></bq-icon><span>16</span></span>
     <span><bq-icon name="bell-ringing"></bq-icon><span>24</span></span>
     <span><bq-icon name="bell-ringing" size="32"></bq-icon><span>32</span></span>
@@ -140,25 +162,25 @@ Maintain a proportional relationship between the size of icons and surrounding t
 `}>
   <CodeGroup>
     ```css CSS icon="css"
-      .icon--sizes {
-        display: flex;
-        align-items: flex-end;
-        gap: var(--bq-spacing-l);
-        flex-wrap: wrap;
-      }
+    .icon {
+      display: flex;
+      align-items: flex-end;
+      gap: var(--bq-spacing-l);
+      flex-wrap: wrap;
+    }
 
-      .icon--sizes > span {
-        display: inline-flex;
-        flex-direction: column;
-        align-items: center;
-        gap: var(--bq-spacing-xs2);
-        font-size: var(--bq-font-size--s);
-        color: var(--bq-text--secondary);
-      }
+    .icon > span {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--bq-spacing-xs2);
+      font-size: var(--bq-font-size--s);
+      color: var(--bq-text--secondary);
+    }
     ```
 
     ```html HTML icon="html5"
-    <div class="icon--sizes">
+    <div class="icon">
       <span><bq-icon name="bell-ringing" size="16"></bq-icon><span>16</span></span>
       <span><bq-icon name="bell-ringing"></bq-icon><span>24</span></span>
       <span><bq-icon name="bell-ringing" size="32"></bq-icon><span>32</span></span>
@@ -169,7 +191,7 @@ Maintain a proportional relationship between the size of icons and surrounding t
     ```jsx React icon="react"
     import { BqIcon } from "@beeq/react";
 
-    <div className="icon--sizes">
+    <div className="icon">
       <span><BqIcon name="bell-ringing" size={16} /><span>16</span></span>
       <span><BqIcon name="bell-ringing" /><span>24</span></span>
       <span><BqIcon name="bell-ringing" size={32} /><span>32</span></span>
@@ -178,7 +200,7 @@ Maintain a proportional relationship between the size of icons and surrounding t
     ```
 
     ```html Angular icon="angular"
-    <div class="icon--sizes">
+    <div class="icon">
       <span><bq-icon name="bell-ringing" size="16"></bq-icon><span>16</span></span>
       <span><bq-icon name="bell-ringing"></bq-icon><span>24</span></span>
       <span><bq-icon name="bell-ringing" size="32"></bq-icon><span>32</span></span>
@@ -192,7 +214,7 @@ Maintain a proportional relationship between the size of icons and surrounding t
     </script>
 
     <template>
-      <div class="icon--sizes">
+      <div class="icon">
         <span><BqIcon name="bell-ringing" :size="16" /><span>16</span></span>
         <span><BqIcon name="bell-ringing" /><span>24</span></span>
         <span><BqIcon name="bell-ringing" :size="32" /><span>32</span></span>
@@ -205,26 +227,28 @@ Maintain a proportional relationship between the size of icons and surrounding t
 
 ### Color
 
-An icon inherits color naturally from its parent, but you can also assign a specific BEEQ token value with the `color` prop. Choose colors carefully so the meaning remains clear and consistent.
+An icon inherits color from its parent by default, but you can also assign a token value through the `color` prop.
 
 <CodeLivePreview code={`
   <style>
-    .icon--colors {
-      display: flex;
-      align-items: center;
-      gap: var(--bq-spacing-xl);
-      flex-wrap: wrap;
-    }
+    @scope {
+      .icon {
+        display: flex;
+        align-items: center;
+        gap: var(--bq-spacing-xl);
+        flex-wrap: wrap;
+      }
 
-    .icon--colors > span {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--bq-spacing-xs2);
-      font-size: var(--bq-font-size--s);
+      .icon > span {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--bq-spacing-xs2);
+        font-size: var(--bq-font-size--s);
+      }
     }
   </style>
-  <div class="icon--colors">
+  <div class="icon">
     <span style="color: var(--bq-text--brand);">
       <bq-icon name="star"></bq-icon>
       <span>Inherited</span>
@@ -245,24 +269,24 @@ An icon inherits color naturally from its parent, but you can also assign a spec
 `}>
   <CodeGroup>
     ```css CSS icon="css"
-      .icon--colors {
-        display: flex;
-        align-items: center;
-        gap: var(--bq-spacing-xl);
-        flex-wrap: wrap;
-      }
+    .icon {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xl);
+      flex-wrap: wrap;
+    }
 
-      .icon--colors > span {
-        display: inline-flex;
-        flex-direction: column;
-        align-items: center;
-        gap: var(--bq-spacing-xs2);
-        font-size: var(--bq-font-size--s);
-      }
+    .icon > span {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--bq-spacing-xs2);
+      font-size: var(--bq-font-size--s);
+    }
     ```
 
     ```html HTML icon="html5"
-    <div class="icon--colors">
+    <div class="icon">
       <span style="color: var(--bq-text--brand);">
         <bq-icon name="star"></bq-icon>
         <span>Inherited</span>
@@ -285,7 +309,7 @@ An icon inherits color naturally from its parent, but you can also assign a spec
     ```jsx React icon="react"
     import { BqIcon } from "@beeq/react";
 
-    <div className="icon--colors">
+    <div className="icon">
       <span style={{ color: "var(--bq-text--brand)" }}>
         <BqIcon name="star" />
         <span>Inherited</span>
@@ -306,7 +330,7 @@ An icon inherits color naturally from its parent, but you can also assign a spec
     ```
 
     ```html Angular icon="angular"
-    <div class="icon--colors">
+    <div class="icon">
       <span style="color: var(--bq-text--brand);">
         <bq-icon name="star"></bq-icon>
         <span>Inherited</span>
@@ -332,7 +356,7 @@ An icon inherits color naturally from its parent, but you can also assign a spec
     </script>
 
     <template>
-      <div class="icon--colors">
+      <div class="icon">
         <span style="color: var(--bq-text--brand);">
           <BqIcon name="star" />
           <span>Inherited</span>
@@ -356,32 +380,36 @@ An icon inherits color naturally from its parent, but you can also assign a spec
 </CodeLivePreview>
 
 <Warning>
-  The `color` value should be a valid BEEQ token. Avoid using color alone to communicate meaning, especially for states like success, warning, or error.
+  The `color` value must be a valid BEEQ token. Do not rely on color alone to communicate status or intent.
 </Warning>
+
+## Options
 
 ### Styles
 
-You can choose from multiple icon styles by adding a style suffix to the icon name, such as `-thin`, `-light`, `-bold`, `-fill`, or `-duotone`. The default unsuffixed name is the regular style. This is the preferred approach over the legacy `weight` prop.
+Use icon-name suffixes like `-thin`, `-light`, `-bold`, `-duotone`, and `-fill` to select a style. This is the preferred approach over the deprecated `weight` prop.
 
 <CodeLivePreview code={`
   <style>
-    .icon--styles {
-      display: flex;
-      align-items: center;
-      gap: var(--bq-spacing-l);
-      flex-wrap: wrap;
-    }
+    @scope {
+      .icon {
+        display: flex;
+        align-items: center;
+        gap: var(--bq-spacing-l);
+        flex-wrap: wrap;
+      }
 
-    .icon--styles > span {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--bq-spacing-xs2);
-      font-size: var(--bq-font-size--s);
-      color: var(--bq-text--secondary);
+      .icon > span {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--bq-spacing-xs2);
+        font-size: var(--bq-font-size--s);
+        color: var(--bq-text--secondary);
+      }
     }
   </style>
-  <div class="icon--styles">
+  <div class="icon">
     <span><bq-icon name="heart"></bq-icon><span>regular</span></span>
     <span><bq-icon name="heart-thin"></bq-icon><span>thin</span></span>
     <span><bq-icon name="heart-light"></bq-icon><span>light</span></span>
@@ -392,25 +420,25 @@ You can choose from multiple icon styles by adding a style suffix to the icon na
 `}>
   <CodeGroup>
     ```css CSS icon="css"
-      .icon--styles {
-        display: flex;
-        align-items: center;
-        gap: var(--bq-spacing-l);
-        flex-wrap: wrap;
-      }
+    .icon {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-l);
+      flex-wrap: wrap;
+    }
 
-      .icon--styles > span {
-        display: inline-flex;
-        flex-direction: column;
-        align-items: center;
-        gap: var(--bq-spacing-xs2);
-        font-size: var(--bq-font-size--s);
-        color: var(--bq-text--secondary);
-      }
+    .icon > span {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--bq-spacing-xs2);
+      font-size: var(--bq-font-size--s);
+      color: var(--bq-text--secondary);
+    }
     ```
 
     ```html HTML icon="html5"
-    <div class="icon--styles">
+    <div class="icon">
       <span><bq-icon name="heart"></bq-icon><span>regular</span></span>
       <span><bq-icon name="heart-thin"></bq-icon><span>thin</span></span>
       <span><bq-icon name="heart-light"></bq-icon><span>light</span></span>
@@ -423,7 +451,7 @@ You can choose from multiple icon styles by adding a style suffix to the icon na
     ```jsx React icon="react"
     import { BqIcon } from "@beeq/react";
 
-    <div className="icon--styles">
+    <div className="icon">
       <span><BqIcon name="heart" /><span>regular</span></span>
       <span><BqIcon name="heart-thin" /><span>thin</span></span>
       <span><BqIcon name="heart-light" /><span>light</span></span>
@@ -434,7 +462,7 @@ You can choose from multiple icon styles by adding a style suffix to the icon na
     ```
 
     ```html Angular icon="angular"
-    <div class="icon--styles">
+    <div class="icon">
       <span><bq-icon name="heart"></bq-icon><span>regular</span></span>
       <span><bq-icon name="heart-thin"></bq-icon><span>thin</span></span>
       <span><bq-icon name="heart-light"></bq-icon><span>light</span></span>
@@ -450,7 +478,7 @@ You can choose from multiple icon styles by adding a style suffix to the icon na
     </script>
 
     <template>
-      <div class="icon--styles">
+      <div class="icon">
         <span><BqIcon name="heart" /><span>regular</span></span>
         <span><BqIcon name="heart-thin" /><span>thin</span></span>
         <span><BqIcon name="heart-light" /><span>light</span></span>
@@ -464,12 +492,12 @@ You can choose from multiple icon styles by adding a style suffix to the icon na
 </CodeLivePreview>
 
 <Warning>
-  The `weight` prop is deprecated. Prefer including the style directly in the icon name, for example `heart-fill` instead of `name="heart" weight="fill"`.
+  The `weight` prop is deprecated. Prefer putting the style directly into the icon name, such as `heart-fill`.
 </Warning>
 
 ### Custom SVG source
 
-Use the `src` prop when you want to load a custom icon from a local or CORS-enabled endpoint. When `src` is set, the `name` prop is ignored.
+Use `src` when you want to load a custom icon from a local or CORS-enabled endpoint.
 
 <CodeLivePreview code={`<bq-icon
   src="https://storybook.beeq.design/assets/wallet.svg"
@@ -520,112 +548,34 @@ Use the `src` prop when you want to load a custom icon from a local or CORS-enab
 </CodeLivePreview>
 
 <Tip>
-  Custom SVG files must be served locally or from a CORS-enabled endpoint so the browser can fetch them successfully.
+  When you use `src`, always provide `label`. Unlike named icons, a custom SVG source does not give the component a useful fallback name.
 </Tip>
 
 ### Explore icons
 
-The Phosphor library includes a wide range of icons. The example below shows only a few of the available names you can use with BEEQ.
+The Phosphor library gives you a broad icon set. The example below shows only a small sample of the available names.
 
 <CodeLivePreview code={`
   <style>
-    .icon-explore-button {
-      display: inline-block;
-      margin-bottom: var(--bq-spacing-xl);
-    }
-
-    .icon-explore-button::part(button) {
-      text-decoration: none;
-    }
-
-    .icon-grid {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-      gap: 1rem;
-    }
-
-    .icon-grid .group {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: var(--bq-spacing-xs2);
-      font-size: var(--bq-font-size--s);
-      color: var(--bq-text--secondary);
-    }
-
-    .icon-grid .group > div {
-      display: flex;
-      justify-content: center;
-      width: 100%;
-      border: 1px solid var(--bq-stroke--primary);
-      border-radius: var(--bq-radius--m);
-      padding-block: var(--bq-spacing-m);
-      transition: transform 0.3s ease;
-    }
-
-    .icon-grid .group > div:hover {
-      transform: scale(1.1);
-    }
-  </style>
-  <bq-button class="icon-explore-button" href="https://phosphoricons.com/" target="_blank">
-    <bq-icon name="binoculars-fill" slot="prefix"></bq-icon>
-    Explore all the icons available
-    <bq-icon class="ms-m" name="caret-right" slot="suffix"></bq-icon>
-  </bq-button>
-  <div class="icon-grid">
-    <div class="group"><div><bq-icon name="map-trifold"></bq-icon></div><span>map-trifold</span></div>
-    <div class="group"><div><bq-icon name="codesandbox-logo"></bq-icon></div><span>codesandbox-logo</span></div>
-    <div class="group"><div><bq-icon name="user-list"></bq-icon></div><span>user-list</span></div>
-    <div class="group"><div><bq-icon name="user-square"></bq-icon></div><span>user-square</span></div>
-    <div class="group"><div><bq-icon name="map-pin-line"></bq-icon></div><span>map-pin-line</span></div>
-    <div class="group"><div><bq-icon name="briefcase-metal"></bq-icon></div><span>briefcase-metal</span></div>
-    <div class="group"><div><bq-icon name="arrow-bend-double-up-left"></bq-icon></div><span>arrow-bend-double-up-left</span></div>
-    <div class="group"><div><bq-icon name="heart-half"></bq-icon></div><span>heart-half</span></div>
-    <div class="group"><div><bq-icon name="arrow-elbow-down-right"></bq-icon></div><span>arrow-elbow-down-right</span></div>
-    <div class="group"><div><bq-icon name="user-focus"></bq-icon></div><span>user-focus</span></div>
-    <div class="group"><div><bq-icon name="pen"></bq-icon></div><span>pen</span></div>
-    <div class="group"><div><bq-icon name="windows-logo"></bq-icon></div><span>windows-logo</span></div>
-    <div class="group"><div><bq-icon name="church"></bq-icon></div><span>church</span></div>
-    <div class="group"><div><bq-icon name="twitter-logo"></bq-icon></div><span>twitter-logo</span></div>
-    <div class="group"><div><bq-icon name="chart-donut"></bq-icon></div><span>chart-donut</span></div>
-    <div class="group"><div><bq-icon name="hourglass-medium"></bq-icon></div><span>hourglass-medium</span></div>
-    <div class="group"><div><bq-icon name="eye"></bq-icon></div><span>eye</span></div>
-    <div class="group"><div><bq-icon name="clipboard-text"></bq-icon></div><span>clipboard-text</span></div>
-    <div class="group"><div><bq-icon name="pencil-simple-slash"></bq-icon></div><span>pencil-simple-slash</span></div>
-    <div class="group"><div><bq-icon name="chart-line-down"></bq-icon></div><span>chart-line-down</span></div>
-    <div class="group"><div><bq-icon name="file-lock"></bq-icon></div><span>file-lock</span></div>
-    <div class="group"><div><bq-icon name="selection-background"></bq-icon></div><span>selection-background</span></div>
-    <div class="group"><div><bq-icon name="twitch-logo"></bq-icon></div><span>twitch-logo</span></div>
-    <div class="group"><div><bq-icon name="gradient"></bq-icon></div><span>gradient</span></div>
-    <div class="group"><div><bq-icon name="archive"></bq-icon></div><span>archive</span></div>
-    <div class="group"><div><bq-icon name="bowl-food"></bq-icon></div><span>bowl-food</span></div>
-    <div class="group"><div><bq-icon name="image-square"></bq-icon></div><span>image-square</span></div>
-    <div class="group"><div><bq-icon name="skip-forward"></bq-icon></div><span>skip-forward</span></div>
-    <div class="group"><div><bq-icon name="number-circle-four"></bq-icon></div><span>number-circle-four</span></div>
-    <div class="group"><div><bq-icon name="person-arms-spread"></bq-icon></div><span>person-arms-spread</span></div>
-    <div class="group"><div><bq-icon name="parallelogram"></bq-icon></div><span>parallelogram</span></div>
-    <div class="group"><div><bq-icon name="confetti"></bq-icon></div><span>confetti</span></div>
-    <div class="group"><div><bq-icon name="check-fat"></bq-icon></div><span>check-fat</span></div>
-    <div class="group"><div><bq-icon name="coins"></bq-icon></div><span>coins</span></div>
-    <div class="group"><div><bq-icon name="bezier-curve"></bq-icon></div><span>bezier-curve</span></div>
-    <div class="group"><div><bq-icon name="medium-logo"></bq-icon></div><span>medium-logo</span></div>
-  </div>
-`}>
-  <CodeGroup>
-    ```css CSS icon="css"
-      .icon-explore-button {
-        display: inline-block;
-        margin-bottom: var(--bq-spacing-xl);
+    @scope {
+      :scope {
+        align-items: stretch !important;
       }
 
-      .icon-explore-button::part(button) {
+      .icon {
+        inline-size: 100%;
+      }
+
+      .icon-link {
+        display: inline-block;
+        margin-block-end: var(--bq-spacing-xl);
+      }
+
+      .icon-link::part(button) {
         text-decoration: none;
       }
 
       .icon-grid {
-        width: 100%;
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
         gap: 1rem;
@@ -644,7 +594,7 @@ The Phosphor library includes a wide range of icons. The example below shows onl
       .icon-grid .group > div {
         display: flex;
         justify-content: center;
-        width: 100%;
+        inline-size: 100%;
         border: 1px solid var(--bq-stroke--primary);
         border-radius: var(--bq-radius--m);
         padding-block: var(--bq-spacing-m);
@@ -654,15 +604,14 @@ The Phosphor library includes a wide range of icons. The example below shows onl
       .icon-grid .group > div:hover {
         transform: scale(1.1);
       }
-    ```
-
-    ```html HTML icon="html5"
-    <bq-button class="icon-explore-button" href="https://phosphoricons.com/" target="_blank">
+    }
+  </style>
+  <div class="icon">
+    <bq-button class="icon-link" href="https://phosphoricons.com/" target="_blank">
       <bq-icon name="binoculars-fill" slot="prefix"></bq-icon>
       Explore all the icons available
       <bq-icon class="ms-m" name="caret-right" slot="suffix"></bq-icon>
     </bq-button>
-
     <div class="icon-grid">
       <div class="group"><div><bq-icon name="map-trifold"></bq-icon></div><span>map-trifold</span></div>
       <div class="group"><div><bq-icon name="codesandbox-logo"></bq-icon></div><span>codesandbox-logo</span></div>
@@ -678,9 +627,9 @@ The Phosphor library includes a wide range of icons. The example below shows onl
       <div class="group"><div><bq-icon name="windows-logo"></bq-icon></div><span>windows-logo</span></div>
       <div class="group"><div><bq-icon name="church"></bq-icon></div><span>church</span></div>
       <div class="group"><div><bq-icon name="twitter-logo"></bq-icon></div><span>twitter-logo</span></div>
-      <div class="group"><div><bq-icon name="chart-donut"></bq-icon></div><span>chart-donut</span></div>
       <div class="group"><div><bq-icon name="hourglass-medium"></bq-icon></div><span>hourglass-medium</span></div>
       <div class="group"><div><bq-icon name="eye"></bq-icon></div><span>eye</span></div>
+      <div class="group"><div><bq-icon name="chart-donut"></bq-icon></div><span>chart-donut</span></div>
       <div class="group"><div><bq-icon name="clipboard-text"></bq-icon></div><span>clipboard-text</span></div>
       <div class="group"><div><bq-icon name="pencil-simple-slash"></bq-icon></div><span>pencil-simple-slash</span></div>
       <div class="group"><div><bq-icon name="chart-line-down"></bq-icon></div><span>chart-line-down</span></div>
@@ -701,13 +650,108 @@ The Phosphor library includes a wide range of icons. The example below shows onl
       <div class="group"><div><bq-icon name="bezier-curve"></bq-icon></div><span>bezier-curve</span></div>
       <div class="group"><div><bq-icon name="medium-logo"></bq-icon></div><span>medium-logo</span></div>
     </div>
+  </div>
+`}>
+  <CodeGroup>
+    ```css CSS icon="css"
+    .icon {
+      inline-size: 100%;
+    }
+
+    .icon-link {
+      display: inline-block;
+      margin-block-end: var(--bq-spacing-xl);
+    }
+
+    .icon-link::part(button) {
+      text-decoration: none;
+    }
+
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+      gap: 1rem;
+    }
+
+    .icon-grid .group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: var(--bq-spacing-xs2);
+      font-size: var(--bq-font-size--s);
+      color: var(--bq-text--secondary);
+    }
+
+    .icon-grid .group > div {
+      display: flex;
+      justify-content: center;
+      inline-size: 100%;
+      border: 1px solid var(--bq-stroke--primary);
+      border-radius: var(--bq-radius--m);
+      padding-block: var(--bq-spacing-m);
+      transition: transform 0.3s ease;
+    }
+
+    .icon-grid .group > div:hover {
+      transform: scale(1.1);
+    }
+    ```
+
+    ```html HTML icon="html5"
+    <div class="icon">
+      <bq-button class="icon-link" href="https://phosphoricons.com/" target="_blank">
+        <bq-icon name="binoculars-fill" slot="prefix"></bq-icon>
+        Explore all the icons available
+        <bq-icon class="ms-m" name="caret-right" slot="suffix"></bq-icon>
+      </bq-button>
+
+      <div class="icon-grid">
+        <div class="group"><div><bq-icon name="map-trifold"></bq-icon></div><span>map-trifold</span></div>
+        <div class="group"><div><bq-icon name="codesandbox-logo"></bq-icon></div><span>codesandbox-logo</span></div>
+        <div class="group"><div><bq-icon name="user-list"></bq-icon></div><span>user-list</span></div>
+        <div class="group"><div><bq-icon name="user-square"></bq-icon></div><span>user-square</span></div>
+        <div class="group"><div><bq-icon name="map-pin-line"></bq-icon></div><span>map-pin-line</span></div>
+        <div class="group"><div><bq-icon name="briefcase-metal"></bq-icon></div><span>briefcase-metal</span></div>
+        <div class="group"><div><bq-icon name="arrow-bend-double-up-left"></bq-icon></div><span>arrow-bend-double-up-left</span></div>
+        <div class="group"><div><bq-icon name="heart-half"></bq-icon></div><span>heart-half</span></div>
+        <div class="group"><div><bq-icon name="arrow-elbow-down-right"></bq-icon></div><span>arrow-elbow-down-right</span></div>
+        <div class="group"><div><bq-icon name="user-focus"></bq-icon></div><span>user-focus</span></div>
+        <div class="group"><div><bq-icon name="pen"></bq-icon></div><span>pen</span></div>
+        <div class="group"><div><bq-icon name="windows-logo"></bq-icon></div><span>windows-logo</span></div>
+        <div class="group"><div><bq-icon name="church"></bq-icon></div><span>church</span></div>
+        <div class="group"><div><bq-icon name="twitter-logo"></bq-icon></div><span>twitter-logo</span></div>
+        <div class="group"><div><bq-icon name="hourglass-medium"></bq-icon></div><span>hourglass-medium</span></div>
+        <div class="group"><div><bq-icon name="eye"></bq-icon></div><span>eye</span></div>
+        <div class="group"><div><bq-icon name="chart-donut"></bq-icon></div><span>chart-donut</span></div>
+        <div class="group"><div><bq-icon name="clipboard-text"></bq-icon></div><span>clipboard-text</span></div>
+        <div class="group"><div><bq-icon name="pencil-simple-slash"></bq-icon></div><span>pencil-simple-slash</span></div>
+        <div class="group"><div><bq-icon name="chart-line-down"></bq-icon></div><span>chart-line-down</span></div>
+        <div class="group"><div><bq-icon name="file-lock"></bq-icon></div><span>file-lock</span></div>
+        <div class="group"><div><bq-icon name="selection-background"></bq-icon></div><span>selection-background</span></div>
+        <div class="group"><div><bq-icon name="twitch-logo"></bq-icon></div><span>twitch-logo</span></div>
+        <div class="group"><div><bq-icon name="gradient"></bq-icon></div><span>gradient</span></div>
+        <div class="group"><div><bq-icon name="archive"></bq-icon></div><span>archive</span></div>
+        <div class="group"><div><bq-icon name="bowl-food"></bq-icon></div><span>bowl-food</span></div>
+        <div class="group"><div><bq-icon name="image-square"></bq-icon></div><span>image-square</span></div>
+        <div class="group"><div><bq-icon name="skip-forward"></bq-icon></div><span>skip-forward</span></div>
+        <div class="group"><div><bq-icon name="number-circle-four"></bq-icon></div><span>number-circle-four</span></div>
+        <div class="group"><div><bq-icon name="person-arms-spread"></bq-icon></div><span>person-arms-spread</span></div>
+        <div class="group"><div><bq-icon name="parallelogram"></bq-icon></div><span>parallelogram</span></div>
+        <div class="group"><div><bq-icon name="confetti"></bq-icon></div><span>confetti</span></div>
+        <div class="group"><div><bq-icon name="check-fat"></bq-icon></div><span>check-fat</span></div>
+        <div class="group"><div><bq-icon name="coins"></bq-icon></div><span>coins</span></div>
+        <div class="group"><div><bq-icon name="bezier-curve"></bq-icon></div><span>bezier-curve</span></div>
+        <div class="group"><div><bq-icon name="medium-logo"></bq-icon></div><span>medium-logo</span></div>
+      </div>
+    </div>
     ```
 
     ```jsx React icon="react"
     import { BqButton, BqIcon } from "@beeq/react";
 
-    <>
-      <BqButton className="icon-explore-button" href="https://phosphoricons.com/" target="_blank">
+    <div className="icon">
+      <BqButton className="icon-link" href="https://phosphoricons.com/" target="_blank">
         <BqIcon name="binoculars-fill" slot="prefix" />
         Explore all the icons available
         <BqIcon className="ms-m" name="caret-right" slot="suffix" />
@@ -728,9 +772,9 @@ The Phosphor library includes a wide range of icons. The example below shows onl
         <div className="group"><div><BqIcon name="windows-logo" /></div><span>windows-logo</span></div>
         <div className="group"><div><BqIcon name="church" /></div><span>church</span></div>
         <div className="group"><div><BqIcon name="twitter-logo" /></div><span>twitter-logo</span></div>
-        <div className="group"><div><BqIcon name="chart-donut" /></div><span>chart-donut</span></div>
         <div className="group"><div><BqIcon name="hourglass-medium" /></div><span>hourglass-medium</span></div>
         <div className="group"><div><BqIcon name="eye" /></div><span>eye</span></div>
+        <div className="group"><div><BqIcon name="chart-donut" /></div><span>chart-donut</span></div>
         <div className="group"><div><BqIcon name="clipboard-text" /></div><span>clipboard-text</span></div>
         <div className="group"><div><BqIcon name="pencil-simple-slash" /></div><span>pencil-simple-slash</span></div>
         <div className="group"><div><BqIcon name="chart-line-down" /></div><span>chart-line-down</span></div>
@@ -751,55 +795,55 @@ The Phosphor library includes a wide range of icons. The example below shows onl
         <div className="group"><div><BqIcon name="bezier-curve" /></div><span>bezier-curve</span></div>
         <div className="group"><div><BqIcon name="medium-logo" /></div><span>medium-logo</span></div>
       </div>
-    </>
+    </div>
     ```
 
     ```html Angular icon="angular"
-    <!-- Standalone: import { BqButton, BqIcon } from "@beeq/angular/standalone" -->
+    <div class="icon">
+      <bq-button class="icon-link" href="https://phosphoricons.com/" target="_blank">
+        <bq-icon name="binoculars-fill" slot="prefix"></bq-icon>
+        Explore all the icons available
+        <bq-icon class="ms-m" name="caret-right" slot="suffix"></bq-icon>
+      </bq-button>
 
-    <bq-button class="icon-explore-button" href="https://phosphoricons.com/" target="_blank">
-      <bq-icon name="binoculars-fill" slot="prefix"></bq-icon>
-      Explore all the icons available
-      <bq-icon class="ms-m" name="caret-right" slot="suffix"></bq-icon>
-    </bq-button>
-
-    <div class="icon-grid">
-      <div class="group"><div><bq-icon name="map-trifold"></bq-icon></div><span>map-trifold</span></div>
-      <div class="group"><div><bq-icon name="codesandbox-logo"></bq-icon></div><span>codesandbox-logo</span></div>
-      <div class="group"><div><bq-icon name="user-list"></bq-icon></div><span>user-list</span></div>
-      <div class="group"><div><bq-icon name="user-square"></bq-icon></div><span>user-square</span></div>
-      <div class="group"><div><bq-icon name="map-pin-line"></bq-icon></div><span>map-pin-line</span></div>
-      <div class="group"><div><bq-icon name="briefcase-metal"></bq-icon></div><span>briefcase-metal</span></div>
-      <div class="group"><div><bq-icon name="arrow-bend-double-up-left"></bq-icon></div><span>arrow-bend-double-up-left</span></div>
-      <div class="group"><div><bq-icon name="heart-half"></bq-icon></div><span>heart-half</span></div>
-      <div class="group"><div><bq-icon name="arrow-elbow-down-right"></bq-icon></div><span>arrow-elbow-down-right</span></div>
-      <div class="group"><div><bq-icon name="user-focus"></bq-icon></div><span>user-focus</span></div>
-      <div class="group"><div><bq-icon name="pen"></bq-icon></div><span>pen</span></div>
-      <div class="group"><div><bq-icon name="windows-logo"></bq-icon></div><span>windows-logo</span></div>
-      <div class="group"><div><bq-icon name="church"></bq-icon></div><span>church</span></div>
-      <div class="group"><div><bq-icon name="twitter-logo"></bq-icon></div><span>twitter-logo</span></div>
-      <div class="group"><div><bq-icon name="chart-donut"></bq-icon></div><span>chart-donut</span></div>
-      <div class="group"><div><bq-icon name="hourglass-medium"></bq-icon></div><span>hourglass-medium</span></div>
-      <div class="group"><div><bq-icon name="eye"></bq-icon></div><span>eye</span></div>
-      <div class="group"><div><bq-icon name="clipboard-text"></bq-icon></div><span>clipboard-text</span></div>
-      <div class="group"><div><bq-icon name="pencil-simple-slash"></bq-icon></div><span>pencil-simple-slash</span></div>
-      <div class="group"><div><bq-icon name="chart-line-down"></bq-icon></div><span>chart-line-down</span></div>
-      <div class="group"><div><bq-icon name="file-lock"></bq-icon></div><span>file-lock</span></div>
-      <div class="group"><div><bq-icon name="selection-background"></bq-icon></div><span>selection-background</span></div>
-      <div class="group"><div><bq-icon name="twitch-logo"></bq-icon></div><span>twitch-logo</span></div>
-      <div class="group"><div><bq-icon name="gradient"></bq-icon></div><span>gradient</span></div>
-      <div class="group"><div><bq-icon name="archive"></bq-icon></div><span>archive</span></div>
-      <div class="group"><div><bq-icon name="bowl-food"></bq-icon></div><span>bowl-food</span></div>
-      <div class="group"><div><bq-icon name="image-square"></bq-icon></div><span>image-square</span></div>
-      <div class="group"><div><bq-icon name="skip-forward"></bq-icon></div><span>skip-forward</span></div>
-      <div class="group"><div><bq-icon name="number-circle-four"></bq-icon></div><span>number-circle-four</span></div>
-      <div class="group"><div><bq-icon name="person-arms-spread"></bq-icon></div><span>person-arms-spread</span></div>
-      <div class="group"><div><bq-icon name="parallelogram"></bq-icon></div><span>parallelogram</span></div>
-      <div class="group"><div><bq-icon name="confetti"></bq-icon></div><span>confetti</span></div>
-      <div class="group"><div><bq-icon name="check-fat"></bq-icon></div><span>check-fat</span></div>
-      <div class="group"><div><bq-icon name="coins"></bq-icon></div><span>coins</span></div>
-      <div class="group"><div><bq-icon name="bezier-curve"></bq-icon></div><span>bezier-curve</span></div>
-      <div class="group"><div><bq-icon name="medium-logo"></bq-icon></div><span>medium-logo</span></div>
+      <div class="icon-grid">
+        <div class="group"><div><bq-icon name="map-trifold"></bq-icon></div><span>map-trifold</span></div>
+        <div class="group"><div><bq-icon name="codesandbox-logo"></bq-icon></div><span>codesandbox-logo</span></div>
+        <div class="group"><div><bq-icon name="user-list"></bq-icon></div><span>user-list</span></div>
+        <div class="group"><div><bq-icon name="user-square"></bq-icon></div><span>user-square</span></div>
+        <div class="group"><div><bq-icon name="map-pin-line"></bq-icon></div><span>map-pin-line</span></div>
+        <div class="group"><div><bq-icon name="briefcase-metal"></bq-icon></div><span>briefcase-metal</span></div>
+        <div class="group"><div><bq-icon name="arrow-bend-double-up-left"></bq-icon></div><span>arrow-bend-double-up-left</span></div>
+        <div class="group"><div><bq-icon name="heart-half"></bq-icon></div><span>heart-half</span></div>
+        <div class="group"><div><bq-icon name="arrow-elbow-down-right"></bq-icon></div><span>arrow-elbow-down-right</span></div>
+        <div class="group"><div><bq-icon name="user-focus"></bq-icon></div><span>user-focus</span></div>
+        <div class="group"><div><bq-icon name="pen"></bq-icon></div><span>pen</span></div>
+        <div class="group"><div><bq-icon name="windows-logo"></bq-icon></div><span>windows-logo</span></div>
+        <div class="group"><div><bq-icon name="church"></bq-icon></div><span>church</span></div>
+        <div class="group"><div><bq-icon name="twitter-logo"></bq-icon></div><span>twitter-logo</span></div>
+        <div class="group"><div><bq-icon name="hourglass-medium"></bq-icon></div><span>hourglass-medium</span></div>
+        <div class="group"><div><bq-icon name="eye"></bq-icon></div><span>eye</span></div>
+        <div class="group"><div><bq-icon name="chart-donut"></bq-icon></div><span>chart-donut</span></div>
+        <div class="group"><div><bq-icon name="clipboard-text"></bq-icon></div><span>clipboard-text</span></div>
+        <div class="group"><div><bq-icon name="pencil-simple-slash"></bq-icon></div><span>pencil-simple-slash</span></div>
+        <div class="group"><div><bq-icon name="chart-line-down"></bq-icon></div><span>chart-line-down</span></div>
+        <div class="group"><div><bq-icon name="file-lock"></bq-icon></div><span>file-lock</span></div>
+        <div class="group"><div><bq-icon name="selection-background"></bq-icon></div><span>selection-background</span></div>
+        <div class="group"><div><bq-icon name="twitch-logo"></bq-icon></div><span>twitch-logo</span></div>
+        <div class="group"><div><bq-icon name="gradient"></bq-icon></div><span>gradient</span></div>
+        <div class="group"><div><bq-icon name="archive"></bq-icon></div><span>archive</span></div>
+        <div class="group"><div><bq-icon name="bowl-food"></bq-icon></div><span>bowl-food</span></div>
+        <div class="group"><div><bq-icon name="image-square"></bq-icon></div><span>image-square</span></div>
+        <div class="group"><div><bq-icon name="skip-forward"></bq-icon></div><span>skip-forward</span></div>
+        <div class="group"><div><bq-icon name="number-circle-four"></bq-icon></div><span>number-circle-four</span></div>
+        <div class="group"><div><bq-icon name="person-arms-spread"></bq-icon></div><span>person-arms-spread</span></div>
+        <div class="group"><div><bq-icon name="parallelogram"></bq-icon></div><span>parallelogram</span></div>
+        <div class="group"><div><bq-icon name="confetti"></bq-icon></div><span>confetti</span></div>
+        <div class="group"><div><bq-icon name="check-fat"></bq-icon></div><span>check-fat</span></div>
+        <div class="group"><div><bq-icon name="coins"></bq-icon></div><span>coins</span></div>
+        <div class="group"><div><bq-icon name="bezier-curve"></bq-icon></div><span>bezier-curve</span></div>
+        <div class="group"><div><bq-icon name="medium-logo"></bq-icon></div><span>medium-logo</span></div>
+      </div>
     </div>
     ```
 
@@ -809,93 +853,72 @@ The Phosphor library includes a wide range of icons. The example below shows onl
     </script>
 
     <template>
-      <BqButton class="icon-explore-button" href="https://phosphoricons.com/" target="_blank">
-        <BqIcon name="binoculars-fill" slot="prefix" />
-        Explore all the icons available
-        <BqIcon class="ms-m" name="caret-right" slot="suffix" />
-      </BqButton>
+      <div class="icon">
+        <BqButton class="icon-link" href="https://phosphoricons.com/" target="_blank">
+          <BqIcon name="binoculars-fill" slot="prefix" />
+          Explore all the icons available
+          <BqIcon class="ms-m" name="caret-right" slot="suffix" />
+        </BqButton>
 
-      <div class="icon-grid">
-        <div class="group"><div><BqIcon name="map-trifold" /></div><span>map-trifold</span></div>
-        <div class="group"><div><BqIcon name="codesandbox-logo" /></div><span>codesandbox-logo</span></div>
-        <div class="group"><div><BqIcon name="user-list" /></div><span>user-list</span></div>
-        <div class="group"><div><BqIcon name="user-square" /></div><span>user-square</span></div>
-        <div class="group"><div><BqIcon name="map-pin-line" /></div><span>map-pin-line</span></div>
-        <div class="group"><div><BqIcon name="briefcase-metal" /></div><span>briefcase-metal</span></div>
-        <div class="group"><div><BqIcon name="arrow-bend-double-up-left" /></div><span>arrow-bend-double-up-left</span></div>
-        <div class="group"><div><BqIcon name="heart-half" /></div><span>heart-half</span></div>
-        <div class="group"><div><BqIcon name="arrow-elbow-down-right" /></div><span>arrow-elbow-down-right</span></div>
-        <div class="group"><div><BqIcon name="user-focus" /></div><span>user-focus</span></div>
-        <div class="group"><div><BqIcon name="pen" /></div><span>pen</span></div>
-        <div class="group"><div><BqIcon name="windows-logo" /></div><span>windows-logo</span></div>
-        <div class="group"><div><BqIcon name="church" /></div><span>church</span></div>
-        <div class="group"><div><BqIcon name="twitter-logo" /></div><span>twitter-logo</span></div>
-        <div class="group"><div><BqIcon name="chart-donut" /></div><span>chart-donut</span></div>
-        <div class="group"><div><BqIcon name="hourglass-medium" /></div><span>hourglass-medium</span></div>
-        <div class="group"><div><BqIcon name="eye" /></div><span>eye</span></div>
-        <div class="group"><div><BqIcon name="clipboard-text" /></div><span>clipboard-text</span></div>
-        <div class="group"><div><BqIcon name="pencil-simple-slash" /></div><span>pencil-simple-slash</span></div>
-        <div class="group"><div><BqIcon name="chart-line-down" /></div><span>chart-line-down</span></div>
-        <div class="group"><div><BqIcon name="file-lock" /></div><span>file-lock</span></div>
-        <div class="group"><div><BqIcon name="selection-background" /></div><span>selection-background</span></div>
-        <div class="group"><div><BqIcon name="twitch-logo" /></div><span>twitch-logo</span></div>
-        <div class="group"><div><BqIcon name="gradient" /></div><span>gradient</span></div>
-        <div class="group"><div><BqIcon name="archive" /></div><span>archive</span></div>
-        <div class="group"><div><BqIcon name="bowl-food" /></div><span>bowl-food</span></div>
-        <div class="group"><div><BqIcon name="image-square" /></div><span>image-square</span></div>
-        <div class="group"><div><BqIcon name="skip-forward" /></div><span>skip-forward</span></div>
-        <div class="group"><div><BqIcon name="number-circle-four" /></div><span>number-circle-four</span></div>
-        <div class="group"><div><BqIcon name="person-arms-spread" /></div><span>person-arms-spread</span></div>
-        <div class="group"><div><BqIcon name="parallelogram" /></div><span>parallelogram</span></div>
-        <div class="group"><div><BqIcon name="confetti" /></div><span>confetti</span></div>
-        <div class="group"><div><BqIcon name="check-fat" /></div><span>check-fat</span></div>
-        <div class="group"><div><BqIcon name="coins" /></div><span>coins</span></div>
-        <div class="group"><div><BqIcon name="bezier-curve" /></div><span>bezier-curve</span></div>
-        <div class="group"><div><BqIcon name="medium-logo" /></div><span>medium-logo</span></div>
+        <div class="icon-grid">
+          <div class="group"><div><BqIcon name="map-trifold" /></div><span>map-trifold</span></div>
+          <div class="group"><div><BqIcon name="codesandbox-logo" /></div><span>codesandbox-logo</span></div>
+          <div class="group"><div><BqIcon name="user-list" /></div><span>user-list</span></div>
+          <div class="group"><div><BqIcon name="user-square" /></div><span>user-square</span></div>
+          <div class="group"><div><BqIcon name="map-pin-line" /></div><span>map-pin-line</span></div>
+          <div class="group"><div><BqIcon name="briefcase-metal" /></div><span>briefcase-metal</span></div>
+          <div class="group"><div><BqIcon name="arrow-bend-double-up-left" /></div><span>arrow-bend-double-up-left</span></div>
+          <div class="group"><div><BqIcon name="heart-half" /></div><span>heart-half</span></div>
+          <div class="group"><div><BqIcon name="arrow-elbow-down-right" /></div><span>arrow-elbow-down-right</span></div>
+          <div class="group"><div><BqIcon name="user-focus" /></div><span>user-focus</span></div>
+          <div class="group"><div><BqIcon name="pen" /></div><span>pen</span></div>
+          <div class="group"><div><BqIcon name="windows-logo" /></div><span>windows-logo</span></div>
+          <div class="group"><div><BqIcon name="church" /></div><span>church</span></div>
+          <div class="group"><div><BqIcon name="twitter-logo" /></div><span>twitter-logo</span></div>
+          <div class="group"><div><BqIcon name="hourglass-medium" /></div><span>hourglass-medium</span></div>
+          <div class="group"><div><BqIcon name="eye" /></div><span>eye</span></div>
+          <div class="group"><div><BqIcon name="chart-donut" /></div><span>chart-donut</span></div>
+          <div class="group"><div><BqIcon name="clipboard-text" /></div><span>clipboard-text</span></div>
+          <div class="group"><div><BqIcon name="pencil-simple-slash" /></div><span>pencil-simple-slash</span></div>
+          <div class="group"><div><BqIcon name="chart-line-down" /></div><span>chart-line-down</span></div>
+          <div class="group"><div><BqIcon name="file-lock" /></div><span>file-lock</span></div>
+          <div class="group"><div><BqIcon name="selection-background" /></div><span>selection-background</span></div>
+          <div class="group"><div><BqIcon name="twitch-logo" /></div><span>twitch-logo</span></div>
+          <div class="group"><div><BqIcon name="gradient" /></div><span>gradient</span></div>
+          <div class="group"><div><BqIcon name="archive" /></div><span>archive</span></div>
+          <div class="group"><div><BqIcon name="bowl-food" /></div><span>bowl-food</span></div>
+          <div class="group"><div><BqIcon name="image-square" /></div><span>image-square</span></div>
+          <div class="group"><div><BqIcon name="skip-forward" /></div><span>skip-forward</span></div>
+          <div class="group"><div><BqIcon name="number-circle-four" /></div><span>number-circle-four</span></div>
+          <div class="group"><div><BqIcon name="person-arms-spread" /></div><span>person-arms-spread</span></div>
+          <div class="group"><div><BqIcon name="parallelogram" /></div><span>parallelogram</span></div>
+          <div class="group"><div><BqIcon name="confetti" /></div><span>confetti</span></div>
+          <div class="group"><div><BqIcon name="check-fat" /></div><span>check-fat</span></div>
+          <div class="group"><div><BqIcon name="coins" /></div><span>coins</span></div>
+          <div class="group"><div><BqIcon name="bezier-curve" /></div><span>bezier-curve</span></div>
+          <div class="group"><div><BqIcon name="medium-logo" /></div><span>medium-logo</span></div>
+        </div>
       </div>
     </template>
     ```
   </CodeGroup>
 </CodeLivePreview>
 
-### Asset base path and custom icon libraries
+Named icons are loaded from SVG assets. If your app copies BEEQ's icons into a public folder, point the component to that URL with `setBasePath()`.
 
-Named icons are loaded as SVG files. If your app copies BEEQ's icons into a public directory, point the component to that URL with `setBasePath()`.
+```ts
+import { setBasePath } from "@beeq/core";
 
-<CodeGroup>
-  ```ts TypeScript icon="typescript"
-  import { setBasePath } from "@beeq/core";
+setBasePath("/icons/svg");
+```
 
-  setBasePath("/icons/svg");
-  ```
-
-  ```tsx React icon="react"
-  import React from "react";
-  import ReactDOM from "react-dom/client";
-  import { setBasePath } from "@beeq/core";
-  import App from "./App";
-
-  setBasePath("/icons/svg");
-
-  ReactDOM.createRoot(document.getElementById("root")!).render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>,
-  );
-  ```
-</CodeGroup>
-
-If you want to use an alternative icon library, point `setBasePath()` to a local or remote SVG directory that follows the file naming convention you plan to use.
+If you want to use an alternative icon library, point `setBasePath()` to a local or remote SVG directory that matches the icon names you plan to use.
 
 ```ts
 import { setBasePath } from "@beeq/core";
 
 setBasePath("https://cdn.jsdelivr.net/npm/heroicons@2.1.5/24/outline");
 ```
-
-<Tip>
-  Make sure the icon names used in `name` match the files available at the configured path. If you only copy a subset of icons, keep the original file names unchanged.
-</Tip>
 
 ## Best practices
 
@@ -905,54 +928,66 @@ setBasePath("https://cdn.jsdelivr.net/npm/heroicons@2.1.5/24/outline");
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use icons purposefully so each one contributes to understanding the content or action.
+    Use one clear icon per concept so the meaning stays easy to recognize.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Don't overload the interface with excessive icons or repeated icon treatments for the same concept.
+    Do not use multiple icon variations for the same concept in one product.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Keep icons center-aligned with nearby text and maintain a proportional relationship between icon and label size.
+    Pair icons with text when the action or meaning may not be obvious on its own.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Don't mix icons from different visual systems or styles in the same product flow.
+    Do not rely on a symbol alone when users might have to guess what it means.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Keep icons simple and recognizable, and use consistent metaphors for the same action across the product.
+    Keep icons aligned with nearby text and controls so the layout feels balanced.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Don't rely on an icon alone when the meaning may be unclear. Pair it with a text label or a [tooltip](/components/tooltip) when needed.
+    Do not mix unrelated icon sizes and styles without a clear visual reason.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use color to reinforce meaning only after the icon choice itself is already understandable.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not use decorative or inconsistent colors that suggest the wrong status or action.
   </Card>
 </CardGroup>
 
----
-
 ## Accessibility
 
-- **Label meaningful standalone icons** — use the `label` prop when the icon itself conveys meaning and needs to be announced to assistive technologies.
-- **Prefer text with icons for ambiguous actions** — some icons do not make sense by themselves, so add a visible label whenever clarity matters.
-- **Use proper interactive wrappers** — if an icon is clickable, give it a generous hit area by placing it inside [Button](/components/button) instead of relying on the icon alone.
-- **Do not rely on color only** — status and meaning should still be understandable without perceiving color differences.
-- **Keep naming consistent** — use familiar metaphors and stable icon names so designers, developers, and users build the same expectations.
+- `bq-icon` renders with `role="img"` and applies an `aria-label` automatically.
+- If you provide `label`, that value becomes the accessible name.
+- For named icons without a `label`, the component falls back to `"[name] icon"`, such as `"bell-ringing icon"`.
+- For custom SVG icons loaded through `src`, add `label` explicitly so assistive technologies get a meaningful name.
+- When an icon is ambiguous, pair it with visible text instead of expecting the symbol alone to carry the meaning.
 
 ## API reference
 
@@ -960,58 +995,40 @@ setBasePath("https://cdn.jsdelivr.net/npm/heroicons@2.1.5/24/outline");
 
 | Property | Attribute | Description | Type | Default |
 |---|---|---|---|---|
-| `color` | `color` | Set the stroke color of the SVG. The value should be a valid palette token | `string` | `undefined` |
-| `label` | `label` | Label for the icon, used for accessibility | `string` | `undefined` |
-| `name` | `name` | Icon name to load | `string` | `undefined` |
-| `size` | `size` | Set the size of the SVG | `number` \| `string` | `24` |
-| `src` | `src` | Set the source of the SVG. If set, `name` is ignored | `string` | `undefined` |
-| `weight` | `weight` | **Deprecated.** Legacy icon weight/style prop | `'thin'` \| `'light'` \| `'regular'` \| `'bold'` \| `'fill'` \| `'duotone'` | `undefined` |
+| `color` | `color` | Sets the stroke color of the SVG using a BEEQ token value | `string` | `undefined` |
+| `label` | `label` | Accessible label for the icon | `string` | `undefined` |
+| `name` | `name` | Icon name to load from the configured SVG base path | `string` | `undefined` |
+| `size` | `size` | Sets the rendered icon size | `number \| string` | `24` |
+| `src` | `src` | Loads a custom SVG source and overrides `name` when set | `string` | `undefined` |
+| `weight` | `weight` | Deprecated legacy icon weight/style prop | `'thin'` \| `'light'` \| `'regular'` \| `'bold'` \| `'fill'` \| `'duotone'` | `undefined` |
 
-### Events
+### Slots
 
-| Event | Description | Type |
-|---|---|---|
-| `svgLoaded` | Fires when the SVG content has loaded | `CustomEvent<any>` |
-
-<CodeGroup>
-  ```jsx React icon="react"
-  <BqIcon onSvgLoaded={(event) => console.log(event.detail)} />
-  ```
-
-  ```html Angular icon="angular"
-  <bq-icon (svgLoaded)="onSvgLoaded($event)"></bq-icon>
-  ```
-
-  ```vue Vue icon="vuejs"
-  <BqIcon @svgLoaded="onSvgLoaded($event)" />
-  ```
-</CodeGroup>
+| Slot | Description |
+|---|---|
+| None | This component does not expose slots |
 
 ### Shadow parts
 
 | Part | Description |
 |---|---|
 | `base` | The internal wrapper that holds the icon SVG content |
-| `svg` | The rendered `<svg>` element |
+| `svg` | The rendered `<svg>` element inside the component |
 
 ### CSS custom properties
 
-<Expandable title="View all CSS variables" defaultOpen={true}>
+<Expandable title="CSS variables" defaultOpen={true}>
   | Variable | Description | Default |
   |---|---|---|
   | `--bq-icon--color` | Icon color | `currentColor` |
   | `--bq-icon--size` | Icon size | `24px` |
 </Expandable>
 
-<Tip>
-  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
-</Tip>
-
 ## Resources
 
 <CardGroup cols={2}>
   <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-icon--default">
-    Explore icon examples and states in Storybook
+    Explore icon examples in Storybook
   </Card>
   <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/icon">
     View the component source on GitHub
