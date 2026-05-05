@@ -55,9 +55,9 @@ Badges provide a compact visual cue for status, presence, or counts without taki
 
 ## Anatomy
 
-<Frame className="px-4 py-4" caption="Badge component overview">
-  <img className="block dark:hidden" src="/components/images/badge/badge-overview-light.svg" alt="BEEQ Badge component overview" />
-  <img className="hidden dark:block" src="/components/images/badge/badge-overview-dark.svg" alt="BEEQ Badge component overview" />
+<Frame className="px-4 py-4" caption="Badge component anatomy">
+  <img className="block dark:hidden" src="/components/images/badge/badge-anatomy-light.svg" alt="BEEQ Badge component anatomy" />
+  <img className="hidden dark:block" src="/components/images/badge/badge-anatomy-dark.svg" alt="BEEQ Badge component anatomy" />
 </Frame>
 
 A badge is a compact surface with optional slotted content. When no content is provided, it renders as a dot indicator. When content is present, it expands to hold the number or short label.
@@ -67,58 +67,58 @@ A badge is a compact surface with optional slotted content. When no content is p
 | **1** | Base | The visible badge surface (`base` part) |
 | **2** | Content | Optional number or short text shown in the default slot (`number` part) |
 
-## Variants
+## Design guidelines
+
+### Size
+
+Badge dot size is controlled by the `size` prop. Choose the size based on how much visual weight the indicator should carry in context.
+
+<Note>
+  The `size` prop only applies when the badge has **no content**. When you add slot content — a number or short label — the badge ignores `size` and auto-expands to fit the text.
+</Note>
+
+| Size | Diameter | When to use |
+|---|---|---|
+| `small` | 8px | Default. Use in dense or compact layouts where a subtle dot signal is enough. |
+| `medium` | 12px | Use when the badge needs slightly more presence, such as next to larger icons or in less crowded layouts. |
+
+### Content length
+
+Keep counter content short — three characters maximum, including the `+` symbol.
+
+<Tip>
+  When a count exceeds what fits, show `99+` or a similar capped value. The `+` signals overflow without needing an exact number.
+</Tip>
+
+## Usage
 
 ### Dot indicator
 
 Use the badge without slot content when you only need a small visual signal. `size` matters most in this variant because it controls the dot diameter.
 
 <CodeLivePreview code={`
-  <style>
-    .badge--row {
-      display: flex;
-      align-items: center;
-      gap: var(--bq-spacing-m);
-    }
-  </style>
-  <div class="badge--row">
-    <bq-badge></bq-badge>
-    <bq-badge size="medium"></bq-badge>
-  </div>
+  <bq-badge></bq-badge>
+  <bq-badge size="medium"></bq-badge>
 `}>
   <CodeGroup>
-    ```css CSS icon="css"
-      .badge--row {
-        display: flex;
-        align-items: center;
-        gap: var(--bq-spacing-m);
-      }
-    ```
-
     ```html HTML icon="html5"
-    <div class="badge--row">
-      <bq-badge></bq-badge>
-      <bq-badge size="medium"></bq-badge>
-    </div>
+    <bq-badge></bq-badge>
+    <bq-badge size="medium"></bq-badge>
     ```
 
     ```jsx React icon="react"
     import { BqBadge } from "@beeq/react";
 
-    <div className="badge--row">
-      <BqBadge />
-      <BqBadge size="medium" />
-    </div>
+    <BqBadge />
+    <BqBadge size="medium" />
     ```
 
     ```html Angular icon="angular"
     <!-- Standalone: import { BqBadge } from "@beeq/angular/standalone" -->
     <!-- Modules: components are available after importing BeeQModule -->
 
-    <div class="badge--row">
-      <bq-badge></bq-badge>
-      <bq-badge size="medium"></bq-badge>
-    </div>
+    <bq-badge></bq-badge>
+    <bq-badge size="medium"></bq-badge>
     ```
 
     ```vue Vue icon="vuejs"
@@ -127,10 +127,8 @@ Use the badge without slot content when you only need a small visual signal. `si
     </script>
 
     <template>
-      <div class="badge--row">
-        <BqBadge />
-        <BqBadge size="medium" />
-      </div>
+      <BqBadge />
+      <BqBadge size="medium" />
     </template>
     ```
   </CodeGroup>
@@ -145,48 +143,25 @@ Use the badge without slot content when you only need a small visual signal. `si
 Add slot content when the badge needs to communicate a count. Keep the value short and meaningful so the badge stays compact and easy to scan.
 
 <CodeLivePreview code={`
-  <style>
-    .badge--row {
-      display: flex;
-      align-items: center;
-      gap: var(--bq-spacing-m);
-    }
-  </style>
-  <div class="badge--row">
-    <bq-badge>2</bq-badge>
-    <bq-badge>12</bq-badge>
-  </div>
+  <bq-badge>2</bq-badge>
+  <bq-badge>12</bq-badge>
 `}>
   <CodeGroup>
-    ```css CSS icon="css"
-      .badge--row {
-        display: flex;
-        align-items: center;
-        gap: var(--bq-spacing-m);
-      }
-    ```
-
     ```html HTML icon="html5"
-    <div class="badge--row">
-      <bq-badge>2</bq-badge>
-      <bq-badge>12</bq-badge>
-    </div>
+    <bq-badge>2</bq-badge>
+    <bq-badge>12</bq-badge>
     ```
 
     ```jsx React icon="react"
     import { BqBadge } from "@beeq/react";
 
-    <div className="badge--row">
-      <BqBadge>2</BqBadge>
-      <BqBadge>12</BqBadge>
-    </div>
+    <BqBadge>2</BqBadge>
+    <BqBadge>12</BqBadge>
     ```
 
     ```html Angular icon="angular"
-    <div class="badge--row">
-      <bq-badge>2</bq-badge>
-      <bq-badge>12</bq-badge>
-    </div>
+    <bq-badge>2</bq-badge>
+    <bq-badge>12</bq-badge>
     ```
 
     ```vue Vue icon="vuejs"
@@ -195,16 +170,16 @@ Add slot content when the badge needs to communicate a count. Keep the value sho
     </script>
 
     <template>
-      <div class="badge--row">
-        <BqBadge>2</BqBadge>
-        <BqBadge>12</BqBadge>
-      </div>
+      <BqBadge>2</BqBadge>
+      <BqBadge>12</BqBadge>
     </template>
     ```
   </CodeGroup>
 </CodeLivePreview>
 
-## Color meanings
+## Options
+
+### Color
 
 Badge color should reinforce meaning, not create it on its own. Keep semantic usage consistent so people learn what each color communicates across the product.
 
@@ -218,16 +193,16 @@ Badge color should reinforce meaning, not create it on its own. Keep semantic us
 
 <CodeLivePreview code={`
   <style>
-    .badge--legend {
+    @scope (.badge--legend) {
       display: flex;
       flex-wrap: wrap;
       gap: var(--bq-spacing-m);
-    }
 
-    .badge--legend span {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--bq-spacing-xs2);
+      & span {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--bq-spacing-xs2);
+      }
     }
   </style>
   <div class="badge--legend">
@@ -240,17 +215,17 @@ Badge color should reinforce meaning, not create it on its own. Keep semantic us
 `}>
   <CodeGroup>
     ```css CSS icon="css"
-      .badge--legend {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--bq-spacing-m);
-      }
+    .badge--legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--bq-spacing-m);
 
-      .badge--legend span {
+      & span {
         display: inline-flex;
         align-items: center;
         gap: var(--bq-spacing-xs2);
       }
+    }
     ```
 
     ```html HTML icon="html5"
@@ -293,17 +268,15 @@ Badge color should reinforce meaning, not create it on its own. Keep semantic us
     <template>
       <div class="badge--legend">
         <span><BqBadge size="medium" /> Default</span>
-        <span><BqBadge size="medium" background-color="ui--info" /> Info</span>
-        <span><BqBadge size="medium" background-color="ui--success" /> Success</span>
-        <span><BqBadge size="medium" background-color="ui--warning" /> Warning</span>
-        <span><BqBadge size="medium" background-color="ui--danger" /> Error</span>
+        <span><BqBadge size="medium" backgroundColor="ui--info" /> Info</span>
+        <span><BqBadge size="medium" backgroundColor="ui--success" /> Success</span>
+        <span><BqBadge size="medium" backgroundColor="ui--warning" /> Warning</span>
+        <span><BqBadge size="medium" backgroundColor="ui--danger" /> Error</span>
       </div>
     </template>
     ```
   </CodeGroup>
 </CodeLivePreview>
-
-## Common usage patterns
 
 ### Attached to an icon
 
@@ -311,15 +284,15 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
 
 <CodeLivePreview code={`
   <style>
-    .badge--icon {
+    @scope (.badge--icon) {
       position: relative;
       display: inline-flex;
-    }
 
-    .badge--icon bq-badge {
-      position: absolute;
-      top: -4px;
-      right: -4px;
+      & bq-badge {
+        position: absolute;
+        inset-block-start: -4px;
+        inset-inline-end: -4px;
+      }
     }
   </style>
   <div class="badge--icon" aria-label="Notifications">
@@ -329,16 +302,16 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
 `}>
   <CodeGroup>
     ```css CSS icon="css"
-      .badge--icon {
-        position: relative;
-        display: inline-flex;
-      }
+    .badge--icon {
+      position: relative;
+      display: inline-flex;
 
-      .badge--icon bq-badge {
+      & bq-badge {
         position: absolute;
-        top: -4px;
-        right: -4px;
+        inset-block-start: -4px;
+        inset-inline-end: -4px;
       }
+    }
     ```
 
     ```html HTML icon="html5"
@@ -379,7 +352,9 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
   </CodeGroup>
 </CodeLivePreview>
 
-## Best practices
+<Tip>
+  To create a "cutout ring" effect — useful when a badge sits on top of an image or avatar — add a border using the `--bq-badge--border-color`, `--bq-badge--border-style`, and `--bq-badge--border-width` CSS custom properties. Match the border color to the surface behind the badge for a clean visual separation.
+</Tip>
 
 <CardGroup cols={2}>
   <Card>
