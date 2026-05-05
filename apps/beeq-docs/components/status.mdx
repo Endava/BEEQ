@@ -10,10 +10,10 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
   <img className="hidden dark:block" src="/components/images/status/status-overview-dark.svg" alt="BEEQ Status component overview" />
 </Frame>
 
-The Status component is a UI element that communicates the status of an item, task, or process to the user. Statuses are commonly used to indicate the current state of an item, such as completed or pending, or to provide updates on the progress of a task or process.
+Statuses help people understand the current state of an item at a glance. Use them when a short label plus a small visual cue makes lists, cards, and workflows easier to scan.
 
 <Note>
-  The original design guidance covers both dot status and icon status patterns. The current `bq-status` component implements the dot-and-label variant: a colored circular indicator paired with descriptive text.
+  `bq-status` implements the dot-and-label pattern. If you need a status with an icon, build that as a separate composition instead of expecting it from this component.
 </Note>
 
 ## When to use
@@ -24,56 +24,76 @@ The Status component is a UI element that communicates the status of an item, ta
       <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Use statuses when
     </span>
-    - You need to indicate the state or condition of an element or action
-    - Users benefit from quick visual understanding of progress, availability, or outcome
-    - The UI should provide updates about changes in a task, item, or process
-    - A short label plus a visible indicator improves scanning in lists, tables, and detail views
+    - You need to communicate the state of an item, task, or process
+    - A short label and visual marker help users scan dense interfaces faster
+    - Status meaning should stay visible in lists, tables, cards, or detail views
+    - The state helps users decide what to do next
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Do not use statuses when
     </span>
-    - The information is already clear without an additional indicator
-    - Status changes are minimal or rare and the extra UI adds noise
-    - Screen space is too limited for both a clear label and indicator
-    - The state is constant and does not help the user make decisions
+    - The state is already obvious without an extra indicator
+    - The component would repeat nearby text without adding meaning
+    - Screen space is too limited for a readable label
+    - The UI would become noisy from too many competing statuses
   </Card>
 </CardGroup>
 
-## Status types
+## Patterns
 
-Status components are useful for providing users with a quick and visual understanding of the situation or status of an element within the system.
+The design guidance describes two common status patterns, even though the shipped component focuses on one of them.
 
 <CardGroup cols={2}>
   <Card title="Dot status">
-    Dot status represents a visual cue indicating a change to a particular item. This is the pattern implemented by `bq-status`.
+    A dot status pairs a colored circular indicator with a short text label. This is the pattern implemented by `bq-status`.
   </Card>
   <Card title="Icon status">
-    Icons are visual symbols utilized to represent ideas, objects, or actions. Ideally, they convey messages quickly, enable interaction, and highlight crucial information.
+    An icon status uses a symbol instead of a plain dot when the message needs stronger visual emphasis or a more specific cue.
   </Card>
 </CardGroup>
 
 ## Anatomy
 
-<Frame caption="Status anatomy">
-  <img className="block dark:hidden" src="/components/images/status/status-anatomy-light.svg" alt="Status anatomy" />
-  <img className="hidden dark:block" src="/components/images/status/status-anatomy-dark.svg" alt="Status anatomy" />
+<Frame className="px-4 py-4" caption="Status component anatomy">
+  <img className="block dark:hidden" src="/components/images/status/status-anatomy-light.svg" alt="BEEQ Status component anatomy" />
+  <img className="hidden dark:block" src="/components/images/status/status-anatomy-dark.svg" alt="BEEQ Status component anatomy" />
 </Frame>
 
-The shipped component keeps the structure intentionally simple: a colored status dot and a text label. This makes it easy to scan in tables, lists, cards, and other dense layouts.
+The structure is intentionally small: one indicator plus one label. That keeps the component readable inside compact layouts.
 
 | Part | Element | Description |
 |---|---|---|
-| **1** | Base | The internal wrapper for the status component |
-| **2** | Circle | The colored circular indicator that marks the status type |
-| **3** | Text | The text label that explains the current status |
+| **1** | Base | The internal wrapper that groups the dot and text |
+| **2** | Circle | The colored circular indicator that reflects the selected status type |
+| **3** | Text | The visible label that explains what the status means |
 
-## Variants
+## Design guidelines
+
+Use statuses consistently so people can recognize state changes without pausing to decode the UI.
+
+<Steps>
+  <Step title="Write the label first">
+    Start with the text. The label should still make sense on its own, because the dot is only a supporting cue.
+  </Step>
+  <Step title="Choose one semantic type">
+    Pick the type that matches the meaning of the message, such as `success` for a completed task or `danger` for a blocked one. Reusing the same type for different meanings makes scanning harder.
+  </Step>
+  <Step title="Place it near the item it describes">
+    Keep the status close to the row, card, or object it belongs to so users do not have to guess what the label refers to.
+  </Step>
+</Steps>
+
+<Note>
+  Status labels work best when they are short and stable. Reuse the same wording and color meaning across the product so states remain predictable.
+</Note>
+
+## Usage
 
 ### Alert
 
-Use `type="alert"` when you want to draw immediate attention to a critical or urgent message. This status provides a noticeable visual cue, ensuring users quickly recognize the importance of the displayed information.
+Use `type="alert"` when the message needs immediate attention.
 
 <CodeLivePreview code={`<bq-status type="alert">Alert status</bq-status>`}>
   <CodeGroup>
@@ -107,12 +127,12 @@ Use `type="alert"` when you want to draw immediate attention to a critical or ur
 </CodeLivePreview>
 
 <Tip>
-  This status type is ideal for error messages, system alerts, or urgent notifications that require immediate user action or acknowledgment.
+  Use this for urgent situations such as service incidents, failed payments, or actions that need immediate attention.
 </Tip>
 
 ### Danger
 
-Use `type="danger"` to signal potential risks or situations that need careful consideration. It provides a clear warning to users about actions that may lead to negative consequences.
+Use `type="danger"` when the state signals risk, failure, or a blocked condition.
 
 <CodeLivePreview code={`<bq-status type="danger">Danger status</bq-status>`}>
   <CodeGroup>
@@ -143,12 +163,12 @@ Use `type="danger"` to signal potential risks or situations that need careful co
 </CodeLivePreview>
 
 <Tip>
-  Use for indicating dangerous or high-risk scenarios, such as deletion confirmations or critical errors.
+  Use this for states such as blocked, overdue, failed, or unavailable.
 </Tip>
 
 ### Info
 
-Use `type="info"` to convey neutral information or additional details that users might find helpful. It's a way to provide supplementary context without invoking a sense of urgency.
+Use `type="info"` when the status provides neutral or supporting context.
 
 <CodeLivePreview code={`<bq-status type="info">Information status</bq-status>`}>
   <CodeGroup>
@@ -179,12 +199,12 @@ Use `type="info"` to convey neutral information or additional details that users
 </CodeLivePreview>
 
 <Tip>
-  Suitable for informational messages, notes, or supporting context that enhances understanding without feeling critical.
+  Use this for progress updates, supporting details, or states that should inform rather than warn.
 </Tip>
 
 ### Neutral
 
-Use `type="neutral"` or omit the attribute to show a standard status that doesn't require special emphasis. It maintains a balanced appearance without conveying urgency or importance.
+Use the default neutral status when the message should stay present without strong emphasis.
 
 <CodeLivePreview code={`<bq-status>Neutral status</bq-status>`}>
   <CodeGroup>
@@ -215,12 +235,12 @@ Use `type="neutral"` or omit the attribute to show a standard status that doesn'
 </CodeLivePreview>
 
 <Tip>
-  Use for general notifications, status updates, or messages that don't fall into critical, warning, or success categories.
+  Use this for standard states that do not need positive, negative, or urgent emphasis.
 </Tip>
 
 ### Success
 
-Use `type="success"` to indicate positive outcomes, successful completions, or affirmations. It provides users with positive feedback, reinforcing a sense of accomplishment.
+Use `type="success"` when the state confirms a positive outcome.
 
 <CodeLivePreview code={`<bq-status type="success">Success status</bq-status>`}>
   <CodeGroup>
@@ -251,79 +271,8 @@ Use `type="success"` to indicate positive outcomes, successful completions, or a
 </CodeLivePreview>
 
 <Tip>
-  Suitable for success messages, confirmation notices, or notifications signaling the completion of a task.
+  Use this for completed, approved, delivered, or otherwise successful states.
 </Tip>
-
-## Common usage patterns
-
-### In tables and lists
-
-Statuses work well in dense layouts because they communicate state quickly without taking much space.
-
-<CodeLivePreview code={`
-  <style>
-    .status-list {
-      display: flex;
-      flex-direction: column;
-      gap: var(--bq-spacing-s);
-    }
-  </style>
-  <div class="status-list">
-    <bq-status type="success">Completed</bq-status>
-    <bq-status type="info">In progress</bq-status>
-    <bq-status type="danger">Blocked</bq-status>
-  </div>
-`}>
-  <CodeGroup>
-    ```css CSS icon="css"
-      .status-list {
-        display: flex;
-        flex-direction: column;
-        gap: var(--bq-spacing-s);
-      }
-    ```
-
-    ```html HTML icon="html5"
-    <div class="status-list">
-      <bq-status type="success">Completed</bq-status>
-      <bq-status type="info">In progress</bq-status>
-      <bq-status type="danger">Blocked</bq-status>
-    </div>
-    ```
-
-    ```jsx React icon="react"
-    import { BqStatus } from "@beeq/react";
-
-    <div className="status-list">
-      <BqStatus type="success">Completed</BqStatus>
-      <BqStatus type="info">In progress</BqStatus>
-      <BqStatus type="danger">Blocked</BqStatus>
-    </div>
-    ```
-
-    ```html Angular icon="angular"
-    <div class="status-list">
-      <bq-status type="success">Completed</bq-status>
-      <bq-status type="info">In progress</bq-status>
-      <bq-status type="danger">Blocked</bq-status>
-    </div>
-    ```
-
-    ```vue Vue icon="vuejs"
-    <script setup lang="ts">
-    import { BqStatus } from "@beeq/vue";
-    </script>
-
-    <template>
-      <div class="status-list">
-        <BqStatus type="success">Completed</BqStatus>
-        <BqStatus type="info">In progress</BqStatus>
-        <BqStatus type="danger">Blocked</BqStatus>
-      </div>
-    </template>
-    ```
-  </CodeGroup>
-</CodeLivePreview>
 
 ## Best practices
 
@@ -333,52 +282,66 @@ Statuses work well in dense layouts because they communicate state quickly witho
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use status indicators for clarity so users can understand the condition of an item at a glance.
+    Use clear labels so the meaning stays understandable even without color.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Don't overload the interface with too many status indicators, especially when the meaning is already obvious.
+    Do not rely on the colored dot alone to communicate the state.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Ensure consistency in language, color meaning, and placement so statuses behave predictably across the product.
+    Keep status wording and color meaning consistent across the product.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Don't neglect visibility and readability. A status should remain easy to distinguish in dense or busy layouts.
+    Do not assign different meanings to the same status type in different screens.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
       Do
     </span>
-    Use intuitive colors and symbols that help users understand the message quickly.
+    Use one status per item when possible so the message stays easy to scan.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Don't use ambiguous or confusing status labels that force users to guess what happened.
+    Do not stack multiple competing statuses around the same piece of content.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Place the status close to the item it describes so the relationship is obvious.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not separate the status so far from the content that users have to infer what it belongs to.
   </Card>
 </CardGroup>
 
 ## Accessibility
 
-- **Always pair the indicator with text** — statuses should be accompanied by descriptive text so meaning does not depend on color alone.
-- **Choose colors with sufficient contrast** — the label must remain readable and the visual indicator should be distinguishable in context.
-- **Use consistent language** — clear, stable labels reduce confusion and help assistive technology users understand changes more easily.
-- **Provide both visual and textual feedback** — when a status changes, users should be able to understand the update whether they rely on visuals, text, or both.
-- **Test the component in context** — validate that the status remains understandable inside tables, cards, forms, and other composite layouts.
+- `bq-status` renders with `role="status"`, so assistive technologies can treat it as a status message instead of a decorative label.
+- The text label is required for meaning. The colored dot is supportive, not sufficient on its own.
+- Keep labels short and specific so status changes remain easy to understand when announced.
+- This component is informational, not interactive. If users need to act on the message, pair it with a separate button or link.
+- Check contrast and surrounding layout so the label remains readable in tables, cards, and dense data views.
 
 ## API reference
 
@@ -392,7 +355,7 @@ Statuses work well in dense layouts because they communicate state quickly witho
 
 | Slot | Description |
 |---|---|
-| *(default)* | The content of the status component |
+| *(default)* | The text content of the status component |
 
 ### Shadow parts
 
@@ -404,15 +367,11 @@ Statuses work well in dense layouts because they communicate state quickly witho
 
 ### CSS custom properties
 
-<Expandable title="View all CSS variables" defaultOpen={true}>
+<Expandable title="CSS variables" defaultOpen={true}>
   | Variable | Description | Default |
   |---|---|---|
   | `--bq-status-circle--size` | Status circle size | `12px` |
 </Expandable>
-
-<Tip>
-  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
-</Tip>
 
 ## Resources
 
