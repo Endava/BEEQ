@@ -41,7 +41,7 @@ Tags, also known as chips, are concise elements that enable users to input infor
   </Card>
 </CardGroup>
 
-## Tag patterns
+## Patterns
 
 The design guidance highlights several common ways tags can appear in an interface.
 
@@ -54,6 +54,9 @@ The design guidance highlights several common ways tags can appear in an interfa
   </Card>
   <Card title="Removable">
     A removable tag allows users to selectively manage or remove items as needed, making it useful in dynamic filtering and selection flows.
+  </Card>
+  <Card title="Removable with icon">
+    A removable tag can also include a leading icon when users need both quick visual context and the ability to clear the tag.
   </Card>
   <Card title="Colored">
     A colored tag helps highlight or differentiate categories, types, or states within an interface.
@@ -76,7 +79,27 @@ A tag can include a text label, optional prefix content, and an optional close a
 | **3** | Text | The visible label of the tag |
 | **4** | Close button | Optional action used to remove the tag |
 
-## Common usage patterns
+## Design guidelines
+
+Use tags with restraint so they help users scan and act without turning into visual noise.
+
+<Steps>
+  <Step title="Choose the role">
+    Start by deciding whether the tag is informational, clickable, or removable. Each behavior changes what users expect when they interact with it.
+  </Step>
+  <Step title="Choose the size">
+    Use `medium` tags when the label needs more prominence, `small` for secondary metadata, and `xsmall` only when space is tight and the text can stay readable.
+  </Step>
+  <Step title="Choose the emphasis">
+    Prefer neutral tags by default. Add color only when it helps people distinguish categories, states, or selected values faster.
+  </Step>
+</Steps>
+
+<Note>
+  Keep tag labels short. The older design guidance recommends one or two words, or roughly no more than 20 characters, so the tag remains scannable.
+</Note>
+
+## Usage
 
 ### Default
 
@@ -119,13 +142,16 @@ Adjust the `size` attribute to customize the tag's dimensions and support a clea
 
 <CodeLivePreview code={`
   <style>
-    .tag-row {
-      display: flex;
-      gap: var(--bq-spacing-s);
-      flex-wrap: wrap;
+    @scope {
+      .tag {
+        display: flex;
+        gap: var(--bq-spacing-s);
+        flex-wrap: wrap;
+        padding: var(--bq-spacing-m);
+      }
     }
   </style>
-  <div class="tag-row">
+  <div class="tag">
     <bq-tag size="xsmall">Extra small</bq-tag>
     <bq-tag size="small">Small</bq-tag>
     <bq-tag size="medium">Medium</bq-tag>
@@ -133,15 +159,16 @@ Adjust the `size` attribute to customize the tag's dimensions and support a clea
 `}>
   <CodeGroup>
     ```css CSS icon="css"
-      .tag-row {
+      .tag {
         display: flex;
         gap: var(--bq-spacing-s);
         flex-wrap: wrap;
+        padding: var(--bq-spacing-m);
       }
     ```
 
     ```html HTML icon="html5"
-    <div class="tag-row">
+    <div class="tag">
       <bq-tag size="xsmall">Extra small</bq-tag>
       <bq-tag size="small">Small</bq-tag>
       <bq-tag size="medium">Medium</bq-tag>
@@ -151,7 +178,7 @@ Adjust the `size` attribute to customize the tag's dimensions and support a clea
     ```jsx React icon="react"
     import { BqTag } from "@beeq/react";
 
-    <div className="tag-row">
+    <div className="tag">
       <BqTag size="xsmall">Extra small</BqTag>
       <BqTag size="small">Small</BqTag>
       <BqTag size="medium">Medium</BqTag>
@@ -159,7 +186,7 @@ Adjust the `size` attribute to customize the tag's dimensions and support a clea
     ```
 
     ```html Angular icon="angular"
-    <div class="tag-row">
+    <div class="tag">
       <bq-tag size="xsmall">Extra small</bq-tag>
       <bq-tag size="small">Small</bq-tag>
       <bq-tag size="medium">Medium</bq-tag>
@@ -172,7 +199,7 @@ Adjust the `size` attribute to customize the tag's dimensions and support a clea
     </script>
 
     <template>
-      <div class="tag-row">
+      <div class="tag">
         <BqTag size="xsmall">Extra small</BqTag>
         <BqTag size="small">Small</BqTag>
         <BqTag size="medium">Medium</BqTag>
@@ -188,20 +215,22 @@ Apply the `clickable` attribute for interactive tags that can trigger actions or
 
 <CodeLivePreview code={`
   <style>
-    .tag-row {
-      display: flex;
-      gap: var(--bq-spacing-s);
-      flex-wrap: wrap;
+    @scope {
+      .tag {
+        display: flex;
+        gap: var(--bq-spacing-s);
+        flex-wrap: wrap;
+      }
     }
   </style>
-  <div class="tag-row">
+  <div class="tag">
     <bq-tag clickable>Tag</bq-tag>
     <bq-tag clickable selected>Tag</bq-tag>
   </div>
 `}>
   <CodeGroup>
     ```css CSS icon="css"
-      .tag-row {
+      .tag {
         display: flex;
         gap: var(--bq-spacing-s);
         flex-wrap: wrap;
@@ -209,7 +238,7 @@ Apply the `clickable` attribute for interactive tags that can trigger actions or
     ```
 
     ```html HTML icon="html5"
-    <div class="tag-row">
+    <div class="tag">
       <bq-tag clickable>Tag</bq-tag>
       <bq-tag clickable selected>Tag</bq-tag>
     </div>
@@ -218,14 +247,14 @@ Apply the `clickable` attribute for interactive tags that can trigger actions or
     ```jsx React icon="react"
     import { BqTag } from "@beeq/react";
 
-    <div className="tag-row">
+    <div className="tag">
       <BqTag clickable>Tag</BqTag>
       <BqTag clickable selected>Tag</BqTag>
     </div>
     ```
 
     ```html Angular icon="angular"
-    <div class="tag-row">
+    <div class="tag">
       <bq-tag clickable>Tag</bq-tag>
       <bq-tag clickable selected>Tag</bq-tag>
     </div>
@@ -237,7 +266,7 @@ Apply the `clickable` attribute for interactive tags that can trigger actions or
     </script>
 
     <template>
-      <div class="tag-row">
+      <div class="tag">
         <BqTag clickable>Tag</BqTag>
         <BqTag clickable selected>Tag</BqTag>
       </div>
@@ -246,19 +275,23 @@ Apply the `clickable` attribute for interactive tags that can trigger actions or
   </CodeGroup>
 </CodeLivePreview>
 
+## Options
+
 ### Color - filled
 
 Use filled colored tags when you want a stronger visual distinction for categories or states.
 
 <CodeLivePreview code={`
   <style>
-    .tag-row {
-      display: flex;
-      gap: var(--bq-spacing-s);
-      flex-wrap: wrap;
+    @scope {
+      .tag {
+        display: flex;
+        gap: var(--bq-spacing-s);
+        flex-wrap: wrap;
+      }
     }
   </style>
-  <div class="tag-row">
+  <div class="tag">
     <bq-tag color="success">Success</bq-tag>
     <bq-tag color="info">Info</bq-tag>
     <bq-tag color="error">Error</bq-tag>
@@ -268,7 +301,7 @@ Use filled colored tags when you want a stronger visual distinction for categori
 `}>
   <CodeGroup>
     ```css CSS icon="css"
-      .tag-row {
+      .tag {
         display: flex;
         gap: var(--bq-spacing-s);
         flex-wrap: wrap;
@@ -276,7 +309,7 @@ Use filled colored tags when you want a stronger visual distinction for categori
     ```
 
     ```html HTML icon="html5"
-    <div class="tag-row">
+    <div class="tag">
       <bq-tag color="success">Success</bq-tag>
       <bq-tag color="info">Info</bq-tag>
       <bq-tag color="error">Error</bq-tag>
@@ -288,7 +321,7 @@ Use filled colored tags when you want a stronger visual distinction for categori
     ```jsx React icon="react"
     import { BqTag } from "@beeq/react";
 
-    <div className="tag-row">
+    <div className="tag">
       <BqTag color="success">Success</BqTag>
       <BqTag color="info">Info</BqTag>
       <BqTag color="error">Error</BqTag>
@@ -298,7 +331,7 @@ Use filled colored tags when you want a stronger visual distinction for categori
     ```
 
     ```html Angular icon="angular"
-    <div class="tag-row">
+    <div class="tag">
       <bq-tag color="success">Success</bq-tag>
       <bq-tag color="info">Info</bq-tag>
       <bq-tag color="error">Error</bq-tag>
@@ -313,7 +346,7 @@ Use filled colored tags when you want a stronger visual distinction for categori
     </script>
 
     <template>
-      <div class="tag-row">
+      <div class="tag">
         <BqTag color="success">Success</BqTag>
         <BqTag color="info">Info</BqTag>
         <BqTag color="error">Error</BqTag>
@@ -331,13 +364,15 @@ Use `variant="outline"` when you want a subtler visual distinction without a fil
 
 <CodeLivePreview code={`
   <style>
-    .tag-row {
-      display: flex;
-      gap: var(--bq-spacing-s);
-      flex-wrap: wrap;
+    @scope {
+      .tag {
+        display: flex;
+        gap: var(--bq-spacing-s);
+        flex-wrap: wrap;
+      }
     }
   </style>
-  <div class="tag-row">
+  <div class="tag">
     <bq-tag color="success" variant="outline">Success</bq-tag>
     <bq-tag color="info" variant="outline">Info</bq-tag>
     <bq-tag color="error" variant="outline">Error</bq-tag>
@@ -347,7 +382,7 @@ Use `variant="outline"` when you want a subtler visual distinction without a fil
 `}>
   <CodeGroup>
     ```css CSS icon="css"
-      .tag-row {
+      .tag {
         display: flex;
         gap: var(--bq-spacing-s);
         flex-wrap: wrap;
@@ -355,7 +390,7 @@ Use `variant="outline"` when you want a subtler visual distinction without a fil
     ```
 
     ```html HTML icon="html5"
-    <div class="tag-row">
+    <div class="tag">
       <bq-tag color="success" variant="outline">Success</bq-tag>
       <bq-tag color="info" variant="outline">Info</bq-tag>
       <bq-tag color="error" variant="outline">Error</bq-tag>
@@ -367,7 +402,7 @@ Use `variant="outline"` when you want a subtler visual distinction without a fil
     ```jsx React icon="react"
     import { BqTag } from "@beeq/react";
 
-    <div className="tag-row">
+    <div className="tag">
       <BqTag color="success" variant="outline">Success</BqTag>
       <BqTag color="info" variant="outline">Info</BqTag>
       <BqTag color="error" variant="outline">Error</BqTag>
@@ -377,7 +412,7 @@ Use `variant="outline"` when you want a subtler visual distinction without a fil
     ```
 
     ```html Angular icon="angular"
-    <div class="tag-row">
+    <div class="tag">
       <bq-tag color="success" variant="outline">Success</bq-tag>
       <bq-tag color="info" variant="outline">Info</bq-tag>
       <bq-tag color="error" variant="outline">Error</bq-tag>
@@ -392,7 +427,7 @@ Use `variant="outline"` when you want a subtler visual distinction without a fil
     </script>
 
     <template>
-      <div class="tag-row">
+      <div class="tag">
         <BqTag color="success" variant="outline">Success</BqTag>
         <BqTag color="info" variant="outline">Info</BqTag>
         <BqTag color="error" variant="outline">Error</BqTag>
@@ -404,29 +439,31 @@ Use `variant="outline"` when you want a subtler visual distinction without a fil
   </CodeGroup>
 </CodeLivePreview>
 
-### Removable
+### Removable - filled
 
-Enable the `removable` attribute for tags that users can remove. This is useful in filters, suggestions, and selected-value patterns.
+Enable `removable` when users need to clear selected items, applied filters, or entered values.
 
 <CodeLivePreview code={`
   <style>
-    .tag-row {
-      display: flex;
-      gap: var(--bq-spacing-s);
-      flex-wrap: wrap;
+    @scope {
+      .tag {
+        display: flex;
+        gap: var(--bq-spacing-s);
+        flex-wrap: wrap;
+      }
     }
   </style>
-  <div class="tag-row tag-row--removable">
+  <div class="tag" data-demo="removable-filled">
     <bq-tag removable>Default</bq-tag>
-    <bq-tag removable color="success" variant="outline">Success</bq-tag>
-    <bq-tag removable color="info" variant="outline">Info</bq-tag>
-    <bq-tag removable color="error" variant="outline">Error</bq-tag>
-    <bq-tag removable color="warning" variant="outline">Warning</bq-tag>
-    <bq-tag removable color="gray" variant="outline">Gray</bq-tag>
+    <bq-tag removable color="success">Success</bq-tag>
+    <bq-tag removable color="info">Info</bq-tag>
+    <bq-tag removable color="error">Error</bq-tag>
+    <bq-tag removable color="warning">Warning</bq-tag>
+    <bq-tag removable color="gray">Gray</bq-tag>
   </div>
   <script>
-    (() => { // isolate scope for demo purposes
-      document.querySelectorAll('.tag-row--removable bq-tag').forEach((tag) => {
+    (() => {
+      document.querySelectorAll('.tag[data-demo="removable-filled"] bq-tag').forEach((tag) => {
         tag.addEventListener('bqClose', () => {
           window.setTimeout(() => tag.show(), 1500);
         });
@@ -436,15 +473,15 @@ Enable the `removable` attribute for tags that users can remove. This is useful 
 `}>
   <CodeGroup>
     ```css CSS icon="css"
-      .tag-row {
-        display: flex;
-        gap: var(--bq-spacing-s);
-        flex-wrap: wrap;
-      }
+    .tag {
+      display: flex;
+      gap: var(--bq-spacing-s);
+      flex-wrap: wrap;
+    }
     ```
 
     ```html HTML icon="html5"
-    <div class="tag-row tag-row--removable">
+    <div class="tag" data-demo="removable-filled">
       <bq-tag removable>Default</bq-tag>
       <bq-tag removable color="success">Success</bq-tag>
       <bq-tag removable color="info">Info</bq-tag>
@@ -455,71 +492,214 @@ Enable the `removable` attribute for tags that users can remove. This is useful 
     ```
 
     ```js JavaScript icon="js"
-    <script>
-        document.querySelectorAll('.tag-row--removable bq-tag').forEach((tag) => {
-          tag.addEventListener('bqClose', () => {
-            window.setTimeout(() => tag.show(), 1500);
-          });
+    (() => {
+      document.querySelectorAll('.tag[data-demo="removable-filled"] bq-tag').forEach((tag) => {
+        tag.addEventListener('bqClose', () => {
+          window.setTimeout(() => tag.show(), 1500);
         });
-    </script>
+      });
+    })();
     ```
 
     ```jsx React icon="react"
     import { BqTag } from "@beeq/react";
 
-    <div className="tag-row">
-      <BqTag removable>Default</BqTag>
-      <BqTag removable color="success">Success</BqTag>
-      <BqTag removable color="info">Info</BqTag>
-      <BqTag removable color="error">Error</BqTag>
-      <BqTag removable color="warning">Warning</BqTag>
-      <BqTag removable color="gray">Gray</BqTag>
-    </div>
+    export function RemovableFilledTags() {
+      const handleTagClose = (event) => {
+        window.setTimeout(() => event.detail.show(), 1500);
+      };
+
+      return (
+        <div className="tag">
+          <BqTag removable onBqClose={handleTagClose}>Default</BqTag>
+          <BqTag removable color="success" onBqClose={handleTagClose}>Success</BqTag>
+          <BqTag removable color="info" onBqClose={handleTagClose}>Info</BqTag>
+          <BqTag removable color="error" onBqClose={handleTagClose}>Error</BqTag>
+          <BqTag removable color="warning" onBqClose={handleTagClose}>Warning</BqTag>
+          <BqTag removable color="gray" onBqClose={handleTagClose}>Gray</BqTag>
+        </div>
+      );
+    }
     ```
 
     ```html Angular icon="angular"
-    <div class="tag-row">
-      <bq-tag removable>Default</bq-tag>
-      <bq-tag removable color="success">Success</bq-tag>
-      <bq-tag removable color="info">Info</bq-tag>
-      <bq-tag removable color="error">Error</bq-tag>
-      <bq-tag removable color="warning">Warning</bq-tag>
-      <bq-tag removable color="gray">Gray</bq-tag>
+    // tag.component.ts
+    handleTagClose(tag: HTMLBqTagElement) {
+      window.setTimeout(() => tag.show(), 1500);
+    }
+
+    <!-- tag.component.html -->
+    <div class="tag">
+      <bq-tag removable (bqClose)="handleTagClose($event.detail)">Default</bq-tag>
+      <bq-tag removable color="success" (bqClose)="handleTagClose($event.detail)">Success</bq-tag>
+      <bq-tag removable color="info" (bqClose)="handleTagClose($event.detail)">Info</bq-tag>
+      <bq-tag removable color="error" (bqClose)="handleTagClose($event.detail)">Error</bq-tag>
+      <bq-tag removable color="warning" (bqClose)="handleTagClose($event.detail)">Warning</bq-tag>
+      <bq-tag removable color="gray" (bqClose)="handleTagClose($event.detail)">Gray</bq-tag>
     </div>
     ```
 
     ```vue Vue icon="vuejs"
     <script setup lang="ts">
     import { BqTag } from "@beeq/vue";
+
+    const handleTagClose = (event: CustomEvent) => {
+      window.setTimeout(() => event.detail.show(), 1500);
+    };
     </script>
 
     <template>
-      <div class="tag-row">
-        <BqTag removable>Default</BqTag>
-        <BqTag removable color="success">Success</BqTag>
-        <BqTag removable color="info">Info</BqTag>
-        <BqTag removable color="error">Error</BqTag>
-        <BqTag removable color="warning">Warning</BqTag>
-        <BqTag removable color="gray">Gray</BqTag>
+      <div class="tag">
+        <BqTag removable @bqClose="handleTagClose">Default</BqTag>
+        <BqTag removable color="success" @bqClose="handleTagClose">Success</BqTag>
+        <BqTag removable color="info" @bqClose="handleTagClose">Info</BqTag>
+        <BqTag removable color="error" @bqClose="handleTagClose">Error</BqTag>
+        <BqTag removable color="warning" @bqClose="handleTagClose">Warning</BqTag>
+        <BqTag removable color="gray" @bqClose="handleTagClose">Gray</BqTag>
       </div>
     </template>
     ```
   </CodeGroup>
 </CodeLivePreview>
 
-### Prefix icon
+### Removable - outline
+
+Use `variant="outline"` with `removable` when you want the same close behavior with lower visual weight.
+
+<CodeLivePreview code={`
+  <style>
+    @scope {
+      .tag {
+        display: flex;
+        gap: var(--bq-spacing-s);
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+  <div class="tag" data-demo="removable-outline">
+    <bq-tag removable variant="outline">Default</bq-tag>
+    <bq-tag removable color="success" variant="outline">Success</bq-tag>
+    <bq-tag removable color="info" variant="outline">Info</bq-tag>
+    <bq-tag removable color="error" variant="outline">Error</bq-tag>
+    <bq-tag removable color="warning" variant="outline">Warning</bq-tag>
+    <bq-tag removable color="gray" variant="outline">Gray</bq-tag>
+  </div>
+  <script>
+    (() => {
+      document.querySelectorAll('.tag[data-demo="removable-outline"] bq-tag').forEach((tag) => {
+        tag.addEventListener('bqClose', () => {
+          window.setTimeout(() => tag.show(), 1500);
+        });
+      });
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```css CSS icon="css"
+    .tag {
+      display: flex;
+      gap: var(--bq-spacing-s);
+      flex-wrap: wrap;
+    }
+    ```
+
+    ```html HTML icon="html5"
+    <div class="tag" data-demo="removable-outline">
+      <bq-tag removable variant="outline">Default</bq-tag>
+      <bq-tag removable color="success" variant="outline">Success</bq-tag>
+      <bq-tag removable color="info" variant="outline">Info</bq-tag>
+      <bq-tag removable color="error" variant="outline">Error</bq-tag>
+      <bq-tag removable color="warning" variant="outline">Warning</bq-tag>
+      <bq-tag removable color="gray" variant="outline">Gray</bq-tag>
+    </div>
+    ```
+
+    ```js JavaScript icon="js"
+    (() => {
+      document.querySelectorAll('.tag[data-demo="removable-outline"] bq-tag').forEach((tag) => {
+        tag.addEventListener('bqClose', () => {
+          window.setTimeout(() => tag.show(), 1500);
+        });
+      });
+    })();
+    ```
+
+    ```jsx React icon="react"
+    import { BqTag } from "@beeq/react";
+
+    export function RemovableOutlineTags() {
+      const handleTagClose = (event) => {
+        window.setTimeout(() => event.detail.show(), 1500);
+      };
+
+      return (
+        <div className="tag">
+          <BqTag removable variant="outline" onBqClose={handleTagClose}>Default</BqTag>
+          <BqTag removable color="success" variant="outline" onBqClose={handleTagClose}>Success</BqTag>
+          <BqTag removable color="info" variant="outline" onBqClose={handleTagClose}>Info</BqTag>
+          <BqTag removable color="error" variant="outline" onBqClose={handleTagClose}>Error</BqTag>
+          <BqTag removable color="warning" variant="outline" onBqClose={handleTagClose}>Warning</BqTag>
+          <BqTag removable color="gray" variant="outline" onBqClose={handleTagClose}>Gray</BqTag>
+        </div>
+      );
+    }
+    ```
+
+    ```html Angular icon="angular"
+    // tag.component.ts
+    handleTagClose(tag: HTMLBqTagElement) {
+      window.setTimeout(() => tag.show(), 1500);
+    }
+
+    <!-- tag.component.html -->
+    <div class="tag">
+      <bq-tag removable variant="outline" (bqClose)="handleTagClose($event.detail)">Default</bq-tag>
+      <bq-tag removable color="success" variant="outline" (bqClose)="handleTagClose($event.detail)">Success</bq-tag>
+      <bq-tag removable color="info" variant="outline" (bqClose)="handleTagClose($event.detail)">Info</bq-tag>
+      <bq-tag removable color="error" variant="outline" (bqClose)="handleTagClose($event.detail)">Error</bq-tag>
+      <bq-tag removable color="warning" variant="outline" (bqClose)="handleTagClose($event.detail)">Warning</bq-tag>
+      <bq-tag removable color="gray" variant="outline" (bqClose)="handleTagClose($event.detail)">Gray</bq-tag>
+    </div>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqTag } from "@beeq/vue";
+
+    const handleTagClose = (event: CustomEvent) => {
+      window.setTimeout(() => event.detail.show(), 1500);
+    };
+    </script>
+
+    <template>
+      <div class="tag">
+        <BqTag removable variant="outline" @bqClose="handleTagClose">Default</BqTag>
+        <BqTag removable color="success" variant="outline" @bqClose="handleTagClose">Success</BqTag>
+        <BqTag removable color="info" variant="outline" @bqClose="handleTagClose">Info</BqTag>
+        <BqTag removable color="error" variant="outline" @bqClose="handleTagClose">Error</BqTag>
+        <BqTag removable color="warning" variant="outline" @bqClose="handleTagClose">Warning</BqTag>
+        <BqTag removable color="gray" variant="outline" @bqClose="handleTagClose">Gray</BqTag>
+      </div>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Prefix - filled
 
 Use the `prefix` slot to add an icon when extra context helps, while keeping the text label as the main content.
 
 <CodeLivePreview code={`
   <style>
-    .tag-row {
-      display: flex;
-      gap: var(--bq-spacing-s);
-      flex-wrap: wrap;
+    @scope {
+      .tag {
+        display: flex;
+        gap: var(--bq-spacing-s);
+        flex-wrap: wrap;
+      }
     }
   </style>
-  <div class="tag-row">
+  <div class="tag">
     <bq-tag>
       <bq-icon name="alarm" slot="prefix"></bq-icon>
       Default
@@ -528,23 +708,35 @@ Use the `prefix` slot to add an icon when extra context helps, while keeping the
       <bq-icon name="check-circle" slot="prefix"></bq-icon>
       Success
     </bq-tag>
-    <bq-tag color="info" variant="outline">
+    <bq-tag color="info">
       <bq-icon name="info" slot="prefix"></bq-icon>
       Info
+    </bq-tag>
+    <bq-tag color="error">
+      <bq-icon name="warning-diamond" slot="prefix"></bq-icon>
+      Error
+    </bq-tag>
+    <bq-tag color="warning">
+      <bq-icon name="warning" slot="prefix"></bq-icon>
+      Warning
+    </bq-tag>
+    <bq-tag color="gray">
+      <bq-icon name="video-camera-slash" slot="prefix"></bq-icon>
+      Gray
     </bq-tag>
   </div>
 `}>
   <CodeGroup>
     ```css CSS icon="css"
-      .tag-row {
-        display: flex;
-        gap: var(--bq-spacing-s);
-        flex-wrap: wrap;
-      }
+    .tag {
+      display: flex;
+      gap: var(--bq-spacing-s);
+      flex-wrap: wrap;
+    }
     ```
 
     ```html HTML icon="html5"
-    <div class="tag-row">
+    <div class="tag">
       <bq-tag>
         <bq-icon name="alarm" slot="prefix"></bq-icon>
         Default
@@ -553,9 +745,21 @@ Use the `prefix` slot to add an icon when extra context helps, while keeping the
         <bq-icon name="check-circle" slot="prefix"></bq-icon>
         Success
       </bq-tag>
-      <bq-tag color="info" variant="outline">
+      <bq-tag color="info">
         <bq-icon name="info" slot="prefix"></bq-icon>
         Info
+      </bq-tag>
+      <bq-tag color="error">
+        <bq-icon name="warning-diamond" slot="prefix"></bq-icon>
+        Error
+      </bq-tag>
+      <bq-tag color="warning">
+        <bq-icon name="warning" slot="prefix"></bq-icon>
+        Warning
+      </bq-tag>
+      <bq-tag color="gray">
+        <bq-icon name="video-camera-slash" slot="prefix"></bq-icon>
+        Gray
       </bq-tag>
     </div>
     ```
@@ -563,7 +767,7 @@ Use the `prefix` slot to add an icon when extra context helps, while keeping the
     ```jsx React icon="react"
     import { BqIcon, BqTag } from "@beeq/react";
 
-    <div className="tag-row">
+    <div className="tag">
       <BqTag>
         <BqIcon name="alarm" slot="prefix" />
         Default
@@ -572,15 +776,27 @@ Use the `prefix` slot to add an icon when extra context helps, while keeping the
         <BqIcon name="check-circle" slot="prefix" />
         Success
       </BqTag>
-      <BqTag color="info" variant="outline">
+      <BqTag color="info">
         <BqIcon name="info" slot="prefix" />
         Info
+      </BqTag>
+      <BqTag color="error">
+        <BqIcon name="warning-diamond" slot="prefix" />
+        Error
+      </BqTag>
+      <BqTag color="warning">
+        <BqIcon name="warning" slot="prefix" />
+        Warning
+      </BqTag>
+      <BqTag color="gray">
+        <BqIcon name="video-camera-slash" slot="prefix" />
+        Gray
       </BqTag>
     </div>
     ```
 
     ```html Angular icon="angular"
-    <div class="tag-row">
+    <div class="tag">
       <bq-tag>
         <bq-icon name="alarm" slot="prefix"></bq-icon>
         Default
@@ -589,9 +805,21 @@ Use the `prefix` slot to add an icon when extra context helps, while keeping the
         <bq-icon name="check-circle" slot="prefix"></bq-icon>
         Success
       </bq-tag>
-      <bq-tag color="info" variant="outline">
+      <bq-tag color="info">
         <bq-icon name="info" slot="prefix"></bq-icon>
         Info
+      </bq-tag>
+      <bq-tag color="error">
+        <bq-icon name="warning-diamond" slot="prefix"></bq-icon>
+        Error
+      </bq-tag>
+      <bq-tag color="warning">
+        <bq-icon name="warning" slot="prefix"></bq-icon>
+        Warning
+      </bq-tag>
+      <bq-tag color="gray">
+        <bq-icon name="video-camera-slash" slot="prefix"></bq-icon>
+        Gray
       </bq-tag>
     </div>
     ```
@@ -602,7 +830,7 @@ Use the `prefix` slot to add an icon when extra context helps, while keeping the
     </script>
 
     <template>
-      <div class="tag-row">
+      <div class="tag">
         <BqTag>
           <BqIcon name="alarm" slot="prefix" />
           Default
@@ -611,9 +839,197 @@ Use the `prefix` slot to add an icon when extra context helps, while keeping the
           <BqIcon name="check-circle" slot="prefix" />
           Success
         </BqTag>
+        <BqTag color="info">
+          <BqIcon name="info" slot="prefix" />
+          Info
+        </BqTag>
+        <BqTag color="error">
+          <BqIcon name="warning-diamond" slot="prefix" />
+          Error
+        </BqTag>
+        <BqTag color="warning">
+          <BqIcon name="warning" slot="prefix" />
+          Warning
+        </BqTag>
+        <BqTag color="gray">
+          <BqIcon name="video-camera-slash" slot="prefix" />
+          Gray
+        </BqTag>
+      </div>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Prefix - outline
+
+Use the outline variant with a prefix icon when you want context with a lighter visual treatment.
+
+<CodeLivePreview code={`
+  <style>
+    @scope {
+      .tag {
+        display: flex;
+        gap: var(--bq-spacing-s);
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+  <div class="tag">
+    <bq-tag variant="outline">
+      <bq-icon name="alarm" slot="prefix"></bq-icon>
+      Default
+    </bq-tag>
+    <bq-tag color="success" variant="outline">
+      <bq-icon name="check-circle" slot="prefix"></bq-icon>
+      Success
+    </bq-tag>
+    <bq-tag color="info" variant="outline">
+      <bq-icon name="info" slot="prefix"></bq-icon>
+      Info
+    </bq-tag>
+    <bq-tag color="error" variant="outline">
+      <bq-icon name="warning-diamond" slot="prefix"></bq-icon>
+      Error
+    </bq-tag>
+    <bq-tag color="warning" variant="outline">
+      <bq-icon name="warning" slot="prefix"></bq-icon>
+      Warning
+    </bq-tag>
+    <bq-tag color="gray" variant="outline">
+      <bq-icon name="video-camera-slash" slot="prefix"></bq-icon>
+      Gray
+    </bq-tag>
+  </div>
+`}>
+  <CodeGroup>
+    ```css CSS icon="css"
+    .tag {
+      display: flex;
+      gap: var(--bq-spacing-s);
+      flex-wrap: wrap;
+    }
+    ```
+
+    ```html HTML icon="html5"
+    <div class="tag">
+      <bq-tag variant="outline">
+        <bq-icon name="alarm" slot="prefix"></bq-icon>
+        Default
+      </bq-tag>
+      <bq-tag color="success" variant="outline">
+        <bq-icon name="check-circle" slot="prefix"></bq-icon>
+        Success
+      </bq-tag>
+      <bq-tag color="info" variant="outline">
+        <bq-icon name="info" slot="prefix"></bq-icon>
+        Info
+      </bq-tag>
+      <bq-tag color="error" variant="outline">
+        <bq-icon name="warning-diamond" slot="prefix"></bq-icon>
+        Error
+      </bq-tag>
+      <bq-tag color="warning" variant="outline">
+        <bq-icon name="warning" slot="prefix"></bq-icon>
+        Warning
+      </bq-tag>
+      <bq-tag color="gray" variant="outline">
+        <bq-icon name="video-camera-slash" slot="prefix"></bq-icon>
+        Gray
+      </bq-tag>
+    </div>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqTag } from "@beeq/react";
+
+    <div className="tag">
+      <BqTag variant="outline">
+        <BqIcon name="alarm" slot="prefix" />
+        Default
+      </BqTag>
+      <BqTag color="success" variant="outline">
+        <BqIcon name="check-circle" slot="prefix" />
+        Success
+      </BqTag>
+      <BqTag color="info" variant="outline">
+        <BqIcon name="info" slot="prefix" />
+        Info
+      </BqTag>
+      <BqTag color="error" variant="outline">
+        <BqIcon name="warning-diamond" slot="prefix" />
+        Error
+      </BqTag>
+      <BqTag color="warning" variant="outline">
+        <BqIcon name="warning" slot="prefix" />
+        Warning
+      </BqTag>
+      <BqTag color="gray" variant="outline">
+        <BqIcon name="video-camera-slash" slot="prefix" />
+        Gray
+      </BqTag>
+    </div>
+    ```
+
+    ```html Angular icon="angular"
+    <div class="tag">
+      <bq-tag variant="outline">
+        <bq-icon name="alarm" slot="prefix"></bq-icon>
+        Default
+      </bq-tag>
+      <bq-tag color="success" variant="outline">
+        <bq-icon name="check-circle" slot="prefix"></bq-icon>
+        Success
+      </bq-tag>
+      <bq-tag color="info" variant="outline">
+        <bq-icon name="info" slot="prefix"></bq-icon>
+        Info
+      </bq-tag>
+      <bq-tag color="error" variant="outline">
+        <bq-icon name="warning-diamond" slot="prefix"></bq-icon>
+        Error
+      </bq-tag>
+      <bq-tag color="warning" variant="outline">
+        <bq-icon name="warning" slot="prefix"></bq-icon>
+        Warning
+      </bq-tag>
+      <bq-tag color="gray" variant="outline">
+        <bq-icon name="video-camera-slash" slot="prefix"></bq-icon>
+        Gray
+      </bq-tag>
+    </div>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqIcon, BqTag } from "@beeq/vue";
+    </script>
+
+    <template>
+      <div class="tag">
+        <BqTag variant="outline">
+          <BqIcon name="alarm" slot="prefix" />
+          Default
+        </BqTag>
+        <BqTag color="success" variant="outline">
+          <BqIcon name="check-circle" slot="prefix" />
+          Success
+        </BqTag>
         <BqTag color="info" variant="outline">
           <BqIcon name="info" slot="prefix" />
           Info
+        </BqTag>
+        <BqTag color="error" variant="outline">
+          <BqIcon name="warning-diamond" slot="prefix" />
+          Error
+        </BqTag>
+        <BqTag color="warning" variant="outline">
+          <BqIcon name="warning" slot="prefix" />
+          Warning
+        </BqTag>
+        <BqTag color="gray" variant="outline">
+          <BqIcon name="video-camera-slash" slot="prefix" />
+          Gray
         </BqTag>
       </div>
     </template>
@@ -666,15 +1082,31 @@ Use the `prefix` slot to add an icon when extra context helps, while keeping the
     </span>
     Don't mix too many tag treatments in the same area when a simpler set of patterns would be easier to scan.
   </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Group tags in a meaningful set when they work as filters, suggestions, or applied selections so users can compare them quickly.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Don't display a single standalone tag when a plain label or a different component would communicate the same thing more clearly.
+  </Card>
 </CardGroup>
 
 ## Accessibility
 
-- **Use clear and concise labels** — tags should avoid jargon and make their meaning obvious at a glance.
-- **Preserve text as the primary content** — icons can support the label but should never replace it entirely.
-- **Keep interactive tags discoverable** — clickable and removable tags should provide an obvious action target and predictable behavior.
-- **Use semantic distinctions carefully** — color can reinforce category or meaning, but the label should remain understandable without relying on color alone.
-- **Handle removal predictably** — if a tag can be removed, make sure the effect is obvious and the surrounding UI updates in a way users can follow.
+- Built in: when a tag is clickable, the component renders a native `button` in the shadow DOM, not a generic `div`, so keyboard and button semantics work by default.
+- Built in: when a clickable tag is disabled, the internal button receives `disabled` and no click, focus, or blur behavior is emitted.
+- Built in: when a removable tag is closed, the host reflects `hidden` and `aria-hidden`, and the close action is exposed through a button labeled `Close`.
+- Built in: decorative close icons are marked `aria-hidden="true"` so assistive technology reads the button label instead of the icon name.
+- You must: keep text as the primary content. Prefix icons can reinforce meaning, but they should never replace the visible label.
+- You must: avoid relying on color alone for category or state. The label should still make sense without the visual treatment.
+- You must: make the effect of removing a tag obvious in the surrounding UI, especially in filters and selected-value patterns.
 
 ## API reference
 
@@ -691,37 +1123,6 @@ Use the `prefix` slot to add an icon when extra context helps, while keeping the
 | `selected` | `selected` | If `true`, the Tag is selected (only if clickable) | `boolean` | `false` |
 | `size` | `size` | The size of the Tag component | `'xsmall'` \| `'small'` \| `'medium'` | `'medium'` |
 | `variant` | `variant` | The visual variant of the Tag | `'filled'` \| `'outline'` | `'filled'` |
-
-### Events
-
-| Event | Description | Type |
-|---|---|---|
-| `bqBlur` | Fires when the tag loses focus | `CustomEvent<HTMLBqTagElement>` |
-| `bqClick` | Fires when the tag is clicked | `CustomEvent<HTMLBqTagElement>` |
-| `bqClose` | Fires when the tag is closed or hidden | `CustomEvent<any>` |
-| `bqFocus` | Fires when the tag receives focus | `CustomEvent<HTMLBqTagElement>` |
-| `bqOpen` | Fires when the tag is shown again | `CustomEvent<any>` |
-
-<CodeGroup>
-  ```jsx React icon="react"
-  <BqTag onBqClick={() => {}}>Tag</BqTag>
-  ```
-
-  ```html Angular icon="angular"
-  <bq-tag (bqClick)="onTagClick($event)">Tag</bq-tag>
-  ```
-
-  ```vue Vue icon="vuejs"
-  <BqTag @bqClick="onTagClick">Tag</BqTag>
-  ```
-</CodeGroup>
-
-### Methods
-
-| Method | Description | Returns |
-|---|---|---|
-| `hide()` | Removes or hides the tag component | `Promise<void>` |
-| `show()` | Shows the tag component again | `Promise<void>` |
 
 ### Slots
 
@@ -741,7 +1142,7 @@ Use the `prefix` slot to add an icon when extra context helps, while keeping the
 
 ### CSS custom properties
 
-<Expandable title="View all CSS variables" defaultOpen={true}>
+<Expandable title="CSS variables" defaultOpen={true}>
   | Variable | Description | Default |
   |---|---|---|
   | `--bq-tag--background-color` | Tag background color | `theme(backgroundColor.ui.secondary)` |
