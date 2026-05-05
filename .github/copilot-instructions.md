@@ -11,5 +11,6 @@ Refer to the following instruction files for specific guidelines on various aspe
 - [StencilJS Guidelines](./instructions/stenciljs.instructions.md)
 - [Styling Guidelines](./instructions/styles.instructions.md)
 - [Accessibility Guidelines](./instructions/accessibility.instructions.md)
+- [Documentation Guidelines](./instructions/documentation.instructions.md)
 
 Follow these guidelines closely to maintain code quality, consistency, and best practices across the `beeq` package and the larger monorepo.
