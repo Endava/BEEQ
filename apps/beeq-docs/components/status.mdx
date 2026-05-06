@@ -65,9 +65,8 @@ The structure is intentionally small: one indicator plus one label. That keeps t
 
 | Part | Element | Description |
 |---|---|---|
-| **1** | Base | The internal wrapper that groups the dot and text |
-| **2** | Circle | The colored circular indicator that reflects the selected status type |
-| **3** | Text | The visible label that explains what the status means |
+| **1** | Icon | The visual status marker that signals the selected status type |
+| **2** | Header | The visible text label that explains what the status means |
 
 ## Design guidelines
 
@@ -75,13 +74,13 @@ Use statuses consistently so people can recognize state changes without pausing 
 
 <Steps>
   <Step title="Write the label first">
-    Start with the text. The label should still make sense on its own, because the dot is only a supporting cue.
+    Start with the text. The label should still make sense on its own, because the indicator is only a supporting cue.
   </Step>
-  <Step title="Choose one semantic type">
-    Pick the type that matches the meaning of the message, such as `success` for a completed task or `danger` for a blocked one. Reusing the same type for different meanings makes scanning harder.
+  <Step title="Keep the indicator supportive">
+    Treat the indicator as a quick visual signal, not the whole message. If you need a more specific symbol, build an icon status as a separate composition.
   </Step>
-  <Step title="Place it near the item it describes">
-    Keep the status close to the row, card, or object it belongs to so users do not have to guess what the label refers to.
+  <Step title="Keep spacing compact and consistent">
+    Place the status close to the row, card, or object it describes, and preserve enough spacing around it so the label and indicator remain easy to scan.
   </Step>
 </Steps>
 
@@ -147,6 +146,9 @@ Use `type="danger"` when the state signals risk, failure, or a blocked condition
     ```
 
     ```html Angular icon="angular"
+    <!-- Standalone: import { BqStatus } from "@beeq/angular/standalone" -->
+    <!-- Modules: components are available after importing BeeQModule -->
+
     <bq-status type="danger">Danger status</bq-status>
     ```
 
@@ -183,6 +185,9 @@ Use `type="info"` when the status provides neutral or supporting context.
     ```
 
     ```html Angular icon="angular"
+    <!-- Standalone: import { BqStatus } from "@beeq/angular/standalone" -->
+    <!-- Modules: components are available after importing BeeQModule -->
+
     <bq-status type="info">Information status</bq-status>
     ```
 
@@ -219,6 +224,9 @@ Use the default neutral status when the message should stay present without stro
     ```
 
     ```html Angular icon="angular"
+    <!-- Standalone: import { BqStatus } from "@beeq/angular/standalone" -->
+    <!-- Modules: components are available after importing BeeQModule -->
+
     <bq-status>Neutral status</bq-status>
     ```
 
@@ -255,6 +263,9 @@ Use `type="success"` when the state confirms a positive outcome.
     ```
 
     ```html Angular icon="angular"
+    <!-- Standalone: import { BqStatus } from "@beeq/angular/standalone" -->
+    <!-- Modules: components are available after importing BeeQModule -->
+
     <bq-status type="success">Success status</bq-status>
     ```
 
@@ -350,12 +361,6 @@ Use `type="success"` when the state confirms a positive outcome.
 | Property | Attribute | Description | Type | Default |
 |---|---|---|---|---|
 | `type` | `type` | Defines the type of status to display | `'alert'` \| `'danger'` \| `'info'` \| `'neutral'` \| `'success'` | `'neutral'` |
-
-### Slots
-
-| Slot | Description |
-|---|---|
-| *(default)* | The text content of the status component |
 
 ### Shadow parts
 
