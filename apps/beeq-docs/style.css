@@ -122,7 +122,7 @@ body,
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
+    flex-flow: column wrap;
     gap: var(--bq-spacing-m);
     padding: var(--bq-spacing-l);
     min-height: 5rem; /* 80px */
