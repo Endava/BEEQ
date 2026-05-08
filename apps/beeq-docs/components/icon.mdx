@@ -14,6 +14,8 @@ Icons help people scan and understand an interface faster. Use them to support a
 
 <Note>
   Named BEEQ icons are loaded from SVG files. Before using them in an app, make sure those assets are publicly available and that you configure `setBasePath()` to point to that directory.
+
+  You can find more details about configuring the icon base path according to your project setup and build tool in the [Getting Started → For developers](/getting-started/for-developers) guide.
 </Note>
 
 ## When to use
@@ -65,8 +67,8 @@ The icon guidance distinguishes between two common visual styles.
 
 | Part | Element | Description |
 |---|---|---|
-| **1** | Base | The internal wrapper that holds the rendered icon |
-| **2** | SVG | The injected `<svg>` element used for the icon graphic |
+| **1** | SVG | The SVG element that contains the icon graphic |
+| **2** | Bounding area | The area that surrounds the icon and defines its size and clickable area |
 
 ## Design guidelines
 
@@ -458,24 +460,7 @@ The Phosphor library gives you a broad icon set. The example below shows only a 
       <div class="group"><div><bq-icon name="medium-logo"></bq-icon></div><span>medium-logo</span></div>
     </div>
   </div>
-`}>
-</CodeLivePreview>
-
-Named icons are loaded from SVG assets. If your app copies BEEQ's icons into a public folder, point the component to that URL with `setBasePath()`.
-
-```ts
-import { setBasePath } from "@beeq/core";
-
-setBasePath("/icons/svg");
-```
-
-If you want to use an alternative icon library, point `setBasePath()` to a local or remote SVG directory that matches the icon names you plan to use.
-
-```ts
-import { setBasePath } from "@beeq/core";
-
-setBasePath("https://cdn.jsdelivr.net/npm/heroicons@2.1.5/24/outline");
-```
+`} />
 
 ## Best practices
 
@@ -545,6 +530,8 @@ setBasePath("https://cdn.jsdelivr.net/npm/heroicons@2.1.5/24/outline");
 - For named icons without a `label`, the component falls back to `"[name] icon"`, such as `"bell-ringing icon"`.
 - For custom SVG icons loaded through `src`, add `label` explicitly so assistive technologies get a meaningful name.
 - When an icon is ambiguous, pair it with visible text instead of expecting the symbol alone to carry the meaning.
+- For icon-only interactive patterns, add a `bq-tooltip` so keyboard and pointer users get a visible label. Keep in mind that tooltips are not reliably discoverable on touch devices, so a visible text label is preferred where possible.
+- Choose icons with widely recognized metaphors: a magnifying glass for search, a heart for favorites, a plus for add actions.
 
 ## API reference
 
@@ -557,7 +544,11 @@ setBasePath("https://cdn.jsdelivr.net/npm/heroicons@2.1.5/24/outline");
 | `name` | `name` | Icon name to load from the configured SVG base path | `string` | `undefined` |
 | `size` | `size` | Sets the rendered icon size | `number \| string` | `24` |
 | `src` | `src` | Loads a custom SVG source and overrides `name` when set | `string` | `undefined` |
-| `weight` | `weight` | Deprecated legacy icon weight/style prop | `'thin'` \| `'light'` \| `'regular'` \| `'bold'` \| `'fill'` \| `'duotone'` | `undefined` |
+| ~~`weight`~~ | ~~`weight`~~ | <strong className="text-red-500">Deprecated!</strong> Legacy icon weight/style prop | `'thin'` \| `'light'` \| `'regular'` \| `'bold'` \| `'fill'` \| `'duotone'` | `undefined` |
+
+### Slots
+
+This component has no public slots.
 
 ### Events
 
@@ -580,12 +571,14 @@ setBasePath("https://cdn.jsdelivr.net/npm/heroicons@2.1.5/24/outline");
 
 ### CSS custom properties
 
-<Expandable title="CSS variables" defaultOpen={true}>
-  | Variable | Description | Default |
-  |---|---|---|
-  | `--bq-icon--color` | Icon color | `currentColor` |
-  | `--bq-icon--size` | Icon size | `24px` |
-</Expandable>
+| Variable | Description | Default |
+|---|---|---|
+| `--bq-icon--color` | Icon color | `currentColor` |
+| `--bq-icon--size` | Icon size | `24px` |
+
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
 
 ## Resources
 
