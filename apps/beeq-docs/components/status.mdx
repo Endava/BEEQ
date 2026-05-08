@@ -43,7 +43,7 @@ Statuses help people understand the current state of an item at a glance. Use th
 
 ## Patterns
 
-The design guidance describes two common status patterns, even though the shipped component focuses on one of them.
+There are two common status patterns, even though the shipped component focuses on one of them.
 
 <CardGroup cols={2}>
   <Card title="Dot status">
@@ -89,6 +89,47 @@ Use statuses consistently so people can recognize state changes without pausing 
 </Note>
 
 ## Usage
+
+Use the default neutral status when the message should stay present without strong emphasis.
+
+<CodeLivePreview code={`<bq-status>Neutral status</bq-status>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-status>Neutral status</bq-status>
+    ```
+
+    ```jsx React icon="react"
+    import { BqStatus } from "@beeq/react";
+
+    <BqStatus>Neutral status</BqStatus>
+    ```
+
+    ```html Angular icon="angular"
+    <!-- Standalone: import { BqStatus } from "@beeq/angular/standalone" -->
+    <!-- Modules: components are available after importing BeeQModule -->
+
+    <bq-status>Neutral status</bq-status>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqStatus } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqStatus>Neutral status</BqStatus>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  Use this for standard states that do not need positive, negative, or urgent emphasis.
+</Tip>
+
+## Options
+
+Use the `type` prop to communicate the nature of the status message. Each value maps to a distinct color so states are recognizable at a glance.
 
 ### Alert
 
@@ -207,45 +248,6 @@ Use `type="info"` when the status provides neutral or supporting context.
   Use this for progress updates, supporting details, or states that should inform rather than warn.
 </Tip>
 
-### Neutral
-
-Use the default neutral status when the message should stay present without strong emphasis.
-
-<CodeLivePreview code={`<bq-status>Neutral status</bq-status>`}>
-  <CodeGroup>
-    ```html HTML icon="html5"
-    <bq-status>Neutral status</bq-status>
-    ```
-
-    ```jsx React icon="react"
-    import { BqStatus } from "@beeq/react";
-
-    <BqStatus>Neutral status</BqStatus>
-    ```
-
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqStatus } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
-
-    <bq-status>Neutral status</bq-status>
-    ```
-
-    ```vue Vue icon="vuejs"
-    <script setup lang="ts">
-    import { BqStatus } from "@beeq/vue";
-    </script>
-
-    <template>
-      <BqStatus>Neutral status</BqStatus>
-    </template>
-    ```
-  </CodeGroup>
-</CodeLivePreview>
-
-<Tip>
-  Use this for standard states that do not need positive, negative, or urgent emphasis.
-</Tip>
-
 ### Success
 
 Use `type="success"` when the state confirms a positive outcome.
@@ -348,7 +350,7 @@ Use `type="success"` when the state confirms a positive outcome.
 
 ## Accessibility
 
-- `bq-status` renders with `role="status"`, so assistive technologies can treat it as a status message instead of a decorative label.
+- `bq-status` unconditionally renders with `role="status"` on its wrapper element, so assistive technologies always treat it as a live status message regardless of the `type` prop.
 - The text label is required for meaning. The colored dot is supportive, not sufficient on its own.
 - Keep labels short and specific so status changes remain easy to understand when announced.
 - This component is informational, not interactive. If users need to act on the message, pair it with a separate button or link.
@@ -361,6 +363,12 @@ Use `type="success"` when the state confirms a positive outcome.
 | Property | Attribute | Description | Type | Default |
 |---|---|---|---|---|
 | `type` | `type` | Defines the type of status to display | `'alert'` \| `'danger'` \| `'info'` \| `'neutral'` \| `'success'` | `'neutral'` |
+
+### Slots
+
+| Slot | Description |
+|---|---|
+| *(default)* | The text label content of the status component |
 
 ### Shadow parts
 
@@ -378,10 +386,14 @@ Use `type="success"` when the state confirms a positive outcome.
   | `--bq-status-circle--size` | Status circle size | `12px` |
 </Expandable>
 
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
 ## Resources
 
 <CardGroup cols={2}>
-  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-status--alert">
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-status--default">
     Explore all status variants in Storybook
   </Card>
   <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/status">
