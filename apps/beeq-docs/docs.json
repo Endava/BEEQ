@@ -102,7 +102,6 @@
               "components/avatar",
               "components/badge",
               "components/icon",
-              "components/option",
               "components/status",
               "components/table",
               "components/tag"
