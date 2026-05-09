@@ -64,8 +64,8 @@ A badge is a compact surface with optional slotted content. When no content is p
 
 | Part | Element | Description |
 |---|---|---|
-| **1** | Base | The visible badge surface (`base` part) |
-| **2** | Content | Optional number or short text shown in the default slot (`number` part) |
+| **1** | Base | The container surface |
+| **2** | Content | Optional number or short text |
 
 ## Design guidelines
 
@@ -191,92 +191,9 @@ Badge color should reinforce meaning, not create it on its own. Keep semantic us
 | `ui--warning` | Caution, review needed, or temporary attention |
 | `ui--danger` | Errors, urgent issues, or disruptive states |
 
-<CodeLivePreview code={`
-  <style>
-    @scope (.badge--legend) {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--bq-spacing-m);
-
-      & span {
-        display: inline-flex;
-        align-items: center;
-        gap: var(--bq-spacing-xs2);
-      }
-    }
-  </style>
-  <div class="badge--legend">
-    <span><bq-badge size="medium"></bq-badge> Default</span>
-    <span><bq-badge size="medium" background-color="ui--info"></bq-badge> Info</span>
-    <span><bq-badge size="medium" background-color="ui--success"></bq-badge> Success</span>
-    <span><bq-badge size="medium" background-color="ui--warning"></bq-badge> Warning</span>
-    <span><bq-badge size="medium" background-color="ui--danger"></bq-badge> Error</span>
-  </div>
-`}>
-  <CodeGroup>
-    ```css CSS icon="css"
-    .badge--legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--bq-spacing-m);
-
-      & span {
-        display: inline-flex;
-        align-items: center;
-        gap: var(--bq-spacing-xs2);
-      }
-    }
-    ```
-
-    ```html HTML icon="html5"
-    <div class="badge--legend">
-      <span><bq-badge size="medium"></bq-badge> Default</span>
-      <span><bq-badge size="medium" background-color="ui--info"></bq-badge> Info</span>
-      <span><bq-badge size="medium" background-color="ui--success"></bq-badge> Success</span>
-      <span><bq-badge size="medium" background-color="ui--warning"></bq-badge> Warning</span>
-      <span><bq-badge size="medium" background-color="ui--danger"></bq-badge> Error</span>
-    </div>
-    ```
-
-    ```jsx React icon="react"
-    import { BqBadge } from "@beeq/react";
-
-    <div className="badge--legend">
-      <span><BqBadge size="medium" /> Default</span>
-      <span><BqBadge size="medium" backgroundColor="ui--info" /> Info</span>
-      <span><BqBadge size="medium" backgroundColor="ui--success" /> Success</span>
-      <span><BqBadge size="medium" backgroundColor="ui--warning" /> Warning</span>
-      <span><BqBadge size="medium" backgroundColor="ui--danger" /> Error</span>
-    </div>
-    ```
-
-    ```html Angular icon="angular"
-    <div class="badge--legend">
-      <span><bq-badge size="medium"></bq-badge> Default</span>
-      <span><bq-badge size="medium" background-color="ui--info"></bq-badge> Info</span>
-      <span><bq-badge size="medium" background-color="ui--success"></bq-badge> Success</span>
-      <span><bq-badge size="medium" background-color="ui--warning"></bq-badge> Warning</span>
-      <span><bq-badge size="medium" background-color="ui--danger"></bq-badge> Error</span>
-    </div>
-    ```
-
-    ```vue Vue icon="vuejs"
-    <script setup lang="ts">
-    import { BqBadge } from "@beeq/vue";
-    </script>
-
-    <template>
-      <div class="badge--legend">
-        <span><BqBadge size="medium" /> Default</span>
-        <span><BqBadge size="medium" backgroundColor="ui--info" /> Info</span>
-        <span><BqBadge size="medium" backgroundColor="ui--success" /> Success</span>
-        <span><BqBadge size="medium" backgroundColor="ui--warning" /> Warning</span>
-        <span><BqBadge size="medium" backgroundColor="ui--danger" /> Error</span>
-      </div>
-    </template>
-    ```
-  </CodeGroup>
-</CodeLivePreview>
+<Tip>
+  Check the [Status](/components/status) component for more details on semantic color usage and meaning in BEEQ.
+</Tip>
 
 ### Attached to an icon
 
@@ -352,9 +269,9 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
   </CodeGroup>
 </CodeLivePreview>
 
-<Tip>
+<Note>
   To create a "cutout ring" effect — useful when a badge sits on top of an image or avatar — add a border using the `--bq-badge--border-color`, `--bq-badge--border-style`, and `--bq-badge--border-width` CSS custom properties. Match the border color to the surface behind the badge for a clean visual separation.
-</Tip>
+</Note>
 
 <CardGroup cols={2}>
   <Card>
