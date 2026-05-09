@@ -560,7 +560,7 @@ Use a custom trigger when the dropdown needs a more specific visual entry point,
     }
   </style>
   <bq-dropdown>
-    <bq-button appearance="secondary" size="medium" type="button" variant="standard" slot="trigger">
+    <bq-button appearance="secondary" size="medium" type="button" variant="standard" only-icon slot="trigger">
       <bq-icon name="dots-three-vertical"></bq-icon>
     </bq-button>
     <bq-option-list>
@@ -580,7 +580,7 @@ Use a custom trigger when the dropdown needs a more specific visual entry point,
   </bq-dropdown>
 
   <bq-dropdown>
-    <bq-button appearance="text" border="full" size="small" slot="trigger">
+    <bq-button appearance="text" border="full" size="small" only-icon slot="trigger">
       <bq-avatar
         alt-text="User profile"
         image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
@@ -605,9 +605,22 @@ Use a custom trigger when the dropdown needs a more specific visual entry point,
   </bq-dropdown>
 `}>
   <CodeGroup>
+    ```css CSS icon="css"
+    /** Custom styles to apply when wrapping a bq-avatar inside a bq-button for accessible dropdown triggers */
+    bq-button:has(bq-avatar) {
+      &::part(button) {
+        padding: 0;
+      }
+
+      &::part(label) {
+        display: flex;
+        align-items: center;
+      }
+    }
+    ```
     ```html HTML icon="html5" expandable
     <bq-dropdown>
-      <bq-button appearance="secondary" size="medium" type="button" variant="standard" slot="trigger">
+      <bq-button appearance="secondary" size="medium" type="button" variant="standard" only-icon slot="trigger">
         <bq-icon name="dots-three-vertical"></bq-icon>
       </bq-button>
       <bq-option-list>
@@ -627,7 +640,7 @@ Use a custom trigger when the dropdown needs a more specific visual entry point,
     </bq-dropdown>
 
     <bq-dropdown>
-      <bq-button appearance="text" border="full" size="small" slot="trigger">
+      <bq-button appearance="text" border="full" size="small" only-icon slot="trigger">
         <bq-avatar
           alt-text="User profile"
           image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
@@ -656,7 +669,7 @@ Use a custom trigger when the dropdown needs a more specific visual entry point,
     import { BqAvatar, BqButton, BqDropdown, BqIcon, BqOption, BqOptionList } from "@beeq/react";
 
     <BqDropdown>
-      <BqButton appearance="secondary" size="medium" type="button" variant="standard" slot="trigger">
+      <BqButton appearance="secondary" size="medium" type="button" variant="standard" onlyIcon slot="trigger">
         <BqIcon name="dots-three-vertical" />
       </BqButton>
       <BqOptionList>
@@ -676,7 +689,7 @@ Use a custom trigger when the dropdown needs a more specific visual entry point,
     </BqDropdown>
 
     <BqDropdown>
-      <BqButton appearance="text" border="full" size="small" slot="trigger">
+      <BqButton appearance="text" border="full" size="small" onlyIcon slot="trigger">
         <BqAvatar
           altText="User profile"
           image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
@@ -703,7 +716,7 @@ Use a custom trigger when the dropdown needs a more specific visual entry point,
 
     ```html Angular icon="angular" expandable
     <bq-dropdown>
-      <bq-button appearance="secondary" size="medium" type="button" variant="standard" slot="trigger">
+      <bq-button appearance="secondary" size="medium" type="button" variant="standard" only-icon slot="trigger">
         <bq-icon name="dots-three-vertical"></bq-icon>
       </bq-button>
       <bq-option-list>
@@ -723,7 +736,7 @@ Use a custom trigger when the dropdown needs a more specific visual entry point,
     </bq-dropdown>
 
     <bq-dropdown>
-      <bq-button appearance="text" border="full" size="small" slot="trigger">
+      <bq-button appearance="text" border="full" size="small" only-icon slot="trigger">
         <bq-avatar
           alt-text="User profile"
           image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
@@ -755,7 +768,7 @@ Use a custom trigger when the dropdown needs a more specific visual entry point,
 
     <template>
       <BqDropdown>
-        <BqButton appearance="secondary" size="medium" type="button" variant="standard" slot="trigger">
+        <BqButton appearance="secondary" size="medium" type="button" variant="standard" onlyIcon slot="trigger">
           <BqIcon name="dots-three-vertical" />
         </BqButton>
         <BqOptionList>
@@ -775,7 +788,7 @@ Use a custom trigger when the dropdown needs a more specific visual entry point,
       </BqDropdown>
 
       <BqDropdown>
-        <BqButton appearance="text" border="full" size="small" slot="trigger">
+        <BqButton appearance="text" border="full" size="small" onlyIcon slot="trigger">
           <BqAvatar
             alt-text="User profile"
             image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
