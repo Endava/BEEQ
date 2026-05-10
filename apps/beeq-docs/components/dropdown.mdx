@@ -72,10 +72,14 @@ A dropdown is composed of a trigger and a floating panel. The trigger can be a b
 | Part | Element | Description |
 |---|---|---|
 | **1** | Trigger | The slotted element that opens and closes the dropdown |
-| **2** | Chevron or cue | Optional visual indicator that communicates whether the dropdown is open or closed |
-| **3** | Panel | The floating surface rendered by `bq-panel` under the hood |
-| **4** | Option list | A structured list of choices, usually built with `bq-option-list` |
-| **5** | Option | Individual action, destination, or value inside the panel |
+| **2** | Label | The trigger's visible text that communicates the dropdown purpose or content |
+| **3** | Chevron or cue | Visual indicator that communicates whether the dropdown is open or closed |
+| **4** | Panel | The floating surface rendered by `bq-panel` under the hood |
+
+<Tip>
+  The panel should contain a list of related options, actions, or destinations.
+  Use [`bq-option-list`](/components/option-list) with [`bq-option`](/components/option) and [`bq-option-group`](/components/option-group) for common dropdown patterns, or add custom content when you need a more specific layout or interaction.
+</Tip>
 
 ## Design guidelines
 
@@ -83,9 +87,9 @@ A dropdown is composed of a trigger and a floating panel. The trigger can be a b
 
 Chevrons on the trigger must reflect the current state of the panel. Use a downward-pointing chevron when the panel is closed, and switch to an upward-pointing chevron when it is open. Reversing this communicates the wrong state to users and erodes trust in the interface.
 
-<Note>
+<Warning>
   `bq-dropdown` does not manage chevron rotation automatically. Listen to the `bqOpen` event and update the icon name (`caret-up` / `caret-down`) or apply a CSS rotation on your trigger accordingly.
-</Note>
+</Warning>
 
 ### Data ordering
 
@@ -290,9 +294,10 @@ The trigger can be any appropriate interactive element, but in most cases a `bq-
   </CodeGroup>
 </CodeLivePreview>
 
-<Tip>
-  The dropdown automatically prevents page scrolling while the panel is open. Set `disable-scroll-lock` when the surrounding experience needs background scrolling, and remember that a dropdown inside a scrollable area closes when that area scrolls.
-</Tip>
+<Note>
+While the panel is open, the dropdown blocks page scrolling by default. Use `disable-scroll-lock` to allow the page to scroll behind it.
+If the dropdown sits inside a scrollable area, scrolling that area will close the panel — you can see this behavior on this documentation page.
+</Note>
 
 ## Options
 
