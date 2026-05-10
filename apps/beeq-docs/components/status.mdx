@@ -66,7 +66,7 @@ The structure is intentionally small: one indicator plus one label. That keeps t
 | Part | Element | Description |
 |---|---|---|
 | **1** | Icon | The visual status marker that signals the selected status type |
-| **2** | Header | The visible text label that explains what the status means |
+| **2** | Label | The text that describes the status meaning in more detail |
 
 ## Design guidelines
 
@@ -380,11 +380,9 @@ Use `type="success"` when the state confirms a positive outcome.
 
 ### CSS custom properties
 
-<Expandable title="CSS variables" defaultOpen={true}>
-  | Variable | Description | Default |
-  |---|---|---|
-  | `--bq-status-circle--size` | Status circle size | `12px` |
-</Expandable>
+| Variable | Description | Default |
+|---|---|---|
+| `--bq-status-circle--size` | Status circle size | `12px` |
 
 <Tip>
   Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
