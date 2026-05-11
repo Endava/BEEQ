@@ -63,6 +63,10 @@ The design guidance highlights several common ways tags can appear in an interfa
   </Card>
 </CardGroup>
 
+<Note>
+  Tags serve four functional roles: **input** (user-entered keywords or values), **suggestion** (pre-defined hints offered based on context), **filter** (applied search or browse criteria shown as chips), and **assist** (read-only context chips alongside content). Choose the visual pattern — informational, clickable, or removable — to match the functional role.
+</Note>
+
 ## Anatomy
 
 <Frame className="px-4 py-4" caption="Tag component anatomy">
@@ -223,6 +227,47 @@ Apply the `clickable` attribute for interactive tags that can trigger actions or
   </CodeGroup>
 </CodeLivePreview>
 
+### Disabled
+
+Apply `disabled` alongside `clickable` when a tag action is temporarily unavailable. The `disabled` attribute has no effect on informational or removable tags.
+
+<CodeLivePreview code={`
+  <bq-tag clickable>Enabled</bq-tag>
+  <bq-tag clickable disabled>Disabled</bq-tag>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-tag clickable>Enabled</bq-tag>
+    <bq-tag clickable disabled>Disabled</bq-tag>
+    ```
+
+    ```jsx React icon="react"
+    import { BqTag } from "@beeq/react";
+
+    <>
+      <BqTag clickable>Enabled</BqTag>
+      <BqTag clickable disabled>Disabled</BqTag>
+    </>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-tag clickable>Enabled</bq-tag>
+    <bq-tag clickable disabled>Disabled</bq-tag>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqTag } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqTag clickable>Enabled</BqTag>
+      <BqTag clickable disabled>Disabled</BqTag>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
 ## Options
 
 ### Color - filled
@@ -344,7 +389,7 @@ Enable `removable` when users need to clear selected items, applied filters, or 
   <bq-tag removable color="error">Error</bq-tag>
   <bq-tag removable color="warning">Warning</bq-tag>
   <bq-tag removable color="gray">Gray</bq-tag>
-  
+
   <script>
     (() => {
       const preview = document.currentScript?.parentElement;
@@ -823,7 +868,7 @@ Use the outline variant with a prefix icon when you want context with a lighter 
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Don't mix too many tag treatments in the same area when a simpler set of patterns would be easier to scan.
+    Don't mix too many colors or tag styles in the same area. Limit color use to a single semantic purpose — more than one color scheme in a single list forces users to decode two systems at once.
   </Card>
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
@@ -837,9 +882,27 @@ Use the outline variant with a prefix icon when you want context with a lighter 
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Don't display a single standalone tag when a plain label or a different component would communicate the same thing more clearly.
+    Don't display a single standalone tag. Tags gain meaning through comparison — use a set of at least three before reaching for this component, otherwise a plain label or a different component will communicate the same thing more clearly.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Reserve removable tags for low-stakes selections like applied filters or entered keywords, where removing the tag is easy to undo.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Don't use removable tags for critical or destructive actions. A close button is easy to tap accidentally — use an explicit button or a confirmation dialog for consequential operations.
   </Card>
 </CardGroup>
+
+<Warning>
+  The `disabled` prop only takes effect when `clickable` is also set. Disabling an informational or removable tag has no visual or behavioral impact.
+</Warning>
 
 ## Accessibility
 
