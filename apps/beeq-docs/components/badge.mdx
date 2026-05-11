@@ -1,0 +1,409 @@
+---
+title: Badge
+description: Badges provide a compact visual indicator for status, presence, or counts tied to another UI element.
+---
+
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Badge component overview">
+  <img className="block dark:hidden" src="/components/images/badge/badge-overview-light.svg" alt="BEEQ Badge component overview" />
+  <img className="hidden dark:block" src="/components/images/badge/badge-overview-dark.svg" alt="BEEQ Badge component overview" />
+</Frame>
+
+Badges provide a compact visual cue for status, presence, or counts without taking up much space. They work best when attached to another element such as an icon, avatar, or navigation item so the meaning is immediately clear.
+
+<Note>
+  Use [Tag](/components/tag) when the element needs to be interactive, dismissible, or read as a standalone labeled item. Badges are non-interactive indicators.
+</Note>
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use badges when
+    </span>
+    - You need to show a small count, status, or presence indicator
+    - The badge is tied to another UI element such as an icon, avatar, or label
+    - The information should be noticeable without dominating the layout
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use badges when
+    </span>
+    - The content needs to be clicked, dismissed, or filtered
+    - The message is essential enough that it should appear as regular text
+    - Adding the badge would create clutter or repeat information the UI already communicates clearly
+  </Card>
+</CardGroup>
+
+## Badge patterns
+
+<CardGroup cols={3}>
+  <Card title="Dot indicator">
+    Use an empty badge to communicate presence, availability, or a lightweight status when a number is not needed.
+  </Card>
+  <Card title="Counter">
+    Use badge content to show the number of notifications, tasks, or updates associated with another element.
+  </Card>
+  <Card title="Semantic status">
+    Use semantic badge colors consistently to communicate informational, positive, warning, or error states.
+  </Card>
+</CardGroup>
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Badge component anatomy">
+  <img className="block dark:hidden" src="/components/images/badge/badge-anatomy-light.svg" alt="BEEQ Badge component anatomy" />
+  <img className="hidden dark:block" src="/components/images/badge/badge-anatomy-dark.svg" alt="BEEQ Badge component anatomy" />
+</Frame>
+
+A badge is a compact surface with optional slotted content. When no content is provided, it renders as a dot indicator. When content is present, it expands to hold the number or short label.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Base | The container surface |
+| **2** | Content | Optional number or short text |
+
+## Design guidelines
+
+### Size
+
+Badge dot size is controlled by the `size` prop. Choose the size based on how much visual weight the indicator should carry in context.
+
+<Note>
+  The `size` prop only applies when the badge has **no content**. When you add slot content — a number or short label — the badge ignores `size` and auto-expands to fit the text.
+</Note>
+
+| Size | Diameter | When to use |
+|---|---|---|
+| `small` | 8px | Default. Use in dense or compact layouts where a subtle dot signal is enough. |
+| `medium` | 12px | Use when the badge needs slightly more presence, such as next to larger icons or in less crowded layouts. |
+
+### Content length
+
+Keep counter content short — three characters maximum, including the `+` symbol.
+
+<Tip>
+  When a count exceeds what fits, show `99+` or a similar capped value. The `+` signals overflow without needing an exact number.
+</Tip>
+
+## Usage
+
+### Dot indicator
+
+Use the badge without slot content when you only need a small visual signal. `size` matters most in this variant because it controls the dot diameter.
+
+<CodeLivePreview code={`
+  <bq-badge></bq-badge>
+  <bq-badge size="medium"></bq-badge>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-badge></bq-badge>
+    <bq-badge size="medium"></bq-badge>
+    ```
+
+    ```jsx React icon="react"
+    import { BqBadge } from "@beeq/react";
+
+    <BqBadge />
+    <BqBadge size="medium" />
+    ```
+
+    ```html Angular icon="angular"
+    <!-- Standalone: import { BqBadge } from "@beeq/angular/standalone" -->
+    <!-- Modules: components are available after importing BeeQModule -->
+
+    <bq-badge></bq-badge>
+    <bq-badge size="medium"></bq-badge>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqBadge } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqBadge />
+      <BqBadge size="medium" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  `small` is the default size, so you only need to set `size="medium"` when you want a larger indicator.
+</Tip>
+
+### Counter
+
+Add slot content when the badge needs to communicate a count. Keep the value short and meaningful so the badge stays compact and easy to scan.
+
+<CodeLivePreview code={`
+  <bq-badge>2</bq-badge>
+  <bq-badge>12</bq-badge>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-badge>2</bq-badge>
+    <bq-badge>12</bq-badge>
+    ```
+
+    ```jsx React icon="react"
+    import { BqBadge } from "@beeq/react";
+
+    <BqBadge>2</BqBadge>
+    <BqBadge>12</BqBadge>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-badge>2</bq-badge>
+    <bq-badge>12</bq-badge>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqBadge } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqBadge>2</BqBadge>
+      <BqBadge>12</BqBadge>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Options
+
+### Color
+
+Badge color should reinforce meaning, not create it on its own. Keep semantic usage consistent so people learn what each color communicates across the product.
+
+| Color | Typical meaning |
+|---|---|
+| `default` | Neutral presence or a generic indicator when no semantic state is needed |
+| `ui--info` | Informational updates or newly available information |
+| `ui--success` | Positive status, availability, or successful completion |
+| `ui--warning` | Caution, review needed, or temporary attention |
+| `ui--danger` | Errors, urgent issues, or disruptive states |
+
+<Tip>
+  Check the [Status](/components/status) component for more details on semantic color usage and meaning in BEEQ.
+</Tip>
+
+### Attached to an icon
+
+When a badge is paired with an icon or trigger, position it on the outer edge so it remains visible without covering the main symbol.
+
+<CodeLivePreview code={`
+  <style>
+    @scope (.badge--icon) {
+      position: relative;
+      display: inline-flex;
+
+      & bq-badge {
+        position: absolute;
+        inset-block-start: -4px;
+        inset-inline-end: -4px;
+      }
+    }
+  </style>
+  <div class="badge--icon" aria-label="Notifications">
+    <bq-icon name="bell-ringing" size="24"></bq-icon>
+    <bq-badge>9</bq-badge>
+  </div>
+`}>
+  <CodeGroup>
+    ```css CSS icon="css"
+    .badge--icon {
+      position: relative;
+      display: inline-flex;
+
+      & bq-badge {
+        position: absolute;
+        inset-block-start: -4px;
+        inset-inline-end: -4px;
+      }
+    }
+    ```
+
+    ```html HTML icon="html5"
+    <div class="badge--icon" aria-label="Notifications">
+      <bq-icon name="bell-ringing" size="24"></bq-icon>
+      <bq-badge>9</bq-badge>
+    </div>
+    ```
+
+    ```jsx React icon="react"
+    import { BqBadge, BqIcon } from "@beeq/react";
+
+    <div className="badge--icon" aria-label="Notifications">
+      <BqIcon name="bell-ringing" size="24" />
+      <BqBadge>9</BqBadge>
+    </div>
+    ```
+
+    ```html Angular icon="angular"
+    <div class="badge--icon" aria-label="Notifications">
+      <bq-icon name="bell-ringing" size="24"></bq-icon>
+      <bq-badge>9</bq-badge>
+    </div>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqBadge, BqIcon } from "@beeq/vue";
+    </script>
+
+    <template>
+      <div class="badge--icon" aria-label="Notifications">
+        <BqIcon name="bell-ringing" size="24" />
+        <BqBadge>9</BqBadge>
+      </div>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Note>
+  To create a "cutout ring" effect — useful when a badge sits on top of an image or avatar — add a border using the `--bq-badge--border-color`, `--bq-badge--border-style`, and `--bq-badge--border-width` CSS custom properties. Match the border color to the surface behind the badge for a clean visual separation.
+</Note>
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+
+    Use the supported badge sizes so indicators stay visually consistent across the product.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+
+    Do not resize badges arbitrarily. Oversized indicators quickly feel noisy and unbalanced.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+
+    Show a badge only when there is relevant status or count information to communicate.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+
+    Do not leave empty or unnecessary badges in the interface when there is nothing meaningful to show.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+
+    Place attached badges on the outer edge of the related icon or trigger so both elements remain visible.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+
+    Do not center a badge over the element it refers to. It can obscure the symbol and reduce clarity.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+
+    Pair badges with another UI element so the status or count has clear context.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+
+    Do not rely on a standalone badge in product UI unless its meaning is obvious from nearby content or a legend.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+Badges are visual indicators, not interactive controls. When a badge communicates count or status, make sure the surrounding element or nearby text also exposes that meaning to assistive technologies.
+
+Do not rely on color alone. Use text, labels, or accessible names on the related control when the badge carries important information such as unread notifications or an error state.
+
+## API reference
+
+### Properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `backgroundColor` | `background-color` | Badge background color token | `string` | `undefined` |
+| `size` | `size` | Dot size when no content is provided | `'small'` \| `'medium'` | `'small'` |
+| `textColor` | `text-color` | Text color token used when content is present | `string` | `undefined` |
+
+### Slots
+
+| Slot | Description |
+|---|---|
+| default | Optional number or short text shown inside the badge |
+
+### Shadow parts
+
+| Part | Description |
+|---|---|
+| `base` | The visible badge wrapper |
+| `number` | The element wrapping the default slot content |
+
+### CSS custom properties
+
+<Expandable title="View all CSS variables" defaultOpen={false}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-badge--background-color` | Badge background color | `theme('backgroundColor.ui.danger')` |
+  | `--bq-badge--box-shadow` | Badge box shadow | `none` |
+  | `--bq-badge--border-color` | Badge border color | `theme('stroke.tertiary')` |
+  | `--bq-badge--border-radius` | Badge border radius | `theme('borderRadius.full')` |
+  | `--bq-badge--border-style` | Badge border style | `none` |
+  | `--bq-badge--border-width` | Badge border width | `theme('borderWidth.0')` |
+  | `--bq-badge--size-small` | Small badge size | `8px` |
+  | `--bq-badge--size-medium` | Medium badge size | `12px` |
+  | `--bq-badge--size-large` | Minimum size used by content badges | `16px` |
+  | `--bq-badge--text-color` | Badge text color | `theme('textColor.alt')` |
+</Expandable>
+
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-badge--default">
+    Explore badge states and examples in Storybook
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/badge">
+    View the component source on GitHub
+  </Card>
+</CardGroup>

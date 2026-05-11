@@ -50,7 +50,7 @@ describe('bq-<component>', () => {
 
   it('should have shadow root', async () => {
     const { root } = await render(<bq-component />);
-    expect(root.shadowRoot).not.toBeNull();
+    expect(root).toHaveShadowRoot(); // ✅ use toHaveShadowRoot(), never .shadowRoot !== null
   });
 
   // ... additional tests
