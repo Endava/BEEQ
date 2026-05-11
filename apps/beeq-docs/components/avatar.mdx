@@ -1,0 +1,776 @@
+---
+title: Avatar
+description: Avatars represent a person, team, or entity using a profile image or initials.
+---
+
+import { CardTile } from '/snippets/CardTile.jsx';
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Avatar component overview">
+  <img className="block dark:hidden" src="/components/images/avatar/avatar-overview-light.svg" alt="BEEQ Avatar component overview" />
+  <img className="hidden dark:block" src="/components/images/avatar/avatar-overview-dark.svg" alt="BEEQ Avatar component overview" />
+</Frame>
+
+Avatars help people identify users, teams, or entities at a glance. Use them in places where identity matters, such as lists, comments, ownership indicators, profile surfaces, contact cards, and people pickers.
+
+<Note>
+  Provide a meaningful `label` for every avatar. When an image is used, add `alt-text` and keep `initials` short so they remain a clean fallback if the image cannot load.
+</Note>
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use avatars when
+    </span>
+    - People need to identify a person, team, or brand quickly
+    - A list, card, or thread benefits from a compact visual identifier
+    - A profile image or initials add useful context without extra text
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use avatars when
+    </span>
+    - Identity is not relevant to the task or content
+    - A dense layout would become noisy with extra visuals
+    - Text labels alone already make ownership or authorship obvious
+  </Card>
+</CardGroup>
+
+## Avatar patterns
+
+These are the most common contexts where avatars add meaningful value. Use them as a reference when deciding whether an avatar fits the layout.
+
+<CardGroup cols={2}>
+  <Card title="Contact details">
+    Pair an avatar with a name and supporting metadata when identity is central to the content, such as profile summaries or directory entries.
+  </Card>
+  <Card title="List">
+    Use avatars in dense lists when a quick visual cue helps people scan authors, owners, assignees, or participants faster.
+  </Card>
+  <Card title="Contact card">
+    Add an avatar to card-based layouts when the card represents a person, team, or brand and identity should be immediately recognizable.
+  </Card>
+  <Card title="Select user">
+    Use avatars in selection patterns when people need to choose from multiple users and benefit from both a name and a visual identifier.
+  </Card>
+</CardGroup>
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Avatar component anatomy">
+  <img className="block dark:hidden" src="/components/images/avatar/avatar-anatomy-light.svg" alt="BEEQ Avatar component anatomy" />
+  <img className="hidden dark:block" src="/components/images/avatar/avatar-anatomy-dark.svg" alt="BEEQ Avatar component anatomy" />
+</Frame>
+
+An avatar is a single visual surface that shows either an image or initials, with optional badge content layered on top.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Base | The visible avatar surface (`base` part) |
+| **2** | Visual | The displayed image (`img` part) or initials (`text` part) |
+| **3** | Badge | Optional content placed in the `badge` slot |
+
+## Design guidelines
+
+### Shape
+
+<CardGroup cols={2}>
+  <CardTile
+    title="Circle — for people"
+    imageLightSrc="/components/images/avatar/avatar-shape-circle-light.svg"
+    imageDarkSrc="/components/images/avatar/avatar-shape-circle-dark.svg"
+  >
+    Use `circle` when the avatar represents an individual person, such as a user profile, comment author, or chat participant. The round shape signals human identity at a glance.
+  </CardTile>
+  <CardTile
+    title="Square — for entities"
+    imageLightSrc="/components/images/avatar/avatar-shape-circle-light.svg"
+    imageDarkSrc="/components/images/avatar/avatar-shape-circle-dark.svg"
+  >
+    Use `square` when the avatar represents a team, brand, organization, or system entity. The sharper edge fits non-personal identity and aligns with logo conventions.
+  </CardTile>
+</CardGroup>
+
+<Tip>
+  Avatar shape can be further customized by adjusting the border-radius tokens (`--bq-avatar--border-radius-*`), allowing the shape to match the overall product aesthetic.
+</Tip>
+
+### Initials
+
+Pass the full intended initials (e.g. `"JD"` for John Doe) and let the component handle trimming. The component automatically caps the visible characters based on `size`:
+
+<Steps>
+  <Step title="xsmall">
+    Shows **1 character** — only the first initial fits at 24px.
+  </Step>
+  <Step title="small">
+    Shows **2 characters** — first and last initial, the most common pattern.
+  </Step>
+  <Step title="medium">
+    Shows **3 characters** — suits slightly longer abbreviations or team codes.
+  </Step>
+  <Step title="large">
+    Shows **4 characters** — maximum at 64px; useful for multi-word team names.
+  </Step>
+</Steps>
+
+### Image and initials together
+
+<Note>
+  Always pass both `image` and `initials` when showing a photo. If the image fails to load, the component automatically falls back to the initials — no extra logic required on your side.
+</Note>
+
+## Usage
+
+Avatar supports two primary variants: `Text` for initials and `Image` for profile photos or logos.
+
+### Text
+
+Use initials when no uploaded image is available or when the interface is intentionally compact. Pass short values rather than full names; the component trims the visible text based on the selected `size`.
+
+<CodeLivePreview code={`
+  <bq-avatar
+    initials="BQ"
+    label="Avatar component label"
+  ></bq-avatar>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-avatar initials="BQ" label="Avatar component label"></bq-avatar>
+    ```
+
+    ```jsx React icon="react"
+    import { BqAvatar } from "@beeq/react";
+
+    <BqAvatar initials="BQ" label="Avatar component label" />
+    ```
+
+    ```html Angular icon="angular"
+    <!-- Standalone: import { BqAvatar } from "@beeq/angular/standalone" -->
+    <!-- Modules: components are available after importing BeeQModule -->
+
+    <bq-avatar
+      initials="BQ"
+      label="Avatar component label"
+    ></bq-avatar>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqAvatar } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqAvatar initials="BQ" label="Avatar component label" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  When using the `Text` variant, you can customise the avatar background color via the `--bq-avatar-background` CSS custom property. For example: `bq-avatar { --bq-avatar-background: var(--bq-ui--success); }`
+</Tip>
+
+### Image
+
+When a profile photo or logo is available, pass both `image` and `initials`. The image is shown first, while initials remain a built-in fallback if the image fails to load.
+
+<CodeLivePreview code={`
+  <bq-avatar
+    alt-text="User profile"
+    image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
+    initials="BQ"
+    label="Avatar component label"
+  ></bq-avatar>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-avatar
+      alt-text="User profile"
+      image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
+      initials="BQ"
+      label="Avatar component label"
+    ></bq-avatar>
+    ```
+
+    ```jsx React icon="react"
+    import { BqAvatar } from "@beeq/react";
+
+    <BqAvatar
+      altText="User profile"
+      image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
+      initials="BQ"
+      label="Avatar component label"
+    />
+    ```
+
+    ```html Angular icon="angular"
+    <bq-avatar
+      alt-text="User profile"
+      image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
+      initials="BQ"
+      label="Avatar component label"
+    ></bq-avatar>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqAvatar } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqAvatar
+        altText="User profile"
+        image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
+        initials="BQ"
+        label="Avatar component label"
+      />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Options
+
+### Shape and size
+
+Avatar supports four sizes (`xsmall`, `small`, `medium`, `large`) and two shapes (`circle`, `square`). Choose size based on context: `small` works well in dense lists and inline layouts; `large` suits profile headers and contact cards where identity is the focal point. Keep shape and size consistent within the same group so the UI feels intentional and easy to scan.
+
+<CodeLivePreview code={`
+  <style>
+    @scope (.avatar--sizes) {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-m);
+      flex-wrap: wrap;
+    }
+  </style>
+  <div class="avatar--sizes">
+    <bq-avatar label="Extra small avatar" initials="B" size="xsmall"></bq-avatar>
+    <bq-avatar label="Small avatar" initials="BQ" size="small"></bq-avatar>
+    <bq-avatar label="Medium square avatar" initials="BQ" shape="square" size="medium"></bq-avatar>
+    <bq-avatar label="Large square avatar" initials="BQ" shape="square" size="large"></bq-avatar>
+  </div>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-avatar label="Extra small avatar" initials="B" size="xsmall"></bq-avatar>
+    <bq-avatar label="Small avatar" initials="BQ" size="small"></bq-avatar>
+    <bq-avatar label="Medium square avatar" initials="BQ" shape="square" size="medium"></bq-avatar>
+    <bq-avatar label="Large square avatar" initials="BQ" shape="square" size="large"></bq-avatar>
+    ```
+
+    ```jsx React icon="react"
+    import { BqAvatar } from "@beeq/react";
+
+    <BqAvatar label="Extra small avatar" initials="B" size="xsmall" />
+    <BqAvatar label="Small avatar" initials="BQ" size="small" />
+    <BqAvatar label="Medium square avatar" initials="BQ" shape="square" size="medium" />
+    <BqAvatar label="Large square avatar" initials="BQ" shape="square" size="large" />
+    ```
+
+    ```html Angular icon="angular"
+    <bq-avatar label="Extra small avatar" initials="B" size="xsmall"></bq-avatar>
+    <bq-avatar label="Small avatar" initials="BQ" size="small"></bq-avatar>
+    <bq-avatar label="Medium square avatar" initials="BQ" shape="square" size="medium"></bq-avatar>
+    <bq-avatar label="Large square avatar" initials="BQ" shape="square" size="large"></bq-avatar>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqAvatar } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqAvatar label="Extra small avatar" initials="B" size="xsmall" />
+      <BqAvatar label="Small avatar" initials="BQ" size="small" />
+      <BqAvatar label="Medium square avatar" initials="BQ" shape="square" size="medium" />
+      <BqAvatar label="Large square avatar" initials="BQ" shape="square" size="large" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Avatar group
+
+Use a grouped avatar pattern when you need to represent multiple participants in a compact space, such as shared ownership, collaborators, or team members. Keep the same size and shape across the whole group.
+
+<Tip>
+  Avatar grouping is not a built-in feature — the component renders avatars independently. A few lines of CSS are all you need to create an overlapping stack, as shown in the example below.
+</Tip>
+
+<CodeLivePreview code={`
+  <style>
+    @scope (.avatar--group) {
+      display: flex;
+      align-items: center;
+
+      & bq-avatar {
+        cursor: pointer;
+        margin-inline-start: calc(var(--bq-spacing-xs) * -1);
+
+        &::part(base) {
+          transition: scale 0.25s ease-in-out;
+        }
+
+        &::part(base):hover {
+          scale: 1.2;
+          z-index: 1;
+        }
+
+        &:first-child {
+          margin-inline-start: 0;
+        }
+      }
+    }
+  </style>
+  <div class="avatar--group">
+    <bq-avatar
+      alt-text="User profile"
+      image="https://i.pravatar.cc/500?img=12"
+      label="Olivia Bennett"
+    ></bq-avatar>
+    <bq-avatar
+      alt-text="User profile"
+      image="https://i.pravatar.cc/500?img=32"
+      label="Liam Carter"
+    ></bq-avatar>
+    <bq-avatar
+      alt-text="User profile"
+      image="https://i.pravatar.cc/500?img=52"
+      label="Emma Wilson"
+    ></bq-avatar>
+    <bq-avatar
+      alt-text="User profile"
+      image="https://i.pravatar.cc/500?img=10"
+      label="Noah Davis"
+    ></bq-avatar>
+  </div>
+`}>
+  <CodeGroup>
+    ```css CSS icon="css"
+    .avatar--group {
+      display: flex;
+      align-items: center;
+
+      & bq-avatar {
+        cursor: pointer;
+        margin-inline-start: calc(var(--bq-spacing-xs) * -1);
+
+        &::part(base) {
+          transition: scale 0.25s ease-in-out;
+        }
+
+        &::part(base):hover {
+          scale: 1.2;
+          z-index: 1;
+        }
+
+        &:first-child {
+          margin-inline-start: 0;
+        }
+      }
+    }
+    ```
+
+    ```html HTML icon="html5"
+    <div class="avatar--group">
+      <bq-avatar
+        alt-text="User profile"
+        image="https://i.pravatar.cc/500?img=12"
+        label="Olivia Bennett"
+        size="small"
+      ></bq-avatar>
+      <bq-avatar
+        alt-text="User profile"
+        image="https://i.pravatar.cc/500?img=32"
+        label="Liam Carter"
+        size="small"
+      ></bq-avatar>
+      <bq-avatar initials="BQ" label="BEEQ team" size="small"></bq-avatar>
+    </div>
+    ```
+
+    ```jsx React icon="react"
+    import { BqAvatar } from "@beeq/react";
+
+    <div className="avatar--group">
+      <BqAvatar
+        altText="User profile"
+        image="https://i.pravatar.cc/500?img=12"
+        label="Olivia Bennett"
+        size="small"
+      />
+      <BqAvatar
+        altText="User profile"
+        image="https://i.pravatar.cc/500?img=32"
+        label="Liam Carter"
+        size="small"
+      />
+      <BqAvatar initials="BQ" label="BEEQ team" size="small" />
+    </div>
+    ```
+
+    ```html Angular icon="angular"
+    <div class="avatar--group">
+      <bq-avatar
+        alt-text="User profile"
+        image="https://i.pravatar.cc/500?img=12"
+        label="Olivia Bennett"
+        size="small"
+      ></bq-avatar>
+      <bq-avatar
+        alt-text="User profile"
+        image="https://i.pravatar.cc/500?img=32"
+        label="Liam Carter"
+        size="small"
+      ></bq-avatar>
+      <bq-avatar initials="BQ" label="BEEQ team" size="small"></bq-avatar>
+    </div>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqAvatar } from "@beeq/vue";
+    </script>
+
+    <template>
+      <div class="avatar--group">
+        <BqAvatar
+          altText="User profile"
+          image="https://i.pravatar.cc/500?img=12"
+          label="Olivia Bennett"
+          size="small"
+        />
+        <BqAvatar
+          altText="User profile"
+          image="https://i.pravatar.cc/500?img=32"
+          label="Liam Carter"
+          size="small"
+        />
+        <BqAvatar initials="BQ" label="BEEQ team" size="small" />
+      </div>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### With badge
+
+Use the `badge` slot when the avatar needs a compact status or count indicator. `bq-badge` is the most common choice.
+
+<CodeLivePreview code={`
+  <bq-avatar
+    alt-text="User profile"
+    image="https://i.pravatar.cc/500"
+    label="Avatar component label"
+  >
+    <bq-badge slot="badge" size="medium" background-color="ui--tertiary"></bq-badge>
+  </bq-avatar>
+
+  <bq-avatar
+    alt-text="User profile"
+    image="https://i.pravatar.cc/500"
+    label="Avatar component label"
+  >
+    <bq-badge slot="badge" size="medium" background-color="ui--success"></bq-badge>
+  </bq-avatar>
+
+  <bq-avatar
+    alt-text="User profile"
+    image="https://i.pravatar.cc/500"
+    label="Avatar component label"
+  >
+    <bq-badge slot="badge">16</bq-badge>
+  </bq-avatar>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5" expandable
+    <!-- Offline user -->
+    <bq-avatar
+      alt-text="User profile"
+      image="https://i.pravatar.cc/500"
+      label="Avatar component label"
+    >
+      <bq-badge slot="badge" size="medium" background-color="ui--tertiary"></bq-badge>
+    </bq-avatar>
+
+    <!-- Online user -->
+    <bq-avatar
+      alt-text="User profile"
+      image="https://i.pravatar.cc/500"
+      label="Avatar component label"
+    >
+      <bq-badge slot="badge" size="medium" background-color="ui--success"></bq-badge>
+    </bq-avatar>
+
+    <!-- Unread notifications -->
+    <bq-avatar
+      alt-text="User profile"
+      image="https://i.pravatar.cc/500"
+      label="Avatar component label"
+    >
+      <bq-badge slot="badge">16</bq-badge>
+    </bq-avatar>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { BqAvatar, BqBadge } from "@beeq/react";
+
+    <div className="avatar--with-badge">
+      {/* Offline user */}
+      <BqAvatar
+        altText="User profile"
+        image="https://i.pravatar.cc/500"
+        label="Avatar component label"
+      >
+        <BqBadge slot="badge" size="medium" backgroundColor="ui--tertiary" />
+      </BqAvatar>
+
+      {/* Online user */}
+      <BqAvatar
+        altText="User profile"
+        image="https://i.pravatar.cc/500"
+        label="Avatar component label"
+      >
+        <BqBadge slot="badge" size="medium" backgroundColor="ui--success" />
+      </BqAvatar>
+
+      {/* Unread notifications */}
+      <BqAvatar
+        altText="User profile"
+        image="https://i.pravatar.cc/500"
+        label="Avatar component label"
+      >
+        <BqBadge slot="badge">16</BqBadge>
+      </BqAvatar>
+    </div>
+    ```
+
+    ```html Angular icon="angular" expandable
+    <div class="avatar--with-badge">
+      <!-- Offline user -->
+      <bq-avatar
+        alt-text="User profile"
+        image="https://i.pravatar.cc/500"
+        label="Avatar component label"
+      >
+        <bq-badge slot="badge" size="medium" background-color="ui--tertiary"></bq-badge>
+      </bq-avatar>
+
+      <!-- Online user -->
+      <bq-avatar
+        alt-text="User profile"
+        image="https://i.pravatar.cc/500"
+        label="Avatar component label"
+      >
+        <bq-badge slot="badge" size="medium" background-color="ui--success"></bq-badge>
+      </bq-avatar>
+
+      <!-- Unread notifications -->
+      <bq-avatar
+        alt-text="User profile"
+        image="https://i.pravatar.cc/500"
+        label="Avatar component label"
+      >
+        <bq-badge slot="badge">16</bq-badge>
+      </bq-avatar>
+    </div>
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { BqAvatar, BqBadge } from "@beeq/vue";
+    </script>
+
+    <template>
+      <div class="avatar--with-badge">
+        <!-- Offline user -->
+        <BqAvatar
+          altText="User profile"
+          image="https://i.pravatar.cc/500"
+          label="Avatar component label"
+        >
+          <BqBadge slot="badge" size="medium" background-color="ui--tertiary" />
+        </BqAvatar>
+
+        <!-- Online user -->
+        <BqAvatar
+          altText="User profile"
+          image="https://i.pravatar.cc/500"
+          label="Avatar component label"
+        >
+          <BqBadge slot="badge" size="medium" background-color="ui--success" />
+        </BqAvatar>
+
+        <!-- Unread notifications -->
+        <BqAvatar
+          altText="User profile"
+          image="https://i.pravatar.cc/500"
+          label="Avatar component label"
+        >
+          <BqBadge slot="badge">16</BqBadge>
+        </BqAvatar>
+      </div>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+
+    Use the supported `shape` options to keep avatars aligned with the system and the surrounding UI.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+
+    Do not resize avatars outside the available sizes. It can distort the component and break visual consistency.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+
+    Keep initials short, ideally using the first letters of a first and last name so they remain legible at every size.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+
+    Do not pass full names as initials. Long strings quickly become unreadable and visually unbalanced.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+
+    Keep avatar style consistent within the same group. Use the same shape, size, and image-vs-initials pattern where possible.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+
+    Do not mix mismatched avatar treatments in one group unless the difference carries meaning. It makes lists harder to scan.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+
+    Use well-cropped images that fit the avatar area cleanly and keep the subject centered and recognizable.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+
+    Do not use clipped, stretched, or low-quality images. If the image is not clear, initials are often the better fallback.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+The component automatically applies `role="img"` and `aria-label` to its root element. You do not need to add ARIA attributes manually — just provide a descriptive `label` and the component handles the rest.
+
+When the avatar displays an image, also pass `alt-text` to describe what the image shows. Keep `initials` short so the text fallback remains readable if the image cannot load.
+
+If the avatar appears alongside other interactive elements such as names, links, or buttons, make sure the surrounding pattern is accessible as a whole — the avatar's built-in label describes the avatar itself, not the composite component around it.
+
+## API reference
+
+### Properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `altText` | `alt-text` | Alternate text applied to the internal image element | `string` | `undefined` |
+| `image` | `image` | Image source to display inside the avatar | `string` | `undefined` |
+| `initials` | `initials` | Short text shown when no image is visible | `string` | `undefined` |
+| `label` | `label` | Accessible name announced for the avatar | `string` | `undefined` |
+| `shape` | `shape` | Visual shape of the avatar | `'circle'` \| `'square'` | `'circle'` |
+| `size` | `size` | Size of the avatar | `'xsmall'` \| `'small'` \| `'medium'` \| `'large'` | `'medium'` |
+
+### Slots
+
+| Slot | Description |
+|---|---|
+| `badge` | Optional badge content positioned on the avatar edge |
+
+### Shadow parts
+
+| Part | Description |
+|---|---|
+| `base` | The visible avatar wrapper |
+| `img` | The internal `<img>` element |
+| `text` | The initials text element |
+| `badge` | The container wrapping the `badge` slot |
+
+### CSS custom properties
+
+<Expandable title="CSS variables" defaultOpen={true}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-avatar-background` | Avatar background color | `theme('backgroundColor.ui.alt')` |
+  | `--bq-avatar--border-color` | Avatar border color | `theme('stroke.tertiary')` |
+  | `--bq-avatar--border-style` | Avatar border style | `solid` |
+  | `--bq-avatar--border-width` | Avatar border width | `theme('borderWidth.m')` |
+  | `--bq-avatar--border-radius-circle` | Border radius for circle avatars | `theme('borderRadius.full')` |
+  | `--bq-avatar--border-radius-squareXs` | Border radius for `square` + `xsmall` | `theme('borderRadius.xs')` |
+  | `--bq-avatar--border-radius-squareS` | Border radius for `square` + `small` | `theme('borderRadius.s')` |
+  | `--bq-avatar--border-radius-squareM` | Border radius for `square` + `medium` and `large` | `theme('borderRadius.m')` |
+  | `--bq-avatar--size-xsmall` | Xsmall avatar size | `24px` |
+  | `--bq-avatar--size-small` | Small avatar size | `32px` |
+  | `--bq-avatar--size-medium` | Medium avatar size | `48px` |
+  | `--bq-avatar--size-large` | Large avatar size | `64px` |
+  | `--bq-avatar--font-size-xsmall` | Initials font size for `xsmall` | `theme('fontSize.xs')` |
+  | `--bq-avatar--font-size-small` | Initials font size for `small` | `theme('fontSize.xs')` |
+  | `--bq-avatar--font-size-medium` | Initials font size for `medium` | `theme('fontSize.m')` |
+  | `--bq-avatar--font-size-large` | Initials font size for `large` | `theme('fontSize.m')` |
+  | `--bq-avatar--badge-top-square` | Badge top offset for square avatars | `-5px` |
+  | `--bq-avatar--badge-left-square` | Badge left offset for square avatars | `80%` |
+  | `--bq-avatar--badge-top-circle` | Badge top offset for circle avatars | `0` |
+  | `--bq-avatar--badge-left-circle` | Badge left offset for circle avatars | `75%` |
+</Expandable>
+
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-avatar--image">
+    Explore avatar variants and states in Storybook
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/avatar">
+    View the component source on GitHub
+  </Card>
+</CardGroup>

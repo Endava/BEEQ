@@ -8,6 +8,15 @@
     "light": "/logo/beeq-light.svg",
     "dark": "/logo/beeq-dark.svg"
   },
+  "fonts": {
+    "heading": {
+      "family": "Outfit",
+      "weight": 700
+    },
+    "body": {
+      "family": "Outfit"
+    }
+  },
   "icons": {
     "library": "fontawesome"
   },
@@ -93,7 +102,6 @@
               "components/avatar",
               "components/badge",
               "components/icon",
-              "components/option",
               "components/status",
               "components/table",
               "components/tag"
@@ -131,8 +139,7 @@
             "pages": [
               "components/card",
               "components/divider",
-              "components/page-title",
-              "components/panel"
+              "components/page-title"
             ]
           },
           {
