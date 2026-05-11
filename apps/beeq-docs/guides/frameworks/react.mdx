@@ -155,6 +155,15 @@ You can add BEEQ to an existing React project in a few steps:
         Make sure the icon names you use in `BqIcon` match the icon set you provide.
       </Tab>
 
+      <Tab title="Set base path via HTML">
+        Another option is setting a `<script>` with `data-beeq=<url_or_path_to_svg_directory>` in your project HTML entry point.
+        This is a convenient way to configure the base path without needing JavaScript imports.
+
+        ```html
+        <script data-beeq="https://cdn.jsdelivr.net/npm/heroicons@2.1.5/24/outline"></script>
+        ```
+      </Tab>
+
       <Tab title="Copy only the icons you need">
         If you don't need the full set of 9k+ icons, you can copy only the ones you actually use into your project. This can speed up development and bundling time.
 
