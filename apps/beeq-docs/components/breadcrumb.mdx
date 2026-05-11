@@ -38,7 +38,28 @@ A breadcrumb is a form of contextual navigation displaying a user's position wit
   </Card>
 </CardGroup>
 
-## Placement
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Breadcrumb anatomy">
+  <img
+    src="https://placeholdit.com/1000x320"
+    alt="Placeholder for the Breadcrumb anatomy image"
+    className="h-[260px] w-full object-cover"
+  />
+</Frame>
+
+| Part | Element | Description |
+|---|---|---|
+| Icon | `bq-icon` or decorative icon | Optional visual cue before the first breadcrumb item |
+| Divider | `separator` slot | The default slash separator or a custom separator element |
+| Inactive breadcrumb | `bq-breadcrumb-item` | A parent navigation step rendered as a link or button |
+| Current page | `bq-breadcrumb-item` with `aria-current="page"` | The last item indicating the user’s current location |
+| Truncation | custom overflow or hidden items | Collapses long paths while preserving the first and last items |
+| Dropdown | custom nested menu | Optional overflow menu for deep breadcrumb trails |
+
+## Design guidelines
+
+### Placement
 
 Breadcrumbs should appear near the top of the page, above the page title or directly below the page header, depending on the surrounding page structure.
 
@@ -65,176 +86,7 @@ Breadcrumbs should appear near the top of the page, above the page title or dire
   </div>
 </div>
 
-## Best practices
-
-<div className="grid grid-cols-1 gap-12">
-  <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-    <div>
-      <div className="rounded-md bg-[#c7f7ed] p-5">
-        <img
-          src="https://placeholdit.com/600x400"
-          alt="Placeholder for detail page breadcrumb label best practice"
-          className="h-[220px] w-full rounded-md object-cover"
-        />
-      </div>
-      <span className="mt-4 inline-flex items-center rounded-full bg-[#c7f7ed] px-5 py-2 text-lg font-semibold text-black" role="heading">
-        <Icon className="mr-2" icon="check" iconType="solid" size={18} color="var(--bq-stroke--success)" />
-        Do
-      </span>
-      <p>For breadcrumbs on detail pages, mention the page type (Create, Edit, View) followed by the item name.</p>
-    </div>
-    <div>
-      <div className="rounded-md bg-[#ffe4e4] p-5">
-        <img
-          src="https://placeholdit.com/600x400"
-          alt="Placeholder for incorrect detail page breadcrumb label best practice"
-          className="h-[220px] w-full rounded-md object-cover"
-        />
-      </div>
-      <span className="mt-4 inline-flex items-center rounded-full bg-[#ffe4e4] px-5 py-2 text-lg font-semibold text-black" role="heading">
-        <Icon className="mr-2" icon="xmark" iconType="solid" size={18} color="var(--bq-stroke--danger)" />
-        Don't
-      </span>
-      <p>Avoid indicating the item number or using the user-inputted name.</p>
-    </div>
-  </div>
-  <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-    <div>
-      <div className="rounded-md bg-[#c7f7ed] p-5">
-        <img
-          src="https://placeholdit.com/600x400"
-          alt="Placeholder for truncated breadcrumb label best practice"
-          className="h-[220px] w-full rounded-md object-cover"
-        />
-      </div>
-      <span className="mt-4 inline-flex items-center rounded-full bg-[#c7f7ed] px-5 py-2 text-lg font-semibold text-black" role="heading">
-        <Icon className="mr-2" icon="check" iconType="solid" size={18} color="var(--bq-stroke--success)" />
-        Do
-      </span>
-      <p>If a breadcrumb's label is longer than 30 characters, put an overflow ellipsis and a tooltip on hover displaying the full title of the page.</p>
-    </div>
-    <div>
-      <div className="rounded-md bg-[#ffe4e4] p-5">
-        <img
-          src="https://placeholdit.com/600x400"
-          alt="Placeholder for overly long breadcrumb label best practice"
-          className="h-[220px] w-full rounded-md object-cover"
-        />
-      </div>
-      <span className="mt-4 inline-flex items-center rounded-full bg-[#ffe4e4] px-5 py-2 text-lg font-semibold text-black" role="heading">
-        <Icon className="mr-2" icon="xmark" iconType="solid" size={18} color="var(--bq-stroke--danger)" />
-        Don't
-      </span>
-      <p>Display all characters in the breadcrumb when character limits are exceeded.</p>
-    </div>
-  </div>
-  <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-    <div>
-      <div className="rounded-md bg-[#c7f7ed] p-5">
-        <img
-          src="https://placeholdit.com/600x400"
-          alt="Placeholder for truncated breadcrumb trail best practice"
-          className="h-[220px] w-full rounded-md object-cover"
-        />
-      </div>
-      <span className="mt-4 inline-flex items-center rounded-full bg-[#c7f7ed] px-5 py-2 text-lg font-semibold text-black" role="heading">
-        <Icon className="mr-2" icon="check" iconType="solid" size={18} color="var(--bq-stroke--success)" />
-        Do
-      </span>
-      <p>The breadcrumb trail displays a default maximum of four items. If more than four items are present, the trail truncates and shows the first and last items.</p>
-    </div>
-    <div>
-      <div className="rounded-md bg-[#ffe4e4] p-5">
-        <img
-          src="https://placeholdit.com/600x400"
-          alt="Placeholder for overly long breadcrumb trail best practice"
-          className="h-[220px] w-full rounded-md object-cover"
-        />
-      </div>
-      <span className="mt-4 inline-flex items-center rounded-full bg-[#ffe4e4] px-5 py-2 text-lg font-semibold text-black" role="heading">
-        <Icon className="mr-2" icon="xmark" iconType="solid" size={18} color="var(--bq-stroke--danger)" />
-        Don't
-      </span>
-      <p>Displaying more than 4 items in a breadcrumb may overload the visual.</p>
-    </div>
-  </div>
-  <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-    <div>
-      <div className="rounded-md bg-[#c7f7ed] p-5">
-        <img
-          src="https://placeholdit.com/600x400"
-          alt="Placeholder for linked breadcrumb parent pages best practice"
-          className="h-[220px] w-full rounded-md object-cover"
-        />
-      </div>
-      <span className="mt-4 inline-flex items-center rounded-full bg-[#c7f7ed] px-5 py-2 text-lg font-semibold text-black" role="heading">
-        <Icon className="mr-2" icon="check" iconType="solid" size={18} color="var(--bq-stroke--success)" />
-        Do
-      </span>
-      <p>Make all pages active links.</p>
-    </div>
-    <div>
-      <div className="rounded-md bg-[#ffe4e4] p-5">
-        <img
-          src="https://placeholdit.com/600x400"
-          alt="Placeholder for linked current breadcrumb page best practice"
-          className="h-[220px] w-full rounded-md object-cover"
-        />
-      </div>
-      <span className="mt-4 inline-flex items-center rounded-full bg-[#ffe4e4] px-5 py-2 text-lg font-semibold text-black" role="heading">
-        <Icon className="mr-2" icon="xmark" iconType="solid" size={18} color="var(--bq-stroke--danger)" />
-        Don't
-      </span>
-      <p>Display the current page as available link.</p>
-    </div>
-  </div>
-</div>
-
-## Accessibility
-
-In designing breadcrumbs for accessibility, it's essential to consider several factors. Ensure sufficient color contrast between labels and background, provide clear focus indicators for interactive elements, and optimize for screen readers by using descriptive labels.
-
-- **Navigation** - navigate to each page link in the breadcrumb by using the <kbd>Tab</kbd> key and activate it with <kbd>Enter</kbd>.
-- **Landmark label** - use the `label` property to provide an `aria-label` for the navigation landmark. The default label is `Breadcrumbs`.
-- **Current page** - the last breadcrumb item receives `aria-current="page"` automatically.
-- **Decorative icons** - set `aria-hidden="true"` on decorative icons inside breadcrumb items.
-
-## Keywords
-
-breadcrumbs, trail truncation, accessibility, label, focus, dropdown, icon, path
-
-## Anatomy
-
-<Frame className="px-4 py-4" caption="Breadcrumb anatomy">
-  <img
-    src="https://placeholdit.com/1000x320"
-    alt="Placeholder for the Breadcrumb anatomy image"
-    className="h-[260px] w-full object-cover"
-  />
-</Frame>
-
-<div className="grid grid-cols-1 gap-4">
-  <div className="flex items-center gap-3">
-    <span>1 <strong>Icon</strong></span>
-  </div>
-  <div className="flex items-center gap-3">
-    <span>2 <strong>Divider</strong></span>
-  </div>
-  <div className="flex items-center gap-3">
-    <span>3  <strong>Inactive Breadcrumb</strong></span>
-  </div>
-  <div className="flex items-center gap-3">
-    <span>4 <strong>Trail truncation</strong></span>
-  </div>
-  <div className="flex items-center gap-3">
-    <span>5 <strong>Current page</strong></span>
-  </div>
-  <div className="flex items-center gap-3">
-    <span>6 <strong>Dropdown</strong></span>
-  </div>
-</div>
-
-## Label and icon
+### Label and icon
 
 <div className="grid grid-cols-1 gap-8 border-t border-[var(--bq-stroke--primary)] pt-8 md:grid-cols-2 md:items-center">
   <p>
@@ -249,7 +101,7 @@ breadcrumbs, trail truncation, accessibility, label, focus, dropdown, icon, path
   </Frame>
 </div>
 
-## States
+### States
 
 <div className="grid grid-cols-1 gap-8 border-t border-[var(--bq-stroke--primary)] pt-8 md:grid-cols-2 md:items-center">
   <p>
@@ -264,7 +116,7 @@ breadcrumbs, trail truncation, accessibility, label, focus, dropdown, icon, path
   </Frame>
 </div>
 
-## Sizing and spacing
+### Sizing and spacing
 
 <div className="grid grid-cols-1 gap-8 border-t border-[var(--bq-stroke--primary)] pt-8 md:grid-cols-2 md:items-center">
   <p>
@@ -279,51 +131,7 @@ breadcrumbs, trail truncation, accessibility, label, focus, dropdown, icon, path
   </Frame>
 </div>
 
-## Variants
-
-<div className="grid grid-cols-1 gap-12 border-t border-[var(--bq-stroke--primary)] pt-8">
-  <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-center">
-    <div>
-      <h3>With icons</h3>
-      <p>The label with the icon in the breadcrumb serves to enhance visual recognition, aiding users in quickly identifying and associating specific categories or sections within the navigation hierarchy. This icon-label combination contributes to a more intuitive and user-friendly experience.</p>
-    </div>
-    <Frame className="px-4 py-4">
-      <img
-        src="https://placeholdit.com/600x400"
-        alt="Placeholder for the Breadcrumb with icons variant image"
-        className="h-[220px] w-full object-cover"
-      />
-    </Frame>
-  </div>
-  <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-center">
-    <div>
-      <h3>Without icons</h3>
-      <p>The decision to include or exclude icons can depend on the design aesthetics, context, and the overall user experience goals. If simplicity or a minimalistic design is preferred, breadcrumbs without icons can still be effective in conveying the navigation hierarchy. It's essential to consider the specific design principles and user expectations of the project when making this decision.</p>
-    </div>
-    <Frame className="px-4 py-4">
-      <img
-        src="https://placeholdit.com/600x400"
-        alt="Placeholder for the Breadcrumb without icons variant image"
-        className="h-[220px] w-full object-cover"
-      />
-    </Frame>
-  </div>
-  <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-center">
-    <div>
-      <h3>With dropdown</h3>
-      <p>The dropdown in a breadcrumb is crucial for presenting a hierarchical structure of navigation. It allows users to access and navigate through nested levels of content, providing a compact and organized way to explore and select specific paths within a website or application. This enhances user experience by offering a clear and concise method for navigating complex information architectures.</p>
-    </div>
-    <Frame className="px-4 py-4">
-      <img
-        src="https://placeholdit.com/600x400"
-        alt="Placeholder for the Breadcrumb with dropdown variant image"
-        className="h-[220px] w-full object-cover"
-      />
-    </Frame>
-  </div>
-</div>
-
-## Common usage patterns
+## Usage
 
 The examples below cover the most common ways to use breadcrumbs in BEEQ.
 
@@ -467,6 +275,123 @@ Use the `separator` slot to replace the default `/` separator.
   </CodeGroup>
 </CodeLivePreview>
 
+## Options
+
+The examples below show common configuration patterns and variants.
+
+### With icons
+
+The label with the icon in the breadcrumb serves to enhance visual recognition, aiding users in quickly identifying and associating specific categories or sections within the navigation hierarchy. This icon-label combination contributes to a more intuitive and user-friendly experience.
+
+<Frame className="px-4 py-4">
+  <img
+    src="https://placeholdit.com/600x400"
+    alt="Placeholder for the Breadcrumb with icons variant image"
+    className="h-[220px] w-full object-cover"
+  />
+</Frame>
+
+### Without icons
+
+The decision to include or exclude icons can depend on the design aesthetics, context, and the overall user experience goals. If simplicity or a minimalistic design is preferred, breadcrumbs without icons can still be effective in conveying the navigation hierarchy. It's essential to consider the specific design principles and user expectations of the project when making this decision.
+
+<Frame className="px-4 py-4">
+  <img
+    src="https://placeholdit.com/600x400"
+    alt="Placeholder for the Breadcrumb without icons variant image"
+    className="h-[220px] w-full object-cover"
+  />
+</Frame>
+
+### With dropdown
+
+The dropdown in a breadcrumb is crucial for presenting a hierarchical structure of navigation. It allows users to access and navigate through nested levels of content, providing a compact and organized way to explore and select specific paths within a website or application. This enhances user experience by offering a clear and concise method for navigating complex information architectures.
+
+<Frame className="px-4 py-4">
+  <img
+    src="https://placeholdit.com/600x400"
+    alt="Placeholder for the Breadcrumb with dropdown variant image"
+    className="h-[220px] w-full object-cover"
+  />
+</Frame>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    For breadcrumbs on detail pages, include the page type (Create, Edit, View) followed by the item name.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Avoid indicating the item number or using dynamically generated names without context.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Truncate labels longer than 30 characters with an ellipsis and show the full text in a tooltip on hover.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Display overly long labels that wrap or truncate without a way to view the complete text.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Show a maximum of four items in the breadcrumb trail. For longer paths, truncate and show the first and last items.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Display more than four items in a single breadcrumb trail, as it overloads the visual and reduces usability.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Make all parent breadcrumb items clickable links, including the current page as the last non-interactive item.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Display the current page as a clickable link; it should be non-interactive text to reflect the user's current location.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+In designing breadcrumbs for accessibility, it's essential to consider several factors. Ensure sufficient color contrast between labels and background, provide clear focus indicators for interactive elements, and optimize for screen readers by using descriptive labels.
+
+- **Navigation** - navigate to each page link in the breadcrumb by using the <kbd>Tab</kbd> key and activate it with <kbd>Enter</kbd>.
+- **Landmark label** - use the `label` property to provide an `aria-label` for the navigation landmark. The default label is `Breadcrumbs`.
+- **Current page** - the last breadcrumb item receives `aria-current="page"` automatically.
+- **Decorative icons** - set `aria-hidden="true"` on decorative icons inside breadcrumb items.
+
 ## API reference
 
 ### `bq-breadcrumb` properties
@@ -528,26 +453,32 @@ Events are emitted by `bq-breadcrumb-item`.
 
 ### CSS custom properties
 
-| Property | Description | Default |
-|---|---|---|
-| `--bq-breadcrumb-item--background` | Background color of the breadcrumb item | `theme(backgroundColor.transparent)` |
-| `--bq-breadcrumb-item--box-shadow` | Box shadow of the breadcrumb item | `none` |
-| `--bq-breadcrumb-item--border-color` | Border color of the breadcrumb item | `theme(borderColor.transparent)` |
-| `--bq-breadcrumb-item--border-style` | Border style of the breadcrumb item | `none` |
-| `--bq-breadcrumb-item--border-width` | Border width of the breadcrumb item | `theme(borderWidth.s)` |
-| `--bq-breadcrumb-item--border-radius` | Border radius of the breadcrumb item | `theme(borderRadius.s)` |
-| `--bq-breadcrumb-item--line-height` | Line height of the breadcrumb item | `theme(lineHeight.regular)` |
-| `--bq-breadcrumb-item--text-color` | Text color of the breadcrumb item | `theme(textColor.secondary)` |
-| `--bq-breadcrumb-item--text-color-current` | Text color of the current breadcrumb item | `theme(textColor.brand)` |
-| `--bq-breadcrumb-item--text-size` | Text size of the breadcrumb item | `theme(fontSize.s)` |
-| `--bq-breadcrumb-item--text-size-separator` | Text size of the breadcrumb item separator | `theme(fontSize.xs)` |
-| `--bq-breadcrumb-item--padding-start` | Padding start of the breadcrumb item | `theme(spacing.xs2)` |
-| `--bq-breadcrumb-item--padding-end` | Padding end of the breadcrumb item | `theme(spacing.xs2)` |
-| `--bq-breadcrumb-item--paddingY` | Padding top and bottom of the breadcrumb item | `theme(spacing.xs)` |
-| `--bq-breadcrumb-item--padding-start-separator` | Padding start of the breadcrumb item separator | `theme(spacing.xs2)` |
-| `--bq-breadcrumb-item--padding-end-separator` | Padding end of the breadcrumb item separator | `theme(spacing.xs2)` |
+<Expandable title="CSS variables" defaultOpen={true}>
+  | Property | Description | Default |
+  |---|---|---|
+  | `--bq-breadcrumb-item--background` | Background color of the breadcrumb item | `theme(backgroundColor.transparent)` |
+  | `--bq-breadcrumb-item--box-shadow` | Box shadow of the breadcrumb item | `none` |
+  | `--bq-breadcrumb-item--border-color` | Border color of the breadcrumb item | `theme(borderColor.transparent)` |
+  | `--bq-breadcrumb-item--border-style` | Border style of the breadcrumb item | `none` |
+  | `--bq-breadcrumb-item--border-width` | Border width of the breadcrumb item | `theme(borderWidth.s)` |
+  | `--bq-breadcrumb-item--border-radius` | Border radius of the breadcrumb item | `theme(borderRadius.s)` |
+  | `--bq-breadcrumb-item--line-height` | Line height of the breadcrumb item | `theme(lineHeight.regular)` |
+  | `--bq-breadcrumb-item--text-color` | Text color of the breadcrumb item | `theme(textColor.secondary)` |
+  | `--bq-breadcrumb-item--text-color-current` | Text color of the current breadcrumb item | `theme(textColor.brand)` |
+  | `--bq-breadcrumb-item--text-size` | Text size of the breadcrumb item | `theme(fontSize.s)` |
+  | `--bq-breadcrumb-item--text-size-separator` | Text size of the breadcrumb item separator | `theme(fontSize.xs)` |
+  | `--bq-breadcrumb-item--padding-start` | Padding start of the breadcrumb item | `theme(spacing.xs2)` |
+  | `--bq-breadcrumb-item--padding-end` | Padding end of the breadcrumb item | `theme(spacing.xs2)` |
+  | `--bq-breadcrumb-item--paddingY` | Padding top and bottom of the breadcrumb item | `theme(spacing.xs)` |
+  | `--bq-breadcrumb-item--padding-start-separator` | Padding start of the breadcrumb item separator | `theme(spacing.xs2)` |
+  | `--bq-breadcrumb-item--padding-end-separator` | Padding end of the breadcrumb item separator | `theme(spacing.xs2)` |
+</Expandable>
 
-## Related resources
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+## Resources
 
 <CardGroup cols={2}>
   <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-breadcrumb--default">

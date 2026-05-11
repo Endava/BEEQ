@@ -3,6 +3,7 @@ title: Alert
 description: "An Alert is a UI component used to convey important information to the user in a clear and concise manner. It can be used to notify users of success, failure, warning, or any other type of information that needs to be brought to their attention."
 ---
 
+import { CardTile } from '/snippets/CardTile.jsx';
 import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
 <Frame className="px-4 py-4" caption="Alert overview">
@@ -12,6 +13,8 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
     style={{ height: "200px", width: "400px" }}
   />
 </Frame>
+
+Alert is a lightweight message surface for conveying status, progress, or required next steps in a clear and consistent way.
 
 ## When to use
 
@@ -38,376 +41,186 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
   </Card>
 </CardGroup>
 
-## Types
-
-<div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-  <div>
-    <Frame className="px-4 py-4">
-      <img
-        src="https://placeholdit.com/600x400"
-        alt="Placeholder for the Basic alert type image"
-        className="h-[200px] w-full object-cover"
-      />
-    </Frame>
-    <h3>Basic</h3>
-    <p>A standard alert with a title providing users with a quick overview of the notification.</p>
-  </div>
-  <div>
-    <Frame className="px-4 py-4">
-      <img
-        src="https://placeholdit.com/600x400"
-        alt="Placeholder for the Alert with description type image"
-        className="h-[200px] w-full object-cover"
-      />
-    </Frame>
-    <h3>With description</h3>
-    <p>Alert includes a title and description with a link for a call to action or next steps. Any links leading to documentation should open in a new tab.</p>
-  </div>
-  <div>
-    <Frame className="px-4 py-4">
-      <img
-        src="https://placeholdit.com/600x400"
-        alt="Placeholder for the Alert with button type image"
-        className="h-[200px] w-full object-cover"
-      />
-    </Frame>
-    <h3>With button</h3>
-    <p>This alert contains a title and a button that enables users to address the notification or navigate to a page with further details.</p>
-  </div>
-  <div>
-    <Frame className="px-4 py-4">
-      <img
-        src="https://placeholdit.com/600x400"
-        alt="Placeholder for the Alert with description and buttons on the bottom type image"
-        className="h-[200px] w-full object-cover"
-      />
-    </Frame>
-    <h3>With description and buttons on the bottom</h3>
-    <p>This type of alert empowers users to take specific actions, which are displayed within the alert itself.</p>
-  </div>
-</div>
-
-## Alert patterns
-
-Alerts can be used at different scopes, depending on what the message affects.
-
-<div className="grid grid-cols-1 gap-12">
-  <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-start">
-    <div>
-      <h3>Global alert</h3>
-      <p>Affects the entire user experience, spans the full width, and is positioned directly beneath the navigation bar.</p>
-    </div>
-    <Frame className="px-4 py-4">
-      <img
-        src="https://placeholdit.com/600x400"
-        alt="Placeholder for the Global alert pattern image"
-        className="h-[220px] w-full object-cover"
-      />
-    </Frame>
-  </div>
-  <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-start">
-    <div>
-      <h3>Page alert</h3>
-      <p>This type of alert will provide a description of an error that applies to the entire page.</p>
-    </div>
-    <Frame className="px-4 py-4">
-      <img
-        src="https://placeholdit.com/600x400"
-        alt="Placeholder for the Page alert pattern image"
-        className="h-[220px] w-full object-cover"
-      />
-    </Frame>
-  </div>
-  <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-start">
-    <div>
-      <h3>Alerts in card</h3>
-      <p>Ensure that the error message is positioned in close proximity to where the error occurred. Clearly communicate the details of the error, including what went wrong, why it happened, and provide guidance on the next steps.</p>
-    </div>
-    <Frame className="px-4 py-4">
-      <img
-        src="https://placeholdit.com/600x400"
-        alt="Placeholder for the Alerts in card pattern image"
-        className="h-[220px] w-full object-cover"
-      />
-    </Frame>
-  </div>
-  <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-start">
-    <div>
-      <h3>Customising</h3>
-      <p>For scenarios beyond the proposed BEEQ design system standard, you have the flexibility to utilise icons and colours to craft custom alerts tailored to your requirements. While an alert typically showcases an icon matching its status by default, you can specify a custom icon as needed.</p>
-    </div>
-    <Frame className="px-4 py-4">
-      <img
-        src="https://placeholdit.com/600x400"
-        alt="Placeholder for the Customising alert pattern image"
-        className="h-[220px] w-full object-cover"
-      />
-    </Frame>
-  </div>
-</div>
-
-## Best practices
-
-<div className="grid grid-cols-1 gap-12">
-  <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-    <div>
-      <div className="rounded-md bg-[#c7f7ed] p-5">
-        <img
-          src="https://placeholdit.com/600x400"
-          alt="Placeholder for concise alert message best practice"
-          className="h-[220px] w-full rounded-md object-cover"
-        />
-      </div>
-      <span className="mt-4 inline-flex items-center rounded-full bg-[#c7f7ed] px-5 py-2 text-lg font-semibold text-black" role="heading">
-        <Icon className="mr-2" icon="check" iconType="solid" size={18} color="var(--bq-stroke--success)" />
-        Do
-      </span>
-      <p>Use concise and direct communication.</p>
-    </div>
-    <div>
-      <div className="rounded-md bg-[#ffe4e4] p-5">
-        <img
-          src="https://placeholdit.com/600x400"
-          alt="Placeholder for overly long alert message best practice"
-          className="h-[220px] w-full rounded-md object-cover"
-        />
-      </div>
-      <span className="mt-4 inline-flex items-center rounded-full bg-[#ffe4e4] px-5 py-2 text-lg font-semibold text-black" role="heading">
-        <Icon className="mr-2" icon="xmark" iconType="solid" size={18} color="var(--bq-stroke--danger)" />
-        Don't
-      </span>
-      <p>Avoid long descriptions in toast messages within the design system, as extended text may lead to user confusion.</p>
-    </div>
-  </div>
-  <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-    <div>
-      <div className="rounded-md bg-[#c7f7ed] p-5">
-        <img
-          src="https://placeholdit.com/600x400"
-          alt="Placeholder for alert with icon best practice"
-          className="h-[220px] w-full rounded-md object-cover"
-        />
-      </div>
-      <span className="mt-4 inline-flex items-center rounded-full bg-[#c7f7ed] px-5 py-2 text-lg font-semibold text-black" role="heading">
-        <Icon className="mr-2" icon="check" iconType="solid" size={18} color="var(--bq-stroke--success)" />
-        Do
-      </span>
-      <p>Add an icon to enforce the message.</p>
-    </div>
-    <div>
-      <div className="rounded-md bg-[#ffe4e4] p-5">
-        <img
-          src="https://placeholdit.com/600x400"
-          alt="Placeholder for alert without icon best practice"
-          className="h-[220px] w-full rounded-md object-cover"
-        />
-      </div>
-      <span className="mt-4 inline-flex items-center rounded-full bg-[#ffe4e4] px-5 py-2 text-lg font-semibold text-black" role="heading">
-        <Icon className="mr-2" icon="xmark" iconType="solid" size={18} color="var(--bq-stroke--danger)" />
-        Don't
-      </span>
-      <p>Exclude icon from the alert layout.</p>
-    </div>
-  </div>
-  <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-    <div>
-      <div className="rounded-md bg-[#c7f7ed] p-5">
-        <img
-          src="https://placeholdit.com/600x400"
-          alt="Placeholder for alert with matching color best practice"
-          className="h-[220px] w-full rounded-md object-cover"
-        />
-      </div>
-      <span className="mt-4 inline-flex items-center rounded-full bg-[#c7f7ed] px-5 py-2 text-lg font-semibold text-black" role="heading">
-        <Icon className="mr-2" icon="check" iconType="solid" size={18} color="var(--bq-stroke--success)" />
-        Do
-      </span>
-      <p>Ensure that the colour used corresponds to the type of message.</p>
-    </div>
-    <div>
-      <div className="rounded-md bg-[#ffe4e4] p-5">
-        <img
-          src="https://placeholdit.com/600x400"
-          alt="Placeholder for alert with mismatched color best practice"
-          className="h-[220px] w-full rounded-md object-cover"
-        />
-      </div>
-      <span className="mt-4 inline-flex items-center rounded-full bg-[#ffe4e4] px-5 py-2 text-lg font-semibold text-black" role="heading">
-        <Icon className="mr-2" icon="xmark" iconType="solid" size={18} color="var(--bq-stroke--danger)" />
-        Don't
-      </span>
-      <p>Use colours for the alert that do not accurately reflect its current state.</p>
-    </div>
-  </div>
-</div>
-
-## Accessibility
-
-- **Color** - messages must meet standard contrast ratio requirements for text and backgrounds in both light and dark modes.
-- **Descriptive message** - the words in the alert should immediately communicate severity for users who may have difficulty recognizing specific colors.
-- **Descriptive icon** - action icons need accessible text. The default close button is labeled "Close alert."
-- **Keyboard access and focus** - users should be able to tab and shift-tab through interactive alert elements in a logical order.
-- **Duration of display** - transient alerts should include a close button, use a readable timeout, and avoid disappearing while the user is interacting with them.
-
-## Keywords
-
-alert, message, notification, toast, inline alerts, warning, error, info, success, custom, accessibility
-
 ## Anatomy
 
 <Frame className="px-4 py-4" caption="Alert anatomy">
   <img
     src="https://placeholdit.com/1000x320"
     alt="Placeholder for the Alert anatomy image"
-    className="h-auto w-full"
+    className="h-[260px] w-full object-cover"
   />
 </Frame>
 
 | Part | Element | Description |
 |---|---|---|
-| **1** | Container | The alert surface that groups the message and actions |
+| **1** | Container | The alert surface that groups the message, icon, title, and actions |
 | **2** | Icon | Status icon, or a custom icon when the alert uses the `default` type |
-| **3** | Label | The alert title content in the default slot |
+| **3** | Title | The alert title content in the default slot |
 | **4** | Close button | Dismisses the alert unless `disable-close` is set |
 | **5** | Description | Optional supporting content in the `body` slot |
 | **6** | CTA button | Optional action content in the `footer` slot |
 
-## Label and icon
+## Design guidelines
 
-<div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-start">
-  <div>
-    <p>The alert title and container succinctly convey the main message, with text color corresponding to the alert type. The description provides additional information and can include a navigation link as an alternative to an action. Icons and colors are closely tied to the alert status, requiring careful selection for improved perception and quick scanning.</p>
-  </div>
-  <Frame className="px-4 py-4">
-    <img
-      src="https://placeholdit.com/600x400"
-      alt="Placeholder for the Alert label and icon image"
-      className="h-[220px] w-full object-cover"
-    />
-  </Frame>
-</div>
+### Types
 
-## States
+<CardGroup cols={2}>
+  <CardTile
+    title="Basic"
+    imageLightSrc="https://placeholdit.com/600x400"
+    imageDarkSrc="https://placeholdit.com/600x400"
+  >
+    Use a basic alert when a short title gives users enough context to understand the message.
+  </CardTile>
+  <CardTile
+    title="With description"
+    imageLightSrc="https://placeholdit.com/600x400"
+    imageDarkSrc="https://placeholdit.com/600x400"
+  >
+    Add a description when users need supporting detail, recovery guidance, or a link to the next step.
+  </CardTile>
+  <CardTile
+    title="With button"
+    imageLightSrc="https://placeholdit.com/600x400"
+    imageDarkSrc="https://placeholdit.com/600x400"
+  >
+    Include an action when the alert asks users to resolve the message or view related details.
+  </CardTile>
+  <CardTile
+    title="With description and footer actions"
+    imageLightSrc="https://placeholdit.com/600x400"
+    imageDarkSrc="https://placeholdit.com/600x400"
+  >
+    Place actions in the footer when users need to compare or choose between multiple next steps.
+  </CardTile>
+</CardGroup>
+
+### Alert patterns
+
+Alerts can be used at different scopes, depending on what the message affects.
+
+<CardGroup cols={2}>
+  <CardTile
+    title="Global alert"
+    imageLightSrc="https://placeholdit.com/600x400"
+    imageDarkSrc="https://placeholdit.com/600x400"
+  >
+    Use a global alert for messages that affect the full experience. Place it directly below the navigation.
+  </CardTile>
+  <CardTile
+    title="Page alert"
+    imageLightSrc="https://placeholdit.com/600x400"
+    imageDarkSrc="https://placeholdit.com/600x400"
+  >
+    Use a page alert when the message applies to the page as a whole, such as a loading failure or permission issue.
+  </CardTile>
+  <CardTile
+    title="Card alert"
+    imageLightSrc="https://placeholdit.com/600x400"
+    imageDarkSrc="https://placeholdit.com/600x400"
+  >
+    Place alerts close to the affected section so users can connect the message with the content it describes.
+  </CardTile>
+  <CardTile
+    title="Custom alert"
+    imageLightSrc="https://placeholdit.com/600x400"
+    imageDarkSrc="https://placeholdit.com/600x400"
+  >
+    Use custom icons and CSS variables when a message has no built-in severity, but keep color and icon choices consistent.
+  </CardTile>
+</CardGroup>
+
+### Label and icon
+
+<CardGroup cols={2}>
+  <CardTile
+    title="Clear label"
+    imageLightSrc="https://placeholdit.com/600x400"
+    imageDarkSrc="https://placeholdit.com/600x400"
+  >
+    Write a concise title that explains the main message. Add body content only when users need more context.
+  </CardTile>
+  <CardTile
+    title="Meaningful icon"
+    imageLightSrc="https://placeholdit.com/600x400"
+    imageDarkSrc="https://placeholdit.com/600x400"
+  >
+    Match the icon and color to the alert type so users can scan severity before reading the full text.
+  </CardTile>
+</CardGroup>
+
+### States
 
 The BEEQ design system offers various alert variants tailored for distinct scenarios: info, success, warning, error and custom. Each variant is equipped with a corresponding status icon, background, and alert title, strategically coded to convey the severity of the alert.
 
-<div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-  <div>
-    <Frame className="px-4 py-4">
-      <img
-        src="https://placeholdit.com/600x400"
-        alt="Placeholder for the Success alert state image"
-        className="h-[240px] w-full object-cover"
-      />
-    </Frame>
-    <h3>Success</h3>
-    <p>Apply to signify successful completion of a task or process.</p>
-  </div>
-  <div>
-    <Frame className="px-4 py-4">
-      <img
-        src="https://placeholdit.com/600x400"
-        alt="Placeholder for the Info alert state image"
-        className="h-[240px] w-full object-cover"
-      />
-    </Frame>
-    <h3>Info</h3>
-    <p>Apply for general informational messages.</p>
-  </div>
-  <div>
-    <Frame className="px-4 py-4">
-      <img
-        src="https://placeholdit.com/600x400"
-        alt="Placeholder for the Warning alert state image"
-        className="h-[240px] w-full object-cover"
-      />
-    </Frame>
-    <h3>Warning</h3>
-    <p>Apply to indicate a non-critical error occurrence.</p>
-  </div>
-  <div>
-    <Frame className="px-4 py-4">
-      <img
-        src="https://placeholdit.com/600x400"
-        alt="Placeholder for the Error alert state image"
-        className="h-[240px] w-full object-cover"
-      />
-    </Frame>
-    <h3>Error</h3>
-    <p>Apply to signify a critical or blocking error occurrence.</p>
-  </div>
-  <div>
-    <Frame className="px-4 py-4">
-      <img
-        src="https://placeholdit.com/600x400"
-        alt="Placeholder for the Custom alert state image"
-        className="h-[240px] w-full object-cover"
-      />
-    </Frame>
-    <h3>Custom</h3>
-    <p>Apply for generic messages requiring a custom colour defined by the associated CSS variable. Use when the message lacks an associated severity.</p>
-  </div>
-</div>
+<CardGroup cols={2}>
+  <CardTile
+    title="Success"
+    imageLightSrc="https://placeholdit.com/600x400"
+    imageDarkSrc="https://placeholdit.com/600x400"
+  >
+    Use success alerts to confirm that a task or process completed.
+  </CardTile>
+  <CardTile
+    title="Info"
+    imageLightSrc="https://placeholdit.com/600x400"
+    imageDarkSrc="https://placeholdit.com/600x400"
+  >
+    Use info alerts for helpful, non-critical context.
+  </CardTile>
+  <CardTile
+    title="Warning"
+    imageLightSrc="https://placeholdit.com/600x400"
+    imageDarkSrc="https://placeholdit.com/600x400"
+  >
+    Use warning alerts for conditions that need attention but do not block the current task.
+  </CardTile>
+  <CardTile
+    title="Error"
+    imageLightSrc="https://placeholdit.com/600x400"
+    imageDarkSrc="https://placeholdit.com/600x400"
+  >
+    Use error alerts for critical or blocking issues that require action.
+  </CardTile>
+  <CardTile
+    title="Default"
+    imageLightSrc="https://placeholdit.com/600x400"
+    imageDarkSrc="https://placeholdit.com/600x400"
+  >
+    Use the default alert for neutral messages with a custom icon or no associated severity.
+  </CardTile>
+</CardGroup>
 
-## Sizing and spacing
+### Sizing and spacing
 
-<div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-  <div>
-    <Frame className="px-4 py-4">
-      <img
-        src="https://placeholdit.com/600x400"
-        alt="Placeholder for the Basic alert sizing and spacing image"
-        className="h-[240px] w-full object-cover"
-      />
-    </Frame>
-    <h3>Basic</h3>
-  </div>
-  <div>
-    <Frame className="px-4 py-4">
-      <img
-        src="https://placeholdit.com/600x400"
-        alt="Placeholder for the Alert with button sizing and spacing image"
-        className="h-[240px] w-full object-cover"
-      />
-    </Frame>
-    <h3>With button</h3>
-  </div>
-  <div>
-    <Frame className="px-4 py-4">
-      <img
-        src="https://placeholdit.com/600x400"
-        alt="Placeholder for the Alert with description sizing and spacing image"
-        className="h-[240px] w-full object-cover"
-      />
-    </Frame>
-    <h3>With description</h3>
-  </div>
-  <div>
-    <Frame className="px-4 py-4">
-      <img
-        src="https://placeholdit.com/600x400"
-        alt="Placeholder for the Alert with description and buttons on bottom sizing and spacing image"
-        className="h-[240px] w-full object-cover"
-      />
-    </Frame>
-    <h3>With description and buttons on bottom</h3>
-  </div>
-</div>
+<CardGroup cols={2}>
+  <CardTile
+    title="Content spacing"
+    imageLightSrc="https://placeholdit.com/600x400"
+    imageDarkSrc="https://placeholdit.com/600x400"
+  >
+    Keep titles, descriptions, and footer actions grouped so the alert reads as one message.
+  </CardTile>
+  <CardTile
+    title="Footer actions"
+    imageLightSrc="https://placeholdit.com/600x400"
+    imageDarkSrc="https://placeholdit.com/600x400"
+  >
+    Use footer spacing to separate actions from body content without disconnecting them from the alert.
+  </CardTile>
+</CardGroup>
 
-## Roundness
+### Roundness
 
-<div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-start">
-  <div>
-    <p>The roundness of the alert can be customized using tokens from the BEEQ design system, known as 'radius.'</p>
-  </div>
-  <Frame className="px-4 py-4">
-    <img
-      src="https://placeholdit.com/600x400"
-      alt="Placeholder for the Alert roundness image"
-      className="h-[240px] w-full object-cover"
-    />
-  </Frame>
-</div>
+<CardGroup cols={2}>
+  <CardTile
+    title="Border radius"
+    imageLightSrc="https://placeholdit.com/600x400"
+    imageDarkSrc="https://placeholdit.com/600x400"
+  >
+    Set `border` to match the surface where the alert appears. Use the same radius scale as the surrounding layout.
+  </CardTile>
+</CardGroup>
 
 ## Usage
 
@@ -416,7 +229,7 @@ The BEEQ design system offers various alert variants tailored for distinct scena
 Use the `default` variant when you want to have a versatile option for general-purpose alerts. It offers the flexibility to customize the `bq-icon`, making it suitable for a wide range of messages. Choose this alert when you want a neutral and adaptable alert that can effectively convey various types of information with a personalized touch.
 
 <Tip>
-  Easily control the alert box using the `open` attribute. Don't forget to include this attribute to reveal the alert box. Additionally, keep in mind that you can take advantage of the `show()` and `hide()` methods to programmatically control the visibility of the component.
+  Set `open` to show the alert. Use `show()` and `hide()` when visibility is controlled programmatically.
 </Tip>
 
 <CodeLivePreview code={`
@@ -447,14 +260,18 @@ Use the `default` variant when you want to have a versatile option for general-p
     </div>
   </bq-alert>
 <script>
-const alertElements = Array.from(document.querySelectorAll(".alert-default-example bq-alert"));
-alertElements.forEach((alert) => {
-  alert.addEventListener("bqHide", () => {
-    setTimeout(() => {
-      alert.open = true;
-    }, 1500);
+(() => {
+  const preview = document.currentScript.closest(".preview");
+  const alertElements = Array.from(preview?.querySelectorAll("bq-alert") ?? []);
+
+  alertElements.forEach((alert) => {
+    alert.addEventListener("bqHide", () => {
+      setTimeout(() => {
+        alert.open = true;
+      }, 1500);
+    });
   });
-});
+})();
 </script>`}>
   <CodeGroup>
     ```html index.html icon="html5"
@@ -586,12 +403,12 @@ alertElements.forEach((alert) => {
 </CodeLivePreview>
 
 <Warning>
-  When using the `Alert`, please be aware that it will take up 100% width within the parent container where it is allocated!
+  Alert fills the width of its parent container.
 </Warning>
 
 ### Info
 
-Use the `info` variant when you want to provide users with additional, non-critical information. It's suitable for conveying details that might enhance their understanding without causing them.
+Use the `info` variant when users need additional, non-critical information. It works well for context that helps users understand a state without requiring immediate action.
 
 <CodeLivePreview code={`
   <bq-alert open type="info">Title</bq-alert>
@@ -616,14 +433,18 @@ Use the `info` variant when you want to provide users with additional, non-criti
     </div>
   </bq-alert>
 <script>
-const alertElements = Array.from(document.querySelectorAll(".alert-info-example bq-alert"));
-alertElements.forEach((alert) => {
-  alert.addEventListener("bqHide", () => {
-    setTimeout(() => {
-      alert.open = true;
-    }, 1500);
+(() => {
+  const preview = document.currentScript.closest(".preview");
+  const alertElements = Array.from(preview?.querySelectorAll("bq-alert") ?? []);
+
+  alertElements.forEach((alert) => {
+    alert.addEventListener("bqHide", () => {
+      setTimeout(() => {
+        alert.open = true;
+      }, 1500);
+    });
   });
-});
+})();
 </script>`}>
   <CodeGroup>
     ```html index.html icon="html5"
@@ -760,14 +581,18 @@ Use the `success` variant to notify users about successful actions or positive o
     </div>
   </bq-alert>
 <script>
-const alertElements = Array.from(document.querySelectorAll(".alert-success-example bq-alert"));
-alertElements.forEach((alert) => {
-  alert.addEventListener("bqHide", () => {
-    setTimeout(() => {
-      alert.open = true;
-    }, 1500);
+(() => {
+  const preview = document.currentScript.closest(".preview");
+  const alertElements = Array.from(preview?.querySelectorAll("bq-alert") ?? []);
+
+  alertElements.forEach((alert) => {
+    alert.addEventListener("bqHide", () => {
+      setTimeout(() => {
+        alert.open = true;
+      }, 1500);
+    });
   });
-});
+})();
 </script>`}>
   <CodeGroup>
     ```html index.html icon="html5"
@@ -904,14 +729,18 @@ Use the `warning` variant to indicate potential issues or actions that users sho
     </div>
   </bq-alert>
 <script>
-const alertElements = Array.from(document.querySelectorAll(".alert-warning-example bq-alert"));
-alertElements.forEach((alert) => {
-  alert.addEventListener("bqHide", () => {
-    setTimeout(() => {
-      alert.open = true;
-    }, 1500);
+(() => {
+  const preview = document.currentScript.closest(".preview");
+  const alertElements = Array.from(preview?.querySelectorAll("bq-alert") ?? []);
+
+  alertElements.forEach((alert) => {
+    alert.addEventListener("bqHide", () => {
+      setTimeout(() => {
+        alert.open = true;
+      }, 1500);
+    });
   });
-});
+})();
 </script>`}>
   <CodeGroup>
     ```html index.html icon="html5"
@@ -1023,7 +852,7 @@ alertElements.forEach((alert) => {
 
 ### Error
 
-Use the `error` variant when there's a need to alert users about crucial errors or issues that require immediate attention. This alert is crucial for conveying issues that prevent the successful completion of a task or operation.
+Use the `error` variant for issues that require immediate attention. It works best for problems that block the task or prevent a successful outcome.
 
 <CodeLivePreview code={`
   <bq-alert open type="error">Title</bq-alert>
@@ -1048,14 +877,18 @@ Use the `error` variant when there's a need to alert users about crucial errors 
     </div>
   </bq-alert>
 <script>
-const alertElements = Array.from(document.querySelectorAll(".alert-error-example bq-alert"));
-alertElements.forEach((alert) => {
-  alert.addEventListener("bqHide", () => {
-    setTimeout(() => {
-      alert.open = true;
-    }, 1500);
+(() => {
+  const preview = document.currentScript.closest(".preview");
+  const alertElements = Array.from(preview?.querySelectorAll("bq-alert") ?? []);
+
+  alertElements.forEach((alert) => {
+    alert.addEventListener("bqHide", () => {
+      setTimeout(() => {
+        alert.open = true;
+      }, 1500);
+    });
   });
-});
+})();
 </script>`}>
   <CodeGroup>
     ```html index.html icon="html5"
@@ -1165,12 +998,14 @@ alertElements.forEach((alert) => {
   </CodeGroup>
 </CodeLivePreview>
 
+## Options
+
 ### Sticky
 
-Use the `sticky` attribute when you want to highlight a persistent alert that remains visible until users explicitly dismiss it. It's useful when you need to convey important or ongoing information that requires prolonged user attention, such as system updates or maintenance alerts.
+Use the `sticky` attribute for persistent alerts that remain visible until users dismiss them. Sticky alerts work well for ongoing information that needs prolonged attention, such as system updates or maintenance notices.
 
 <Tip>
-  When using the `sticky` alert, please note that you have the option to choose from existing types, including `default`, `success`, `error`, `warning`, and `info`.
+  Sticky alerts support every alert type: `default`, `success`, `error`, `warning`, and `info`.
 </Tip>
 
 <CodeLivePreview code={`<style>
@@ -1285,8 +1120,79 @@ Use the `sticky` attribute when you want to highlight a persistent alert that re
 </CodeLivePreview>
 
 <Warning>
-  When using the sticky alert, be aware that the design is preset, with the alert text centered at the top of the screen.
+  Sticky alerts use a preset layout with the alert text centered at the top of the screen.
 </Warning>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Place alerts close to the content or workflow they affect.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not place alerts where they hide controls or interrupt a critical task.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Write a short title that explains the state, then add body text only when users need context.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not use long paragraphs or unrelated links inside an alert.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Give users enough time to read auto-dismiss alerts and keep important messages dismissible by intent.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not auto-dismiss alerts that contain errors, required actions, or legal information.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Match the alert type, icon, and action style to the severity of the message.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not mix severity colors or custom icons in ways that make the alert harder to scan.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+- The host uses `role="alert"` so assistive technologies announce the message when it appears.
+- The host sets `aria-hidden` from the `open` state, keeping hidden alerts out of the accessibility tree.
+- The default close button has the accessible label "Close alert."
+- `type` provides visual intent and a matching predefined status icon for `info`, `success`, `warning`, and `error`.
+- Provide a concise title in the default slot and supporting details in the `body` slot when users need more context.
+- Keep auto-dismiss timing long enough for users to read the message, and avoid auto-dismiss for alerts that require action.
+- When `sticky` is enabled, keep the page focus order logical so keyboard users can still reach the affected content.
 
 ## API reference
 
@@ -1302,28 +1208,6 @@ Use the `sticky` attribute when you want to highlight a persistent alert that re
 | `sticky` | `sticky` | If `true`, the alert remains fixed at the top of the page, occupying the full viewport width | `boolean` | `false` |
 | `time` | `time` | The length of time, in milliseconds, after which the alert closes itself. Only valid when `auto-dismiss` is set | `number` | `3000` |
 | `type` | `type` | Type of alert | `'default'` \| `'error'` \| `'info'` \| `'success'` \| `'warning'` | `'default'` |
-
-### Events
-
-| Event | Description | Type |
-|---|---|---|
-| `bqHide` | Fires when the alert starts to hide | `CustomEvent<any>` |
-| `bqShow` | Fires when the alert starts to show | `CustomEvent<any>` |
-| `bqAfterHide` | Fires after the alert has been hidden | `CustomEvent<any>` |
-| `bqAfterShow` | Fires after the alert has been shown | `CustomEvent<any>` |
-
-<Note>
-  - In React, prefix events with `on`: `onBqShow`, `onBqHide`, `onBqAfterShow`, `onBqAfterHide`.
-  - In Angular, use the event binding syntax: `(bqShow)`, `(bqHide)`, `(bqAfterShow)`, `(bqAfterHide)`.
-  - In Vue, use the `@` shorthand: `@bq-show`, `@bq-hide`, `@bq-after-show`, `@bq-after-hide`.
-</Note>
-
-### Methods
-
-| Method | Description | Type |
-|---|---|---|
-| `show()` | Shows the alert component | `Promise<void>` |
-| `hide()` | Hides the alert component | `Promise<void>` |
 
 ### Slots
 
@@ -1353,7 +1237,7 @@ Use the `sticky` attribute when you want to highlight a persistent alert that re
 
 ### CSS custom properties
 
-<Expandable title="View all CSS variables" defaultOpen={false}>
+<Expandable title="CSS variables" defaultOpen={false}>
   | Variable | Description | Default |
   |---|---|---|
   | `--bq-alert--background` | Alert background color | `theme(colors.ui.secondary)` |
@@ -1381,6 +1265,32 @@ Use the `sticky` attribute when you want to highlight a persistent alert that re
   | `--bq-alert--padding` | Alert padding | `theme(padding.s)` |
   | `--bq-alert--min-width` | Alert minimum width | `320px` |
 </Expandable>
+
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+### Events
+
+| Event | Description | Type |
+|---|---|---|
+| `bqHide` | Fires when the alert starts to hide | `CustomEvent<any>` |
+| `bqShow` | Fires when the alert starts to show | `CustomEvent<any>` |
+| `bqAfterHide` | Fires after the alert has been hidden | `CustomEvent<any>` |
+| `bqAfterShow` | Fires after the alert has been shown | `CustomEvent<any>` |
+
+<Note>
+  - In React, prefix events with `on`: `onBqShow`, `onBqHide`, `onBqAfterShow`, `onBqAfterHide`.
+  - In Angular, use the event binding syntax: `(bqShow)`, `(bqHide)`, `(bqAfterShow)`, `(bqAfterHide)`.
+  - In Vue, use the `@` shorthand: `@bqShow`, `@bqHide`, `@bqAfterShow`, `@bqAfterHide`.
+</Note>
+
+### Methods
+
+| Method | Description | Type |
+|---|---|---|
+| `show()` | Shows the alert component | `Promise<void>` |
+| `hide()` | Hides the alert component | `Promise<void>` |
 
 ## Resources
 
