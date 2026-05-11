@@ -62,10 +62,12 @@ The common page-title compositions build from the same base component.
 
 ## Anatomy
 
+{/* TODO: Uncomment when anatomy SVGs are available
 <Frame className="px-4 py-4" caption="Page title component anatomy">
   <img className="block dark:hidden" src="/components/images/page-title/page-title-anatomy-light.svg" alt="BEEQ Page title component anatomy" />
   <img className="hidden dark:block" src="/components/images/page-title/page-title-anatomy-dark.svg" alt="BEEQ Page title component anatomy" />
 </Frame>
+*/}
 
 Page titles combine a required H1 with optional supporting slots. This makes it easy to keep navigation, context, and related actions grouped in one predictable place.
 
@@ -78,7 +80,8 @@ Page titles combine a required H1 with optional supporting slots. This makes it 
 
 ## Design guidelines
 
-Use this sequence when you define a page title:
+The page title component already renders the main title inside an `h1`. Use it for the primary page heading, not for lower-level section labels.
+Follow this sequence when you define a page title:
 
 <Steps>
   <Step title="Write the title first">
@@ -92,9 +95,9 @@ Use this sequence when you define a page title:
   </Step>
 </Steps>
 
-<Note>
-  The page title component already renders the main title inside an `h1`. Use it for the primary page heading, not for lower-level section labels.
-</Note>
+<Warning>
+  Use `bq-page-title` once per page view and only at the top of the main content area. Placing it inside cards, panels, or repeating list items creates multiple `h1` elements on the same page, which breaks heading hierarchy for screen readers.
+</Warning>
 
 ## Usage
 
@@ -303,6 +306,99 @@ Add a subtitle when people need a little more context before acting.
 
 ## Options
 
+### Title + Actions
+
+Use the suffix slot for page-level actions when back navigation is not relevant — for example, a top-level list page with a primary action.
+
+<CodeLivePreview
+  code={`
+  <style>
+    @scope {
+      bq-page-title {
+        inline-size: 100% !important;
+
+        & [slot="suffix"] {
+          display: flex;
+          align-items: center;
+          flex-grow: 1;
+          justify-content: flex-end;
+        }
+      }
+    }
+  </style>
+  <bq-page-title>
+    Dashboard users
+    <div slot="suffix">
+      <bq-button>
+        <bq-icon name="plus" aria-hidden="true" slot="prefix"></bq-icon>
+        Add user
+      </bq-button>
+    </div>
+  </bq-page-title>
+  `}
+>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-page-title>
+      Dashboard users
+      <div slot="suffix">
+        <bq-button>
+          <bq-icon name="plus" aria-hidden="true" slot="prefix"></bq-icon>
+          Add user
+        </bq-button>
+      </div>
+    </bq-page-title>
+    ```
+
+    ```jsx React icon="react"
+    import { BqButton, BqIcon, BqPageTitle } from "@beeq/react";
+
+    <BqPageTitle>
+      Dashboard users
+      <div slot="suffix">
+        <BqButton>
+          <BqIcon name="plus" aria-hidden="true" slot="prefix" />
+          Add user
+        </BqButton>
+      </div>
+    </BqPageTitle>
+    ```
+
+    ```html Angular icon="angular"
+    <!-- Standalone: import { BqButton, BqIcon, BqPageTitle } from "@beeq/angular/standalone" -->
+    <!-- Modules: components are available after importing BeeQModule -->
+
+    <bq-page-title>
+      Dashboard users
+      <div slot="suffix">
+        <bq-button>
+          <bq-icon name="plus" aria-hidden="true" slot="prefix"></bq-icon>
+          Add user
+        </bq-button>
+      </div>
+    </bq-page-title>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqButton, BqIcon, BqPageTitle } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqPageTitle>
+        Dashboard users
+        <div slot="suffix">
+          <BqButton>
+            <BqIcon name="plus" aria-hidden="true" slot="prefix" />
+            Add user
+          </BqButton>
+        </div>
+      </BqPageTitle>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
 ### Title + Back + Subtitle + Actions
 
 Use the suffix slot when the title area needs page-level actions such as edit or download.
@@ -320,7 +416,7 @@ Use the suffix slot when the title area needs page-level actions such as edit or
           justify-content: end;
         }
 
-        & [slot="suffix"] bq-icon {
+        & [slot="suffix"] bq-button {
           padding: var(--bq-spacing-xs2);
         }
       }
@@ -333,13 +429,33 @@ Use the suffix slot when the title area needs page-level actions such as edit or
       Title
       <div slot="sub-title">Sub-title</div>
       <div slot="suffix">
-        <bq-icon name="pencil-simple" weight="bold" color="text--brand" title="Edit"></bq-icon>
-        <bq-icon name="download-simple" weight="bold" color="text--brand" title="Download"></bq-icon>
+        <bq-button appearance="text" size="small" only-icon>
+          <bq-icon name="pencil-simple-bold" color="text--brand" aria-label="Edit"></bq-icon>
+        </bq-button>
+        <bq-button appearance="text" size="small" only-icon>
+          <bq-icon name="download-simple-bold" color="text--brand" aria-label="Download"></bq-icon>
+        </bq-button>
       </div>
     </bq-page-title>
   `}
 >
   <CodeGroup>
+    ```css CSS icon="css"
+    bq-page-title {
+      inline-size: 100% !important;
+
+      & [slot="suffix"] {
+        display: flex;
+        flex-grow: 1;
+        justify-content: end;
+      }
+
+      & [slot="suffix"] bq-button {
+        padding: var(--bq-spacing-xs2);
+      }
+    }
+    ```
+
     ```html HTML icon="html5"
     <bq-page-title>
       <bq-button appearance="link" slot="back" only-icon>
@@ -348,8 +464,12 @@ Use the suffix slot when the title area needs page-level actions such as edit or
       Title
       <div slot="sub-title">Sub-title</div>
       <div slot="suffix">
-        <bq-icon name="pencil-simple" weight="bold" color="text--brand" title="Edit"></bq-icon>
-        <bq-icon name="download-simple" weight="bold" color="text--brand" title="Download"></bq-icon>
+        <bq-button appearance="text" size="small" only-icon>
+          <bq-icon name="pencil-simple-bold" color="text--brand" aria-label="Edit"></bq-icon>
+        </bq-button>
+        <bq-button appearance="text" size="small" only-icon>
+          <bq-icon name="download-simple-bold" color="text--brand" aria-label="Download"></bq-icon>
+        </bq-button>
       </div>
     </bq-page-title>
     ```
@@ -364,8 +484,12 @@ Use the suffix slot when the title area needs page-level actions such as edit or
       Title
       <div slot="sub-title">Sub-title</div>
       <div slot="suffix">
-        <BqIcon name="pencil-simple" weight="bold" color="text--brand" title="Edit" />
-        <BqIcon name="download-simple" weight="bold" color="text--brand" title="Download" />
+        <BqButton appearance="text" size="small" onlyIcon>
+          <BqIcon name="pencil-simple-bold" color="text--brand" aria-label="Edit" />
+        </BqButton>
+        <BqButton appearance="text" size="small" onlyIcon>
+          <BqIcon name="download-simple-bold" color="text--brand" aria-label="Download" />
+        </BqButton>
       </div>
     </BqPageTitle>
     ```
@@ -381,8 +505,12 @@ Use the suffix slot when the title area needs page-level actions such as edit or
       Title
       <div slot="sub-title">Sub-title</div>
       <div slot="suffix">
-        <bq-icon name="pencil-simple" weight="bold" color="text--brand" title="Edit"></bq-icon>
-        <bq-icon name="download-simple" weight="bold" color="text--brand" title="Download"></bq-icon>
+        <bq-button appearance="text" size="small" only-icon>
+          <bq-icon name="pencil-simple-bold" color="text--brand" aria-label="Edit"></bq-icon>
+        </bq-button>
+        <bq-button appearance="text" size="small" only-icon>
+          <bq-icon name="download-simple-bold" color="text--brand" aria-label="Download"></bq-icon>
+        </bq-button>
       </div>
     </bq-page-title>
     ```
@@ -400,8 +528,12 @@ Use the suffix slot when the title area needs page-level actions such as edit or
         Title
         <div slot="sub-title">Sub-title</div>
         <div slot="suffix">
-          <BqIcon name="pencil-simple" weight="bold" color="text--brand" title="Edit" />
-          <BqIcon name="download-simple" weight="bold" color="text--brand" title="Download" />
+          <BqButton appearance="text" size="small" onlyIcon>
+            <BqIcon name="pencil-simple-bold" color="text--brand" aria-label="Edit" />
+          </BqButton>
+          <BqButton appearance="text" size="small" onlyIcon>
+            <BqIcon name="download-simple-bold" color="text--brand" aria-label="Download" />
+          </BqButton>
         </div>
       </BqPageTitle>
     </template>
@@ -472,6 +604,8 @@ Use the suffix slot when the title area needs page-level actions such as edit or
 
 ## Accessibility
 
+- Only one `h1` may exist per page. Do not place `bq-page-title` inside panels, cards, drawers, or any context where it would render alongside another `h1`.
+- When using an icon-only back button, add `role="img"` and a descriptive `title` attribute to `bq-icon` (e.g., `title="Navigate back to the previous page"`) so screen readers announce the icon's purpose rather than its name.
 - `bq-page-title` renders the main title inside an `h1`, so the default slot should contain the primary heading for the page.
 - Back and suffix content are slotted, so their accessibility depends on what you place there. Use real buttons or links with clear accessible names.
 - The subtitle is additional context, not a replacement for the title. Keep the main heading understandable on its own.
@@ -521,6 +655,10 @@ Use the suffix slot when the title area needs page-level actions such as edit or
   | `--title-textColor` | Title text color | `theme(textColor.primary)` |
   | `--title-textSize` | Title font size | `theme(fontSize.xxl)` |
 </Expandable>
+
+<Note>
+  The CSS custom properties for `bq-page-title` use shorthand names (e.g., `--paddingY`, `--title-fontWeight`) rather than the `--bq-*` prefix convention used by other BEEQ components. Set these variables directly on the `bq-page-title` element or a wrapping ancestor.
+</Note>
 
 <Tip>
   Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
