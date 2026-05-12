@@ -1,0 +1,563 @@
+---
+title: Divider
+description: A divider visually separates related content so users can scan layout groups, sections, and lists more easily.
+---
+
+import { CardTile } from '/snippets/CardTile.jsx';
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Divider component overview">
+  <img
+    className="block dark:hidden"
+    src="/components/images/divider/divider-overview-light.svg"
+    alt="BEEQ Divider component overview"
+  />
+  <img
+    className="hidden dark:block"
+    src="/components/images/divider/divider-overview-dark.svg"
+    alt="BEEQ Divider component overview"
+  />
+</Frame>
+
+A divider creates a visual break between related pieces of content. Use it to clarify grouping without adding another heading, card, or container.
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use dividers when
+    </span>
+    - Content groups need a subtle visual boundary
+    - A list or page section needs clearer scanning
+    - Related items sit close together and spacing alone is not enough
+    - Horizontal or vertical separation improves the layout hierarchy
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use dividers when
+    </span>
+    - Whitespace already separates the content clearly
+    - The divider adds clutter without improving comprehension
+    - A heading, card, or layout change would explain the grouping better
+    - Users need a semantic landmark or navigational structure
+  </Card>
+</CardGroup>
+
+## Patterns
+
+### Full-bleed and inset
+
+A **full-bleed** divider runs edge-to-edge across its container. This is the default (`stroke-basis="0"`) and suits top-level page and card section breaks where content is not indented.
+
+An **inset** divider sets `stroke-basis` to the pixel offset of the content below it — typically the width of a list item's leading avatar or icon. The stroke starts at that offset rather than the container edge, keeping it visually aligned with the text column. Use this pattern in rich lists and inbox-style data rows.
+
+### List rows
+
+Place a divider between repeated items in dense views — inboxes, contact lists, or data tables — when row boundaries would otherwise blur together and impair scanning.
+
+### Title separation
+
+A divider with slot content and `title-alignment="start"` doubles as a lightweight section label. Use this pattern when a heading (`<h2>`, `<h3>`) would add too much visual weight but the group still needs a short name.
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Divider anatomy">
+  <img
+    className="block dark:hidden"
+    src="/components/images/divider/divider-anatomy-light.svg"
+    alt="BEEQ Divider anatomy"
+  />
+  <img
+    className="hidden dark:block"
+    src="/components/images/divider/divider-anatomy-dark.svg"
+    alt="BEEQ Divider anatomy"
+  />
+</Frame>
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Stroke | The visual line that separates content |
+| **2** | Text | Optional text content placed in the default slot |
+
+## Design guidelines
+
+### Orientation
+
+<CardGroup cols={2}>
+  <CardTile
+    title="Horizontal divider"
+    imageLightSrc="/components/images/divider/divider-type-horizontal-light.svg"
+    imageDarkSrc="/components/images/divider/divider-type-horizontal-dark.svg"
+  >
+    Use horizontal dividers to separate stacked content, sections, list rows, or blocks inside a page.
+  </CardTile>
+  <CardTile
+    title="Vertical divider"
+    imageLightSrc="/components/images/divider/divider-type-vertical-light.svg"
+    imageDarkSrc="/components/images/divider/divider-type-vertical-dark.svg"
+  >
+    Use vertical dividers between side-by-side controls or columns when spacing alone does not show the relationship clearly.
+  </CardTile>
+</CardGroup>
+
+### Placement
+
+<CardGroup cols={2}>
+  <CardTile
+    title="Divide Group"
+    imageLightSrc="/components/images/divider/divider-group-light.svg"
+    imageDarkSrc="/components/images/divider/divider-group-dark.svg"
+  >
+    For a clearer representation of elements dependent on specific categories or criteria, the divider plays a crucial role in delineating sections.
+  </CardTile>
+  <CardTile
+    title="Inside dense lists"
+    imageLightSrc="/components/images/divider/divider-placement-list-light.svg"
+    imageDarkSrc="/components/images/divider/divider-placement-list-dark.svg"
+  >
+    Use dividers in dense lists when repeated items need stronger row boundaries for scanning.
+  </CardTile>
+</CardGroup>
+
+### Sizing
+
+<Note>
+  Divider strokes default to a thin line. Increase `stroke-thickness` only when the divider must match a stronger visual treatment in the surrounding layout.
+</Note>
+
+## Usage
+
+### Default
+
+The simplest use — no attributes or slot content required. The divider renders as a full-width horizontal line.
+
+<CodeLivePreview code={`
+  <bq-divider></bq-divider>
+`}>
+  <CodeGroup>
+
+    ```html HTML icon="html5"
+    <bq-divider></bq-divider>
+    ```
+
+    ```jsx React icon="react"
+    import { BqDivider } from "@beeq/react";
+
+    <BqDivider />
+    ```
+
+    ```html Angular icon="angular"
+    <bq-divider></bq-divider>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDivider } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDivider />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Vertical
+
+Set `orientation="vertical"` when the divider separates side-by-side content, such as adjacent actions or columns.
+
+<CodeLivePreview code={`
+  <style>
+    @scope {
+      .divider--vertical-example {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        block-size: 120px;
+        gap: var(--bq-spacing-m);
+      }
+    }
+  </style>
+  <div class="divider--vertical-example">
+    <span>Left</span>
+    <bq-divider orientation="vertical"></bq-divider>
+    <span>Right</span>
+  </div>
+`}>
+  <CodeGroup>
+    ```css CSS icon="css"
+    .divider--vertical-example {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      block-size: 120px;
+      gap: var(--bq-spacing-m);
+    }
+    ```
+
+    ```html HTML icon="html5"
+    <div class="divider--vertical-example">
+      <span>Left</span>
+      <bq-divider orientation="vertical"></bq-divider>
+      <span>Right</span>
+    </div>
+    ```
+
+    ```jsx React icon="react"
+    import { BqDivider } from "@beeq/react";
+
+    <div className="divider--vertical-example">
+      <span>Left</span>
+      <BqDivider orientation="vertical" />
+      <span>Right</span>
+    </div>
+    ```
+
+    ```html Angular icon="angular"
+    <div class="divider--vertical-example">
+      <span>Left</span>
+      <bq-divider orientation="vertical"></bq-divider>
+      <span>Right</span>
+    </div>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDivider } from "@beeq/vue";
+    </script>
+
+    <template>
+      <div class="divider--vertical-example">
+        <span>Left</span>
+        <BqDivider orientation="vertical" />
+        <span>Right</span>
+      </div>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  When using a vertical divider, ensure the container has enough height for the stroke to render and sufficient horizontal padding so the line does not feel cramped.
+</Tip>
+
+## Options
+
+### Dashed
+
+Use `dashed` for a lighter visual boundary. Adjust `stroke-dash-width`, `stroke-dash-gap`, and `stroke-linecap` when the dash pattern needs to match the surrounding interface.
+
+<CodeLivePreview code={`
+  <bq-divider
+    dashed
+    stroke-dash-width="12"
+    stroke-dash-gap="7"
+    stroke-linecap="butt"
+  ></bq-divider>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-divider
+      dashed
+      stroke-dash-width="12"
+      stroke-dash-gap="7"
+      stroke-linecap="butt"
+    ></bq-divider>
+    ```
+
+    ```jsx React icon="react"
+    import { BqDivider } from "@beeq/react";
+
+    <BqDivider
+      dashed
+      strokeDashWidth={12}
+      strokeDashGap={7}
+      strokeLinecap="butt"
+    />
+    ```
+
+    ```html Angular icon="angular"
+    <bq-divider
+      dashed
+      stroke-dash-width="12"
+      stroke-dash-gap="7"
+      stroke-linecap="butt"
+    ></bq-divider>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDivider } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDivider
+        dashed
+        :strokeDashWidth="12"
+        :strokeDashGap="7"
+        strokeLinecap="butt"
+      />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Title alignment
+
+Use `title-alignment` to place title content at the start, middle, or end of the divider.
+
+<CodeLivePreview code={`
+  <style>
+    @scope {
+      bq-divider {
+        white-space: nowrap;
+      }
+    }
+  </style>
+  <bq-divider title-alignment="start">
+    Text start
+  </bq-divider>
+  <bq-divider title-alignment="middle">
+    Text middle
+  </bq-divider>
+  <bq-divider title-alignment="end">
+    Text end
+  </bq-divider>
+`}>
+  <CodeGroup>
+    ```css CSS icon="css"
+    bq-divider {
+      white-space: nowrap;
+    }
+    ```
+
+    ```html HTML icon="html5"
+    <bq-divider title-alignment="start">Text start</bq-divider>
+    <bq-divider title-alignment="middle">Text middle</bq-divider>
+    <bq-divider title-alignment="end">Text end</bq-divider>
+    ```
+
+    ```jsx React icon="react"
+    import { BqDivider } from "@beeq/react";
+
+    <BqDivider titleAlignment="start">Text start</BqDivider>
+    <BqDivider titleAlignment="middle">Text middle</BqDivider>
+    <BqDivider titleAlignment="end">Text end</BqDivider>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-divider title-alignment="start">Text start</bq-divider>
+    <bq-divider title-alignment="middle">Text middle</bq-divider>
+    <bq-divider title-alignment="end">Text end</bq-divider>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDivider } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDivider titleAlignment="start">Text start</BqDivider>
+      <BqDivider titleAlignment="middle">Text middle</BqDivider>
+      <BqDivider titleAlignment="end">Text end</BqDivider>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Stroke
+
+Use stroke attributes to match the divider to a specific visual treatment. Set `stroke-basis` to create an **inset** divider — give it the pixel width of the leading icon or avatar in your list so the line starts at the text column rather than the container edge.
+
+<CodeLivePreview code={`
+  <bq-divider
+    stroke-color="stroke--brand"
+    stroke-thickness="2"
+    stroke-basis="96"
+    title-alignment="start"
+  >
+    Section
+  </bq-divider>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-divider
+      stroke-color="stroke--brand"
+      stroke-thickness="2"
+      stroke-basis="96"
+      title-alignment="start"
+    >
+      Section
+    </bq-divider>
+    ```
+
+    ```jsx React icon="react"
+    import { BqDivider } from "@beeq/react";
+
+    <BqDivider
+      strokeColor="stroke--brand"
+      strokeThickness={2}
+      strokeBasis={96}
+      titleAlignment="start"
+    >
+      Section
+    </BqDivider>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-divider
+      stroke-color="stroke--brand"
+      stroke-thickness="2"
+      stroke-basis="96"
+      title-alignment="start"
+    >
+      Section
+    </bq-divider>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDivider } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDivider
+        strokeColor="stroke--brand"
+        :strokeThickness="2"
+        :strokeBasis="96"
+        titleAlignment="start"
+      >
+        Section
+      </BqDivider>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use dividers to clarify groups that already belong together.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not use dividers to force unrelated content into the same section.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Prefer spacing first, then add a divider when the boundary still needs emphasis.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not add repeated dividers that make the layout feel busy.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use title content only when the label helps users understand the next group.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not use divider title content as a replacement for a real heading.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Keep stroke color and thickness consistent with the surrounding hierarchy.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not rely on color or line style as the only way to communicate meaning.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+- Divider strokes are rendered as SVG lines with `aria-hidden="true"`, so assistive technologies ignore the decorative line.
+- Content passed into the default slot remains available to assistive technologies.
+- Use slot content only for short labels that help identify the following group.
+- Do not rely on a divider alone to communicate page structure. Use headings, landmarks, or list semantics when users need navigation or hierarchy.
+- Keep vertical dividers out of the keyboard focus order unless nearby interactive content already provides a clear path.
+
+## API reference
+
+### Properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `dashed` | `dashed` | If `true`, the divider uses a dashed pattern | `boolean` | `false` |
+| `orientation` | `orientation` | The divider orientation | `'horizontal' \| 'vertical'` | `'horizontal'` |
+| `strokeBasis` | `stroke-basis` | Minimum pixel offset before the stroke starts; set to the width of a leading icon or avatar to create an inset divider | `number` | `0` |
+| `strokeColor` | `stroke-color` | Stroke color token from the palette | `string` | `'stroke--primary'` |
+| `strokeDashGap` | `stroke-dash-gap` | Gap between dashes when `dashed` is set | `number` | `7` |
+| `strokeDashWidth` | `stroke-dash-width` | Width of each dash when `dashed` is set | `number` | `12` |
+| `strokeLinecap` | `stroke-linecap` | Line cap style when `dashed` is set | `'butt' \| 'round' \| 'square'` | `'butt'` |
+| `strokeThickness` | `stroke-thickness` | Stroke thickness, in pixels | `number` | `1` |
+| `titleAlignment` | `title-alignment` | Alignment of title content on the divider axis | `'end' \| 'middle' \| 'start'` | `'middle'` |
+
+### Slots
+
+| Slot | Description |
+|---|---|
+| *(default)* | Optional title content displayed between divider strokes |
+
+### Shadow parts
+
+| Part | Description |
+|---|---|
+| `base` | The component's internal wrapper |
+| `dash-end` | The internal SVG wrapper for the end stroke |
+| `dash-end-line` | The line element for the end stroke |
+| `dash-start` | The internal SVG wrapper for the start stroke |
+| `dash-start-line` | The line element for the start stroke |
+
+### CSS custom properties
+
+<Expandable title="CSS variables" defaultOpen={true}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-divider--color` | Divider color | `theme(stroke.primary)` |
+  | `--bq-divider--title-marginX` | Space between title content and delimiter strokes | `theme(spacing.m)` |
+</Expandable>
+
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-divider--default">
+    Explore divider variants and states in Storybook
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/divider">
+    View the component source on GitHub
+  </Card>
+</CardGroup>
