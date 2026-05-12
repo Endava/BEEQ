@@ -151,6 +151,108 @@ body,
   }
 }
 
+/* -------------------------------------------------------------------------- */
+/*           BEEQ Table — unlayered so it wins over layer(beeq)              */
+/* -------------------------------------------------------------------------- */
+
+.bq-table:not(.bordered) {
+  border-collapse: collapse;
+}
+
+.bq-table:not(.bordered) th::after {
+  content: '';
+  position: absolute;
+  background-color: var(--bq-table--border-color);
+  block-size: 50%;
+  inline-size: var(--bq-table--border-width);
+  inset-block-start: var(--bq-table--header-divider-inset);
+  inset-inline-end: 0;
+}
+
+.bq-table:not(.bordered) tr.selected {
+  border-radius: var(--bq-table--border-radius);
+  outline-offset: -1px;
+}
+
+.bq-table:not(.bordered) tr.selected td:first-child {
+  border-start-start-radius: var(--bq-table--border-radius);
+  border-end-start-radius: var(--bq-table--border-radius);
+}
+
+.bq-table:not(.bordered) tr.selected td:last-child {
+  border-start-end-radius: var(--bq-table--border-radius);
+  border-end-end-radius: var(--bq-table--border-radius);
+}
+
+.bq-table thead {
+  height: var(--bq-table--header-height);
+  border-width: 0;
+  border-style: solid;
+  border-color: var(--bq-table--border-color);
+  border-block-end-width: var(--bq-table--border-width);
+}
+
+.bq-table th {
+  position: relative;
+  text-align: start;
+  font-weight: 600;
+  color: var(--bq-text--primary);
+  padding-block: var(--bq-table--header-padding-block);
+  padding-inline: var(--bq-table--header-padding-inline);
+}
+
+.bq-table tbody tr {
+  position: relative;
+  border-width: 0;
+  border-style: solid;
+  border-color: var(--bq-table--border-color);
+  border-block-end-width: var(--bq-table--border-width);
+}
+
+.bq-table td {
+  position: relative;
+  text-align: start;
+  color: var(--bq-text--primary);
+  padding-block: var(--bq-table--cell-padding-block);
+  padding-inline: var(--bq-table--cell-padding-inline);
+}
+
+.bq-table tr.selected {
+  background-color: var(--bq-table--row-selected-bg);
+  outline: var(--bq-table--border-width) solid var(--bq-table--row-selected-border);
+  outline-offset: -2px;
+  border-block-end-width: 0;
+}
+
+.bq-table.bordered {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-block-start: var(--bq-table--border-width) solid var(--bq-table--border-color);
+  border-inline-start: var(--bq-table--border-width) solid var(--bq-table--border-color);
+}
+
+.bq-table.bordered th,
+.bq-table.bordered td {
+  border-block-end: var(--bq-table--border-width) solid var(--bq-table--border-color);
+  border-inline-end: var(--bq-table--border-width) solid var(--bq-table--border-color);
+}
+
+.bq-table.bordered thead th:first-child {
+  border-start-start-radius: var(--bq-table--border-radius);
+}
+
+.bq-table.bordered thead th:last-child {
+  border-start-end-radius: var(--bq-table--border-radius);
+}
+
+.bq-table.bordered tbody tr:last-child td:first-child {
+  border-end-start-radius: var(--bq-table--border-radius);
+}
+
+.bq-table.bordered tbody tr:last-child td:last-child {
+  border-end-end-radius: var(--bq-table--border-radius);
+}
+
 /* --------------- Small fixes to BEEQ components in the docs --------------- */
 
 bq-dropdown::part(panel) {
