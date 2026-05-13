@@ -1,16 +1,14 @@
 ---
 title: Breadcrumb
-description: "Breadcrumb components are an essential element of user interface design, providing users with a clear and intuitive navigation structure within a website or application."
+description: "A breadcrumb shows users their current location within a site hierarchy and lets them navigate back through parent levels."
 ---
 
+import { CardTile } from '/snippets/CardTile.jsx';
 import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
-<Frame className="px-4 py-4" caption="Breadcrumb overview">
-  <img
-    src="https://placeholdit.com/600x400"
-    alt="Placeholder for the Breadcrumb overview image"
-    style={{ height: "200px", width: "400px" }}
-  />
+<Frame className="px-4 py-4" caption="Breadcrumb component overview">
+  <img className="block dark:hidden" src="/components/images/breadcrumb/breadcrumb-overview-light.svg" alt="BEEQ Breadcrumb component overview" />
+  <img className="hidden dark:block" src="/components/images/breadcrumb/breadcrumb-overview-dark.svg" alt="BEEQ Breadcrumb component overview" />
 </Frame>
 
 A breadcrumb is a form of contextual navigation displaying a user's position within a site hierarchy, enabling them to navigate back through the levels, while it should not be misleading as a primary navigation tool.
@@ -40,12 +38,9 @@ A breadcrumb is a form of contextual navigation displaying a user's position wit
 
 ## Anatomy
 
-<Frame className="px-4 py-4" caption="Breadcrumb anatomy">
-  <img
-    src="https://placeholdit.com/1000x320"
-    alt="Placeholder for the Breadcrumb anatomy image"
-    className="h-[260px] w-full object-cover"
-  />
+<Frame className="px-4 py-4" caption="Breadcrumb component anatomy">
+  <img className="block dark:hidden" src="/components/images/breadcrumb/breadcrumb-anatomy-light.svg" alt="BEEQ Breadcrumb component anatomy" />
+  <img className="hidden dark:block" src="/components/images/breadcrumb/breadcrumb-anatomy-dark.svg" alt="BEEQ Breadcrumb component anatomy" />
 </Frame>
 
 | Part | Element | Description |
@@ -61,75 +56,69 @@ A breadcrumb is a form of contextual navigation displaying a user's position wit
 
 ### Placement
 
-Breadcrumbs should appear near the top of the page, above the page title or directly below the page header, depending on the surrounding page structure.
+Breadcrumbs should appear near the top of the page, above the page title or directly below the page header.
 
-<div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-  <div>
-    <Frame className="px-4 py-4">
-      <img
-        src="https://placeholdit.com/600x400"
-        alt="Placeholder for the Breadcrumb position option 1 image"
-        className="h-[220px] w-full object-cover"
-      />
-    </Frame>
-    <h3>Position option 1</h3>
-  </div>
-  <div>
-    <Frame className="px-4 py-4">
-      <img
-        src="https://placeholdit.com/600x400"
-        alt="Placeholder for the Breadcrumb position option 2 image"
-        className="h-[220px] w-full object-cover"
-      />
-    </Frame>
-    <h3>Position option 2</h3>
-  </div>
-</div>
+<CardGroup cols={2}>
+  <CardTile
+    title="Position option 1"
+    imageLightSrc="/components/images/breadcrumb/breadcrumb-placement-1-light.svg"
+    imageDarkSrc="/components/images/breadcrumb/breadcrumb-placement-1-dark.svg"
+  >
+    Place breadcrumbs directly above the page title when the header contains navigation or actions.
+  </CardTile>
+  <CardTile
+    title="Position option 2"
+    imageLightSrc="/components/images/breadcrumb/breadcrumb-placement-2-light.svg"
+    imageDarkSrc="/components/images/breadcrumb/breadcrumb-placement-2-dark.svg"
+  >
+    Place breadcrumbs below the page header when an additional top bar or contextual toolbar is present.
+  </CardTile>
+</CardGroup>
 
 ### Label and icon
 
-<div className="grid grid-cols-1 gap-8 border-t border-[var(--bq-stroke--primary)] pt-8 md:grid-cols-2 md:items-center">
-  <p>
-    In a breadcrumb design system, it's crucial to carefully consider the moments when labels and icons are used. Labels should effectively convey meaningful information about the navigation path without unnecessary verbosity. Icons, when employed, should complement the labels to enhance visual recognition and provide context.
-  </p>
-  <Frame className="px-4 py-4">
-    <img
-      src="https://placeholdit.com/600x400"
-      alt="Placeholder for the Breadcrumb label and icon image"
-      className="h-[220px] w-full object-cover"
-    />
-  </Frame>
-</div>
+<CardGroup cols={2}>
+  <CardTile
+    title="With icon"
+    imageLightSrc="/components/images/breadcrumb/breadcrumb-label-icon-light.svg"
+    imageDarkSrc="/components/images/breadcrumb/breadcrumb-label-icon-dark.svg"
+  >
+    Use small icons (`size="16"`) paired with a text label to aid recognition. Never use an icon alone without a label or `aria-label`.
+  </CardTile>
+  <CardTile
+    title="Text only"
+    imageLightSrc="/components/images/breadcrumb/breadcrumb-label-text-light.svg"
+    imageDarkSrc="/components/images/breadcrumb/breadcrumb-label-text-dark.svg"
+  >
+    Text-only labels work well in compact spaces or minimal interfaces. Keep labels short and match the destination page title exactly.
+  </CardTile>
+</CardGroup>
 
 ### States
 
-<div className="grid grid-cols-1 gap-8 border-t border-[var(--bq-stroke--primary)] pt-8 md:grid-cols-2 md:items-center">
-  <p>
-    In a design system, breadcrumb states typically include "default," "hover," and "active." The "default" state represents the standard appearance, "hover" highlights the item when a user hovers over it, and "active" indicates the current page. These states are crucial for providing visual feedback and aiding navigation within the breadcrumb trail. Ensure consistent styling and appropriate colour changes to maintain clarity and user understanding across different states.
-  </p>
-  <Frame className="px-4 py-4">
-    <img
-      src="https://placeholdit.com/600x400"
-      alt="Placeholder for the Breadcrumb states image"
-      className="h-[220px] w-full object-cover"
-    />
-  </Frame>
-</div>
+All parent breadcrumb items share the same brand primary color. Each interactive state provides a distinct visual cue:
+
+| State | Visual treatment |
+|---|---|
+| **Default** | Brand primary color text, no decoration |
+| **Hover** | Reduced opacity to signal interactivity |
+| **Focus** | Visible focus ring around the item |
+| **Active** | `:active` pressed appearance |
+| **Current page** | Brand color text, non-interactive; `aria-current="page"` is set automatically |
 
 ### Sizing and spacing
 
-<div className="grid grid-cols-1 gap-8 border-t border-[var(--bq-stroke--primary)] pt-8 md:grid-cols-2 md:items-center">
-  <p>
-    Consistent sizing ensures that breadcrumb items are visually balanced, while appropriate spacing helps to enhance readability and distinguish between individual items.
-  </p>
-  <Frame className="px-4 py-4">
-    <img
-      src="https://placeholdit.com/600x400"
-      alt="Placeholder for the Breadcrumb sizing and spacing image"
-      className="h-[220px] w-full object-cover"
-    />
-  </Frame>
-</div>
+Breadcrumb items use consistent internal padding and separator spacing controlled by CSS custom properties. You can adjust these tokens when integrating the breadcrumb into a custom page header:
+
+- `--bq-breadcrumb-item--paddingY` — vertical padding of each item
+- `--bq-breadcrumb-item--padding-start` / `--bq-breadcrumb-item--padding-end` — horizontal padding of each item
+- `--bq-breadcrumb-item--padding-start-separator` / `--bq-breadcrumb-item--padding-end-separator` — spacing around the separator
+
+### Truncation
+
+<Note>
+  Show a maximum of four items in the breadcrumb trail. When the path is deeper, keep the first (root) and last (current page) items visible and collapse the intermediate levels into a dropdown so users can still reach any level.
+</Note>
 
 ## Usage
 
@@ -138,6 +127,10 @@ The examples below cover the most common ways to use breadcrumbs in BEEQ.
 ### Default
 
 Use a default breadcrumb to show the current page within a hierarchy. When `href` is not set, each breadcrumb item renders as a button.
+
+<Note>
+  Always place `bq-breadcrumb-item` elements directly inside `bq-breadcrumb`. Items rendered outside the component will not receive separator or `aria-current` handling.
+</Note>
 
 <CodeLivePreview code={`
   <bq-breadcrumb label="Breadcrumb">
@@ -149,20 +142,11 @@ Use a default breadcrumb to show the current page within a hierarchy. When `href
 `}>
   <CodeGroup>
     ```html HTML icon="html5"
-    <bq-breadcrumb>
-      <bq-breadcrumb-item aria-label="Home page">
-        <bq-icon name="house-line" size="16"></bq-icon>
-      </bq-breadcrumb-item>
-      <bq-breadcrumb-item aria-label="Men clothing">
-        Men's Clothing
-      </bq-breadcrumb-item>
-      <bq-breadcrumb-item aria-label="Shirts">
-        <bq-icon name="shirt-folded" size="16"></bq-icon>
-        Shirts
-      </bq-breadcrumb-item>
-      <bq-breadcrumb-item aria-label="Casual shirts">
-        Casual shirts
-      </bq-breadcrumb-item>
+    <bq-breadcrumb label="Breadcrumb">
+      <bq-breadcrumb-item>Home</bq-breadcrumb-item>
+      <bq-breadcrumb-item>Men's clothing</bq-breadcrumb-item>
+      <bq-breadcrumb-item>Shirt</bq-breadcrumb-item>
+      <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
     </bq-breadcrumb>
     ```
 
@@ -220,7 +204,7 @@ Use the `separator` slot to replace the default `/` separator.
 `}>
   <CodeGroup>
     ```html HTML icon="html5"
-      <bq-breadcrumb aria-label="Breadcrumbs">
+      <bq-breadcrumb label="Breadcrumb">
         <bq-icon slot="separator" name="caret-right" size="12"></bq-icon>
         <bq-breadcrumb-item aria-label="Home page">
           <bq-icon name="house-line" size="16"></bq-icon>
@@ -275,45 +259,95 @@ Use the `separator` slot to replace the default `/` separator.
   </CodeGroup>
 </CodeLivePreview>
 
+<Note>
+  Use the same separator throughout a breadcrumb trail. Mixing separator styles in a single trail breaks visual consistency.
+</Note>
+
 ## Options
 
-The examples below show common configuration patterns and variants.
+The following example shows how to combine icons with breadcrumb items.
 
 ### With icons
 
-The label with the icon in the breadcrumb serves to enhance visual recognition, aiding users in quickly identifying and associating specific categories or sections within the navigation hierarchy. This icon-label combination contributes to a more intuitive and user-friendly experience.
+Icons next to labels help users recognize categories at a glance. Use `size="16"` icons and always pair them with a text label or `aria-label` for screen reader clarity.
 
-<Frame className="px-4 py-4">
-  <img
-    src="https://placeholdit.com/600x400"
-    alt="Placeholder for the Breadcrumb with icons variant image"
-    className="h-[220px] w-full object-cover"
-  />
-</Frame>
+<CodeLivePreview code={`
+  <bq-breadcrumb label="Breadcrumb">
+    <bq-breadcrumb-item aria-label="Home page">
+      <bq-icon name="house-line" size="16"></bq-icon>
+    </bq-breadcrumb-item>
+    <bq-breadcrumb-item>
+      <bq-icon name="shirt-folded" size="16"></bq-icon>
+      Men's Clothing
+    </bq-breadcrumb-item>
+    <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+  </bq-breadcrumb>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-breadcrumb label="Breadcrumb">
+      <bq-breadcrumb-item aria-label="Home page">
+        <bq-icon name="house-line" size="16"></bq-icon>
+      </bq-breadcrumb-item>
+      <bq-breadcrumb-item>
+        <bq-icon name="shirt-folded" size="16"></bq-icon>
+        Men's Clothing
+      </bq-breadcrumb-item>
+      <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+    </bq-breadcrumb>
+    ```
 
-### Without icons
+    ```jsx React icon="react"
+    import { BqBreadcrumb, BqBreadcrumbItem, BqIcon } from "@beeq/react";
 
-The decision to include or exclude icons can depend on the design aesthetics, context, and the overall user experience goals. If simplicity or a minimalistic design is preferred, breadcrumbs without icons can still be effective in conveying the navigation hierarchy. It's essential to consider the specific design principles and user expectations of the project when making this decision.
+    <BqBreadcrumb label="Breadcrumb">
+      <BqBreadcrumbItem aria-label="Home page">
+        <BqIcon name="house-line" size="16" />
+      </BqBreadcrumbItem>
+      <BqBreadcrumbItem>
+        <BqIcon name="shirt-folded" size="16" />
+        Men's Clothing
+      </BqBreadcrumbItem>
+      <BqBreadcrumbItem>Casual shirts</BqBreadcrumbItem>
+    </BqBreadcrumb>
+    ```
 
-<Frame className="px-4 py-4">
-  <img
-    src="https://placeholdit.com/600x400"
-    alt="Placeholder for the Breadcrumb without icons variant image"
-    className="h-[220px] w-full object-cover"
-  />
-</Frame>
+    ```html Angular icon="angular"
+    <!-- Standalone: import { BqBreadcrumb, BqBreadcrumbItem, BqIcon } from "@beeq/angular/standalone" -->
+    <!-- Modules: components are available after importing BeeQModule -->
 
-### With dropdown
+    <bq-breadcrumb label="Breadcrumb">
+      <bq-breadcrumb-item aria-label="Home page">
+        <bq-icon name="house-line" size="16"></bq-icon>
+      </bq-breadcrumb-item>
+      <bq-breadcrumb-item>
+        <bq-icon name="shirt-folded" size="16"></bq-icon>
+        Men's Clothing
+      </bq-breadcrumb-item>
+      <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+    </bq-breadcrumb>
+    ```
 
-The dropdown in a breadcrumb is crucial for presenting a hierarchical structure of navigation. It allows users to access and navigate through nested levels of content, providing a compact and organized way to explore and select specific paths within a website or application. This enhances user experience by offering a clear and concise method for navigating complex information architectures.
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqBreadcrumb, BqBreadcrumbItem, BqIcon } from "@beeq/vue";
+    </script>
 
-<Frame className="px-4 py-4">
-  <img
-    src="https://placeholdit.com/600x400"
-    alt="Placeholder for the Breadcrumb with dropdown variant image"
-    className="h-[220px] w-full object-cover"
-  />
-</Frame>
+    <template>
+      <BqBreadcrumb label="Breadcrumb">
+        <BqBreadcrumbItem aria-label="Home page">
+          <BqIcon name="house-line" size="16" />
+        </BqBreadcrumbItem>
+        <BqBreadcrumbItem>
+          <BqIcon name="shirt-folded" size="16" />
+          Men's Clothing
+        </BqBreadcrumbItem>
+        <BqBreadcrumbItem>Casual shirts</BqBreadcrumbItem>
+      </BqBreadcrumb>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
 
 ## Best practices
 
@@ -385,12 +419,11 @@ The dropdown in a breadcrumb is crucial for presenting a hierarchical structure 
 
 ## Accessibility
 
-In designing breadcrumbs for accessibility, it's essential to consider several factors. Ensure sufficient color contrast between labels and background, provide clear focus indicators for interactive elements, and optimize for screen readers by using descriptive labels.
-
-- **Navigation** - navigate to each page link in the breadcrumb by using the <kbd>Tab</kbd> key and activate it with <kbd>Enter</kbd>.
-- **Landmark label** - use the `label` property to provide an `aria-label` for the navigation landmark. The default label is `Breadcrumbs`.
-- **Current page** - the last breadcrumb item receives `aria-current="page"` automatically.
-- **Decorative icons** - set `aria-hidden="true"` on decorative icons inside breadcrumb items.
+- **Navigation** — navigate to each link in the breadcrumb using <kbd>Tab</kbd> and activate it with <kbd>Enter</kbd>.
+- **Landmark label** — use the `label` prop to set an `aria-label` on the `<nav>` landmark. The default value is `Breadcrumbs`; override it when multiple navigation regions exist on the same page.
+- **Current page** — the last breadcrumb item receives `aria-current="page"` automatically.
+- **Icon-only items** — when a breadcrumb item contains only an icon, set `aria-label` on the `bq-breadcrumb-item` to describe the destination (e.g. `aria-label="Home page"`).
+- **Decorative icons** — when an icon appears alongside a visible text label, set `aria-hidden="true"` on the `bq-icon` so screen readers do not announce it twice.
 
 ## API reference
 
@@ -454,7 +487,7 @@ Events are emitted by `bq-breadcrumb-item`.
 ### CSS custom properties
 
 <Expandable title="CSS variables" defaultOpen={true}>
-  | Property | Description | Default |
+  | Variable | Description | Default |
   |---|---|---|
   | `--bq-breadcrumb-item--background` | Background color of the breadcrumb item | `theme(backgroundColor.transparent)` |
   | `--bq-breadcrumb-item--box-shadow` | Box shadow of the breadcrumb item | `none` |
