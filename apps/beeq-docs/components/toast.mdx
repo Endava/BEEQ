@@ -109,13 +109,10 @@ Use toast messages carefully so they stay brief, noticeable, and easy to underst
 
 Use the built-in `type` values to communicate the nature of the message quickly. Keep the text concise and let the icon and color carry the status cue. `info` is the default type, while `success`, `alert`, `error`, and `loading` cover the most common toast states.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      bq-toast[open] {
-        display: inline-block;
-      }
+    bq-toast[open] {
+      display: inline-block;
     }
   </style>
 
@@ -123,8 +120,8 @@ Use the built-in `type` values to communicate the nature of the message quickly.
   <bq-toast open type="success" time="600000">Your profile was updated.</bq-toast>
   <bq-toast open type="alert" time="600000">Your session will expire soon.</bq-toast>
   <bq-toast open type="error" time="600000">We couldn't complete the request.</bq-toast>
-  <bq-toast open type="loading" time="600000">Uploading file...</bq-toast>`}
->
+  <bq-toast open type="loading" time="600000">Uploading file...</bq-toast>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-toast open>This is an informational message.</bq-toast>
@@ -179,21 +176,18 @@ Use the built-in `type` values to communicate the nature of the message quickly.
 
 Use `type="custom"` when you need a branded or domain-specific status cue. Replace the default icon through the `icon` slot.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      bq-toast[open] {
-        display: inline-block;
-      }
+    bq-toast[open] {
+      display: inline-block;
     }
   </style>
 
   <bq-toast open type="custom" time="600000">
     <bq-icon slot="icon" name="star-bold"></bq-icon>
     New feature added to your workspace.
-  </bq-toast>`}
->
+  </bq-toast>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-toast open type="custom">
@@ -240,33 +234,30 @@ Use `type="custom"` when you need a branded or domain-specific status cue. Repla
 
 Use a dedicated toast container when you want the stacking behavior to be explicit in the markup. This example keeps the stack at the top center and appends each new toast into the same container, while keeping the visible documentation focused on the structure rather than the implementation details.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        position: relative;
-        min-height: 240px;
-        align-items: flex-start !important;
-      }
+    :host {
+      position: relative;
+      min-height: 240px;
+      align-items: flex-start !important;
+    }
 
-      [data-toast-container] {
-        display: flex;
-        position: fixed;
-        z-index: 9999;
-        flex-direction: column;
-        gap: var(--bq-spacing-xs);
-        pointer-events: none;
-        top: var(--bq-spacing-xxl3);
-        left: 50%;
-        transform: translateX(-50%);
-        align-items: center;
-      }
+    [data-toast-container] {
+      display: flex;
+      position: fixed;
+      z-index: 9999;
+      flex-direction: column;
+      gap: var(--bq-spacing-xs);
+      pointer-events: none;
+      top: var(--bq-spacing-xxl3);
+      left: 50%;
+      transform: translateX(-50%);
+      align-items: center;
+    }
 
-      [data-toast-container] bq-toast {
-        display: inline-block;
-        pointer-events: auto;
-      }
+    [data-toast-container] bq-toast {
+      display: inline-block;
+      pointer-events: auto;
     }
   </style>
 
@@ -276,11 +267,9 @@ Use a dedicated toast container when you want the stacking behavior to be explic
   <script>
     (() => {
       const TOAST_TYPE = ['info', 'success', 'alert', 'error', 'loading'];
-      const preview = document.currentScript?.parentElement;
-      if (!preview) return;
 
-      const button = preview.querySelector('bq-button');
-      const toastContainer = preview.querySelector('[data-toast-container]');
+      const button = previewRoot.querySelector('bq-button');
+      const toastContainer = previewRoot.querySelector('[data-toast-container]');
       if (!button || !toastContainer) return;
 
       const getRandomType = () => TOAST_TYPE[Math.floor(Math.random() * TOAST_TYPE.length)];
@@ -309,8 +298,8 @@ Use a dedicated toast container when you want the stacking behavior to be explic
         }, 4000);
       });
     })();
-  </script>`}
->
+  </script>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-button data-placement="top-center">Toggle toast</bq-button>
@@ -570,7 +559,7 @@ Use a dedicated toast container when you want the stacking behavior to be explic
 | Part | Description |
 |---|---|
 | `wrapper` | The internal wrapper that contains the icon and message |
-| `icon` | The icon container inside the shadow DOM |
+| `icon-info` | The `<div>` container that holds the icon component |
 | `base` | The root element of the internal default `bq-icon` |
 | `svg` | The `<svg>` element of the internal default `bq-icon` |
 

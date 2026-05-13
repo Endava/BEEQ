@@ -123,7 +123,9 @@ Choose the spinner treatment that best explains the waiting state without adding
 
 Use the default spinner when the surrounding UI already makes the loading context obvious and you do not need a custom size or icon.
 
-<CodeLivePreview code={`<bq-spinner></bq-spinner>`}>
+<CodeLivePreview code={`
+  <bq-spinner></bq-spinner>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-spinner></bq-spinner>
@@ -164,7 +166,9 @@ Use the default spinner when the surrounding UI already makes the loading contex
 
 Use the small spinner when space is limited and the loading state belongs to a compact surface.
 
-<CodeLivePreview code={`<bq-spinner size="small"></bq-spinner>`}>
+<CodeLivePreview code={`
+  <bq-spinner size="small"></bq-spinner>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-spinner size="small"></bq-spinner>
@@ -196,7 +200,9 @@ Use the small spinner when space is limited and the loading state belongs to a c
 
 Use `size="large"` for prominent loading states such as page-level waits, major panels, or longer-running tasks that need stronger visual emphasis.
 
-<CodeLivePreview code={`<bq-spinner size="large"></bq-spinner>`}>
+<CodeLivePreview code={`
+  <bq-spinner size="large"></bq-spinner>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-spinner size="large"></bq-spinner>
@@ -228,21 +234,18 @@ Use `size="large"` for prominent loading states such as page-level waits, major 
 
 Use `text-position` to control where the loading message appears relative to the spinner icon.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        gap: var(--bq-spacing-l) !important;
-      }
+    :host {
+      gap: var(--bq-spacing-l) !important;
     }
   </style>
 
   <bq-spinner text-position="below">Loading invoices...</bq-spinner>
   <bq-spinner text-position="above">Syncing changes...</bq-spinner>
   <bq-spinner text-position="right">Submitting...</bq-spinner>
-  <bq-spinner text-position="left">Processing...</bq-spinner>`}
->
+  <bq-spinner text-position="left">Processing...</bq-spinner>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-spinner text-position="below">Loading invoices...</bq-spinner>
@@ -291,8 +294,8 @@ Use the `icon` slot when you need a different spinner icon treatment. Make sure 
 <CodeLivePreview code={`
   <bq-spinner size="large">
     <bq-icon name="spinner-gap-bold" slot="icon"></bq-icon>
-  </bq-spinner>`}
->
+  </bq-spinner>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-spinner size="large">

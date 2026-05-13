@@ -118,16 +118,14 @@ Enhance user interaction by implementing the default select variant. Perfect for
 
 <CodeLivePreview code={`
   <style>
-    @scope {
-      bq-select::part(panel) { z-index: 12; }
-
-        span {
-            display: flex;
-            align-items: center;
-            gap: var(--bq-spacing-xs);
-        }
+    bq-select::part(panel) { z-index: 12; }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
     }
   </style>
+
   <bq-select placeholder="Placeholder">
     <label slot="label">Select label</label>
     <span slot="helper-text">
@@ -208,16 +206,14 @@ Use the `open` attribute to display the select dropdown by default, offering use
 
 <CodeLivePreview code={`
   <style>
-    @scope {
-      bq-select::part(panel) { z-index: 12; }
-
-        span {
-            display: flex;
-            align-items: center;
-            gap: var(--bq-spacing-xs);
-        }
+    bq-select::part(panel) { z-index: 12; }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
     }
   </style>
+
   <bq-select autofocus open placeholder="Placeholder">
     <label slot="label">Select label</label>
     <span slot="helper-text">
@@ -298,14 +294,11 @@ Set an initial `value` for the select component to preselect an option, providin
 
 <CodeLivePreview code={`
   <style>
-    @scope {
-      bq-select::part(panel) { z-index: 12; }
-
-        span {
-            display: flex;
-            align-items: center;
-            gap: var(--bq-spacing-xs);
-        }
+    bq-select::part(panel) { z-index: 12; }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
     }
   </style>
   <bq-select placeholder="Placeholder" value="2">
@@ -388,50 +381,49 @@ The `displayValue` property (`display-value` attribute) on `bq-option` overrides
 
 <CodeLivePreview code={`
   <style>
-    @scope {
-      bq-select::part(panel) { z-index: 12; }
+    bq-select::part(panel) { z-index: 12; }
 
-        .flex {
-            display: flex;
-        }
+    .flex {
+      display: flex;
+    }
 
-        .flex-col {
-            flex-direction: column;
-        }
+    .flex-col {
+      flex-direction: column;
+    }
 
-        .items-center {
-            align-items: center;
-        }
+    .items-center {
+      align-items: center;
+    }
 
-        .gap-xs {
-            gap: var(--bq-spacing-xs);
-        }
+    .gap-xs {
+      gap: var(--bq-spacing-xs);
+    }
 
-        .gap-xs2 {
-            gap: var(--bq-spacing-xs2);
-        }
+    .gap-xs2 {
+      gap: var(--bq-spacing-xs2);
+    }
 
-        .text-secondary {
-            color: var(--bq-text--secondary);
-        }
+    .text-secondary {
+      color: var(--bq-text--secondary);
+    }
 
-        .text-s {
-            font-size: var(--bq-font-size--s);
-        }
+    .text-s {
+      font-size: var(--bq-font-size--s);
+    }
 
-        .text-xs {
-            font-size: var(--bq-font-size--xs);
-        }
+    .text-xs {
+      font-size: var(--bq-font-size--xs);
+    }
 
-        .option-indent {
-            padding-inline-start: 28px;
-        }
+    .option-indent {
+      padding-inline-start: 28px;
+    }
 
-        .font-semibold {
-            font-weight: 600;
-        }
+    .font-semibold {
+      font-weight: 600;
     }
   </style>
+
   <bq-select placeholder="Payment method..." open>
     <label slot="label">Choose a payment method</label>
     <span slot="helper-text">
@@ -637,16 +629,14 @@ Employ the `disabled` attribute to restrict user interaction with the select com
 
 <CodeLivePreview code={`
   <style>
-    @scope {
-      bq-select::part(panel) { z-index: 12; }
-
-        span {
-            display: flex;
-            align-items: center;
-            gap: var(--bq-spacing-xs);
-        }
+    bq-select::part(panel) { z-index: 12; }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
     }
   </style>
+
   <bq-select disabled placeholder="Placeholder" value="3">
     <label slot="label">Select label</label>
     <span slot="helper-text">
@@ -727,16 +717,14 @@ Use the `multiple` property to enable multiple selections. Use `keep-open-on-sel
 
 <CodeLivePreview code={`
   <style>
-    @scope {
-      bq-select::part(panel) { z-index: 12; }
-
-        span {
-            display: flex;
-            align-items: center;
-            gap: var(--bq-spacing-xs);
-        }
+    bq-select::part(panel) { z-index: 12; }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
     }
   </style>
+
   <bq-select
     multiple
     keep-open-on-select
@@ -954,16 +942,14 @@ Use the `prefix` slot to include additional visual elements or context, such as 
 
 <CodeLivePreview code={`
   <style>
-    @scope {
-      bq-select::part(panel) { z-index: 12; }
-
-        span {
-            display: flex;
-            align-items: center;
-            gap: var(--bq-spacing-xs);
-        }
+    bq-select::part(panel) { z-index: 12; }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
     }
   </style>
+
   <bq-select placeholder="Placeholder">
     <label slot="label">Select label</label>
     <bq-icon name="user-circle" slot="prefix"></bq-icon>
@@ -1049,16 +1035,14 @@ Leverage the `suffix` slot to enhance the select component with extra elements. 
 
 <CodeLivePreview code={`
   <style>
-    @scope {
-      bq-select::part(panel) { z-index: 12; }
-
-        span {
-            display: flex;
-            align-items: center;
-            gap: var(--bq-spacing-xs);
-        }
+    bq-select::part(panel) { z-index: 12; }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
     }
   </style>
+
   <bq-select placeholder="Placeholder">
     <label slot="label">Select label</label>
     <bq-icon name="arrow-down" slot="suffix"></bq-icon>
@@ -1144,17 +1128,16 @@ Use `validation-status` to signal the validation state (`error`, `warning`, or `
 
 <CodeLivePreview code={`
   <style>
-    @scope {
-      :scope { gap: var(--bq-spacing-l) !important; }
-      bq-select::part(panel) { z-index: 12; }
+    :host { gap: var(--bq-spacing-l) !important; }
+    bq-select::part(panel) { z-index: 12; }
 
-        span {
-            display: flex;
-            align-items: center;
-            gap: var(--bq-spacing-xs);
-        }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
     }
   </style>
+
   <bq-select placeholder="Placeholder" validation-status="error" value="1">
     <label slot="label">Select label</label>
     <span slot="helper-text">
@@ -1343,31 +1326,30 @@ Choose this style when you want to include an optional label for additional cont
 
 <CodeLivePreview code={`
   <style>
-    @scope {
-      bq-select::part(panel) { z-index: 12; }
+    bq-select::part(panel) { z-index: 12; }
 
-        div {
-            display: flex;
-            flex: 1 1 0%;
-        }
+    div {
+      display: flex;
+      flex: 1 1 0%;
+    }
 
-        div > label {
-            display: flex;
-            flex-grow: 1;
-            align-items: center;
-        }
+    div > label {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+    }
 
-        div > span {
-            color: var(--bq-text--secondary);
-        } 
+    div > span {
+      color: var(--bq-text--secondary);
+    } 
 
-        span {
-            display: flex;
-            align-items: center;
-            gap: var(--bq-spacing-xs);
-        }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
     }
   </style>
+
   <bq-select placeholder="Placeholder">
     <div slot="label">
       <label>Select label</label>
@@ -1468,35 +1450,34 @@ Enhance user understanding by incorporating a `bq-tooltip` alongside the label, 
 
 <CodeLivePreview code={`
   <style>
-    @scope {
-      bq-select::part(panel) { z-index: 12; }
+    bq-select::part(panel) { z-index: 12; }
 
-        bq-tooltip {
-            margin-inline-start: var(--bq-spacing-xs);
-        }
+    bq-tooltip {
+      margin-inline-start: var(--bq-spacing-xs);
+    }
 
-        div {
-            display: flex;
-            flex: 1 1 0%;
-        }
+    div {
+      display: flex;
+      flex: 1 1 0%;
+    }
 
-        div > label {
-            display: flex;
-            flex-grow: 1;
-            align-items: center;
-        }
+    div > label {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+    }
 
-        div > span {
-            color: var(--bq-text--secondary);
-        } 
+    div > span {
+      color: var(--bq-text--secondary);
+    } 
 
-        span {
-            display: flex;
-            align-items: center;
-            gap: var(--bq-spacing-xs);
-        }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
     }
   </style>
+
   <bq-select placeholder="Placeholder">
     <div slot="label">
       <label>
@@ -1627,26 +1608,25 @@ Adjust the panel placement to suit your layout. Use the `placement` attribute to
 
 <CodeLivePreview code={`
   <style>
-    @scope {
-      bq-select::part(panel) { z-index: 12; }
+    bq-select::part(panel) { z-index: 12; }
 
-        bq-tooltip {
-            margin-inline-start: var(--bq-spacing-xs);
-        }
+    bq-tooltip {
+      margin-inline-start: var(--bq-spacing-xs);
+    }
 
-        label {
-            display: flex;
-            flex-grow: 1;
-            align-items: center;
-        }
+    label {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+    }
 
-        span {
-            display: flex;
-            align-items: center;
-            gap: var(--bq-spacing-xs);
-        }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
     }
   </style>
+
   <bq-select placeholder="Placeholder" placement="top">
     <label slot="label">
       Select label
@@ -1762,16 +1742,15 @@ Use this style when you prefer a minimal look and the field's purpose is conveye
 
 <CodeLivePreview code={`
   <style>
-    @scope {
-      bq-select::part(panel) { z-index: 12; }
+    bq-select::part(panel) { z-index: 12; }
 
-        span {
-            display: flex;
-            align-items: center;
-            gap: var(--bq-spacing-xs);
-        }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
     }
   </style>
+
   <bq-select placeholder="Placeholder">
     <bq-icon name="user-circle" slot="prefix"></bq-icon>
     <span slot="helper-text">
@@ -1852,10 +1831,9 @@ Select this variant when you don't need additional helper text, giving users a s
 
 <CodeLivePreview code={`
   <style>
-    @scope {
-      bq-select::part(panel) { z-index: 12; }
-    }
+    bq-select::part(panel) { z-index: 12; }
   </style>
+
   <bq-select placeholder="Placeholder">
     <label slot="label">Select label</label>
     <bq-icon name="user-circle" slot="prefix"></bq-icon>
@@ -1921,16 +1899,15 @@ A readonly select shows the current value but prevents the panel from opening. U
 
 <CodeLivePreview code={`
   <style>
-    @scope {
-      bq-select::part(panel) { z-index: 12; }
+    bq-select::part(panel) { z-index: 12; }
 
-        span {
-            display: flex;
-            align-items: center;
-            gap: var(--bq-spacing-xs);
-        }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
     }
   </style>
+
   <bq-select placeholder="Placeholder" value="2" readonly>
     <label slot="label">Select label</label>
     <span slot="helper-text">
@@ -2011,16 +1988,15 @@ Set `disable-clear` to hide the clear button and prevent one-click deselection. 
 
 <CodeLivePreview code={`
   <style>
-    @scope {
-      bq-select::part(panel) { z-index: 12; }
+    bq-select::part(panel) { z-index: 12; }
 
-        span {
-            display: flex;
-            align-items: center;
-            gap: var(--bq-spacing-xs);
-        }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
     }
   </style>
+
   <bq-select placeholder="Placeholder" value="1" disable-clear>
     <label slot="label">Select label</label>
     <span slot="helper-text">
@@ -2105,13 +2081,13 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
 
 <CodeLivePreview code={`
   <style>
-    @scope {
-      bq-select::part(panel) { z-index: 12; }
-    }
+    bq-select::part(panel) { z-index: 12; }
   </style>
+
   <bq-select id="custom-select" placeholder="Search options..." debounce-time="300">
     <label slot="label">Custom filtering</label>
   </bq-select>
+  
   <script>
     (() => {
       const ALL_OPTIONS = [
@@ -2125,7 +2101,7 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
         { label: 'Ice-cream', value: 'ice-cream', icon: 'ice-cream' },
       ];
 
-      const select = document.querySelector('#custom-select');
+      const select = previewRoot.querySelector('#custom-select');
 
       function highlight(text, query) {
         return text.replace(new RegExp('(' + query + ')', 'gi'), '<b>$1</b>');

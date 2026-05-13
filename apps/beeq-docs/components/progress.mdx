@@ -120,27 +120,24 @@ Choose the progress treatment that matches how precise the feedback needs to be.
 
 Use the default progress bar for general task tracking when the process has a measurable completion point.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        flex-direction: column !important;
-        align-items: center !important;
-        gap: var(--bq-spacing-m) !important;
-      }
+    :host {
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: var(--bq-spacing-m) !important;
+    }
 
-      bq-progress {
-        width: 250px;
-      }
+    bq-progress {
+      width: 250px;
     }
   </style>
 
   <bq-progress value="25"></bq-progress>
   <bq-progress value="50"></bq-progress>
   <bq-progress value="75"></bq-progress>
-  <bq-progress value="100"></bq-progress>`}
->
+  <bq-progress value="100"></bq-progress>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-progress value="25"></bq-progress>
@@ -191,25 +188,22 @@ Use the default progress bar for general task tracking when the process has a me
 
 Use `thickness="large"` to increase the visual weight of the progress bar in more prominent layouts.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        flex-direction: column !important;
-        align-items: center !important;
-        gap: var(--bq-spacing-m) !important;
-      }
+    :host {
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: var(--bq-spacing-m) !important;
+    }
 
-      bq-progress {
-        width: 250px;
-      }
+    bq-progress {
+      width: 250px;
     }
   </style>
 
   <bq-progress value="30"></bq-progress>
-  <bq-progress thickness="large" value="30"></bq-progress>`}
->
+  <bq-progress thickness="large" value="30"></bq-progress>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-progress value="30"></bq-progress>
@@ -247,18 +241,15 @@ Use `thickness="large"` to increase the visual weight of the progress bar in mor
 
 Use `type="error"` to communicate that a process failed or needs attention.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      bq-progress {
-        width: 250px;
-      }
+    bq-progress {
+      width: 250px;
     }
   </style>
 
-  <bq-progress type="error" value="30"></bq-progress>`}
->
+  <bq-progress type="error" value="30"></bq-progress>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-progress type="error" value="30"></bq-progress>
@@ -294,25 +285,22 @@ Use `type="error"` to communicate that a process failed or needs attention.
 
 Use `border-shape="square"` when you want a straighter edge treatment. The default is `rounded`.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        flex-direction: column !important;
-        align-items: center !important;
-        gap: var(--bq-spacing-m) !important;
-      }
+    :host {
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: var(--bq-spacing-m) !important;
+    }
 
-      bq-progress {
-        width: 250px;
-      }
+    bq-progress {
+      width: 250px;
     }
   </style>
 
   <bq-progress value="80"></bq-progress>
-  <bq-progress border-shape="square" value="80"></bq-progress>`}
->
+  <bq-progress border-shape="square" value="80"></bq-progress>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-progress value="80"></bq-progress>
@@ -350,27 +338,24 @@ Use `border-shape="square"` when you want a straighter edge treatment. The defau
 
 Add `label` to display a persistent numeric percentage beside the bar.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        flex-direction: column !important;
-        align-items: center !important;
-        gap: var(--bq-spacing-m) !important;
-      }
+    :host {
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: var(--bq-spacing-m) !important;
+    }
 
-      bq-progress {
-        width: 250px;
-      }
+    bq-progress {
+      width: 250px;
     }
   </style>
 
   <bq-progress label value="25"></bq-progress>
   <bq-progress label value="50"></bq-progress>
   <bq-progress label value="75"></bq-progress>
-  <bq-progress label value="100"></bq-progress>`}
->
+  <bq-progress label value="100"></bq-progress>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-progress label value="25"></bq-progress>
@@ -416,27 +401,24 @@ Add `label` to display a persistent numeric percentage beside the bar.
 
 Add `enable-tooltip` to show the current percentage at the indicator. In the current component implementation, the tooltip stays visible while the option is enabled.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        flex-direction: column !important;
-        align-items: center !important;
-        gap: var(--bq-spacing-m) !important;
-        padding-block: var(--bq-spacing-xl) !important;
-      }
+    :host {
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: var(--bq-spacing-m) !important;
+      padding-block: var(--bq-spacing-xl) !important;
+    }
 
-      bq-progress {
-        width: 250px;
-      }
+    bq-progress {
+      width: 250px;
     }
   </style>
 
   <bq-progress enable-tooltip value="25"></bq-progress>
   <bq-progress enable-tooltip value="50"></bq-progress>
-  <bq-progress enable-tooltip value="75"></bq-progress>`}
->
+  <bq-progress enable-tooltip value="75"></bq-progress>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-progress enable-tooltip value="25"></bq-progress>
@@ -482,18 +464,15 @@ Add `enable-tooltip` to show the current percentage at the indicator. In the cur
 
 Use `indeterminate` when the task is active but the exact completion point cannot be measured.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      bq-progress {
-        width: 250px;
-      }
+    bq-progress {
+      width: 250px;
     }
   </style>
 
-  <bq-progress indeterminate></bq-progress>`}
->
+  <bq-progress indeterminate></bq-progress>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-progress indeterminate></bq-progress>

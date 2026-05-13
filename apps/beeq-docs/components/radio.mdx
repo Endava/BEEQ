@@ -116,16 +116,14 @@ A radio button consists of a circular icon and a text label. The icon changes ap
 
 Wrap `bq-radio` elements inside a `bq-radio-group`. Set a matching `value` on the group to pre-select one option. The group handles all state synchronization.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <bq-radio-group name="group" value="option1">
     <span slot="label">Label</span>
     <bq-radio value="option1">Radio option 1</bq-radio>
     <bq-radio value="option2">Radio option 2</bq-radio>
     <bq-radio value="option3">Radio option 3</bq-radio>
   </bq-radio-group>
-  `}
->
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-radio-group name="group" value="option1">
@@ -179,11 +177,10 @@ Wrap `bq-radio` elements inside a `bq-radio-group`. Set a matching `value` on th
 
 Set `disabled` on the group to prevent all interaction. You can also disable individual `bq-radio` elements when only specific options are unavailable.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      :scope { gap: var(--bq-spacing-l) !important; }
+    :host {
+      gap: var(--bq-spacing-l) !important;
     }
   </style>
   <bq-radio-group name="group-disabled" value="option1" disabled>
@@ -198,8 +195,7 @@ Set `disabled` on the group to prevent all interaction. You can also disable ind
     <bq-radio value="option2" disabled>Radio option 2</bq-radio>
     <bq-radio value="option3">Radio option 3</bq-radio>
   </bq-radio-group>
-  `}
->
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <!-- Fully disabled group -->
@@ -287,16 +283,14 @@ Set `disabled` on the group to prevent all interaction. You can also disable ind
 
 Use `orientation="horizontal"` to arrange options side by side. Best for short labels and a small number of choices where vertical space is limited.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <bq-radio-group name="group" value="option1" orientation="horizontal">
     <span slot="label">Label</span>
     <bq-radio value="option1">Radio option 1</bq-radio>
     <bq-radio value="option2">Radio option 2</bq-radio>
     <bq-radio value="option3">Radio option 3</bq-radio>
   </bq-radio-group>
-  `}
->
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-radio-group name="group" value="option1" orientation="horizontal">
@@ -348,16 +342,14 @@ Use `orientation="horizontal"` to arrange options side by side. Best for short l
 
 Add the `fieldset` attribute to render a visible border and legend around the group. Use this when the radio group is one of several distinct sections in a form that need visual separation.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <bq-radio-group name="group" value="option1" fieldset>
     <span slot="label">Label</span>
     <bq-radio value="option1">Radio option 1</bq-radio>
     <bq-radio value="option2">Radio option 2</bq-radio>
     <bq-radio value="option3">Radio option 3</bq-radio>
   </bq-radio-group>
-  `}
->
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-radio-group name="group" value="option1" fieldset>
@@ -409,16 +401,14 @@ Add the `fieldset` attribute to render a visible border and legend around the gr
 
 Set `background-on-hover` on the group (or on individual `bq-radio` elements) to show a filled highlight on the label row when the user hovers. This increases the perceived click area in spacious layouts.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <bq-radio-group name="group" value="option1" background-on-hover>
     <span slot="label">Label</span>
     <bq-radio value="option1">Radio option 1</bq-radio>
     <bq-radio value="option2">Radio option 2</bq-radio>
     <bq-radio value="option3">Radio option 3</bq-radio>
   </bq-radio-group>
-  `}
->
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-radio-group name="group" value="option1" background-on-hover>
@@ -579,6 +569,7 @@ Set `background-on-hover` on the group (or on individual `bq-radio` elements) to
 | `vClick()` | Simulates a click on the native `<input>` — use instead of `element.click()` |
 | `vFocus()` | Sets focus on the native `<input>` — use instead of `element.focus()` |
 | `vBlur()` | Removes focus from the native `<input>` — use instead of `element.blur()` |
+| `getNativeInput()` | Returns the native `<input>` HTML element used under the hood |
 
 ### `bq-radio` events
 
