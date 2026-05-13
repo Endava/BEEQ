@@ -1,0 +1,596 @@
+---
+title: Side Menu
+description: "Side menus provide persistent vertical navigation for applications with multiple sections, features, or hierarchy levels."
+---
+
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Side Menu overview">
+  <img
+    src="https://placeholdit.com/600x400"
+    alt="Placeholder for the Side Menu overview image"
+    style={{ height: "260px", width: "520px" }}
+  />
+</Frame>
+
+The side menu is a vertical navigation element that sits alongside a page or application layout. It acts as a central hub for accessing sections, features, and functionality.
+
+<Note>
+  Use `bq-side-menu-item` inside `bq-side-menu`; side menu items rely on the parent menu to manage collapsed and selected states.
+</Note>
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use side menus when
+    </span>
+    - A website or application has extensive content or multiple hierarchical levels
+    - A compact and organized navigation system is necessary
+    - Users need persistent access to primary sections while they work
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use side menus when
+    </span>
+    - The menu reduces the visibility of primary content
+    - The interface is focused on reading or content consumption
+    - The layout is too narrow to support persistent navigation
+  </Card>
+</CardGroup>
+
+## Patterns
+
+<CardGroup cols={2}>
+  <Card title="Default view">
+    Navigation items remain visible while users scroll. This gives people a persistent representation of the product structure.
+  </Card>
+  <Card title="Collapsible view">
+    The collapsible view reduces the menu to a compact rail. Use it when space is constrained or when users need more room for content.
+  </Card>
+</CardGroup>
+
+<Tip>
+  For grid sizes M to XS, applicable to viewports of 768 pixels and below, display the side menu in collapsed mode.
+</Tip>
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Side Menu anatomy">
+  <img
+    src="https://placeholdit.com/1000x420"
+    alt="Placeholder for the Side Menu anatomy image"
+    className="h-[300px] w-full object-cover"
+  />
+</Frame>
+
+A side menu is composed of a container, selected item state, navigation items, and an expand/collapse control.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Container | The root `<aside>` surface that holds the side menu |
+| **2** | Selected | The active item that represents the current location |
+| **3** | Navigation item | A selectable `bq-side-menu-item` with optional prefix and suffix content |
+| **4** | Expand/collapse button | The control used to toggle between expanded and collapsed views |
+
+## Design guidelines
+
+<CardGroup cols={2}>
+  <Card title="Keep navigation available">
+    The side menu can scroll separately from the main content. This keeps navigation available when the page content is long.
+  </Card>
+  <Card title="Write clear labels">
+    Use short, unique labels in sentence case. The link text should explain the destination without extra context.
+  </Card>
+</CardGroup>
+
+## Usage
+
+### Default
+
+The default side menu is a versatile container for organizing and displaying navigation elements. Use it as the foundation for structured and intuitive navigation layouts.
+
+<CodeLivePreview code={`<style>
+  :host {
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    min-height: 22rem !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    position: relative !important;
+  }
+
+  bq-side-menu {
+    display: block;
+    inline-size: var(--bq-side-menu--width);
+    min-height: 22rem;
+    position: relative;
+  }
+
+  bq-side-menu::part(base) {
+    block-size: 100% !important;
+    inset: 0 auto 0 0 !important;
+    min-block-size: 0 !important;
+    position: absolute !important;
+  }
+
+  .side-menu-demo__logo {
+    display: flex;
+    align-items: center;
+    gap: var(--bq-spacing-s);
+    padding: var(--bq-spacing-m);
+  }
+
+  .side-menu-demo__title {
+    margin: 0;
+    font-size: var(--bq-font-size--xl);
+    white-space: nowrap;
+  }
+</style>
+
+<bq-side-menu>
+  <div class="side-menu-demo__logo" slot="logo">
+    <bq-icon name="hexagon" size="32"></bq-icon>
+    <h1 class="side-menu-demo__title">BEEQ</h1>
+  </div>
+  <bq-side-menu-item active>
+    <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+    Dashboard
+  </bq-side-menu-item>
+  <bq-side-menu-item>
+    <bq-icon name="package" slot="prefix"></bq-icon>
+    Products
+    <bq-badge slot="suffix">5</bq-badge>
+  </bq-side-menu-item>
+  <bq-side-menu-item disabled>
+    <bq-icon name="gauge" slot="prefix"></bq-icon>
+    Performance
+  </bq-side-menu-item>
+</bq-side-menu>
+
+<script>
+  (() => {
+    const bodyClasses = ['bq-body--side-menu', 'bq-body--side-menu__expand', 'bq-body--side-menu__collapse'];
+    const resetBodyClasses = () => document.body.classList.remove(...bodyClasses);
+
+    const scheduleReset = () => requestAnimationFrame(() => requestAnimationFrame(resetBodyClasses));
+
+    // The production side menu reserves layout space on <body>; the docs preview
+    // keeps the demo contained, so remove those global layout classes after mount.
+    resetBodyClasses();
+    customElements.whenDefined('bq-side-menu').then(scheduleReset);
+  })();
+</script>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-side-menu>
+      <div slot="logo">
+        <bq-icon name="hexagon" size="32"></bq-icon>
+        <h1>BEEQ</h1>
+      </div>
+
+      <bq-side-menu-item active>
+        <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+        Dashboard
+      </bq-side-menu-item>
+
+      <bq-side-menu-item>
+        <bq-icon name="package" slot="prefix"></bq-icon>
+        Products
+        <bq-badge slot="suffix">5</bq-badge>
+      </bq-side-menu-item>
+
+      <bq-side-menu-item disabled>
+        <bq-icon name="gauge" slot="prefix"></bq-icon>
+        Performance
+      </bq-side-menu-item>
+    </bq-side-menu>
+    ```
+    ```jsx React icon="react"
+    import { BqBadge, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/react";
+
+    <BqSideMenu>
+      <div slot="logo">
+        <BqIcon name="hexagon" size="32" />
+        <h1>BEEQ</h1>
+      </div>
+
+      <BqSideMenuItem active>
+        <BqIcon name="diamonds-four" slot="prefix" />
+        Dashboard
+      </BqSideMenuItem>
+
+      <BqSideMenuItem>
+        <BqIcon name="package" slot="prefix" />
+        Products
+        <BqBadge slot="suffix">5</BqBadge>
+      </BqSideMenuItem>
+    </BqSideMenu>
+    ```
+    ```html Angular icon="angular"
+    <bq-side-menu>
+      <div slot="logo">
+        <bq-icon name="hexagon" size="32"></bq-icon>
+        <h1>BEEQ</h1>
+      </div>
+
+      <bq-side-menu-item active>
+        <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+        Dashboard
+      </bq-side-menu-item>
+
+      <bq-side-menu-item>
+        <bq-icon name="package" slot="prefix"></bq-icon>
+        Products
+        <bq-badge slot="suffix">5</bq-badge>
+      </bq-side-menu-item>
+    </bq-side-menu>
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqBadge, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSideMenu>
+        <div slot="logo">
+          <BqIcon name="hexagon" size="32" />
+          <h1>BEEQ</h1>
+        </div>
+
+        <BqSideMenuItem active>
+          <BqIcon name="diamonds-four" slot="prefix" />
+          Dashboard
+        </BqSideMenuItem>
+
+        <BqSideMenuItem>
+          <BqIcon name="package" slot="prefix" />
+          Products
+          <BqBadge slot="suffix">5</BqBadge>
+        </BqSideMenuItem>
+      </BqSideMenu>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Options
+
+### Item states
+
+Side menu items support default, active, hover, focus, disabled, and with-counter states.
+
+<CodeLivePreview code={`<style>
+  :host {
+    align-items: stretch !important;
+  }
+
+  .side-menu-states {
+    display: grid;
+    gap: var(--bq-spacing-xs);
+    inline-size: min(100%, 16rem);
+  }
+</style>
+
+<div class="side-menu-states">
+  <bq-side-menu-item>
+    <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+    Default
+  </bq-side-menu-item>
+  <bq-side-menu-item active>
+    <bq-icon name="package" slot="prefix"></bq-icon>
+    Active
+  </bq-side-menu-item>
+  <bq-side-menu-item disabled>
+    <bq-icon name="gauge" slot="prefix"></bq-icon>
+    Disabled
+  </bq-side-menu-item>
+  <bq-side-menu-item>
+    <bq-icon name="bell" slot="prefix"></bq-icon>
+    With counter
+    <bq-badge slot="suffix">5</bq-badge>
+  </bq-side-menu-item>
+</div>`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-side-menu-item>
+      <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+      Default
+    </bq-side-menu-item>
+
+    <bq-side-menu-item active>
+      <bq-icon name="package" slot="prefix"></bq-icon>
+      Active
+    </bq-side-menu-item>
+
+    <bq-side-menu-item disabled>
+      <bq-icon name="gauge" slot="prefix"></bq-icon>
+      Disabled
+    </bq-side-menu-item>
+
+    <bq-side-menu-item>
+      <bq-icon name="bell" slot="prefix"></bq-icon>
+      With counter
+      <bq-badge slot="suffix">5</bq-badge>
+    </bq-side-menu-item>
+    ```
+    ```jsx React icon="react"
+    import { BqBadge, BqIcon, BqSideMenuItem } from "@beeq/react";
+
+    <>
+      <BqSideMenuItem>
+        <BqIcon name="diamonds-four" slot="prefix" />
+        Default
+      </BqSideMenuItem>
+      <BqSideMenuItem active>
+        <BqIcon name="package" slot="prefix" />
+        Active
+      </BqSideMenuItem>
+      <BqSideMenuItem disabled>
+        <BqIcon name="gauge" slot="prefix" />
+        Disabled
+      </BqSideMenuItem>
+      <BqSideMenuItem>
+        <BqIcon name="bell" slot="prefix" />
+        With counter
+        <BqBadge slot="suffix">5</BqBadge>
+      </BqSideMenuItem>
+    </>
+    ```
+    ```html Angular icon="angular"
+    <bq-side-menu-item>
+      <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+      Default
+    </bq-side-menu-item>
+
+    <bq-side-menu-item active>
+      <bq-icon name="package" slot="prefix"></bq-icon>
+      Active
+    </bq-side-menu-item>
+
+    <bq-side-menu-item disabled>
+      <bq-icon name="gauge" slot="prefix"></bq-icon>
+      Disabled
+    </bq-side-menu-item>
+
+    <bq-side-menu-item>
+      <bq-icon name="bell" slot="prefix"></bq-icon>
+      With counter
+      <bq-badge slot="suffix">5</bq-badge>
+    </bq-side-menu-item>
+    ```
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqBadge, BqIcon, BqSideMenuItem } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSideMenuItem>
+        <BqIcon name="diamonds-four" slot="prefix" />
+        Default
+      </BqSideMenuItem>
+      <BqSideMenuItem active>
+        <BqIcon name="package" slot="prefix" />
+        Active
+      </BqSideMenuItem>
+      <BqSideMenuItem disabled>
+        <BqIcon name="gauge" slot="prefix" />
+        Disabled
+      </BqSideMenuItem>
+      <BqSideMenuItem>
+        <BqIcon name="bell" slot="prefix" />
+        With counter
+        <BqBadge slot="suffix">5</BqBadge>
+      </BqSideMenuItem>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Appearance
+
+Use the `appearance` attribute to align the side menu with your application's visual language.
+
+| Appearance | Description |
+|---|---|
+| `default` | The standard side menu appearance |
+| `brand` | A brand-colored side menu used when navigation should carry stronger product identity |
+| `inverse` | An inverse side menu used on darker or higher-contrast surfaces |
+
+### Collapse and size
+
+Use `collapse` to create a compact side menu. Use `size="small"` when space is constrained and labels remain readable.
+
+### With footer
+
+Use the footer slot for supplementary actions, links, or information at the bottom of the menu.
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Choose navigation titles that clearly communicate where each item leads.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Avoid arbitrary titles that hide the destination or force people to guess.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Keep navigation labels concise by removing words that do not add meaning.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Avoid long labels that wrap, truncate poorly, or reduce scanability.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use sentence case for navigation items so labels read naturally.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Avoid title case or all caps when they make navigation harder to scan.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Validate icon meaning with users when icons are needed for collapsed navigation.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not rely on icons alone unless the destination remains understandable.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+The side menu renders the root navigation surface as an `<aside>`. Each `bq-side-menu-item` renders as a focusable button with `role="menuitem"`. The `disabled` property maps to `aria-disabled="true"` and removes the item from the tab order with `tabindex="-1"`.
+
+- **Landmark context** - include semantic heading text in the logo slot to communicate the menu purpose and where its content begins.
+- **Collapsed state** - communicate the expanded or collapsed state through your surrounding layout controls when you expose a custom toggle.
+- **Icons** - validate icon meaning with people who use assistive technology or who may need additional visual clarity.
+- **Labels** - use unique labels that make sense without additional context. The side menu item text feeds the collapsed tooltip content.
+- **Keyboard navigation** - side menu items support focus, click, <kbd>Enter</kbd>, and <kbd>Space</kbd> interaction through the underlying button.
+
+## API reference
+
+### Properties
+
+#### `bq-side-menu`
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `appearance` | `appearance` | Sets a predefined appearance of the side menu | `'brand'` \| `'default'` \| `'inverse'` | `'default'` |
+| `collapse` | `collapse` | If `true`, the container will reduce its width | `boolean` | `false` |
+| `size` | `size` | Sets the size of the navigation menu items | `'medium'` \| `'small'` | `'medium'` |
+
+#### `bq-side-menu-item`
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `active` | `active` | If `true`, the menu item will be shown as active or selected | `boolean` | `false` |
+| `collapse` | `collapse` | If `true`, the item label and suffix will be hidden and the width will be reduced according to its parent | `boolean` | `false` |
+| `disabled` | `disabled` | If `true`, the menu item will be disabled and no interaction is allowed | `boolean` | `false` |
+
+### Slots
+
+#### `bq-side-menu`
+
+| Slot | Description |
+|---|---|
+| *(default)* | The main section that holds all menu items |
+| `footer` | The section for adding footer content to the side menu |
+| `logo` | The section for displaying the logo or brand in the side menu |
+
+#### `bq-side-menu-item`
+
+| Slot | Description |
+|---|---|
+| *(default)* | The content of the menu item |
+| `prefix` | The prefix part of the menu item |
+| `suffix` | The suffix part of the menu item |
+
+### Shadow parts
+
+#### `bq-side-menu`
+
+| Part | Description |
+|---|---|
+| `base` | HTML `<aside>` root container |
+| `footer` | HTML `<div>` element that holds the footer |
+| `logo` | HTML `<div>` element that holds the logo |
+| `nav` | HTML `<nav>` element that holds the navigation items |
+
+#### `bq-side-menu-item`
+
+| Part | Description |
+|---|---|
+| `base` | The component wrapper container inside the shadow DOM |
+| `label` | The label slot |
+| `panel` | The `<div>` container that holds the tooltip content when the side menu is collapsed |
+| `prefix` | The prefix slot |
+| `suffix` | The suffix slot |
+| `trigger` | The `<div>` container that holds the element that displays the tooltip on hover when the side menu is collapsed |
+
+### CSS custom properties
+
+<Expandable title="CSS variables" defaultOpen={true}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-side-menu--bg-color` | Side menu background color | `theme(backgroundColor.ui.primary)` |
+  | `--bq-side-menu--brand-color` | Side menu logo color | `theme(backgroundColor.ui.brand)` |
+  | `--bq-side-menu--border-color` | Side menu border color | `theme(stroke.primary)` |
+  | `--bq-side-menu--footer-box-shadow` | Side menu footer box shadow | `0 -10px 12px -12px var(--bq-background--tertiary)` |
+  | `--bq-side-menu-item--bg-default` | Side menu item default background color | `theme(backgroundColor.transparent)` |
+  | `--bq-side-menu-item--bg-active` | Side menu item active background color | `theme(backgroundColor.ui.brand-alt)` |
+  | `--bq-side-menu-item--text-default` | Side menu item default text color | `theme(textColor.primary)` |
+  | `--bq-side-menu-item--text-active` | Side menu item active text color | `theme(textColor.brand)` |
+  | `--bq-side-menu-item--paddingX` | Side menu item horizontal padding | `theme(space.l)` |
+  | `--bq-side-menu-item--paddingY` | Side menu item vertical padding | `theme(space.m)` |
+  | `--bq-side-menu--width` | Side menu width, added to the global `:root` scope | `16rem` |
+  | `--bq-side-menu--width-collapse` | Side menu width when collapsed, added to the global `:root` scope | `4.5rem` |
+</Expandable>
+
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+### Events
+
+| Component | Event | Description | Type |
+|---|---|---|---|
+| `bq-side-menu` | `bqCollapse` | Fires when the side menu changes its width from expanded to collapsed and vice versa | `CustomEvent<{ collapse: boolean; }>` |
+| `bq-side-menu` | `bqSelect` | Fires when the active or selected menu item changes | `CustomEvent<HTMLBqSideMenuItemElement>` |
+| `bq-side-menu-item` | `bqBlur` | Fires when the menu item loses focus | `CustomEvent<HTMLBqSideMenuItemElement>` |
+| `bq-side-menu-item` | `bqClick` | Fires when the menu item is clicked | `CustomEvent<HTMLBqSideMenuItemElement>` |
+| `bq-side-menu-item` | `bqFocus` | Fires when the menu item receives focus | `CustomEvent<HTMLBqSideMenuItemElement>` |
+
+<Note>
+  - In React, prefix events with `on`: `onBqSelect`, `onBqCollapse`, `onBqClick`.
+  - In Angular, use event binding syntax: `(bqSelect)`, `(bqCollapse)`, `(bqClick)`.
+  - In Vue, use the `@` shorthand: `@bqSelect`, `@bqCollapse`, `@bqClick`.
+</Note>
+
+### Methods
+
+| Method | Description | Returns |
+|---|---|---|
+| `toggleCollapse()` | Toggles the collapse state of the side menu | `Promise<void>` |
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-side-menu--default">
+    Explore all side menu configurations in Storybook
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/side-menu">
+    View the component source on GitHub
+  </Card>
+</CardGroup>
