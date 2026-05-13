@@ -1,0 +1,523 @@
+---
+title: Breadcrumb
+description: "A breadcrumb shows users their current location within a site hierarchy and lets them navigate back through parent levels."
+---
+
+import { CardTile } from '/snippets/CardTile.jsx';
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Breadcrumb component overview">
+  <img className="block dark:hidden" src="/components/images/breadcrumb/breadcrumb-overview-light.svg" alt="BEEQ Breadcrumb component overview" />
+  <img className="hidden dark:block" src="/components/images/breadcrumb/breadcrumb-overview-dark.svg" alt="BEEQ Breadcrumb component overview" />
+</Frame>
+
+A breadcrumb is a form of contextual navigation displaying a user's position within a site hierarchy, enabling them to navigate back through the levels, while it should not be misleading as a primary navigation tool.
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use breadcrumbs when
+    </span>
+    - Navigating large content hierarchies with more than two levels
+    - Users need compact context for where they are in the navigation hierarchy
+    - Users need to move back through parent levels from the current page
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use breadcrumbs when
+    </span>
+    - They would substitute the primary navigation
+    - The product has single-level navigation and breadcrumbs would add unnecessary clutter
+    - The user is in a multistep process; use a progress indicator instead
+  </Card>
+</CardGroup>
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Breadcrumb component anatomy">
+  <img className="block dark:hidden" src="/components/images/breadcrumb/breadcrumb-anatomy-light.svg" alt="BEEQ Breadcrumb component anatomy" />
+  <img className="hidden dark:block" src="/components/images/breadcrumb/breadcrumb-anatomy-dark.svg" alt="BEEQ Breadcrumb component anatomy" />
+</Frame>
+
+| Part | Element | Description |
+|---|---|---|
+| Icon | `bq-icon` or decorative icon | Optional visual cue before the first breadcrumb item |
+| Divider | `separator` slot | The default slash separator or a custom separator element |
+| Inactive breadcrumb | `bq-breadcrumb-item` | A parent navigation step rendered as a link or button |
+| Current page | `bq-breadcrumb-item` with `aria-current="page"` | The last item indicating the user’s current location |
+| Truncation | custom overflow or hidden items | Collapses long paths while preserving the first and last items |
+| Dropdown | custom nested menu | Optional overflow menu for deep breadcrumb trails |
+
+## Design guidelines
+
+### Placement
+
+Breadcrumbs should appear near the top of the page, above the page title or directly below the page header.
+
+<CardGroup cols={2}>
+  <CardTile
+    title="Position option 1"
+    imageLightSrc="/components/images/breadcrumb/breadcrumb-placement-1-light.svg"
+    imageDarkSrc="/components/images/breadcrumb/breadcrumb-placement-1-dark.svg"
+  >
+    Place breadcrumbs directly above the page title when the header contains navigation or actions.
+  </CardTile>
+  <CardTile
+    title="Position option 2"
+    imageLightSrc="/components/images/breadcrumb/breadcrumb-placement-2-light.svg"
+    imageDarkSrc="/components/images/breadcrumb/breadcrumb-placement-2-dark.svg"
+  >
+    Place breadcrumbs below the page header when an additional top bar or contextual toolbar is present.
+  </CardTile>
+</CardGroup>
+
+### Label and icon
+
+<CardGroup cols={2}>
+  <CardTile
+    title="With icon"
+    imageLightSrc="/components/images/breadcrumb/breadcrumb-label-icon-light.svg"
+    imageDarkSrc="/components/images/breadcrumb/breadcrumb-label-icon-dark.svg"
+  >
+    Use small icons (`size="16"`) paired with a text label to aid recognition. Never use an icon alone without a label or `aria-label`.
+  </CardTile>
+  <CardTile
+    title="Text only"
+    imageLightSrc="/components/images/breadcrumb/breadcrumb-label-text-light.svg"
+    imageDarkSrc="/components/images/breadcrumb/breadcrumb-label-text-dark.svg"
+  >
+    Text-only labels work well in compact spaces or minimal interfaces. Keep labels short and match the destination page title exactly.
+  </CardTile>
+</CardGroup>
+
+### States
+
+All parent breadcrumb items share the same brand primary color. Each interactive state provides a distinct visual cue:
+
+| State | Visual treatment |
+|---|---|
+| **Default** | Brand primary color text, no decoration |
+| **Hover** | Reduced opacity to signal interactivity |
+| **Focus** | Visible focus ring around the item |
+| **Active** | `:active` pressed appearance |
+| **Current page** | Brand color text, non-interactive; `aria-current="page"` is set automatically |
+
+### Sizing and spacing
+
+Breadcrumb items use consistent internal padding and separator spacing controlled by CSS custom properties. You can adjust these tokens when integrating the breadcrumb into a custom page header:
+
+- `--bq-breadcrumb-item--paddingY` — vertical padding of each item
+- `--bq-breadcrumb-item--padding-start` / `--bq-breadcrumb-item--padding-end` — horizontal padding of each item
+- `--bq-breadcrumb-item--padding-start-separator` / `--bq-breadcrumb-item--padding-end-separator` — spacing around the separator
+
+### Truncation
+
+<Note>
+  Show a maximum of four items in the breadcrumb trail. When the path is deeper, keep the first (root) and last (current page) items visible and collapse the intermediate levels into a dropdown so users can still reach any level.
+</Note>
+
+## Usage
+
+The examples below cover the most common ways to use breadcrumbs in BEEQ.
+
+### Default
+
+Use a default breadcrumb to show the current page within a hierarchy. When `href` is not set, each breadcrumb item renders as a button.
+
+<Note>
+  Always place `bq-breadcrumb-item` elements directly inside `bq-breadcrumb`. Items rendered outside the component will not receive separator or `aria-current` handling.
+</Note>
+
+<CodeLivePreview code={`
+  <bq-breadcrumb label="Breadcrumb">
+    <bq-breadcrumb-item>Home</bq-breadcrumb-item>
+    <bq-breadcrumb-item>Men's clothing</bq-breadcrumb-item>
+    <bq-breadcrumb-item>Shirt</bq-breadcrumb-item>
+    <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+  </bq-breadcrumb>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-breadcrumb label="Breadcrumb">
+      <bq-breadcrumb-item>Home</bq-breadcrumb-item>
+      <bq-breadcrumb-item>Men's clothing</bq-breadcrumb-item>
+      <bq-breadcrumb-item>Shirt</bq-breadcrumb-item>
+      <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+    </bq-breadcrumb>
+    ```
+
+    ```jsx React icon="react"
+    import { BqBreadcrumb, BqBreadcrumbItem } from "@beeq/react";
+
+    <BqBreadcrumb label="Breadcrumb">
+      <BqBreadcrumbItem>Home</BqBreadcrumbItem>
+      <BqBreadcrumbItem>Men's clothing</BqBreadcrumbItem>
+      <BqBreadcrumbItem>Shirt</BqBreadcrumbItem>
+      <BqBreadcrumbItem>Casual shirts</BqBreadcrumbItem>
+    </BqBreadcrumb>
+    ```
+
+    ```html Angular icon="angular"
+    <!-- Standalone: import { BqBreadcrumb, BqBreadcrumbItem } from "@beeq/angular/standalone" -->
+    <!-- Modules: components are available after importing BeeQModule -->
+
+    <bq-breadcrumb label="Breadcrumb">
+      <bq-breadcrumb-item>Home</bq-breadcrumb-item>
+      <bq-breadcrumb-item>Men's clothing</bq-breadcrumb-item>
+      <bq-breadcrumb-item>Shirt</bq-breadcrumb-item>
+      <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+    </bq-breadcrumb>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqBreadcrumb, BqBreadcrumbItem } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqBreadcrumb label="Breadcrumb">
+        <BqBreadcrumbItem>Home</BqBreadcrumbItem>
+        <BqBreadcrumbItem>Men's clothing</BqBreadcrumbItem>
+        <BqBreadcrumbItem>Shirt</BqBreadcrumbItem>
+        <BqBreadcrumbItem>Casual shirts</BqBreadcrumbItem>
+      </BqBreadcrumb>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Custom separator
+
+Use the `separator` slot to replace the default `/` separator.
+
+<CodeLivePreview code={`
+  <bq-breadcrumb label="Breadcrumb">
+    <bq-icon name="caret-right" size="12" slot="separator"></bq-icon>
+    <bq-breadcrumb-item href="/">Home</bq-breadcrumb-item>
+    <bq-breadcrumb-item href="/catalog">Catalog</bq-breadcrumb-item>
+    <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+  </bq-breadcrumb>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+      <bq-breadcrumb label="Breadcrumb">
+        <bq-icon slot="separator" name="caret-right" size="12"></bq-icon>
+        <bq-breadcrumb-item aria-label="Home page">
+          <bq-icon name="house-line" size="16"></bq-icon>
+        </bq-breadcrumb-item>
+        <bq-breadcrumb-item aria-label="Men clothing">
+          Men's Clothing
+        </bq-breadcrumb-item>
+        <bq-breadcrumb-item aria-label="Shirts" >
+          <bq-icon name="shirt-folded" size="16"></bq-icon>
+          Shirts
+        </bq-breadcrumb-item>
+        <bq-breadcrumb-item aria-label="Casual shirts" >
+          Casual shirts
+        </bq-breadcrumb-item>
+      </bq-breadcrumb>
+    ```
+
+    ```jsx React icon="react"
+    import { BqBreadcrumb, BqBreadcrumbItem, BqIcon } from "@beeq/react";
+
+    <BqBreadcrumb label="Breadcrumb">
+      <BqIcon name="caret-right" size="12" slot="separator" />
+      <BqBreadcrumbItem href="/">Home</BqBreadcrumbItem>
+      <BqBreadcrumbItem href="/catalog">Catalog</BqBreadcrumbItem>
+      <BqBreadcrumbItem>Casual shirts</BqBreadcrumbItem>
+    </BqBreadcrumb>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-breadcrumb label="Breadcrumb">
+      <bq-icon name="caret-right" size="12" slot="separator"></bq-icon>
+      <bq-breadcrumb-item href="/">Home</bq-breadcrumb-item>
+      <bq-breadcrumb-item href="/catalog">Catalog</bq-breadcrumb-item>
+      <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+    </bq-breadcrumb>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqBreadcrumb, BqBreadcrumbItem, BqIcon } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqBreadcrumb label="Breadcrumb">
+        <BqIcon name="caret-right" size="12" slot="separator" />
+        <BqBreadcrumbItem href="/">Home</BqBreadcrumbItem>
+        <BqBreadcrumbItem href="/catalog">Catalog</BqBreadcrumbItem>
+        <BqBreadcrumbItem>Casual shirts</BqBreadcrumbItem>
+      </BqBreadcrumb>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Note>
+  Use the same separator throughout a breadcrumb trail. Mixing separator styles in a single trail breaks visual consistency.
+</Note>
+
+## Options
+
+The following example shows how to combine icons with breadcrumb items.
+
+### With icons
+
+Icons next to labels help users recognize categories at a glance. Use `size="16"` icons and always pair them with a text label or `aria-label` for screen reader clarity.
+
+<CodeLivePreview code={`
+  <bq-breadcrumb label="Breadcrumb">
+    <bq-breadcrumb-item aria-label="Home page">
+      <bq-icon name="house-line" size="16"></bq-icon>
+    </bq-breadcrumb-item>
+    <bq-breadcrumb-item>
+      <bq-icon name="shirt-folded" size="16"></bq-icon>
+      Men's Clothing
+    </bq-breadcrumb-item>
+    <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+  </bq-breadcrumb>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-breadcrumb label="Breadcrumb">
+      <bq-breadcrumb-item aria-label="Home page">
+        <bq-icon name="house-line" size="16"></bq-icon>
+      </bq-breadcrumb-item>
+      <bq-breadcrumb-item>
+        <bq-icon name="shirt-folded" size="16"></bq-icon>
+        Men's Clothing
+      </bq-breadcrumb-item>
+      <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+    </bq-breadcrumb>
+    ```
+
+    ```jsx React icon="react"
+    import { BqBreadcrumb, BqBreadcrumbItem, BqIcon } from "@beeq/react";
+
+    <BqBreadcrumb label="Breadcrumb">
+      <BqBreadcrumbItem aria-label="Home page">
+        <BqIcon name="house-line" size="16" />
+      </BqBreadcrumbItem>
+      <BqBreadcrumbItem>
+        <BqIcon name="shirt-folded" size="16" />
+        Men's Clothing
+      </BqBreadcrumbItem>
+      <BqBreadcrumbItem>Casual shirts</BqBreadcrumbItem>
+    </BqBreadcrumb>
+    ```
+
+    ```html Angular icon="angular"
+    <!-- Standalone: import { BqBreadcrumb, BqBreadcrumbItem, BqIcon } from "@beeq/angular/standalone" -->
+    <!-- Modules: components are available after importing BeeQModule -->
+
+    <bq-breadcrumb label="Breadcrumb">
+      <bq-breadcrumb-item aria-label="Home page">
+        <bq-icon name="house-line" size="16"></bq-icon>
+      </bq-breadcrumb-item>
+      <bq-breadcrumb-item>
+        <bq-icon name="shirt-folded" size="16"></bq-icon>
+        Men's Clothing
+      </bq-breadcrumb-item>
+      <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+    </bq-breadcrumb>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqBreadcrumb, BqBreadcrumbItem, BqIcon } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqBreadcrumb label="Breadcrumb">
+        <BqBreadcrumbItem aria-label="Home page">
+          <BqIcon name="house-line" size="16" />
+        </BqBreadcrumbItem>
+        <BqBreadcrumbItem>
+          <BqIcon name="shirt-folded" size="16" />
+          Men's Clothing
+        </BqBreadcrumbItem>
+        <BqBreadcrumbItem>Casual shirts</BqBreadcrumbItem>
+      </BqBreadcrumb>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    For breadcrumbs on detail pages, include the page type (Create, Edit, View) followed by the item name.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Avoid indicating the item number or using dynamically generated names without context.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Truncate labels longer than 30 characters with an ellipsis and show the full text in a tooltip on hover.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Display overly long labels that wrap or truncate without a way to view the complete text.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Show a maximum of four items in the breadcrumb trail. For longer paths, truncate and show the first and last items.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Display more than four items in a single breadcrumb trail, as it overloads the visual and reduces usability.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Make all parent breadcrumb items clickable links, including the current page as the last non-interactive item.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Display the current page as a clickable link; it should be non-interactive text to reflect the user's current location.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+- **Navigation** — navigate to each link in the breadcrumb using <kbd>Tab</kbd> and activate it with <kbd>Enter</kbd>.
+- **Landmark label** — use the `label` prop to set an `aria-label` on the `<nav>` landmark. The default value is `Breadcrumbs`; override it when multiple navigation regions exist on the same page.
+- **Current page** — the last breadcrumb item receives `aria-current="page"` automatically.
+- **Icon-only items** — when a breadcrumb item contains only an icon, set `aria-label` on the `bq-breadcrumb-item` to describe the destination (e.g. `aria-label="Home page"`).
+- **Decorative icons** — when an icon appears alongside a visible text label, set `aria-hidden="true"` on the `bq-icon` so screen readers do not announce it twice.
+
+## API reference
+
+### `bq-breadcrumb` properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `label` | `label` | The `aria-label` attribute to describe the type of navigation | `string` | `'Breadcrumbs'` |
+
+### `bq-breadcrumb-item` properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `href` | `href` | If set, the breadcrumb item will be rendered as an `<a>` with this `href`, otherwise, a `<button>` will be rendered | `string` | `undefined` |
+| `rel` | `rel` | Where to display the link in the browser context. Relevant only if `href` is set | `string` | `'noreferrer noopener'` |
+| `target` | `target` | Where to display the link in the browser context. Relevant only if `href` is set | `'_blank'` \| `'_parent'` \| `'_self'` \| `'_top'` | `undefined` |
+
+### Events
+
+Events are emitted by `bq-breadcrumb-item`.
+
+| Event | Description | Type |
+|---|---|---|
+| `bqBlur` | Handler to be called when item loses focus | `CustomEvent<HTMLBqBreadcrumbItemElement>` |
+| `bqClick` | Handler to be called when item is clicked | `CustomEvent<HTMLBqBreadcrumbItemElement>` |
+| `bqFocus` | Handler to be called when item is focused | `CustomEvent<HTMLBqBreadcrumbItemElement>` |
+
+### Slots
+
+#### `bq-breadcrumb`
+
+| Slot | Description |
+|---|---|
+| *(default)* | The default slot is used to add `bq-breadcrumb-item` items to the breadcrumb |
+| `separator` | The slot to add a separator between breadcrumb items. Default separator is `/` |
+
+#### `bq-breadcrumb-item`
+
+| Slot | Description |
+|---|---|
+| *(default)* | The default slot is used to add content to the breadcrumb item |
+
+### CSS parts
+
+#### `bq-breadcrumb`
+
+| Part | Description |
+|---|---|
+| `navigation` | The `nav` tag that loads the breadcrumb items |
+| `separator` | The container that wraps the separator element |
+
+#### `bq-breadcrumb-item`
+
+| Part | Description |
+|---|---|
+| `base` | The component wrapper container |
+| `content` | The `span` tag that wraps the content item |
+| `item` | The breadcrumb item wrapper (`button` or `a`) |
+| `separator` | The `span` tag that wraps the separator element |
+
+### CSS custom properties
+
+<Expandable title="CSS variables" defaultOpen={true}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-breadcrumb-item--background` | Background color of the breadcrumb item | `theme(backgroundColor.transparent)` |
+  | `--bq-breadcrumb-item--box-shadow` | Box shadow of the breadcrumb item | `none` |
+  | `--bq-breadcrumb-item--border-color` | Border color of the breadcrumb item | `theme(borderColor.transparent)` |
+  | `--bq-breadcrumb-item--border-style` | Border style of the breadcrumb item | `none` |
+  | `--bq-breadcrumb-item--border-width` | Border width of the breadcrumb item | `theme(borderWidth.s)` |
+  | `--bq-breadcrumb-item--border-radius` | Border radius of the breadcrumb item | `theme(borderRadius.s)` |
+  | `--bq-breadcrumb-item--line-height` | Line height of the breadcrumb item | `theme(lineHeight.regular)` |
+  | `--bq-breadcrumb-item--text-color` | Text color of the breadcrumb item | `theme(textColor.secondary)` |
+  | `--bq-breadcrumb-item--text-color-current` | Text color of the current breadcrumb item | `theme(textColor.brand)` |
+  | `--bq-breadcrumb-item--text-size` | Text size of the breadcrumb item | `theme(fontSize.s)` |
+  | `--bq-breadcrumb-item--text-size-separator` | Text size of the breadcrumb item separator | `theme(fontSize.xs)` |
+  | `--bq-breadcrumb-item--padding-start` | Padding start of the breadcrumb item | `theme(spacing.xs2)` |
+  | `--bq-breadcrumb-item--padding-end` | Padding end of the breadcrumb item | `theme(spacing.xs2)` |
+  | `--bq-breadcrumb-item--paddingY` | Padding top and bottom of the breadcrumb item | `theme(spacing.xs)` |
+  | `--bq-breadcrumb-item--padding-start-separator` | Padding start of the breadcrumb item separator | `theme(spacing.xs2)` |
+  | `--bq-breadcrumb-item--padding-end-separator` | Padding end of the breadcrumb item separator | `theme(spacing.xs2)` |
+</Expandable>
+
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-breadcrumb--default">
+    Explore all breadcrumb configurations in Storybook
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/breadcrumb">
+    View the breadcrumb implementation on GitHub
+  </Card>
+</CardGroup>
