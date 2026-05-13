@@ -63,9 +63,6 @@ export const CodeLivePreview = ({ code, children, height }) => {
     // cached beeq.css response on subsequent updates.
     shadowRoot.innerHTML = [
       '<link rel="stylesheet" href="https://esm.sh/@beeq/core@beta/dist/beeq/beeq.css">',
-      // Fix: BEEQ components emit hidden="false" (string) when open=true.
-      // The UA stylesheet treats any [hidden] as display:none, so we restore it.
-      '<style>[hidden="false"] { display: block; }</style>',
       code,
     ].join('');
 
