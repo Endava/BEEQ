@@ -323,13 +323,11 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      .checkbox-group__children {
-        display: flex;
-        flex-direction: column;
-        gap: var(--bq-spacing-xs2);
-        margin-inline-start: 1.5rem;
-      }
+    .checkbox-group__children {
+      display: flex;
+      flex-direction: column;
+      gap: var(--bq-spacing-xs2);
+      margin-inline-start: 1.5rem;
     }
   </style>
 
@@ -352,43 +350,35 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
   </div>
 
   <script>
-    (async () => {
-      const currentScript = document.currentScript;
+    (() => {
+      customElements.whenDefined('bq-checkbox').then(() => {
+        const checkboxGroup = previewRoot?.querySelector('div');
+        const allInterestCheckbox = checkboxGroup?.querySelector('bq-checkbox[name="all-interests"]');
+        const interestCheckboxes = Array.from(checkboxGroup?.querySelectorAll('bq-checkbox[name="interest"]') ?? []);
 
-      await customElements.whenDefined('bq-checkbox');
+        if (!allInterestCheckbox || !interestCheckboxes.length) return;
 
-      const previewRoot = currentScript?.closest('.preview');
-      const checkboxGroup = previewRoot?.querySelector('div');
-      const allInterestCheckbox = checkboxGroup?.querySelector('bq-checkbox[name="all-interests"]');
-      const interestCheckboxes = Array.from(checkboxGroup?.querySelectorAll('bq-checkbox[name="interest"]') ?? []);
+        const syncParentCheckbox = () => {
+          const checkedCount = interestCheckboxes.filter((checkbox) => checkbox.checked).length;
 
-      if (!allInterestCheckbox || !interestCheckboxes.length) return;
+          allInterestCheckbox.indeterminate =
+            checkedCount > 0 && checkedCount < interestCheckboxes.length;
+          allInterestCheckbox.checked = checkedCount === interestCheckboxes.length;
+        };
 
-      await Promise.all([
-        allInterestCheckbox.componentOnReady?.(),
-        ...interestCheckboxes.map((checkbox) => checkbox.componentOnReady?.()),
-      ]);
+        const syncChildrenCheckboxes = (event) => {
+          interestCheckboxes.forEach((checkbox) => {
+            checkbox.checked = event.detail.checked;
+          });
+          allInterestCheckbox.indeterminate = false;
+        };
 
-      const syncParentCheckbox = () => {
-        const checkedCount = interestCheckboxes.filter((checkbox) => checkbox.checked).length;
+        syncParentCheckbox();
 
-        allInterestCheckbox.indeterminate =
-          checkedCount > 0 && checkedCount < interestCheckboxes.length;
-        allInterestCheckbox.checked = checkedCount === interestCheckboxes.length;
-      };
-
-      const syncChildrenCheckboxes = (event) => {
+        allInterestCheckbox.addEventListener('bqChange', syncChildrenCheckboxes);
         interestCheckboxes.forEach((checkbox) => {
-          checkbox.checked = event.detail.checked;
+          checkbox.addEventListener('bqChange', syncParentCheckbox);
         });
-        allInterestCheckbox.indeterminate = false;
-      };
-
-      syncParentCheckbox();
-
-      allInterestCheckbox.addEventListener('bqChange', syncChildrenCheckboxes);
-      interestCheckboxes.forEach((checkbox) => {
-        checkbox.addEventListener('bqChange', syncParentCheckbox);
       });
     })();
   </script>`}

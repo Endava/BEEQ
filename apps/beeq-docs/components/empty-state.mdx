@@ -146,10 +146,8 @@ Use body content when the empty state needs a short explanation or a little more
 
 <CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        gap: var(--bq-spacing-xxl4) !important;
-      }
+    :host {
+      gap: var(--bq-spacing-xxl4) !important;
     }
   </style>
   <bq-empty-state>
@@ -237,10 +235,8 @@ Use the footer when the empty state should help people recover immediately. Pref
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      :scope {
-        gap: var(--bq-spacing-xxl4) !important;
-      }
+    :host {
+      gap: var(--bq-spacing-xxl4) !important;
     }
   </style>
   <bq-empty-state size="medium">
@@ -536,6 +532,10 @@ Choose size based on the available space and the prominence of the moment. `medi
 | `title` | The container that wraps the title content |
 | `body` | The container that wraps the body slot |
 | `footer` | The container that wraps the footer slot |
+
+### CSS custom properties
+
+This component does not expose any CSS custom properties.
 
 <Tip>
   Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).

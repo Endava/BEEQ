@@ -110,12 +110,10 @@ Use the default `single` type when users need to choose one date. This is the be
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      :scope {
-        position: relative;
-        z-index: 11;
-        width: 100%;
-      }
+    :host {
+      position: relative;
+      width: 100%;
+      z-index: 11;
     }
   </style>
 
@@ -173,12 +171,10 @@ Use `type="range"` when users need a start and end date. Set `months="2"` so bot
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      :scope {
-        width: 100%;
-        position: relative;
-        z-index: 11;
-      }
+    :host {
+      position: relative;
+      width: 100%;
+      z-index: 11;
     }
   </style>
 
@@ -258,12 +254,10 @@ Use `type="multi"` when users need to pick several non-consecutive dates. Unlike
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      :scope {
-        width: 100%;
-        position: relative;
-        z-index: 11;
-      }
+    :host {
+      position: relative;
+      width: 100%;
+      z-index: 11;
     }
   </style>
 
@@ -346,13 +340,11 @@ Use `validation-status` when the field should show immediate visual feedback aft
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      :scope {
-        width: 100%;
-        position: relative;
-        z-index: 11;
-        justify-content: flex-start !important;
-      }
+    :host {
+      justify-content: flex-start !important;
+      position: relative;
+      width: 100%;
+      z-index: 11;
     }
   </style>
 
@@ -445,27 +437,25 @@ Use an optional indicator when the date adds context but is not required to comp
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      :scope {
-        width: 100%;
-        position: relative;
-        z-index: 11;
-      }
-      
-      div[slot="label"] {
-        display: flex;
-        flex: 1 1 0%;
-      }
+    :host {
+      position: relative;
+      width: 100%;
+      z-index: 11;
+    }
 
-      div[slot="label"] > label {
-        display: flex;
-        flex-grow: 1;
-        align-items: center;
-      }
+    div[slot="label"] {
+      display: flex;
+      flex: 1 1 0%;
+    }
 
-      div[slot="label"] > span {
-        color: var(--bq-text--secondary);
-      }
+    div[slot="label"] > label {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+    }
+
+    div[slot="label"] > span {
+      color: var(--bq-text--secondary);
     }
   </style>
 
@@ -531,33 +521,31 @@ Combine the label slot with a tooltip when users may need a short explanation be
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      :scope {
-        width: 100%;
-        position: relative;
-        z-index: 11;
-      }
+    :host {
+      position: relative;
+      width: 100%;
+      z-index: 11;
+    }
 
-      bq-tooltip::part(trigger) {
-        display: flex;
-      }
+    bq-tooltip::part(trigger) {
+      display: flex;
+    }
 
-      div[slot="label"] {
-        display: flex;
-        flex: 1 1 0%;
-        align-items: center;
-        gap: var(--bq-spacing-xs);
-      }
+    div[slot="label"] {
+      display: flex;
+      flex: 1 1 0%;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
 
-      div[slot="label"] > label {
-        display: flex;
-        flex-grow: 1;
-        align-items: center;
-      }
+    div[slot="label"] > label {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+    }
 
-      div[slot="label"] > span {
-        color: var(--bq-text--secondary);
-      }
+    div[slot="label"] > span {
+      color: var(--bq-text--secondary);
     }
   </style>
 
@@ -643,13 +631,11 @@ Use a label-less date picker only when the surrounding context already makes the
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      :scope {
-        width: 100%;
-        position: relative;
-        z-index: 11;
-        justify-content: flex-start !important;
-      }
+    :host {
+      justify-content: flex-start !important;
+      position: relative;
+      width: 100%;
+      z-index: 11;
     }
   </style>
 
@@ -694,13 +680,11 @@ Use `locale` to match date formatting and calendar conventions to regional expec
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      :scope {
-        width: 100%;
-        position: relative;
-        z-index: 11;
-        justify-content: flex-start !important;
-      }
+    :host {
+      justify-content: flex-start !important;
+      position: relative;
+      width: 100%;
+      z-index: 11;
     }
   </style>
 
@@ -793,13 +777,11 @@ Use `first-day-of-week` to align the calendar grid with regional or business exp
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      :scope {
-        width: 100%;
-        position: relative;
-        z-index: 11;
-        justify-content: flex-start !important;
-      }
+    :host {
+      justify-content: flex-start !important;
+      position: relative;
+      width: 100%;
+      z-index: 11;
     }
   </style>
 
@@ -872,13 +854,11 @@ By default, the calendar shows only the days of the displayed month. Enable `sho
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      :scope {
-        width: 100%;
-        position: relative;
-        z-index: 11;
-        justify-content: flex-start !important;
-      }
+    :host {
+      justify-content: flex-start !important;
+      position: relative;
+      width: 100%;
+      z-index: 11;
     }
   </style>
 
@@ -934,13 +914,11 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      :scope {
-        width: 100%;
-        position: relative;
-        z-index: 11;
-        justify-content: flex-start !important;
-      }
+    :host {
+      justify-content: flex-start !important;
+      position: relative;
+      width: 100%;
+      z-index: 11;
     }
   </style>
 
@@ -950,8 +928,6 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
 
   <script>
     (() => {
-      const currentScript = document.currentScript;
-      const previewRoot = currentScript?.closest('.preview');
       const datePickerElem = previewRoot?.querySelector('bq-date-picker[name="disallowed-dates"]');
 
       if (!datePickerElem) return;
@@ -1053,13 +1029,11 @@ Use `formatOptions` when the selected date needs a more descriptive text format 
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      :scope {
-        width: 100%;
-        position: relative;
-        z-index: 11;
-        justify-content: flex-start !important;
-      }
+    :host {
+      justify-content: flex-start !important;
+      position: relative;
+      width: 100%;
+      z-index: 11;
     }
   </style>
 
@@ -1074,8 +1048,6 @@ Use `formatOptions` when the selected date needs a more descriptive text format 
 
   <script>
     (() => {
-      const currentScript = document.currentScript;
-      const previewRoot = currentScript?.closest('.preview');
       const datePickerElem = previewRoot?.querySelector('bq-date-picker[name="formatted-date"]');
 
       if (!datePickerElem) return;

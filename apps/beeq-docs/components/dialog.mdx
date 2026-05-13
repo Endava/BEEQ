@@ -122,18 +122,16 @@ Use the `default` dialog when you want to overlay content for focused user engag
   className="dialog-component"
   code={`
   <style>
-    @scope {
-      h5 {
-        display: flex;
-        font-weight: 700;
-        align-items: center;
-        gap: var(--bq-spacing-s);
-      }
+    h5 {
+      display: flex;
+      font-weight: 700;
+      align-items: center;
+      gap: var(--bq-spacing-s);
+    }
 
-      .dialog-footer {
-        display: flex;
-        gap: var(--bq-spacing-xs);
-      }
+    .dialog-footer {
+      display: flex;
+      gap: var(--bq-spacing-xs);
     }
   </style>
 
@@ -156,11 +154,8 @@ Use the `default` dialog when you want to overlay content for focused user engag
 
   <script>
     (() => {
-      const preview = document.currentScript?.parentElement;
-      if (!preview) return;
-
-      const dialog = preview.querySelector('bq-dialog');
-      const openButton = preview.querySelector('bq-button');
+      const dialog = previewRoot.querySelector('bq-dialog');
+      const openButton = previewRoot.querySelector('bq-button');
       if (!dialog || !openButton) return;
 
       const getNativeDialog = () => dialog.shadowRoot?.querySelector('dialog');
@@ -302,18 +297,16 @@ Use `footer-appearance="highlight"` when emphasis on the footer is important.
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      h5 {
-        display: flex;
-        font-weight: 700;
-        align-items: center;
-        gap: var(--bq-spacing-s);
-      }
+    h5 {
+      display: flex;
+      font-weight: 700;
+      align-items: center;
+      gap: var(--bq-spacing-s);
+    }
 
-      .dialog-footer {
-        display: flex;
-        gap: var(--bq-spacing-xs);
-      }
+    .dialog-footer {
+      display: flex;
+      gap: var(--bq-spacing-xs);
     }
   </style>
 
@@ -336,11 +329,8 @@ Use `footer-appearance="highlight"` when emphasis on the footer is important.
 
   <script>
     (() => {
-      const preview = document.currentScript?.parentElement;
-      if (!preview) return;
-
-      const dialog = preview.querySelector('bq-dialog');
-      const openButton = preview.querySelector('bq-button');
+      const dialog = previewRoot.querySelector('bq-dialog');
+      const openButton = previewRoot.querySelector('bq-button');
       if (!dialog || !openButton) return;
 
       const getNativeDialog = () => dialog.shadowRoot?.querySelector('dialog');
@@ -473,13 +463,11 @@ This kind of dialog omits the footer section for situations where a minimal and 
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      h5 {
-        display: flex;
-        font-weight: 700;
-        align-items: center;
-        gap: var(--bq-spacing-s);
-      }
+    h5 {
+      display: flex;
+      font-weight: 700;
+      align-items: center;
+      gap: var(--bq-spacing-s);
     }
   </style>
 
@@ -496,11 +484,8 @@ This kind of dialog omits the footer section for situations where a minimal and 
 
   <script>
     (() => {
-      const preview = document.currentScript?.parentElement;
-      if (!preview) return;
-
-      const dialog = preview.querySelector('bq-dialog');
-      const openButton = preview.querySelector('bq-button');
+      const dialog = previewRoot.querySelector('bq-dialog');
+      const openButton = previewRoot.querySelector('bq-button');
       if (!dialog || !openButton) return;
 
       const getNativeDialog = () => dialog.shadowRoot?.querySelector('dialog');
@@ -609,23 +594,21 @@ Use `disable-backdrop` when you want to allow users to focus on the dialog conte
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      :scope {
-        position: relative !important;
-        z-index: 12 !important;
-      }
+    :host {
+      position: relative !important;
+      z-index: 12 !important;
+    }
 
-      h5 {
-        display: flex;
-        font-weight: 700;
-        align-items: center;
-        gap: var(--bq-spacing-s);
-      }
+    h5 {
+      display: flex;
+      font-weight: 700;
+      align-items: center;
+      gap: var(--bq-spacing-s);
+    }
 
-      .dialog-footer {
-        display: flex;
-        gap: var(--bq-spacing-xs);
-      }
+    .dialog-footer {
+      display: flex;
+      gap: var(--bq-spacing-xs);
     }
   </style>
 
@@ -648,11 +631,8 @@ Use `disable-backdrop` when you want to allow users to focus on the dialog conte
 
   <script>
     (() => {
-      const preview = document.currentScript?.parentElement;
-      if (!preview) return;
-
-      const dialog = preview.querySelector('bq-dialog');
-      const openButton = preview.querySelector('bq-button');
+      const dialog = previewRoot.querySelector('bq-dialog');
+      const openButton = previewRoot.querySelector('bq-button');
       if (!dialog || !openButton) return;
 
       const getNativeDialog = () => dialog.shadowRoot?.querySelector('dialog');
@@ -785,23 +765,21 @@ Use this variant to confirm irreversible actions with clear messaging and focuse
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      h5 {
-        display: flex;
-        font-weight: 700;
-        align-items: center;
-        gap: var(--bq-spacing-s);
-      }
+    h5 {
+      display: flex;
+      font-weight: 700;
+      align-items: center;
+      gap: var(--bq-spacing-s);
+    }
 
-      .dialog-caption {
-        color: var(--bq-text--secondary);
-        font-size: var(--bq-font-size--s);
-      }
+    .dialog-caption {
+      color: var(--bq-text--secondary);
+      font-size: var(--bq-font-size--s);
+    }
 
-      .dialog-footer {
-        display: flex;
-        gap: var(--bq-spacing-xs);
-      }
+    .dialog-footer {
+      display: flex;
+      gap: var(--bq-spacing-xs);
     }
   </style>
 
@@ -828,13 +806,10 @@ Use this variant to confirm irreversible actions with clear messaging and focuse
 
   <script>
     (() => {
-      const preview = document.currentScript?.parentElement;
-      if (!preview) return;
-
-      const dialog = preview.querySelector('bq-dialog');
-      const openButton = preview.querySelector('bq-button[variant="ghost"]');
-      const cancelButton = preview.querySelector('bq-button[appearance="secondary"]');
-      const confirmButton = preview.querySelector('bq-button[variant="danger"]');
+      const dialog = previewRoot.querySelector('bq-dialog');
+      const openButton = previewRoot.querySelector('bq-button[variant="ghost"]');
+      const cancelButton = previewRoot.querySelector('bq-button[appearance="secondary"]');
+      const confirmButton = previewRoot.querySelector('bq-button[variant="danger"]');
       if (!dialog || !openButton || !cancelButton || !confirmButton) return;
 
       const getNativeDialog = () => dialog.shadowRoot?.querySelector('dialog');
@@ -1114,7 +1089,7 @@ Use this variant to confirm irreversible actions with clear messaging and focuse
 | Slot | Description |
 |---|---|
 | `title` | The title content of the dialog |
-| `default` | The body content of the dialog |
+| *(default)* | The body content of the dialog |
 | `footer` | The footer content of the dialog |
 | `button-close` | Replaces the default close button content |
 
@@ -1132,7 +1107,7 @@ Use this variant to confirm irreversible actions with clear messaging and focuse
 
 ### CSS custom properties
 
-<Expandable title="View all CSS variables" defaultOpen={true}>
+<Expandable title="CSS variables" defaultOpen={false}>
   | Variable | Description | Default |
   |---|---|---|
   | `--bq-dialog--background` | Dialog background color | `theme(backgroundColor.ui.primary)` |

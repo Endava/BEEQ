@@ -135,12 +135,9 @@ The default table applies base typography, header and cell padding, and row sepa
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      :scope {
-        inline-size: 100% !important;
-        align-items: stretch !important;
-      }
-
+    :host {
+      inline-size: 100% !important;
+      align-items: stretch !important;
     }
   </style>
 
@@ -302,12 +299,9 @@ Add the `selected` class to a `<tr>` to highlight the active record. Use this wh
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      :scope {
-        inline-size: 100% !important;
-        align-items: stretch !important;
-      }
-
+    :host {
+      inline-size: 100% !important;
+      align-items: stretch !important;
     }
   </style>
 
@@ -467,12 +461,9 @@ Add the `compact` class to the `<table>` to reduce cell and header padding. This
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      :scope {
-        inline-size: 100% !important;
-        align-items: stretch !important;
-      }
-
+    :host {
+      inline-size: 100% !important;
+      align-items: stretch !important;
     }
   </style>
 
@@ -632,12 +623,9 @@ Add the `bordered` class to draw explicit borders around each cell and the table
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      :scope {
-        inline-size: 100% !important;
-        align-items: stretch !important;
-      }
-
+    :host {
+      inline-size: 100% !important;
+      align-items: stretch !important;
     }
   </style>
 
@@ -701,31 +689,31 @@ Add the `bordered` class to draw explicit borders around each cell and the table
 
     ```jsx React icon="react"
     <table className="bq-table bordered">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Status</th>
-            <th>Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>John Doe</td>
-            <td>Active</td>
-            <td>−2,343 €</td>
-          </tr>
-          <tr className="selected">
-            <td>Alice Smith</td>
-            <td>Pending</td>
-            <td>+95,453 €</td>
-          </tr>
-          <tr>
-            <td>Robert Johnson</td>
-            <td>Inactive</td>
-            <td>−2,343 €</td>
-          </tr>
-        </tbody>
-      </table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>John Doe</td>
+          <td>Active</td>
+          <td>−2,343 €</td>
+        </tr>
+        <tr className="selected">
+          <td>Alice Smith</td>
+          <td>Pending</td>
+          <td>+95,453 €</td>
+        </tr>
+        <tr>
+          <td>Robert Johnson</td>
+          <td>Inactive</td>
+          <td>−2,343 €</td>
+        </tr>
+      </tbody>
+    </table>
     ```
 
     ```html Angular icon="angular"
@@ -901,7 +889,7 @@ The table pattern is CSS-only. There is no custom element. Apply these classes t
 </Expandable>
 
 <Tip>
-  Learn more about [CSS custom properties](/theming/global-css-variables) and [global styling](/theming/styles).
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
 </Tip>
 
 ## Resources
