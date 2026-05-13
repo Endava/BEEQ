@@ -88,24 +88,24 @@ Every image appears twice — once with `className="block dark:hidden"` and once
 
 ### CodeLivePreview CSS isolation
 
-Every `<style>` inside a `code` prop **must** use prelude-less `@scope`:
+`CodeLivePreview` injects code into a **shadow root** — Mintlify/Tailwind styles cannot reach inside it. `beeq.css` is loaded automatically. CSS custom properties (`--bq-*`) still inherit through the boundary.
+
+To override the host (`.preview`) layout, use `:host` inside a `<style>` block. Override properties require `!important` to beat the `CodeLivePreview` stylesheet:
 ```html
 <style>
-  @scope {
-    :scope { justify-content: center !important; }
-    .my-wrapper { display: flex; gap: 1rem; }
-  }
+  :host { flex-direction: column !important; gap: var(--bq-spacing-m) !important; }
+  .my-wrapper { display: flex; gap: 1rem; }
 </style>
 ```
-Never write `@scope (.preview) { ... }` — it leaks across all previews on the page.
-Use `!important` on any `:scope` property that overrides a global `.code-live-preview .preview` rule.
+Do **not** use `@scope` — it was the old light-DOM approach and is no longer needed.
+Do **not** use `<style scoped>` — not a real browser feature.
 
-Every <script> block must be wrapped in an IIFE to prevent variable leakage:
+Every <script> block must use `previewRoot` to query elements — `document.currentScript` is always `null` for dynamically created scripts, and `document.querySelector` cannot cross shadow boundaries. Wrap in an IIFE to prevent variable leakage:
 ```html
 <script>
   (() => {
-    const btn = document.querySelector('button');
-    btn.addEventListener('click', () => alert('Clicked!'));
+    const btn = previewRoot.querySelector('bq-button');
+    btn?.addEventListener('bqClick', () => { /* ... */ });
   })();
 </script>
 ```

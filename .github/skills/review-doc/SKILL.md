@@ -103,16 +103,17 @@ Also read the component source to verify API table accuracy:
 
 ### D. CodeLivePreview — CSS isolation
 
-- [ ] Every `<style>` inside a `code` prop uses **prelude-less** `@scope { ... }` — no selector after `@scope`
-- [ ] No `@scope (.preview) { ... }` — leaks across all previews on the page
-- [ ] No `@scope (.class-name) { ... }` — leaks across all elements with that class on the page
-- [ ] `:scope` used to target the preview container itself; no bare declarations inside `@scope` without a selector
-- [ ] `!important` applied to **all** `:scope` property overrides (needed to beat the global `.code-live-preview .preview` specificity)
-- [ ] `@media` and `@supports` nested **inside** `@scope`, not outside
+- [ ] Every `<style>` inside a `code` prop uses `:host { ... }` to override the shadow host layout — **not** `@scope`
+- [ ] `:host` overrides use `!important` for properties that the `CodeLivePreview` stylesheet already defines (e.g., `flex-direction`, `justify-content`, `gap`, `padding`)
+- [ ] Descendant selectors (`.my-class`, `bq-button`, etc.) are plain selectors at the top level of `<style>` — no wrapper at-rule needed
+- [ ] No `@scope { :scope {} }` — this is the old light-DOM approach; flag any remaining instances as errors
+- [ ] No `@scope (.class-name)` — same reason
 - [ ] No `<style scoped>` — not a real browser feature
+- [ ] `@media` and `@supports` used normally inside `<style>` (no nesting restriction)
 - [ ] Every `<script>` inside a `code` prop wrapped in an IIFE: `(() => { ... })()`
-- [ ] No unnecessary wrapper `<div>` added only for alignment — use `:scope` overrides instead
-- [ ] When a wrapper `<div>` is genuinely needed, it has a BEM-style class name and is styled via a normal selector inside `@scope`
+- [ ] Scripts use `previewRoot` to query elements, **not** `document.currentScript` (always `null`) or `document.querySelector` (cannot cross shadow boundary)
+- [ ] No unnecessary wrapper `<div>` added only for alignment — use `:host` overrides instead
+- [ ] When a wrapper `<div>` is genuinely needed, it has a BEM-style class name and is styled via a plain selector inside `<style>`
 
 ### E. CodeGroup framework tabs
 

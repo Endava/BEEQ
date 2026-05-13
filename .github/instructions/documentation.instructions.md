@@ -128,106 +128,89 @@ Use `Note` for automatic or fallback behaviors that require no user action:
 
 ## CodeLivePreview
 
-`CodeLivePreview` renders its `code` prop via `dangerouslySetInnerHTML` directly into the Mintlify page DOM — it is **not** iframe-based. Every preview shares the same global CSS scope.
+`CodeLivePreview` injects the `code` prop into a **shadow root** attached to the `.preview` div. The shadow root provides full CSS isolation — Mintlify and Tailwind styles cannot reach inside it. `beeq.css` is loaded inside the shadow root automatically, so all BEEQ components and raw HTML elements render correctly without any extra setup.
 
-### CSS isolation in `code` prop — use prelude-less `@scope`
+CSS custom properties (`--bq-*`) inherit through the shadow boundary, so design tokens and dark/light mode work without changes.
 
-Every `<style>` block inside a `code` prop **must** use the prelude-less form of `@scope` to isolate styles to the single preview container:
+### CSS inside the `code` prop — use `:host`
+
+The shadow root's host element is the `.preview` div. The `CodeLivePreview` stylesheet sets the following properties on it by default: `display: flex`, `align-items: center`, `justify-content: center`, `flex-direction: column` (switching to `row` at ≥40rem via container query), `gap: var(--bq-spacing-m)`, and `padding: var(--bq-spacing-l)`.
+
+To override host layout, use `:host` inside a `<style>` block:
 
 ```html
 <style>
-  @scope {
-    :scope {
-      /* styles applied to the .preview parent itself */
-    }
+  :host {
+    /* Override the shadow host (.preview) flex defaults */
+    flex-direction: column !important;
+    gap: var(--bq-spacing-m) !important;
+  }
 
-    .my-wrapper {
-      /* styles applied to descendants inside this preview only */
-    }
+  .my-wrapper {
+    /* Target descendants inside the shadow root — no isolation needed */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
   }
 </style>
 ```
 
-How it works (per the [CSS spec / MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@scope)): when `@scope` is used inline inside a `<style>` element with **no prelude**, the scope root is automatically the `<style>`'s parent element. Inside `CodeLivePreview` that parent is the single `.preview` `<div>` for this example only — other previews on the page are unaffected.
-
 **Rules:**
 
-- **Always omit the prelude.** Write `@scope { ... }`, never `@scope (.preview) { ... }` or `@scope (.some-class) { ... }`. A prelude with a class selector matches *every* element with that class on the page and leaks across previews.
-- **Use `:scope`** to target the scope root itself (the `.preview` parent). Bare declarations like `@scope { color: red; }` are invalid CSS.
-- **Add `!important` when overriding `:scope`.** The global stylesheet defines rules on `.code-live-preview .preview { ... }`, which has higher specificity than `:scope` (specificity `0,0,0`). Any property you set on `:scope` that the global stylesheet already defines (e.g., `flex-direction`, `justify-content`, `gap`, `padding`) **must** use `!important` to take effect. Descendant selectors inside `@scope` do not need `!important` — only `:scope` does.
-- **Use any selector** (e.g., `.dropdown-custom`, `bq-button`, `:scope > *`) to target descendants within this preview.
-- `@media`, `@supports`, etc. can be **nested directly inside `@scope`** — no need to repeat the at-rule.
-- `<style scoped>` is **not** a real browser feature. Do not use it.
+- Use `:host` to target the `.preview` container itself. All layout overrides on `:host` require `!important` to beat the `CodeLivePreview` stylesheet's specificity.
+- Use any other selector (`.my-class`, `bq-button`, `h1`, etc.) to target elements inside the preview — no scoping wrapper needed; the shadow boundary isolates everything automatically.
+- **Do not use `@scope`** — it was the previous approach for light-DOM isolation and is no longer needed. All existing `@scope { :scope {} }` blocks have been migrated to `:host {}`.
+- `@media` and `@supports` can be used normally inside `<style>`.
 
 **Correct:**
 ```html
 <style>
-  @scope {
-    /* :scope has specificity 0,0,0 — needs !important to beat the global .code-live-preview .preview rules */
-    :scope { justify-content: space-around !important; }
+  :host { flex-direction: column !important; gap: var(--bq-spacing-m) !important; }
 
-    .dropdown-custom {
-      display: grid;
-      grid-template-columns: repeat(1, minmax(0, 1fr));
-    }
+  .avatar--group { display: flex; }
 
-    @media (min-width: 640px) {
-      .dropdown-custom {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
+  @media (min-width: 640px) {
+    .avatar--group { flex-direction: row; }
   }
 </style>
 ```
 
 **Incorrect:**
 ```html
-<!-- Leaks: matches every .preview on the page -->
+<!-- Old approach — do not use -->
 <style>
-  @scope (.preview) { ... }
+  @scope { :scope { flex-direction: column !important; } }
 </style>
 
-<!-- Leaks: matches every .dropdown-custom on the page -->
-<style>
-  @scope (.dropdown-custom) { ... }
-</style>
-
-<!-- Invalid CSS: bare declarations need a selector inside @scope -->
-<style>
-  @scope { justify-content: space-around; }
-</style>
-
-<!-- Not a real feature: silently ignored -->
-<style scoped>
-  ...
-</style>
+<!-- Not a real browser feature -->
+<style scoped> ... </style>
 ```
 
 ### JavaScript in `code` prop
 
-Wrap any `<script>` blocks in an IIFE to avoid polluting the global scope:
+Inline `<script>` blocks are executed via `new Function('previewRoot', ...)`. The shadow root is passed as the `previewRoot` parameter — use it to query elements inside the preview. Do **not** use `document.currentScript` (always `null` for dynamically created scripts) or `document.querySelector` (cannot cross shadow boundaries).
+
+Wrap logic in an IIFE to avoid variable leakage across multiple re-renders:
 
 ```html
 <script>
   (() => {
-    // your logic here
+    const btn = previewRoot.querySelector('bq-button');
+    btn?.addEventListener('bqClick', () => { /* ... */ });
   })();
 </script>
 ```
 
 ### Wrapper divs and layout
 
-The `CodeLivePreview` `.preview` container already applies `display: flex`, `align-items: center`, `justify-content: center`, `flex-direction: column` (switching to `row` at ≥40rem via container query), `gap: var(--bq-spacing-m)`, and `padding: var(--bq-spacing-l)` via the global stylesheet. Do **not** add a wrapper `<div>` around the example just to achieve alignment, centering, or spacing between sibling components — the container handles all of it.
+The `.preview` shadow host already applies `display: flex`, `align-items: center`, `justify-content: center`, `flex-direction: column` (switching to `row` at ≥40rem via container query), `gap: var(--bq-spacing-m)`, and `padding: var(--bq-spacing-l)`. Do **not** add a wrapper `<div>` around the example just to achieve alignment, centering, or spacing between sibling components — the host handles all of it.
 
-If you only need to tweak alignment or spacing between components, override the `.preview` container directly via `:scope` inside a prelude-less `@scope` block (remember `!important` is required when overriding global rules):
+If you only need to tweak alignment or spacing, override `:host` directly (with `!important`):
 
 ```html
 <style>
-  @scope {
-    :scope {
-      justify-content: space-around !important;
-      gap: var(--bq-spacing-l) !important;
-    }
+  :host {
+    justify-content: space-around !important;
+    gap: var(--bq-spacing-l) !important;
   }
 </style>
 ```
@@ -241,7 +224,7 @@ Only add a wrapper element when the layout the example needs is fundamentally di
 When a wrapper is genuinely needed:
 
 - Give it a BEM-style class name (e.g., `.avatar--group`, `.badge--icon`, `.dropdown-custom`).
-- Style it inside the prelude-less `@scope` block via a normal selector (`.avatar--group { ... }`), **not** via `@scope (.avatar--group)`.
+- Style it inside a `<style>` block via a normal selector (`.avatar--group { ... }`).
 - Keep the wrapper class name consistent between the `code` prop and the framework code tabs.
 - Drop the CSS code tab entirely from the `CodeGroup` if the wrapper exists only for preview isolation and carries no educational value for users.
 
