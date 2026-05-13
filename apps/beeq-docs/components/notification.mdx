@@ -120,24 +120,21 @@ Choose the notification treatment that matches the urgency of the message withou
 
 Use the default `info` notification for standard messages and updates.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        flex-direction: column !important;
-        align-items: stretch !important;
-        gap: var(--bq-spacing-m) !important;
-      }
+    :host {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: var(--bq-spacing-m) !important;
+    }
 
-      .footer-btns {
-        display: flex;
-        gap: var(--bq-spacing-xs);
-      }
+    .footer-btns {
+      display: flex;
+      gap: var(--bq-spacing-xs);
+    }
 
-      bq-notification[open] {
-        display: block;
-      }
+    bq-notification[open] {
+      display: block;
     }
   </style>
 
@@ -165,10 +162,7 @@ Use the default `info` notification for standard messages and updates.
 
   <script>
     (() => {
-      const root = document.currentScript?.closest('.preview') || document.currentScript?.parentElement;
-      if (!root) return;
-
-      const notifications = Array.from(root.querySelectorAll('bq-notification'));
+      const notifications = Array.from(previewRoot.querySelectorAll('bq-notification'));
       notifications.forEach((notification) => {
         notification.addEventListener('bqHide', () => {
           setTimeout(() => {
@@ -177,8 +171,8 @@ Use the default `info` notification for standard messages and updates.
         });
       });
     })();
-  </script>`}
->
+  </script>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-notification open>Title</bq-notification>
@@ -335,19 +329,16 @@ Use the default `info` notification for standard messages and updates.
 
 Use semantic `type` values to communicate severity and intent clearly.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        flex-direction: column !important;
-        align-items: stretch !important;
-        gap: var(--bq-spacing-m) !important;
-      }
+    :host {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: var(--bq-spacing-m) !important;
+    }
 
-      bq-notification[open] {
-        display: block;
-      }
+    bq-notification[open] {
+      display: block;
     }
   </style>
 
@@ -358,10 +349,7 @@ Use semantic `type` values to communicate severity and intent clearly.
 
   <script>
     (() => {
-      const root = document.currentScript?.closest('.preview') || document.currentScript?.parentElement;
-      if (!root) return;
-
-      const notifications = Array.from(root.querySelectorAll('bq-notification'));
+      const notifications = Array.from(previewRoot.querySelectorAll('bq-notification'));
       notifications.forEach((notification) => {
         notification.addEventListener('bqHide', () => {
           setTimeout(() => {
@@ -370,8 +358,8 @@ Use semantic `type` values to communicate severity and intent clearly.
         });
       });
     })();
-  </script>`}
->
+  </script>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-notification open type="error">Error</bq-notification>
@@ -454,24 +442,21 @@ Use semantic `type` values to communicate severity and intent clearly.
 
 Use the `icon` slot to replace the default type icon with a custom `bq-icon`.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        flex-direction: column !important;
-        align-items: stretch !important;
-        gap: var(--bq-spacing-m) !important;
-      }
+    :host {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: var(--bq-spacing-m) !important;
+    }
 
-      .footer-btns {
-        display: flex;
-        gap: var(--bq-spacing-xs);
-      }
+    .footer-btns {
+      display: flex;
+      gap: var(--bq-spacing-xs);
+    }
 
-      bq-notification[open] {
-        display: block;
-      }
+    bq-notification[open] {
+      display: block;
     }
   </style>
 
@@ -504,10 +489,7 @@ Use the `icon` slot to replace the default type icon with a custom `bq-icon`.
 
   <script>
     (() => {
-      const root = document.currentScript?.closest('.preview') || document.currentScript?.parentElement;
-      if (!root) return;
-
-      const notifications = Array.from(root.querySelectorAll('bq-notification'));
+      const notifications = Array.from(previewRoot.querySelectorAll('bq-notification'));
       notifications.forEach((notification) => {
         notification.addEventListener('bqHide', () => {
           setTimeout(() => {
@@ -516,8 +498,8 @@ Use the `icon` slot to replace the default type icon with a custom `bq-icon`.
         });
       });
     })();
-  </script>`}
->
+  </script>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-notification open type="info">
@@ -688,19 +670,16 @@ Use the `icon` slot to replace the default type icon with a custom `bq-icon`.
 
 Use the `toast()` method to render notifications in a fixed-position portal that stacks multiple notifications vertically outside the normal document flow.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        align-items: flex-start !important;
-      }
+    :host {
+      align-items: flex-start !important;
+    }
 
-      .notification--stacked {
-        display: flex;
-        flex-direction: column;
-        gap: var(--bq-spacing-s);
-      }
+    .notification--stacked {
+      display: flex;
+      flex-direction: column;
+      gap: var(--bq-spacing-s);
     }
   </style>
 
@@ -712,9 +691,6 @@ Use the `toast()` method to render notifications in a fixed-position portal that
 
   <script>
     (() => {
-      const root = document.currentScript?.closest('.preview') || document.currentScript?.parentElement;
-      if (!root) return;
-
       const styleId = 'notification-stacked-portal-style';
       if (!document.getElementById(styleId)) {
         const style = document.createElement('style');
@@ -740,7 +716,7 @@ Use the `toast()` method to render notifications in a fixed-position portal that
       const NOTIFICATION_TYPE = ['error', 'info', 'neutral', 'success', 'warning'];
       const getRandomType = () => NOTIFICATION_TYPE[Math.floor(Math.random() * NOTIFICATION_TYPE.length)];
 
-      const openBtn = root.querySelector('#notification-stacked-btn');
+      const openBtn = previewRoot.querySelector('#notification-stacked-btn');
       if (!openBtn) return;
 
       const handleOpen = async () => {
@@ -765,8 +741,8 @@ Use the `toast()` method to render notifications in a fixed-position portal that
 
       openBtn.addEventListener('bqClick', handleOpen);
     })();
-  </script>`}
->
+  </script>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <p>The notification portal stacks multiple notifications vertically in a fixed position.</p>
@@ -1054,7 +1030,7 @@ Use the `toast()` method to render notifications in a fixed-position portal that
 
 ### CSS custom properties
 
-<Expandable title="CSS variables" defaultOpen={true}>
+<Expandable title="CSS variables" defaultOpen={false}>
   | Variable | Description | Default |
   |---|---|---|
   | `--bq-notification--background` | Notification background color | `theme(backgroundColor.ui.primary)` |

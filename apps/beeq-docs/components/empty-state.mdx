@@ -103,7 +103,11 @@ Use empty states to orient people quickly, explain why nothing is shown, and mak
 
 Use the default variant when you want the cleanest possible presentation and the title already communicates enough context.
 
-<CodeLivePreview code={`<bq-empty-state>Title</bq-empty-state>`}>
+<CodeLivePreview code={`
+  <bq-empty-state>
+    Title
+  </bq-empty-state>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-empty-state>Title</bq-empty-state>
@@ -150,6 +154,7 @@ Use body content when the empty state needs a short explanation or a little more
       gap: var(--bq-spacing-xxl4) !important;
     }
   </style>
+
   <bq-empty-state>
     Title
     <span slot="body">Description</span>
@@ -160,7 +165,8 @@ Use body content when the empty state needs a short explanation or a little more
       Description
       <a class="bq-link" href="https://example.com">Link</a>
     </span>
-  </bq-empty-state>`}>
+  </bq-empty-state>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-empty-state>
@@ -232,13 +238,13 @@ Use body content when the empty state needs a short explanation or a little more
 
 Use the footer when the empty state should help people recover immediately. Prefer one primary action. Add a secondary action only when it offers a clearly different path.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
     :host {
       gap: var(--bq-spacing-xxl4) !important;
     }
   </style>
+
   <bq-empty-state size="medium">
     Title
     <span slot="body">
@@ -270,8 +276,7 @@ Use the footer when the empty state should help people recover immediately. Pref
       <bq-button appearance="primary" size="small">Button</bq-button>
     </div>
   </bq-empty-state>
-  `}
->
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-empty-state size="medium">

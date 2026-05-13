@@ -130,32 +130,28 @@ Use this sequence when you define an input:
 
 Use the default type of input when you want to provide a simple, versatile field for gathering user input. You do not need to specify any additional property that already uses its default value.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        inline-size: 100% !important;
-        align-items: stretch !important;
-      }
+    :host {
+      inline-size: 100% !important;
+      align-items: stretch !important;
+    }
 
-      span {
-        display: flex;
-        align-items: center;
-        gap: var(--bq-spacing-xs);
-      }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
     }
   </style>
 
-    <bq-input name="bq-input" placeholder="Placeholder">
-      <label class="flex flex-grow items-center" slot="label">Input label</label>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-input>
-  `}
->
+  <bq-input name="bq-input" placeholder="Placeholder">
+    <label class="flex flex-grow items-center" slot="label">Input label</label>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+  </bq-input>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-input name="bq-input" placeholder="Placeholder">
@@ -214,32 +210,28 @@ Use the default type of input when you want to provide a simple, versatile field
 
 Use the `value` attribute to provide a convenient solution for scenarios where the initial input is predefined.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        inline-size: 100% !important;
-        align-items: stretch !important;
-      }
+    :host {
+      inline-size: 100% !important;
+      align-items: stretch !important;
+    }
 
-      span {
-        display: flex;
-        align-items: center;
-        gap: var(--bq-spacing-xs);
-      }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
     }
   </style>
 
-    <bq-input name="bq-input" placeholder="Placeholder" value="Hello World!">
-      <label class="flex flex-grow items-center" slot="label">Input label</label>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-input>
-  `}
->
+  <bq-input name="bq-input" placeholder="Placeholder" value="Hello World!">
+    <label class="flex flex-grow items-center" slot="label">Input label</label>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+  </bq-input>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-input name="bq-input" placeholder="Placeholder" value="Hello World!">
@@ -295,33 +287,29 @@ Use the `value` attribute to provide a convenient solution for scenarios where t
 
 Use the prefix slot when you want to place an icon before the input value to provide extra context.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        inline-size: 100% !important;
-        align-items: stretch !important;
-      }
+    :host {
+      inline-size: 100% !important;
+      align-items: stretch !important;
+    }
 
-      span {
-        display: flex;
-        align-items: center;
-        gap: var(--bq-spacing-xs);
-      }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
     }
   </style>
 
-    <bq-input name="bq-input" placeholder="Placeholder">
-        <label class="flex flex-grow items-center" slot="label">Input label</label>
-        <bq-icon name="user-circle" slot="prefix"></bq-icon>
-        <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-        </span>
-    </bq-input>
-  `}
->
+  <bq-input name="bq-input" placeholder="Placeholder">
+      <label class="flex flex-grow items-center" slot="label">Input label</label>
+      <bq-icon name="user-circle" slot="prefix"></bq-icon>
+      <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+      </span>
+  </bq-input>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-input name="bq-input" placeholder="Placeholder">
@@ -381,33 +369,29 @@ Use the prefix slot when you want to place an icon before the input value to pro
 
 Use the suffix slot when you want to add an icon after the input field for extra context or feedback.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        inline-size: 100% !important;
-        align-items: stretch !important;
-      }
+    :host {
+      inline-size: 100% !important;
+      align-items: stretch !important;
+    }
 
-      span {
-        display: flex;
-        align-items: center;
-        gap: var(--bq-spacing-xs);
-      }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
     }
   </style>
 
-    <bq-input name="bq-input" placeholder="Placeholder">
-        <label class="flex flex-grow items-center" slot="label">Input label</label>
-        <bq-icon name="gear" slot="suffix"></bq-icon>
-        <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-        </span>
-    </bq-input>
-  `}
->
+  <bq-input name="bq-input" placeholder="Placeholder">
+      <label class="flex flex-grow items-center" slot="label">Input label</label>
+      <bq-icon name="gear" slot="suffix"></bq-icon>
+      <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+      </span>
+  </bq-input>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-input name="bq-input" placeholder="Placeholder">
@@ -467,34 +451,30 @@ Use the suffix slot when you want to add an icon after the input field for extra
 
 This variant combines both prefix and suffix features within the same input.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        inline-size: 100% !important;
-        align-items: stretch !important;
-      }
+    :host {
+      inline-size: 100% !important;
+      align-items: stretch !important;
+    }
 
-      span {
-        display: flex;
-        align-items: center;
-        gap: var(--bq-spacing-xs);
-      }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
     }
   </style>
 
-    <bq-input name="bq-input" placeholder="Placeholder">
-      <label class="flex flex-grow items-center" slot="label">Input label</label>
-      <bq-icon name="user-circle" slot="prefix"></bq-icon>
-      <bq-icon name="gear" slot="suffix"></bq-icon>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-input>
-  `}
->
+  <bq-input name="bq-input" placeholder="Placeholder">
+    <label class="flex flex-grow items-center" slot="label">Input label</label>
+    <bq-icon name="user-circle" slot="prefix"></bq-icon>
+    <bq-icon name="gear" slot="suffix"></bq-icon>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+  </bq-input>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-input name="bq-input" placeholder="Placeholder">
@@ -558,34 +538,30 @@ This variant combines both prefix and suffix features within the same input.
 
 Use the `disabled` attribute when the input field should be visible but non-editable.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        inline-size: 100% !important;
-        align-items: stretch !important;
-      }
+    :host {
+      inline-size: 100% !important;
+      align-items: stretch !important;
+    }
 
-      span {
-        display: flex;
-        align-items: center;
-        gap: var(--bq-spacing-xs);
-      }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
     }
   </style>
 
-    <bq-input disabled name="bq-input" placeholder="Placeholder">
-      <label class="flex flex-grow items-center" slot="label">Input label</label>
-      <bq-icon name="user-circle" slot="prefix"></bq-icon>
-      <bq-icon name="gear" slot="suffix"></bq-icon>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-input>
-  `}
->
+  <bq-input disabled name="bq-input" placeholder="Placeholder">
+    <label class="flex flex-grow items-center" slot="label">Input label</label>
+    <bq-icon name="user-circle" slot="prefix"></bq-icon>
+    <bq-icon name="gear" slot="suffix"></bq-icon>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+  </bq-input>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-input disabled name="bq-input" placeholder="Placeholder">
@@ -651,55 +627,51 @@ Use the `disabled` attribute when the input field should be visible but non-edit
 
 Use this variant for validation feedback by setting `validation-status` to `error`, `success`, `warning`, or `none`.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        inline-size: 100% !important;
-        align-items: stretch !important;
-        flex-direction: column !important;
-      }
+    :host {
+      inline-size: 100% !important;
+      align-items: stretch !important;
+      flex-direction: column !important;
+    }
 
-      span {
-        display: flex;
-        align-items: center;
-        gap: var(--bq-spacing-xs);
-      }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
     }
   </style>
 
-    <bq-input name="bq-input-error" placeholder="Placeholder" validation-status="error">
-      <label class="flex flex-grow items-center" slot="label">Input label</label>
-      <bq-icon name="user-circle" slot="prefix"></bq-icon>
-      <bq-icon name="gear" slot="suffix"></bq-icon>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-input>
+  <bq-input name="bq-input-error" placeholder="Placeholder" validation-status="error">
+    <label class="flex flex-grow items-center" slot="label">Input label</label>
+    <bq-icon name="user-circle" slot="prefix"></bq-icon>
+    <bq-icon name="gear" slot="suffix"></bq-icon>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+  </bq-input>
 
-    <bq-input name="bq-input-success" placeholder="Placeholder" validation-status="success">
-      <label class="flex flex-grow items-center" slot="label">Input label</label>
-      <bq-icon name="user-circle" slot="prefix"></bq-icon>
-      <bq-icon name="gear" slot="suffix"></bq-icon>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-input>
+  <bq-input name="bq-input-success" placeholder="Placeholder" validation-status="success">
+    <label class="flex flex-grow items-center" slot="label">Input label</label>
+    <bq-icon name="user-circle" slot="prefix"></bq-icon>
+    <bq-icon name="gear" slot="suffix"></bq-icon>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+  </bq-input>
 
-    <bq-input name="bq-input-warning" placeholder="Placeholder" validation-status="warning">
-      <label class="flex flex-grow items-center" slot="label">Input label</label>
-      <bq-icon name="user-circle" slot="prefix"></bq-icon>
-      <bq-icon name="gear" slot="suffix"></bq-icon>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-input>
-  `}
->
+  <bq-input name="bq-input-warning" placeholder="Placeholder" validation-status="warning">
+    <label class="flex flex-grow items-center" slot="label">Input label</label>
+    <bq-icon name="user-circle" slot="prefix"></bq-icon>
+    <bq-icon name="gear" slot="suffix"></bq-icon>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+  </bq-input>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-input name="bq-input-error" placeholder="Placeholder" validation-status="error">
@@ -845,50 +817,46 @@ Use this variant for validation feedback by setting `validation-status` to `erro
 
 Use this style when you want to include an optional marker to provide additional context.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        inline-size: 100% !important;
-        align-items: stretch !important;
-      }
+    :host {
+      inline-size: 100% !important;
+      align-items: stretch !important;
+    }
 
-      .label-row {
-        display: flex;
-        flex: 1 1 0%;
-      }
+    .label-row {
+      display: flex;
+      flex: 1 1 0%;
+    }
 
-      .label-row > label {
-        display: flex;
-        flex-grow: 1;
-        align-items: center;
-      }
+    .label-row > label {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+    }
 
-      .label-row > span {
-        color: var(--bq-text--secondary);
-      }
+    .label-row > span {
+      color: var(--bq-text--secondary);
+    }
 
-      bq-input span[slot="helper-text"] {
-        display: flex;
-        align-items: center;
-        gap: var(--bq-spacing-xs);
-      }
+    bq-input span[slot="helper-text"] {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
     }
   </style>
 
-    <bq-input name="bq-input" placeholder="Placeholder">
-      <div class="label-row" slot="label">
-        <label>Input label</label>
-        <span>Optional</span>
-      </div>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-input>
-  `}
->
+  <bq-input name="bq-input" placeholder="Placeholder">
+    <div class="label-row" slot="label">
+      <label>Input label</label>
+      <span>Optional</span>
+    </div>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+  </bq-input>
+`}>
   <CodeGroup>
     ```css CSS icon="css"
     .label-row {
@@ -979,64 +947,60 @@ Use this style when you want to include an optional marker to provide additional
 
 Use this style when you want to include an informational tooltip alongside the input label.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        inline-size: 100% !important;
-        align-items: stretch !important;
-      }
+    :host {
+      inline-size: 100% !important;
+      align-items: stretch !important;
+    }
 
-      bq-tooltip {
-        margin-inline-start: var(--bq-spacing-xs);
-      }
+    bq-tooltip {
+      margin-inline-start: var(--bq-spacing-xs);
+    }
 
-      bq-tooltip::part(trigger) {
-        display: flex;
-      }
+    bq-tooltip::part(trigger) {
+      display: flex;
+    }
 
-      .label-row {
-        display: flex;
-        flex: 1 1 0%;
-      }
+    .label-row {
+      display: flex;
+      flex: 1 1 0%;
+    }
 
-      .label-row > label {
-        display: flex;
-        flex-grow: 1;
-        align-items: center;
-      }
+    .label-row > label {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+    }
 
-      .label-row > span {
-        color: var(--bq-text--secondary);
-      }
+    .label-row > span {
+      color: var(--bq-text--secondary);
+    }
 
-      bq-input span[slot="helper-text"] {
-        display: flex;
-        align-items: center;
-        gap: var(--bq-spacing-xs);
-      }
+    bq-input span[slot="helper-text"] {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
     }
   </style>
 
-    <bq-input name="bq-input" placeholder="Placeholder">
-      <div class="label-row" slot="label">
-        <label>
-          Input label
-          <bq-tooltip>
-            You can provide more context detail by adding a tooltip to the label.
-            <bq-icon class="flex" name="info" slot="trigger"></bq-icon>
-          </bq-tooltip>
-        </label>
-        <span>Optional</span>
-      </div>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-input>
-  `}
->
+  <bq-input name="bq-input" placeholder="Placeholder">
+    <div class="label-row" slot="label">
+      <label>
+        Input label
+        <bq-tooltip>
+          You can provide more context detail by adding a tooltip to the label.
+          <bq-icon class="flex" name="info" slot="trigger"></bq-icon>
+        </bq-tooltip>
+      </label>
+      <span>Optional</span>
+    </div>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+  </bq-input>
+`}>
   <CodeGroup>
     ```css CSS icon="css"
     bq-tooltip {
@@ -1159,33 +1123,29 @@ Use this style when you want to include an informational tooltip alongside the i
 
 Use this variant when the surrounding context already makes the field purpose clear and a visible label would be redundant.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        inline-size: 100% !important;
-        align-items: stretch !important;
-      }
+    :host {
+      inline-size: 100% !important;
+      align-items: stretch !important;
+    }
 
-      span {
-        display: flex;
-        align-items: center;
-        gap: var(--bq-spacing-xs);
-      }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
     }
   </style>
 
-    <bq-input name="bq-input" placeholder="Placeholder">
-        <bq-icon name="user-circle" slot="prefix"></bq-icon>
-        <bq-icon name="gear" slot="suffix"></bq-icon>
-        <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-        </span>
-    </bq-input>
-  `}
->
+  <bq-input name="bq-input" placeholder="Placeholder">
+      <bq-icon name="user-circle" slot="prefix"></bq-icon>
+      <bq-icon name="gear" slot="suffix"></bq-icon>
+      <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+      </span>
+  </bq-input>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-input name="bq-input" placeholder="Placeholder">
@@ -1245,30 +1205,26 @@ Use this variant when the surrounding context already makes the field purpose cl
 
 Use this variant when the field does not require supplementary guidance.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        inline-size: 100% !important;
-        align-items: stretch !important;
-      }
+    :host {
+      inline-size: 100% !important;
+      align-items: stretch !important;
+    }
 
-      label {
-        display: flex;
-        flex-grow: 1;
-        align-items: center;
-      }
+    label {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
     }
   </style>
 
-    <bq-input name="bq-input" placeholder="Placeholder">
-      <label slot="label">Input label</label>
-      <bq-icon name="user-circle" slot="prefix"></bq-icon>
-      <bq-icon name="gear" slot="suffix"></bq-icon>
-    </bq-input>
-  `}
->
+  <bq-input name="bq-input" placeholder="Placeholder">
+    <label slot="label">Input label</label>
+    <bq-icon name="user-circle" slot="prefix"></bq-icon>
+    <bq-icon name="gear" slot="suffix"></bq-icon>
+  </bq-input>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-input name="bq-input" placeholder="Placeholder">

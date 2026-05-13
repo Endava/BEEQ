@@ -123,9 +123,11 @@ Use checkbox labels and grouping patterns that make the selected state easy to u
 
 Use the default checkbox for a straightforward binary choice with a short label.
 
-<CodeLivePreview code={`<bq-checkbox name="updates" value="updates">
-  Send me product updates
-</bq-checkbox>`}>
+<CodeLivePreview code={`
+  <bq-checkbox name="updates" value="updates">
+    Send me product updates
+  </bq-checkbox>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-checkbox name="updates" value="updates">
@@ -172,12 +174,11 @@ Use the default checkbox for a straightforward binary choice with a short label.
 
 Use a longer label when people need more context before deciding, but keep the core meaning easy to scan at the beginning of the sentence.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <bq-checkbox class="checkbox-long" name="terms" value="terms">
     By clicking here, I state that I have read and understood the terms and conditions.
-  </bq-checkbox>`}
->
+  </bq-checkbox>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-checkbox class="checkbox-long" name="terms" value="terms">
@@ -219,9 +220,11 @@ Use a longer label when people need more context before deciding, but keep the c
 
 Use `background-on-hover` when the surrounding layout benefits from a larger perceived hit area and stronger hover feedback.
 
-<CodeLivePreview code={`<bq-checkbox name="notifications" value="notifications" background-on-hover>
-  Email me about account activity
-</bq-checkbox>`}>
+<CodeLivePreview code={`
+  <bq-checkbox name="notifications" value="notifications" background-on-hover>
+    Email me about account activity
+  </bq-checkbox>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-checkbox name="notifications" value="notifications" background-on-hover>
@@ -261,14 +264,14 @@ Use `background-on-hover` when the surrounding layout benefits from a larger per
 
 Use `checked` for a preselected default, and `disabled` when the option is currently unavailable or not editable in the current context.
 
-<CodeLivePreview
-  code={`<bq-checkbox checked name="newsletter" value="newsletter">
-  Subscribe to the newsletter
-</bq-checkbox>
-<bq-checkbox disabled name="archived" value="archived">
-  Archived option
-</bq-checkbox>`}
->
+<CodeLivePreview code={`
+  <bq-checkbox checked name="newsletter" value="newsletter">
+    Subscribe to the newsletter
+  </bq-checkbox>
+  <bq-checkbox disabled name="archived" value="archived">
+    Archived option
+  </bq-checkbox>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <bq-checkbox checked name="newsletter" value="newsletter">
@@ -320,8 +323,7 @@ Use `checked` for a preselected default, and `disabled` when the option is curre
 
 Use the indeterminate state when a parent checkbox controls a related set of child options and only some of them are selected.
 
-<CodeLivePreview
-  code={`
+<CodeLivePreview code={`
   <style>
     .checkbox-group__children {
       display: flex;
@@ -381,8 +383,8 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
         });
       });
     })();
-  </script>`}
->
+  </script>
+`}>
   <CodeGroup>
     ```html HTML icon="html5"
     <div>
