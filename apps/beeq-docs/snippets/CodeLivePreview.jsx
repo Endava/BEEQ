@@ -46,33 +46,49 @@ export const CodeLivePreview = ({ code, children, height }) => {
     document.head.appendChild(script);
   }, []);
 
-  // Execute any <script> tags inside the preview
+  // Attach a shadow root to the preview container and inject the code HTML.
+  // The shadow root isolates Mintlify/Tailwind styles so BEEQ components and
+  // any raw HTML elements in the preview always render with beeq.css only.
+  // CSS custom properties (--bq-*) still inherit through the shadow boundary,
+  // so design tokens and dark/light mode continue to work without changes.
   useEffect(() => {
-    if (!previewRef.current) return;
+    const el = previewRef.current;
+    if (!el) return;
 
-    const scripts = previewRef.current.querySelectorAll('script');
-    scripts.forEach((oldScript) => {
-      const newScript = document.createElement('script');
+    // Attach shadow root once; reuse on subsequent code changes.
+    const shadowRoot = el.shadowRoot ?? el.attachShadow({ mode: 'open' });
+
+    // Inject beeq.css (for raw HTML elements) + the hidden="false" fix + user code.
+    // Setting innerHTML replaces all shadow content; the browser uses the
+    // cached beeq.css response on subsequent updates.
+    shadowRoot.innerHTML = [
+      '<link rel="stylesheet" href="https://esm.sh/@beeq/core@beta/dist/beeq/beeq.css">',
+      // Fix: BEEQ components emit hidden="false" (string) when open=true.
+      // The UA stylesheet treats any [hidden] as display:none, so we restore it.
+      '<style>[hidden="false"] { display: block; }</style>',
+      code,
+    ].join('');
+
+    // Re-execute any <script> blocks inside the injected HTML.
+    // Inline scripts are executed via new Function so the shadow root can be
+    // passed in as 'previewRoot' — document.currentScript is always null for
+    // dynamically created script elements, so getRootNode() would throw.
+    shadowRoot.querySelectorAll('script').forEach((oldScript) => {
       if (oldScript.src) {
+        const newScript = document.createElement('script');
         newScript.src = oldScript.src;
+        oldScript.replaceWith(newScript);
       } else {
-        newScript.textContent = oldScript.textContent;
+        new Function('previewRoot', oldScript.textContent)(shadowRoot);
+        oldScript.remove();
       }
-      oldScript.replaceWith(newScript);
     });
   }, [code]);
 
   return (
     <div className="code-live-preview not-prose">
-      {/* Live preview */}
-      <div
-        className="preview"
-        ref={previewRef}
-        // biome-ignore lint/style/useNamingConvention: `__html` is required for dangerouslySetInnerHTML
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: This is a controlled use of dangerouslySetInnerHTML for rendering code snippets in documentation.
-        dangerouslySetInnerHTML={{ __html: code }}
-        style={{ minHeight: height }}
-      />
+      {/* Live preview — shadow root attached imperatively for full style isolation */}
+      <div className="preview" ref={previewRef} style={{ minHeight: height }} />
 
       {/* Code section — rendered via children (e.g. CodeGroup from MDX) */}
       {children && <div className="code">{children}</div>}
