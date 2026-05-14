@@ -1,0 +1,63 @@
+---
+title: Design principles
+description: The values and methodology that guide every decision in BEEQ — from individual component behaviour to the overall system architecture.
+---
+
+<Frame>
+  <img className="block dark:hidden" src="/getting-started/images/design-principles-overview-light.svg" alt="Illustration showing the 8 design principles of BEEQ: user-centric, accessibility, reusability, modularity, extensibility, scalability, consistency, flexibility" />
+  <img className="hidden dark:block" src="/getting-started/images/design-principles-overview-dark.svg" alt="Illustration showing the 8 design principles of BEEQ: user-centric, accessibility, reusability, modularity, extensibility, scalability, consistency, flexibility" />
+</Frame>
+
+Every design system makes thousands of small decisions. BEEQ's principles exist to make those decisions consistent and intentional — so that when something is built, extended, or changed, it aligns with the same set of values.
+
+## Guiding principles
+
+<Columns cols={2}>
+  <Card title="User-centric" icon="user" iconType="duotone" horizontal>
+    Every decision starts with the people using the product. Components, patterns, and guidance are shaped by real user needs and goals — not internal convenience.
+  </Card>
+  <Card title="Accessibility" icon="universal-access" iconType="duotone" horizontal>
+    BEEQ is built to be inclusive. All components are designed and tested to support users with disabilities, targeting WCAG 2.1 Level AA compliance across the board.
+  </Card>
+  <Card title="Reusability" icon="recycle" iconType="duotone" horizontal>
+    Components are designed to be shared and adapted across projects. The goal is a library you reach for instead of rebuild — saving time without sacrificing quality.
+  </Card>
+  <Card title="Modularity" icon="cubes" iconType="duotone" horizontal>
+    The system is built from small, independent pieces that can be composed freely. Nothing is tightly coupled — swap, extend, or replace parts without breaking the whole.
+  </Card>
+  <Card title="Extensibility" icon="code-branch" iconType="duotone" horizontal>
+    BEEQ is a starting point, not a constraint. It's designed to be extended with custom tokens, brand overrides, and additional components when a project's needs go beyond the core.
+  </Card>
+  <Card title="Scalability" icon="chart-line" iconType="duotone" horizontal>
+    From a small product to a multi-brand, multi-platform suite — the same system scales. Token-based theming and web components make it possible to grow without rewriting.
+  </Card>
+  <Card title="Consistency" icon="layer-group" iconType="duotone" horizontal>
+    Shared language, shared patterns, shared decisions. Consistency reduces cognitive load for users and speeds up design and development by removing repeated judgment calls.
+  </Card>
+  <Card title="Flexibility" icon="sliders" iconType="duotone" horizontal>
+    BEEQ works across B2C and B2B products, desktop and mobile, light and dark themes. The system adapts to diverse contexts while maintaining a coherent identity.
+  </Card>
+</Columns>
+
+---
+
+## How BEEQ is organized
+
+BEEQ follows **Atomic Design** — a methodology that structures UI from the smallest design decisions up to complete layouts. Understanding this makes it easier to navigate the Figma file, reason about component relationships, and know where new things belong.
+
+<Frame>
+  <img src="/getting-started/images/for-designers-atomic-design-hierarchy.svg" alt="Diagram showing the Atomic Design hierarchy: tokens at the bottom, then atoms, molecules, organisms, templates, and pages at the top" />
+</Frame>
+
+| Level | What it is | Examples in BEEQ |
+|---|---|---|
+| **Design Tokens** | Shared values that define how everything looks — color, spacing, typography, radius, shadow. The foundation all components build on. | `--bq-brand`, `--bq-spacing-m`, `--bq-radius-m` |
+| **Atoms** | The smallest, self-contained components. | Button, Icon, Badge, Input, Checkbox |
+| **Molecules** | Two or more atoms working together as a unit. | Search field (Input + Button), labeled form field |
+| **Organisms** | Larger, self-contained UI sections made from molecules and atoms. | Navigation header, product card, alert banner |
+| **Templates** | Full layout compositions using multiple organisms. | Page shell, dashboard layout |
+| **Pages** | Realized instances of templates filled with real content. | A product detail page, a settings screen |
+
+<Tip>
+  The Atomic Design methodology was introduced by Brad Frost. If you want the full background, [Atomic Design](https://atomicdesign.bradfrost.com/chapter-2/) is the definitive reference.
+</Tip>

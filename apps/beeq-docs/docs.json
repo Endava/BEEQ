@@ -50,11 +50,11 @@
               "getting-started/introduction",
               "getting-started/for-designers",
               "getting-started/for-developers",
-              "getting-started/installation"
+              "getting-started/ai-tools"
             ]
           },
           {
-            "group": "Framework guides",
+            "group": "Frameworks",
             "pages": [
               "guides/frameworks/angular",
               "guides/frameworks/react",
