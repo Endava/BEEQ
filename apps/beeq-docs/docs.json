@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "almond",
+  "theme": "mint",
   "name": "BEEQ Design System",
   "description": "BEEQ is a white-label open-source design system created at Endava that accelerates the building of digital products with the goal of providing a UI Library of components and guidelines to help designers and developers produce high-quality solutions.",
   "favicon": "/favicon.svg",
@@ -48,6 +48,7 @@
             "group": "Get started",
             "pages": [
               "getting-started/introduction",
+              "getting-started/design-principles",
               "getting-started/for-designers",
               "getting-started/for-developers",
               "getting-started/ai-tools"
