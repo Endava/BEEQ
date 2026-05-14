@@ -155,9 +155,9 @@ Add a `CSS` tab first only when custom styles are educationally relevant.
 
 ### API reference — CSS custom properties
 
-Wrap in `<Expandable title="CSS variables" defaultOpen={true}>` (use `defaultOpen={false}` when the list is long). Columns: **Variable**, **Description**, **Default**.
+If the component has **more than 5 variables**, wrap in `<Expandable title="CSS variables" defaultOpen={true}>` (use `defaultOpen={false}` when the list is very long, e.g. 20+). If **5 or fewer variables**, display the table directly — no `<Expandable>` wrapper needed. Columns: **Variable**, **Description**, **Default**.
 
-Extract all variables from `bq-<name>.variables.scss`.
+Extract all variables from `bq-<name>.variables.scss`. **Default values must use `var(--bq-*)` CSS custom properties** — never Tailwind `theme()` function calls. Map each `theme(...)` value to its underlying `var(--bq-*)` equivalent. Hardcoded values (e.g. `transparent`, `none`, `solid`, `unset`, plain numbers like `0` or `10`, pixel values like `24px`) are kept as-is.
 
 ### Resources section
 
