@@ -80,9 +80,15 @@ body,
 
 /* ------------------------------ Main content ------------------------------ */
 
-#content-area {
+/* #content-area {
   width: 100%;
   max-width: 64rem /* 1024px */;
+} */
+
+.step-container[role="listitem"] {
+  .w-full {
+    overflow: unset;
+  }
 }
 
 .card-tile,
