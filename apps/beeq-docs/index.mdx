@@ -1,97 +1,849 @@
 ---
-title: Overview
-description: BEEQ is Endava's open-source design system for building consistent, accessible digital products across teams and technologies.
+title: "BEEQ Design System — Build faster. Design better."
+description: "Endava's open-source design system — production-ready web components for React, Angular, Vue, and plain HTML."
+mode: "custom"
 ---
 
-<img
-  src="/images/hero-image-light.svg"
-  alt="BEEQ Design System"
-  className="block w-full h-auto dark:hidden mx-auto"
-/>
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
-<img
-  src="/images/hero-image-dark.svg"
-  alt="BEEQ Design System"
-  className="hidden w-full h-auto dark:block mx-auto"
-/>
+{/* ══════════════════════════════════════════════════════
+    HERO
+══════════════════════════════════════════════════════ */}
 
-BEEQ stands for "**Building Excellence, Enhancing Quality**".
-It is Endava’s design system and web component library for building consistent, accessible digital products.
-It brings together framework-agnostic UI components, design foundations, and practical implementation guidance to help teams move faster and stay aligned.
+<div className="relative overflow-hidden px-6" style={{ paddingTop: "5rem", paddingBottom: "5rem" }}>
+  <div
+    className="absolute inset-0 pointer-events-none"
+    style={{ background: "radial-gradient(ellipse 70% 55% at 65% -5%, rgba(99,102,241,.2) 0%, transparent 55%)" }}
+  />
+  <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-## Choose your path
+    {/* ── Left: copy ── */}
+    <div>
+      <a
+        href="/releases/changelog"
+        className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold border mb-6 no-underline hover:opacity-80"
+        style={{ borderColor: "rgba(99,102,241,.4)", background: "rgba(99,102,241,.08)", color: "#818cf8" }}
+      >
+        <Icon icon="sparkles" size="12" /> v1.12.3 — What's new →
+      </a>
+      <h1 className="text-5xl lg:text-6xl font-black tracking-tighter leading-none mb-5" style={{ color: "var(--bq-text--primary)" }}>
+        Building{" "}
+        <span style={{ background: "linear-gradient(135deg,#6366f1 0%,#a855f7 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+          Excellence,
+        </span>
+        <br />
+        Enhancing{" "}
+        <span style={{ background: "linear-gradient(135deg,#6366f1 0%,#a855f7 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+          Quality.
+        </span>
+      </h1>
 
-Whether you are setting up a new project, exploring components, integrating BEEQ with your framework, or customizing the design system, start with the section that matches your needs.
+      <p className="text-base lg:text-lg leading-relaxed mb-7" style={{ color: "var(--bq-text--secondary)", maxWidth: "46ch" }}>
+        BEEQ is Endava's open-source design system — 37 production-ready web components that work
+        across React, Angular, Vue, and plain HTML. No rewrites. No lock-in. No compromises.
+      </p>
 
-<CardGroup cols={2}>
-  <Card title="Get started" icon="rocket" iconType="duotone" href="/getting-started/overview">
-    Set up BEEQ in your project and follow the recommended onboarding path.
-  </Card>
+      {/* Install block */}
+      <div
+        className="rounded-xl px-4 py-3 mb-2 flex items-center gap-3 font-mono text-sm"
+        style={{ background: "var(--bq-background--secondary)", border: "1px solid var(--bq-stroke--primary)" }}
+      >
+        <Icon icon="terminal" style={{ color: "#818cf8", flexShrink: 0 }} />
+        <code style={{ color: "var(--bq-text--primary)", background: "none", padding: 0 }}>
+          npm install @beeq/core
+        </code>
+      </div>
+      <p className="flex items-center gap-1 text-xs mb-8" style={{ color: "var(--bq-text--tertiary)" }}>
+        <Icon icon="circle-info" size="12" />
+        Prefer a CDN? Add two lines to any HTML page — no build step needed.
+        <a href="/getting-started/for-developers" className="bq-link" style={{ color: "var(--bq-text--brand)" }}>
+          All setup options →
+        </a>
+      </p>
 
-  <Card title="Components" icon="puzzle" iconType="duotone" href="/components/overview">
-    Explore production-ready UI components, patterns, and usage guidance.
-  </Card>
+      <div className="flex flex-wrap gap-3 items-center">
+        <a
+          href="/getting-started/for-developers"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90"
+          style={{ background: "linear-gradient(135deg,#6366f1,#a855f7)" }}
+        >
+          <Icon icon="rocket" /> Get started
+        </a>
+        <a
+          href="https://github.com/Endava/BEEQ"
+          target="_blank"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold no-underline border transition-opacity hover:opacity-80"
+          style={{ borderColor: "var(--bq-stroke--primary)", color: "var(--bq-text--primary)" }}
+        >
+          <Icon icon="github" /> View on GitHub
+        </a>
+        <a
+          href="https://storybook.beeq.design"
+          target="_blank"
+          className="text-sm no-underline transition-opacity hover:opacity-70"
+          style={{ color: "var(--bq-text--secondary)" }}
+        >
+          Explore Storybook →
+        </a>
+      </div>
+    </div>
 
-  <Card title="Framework Guides" icon="layer-group" iconType="duotone" href="/guides/frameworks">
-    Use BEEQ with Angular, React, Vue, or plain HTML.
-  </Card>
+    {/* ── Right: browser mockup with live components ── */}
+    <div className="w-full">
+      <CodeLivePreview code={`
+        <div style="width:100%;background:var(--bq-background--primary);border:1px solid var(--bq-stroke--primary);border-radius:14px;overflow:hidden;box-shadow:0 24px 64px var(--bq-background--secondary);font-family:system-ui,sans-serif">
 
-  <Card title="Theming" icon="palette" iconType="duotone" href="/theming/overview">
-    Customize styles with CSS variables, tokens, and theme options.
-  </Card>
-</CardGroup>
+          <!-- Title bar -->
+          <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--bq-background--tertiary);border-bottom:1px solid var(--bq-stroke--primary)">
+            <div style="display:flex;gap:6px;flex-shrink:0">
+              <div style="width:12px;height:12px;border-radius:50%;background:#ff5f57"></div>
+              <div style="width:12px;height:12px;border-radius:50%;background:#febc2e"></div>
+              <div style="width:12px;height:12px;border-radius:50%;background:#28c840"></div>
+            </div>
+            <div style="flex:1;text-align:center;font-size:11px;font-family:monospace;color:var(--bq-text--tertiary);background:var(--bq-background--secondary);border:1px solid var(--bq-stroke--primary);border-radius:6px;padding:3px 10px">
+              beeq / component-preview
+            </div>
+          </div>
 
-## What is BEEQ?
+          <!-- Content -->
+          <div style="padding:1.25rem 1.5rem;display:flex;flex-direction:column;gap:1rem">
 
-BEEQ combines reusable UI components, design foundations, and practical guidance in one shared system. It helps designers and developers create consistent experiences, reduce duplication, and work with a common language across products and teams.
+            <!-- BUTTONS -->
+            <div>
+              <div style="font-size:.62rem;font-weight:600;letter-spacing:.05em;font-family:monospace;color:var(--bq-text--tertiary);margin-bottom:.55rem">// BUTTONS</div>
+              <div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center">
+                <bq-button appearance="primary">Get started &#x2192;</bq-button>
+                <bq-button appearance="secondary">Docs</bq-button>
+                <bq-button appearance="text">Cancel</bq-button>
+              </div>
+            </div>
 
-The component library is built with StencilJS and delivered as native HTML custom elements, making it portable across modern web environments. Styling and customization are designed to work cleanly with Tailwind CSS-based workflows.
+            <bq-divider></bq-divider>
 
-## Why teams use BEEQ
+            <!-- INPUT + BADGES -->
+            <div>
+              <div style="font-size:.62rem;font-weight:600;letter-spacing:.05em;font-family:monospace;color:var(--bq-text--tertiary);margin-bottom:.55rem">// INPUT + BADGES</div>
+              <bq-input placeholder="Search components&#x2026;"></bq-input>
+              <div style="display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-top:.55rem">
+                <bq-badge background-color="ui--success">stable</bq-badge>
+                <bq-badge background-color="ui--warning">beta</bq-badge>
+                <bq-badge background-color="ui--danger">deprecated</bq-badge>
+              </div>
+            </div>
 
-A design system is a shared set of components, standards, and guidelines that helps teams design and build products more consistently.
-It improves reuse, supports accessibility, and makes collaboration between design and development more effective.
+            <bq-divider></bq-divider>
 
-<Tip>
-  - **Consistency:** Create a shared UI language across products, teams, and brands.
-  - **Efficiency:** Reuse proven building blocks instead of recreating patterns from scratch.
-  - **Scalability:** Support everything from prototypes to enterprise-grade applications.
-  - **Accessibility:** Build on foundations and components designed for inclusive product experiences.
-</Tip>
+            <!-- CONTROLS -->
+            <div>
+              <div style="font-size:.62rem;font-weight:600;letter-spacing:.05em;font-family:monospace;color:var(--bq-text--tertiary);margin-bottom:.55rem">// CONTROLS</div>
+              <div style="display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap;margin-bottom:.65rem">
+                <bq-checkbox checked>Theming</bq-checkbox>
+                <bq-switch>Notifications</bq-switch>
+              </div>
+              <bq-slider value="70" style="width:100%"></bq-slider>
+            </div>
 
-## What makes BEEQ different
+            <bq-divider></bq-divider>
 
-BEEQ is designed to be flexible, scalable, and practical across products, teams, and frontend stacks.
+            <!-- TAGS + STATUS -->
+            <div>
+              <div style="font-size:.62rem;font-weight:600;letter-spacing:.05em;font-family:monospace;color:var(--bq-text--tertiary);margin-bottom:.55rem">// TAGS + STATUS</div>
+              <div style="display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.5rem">
+                <bq-tag color="success" variant="outline" size="small">Web Components</bq-tag>
+                <bq-tag color="warning" variant="outline" size="small" removable>StencilJS</bq-tag>
+                <bq-tag color="gray" variant="outline" size="small" removable>TypeScript</bq-tag>
+              </div>
+              <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+                <bq-status type="danger">Busy</bq-status>
+                <bq-status type="success">Online</bq-status>
+                <bq-status type="neutral">Offline</bq-status>
+              </div>
+            </div>
 
-- **White-label and open-source**\
-  BEEQ is designed to support different brands and products without imposing a fixed visual identity, while remaining transparent and easy to extend.
-- **Framework-agnostic core**\
-   BEEQ’s components are built as standard web components (using [StencilJS](https://stenciljs.com/)), meaning the same core can be used across _any_ major frontend framework—Angular, React, Vue—thanks to dedicated wrappers for each environment. Many popular libraries are often tied to only one framework (e.g., Material UI for React), while BEEQ is truly cross-framework.
-- **Consistency at scale**\
-   The system’s design guidelines and component library promote consistent UI/UX across large teams and multiple projects, no matter the front-end technology. Combined with its white-label nature, this enables organizations to roll out branded experiences at scale and speed.
-- **Tailored for enterprise workflows**\
-   The BEEQ monorepo includes tailored tooling ([NX](https://nx.dev/), [Volta](https://volta.sh/), [PNPM](https://pnpm.io/)) and integrated style presets like [Tailwind CSS](http://tailwindcss.com/), making modern development practices and streamlined CI/CD pipelines easy to adopt.
-- **Developer experience**\
-   Comprehensive docs, Storybook demos, and clear API design make BEEQ easy to adopt, extend, and maintain. The design system is as much about enabling _good process_ (including clear contribution flows and robust testing) as about the components themselves.
-- **Transparent, community-driven development**\
-   BEEQ welcomes contributions and is actively managed through open-source practices, with documented branching strategies and regular releases.
+            <bq-divider></bq-divider>
 
-| **Feature** | **BEEQ** | **Typical UI Libraries** |
-| --- | --- | --- |
-| Branding | Easily white-label | Often opinionated |
-| Framework Support | Core \+ wrappers for all | Usually tied to one |
-| Design Philosophy | Consistency \+ flexibility | Usually “one-size-fits-most” |
-| Tooling | Monorepo, modern tools | Varies, often basic |
-| Integration | Tailwind, Storybook | Varies |
-| Community | Open-source, welcoming | Varies |
-| Enterprise Suitability | High (scalability) | Varies |
+            <!-- AVATARS -->
+            <div>
+              <div style="font-size:.62rem;font-weight:600;letter-spacing:.05em;font-family:monospace;color:var(--bq-text--tertiary);margin-bottom:.55rem">// AVATARS</div>
+              <div style="display:flex;align-items:center;gap:.4rem;flex-wrap:wrap">
+                <bq-avatar initials="EA" image="https://i.pravatar.cc/150?img=11"></bq-avatar>
+                <bq-avatar initials="MK" image="https://i.pravatar.cc/150?img=28"></bq-avatar>
+                <bq-avatar initials="RL" image="https://i.pravatar.cc/150?img=12"></bq-avatar>
+                <bq-avatar initials="NS" image="https://i.pravatar.cc/150?img=16"></bq-avatar>
+                <bq-avatar initials="+8" image="https://i.pravatar.cc/150?img=64"></bq-avatar>
+                <span style="font-size:.8rem;color:var(--bq-text--secondary);margin-left:.25rem">12 contributors</span>
+              </div>
+            </div>
 
-## Where to find help
+          </div>
+        </div>
+      `} />
+    </div>
 
-Need assistance or want to contribute?
+  </div>
+</div>
 
-- For suggestions, issues, or improvements, visit our [GitHub Issues](https://github.com/Endava/BEEQ/issues) page.
-- For direct questions, contact us at [beeq@endava.com](mailto:beeq@endava.com).
-- For documentation feedback, use the feedback button on any page.
+{/* ══════════════════════════════════════════════════════
+    FRAMEWORK TRUST STRIP
+══════════════════════════════════════════════════════ */}
 
-Your feedback and participation helps BEEQ keep improving for everyone who uses it.
+<div
+  className="px-6 py-7 border-y"
+  style={{ borderColor: "var(--bq-stroke--primary)" }}
+>
+  <div className="max-w-6xl mx-auto flex flex-wrap justify-center items-center gap-x-6 gap-y-3">
+    <span className="text-xs font-bold uppercase tracking-widest mr-2" style={{ color: "var(--bq-text--tertiary)" }}>
+      Works with
+    </span>
+    <span className="px-3 py-1 rounded-full text-sm font-semibold border" style={{ color: "#f97316", borderColor: "rgba(249,115,22,.3)", background: "rgba(249,115,22,.06)" }}>HTML</span>
+    <span className="px-3 py-1 rounded-full text-sm font-semibold border" style={{ color: "#61dafb", borderColor: "rgba(97,218,251,.3)", background: "rgba(97,218,251,.06)" }}>React</span>
+    <span className="px-3 py-1 rounded-full text-sm font-semibold border" style={{ color: "#dd1b16", borderColor: "rgba(221,27,22,.3)", background: "rgba(221,27,22,.06)" }}>Angular</span>
+    <span className="px-3 py-1 rounded-full text-sm font-semibold border" style={{ color: "#42b883", borderColor: "rgba(66,184,131,.3)", background: "rgba(66,184,131,.06)" }}>Vue</span>
+    <span className="hidden lg:block w-px h-4 mx-2" style={{ background: "var(--bq-stroke--primary)" }} />
+    <span className="hidden lg:flex items-center gap-1.5 text-xs" style={{ color: "var(--bq-text--tertiary)" }}>
+      <Icon icon="shield-halved" /> WCAG 2.1 AA
+    </span>
+    <span className="hidden lg:flex items-center gap-1.5 text-xs" style={{ color: "var(--bq-text--tertiary)" }}>
+      <Icon icon="cubes" /> 37 components
+    </span>
+    <span className="hidden lg:flex items-center gap-1.5 text-xs" style={{ color: "var(--bq-text--tertiary)" }}>
+      <Icon icon="icons" /> 9k+ icons
+    </span>
+    <span className="hidden lg:flex items-center gap-1.5 text-xs" style={{ color: "var(--bq-text--tertiary)" }}>
+      <Icon icon="scale-balanced" /> Apache 2.0
+    </span>
+  </div>
+</div>
+
+{/* ══════════════════════════════════════════════════════
+    SPOTLIGHT 1 — Framework agnostic
+══════════════════════════════════════════════════════ */}
+
+<div
+  className="px-6 py-16"
+  style={{ background: "rgba(99,102,241,.06)", borderBottom: "1px solid var(--bq-stroke--primary)" }}
+>
+  <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+
+    <div>
+      <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-2" style={{ color: "var(--bq-text--brand)" }}>
+        <Icon icon="globe" /> Universal compatibility
+      </p>
+      <h2 className="text-3xl lg:text-4xl font-black tracking-tight leading-tight mb-4" style={{ color: "var(--bq-text--primary)" }}>
+        One library.<br />Every framework.
+      </h2>
+      <p className="text-base leading-relaxed mb-4 mt-0" style={{ color: "var(--bq-text--secondary)", maxWidth: "44ch" }}>
+        BEEQ is built on standard HTML custom elements. The same component works in React, Angular,
+        Vue, or a plain HTML file — with zero rewrites.
+      </p>
+      <p className="text-base leading-relaxed mb-6 mt-0" style={{ color: "var(--bq-text--secondary)", maxWidth: "44ch" }}>
+        Want typed props and native framework events? The optional <code style={{ fontSize: ".85em" }}>@beeq/react</code>,{" "}
+        <code style={{ fontSize: ".85em" }}>@beeq/angular</code>, and <code style={{ fontSize: ".85em" }}>@beeq/vue</code> wrappers
+        give you a first-class developer experience without locking you into a proprietary fork.
+      </p>
+      <div className="flex flex-wrap gap-2 mb-7">
+        <span className="px-3 py-1 rounded-full text-sm font-semibold border" style={{ color: "#f97316", borderColor: "rgba(249,115,22,.35)", background: "rgba(249,115,22,.08)" }}>HTML</span>
+        <span className="px-3 py-1 rounded-full text-sm font-semibold border" style={{ color: "#61dafb", borderColor: "rgba(97,218,251,.35)", background: "rgba(97,218,251,.08)" }}>React</span>
+        <span className="px-3 py-1 rounded-full text-sm font-semibold border" style={{ color: "#dd1b16", borderColor: "rgba(221,27,22,.35)", background: "rgba(221,27,22,.08)" }}>Angular</span>
+        <span className="px-3 py-1 rounded-full text-sm font-semibold border" style={{ color: "#42b883", borderColor: "rgba(66,184,131,.35)", background: "rgba(66,184,131,.08)" }}>Vue</span>
+      </div>
+      <a href="/getting-started/for-developers" className="bq-link inline-flex items-center gap-2 text-sm font-semibold no-underline hover:underline" style={{ color: "var(--bq-text--brand)" }}>
+        See all integration guides <Icon icon="arrow-right" />
+      </a>
+    </div>
+
+    <div className="flex items-center justify-center">
+      <div style={{ width: "100%", maxWidth: "28rem" }} dangerouslySetInnerHTML={{ __html: `
+        <svg viewBox="0 0 440 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+          <defs>
+            <linearGradient id="hub-g-landing" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#6366f1"/>
+              <stop offset="100%" stop-color="#a855f7"/>
+            </linearGradient>
+          </defs>
+          <line x1="94" y1="86" x2="196" y2="160" stroke="rgba(99,102,241,.4)" stroke-width="1.5" stroke-dasharray="5,4"/>
+          <line x1="346" y1="86" x2="244" y2="160" stroke="rgba(99,102,241,.4)" stroke-width="1.5" stroke-dasharray="5,4"/>
+          <line x1="94" y1="234" x2="196" y2="160" stroke="rgba(99,102,241,.4)" stroke-width="1.5" stroke-dasharray="5,4"/>
+          <line x1="346" y1="234" x2="244" y2="160" stroke="rgba(99,102,241,.4)" stroke-width="1.5" stroke-dasharray="5,4"/>
+          <circle cx="220" cy="160" r="40" fill="url(#hub-g-landing)" opacity=".9"/>
+          <circle cx="220" cy="160" r="48" fill="none" stroke="rgba(99,102,241,.3)" stroke-width="1.5"/>
+          <text x="220" y="155" text-anchor="middle" fill="white" font-size="12" font-weight="800">BEEQ</text>
+          <text x="220" y="173" text-anchor="middle" fill="rgba(255,255,255,.6)" font-size="10">Core</text>
+          <circle cx="94" cy="86" r="34" fill="rgba(97,218,251,.1)" stroke="rgba(97,218,251,.4)" stroke-width="1.5"/>
+          <text x="94" y="83" text-anchor="middle" fill="#61dafb" font-size="12" font-weight="700">React</text>
+          <text x="94" y="99" text-anchor="middle" fill="rgba(97,218,251,.6)" font-size="9">@beeq/react</text>
+          <circle cx="346" cy="86" r="34" fill="rgba(221,27,22,.1)" stroke="rgba(221,27,22,.4)" stroke-width="1.5"/>
+          <text x="346" y="83" text-anchor="middle" fill="#f87171" font-size="12" font-weight="700">Angular</text>
+          <text x="346" y="99" text-anchor="middle" fill="rgba(248,113,113,.6)" font-size="9">v17+</text>
+          <circle cx="94" cy="234" r="34" fill="rgba(66,184,131,.1)" stroke="rgba(66,184,131,.4)" stroke-width="1.5"/>
+          <text x="94" y="231" text-anchor="middle" fill="#42b883" font-size="12" font-weight="700">Vue</text>
+          <text x="94" y="247" text-anchor="middle" fill="rgba(66,184,131,.6)" font-size="9">@beeq/vue</text>
+          <circle cx="346" cy="234" r="34" fill="rgba(249,115,22,.1)" stroke="rgba(249,115,22,.4)" stroke-width="1.5"/>
+          <text x="346" y="231" text-anchor="middle" fill="#f97316" font-size="12" font-weight="700">HTML</text>
+          <text x="346" y="247" text-anchor="middle" fill="rgba(249,115,22,.6)" font-size="9">@beeq/core</text>
+        </svg>
+      ` }} />
+    </div>
+
+  </div>
+</div>
+
+{/* ══════════════════════════════════════════════════════
+    SPOTLIGHT 2 — Setup in minutes (CDN first)
+══════════════════════════════════════════════════════ */}
+
+<div className="px-6 py-16" style={{ borderBottom: "1px solid var(--bq-stroke--primary)" }}>
+  <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
+
+    {/* Left: code */}
+    <div>
+      <CodeGroup>
+        ```html CDN (fastest — no build step)
+        <!-- 1. Load styles -->
+        <link rel="stylesheet"
+          href="https://esm.sh/@beeq/core/dist/beeq/beeq.css" />
+
+        <!-- 2. Load components + icons -->
+        <script type="module"
+          src="https://esm.sh/@beeq/core/dist/beeq/beeq.esm.js"
+          data-beeq="https://esm.sh/@beeq/core/dist/beeq/svg">
+        </script>
+
+        <!-- 3. Use any component -->
+        <bq-button appearance="primary">
+          Hello BEEQ
+        </bq-button>
+        ```
+
+        ```bash npm
+        # Core package (required)
+        npm install @beeq/core
+
+        # Pick your framework wrapper
+        npm install @beeq/react   # React
+        npm install @beeq/angular # Angular v17+
+        npm install @beeq/vue     # Vue
+        ```
+
+        ```ts React
+        // main.tsx — register icon path once
+        import { setBasePath } from "@beeq/core/loader";
+        setBasePath("https://esm.sh/@beeq/core/dist/beeq/svg");
+
+        // anywhere in your app:
+        import { BqButton } from "@beeq/react";
+
+        <BqButton appearance="primary">Hello BEEQ</BqButton>
+        ```
+
+        ```ts Angular
+        // standalone component (recommended):
+        import { BqButtonComponent } from "@beeq/angular/standalone";
+
+        @Component({
+          standalone: true,
+          imports: [BqButtonComponent],
+          template: `<bq-button appearance="primary">Hello</bq-button>`
+        })
+        export class MyComponent {}
+        ```
+
+        ```ts Vue
+        import { BqButton } from "@beeq/vue";
+
+        // in <template>:
+        <BqButton appearance="primary">Hello BEEQ</BqButton>
+        ```
+      </CodeGroup>
+    </div>
+
+    {/* Right: copy */}
+    <div className="lg:pt-2">
+      <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-2" style={{ color: "var(--bq-text--brand)" }}>
+        <Icon icon="bolt" /> Quick setup
+      </p>
+      <h2 className="text-3xl lg:text-4xl font-black tracking-tight leading-tight mb-4" style={{ color: "var(--bq-text--primary)" }}>
+        Two lines.<br />Real components.
+      </h2>
+      <p className="text-base leading-relaxed mb-4 mt-0" style={{ color: "var(--bq-text--secondary)", maxWidth: "44ch" }}>
+        The fastest path is the CDN — link a stylesheet and a module script to any HTML page and
+        you're rendering production-quality components in under a minute. No bundler, no CLI, no config.
+      </p>
+      <p className="text-base leading-relaxed mb-6 mt-0" style={{ color: "var(--bq-text--secondary)", maxWidth: "44ch" }}>
+        Building with a framework? Install the matching wrapper package for typed props, native event
+        bindings, and full IDE autocomplete — all wired up the way your framework expects.
+      </p>
+      <div className="flex flex-col gap-2 mb-6">
+        <div className="flex items-start gap-2 text-sm" style={{ color: "var(--bq-text--secondary)" }}>
+          <Icon icon="circle-check" style={{ color: "#818cf8", marginTop: "2px", flexShrink: 0 }} />
+          CSS custom properties for full theming control
+        </div>
+        <div className="flex items-start gap-2 text-sm" style={{ color: "var(--bq-text--secondary)" }}>
+          <Icon icon="circle-check" style={{ color: "#818cf8", marginTop: "2px", flexShrink: 0 }} />
+          Icons loaded on demand — no bundle bloat
+        </div>
+        <div className="flex items-start gap-2 text-sm" style={{ color: "var(--bq-text--secondary)" }}>
+          <Icon icon="circle-check" style={{ color: "#818cf8", marginTop: "2px", flexShrink: 0 }} />
+          Tree-shakeable when using npm
+        </div>
+      </div>
+      <a href="/getting-started/for-developers" className="bq-link inline-flex items-center gap-2 text-sm font-semibold no-underline hover:underline" style={{ color: "var(--bq-text--brand)" }}>
+        Full getting started guide <Icon icon="arrow-right" />
+      </a>
+    </div>
+
+  </div>
+</div>
+
+{/* ══════════════════════════════════════════════════════
+    LIVE COMPONENT SHOWCASE
+══════════════════════════════════════════════════════ */}
+
+<div
+  className="px-6 py-24"
+  style={{ background: "rgba(99,102,241,.06)", borderBottom: "1px solid var(--bq-stroke--primary)" }}
+>
+  <div className="max-w-6xl mx-auto">
+    <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-0 flex items-center gap-2" style={{ color: "var(--bq-text--brand)" }}>
+      <Icon icon="eye" /> Live Preview
+    </p>
+    <h2 className="text-4xl lg:text-5xl font-black tracking-tight leading-tight mb-3" style={{ color: "var(--bq-text--primary)" }}>
+      See the code.<br />See it render.
+    </h2>
+    <p className="text-base mb-10" style={{ color: "var(--bq-text--secondary)", maxWidth: "52ch" }}>
+      Every component below runs live from the actual BEEQ package.
+      Pick a tab and interact with them directly.
+    </p>
+
+    <Tabs>
+      <Tab title="Actions">
+        <CodeLivePreview code={`
+          <div style="display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;padding:.25rem 0">
+            <bq-button appearance="primary">Primary</bq-button>
+            <bq-button appearance="secondary">Secondary</bq-button>
+            <bq-button variant="ghost">Ghost</bq-button>
+            <bq-button variant="danger">Danger</bq-button>
+            <bq-button appearance="link">Link button</bq-button>
+            <bq-button loading>Loading</bq-button>
+            <bq-button disabled>Disabled</bq-button>
+          </div>
+        `}>
+          <CodeGroup>
+            ```html HTML
+            <bq-button appearance="primary">Primary</bq-button>
+            <bq-button appearance="secondary">Secondary</bq-button>
+            <bq-button variant="ghost">Ghost</bq-button>
+            <bq-button variant="danger">Danger</bq-button>
+            <bq-button appearance="link">Link button</bq-button>
+            <bq-button loading>Loading</bq-button>
+            <bq-button disabled>Disabled</bq-button>
+            ```
+
+            ```tsx React
+            import { BqButton } from "@beeq/react";
+
+            <BqButton appearance="primary">Primary</BqButton>
+            <BqButton appearance="secondary">Secondary</BqButton>
+            <BqButton variant="ghost">Ghost</BqButton>
+            <BqButton variant="danger">Danger</BqButton>
+            <BqButton loading>Loading</BqButton>
+            <BqButton disabled>Disabled</BqButton>
+            ```
+
+            ```ts Angular
+            // import { BqButtonComponent } from "@beeq/angular/standalone";
+            <bq-button appearance="primary">Primary</bq-button>
+            <bq-button appearance="secondary">Secondary</bq-button>
+            <bq-button variant="ghost">Ghost</bq-button>
+            <bq-button variant="danger">Danger</bq-button>
+            <bq-button [loading]="isLoading">Loading</bq-button>
+            <bq-button [disabled]="true">Disabled</bq-button>
+            ```
+
+            ```ts Vue
+            import { BqButton } from "@beeq/vue";
+
+            <BqButton appearance="primary">Primary</BqButton>
+            <BqButton appearance="secondary">Secondary</BqButton>
+            <BqButton variant="ghost">Ghost</BqButton>
+            <BqButton variant="danger">Danger</BqButton>
+            <BqButton :loading="true">Loading</BqButton>
+            ```
+          </CodeGroup>
+        </CodeLivePreview>
+      </Tab>
+
+      <Tab title="Form">
+        <CodeLivePreview code={`
+          <div style="display:flex;flex-direction:column;gap:1.25rem;max-width:440px;width:100%">
+            <bq-input placeholder="Enter your email" type="email">
+              <label slot="label">Email address</label>
+            </bq-input>
+            <bq-input placeholder="Search components…">
+              <label slot="label">Search</label>
+            </bq-input>
+            <div style="display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center">
+              <bq-checkbox checked>Enable notifications</bq-checkbox>
+              <bq-checkbox>Remember me</bq-checkbox>
+            </div>
+            <div style="display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center">
+              <bq-switch checked>Dark mode</bq-switch>
+              <bq-switch>Auto-save</bq-switch>
+            </div>
+          </div>
+        `}>
+          <CodeGroup>
+            ```html HTML
+            <bq-input placeholder="Enter your email" type="email">
+              <label slot="label">Email address</label>
+            </bq-input>
+            <bq-checkbox checked>Enable notifications</bq-checkbox>
+            <bq-switch checked>Dark mode</bq-switch>
+            ```
+
+            ```tsx React
+            import { BqInput, BqCheckbox, BqSwitch } from "@beeq/react";
+
+            <BqInput placeholder="Enter your email" type="email">
+              <label slot="label">Email address</label>
+            </BqInput>
+            <BqCheckbox checked>Enable notifications</BqCheckbox>
+            <BqSwitch checked>Dark mode</BqSwitch>
+            ```
+
+            ```ts Vue
+            import { BqInput, BqCheckbox, BqSwitch } from "@beeq/vue";
+
+            <BqInput placeholder="Enter your email" type="email">
+              <label slot="label">Email address</label>
+            </BqInput>
+            <BqCheckbox checked>Enable notifications</BqCheckbox>
+            <BqSwitch checked>Dark mode</BqSwitch>
+            ```
+          </CodeGroup>
+        </CodeLivePreview>
+      </Tab>
+
+      <Tab title="Feedback">
+        <CodeLivePreview code={`
+          <div style="display:flex;flex-direction:column;gap:1.5rem;align-items:flex-start;width:100%;max-width:520px">
+            <div style="display:flex;gap:.65rem;flex-wrap:wrap;align-items:center">
+              <bq-badge>New</bq-badge>
+              <bq-badge appearance="warning">Beta</bq-badge>
+              <bq-badge appearance="success">Stable</bq-badge>
+              <bq-badge appearance="error">Deprecated</bq-badge>
+              <bq-badge appearance="info">Info</bq-badge>
+            </div>
+            <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center">
+              <bq-status type="success">Online</bq-status>
+              <bq-status type="warning">Degraded</bq-status>
+              <bq-status type="error">Offline</bq-status>
+              <bq-status type="info">Maintenance</bq-status>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:.75rem;width:100%">
+              <div style="display:flex;align-items:center;gap:.75rem">
+                <span style="font-size:.8rem;width:80px;opacity:.7">Complete</span>
+                <bq-progress value="100" style="flex:1"></bq-progress>
+              </div>
+              <div style="display:flex;align-items:center;gap:.75rem">
+                <span style="font-size:.8rem;width:80px;opacity:.7">In progress</span>
+                <bq-progress value="65" style="flex:1"></bq-progress>
+              </div>
+              <div style="display:flex;align-items:center;gap:.75rem">
+                <span style="font-size:.8rem;width:80px;opacity:.7">Failed</span>
+                <bq-progress value="30" type="error" style="flex:1"></bq-progress>
+              </div>
+            </div>
+            <div style="display:flex;gap:1.25rem;align-items:center">
+              <bq-spinner></bq-spinner>
+              <bq-spinner size="small"></bq-spinner>
+              <span style="font-size:.8rem;opacity:.6">Loading states</span>
+            </div>
+          </div>
+        `}>
+          <CodeGroup>
+            ```html HTML
+            <bq-badge appearance="success">Stable</bq-badge>
+            <bq-status type="success">Online</bq-status>
+            <bq-progress value="65"></bq-progress>
+            <bq-progress value="30" type="error"></bq-progress>
+            <bq-spinner size="small"></bq-spinner>
+            ```
+
+            ```tsx React
+            import { BqBadge, BqStatus, BqProgress, BqSpinner } from "@beeq/react";
+
+            <BqBadge appearance="success">Stable</BqBadge>
+            <BqStatus type="success">Online</BqStatus>
+            <BqProgress value={65} />
+            <BqProgress value={30} type="error" />
+            <BqSpinner size="small" />
+            ```
+          </CodeGroup>
+        </CodeLivePreview>
+      </Tab>
+
+      <Tab title="Display">
+        <CodeLivePreview code={`
+          <div style="display:flex;flex-direction:column;gap:1.5rem;align-items:flex-start;width:100%;max-width:520px">
+            <div style="display:flex;gap:.65rem;align-items:center;flex-wrap:wrap">
+              <bq-avatar initials="BQ" style="--bq-avatar--background:linear-gradient(135deg,#6366f1,#a855f7)"></bq-avatar>
+              <bq-avatar initials="AL" style="--bq-avatar--background:linear-gradient(135deg,#3b82f6,#06b6d4)"></bq-avatar>
+              <bq-avatar initials="MR" style="--bq-avatar--background:linear-gradient(135deg,#a855f7,#ec4899)"></bq-avatar>
+              <bq-avatar size="small" initials="SP" style="--bq-avatar--background:linear-gradient(135deg,#10b981,#3b82f6)"></bq-avatar>
+              <bq-avatar size="xsmall" initials="JK" style="--bq-avatar--background:linear-gradient(135deg,#f97316,#eab308)"></bq-avatar>
+            </div>
+            <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+              <bq-tag>Design System</bq-tag>
+              <bq-tag removable>Web Components</bq-tag>
+              <bq-tag removable>StencilJS</bq-tag>
+              <bq-tag size="small">TypeScript</bq-tag>
+              <bq-tag size="small" removable>Open Source</bq-tag>
+            </div>
+            <div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:center">
+              <bq-icon name="heart" size="22" style="color:#f43f5e"></bq-icon>
+              <bq-icon name="star" size="22" style="color:#fbbf24"></bq-icon>
+              <bq-icon name="rocket-launch" size="22" style="color:#818cf8"></bq-icon>
+              <bq-icon name="github-logo" size="22"></bq-icon>
+              <bq-icon name="lightning" size="22" style="color:#f97316"></bq-icon>
+              <bq-icon name="shield-check" size="22" style="color:#10b981"></bq-icon>
+              <bq-icon name="sparkle" size="22" style="color:#a855f7"></bq-icon>
+            </div>
+            <bq-divider dashed></bq-divider>
+            <div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:center">
+              <bq-slider value="60" style="width:180px"></bq-slider>
+              <span style="font-size:.8rem;opacity:.6">Range slider</span>
+            </div>
+          </div>
+        `}>
+          <CodeGroup>
+            ```html HTML
+            <bq-avatar initials="BQ"></bq-avatar>
+            <bq-tag removable>Web Components</bq-tag>
+            <bq-icon name="heart" size="22"></bq-icon>
+            <bq-slider value="60"></bq-slider>
+            <bq-divider dashed></bq-divider>
+            ```
+
+            ```tsx React
+            import { BqAvatar, BqTag, BqIcon, BqSlider, BqDivider } from "@beeq/react";
+
+            <BqAvatar initials="BQ" />
+            <BqTag removable>Web Components</BqTag>
+            <BqIcon name="heart" size="22" />
+            <BqSlider value={60} />
+            <BqDivider dashed />
+            ```
+          </CodeGroup>
+        </CodeLivePreview>
+      </Tab>
+    </Tabs>
+  </div>
+</div>
+
+{/* ══════════════════════════════════════════════════════
+    WHY BEEQ — STAT GRID
+══════════════════════════════════════════════════════ */}
+
+<div className="px-6 py-20" style={{ borderBottom: "1px solid var(--bq-stroke--primary)" }}>
+  <div className="max-w-6xl mx-auto">
+    <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-0 flex items-center gap-2" style={{ color: "var(--bq-text--brand)" }}>
+      <Icon icon="circle-question" /> Why BEEQ
+    </p>
+    <h2 className="text-3xl lg:text-4xl font-black tracking-tight leading-tight mb-3" style={{ color: "var(--bq-text--primary)" }}>
+      One system.<br />Every product. Every team.
+    </h2>
+    <p className="text-base mb-12" style={{ color: "var(--bq-text--secondary)", maxWidth: "52ch" }}>
+      BEEQ gives you the building blocks to ship great UIs faster — with consistency, accessibility,
+      and developer experience baked in from day one.
+    </p>
+
+    <div
+      className="grid grid-cols-1 sm:grid-cols-2 rounded-2xl overflow-hidden border"
+      style={{ borderColor: "var(--bq-stroke--primary)" }}
+    >
+      <div className="p-10 border-b border-r" style={{ borderColor: "var(--bq-stroke--primary)" }}>
+        <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-1.5" style={{ color: "var(--bq-text--tertiary)" }}>
+          <Icon icon="layer-group" /> Consistency
+        </p>
+        <span className="block text-7xl font-black leading-none mb-3" style={{ background: "linear-gradient(135deg,#6366f1,#a855f7)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>ONE</span>
+        <p className="text-base font-bold mb-1 mt-0">Source of truth, every product</p>
+        <p className="text-sm mt-0" style={{ color: "var(--bq-text--secondary)" }}>
+          Build once, use everywhere. Components encode your design decisions so every product
+          looks and behaves consistently — across every team and brand.
+        </p>
+      </div>
+
+      <div className="p-10 border-b" style={{ borderColor: "var(--bq-stroke--primary)" }}>
+        <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-1.5" style={{ color: "var(--bq-text--tertiary)" }}>
+          <Icon icon="bolt" /> Efficiency
+        </p>
+        <span className="block text-7xl font-black leading-none mb-3" style={{ background: "linear-gradient(135deg,#3b82f6,#06b6d4)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>5min</span>
+        <p className="text-base font-bold mb-1 mt-0">From zero to your first component</p>
+        <p className="text-sm mt-0" style={{ color: "var(--bq-text--secondary)" }}>
+          Add two CDN links to any HTML page and you're rendering real components. No bundler,
+          no CLI, no configuration required to get started.
+        </p>
+      </div>
+
+      <div className="p-10 border-r" style={{ borderColor: "var(--bq-stroke--primary)" }}>
+        <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-1.5" style={{ color: "var(--bq-text--tertiary)" }}>
+          <Icon icon="palette" /> Scalability
+        </p>
+        <span className="block text-7xl font-black leading-none mb-3" style={{ background: "linear-gradient(135deg,#a855f7,#ec4899)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>∞</span>
+        <p className="text-base font-bold mb-1 mt-0">Infinite brands, one codebase</p>
+        <p className="text-sm mt-0" style={{ color: "var(--bq-text--secondary)" }}>
+          CSS tokens and custom properties let any team go fully white-label — swap colors,
+          typography, and radius without ever forking or rebuilding components.
+        </p>
+      </div>
+
+      <div className="p-10">
+        <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-1.5" style={{ color: "var(--bq-text--tertiary)" }}>
+          <Icon icon="universal-access" /> Accessibility
+        </p>
+        <span className="block text-7xl font-black leading-none mb-3" style={{ background: "linear-gradient(135deg,#10b981,#3b82f6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>AA</span>
+        <p className="text-base font-bold mb-1 mt-0">WCAG 2.1 AA by default</p>
+        <p className="text-sm mt-0" style={{ color: "var(--bq-text--secondary)" }}>
+          Keyboard navigation, ARIA semantics, and screen reader support aren't add-ons —
+          they're baked into every component from day one.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{/* ══════════════════════════════════════════════════════
+    COMPARISON TABLE
+══════════════════════════════════════════════════════ */}
+
+<div className="px-6 py-16" style={{ borderBottom: "1px solid var(--bq-stroke--primary)" }}>
+  <div className="max-w-6xl mx-auto">
+    <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-0 flex items-center gap-2" style={{ color: "var(--bq-text--brand)" }}>
+      <Icon icon="scale-balanced" /> Comparison
+    </p>
+    <h2 className="text-3xl lg:text-4xl font-black tracking-tight leading-tight mb-3" style={{ color: "var(--bq-text--primary)" }}>
+      BEEQ vs{" "}
+      <span style={{ background: "linear-gradient(135deg,#6366f1,#a855f7)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+        typical
+      </span>{" "}
+      UI libraries.
+    </h2>
+    <p className="text-base mb-10" style={{ color: "var(--bq-text--secondary)", maxWidth: "52ch" }}>
+      What you get out of the box compared to off-the-shelf component libraries.
+    </p>
+
+    <div className="rounded-2xl overflow-hidden border" style={{ borderColor: "var(--bq-stroke--primary)" }}>
+      <div className="grid grid-cols-3">
+        <div className="p-4 text-xs font-bold uppercase tracking-widest" style={{ color: "var(--bq-text--tertiary)", borderBottom: "1px solid var(--bq-stroke--primary)", borderRight: "1px solid var(--bq-stroke--primary)" }}>Feature</div>
+        <div className="p-4 text-xs font-bold uppercase tracking-widest text-center" style={{ color: "#818cf8", background: "rgba(99,102,241,.08)", borderBottom: "1px solid var(--bq-stroke--primary)", borderRight: "1px solid var(--bq-stroke--primary)" }}>BEEQ</div>
+        <div className="p-4 text-xs font-bold uppercase tracking-widest text-center" style={{ color: "var(--bq-text--tertiary)", borderBottom: "1px solid var(--bq-stroke--primary)" }}>Typical UI library</div>
+      </div>
+      {[
+        ["Branding",               "White-label by default",    "Often opinionated"],
+        ["Framework support",      "Web components + wrappers", "Usually tied to one"],
+        ["Theming",                "Token-driven, CSS variables","Varies, often limited"],
+        ["Integrations",           "Tailored, low-level ready", "None"],
+        ["Community",              "Open source, welcoming",    "Varies"],
+        ["Enterprise scalability", "✓ Included",                "✗ Varies"],
+        ["Accessibility baked in", "✓ Included",                "✗ Varies"],
+      ].map(([feature, beeq, other], i, arr) => (
+        <div key={feature} className="grid grid-cols-3" style={{ borderBottom: i < arr.length - 1 ? "1px solid var(--bq-stroke--primary)" : "none" }}>
+          <div className="p-4 text-sm" style={{ color: "var(--bq-text--secondary)", borderRight: "1px solid var(--bq-stroke--primary)" }}>{feature}</div>
+          <div className="p-4 text-sm font-medium text-center" style={{ color: "#a5b4fc", background: "rgba(99,102,241,.04)", borderRight: "1px solid var(--bq-stroke--primary)" }}>{beeq}</div>
+          <div className="p-4 text-sm text-center" style={{ color: "var(--bq-text--tertiary)" }}>{other}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+{/* ══════════════════════════════════════════════════════
+    CTA
+══════════════════════════════════════════════════════ */}
+
+<div
+  className="relative px-6 py-24 text-center overflow-hidden"
+  style={{ background: "var(--bq-background--secondary)" }}
+>
+  <div
+    className="absolute inset-0 pointer-events-none"
+    style={{ background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(99,102,241,.12) 0%, transparent 70%)" }}
+  />
+  <h2 className="text-4xl lg:text-5xl font-black tracking-tighter leading-none mb-4" style={{ color: "var(--bq-text--primary)" }}>
+    Start building<br />
+    <span style={{ background: "linear-gradient(135deg,#6366f1,#a855f7)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+      today.
+    </span>
+  </h2>
+  <p className="text-base mb-6 mx-auto" style={{ color: "var(--bq-text--secondary)", maxWidth: "44ch" }}>
+    One install. A production-grade design system. Ready for your next project.
+  </p>
+
+  {/* Install block repeated */}
+  <div
+    className="inline-flex items-center gap-3 rounded-xl px-5 py-3 mb-8 font-mono text-sm"
+    style={{ background: "var(--bq-background--primary)", border: "1px solid var(--bq-stroke--primary)" }}
+  >
+    <Icon icon="terminal" style={{ color: "#818cf8" }} />
+    <code style={{ color: "var(--bq-text--primary)", background: "none", padding: 0 }}>
+      npm install @beeq/core
+    </code>
+  </div>
+
+  <div className="flex justify-center flex-wrap gap-3">
+    <a
+      href="/getting-started/introduction"
+      className="inline-flex px-6 py-3 rounded-lg text-base font-semibold text-white no-underline transition-opacity hover:opacity-90"
+      style={{ background: "linear-gradient(135deg,#6366f1,#a855f7)" }}
+    >
+      <span className="flex items-center gap-2"><Icon icon="rocket" /> Get started</span>
+    </a>
+    <a
+      href="https://github.com/Endava/BEEQ"
+      target="_blank"
+      className="inline-flex px-6 py-3 rounded-lg text-sm font-medium no-underline transition-opacity hover:opacity-70"
+      style={{ color: "var(--bq-text--secondary)" }}
+    >
+      <span className="flex items-center gap-2"><Icon icon="github" /> Star on GitHub</span>
+    </a>
+  </div>
+</div>
+
+{/* ══════════════════════════════════════════════════════
+    RESOURCES
+══════════════════════════════════════════════════════ */}
+
+<div className="px-6 py-14" style={{ borderBottom: "1px solid var(--bq-stroke--primary)" }}>
+  <div className="max-w-6xl mx-auto">
+    <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-0 flex items-center gap-2" style={{ color: "var(--bq-text--brand)" }}>
+      <Icon icon="compass" /> Resources
+    </p>
+    <h2 className="text-3xl lg:text-4xl font-black tracking-tight leading-tight mb-3" style={{ color: "var(--bq-text--primary)" }}>
+      Docs, tools,<br />and community.
+    </h2>
+    <p className="text-base mb-10" style={{ color: "var(--bq-text--secondary)" }}>
+      Everything you need to ship, all in one place.
+    </p>
+    <CardGroup cols={3}>
+      <Card title="Documentation" icon="book-open" href="/getting-started/introduction">
+        Guides, API reference, and recipes to get you up and running fast.
+      </Card>
+      <Card title="Storybook" icon="book-bookmark" href="https://storybook.beeq.design">
+        Interactive component explorer to preview and prototype with BEEQ.
+      </Card>
+      <Card title="Component Library" icon="puzzle-piece" href="/components/overview">
+        Browse all 37 production-ready components with live examples.
+      </Card>
+      <Card title="Theming" icon="palette" href="/theming/overview">
+        Learn how to fully customize BEEQ with CSS tokens for your brand.
+      </Card>
+      <Card title="GitHub" icon="github" href="https://github.com/Endava/BEEQ">
+        Source code, issues, and discussions. Open source, open development.
+      </Card>
+      <Card title="Changelog" icon="clock-rotate-left" href="/releases/changelog">
+        Stay up to date with what's new in every release.
+      </Card>
+    </CardGroup>
+  </div>
+</div>
