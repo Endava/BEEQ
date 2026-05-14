@@ -1,0 +1,688 @@
+---
+title: Changelog
+description: New features, bug fixes, and improvements to the BEEQ Design System.
+rss: true
+---
+
+<Update label="v1.12.3" description="February 2026">
+  ### Documentation 📚
+
+  - **Storybook:** re-enable the HTML story code preview panel ([997494e8](https://github.com/Endava/BEEQ/commit/997494e8)).
+
+  ### Chore ⚙️
+
+  - Enhanced `esm-loader.js` to dynamically resolve ESM module URLs from CDN version strings ([1a487926](https://github.com/Endava/BEEQ/commit/1a487926)).
+  - Dependency bumps: `@stencil/core` → v4.42.0, Storybook → v10.2.7, Autoprefixer → v10.4.24.
+  - Reverted an experimental `jsxImportSource` tsconfig change that caused regressions ([63651f8b](https://github.com/Endava/BEEQ/commit/63651f8b)).
+</Update>
+
+<Update label="v1.12.2" description="January 2026">
+  ### Bug Fixes 🐞
+
+  - **Styles:** disabled constructable stylesheets to restore compatibility in affected environments ([76587610](https://github.com/Endava/BEEQ/commit/76587610)).
+
+  ### Chore ⚙️
+
+  - Dependency bumps: Angular → v21.1.2, React → v19.2.4, Storybook → v10.2.1, NX → v22.4.3.
+</Update>
+
+<Update label="v1.12.1" description="January 2026">
+  ### Chore ⚙️
+
+  - Synchronized peer dependency versions and updated the pnpm lock file ([f531a644](https://github.com/Endava/BEEQ/commit/f531a644)).
+</Update>
+
+<Update label="v1.12.0" description="January 2026">
+  Two new layout options in this release: an **icon-only square button** for compact toolbars and action bars, and **vertical orientation for Steps** — ideal for wizard flows and multi-step forms where step labels are long.
+
+  ### Features ⚡️
+
+  - **Button:** new icon-only variant with a square 1:1 aspect-ratio ([#1570](https://github.com/Endava/BEEQ/pull/1570)).
+  - **Steps / Step Item:** added `orientation` property with support for a vertical layout ([#1566](https://github.com/Endava/BEEQ/pull/1566)).
+
+  ### Bug Fixes 🐞
+
+  - **Datepicker:** resolved a race condition in the Cally library loading path ([#1604](https://github.com/Endava/BEEQ/pull/1604)).
+  - **Select:** prevented tag removal on Backspace in multi-select when the text input is non-empty ([#1597](https://github.com/Endava/BEEQ/pull/1597)).
+
+  ### Refactor 🛠️
+
+  - **Datepicker:** extracted utilities for better performance and scalability; updated Cally library ([#1603](https://github.com/Endava/BEEQ/pull/1603)).
+
+  ### Chore ⚙️
+
+  - Major dependency bumps: Angular → v21, Node.js → v24, Vite → v7, NX → v22, Storybook → v10, Commitlint → v20.
+
+  ### ❤️ Thank You
+
+  - [Dabiel González Ramos](https://github.com/dgonzalezr)
+</Update>
+
+<Update label="v1.11.2" description="December 2025">
+  ### Bug Fixes 🐞
+
+  - **Tag:** fixed an unresponsive close-button click on the removable variant, and allowed the `hidden` attribute unconditionally ([#1563](https://github.com/Endava/BEEQ/pull/1563)).
+</Update>
+
+<Update label="v1.11.1" description="November 2025">
+  ### Features ⚡️
+
+  - **Datepicker:** added support for dot-separated date formats `DD.MM.YYYY` / `MM.DD.YYYY` ([#1558](https://github.com/Endava/BEEQ/pull/1558)).
+  - **Option:** added `displayValue` prop to `bq-option` for custom label rendering in multi-select ([#1531](https://github.com/Endava/BEEQ/pull/1531)).
+
+  ### Bug Fixes 🐞
+
+  - **Accordion:** corrected medium-size corner radius to match the Figma design spec ([#1537](https://github.com/Endava/BEEQ/pull/1537)).
+  - **Alert / Drawer:** fixed a regression where `hide()` was not called correctly on close-button click ([c38282b](https://github.com/Endava/BEEQ/commit/c38282b)).
+  - **Date Picker:** clamped out-of-range input values to the nearest `min`/`max` boundary ([#1546](https://github.com/Endava/BEEQ/pull/1546)).
+  - **Datepicker:** now fires the change event for invalid date format inputs as well ([#1544](https://github.com/Endava/BEEQ/pull/1544)).
+  - **Select:** the search filter now matches against both the label and the value, case-insensitively ([#1538](https://github.com/Endava/BEEQ/pull/1538)).
+  - **Side Menu:** restored visibility of slotted button icons in the footer on hover for `brand` and `inverse` variants ([#1547](https://github.com/Endava/BEEQ/pull/1547)).
+  - **Spinner:** corrected a typo in a label-position type value ([#1543](https://github.com/Endava/BEEQ/pull/1543)).
+
+  ### Chore ⚙️
+
+  - Migrated linting and formatting from ESLint + Prettier to [Biome](https://biomejs.dev/) ([#1536](https://github.com/Endava/BEEQ/pull/1536)).
+  - Upgraded NX → v22, Storybook → v10.
+</Update>
+
+<Update label="v1.11.0" description="October 2025">
+  ### Features ⚡️
+
+  - **BEEQ Tailwind CSS:** added a custom `flattenColorPalette` implementation for Tailwind CSS v4 compatibility ([#1533](https://github.com/Endava/BEEQ/pull/1533)).
+
+  ### Bug Fixes 🐞
+
+  - **Assets Path:** `data-beeq` path is now used as-is when provided ([#1532](https://github.com/Endava/BEEQ/pull/1532)).
+  - **Radio Group:** `bqFocus` and `bqBlur` events are now emitted exactly once ([#1511](https://github.com/Endava/BEEQ/pull/1511)).
+  - **Select:** improved value initialisation and guarded against missing input elements ([#1510](https://github.com/Endava/BEEQ/pull/1510)).
+
+  ### ❤️ Thank You
+
+  - [Bogdan Bosca](https://github.com/endv-bogdanb)
+  - [Dabiel González Ramos](https://github.com/dgonzalezr)
+</Update>
+
+<Update label="v1.10.0" description="August 2025">
+  Three quality-of-life wins in this release: overlay panels now lock body scroll (no more content shifting behind an open Dropdown or Select), BEEQ design tokens apply directly to native `<table>` elements with no wrapper component needed, and the Icon's SVG fetcher now deduplicates concurrent requests to reduce network overhead.
+
+  ### Features ⚡️
+
+  - **Dropdown / Select:** the document body scroll is now locked while an overlay panel is open ([#1483](https://github.com/Endava/BEEQ/pull/1483)).
+  - **Table:** added base styles for native HTML table elements ([#1493](https://github.com/Endava/BEEQ/pull/1493)).
+  - **Tooltip:** the tooltip now auto-hides on scroll unless `alwaysVisible` is set ([#1482](https://github.com/Endava/BEEQ/pull/1482)).
+  - **Tooltip:** added `preventDefault` support for `click`, `focus`, and `hover` trigger events ([#1507](https://github.com/Endava/BEEQ/pull/1507)).
+
+  ### Bug Fixes 🐞
+
+  - **BEEQ Tailwind CSS:** improved specificity and default behavior for light and dark mode tokens ([#1486](https://github.com/Endava/BEEQ/pull/1486)).
+  - **Date Picker:** ensured consistent date selection across time zones ([#1506](https://github.com/Endava/BEEQ/pull/1506)).
+  - **Radio Group:** a radio group can now receive focus when no item is checked ([#1503](https://github.com/Endava/BEEQ/pull/1503)).
+  - **Side Menu Item:** fixed active selection not triggering on Enter or Space key press ([#1501](https://github.com/Endava/BEEQ/pull/1501)).
+  - **Slider:** fixed progress-track rendering when `min` is a negative value ([#1487](https://github.com/Endava/BEEQ/pull/1487)).
+  - **Steps / Step Item:** improved accessibility and interaction behavior ([#1502](https://github.com/Endava/BEEQ/pull/1502)).
+
+  ### Refactor 🛠️
+
+  - **BEEQ Tailwind CSS:** replaced the external `tailwindcss-theme-swapper` plugin with a first-party implementation ([#1481](https://github.com/Endava/BEEQ/pull/1481)).
+  - **Icon:** improved SVG fetching with request deduplication, caching, and security validation ([#1485](https://github.com/Endava/BEEQ/pull/1485)).
+
+  ### ❤️ Thank You
+
+  - [Bogdan Bosca](https://github.com/endv-bogdanb)
+  - [Dabiel González Ramos](https://github.com/dgonzalezr)
+</Update>
+
+<Update label="v1.9.0" description="April 2025">
+  The workspace migrates from NPM to **pnpm** in this release, significantly reducing disk usage and install times across the monorepo. On the component side, Select gains a real-time `bqInput` event for filtering feedback and a `reset()` method to restore a previous value.
+
+  ### Features ⚡️
+
+  - **Select:** added `bqInput` event for real-time input value changes during filtering ([#1476](https://github.com/Endava/BEEQ/pull/1476)).
+  - **Select:** added a `reset()` method to restore the component to a previous value ([#1477](https://github.com/Endava/BEEQ/pull/1477)).
+
+  ### Bug Fixes 🐞
+
+  - **Dialog:** changed positioning from `absolute` to `fixed` for correct stacking context ([#1464](https://github.com/Endava/BEEQ/pull/1464)).
+  - **Select:** value clearing now uses an empty string instead of `undefined` ([#1475](https://github.com/Endava/BEEQ/pull/1475)).
+
+  ### Chore ⚙️
+
+  - Workspace migrated from NPM to **pnpm** ([#1442](https://github.com/Endava/BEEQ/pull/1442)).
+
+  ### ❤️ Thank You
+
+  - [Dabiel González Ramos](https://github.com/dgonzalezr)
+</Update>
+
+<Update label="v1.8.4" description="February 2025">
+  ### Bug Fixes 🐞
+
+  - **React SSR:** replaced the dynamic import for the Cally calendar with a static import to fix Server Side Rendering ([#1431](https://github.com/Endava/BEEQ/pull/1431)).
+</Update>
+
+<Update label="v1.8.3" description="January 2025">
+  ### Chore ⚙️
+
+  - Dependency bumps: Stencil vue-output-target → v0.9.4, NX → v20.4.0, React → v19 (major).
+</Update>
+
+<Update label="v1.8.2" description="January 2025">
+  ### Refactor 🛠️
+
+  - **Accordion:** replaced the `calc-size()` open/close animation with the `interpolate-size` approach for better browser compatibility ([#1393](https://github.com/Endava/BEEQ/pull/1393)).
+
+  ### Chore ⚙️
+
+  - Major dependency bumps: Vite → v6, NX → v20, Node.js → v22.
+</Update>
+
+<Update label="v1.8.1" description="December 2024">
+  ### Chore ⚙️
+
+  - Fixed CI publish workflow; dependency bumps: Puppeteer → v23.10.4, Vite → v5.4.11.
+</Update>
+
+<Update label="v1.8.0" description="December 2024">
+  The biggest release of 2024. All BEEQ form controls are now **natively form-associated** — their values appear in `FormData`, participate in browser validation, and submit with the parent `<form>` with no extra JavaScript wiring. `@beeq/react` also gains full **SSR support**, making it compatible with Next.js App Router and Remix server components.
+
+  ### Features ⚡️
+
+  - **Checkbox / Date Picker / Input / Radio / Select / Slider / Switch / Textarea:** enabled native form-association support across all form controls ([#1213](https://github.com/Endava/BEEQ/pull/1213), [#1362](https://github.com/Endava/BEEQ/pull/1362), [#1211](https://github.com/Endava/BEEQ/pull/1211), [#1353](https://github.com/Endava/BEEQ/pull/1353), [#1212](https://github.com/Endava/BEEQ/pull/1212), [#1369](https://github.com/Endava/BEEQ/pull/1369), [#1368](https://github.com/Endava/BEEQ/pull/1368), [#1370](https://github.com/Endava/BEEQ/pull/1370)).
+  - **BEEQ Angular:** enabled `inlineProperties` configuration ([#1330](https://github.com/Endava/BEEQ/pull/1330)).
+  - **React:** added Server Side Rendering (SSR) support ([#1216](https://github.com/Endava/BEEQ/pull/1216)).
+  - **Tab:** added `horizontal` and `vertical` orientation support ([#1091](https://github.com/Endava/BEEQ/pull/1091)).
+
+  ### Bug Fixes 🐞
+
+  - **Alert:** made the close icon customizable via a dedicated slot ([#1230](https://github.com/Endava/BEEQ/pull/1230)).
+  - **Assets:** SVG base path is now persisted on the window object across navigation ([#1218](https://github.com/Endava/BEEQ/pull/1218)).
+  - **Button:** removed extraneous `role` and `title` attributes from the loading icon ([#1351](https://github.com/Endava/BEEQ/pull/1351)).
+  - **Date Picker:** improved hover and cursor styles for date ranges, disabled, and today states ([#1356](https://github.com/Endava/BEEQ/pull/1356)).
+  - **Drawer:** switched to `x-bold` icon and moved the close button slot inside `<bq-button>` ([#1210](https://github.com/Endava/BEEQ/pull/1210)).
+  - **Icon:** deduplicated concurrent icon requests ([#1209](https://github.com/Endava/BEEQ/pull/1209)).
+  - **Input:** improved `required` validation handling on form submit when the value is empty ([#1371](https://github.com/Endava/BEEQ/pull/1371)).
+  - **Select:** fixed `displayValue` not shown when an initial value is set programmatically ([#1217](https://github.com/Endava/BEEQ/pull/1217)).
+
+  ### Refactor 🛠️
+
+  - **BEEQ Tailwind:** moved declarative tokens to their corresponding Tailwind core plugin ([#1315](https://github.com/Endava/BEEQ/pull/1315)).
+  - **Notification / Toast:** portal elements are now mounted from `connectedCallback()` lifecycle ([#1236](https://github.com/Endava/BEEQ/pull/1236), [#1237](https://github.com/Endava/BEEQ/pull/1237)).
+
+  ### Chore ⚙️
+
+  - Added Custom Elements Manifest JSON files ([#1352](https://github.com/Endava/BEEQ/pull/1352)).
+  - Migrated ESLint to v9 with a flat config format ([#1297](https://github.com/Endava/BEEQ/pull/1297)).
+  - Configured `nx release` for versioning and publishing ([#1382](https://github.com/Endava/BEEQ/pull/1382)).
+
+  ### ❤️ Thank You
+
+  - [Bogdan Bosca](https://github.com/endv-bogdanb)
+  - [Dabiel González Ramos](https://github.com/dgonzalezr)
+  - [Lungan Catalin](https://github.com/Cata1989)
+</Update>
+
+<Update label="v1.7.0" description="August 2024">
+  ### Features ⚡️
+
+  - **Icon:** deprecated the `weight` property ([#1183](https://github.com/Endava/BEEQ/issues/1183)).
+</Update>
+
+<Update label="v1.6.1" description="July 2024">
+  ### Bug Fixes 🐞
+
+  - **BEEQ Angular / React / Vue:** fixed a missing `@stencil/core` peer dependency in framework output targets ([#1172](https://github.com/Endava/BEEQ/issues/1172)).
+
+  ### Documentation 📚
+
+  - **Storybook:** added `Welcome` and `Foundation` sections as standalone MDX stories ([#1173](https://github.com/Endava/BEEQ/issues/1173)).
+  - **Storybook:** added a Changelog page ([#1174](https://github.com/Endava/BEEQ/issues/1174)).
+</Update>
+
+<Update label="v1.6.0" description="July 2024">
+  ### Features ⚡️
+
+  - **Drawer:** deprecated `placement` prop in favour of the new `position` property ([#1110](https://github.com/Endava/BEEQ/issues/1110)).
+  - **Icon:** added `--bq-icon--direction` CSS custom property to automatically flip icons in RTL contexts ([#1156](https://github.com/Endava/BEEQ/issues/1156)).
+  - **Page Title:** introduced the new `bq-page-title` component ([#1085](https://github.com/Endava/BEEQ/issues/1085)).
+  - **Select:** added support for custom tag display in the multiple-selection variant ([#1093](https://github.com/Endava/BEEQ/issues/1093)).
+
+  ### Bug Fixes 🐞
+
+  - **Date Picker:** incomplete range selections are now cleared correctly ([#1074](https://github.com/Endava/BEEQ/issues/1074)).
+  - **Divider:** synchronized default values with the Figma design spec ([#1160](https://github.com/Endava/BEEQ/issues/1160)).
+  - **Drawer:** open/close animation is now synchronized with the content direction ([#1155](https://github.com/Endava/BEEQ/issues/1155)).
+</Update>
+
+<Update label="v1.5.1" description="June 2024">
+  ### Bug Fixes 🐞
+
+  - **Input:** fixed a typo in the CSS variables for padding-start/padding-end ([#1086](https://github.com/Endava/BEEQ/issues/1086)).
+</Update>
+
+<Update label="v1.5.0" description="June 2024">
+  ### Features ⚡️
+
+  - **Tokens:** added new `--bq-stroke-*` design tokens for border-width values ([#1062](https://github.com/Endava/BEEQ/issues/1062)).
+
+  ### Bug Fixes 🐞
+
+  - **Beeq Core:** resolved Vite failure to resolve `@beeq/core/dist/*` paths ([#1077](https://github.com/Endava/BEEQ/issues/1077)).
+  - **Date Picker:** fixed missing value accessor and model config for Angular ([#1066](https://github.com/Endava/BEEQ/issues/1066)).
+  - **Slider:** lower value not updated when equal to the upper value ([#1078](https://github.com/Endava/BEEQ/issues/1078)).
+  - **Slider:** range thumbs no longer get stuck when min/max values overlap ([#1075](https://github.com/Endava/BEEQ/issues/1075)).
+
+  ### Chore ⚙️
+
+  - Dependency bumps: Angular → v18 (major), NX → v19, Storybook → v8.1.5, Stencil → v4.18.3, Cally → v0.6.1.
+</Update>
+
+<Update label="v1.4.0" description="May 2024">
+  This release introduces the `bq-date-picker` component — supporting single and date-range selection, keyboard navigation, and locale-aware formatting — alongside a new secondary ghost button variant.
+
+  ### Features ⚡️
+
+  - **Button:** added secondary ghost variant ([#1058](https://github.com/Endava/BEEQ/issues/1058)).
+  - **Date Picker:** introduced the new `bq-date-picker` component ([#1029](https://github.com/Endava/BEEQ/issues/1029)).
+  - **Drawer:** added support for a custom footer divider ([#1060](https://github.com/Endava/BEEQ/issues/1060)).
+
+  ### Refactor 🛠️
+
+  - **Select:** removed redundant CSS rules ([#1057](https://github.com/Endava/BEEQ/issues/1057)).
+
+  ### Chore ⚙️
+
+  - Improved ESM exports and type exports; dependency bumps: Stencil → v4.18.2.
+</Update>
+
+<Update label="v1.3.3" description="May 2024">
+  ### Bug Fixes 🐞
+
+  - **BEEQ Vue:** removed deprecated `applyPolyfills()` call ([#1055](https://github.com/Endava/BEEQ/issues/1055)).
+</Update>
+
+<Update label="v1.3.2" description="May 2024">
+  ### Bug Fixes 🐞
+
+  - **Slider:** model not reflecting value changes when using `ngModel` in Angular ([#1051](https://github.com/Endava/BEEQ/issues/1051)).
+
+  ### Refactor 🛠️
+
+  - **Button:** changed hover background color for the link and text variants ([#1039](https://github.com/Endava/BEEQ/issues/1039)).
+  - **Icon:** removed the usage of the deprecated `Env` from `@stencil/core` ([#1045](https://github.com/Endava/BEEQ/issues/1045)).
+</Update>
+
+<Update label="v1.3.1" description="May 2024">
+  ### Bug Fixes 🐞
+
+  - **Checkbox:** `indeterminate` property was incorrectly typed ([#1036](https://github.com/Endava/BEEQ/issues/1036)).
+  - **Select:** prevented `bqClose` event from propagating further ([#1034](https://github.com/Endava/BEEQ/issues/1034)).
+  - **Select:** tags re-render when value changes externally ([#1037](https://github.com/Endava/BEEQ/issues/1037)).
+  - **Slider:** lower value was being set to the max value ([#1031](https://github.com/Endava/BEEQ/issues/1031)).
+</Update>
+
+<Update label="v1.3.0" description="April 2024">
+  A major Select upgrade: **multi-select** (selected values render as removable tag chips) and **real-time search/filter** are now available. Typing in the Select filters the options list instantly, making long lists much easier to navigate. The Slider also gains an optional tooltip over each thumb.
+
+  ### Features ⚡️
+
+  - **Select:** added support for multiple selection ([#1025](https://github.com/Endava/BEEQ/issues/1025)).
+  - **Select:** added support to search and filter the options list ([#1024](https://github.com/Endava/BEEQ/issues/1024)).
+  - **Slider:** optional tooltip display over slider thumb(s) ([#999](https://github.com/Endava/BEEQ/issues/999)).
+
+  ### Bug Fixes 🐞
+
+  - **Select:** initial value not displayed on component load ([#1017](https://github.com/Endava/BEEQ/issues/1017)).
+  - **Side Menu:** item tooltips not showing correctly when the menu is collapsed ([#1014](https://github.com/Endava/BEEQ/issues/1014)).
+  - **Slider:** range type not rendering correctly when the max value is greater than 10 ([#1004](https://github.com/Endava/BEEQ/issues/1004)).
+  - **Slider:** unable to drag the slider down to `0` ([#996](https://github.com/Endava/BEEQ/issues/996)).
+
+  ### Chore ⚙️
+
+  - Dependency bumps: Storybook → v8, Angular → v17.3.5, NX → v18.3.3, Stencil → v4.16.0, Vite → v5.2.10.
+</Update>
+
+<Update label="v1.2.0" description="April 2024">
+  ### Features ⚡️
+
+  - **Drawer:** introduced the new `bq-drawer` component ([#918](https://github.com/Endava/BEEQ/issues/918)).
+  - **Progress:** introduced the new `bq-progress` component with indeterminate support ([#946](https://github.com/Endava/BEEQ/issues/946), [#967](https://github.com/Endava/BEEQ/issues/967)).
+  - **Tooltip:** added `always-visible` mode to keep the tooltip permanently shown ([#959](https://github.com/Endava/BEEQ/issues/959)).
+
+  ### Bug Fixes 🐞
+
+  - **Accordion:** improved open/close animations and `bqAfterOpen`/`bqAfterClose` event handling ([#951](https://github.com/Endava/BEEQ/issues/951)).
+  - **Dialog:** dialog was closing on Esc when `disable-close-esc-keydown` was enabled ([#979](https://github.com/Endava/BEEQ/issues/979)).
+  - **Dialog:** corrected wrong entry/leave transition position ([#929](https://github.com/Endava/BEEQ/issues/929)).
+
+  ### Chore ⚙️
+
+  - Dependency bumps: Storybook → v8.0.5, Angular → v17.3.2, NX → v18.2.1, Stencil → v4.13.0.
+</Update>
+
+<Update label="v1.1.0" description="March 2024">
+  ### Features ⚡️
+
+  - **Accordion:** added `appearance` and `size` properties to `bq-accordion-group` ([#901](https://github.com/Endava/BEEQ/issues/901)).
+  - **Angular:** added standalone component exports to the `@beeq/angular` output target ([#870](https://github.com/Endava/BEEQ/issues/870)).
+
+  ### Bug Fixes 🐞
+
+  - **Accordion:** incorrect `not-allowed` cursor for the disabled state ([#877](https://github.com/Endava/BEEQ/issues/877)).
+  - **Card:** removed unintended `display: flex` and `position: relative` from the wrapper ([#864](https://github.com/Endava/BEEQ/issues/864)).
+  - **Dropdown:** trigger element is now disabled when the dropdown has `disabled="true"` ([#878](https://github.com/Endava/BEEQ/issues/878)).
+  - **Icon:** replaced `title` attribute with `label` for accessibility ([#880](https://github.com/Endava/BEEQ/issues/880)).
+  - **Slider:** added `not-allowed` cursor for the disabled state ([#879](https://github.com/Endava/BEEQ/issues/879)).
+  - **Theme:** updated the Endava theme font family to reflect the new brand ([#893](https://github.com/Endava/BEEQ/issues/893)).
+  - **Vue:** fixed camelCase events not being listened to on wrapped components ([#921](https://github.com/Endava/BEEQ/issues/921)).
+
+  ### Documentation 📚
+
+  - Updated package names in README files ([8256de3](https://github.com/Endava/BEEQ/commit/8256de3)).
+
+  ### Chore ⚙️
+
+  - Dependency bumps: Storybook → v7.6.15, NX → v18.0.8, Angular → v17.2.x, Stencil → v4.12.5, Chromatic → v11.
+  - Added bug, feature request, and pull request GitHub issue templates ([#904](https://github.com/Endava/BEEQ/issues/904)).
+  - Added a CSS performance improvement: removed massive empty Tailwind CSS property walls ([#913](https://github.com/Endava/BEEQ/issues/913)).
+</Update>
+
+<Update label="v1.0.1" description="February 2024">
+  ### Chore ⚙️
+
+  - Renamed package scope from `@bee-q` to `@beeq` ([#863](https://github.com/Endava/BEEQ/issues/863)).
+  - Dependency bumps: Stencil → v4.12.3.
+</Update>
+
+<Update label="v1.0.0" description="February 2024">
+  ### Breaking Changes
+
+  - **Tokens:** simplified the declarative design tokens — all `hover`, `active`, and `disabled` state tokens have been removed in favour of `color-mix()` ([#835](https://github.com/Endava/BEEQ/issues/835)).
+
+  ### Chore ⚙️
+
+  - Dependency bumps: Storybook → v7.6.17, NX → v18.0.4, Stencil → v4.12.2, Puppeteer → v22.
+</Update>
+
+<Update label="v0.13.0" description="February 2024">
+  ### Features ⚡️
+
+  - **Alert:** added `border` property to support dynamic border-radius changes ([#817](https://github.com/Endava/BEEQ/issues/817)).
+  - **Card:** introduced the new `bq-card` component ([#806](https://github.com/Endava/BEEQ/issues/806)).
+  - **Dialog:** added `border` property to support dynamic border-radius changes ([#818](https://github.com/Endava/BEEQ/issues/818)).
+  - **Notification:** added `border` property to support dynamic border-radius changes ([#819](https://github.com/Endava/BEEQ/issues/819)).
+  - **Toast:** added `border` property to support dynamic border-radius changes ([#820](https://github.com/Endava/BEEQ/issues/820)).
+
+  ### Documentation 📚
+
+  - Updated missing SCSS variable descriptions ([#829](https://github.com/Endava/BEEQ/issues/829)).
+
+  ### Chore ⚙️
+
+  - Dependency bumps: NX → v18 (major), Puppeteer → v22, Storybook → v7.6.14, Angular → v17.1.3, Stencil → v4.10.0.
+</Update>
+
+<Update label="v0.12.0" description="February 2024">
+  ### Features ⚡️
+
+  - **Icon:** added support for a custom `src` attribute and custom assets path ([#742](https://github.com/Endava/BEEQ/issues/742)).
+  - **Select:** added a `clear()` method to programmatically remove the selected value ([#770](https://github.com/Endava/BEEQ/issues/770)).
+  - **Tag:** allowed setting a custom tag color ([#724](https://github.com/Endava/BEEQ/issues/724)).
+
+  ### Bug Fixes 🐞
+
+  - **Accordion:** focus is now skipped when `disabled="true"` ([#741](https://github.com/Endava/BEEQ/issues/741)).
+  - **Alert:** improved open/close animation ([#769](https://github.com/Endava/BEEQ/issues/769)).
+  - **Dialog:** fixed `footerAppearance` typo and improved open/close animations ([#767](https://github.com/Endava/BEEQ/issues/767)).
+  - **Notification:** improved open/close animations ([#768](https://github.com/Endava/BEEQ/issues/768)).
+
+  ### Documentation 📚
+
+  - **Accordion:** added CSS variable descriptions ([#788](https://github.com/Endava/BEEQ/issues/788)).
+  - **Search Input:** added Storybook examples for the search input pattern ([#766](https://github.com/Endava/BEEQ/issues/766)).
+  - **Storybook:** enabled visual tests addon with Chromatic ([#755](https://github.com/Endava/BEEQ/issues/755)).
+
+  ### Chore ⚙️
+
+  - Dependency bumps: NX → v17.3.0, Storybook → v7.6.12, Angular → v17.1.2, Tailwind → v3.4.1, Vite → v5.0.12.
+</Update>
+
+<Update label="v0.11.0" description="January 2024">
+  A landmark release with four new components — Accordion, Alert, Empty State, and Tag — plus the introduction of **`@beeq/beeq-tailwindcss`**: a drop-in Tailwind CSS preset that maps all BEEQ design tokens to utility classes, enabling the design system to be applied directly in markup.
+
+  ### Features ⚡️
+
+  - **Accordion:** introduced `bq-accordion` and `bq-accordion-group` components ([#697](https://github.com/Endava/BEEQ/issues/697)).
+  - **Alert:** introduced the `bq-alert` component ([#675](https://github.com/Endava/BEEQ/issues/675)).
+  - **BEEQ TailwindCSS:** added the `@beeq/beeq-tailwindcss` opinionated Tailwind CSS preset package ([#628](https://github.com/Endava/BEEQ/issues/628)).
+  - **Button:** added `border` property to support border-radius changes ([#709](https://github.com/Endava/BEEQ/issues/709)).
+  - **Empty State:** introduced the `bq-empty-state` component ([#694](https://github.com/Endava/BEEQ/issues/694)).
+  - **Tag:** introduced the `bq-tag` component ([#695](https://github.com/Endava/BEEQ/issues/695)).
+
+  ### Bug Fixes 🐞
+
+  - **Badge:** removed unintended border styles ([#629](https://github.com/Endava/BEEQ/issues/629)).
+  - **Textarea:** exported missing Shadow DOM parts ([#708](https://github.com/Endava/BEEQ/issues/708)).
+
+  ### Documentation 📚
+
+  - Prevented Storybook docs pages from being indexed by crawlers ([61bbe38](https://github.com/Endava/BEEQ/commit/61bbe38)).
+
+  ### Chore ⚙️
+
+  - Added GitHub Pages deploy workflow for Storybook ([#715](https://github.com/Endava/BEEQ/issues/715)).
+  - Dependency bumps: Angular → v17, NX → v17.2.8, Storybook → v7.6.6, Tailwind → v3.4.0, Vite → v5, Stylelint → v16.
+</Update>
+
+<Update label="v0.10.0" description="November 2023">
+  ### Features ⚡️
+
+  - **BEEQ Vue:** added the `@beeq/vue` output target package ([#619](https://github.com/Endava/BEEQ/issues/619)).
+
+  ### Chore ⚙️
+
+  - Dependency bumps: Angular → v16 (major), NX → v17 (major), Storybook → v7.5.2, Stencil → v4.7.0, Node.js → v20.
+</Update>
+
+<Update label="v0.9.0" description="October 2023">
+  This release ships the Steps component and the **Endava theme** — the first non-default theme in BEEQ, demonstrating how the design token layer enables full white-labelling of the component library.
+
+  ### Features ⚡️
+
+  - **Colors:** added new `alt` and `alt-disabled` color tokens ([#505](https://github.com/Endava/BEEQ/issues/505)).
+  - **Steps:** introduced `bq-steps` and `bq-step-item` components ([#532](https://github.com/Endava/BEEQ/issues/532)).
+  - **Theme:** added the Endava theme ([#567](https://github.com/Endava/BEEQ/issues/567)).
+
+  ### Bug Fixes 🐞
+
+  - **Form Inputs:** label containers are now hidden when no slot content is provided ([#569](https://github.com/Endava/BEEQ/issues/569)).
+  - **Tooltip:** added `z-index` to the tooltip panel to prevent layering issues ([#570](https://github.com/Endava/BEEQ/issues/570)).
+
+  ### Chore ⚙️
+
+  - Dependency bumps: NX → v16.9.1, Storybook → v7.4.6, Stencil → v4.3.0, Node.js → v18.18.2.
+</Update>
+
+<Update label="v0.8.2" description="September 2023">
+  ### Bug Fixes 🐞
+
+  - **Debounce:** `cancel` is not a function error resolved ([#502](https://github.com/Endava/BEEQ/issues/502)).
+  - **ESM Loader:** fixed wrong script `src` path in the ESM loader ([c76de5a](https://github.com/Endava/BEEQ/commit/c76de5a)).
+
+  ### Documentation 📚
+
+  - **Storybook:** improved styles and BEEQ light/dark mode theming ([#501](https://github.com/Endava/BEEQ/issues/501)).
+</Update>
+
+<Update label="v0.8.1" description="August 2023">
+  ### Bug Fixes 🐞
+
+  - **BEEQ React:** fixed wrong paths in `package.json` ([#462](https://github.com/Endava/BEEQ/issues/462)).
+
+  ### Chore ⚙️
+
+  - **BEEQ React:** migrated the build from Rollup to TypeScript ([#463](https://github.com/Endava/BEEQ/issues/463)).
+</Update>
+
+<Update label="v0.8.0" description="August 2023">
+  A landmark release: BEEQ gains **dark mode** (set `data-bq-mode="dark"` on any container to switch all color tokens instantly), two major new components (Select and Textarea), and global typography CSS styles.
+
+  ### Features ⚡️
+
+  - **Select:** introduced the new `bq-select` component ([#449](https://github.com/Endava/bee-q/issues/449)).
+  - **Textarea:** introduced the new `bq-textarea` component ([#393](https://github.com/Endava/bee-q/issues/393)).
+  - **Theme:** added dark mode support ([#435](https://github.com/Endava/bee-q/issues/435)).
+  - **Typography:** added global typography CSS styles ([#388](https://github.com/Endava/bee-q/issues/388)).
+
+  ### Bug Fixes 🐞
+
+  - **Avatar:** trims initials text only when present ([#428](https://github.com/Endava/bee-q/issues/428)).
+  - **Side Menu Item:** fixed icon misalignment when the menu is collapsed ([#453](https://github.com/Endava/bee-q/issues/453)).
+  - **Tab:** active tab now updates when value is changed externally ([#402](https://github.com/Endava/bee-q/issues/402)).
+
+  ### Documentation 📚
+
+  - Renamed all README files and packages folder to use `BEEQ` branding ([#454](https://github.com/Endava/bee-q/issues/454)).
+
+  ### Chore ⚙️
+
+  - Dependency bumps: NX → v16.7.0, Storybook → v7.3.1, Stencil → v4.0.3, Puppeteer → v21, Tailwind → v3.3.3.
+</Update>
+
+<Update label="v0.7.1" description="July 2023">
+  ### Bug Fixes 🐞
+
+  - **Input:** clear button was showing up in the disabled state ([#368](https://github.com/Endava/bee-q/issues/368)).
+  - **Input:** focus style was missing in consumer applications ([#371](https://github.com/Endava/bee-q/issues/371)).
+  - **Input:** native input `id` is now set from the `name` prop value ([#370](https://github.com/Endava/bee-q/issues/370)).
+</Update>
+
+<Update label="v0.7.0" description="July 2023">
+  ### Features ⚡️
+
+  - **Breadcrumb:** introduced the new `bq-breadcrumb` component ([#266](https://github.com/Endava/bee-q/issues/266)).
+  - **Input:** introduced the new `bq-input` component ([#344](https://github.com/Endava/bee-q/issues/344)).
+
+  ### Bug Fixes 🐞
+
+  - **Dialog:** fixed backdrop overlay color opacity ([#342](https://github.com/Endava/bee-q/issues/342)).
+  - **Dialog:** dialog no longer freezes when using the `open` property ([#349](https://github.com/Endava/bee-q/issues/349)).
+  - **Tab:** fixed wrong gap space between icon and label ([#366](https://github.com/Endava/bee-q/issues/366)).
+</Update>
+
+<Update label="v0.6.2" description="July 2023">
+  ### Bug Fixes 🐞
+
+  - **Notification:** notification was rendered as visible with `open="false"` ([#316](https://github.com/Endava/bee-q/issues/316)).
+  - **Toast:** toast was rendered as visible with `open="false"` ([#315](https://github.com/Endava/bee-q/issues/315)).
+</Update>
+
+<Update label="v0.6.1" description="July 2023">
+  Patch release with no user-facing changes.
+</Update>
+
+<Update label="v0.6.0" description="July 2023">
+  ### Features ⚡️
+
+  - **Avatar:** added support for displaying a badge on the avatar ([#267](https://github.com/Endava/bee-q/issues/267)).
+  - **Dialog:** introduced the new `bq-dialog` component ([#269](https://github.com/Endava/bee-q/issues/269)).
+  - **Dialog:** allow disabling the backdrop overlay; added `bqAfterOpen` event ([#306](https://github.com/Endava/bee-q/issues/306)).
+  - **Toast:** introduced the new `bq-toast` component ([#301](https://github.com/Endava/bee-q/issues/301)).
+
+  ### Bug Fixes 🐞
+
+  - **Badge:** badge was not fully rounded with a single-digit number ([#307](https://github.com/Endava/bee-q/issues/307)).
+  - **CSS Shadow Token:** incorrect `shadow-m` token value ([#313](https://github.com/Endava/bee-q/issues/313)).
+  - **Dialog:** fixed footer padding for `standard` and `highlight` appearances ([#305](https://github.com/Endava/bee-q/issues/305)).
+  - **Notification:** hidden CSS class was not being applied ([#308](https://github.com/Endava/bee-q/issues/308)).
+</Update>
+
+<Update label="v0.5.0" description="June 2023">
+  ### Features ⚡️
+
+  - **CSS Reset:** improved the global custom CSS reset ([#287](https://github.com/Endava/bee-q/issues/287)).
+  - **Side Menu:** introduced `bq-side-menu` and `bq-side-menu-item` components ([#289](https://github.com/Endava/bee-q/issues/289)).
+
+  ### Bug Fixes 🐞
+
+  - **Angular Wrapper:** fixed peerDependencies and allowed version ranges ([#291](https://github.com/Endava/bee-q/issues/291)).
+  - **Angular:** resolved "cannot mix multi and regular providers" error ([#290](https://github.com/Endava/bee-q/issues/290)).
+  - **React Wrapper:** fixed peerDependencies version ranges ([#292](https://github.com/Endava/bee-q/issues/292)).
+</Update>
+
+<Update label="v0.4.0" description="June 2023">
+  ### Features ⚡️
+
+  - **Button:** added `block` property to support full-width layout ([#262](https://github.com/Endava/bee-q/issues/262)).
+  - **Button:** added `justifyContent` property to align the button label content ([#263](https://github.com/Endava/bee-q/issues/263)).
+  - **Notification:** introduced the new `bq-notification` component ([#204](https://github.com/Endava/bee-q/issues/204)).
+  - **Tokens:** added spacing design tokens ([#265](https://github.com/Endava/bee-q/issues/265)).
+
+  ### Bug Fixes 🐞
+
+  - **Tab Group:** divider is now full-width ([#205](https://github.com/Endava/bee-q/issues/205)).
+  - **Tokens:** made feedback text color tokens accessible ([#268](https://github.com/Endava/bee-q/issues/268)).
+</Update>
+
+<Update label="v0.3.0" description="April 2023">
+  ### Features ⚡️
+
+  - **Tab:** introduced the `bq-tab` component ([#93](https://github.com/Endava/bee-q/issues/93)).
+  - **Tokens:** added extended palette colors and updated declarative color tokens ([#67](https://github.com/Endava/bee-q/issues/67)).
+
+  ### Documentation 📚
+
+  - **Storybook:** upgraded to Storybook v7 ([#163](https://github.com/Endava/bee-q/issues/163)).
+</Update>
+
+<Update label="v0.2.2" description="March 2023">
+  ### Bug Fixes 🐞
+
+  - **CI:** fixed the NPM publish workflow to trigger after a GitHub release is published ([#38](https://github.com/Endava/bee-q/issues/38)).
+</Update>
+
+<Update label="v0.2.1" description="March 2023">
+  ### Bug Fixes 🐞
+
+  - **Checkbox:** fixed label misalignment when a parent container had different alignment ([#35](https://github.com/Endava/bee-q/issues/35)).
+  - **Font Family:** switched from `@import` to `@font-face` for better performance ([#32](https://github.com/Endava/bee-q/issues/32)).
+  - **Icon:** fixed base container alignment for custom size values ([#33](https://github.com/Endava/bee-q/issues/33)).
+  - **Slider:** fixed layout styles breaking when the parent had alignment set ([#34](https://github.com/Endava/bee-q/issues/34)).
+</Update>
+
+<Update label="v0.2.0" description="March 2023">
+  ### Features ⚡️
+
+  - **Spinner:** introduced the `bq-spinner` component ([#75](https://github.com/dgonzalezr/bee-q/issues/75)).
+  - **Switch:** introduced the `bq-switch` component ([#84](https://github.com/dgonzalezr/bee-q/issues/84)).
+  - **Utils:** added `setProperties()` utility method ([#80](https://github.com/dgonzalezr/bee-q/issues/80)).
+
+  ### Bug Fixes 🐞
+
+  - **Badge:** fixed misspelled `disconnectedCallback` lifecycle method ([#90](https://github.com/dgonzalezr/bee-q/issues/90)).
+  - **Slider:** fixed missing Angular value accessor and host `display` CSS rule ([#91](https://github.com/dgonzalezr/bee-q/issues/91)).
+  - **Spinner:** fixed misspelled `disconnectedCallback` lifecycle method ([#89](https://github.com/dgonzalezr/bee-q/issues/89)).
+
+  ### Documentation 📚
+
+  - Updated README usage section and spinner shadow parts documentation ([c975cc1](https://github.com/dgonzalezr/bee-q/commit/c975cc1)).
+</Update>
+
+<Update label="v0.1.0" description="January 2023">
+  This release marks the first stable version of BEEQ and includes all features and bug fixes from prior pre-releases, plus the following changes:
+
+  ### Features ⚡️
+
+  - **Utils:** removed unnecessary `propertyValue` parameter from `validatePropValue` ([#53](https://github.com/dgonzalezr/bee-q/issues/53)).
+
+  ### Bug Fixes 🐞
+
+  - **E2E:** fixed missing HTML closing tags ([#68](https://github.com/dgonzalezr/bee-q/issues/68)).
+  - **Icon:** wait for SVG image to load in E2E tests ([#69](https://github.com/dgonzalezr/bee-q/issues/69)).
+
+  ### Documentation 📚
+
+  - **Contribution:** added branching strategy and test documentation ([#43](https://github.com/dgonzalezr/bee-q/issues/43)).
+  - **Code of Conduct:** updated to Contributor Covenant v2.0 ([#55](https://github.com/dgonzalezr/bee-q/issues/55)).
+  - **Icon:** added Phosphor Icons link on Storybook ([#64](https://github.com/dgonzalezr/bee-q/issues/64)).
+</Update>
