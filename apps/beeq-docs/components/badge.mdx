@@ -201,7 +201,7 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
 
 <CodeLivePreview code={`
   <style>
-    @scope (.badge--icon) {
+    .badge--icon {
       position: relative;
       display: inline-flex;
 
@@ -378,19 +378,19 @@ Do not rely on color alone. Use text, labels, or accessible names on the related
 
 ### CSS custom properties
 
-<Expandable title="View all CSS variables" defaultOpen={false}>
+<Expandable title="CSS variables" defaultOpen={false}>
   | Variable | Description | Default |
   |---|---|---|
-  | `--bq-badge--background-color` | Badge background color | `theme('backgroundColor.ui.danger')` |
+  | `--bq-badge--background-color` | Badge background color | `var(--bq-ui--danger)` |
   | `--bq-badge--box-shadow` | Badge box shadow | `none` |
-  | `--bq-badge--border-color` | Badge border color | `theme('stroke.tertiary')` |
-  | `--bq-badge--border-radius` | Badge border radius | `theme('borderRadius.full')` |
+  | `--bq-badge--border-color` | Badge border color | `var(--bq-stroke--tertiary)` |
+  | `--bq-badge--border-radius` | Badge border radius | `var(--bq-radius--full)` |
   | `--bq-badge--border-style` | Badge border style | `none` |
-  | `--bq-badge--border-width` | Badge border width | `theme('borderWidth.0')` |
+  | `--bq-badge--border-width` | Badge border width | `0` |
   | `--bq-badge--size-small` | Small badge size | `8px` |
   | `--bq-badge--size-medium` | Medium badge size | `12px` |
   | `--bq-badge--size-large` | Minimum size used by content badges | `16px` |
-  | `--bq-badge--text-color` | Badge text color | `theme('textColor.alt')` |
+  | `--bq-badge--text-color` | Badge text color | `var(--bq-text--alt)` |
 </Expandable>
 
 <Tip>
