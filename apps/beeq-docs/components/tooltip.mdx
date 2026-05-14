@@ -1018,18 +1018,18 @@ The `distance` prop controls the gap in pixels between the trigger and the toolt
 <Expandable title="CSS variables" defaultOpen={false}>
   | Variable                         | Description               | Default                              |
   | -------------------------------- | ------------------------- | ------------------------------------ |
-  | `--bq-tooltip--background-color` | Tooltip background color  | `theme('backgroundColor.ui.inverse')` |
-  | `--bq-tooltip--box-shadow`       | Tooltip box shadow        | `theme('boxShadow.m')`               |
-  | `--bq-tooltip--font-size`        | Tooltip font size         | `theme('fontSize.m')`                |
-  | `--bq-tooltip--line-height`      | Tooltip line height       | `theme('lineHeight.regular')`        |
-  | `--bq-tooltip--text-color`       | Tooltip text color        | `theme('textColor.inverse')`         |
-  | `--bq-tooltip--paddingX`         | Horizontal padding        | `theme('padding.xs')`                |
-  | `--bq-tooltip--paddingY`         | Vertical padding          | `theme('padding.xs2')`               |
+  | `--bq-tooltip--background-color` | Tooltip background color  | `var(--bq-ui--inverse)`              |
+  | `--bq-tooltip--box-shadow`       | Tooltip box shadow        | `var(--bq-box-shadow--m)`            |
+  | `--bq-tooltip--font-size`        | Tooltip font size         | `var(--bq-font-size--m)`             |
+  | `--bq-tooltip--line-height`      | Tooltip line height       | `var(--bq-font-line-height--regular)` |
+  | `--bq-tooltip--text-color`       | Tooltip text color        | `var(--bq-text--inverse)`            |
+  | `--bq-tooltip--paddingX`         | Horizontal padding        | `var(--bq-spacing-xs)`               |
+  | `--bq-tooltip--paddingY`         | Vertical padding          | `var(--bq-spacing-xs2)`              |
   | `--bq-tooltip--border-color`     | Border color              | `transparent`                        |
-  | `--bq-tooltip--border-radius`    | Border radius             | `theme('borderRadius.s')`            |
+  | `--bq-tooltip--border-radius`    | Border radius             | `var(--bq-radius--s)`                |
   | `--bq-tooltip--border-style`     | Border style              | `none`                               |
   | `--bq-tooltip--border-width`     | Border width              | `unset`                              |
-  | `--bq-tooltip--z-index`          | Stack order of the panel  | `theme('zIndex.10')`                 |
+  | `--bq-tooltip--z-index`          | Stack order of the panel  | `10`                                 |
 </Expandable>
 
 <Tip>

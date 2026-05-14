@@ -171,14 +171,12 @@ Set `orientation="vertical"` when the divider separates side-by-side content, su
 
 <CodeLivePreview code={`
   <style>
-    @scope {
-      .divider--vertical-example {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        block-size: 120px;
-        gap: var(--bq-spacing-m);
-      }
+    .divider--vertical-example {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      block-size: 120px;
+      gap: var(--bq-spacing-m);
     }
   </style>
   <div class="divider--vertical-example">
@@ -311,10 +309,8 @@ Use `title-alignment` to place title content at the start, middle, or end of the
 
 <CodeLivePreview code={`
   <style>
-    @scope {
-      bq-divider {
-        white-space: nowrap;
-      }
+    bq-divider {
+      white-space: nowrap;
     }
   </style>
   <bq-divider title-alignment="start">
@@ -540,12 +536,10 @@ Use stroke attributes to match the divider to a specific visual treatment. Set `
 
 ### CSS custom properties
 
-<Expandable title="CSS variables" defaultOpen={true}>
-  | Variable | Description | Default |
-  |---|---|---|
-  | `--bq-divider--color` | Divider color | `theme(stroke.primary)` |
-  | `--bq-divider--title-marginX` | Space between title content and delimiter strokes | `theme(spacing.m)` |
-</Expandable>
+| Variable | Description | Default |
+|---|---|---|
+| `--bq-divider--color` | Divider color | `var(--bq-stroke--primary)` |
+| `--bq-divider--title-marginX` | Space between title content and delimiter strokes | `var(--bq-spacing-m)` |
 
 <Tip>
   Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
