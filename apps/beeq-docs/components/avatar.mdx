@@ -242,7 +242,7 @@ Avatar supports four sizes (`xsmall`, `small`, `medium`, `large`) and two shapes
 
 <CodeLivePreview code={`
   <style>
-    @scope (.avatar--sizes) {
+    .avatar--sizes {
       display: flex;
       align-items: center;
       gap: var(--bq-spacing-m);
@@ -305,7 +305,7 @@ Use a grouped avatar pattern when you need to represent multiple participants in
 
 <CodeLivePreview code={`
   <style>
-    @scope (.avatar--group) {
+    .avatar--group {
       display: flex;
       align-items: center;
 
@@ -738,22 +738,22 @@ If the avatar appears alongside other interactive elements such as names, links,
 <Expandable title="CSS variables" defaultOpen={true}>
   | Variable | Description | Default |
   |---|---|---|
-  | `--bq-avatar-background` | Avatar background color | `theme('backgroundColor.ui.alt')` |
-  | `--bq-avatar--border-color` | Avatar border color | `theme('stroke.tertiary')` |
+  | `--bq-avatar-background` | Avatar background color | `var(--bq-ui--alt)` |
+  | `--bq-avatar--border-color` | Avatar border color | `var(--bq-stroke--tertiary)` |
   | `--bq-avatar--border-style` | Avatar border style | `solid` |
-  | `--bq-avatar--border-width` | Avatar border width | `theme('borderWidth.m')` |
-  | `--bq-avatar--border-radius-circle` | Border radius for circle avatars | `theme('borderRadius.full')` |
-  | `--bq-avatar--border-radius-squareXs` | Border radius for `square` + `xsmall` | `theme('borderRadius.xs')` |
-  | `--bq-avatar--border-radius-squareS` | Border radius for `square` + `small` | `theme('borderRadius.s')` |
-  | `--bq-avatar--border-radius-squareM` | Border radius for `square` + `medium` and `large` | `theme('borderRadius.m')` |
+  | `--bq-avatar--border-width` | Avatar border width | `var(--bq-stroke-m)` |
+  | `--bq-avatar--border-radius-circle` | Border radius for circle avatars | `var(--bq-radius--full)` |
+  | `--bq-avatar--border-radius-squareXs` | Border radius for `square` + `xsmall` | `var(--bq-radius--xs)` |
+  | `--bq-avatar--border-radius-squareS` | Border radius for `square` + `small` | `var(--bq-radius--s)` |
+  | `--bq-avatar--border-radius-squareM` | Border radius for `square` + `medium` and `large` | `var(--bq-radius--m)` |
   | `--bq-avatar--size-xsmall` | Xsmall avatar size | `24px` |
   | `--bq-avatar--size-small` | Small avatar size | `32px` |
   | `--bq-avatar--size-medium` | Medium avatar size | `48px` |
   | `--bq-avatar--size-large` | Large avatar size | `64px` |
-  | `--bq-avatar--font-size-xsmall` | Initials font size for `xsmall` | `theme('fontSize.xs')` |
-  | `--bq-avatar--font-size-small` | Initials font size for `small` | `theme('fontSize.xs')` |
-  | `--bq-avatar--font-size-medium` | Initials font size for `medium` | `theme('fontSize.m')` |
-  | `--bq-avatar--font-size-large` | Initials font size for `large` | `theme('fontSize.m')` |
+  | `--bq-avatar--font-size-xsmall` | Initials font size for `xsmall` | `var(--bq-font-size--xs)` |
+  | `--bq-avatar--font-size-small` | Initials font size for `small` | `var(--bq-font-size--xs)` |
+  | `--bq-avatar--font-size-medium` | Initials font size for `medium` | `var(--bq-font-size--m)` |
+  | `--bq-avatar--font-size-large` | Initials font size for `large` | `var(--bq-font-size--m)` |
   | `--bq-avatar--badge-top-square` | Badge top offset for square avatars | `-5px` |
   | `--bq-avatar--badge-left-square` | Badge left offset for square avatars | `80%` |
   | `--bq-avatar--badge-top-circle` | Badge top offset for circle avatars | `0` |

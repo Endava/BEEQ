@@ -108,10 +108,8 @@ Use the default composition when the title alone provides enough context.
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      bq-page-title {
-        inline-size: 100% !important;
-      }
+    bq-page-title {
+      inline-size: 100% !important;
     }
   </style>
     <bq-page-title>
@@ -164,18 +162,12 @@ Use a back action when the page is part of a flow or nested navigation path.
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      bq-page-title {
-        inline-size: 100% !important;
-      }
+    bq-page-title {
+      inline-size: 100% !important;
     }
   </style>
     <bq-page-title>
       <bq-button appearance="link" slot="back" only-icon>
-        <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
-      </bq-button>
-      Title
-    </bq-page-title>
   `}
 >
   <CodeGroup>
@@ -235,10 +227,8 @@ Add a subtitle when people need a little more context before acting.
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      bq-page-title {
-        inline-size: 100% !important;
-      }
+    bq-page-title {
+      inline-size: 100% !important;
     }
   </style>
     <bq-page-title>
@@ -313,16 +303,14 @@ Use the suffix slot for page-level actions when back navigation is not relevant 
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      bq-page-title {
-        inline-size: 100% !important;
+    bq-page-title {
+      inline-size: 100% !important;
 
-        & [slot="suffix"] {
-          display: flex;
-          align-items: center;
-          flex-grow: 1;
-          justify-content: flex-end;
-        }
+      & [slot="suffix"] {
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
+        justify-content: flex-end;
       }
     }
   </style>
@@ -406,19 +394,17 @@ Use the suffix slot when the title area needs page-level actions such as edit or
 <CodeLivePreview
   code={`
   <style>
-    @scope {
-      bq-page-title {
-        inline-size: 100% !important;
+    bq-page-title {
+      inline-size: 100% !important;
 
-        & [slot="suffix"] {
-          display: flex;
-          flex-grow: 1;
-          justify-content: end;
-        }
+      & [slot="suffix"] {
+        display: flex;
+        flex-grow: 1;
+        justify-content: end;
+      }
 
-        & [slot="suffix"] bq-button {
-          padding: var(--bq-spacing-xs2);
-        }
+      & [slot="suffix"] bq-button {
+        padding: var(--bq-spacing-xs2);
       }
     }
   </style>
@@ -645,15 +631,15 @@ Use the suffix slot when the title area needs page-level actions such as edit or
 <Expandable title="CSS variables" defaultOpen={true}>
   | Variable | Description | Default |
   |---|---|---|
-  | `--paddingY` | Vertical padding of the page title wrapper | `theme(spacing.xl)` |
-  | `--subtitle-borderBlockEnd` | Border below the page title area | `1px solid theme(stroke.primary)` |
-  | `--subtitle-fontWeight` | Subtitle font weight | `theme(fontWeight.medium)` |
-  | `--subtitle-textColor` | Subtitle text color | `theme(textColor.secondary)` |
-  | `--subtitle-textSize` | Subtitle font size | `theme(fontSize.l)` |
-  | `--title-fontWeight` | Title font weight | `theme(fontWeight.bold)` |
-  | `--title-lineHeight` | Title line height | `theme(lineHeight.regular)` |
-  | `--title-textColor` | Title text color | `theme(textColor.primary)` |
-  | `--title-textSize` | Title font size | `theme(fontSize.xxl)` |
+  | `--paddingY` | Vertical padding of the page title wrapper | `var(--bq-spacing-xl)` |
+  | `--subtitle-borderBlockEnd` | Border below the page title area | `1px solid var(--bq-stroke--primary)` |
+  | `--subtitle-fontWeight` | Subtitle font weight | `var(--bq-font-weight--medium)` |
+  | `--subtitle-textColor` | Subtitle text color | `var(--bq-text--secondary)` |
+  | `--subtitle-textSize` | Subtitle font size | `var(--bq-font-size--l)` |
+  | `--title-fontWeight` | Title font weight | `var(--bq-font-weight--bold)` |
+  | `--title-lineHeight` | Title line height | `var(--bq-font-line-height--regular)` |
+  | `--title-textColor` | Title text color | `var(--bq-text--primary)` |
+  | `--title-textSize` | Title font size | `var(--bq-font-size--xxl)` |
 </Expandable>
 
 <Note>

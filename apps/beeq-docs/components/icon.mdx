@@ -366,53 +366,51 @@ The Phosphor library gives you a broad icon set. The example below shows only a 
 
 <CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        align-items: stretch !important;
-      }
+    :host {
+      align-items: stretch !important;
+    }
 
-      .icon {
-        inline-size: 100%;
-      }
+    .icon {
+      inline-size: 100%;
+    }
 
-      .icon-link {
-        display: inline-block;
-        margin-block-end: var(--bq-spacing-xl);
-      }
+    .icon-link {
+      display: inline-block;
+      margin-block-end: var(--bq-spacing-xl);
+    }
 
-      .icon-link::part(button) {
-        text-decoration: none;
-      }
+    .icon-link::part(button) {
+      text-decoration: none;
+    }
 
-      .icon-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-        gap: 1rem;
-      }
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+      gap: 1rem;
+    }
 
-      .icon-grid .group {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: var(--bq-spacing-xs2);
-        font-size: var(--bq-font-size--s);
-        color: var(--bq-text--secondary);
-      }
+    .icon-grid .group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: var(--bq-spacing-xs2);
+      font-size: var(--bq-font-size--s);
+      color: var(--bq-text--secondary);
+    }
 
-      .icon-grid .group > div {
-        display: flex;
-        justify-content: center;
-        inline-size: 100%;
-        border: 1px solid var(--bq-stroke--primary);
-        border-radius: var(--bq-radius--m);
-        padding-block: var(--bq-spacing-m);
-        transition: transform 0.3s ease;
-      }
+    .icon-grid .group > div {
+      display: flex;
+      justify-content: center;
+      inline-size: 100%;
+      border: 1px solid var(--bq-stroke--primary);
+      border-radius: var(--bq-radius--m);
+      padding-block: var(--bq-spacing-m);
+      transition: transform 0.3s ease;
+    }
 
-      .icon-grid .group > div:hover {
-        transform: scale(1.1);
-      }
+    .icon-grid .group > div:hover {
+      transform: scale(1.1);
     }
   </style>
   <div class="icon">

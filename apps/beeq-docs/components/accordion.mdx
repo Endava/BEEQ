@@ -1238,22 +1238,22 @@ Developers can [rely on the exposed shadow DOM parts](https://www.beeq.design/3d
 
 ### CSS custom properties
 
-<Expandable title="View all CSS variables" defaultOpen={false}>
+<Expandable title="CSS variables" defaultOpen={false}>
 
   #### Size
 
   | Variable                                   | Description                                       | Default                      |
   | ------------------------------------------ | ------------------------------------------------- | ---------------------------- |
-  | `--bq-accordion--small-padding-y`          | Small vertical padding                            | `theme('spacing.xs')`        |
-  | `--bq-accordion--small-padding-start`      | Small start padding                               | `theme('spacing.s')`         |
-  | `--bq-accordion--small-padding-end`        | Small end padding                                 | `theme('spacing.s')`         |
-  | `--bq-accordion--small-gap`                | Small gap between prefix, title, and suffix       | `theme('spacing.xs')`        |
-  | `--bq-accordion--small-radius`             | Small border radius                               | `theme('borderRadius.xs')`   |
-  | `--bq-accordion--medium-padding-y`         | Medium vertical padding                           | `theme('spacing.s')`         |
-  | `--bq-accordion--medium-padding-start`     | Medium start padding                              | `theme('spacing.m')`         |
-  | `--bq-accordion--medium-padding-end`       | Medium end padding                                | `theme('spacing.m')`         |
-  | `--bq-accordion--medium-gap`               | Medium gap between prefix, title, and suffix      | `theme('spacing.m')`         |
-  | `--bq-accordion--medium-radius`            | Medium border radius                              | `theme('borderRadius.xs')`   |
+  | `--bq-accordion--small-padding-y`          | Small vertical padding                            | `var(--bq-spacing-xs)`       |
+  | `--bq-accordion--small-padding-start`      | Small start padding                               | `var(--bq-spacing-s)`        |
+  | `--bq-accordion--small-padding-end`        | Small end padding                                 | `var(--bq-spacing-s)`        |
+  | `--bq-accordion--small-gap`                | Small gap between prefix, title, and suffix       | `var(--bq-spacing-xs)`       |
+  | `--bq-accordion--small-radius`             | Small border radius                               | `var(--bq-radius--xs)`       |
+  | `--bq-accordion--medium-padding-y`         | Medium vertical padding                           | `var(--bq-spacing-s)`        |
+  | `--bq-accordion--medium-padding-start`     | Medium start padding                              | `var(--bq-spacing-m)`        |
+  | `--bq-accordion--medium-padding-end`       | Medium end padding                                | `var(--bq-spacing-m)`        |
+  | `--bq-accordion--medium-gap`               | Medium gap between prefix, title, and suffix      | `var(--bq-spacing-m)`        |
+  | `--bq-accordion--medium-radius`            | Medium border radius                              | `var(--bq-radius--m)`        |
 
   #### Border (collapsed state)
 
@@ -1275,53 +1275,53 @@ Developers can [rely on the exposed shadow DOM parts](https://www.beeq.design/3d
 
   | Variable                                              | Description                                | Default                          |
   | ----------------------------------------------------- | ------------------------------------------ | -------------------------------- |
-  | `--bq-accordion--filled-collapsed-background`         | Filled collapsed header background         | `theme('colors.ui.secondary')`   |
-  | `--bq-accordion--filled-collapsed-text-color`         | Filled collapsed header text color         | `theme('colors.text.primary')`   |
-  | `--bq-accordion--filled-expanded-background`          | Filled expanded header background          | `theme('colors.ui.brand-alt')`   |
-  | `--bq-accordion--filled-expanded-text-color`          | Filled expanded header text color          | `theme('colors.text.primary')`   |
+  | `--bq-accordion--filled-collapsed-background`         | Filled collapsed header background         | `var(--bq-ui--secondary)`        |
+  | `--bq-accordion--filled-collapsed-text-color`         | Filled collapsed header text color         | `var(--bq-text--primary)`        |
+  | `--bq-accordion--filled-expanded-background`          | Filled expanded header background          | `var(--bq-ui--brand-alt)`        |
+  | `--bq-accordion--filled-expanded-text-color`          | Filled expanded header text color          | `var(--bq-text--primary)`        |
 
   #### Ghost appearance
 
   | Variable                                              | Description                                | Default                          |
   | ----------------------------------------------------- | ------------------------------------------ | -------------------------------- |
   | `--bq-accordion--ghost-collapsed-background`          | Ghost collapsed header background          | `transparent`                    |
-  | `--bq-accordion--ghost-collapsed-text-color`          | Ghost collapsed header text color          | `theme('colors.text.primary')`   |
+  | `--bq-accordion--ghost-collapsed-text-color`          | Ghost collapsed header text color          | `var(--bq-text--primary)`        |
   | `--bq-accordion--ghost-expanded-background`           | Ghost expanded header background           | `transparent`                    |
-  | `--bq-accordion--ghost-expanded-text-color`           | Ghost expanded header text color           | `theme('colors.text.brand')`     |
+  | `--bq-accordion--ghost-expanded-text-color`           | Ghost expanded header text color           | `var(--bq-text--brand)`          |
 
   #### Panel — filled
 
   | Variable                                              | Description                                | Default                          |
   | ----------------------------------------------------- | ------------------------------------------ | -------------------------------- |
-  | `--bq-accordion--panel-filled-border-color`           | Filled panel border color                  | `theme('colors.stroke.primary')` |
+  | `--bq-accordion--panel-filled-border-color`           | Filled panel border color                  | `var(--bq-stroke--primary)`      |
   | `--bq-accordion--panel-filled-border-style`           | Filled panel border style                  | `solid`                          |
-  | `--bq-accordion--panel-filled-border-width`           | Filled panel border width                  | `1px`                            |
-  | `--bq-accordion--panel-small-filled-padding-y`        | Small filled panel vertical padding        | `theme('spacing.s')`             |
-  | `--bq-accordion--panel-small-filled-padding-start`    | Small filled panel start padding           | `theme('spacing.s')`             |
-  | `--bq-accordion--panel-small-filled-padding-end`      | Small filled panel end padding             | `theme('spacing.s')`             |
-  | `--bq-accordion--panel-medium-filled-padding-y`       | Medium filled panel vertical padding       | `theme('spacing.m')`             |
-  | `--bq-accordion--panel-medium-filled-padding-start`   | Medium filled panel start padding          | `theme('spacing.m')`             |
-  | `--bq-accordion--panel-medium-filled-padding-end`     | Medium filled panel end padding            | `theme('spacing.m')`             |
+  | `--bq-accordion--panel-filled-border-width`           | Filled panel border width                  | `var(--bq-stroke-s)`             |
+  | `--bq-accordion--panel-small-filled-padding-y`        | Small filled panel vertical padding        | `var(--bq-spacing-s)`            |
+  | `--bq-accordion--panel-small-filled-padding-start`    | Small filled panel start padding           | `var(--bq-spacing-s)`            |
+  | `--bq-accordion--panel-small-filled-padding-end`      | Small filled panel end padding             | `var(--bq-spacing-s)`            |
+  | `--bq-accordion--panel-medium-filled-padding-y`       | Medium filled panel vertical padding       | `var(--bq-spacing-m)`            |
+  | `--bq-accordion--panel-medium-filled-padding-start`   | Medium filled panel start padding          | `var(--bq-spacing-m)`            |
+  | `--bq-accordion--panel-medium-filled-padding-end`     | Medium filled panel end padding            | `var(--bq-spacing-m)`            |
 
   #### Panel — ghost
 
   | Variable                                              | Description                                | Default                          |
   | ----------------------------------------------------- | ------------------------------------------ | -------------------------------- |
-  | `--bq-accordion--panel-ghost-border-color`            | Ghost panel border color                   | `theme('colors.stroke.primary')` |
-  | `--bq-accordion--panel-ghost-border-style`            | Ghost panel border style                   | `solid`                          |
-  | `--bq-accordion--panel-ghost-border-width`            | Ghost panel border width                   | `1px`                            |
-  | `--bq-accordion--panel-small-ghost-padding-y`         | Small ghost panel vertical padding         | `theme('spacing.s')`             |
-  | `--bq-accordion--panel-small-ghost-padding-start`     | Small ghost panel start padding            | `theme('spacing.s')`             |
-  | `--bq-accordion--panel-small-ghost-padding-end`       | Small ghost panel end padding              | `theme('spacing.s')`             |
-  | `--bq-accordion--panel-medium-ghost-padding-y`        | Medium ghost panel vertical padding        | `theme('spacing.m')`             |
-  | `--bq-accordion--panel-medium-ghost-padding-start`    | Medium ghost panel start padding           | `theme('spacing.m')`             |
-  | `--bq-accordion--panel-medium-ghost-padding-end`      | Medium ghost panel end padding             | `theme('spacing.m')`             |
+  | `--bq-accordion--panel-ghost-border-color`            | Ghost panel border color                   | `transparent`                    |
+  | `--bq-accordion--panel-ghost-border-style`            | Ghost panel border style                   | `none`                           |
+  | `--bq-accordion--panel-ghost-border-width`            | Ghost panel border width                   | `unset`                          |
+  | `--bq-accordion--panel-small-ghost-padding-y`         | Small ghost panel vertical padding         | `var(--bq-spacing-s)`            |
+  | `--bq-accordion--panel-small-ghost-padding-start`     | Small ghost panel start padding            | `var(--bq-spacing-l)`            |
+  | `--bq-accordion--panel-small-ghost-padding-end`       | Small ghost panel end padding              | `var(--bq-spacing-l)`            |
+  | `--bq-accordion--panel-medium-ghost-padding-y`        | Medium ghost panel vertical padding        | `var(--bq-spacing-m)`            |
+  | `--bq-accordion--panel-medium-ghost-padding-start`    | Medium ghost panel start padding           | `var(--bq-spacing-xl)`           |
+  | `--bq-accordion--panel-medium-ghost-padding-end`      | Medium ghost panel end padding             | `var(--bq-spacing-xl)`           |
 
   #### Group
 
   | Variable                         | Description                            | Default               |
   | -------------------------------- | -------------------------------------- | --------------------- |
-  | `--bq-accordion-group--gap`      | Gap between accordion items in a group | `theme('spacing.xs')` |
+  | `--bq-accordion-group--gap`      | Gap between accordion items in a group | `var(--bq-spacing-xs)` |
 
 </Expandable>
 

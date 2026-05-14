@@ -307,10 +307,8 @@ Use the `placement` attribute when you need fine-grained control over the panel 
 
 <CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        justify-content: space-around !important;
-      }
+    :host {
+      justify-content: space-around !important;
     }
   </style>
   <bq-dropdown class="dropdown--placement" placement="bottom-start">
@@ -547,20 +545,18 @@ Use a custom trigger when the dropdown needs a more specific visual entry point,
 
 <CodeLivePreview code={`
   <style>
-    @scope {
-      :scope {
-        justify-content: space-around !important;
+    :host {
+      justify-content: space-around !important;
+    }
+
+    bq-button:has(bq-avatar) {
+      &::part(button) {
+        padding: 0;
       }
 
-      bq-button:has(bq-avatar) {
-        &::part(button) {
-          padding: 0;
-        }
-
-        &::part(label) {
-          display: flex;
-          align-items: center;
-        }
+      &::part(label) {
+        display: flex;
+        align-items: center;
       }
     }
   </style>
@@ -1330,18 +1326,18 @@ Use `same-width` when the panel should match the trigger width. Use `panel-heigh
 
 ### CSS custom properties
 
-<Expandable title="View all CSS variables" defaultOpen={true}>
+<Expandable title="CSS variables" defaultOpen={true}>
   | Variable | Description | Default |
   |---|---|---|
-  | `--bq-panel--background` | Panel background color | `theme(backgroundColor.ui.primary)` |
-  | `--bq-panel--border-color` | Panel border color | `theme(stroke.transparent)` |
-  | `--bq-panel--border-radius` | Panel border radius | `theme(borderRadius.s)` |
+  | `--bq-panel--background` | Panel background color | `var(--bq-ui--primary)` |
+  | `--bq-panel--border-color` | Panel border color | `transparent` |
+  | `--bq-panel--border-radius` | Panel border radius | `var(--bq-radius--s)` |
   | `--bq-panel--border-style` | Panel border style | `none` |
   | `--bq-panel--border-width` | Panel border width | `unset` |
-  | `--bq-panel--box-shadow` | Panel box shadow | `theme(boxShadow.m)` |
-  | `--bq-panel--paddingY` | Vertical padding | `theme(spacing.xs)` |
-  | `--bq-panel--padding-start` | Start padding | `theme(spacing.xs)` |
-  | `--bq-panel--padding-end` | End padding | `theme(spacing.xs)` |
+  | `--bq-panel--box-shadow` | Panel box shadow | `var(--bq-box-shadow--m)` |
+  | `--bq-panel--paddingY` | Vertical padding | `var(--bq-spacing-xs)` |
+  | `--bq-panel--padding-start` | Start padding | `var(--bq-spacing-xs)` |
+  | `--bq-panel--padding-end` | End padding | `var(--bq-spacing-xs)` |
   | `--bq-panel--height` | Panel max height | `50vh` |
   | `--bq-panel--width` | Panel width | `320px` |
   | `--bq-panel-z-index` | Panel z-index applied when opened | `10` |
