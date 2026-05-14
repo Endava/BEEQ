@@ -300,7 +300,7 @@ Vue component wrappers use camelCase — **never** copy HTML attribute names int
 | `Note` | Neutral important information; automatic behaviors |
 | `Tip` | Actionable suggestions; customization hints |
 | `Warning` | Behavior that may surprise or break things |
-| `Expandable` | Collapsible sections (e.g., full CSS variables table) |
+| `Expandable` | Collapsible sections (e.g., CSS variables table when >5 variables) |
 | `Icon` | Inline icons in card headings |
 | `CodeGroup` | Multi-tab code blocks |
 | `Tabs` / `Tab` | Tabbed content sections |
@@ -373,7 +373,9 @@ Use four subsections in this order:
 1. **Properties** — columns: Property, Attribute, Description, Type, Default
 2. **Slots** — columns: Slot, Description
 3. **Shadow parts** — columns: Part, Description
-4. **CSS custom properties** — wrapped in `<Expandable title="CSS variables" defaultOpen={true}>` (use defaultOpen={false} if the section is too long); columns: Variable, Description, Default
+4. **CSS custom properties** — if the component has **more than 5 variables**, wrap in `<Expandable title="CSS variables" defaultOpen={true}>` (use `defaultOpen={false}` when the list is very long, e.g. 20+); if **5 or fewer**, display the markdown table directly without an `<Expandable>` wrapper. Columns: Variable, Description, Default
+
+   **Default values must use `var(--bq-*)` CSS custom properties** — never Tailwind `theme()` function calls. Use the values from `bq-<name>.variables.scss` as the source of truth and map them to their underlying `var(--bq-*)` equivalents. Hardcoded values (e.g. `transparent`, `none`, `solid`, `unset`, plain numbers like `0` or `10`, pixel values like `24px`) are kept as-is.
 
 Follow with a `Tip` linking to theming guides:
 

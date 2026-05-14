@@ -154,9 +154,10 @@ Only applies when a `CSS` tab is present in the `CodeGroup`:
 - [ ] **Properties** table: columns `Property`, `Attribute`, `Description`, `Type`, `Default`
 - [ ] **Slots** table: columns `Slot`, `Description`
 - [ ] **Shadow parts** table: columns `Part`, `Description`
-- [ ] **CSS custom properties** wrapped in `<Expandable title="CSS variables" defaultOpen={true}>` (use `defaultOpen={false}` for long lists); columns `Variable`, `Description`, `Default`
+- [ ] **CSS custom properties**: if >5 variables, wrapped in `<Expandable title="CSS variables" defaultOpen={true}>` (use `defaultOpen={false}` for very long lists, e.g. 20+); if ≤5 variables, displayed as a plain table with no `<Expandable>` wrapper. Columns `Variable`, `Description`, `Default`
+- [ ] CSS variables **Default** values use `var(--bq-*)` CSS custom properties — not Tailwind `theme()` function calls; hardcoded values (`transparent`, `none`, `solid`, `unset`, `0`, `24px`, etc.) are kept as-is
 - [ ] CSS variables table is accurate — cross-checked against `bq-*.variables.scss`
-- [ ] `<Expandable>` is followed by a `<Tip>` linking to `/theming/styles` and `/theming/global-css-variables`
+- [ ] CSS variables section is followed by a `<Tip>` linking to `/theming/styles` and `/theming/global-css-variables`
 - [ ] No undocumented props, events, slots, or shadow parts relative to the component source
 
 ### J. Resources section
