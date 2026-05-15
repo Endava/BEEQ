@@ -1,0 +1,359 @@
+/* ============================================================
+   apps/beeq-docs/home.css
+   Landing page styles — BEM block prefix: bq- (landing page)
+
+   Handles custom styles that cannot be expressed as Tailwind
+   utilities: BEEQ token values, gradients, and brand colours.
+   Imported by style.css.
+
+   Uses modern CSS: logical properties, :is(), CSS custom
+   properties. No CSS nesting — postcss-nesting is not in the
+   pipeline; native nesting is stripped by the PostCSS build.
+
+   Note: color-mix() is intentionally NOT used for rgba
+   transparency effects — color-mix(in srgb, color X%, transparent)
+   mixes toward transparent-black (#00000000), which shifts RGB
+   channels toward 0, producing a hue-shifted result.
+   rgba() is the correct tool for alpha transparency.
+
+   Excluded from this file:
+   - Tailwind utility classes (those stay in className="")
+   - Inline styles inside code={`…`} template literals
+     (they render inside a Shadow DOM and are unreachable)
+   ============================================================ */
+
+/* ── Design tokens ────────────────────────────────────────── */
+/* Local aliases for colours repeated throughout this file. */
+
+:root {
+  --bq-lp-indigo:       #6366f1;
+  --bq-lp-indigo-muted: #818cf8;
+  --bq-lp-indigo-faint: #a5b4fc;
+  --bq-lp-purple:       #a855f7;
+  --bq-lp-bg-dark:      #0d0e11;
+}
+
+/* ── Gradient text ────────────────────────────────────────── */
+
+:is(.bq-gradient-text, .bq-gradient-text--blue, .bq-gradient-text--purple, .bq-gradient-text--green) {
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bq-gradient-text         { background-image: linear-gradient(135deg, var(--bq-lp-indigo), var(--bq-lp-purple)); }
+.bq-gradient-text--blue   { background-image: linear-gradient(135deg, #3b82f6, #06b6d4); }
+.bq-gradient-text--purple { background-image: linear-gradient(135deg, var(--bq-lp-purple), #ec4899); }
+.bq-gradient-text--green  { background-image: linear-gradient(135deg, #10b981, #3b82f6); }
+
+/* ── Section shared elements ──────────────────────────────── */
+
+.bq-section__label {
+  color: var(--bq-text--brand);
+}
+
+.bq-section__heading {
+  color: var(--bq-text--primary);
+}
+
+.bq-section__body {
+  color: var(--bq-text--secondary);
+}
+
+/* max-width modifiers — used alongside .bq-section__body */
+.bq-section__body--44 { max-width: 44ch; }
+.bq-section__body--46 { max-width: 46ch; }
+.bq-section__body--52 { max-width: 52ch; }
+
+.bq-section__link {
+  color: var(--bq-text--brand);
+}
+
+/* Icon preceding a check-list item */
+.bq-section__check-icon {
+  color: var(--bq-lp-indigo-muted);
+  margin-block-start: 2px;
+  flex-shrink: 0;
+}
+
+/* ── Install / code block ─────────────────────────────────── */
+
+.bq-install-block {
+  background: var(--bq-background--secondary);
+  border: 1px solid var(--bq-stroke--primary);
+}
+
+/* CTA variant sits on a darker background */
+.bq-install-block--on-cta {
+  background: var(--bq-background--primary);
+  border: 1px solid var(--bq-stroke--primary);
+}
+
+.bq-install-block__icon {
+  color: var(--bq-lp-indigo-muted);
+  flex-shrink: 0;
+}
+
+.bq-install-block__code {
+  color: var(--bq-text--primary);
+  background: none;
+  padding: 0;
+}
+
+/* ── Buttons ──────────────────────────────────────────────── */
+
+.bq-btn--primary {
+  background: linear-gradient(135deg, var(--bq-lp-indigo), var(--bq-lp-purple));
+}
+
+.bq-btn--secondary {
+  border-color: var(--bq-stroke--primary);
+  color: var(--bq-text--primary);
+}
+
+.bq-btn--ghost {
+  color: var(--bq-text--secondary);
+}
+
+/* ── Framework badges ─────────────────────────────────────── */
+
+.bq-framework-badge--html {
+  color: #f97316;
+  border-color: rgba(249, 115, 22, 0.3);
+  background: rgba(249, 115, 22, 0.06);
+}
+
+.bq-framework-badge--react {
+  color: #61dafb;
+  border-color: rgba(97, 218, 251, 0.3);
+  background: rgba(97, 218, 251, 0.06);
+}
+
+.bq-framework-badge--angular {
+  color: #dd1b16;
+  border-color: rgba(221, 27, 22, 0.3);
+  background: rgba(221, 27, 22, 0.06);
+}
+
+.bq-framework-badge--vue {
+  color: #42b883;
+  border-color: rgba(66, 184, 131, 0.3);
+  background: rgba(66, 184, 131, 0.06);
+}
+
+/* ─────────────────── HERO ─────────────────────────────────── */
+
+.bq-hero {
+  padding-block: 5rem;
+}
+
+.bq-hero__glow {
+  background: radial-gradient(ellipse 70% 55% at 65% -5%, rgba(99, 102, 241, 0.2) 0%, transparent 55%);
+}
+
+.bq-hero__version-badge {
+  border-color: rgba(99, 102, 241, 0.4);
+  background: rgba(99, 102, 241, 0.08);
+  color: var(--bq-lp-indigo-muted);
+}
+
+.bq-hero__cdn-hint {
+  color: var(--bq-text--tertiary);
+}
+
+/* Reserve the right-column height so the hero grid doesn't reflow
+   when the CodeLivePreview shadow DOM loads (prevents CLS). */
+@media (width > 1024px) {
+  .bq-hero__mockup-col {
+    min-height: 703px;
+  }
+}
+
+/* ─────────────────── TRUST STRIP ──────────────────────────── */
+
+.bq-trust-strip {
+  border-color: var(--bq-stroke--primary);
+}
+
+.bq-trust-strip__stat {
+  color: var(--bq-text--secondary);
+}
+
+/* ─────────────────── SPOTLIGHTS ───────────────────────────── */
+
+.bq-spotlight {
+  border-block-end: 1px solid var(--bq-stroke--primary);
+}
+
+.bq-spotlight--tinted {
+  background: rgba(99, 102, 241, 0.06);
+  border-block-end: 1px solid var(--bq-stroke--primary);
+}
+
+.bq-spotlight__hub {
+  width: 100%;
+  max-width: 28rem;
+}
+
+.bq-spotlight__code-inline {
+  font-size: 0.85em;
+}
+
+/* Inside tinted spotlight sections, use a slightly higher alpha on badges */
+.bq-spotlight--tinted .bq-framework-badge--html {
+  border-color: rgba(249, 115, 22, 0.35);
+  background: rgba(249, 115, 22, 0.08);
+}
+
+.bq-spotlight--tinted .bq-framework-badge--react {
+  border-color: rgba(97, 218, 251, 0.35);
+  background: rgba(97, 218, 251, 0.08);
+}
+
+.bq-spotlight--tinted .bq-framework-badge--angular {
+  border-color: rgba(221, 27, 22, 0.35);
+  background: rgba(221, 27, 22, 0.08);
+}
+
+.bq-spotlight--tinted .bq-framework-badge--vue {
+  border-color: rgba(66, 184, 131, 0.35);
+  background: rgba(66, 184, 131, 0.08);
+}
+
+/* ─────────────────── LIVE COMPONENT SHOWCASE ──────────────── */
+
+.bq-showcase {
+  background: rgba(99, 102, 241, 0.06);
+  border-block-end: 1px solid var(--bq-stroke--primary);
+}
+
+/* ─────────────────── STAT GRID ────────────────────────────── */
+
+.bq-stats {
+  border-block-end: 1px solid var(--bq-stroke--primary);
+}
+
+.bq-stats__grid,
+.bq-stats__cell {
+  border-color: var(--bq-stroke--primary);
+}
+
+.bq-stats__cell-label {
+  color: var(--bq-text--tertiary);
+}
+
+/* ─────────────────── COMPARISON TABLE ─────────────────────── */
+
+.bq-comparison {
+  border-block-end: 1px solid var(--bq-stroke--primary);
+}
+
+.bq-comparison__table {
+  border-color: var(--bq-stroke--primary);
+}
+
+/* Border between rows */
+.bq-comparison__row:not(:last-child) {
+  border-block-end: 1px solid var(--bq-stroke--primary);
+}
+
+.bq-comparison__header--feature {
+  color: var(--bq-text--tertiary);
+  border-block-end: 1px solid var(--bq-stroke--primary);
+  border-inline-end: 1px solid var(--bq-stroke--primary);
+}
+
+.bq-comparison__header--beeq {
+  color: var(--bq-accent);
+  background: rgba(99, 102, 241, 0.08);
+  border-block-end: 1px solid var(--bq-stroke--primary);
+  border-inline-end: 1px solid var(--bq-stroke--primary);
+}
+
+.bq-comparison__header--other {
+  color: var(--bq-text--tertiary);
+  border-block-end: 1px solid var(--bq-stroke--primary);
+}
+
+.bq-comparison__cell--feature {
+  color: var(--bq-text--secondary);
+  border-inline-end: 1px solid var(--bq-stroke--primary);
+}
+
+.bq-comparison__cell--beeq {
+  color: var(--bq-accent);
+  background: rgba(99, 102, 241, 0.04);
+  border-inline-end: 1px solid var(--bq-stroke--primary);
+}
+
+.bq-comparison__cell--other {
+  color: var(--bq-text--tertiary);
+}
+
+.dark .bq-comparison__header--beeq,
+.dark .bq-comparison__cell--beeq {
+  color: var(--bq-lp-purple);
+}
+
+/* ─────────────────── CTA ──────────────────────────────────── */
+
+.bq-cta {
+  background: var(--bq-background--secondary);
+}
+
+.bq-cta__glow {
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(99, 102, 241, 0.12) 0%, transparent 70%);
+}
+
+/* ─────────────────── RESOURCES ────────────────────────────── */
+
+.bq-resources {
+  border-block-end: 1px solid var(--bq-stroke--primary);
+}
+
+/* ─────────────────── PAGE-LOAD GUARD ──────────────────────── */
+/* A plain <div id="bq-page-guard"> in index.mdx, SSR-rendered so it
+   exists from the very first byte. bq-mode-sync.js fades it out once
+   BEEQ web components are registered, then adds `bq-loaded` to <html>
+   so any future instance (client-side navigation) is suppressed by CSS. */
+
+#bq-page-guard {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: #ffffff;
+  transition: opacity 0.4s ease;
+  pointer-events: all;
+}
+
+.dark #bq-page-guard {
+  background-color: var(--bq-lp-bg-dark);
+}
+
+/* Spinner centered in the overlay */
+#bq-page-guard::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  width: 2rem;
+  height: 2rem;
+  margin-block-start: -1rem;
+  margin-inline-start: -1rem;
+  border: 2px solid rgba(99, 102, 241, 0.25);
+  border-block-start-color: var(--bq-lp-indigo);
+  border-radius: 50%;
+  animation: bq-page-guard-spin 0.7s linear infinite;
+}
+
+#bq-page-guard.bq-page-guard--out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Once BEEQ is registered, <html> gets .bq-loaded. Any future #bq-page-guard
+   rendered by client-side navigation is instantly suppressed by CSS. */
+.bq-loaded #bq-page-guard { display: none; }
+
+@keyframes bq-page-guard-spin {
+  to { transform: rotate(360deg); }
+}

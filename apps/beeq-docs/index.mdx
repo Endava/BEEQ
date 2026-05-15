@@ -6,57 +6,48 @@ mode: "custom"
 
 import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
+<div id="bq-page-guard" aria-hidden="true" />
+
 {/* ══════════════════════════════════════════════════════
     HERO
 ══════════════════════════════════════════════════════ */}
 
-<div className="relative overflow-hidden px-6" style={{ paddingTop: "5rem", paddingBottom: "5rem" }}>
-  <div
-    className="absolute inset-0 pointer-events-none"
-    style={{ background: "radial-gradient(ellipse 70% 55% at 65% -5%, rgba(99,102,241,.2) 0%, transparent 55%)" }}
-  />
+<div className="relative overflow-hidden px-6 bq-hero">
+  <div className="absolute inset-0 pointer-events-none bq-hero__glow" />
   <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
     {/* ── Left: copy ── */}
     <div>
       <a
         href="/releases/changelog"
-        className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold border mb-6 no-underline hover:opacity-80"
-        style={{ borderColor: "rgba(99,102,241,.4)", background: "rgba(99,102,241,.08)", color: "#818cf8" }}
+        className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold border mb-6 no-underline hover:opacity-80 bq-hero__version-badge"
       >
         <Icon icon="sparkles" size="12" /> v1.12.3 — What's new →
       </a>
-      <h1 className="text-5xl lg:text-6xl font-black tracking-tighter leading-none mb-5" style={{ color: "var(--bq-text--primary)" }}>
+      <h1 className="text-5xl lg:text-6xl font-black font-bold tracking-tighter leading-none mb-5 bq-section__heading">
         Building{" "}
-        <span style={{ background: "linear-gradient(135deg,#6366f1 0%,#a855f7 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-          Excellence,
-        </span>
+        <span className="bq-gradient-text">Excellence,</span>
         <br />
         Enhancing{" "}
-        <span style={{ background: "linear-gradient(135deg,#6366f1 0%,#a855f7 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-          Quality.
-        </span>
+        <span className="bq-gradient-text">Quality.</span>
       </h1>
 
-      <p className="text-base lg:text-lg leading-relaxed mb-7" style={{ color: "var(--bq-text--secondary)", maxWidth: "46ch" }}>
+      <p className="text-base lg:text-lg leading-relaxed mb-7 bq-section__body bq-section__body--46">
         BEEQ is Endava's open-source design system — 37 production-ready web components that work
         across React, Angular, Vue, and plain HTML. No rewrites. No lock-in. No compromises.
       </p>
 
       {/* Install block */}
-      <div
-        className="rounded-xl px-4 py-3 mb-2 flex items-center gap-3 font-mono text-sm"
-        style={{ background: "var(--bq-background--secondary)", border: "1px solid var(--bq-stroke--primary)" }}
-      >
-        <Icon icon="terminal" style={{ color: "#818cf8", flexShrink: 0 }} />
-        <code style={{ color: "var(--bq-text--primary)", background: "none", padding: 0 }}>
+      <div className="rounded-xl px-4 py-3 mb-2 flex items-center gap-3 font-mono text-sm bq-install-block">
+        <Icon icon="terminal" className="bq-install-block__icon" />
+        <p className="bq-install-block__code">
           npm install @beeq/core
-        </code>
+        </p>
       </div>
-      <p className="flex items-center gap-1 text-xs mb-8" style={{ color: "var(--bq-text--tertiary)" }}>
+      <p className="flex items-center gap-1 text-xs mb-8 bq-hero__cdn-hint">
         <Icon icon="circle-info" size="12" />
         Prefer a CDN? Add two lines to any HTML page — no build step needed.
-        <a href="/getting-started/for-developers" className="bq-link" style={{ color: "var(--bq-text--brand)" }}>
+        <a href="/getting-started/for-developers" className="bq-link bq-section__link">
           All setup options →
         </a>
       </p>
@@ -64,24 +55,27 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
       <div className="flex flex-wrap gap-3 items-center">
         <a
           href="/getting-started/for-developers"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90"
-          style={{ background: "linear-gradient(135deg,#6366f1,#a855f7)" }}
+          className="inline-flex px-5 py-2.5 rounded-lg text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90 bq-btn--primary"
         >
-          <Icon icon="rocket" /> Get started
+          <span className="flex items-center gap-2">
+            <Icon icon="rocket" color="var(--bq-icon--alt)" />
+            Get started
+          </span>
         </a>
         <a
           href="https://github.com/Endava/BEEQ"
           target="_blank"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold no-underline border transition-opacity hover:opacity-80"
-          style={{ borderColor: "var(--bq-stroke--primary)", color: "var(--bq-text--primary)" }}
+          className="inline-flex px-5 py-2.5 rounded-lg text-sm font-semibold no-underline border transition-opacity hover:opacity-80 bq-btn--secondary"
         >
-          <Icon icon="github" /> View on GitHub
+          <span className="flex items-center gap-2">
+            <Icon icon="github" color="var(--bq-icon--primary)" />
+            View on GitHub
+          </span>
         </a>
         <a
           href="https://storybook.beeq.design"
           target="_blank"
-          className="text-sm no-underline transition-opacity hover:opacity-70"
-          style={{ color: "var(--bq-text--secondary)" }}
+          className="text-sm no-underline transition-opacity hover:opacity-70 bq-btn--ghost"
         >
           Explore Storybook →
         </a>
@@ -89,7 +83,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
     </div>
 
     {/* ── Right: browser mockup with live components ── */}
-    <div className="w-full">
+    <div className="w-full bq-hero__mockup-col">
       <CodeLivePreview code={`
         <div style="width:100%;background:var(--bq-background--primary);border:1px solid var(--bq-stroke--primary);border-radius:14px;overflow:hidden;box-shadow:0 24px 64px var(--bq-background--secondary);font-family:system-ui,sans-serif">
 
@@ -177,6 +171,19 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
           </div>
         </div>
+        <script>
+          (() => {
+            const bqTags = previewRoot.querySelectorAll('bq-tag[removable]');
+            bqTags.forEach(tag => {
+              tag.addEventListener('bqClose', () => {
+                // Add back removable tags after a delay, just to show the event in action
+                setTimeout(() => {
+                  tag.show()
+                }, 2000);
+              });
+            });
+          })();
+        </script>
       `} />
     </div>
 
@@ -187,31 +194,24 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
     FRAMEWORK TRUST STRIP
 ══════════════════════════════════════════════════════ */}
 
-<div
-  className="px-6 py-7 border-y"
-  style={{ borderColor: "var(--bq-stroke--primary)" }}
->
+<div className="px-6 py-7 border-y bq-trust-strip">
   <div className="max-w-6xl mx-auto flex flex-wrap justify-center items-center gap-x-6 gap-y-3">
-    <span className="text-xs font-bold uppercase tracking-widest mr-2" style={{ color: "var(--bq-text--tertiary)" }}>
-      Works with
-    </span>
-    <span className="px-3 py-1 rounded-full text-sm font-semibold border" style={{ color: "#f97316", borderColor: "rgba(249,115,22,.3)", background: "rgba(249,115,22,.06)" }}>HTML</span>
-    <span className="px-3 py-1 rounded-full text-sm font-semibold border" style={{ color: "#61dafb", borderColor: "rgba(97,218,251,.3)", background: "rgba(97,218,251,.06)" }}>React</span>
-    <span className="px-3 py-1 rounded-full text-sm font-semibold border" style={{ color: "#dd1b16", borderColor: "rgba(221,27,22,.3)", background: "rgba(221,27,22,.06)" }}>Angular</span>
-    <span className="px-3 py-1 rounded-full text-sm font-semibold border" style={{ color: "#42b883", borderColor: "rgba(66,184,131,.3)", background: "rgba(66,184,131,.06)" }}>Vue</span>
-    <span className="hidden lg:block w-px h-4 mx-2" style={{ background: "var(--bq-stroke--primary)" }} />
-    <span className="hidden lg:flex items-center gap-1.5 text-xs" style={{ color: "var(--bq-text--tertiary)" }}>
-      <Icon icon="shield-halved" /> WCAG 2.1 AA
-    </span>
-    <span className="hidden lg:flex items-center gap-1.5 text-xs" style={{ color: "var(--bq-text--tertiary)" }}>
-      <Icon icon="cubes" /> 37 components
-    </span>
-    <span className="hidden lg:flex items-center gap-1.5 text-xs" style={{ color: "var(--bq-text--tertiary)" }}>
-      <Icon icon="icons" /> 9k+ icons
-    </span>
-    <span className="hidden lg:flex items-center gap-1.5 text-xs" style={{ color: "var(--bq-text--tertiary)" }}>
-      <Icon icon="scale-balanced" /> Apache 2.0
-    </span>
+    <div className="flex items-center gap-2 text-xs bq-trust-strip__stat">
+      <Icon icon="shield-halved" size="14" color="var(--bq-text--secondary)" />
+      <span>WCAG 2.1 AA</span>
+    </div>
+    <div className="flex items-center gap-2 text-xs bq-trust-strip__stat">
+      <Icon icon="cubes" size="14" color="var(--bq-text--secondary)" />
+      <span>37 components</span>
+    </div>
+    <div className="flex items-center gap-2 text-xs bq-trust-strip__stat">
+      <Icon icon="icons" size="14" color="var(--bq-text--secondary)" />
+      <span>9k+ icons</span>
+    </div>
+    <div className="flex items-center gap-2 text-xs bq-trust-strip__stat">
+      <Icon icon="scale-balanced" size="14" color="var(--bq-text--secondary)" />
+      <span>Apache 2.0</span>
+    </div>
   </div>
 </div>
 
@@ -219,41 +219,39 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
     SPOTLIGHT 1 — Framework agnostic
 ══════════════════════════════════════════════════════ */}
 
-<div
-  className="px-6 py-16"
-  style={{ background: "rgba(99,102,241,.06)", borderBottom: "1px solid var(--bq-stroke--primary)" }}
->
+<div className="px-6 py-16 bq-spotlight--tinted">
   <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
 
     <div>
-      <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-2" style={{ color: "var(--bq-text--brand)" }}>
-        <Icon icon="globe" /> Universal compatibility
+      <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-2 bq-section__label">
+        <Icon icon="globe" />
+        <span>Universal compatibility</span>
       </p>
-      <h2 className="text-3xl lg:text-4xl font-black tracking-tight leading-tight mb-4" style={{ color: "var(--bq-text--primary)" }}>
+      <h2 className="text-3xl lg:text-4xl font-black font-bold tracking-tight leading-tight mb-4 bq-section__heading">
         One library.<br />Every framework.
       </h2>
-      <p className="text-base leading-relaxed mb-4 mt-0" style={{ color: "var(--bq-text--secondary)", maxWidth: "44ch" }}>
+      <p className="text-base leading-relaxed mb-4 mt-0 bq-section__body bq-section__body--44">
         BEEQ is built on standard HTML custom elements. The same component works in React, Angular,
         Vue, or a plain HTML file — with zero rewrites.
       </p>
-      <p className="text-base leading-relaxed mb-6 mt-0" style={{ color: "var(--bq-text--secondary)", maxWidth: "44ch" }}>
-        Want typed props and native framework events? The optional <code style={{ fontSize: ".85em" }}>@beeq/react</code>,{" "}
-        <code style={{ fontSize: ".85em" }}>@beeq/angular</code>, and <code style={{ fontSize: ".85em" }}>@beeq/vue</code> wrappers
+      <p className="text-base leading-relaxed mb-6 mt-0 bq-section__body bq-section__body--44">
+        Want typed props and native framework events? The optional <code className="bq-spotlight__code-inline">@beeq/react</code>,{" "}
+        <code className="bq-spotlight__code-inline">@beeq/angular</code>, and <code className="bq-spotlight__code-inline">@beeq/vue</code> wrappers
         give you a first-class developer experience without locking you into a proprietary fork.
       </p>
       <div className="flex flex-wrap gap-2 mb-7">
-        <span className="px-3 py-1 rounded-full text-sm font-semibold border" style={{ color: "#f97316", borderColor: "rgba(249,115,22,.35)", background: "rgba(249,115,22,.08)" }}>HTML</span>
-        <span className="px-3 py-1 rounded-full text-sm font-semibold border" style={{ color: "#61dafb", borderColor: "rgba(97,218,251,.35)", background: "rgba(97,218,251,.08)" }}>React</span>
-        <span className="px-3 py-1 rounded-full text-sm font-semibold border" style={{ color: "#dd1b16", borderColor: "rgba(221,27,22,.35)", background: "rgba(221,27,22,.08)" }}>Angular</span>
-        <span className="px-3 py-1 rounded-full text-sm font-semibold border" style={{ color: "#42b883", borderColor: "rgba(66,184,131,.35)", background: "rgba(66,184,131,.08)" }}>Vue</span>
+        <span className="px-3 py-1 rounded-full text-sm font-semibold border bq-framework-badge--html">HTML</span>
+        <span className="px-3 py-1 rounded-full text-sm font-semibold border bq-framework-badge--react">React</span>
+        <span className="px-3 py-1 rounded-full text-sm font-semibold border bq-framework-badge--angular">Angular</span>
+        <span className="px-3 py-1 rounded-full text-sm font-semibold border bq-framework-badge--vue">Vue</span>
       </div>
-      <a href="/getting-started/for-developers" className="bq-link inline-flex items-center gap-2 text-sm font-semibold no-underline hover:underline" style={{ color: "var(--bq-text--brand)" }}>
+      <a href="/getting-started/for-developers" className="bq-link inline-flex items-center gap-2 text-sm font-semibold no-underline hover:underline bq-section__link">
         See all integration guides <Icon icon="arrow-right" />
       </a>
     </div>
 
     <div className="flex items-center justify-center">
-      <div style={{ width: "100%", maxWidth: "28rem" }} dangerouslySetInnerHTML={{ __html: `
+      <div className="bq-spotlight__hub" dangerouslySetInnerHTML={{ __html: `
         <svg viewBox="0 0 440 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
           <defs>
             <linearGradient id="hub-g-landing" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -292,7 +290,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
     SPOTLIGHT 2 — Setup in minutes (CDN first)
 ══════════════════════════════════════════════════════ */}
 
-<div className="px-6 py-16" style={{ borderBottom: "1px solid var(--bq-stroke--primary)" }}>
+<div className="px-6 py-16 bq-spotlight">
   <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
 
     {/* Left: code */}
@@ -300,8 +298,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
       <CodeGroup>
         ```html CDN (fastest — no build step)
         <!-- 1. Load styles -->
-        <link rel="stylesheet"
-          href="https://esm.sh/@beeq/core/dist/beeq/beeq.css" />
+        <link rel="stylesheet" href="https://esm.sh/@beeq/core/dist/beeq/beeq.css" />
 
         <!-- 2. Load components + icons -->
         <script type="module"
@@ -313,16 +310,6 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
         <bq-button appearance="primary">
           Hello BEEQ
         </bq-button>
-        ```
-
-        ```bash npm
-        # Core package (required)
-        npm install @beeq/core
-
-        # Pick your framework wrapper
-        npm install @beeq/react   # React
-        npm install @beeq/angular # Angular v17+
-        npm install @beeq/vue     # Vue
         ```
 
         ```ts React
@@ -359,35 +346,35 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
     {/* Right: copy */}
     <div className="lg:pt-2">
-      <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-2" style={{ color: "var(--bq-text--brand)" }}>
+      <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-2 bq-section__label">
         <Icon icon="bolt" /> Quick setup
       </p>
-      <h2 className="text-3xl lg:text-4xl font-black tracking-tight leading-tight mb-4" style={{ color: "var(--bq-text--primary)" }}>
+      <h2 className="text-3xl lg:text-4xl font-black tracking-tight leading-tight mb-4 bq-section__heading">
         Two lines.<br />Real components.
       </h2>
-      <p className="text-base leading-relaxed mb-4 mt-0" style={{ color: "var(--bq-text--secondary)", maxWidth: "44ch" }}>
+      <p className="text-base leading-relaxed mb-4 mt-0 bq-section__body bq-section__body--44">
         The fastest path is the CDN — link a stylesheet and a module script to any HTML page and
         you're rendering production-quality components in under a minute. No bundler, no CLI, no config.
       </p>
-      <p className="text-base leading-relaxed mb-6 mt-0" style={{ color: "var(--bq-text--secondary)", maxWidth: "44ch" }}>
+      <p className="text-base leading-relaxed mb-6 mt-0 bq-section__body bq-section__body--44">
         Building with a framework? Install the matching wrapper package for typed props, native event
         bindings, and full IDE autocomplete — all wired up the way your framework expects.
       </p>
       <div className="flex flex-col gap-2 mb-6">
-        <div className="flex items-start gap-2 text-sm" style={{ color: "var(--bq-text--secondary)" }}>
-          <Icon icon="circle-check" style={{ color: "#818cf8", marginTop: "2px", flexShrink: 0 }} />
+        <div className="flex items-start gap-2 text-sm bq-section__body">
+          <Icon icon="circle-check" className="bq-section__check-icon" />
           CSS custom properties for full theming control
         </div>
-        <div className="flex items-start gap-2 text-sm" style={{ color: "var(--bq-text--secondary)" }}>
-          <Icon icon="circle-check" style={{ color: "#818cf8", marginTop: "2px", flexShrink: 0 }} />
+        <div className="flex items-start gap-2 text-sm bq-section__body">
+          <Icon icon="circle-check" className="bq-section__check-icon" />
           Icons loaded on demand — no bundle bloat
         </div>
-        <div className="flex items-start gap-2 text-sm" style={{ color: "var(--bq-text--secondary)" }}>
-          <Icon icon="circle-check" style={{ color: "#818cf8", marginTop: "2px", flexShrink: 0 }} />
+        <div className="flex items-start gap-2 text-sm bq-section__body">
+          <Icon icon="circle-check" className="bq-section__check-icon" />
           Tree-shakeable when using npm
         </div>
       </div>
-      <a href="/getting-started/for-developers" className="bq-link inline-flex items-center gap-2 text-sm font-semibold no-underline hover:underline" style={{ color: "var(--bq-text--brand)" }}>
+      <a href="/getting-started/for-developers" className="bq-link inline-flex items-center gap-2 text-sm font-semibold no-underline hover:underline bq-section__link">
         Full getting started guide <Icon icon="arrow-right" />
       </a>
     </div>
@@ -399,18 +386,16 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
     LIVE COMPONENT SHOWCASE
 ══════════════════════════════════════════════════════ */}
 
-<div
-  className="px-6 py-24"
-  style={{ background: "rgba(99,102,241,.06)", borderBottom: "1px solid var(--bq-stroke--primary)" }}
->
+<div className="px-6 py-24 bq-showcase">
   <div className="max-w-6xl mx-auto">
-    <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-0 flex items-center gap-2" style={{ color: "var(--bq-text--brand)" }}>
-      <Icon icon="eye" /> Live Preview
+    <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-0 flex items-center gap-2 bq-section__label">
+      <Icon icon="eye" />
+      <span>Live Preview</span>
     </p>
-    <h2 className="text-4xl lg:text-5xl font-black tracking-tight leading-tight mb-3" style={{ color: "var(--bq-text--primary)" }}>
+    <h2 className="text-4xl lg:text-5xl font-black font-bold tracking-tight leading-tight mb-3 bq-section__heading">
       See the code.<br />See it render.
     </h2>
-    <p className="text-base mb-10" style={{ color: "var(--bq-text--secondary)", maxWidth: "52ch" }}>
+    <p className="text-base mb-10 bq-section__body bq-section__body--52">
       Every component below runs live from the actual BEEQ package.
       Pick a tab and interact with them directly.
     </p>
@@ -429,7 +414,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
           </div>
         `}>
           <CodeGroup>
-            ```html HTML
+            ```html HTML icon="html5"
             <bq-button appearance="primary">Primary</bq-button>
             <bq-button appearance="secondary">Secondary</bq-button>
             <bq-button variant="ghost">Ghost</bq-button>
@@ -439,7 +424,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
             <bq-button disabled>Disabled</bq-button>
             ```
 
-            ```tsx React
+            ```tsx React icon="react"
             import { BqButton } from "@beeq/react";
 
             <BqButton appearance="primary">Primary</BqButton>
@@ -450,8 +435,9 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
             <BqButton disabled>Disabled</BqButton>
             ```
 
-            ```ts Angular
+            ```ts Angular icon="angular"
             // import { BqButtonComponent } from "@beeq/angular/standalone";
+
             <bq-button appearance="primary">Primary</bq-button>
             <bq-button appearance="secondary">Secondary</bq-button>
             <bq-button variant="ghost">Ghost</bq-button>
@@ -460,7 +446,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
             <bq-button [disabled]="true">Disabled</bq-button>
             ```
 
-            ```ts Vue
+            ```ts Vue icon="vuejs"
             import { BqButton } from "@beeq/vue";
 
             <BqButton appearance="primary">Primary</BqButton>
@@ -493,7 +479,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
           </div>
         `}>
           <CodeGroup>
-            ```html HTML
+            ```html HTML icon="html5"
             <bq-input placeholder="Enter your email" type="email">
               <label slot="label">Email address</label>
             </bq-input>
@@ -501,7 +487,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
             <bq-switch checked>Dark mode</bq-switch>
             ```
 
-            ```tsx React
+            ```tsx React icon="react"
             import { BqInput, BqCheckbox, BqSwitch } from "@beeq/react";
 
             <BqInput placeholder="Enter your email" type="email">
@@ -511,7 +497,17 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
             <BqSwitch checked>Dark mode</BqSwitch>
             ```
 
-            ```ts Vue
+            ```ts Angular icon="angular"
+            // import { BqInputComponent, BqCheckboxComponent, BqSwitchComponent } from "@beeq/angular/standalone";
+
+            <bq-input placeholder="Enter your email" type="email">
+              <label slot="label">Email address</label>
+            </bq-input>
+            <bq-checkbox [checked]="true">Enable notifications</bq-checkbox>
+            <bq-switch [checked]="true">Dark mode</bq-switch>
+            ```
+
+            ```ts Vue icon="vuejs"
             import { BqInput, BqCheckbox, BqSwitch } from "@beeq/vue";
 
             <BqInput placeholder="Enter your email" type="email">
@@ -528,16 +524,16 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
         <CodeLivePreview code={`
           <div style="display:flex;flex-direction:column;gap:1.5rem;align-items:flex-start;width:100%;max-width:520px">
             <div style="display:flex;gap:.65rem;flex-wrap:wrap;align-items:center">
-              <bq-badge>New</bq-badge>
-              <bq-badge appearance="warning">Beta</bq-badge>
-              <bq-badge appearance="success">Stable</bq-badge>
-              <bq-badge appearance="error">Deprecated</bq-badge>
-              <bq-badge appearance="info">Info</bq-badge>
+              <bq-badge background-color="ui--tertiary">New</bq-badge>
+              <bq-badge background-color="ui--warning">Beta</bq-badge>
+              <bq-badge background-color="ui--success">Stable</bq-badge>
+              <bq-badge background-color="ui--danger">Deprecated</bq-badge>
+              <bq-badge background-color="ui--info">Info</bq-badge>
             </div>
             <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center">
               <bq-status type="success">Online</bq-status>
-              <bq-status type="warning">Degraded</bq-status>
-              <bq-status type="error">Offline</bq-status>
+              <bq-status type="alert">Degraded</bq-status>
+              <bq-status type="danger">Offline</bq-status>
               <bq-status type="info">Maintenance</bq-status>
             </div>
             <div style="display:flex;flex-direction:column;gap:.75rem;width:100%">
@@ -562,7 +558,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
           </div>
         `}>
           <CodeGroup>
-            ```html HTML
+            ```html HTML icon="html5"
             <bq-badge appearance="success">Stable</bq-badge>
             <bq-status type="success">Online</bq-status>
             <bq-progress value="65"></bq-progress>
@@ -570,13 +566,33 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
             <bq-spinner size="small"></bq-spinner>
             ```
 
-            ```tsx React
+            ```tsx React icon="react"
             import { BqBadge, BqStatus, BqProgress, BqSpinner } from "@beeq/react";
 
             <BqBadge appearance="success">Stable</BqBadge>
             <BqStatus type="success">Online</BqStatus>
             <BqProgress value={65} />
             <BqProgress value={30} type="error" />
+            <BqSpinner size="small" />
+            ```
+
+            ```ts Angular icon="angular"
+            // import { BqBadgeComponent, BqStatusComponent, BqProgressComponent, BqSpinnerComponent } from "@beeq/angular/standalone";
+
+            <bq-badge appearance="success">Stable</bq-badge>
+            <bq-status type="success">Online</bq-status>
+            <bq-progress [value]="65"></bq-progress>
+            <bq-progress [value]="30" type="error"></bq-progress>
+            <bq-spinner size="small"></bq-spinner>
+            ```
+
+            ```ts Vue icon="vuejs"
+            import { BqBadge, BqStatus, BqProgress, BqSpinner } from "@beeq/vue";
+
+            <BqBadge appearance="success">Stable</BqBadge>
+            <BqStatus type="success">Online</BqStatus>
+            <BqProgress :value="65" />
+            <BqProgress :value="30" type="error" />
             <BqSpinner size="small" />
             ```
           </CodeGroup>
@@ -587,18 +603,33 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
         <CodeLivePreview code={`
           <div style="display:flex;flex-direction:column;gap:1.5rem;align-items:flex-start;width:100%;max-width:520px">
             <div style="display:flex;gap:.65rem;align-items:center;flex-wrap:wrap">
-              <bq-avatar initials="BQ" style="--bq-avatar--background:linear-gradient(135deg,#6366f1,#a855f7)"></bq-avatar>
-              <bq-avatar initials="AL" style="--bq-avatar--background:linear-gradient(135deg,#3b82f6,#06b6d4)"></bq-avatar>
-              <bq-avatar initials="MR" style="--bq-avatar--background:linear-gradient(135deg,#a855f7,#ec4899)"></bq-avatar>
-              <bq-avatar size="small" initials="SP" style="--bq-avatar--background:linear-gradient(135deg,#10b981,#3b82f6)"></bq-avatar>
-              <bq-avatar size="xsmall" initials="JK" style="--bq-avatar--background:linear-gradient(135deg,#f97316,#eab308)"></bq-avatar>
+              <bq-avatar image="https://i.pravatar.cc/150?img=11"></bq-avatar>
+              <bq-avatar image="https://i.pravatar.cc/150?img=12"></bq-avatar>
+              <bq-avatar image="https://i.pravatar.cc/150?img=16"></bq-avatar>
+              <bq-avatar size="small" initials="SP"></bq-avatar>
+              <bq-avatar size="xsmall" initials="JK"></bq-avatar>
             </div>
             <div style="display:flex;gap:.5rem;flex-wrap:wrap">
-              <bq-tag>Design System</bq-tag>
-              <bq-tag removable>Web Components</bq-tag>
-              <bq-tag removable>StencilJS</bq-tag>
-              <bq-tag size="small">TypeScript</bq-tag>
-              <bq-tag size="small" removable>Open Source</bq-tag>
+              <bq-tag color="info">
+                <bq-icon name="palette" slot="prefix"></bq-icon>
+                Design System
+              </bq-tag>
+              <bq-tag color="warning" removable>
+                <bq-icon name="code" slot="prefix"></bq-icon>
+                Web Components
+              </bq-tag>
+              <bq-tag color="success" removable>
+                <bq-icon name="file-tsx" slot="prefix"></bq-icon>
+                StencilJS
+              </bq-tag>
+              <bq-tag size="small" color="#f97316">
+                <bq-icon name="file-ts" slot="prefix"></bq-icon>
+                TypeScript
+              </bq-tag>
+              <bq-tag size="small" color="#a855f7" removable>
+                <bq-icon name="linux-logo" slot="prefix"></bq-icon>
+                Open Source
+              </bq-tag>
             </div>
             <div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:center">
               <bq-icon name="heart" size="22" style="color:#f43f5e"></bq-icon>
@@ -610,28 +641,73 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
               <bq-icon name="sparkle" size="22" style="color:#a855f7"></bq-icon>
             </div>
             <bq-divider dashed></bq-divider>
-            <div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:center">
-              <bq-slider value="60" style="width:180px"></bq-slider>
+            <div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;width:100%">
+              <bq-slider value="60"></bq-slider>
               <span style="font-size:.8rem;opacity:.6">Range slider</span>
             </div>
           </div>
+          <script>
+            (() => {
+              const bqTags = previewRoot.querySelectorAll('bq-tag[removable]');
+              bqTags.forEach(tag => {
+                tag.addEventListener('bqClose', () => {
+                  // Add back removable tags after a delay, just to show the event in action
+                  setTimeout(() => {
+                    tag.show()
+                  }, 2000);
+                });
+              });
+            })();
+          </script>
         `}>
           <CodeGroup>
-            ```html HTML
+            ```html HTML icon="html5"
+            <bq-avatar image="https://i.pravatar.cc/150?img=11"></bq-avatar>
             <bq-avatar initials="BQ"></bq-avatar>
-            <bq-tag removable>Web Components</bq-tag>
+            <bq-tag color="info" removable>
+              <bq-icon name="code" slot="prefix"></bq-icon>
+              Web Components
+            </bq-tag>
             <bq-icon name="heart" size="22"></bq-icon>
             <bq-slider value="60"></bq-slider>
             <bq-divider dashed></bq-divider>
             ```
 
-            ```tsx React
+            ```tsx React icon="react"
             import { BqAvatar, BqTag, BqIcon, BqSlider, BqDivider } from "@beeq/react";
 
-            <BqAvatar initials="BQ" />
-            <BqTag removable>Web Components</BqTag>
+            <BqAvatar image="https://i.pravatar.cc/150?img=11" />
+            <BqTag color="info" removable>
+              <BqIcon name="code" slot="prefix" />
+              Web Components
+            </BqTag>
             <BqIcon name="heart" size="22" />
             <BqSlider value={60} />
+            <BqDivider dashed />
+            ```
+
+            ```ts Angular icon="angular"
+            // import { BqAvatarComponent, BqTagComponent, BqIconComponent, BqSliderComponent, BqDividerComponent } from "@beeq/angular/standalone";
+            <bq-avatar image="https://i.pravatar.cc/150?img=11"></bq-avatar>
+            <bq-tag color="info" [removable]="true">
+              <bq-icon name="code" slot="prefix"></bq-icon>
+              Web Components
+            </bq-tag>
+            <bq-icon name="heart" size="22"></bq-icon>
+            <bq-slider [value]="60"></bq-slider>
+            <bq-divider dashed></bq-divider>
+            ```
+
+            ```ts Vue icon="vuejs"
+            import { BqAvatar, BqTag, BqIcon, BqSlider, BqDivider } from "@beeq/vue";
+
+            <BqAvatar image="https://i.pravatar.cc/150?img=11" />
+            <BqTag color="info" :removable="true">
+              <BqIcon name="code" slot="prefix" />
+              Web Components
+            </BqTag>
+            <BqIcon name="heart" size="22" />
+            <BqSlider :value="60" />
             <BqDivider dashed />
             ```
           </CodeGroup>
@@ -645,66 +721,66 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
     WHY BEEQ — STAT GRID
 ══════════════════════════════════════════════════════ */}
 
-<div className="px-6 py-20" style={{ borderBottom: "1px solid var(--bq-stroke--primary)" }}>
+<div className="px-6 py-20 bq-stats">
   <div className="max-w-6xl mx-auto">
-    <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-0 flex items-center gap-2" style={{ color: "var(--bq-text--brand)" }}>
-      <Icon icon="circle-question" /> Why BEEQ
+    <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-0 flex items-center gap-2 bq-section__label">
+      <Icon icon="circle-question" />
+      <span>Why BEEQ</span>
     </p>
-    <h2 className="text-3xl lg:text-4xl font-black tracking-tight leading-tight mb-3" style={{ color: "var(--bq-text--primary)" }}>
+    <h2 className="text-3xl lg:text-4xl font-black font-bold tracking-tight leading-tight mb-3 bq-section__heading">
       One system.<br />Every product. Every team.
     </h2>
-    <p className="text-base mb-12" style={{ color: "var(--bq-text--secondary)", maxWidth: "52ch" }}>
+    <p className="text-base mb-12 bq-section__body bq-section__body--52">
       BEEQ gives you the building blocks to ship great UIs faster — with consistency, accessibility,
       and developer experience baked in from day one.
     </p>
 
     <div
-      className="grid grid-cols-1 sm:grid-cols-2 rounded-2xl overflow-hidden border"
-      style={{ borderColor: "var(--bq-stroke--primary)" }}
+      className="grid grid-cols-1 sm:grid-cols-2 rounded-2xl overflow-hidden border bq-stats__grid"
     >
-      <div className="p-10 border-b border-r" style={{ borderColor: "var(--bq-stroke--primary)" }}>
-        <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-1.5" style={{ color: "var(--bq-text--tertiary)" }}>
+      <div className="p-10 border-b border-r bq-stats__cell">
+        <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-1.5 bq-stats__cell-label">
           <Icon icon="layer-group" /> Consistency
         </p>
-        <span className="block text-7xl font-black leading-none mb-3" style={{ background: "linear-gradient(135deg,#6366f1,#a855f7)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>ONE</span>
+        <span className="block text-7xl font-black leading-none mb-3 bq-gradient-text">ONE</span>
         <p className="text-base font-bold mb-1 mt-0">Source of truth, every product</p>
-        <p className="text-sm mt-0" style={{ color: "var(--bq-text--secondary)" }}>
+        <p className="text-sm mt-0 bq-section__body">
           Build once, use everywhere. Components encode your design decisions so every product
           looks and behaves consistently — across every team and brand.
         </p>
       </div>
 
-      <div className="p-10 border-b" style={{ borderColor: "var(--bq-stroke--primary)" }}>
-        <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-1.5" style={{ color: "var(--bq-text--tertiary)" }}>
+      <div className="p-10 border-b bq-stats__cell">
+        <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-1.5 bq-stats__cell-label">
           <Icon icon="bolt" /> Efficiency
         </p>
-        <span className="block text-7xl font-black leading-none mb-3" style={{ background: "linear-gradient(135deg,#3b82f6,#06b6d4)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>5min</span>
+        <span className="block text-7xl font-black leading-none mb-3 bq-gradient-text--blue">5min</span>
         <p className="text-base font-bold mb-1 mt-0">From zero to your first component</p>
-        <p className="text-sm mt-0" style={{ color: "var(--bq-text--secondary)" }}>
+        <p className="text-sm mt-0 bq-section__body">
           Add two CDN links to any HTML page and you're rendering real components. No bundler,
           no CLI, no configuration required to get started.
         </p>
       </div>
 
-      <div className="p-10 border-r" style={{ borderColor: "var(--bq-stroke--primary)" }}>
-        <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-1.5" style={{ color: "var(--bq-text--tertiary)" }}>
+      <div className="p-10 border-r bq-stats__cell">
+        <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-1.5 bq-stats__cell-label">
           <Icon icon="palette" /> Scalability
         </p>
-        <span className="block text-7xl font-black leading-none mb-3" style={{ background: "linear-gradient(135deg,#a855f7,#ec4899)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>∞</span>
+        <span className="block text-7xl font-black leading-none mb-3 bq-gradient-text--purple">∞</span>
         <p className="text-base font-bold mb-1 mt-0">Infinite brands, one codebase</p>
-        <p className="text-sm mt-0" style={{ color: "var(--bq-text--secondary)" }}>
+        <p className="text-sm mt-0 bq-section__body">
           CSS tokens and custom properties let any team go fully white-label — swap colors,
           typography, and radius without ever forking or rebuilding components.
         </p>
       </div>
 
       <div className="p-10">
-        <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-1.5" style={{ color: "var(--bq-text--tertiary)" }}>
+        <p className="text-xs font-bold uppercase tracking-widest mb-3 mt-0 flex items-center gap-1.5 bq-stats__cell-label">
           <Icon icon="universal-access" /> Accessibility
         </p>
-        <span className="block text-7xl font-black leading-none mb-3" style={{ background: "linear-gradient(135deg,#10b981,#3b82f6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>AA</span>
+        <span className="block text-7xl font-black leading-none mb-3 bq-gradient-text--green">AA</span>
         <p className="text-base font-bold mb-1 mt-0">WCAG 2.1 AA by default</p>
-        <p className="text-sm mt-0" style={{ color: "var(--bq-text--secondary)" }}>
+        <p className="text-sm mt-0 bq-section__body">
           Keyboard navigation, ARIA semantics, and screen reader support aren't add-ons —
           they're baked into every component from day one.
         </p>
@@ -717,27 +793,28 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
     COMPARISON TABLE
 ══════════════════════════════════════════════════════ */}
 
-<div className="px-6 py-16" style={{ borderBottom: "1px solid var(--bq-stroke--primary)" }}>
+<div className="px-6 py-16 bq-comparison">
   <div className="max-w-6xl mx-auto">
-    <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-0 flex items-center gap-2" style={{ color: "var(--bq-text--brand)" }}>
-      <Icon icon="scale-balanced" /> Comparison
+    <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-0 flex items-center gap-2 bq-section__label">
+      <Icon icon="scale-balanced" />
+      <span>Comparison</span>
     </p>
-    <h2 className="text-3xl lg:text-4xl font-black tracking-tight leading-tight mb-3" style={{ color: "var(--bq-text--primary)" }}>
+    <h2 className="text-3xl lg:text-4xl font-black font-bold tracking-tight leading-tight mb-3 bq-section__heading">
       BEEQ vs{" "}
-      <span style={{ background: "linear-gradient(135deg,#6366f1,#a855f7)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+      <span className="bq-gradient-text">
         typical
       </span>{" "}
       UI libraries.
     </h2>
-    <p className="text-base mb-10" style={{ color: "var(--bq-text--secondary)", maxWidth: "52ch" }}>
+    <p className="text-base mb-10 bq-section__body bq-section__body--52">
       What you get out of the box compared to off-the-shelf component libraries.
     </p>
 
-    <div className="rounded-2xl overflow-hidden border" style={{ borderColor: "var(--bq-stroke--primary)" }}>
+    <div className="rounded-2xl overflow-hidden border bq-comparison__table">
       <div className="grid grid-cols-3">
-        <div className="p-4 text-xs font-bold uppercase tracking-widest" style={{ color: "var(--bq-text--tertiary)", borderBottom: "1px solid var(--bq-stroke--primary)", borderRight: "1px solid var(--bq-stroke--primary)" }}>Feature</div>
-        <div className="p-4 text-xs font-bold uppercase tracking-widest text-center" style={{ color: "#818cf8", background: "rgba(99,102,241,.08)", borderBottom: "1px solid var(--bq-stroke--primary)", borderRight: "1px solid var(--bq-stroke--primary)" }}>BEEQ</div>
-        <div className="p-4 text-xs font-bold uppercase tracking-widest text-center" style={{ color: "var(--bq-text--tertiary)", borderBottom: "1px solid var(--bq-stroke--primary)" }}>Typical UI library</div>
+        <div className="p-4 text-xs font-bold uppercase tracking-widest bq-comparison__header--feature">Feature</div>
+        <div className="p-4 text-xs font-bold uppercase tracking-widest text-center bq-comparison__header--beeq">BEEQ</div>
+        <div className="p-4 text-xs font-bold uppercase tracking-widest text-center bq-comparison__header--other">Typical UI library</div>
       </div>
       {[
         ["Branding",               "White-label by default",    "Often opinionated"],
@@ -747,11 +824,11 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
         ["Community",              "Open source, welcoming",    "Varies"],
         ["Enterprise scalability", "✓ Included",                "✗ Varies"],
         ["Accessibility baked in", "✓ Included",                "✗ Varies"],
-      ].map(([feature, beeq, other], i, arr) => (
-        <div key={feature} className="grid grid-cols-3" style={{ borderBottom: i < arr.length - 1 ? "1px solid var(--bq-stroke--primary)" : "none" }}>
-          <div className="p-4 text-sm" style={{ color: "var(--bq-text--secondary)", borderRight: "1px solid var(--bq-stroke--primary)" }}>{feature}</div>
-          <div className="p-4 text-sm font-medium text-center" style={{ color: "#a5b4fc", background: "rgba(99,102,241,.04)", borderRight: "1px solid var(--bq-stroke--primary)" }}>{beeq}</div>
-          <div className="p-4 text-sm text-center" style={{ color: "var(--bq-text--tertiary)" }}>{other}</div>
+      ].map(([feature, beeq, other]) => (
+        <div key={feature} className="grid grid-cols-3 bq-comparison__row">
+          <div className="p-4 text-sm bq-comparison__cell--feature">{feature}</div>
+          <div className="p-4 text-sm font-medium text-center bq-comparison__cell--beeq">{beeq}</div>
+          <div className="p-4 text-sm text-center bq-comparison__cell--other">{other}</div>
         </div>
       ))}
     </div>
@@ -762,50 +839,47 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
     CTA
 ══════════════════════════════════════════════════════ */}
 
-<div
-  className="relative px-6 py-24 text-center overflow-hidden"
-  style={{ background: "var(--bq-background--secondary)" }}
->
-  <div
-    className="absolute inset-0 pointer-events-none"
-    style={{ background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(99,102,241,.12) 0%, transparent 70%)" }}
-  />
-  <h2 className="text-4xl lg:text-5xl font-black tracking-tighter leading-none mb-4" style={{ color: "var(--bq-text--primary)" }}>
+<div className="relative px-6 py-24 text-center overflow-hidden bq-cta">
+  <div className="absolute inset-0 pointer-events-none bq-cta__glow" />
+  <h2 className="text-4xl lg:text-5xl font-black font-bold tracking-tighter leading-none mb-4 bq-section__heading">
     Start building<br />
-    <span style={{ background: "linear-gradient(135deg,#6366f1,#a855f7)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+    <span className="bq-gradient-text">
       today.
     </span>
   </h2>
-  <p className="text-base mb-6 mx-auto" style={{ color: "var(--bq-text--secondary)", maxWidth: "44ch" }}>
+  <p className="text-base mb-6 mx-auto bq-section__body bq-section__body--44">
     One install. A production-grade design system. Ready for your next project.
   </p>
 
-  {/* Install block repeated */}
-  <div
-    className="inline-flex items-center gap-3 rounded-xl px-5 py-3 mb-8 font-mono text-sm"
-    style={{ background: "var(--bq-background--primary)", border: "1px solid var(--bq-stroke--primary)" }}
-  >
-    <Icon icon="terminal" style={{ color: "#818cf8" }} />
-    <code style={{ color: "var(--bq-text--primary)", background: "none", padding: 0 }}>
+  <div className="mx-auto w-full max-w-md text-start">
+    <CodeGroup>
+      ```bash npm icon=npm
       npm install @beeq/core
-    </code>
+      ```
+
+      ```bash pnpm icon=pnpm
+      pnpm add @beeq/core
+      ```
+
+      ```bash yarn icon=yarn
+      yarn add @beeq/core
+      ```
+    </CodeGroup>
   </div>
 
   <div className="flex justify-center flex-wrap gap-3">
     <a
       href="/getting-started/introduction"
-      className="inline-flex px-6 py-3 rounded-lg text-base font-semibold text-white no-underline transition-opacity hover:opacity-90"
-      style={{ background: "linear-gradient(135deg,#6366f1,#a855f7)" }}
+      className="inline-flex px-6 py-3 rounded-lg text-base font-semibold text-white no-underline transition-opacity hover:opacity-90 bq-btn--primary"
     >
-      <span className="flex items-center gap-2"><Icon icon="rocket" /> Get started</span>
+      <span className="flex items-center gap-2"><Icon icon="rocket" color="var(--bq-icon--alt)" /> Get started</span>
     </a>
     <a
       href="https://github.com/Endava/BEEQ"
       target="_blank"
-      className="inline-flex px-6 py-3 rounded-lg text-sm font-medium no-underline transition-opacity hover:opacity-70"
-      style={{ color: "var(--bq-text--secondary)" }}
+      className="inline-flex px-6 py-3 rounded-lg text-sm font-medium no-underline transition-opacity hover:opacity-70 bq-btn--ghost"
     >
-      <span className="flex items-center gap-2"><Icon icon="github" /> Star on GitHub</span>
+      <span className="flex items-center gap-2"><Icon icon="github" color="var(--bq-icon--primary)" /> Star on GitHub</span>
     </a>
   </div>
 </div>
@@ -814,15 +888,15 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
     RESOURCES
 ══════════════════════════════════════════════════════ */}
 
-<div className="px-6 py-14" style={{ borderBottom: "1px solid var(--bq-stroke--primary)" }}>
+<div className="px-6 py-14 bq-resources">
   <div className="max-w-6xl mx-auto">
-    <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-0 flex items-center gap-2" style={{ color: "var(--bq-text--brand)" }}>
+    <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-0 flex items-center gap-2 bq-section__label">
       <Icon icon="compass" /> Resources
     </p>
-    <h2 className="text-3xl lg:text-4xl font-black tracking-tight leading-tight mb-3" style={{ color: "var(--bq-text--primary)" }}>
+    <h2 className="text-3xl lg:text-4xl font-black font-bold tracking-tight leading-tight mb-3 bq-section__heading">
       Docs, tools,<br />and community.
     </h2>
-    <p className="text-base mb-10" style={{ color: "var(--bq-text--secondary)" }}>
+    <p className="text-base mb-10 bq-section__body">
       Everything you need to ship, all in one place.
     </p>
     <CardGroup cols={3}>
