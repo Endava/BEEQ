@@ -33,6 +33,10 @@
   --bq-lp-bg-dark:      #0d0e11;
 }
 
+html:not(.bq-loaded) {
+  overflow: hidden; /* Prevent scrolling while page-load guard is active */
+}
+
 /* ── Gradient text ────────────────────────────────────────── */
 
 :is(.bq-gradient-text, .bq-gradient-text--blue, .bq-gradient-text--purple, .bq-gradient-text--green) {
@@ -317,7 +321,10 @@
    so any future instance (client-side navigation) is suppressed by CSS. */
 
 #bq-page-guard {
-  position: fixed;
+  display: grid;
+  place-items: center;
+  position: absolute;
+  block-size: 100dvh;
   inset: 0;
   z-index: 9999;
   background-color: #ffffff;
@@ -332,12 +339,8 @@
 /* Spinner centered in the overlay */
 #bq-page-guard::after {
   content: '';
-  position: absolute;
-  inset-block-start: 50%;
-  inset-inline-start: 50%;
   width: 2rem;
   height: 2rem;
-  margin-block-start: -1rem;
   margin-inline-start: -1rem;
   border: 2px solid rgba(99, 102, 241, 0.25);
   border-block-start-color: var(--bq-lp-indigo);
