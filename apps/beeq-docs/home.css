@@ -72,6 +72,15 @@ html:not(.bq-loaded) {
   color: var(--bq-text--brand);
 }
 
+.bq-section__link::after {
+  content: '' !important;
+  --tw-scale-x: 0 !important;
+}
+
+.bq-section__link:hover::after {
+  --tw-scale-x: 1 !important;
+}
+
 /* Icon preceding a check-list item */
 .bq-section__check-icon {
   color: var(--bq-lp-indigo-muted);
@@ -106,16 +115,24 @@ html:not(.bq-loaded) {
 /* ── Buttons ──────────────────────────────────────────────── */
 
 .bq-btn--primary {
-  background: linear-gradient(135deg, var(--bq-lp-indigo), var(--bq-lp-purple));
+  background: linear-gradient(135deg, var(--bq-brand), var(--bq-accent));
 }
 
 .bq-btn--secondary {
-  border-color: var(--bq-stroke--primary);
+  background-color: var(--bq-ui--secondary);
   color: var(--bq-text--primary);
 }
 
+.bq-btn--secondary:hover {
+  background-color: color-mix(in srgb,var(--bq-ui--secondary),var(--bq-hover) 20%);
+}
+
 .bq-btn--ghost {
-  color: var(--bq-text--secondary);
+  color: var(--bq-text--brand);
+}
+
+.bq-btn--ghost:hover {
+  background-color: color-mix(in srgb,var(--bq-ui--primary),var(--bq-hover) 20%);
 }
 
 /* ── Framework badges ─────────────────────────────────────── */
