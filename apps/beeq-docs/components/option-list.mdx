@@ -1,0 +1,444 @@
+---
+title: Option List
+description: Option List is a listbox container that groups one or more Option items and surfaces a selection event when the user clicks or activates any of them.
+---
+
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Option List component overview">
+  <img className="block dark:hidden" src="/components/images/option-list/option-list-overview-light.svg" alt="BEEQ Option List component overview" />
+  <img className="hidden dark:block" src="/components/images/option-list/option-list-overview-dark.svg" alt="BEEQ Option List component overview" />
+</Frame>
+
+`bq-option-list` is the required wrapper for `bq-option` and `bq-option-group` elements. It sets the `role="listbox"` context, handles keyboard and click events from child options, and emits a single `bqSelect` event with the selected item's value back to the parent component.
+
+<Note>
+  `bq-option-list` is a structural container — it does not render any visible UI of its own. It is used internally by higher-level components such as `bq-select` and `bq-dropdown`. Use it directly only when you are building a custom listbox-based control.
+</Note>
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use option list when
+    </span>
+
+    * You are composing a custom dropdown, command palette, or navigation menu from `bq-option` items
+    * You need a `role="listbox"` container that bubbles selection events from child options to your component logic
+    * You want to combine flat options with `bq-option-group` sections in the same list
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use option list when
+    </span>
+
+    * You are using `bq-select` or `bq-dropdown` — these components manage `bq-option-list` internally
+    * You need a multi-select list with checkboxes — use form controls such as `bq-checkbox` directly
+    * The items are primarily navigational links rather than discrete selectable choices
+  </Card>
+</CardGroup>
+
+## Option List patterns
+
+<CardGroup cols={3}>
+  <Card title="Flat list">
+    A plain sequence of `bq-option` items. Use when all choices belong to the same category and no visual separation is needed.
+  </Card>
+  <Card title="Grouped list">
+    One or more `bq-option-group` containers inside the list. Use when choices fall into distinct named categories that help users scan faster.
+  </Card>
+  <Card title="Mixed list">
+    Ungrouped options above or below grouped sections. Use when a "pinned" set of common choices (for example, "Recently used") should appear before the full categorized list.
+  </Card>
+</CardGroup>
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Option List component anatomy">
+  <img className="block dark:hidden" src="/components/images/option-list/option-list-anatomy-light.svg" alt="BEEQ Option List component anatomy" />
+  <img className="hidden dark:block" src="/components/images/option-list/option-list-anatomy-dark.svg" alt="BEEQ Option List component anatomy" />
+</Frame>
+
+`bq-option-list` is a single flex column container that holds slotted option items or option groups. It has no visual chrome of its own — the border, shadow, and background typically come from the enclosing panel or dropdown trigger.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Base | The internal `<div>` that stacks slotted options vertically with consistent gap |
+| **2** | Option items | `bq-option` or `bq-option-group` elements placed in the default slot |
+
+## Design guidelines
+
+### Use with a containing surface
+
+`bq-option-list` provides layout and interaction semantics but no background or border. Wrap it in a surface element — typically a panel, popover, or card — that provides the visual boundary users associate with a dropdown or list.
+
+<Note>
+  When used inside `bq-select` or `bq-dropdown`, the containing surface is handled automatically. The guidelines here apply when you are building a custom container from scratch.
+</Note>
+
+### Vertical rhythm
+
+The gap between items is controlled by the `--bq-option-group--gapY-list` CSS custom property. The default is tight (`var(--bq-spacing-xs)`) to keep the list compact. Increase it only when items are taller than a single text line or when the list is used in a context with generous surrounding whitespace.
+
+### Accessible label
+
+The `ariaLabel` prop (rendered as `aria-label` on the host element) names the listbox for screen readers. The default value is `"Options"`. Override it with a more specific label when the context makes the default ambiguous — for example, `"Navigation links"` or `"Assignees"`.
+
+## Usage
+
+### Flat list
+
+A simple list with no groups. Each `bq-option` carries a `value` so the parent can identify the selection via the `bqSelect` event.
+
+<CodeLivePreview code={`
+  <bq-option-list>
+    <bq-option value="profile">
+      <bq-icon slot="prefix" name="user"></bq-icon>
+      <span>User profile</span>
+    </bq-option>
+    <bq-option value="password">
+      <bq-icon slot="prefix" name="lock-simple"></bq-icon>
+      <span>Change password</span>
+    </bq-option>
+    <bq-option value="settings">
+      <bq-icon slot="prefix" name="gear"></bq-icon>
+      <span>Settings</span>
+    </bq-option>
+    <bq-option value="logout">
+      <bq-icon slot="prefix" name="sign-out"></bq-icon>
+      <span>Close session</span>
+    </bq-option>
+  </bq-option-list>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-option-list>
+      <bq-option value="profile">
+        <bq-icon slot="prefix" name="user"></bq-icon>
+        <span>User profile</span>
+      </bq-option>
+      <bq-option value="password">
+        <bq-icon slot="prefix" name="lock-simple"></bq-icon>
+        <span>Change password</span>
+      </bq-option>
+      <bq-option value="settings">
+        <bq-icon slot="prefix" name="gear"></bq-icon>
+        <span>Settings</span>
+      </bq-option>
+      <bq-option value="logout">
+        <bq-icon slot="prefix" name="sign-out"></bq-icon>
+        <span>Close session</span>
+      </bq-option>
+    </bq-option-list>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqOption, BqOptionList } from "@beeq/react";
+
+    <BqOptionList>
+      <BqOption value="profile">
+        <BqIcon slot="prefix" name="user" />
+        <span>User profile</span>
+      </BqOption>
+      <BqOption value="password">
+        <BqIcon slot="prefix" name="lock-simple" />
+        <span>Change password</span>
+      </BqOption>
+      <BqOption value="settings">
+        <BqIcon slot="prefix" name="gear" />
+        <span>Settings</span>
+      </BqOption>
+      <BqOption value="logout">
+        <BqIcon slot="prefix" name="sign-out" />
+        <span>Close session</span>
+      </BqOption>
+    </BqOptionList>
+    ```
+
+    ```html Angular icon="angular"
+    <!-- Standalone: import { BqIcon, BqOption, BqOptionList } from "@beeq/angular/standalone" -->
+
+    <bq-option-list>
+      <bq-option value="profile">
+        <bq-icon slot="prefix" name="user"></bq-icon>
+        <span>User profile</span>
+      </bq-option>
+      <bq-option value="password">
+        <bq-icon slot="prefix" name="lock-simple"></bq-icon>
+        <span>Change password</span>
+      </bq-option>
+      <bq-option value="settings">
+        <bq-icon slot="prefix" name="gear"></bq-icon>
+        <span>Settings</span>
+      </bq-option>
+      <bq-option value="logout">
+        <bq-icon slot="prefix" name="sign-out"></bq-icon>
+        <span>Close session</span>
+      </bq-option>
+    </bq-option-list>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqIcon, BqOption, BqOptionList } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqOptionList>
+        <BqOption value="profile">
+          <BqIcon slot="prefix" name="user" />
+          <span>User profile</span>
+        </BqOption>
+        <BqOption value="password">
+          <BqIcon slot="prefix" name="lock-simple" />
+          <span>Change password</span>
+        </BqOption>
+        <BqOption value="settings">
+          <BqIcon slot="prefix" name="gear" />
+          <span>Settings</span>
+        </BqOption>
+        <BqOption value="logout">
+          <BqIcon slot="prefix" name="sign-out" />
+          <span>Close session</span>
+        </BqOption>
+      </BqOptionList>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  To use grouped sections, place [`bq-option-group`](/components/option-group) elements inside `bq-option-list`. The `bqSelect` event still bubbles from whichever `bq-option` the user activates. See the [Option Group](/components/option-group) page for full grouped list examples including header prefix and suffix slots.
+</Tip>
+
+## Options
+
+### Custom accessible label
+
+Override `aria-label` when the default `"Options"` is too generic for the context. A specific label helps screen reader users understand the purpose of the list before navigating into it.
+
+<CodeLivePreview code={`
+  <bq-option-list aria-label="Navigation links">
+    <bq-option value="home">
+      <bq-icon slot="prefix" name="house"></bq-icon>
+      <span>Home</span>
+    </bq-option>
+    <bq-option value="dashboard">
+      <bq-icon slot="prefix" name="layout"></bq-icon>
+      <span>Dashboard</span>
+    </bq-option>
+    <bq-option value="reports">
+      <bq-icon slot="prefix" name="chart-bar"></bq-icon>
+      <span>Reports</span>
+    </bq-option>
+  </bq-option-list>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-option-list aria-label="Navigation links">
+      <bq-option value="home">
+        <bq-icon slot="prefix" name="house"></bq-icon>
+        <span>Home</span>
+      </bq-option>
+      <bq-option value="dashboard">
+        <bq-icon slot="prefix" name="layout"></bq-icon>
+        <span>Dashboard</span>
+      </bq-option>
+      <bq-option value="reports">
+        <bq-icon slot="prefix" name="chart-bar"></bq-icon>
+        <span>Reports</span>
+      </bq-option>
+    </bq-option-list>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqOption, BqOptionList } from "@beeq/react";
+
+    <BqOptionList ariaLabel="Navigation links">
+      <BqOption value="home">
+        <BqIcon slot="prefix" name="house" />
+        <span>Home</span>
+      </BqOption>
+      <BqOption value="dashboard">
+        <BqIcon slot="prefix" name="layout" />
+        <span>Dashboard</span>
+      </BqOption>
+      <BqOption value="reports">
+        <BqIcon slot="prefix" name="chart-bar" />
+        <span>Reports</span>
+      </BqOption>
+    </BqOptionList>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-option-list aria-label="Navigation links">
+      <bq-option value="home">
+        <bq-icon slot="prefix" name="house"></bq-icon>
+        <span>Home</span>
+      </bq-option>
+      <bq-option value="dashboard">
+        <bq-icon slot="prefix" name="layout"></bq-icon>
+        <span>Dashboard</span>
+      </bq-option>
+      <bq-option value="reports">
+        <bq-icon slot="prefix" name="chart-bar"></bq-icon>
+        <span>Reports</span>
+      </bq-option>
+    </bq-option-list>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqIcon, BqOption, BqOptionList } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqOptionList ariaLabel="Navigation links">
+        <BqOption value="home">
+          <BqIcon slot="prefix" name="house" />
+          <span>Home</span>
+        </BqOption>
+        <BqOption value="dashboard">
+          <BqIcon slot="prefix" name="layout" />
+          <span>Dashboard</span>
+        </BqOption>
+        <BqOption value="reports">
+          <BqIcon slot="prefix" name="chart-bar" />
+          <span>Reports</span>
+        </BqOption>
+      </BqOptionList>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Always place `bq-option` and `bq-option-group` directly inside `bq-option-list` — the component listens for `bqClick` and `bqEnter` events from child options and will not receive them if additional wrapper elements break the event path.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Wrap options in arbitrary `<div>` or `<span>` elements inside the list. Non-option wrappers break the `bqClick`/`bqEnter` event delegation that `bq-option-list` relies on to emit `bqSelect`.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Override `aria-label` with a descriptive phrase when the list is not the only `role="listbox"` on the page or when the default `"Options"` does not communicate the list's purpose.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Leave the default `aria-label="Options"` on multiple lists within the same view without making each one contextually unique — screen reader users navigating by landmark will see identical labels and cannot tell the lists apart.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Listen to the `bqSelect` event on `bq-option-list` rather than individual `bqClick` events on each `bq-option`. The list normalises both click and Enter-key activations into a single `bqSelect` event with a consistent `{ value, item }` payload.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Attach separate `bqClick` listeners to every `bq-option` when you only need the selected value — `bq-option-list` already aggregates these and emitting redundant handlers increases the chance of inconsistent state.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use `bq-option-group` to divide a long list into named sections when the number of items makes scanning difficult.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Render dozens of flat options without any grouping. An ungrouped list longer than around eight items becomes hard to scan — users have to read every item individually rather than jumping to the relevant category.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+`bq-option-list` sets `role="listbox"` on its host element during `componentDidLoad`. This establishes the ARIA container that child `bq-option` elements (which carry `role="option"`) require in order to form a valid accessible list.
+
+The `ariaLabel` prop is reflected as `aria-label` on the host and defaults to `"Options"`. It names the listbox for assistive technologies.
+
+As a developer, you are responsible for:
+
+- **Providing a meaningful `ariaLabel`** when the default is ambiguous. Screen readers announce the listbox name before a user navigates into it, so a specific label ("Assignees", "Color palette") is more useful than the generic default.
+- **Placing only `bq-option` and `bq-option-group` elements inside the list** — inserting non-option elements breaks the `role="listbox"` / `role="option"` relationship that assistive technologies expect.
+- **Managing focus** when the list is shown or hidden — `bq-option-list` does not manage focus automatically. If you are building a custom dropdown, move focus to the first option when the list opens and return it to the trigger when it closes.
+
+## API reference
+
+### Properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `ariaLabel` | `aria-label` | Accessible label for the listbox | `string` | `'Options'` |
+
+### Events
+
+| Event | Description | Type |
+|---|---|---|
+| `bqSelect` | Emitted when an option is selected via click or Enter key | `CustomEvent<{ value: string; item: HTMLBqOptionElement }>` |
+
+### Slots
+
+| Slot | Description |
+|---|---|
+| *(default)* | `bq-option` and `bq-option-group` items |
+
+### Shadow parts
+
+| Part | Description |
+|---|---|
+| `base` | The internal `<div>` wrapper that stacks slotted items vertically |
+
+### CSS custom properties
+
+| Variable | Description | Default |
+|---|---|---|
+| `--bq-option-group--gapY-list` | Vertical gap between items in the list | `var(--bq-spacing-xs)` |
+
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-option--default">
+    Explore option list variants and states in Storybook
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/option-list">
+    View the component source on GitHub
+  </Card>
+</CardGroup>
