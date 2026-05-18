@@ -44,38 +44,39 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
           npm install @beeq/core
         </p>
       </div>
-      <p className="flex items-center gap-1 text-xs mb-8 bq-hero__cdn-hint">
-        <Icon icon="circle-info" size="12" />
-        Prefer a CDN? Add two lines to any HTML page — no build step needed.
-        <a href="/getting-started/for-developers" className="bq-link bq-section__link">
-          All setup options →
-        </a>
+      <p className="flex items-start md:items-center gap-1 text-xs mb-8 bq-hero__cdn-hint">
+        <Icon icon="circle-info" size="12" className="mt-0.5" />
+        <span className="space-x-1">
+          Prefer a CDN? Add two lines to any HTML page — no build step needed.
+          <a href="/getting-started/for-developers" className="bq-link bq-section__link">
+            All setup options.
+          </a>
+        </span>
       </p>
 
       <div className="flex flex-wrap gap-3 items-center">
         <a
           href="/getting-started/for-developers"
-          className="inline-flex px-5 py-2.5 rounded-lg text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90 bq-btn--primary"
+          className="box-border inline-flex px-5 py-2.5 rounded-lg text-sm font-semibold text-white no-underline border border-transparent transition-opacity hover:opacity-90 bq-btn--primary w-full md:w-auto"
         >
-          <span className="flex items-center gap-2">
+          <span className="flex grow items-center justify-center gap-2 md:justify-start">
             <Icon icon="rocket" color="var(--bq-icon--alt)" />
             Get started
           </span>
         </a>
         <a
-          href="https://github.com/Endava/BEEQ"
-          target="_blank"
-          className="inline-flex px-5 py-2.5 rounded-lg text-sm font-semibold no-underline border transition-opacity hover:opacity-80 bq-btn--secondary"
+          href="/components/overview"
+          className="box-border inline-flex px-5 py-2.5 rounded-lg text-sm font-semibold no-underline border border-transparent transition-colors bq-btn--secondary w-full md:w-auto"
         >
-          <span className="flex items-center gap-2">
-            <Icon icon="github" color="var(--bq-icon--primary)" />
-            View on GitHub
+          <span className="flex grow items-center justify-center gap-2 md:justify-start">
+            <Icon icon="cubes" color="var(--bq-icon--primary)" />
+            Browse components
           </span>
         </a>
         <a
           href="https://storybook.beeq.design"
           target="_blank"
-          className="text-sm no-underline transition-opacity hover:opacity-70 bq-btn--ghost"
+          className="box-border px-5 py-2.5 rounded-lg text-sm no-underline transition-colors bq-btn--ghost w-full md:w-auto text-center md:text-start"
         >
           Explore Storybook →
         </a>
@@ -106,9 +107,10 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
             <div>
               <div style="font-size:.62rem;font-weight:600;letter-spacing:.05em;font-family:monospace;color:var(--bq-text--tertiary);margin-bottom:.55rem">// BUTTONS</div>
               <div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center">
-                <bq-button appearance="primary">Get started &#x2192;</bq-button>
-                <bq-button appearance="secondary">Docs</bq-button>
-                <bq-button appearance="text">Cancel</bq-button>
+                <bq-button appearance="primary">Primary</bq-button>
+                <bq-button appearance="secondary">Secondary</bq-button>
+                <bq-button appearance="text">Text</bq-button>
+                <bq-button appearance="link">Link</bq-button>
               </div>
             </div>
 
@@ -219,7 +221,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
     SPOTLIGHT 1 — Framework agnostic
 ══════════════════════════════════════════════════════ */}
 
-<div className="px-6 py-16 bq-spotlight--tinted">
+<div className="px-6 py-14 bq-spotlight--tinted">
   <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
 
     <div>
@@ -245,8 +247,9 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
         <span className="px-3 py-1 rounded-full text-sm font-semibold border bq-framework-badge--angular">Angular</span>
         <span className="px-3 py-1 rounded-full text-sm font-semibold border bq-framework-badge--vue">Vue</span>
       </div>
-      <a href="/getting-started/for-developers" className="bq-link inline-flex items-center gap-2 text-sm font-semibold no-underline hover:underline bq-section__link">
-        See all integration guides <Icon icon="arrow-right" color="var(--bq-icon--brand)" />
+      <a href="/getting-started/for-developers" className="inline-flex items-center gap-2 text-sm font-medium bq-link bq-section__link">
+        <span>See all integration guides</span>
+        <Icon icon="arrow-right" size={12} color="var(--bq-icon--brand)" />
       </a>
     </div>
 
@@ -290,15 +293,18 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
     SPOTLIGHT 2 — Setup in minutes (CDN first)
 ══════════════════════════════════════════════════════ */}
 
-<div className="px-6 py-16 bq-spotlight">
+<div className="px-6 py-14 bq-spotlight">
   <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
 
     {/* Left: code */}
     <div>
       <CodeGroup>
-        ```html CDN (fastest — no build step)
+        ```html CDN (easiest) icon="cloud"
         <!-- 1. Load styles -->
-        <link rel="stylesheet" href="https://esm.sh/@beeq/core/dist/beeq/beeq.css" />
+        <link
+          rel="stylesheet"
+          href="https://esm.sh/@beeq/core/dist/beeq/beeq.css"
+        />
 
         <!-- 2. Load components + icons -->
         <script type="module"
@@ -307,12 +313,10 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
         </script>
 
         <!-- 3. Use any component -->
-        <bq-button appearance="primary">
-          Hello BEEQ
-        </bq-button>
+        <bq-button appearance="primary">Hello BEEQ</bq-button>
         ```
 
-        ```ts React
+        ```tsx React icon="react"
         // main.tsx — register icon path once
         import { setBasePath } from "@beeq/core/loader";
         setBasePath("https://esm.sh/@beeq/core/dist/beeq/svg");
@@ -323,23 +327,24 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
         <BqButton appearance="primary">Hello BEEQ</BqButton>
         ```
 
-        ```ts Angular
+        ```ts Angular icon="angular"
         // standalone component (recommended):
         import { BqButtonComponent } from "@beeq/angular/standalone";
 
         @Component({
           standalone: true,
           imports: [BqButtonComponent],
-          template: `<bq-button appearance="primary">Hello</bq-button>`
+          template: `<bq-button appearance="primary">Hello BEEQ</bq-button>`
         })
         export class MyComponent {}
         ```
 
-        ```ts Vue
+        ```tsx Vue icon="vuejs"
         import { BqButton } from "@beeq/vue";
 
-        // in <template>:
-        <BqButton appearance="primary">Hello BEEQ</BqButton>
+        <template>
+          <BqButton appearance="primary">Hello BEEQ</BqButton>
+        </template>
         ```
       </CodeGroup>
     </div>
@@ -374,8 +379,9 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
           Tree-shakeable when using npm
         </div>
       </div>
-      <a href="/getting-started/for-developers" className="bq-link inline-flex items-center gap-2 text-sm font-semibold no-underline hover:underline bq-section__link">
-        Full getting started guide <Icon icon="arrow-right" />
+      <a href="/getting-started/for-developers" className="bq-link inline-flex items-center gap-2 font-medium text-sm bq-link bq-section__link">
+        <span>Full getting started guide</span>
+        <Icon icon="arrow-right" size={12} color="var(--bq-icon--brand)" />
       </a>
     </div>
 
@@ -386,7 +392,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
     LIVE COMPONENT SHOWCASE
 ══════════════════════════════════════════════════════ */}
 
-<div className="px-6 py-24 bq-showcase">
+<div className="px-6 py-14 bq-showcase">
   <div className="max-w-6xl mx-auto">
     <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-0 flex items-center gap-2 bq-section__label">
       <Icon icon="eye" />
@@ -446,14 +452,18 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
             <bq-button [disabled]="true">Disabled</bq-button>
             ```
 
-            ```ts Vue icon="vuejs"
-            import { BqButton } from "@beeq/vue";
+            ```vue Vue icon="vuejs"
+            <script setup lang="ts">
+              import { BqButton } from "@beeq/vue";
+            </script>
 
-            <BqButton appearance="primary">Primary</BqButton>
-            <BqButton appearance="secondary">Secondary</BqButton>
-            <BqButton variant="ghost">Ghost</BqButton>
-            <BqButton variant="danger">Danger</BqButton>
-            <BqButton :loading="true">Loading</BqButton>
+            <template>
+              <BqButton appearance="primary">Primary</BqButton>
+              <BqButton appearance="secondary">Secondary</BqButton>
+              <BqButton variant="ghost">Ghost</BqButton>
+              <BqButton variant="danger">Danger</BqButton>
+              <BqButton :loading="true">Loading</BqButton>
+            </template>
             ```
           </CodeGroup>
         </CodeLivePreview>
@@ -465,9 +475,9 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
             <bq-input placeholder="Enter your email" type="email">
               <label slot="label">Email address</label>
             </bq-input>
-            <bq-input placeholder="Search components…">
-              <label slot="label">Search</label>
-            </bq-input>
+            <bq-date-picker placeholder="Select a date">
+              <label slot="label">Select a date</label>
+            </bq-date-picker>
             <div style="display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center">
               <bq-checkbox checked>Enable notifications</bq-checkbox>
               <bq-checkbox>Remember me</bq-checkbox>
@@ -507,14 +517,18 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
             <bq-switch [checked]="true">Dark mode</bq-switch>
             ```
 
-            ```ts Vue icon="vuejs"
-            import { BqInput, BqCheckbox, BqSwitch } from "@beeq/vue";
+            ```vue Vue icon="vuejs"
+            <script setup lang="ts">
+              import { BqInput, BqCheckbox, BqSwitch } from "@beeq/vue";
+            </script>
 
-            <BqInput placeholder="Enter your email" type="email">
-              <label slot="label">Email address</label>
-            </BqInput>
-            <BqCheckbox checked>Enable notifications</BqCheckbox>
-            <BqSwitch checked>Dark mode</BqSwitch>
+            <template>
+              <BqInput placeholder="Enter your email" type="email">
+                <label slot="label">Email address</label>
+              </BqInput>
+              <BqCheckbox checked>Enable notifications</BqCheckbox>
+              <BqSwitch checked>Dark mode</BqSwitch>
+            </template>
             ```
           </CodeGroup>
         </CodeLivePreview>
@@ -586,14 +600,18 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
             <bq-spinner size="small"></bq-spinner>
             ```
 
-            ```ts Vue icon="vuejs"
-            import { BqBadge, BqStatus, BqProgress, BqSpinner } from "@beeq/vue";
+            ```vue Vue icon="vuejs"
+            <script setup lang="ts">
+              import { BqBadge, BqStatus, BqProgress, BqSpinner } from "@beeq/vue";
+            </script>
 
-            <BqBadge appearance="success">Stable</BqBadge>
-            <BqStatus type="success">Online</BqStatus>
-            <BqProgress :value="65" />
-            <BqProgress :value="30" type="error" />
-            <BqSpinner size="small" />
+            <template>
+              <BqBadge appearance="success">Stable</BqBadge>
+              <BqStatus type="success">Online</BqStatus>
+              <BqProgress :value="65" />
+              <BqProgress :value="30" type="error" />
+              <BqSpinner size="small" />
+            </template>
             ```
           </CodeGroup>
         </CodeLivePreview>
@@ -641,10 +659,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
               <bq-icon name="sparkle" size="22" style="color:#a855f7"></bq-icon>
             </div>
             <bq-divider dashed></bq-divider>
-            <div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;width:100%">
-              <bq-slider value="60"></bq-slider>
-              <span style="font-size:.8rem;opacity:.6">Range slider</span>
-            </div>
+            <bq-slider value="[30, 70]" type="range" enable-tooltip></bq-slider>
           </div>
           <script>
             (() => {
@@ -669,8 +684,8 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
               Web Components
             </bq-tag>
             <bq-icon name="heart" size="22"></bq-icon>
-            <bq-slider value="60"></bq-slider>
             <bq-divider dashed></bq-divider>
+            <bq-slider value="[30, 70]" type="range" enable-tooltip></bq-slider>
             ```
 
             ```tsx React icon="react"
@@ -682,33 +697,38 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
               Web Components
             </BqTag>
             <BqIcon name="heart" size="22" />
-            <BqSlider value={60} />
             <BqDivider dashed />
+            <BqSlider value={[30, 70]} type="range" enableTooltip />
             ```
 
             ```ts Angular icon="angular"
             // import { BqAvatarComponent, BqTagComponent, BqIconComponent, BqSliderComponent, BqDividerComponent } from "@beeq/angular/standalone";
+
             <bq-avatar image="https://i.pravatar.cc/150?img=11"></bq-avatar>
             <bq-tag color="info" [removable]="true">
               <bq-icon name="code" slot="prefix"></bq-icon>
               Web Components
             </bq-tag>
             <bq-icon name="heart" size="22"></bq-icon>
-            <bq-slider [value]="60"></bq-slider>
             <bq-divider dashed></bq-divider>
+            <bq-slider type="range" [value]="[30, 70]" [enableTooltip]="true"></bq-slider>
             ```
 
-            ```ts Vue icon="vuejs"
-            import { BqAvatar, BqTag, BqIcon, BqSlider, BqDivider } from "@beeq/vue";
+            ```vue Vue icon="vuejs"
+            <script setup lang="ts">
+              import { BqAvatar, BqTag, BqIcon, BqSlider, BqDivider } from "@beeq/vue";
+            </script>
 
-            <BqAvatar image="https://i.pravatar.cc/150?img=11" />
-            <BqTag color="info" :removable="true">
-              <BqIcon name="code" slot="prefix" />
-              Web Components
-            </BqTag>
-            <BqIcon name="heart" size="22" />
-            <BqSlider :value="60" />
-            <BqDivider dashed />
+            <template>
+              <BqAvatar image="https://i.pravatar.cc/150?img=11" />
+              <BqTag color="info" :removable="true">
+                <BqIcon name="code" slot="prefix" />
+                Web Components
+              </BqTag>
+              <BqIcon name="heart" size="22" />
+              <BqDivider dashed />
+              <BqSlider :value="[30, 70]" :type="'range'" :enableTooltip="true" />
+            </template>
             ```
           </CodeGroup>
         </CodeLivePreview>
@@ -721,7 +741,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
     WHY BEEQ — STAT GRID
 ══════════════════════════════════════════════════════ */}
 
-<div className="px-6 py-20 bq-stats">
+<div className="px-6 py-14 bq-stats">
   <div className="max-w-6xl mx-auto">
     <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-0 flex items-center gap-2 bq-section__label">
       <Icon icon="circle-question" />
@@ -793,7 +813,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
     COMPARISON TABLE
 ══════════════════════════════════════════════════════ */}
 
-<div className="px-6 py-16 bq-comparison">
+<div className="px-6 py-14 bq-comparison">
   <div className="max-w-6xl mx-auto">
     <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-0 flex items-center gap-2 bq-section__label">
       <Icon icon="scale-balanced" />
@@ -857,7 +877,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
       npm install @beeq/core
       ```
 
-      ```bash pnpm icon=pnpm
+      ```bash pnpm icon=data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCBtZWV0IiB2aWV3Qm94PSI3Ni41ODk4NzI0NDg5Nzk1OCA0NCAxNjQuMDA3NzU1MTAyMDQwNjggMTY0IiB3aWR0aD0iMTYwLjAxIiBoZWlnaHQ9IjE2MCI+PGRlZnM+PHBhdGggZD0iTTIzNy42IDk1TDE4Ny42IDk1TDE4Ny42IDQ1TDIzNy42IDQ1TDIzNy42IDk1WiIgaWQ9ImI0NXZkVEQ4aHMiPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDk1TDEzMi41OSA5NUwxMzIuNTkgNDVMMTgyLjU5IDQ1TDE4Mi41OSA5NVoiIGlkPSJhNDBXdHhJbDhkIj48L3BhdGg+PHBhdGggZD0iTTEyNy41OSA5NUw3Ny41OSA5NUw3Ny41OSA0NUwxMjcuNTkgNDVMMTI3LjU5IDk1WiIgaWQ9ImgyQ045QUVFcGUiPjwvcGF0aD48cGF0aCBkPSJNMjM3LjYgMTUwTDE4Ny42IDE1MEwxODcuNiAxMDBMMjM3LjYgMTAwTDIzNy42IDE1MFoiIGlkPSJkcXY1MTMzRzgiPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDE1MEwxMzIuNTkgMTUwTDEzMi41OSAxMDBMMTgyLjU5IDEwMEwxODIuNTkgMTUwWiIgaWQ9ImIxTHY3OXlwdm0iPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDIwNUwxMzIuNTkgMjA1TDEzMi41OSAxNTVMMTgyLjU5IDE1NUwxODIuNTkgMjA1WiIgaWQ9Imh5MUlaV3dMWCI+PC9wYXRoPjxwYXRoIGQ9Ik0yMzcuNiAyMDVMMTg3LjYgMjA1TDE4Ny42IDE1NUwyMzcuNiAxNTVMMjM3LjYgMjA1WiIgaWQ9ImFrUWZqeFFlcyI+PC9wYXRoPjxwYXRoIGQ9Ik0xMjcuNTkgMjA1TDc3LjU5IDIwNUw3Ny41OSAxNTVMMTI3LjU5IDE1NUwxMjcuNTkgMjA1WiIgaWQ9ImJkU3J3RTVwayI+PC9wYXRoPjwvZGVmcz48Zz48Zz48dXNlIHhsaW5rOmhyZWY9IiNiNDV2ZFREOGhzIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNhNDBXdHhJbDhkIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNoMkNOOUFFRXBlIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNkcXY1MTMzRzgiIG9wYWNpdHk9IjEiIGZpbGw9IiNmOWFkMDAiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjxnPjx1c2UgeGxpbms6aHJlZj0iI2IxTHY3OXlwdm0iIG9wYWNpdHk9IjEiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjxnPjx1c2UgeGxpbms6aHJlZj0iI2h5MUlaV3dMWCIgb3BhY2l0eT0iMSIgZmlsbD0iI2ZmZmZmZiIgZmlsbC1vcGFjaXR5PSIxIj48L3VzZT48L2c+PGc+PHVzZSB4bGluazpocmVmPSIjYWtRZmp4UWVzIiBvcGFjaXR5PSIxIiBmaWxsPSIjZmZmZmZmIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNiZFNyd0U1cGsiIG9wYWNpdHk9IjEiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjwvZz48L3N2Zz4=
       pnpm add @beeq/core
       ```
 
@@ -870,16 +890,22 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
   <div className="flex justify-center flex-wrap gap-3">
     <a
       href="/getting-started/introduction"
-      className="inline-flex px-6 py-3 rounded-lg text-base font-semibold text-white no-underline transition-opacity hover:opacity-90 bq-btn--primary"
+      className="box-border inline-flex px-5 py-2.5 rounded-lg text-sm font-semibold text-white no-underline border border-transparent transition-opacity hover:opacity-90 bq-btn--primary w-full md:w-auto"
     >
-      <span className="flex items-center gap-2"><Icon icon="rocket" color="var(--bq-icon--alt)" /> Get started</span>
+      <span className="flex grow items-center justify-center gap-2 md:justify-start">
+        <Icon icon="rocket" color="var(--bq-icon--alt)" />
+        Get started
+      </span>
     </a>
     <a
       href="https://github.com/Endava/BEEQ"
       target="_blank"
-      className="inline-flex px-6 py-3 rounded-lg text-sm font-medium no-underline transition-opacity hover:opacity-70 bq-btn--ghost"
+      className="box-border inline-flex px-5 py-2.5 rounded-lg text-sm font-semibold no-underline border border-transparent transition-colors bq-btn--secondary w-full md:w-auto"
     >
-      <span className="flex items-center gap-2"><Icon icon="github" color="var(--bq-icon--primary)" /> Star on GitHub</span>
+      <span className="flex grow items-center justify-center gap-2 md:justify-start">
+        <Icon icon="github" size={12} color="var(--bq-icon--primary)" />
+        Star on GitHub
+      </span>
     </a>
   </div>
 </div>
@@ -891,7 +917,8 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 <div className="px-6 py-14 bq-resources">
   <div className="max-w-6xl mx-auto">
     <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-0 flex items-center gap-2 bq-section__label">
-      <Icon icon="compass" /> Resources
+      <Icon icon="compass" />
+      <span>Resources</span>
     </p>
     <h2 className="text-3xl lg:text-4xl font-black font-bold tracking-tight leading-tight mb-3 bq-section__heading">
       Docs, tools,<br />and community.
