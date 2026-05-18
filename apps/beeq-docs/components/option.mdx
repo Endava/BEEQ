@@ -1,0 +1,799 @@
+---
+title: Option
+description: Options are individual selectable items rendered inside a list, dropdown, or navigation menu, each carrying a label, an optional icon prefix, and an optional icon suffix.
+---
+
+import { CardTile } from '/snippets/CardTile.jsx';
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Option component overview">
+  <img className="block dark:hidden" src="/components/images/option/option-overview-light.svg" alt="BEEQ Option component overview" />
+  <img className="hidden dark:block" src="/components/images/option/option-overview-dark.svg" alt="BEEQ Option component overview" />
+</Frame>
+
+`bq-option` is a single selectable item inside a list-based UI control such as a dropdown, select, or navigation menu. It manages its own focused, selected, and disabled states, and communicates user interactions back to the parent through events.
+
+<Note>
+  `bq-option` must always be placed inside a `bq-option-list`, which provides the required `role="listbox"` context. Rendering an option outside a list breaks the ARIA relationship expected by assistive technologies.
+</Note>
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use options when
+    </span>
+
+    * You need a single selectable item inside a dropdown, select, or menu
+    * The item requires a text label with optional prefix or suffix icons to add clarity
+    * The choice should be individually disableable without removing it from the list
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use options when
+    </span>
+
+    * You need a standalone interactive control — use `bq-button` or `bq-checkbox` instead
+    * The action is destructive and needs confirmation — surface it as a dialog or separate form element, not a list item
+    * The item will be displayed outside a `bq-option-list` context
+  </Card>
+</CardGroup>
+
+## Option patterns
+
+<CardGroup cols={3}>
+  <Card title="Label only">
+    The simplest form — a text label with no icon. Use for compact menus where space is limited and the labels are self-explanatory.
+  </Card>
+  <Card title="Prefix icon + label">
+    An icon to the left of the label visually categorizes the item. Use when the list contains many entries and users benefit from a quick visual scan.
+  </Card>
+  <Card title="Label + suffix icon">
+    An icon to the right of the label signals a secondary function — such as an external link, a shortcut key, or a status indicator. Use sparingly so it does not compete with the primary label.
+  </Card>
+</CardGroup>
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Option component anatomy">
+  <img className="block dark:hidden" src="/components/images/option/option-anatomy-light.svg" alt="BEEQ Option component anatomy" />
+  <img className="hidden dark:block" src="/components/images/option/option-anatomy-dark.svg" alt="BEEQ Option component anatomy" />
+</Frame>
+
+Each option is a button-like surface with an optional prefix icon, a label, and an optional suffix icon. The three parts are spaced via dedicated CSS custom properties.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Prefix | Optional slot for an icon or element rendered before the label |
+| **2** | Label | The main text content of the option |
+| **3** | Suffix | Optional slot for an icon or element rendered after the label |
+
+## Design guidelines
+
+### States
+
+<Note>
+  `bq-option` manages hover, focus, selected, and disabled styles automatically via internal CSS. You do not need to apply classes or attributes for these visual states — set the `selected` and `disabled` props and the component handles the rest.
+</Note>
+
+<CardGroup cols={2}>
+  <CardTile
+    title="Selected"
+    imageLightSrc="/components/images/option/option-state-selected-light.svg"
+    imageDarkSrc="/components/images/option/option-state-selected-dark.svg"
+  >
+    Setting `selected="true"` highlights the option with the brand accent color, signaling the current active choice to users.
+  </CardTile>
+
+  <CardTile
+    title="Disabled"
+    imageLightSrc="/components/images/option/option-state-disabled-light.svg"
+    imageDarkSrc="/components/images/option/option-state-disabled-dark.svg"
+  >
+    Setting `disabled="true"` mutes the option and blocks click and keyboard events without removing the item from the list. Use this when a choice is contextually unavailable rather than permanently absent.
+  </CardTile>
+</CardGroup>
+
+### Icon placement
+
+Place prefix icons when the list is long and icon-based scanning helps users find the right item quickly. Reserve the suffix slot for secondary information — an arrow indicating an external link, a keyboard shortcut, or a status badge — that does not compete with the label.
+
+<Steps>
+  <Step title="Prefix only">
+    The most common pattern. One icon on the left anchors the visual rhythm of the list and speeds up scanning.
+  </Step>
+  <Step title="Suffix only">
+    Use when the right-aligned indicator is the primary reason for the icon — for example, a link-out arrow that tells users this option opens a new page.
+  </Step>
+  <Step title="Prefix and suffix">
+    Acceptable for rich option lists where both a category icon (prefix) and a status indicator (suffix) genuinely add value. Avoid overusing this combination — it can make the list feel dense.
+  </Step>
+</Steps>
+
+## Usage
+
+### Default
+
+A simple list of options inside a `bq-option-list`. Each option carries a `value` attribute used by the parent to identify which item the user selected.
+
+<CodeLivePreview code={`
+  <bq-option-list>
+    <bq-option value="profile">
+      <span>User profile</span>
+    </bq-option>
+    <bq-option value="password">
+      <span>Change password</span>
+    </bq-option>
+    <bq-option value="logout">
+      <span>Close session</span>
+    </bq-option>
+  </bq-option-list>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-option-list>
+      <bq-option value="profile">
+        <span>User profile</span>
+      </bq-option>
+      <bq-option value="password">
+        <span>Change password</span>
+      </bq-option>
+      <bq-option value="logout">
+        <span>Close session</span>
+      </bq-option>
+    </bq-option-list>
+    ```
+
+    ```jsx React icon="react"
+    import { BqOption, BqOptionList } from "@beeq/react";
+
+    <BqOptionList>
+      <BqOption value="profile">
+        <span>User profile</span>
+      </BqOption>
+      <BqOption value="password">
+        <span>Change password</span>
+      </BqOption>
+      <BqOption value="logout">
+        <span>Close session</span>
+      </BqOption>
+    </BqOptionList>
+    ```
+
+    ```html Angular icon="angular"
+    <!-- Standalone: import { BqOption, BqOptionList } from "@beeq/angular/standalone" -->
+
+    <bq-option-list>
+      <bq-option value="profile">
+        <span>User profile</span>
+      </bq-option>
+      <bq-option value="password">
+        <span>Change password</span>
+      </bq-option>
+      <bq-option value="logout">
+        <span>Close session</span>
+      </bq-option>
+    </bq-option-list>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqOption, BqOptionList } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqOptionList>
+        <BqOption value="profile">
+          <span>User profile</span>
+        </BqOption>
+        <BqOption value="password">
+          <span>Change password</span>
+        </BqOption>
+        <BqOption value="logout">
+          <span>Close session</span>
+        </BqOption>
+      </BqOptionList>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### With prefix icon
+
+Add a `bq-icon` in the `prefix` slot to give each item a visual anchor. Icons make longer lists easier to scan and help users recognize options without reading every label.
+
+<CodeLivePreview code={`
+  <bq-option-list>
+    <bq-option value="profile">
+      <bq-icon slot="prefix" name="user"></bq-icon>
+      <span>User profile</span>
+    </bq-option>
+    <bq-option value="password">
+      <bq-icon slot="prefix" name="lock-simple"></bq-icon>
+      <span>Change password</span>
+    </bq-option>
+    <bq-option value="logout">
+      <bq-icon slot="prefix" name="sign-out"></bq-icon>
+      <span>Close session</span>
+    </bq-option>
+  </bq-option-list>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-option-list>
+      <bq-option value="profile">
+        <bq-icon slot="prefix" name="user"></bq-icon>
+        <span>User profile</span>
+      </bq-option>
+      <bq-option value="password">
+        <bq-icon slot="prefix" name="lock-simple"></bq-icon>
+        <span>Change password</span>
+      </bq-option>
+      <bq-option value="logout">
+        <bq-icon slot="prefix" name="sign-out"></bq-icon>
+        <span>Close session</span>
+      </bq-option>
+    </bq-option-list>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqOption, BqOptionList } from "@beeq/react";
+
+    <BqOptionList>
+      <BqOption value="profile">
+        <BqIcon slot="prefix" name="user" />
+        <span>User profile</span>
+      </BqOption>
+      <BqOption value="password">
+        <BqIcon slot="prefix" name="lock-simple" />
+        <span>Change password</span>
+      </BqOption>
+      <BqOption value="logout">
+        <BqIcon slot="prefix" name="sign-out" />
+        <span>Close session</span>
+      </BqOption>
+    </BqOptionList>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-option-list>
+      <bq-option value="profile">
+        <bq-icon slot="prefix" name="user"></bq-icon>
+        <span>User profile</span>
+      </bq-option>
+      <bq-option value="password">
+        <bq-icon slot="prefix" name="lock-simple"></bq-icon>
+        <span>Change password</span>
+      </bq-option>
+      <bq-option value="logout">
+        <bq-icon slot="prefix" name="sign-out"></bq-icon>
+        <span>Close session</span>
+      </bq-option>
+    </bq-option-list>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqIcon, BqOption, BqOptionList } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqOptionList>
+        <BqOption value="profile">
+          <BqIcon slot="prefix" name="user" />
+          <span>User profile</span>
+        </BqOption>
+        <BqOption value="password">
+          <BqIcon slot="prefix" name="lock-simple" />
+          <span>Change password</span>
+        </BqOption>
+        <BqOption value="logout">
+          <BqIcon slot="prefix" name="sign-out" />
+          <span>Close session</span>
+        </BqOption>
+      </BqOptionList>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### With suffix icon
+
+Use the `suffix` slot for a right-aligned secondary indicator. Common uses include link-out arrows, keyboard shortcuts, or status icons.
+
+<CodeLivePreview code={`
+  <bq-option-list>
+    <bq-option value="profile">
+      <span>User profile</span>
+      <bq-icon slot="suffix" name="user"></bq-icon>
+    </bq-option>
+    <bq-option value="admin">
+      <span>Admin dashboard</span>
+      <bq-icon slot="suffix" name="layout"></bq-icon>
+    </bq-option>
+    <bq-option value="password">
+      <span>Change password</span>
+      <bq-icon slot="suffix" name="lock-simple"></bq-icon>
+    </bq-option>
+    <bq-option value="logout">
+      <span>Close session</span>
+      <bq-icon slot="suffix" name="sign-out"></bq-icon>
+    </bq-option>
+  </bq-option-list>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-option-list>
+      <bq-option value="profile">
+        <span>User profile</span>
+        <bq-icon slot="suffix" name="user"></bq-icon>
+      </bq-option>
+      <bq-option value="admin">
+        <span>Admin dashboard</span>
+        <bq-icon slot="suffix" name="layout"></bq-icon>
+      </bq-option>
+      <bq-option value="password">
+        <span>Change password</span>
+        <bq-icon slot="suffix" name="lock-simple"></bq-icon>
+      </bq-option>
+      <bq-option value="logout">
+        <span>Close session</span>
+        <bq-icon slot="suffix" name="sign-out"></bq-icon>
+      </bq-option>
+    </bq-option-list>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqOption, BqOptionList } from "@beeq/react";
+
+    <BqOptionList>
+      <BqOption value="profile">
+        <span>User profile</span>
+        <BqIcon slot="suffix" name="user" />
+      </BqOption>
+      <BqOption value="admin">
+        <span>Admin dashboard</span>
+        <BqIcon slot="suffix" name="layout" />
+      </BqOption>
+      <BqOption value="password">
+        <span>Change password</span>
+        <BqIcon slot="suffix" name="lock-simple" />
+      </BqOption>
+      <BqOption value="logout">
+        <span>Close session</span>
+        <BqIcon slot="suffix" name="sign-out" />
+      </BqOption>
+    </BqOptionList>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-option-list>
+      <bq-option value="profile">
+        <span>User profile</span>
+        <bq-icon slot="suffix" name="user"></bq-icon>
+      </bq-option>
+      <bq-option value="admin">
+        <span>Admin dashboard</span>
+        <bq-icon slot="suffix" name="layout"></bq-icon>
+      </bq-option>
+      <bq-option value="password">
+        <span>Change password</span>
+        <bq-icon slot="suffix" name="lock-simple"></bq-icon>
+      </bq-option>
+      <bq-option value="logout">
+        <span>Close session</span>
+        <bq-icon slot="suffix" name="sign-out"></bq-icon>
+      </bq-option>
+    </bq-option-list>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqIcon, BqOption, BqOptionList } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqOptionList>
+        <BqOption value="profile">
+          <span>User profile</span>
+          <BqIcon slot="suffix" name="user" />
+        </BqOption>
+        <BqOption value="admin">
+          <span>Admin dashboard</span>
+          <BqIcon slot="suffix" name="layout" />
+        </BqOption>
+        <BqOption value="password">
+          <span>Change password</span>
+          <BqIcon slot="suffix" name="lock-simple" />
+        </BqOption>
+        <BqOption value="logout">
+          <span>Close session</span>
+          <BqIcon slot="suffix" name="sign-out" />
+        </BqOption>
+      </BqOptionList>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Options
+
+### Selected state
+
+Set `selected` on the option that reflects the current active value. The component applies the brand accent styling automatically.
+
+<CodeLivePreview code={`
+  <bq-option-list>
+    <bq-option selected value="profile">
+      <bq-icon slot="prefix" name="user"></bq-icon>
+      <span>User profile</span>
+    </bq-option>
+    <bq-option value="password">
+      <bq-icon slot="prefix" name="lock-simple"></bq-icon>
+      <span>Change password</span>
+    </bq-option>
+    <bq-option value="logout">
+      <bq-icon slot="prefix" name="sign-out"></bq-icon>
+      <span>Close session</span>
+    </bq-option>
+  </bq-option-list>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-option-list>
+      <bq-option selected value="profile">
+        <bq-icon slot="prefix" name="user"></bq-icon>
+        <span>User profile</span>
+      </bq-option>
+      <bq-option value="password">
+        <bq-icon slot="prefix" name="lock-simple"></bq-icon>
+        <span>Change password</span>
+      </bq-option>
+      <bq-option value="logout">
+        <bq-icon slot="prefix" name="sign-out"></bq-icon>
+        <span>Close session</span>
+      </bq-option>
+    </bq-option-list>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqOption, BqOptionList } from "@beeq/react";
+
+    <BqOptionList>
+      <BqOption selected value="profile">
+        <BqIcon slot="prefix" name="user" />
+        <span>User profile</span>
+      </BqOption>
+      <BqOption value="password">
+        <BqIcon slot="prefix" name="lock-simple" />
+        <span>Change password</span>
+      </BqOption>
+      <BqOption value="logout">
+        <BqIcon slot="prefix" name="sign-out" />
+        <span>Close session</span>
+      </BqOption>
+    </BqOptionList>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-option-list>
+      <bq-option [selected]="true" value="profile">
+        <bq-icon slot="prefix" name="user"></bq-icon>
+        <span>User profile</span>
+      </bq-option>
+      <bq-option value="password">
+        <bq-icon slot="prefix" name="lock-simple"></bq-icon>
+        <span>Change password</span>
+      </bq-option>
+      <bq-option value="logout">
+        <bq-icon slot="prefix" name="sign-out"></bq-icon>
+        <span>Close session</span>
+      </bq-option>
+    </bq-option-list>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqIcon, BqOption, BqOptionList } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqOptionList>
+        <BqOption :selected="true" value="profile">
+          <BqIcon slot="prefix" name="user" />
+          <span>User profile</span>
+        </BqOption>
+        <BqOption value="password">
+          <BqIcon slot="prefix" name="lock-simple" />
+          <span>Change password</span>
+        </BqOption>
+        <BqOption value="logout">
+          <BqIcon slot="prefix" name="sign-out" />
+          <span>Close session</span>
+        </BqOption>
+      </BqOptionList>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Disabled state
+
+Set `disabled` on individual options to mark them as contextually unavailable. Disabled options remain visible in the list but do not respond to clicks or keyboard events.
+
+<CodeLivePreview code={`
+  <bq-option-list>
+    <bq-option value="profile">
+      <bq-icon slot="prefix" name="user"></bq-icon>
+      <span>User profile</span>
+    </bq-option>
+    <bq-option disabled value="admin">
+      <bq-icon slot="prefix" name="layout"></bq-icon>
+      <span>Admin dashboard</span>
+    </bq-option>
+    <bq-option value="password">
+      <bq-icon slot="prefix" name="lock-simple"></bq-icon>
+      <span>Change password</span>
+    </bq-option>
+    <bq-option value="logout">
+      <bq-icon slot="prefix" name="sign-out"></bq-icon>
+      <span>Close session</span>
+    </bq-option>
+  </bq-option-list>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-option-list>
+      <bq-option value="profile">
+        <bq-icon slot="prefix" name="user"></bq-icon>
+        <span>User profile</span>
+      </bq-option>
+      <bq-option disabled value="admin">
+        <bq-icon slot="prefix" name="layout"></bq-icon>
+        <span>Admin dashboard</span>
+      </bq-option>
+      <bq-option value="password">
+        <bq-icon slot="prefix" name="lock-simple"></bq-icon>
+        <span>Change password</span>
+      </bq-option>
+      <bq-option value="logout">
+        <bq-icon slot="prefix" name="sign-out"></bq-icon>
+        <span>Close session</span>
+      </bq-option>
+    </bq-option-list>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqOption, BqOptionList } from "@beeq/react";
+
+    <BqOptionList>
+      <BqOption value="profile">
+        <BqIcon slot="prefix" name="user" />
+        <span>User profile</span>
+      </BqOption>
+      <BqOption disabled value="admin">
+        <BqIcon slot="prefix" name="layout" />
+        <span>Admin dashboard</span>
+      </BqOption>
+      <BqOption value="password">
+        <BqIcon slot="prefix" name="lock-simple" />
+        <span>Change password</span>
+      </BqOption>
+      <BqOption value="logout">
+        <BqIcon slot="prefix" name="sign-out" />
+        <span>Close session</span>
+      </BqOption>
+    </BqOptionList>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-option-list>
+      <bq-option value="profile">
+        <bq-icon slot="prefix" name="user"></bq-icon>
+        <span>User profile</span>
+      </bq-option>
+      <bq-option [disabled]="true" value="admin">
+        <bq-icon slot="prefix" name="layout"></bq-icon>
+        <span>Admin dashboard</span>
+      </bq-option>
+      <bq-option value="password">
+        <bq-icon slot="prefix" name="lock-simple"></bq-icon>
+        <span>Change password</span>
+      </bq-option>
+      <bq-option value="logout">
+        <bq-icon slot="prefix" name="sign-out"></bq-icon>
+        <span>Close session</span>
+      </bq-option>
+    </bq-option-list>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqIcon, BqOption, BqOptionList } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqOptionList>
+        <BqOption value="profile">
+          <BqIcon slot="prefix" name="user" />
+          <span>User profile</span>
+        </BqOption>
+        <BqOption :disabled="true" value="admin">
+          <BqIcon slot="prefix" name="layout" />
+          <span>Admin dashboard</span>
+        </BqOption>
+        <BqOption value="password">
+          <BqIcon slot="prefix" name="lock-simple" />
+          <span>Change password</span>
+        </BqOption>
+        <BqOption value="logout">
+          <BqIcon slot="prefix" name="sign-out" />
+          <span>Close session</span>
+        </BqOption>
+      </BqOptionList>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  To organize options into labeled sections, wrap `bq-option` elements in [`bq-option-group`](/components/option-group) and place the groups inside a `bq-option-list`. The [Option Group](/components/option-group) page has full code examples including header prefix and suffix customization.
+</Tip>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Always provide a `value` attribute on each option so the parent component can identify which item was selected.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Omit the `value` attribute. Without it, the parent `bq-option-list` or select-like component cannot distinguish which option the user chose.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use `disabled` for options that are temporarily unavailable in the current context — keeping them visible signals that the feature exists.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Use `hidden` as a permanent way to remove an option. If an option is never relevant for the user, remove it from the DOM entirely instead.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Keep option labels short and descriptive — one to four words that clearly identify the action or destination.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Write long sentences as option labels. Long labels break the visual rhythm of the list and make scanning harder.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use consistent icon placement across all options in the same list — either all with prefix icons or all without.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Mix options with icons and options without icons in the same list — the uneven spacing makes the list look misaligned.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+`bq-option` sets `role="option"` on its host element automatically. It also manages the following ARIA attributes based on its props:
+
+- `aria-selected="true"` is set when `selected` is `true`, communicating the active choice to screen readers.
+- `aria-disabled` is always present on the host. It is set to `"true"` when `disabled` or `hidden` is `true`, and to `"false"` otherwise, ensuring assistive technologies always have the correct interactive state.
+- `aria-hidden="true"` is set when `hidden` is `true`, removing the item from the accessibility tree entirely.
+
+As a developer, you are responsible for:
+
+- **Placing options inside `bq-option-list`** — the `role="option"` on each item requires a `role="listbox"` ancestor, which `bq-option-list` provides. Rendering options outside this context breaks the ARIA relationship.
+- **Providing meaningful labels** — the text inside the default slot is read by screen readers as the option's accessible name. Avoid icon-only options; always include a visible text label.
+- **Keyboard navigation** — `bq-option` listens for `Enter` keydown and emits `bqEnter`. The parent `bq-option-list` handles `ArrowUp`/`ArrowDown` focus management. Do not intercept these keys in your own handlers unless you are building a custom container.
+
+## API reference
+
+### Properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `disabled` | `disabled` | If true, the option is disabled | `boolean` | `false` |
+| `displayValue` | `display-value` | Overrides the default displayed value of the option | `string` | — |
+| `hidden` | `hidden` | If true, the option is hidden | `boolean` | `false` |
+| `selected` | `selected` | If true, the option is selected and active | `boolean` | `false` |
+| `value` | `value` | A string used to identify the option | `string` | — |
+
+### Events
+
+| Event | Description | Type |
+|---|---|---|
+| `bqBlur` | Emitted when the option loses focus | `CustomEvent<HTMLBqOptionElement>` |
+| `bqClick` | Emitted when the option is clicked | `CustomEvent<HTMLBqOptionElement>` |
+| `bqEnter` | Emitted when Enter is pressed while the option is focused | `CustomEvent<HTMLBqOptionElement>` |
+| `bqFocus` | Emitted when the option receives focus | `CustomEvent<HTMLBqOptionElement>` |
+
+### Slots
+
+| Slot | Description |
+|---|---|
+| *(default)* | The label text content of the option |
+| `prefix` | Content rendered before the label — typically a `bq-icon` |
+| `suffix` | Content rendered after the label — typically a `bq-icon` |
+
+### Shadow parts
+
+| Part | Description |
+|---|---|
+| `base` | The internal `<button>` wrapper of the option |
+| `label` | The `<span>` element containing the label text |
+| `prefix` | The `<span>` element wrapping the prefix slot content |
+| `suffix` | The `<span>` element wrapping the suffix slot content |
+
+### CSS custom properties
+
+<Expandable title="CSS variables" defaultOpen={true}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-option--background` | Option background color | `var(--bq-ui--primary)` |
+  | `--bq-option--font-size` | Option label font size | `var(--bq-font-size--m)` |
+  | `--bq-option--border-color` | Option border color | `transparent` |
+  | `--bq-option--border-style` | Option border style | `none` |
+  | `--bq-option--border-width` | Option border width | `0` |
+  | `--bq-option--border-radius` | Option border radius | `var(--bq-radius--s)` |
+  | `--bq-option--box-shadow` | Option box shadow | `none` |
+  | `--bq-option--gap-start` | Gap between prefix icon and label | `var(--bq-spacing-s)` |
+  | `--bq-option--gap-end` | Gap between label and suffix icon | `var(--bq-spacing-s)` |
+  | `--bq-option--paddingY` | Vertical padding | `var(--bq-spacing-xs)` |
+  | `--bq-option--padding-start` | Inline-start padding | `var(--bq-spacing-s)` |
+  | `--bq-option--padding-end` | Inline-end padding | `var(--bq-spacing-s)` |
+</Expandable>
+
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-option--default">
+    Explore option variants and states in Storybook
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/option">
+    View the component source on GitHub
+  </Card>
+</CardGroup>

@@ -143,6 +143,14 @@
             ]
           },
           {
+            "group": "Options",
+            "pages": [
+              "components/option",
+              "components/option-group",
+              "components/option-list"
+            ]
+          },
+          {
             "group": "Layout",
             "pages": [
               "components/card",
