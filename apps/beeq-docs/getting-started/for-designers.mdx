@@ -58,6 +58,60 @@ You're all set. BEEQ components, tokens, and assets are now ready to use across 
 
 BEEQ is built to be white-labelled. In Figma, brand customization happens through **Figma Variables** — change a token in the Theme Collection and every component that references it updates automatically.
 
+### Figma Variables: three collections
+
+BEEQ color tokens use Figma's variable capability and are split into three linked collections. Knowing which one to edit — and which to leave alone — is the key to customising without breaking anything.
+
+| Collection | What it contains | Should you edit it? |
+|---|---|---|
+| **Primitives** | All raw color scales (e.g. `iris-600`, `neutral-200`). 17 default hue sets plus any brand-specific additions. Colors are named `[color-name]-xxx`, from lightest (100) to darkest (1000). | No — reference only |
+| **Theme** | Selects colors from Primitives and maps them to semantic slots: `brand`, `accent`, `neutrals`, `system`, and `data`. BEEQ ships with 5 built-in themes — BEEQ, Endava, and a ready-to-use **Custom Theme**. | **Yes — this is where you customise** |
+| **Modes** | Wires Theme colors to component usage tokens (UI, Text, Icon, Background, Stroke, States) for both light and dark mode. | No — do not change |
+
+<Frame className="px-4 py-4" caption="The three Figma Variable collections that make up BEEQ's color system">
+  <img src="/getting-started/images/for-designers-figma-variables.svg" alt="Screenshot of the Figma Variables panel showing the Primitives, Theme, and Modes collections" />
+</Frame>
+
+<Warning>
+  Edit the **Theme** collection only. The Modes collection is what components read at runtime — changing it directly will break light/dark mode behaviour.
+</Warning>
+
+### Building your color palette
+
+When using BEEQ on client projects, it's usually required to adhere to the client's brand guidelines. Those guidelines typically focus on the physical aspects of the brand — stationery, print materials — rather than digital. You'll need to expand them to cover all the semantic color slots BEEQ uses before you can customise the system.
+
+<Frame className="px-4 py-4" caption="Create a color palette for your brand">
+  <img
+    className="block dark:hidden"
+    src="/getting-started/images/for-designers-create-color-palette-light.svg"
+    alt="Create a color palette for your brand — light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/getting-started/images/for-designers-create-color-palette-dark.svg"
+    alt="Create a color palette for your brand — dark mode"
+  />
+</Frame>
+
+<Steps>
+  <Step title="Create palettes for your theme">
+    Build each of the following scales before opening Figma Variables:
+
+    - **Brand palette** — a full light-to-dark scale for the primary brand color
+    - **Accent palette** (if needed) — the same light-to-dark scale for a secondary highlight color. In BEEQ's default theme the accent slot is unused
+    - **Neutral palette** — a custom grey scale, if the brand specifies its own neutrals. Leave this out to keep BEEQ's defaults
+    - **System colors** — shades for success, warning, error, and info
+    - **Data colors** — a set of distinct hues for charts and graphs
+  </Step>
+  <Step title="Apply to Figma Variables">
+    Substitute the default colors from the **Theme Variables**, or introduce a new **Mode** for multi-theme projects, using the **Local Variables Panel**. Then follow the [Changing brand colors](#changing-brand-colors) steps below to wire up the specific brand variables.
+  </Step>
+</Steps>
+
+<Tip>
+  There are many color generators available online to help you build palette scales. Tools like [Radix Colors](https://www.radix-ui.com/colors), [uicolors.app](https://uicolors.app), and [Huetone](https://huetone.ardov.me/) can produce perceptually uniform, accessible scales from a single brand hex.
+</Tip>
+
 ### Changing brand colors
 
 There are three brand color variables you'll need to update for any client or product:
