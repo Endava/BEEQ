@@ -1,0 +1,2657 @@
+---
+title: Select
+description: The select input lets users choose one or more options from a predefined list, commonly used in forms for easy data selection.
+---
+
+import { CardTile } from '/snippets/CardTile.jsx';
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Select component overview">
+  <img className="block dark:hidden" src="/components/images/select/select-overview-light.svg" alt="BEEQ Select component overview" />
+  <img className="hidden dark:block" src="/components/images/select/select-overview-dark.svg" alt="BEEQ Select component overview" />
+</Frame>
+
+The select input lets users choose one option — or multiple options when `multiple` is enabled — from a predefined list. It pairs a styled trigger with a floating panel of `bq-option` elements and integrates with native HTML forms.
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use Select when
+    </span>
+    - The option list contains more than five items and a radio group would take too much space
+    - Users need to choose from a predefined set of values in a form
+    - Multiple selection from a long list is required and a checkbox group would be impractical
+    - The available choices are dynamic or loaded from an external source
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use Select when
+    </span>
+    - Fewer than five options are available — use radio buttons or a segmented control instead
+    - The user needs to type a free-form value not constrained to a fixed list — use an [Input](/components/input) instead
+    - The choices are binary (yes / no, on / off) — use a [Checkbox](/components/checkbox) or toggle instead
+  </Card>
+</CardGroup>
+
+## Patterns
+
+<CardGroup cols={2}>
+  <Card title="Single select">
+    Single Select allows the user to pick one option from a menu.
+  </Card>
+  <Card title="Multiple select">
+    Multiple Select allows the user to pick multiple options from a menu via checkboxes. Once selected, the items are shown as dismissible tags in the input field above.
+  </Card>
+</CardGroup>
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Select component anatomy">
+  <img className="block dark:hidden" src="/components/images/select/select-anatomy-light.svg" alt="BEEQ Select component anatomy" />
+  <img className="hidden dark:block" src="/components/images/select/select-anatomy-dark.svg" alt="BEEQ Select component anatomy" />
+</Frame>
+
+The select is composed of a label, an input field, a dropdown panel, and optional status indicators.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Label | The descriptive label rendered above the input control |
+| **2** | Input field | The control area that displays the selected value or placeholder |
+| **3** | Leading icon | Optional prefix icon displayed at the start of the input field |
+| **4** | Placeholder | The hint text shown inside the input when no value is selected |
+| **5** | Dropdown panel | The floating container that opens below the input and holds the option list |
+| **6** | Menu | The list of selectable `bq-option` items inside the dropdown panel |
+| **7** | Scroll | The scrollbar that appears when the option list overflows the panel height |
+| **8** | Dropdown icon | The chevron caret at the end of the input that indicates the open/closed state |
+| **9** | Field status label (optional) | Helper text below the input providing guidance or validation feedback |
+| **10** | Info label (icon) | Optional icon accompanying the field status label for additional context |
+
+## Design guidelines
+
+### Single vs. multiple selection
+
+<CardGroup cols={2}>
+  <CardTile
+    title="Single selection"
+    imageLightSrc="/components/images/select/select-single-light.svg"
+    imageDarkSrc="/components/images/select/select-single-dark.svg"
+  >
+    The default mode. Users pick exactly one option; the selected value replaces the placeholder text in the input.
+  </CardTile>
+  <CardTile
+    title="Multiple selection"
+    imageLightSrc="/components/images/select/select-multiple-light.svg"
+    imageDarkSrc="/components/images/select/select-multiple-dark.svg"
+  >
+    Enable with `multiple`. Selected items appear as removable tags inside the input. Use `max-tags-visible` to cap how many tags show before a `+N` overflow tag appears.
+  </CardTile>
+</CardGroup>
+
+### Validation states
+
+<CardGroup cols={2}>
+  <CardTile
+    title="Error state"
+    imageLightSrc="/components/images/select/select-error-light.svg"
+    imageDarkSrc="/components/images/select/select-error-dark.svg"
+  >
+    Set `validation-status="error"` and populate the `helper-text` slot with the reason. Always pair a visual indicator with a text description so color-blind users are not excluded.
+  </CardTile>
+  <CardTile
+    title="Success state"
+    imageLightSrc="/components/images/select/select-success-light.svg"
+    imageDarkSrc="/components/images/select/select-success-dark.svg"
+  >
+    Set `validation-status="success"` to confirm a valid selection. Use sparingly — only when confirmation meaningfully reduces user uncertainty.
+  </CardTile>
+</CardGroup>
+
+## Usage
+
+### Default
+
+Enhance user interaction by implementing the default select variant. Perfect for scenarios where you want users to choose from a list of options within a dropdown.
+
+<CodeLivePreview code={`
+  <style>
+    bq-select::part(panel) { z-index: 12; }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+
+  <bq-select placeholder="Placeholder">
+    <label slot="label">Select label</label>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+    <bq-option value="1">Option 1</bq-option>
+    <bq-option value="2">Option 2</bq-option>
+    <bq-option value="3">Option 3</bq-option>
+  </bq-select>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-select placeholder="Placeholder">
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqOption, BqSelect } from "@beeq/react";
+
+    <BqSelect placeholder="Placeholder">
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <BqIcon name="star" />
+        Helper text
+      </span>
+      <BqOption value="1">Option 1</BqOption>
+      <BqOption value="2">Option 2</BqOption>
+      <BqOption value="3">Option 3</BqOption>
+    </BqSelect>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-select placeholder="Placeholder">
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <template>
+      <BqSelect placeholder="Placeholder">
+        <label slot="label">Select label</label>
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+        <BqOption value="1">Option 1</BqOption>
+        <BqOption value="2">Option 2</BqOption>
+        <BqOption value="3">Option 3</BqOption>
+      </BqSelect>
+    </template>
+
+    <script setup>
+    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
+    </script>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Open
+
+Use the `open` attribute to display the select dropdown by default, offering users quick access to the available options without additional clicks. Use `autofocus` to keep the input focused on render.
+
+<CodeLivePreview code={`
+  <style>
+    bq-select::part(panel) { z-index: 12; }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+
+  <bq-select autofocus open placeholder="Placeholder">
+    <label slot="label">Select label</label>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+    <bq-option value="1">Option 1</bq-option>
+    <bq-option value="2">Option 2</bq-option>
+    <bq-option value="3">Option 3</bq-option>
+  </bq-select>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-select autofocus open placeholder="Placeholder">
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqOption, BqSelect } from "@beeq/react";
+
+    <BqSelect autofocus open placeholder="Placeholder">
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <BqIcon name="star" />
+        Helper text
+      </span>
+      <BqOption value="1">Option 1</BqOption>
+      <BqOption value="2">Option 2</BqOption>
+      <BqOption value="3">Option 3</BqOption>
+    </BqSelect>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-select autofocus open placeholder="Placeholder">
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <template>
+      <BqSelect autofocus open placeholder="Placeholder">
+        <label slot="label">Select label</label>
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+        <BqOption value="1">Option 1</BqOption>
+        <BqOption value="2">Option 2</BqOption>
+        <BqOption value="3">Option 3</BqOption>
+      </BqSelect>
+    </template>
+
+    <script setup>
+    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
+    </script>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Initial value
+
+Set an initial `value` for the select component to preselect an option, providing a streamlined user experience and minimizing manual input.
+
+<CodeLivePreview code={`
+  <style>
+    bq-select::part(panel) { z-index: 12; }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+  <bq-select placeholder="Placeholder" value="2">
+    <label slot="label">Select label</label>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+    <bq-option value="1">Option 1</bq-option>
+    <bq-option value="2">Option 2</bq-option>
+    <bq-option value="3">Option 3</bq-option>
+  </bq-select>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-select placeholder="Placeholder" value="2">
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqOption, BqSelect } from "@beeq/react";
+
+    <BqSelect placeholder="Placeholder" value="2">
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <BqIcon name="star" />
+        Helper text
+      </span>
+      <BqOption value="1">Option 1</BqOption>
+      <BqOption value="2">Option 2</BqOption>
+      <BqOption value="3">Option 3</BqOption>
+    </BqSelect>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-select placeholder="Placeholder" value="2">
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <template>
+      <BqSelect placeholder="Placeholder" value="2">
+        <label slot="label">Select label</label>
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+        <BqOption value="1">Option 1</BqOption>
+        <BqOption value="2">Option 2</BqOption>
+        <BqOption value="3">Option 3</BqOption>
+      </BqSelect>
+    </template>
+
+    <script setup>
+    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
+    </script>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Display value
+
+The `displayValue` property (`display-value` attribute) on `bq-option` overrides the value shown inside the input after selection. Use it when the full option content (e.g., multi-line layout) should not be collapsed into the input field.
+
+<CodeLivePreview code={`
+  <style>
+    bq-select::part(panel) { z-index: 12; }
+
+    .flex {
+      display: flex;
+    }
+
+    .flex-col {
+      flex-direction: column;
+    }
+
+    .items-center {
+      align-items: center;
+    }
+
+    .gap-xs {
+      gap: var(--bq-spacing-xs);
+    }
+
+    .gap-xs2 {
+      gap: var(--bq-spacing-xs2);
+    }
+
+    .text-secondary {
+      color: var(--bq-text--secondary);
+    }
+
+    .text-s {
+      font-size: var(--bq-font-size--s);
+    }
+
+    .text-xs {
+      font-size: var(--bq-font-size--xs);
+    }
+
+    .option-indent {
+      padding-inline-start: 28px;
+    }
+
+    .font-semibold {
+      font-weight: 600;
+    }
+  </style>
+
+  <bq-select placeholder="Payment method..." open>
+    <label slot="label">Choose a payment method</label>
+    <span slot="helper-text">
+      You will not be charged until you review your order on the next page
+    </span>
+    <bq-option value="visa-1234" display-value="Visa •••• 1234">
+      <div class="flex flex-col gap-xs2">
+        <div class="flex items-center gap-xs">
+          <bq-icon name="credit-card" size="20"></bq-icon>
+          <span class="font-semibold">Visa ending in 1234</span>
+        </div>
+        <span class="text-secondary text-s option-indent">Expires 12/2025</span>
+        <span class="text-secondary text-xs option-indent">John Doe</span>
+      </div>
+    </bq-option>
+    <bq-option value="mastercard-5678" display-value="Mastercard •••• 5678">
+      <div class="flex flex-col gap-xs2">
+        <div class="flex items-center gap-xs">
+          <bq-icon name="credit-card" size="20"></bq-icon>
+          <span class="font-semibold">Mastercard ending in 5678</span>
+        </div>
+        <span class="text-secondary text-s option-indent">Expires 08/2026</span>
+        <span class="text-secondary text-xs option-indent">Jane Smith</span>
+      </div>
+    </bq-option>
+    <bq-option value="paypal" display-value="PayPal">
+      <div class="flex flex-col gap-xs2">
+        <div class="flex items-center gap-xs">
+          <bq-icon name="paypal-logo" size="20"></bq-icon>
+          <span class="font-semibold">Pay with PayPal</span>
+        </div>
+        <span class="text-secondary text-s option-indent">john.doe@email.com</span>
+      </div>
+    </bq-option>
+  </bq-select>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-select placeholder="Payment method..." open>
+      <label slot="label">Choose a payment method</label>
+      <span slot="helper-text">
+        You will not be charged until you review your order on the next page
+      </span>
+      <bq-option value="visa-1234" display-value="Visa •••• 1234">
+        <div class="flex flex-col gap-xs2">
+          <div class="flex items-center gap-xs">
+            <bq-icon name="credit-card" size="20"></bq-icon>
+            <span class="font-semibold">Visa ending in 1234</span>
+          </div>
+          <span class="text-secondary text-s option-indent">Expires 12/2025</span>
+          <span class="text-secondary text-xs option-indent">John Doe</span>
+        </div>
+      </bq-option>
+      <bq-option value="mastercard-5678" display-value="Mastercard •••• 5678">
+        <div class="flex flex-col gap-xs2">
+          <div class="flex items-center gap-xs">
+            <bq-icon name="credit-card" size="20"></bq-icon>
+            <span class="font-semibold">Mastercard ending in 5678</span>
+          </div>
+          <span class="text-secondary text-s option-indent">Expires 08/2026</span>
+          <span class="text-secondary text-xs option-indent">Jane Smith</span>
+        </div>
+      </bq-option>
+      <bq-option value="paypal" display-value="PayPal">
+        <div class="flex flex-col gap-xs2">
+          <div class="flex items-center gap-xs">
+            <bq-icon name="paypal-logo" size="20"></bq-icon>
+            <span class="font-semibold">Pay with PayPal</span>
+          </div>
+          <span class="text-secondary text-s option-indent">john.doe@email.com</span>
+        </div>
+      </bq-option>
+    </bq-select>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqOption, BqSelect } from "@beeq/react";
+
+    <BqSelect placeholder="Payment method..." open>
+      <label slot="label">Choose a payment method</label>
+      <span slot="helper-text">
+        You will not be charged until you review your order on the next page
+      </span>
+      <BqOption value="visa-1234" displayValue="Visa •••• 1234">
+        <div className="flex flex-col gap-xs2">
+          <div className="flex items-center gap-xs">
+            <BqIcon name="credit-card" size="20" />
+            <span className="font-semibold">Visa ending in 1234</span>
+          </div>
+          <span className="text-secondary text-s option-indent">Expires 12/2025</span>
+          <span className="text-secondary text-xs option-indent">John Doe</span>
+        </div>
+      </BqOption>
+      <BqOption value="mastercard-5678" displayValue="Mastercard •••• 5678">
+        <div className="flex flex-col gap-xs2">
+          <div className="flex items-center gap-xs">
+            <BqIcon name="credit-card" size="20" />
+            <span className="font-semibold">Mastercard ending in 5678</span>
+          </div>
+          <span className="text-secondary text-s option-indent">Expires 08/2026</span>
+          <span className="text-secondary text-xs option-indent">Jane Smith</span>
+        </div>
+      </BqOption>
+      <BqOption value="paypal" displayValue="PayPal">
+        <div className="flex flex-col gap-xs2">
+          <div className="flex items-center gap-xs">
+            <BqIcon name="paypal-logo" size="20" />
+            <span className="font-semibold">Pay with PayPal</span>
+          </div>
+          <span className="text-secondary text-s option-indent">john.doe@email.com</span>
+        </div>
+      </BqOption>
+    </BqSelect>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-select placeholder="Payment method..." open>
+      <label slot="label">Choose a payment method</label>
+      <span slot="helper-text">
+        You will not be charged until you review your order on the next page
+      </span>
+      <bq-option value="visa-1234" display-value="Visa •••• 1234">
+        <div class="flex flex-col gap-xs2">
+          <div class="flex items-center gap-xs">
+            <bq-icon name="credit-card" size="20"></bq-icon>
+            <span class="font-semibold">Visa ending in 1234</span>
+          </div>
+          <span class="text-secondary text-s option-indent">Expires 12/2025</span>
+          <span class="text-secondary text-xs option-indent">John Doe</span>
+        </div>
+      </bq-option>
+      <bq-option value="mastercard-5678" display-value="Mastercard •••• 5678">
+        <div class="flex flex-col gap-xs2">
+          <div class="flex items-center gap-xs">
+            <bq-icon name="credit-card" size="20"></bq-icon>
+            <span class="font-semibold">Mastercard ending in 5678</span>
+          </div>
+          <span class="text-secondary text-s option-indent">Expires 08/2026</span>
+          <span class="text-secondary text-xs option-indent">Jane Smith</span>
+        </div>
+      </bq-option>
+      <bq-option value="paypal" display-value="PayPal">
+        <div class="flex flex-col gap-xs2">
+          <div class="flex items-center gap-xs">
+            <bq-icon name="paypal-logo" size="20"></bq-icon>
+            <span class="font-semibold">Pay with PayPal</span>
+          </div>
+          <span class="text-secondary text-s option-indent">john.doe@email.com</span>
+        </div>
+      </bq-option>
+    </bq-select>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <template>
+      <BqSelect placeholder="Payment method..." open>
+        <label slot="label">Choose a payment method</label>
+        <span slot="helper-text">
+          You will not be charged until you review your order on the next page
+        </span>
+        <BqOption value="visa-1234" displayValue="Visa •••• 1234">
+          <div class="flex flex-col gap-xs2">
+            <div class="flex items-center gap-xs">
+              <BqIcon name="credit-card" size="20" />
+              <span class="font-semibold">Visa ending in 1234</span>
+            </div>
+            <span class="text-secondary text-s option-indent">Expires 12/2025</span>
+            <span class="text-secondary text-xs option-indent">John Doe</span>
+          </div>
+        </BqOption>
+        <BqOption value="mastercard-5678" displayValue="Mastercard •••• 5678">
+          <div class="flex flex-col gap-xs2">
+            <div class="flex items-center gap-xs">
+              <BqIcon name="credit-card" size="20" />
+              <span class="font-semibold">Mastercard ending in 5678</span>
+            </div>
+            <span class="text-secondary text-s option-indent">Expires 08/2026</span>
+            <span class="text-secondary text-xs option-indent">Jane Smith</span>
+          </div>
+        </BqOption>
+        <BqOption value="paypal" displayValue="PayPal">
+          <div class="flex flex-col gap-xs2">
+            <div class="flex items-center gap-xs">
+              <BqIcon name="paypal-logo" size="20" />
+              <span class="font-semibold">Pay with PayPal</span>
+            </div>
+            <span class="text-secondary text-s option-indent">john.doe@email.com</span>
+          </div>
+        </BqOption>
+      </BqSelect>
+    </template>
+
+    <script setup>
+    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
+    </script>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Disabled
+
+Employ the `disabled` attribute to restrict user interaction with the select component temporarily, useful for scenarios where certain options are unavailable.
+
+<CodeLivePreview code={`
+  <style>
+    bq-select::part(panel) { z-index: 12; }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+
+  <bq-select disabled placeholder="Placeholder" value="3">
+    <label slot="label">Select label</label>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+    <bq-option value="1">Option 1</bq-option>
+    <bq-option value="2">Option 2</bq-option>
+    <bq-option value="3">Option 3</bq-option>
+  </bq-select>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-select disabled placeholder="Placeholder" value="3">
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqOption, BqSelect } from "@beeq/react";
+
+    <BqSelect disabled placeholder="Placeholder" value="3">
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <BqIcon name="star" />
+        Helper text
+      </span>
+      <BqOption value="1">Option 1</BqOption>
+      <BqOption value="2">Option 2</BqOption>
+      <BqOption value="3">Option 3</BqOption>
+    </BqSelect>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-select disabled placeholder="Placeholder" value="3">
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <template>
+      <BqSelect disabled placeholder="Placeholder" value="3">
+        <label slot="label">Select label</label>
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+        <BqOption value="1">Option 1</BqOption>
+        <BqOption value="2">Option 2</BqOption>
+        <BqOption value="3">Option 3</BqOption>
+      </BqSelect>
+    </template>
+
+    <script setup>
+    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
+    </script>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Multiple
+
+Use the `multiple` property to enable multiple selections. Use `keep-open-on-select` to keep the panel open while the user selects options. The `max-tags-visible` attribute controls how many tags are shown before a `+N` overflow tag appears.
+
+<CodeLivePreview code={`
+  <style>
+    bq-select::part(panel) { z-index: 12; }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+
+  <bq-select
+    multiple
+    keep-open-on-select
+    max-tags-visible="2"
+    placeholder="Placeholder"
+    value='["running","biking","pizza"]'
+  >
+    <label slot="label">Select label</label>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+    <bq-option value="running">
+      <bq-icon slot="prefix" name="sneaker-move"></bq-icon>
+      Running
+    </bq-option>
+    <bq-option value="hiking">
+      <bq-icon slot="prefix" name="boot"></bq-icon>
+      Hiking
+    </bq-option>
+    <bq-option value="biking">
+      <bq-icon slot="prefix" name="person-simple-bike"></bq-icon>
+      Biking
+    </bq-option>
+    <bq-option value="swimming">
+      <bq-icon slot="prefix" name="swimming-pool"></bq-icon>
+      Swimming
+    </bq-option>
+    <bq-option value="pizza">
+      <bq-icon slot="prefix" name="pizza"></bq-icon>
+      Pizza
+    </bq-option>
+    <bq-option value="hamburger">
+      <bq-icon slot="prefix" name="hamburger"></bq-icon>
+      Hamburger
+    </bq-option>
+  </bq-select>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-select
+      multiple
+      keep-open-on-select
+      max-tags-visible="2"
+      placeholder="Placeholder"
+      value='["running","biking","pizza"]'
+    >
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="running">
+        <bq-icon slot="prefix" name="sneaker-move"></bq-icon>
+        Running
+      </bq-option>
+      <bq-option value="hiking">
+        <bq-icon slot="prefix" name="boot"></bq-icon>
+        Hiking
+      </bq-option>
+      <bq-option value="biking">
+        <bq-icon slot="prefix" name="person-simple-bike"></bq-icon>
+        Biking
+      </bq-option>
+      <bq-option value="swimming">
+        <bq-icon slot="prefix" name="swimming-pool"></bq-icon>
+        Swimming
+      </bq-option>
+      <bq-option value="pizza">
+        <bq-icon slot="prefix" name="pizza"></bq-icon>
+        Pizza
+      </bq-option>
+      <bq-option value="hamburger">
+        <bq-icon slot="prefix" name="hamburger"></bq-icon>
+        Hamburger
+      </bq-option>
+    </bq-select>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqOption, BqSelect } from "@beeq/react";
+
+    <BqSelect
+      multiple
+      keepOpenOnSelect
+      maxTagsVisible={2}
+      placeholder="Placeholder"
+      value={["running", "biking", "pizza"]}
+    >
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <BqIcon name="star" />
+        Helper text
+      </span>
+      <BqOption value="running">
+        <BqIcon slot="prefix" name="sneaker-move" />
+        Running
+      </BqOption>
+      <BqOption value="hiking">
+        <BqIcon slot="prefix" name="boot" />
+        Hiking
+      </BqOption>
+      <BqOption value="biking">
+        <BqIcon slot="prefix" name="person-simple-bike" />
+        Biking
+      </BqOption>
+      <BqOption value="swimming">
+        <BqIcon slot="prefix" name="swimming-pool" />
+        Swimming
+      </BqOption>
+      <BqOption value="pizza">
+        <BqIcon slot="prefix" name="pizza" />
+        Pizza
+      </BqOption>
+      <BqOption value="hamburger">
+        <BqIcon slot="prefix" name="hamburger" />
+        Hamburger
+      </BqOption>
+    </BqSelect>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-select
+      multiple
+      keep-open-on-select
+      max-tags-visible="2"
+      placeholder="Placeholder"
+      value='["running","biking","pizza"]'
+    >
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="running">
+        <bq-icon slot="prefix" name="sneaker-move"></bq-icon>
+        Running
+      </bq-option>
+      <bq-option value="hiking">
+        <bq-icon slot="prefix" name="boot"></bq-icon>
+        Hiking
+      </bq-option>
+      <bq-option value="biking">
+        <bq-icon slot="prefix" name="person-simple-bike"></bq-icon>
+        Biking
+      </bq-option>
+      <bq-option value="swimming">
+        <bq-icon slot="prefix" name="swimming-pool"></bq-icon>
+        Swimming
+      </bq-option>
+      <bq-option value="pizza">
+        <bq-icon slot="prefix" name="pizza"></bq-icon>
+        Pizza
+      </bq-option>
+      <bq-option value="hamburger">
+        <bq-icon slot="prefix" name="hamburger"></bq-icon>
+        Hamburger
+      </bq-option>
+    </bq-select>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <template>
+      <BqSelect
+        multiple
+        keepOpenOnSelect
+        :maxTagsVisible="2"
+        placeholder="Placeholder"
+        :value="['running', 'biking', 'pizza']"
+      >
+        <label slot="label">Select label</label>
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+        <BqOption value="running">
+          <BqIcon slot="prefix" name="sneaker-move" />
+          Running
+        </BqOption>
+        <BqOption value="hiking">
+          <BqIcon slot="prefix" name="boot" />
+          Hiking
+        </BqOption>
+        <BqOption value="biking">
+          <BqIcon slot="prefix" name="person-simple-bike" />
+          Biking
+        </BqOption>
+        <BqOption value="swimming">
+          <BqIcon slot="prefix" name="swimming-pool" />
+          Swimming
+        </BqOption>
+        <BqOption value="pizza">
+          <BqIcon slot="prefix" name="pizza" />
+          Pizza
+        </BqOption>
+        <BqOption value="hamburger">
+          <BqIcon slot="prefix" name="hamburger" />
+          Hamburger
+        </BqOption>
+      </BqSelect>
+    </template>
+
+    <script setup>
+    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
+    </script>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Options
+
+### Prefix
+
+Use the `prefix` slot to include additional visual elements or context, such as an icon, to provide users with extra visual cues about the field's purpose.
+
+<CodeLivePreview code={`
+  <style>
+    bq-select::part(panel) { z-index: 12; }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+
+  <bq-select placeholder="Placeholder">
+    <label slot="label">Select label</label>
+    <bq-icon name="user-circle" slot="prefix"></bq-icon>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+    <bq-option value="1">Option 1</bq-option>
+    <bq-option value="2">Option 2</bq-option>
+    <bq-option value="3">Option 3</bq-option>
+  </bq-select>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-select placeholder="Placeholder">
+      <label slot="label">Select label</label>
+      <bq-icon name="user-circle" slot="prefix"></bq-icon>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqOption, BqSelect } from "@beeq/react";
+
+    <BqSelect placeholder="Placeholder">
+      <label slot="label">Select label</label>
+      <BqIcon name="user-circle" slot="prefix" />
+      <span slot="helper-text">
+        <BqIcon name="star" />
+        Helper text
+      </span>
+      <BqOption value="1">Option 1</BqOption>
+      <BqOption value="2">Option 2</BqOption>
+      <BqOption value="3">Option 3</BqOption>
+    </BqSelect>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-select placeholder="Placeholder">
+      <label slot="label">Select label</label>
+      <bq-icon name="user-circle" slot="prefix"></bq-icon>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <template>
+      <BqSelect placeholder="Placeholder">
+        <label slot="label">Select label</label>
+        <BqIcon name="user-circle" slot="prefix" />
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+        <BqOption value="1">Option 1</BqOption>
+        <BqOption value="2">Option 2</BqOption>
+        <BqOption value="3">Option 3</BqOption>
+      </BqSelect>
+    </template>
+
+    <script setup>
+    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
+    </script>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Suffix
+
+Leverage the `suffix` slot to enhance the select component with extra elements. The default suffix is a rotating chevron caret; replace it with any icon to match your design context.
+
+<CodeLivePreview code={`
+  <style>
+    bq-select::part(panel) { z-index: 12; }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+
+  <bq-select placeholder="Placeholder">
+    <label slot="label">Select label</label>
+    <bq-icon name="arrow-down" slot="suffix"></bq-icon>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+    <bq-option value="1">Option 1</bq-option>
+    <bq-option value="2">Option 2</bq-option>
+    <bq-option value="3">Option 3</bq-option>
+  </bq-select>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-select placeholder="Placeholder">
+      <label slot="label">Select label</label>
+      <bq-icon name="arrow-down" slot="suffix"></bq-icon>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqOption, BqSelect } from "@beeq/react";
+
+    <BqSelect placeholder="Placeholder">
+      <label slot="label">Select label</label>
+      <BqIcon name="arrow-down" slot="suffix" />
+      <span slot="helper-text">
+        <BqIcon name="star" />
+        Helper text
+      </span>
+      <BqOption value="1">Option 1</BqOption>
+      <BqOption value="2">Option 2</BqOption>
+      <BqOption value="3">Option 3</BqOption>
+    </BqSelect>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-select placeholder="Placeholder">
+      <label slot="label">Select label</label>
+      <bq-icon name="arrow-down" slot="suffix"></bq-icon>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <template>
+      <BqSelect placeholder="Placeholder">
+        <label slot="label">Select label</label>
+        <BqIcon name="arrow-down" slot="suffix" />
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+        <BqOption value="1">Option 1</BqOption>
+        <BqOption value="2">Option 2</BqOption>
+        <BqOption value="3">Option 3</BqOption>
+      </BqSelect>
+    </template>
+
+    <script setup>
+    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
+    </script>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Validation
+
+Use `validation-status` to signal the validation state (`error`, `warning`, or `success`) of the select component, ensuring accurate data input and real-time feedback.
+
+<CodeLivePreview code={`
+  <style>
+    :host { gap: var(--bq-spacing-l) !important; }
+    bq-select::part(panel) { z-index: 12; }
+
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+
+  <bq-select placeholder="Placeholder" validation-status="error" value="1">
+    <label slot="label">Select label</label>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+    <bq-option value="1">Option 1</bq-option>
+    <bq-option value="2">Option 2</bq-option>
+    <bq-option value="3">Option 3</bq-option>
+  </bq-select>
+  <bq-select placeholder="Placeholder" validation-status="warning" value="2">
+    <label slot="label">Select label</label>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+    <bq-option value="1">Option 1</bq-option>
+    <bq-option value="2">Option 2</bq-option>
+    <bq-option value="3">Option 3</bq-option>
+  </bq-select>
+  <bq-select placeholder="Placeholder" validation-status="success" value="3">
+    <label slot="label">Select label</label>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+    <bq-option value="1">Option 1</bq-option>
+    <bq-option value="2">Option 2</bq-option>
+    <bq-option value="3">Option 3</bq-option>
+  </bq-select>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-select placeholder="Placeholder" validation-status="error" value="1">
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+
+    <bq-select placeholder="Placeholder" validation-status="warning" value="2">
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+
+    <bq-select placeholder="Placeholder" validation-status="success" value="3">
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqOption, BqSelect } from "@beeq/react";
+
+    <BqSelect placeholder="Placeholder" validationStatus="error" value="1">
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <BqIcon name="star" />
+        Helper text
+      </span>
+      <BqOption value="1">Option 1</BqOption>
+      <BqOption value="2">Option 2</BqOption>
+      <BqOption value="3">Option 3</BqOption>
+    </BqSelect>
+
+    <BqSelect placeholder="Placeholder" validationStatus="warning" value="2">
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <BqIcon name="star" />
+        Helper text
+      </span>
+      <BqOption value="1">Option 1</BqOption>
+      <BqOption value="2">Option 2</BqOption>
+      <BqOption value="3">Option 3</BqOption>
+    </BqSelect>
+
+    <BqSelect placeholder="Placeholder" validationStatus="success" value="3">
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <BqIcon name="star" />
+        Helper text
+      </span>
+      <BqOption value="1">Option 1</BqOption>
+      <BqOption value="2">Option 2</BqOption>
+      <BqOption value="3">Option 3</BqOption>
+    </BqSelect>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-select placeholder="Placeholder" validation-status="error" value="1">
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+
+    <bq-select placeholder="Placeholder" validation-status="warning" value="2">
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+
+    <bq-select placeholder="Placeholder" validation-status="success" value="3">
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <template>
+      <BqSelect placeholder="Placeholder" validationStatus="error" value="1">
+        <label slot="label">Select label</label>
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+        <BqOption value="1">Option 1</BqOption>
+        <BqOption value="2">Option 2</BqOption>
+        <BqOption value="3">Option 3</BqOption>
+      </BqSelect>
+
+      <BqSelect placeholder="Placeholder" validationStatus="warning" value="2">
+        <label slot="label">Select label</label>
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+        <BqOption value="1">Option 1</BqOption>
+        <BqOption value="2">Option 2</BqOption>
+        <BqOption value="3">Option 3</BqOption>
+      </BqSelect>
+
+      <BqSelect placeholder="Placeholder" validationStatus="success" value="3">
+        <label slot="label">Select label</label>
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+        <BqOption value="1">Option 1</BqOption>
+        <BqOption value="2">Option 2</BqOption>
+        <BqOption value="3">Option 3</BqOption>
+      </BqSelect>
+    </template>
+
+    <script setup>
+    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
+    </script>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Label with "Optional"
+
+Choose this style when you want to include an optional label for additional context, providing users with guidance while maintaining a clean and unobtrusive design.
+
+<CodeLivePreview code={`
+  <style>
+    bq-select::part(panel) { z-index: 12; }
+
+    div {
+      display: flex;
+      flex: 1 1 0%;
+    }
+
+    div > label {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+    }
+
+    div > span {
+      color: var(--bq-text--secondary);
+    } 
+
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+
+  <bq-select placeholder="Placeholder">
+    <div slot="label">
+      <label>Select label</label>
+      <span>Optional</span>
+    </div>
+    <bq-icon name="user-circle" slot="prefix"></bq-icon>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+    <bq-option value="1">Option 1</bq-option>
+    <bq-option value="2">Option 2</bq-option>
+    <bq-option value="3">Option 3</bq-option>
+  </bq-select>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-select placeholder="Placeholder">
+      <div slot="label">
+        <label>Select label</label>
+        <span>Optional</span>
+      </div>
+      <bq-icon name="user-circle" slot="prefix"></bq-icon>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqOption, BqSelect } from "@beeq/react";
+
+    <BqSelect placeholder="Placeholder">
+      <div slot="label">
+        <label>Select label</label>
+        <span>Optional</span>
+      </div>
+      <BqIcon name="user-circle" slot="prefix" />
+      <span slot="helper-text">
+        <BqIcon name="star" />
+        Helper text
+      </span>
+      <BqOption value="1">Option 1</BqOption>
+      <BqOption value="2">Option 2</BqOption>
+      <BqOption value="3">Option 3</BqOption>
+    </BqSelect>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-select placeholder="Placeholder">
+      <div slot="label">
+        <label>Select label</label>
+        <span>Optional</span>
+      </div>
+      <bq-icon name="user-circle" slot="prefix"></bq-icon>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <template>
+      <BqSelect placeholder="Placeholder">
+        <div slot="label">
+          <label>Select label</label>
+          <span>Optional</span>
+        </div>
+        <BqIcon name="user-circle" slot="prefix" />
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+        <BqOption value="1">Option 1</BqOption>
+        <BqOption value="2">Option 2</BqOption>
+        <BqOption value="3">Option 3</BqOption>
+      </BqSelect>
+    </template>
+
+    <script setup>
+    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
+    </script>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Label with "Info Tooltip"
+
+Enhance user understanding by incorporating a `bq-tooltip` alongside the label, offering additional information or clarification about the select.
+
+<CodeLivePreview code={`
+  <style>
+    bq-select::part(panel) { z-index: 12; }
+
+    bq-tooltip {
+      margin-inline-start: var(--bq-spacing-xs);
+    }
+
+    div {
+      display: flex;
+      flex: 1 1 0%;
+    }
+
+    div > label {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+    }
+
+    div > span {
+      color: var(--bq-text--secondary);
+    } 
+
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+
+  <bq-select placeholder="Placeholder">
+    <div slot="label">
+      <label>
+        Select label
+        <bq-tooltip>
+          <bq-icon name="info" slot="trigger"></bq-icon>
+          You can provide more context by adding a tooltip to the label.
+        </bq-tooltip>
+      </label>
+      <span>Optional</span>
+    </div>
+    <bq-icon name="user-circle" slot="prefix"></bq-icon>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+    <bq-option value="1">Option 1</bq-option>
+    <bq-option value="2">Option 2</bq-option>
+    <bq-option value="3">Option 3</bq-option>
+  </bq-select>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-select placeholder="Placeholder">
+      <div slot="label">
+        <label>
+          Select label
+          <bq-tooltip>
+            <bq-icon name="info" slot="trigger"></bq-icon>
+            You can provide more context by adding a tooltip to the label.
+          </bq-tooltip>
+        </label>
+        <span>Optional</span>
+      </div>
+      <bq-icon name="user-circle" slot="prefix"></bq-icon>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqOption, BqSelect, BqTooltip } from "@beeq/react";
+
+    <BqSelect placeholder="Placeholder">
+      <div slot="label">
+        <label>
+          Select label
+          <BqTooltip>
+            <BqIcon name="info" slot="trigger" />
+            You can provide more context by adding a tooltip to the label.
+          </BqTooltip>
+        </label>
+        <span>Optional</span>
+      </div>
+      <BqIcon name="user-circle" slot="prefix" />
+      <span slot="helper-text">
+        <BqIcon name="star" />
+        Helper text
+      </span>
+      <BqOption value="1">Option 1</BqOption>
+      <BqOption value="2">Option 2</BqOption>
+      <BqOption value="3">Option 3</BqOption>
+    </BqSelect>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-select placeholder="Placeholder">
+      <div slot="label">
+        <label>
+          Select label
+          <bq-tooltip>
+            <bq-icon name="info" slot="trigger"></bq-icon>
+            You can provide more context by adding a tooltip to the label.
+          </bq-tooltip>
+        </label>
+        <span>Optional</span>
+      </div>
+      <bq-icon name="user-circle" slot="prefix"></bq-icon>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <template>
+      <BqSelect placeholder="Placeholder">
+        <div slot="label">
+          <label>
+            Select label
+            <BqTooltip>
+              <BqIcon name="info" slot="trigger" />
+              You can provide more context by adding a tooltip to the label.
+            </BqTooltip>
+          </label>
+          <span>Optional</span>
+        </div>
+        <BqIcon name="user-circle" slot="prefix" />
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+        <BqOption value="1">Option 1</BqOption>
+        <BqOption value="2">Option 2</BqOption>
+        <BqOption value="3">Option 3</BqOption>
+      </BqSelect>
+    </template>
+
+    <script setup>
+    import { BqIcon, BqOption, BqSelect, BqTooltip } from "@beeq/vue";
+    </script>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Panel placement
+
+Adjust the panel placement to suit your layout. Use the `placement` attribute to position the dropdown relative to the input — useful when the select is near the bottom of the viewport.
+
+<CodeLivePreview code={`
+  <style>
+    bq-select::part(panel) { z-index: 12; }
+
+    bq-tooltip {
+      margin-inline-start: var(--bq-spacing-xs);
+    }
+
+    label {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+    }
+
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+
+  <bq-select placeholder="Placeholder" placement="top">
+    <label slot="label">
+      Select label
+      <bq-tooltip>
+        <bq-icon name="info" slot="trigger"></bq-icon>
+        You can provide more context by adding a tooltip to the label.
+      </bq-tooltip>
+    </label>
+    <bq-icon name="user-circle" slot="prefix"></bq-icon>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+    <bq-option value="1">Option 1</bq-option>
+    <bq-option value="2">Option 2</bq-option>
+    <bq-option value="3">Option 3</bq-option>
+  </bq-select>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-select placeholder="Placeholder" placement="top">
+      <label slot="label">
+        Select label
+        <bq-tooltip>
+          <bq-icon name="info" slot="trigger"></bq-icon>
+          You can provide more context by adding a tooltip to the label.
+        </bq-tooltip>
+      </label>
+      <bq-icon name="user-circle" slot="prefix"></bq-icon>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqOption, BqSelect, BqTooltip } from "@beeq/react";
+
+    <BqSelect placeholder="Placeholder" placement="top">
+      <label slot="label">
+        Select label
+        <BqTooltip>
+          <BqIcon name="info" slot="trigger" />
+          You can provide more context by adding a tooltip to the label.
+        </BqTooltip>
+      </label>
+      <BqIcon name="user-circle" slot="prefix" />
+      <span slot="helper-text">
+        <BqIcon name="star" />
+        Helper text
+      </span>
+      <BqOption value="1">Option 1</BqOption>
+      <BqOption value="2">Option 2</BqOption>
+      <BqOption value="3">Option 3</BqOption>
+    </BqSelect>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-select placeholder="Placeholder" placement="top">
+      <label slot="label">
+        Select label
+        <bq-tooltip>
+          <bq-icon name="info" slot="trigger"></bq-icon>
+          You can provide more context by adding a tooltip to the label.
+        </bq-tooltip>
+      </label>
+      <bq-icon name="user-circle" slot="prefix"></bq-icon>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <template>
+      <BqSelect placeholder="Placeholder" placement="top">
+        <label slot="label">
+          Select label
+          <BqTooltip>
+            <BqIcon name="info" slot="trigger" />
+            You can provide more context by adding a tooltip to the label.
+          </BqTooltip>
+        </label>
+        <BqIcon name="user-circle" slot="prefix" />
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+        <BqOption value="1">Option 1</BqOption>
+        <BqOption value="2">Option 2</BqOption>
+        <BqOption value="3">Option 3</BqOption>
+      </BqSelect>
+    </template>
+
+    <script setup>
+    import { BqIcon, BqOption, BqSelect, BqTooltip } from "@beeq/vue";
+    </script>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### With no label
+
+Use this style when you prefer a minimal look and the field's purpose is conveyed by surrounding context — for example, inside a table or toolbar where a visible label would be redundant.
+
+<CodeLivePreview code={`
+  <style>
+    bq-select::part(panel) { z-index: 12; }
+
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+
+  <bq-select placeholder="Placeholder">
+    <bq-icon name="user-circle" slot="prefix"></bq-icon>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+    <bq-option value="1">Option 1</bq-option>
+    <bq-option value="2">Option 2</bq-option>
+    <bq-option value="3">Option 3</bq-option>
+  </bq-select>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-select placeholder="Placeholder">
+      <bq-icon name="user-circle" slot="prefix"></bq-icon>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqOption, BqSelect } from "@beeq/react";
+
+    <BqSelect placeholder="Placeholder">
+      <BqIcon name="user-circle" slot="prefix" />
+      <span slot="helper-text">
+        <BqIcon name="star" />
+        Helper text
+      </span>
+      <BqOption value="1">Option 1</BqOption>
+      <BqOption value="2">Option 2</BqOption>
+      <BqOption value="3">Option 3</BqOption>
+    </BqSelect>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-select placeholder="Placeholder">
+      <bq-icon name="user-circle" slot="prefix"></bq-icon>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <template>
+      <BqSelect placeholder="Placeholder">
+        <BqIcon name="user-circle" slot="prefix" />
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+        <BqOption value="1">Option 1</BqOption>
+        <BqOption value="2">Option 2</BqOption>
+        <BqOption value="3">Option 3</BqOption>
+      </BqSelect>
+    </template>
+
+    <script setup>
+    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
+    </script>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### With no Helper Text
+
+Select this variant when you don't need additional helper text, giving users a straightforward and uncluttered experience.
+
+<CodeLivePreview code={`
+  <style>
+    bq-select::part(panel) { z-index: 12; }
+  </style>
+
+  <bq-select placeholder="Placeholder">
+    <label slot="label">Select label</label>
+    <bq-icon name="user-circle" slot="prefix"></bq-icon>
+    <bq-option value="1">Option 1</bq-option>
+    <bq-option value="2">Option 2</bq-option>
+    <bq-option value="3">Option 3</bq-option>
+  </bq-select>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-select placeholder="Placeholder">
+      <label slot="label">Select label</label>
+      <bq-icon name="user-circle" slot="prefix"></bq-icon>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqOption, BqSelect } from "@beeq/react";
+
+    <BqSelect placeholder="Placeholder">
+      <label slot="label">Select label</label>
+      <BqIcon name="user-circle" slot="prefix" />
+      <BqOption value="1">Option 1</BqOption>
+      <BqOption value="2">Option 2</BqOption>
+      <BqOption value="3">Option 3</BqOption>
+    </BqSelect>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-select placeholder="Placeholder">
+      <label slot="label">Select label</label>
+      <bq-icon name="user-circle" slot="prefix"></bq-icon>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <template>
+      <BqSelect placeholder="Placeholder">
+        <label slot="label">Select label</label>
+        <BqIcon name="user-circle" slot="prefix" />
+        <BqOption value="1">Option 1</BqOption>
+        <BqOption value="2">Option 2</BqOption>
+        <BqOption value="3">Option 3</BqOption>
+      </BqSelect>
+    </template>
+
+    <script setup>
+    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
+    </script>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Readonly
+
+A readonly select shows the current value but prevents the panel from opening. Use it in review or summary screens where the displayed value is informational and should not be changed.
+
+<CodeLivePreview code={`
+  <style>
+    bq-select::part(panel) { z-index: 12; }
+
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+
+  <bq-select placeholder="Placeholder" value="2" readonly>
+    <label slot="label">Select label</label>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+    <bq-option value="1">Option 1</bq-option>
+    <bq-option value="2">Option 2</bq-option>
+    <bq-option value="3">Option 3</bq-option>
+  </bq-select>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-select placeholder="Placeholder" value="2" readonly>
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqOption, BqSelect } from "@beeq/react";
+
+    <BqSelect placeholder="Placeholder" value="2" readOnly>
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <BqIcon name="star" />
+        Helper text
+      </span>
+      <BqOption value="1">Option 1</BqOption>
+      <BqOption value="2">Option 2</BqOption>
+      <BqOption value="3">Option 3</BqOption>
+    </BqSelect>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-select placeholder="Placeholder" value="2" readonly>
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <template>
+      <BqSelect placeholder="Placeholder" value="2" readonly>
+        <label slot="label">Select label</label>
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+        <BqOption value="1">Option 1</BqOption>
+        <BqOption value="2">Option 2</BqOption>
+        <BqOption value="3">Option 3</BqOption>
+      </BqSelect>
+    </template>
+
+    <script setup>
+    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
+    </script>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Without clear button
+
+Set `disable-clear` to hide the clear button and prevent one-click deselection. Use this when selecting a value is required and removing it should not be trivially easy.
+
+<CodeLivePreview code={`
+  <style>
+    bq-select::part(panel) { z-index: 12; }
+
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+
+  <bq-select placeholder="Placeholder" value="1" disable-clear>
+    <label slot="label">Select label</label>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+    <bq-option value="1">Option 1</bq-option>
+    <bq-option value="2">Option 2</bq-option>
+    <bq-option value="3">Option 3</bq-option>
+  </bq-select>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-select placeholder="Placeholder" value="1" disable-clear>
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqOption, BqSelect } from "@beeq/react";
+
+    <BqSelect placeholder="Placeholder" value="1" disableClear>
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <BqIcon name="star" />
+        Helper text
+      </span>
+      <BqOption value="1">Option 1</BqOption>
+      <BqOption value="2">Option 2</BqOption>
+      <BqOption value="3">Option 3</BqOption>
+    </BqSelect>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-select placeholder="Placeholder" value="1" disable-clear>
+      <label slot="label">Select label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+      <bq-option value="1">Option 1</bq-option>
+      <bq-option value="2">Option 2</bq-option>
+      <bq-option value="3">Option 3</bq-option>
+    </bq-select>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <template>
+      <BqSelect placeholder="Placeholder" value="1" disableClear>
+        <label slot="label">Select label</label>
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+        <BqOption value="1">Option 1</BqOption>
+        <BqOption value="2">Option 2</BqOption>
+        <BqOption value="3">Option 3</BqOption>
+      </BqSelect>
+    </template>
+
+    <script setup>
+    import { BqIcon, BqOption, BqSelect } from "@beeq/vue";
+    </script>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Custom behavior
+
+Call `preventDefault()` on the `bqInput` event to take full control of option filtering. This lets you implement async filtering, loading states, empty-state messages, and matched-text highlighting entirely in your own code.
+
+<Tip>
+  Set `debounce-time` to throttle how often `bqInput` fires while the user types — `300` ms is a good default for async requests.
+</Tip>
+
+<CodeLivePreview code={`
+  <style>
+    bq-select::part(panel) { z-index: 12; }
+  </style>
+
+  <bq-select id="custom-select" placeholder="Search options..." debounce-time="300">
+    <label slot="label">Custom filtering</label>
+  </bq-select>
+  
+  <script>
+    (() => {
+      const ALL_OPTIONS = [
+        { label: 'Running', value: 'running', icon: 'sneaker-move' },
+        { label: 'Hiking', value: 'hiking', icon: 'boot' },
+        { label: 'Biking', value: 'biking', icon: 'person-simple-bike' },
+        { label: 'Swimming', value: 'swimming', icon: 'swimming-pool' },
+        { label: 'Pizza', value: 'pizza', icon: 'pizza' },
+        { label: 'Hamburger', value: 'hamburger', icon: 'hamburger' },
+        { label: 'Cookie', value: 'cookie', icon: 'cookie' },
+        { label: 'Ice-cream', value: 'ice-cream', icon: 'ice-cream' },
+      ];
+
+      const select = previewRoot.querySelector('#custom-select');
+
+      function highlight(text, query) {
+        return text.replace(new RegExp('(' + query + ')', 'gi'), '<b>$1</b>');
+      }
+
+      function renderOptions(items, query) {
+        select.querySelectorAll('bq-option').forEach(function(el) { el.remove(); });
+
+        if (items.length === 0) {
+          const opt = document.createElement('bq-option');
+          opt.setAttribute('disabled', '');
+          opt.innerHTML = '<bq-icon slot="prefix" name="x-circle"></bq-icon> No results found';
+          select.appendChild(opt);
+          return;
+        }
+
+        items.forEach(function(item) {
+          const opt = document.createElement('bq-option');
+          opt.value = item.value;
+          const labelHtml = query ? highlight(item.label, query) : item.label;
+          opt.innerHTML = '<bq-icon slot="prefix" name="' + item.icon + '"></bq-icon><span>' + labelHtml + '</span>';
+          select.appendChild(opt);
+        });
+      }
+
+      renderOptions(ALL_OPTIONS);
+
+      select.addEventListener('bqInput', function(ev) {
+        ev.preventDefault();
+        const query = ev.detail.value;
+        if (!query) { renderOptions(ALL_OPTIONS); return; }
+        const q = query.toLowerCase();
+        renderOptions(
+          ALL_OPTIONS.filter(function(o) { return o.label.toLowerCase().includes(q); }),
+          query
+        );
+      });
+
+      select.addEventListener('bqSelect', function() {
+        renderOptions(ALL_OPTIONS);
+      });
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-select id="custom-select" placeholder="Search options..." debounce-time="300">
+      <label slot="label">Custom filtering</label>
+    </bq-select>
+    ```
+
+    ```js JS icon="square-js"
+    const ALL_OPTIONS = [
+      { label: 'Running', value: 'running', icon: 'sneaker-move' },
+      { label: 'Hiking', value: 'hiking', icon: 'boot' },
+      { label: 'Biking', value: 'biking', icon: 'person-simple-bike' },
+      { label: 'Swimming', value: 'swimming', icon: 'swimming-pool' },
+      { label: 'Pizza', value: 'pizza', icon: 'pizza' },
+      { label: 'Hamburger', value: 'hamburger', icon: 'hamburger' },
+      { label: 'Cookie', value: 'cookie', icon: 'cookie' },
+      { label: 'Ice-cream', value: 'ice-cream', icon: 'ice-cream' },
+    ];
+
+    const select = document.querySelector('#custom-select');
+
+    function highlight(text, query) {
+      const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return text.replace(new RegExp(`(${escaped})`, 'gi'), '<b>$1</b>');
+    }
+
+    function renderOptions(items, query = '') {
+      select.querySelectorAll('bq-option').forEach((el) => el.remove());
+
+      if (items.length === 0) {
+        const opt = document.createElement('bq-option');
+        opt.setAttribute('disabled', '');
+        opt.innerHTML = `<bq-icon slot="prefix" name="x-circle"></bq-icon> No results found`;
+        select.appendChild(opt);
+        return;
+      }
+
+      items.forEach(({ label, value, icon }) => {
+        const opt = document.createElement('bq-option');
+        opt.value = value;
+        const labelHtml = query ? highlight(label, query) : label;
+        opt.innerHTML = `<bq-icon slot="prefix" name="${icon}"></bq-icon><span>${labelHtml}</span>`;
+        select.appendChild(opt);
+      });
+    }
+
+    renderOptions(ALL_OPTIONS);
+
+    select.addEventListener('bqInput', (ev) => {
+      ev.preventDefault();
+      const query = ev.detail.value;
+      if (!query) { renderOptions(ALL_OPTIONS); return; }
+      const q = query.toLowerCase();
+      renderOptions(ALL_OPTIONS.filter((o) => o.label.toLowerCase().includes(q)), query);
+    });
+
+    select.addEventListener('bqSelect', () => renderOptions(ALL_OPTIONS));
+    ```
+
+    ```jsx React icon="react"
+    import { useState } from 'react';
+    import type { BqSelectCustomEvent } from '@beeq/core';
+    import { BqIcon, BqOption, BqSelect, BqSpinner } from '@beeq/react';
+
+    const ALL_OPTIONS = [
+      { label: 'Running', value: 'running', icon: 'sneaker-move' },
+      { label: 'Hiking', value: 'hiking', icon: 'boot' },
+      { label: 'Biking', value: 'biking', icon: 'person-simple-bike' },
+      { label: 'Swimming', value: 'swimming', icon: 'swimming-pool' },
+      { label: 'Pizza', value: 'pizza', icon: 'pizza' },
+      { label: 'Hamburger', value: 'hamburger', icon: 'hamburger' },
+      { label: 'Cookie', value: 'cookie', icon: 'cookie' },
+      { label: 'Ice-cream', value: 'ice-cream', icon: 'ice-cream' },
+    ];
+
+    function highlight(text: string, query: string) {
+      return text.replace(new RegExp(`(${query})`, 'gi'), '<b>$1</b>');
+    }
+
+    export default function App() {
+      const [visibleOptions, setVisibleOptions] = useState(ALL_OPTIONS);
+      const [isLoading, setIsLoading] = useState(false);
+      const [error, setError] = useState<string | null>(null);
+
+      const handleInput = async (event: BqSelectCustomEvent<{ value: string }>) => {
+        event.preventDefault();
+        const query = event.detail.value;
+
+        if (!query) {
+          setVisibleOptions(ALL_OPTIONS);
+          setError(null);
+          return;
+        }
+
+        setIsLoading(true);
+        setError(null);
+
+        try {
+          // Simulate an async API call
+          await new Promise((resolve) => setTimeout(resolve, 300));
+          const q = query.toLowerCase();
+          setVisibleOptions(
+            ALL_OPTIONS
+              .filter((o) => o.label.toLowerCase().includes(q))
+              .map((o) => ({ ...o, label: highlight(o.label, query) }))
+          );
+        } catch {
+          setError('Error loading options');
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      const handleSelect = () => {
+        setVisibleOptions(ALL_OPTIONS);
+        setError(null);
+      };
+
+      return (
+        <BqSelect
+          placeholder="Search options..."
+          debounceTime={300}
+          onBqInput={handleInput}
+          onBqSelect={handleSelect}
+        >
+          <label slot="label">Custom filtering</label>
+          {isLoading ? (
+            <BqOption disabled>
+              <BqSpinner slot="prefix" animation size="small" textPosition="right" />
+              Loading...
+            </BqOption>
+          ) : error ? (
+            <BqOption disabled>
+              <BqIcon slot="prefix" name="warning" />
+              {error}
+            </BqOption>
+          ) : visibleOptions.length === 0 ? (
+            <BqOption disabled>
+              <BqIcon slot="prefix" name="x-circle" />
+              No results found
+            </BqOption>
+          ) : (
+            visibleOptions.map((option) => (
+              <BqOption key={option.value} value={option.value}>
+                <BqIcon slot="prefix" name={option.icon} />
+                <span dangerouslySetInnerHTML={{ __html: option.label }} />
+              </BqOption>
+            ))
+          )}
+        </BqSelect>
+      );
+    }
+    ```
+
+    ```html Angular icon="angular"
+    <!-- app.component.html -->
+    <bq-select
+      placeholder="Search options..."
+      debounce-time="300"
+      (bqInput)="handleInput($event)"
+      (bqSelect)="handleSelect()"
+    >
+      <label slot="label">Custom filtering</label>
+      <bq-option *ngIf="isLoading" disabled>
+        <bq-spinner slot="prefix" animation size="small" text-position="right"></bq-spinner>
+        Loading...
+      </bq-option>
+      <ng-container *ngIf="!isLoading">
+        <bq-option *ngIf="visibleOptions.length === 0" disabled>
+          <bq-icon slot="prefix" name="x-circle"></bq-icon>
+          No results found
+        </bq-option>
+        <bq-option *ngFor="let option of visibleOptions" [value]="option.value">
+          <bq-icon slot="prefix" [name]="option.icon"></bq-icon>
+          <span [innerHTML]="option.label"></span>
+        </bq-option>
+      </ng-container>
+    </bq-select>
+
+    // app.component.ts
+    import { Component } from '@angular/core';
+    import type { BqSelectCustomEvent } from '@beeq/core';
+
+    const ALL_OPTIONS = [
+      { label: 'Running', value: 'running', icon: 'sneaker-move' },
+      { label: 'Hiking', value: 'hiking', icon: 'boot' },
+      { label: 'Biking', value: 'biking', icon: 'person-simple-bike' },
+      { label: 'Swimming', value: 'swimming', icon: 'swimming-pool' },
+      { label: 'Pizza', value: 'pizza', icon: 'pizza' },
+      { label: 'Hamburger', value: 'hamburger', icon: 'hamburger' },
+      { label: 'Cookie', value: 'cookie', icon: 'cookie' },
+      { label: 'Ice-cream', value: 'ice-cream', icon: 'ice-cream' },
+    ];
+
+    @Component({ selector: 'app-root', templateUrl: './app.component.html' })
+    export class AppComponent {
+      visibleOptions = [...ALL_OPTIONS];
+      isLoading = false;
+
+      handleInput(event: BqSelectCustomEvent<{ value: string }>) {
+        event.preventDefault();
+        const query = event.detail.value;
+
+        if (!query) {
+          this.visibleOptions = [...ALL_OPTIONS];
+          return;
+        }
+
+        this.isLoading = true;
+        const q = query.toLowerCase();
+
+        setTimeout(() => {
+          this.isLoading = false;
+          this.visibleOptions = ALL_OPTIONS
+            .filter((o) => o.label.toLowerCase().includes(q))
+            .map((o) => ({
+              ...o,
+              label: o.label.replace(new RegExp(`(${query})`, 'gi'), '<b>$1</b>'),
+            }));
+        }, 300);
+      }
+
+      handleSelect() {
+        this.visibleOptions = [...ALL_OPTIONS];
+      }
+    }
+    ```
+
+    ```vue Vue icon="vuejs"
+    <template>
+      <BqSelect
+        placeholder="Search options..."
+        :debounceTime="300"
+        @bqInput="handleInput"
+        @bqSelect="handleSelect"
+      >
+        <label slot="label">Custom filtering</label>
+        <BqOption v-if="isLoading" disabled>
+          <BqSpinner slot="prefix" animation size="small" textPosition="right" />
+          Loading...
+        </BqOption>
+        <template v-if="!isLoading">
+          <BqOption v-if="visibleOptions.length === 0" disabled>
+            <BqIcon slot="prefix" name="x-circle" />
+            No results found
+          </BqOption>
+          <BqOption v-for="option in visibleOptions" :key="option.value" :value="option.value">
+            <BqIcon slot="prefix" :name="option.icon" />
+            <span v-html="option.label" />
+          </BqOption>
+        </template>
+      </BqSelect>
+    </template>
+
+    <script setup>
+    import { ref } from 'vue';
+    import { BqIcon, BqOption, BqSelect, BqSpinner } from '@beeq/vue';
+
+    const ALL_OPTIONS = [
+      { label: 'Running', value: 'running', icon: 'sneaker-move' },
+      { label: 'Hiking', value: 'hiking', icon: 'boot' },
+      { label: 'Biking', value: 'biking', icon: 'person-simple-bike' },
+      { label: 'Swimming', value: 'swimming', icon: 'swimming-pool' },
+      { label: 'Pizza', value: 'pizza', icon: 'pizza' },
+      { label: 'Hamburger', value: 'hamburger', icon: 'hamburger' },
+      { label: 'Cookie', value: 'cookie', icon: 'cookie' },
+      { label: 'Ice-cream', value: 'ice-cream', icon: 'ice-cream' },
+    ];
+
+    const visibleOptions = ref([...ALL_OPTIONS]);
+    const isLoading = ref(false);
+
+    function highlight(text, query) {
+      return text.replace(new RegExp(`(${query})`, 'gi'), '<b>$1</b>');
+    }
+
+    async function handleInput(event) {
+      event.preventDefault();
+      const query = event.detail.value;
+
+      if (!query) {
+        visibleOptions.value = [...ALL_OPTIONS];
+        return;
+      }
+
+      isLoading.value = true;
+
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 300));
+        const q = query.toLowerCase();
+        visibleOptions.value = ALL_OPTIONS
+          .filter((o) => o.label.toLowerCase().includes(q))
+          .map((o) => ({ ...o, label: highlight(o.label, query) }));
+      } finally {
+        isLoading.value = false;
+      }
+    }
+
+    function handleSelect() {
+      visibleOptions.value = [...ALL_OPTIONS];
+    }
+    </script>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Always populate the `label` slot so the select has an accessible name visible to all users, not just those relying on assistive technology.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Leave the `label` slot empty and rely solely on `placeholder` text — placeholder disappears once a value is selected and is not announced reliably by screen readers.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Write a clear, neutral placeholder such as "Choose a country" so users understand the field is interactive and what kind of value they are selecting.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Use the placeholder as a label substitute or write a directive like "Select" without context — this gives users no information about what the field is for.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use `validation-status` and the `helper-text` slot together when the field is required or has a validation error, so users understand exactly what is wrong and how to fix it.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Apply `validation-status="error"` without a helper text message — a red border alone does not tell users what is wrong or how to correct it.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Provide meaningful option labels that describe the value clearly — e.g., "Europe" instead of "EU", "Pro plan ($49/mo)" instead of "pro".
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Use internal codes, abbreviations, or IDs as the visible option labels — what is meaningful in your database is not necessarily meaningful to users.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+- **Built in:** the native `<input>` inside the control has `role="combobox"`, `aria-haspopup="listbox"`, `aria-expanded` (toggled when the panel opens and closes), and `aria-controls` pointing to the `bq-option-list` by `id`.
+- **Built in:** `aria-disabled="true"` is applied on the input when `disabled` is set.
+- **Built in:** the component is form-associated via `ElementInternals`, so it works with native `<form>` elements, `required` validation, and `formResetCallback`.
+- **Built in:** keyboard navigation — `Tab` moves focus to the input; `Enter` / `Space` opens the panel; `ArrowDown` / `ArrowUp` move between options; `Enter` selects the focused option; `Escape` closes the panel.
+- **Built in:** in multi-select mode, `Backspace` on an empty input removes the most recently added tag.
+- **Your responsibility:** always provide a visible label via the `label` slot. The `aria-labelledby` on the combobox role relies on the label element being present.
+- **Your responsibility:** when `validation-status` is `"error"`, populate the `helper-text` slot with a clear error description so `aria-describedby` can link the input to the explanation.
+- **Your responsibility:** if options are loaded asynchronously, provide a loading indicator in the panel slot so users know content is arriving.
+
+## API reference
+
+### Properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `autofocus` | `autofocus` | If `true`, the Select input will be focused on component render | `boolean` | — |
+| `clearButtonLabel` | `clear-button-label` | The aria label for the clear button | `string` | `'Clear value'` |
+| `debounceTime` | `debounce-time` | Milliseconds to wait before emitting `bqInput` after typing | `number` | `0` |
+| `disableClear` | `disable-clear` | If `true`, the clear button is hidden | `boolean` | `false` |
+| `disabled` | `disabled` | If `true`, the select cannot be interacted with | `boolean` | `false` |
+| `disableScrollLock` | `disable-scroll-lock` | If `true`, the page body scroll will not be locked when the panel is open | `boolean` | `false` |
+| `distance` | `distance` | Gap in pixels between the panel and the input element | `number` | `8` |
+| `form` | `form` | The `id` of the `<form>` element this select belongs to | `string` | — |
+| `keepOpenOnSelect` | `keep-open-on-select` | If `true`, the panel stays open after a selection | `boolean` | `false` |
+| `maxTagsVisible` | `max-tags-visible` | Maximum number of tags shown in multi-select mode before a `+N` tag appears | `number` | `2` |
+| `multiple` | `multiple` | If `true`, the select allows multiple selections | `boolean` | `false` |
+| `name` | `name` | The form control name, submitted as part of a name/value pair. **Required** for form submission | `string` | — |
+| `open` | `open` | If `true`, the panel is visible | `boolean` | `false` |
+| `panelHeight` | `panel-height` | Overrides the default height of the Select panel | `string` | — |
+| `placeholder` | `placeholder` | Placeholder text shown when no value is selected | `string` | — |
+| `placement` | `placement` | Position of the Select panel relative to the input | `'bottom' \| 'bottom-end' \| 'bottom-start' \| 'left' \| 'left-end' \| 'left-start' \| 'right' \| 'right-end' \| 'right-start' \| 'top' \| 'top-end' \| 'top-start'` | `'bottom'` |
+| `readonly` | `readonly` | If `true`, the option list cannot be opened or filtered | `boolean` | — |
+| `required` | `required` | If `true`, a value must be selected before the form can be submitted | `boolean` | — |
+| `sameWidth` | `same-width` | If `true`, the panel matches the width of the input element | `boolean` | `true` |
+| `skidding` | `skidding` | Offset in pixels along the input element axis | `number` | `0` |
+| `strategy` | `strategy` | CSS position strategy used to place the panel | `'fixed' \| 'absolute'` | `'fixed'` |
+| `validationStatus` | `validation-status` | Visual validation state of the select | `'error' \| 'none' \| 'success' \| 'warning'` | `'none'` |
+| `value` | `value` | The currently selected value; can be a string or array of strings in multi-select mode | `string \| string[]` | — |
+
+### Methods
+
+| Method | Parameters | Returns | Description |
+|---|---|---|---|
+| `clear()` | — | `Promise<void>` | Clears the selected value and resets the input |
+| `reset(value)` | `value: string \| string[]` | `Promise<void>` | Resets the select to the supplied `value` |
+
+### Events
+
+| Event | Description |
+|---|---|
+| `bqBlur` | Emitted when the Select input loses focus |
+| `bqClear` | Emitted when the selected value has been cleared |
+| `bqFocus` | Emitted when the Select input receives focus |
+| `bqInput` | Emitted when the input value changes while typing; detail is `{ value: string \| number \| string[] }` |
+| `bqSelect` | Emitted when the selected value changes; detail is `{ value: string \| number \| string[]; item: HTMLBqOptionElement }` |
+
+### Slots
+
+| Slot | Description |
+|---|---|
+| _(default)_ | The `bq-option` elements that make up the option list |
+| `label` | The label displayed above the input |
+| `prefix` | Content shown before the value text inside the control |
+| `tags` | Replaces the auto-generated tag list in multi-select mode |
+| `clear-icon` | Replaces the default clear icon inside the clear button |
+| `suffix` | Content shown after the value text; defaults to a chevron caret |
+| `helper-text` | Text shown below the input for guidance or validation messages |
+
+### Shadow parts
+
+| Part | Description |
+|---|---|
+| `base` | The component's root wrapper `<div>` |
+| `button` | The native `<button>` inside the clear button |
+| `clear-btn` | The `bq-button` used as the clear button |
+| `control` | The input control wrapper `<div>` |
+| `input-outline` | The inner `<div>` that holds the tags and the native input |
+| `helper-text` | The helper text slot container |
+| `input` | The native `<input>` element |
+| `label` | The label slot container |
+| `panel` | The floating panel container |
+| `prefix` | The prefix slot container |
+| `suffix` | The suffix slot container |
+| `tags` | The tag container `<span>` for multi-selection |
+| `tag` | Each individual tag wrapper |
+| `tag__base` | The base wrapper of each `bq-tag` |
+| `tag__prefix` | The prefix slot container of each `bq-tag` |
+| `tag__text` | The text slot container of each `bq-tag` |
+| `tag__btn-close` | The close button of each `bq-tag` |
+| `option-list` | The `bq-option-list` container |
+
+### CSS custom properties
+
+<Expandable title="CSS variables" defaultOpen={false}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-select--background-color` | Select background color | `theme(backgroundColor.ui.primary)` |
+  | `--bq-select--border-color` | Select border color | `theme(stroke.tertiary)` |
+  | `--bq-select--border-color-focus` | Select border color on focus | `theme(stroke.brand)` |
+  | `--bq-select--border-color-disabled` | Select border color when disabled | — |
+  | `--bq-select--border-radius` | Select border radius | `theme(borderRadius.s)` |
+  | `--bq-select--border-width` | Select border width | `theme(borderWidth.s)` |
+  | `--bq-select--border-style` | Select border style | `solid` |
+  | `--bq-select--gap` | Gap between select content and prefix/suffix | `theme(spacing.xs)` |
+  | `--bq-select--helper-margin-top` | Helper text top margin | `theme(spacing.xs)` |
+  | `--bq-select--helper-text-color` | Helper text color | `theme(textColor.primary)` |
+  | `--bq-select--helper-text-size` | Helper text font size | `theme(fontSize.s)` |
+  | `--bq-select--icon-size` | Size of icons in prefix, suffix, and clear button | `24px` |
+  | `--bq-select--label-margin-bottom` | Label bottom margin | `theme(spacing.xs)` |
+  | `--bq-select--label-text-color` | Label text color | `theme(textColor.primary)` |
+  | `--bq-select--label-text-size` | Label font size | `theme(fontSize.s)` |
+  | `--bq-select--padding-start` | Inline-start padding of the control | `calc(var(--bq-spacing-m) - var(--bq-select--border-width))` |
+  | `--bq-select--padding-end` | Inline-end padding of the control | `calc(var(--bq-spacing-m) - var(--bq-select--border-width))` |
+  | `--bq-select--paddingY` | Block (top and bottom) padding of the control | `calc(var(--bq-spacing-s) - var(--bq-select--border-width))` |
+  | `--bq-select--text-color` | Input text color | `theme(textColor.primary)` |
+  | `--bq-select--text-size` | Input text font size | `theme(fontSize.m)` |
+  | `--bq-select--text-placeholder-color` | Placeholder text color | `theme(textColor.secondary)` |
+</Expandable>
+
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-select--default">
+    Explore Select variants and states in Storybook
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/select">
+    View the component source on GitHub
+  </Card>
+</CardGroup>

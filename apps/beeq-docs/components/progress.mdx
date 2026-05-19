@@ -1,0 +1,624 @@
+---
+title: Progress
+description: "Progress bars visually represent the completion status of a task or process, giving users real-time feedback on how much has been done and what remains."
+---
+
+import { CardTile } from "/snippets/CardTile.jsx";
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Progress component overview">
+  <img className="block dark:hidden" src="/components/images/progress/progress-overview-light.svg" alt="BEEQ Progress component overview" />
+  <img className="hidden dark:block" src="/components/images/progress/progress-overview-dark.svg" alt="BEEQ Progress component overview" />
+</Frame>
+
+Progress bars communicate the status of ongoing tasks such as downloads, uploads, installations, or any operation with measurable completion. They reduce uncertainty by showing how much work is done and how much remains.
+
+<Note>
+  Use a determinate progress bar when completion can be calculated against a known total. Use `indeterminate` only when the duration or completion cannot be determined.
+</Note>
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use progress bars when
+    </span>
+    - The task has a measurable duration and a defined completion point
+    - Real-time feedback helps users understand how long they need to wait
+    - You need to communicate progress, completion, or error state visually
+    - A spinner would feel too vague because the work can be quantified
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use progress bars when
+    </span>
+    - The task completes instantly and no waiting feedback is needed
+    - Progress cannot be tracked reliably and a determinate bar would be misleading
+    - A spinner or loading skeleton is a better fit for the context
+    - The bar would compete with the main content instead of supporting it
+  </Card>
+</CardGroup>
+
+## Patterns
+
+<CardGroup cols={2}>
+  <Card title="With percentage">
+    Show the progress value when users need a clear percentage in addition to the visual bar.
+  </Card>
+  <Card title="With tooltip">
+    Use a tooltip when you want the progress value attached to the indicator instead of displayed beside the bar.
+  </Card>
+  <Card title="Determinate">
+    Use a determinate progress bar when the task can be measured against a known completion point.
+  </Card>
+  <Card title="Indeterminate">
+    Use an indeterminate progress bar when work is in progress but the exact completion point cannot be determined.
+  </Card>
+  <Card title="Top page progress bar">
+    A progress bar can also appear at the top of the page to communicate loading or update status without interrupting the main content.
+  </Card>
+</CardGroup>
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Progress component anatomy">
+  <img className="block dark:hidden" src="/components/images/progress/progress-anatomy-light.svg" alt="BEEQ Progress component anatomy" />
+  <img className="hidden dark:block" src="/components/images/progress/progress-anatomy-dark.svg" alt="BEEQ Progress component anatomy" />
+</Frame>
+
+The progress component is made up of the track, the filled indicator, and the progress value when it is displayed.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Bar indicator | The filled portion showing the current progress value |
+| **2** | Track | The background rail representing the full available range |
+| **3** | Value | The percentage detail shown when the progress value is exposed to the user |
+
+## Design guidelines
+
+Choose the progress treatment that matches how precise the feedback needs to be.
+
+<CardGroup cols={2}>
+  <CardTile
+    title="Show a percentage when precision matters"
+    imageLightSrc="/components/images/progress/progress-percentage-guidance-light.svg"
+    imageDarkSrc="/components/images/progress/progress-percentage-guidance-dark.svg"
+  >
+    Add `label` or `enable-tooltip` when users need a clear numeric indication of how much work remains.
+  </CardTile>
+  <CardTile
+    title="Pair status changes with context"
+    imageLightSrc="/components/images/progress/progress-status-guidance-light.svg"
+    imageDarkSrc="/components/images/progress/progress-status-guidance-dark.svg"
+  >
+    Color changes such as `type="error"` should always be supported by nearby text that explains what happened.
+  </CardTile>
+</CardGroup>
+
+<Steps>
+  <Step title="Choose the feedback type">
+    Start with a determinate bar whenever progress can be measured. Switch to `indeterminate` only when the task is active but cannot be quantified.
+  </Step>
+  <Step title="Choose the emphasis">
+    Use `medium` thickness by default. Use `large` only when the progress bar needs stronger visual emphasis in a prominent area.
+  </Step>
+  <Step title="Choose the detail level">
+    Add `label` for persistent percentage text or `enable-tooltip` when you want the value attached to the indicator instead.
+  </Step>
+</Steps>
+
+<Note>
+  When `indeterminate` is enabled, `label` and `enable-tooltip` do not render a percentage, because the component cannot represent a specific completion value.
+</Note>
+
+## Usage
+
+### Default
+
+Use the default progress bar for general task tracking when the process has a measurable completion point.
+
+<CodeLivePreview code={`
+  <style>
+    :host {
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: var(--bq-spacing-m) !important;
+    }
+
+    bq-progress {
+      width: 250px;
+    }
+  </style>
+
+  <bq-progress value="25"></bq-progress>
+  <bq-progress value="50"></bq-progress>
+  <bq-progress value="75"></bq-progress>
+  <bq-progress value="100"></bq-progress>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-progress value="25"></bq-progress>
+    <bq-progress value="50"></bq-progress>
+    <bq-progress value="75"></bq-progress>
+    <bq-progress value="100"></bq-progress>
+    ```
+
+    ```jsx React icon="react"
+    import { BqProgress } from "@beeq/react";
+
+    <>
+      <BqProgress value={25} />
+      <BqProgress value={50} />
+      <BqProgress value={75} />
+      <BqProgress value={100} />
+    </>
+    ```
+
+    ```html Angular icon="angular"
+    <!-- Standalone: import { BqProgress } from "@beeq/angular/standalone" -->
+    <!-- Modules: components are available after importing BeeQModule -->
+
+    <bq-progress value="25"></bq-progress>
+    <bq-progress value="50"></bq-progress>
+    <bq-progress value="75"></bq-progress>
+    <bq-progress value="100"></bq-progress>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqProgress } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqProgress :value="25" />
+      <BqProgress :value="50" />
+      <BqProgress :value="75" />
+      <BqProgress :value="100" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Options
+
+### Large thickness
+
+Use `thickness="large"` to increase the visual weight of the progress bar in more prominent layouts.
+
+<CodeLivePreview code={`
+  <style>
+    :host {
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: var(--bq-spacing-m) !important;
+    }
+
+    bq-progress {
+      width: 250px;
+    }
+  </style>
+
+  <bq-progress value="30"></bq-progress>
+  <bq-progress thickness="large" value="30"></bq-progress>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-progress value="30"></bq-progress>
+    <bq-progress thickness="large" value="30"></bq-progress>
+    ```
+
+    ```jsx React icon="react"
+    import { BqProgress } from "@beeq/react";
+
+    <>
+      <BqProgress value={30} />
+      <BqProgress thickness="large" value={30} />
+    </>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-progress value="30"></bq-progress>
+    <bq-progress thickness="large" value="30"></bq-progress>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqProgress } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqProgress :value="30" />
+      <BqProgress thickness="large" :value="30" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Error
+
+Use `type="error"` to communicate that a process failed or needs attention.
+
+<CodeLivePreview code={`
+  <style>
+    bq-progress {
+      width: 250px;
+    }
+  </style>
+
+  <bq-progress type="error" value="30"></bq-progress>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-progress type="error" value="30"></bq-progress>
+    ```
+
+    ```jsx React icon="react"
+    import { BqProgress } from "@beeq/react";
+
+    <BqProgress type="error" value={30} />
+    ```
+
+    ```html Angular icon="angular"
+    <bq-progress type="error" value="30"></bq-progress>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqProgress } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqProgress type="error" :value="30" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  Always pair a color change with a contextual message. Color alone is not enough to communicate an error state clearly to all users.
+</Tip>
+
+### Border shape
+
+Use `border-shape="square"` when you want a straighter edge treatment. The default is `rounded`.
+
+<CodeLivePreview code={`
+  <style>
+    :host {
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: var(--bq-spacing-m) !important;
+    }
+
+    bq-progress {
+      width: 250px;
+    }
+  </style>
+
+  <bq-progress value="80"></bq-progress>
+  <bq-progress border-shape="square" value="80"></bq-progress>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-progress value="80"></bq-progress>
+    <bq-progress border-shape="square" value="80"></bq-progress>
+    ```
+
+    ```jsx React icon="react"
+    import { BqProgress } from "@beeq/react";
+
+    <>
+      <BqProgress value={80} />
+      <BqProgress borderShape="square" value={80} />
+    </>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-progress value="80"></bq-progress>
+    <bq-progress border-shape="square" value="80"></bq-progress>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqProgress } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqProgress :value="80" />
+      <BqProgress borderShape="square" :value="80" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### With label
+
+Add `label` to display a persistent numeric percentage beside the bar.
+
+<CodeLivePreview code={`
+  <style>
+    :host {
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: var(--bq-spacing-m) !important;
+    }
+
+    bq-progress {
+      width: 250px;
+    }
+  </style>
+
+  <bq-progress label value="25"></bq-progress>
+  <bq-progress label value="50"></bq-progress>
+  <bq-progress label value="75"></bq-progress>
+  <bq-progress label value="100"></bq-progress>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-progress label value="25"></bq-progress>
+    <bq-progress label value="50"></bq-progress>
+    <bq-progress label value="75"></bq-progress>
+    <bq-progress label value="100"></bq-progress>
+    ```
+
+    ```jsx React icon="react"
+    import { BqProgress } from "@beeq/react";
+
+    <>
+      <BqProgress label value={25} />
+      <BqProgress label value={50} />
+      <BqProgress label value={75} />
+      <BqProgress label value={100} />
+    </>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-progress label value="25"></bq-progress>
+    <bq-progress label value="50"></bq-progress>
+    <bq-progress label value="75"></bq-progress>
+    <bq-progress label value="100"></bq-progress>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqProgress } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqProgress label :value="25" />
+      <BqProgress label :value="50" />
+      <BqProgress label :value="75" />
+      <BqProgress label :value="100" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### With tooltip
+
+Add `enable-tooltip` to show the current percentage at the indicator. In the current component implementation, the tooltip stays visible while the option is enabled.
+
+<CodeLivePreview code={`
+  <style>
+    :host {
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: var(--bq-spacing-m) !important;
+      padding-block: var(--bq-spacing-xl) !important;
+    }
+
+    bq-progress {
+      width: 250px;
+    }
+  </style>
+
+  <bq-progress enable-tooltip value="25"></bq-progress>
+  <bq-progress enable-tooltip value="50"></bq-progress>
+  <bq-progress enable-tooltip value="75"></bq-progress>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-progress enable-tooltip value="25"></bq-progress>
+    <bq-progress enable-tooltip value="50"></bq-progress>
+    <bq-progress enable-tooltip value="75"></bq-progress>
+    ```
+
+    ```jsx React icon="react"
+    import { BqProgress } from "@beeq/react";
+
+    <>
+      <BqProgress enableTooltip value={25} />
+      <BqProgress enableTooltip value={50} />
+      <BqProgress enableTooltip value={75} />
+    </>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-progress enable-tooltip value="25"></bq-progress>
+    <bq-progress enable-tooltip value="50"></bq-progress>
+    <bq-progress enable-tooltip value="75"></bq-progress>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqProgress } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqProgress enableTooltip :value="25" />
+      <BqProgress enableTooltip :value="50" />
+      <BqProgress enableTooltip :value="75" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  Choose `enable-tooltip` when you want the percentage anchored to the indicator instead of rendered as a separate inline label.
+</Tip>
+
+### Indeterminate
+
+Use `indeterminate` when the task is active but the exact completion point cannot be measured.
+
+<CodeLivePreview code={`
+  <style>
+    bq-progress {
+      width: 250px;
+    }
+  </style>
+
+  <bq-progress indeterminate></bq-progress>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-progress indeterminate></bq-progress>
+    ```
+
+    ```jsx React icon="react"
+    import { BqProgress } from "@beeq/react";
+
+    <BqProgress indeterminate />
+    ```
+
+    ```html Angular icon="angular"
+    <bq-progress indeterminate></bq-progress>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqProgress } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqProgress indeterminate />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Place descriptive text close to the progress bar so people immediately understand what is being tracked.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not embed text inside the bar itself. It becomes unreadable at low progress values and is harder to interpret accessibly.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use `label` or `enable-tooltip` when users need a precise sense of how much work remains.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not use a determinate progress bar when progress cannot actually be measured. That creates false certainty.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Pair `type="error"` with a visible message so users who cannot perceive color still understand the failure.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not rely on color alone to communicate error state. Not all users perceive color distinctions.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use `indeterminate` only when the duration genuinely cannot be measured. Switch to a determinate bar as soon as progress can be tracked.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not use an indeterminate bar as a substitute when a determinate bar is technically possible. It creates unnecessary uncertainty.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+- **Built-in progress semantics** — the component renders a native `<progress>` element inside its shadow DOM, which browsers expose as `role="progressbar"` with `aria-valuenow`, `aria-valuemin="0"`, and `aria-valuemax="100"` automatically. Assistive technology reads the current value without additional markup.
+- **Indeterminate state** — when `indeterminate` is `true`, the native element has no `value` attribute, and assistive technology announces it as an indeterminate progress bar.
+- **Provide task context**: add a visible label or nearby text that explains what operation the progress bar is tracking.
+- **Do not rely on color alone**: pair `type="error"` with a visible message so the failure state is understandable without color perception.
+- **Use percentage only when it helps**: `label` or `enable-tooltip` improves clarity when precise status matters, but it is not required for every short or self-explanatory task.
+- **Be careful with motion**: if indeterminate animation is distracting in your application, respect `prefers-reduced-motion` at the app level.
+
+## API reference
+
+### Properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `borderShape` | `border-shape` | Sets the border style of the progress bar | `"rounded"` \| `"square"` | `"rounded"` |
+| `enableTooltip` | `enable-tooltip` | If `true`, a tooltip showing the current value is rendered at the indicator | `boolean` | `false` |
+| `indeterminate` | `indeterminate` | If `true`, the indeterminate animation is shown and `value` is ignored | `boolean` | `false` |
+| `label` | `label` | If `true`, a percentage label is rendered beside the bar | `boolean` | `false` |
+| `thickness` | `thickness` | Controls the height of the bar | `"medium"` \| `"large"` | `"medium"` |
+| `type` | `type` | Sets the visual type of the progress bar | `"default"` \| `"error"` | `"default"` |
+| `value` | `value` | The current progress value, clamped between `0` and `100` | `number` | `0` |
+
+### Shadow parts
+
+| Part | Description |
+|---|---|
+| `base` | The base container for the internal `bq-tooltip` component |
+| `indeterminate` | The `<div>` container that holds the animated indeterminate indicator |
+| `label` | The `<div>` container that holds the label value in percentage |
+| `panel` | The container holding the tooltip content |
+| `progress` | The `<div>` container that holds the native `<progress>` element |
+| `progress-bar` | The native `<progress>` element |
+| `trigger` | The element that triggers the internal tooltip placement |
+| `wrapper` | The component wrapper container inside the shadow DOM |
+
+### CSS custom properties
+
+<Expandable title="CSS variables" defaultOpen={true}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-progress-bar--height` | The progress bar height | `theme(height.1)` |
+  | `--bq-progress-bar--indeterminateWidth` | The width of the moving indicator when indeterminate | `25%` |
+  | `--bq-progress-bar--indicatorColor` | The filled indicator color | `theme(backgroundColor.ui.brand)` |
+  | `--bq-progress-bar--trackColor` | The track color | `theme(backgroundColor.ui.secondary)` |
+</Expandable>
+
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-progress--default">
+    Explore progress bar examples and states in Storybook.
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/progress">
+    Browse the component implementation, styles, and tests on GitHub.
+  </Card>
+</CardGroup>

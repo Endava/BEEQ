@@ -150,10 +150,3 @@ body,
     }
   }
 }
-
-/* --------------- Small fixes to BEEQ components in the docs --------------- */
-
-bq-dropdown::part(panel) {
-  /* Ensure dropdown panels appear above other content in the docs */
-  --bq-panel-z-index: 100;
-}

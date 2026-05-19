@@ -1,0 +1,558 @@
+---
+title: Empty State
+description: Empty states explain why content is missing and help people understand what to do next.
+---
+
+import { CardTile } from "/snippets/CardTile.jsx";
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Empty-state component overview">
+  <img className="block dark:hidden" src="/components/images/empty-state/empty-state-overview-light.svg" alt="BEEQ Empty-state component overview" />
+  <img className="hidden dark:block" src="/components/images/empty-state/empty-state-overview-dark.svg" alt="BEEQ Empty-state component overview" />
+</Frame>
+
+Empty states appear when a section, page, or workflow has nothing to show yet. A good empty state explains the situation, reduces uncertainty, and helps people recover by pointing them toward the next meaningful action.
+
+<Note>
+  Use empty states when the absence of content is meaningful and persistent enough to deserve guidance. If content is only loading or momentarily unavailable, use a loading or error pattern instead.
+</Note>
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use empty states when
+    </span>
+    - A page or section has no data yet and people need orientation
+    - A first-time experience needs guidance before content exists
+    - The interface should explain what is missing and what action can create content
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use empty states when
+    </span>
+    - Content is still loading and a spinner or skeleton is more accurate
+    - The issue is a temporary system problem that should be communicated as an error state
+    - The page already contains enough surrounding guidance to explain what is happening
+  </Card>
+</CardGroup>
+
+## Patterns
+
+<CardGroup cols={2}>
+  <CardTile title="With icon">
+    Use an icon when a compact, symbolic visual is enough to communicate the empty state quickly and keep the message lightweight.
+  </CardTile>
+  <CardTile title="Illustration">
+    Use an illustration when a more expressive or context-rich visual helps people understand the situation and feel guided toward the next step.
+  </CardTile>
+</CardGroup>
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Empty-state component anatomy">
+  <img className="block dark:hidden" src="/components/images/empty-state/empty-state-anatomy-light.svg" alt="BEEQ Empty-state component anatomy" />
+  <img className="hidden dark:block" src="/components/images/empty-state/empty-state-anatomy-dark.svg" alt="BEEQ Empty-state component anatomy" />
+</Frame>
+
+An empty state is intentionally simple, but it can combine several layers of guidance depending on how much orientation or recovery support people need.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Illustration or icon | A default icon or custom `thumbnail` slot that visually communicates the empty state |
+| **2** | Title | The primary statement that explains what is missing or unavailable |
+| **3** | Description | Optional supporting text placed in the `body` slot to add context or reassurance |
+| **4** | Link | Optional inline guidance inside the body content that points to help, learning, or an alternate path |
+| **5** | CTA buttons | Optional primary and secondary actions placed in the `footer` slot |
+
+## Design guidelines
+
+Use empty states to orient people quickly, explain why nothing is shown, and make the next step obvious.
+
+<CardGroup cols={2}>
+  <CardTile title="Choose the right visual weight">
+    Use an icon for simpler product moments and a richer illustration only when it adds meaningful context to the empty state.
+  </CardTile>
+  <CardTile title="Keep recovery obvious">
+    Pair the message with one clear next action when people need help creating, finding, or restoring content.
+  </CardTile>
+</CardGroup>
+
+<Steps>
+  <Step title="Start with the reason">
+    Explain what is missing or unavailable before telling people what they can do next.
+  </Step>
+  <Step title="Add only necessary detail">
+    Use a short description when the title alone is not enough to reduce uncertainty or guide the next action.
+  </Step>
+  <Step title="Match the scale to the layout">
+    Use `small`, `medium`, or `large` based on the available space and the prominence the empty moment needs.
+  </Step>
+</Steps>
+
+<Note>
+  Center the empty state within the available area when it represents the main content of the page or section, so the message is easy to notice without competing with unrelated UI.
+</Note>
+
+## Usage
+
+### Default
+
+Use the default variant when you want the cleanest possible presentation and the title already communicates enough context.
+
+<CodeLivePreview code={`
+  <bq-empty-state>
+    Title
+  </bq-empty-state>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-empty-state>Title</bq-empty-state>
+    ```
+
+    ```jsx React icon="react"
+    import { BqEmptyState } from "@beeq/react";
+
+    <BqEmptyState>Title</BqEmptyState>
+    ```
+
+    ```html Angular icon="angular"
+    <!-- Standalone: import { BqEmptyState } from "@beeq/angular/standalone" -->
+    <!-- Modules: components are available after importing BeeQModule -->
+
+    <bq-empty-state>Title</bq-empty-state>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqEmptyState } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqEmptyState>Title</BqEmptyState>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  Keep the title direct and outcome-oriented. State what is missing, not just that the page is empty.
+</Tip>
+
+## Options
+
+### With body
+
+Use body content when the empty state needs a short explanation or a little more guidance about what happens next.
+
+<CodeLivePreview code={`
+  <style>
+    :host {
+      gap: var(--bq-spacing-xxl4) !important;
+    }
+  </style>
+
+  <bq-empty-state>
+    Title
+    <span slot="body">Description</span>
+  </bq-empty-state>
+  <bq-empty-state>
+    Title
+    <span slot="body">
+      Description
+      <a class="bq-link" href="https://example.com">Link</a>
+    </span>
+  </bq-empty-state>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-empty-state>
+      Title
+      <span slot="body">Description</span>
+    </bq-empty-state>
+    <bq-empty-state>
+      Title
+      <span slot="body">
+        Description
+        <a class="bq-link" href="https://example.com">Link</a>
+      </span>
+    </bq-empty-state>
+    ```
+
+    ```jsx React icon="react"
+    import { BqEmptyState } from "@beeq/react";
+
+    <BqEmptyState>
+      Title
+      <span slot="body">Description</span>
+    </BqEmptyState>
+    <BqEmptyState>
+      Title
+      <span slot="body">
+        Description
+        <a className="bq-link" href="https://example.com">Link</a>
+      </span>
+    </BqEmptyState>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-empty-state>
+      Title
+      <span slot="body">Description</span>
+    </bq-empty-state>
+    <bq-empty-state>
+      Title
+      <span slot="body">
+        Description
+        <a class="bq-link" href="https://example.com">Link</a>
+      </span>
+    </bq-empty-state>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqEmptyState } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqEmptyState>
+        Title
+        <span slot="body">Description</span>
+      </BqEmptyState>
+      <BqEmptyState>
+        Title
+        <span slot="body">
+          Description
+          <a class="bq-link" href="https://example.com">Link</a>
+        </span>
+      </BqEmptyState>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### With call to action
+
+Use the footer when the empty state should help people recover immediately. Prefer one primary action. Add a secondary action only when it offers a clearly different path.
+
+<CodeLivePreview code={`
+  <style>
+    :host {
+      gap: var(--bq-spacing-xxl4) !important;
+    }
+  </style>
+
+  <bq-empty-state size="medium">
+    Title
+    <span slot="body">
+      Description
+      <a class="bq-link" href="https://example.com">Link</a>
+    </span>
+    <div slot="footer">
+      <bq-button appearance="primary" size="small">Button</bq-button>
+    </div>
+  </bq-empty-state>
+  <bq-empty-state size="medium">
+    Title
+    <span slot="body">
+      Description
+      <a class="bq-link" href="https://example.com">Link</a>
+    </span>
+    <div slot="footer">
+      <bq-button size="small" variant="ghost">Button</bq-button>
+    </div>
+  </bq-empty-state>
+  <bq-empty-state size="medium">
+    Title
+    <span slot="body">
+      Description
+      <a class="bq-link" href="https://example.com">Link</a>
+    </span>
+    <div slot="footer">
+      <bq-button size="small" variant="ghost">Button</bq-button>
+      <bq-button appearance="primary" size="small">Button</bq-button>
+    </div>
+  </bq-empty-state>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-empty-state size="medium">
+      Title
+      <span slot="body">
+        Description
+        <a class="bq-link" href="https://example.com">Link</a>
+      </span>
+      <div slot="footer">
+        <bq-button appearance="primary" size="small">Button</bq-button>
+      </div>
+    </bq-empty-state>
+    <bq-empty-state size="medium">
+      Title
+      <span slot="body">
+        Description
+        <a class="bq-link" href="https://example.com">Link</a>
+      </span>
+      <div slot="footer">
+        <bq-button size="small" variant="ghost">Button</bq-button>
+      </div>
+    </bq-empty-state>
+    <bq-empty-state size="medium">
+      Title
+      <span slot="body">
+        Description
+        <a class="bq-link" href="https://example.com">Link</a>
+      </span>
+      <div slot="footer">
+        <bq-button size="small" variant="ghost">Button</bq-button>
+        <bq-button appearance="primary" size="small">Button</bq-button>
+      </div>
+    </bq-empty-state>
+    ```
+
+    ```jsx React icon="react"
+    import { BqButton, BqEmptyState } from "@beeq/react";
+
+    <>
+
+      <BqEmptyState size="medium">
+        Title
+        <span slot="body">
+          Description
+          <a className="bq-link" href="https://example.com">Link</a>
+        </span>
+        <div slot="footer">
+          <BqButton appearance="primary" size="small">Button</BqButton>
+        </div>
+      </BqEmptyState>
+      <BqEmptyState size="medium">
+        Title
+        <span slot="body">
+          Description
+          <a className="bq-link" href="https://example.com">Link</a>
+        </span>
+        <div slot="footer">
+          <BqButton size="small" variant="ghost">Button</BqButton>
+        </div>
+      </BqEmptyState>
+      <BqEmptyState size="medium">
+        Title
+        <span slot="body">
+          Description
+          <a className="bq-link" href="https://example.com">Link</a>
+        </span>
+        <div slot="footer">
+          <BqButton size="small" variant="ghost">Button</BqButton>
+          <BqButton appearance="primary" size="small">Button</BqButton>
+        </div>
+      </BqEmptyState>
+    </>
+    ```
+
+    ```html Angular icon="angular"
+    <bq-empty-state size="medium">
+      Title
+      <span slot="body">
+        Description
+        <a class="bq-link" href="https://example.com">Link</a>
+      </span>
+      <div slot="footer">
+        <bq-button appearance="primary" size="small">Button</bq-button>
+      </div>
+    </bq-empty-state>
+    <bq-empty-state size="medium">
+      Title
+      <span slot="body">
+        Description
+        <a class="bq-link" href="https://example.com">Link</a>
+      </span>
+      <div slot="footer">
+        <bq-button size="small" variant="ghost">Button</bq-button>
+      </div>
+    </bq-empty-state>
+    <bq-empty-state size="medium">
+      Title
+      <span slot="body">
+        Description
+        <a class="bq-link" href="https://example.com">Link</a>
+      </span>
+      <div slot="footer">
+        <bq-button size="small" variant="ghost">Button</bq-button>
+        <bq-button appearance="primary" size="small">Button</bq-button>
+      </div>
+    </bq-empty-state>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqButton, BqEmptyState } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqEmptyState size="medium">
+        Title
+        <span slot="body">
+          Description
+          <a class="bq-link" href="https://example.com">Link</a>
+        </span>
+        <div slot="footer">
+          <BqButton appearance="primary" size="small">Button</BqButton>
+        </div>
+      </BqEmptyState>
+      <BqEmptyState size="medium">
+        Title
+        <span slot="body">
+          Description
+          <a class="bq-link" href="https://example.com">Link</a>
+        </span>
+        <div slot="footer">
+          <BqButton size="small" variant="ghost">Button</BqButton>
+        </div>
+      </BqEmptyState>
+      <BqEmptyState size="medium">
+        Title
+        <span slot="body">
+          Description
+          <a class="bq-link" href="https://example.com">Link</a>
+        </span>
+        <div slot="footer">
+          <BqButton size="small" variant="ghost">Button</BqButton>
+          <BqButton appearance="primary" size="small">Button</BqButton>
+        </div>
+      </BqEmptyState>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Warning>
+  Do not overload an empty state with many equal-priority actions. If people need several next steps, pick the primary recovery path and move secondary options elsewhere.
+</Warning>
+
+### Sizes
+
+Choose size based on the available space and the prominence of the moment. `medium` is the default and works for most dashboard or section-level empty states.
+
+| Size | When to use |
+|---|---|
+| **Small** | Dense layouts, side panels, compact cards, or mobile contexts where space is limited |
+| **Medium** | Most standard application pages and sections |
+| **Large** | Full-page empty states or moments where the message should feel more prominent |
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Combine a clear title with a short description when people need extra context. A title alone is often not enough to guide recovery.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not leave people with a vague message that explains nothing beyond the fact that the page is empty.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use one clear primary [Button](/components/button) or link to show the most useful next step.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not add too many competing calls to action. Too many choices weaken the guidance the empty state is supposed to provide.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use a representative icon or illustration and place the empty state where it is easy to notice, usually centered within the available space.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not use decorative art that suggests the wrong situation or distracts from the actual message.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Match the empty state size to the available layout so the message feels intentional instead of oversized or easy to miss.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not use a full-page large empty state inside a compact panel or card where it overwhelms the surrounding layout.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+- **Keep visuals decorative unless they carry meaning** — if the thumbnail is only illustrative, hide it from assistive technology with `aria-hidden="true"` or an empty `alt` value.
+- **Make the title and body self-sufficient** — people should understand the state without needing to infer meaning from the artwork.
+- **Use semantic, keyboard-accessible actions** — any recovery path in the footer should be a real button or link that can receive focus and has a clear label.
+- **Preserve reading order** — title, description, and actions should follow a logical visual and DOM sequence.
+- **Do not rely on color or imagery alone** — the message itself should explain what is happening and what can be done next.
+
+## API reference
+
+### Properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `size` | `size` | The size of the empty state component | `"large" \| "medium" \| "small"` | `"medium"` |
+
+### Slots
+
+| Slot | Description |
+|---|---|
+| *(default)* | The empty state title |
+| `thumbnail` | Replaces the default icon with custom visual content |
+| `body` | Supporting descriptive content displayed below the title |
+| `footer` | Actions displayed below the body |
+
+### Shadow parts
+
+| Part | Description |
+|---|---|
+| `wrapper` | The outer container inside the shadow DOM |
+| `thumbnail` | The container that wraps the icon or slotted thumbnail |
+| `icon` | The default `bq-icon` rendered when no thumbnail is provided |
+| `title` | The container that wraps the title content |
+| `body` | The container that wraps the body slot |
+| `footer` | The container that wraps the footer slot |
+
+### CSS custom properties
+
+This component does not expose any CSS custom properties.
+
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-empty-state--default">
+    Explore Empty State examples and sizes in Storybook
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/empty-state">
+    View the component source on GitHub
+  </Card>
+</CardGroup>
