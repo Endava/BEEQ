@@ -1,0 +1,702 @@
+---
+title: Colors
+description: BEEQ's color system is built in two tiers — a raw primitive palette and semantic tokens that name colors by their intended role, not their appearance.
+---
+
+<Frame className="px-4 py-4" caption="BEEQ colors overview — a snapshot of some tokens from the color palette">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/colors/colors-overview-light.svg"
+    alt="BEEQ color system overview — light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/colors/colors-overview-dark.svg"
+    alt="BEEQ color system overview — dark mode"
+  />
+</Frame>
+
+Color in BEEQ serves communication, not decoration. The system gives every color a clear role — brand identity, feedback, hierarchy, or data — so interfaces stay consistent across products and themes.
+
+<Note>
+  Always reach for a **semantic token** (`--bq-text--primary`, `--bq-background--brand`, etc.) rather than a raw primitive value. Semantic tokens adapt automatically to light and dark mode. Primitives do not.
+</Note>
+
+## Color architecture
+
+BEEQ organizes color in two tiers that work together:
+
+<CardGroup cols={2}>
+  <Card title="Primitive palette" icon="palette">
+    The raw color values. Named by hue and numeric scale (`--bq-iris-600`, `--bq-grey-200`), these are the actual hex values. Use them **only** when defining a custom theme or creating new semantic tokens — not in component code.
+  </Card>
+  <Card title="Semantic tokens" icon="tag">
+    The application layer. Named by role (`--bq-background--primary`, `--bq-text--brand`), these tokens point to primitives and flip automatically between light and dark values. **These are what you use in day-to-day design and development.**
+  </Card>
+</CardGroup>
+
+---
+
+## Color palette
+
+### Brand
+
+The brand color anchors primary actions, interactive states, and brand surfaces. Three stops cover the full light-to-dark range.
+
+<Color variant="compact">
+  <Color.Item name="bq-brand-light" value="#e9f0ff" />
+  <Color.Item name="bq-brand" value="#4f46e5" />
+  <Color.Item name="bq-brand-dark" value="#181545" />
+</Color>
+
+### Accent
+
+The accent color is reserved for white-label customization. It is not applied in the default BEEQ theme.
+
+<Color variant="compact">
+  <Color.Item name="bq-accent-light" value="#efebf8" />
+  <Color.Item name="bq-accent" value="#6538be" />
+  <Color.Item name="bq-accent-dark" value="#140b26" />
+</Color>
+
+### Neutral
+
+The neutral scale underpins surfaces, text, borders, and icons. `bq-neutral-*` tokens are direct aliases of the grey primitive scale.
+
+<Color variant="compact">
+  <Color.Item name="bq-neutral-50" value="#f6f6f8" />
+  <Color.Item name="bq-neutral-100" value="#f1f2f4" />
+  <Color.Item name="bq-neutral-200" value="#e7e8eb" />
+  <Color.Item name="bq-neutral-300" value="#caccd2" />
+  <Color.Item name="bq-neutral-400" value="#a6aab3" />
+  <Color.Item name="bq-neutral-500" value="#898e99" />
+  <Color.Item name="bq-neutral-600" value="#646a77" />
+  <Color.Item name="bq-neutral-700" value="#3f4350" />
+  <Color.Item name="bq-neutral-800" value="#2a2c35" />
+  <Color.Item name="bq-neutral-900" value="#1c1d23" />
+  <Color.Item name="bq-neutral-950" value="#15161a" />
+  <Color.Item name="bq-neutral-1000" value="#0d0e11" />
+</Color>
+
+### System colors
+
+System colors communicate success, caution, error, and information. Each role has three stops — light (tinted background), main, and dark — for composing surfaces, text, and icons. Never use them for decoration or branding.
+
+<Color variant="compact">
+  <Color.Item name="bq-success-light" value="#e5f7f5" />
+  <Color.Item name="bq-success" value="#00b49d" />
+  <Color.Item name="bq-success-dark" value="#00241f" />
+  <Color.Item name="bq-warning-light" value="#fbf4ec" />
+  <Color.Item name="bq-warning" value="#d99048" />
+  <Color.Item name="bq-warning-dark" value="#2b1d0e" />
+  <Color.Item name="bq-danger-light" value="#fce7ea" />
+  <Color.Item name="bq-danger" value="#e1172f" />
+  <Color.Item name="bq-danger-dark" value="#2d0509" />
+  <Color.Item name="bq-info-light" value="#e9f0ff" />
+  <Color.Item name="bq-info" value="#4f46e5" />
+  <Color.Item name="bq-info-dark" value="#181545" />
+</Color>
+
+### Focus
+
+The focus color is applied to keyboard focus rings across all interactive components.
+
+<Color variant="compact">
+  <Color.Item name="bq-focus" value="#4f46e5" />
+</Color>
+
+### Data colors
+
+A curated set of 12 perceptually distinct hues for charts, graphs, and data-driven visualizations. Use them in sequence — `bq-data-01` first — to maintain legibility as more series are added.
+
+<Color variant="compact">
+  <Color.Item name="bq-data-01" value="#4f46e5" />
+  <Color.Item name="bq-data-02" value="#6538be" />
+  <Color.Item name="bq-data-03" value="#de1395" />
+  <Color.Item name="bq-data-04" value="#1eb3db" />
+  <Color.Item name="bq-data-05" value="#00b49d" />
+  <Color.Item name="bq-data-06" value="#dc6726" />
+  <Color.Item name="bq-data-07" value="#f2d412" />
+  <Color.Item name="bq-data-08" value="#e1172f" />
+  <Color.Item name="bq-data-09" value="#156eeb" />
+  <Color.Item name="bq-data-10" value="#646a77" />
+  <Color.Item name="bq-data-11" value="#060708" />
+  <Color.Item name="bq-data-12" value="#ffffff" />
+</Color>
+
+<Tip>
+  The full primitive palette — all hue scales grouped by color — is available in the [Primitive color scales](#primitive-color-scales) reference section below.
+</Tip>
+
+---
+
+## Semantic tokens
+
+Semantic tokens are the building blocks of every BEEQ component. They abstract the "what" (raw hex) from the "why" (intended role), so the same design token automatically resolves to the correct light or dark value without manual overrides.
+
+Each group below shows both the light and dark values side by side. Click any swatch to copy the CSS custom property name.
+
+### Background
+
+Use background tokens for page surfaces, cards, modals, drawers, and overlays.
+
+<Color variant="compact">
+  <Color.Item name="--bq-background--primary" value={{ light: "var(--bq-white)", dark: "var(--bq-neutral-1000)" }} />
+  <Color.Item name="--bq-background--secondary" value={{ light: "var(--bq-neutral-100)", dark: "var(--bq-neutral-950)" }} />
+  <Color.Item name="--bq-background--tertiary" value={{ light: "var(--bq-neutral-200)", dark: "var(--bq-neutral-800)" }} />
+  <Color.Item name="--bq-background--alt" value={{ light: "var(--bq-neutral-300)", dark: "var(--bq-neutral-700)" }} />
+  <Color.Item name="--bq-background--inverse" value={{ light: "var(--bq-neutral-900)", dark: "var(--bq-neutral-600)" }} />
+  <Color.Item name="--bq-background--brand" value="var(--bq-brand)" />
+  <Color.Item name="--bq-background--overlay" value="var(--bq-neutral-900)" />
+</Color>
+
+| Token | Light primitive | Dark primitive | When to use |
+|---|---|---|---|
+| `--bq-background--primary` | `var(--bq-white)` | `var(--bq-neutral-1000)` | Main page canvas |
+| `--bq-background--secondary` | `var(--bq-neutral-100)` | `var(--bq-neutral-950)` | Panels, sidebars, elevated cards |
+| `--bq-background--tertiary` | `var(--bq-neutral-200)` | `var(--bq-neutral-800)` | Nested sections within cards |
+| `--bq-background--alt` | `var(--bq-neutral-300)` | `var(--bq-neutral-700)` | Hover states on secondary surfaces |
+| `--bq-background--inverse` | `var(--bq-neutral-900)` | `var(--bq-neutral-600)` | Dark banners on light backgrounds |
+| `--bq-background--brand` | `var(--bq-brand)` | `var(--bq-brand)` | Brand callouts, primary action areas |
+| `--bq-background--overlay` | `var(--bq-neutral-900) / 60%` | `var(--bq-neutral-900) / 60%` | Modal scrims, drawer overlays |
+
+### UI elements
+
+Use UI tokens for interactive component fills — buttons, toggles, chips, selects, and other small shapes.
+
+<Color variant="compact">
+  <Color.Item name="--bq-ui--primary" value={{ light: "var(--bq-white)", dark: "var(--bq-neutral-900)" }} />
+  <Color.Item name="--bq-ui--secondary" value={{ light: "var(--bq-neutral-100)", dark: "var(--bq-neutral-950)" }} />
+  <Color.Item name="--bq-ui--tertiary" value={{ light: "var(--bq-neutral-500)", dark: "var(--bq-neutral-700)" }} />
+  <Color.Item name="--bq-ui--inverse" value={{ light: "var(--bq-neutral-900)", dark: "var(--bq-neutral-100)" }} />
+  <Color.Item name="--bq-ui--brand" value="var(--bq-brand)" />
+  <Color.Item name="--bq-ui--brand-alt" value={{ light: "var(--bq-brand-light)", dark: "var(--bq-brand-dark)" }} />
+  <Color.Item name="--bq-ui--success" value="var(--bq-success)" />
+  <Color.Item name="--bq-ui--success-alt" value={{ light: "var(--bq-success-light)", dark: "var(--bq-success-dark)" }} />
+  <Color.Item name="--bq-ui--warning" value="var(--bq-warning)" />
+  <Color.Item name="--bq-ui--warning-alt" value={{ light: "var(--bq-warning-light)", dark: "var(--bq-warning-dark)" }} />
+  <Color.Item name="--bq-ui--danger" value="var(--bq-danger)" />
+  <Color.Item name="--bq-ui--danger-alt" value={{ light: "var(--bq-danger-light)", dark: "var(--bq-danger-dark)" }} />
+</Color>
+
+| Token | Light primitive | Dark primitive | When to use |
+|---|---|---|---|
+| `--bq-ui--primary` | `var(--bq-white)` | `var(--bq-neutral-900)` | Default component fill — buttons, cards |
+| `--bq-ui--secondary` | `var(--bq-neutral-100)` | `var(--bq-neutral-950)` | Secondary fill — input backgrounds, toggles |
+| `--bq-ui--tertiary` | `var(--bq-neutral-500)` | `var(--bq-neutral-700)` | Disabled states, placeholder fills |
+| `--bq-ui--inverse` | `var(--bq-neutral-900)` | `var(--bq-neutral-100)` | Inverted fill — dark-on-light component fills |
+| `--bq-ui--brand` | `var(--bq-brand)` | `var(--bq-brand)` | Primary brand buttons, key call-to-action fills |
+| `--bq-ui--brand-alt` | `var(--bq-brand-light)` | `var(--bq-brand-dark)` | Low-emphasis brand fills, badge backgrounds |
+| `--bq-ui--success` | `var(--bq-success)` | `var(--bq-success)` | Success state fills |
+| `--bq-ui--success-alt` | `var(--bq-success-light)` | `var(--bq-success-dark)` | Success tinted backgrounds, alert fills |
+| `--bq-ui--warning` | `var(--bq-warning)` | `var(--bq-warning)` | Warning state fills |
+| `--bq-ui--warning-alt` | `var(--bq-warning-light)` | `var(--bq-warning-dark)` | Warning tinted backgrounds, caution alert fills |
+| `--bq-ui--danger` | `var(--bq-danger)` | `var(--bq-danger)` | Destructive button fills, error states |
+| `--bq-ui--danger-alt` | `var(--bq-danger-light)` | `var(--bq-danger-dark)` | Danger tinted backgrounds, error alert fills |
+
+The `*-alt` variants are tinted backgrounds — use them for low-emphasis states such as badge fills or alert backgrounds.
+
+### Stroke
+
+Use stroke tokens for borders, dividers, and outlines.
+
+<Color variant="compact">
+  <Color.Item name="--bq-stroke--primary" value={{ light: "var(--bq-neutral-200)", dark: "var(--bq-neutral-900)" }} />
+  <Color.Item name="--bq-stroke--secondary" value={{ light: "var(--bq-neutral-600)", dark: "var(--bq-neutral-700)" }} />
+  <Color.Item name="--bq-stroke--tertiary" value={{ light: "var(--bq-neutral-900)", dark: "var(--bq-neutral-400)" }} />
+  <Color.Item name="--bq-stroke--inverse" value={{ light: "var(--bq-white)", dark: "var(--bq-neutral-950)" }} />
+  <Color.Item name="--bq-stroke--brand" value="var(--bq-brand)" />
+  <Color.Item name="--bq-stroke--success" value="var(--bq-success)" />
+  <Color.Item name="--bq-stroke--warning" value="var(--bq-warning)" />
+  <Color.Item name="--bq-stroke--danger" value="var(--bq-danger)" />
+</Color>
+
+| Token | Light primitive | Dark primitive | When to use |
+|---|---|---|---|
+| `--bq-stroke--primary` | `var(--bq-neutral-200)` | `var(--bq-neutral-900)` | Default borders, dividers, separators |
+| `--bq-stroke--secondary` | `var(--bq-neutral-600)` | `var(--bq-neutral-700)` | Emphasis borders, selected outlines |
+| `--bq-stroke--tertiary` | `var(--bq-neutral-900)` | `var(--bq-neutral-400)` | High-contrast borders |
+| `--bq-stroke--inverse` | `var(--bq-white)` | `var(--bq-neutral-950)` | Borders on inverted or dark surfaces |
+| `--bq-stroke--brand` | `var(--bq-brand)` | `var(--bq-brand)` | Focus rings, brand-highlighted outlines |
+| `--bq-stroke--success` | `var(--bq-success)` | `var(--bq-success)` | Success state borders, valid field outlines |
+| `--bq-stroke--warning` | `var(--bq-warning)` | `var(--bq-warning)` | Warning state borders |
+| `--bq-stroke--danger` | `var(--bq-danger)` | `var(--bq-danger)` | Error state borders, invalid field outlines |
+
+### Text
+
+Use text tokens for all typographic content — headings, body copy, labels, captions. Never apply a raw hex value to text.
+
+<Color variant="compact">
+  <Color.Item name="--bq-text--primary" value={{ light: "var(--bq-neutral-800)", dark: "var(--bq-neutral-100)" }} />
+  <Color.Item name="--bq-text--secondary" value={{ light: "var(--bq-neutral-600)", dark: "var(--bq-neutral-400)" }} />
+  <Color.Item name="--bq-text--inverse" value={{ light: "var(--bq-neutral-50)", dark: "var(--bq-neutral-800)" }} />
+  <Color.Item name="--bq-text--brand" value="var(--bq-brand)" />
+  <Color.Item name="--bq-text--success" value="var(--bq-success)" />
+  <Color.Item name="--bq-text--warning" value="var(--bq-warning)" />
+  <Color.Item name="--bq-text--danger" value="var(--bq-danger)" />
+  <Color.Item name="--bq-text--info" value="var(--bq-brand)" />
+</Color>
+
+| Token | Light primitive | Dark primitive | When to use |
+|---|---|---|---|
+| `--bq-text--primary` | `var(--bq-neutral-800)` | `var(--bq-neutral-100)` | Main headings, body copy, labels |
+| `--bq-text--secondary` | `var(--bq-neutral-600)` | `var(--bq-neutral-400)` | Supporting text, captions, placeholders |
+| `--bq-text--inverse` | `var(--bq-neutral-50)` | `var(--bq-neutral-800)` | Text on dark/inverted backgrounds |
+| `--bq-text--brand` | `var(--bq-brand)` | `var(--bq-brand)` | Branded links, highlighted labels |
+| `--bq-text--success` | `var(--bq-success)` | `var(--bq-success)` | Confirmation messages, positive feedback |
+| `--bq-text--warning` | `var(--bq-warning)` | `var(--bq-warning)` | Caution text, in-progress states |
+| `--bq-text--danger` | `var(--bq-danger)` | `var(--bq-danger)` | Error messages, destructive confirmations |
+| `--bq-text--info` | `var(--bq-brand)` | `var(--bq-brand)` | Informational callouts |
+
+### Icons
+
+Use icon tokens for SVG fills. Pair each icon token with the text or background token of the same semantic context — e.g. use `--bq-icon--danger` alongside `--bq-text--danger`.
+
+<Color variant="compact">
+  <Color.Item name="--bq-icon--primary" value={{ light: "var(--bq-neutral-800)", dark: "var(--bq-neutral-100)" }} />
+  <Color.Item name="--bq-icon--secondary" value={{ light: "var(--bq-neutral-600)", dark: "var(--bq-neutral-400)" }} />
+  <Color.Item name="--bq-icon--inverse" value={{ light: "var(--bq-neutral-50)", dark: "var(--bq-neutral-800)" }} />
+  <Color.Item name="--bq-icon--brand" value="var(--bq-brand)" />
+  <Color.Item name="--bq-icon--success" value="var(--bq-success)" />
+  <Color.Item name="--bq-icon--warning" value="var(--bq-warning)" />
+  <Color.Item name="--bq-icon--danger" value="var(--bq-danger)" />
+  <Color.Item name="--bq-icon--info" value="var(--bq-brand)" />
+</Color>
+
+| Token | Light primitive | Dark primitive | When to use |
+|---|---|---|---|
+| `--bq-icon--primary` | `var(--bq-neutral-800)` | `var(--bq-neutral-100)` | Default icon fill |
+| `--bq-icon--secondary` | `var(--bq-neutral-600)` | `var(--bq-neutral-400)` | Subdued icons, decorative marks |
+| `--bq-icon--inverse` | `var(--bq-neutral-50)` | `var(--bq-neutral-800)` | Icons on dark/inverted surfaces |
+| `--bq-icon--brand` | `var(--bq-brand)` | `var(--bq-brand)` | Brand-highlighted icons |
+| `--bq-icon--success` | `var(--bq-success)` | `var(--bq-success)` | Success state icons |
+| `--bq-icon--warning` | `var(--bq-warning)` | `var(--bq-warning)` | Warning state icons |
+| `--bq-icon--danger` | `var(--bq-danger)` | `var(--bq-danger)` | Danger/error state icons |
+| `--bq-icon--info` | `var(--bq-brand)` | `var(--bq-brand)` | Informational icons |
+
+---
+
+## Using colors in code
+
+### CSS custom properties
+
+Every token is a native CSS custom property. Apply semantic tokens directly to any element:
+
+```css
+.card {
+  background-color: var(--bq-background--primary);
+  border: 1px solid var(--bq-stroke--primary);
+  color: var(--bq-text--primary);
+}
+
+.badge--success {
+  background-color: var(--bq-ui--success-alt);
+  color: var(--bq-text--success);
+}
+
+.icon--danger {
+  fill: var(--bq-icon--danger);
+}
+```
+
+Primitive values are equally accessible when you need a specific scale step — for example, building a gradient or a custom illustration:
+
+```css
+.hero-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--bq-iris-100),
+    var(--bq-iris-600)
+  );
+}
+```
+
+### Tailwind CSS
+
+Add `@beeq/tailwindcss` to your project to use BEEQ's semantic tokens as Tailwind utility classes.
+
+**Tailwind v3** — add it as a preset in `tailwind.config.ts`:
+
+```ts
+import beeqPreset from '@beeq/tailwindcss';
+import type { Config } from 'tailwindcss';
+
+export default {
+  content: ['./src/**/*.{html,ts,tsx,vue}'],
+  presets: [beeqPreset],
+  theme: {
+    extend: {
+      // Add your own utilities on top of BEEQ's token set
+    },
+  },
+} satisfies Config;
+```
+
+**Tailwind v4** — load it with `@plugin` in your CSS entry file:
+
+```css
+@import "tailwindcss";
+@plugin "@beeq/tailwindcss";
+```
+
+Once set up, all semantic tokens are available as utility classes:
+
+| Category | Tailwind prefix | Example class |
+|---|---|---|
+| Background | `bg-` | `bg-primary`, `bg-brand`, `bg-inverse` |
+| Text | `text-` | `text-primary`, `text-secondary`, `text-danger` |
+| Border | `border-` | `border-primary`, `border-brand`, `border-danger` |
+| Icon fill | `fill-` | `fill-primary`, `fill-brand`, `fill-success` |
+| UI fill | `bg-ui-*` | `bg-ui-brand`, `bg-ui-success`, `bg-ui-danger-alt` |
+| Data fill | `bg-data-*` | `bg-data-01`, `bg-data-05` |
+
+Primitive hues are also available as standard Tailwind color utilities:
+
+```html
+<!-- Semantic tokens (recommended) -->
+<div class="bg-primary text-primary border border-primary">…</div>
+<p class="text-secondary">Supporting text</p>
+<span class="text-danger">Error message</span>
+
+<!-- Brand badge using semantic tokens -->
+<span class="bg-ui-brand text-alt rounded-full px-s py-xs2 text-s font-semibold">
+  New
+</span>
+
+<!-- Success state -->
+<div class="bg-ui-success-alt border border-success text-success rounded-s p-m">
+  Changes saved successfully.
+</div>
+
+<!-- Primitive hue (use sparingly — only for custom illustrations or theme overrides) -->
+<span class="bg-iris-100 text-iris-800">Custom highlight</span>
+```
+
+To apply a custom brand, override the CSS custom properties in your stylesheet — the utility classes resolve to whatever the CSS variables point to. See [Overriding tokens — CSS](#overriding-tokens-—-css) in the Theming section below.
+
+---
+
+## Color guidelines
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mb-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+
+    - Use semantic tokens for all component and layout styling
+    - Apply `--bq-background--brand` to primary action surfaces
+    - Use system tokens (`--bq-text--danger`, `--bq-ui--success`) for feedback states
+    - Use data colors (`data-01` → `data-12`) for all chart series
+    - Test every custom color combination for sufficient contrast
+  </Card>
+  <Card>
+    <span className="flex items-center mb-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+
+    - Hard-code hex values in component styles — always use a token
+    - Use the brand color as a large background surface; it creates visual overload
+    - Apply system colors (success, warning, danger) for decoration or branding
+    - Mix more than 4–5 hues in a single view
+    - Rely on color alone to communicate state or meaning
+  </Card>
+</CardGroup>
+
+---
+
+## Accessibility
+
+Color alone must never be the only way information is communicated. Always pair color with text labels, icons, or patterns.
+
+BEEQ semantic tokens are designed to meet **WCAG 2.1 Level AA** contrast requirements when used as documented:
+
+| Token pair | Use context | Contrast ratio |
+|---|---|---|
+| `--bq-text--primary` on `--bq-background--primary` | Body text, headings | ≥ 7:1 (AAA) |
+| `--bq-text--secondary` on `--bq-background--primary` | Supporting text, labels | ≥ 4.5:1 (AA) |
+| `--bq-text--inverse` on `--bq-background--inverse` | Inverted surfaces | ≥ 7:1 (AAA) |
+| `--bq-text--brand` on `--bq-background--primary` | Large text, UI labels only | ≥ 3:1 |
+| `--bq-text--danger` on `--bq-background--primary` | Error text | ≥ 4.5:1 (AA) |
+
+<Warning>
+  `--bq-text--brand` on white does not meet AA for small body text. Use it only for large text (18px+ or 14px+ bold) or non-text UI elements.
+</Warning>
+
+<Tip>
+  Verify custom color pairings with the [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/) or the [APCA Contrast Calculator](https://www.myndex.com/APCA/) before shipping. The `mint a11y` CLI command can also flag contrast issues in your documentation automatically.
+</Tip>
+
+When customizing a theme, ensure the full semantic token set is re-validated against WCAG 2.1 AA. Changing a single primitive alias can affect dozens of tokens simultaneously.
+
+---
+
+## Theming and customization
+
+<Note>
+  **Designers:** need to build a custom palette for a client project before applying it in Figma? See [Building your color palette](/getting-started/for-designers#building-your-color-palette).
+</Note>
+
+All BEEQ components read colors from CSS custom properties. Overriding those properties is the **one universal mechanism** for applying a custom brand — no library modifications needed, and it works regardless of your styling tool.
+
+If your project also uses Tailwind, adding `@beeq/tailwindcss` makes your own utility classes (`bg-brand`, `text-primary`, etc.) resolve to the same tokens. The two approaches are independent and complementary — the Tailwind integration does not replace CSS overrides, it builds on top of them.
+
+### Overriding tokens — CSS
+
+Set your brand values in your own stylesheet. Every BEEQ component picks them up automatically:
+
+```css
+/* your-theme.css */
+:root {
+  --bq-brand: #0ea5e9;
+  --bq-brand-light: #e0f2fe;
+  --bq-brand-dark: #0c4a6e;
+
+  /* Adjust system colors if needed */
+  --bq-success: #16a34a;
+  --bq-success-light: #dcfce7;
+  --bq-success-dark: #14532d;
+}
+```
+
+Scope overrides to a specific selector for themed sections or multi-brand layouts:
+
+```css
+[data-theme="acme"] {
+  --bq-brand: #f97316;
+  --bq-brand-light: #fff7ed;
+  --bq-brand-dark: #431407;
+}
+```
+
+This works identically whether you use plain CSS, Sass, PostCSS, or Tailwind's `@layer`.
+
+---
+
+## Primitive color scales
+
+The complete raw hue scales — grouped by color, not by meaning. Each step is available as `var(--bq-{hue}-{scale})`. Use these when tracing which raw value backs a semantic token or when defining a custom theme.
+
+<Color variant="table">
+  <Color.Row title="Blue">
+    <Color.Item name="blue-100" value="#e7f0fd" />
+    <Color.Item name="blue-200" value="#d0e2fb" />
+    <Color.Item name="blue-300" value="#a1c5f7" />
+    <Color.Item name="blue-400" value="#73a8f3" />
+    <Color.Item name="blue-500" value="#448bef" />
+    <Color.Item name="blue-600" value="#156eeb" />
+    <Color.Item name="blue-700" value="#1158bc" />
+    <Color.Item name="blue-800" value="#0d428d" />
+    <Color.Item name="blue-900" value="#082c5e" />
+    <Color.Item name="blue-1000" value="#04162f" />
+  </Color.Row>
+  <Color.Row title="Corai">
+    <Color.Item name="corai-100" value="#fff2f2" />
+    <Color.Item name="corai-200" value="#ffe6e6" />
+    <Color.Item name="corai-300" value="#ffccce" />
+    <Color.Item name="corai-400" value="#ffb3b5" />
+    <Color.Item name="corai-500" value="#ff999d" />
+    <Color.Item name="corai-600" value="#ff8084" />
+    <Color.Item name="corai-700" value="#cc666a" />
+    <Color.Item name="corai-800" value="#994d4f" />
+    <Color.Item name="corai-900" value="#663335" />
+    <Color.Item name="corai-1000" value="#331a1a" />
+  </Color.Row>
+  <Color.Row title="Cyan">
+    <Color.Item name="cyan-100" value="#e8f7fb" />
+    <Color.Item name="cyan-200" value="#d2f0f8" />
+    <Color.Item name="cyan-300" value="#a5e1f1" />
+    <Color.Item name="cyan-400" value="#78d1e9" />
+    <Color.Item name="cyan-500" value="#4bc2e2" />
+    <Color.Item name="cyan-600" value="#1eb3db" />
+    <Color.Item name="cyan-700" value="#188faf" />
+    <Color.Item name="cyan-800" value="#126b83" />
+    <Color.Item name="cyan-900" value="#0c4858" />
+    <Color.Item name="cyan-1000" value="#06242c" />
+  </Color.Row>
+  <Color.Row title="Gold">
+    <Color.Item name="gold-100" value="#fbf4ec" />
+    <Color.Item name="gold-200" value="#f7e9da" />
+    <Color.Item name="gold-300" value="#f0d3b6" />
+    <Color.Item name="gold-400" value="#e8bc91" />
+    <Color.Item name="gold-500" value="#e1a66d" />
+    <Color.Item name="gold-600" value="#d99048" />
+    <Color.Item name="gold-700" value="#ae733a" />
+    <Color.Item name="gold-800" value="#82562b" />
+    <Color.Item name="gold-900" value="#573a1d" />
+    <Color.Item name="gold-1000" value="#2b1d0e" />
+  </Color.Row>
+  <Color.Row title="Green">
+    <Color.Item name="green-100" value="#e8f8ef" />
+    <Color.Item name="green-200" value="#d2f1e0" />
+    <Color.Item name="green-300" value="#a5e3c1" />
+    <Color.Item name="green-400" value="#78d5a1" />
+    <Color.Item name="green-500" value="#4bc782" />
+    <Color.Item name="green-600" value="#1eb963" />
+    <Color.Item name="green-700" value="#18944f" />
+    <Color.Item name="green-800" value="#126f3b" />
+    <Color.Item name="green-900" value="#0c4a28" />
+    <Color.Item name="green-1000" value="#062514" />
+  </Color.Row>
+  <Color.Row title="Grey">
+    <Color.Item name="grey-50" value="#f6f6f8" />
+    <Color.Item name="grey-100" value="#f1f2f4" />
+    <Color.Item name="grey-200" value="#e7e8eb" />
+    <Color.Item name="grey-300" value="#caccd2" />
+    <Color.Item name="grey-400" value="#a6aab3" />
+    <Color.Item name="grey-500" value="#898e99" />
+    <Color.Item name="grey-600" value="#646a77" />
+    <Color.Item name="grey-700" value="#3f4350" />
+    <Color.Item name="grey-800" value="#2a2c35" />
+    <Color.Item name="grey-900" value="#1c1d23" />
+    <Color.Item name="grey-950" value="#15161a" />
+    <Color.Item name="grey-1000" value="#0d0e11" />
+  </Color.Row>
+  <Color.Row title="Indigo">
+    <Color.Item name="indigo-100" value="#edecfc" />
+    <Color.Item name="indigo-200" value="#dcdafa" />
+    <Color.Item name="indigo-300" value="#b9b5f5" />
+    <Color.Item name="indigo-400" value="#9590ef" />
+    <Color.Item name="indigo-500" value="#726bea" />
+    <Color.Item name="indigo-600" value="#4f46e5" />
+    <Color.Item name="indigo-700" value="#3f38b7" />
+    <Color.Item name="indigo-800" value="#2f2a89" />
+    <Color.Item name="indigo-900" value="#201c5c" />
+    <Color.Item name="indigo-1000" value="#100e2e" />
+  </Color.Row>
+  <Color.Row title="Iris">
+    <Color.Item name="iris-100" value="#e9f0ff" />
+    <Color.Item name="iris-200" value="#d6e0ff" />
+    <Color.Item name="iris-300" value="#b2c0fe" />
+    <Color.Item name="iris-400" value="#8691f8" />
+    <Color.Item name="iris-500" value="#6061ee" />
+    <Color.Item name="iris-600" value="#4f46e5" />
+    <Color.Item name="iris-700" value="#413abd" />
+    <Color.Item name="iris-800" value="#332e95" />
+    <Color.Item name="iris-900" value="#26216d" />
+    <Color.Item name="iris-1000" value="#181545" />
+  </Color.Row>
+  <Color.Row title="Lime">
+    <Color.Item name="lime-100" value="#f5fae8" />
+    <Color.Item name="lime-200" value="#ecf6d2" />
+    <Color.Item name="lime-300" value="#d9eda5" />
+    <Color.Item name="lime-400" value="#c5e379" />
+    <Color.Item name="lime-500" value="#b2da4c" />
+    <Color.Item name="lime-600" value="#9fd11f" />
+    <Color.Item name="lime-700" value="#7fa719" />
+    <Color.Item name="lime-800" value="#5f7d13" />
+    <Color.Item name="lime-900" value="#40540c" />
+    <Color.Item name="lime-1000" value="#202a06" />
+  </Color.Row>
+  <Color.Row title="Magenta">
+    <Color.Item name="magenta-100" value="#fce7f4" />
+    <Color.Item name="magenta-200" value="#f9cfea" />
+    <Color.Item name="magenta-300" value="#f39fd6" />
+    <Color.Item name="magenta-400" value="#ee6fbf" />
+    <Color.Item name="magenta-500" value="#e83fab" />
+    <Color.Item name="magenta-600" value="#de1395" />
+    <Color.Item name="magenta-700" value="#b20f77" />
+    <Color.Item name="magenta-800" value="#850c59" />
+    <Color.Item name="magenta-900" value="#58083c" />
+    <Color.Item name="magenta-1000" value="#2c041e" />
+  </Color.Row>
+  <Color.Row title="Orange">
+    <Color.Item name="orange-100" value="#fbf0e9" />
+    <Color.Item name="orange-200" value="#f8e1d4" />
+    <Color.Item name="orange-300" value="#f1c2a8" />
+    <Color.Item name="orange-400" value="#eaa47d" />
+    <Color.Item name="orange-500" value="#e38551" />
+    <Color.Item name="orange-600" value="#dc6726" />
+    <Color.Item name="orange-700" value="#b0521e" />
+    <Color.Item name="orange-800" value="#843e17" />
+    <Color.Item name="orange-900" value="#58290f" />
+    <Color.Item name="orange-1000" value="#2c1508" />
+  </Color.Row>
+  <Color.Row title="Purple">
+    <Color.Item name="purple-100" value="#efebf8" />
+    <Color.Item name="purple-200" value="#e0d7f2" />
+    <Color.Item name="purple-300" value="#c1afe5" />
+    <Color.Item name="purple-400" value="#a388d8" />
+    <Color.Item name="purple-500" value="#8460cb" />
+    <Color.Item name="purple-600" value="#6538be" />
+    <Color.Item name="purple-700" value="#512d98" />
+    <Color.Item name="purple-800" value="#3d2272" />
+    <Color.Item name="purple-900" value="#28164c" />
+    <Color.Item name="purple-1000" value="#140b26" />
+  </Color.Row>
+  <Color.Row title="Red">
+    <Color.Item name="red-100" value="#fce7ea" />
+    <Color.Item name="red-200" value="#f9d1d5" />
+    <Color.Item name="red-300" value="#f3a2ac" />
+    <Color.Item name="red-400" value="#ed7482" />
+    <Color.Item name="red-500" value="#e74559" />
+    <Color.Item name="red-600" value="#e1172f" />
+    <Color.Item name="red-700" value="#b41226" />
+    <Color.Item name="red-800" value="#870e1c" />
+    <Color.Item name="red-900" value="#5a0913" />
+    <Color.Item name="red-1000" value="#2d0509" />
+  </Color.Row>
+  <Color.Row title="Sky">
+    <Color.Item name="sky-100" value="#eff4fb" />
+    <Color.Item name="sky-200" value="#dfeaf8" />
+    <Color.Item name="sky-300" value="#bfd5f1" />
+    <Color.Item name="sky-400" value="#9ec1e9" />
+    <Color.Item name="sky-500" value="#7eace2" />
+    <Color.Item name="sky-600" value="#5e97db" />
+    <Color.Item name="sky-700" value="#4b79af" />
+    <Color.Item name="sky-800" value="#385b83" />
+    <Color.Item name="sky-900" value="#263c58" />
+    <Color.Item name="sky-1000" value="#131e2c" />
+  </Color.Row>
+  <Color.Row title="Teal">
+    <Color.Item name="teal-100" value="#e5f7f5" />
+    <Color.Item name="teal-200" value="#ccf0eb" />
+    <Color.Item name="teal-300" value="#99e1d8" />
+    <Color.Item name="teal-400" value="#66d2c4" />
+    <Color.Item name="teal-500" value="#33c3b1" />
+    <Color.Item name="teal-600" value="#00b49d" />
+    <Color.Item name="teal-700" value="#00907e" />
+    <Color.Item name="teal-800" value="#006c5e" />
+    <Color.Item name="teal-900" value="#00483f" />
+    <Color.Item name="teal-1000" value="#00241f" />
+  </Color.Row>
+  <Color.Row title="Volcano">
+    <Color.Item name="volcano-100" value="#feede7" />
+    <Color.Item name="volcano-200" value="#fddbd1" />
+    <Color.Item name="volcano-300" value="#fbb8a3" />
+    <Color.Item name="volcano-400" value="#fa9474" />
+    <Color.Item name="volcano-500" value="#f87146" />
+    <Color.Item name="volcano-600" value="#f64d18" />
+    <Color.Item name="volcano-700" value="#c53e13" />
+    <Color.Item name="volcano-800" value="#942e0e" />
+    <Color.Item name="volcano-900" value="#621f0a" />
+    <Color.Item name="volcano-1000" value="#310f05" />
+  </Color.Row>
+  <Color.Row title="Yellow">
+    <Color.Item name="yellow-100" value="#fefbe7" />
+    <Color.Item name="yellow-200" value="#fcf6d0" />
+    <Color.Item name="yellow-300" value="#faeea0" />
+    <Color.Item name="yellow-400" value="#f7e571" />
+    <Color.Item name="yellow-500" value="#f5dd41" />
+    <Color.Item name="yellow-600" value="#f2d412" />
+    <Color.Item name="yellow-700" value="#c2aa0e" />
+    <Color.Item name="yellow-800" value="#917f0b" />
+    <Color.Item name="yellow-900" value="#615507" />
+    <Color.Item name="yellow-1000" value="#302a04" />
+  </Color.Row>
+</Color>
+
+---
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card title="Custom theming" icon="paintbrush" href="/theming/custom-theme">
+    Full walkthrough for applying a custom brand, including light/dark mode token overrides.
+  </Card>
+  <Card title="GitHub — Theme source" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq-tailwindcss/src/theme">
+    Browse the full primitive palette, semantic tokens, and theme definitions.
+  </Card>
+</CardGroup>
