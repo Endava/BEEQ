@@ -1,0 +1,1014 @@
+---
+title: Textarea
+description: The Textarea component is a multi-line text input control used in forms to collect longer user input such as comments, messages, or descriptions.
+---
+
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Textarea component overview">
+  <img className="block dark:hidden" src="/components/images/textarea/textarea-overview-light.svg" alt="BEEQ Textarea component overview" />
+  <img className="hidden dark:block" src="/components/images/textarea/textarea-overview-dark.svg" alt="BEEQ Textarea component overview" />
+</Frame>
+
+A textarea is a multi-line text input control. Use it when users need to provide longer pieces of text such as comments, messages, or descriptions where a single-line input would be too limiting.
+
+<Note>
+  Use an [Input](/components/input) when users only need to enter a short, single-line value. Use a Textarea when the expected content spans multiple lines.
+</Note>
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use a textarea when
+    </span>
+    - Users need to enter multiple lines of text such as a comment, review, or description
+    - The expected input length varies and may be long
+    - Free-form text entry is required without a predefined set of values
+    - Context makes the textarea purpose clear through a visible label
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use a textarea when
+    </span>
+    - The expected input is a short single-line value — use an Input instead
+    - Users must choose from a fixed set of options — use a Select or Radio
+    - The field value is meant to be read-only in the final UI — use plain text
+    - Rich formatting or markdown editing is required — consider a dedicated editor
+  </Card>
+</CardGroup>
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Textarea component anatomy">
+  <img className="block dark:hidden" src="/components/images/textarea/textarea-anatomy-light.svg" alt="BEEQ Textarea component anatomy" />
+  <img className="hidden dark:block" src="/components/images/textarea/textarea-anatomy-dark.svg" alt="BEEQ Textarea component anatomy" />
+</Frame>
+
+The textarea is composed of a label area, an input container, and an optional helper area. Each part can carry additional icons and text to guide users through data entry.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Optional label | Secondary descriptive text displayed alongside the main label |
+| **2** | Text | The value or placeholder text inside the control |
+| **3** | Label icon | Optional icon displayed next to the label |
+| **4** | Label | The primary field label rendered via the `label` slot |
+| **5** | Leading icon | Optional icon displayed at the start of the input container |
+| **6** | Container | The outer border and background wrapper of the textarea |
+| **7** | Validation icon | Icon shown when `validation-status` is set (error, warning, success) |
+| **8** | Helper text | Optional guidance or error text rendered via the `helper-text` slot |
+| **9** | Character counter | Shown automatically when `maxlength` is set |
+| **10** | Trailing icon | Optional icon displayed at the end of the input container |
+
+## Design guidelines
+
+### States
+
+A textarea supports five interactive states: **default**, **focused**, **disabled**, **read-only**, and **validation** (error, warning, success). The focused state shows a colored ring. The disabled state dims the control and blocks all interaction. The read-only state displays the value but prevents editing.
+
+<Note>
+  Always pair a textarea with a visible `label` slot. An unlabeled textarea has no accessible name and is inaccessible by default.
+</Note>
+
+### Resize behavior
+
+By default, users can drag the bottom-right corner to resize the textarea vertically. Set `disable-resize` to prevent resizing — useful when you want to maintain a consistent layout height. Alternatively, set `auto-grow` to let the textarea expand automatically as the user types, eliminating the need for manual resizing.
+
+### Character counter
+
+When `maxlength` is set to a value greater than zero, a character counter appears in the helper area below the textarea. It shows the current character count against the limit and helps users stay within bounds. The counter truncates input automatically when the limit is reached.
+
+### Validation
+
+Set `validation-status` to `error`, `warning`, or `success` to communicate the state of the field. Pair each state with a descriptive `helper-text` message so users know what went wrong and how to fix it. Use `error` for critical blocking issues, `warning` for non-blocking concerns, and `success` to confirm valid input.
+
+## Usage
+
+### Default
+
+Use the default textarea when you need a standard multi-line text input. Provide a `label` slot for the field name and a `helper-text` slot for any additional guidance.
+
+<CodeLivePreview code={`
+  <style>
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+
+  <bq-textarea placeholder="Placeholder...">
+    <label slot="label">Label</label>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+  </bq-textarea>
+`}>
+  <CodeGroup>
+    ```html HTML
+    <bq-textarea placeholder="Placeholder...">
+      <label slot="label">Label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+    </bq-textarea>
+    ```
+    ```tsx React
+    import { BqIcon, BqTextarea } from "@beeq/react";
+
+    export default () => (
+      <BqTextarea placeholder="Placeholder...">
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+      </BqTextarea>
+    );
+    ```
+    ```html Angular
+    <bq-textarea placeholder="Placeholder...">
+      <label slot="label">Label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+    </bq-textarea>
+    ```
+    ```html Vue
+    <bq-textarea placeholder="Placeholder...">
+      <label slot="label">Label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+    </bq-textarea>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Initial Value
+
+Pre-populate your textarea with an initial `value` attribute to streamline user interactions and provide a helpful starting point.
+
+<CodeLivePreview code={`
+  <style>
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+
+  <bq-textarea
+    placeholder="Placeholder..."
+    value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
+  >
+    <label slot="label">Label</label>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+  </bq-textarea>
+`}>
+  <CodeGroup>
+    ```html HTML
+    <bq-textarea
+      placeholder="Placeholder..."
+      value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
+    >
+      <label slot="label">Label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+    </bq-textarea>
+    ```
+    ```tsx React
+    import { BqIcon, BqTextarea } from "@beeq/react";
+
+    export default () => (
+      <BqTextarea
+        placeholder="Placeholder..."
+        value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
+      >
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+      </BqTextarea>
+    );
+    ```
+    ```html Angular
+    <bq-textarea
+      placeholder="Placeholder..."
+      value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
+    >
+      <label slot="label">Label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+    </bq-textarea>
+    ```
+    ```html Vue
+    <bq-textarea
+      placeholder="Placeholder..."
+      value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
+    >
+      <label slot="label">Label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+    </bq-textarea>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Options
+
+### Disabled
+
+Set `disabled` when the field is not currently available for interaction. Use it to present non-editable content in a form context. Always communicate why the field is disabled through surrounding text or a tooltip.
+
+<CodeLivePreview code={`
+  <style>
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+
+  <bq-textarea
+    disabled
+    placeholder="Placeholder..."
+    value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
+  >
+    <label slot="label">Label</label>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+  </bq-textarea>
+`}>
+  <CodeGroup>
+    ```html HTML
+    <bq-textarea
+      disabled
+      placeholder="Placeholder..."
+      value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
+    >
+      <label slot="label">Label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+    </bq-textarea>
+    ```
+    ```tsx React
+    import { BqIcon, BqTextarea } from "@beeq/react";
+
+    export default () => (
+      <BqTextarea
+        disabled
+        placeholder="Placeholder..."
+        value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
+      >
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+      </BqTextarea>
+    );
+    ```
+    ```html Angular
+    <bq-textarea
+      disabled
+      placeholder="Placeholder..."
+      value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
+    >
+      <label slot="label">Label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+    </bq-textarea>
+    ```
+    ```html Vue
+    <bq-textarea
+      disabled
+      placeholder="Placeholder..."
+      value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
+    >
+      <label slot="label">Label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+    </bq-textarea>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Disable Resize
+
+Add `disable-resize` to prevent users from resizing the textarea. This is useful when you need a stable layout with a consistent textarea height.
+
+<CodeLivePreview code={`
+  <style>
+    .textarea--resize-group {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0px, 1fr));
+      gap: var(--bq-spacing-m);
+    }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+
+  <div class="textarea--resize-group">
+    <bq-textarea placeholder="Resize is enabled">
+      <label slot="label">Label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+    </bq-textarea>
+    <bq-textarea disable-resize placeholder="Resize is disabled">
+      <label slot="label">Label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+    </bq-textarea>
+  </div>
+`}>
+  <CodeGroup>
+    ```html HTML
+    <div class="textarea--resize-group">
+      <bq-textarea placeholder="Resize is enabled">
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <bq-icon name="star"></bq-icon>
+          Helper text
+        </span>
+      </bq-textarea>
+      <bq-textarea disable-resize placeholder="Resize is disabled">
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <bq-icon name="star"></bq-icon>
+          Helper text
+        </span>
+      </bq-textarea>
+    </div>
+    ```
+    ```tsx React
+    import { BqIcon, BqTextarea } from "@beeq/react";
+
+    export default () => (
+      <>
+        <BqTextarea placeholder="Resize is enabled">
+          <label slot="label">Label</label>
+          <span slot="helper-text">
+            <BqIcon name="star" />
+            Helper text
+          </span>
+        </BqTextarea>
+        <BqTextarea disableResize placeholder="Resize is disabled">
+          <label slot="label">Label</label>
+          <span slot="helper-text">
+            <BqIcon name="star" />
+            Helper text
+          </span>
+        </BqTextarea>
+      </>
+    );
+    ```
+    ```html Angular
+    <div class="textarea--resize-group">
+      <bq-textarea placeholder="Resize is enabled">
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <bq-icon name="star"></bq-icon>
+          Helper text
+        </span>
+      </bq-textarea>
+      <bq-textarea disable-resize placeholder="Resize is disabled">
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <bq-icon name="star"></bq-icon>
+          Helper text
+        </span>
+      </bq-textarea>
+    </div>
+    ```
+    ```html Vue
+    <div class="textarea--resize-group">
+      <bq-textarea placeholder="Resize is enabled">
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <bq-icon name="star"></bq-icon>
+          Helper text
+        </span>
+      </bq-textarea>
+      <bq-textarea disableResize placeholder="Resize is disabled">
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <bq-icon name="star"></bq-icon>
+          Helper text
+        </span>
+      </bq-textarea>
+    </div>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  Maintain a consistent layout by preventing users from resizing.
+</Tip>
+
+### Max Length
+
+Set `maxlength` to limit the number of characters users can enter. A character counter appears automatically below the textarea to show progress toward the limit. Input is truncated once the limit is reached.
+
+<CodeLivePreview code={`
+  <style>
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+
+  <bq-textarea
+    maxlength="100"
+    placeholder="Placeholder..."
+    value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+  >
+    <label slot="label">Label</label>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+  </bq-textarea>
+`}>
+  <CodeGroup>
+    ```html HTML
+    <bq-textarea
+      maxlength="100"
+      placeholder="Placeholder..."
+      value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+    >
+      <label slot="label">Label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+    </bq-textarea>
+    ```
+    ```tsx React
+    import { BqIcon, BqTextarea } from "@beeq/react";
+
+    export default () => (
+      <BqTextarea
+        maxlength={100}
+        placeholder="Placeholder..."
+        value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+      >
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+      </BqTextarea>
+    );
+    ```
+    ```html Angular
+    <bq-textarea
+      maxlength="100"
+      placeholder="Placeholder..."
+      value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+    >
+      <label slot="label">Label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+    </bq-textarea>
+    ```
+    ```html Vue
+    <bq-textarea
+      :maxlength="100"
+      placeholder="Placeholder..."
+      value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+    >
+      <label slot="label">Label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+    </bq-textarea>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Read Only
+
+Set `readonly` to display the value without allowing edits. Unlike `disabled`, a read-only textarea is still focusable and its value is submitted with the form.
+
+<CodeLivePreview code={`
+  <style>
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+
+  <bq-textarea
+    placeholder="Placeholder..."
+    readonly
+    value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
+  >
+    <label slot="label">Label</label>
+    <span slot="helper-text">
+      <bq-icon name="star"></bq-icon>
+      Helper text
+    </span>
+  </bq-textarea>
+`}>
+  <CodeGroup>
+    ```html HTML
+    <bq-textarea
+      placeholder="Placeholder..."
+      readonly
+      value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
+    >
+      <label slot="label">Label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+    </bq-textarea>
+    ```
+    ```tsx React
+    import { BqIcon, BqTextarea } from "@beeq/react";
+
+    export default () => (
+      <BqTextarea
+        placeholder="Placeholder..."
+        readonly
+        value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
+      >
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+      </BqTextarea>
+    );
+    ```
+    ```html Angular
+    <bq-textarea
+      placeholder="Placeholder..."
+      readonly
+      value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
+    >
+      <label slot="label">Label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+    </bq-textarea>
+    ```
+    ```html Vue
+    <bq-textarea
+      placeholder="Placeholder..."
+      readonly
+      value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
+    >
+      <label slot="label">Label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+    </bq-textarea>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Validation
+
+Set `validation-status` to `error`, `warning`, or `success` to communicate the state of the field. Always pair a validation status with a descriptive `helper-text` message so users understand the issue and how to resolve it.
+
+<CodeLivePreview code={`
+  <style>
+    .textarea--validation-group {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0px, 1fr));
+      gap: var(--bq-spacing-m);
+    }
+    span {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+  </style>
+
+  <div class="textarea--validation-group">
+    <bq-textarea
+      maxlength="100"
+      placeholder="Placeholder..."
+      validation-status="error"
+      value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+    >
+      <label slot="label">Label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+    </bq-textarea>
+    <bq-textarea
+      maxlength="100"
+      placeholder="Placeholder..."
+      validation-status="warning"
+      value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+    >
+      <label slot="label">Label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+    </bq-textarea>
+    <bq-textarea
+      maxlength="100"
+      placeholder="Placeholder..."
+      validation-status="success"
+      value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+    >
+      <label slot="label">Label</label>
+      <span slot="helper-text">
+        <bq-icon name="star"></bq-icon>
+        Helper text
+      </span>
+    </bq-textarea>
+  </div>
+`}>
+  <CodeGroup>
+    ```html HTML
+    <div class="textarea--validation-group">
+      <bq-textarea
+        maxlength="100"
+        placeholder="Placeholder..."
+        validation-status="error"
+        value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+      >
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <bq-icon name="star"></bq-icon>
+          Helper text
+        </span>
+      </bq-textarea>
+      <bq-textarea
+        maxlength="100"
+        placeholder="Placeholder..."
+        validation-status="warning"
+        value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+      >
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <bq-icon name="star"></bq-icon>
+          Helper text
+        </span>
+      </bq-textarea>
+      <bq-textarea
+        maxlength="100"
+        placeholder="Placeholder..."
+        validation-status="success"
+        value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+      >
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <bq-icon name="star"></bq-icon>
+          Helper text
+        </span>
+      </bq-textarea>
+    </div>
+    ```
+    ```tsx React
+    import { BqIcon, BqTextarea } from "@beeq/react";
+
+    export default () => (
+      <>
+        <BqTextarea
+          maxlength={100}
+          placeholder="Placeholder..."
+          validationStatus="error"
+          value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+        >
+          <label slot="label">Label</label>
+          <span slot="helper-text">
+            <BqIcon name="star" />
+            Helper text
+          </span>
+        </BqTextarea>
+        <BqTextarea
+          maxlength={100}
+          placeholder="Placeholder..."
+          validationStatus="warning"
+          value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+        >
+          <label slot="label">Label</label>
+          <span slot="helper-text">
+            <BqIcon name="star" />
+            Helper text
+          </span>
+        </BqTextarea>
+        <BqTextarea
+          maxlength={100}
+          placeholder="Placeholder..."
+          validationStatus="success"
+          value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+        >
+          <label slot="label">Label</label>
+          <span slot="helper-text">
+            <BqIcon name="star" />
+            Helper text
+          </span>
+        </BqTextarea>
+      </>
+    );
+    ```
+    ```html Angular
+    <div class="textarea--validation-group">
+      <bq-textarea
+        maxlength="100"
+        placeholder="Placeholder..."
+        validation-status="error"
+        value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+      >
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <bq-icon name="star"></bq-icon>
+          Helper text
+        </span>
+      </bq-textarea>
+      <bq-textarea
+        maxlength="100"
+        placeholder="Placeholder..."
+        validation-status="warning"
+        value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+      >
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <bq-icon name="star"></bq-icon>
+          Helper text
+        </span>
+      </bq-textarea>
+      <bq-textarea
+        maxlength="100"
+        placeholder="Placeholder..."
+        validation-status="success"
+        value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+      >
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <bq-icon name="star"></bq-icon>
+          Helper text
+        </span>
+      </bq-textarea>
+    </div>
+    ```
+    ```html Vue
+    <div class="textarea--validation-group">
+      <bq-textarea
+        :maxlength="100"
+        placeholder="Placeholder..."
+        validationStatus="error"
+        value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+      >
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <bq-icon name="star"></bq-icon>
+          Helper text
+        </span>
+      </bq-textarea>
+      <bq-textarea
+        :maxlength="100"
+        placeholder="Placeholder..."
+        validationStatus="warning"
+        value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+      >
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <bq-icon name="star"></bq-icon>
+          Helper text
+        </span>
+      </bq-textarea>
+      <bq-textarea
+        :maxlength="100"
+        placeholder="Placeholder..."
+        validationStatus="success"
+        value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+      >
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <bq-icon name="star"></bq-icon>
+          Helper text
+        </span>
+      </bq-textarea>
+    </div>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  Use validation feedback to provide context on the textarea's status based on user input.
+</Tip>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Always provide a visible label via the `label` slot. An unlabeled textarea has no accessible name and relies entirely on context, which screen readers cannot infer.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Use placeholder text as a substitute for a label. Placeholder text disappears as soon as the user starts typing, leaving the field without any visible description.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Write validation error messages with a user-centric approach — explain what went wrong and how to fix it, not just that the input was invalid.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Show vague error messages like "Invalid input". Users need actionable guidance to correct their input, not a generic error label.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use `maxlength` for inputs where length matters — tweet-like comments, SMS text, or short descriptions. The character counter gives users clear progress feedback.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Set `maxlength` on open-ended fields like detailed feedback forms or long descriptions where an arbitrary limit would frustrate users.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use a textarea only when the expected input is long or variable in length. This sets the right expectation for users about how much text they should provide.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Use a textarea when a short single-line response is expected. An oversized input creates confusion and wastes space — use an Input component instead.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+`bq-textarea` renders a native `<textarea>` element inside its shadow DOM. The `label` slot renders as a `<label>` element that is linked to the `<textarea>` via an `id`/`for` relationship automatically, giving assistive technologies a correct accessible name.
+
+### Keyboard interaction
+
+| Key | Action |
+|---|---|
+| `Tab` | Moves focus to the textarea |
+| `Shift + Tab` | Moves focus away from the textarea |
+| Arrow keys | Navigate the cursor through the text |
+| `Enter` | Inserts a new line in the text |
+
+### Developer responsibilities
+
+- Always provide content in the `label` slot. The label is the primary source of the accessible name for the textarea. Do not rely on `placeholder` — it disappears once the user starts typing.
+- When using `validation-status`, pair it with a `helper-text` message that explains the issue. Screen readers announce the helper text to users so they know what to correct.
+- When the textarea is `disabled`, it is removed from the tab order and excluded from form submission. Communicate the reason for disabling through surrounding text.
+- A `readonly` textarea remains focusable and its value is included in form submissions. Use it when you want users to see but not edit a value.
+- The `bqChange` event fires when the user changes the value and then blurs the field. The `bqInput` event fires on every keystroke. Use `debounce-time` to throttle `bqInput` for performance-sensitive scenarios such as live search.
+
+## API reference
+
+### Properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `autocapitalize` | `autocapitalize` | Controls how the textarea value is capitalized | `'off' \| 'on' \| 'sentences' \| 'words' \| 'characters'` | `'off'` |
+| `autocomplete` | `autocomplete` | Specifies whether autocomplete is enabled | `string` | `'off'` |
+| `autofocus` | `autofocus` | If `true`, the textarea is focused on render | `boolean` | `false` |
+| `autoGrow` | `auto-grow` | If `true`, the textarea grows and shrinks to fit its contents | `boolean` | `false` |
+| `debounceTime` | `debounce-time` | Milliseconds to wait before emitting `bqInput` after a value change | `number` | `0` |
+| `disabled` | `disabled` | If `true`, the user cannot interact with the textarea | `boolean` | `false` |
+| `disableResize` | `disable-resize` | If `true`, the user cannot resize the textarea | `boolean` | `false` |
+| `form` | `form` | The ID of the form the textarea belongs to | `string` | — |
+| `formValidationMessage` | `form-validation-message` | Custom native form validation message | `string` | — |
+| `maxlength` | `maxlength` | Maximum number of characters (`0` means no limit); enables the character counter | `number` | — |
+| `name` | `name` | Name of the form control; submitted with the form | `string` | **required** |
+| `placeholder` | `placeholder` | Placeholder text shown when the textarea has no value | `string` | **required** |
+| `readonly` | `readonly` | If `true`, the value cannot be modified but remains focusable and submitted | `boolean` | `false` |
+| `required` | `required` | If `true`, the textarea must have a value before the form can be submitted | `boolean` | `false` |
+| `rows` | `rows` | Number of visible text lines | `number` | `5` |
+| `spellcheck` | `spellcheck` | If `true`, the content may be checked for spelling errors | `boolean` | `false` |
+| `validationStatus` | `validation-status` | Validation state of the textarea | `'none' \| 'error' \| 'warning' \| 'success'` | `'none'` |
+| `value` | `value` | The current value of the textarea | `string` | — |
+| `wrap` | `wrap` | How text is wrapped when the form is submitted | `'soft' \| 'hard' \| 'off'` | `'soft'` |
+
+### Events
+
+| Event | Description | Type |
+|---|---|---|
+| `bqBlur` | Emitted when the textarea loses focus | `CustomEvent<HTMLBqTextareaElement>` |
+| `bqChange` | Emitted when the value changes and the textarea loses focus | `CustomEvent<{ value: string; el: HTMLBqTextareaElement }>` |
+| `bqClear` | Emitted when the textarea value is cleared | `CustomEvent<HTMLBqTextareaElement>` |
+| `bqFocus` | Emitted when the textarea receives focus | `CustomEvent<HTMLBqTextareaElement>` |
+| `bqInput` | Emitted on every value change (keystroke or paste) | `CustomEvent<{ value: string; el: HTMLBqTextareaElement }>` |
+
+### Slots
+
+| Slot | Description |
+|---|---|
+| `label` | The textarea label displayed above the control |
+| `helper-text` | Optional helper text or icon shown below the control |
+
+### Shadow parts
+
+| Part | Description |
+|---|---|
+| `base` | The component's base wrapper |
+| `input` | The native `<textarea>` element |
+| `label` | The `<label>` element |
+| `helper-info` | The helper info container below the textarea |
+| `helper-text` | The helper text element |
+| `helper-counter` | The character counter element |
+
+### CSS custom properties
+
+<Expandable title="CSS variables" defaultOpen={true}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-textarea--background-color` | Textarea background color | `transparent` |
+  | `--bq-textarea--border-color` | Textarea border color | `var(--bq-stroke--tertiary)` |
+  | `--bq-textarea--border-color-focus` | Textarea border color on focus | `var(--bq-stroke--brand)` |
+  | `--bq-textarea--border-radius` | Textarea border radius | `var(--bq-radius--s)` |
+  | `--bq-textarea--border-width` | Textarea border width | `var(--bq-stroke-s)` |
+  | `--bq-textarea--border-style` | Textarea border style | `solid` |
+  | `--bq-textarea--helper-margin-top` | Helper text margin top | `var(--bq-spacing-xs)` |
+  | `--bq-textarea--helper-text-color` | Helper text color | `var(--bq-text--primary)` |
+  | `--bq-textarea--helper-text-size` | Helper text font size | `var(--bq-font-size--s)` |
+  | `--bq-textarea--label-margin-bottom` | Label margin bottom | `var(--bq-spacing-xs)` |
+  | `--bq-textarea--label-text-color` | Label text color | `var(--bq-text--primary)` |
+  | `--bq-textarea--label-text-size` | Label text font size | `var(--bq-font-size--s)` |
+  | `--bq-textarea--paddingY` | Textarea vertical padding | `var(--bq-spacing-s)` |
+  | `--bq-textarea--padding-start` | Textarea start padding | `var(--bq-spacing-m)` |
+  | `--bq-textarea--padding-end` | Textarea end padding | `var(--bq-spacing-m)` |
+  | `--bq-textarea--text-color` | Textarea text color | `var(--bq-text--primary)` |
+  | `--bq-textarea--text-size` | Textarea text font size | `var(--bq-font-size--m)` |
+  | `--bq-textarea--text-placeholder-color` | Placeholder text color | `var(--bq-text--secondary)` |
+</Expandable>
+
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-textarea--default">
+    Explore textarea variants and states in Storybook
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/textarea">
+    View the component source on GitHub
+  </Card>
+</CardGroup>
