@@ -1,0 +1,813 @@
+---
+title: Tab
+description: Tabs organize content into separate sections and let users switch between them without leaving the page.
+---
+
+import { CardTile } from "/snippets/CardTile.jsx";
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Tab component overview">
+  <img className="block dark:hidden" src="/components/images/tab/tab-overview-light.svg" alt="BEEQ Tab component overview" />
+  <img className="hidden dark:block" src="/components/images/tab/tab-overview-dark.svg" alt="BEEQ Tab component overview" />
+</Frame>
+
+Tabs let users navigate between related sections of content within the same page or view. Each tab reveals one panel at a time, keeping the interface clean while making multiple content sections available without navigation.
+
+<Note>
+  `bq-tab` must always be placed inside a `bq-tab-group`. The group manages tab state, keyboard navigation, and propagates `size`, `orientation`, and `placement` to all child tabs automatically.
+</Note>
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use tabs when
+    </span>
+
+    - Content can be clearly organized into a small number of distinct, peer-level sections
+    - Users need to compare or switch between sections without losing page context
+    - Space is limited and displaying all sections at once would clutter the layout
+    - Each section can stand independently without requiring the user to read others first
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use tabs when
+    </span>
+
+    - The number of tabs exceeds seven — prefer a sidebar navigation or dropdown instead
+    - Content across sections is sequential and users must read them in order — prefer a stepper
+    - Sections contain very different content types that do not relate to the same subject
+    - The goal is to navigate to a new page or route — prefer anchor links or a navigation component
+  </Card>
+</CardGroup>
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Tab component anatomy">
+  <img className="block dark:hidden" src="/components/images/tab/tab-anatomy-light.svg" alt="BEEQ Tab component anatomy" />
+  <img className="hidden dark:block" src="/components/images/tab/tab-anatomy-dark.svg" alt="BEEQ Tab component anatomy" />
+</Frame>
+
+The tab group renders a list of tab buttons inside a scrollable container. Each individual tab consists of an optional icon, a text label, and an active-state underline indicator.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Active tab | The currently selected tab button, visually distinguished by brand color and the selected indicator |
+| **2** | Inactive tab | A tab button that is not currently selected; clicking it activates it and deactivates the previous tab |
+| **3** | Selected indicator | The underline beneath the active tab that marks the current selection; exposed as the `underline` shadow part |
+| **4** | Text label | The visible label inside each tab button; placed in the default slot and exposed as the `text` shadow part |
+
+## Design guidelines
+
+### Orientation
+
+<CardGroup cols={2}>
+  <CardTile
+    title="Horizontal"
+    imageLightSrc="/components/images/tab/tab-orientation-horizontal-light.svg"
+    imageDarkSrc="/components/images/tab/tab-orientation-horizontal-dark.svg"
+  >
+    The default orientation. Tabs are arranged in a row across the top of the content area. Best suited for most layouts.
+  </CardTile>
+  <CardTile
+    title="Vertical"
+    imageLightSrc="/components/images/tab/tab-orientation-vertical-light.svg"
+    imageDarkSrc="/components/images/tab/tab-orientation-vertical-dark.svg"
+  >
+    Tabs are stacked in a column to the left or right of the content area. Use when there are many tabs or when the layout is sidebar-based.
+  </CardTile>
+</CardGroup>
+
+### Size
+
+<Steps>
+  <Step title="small">Compact tabs with reduced padding. Use in dense interfaces or data-heavy views where space is constrained.</Step>
+  <Step title="medium">The default size. Appropriate for most applications and standard-density layouts.</Step>
+  <Step title="large">Prominent tabs with increased padding. Use when tabs are a primary navigation element or accessibility requires larger touch targets.</Step>
+</Steps>
+
+<Note>
+  Setting `size` on `bq-tab-group` propagates the value to all child `bq-tab` elements automatically. You do not need to set `size` on each tab individually.
+</Note>
+
+### Placement
+
+Use `placement="start"` (default) to left-align horizontal tabs or top-align vertical tabs. Use `placement="end"` to right-align horizontal tabs or bottom-align vertical tabs.
+
+## Usage
+
+### Default
+
+<CodeLivePreview code={`
+  <style>
+    :host {
+      flex-direction: column !important;
+      align-items: stretch !important;
+    }
+  </style>
+  <bq-tab-group value="5">
+    <bq-tab tab-id="1">Tab</bq-tab>
+    <bq-tab tab-id="2">Tab</bq-tab>
+    <bq-tab tab-id="3">Long Tab name</bq-tab>
+    <bq-tab tab-id="4" disabled>Tab</bq-tab>
+    <bq-tab tab-id="5">Tab</bq-tab>
+    <bq-tab tab-id="6">Tab</bq-tab>
+    <bq-tab tab-id="7">Tab</bq-tab>
+    <bq-tab tab-id="8">Tab</bq-tab>
+  </bq-tab-group>
+`}>
+</CodeLivePreview>
+
+<CodeGroup>
+```html HTML icon="html5"
+<bq-tab-group value="5">
+  <bq-tab tab-id="1">Tab</bq-tab>
+  <bq-tab tab-id="2">Tab</bq-tab>
+  <bq-tab tab-id="3">Long Tab name</bq-tab>
+  <bq-tab tab-id="4" disabled>Tab</bq-tab>
+  <bq-tab tab-id="5">Tab</bq-tab>
+  <bq-tab tab-id="6">Tab</bq-tab>
+  <bq-tab tab-id="7">Tab</bq-tab>
+  <bq-tab tab-id="8">Tab</bq-tab>
+</bq-tab-group>
+```
+```tsx React icon="react"
+import { BqTab, BqTabGroup } from "@beeq/react";
+
+export default () => (
+  <BqTabGroup value="5">
+    <BqTab tabId="1">Tab</BqTab>
+    <BqTab tabId="2">Tab</BqTab>
+    <BqTab tabId="3">Long Tab name</BqTab>
+    <BqTab tabId="4" disabled>Tab</BqTab>
+    <BqTab tabId="5">Tab</BqTab>
+    <BqTab tabId="6">Tab</BqTab>
+    <BqTab tabId="7">Tab</BqTab>
+    <BqTab tabId="8">Tab</BqTab>
+  </BqTabGroup>
+);
+```
+```html Angular icon="angular"
+<bq-tab-group value="5">
+  <bq-tab tab-id="1">Tab</bq-tab>
+  <bq-tab tab-id="2">Tab</bq-tab>
+  <bq-tab tab-id="3">Long Tab name</bq-tab>
+  <bq-tab tab-id="4" disabled>Tab</bq-tab>
+  <bq-tab tab-id="5">Tab</bq-tab>
+  <bq-tab tab-id="6">Tab</bq-tab>
+  <bq-tab tab-id="7">Tab</bq-tab>
+  <bq-tab tab-id="8">Tab</bq-tab>
+</bq-tab-group>
+```
+```vue Vue icon="vuejs"
+<template>
+  <BqTabGroup value="5">
+    <BqTab tabId="1">Tab</BqTab>
+    <BqTab tabId="2">Tab</BqTab>
+    <BqTab tabId="3">Long Tab name</BqTab>
+    <BqTab tabId="4" disabled>Tab</BqTab>
+    <BqTab tabId="5">Tab</BqTab>
+    <BqTab tabId="6">Tab</BqTab>
+    <BqTab tabId="7">Tab</BqTab>
+    <BqTab tabId="8">Tab</BqTab>
+  </BqTabGroup>
+</template>
+```
+</CodeGroup>
+
+## Options
+
+### With icons
+
+Tabs support an optional icon displayed before the label via the `icon` slot.
+
+<CodeLivePreview code={`
+  <style>
+    :host {
+      flex-direction: column !important;
+      align-items: stretch !important;
+    }
+  </style>
+  <bq-tab-group value="5" size="small">
+    <bq-tab tab-id="1">
+      <bq-icon name="pulse" slot="icon"></bq-icon>
+      Tab
+    </bq-tab>
+    <bq-tab tab-id="2">
+      <bq-icon name="bell" slot="icon"></bq-icon>
+      Tab
+    </bq-tab>
+    <bq-tab tab-id="3">
+      <bq-icon name="airplane-in-flight" slot="icon"></bq-icon>
+      Long Tab name
+    </bq-tab>
+    <bq-tab tab-id="4" disabled>
+      <bq-icon name="airplane-tilt" slot="icon"></bq-icon>
+      Tab
+    </bq-tab>
+    <bq-tab tab-id="5">
+      <bq-icon name="align-right-simple" slot="icon"></bq-icon>
+      Tab
+    </bq-tab>
+    <bq-tab tab-id="6">
+      <bq-icon name="anchor" slot="icon"></bq-icon>
+      Tab
+    </bq-tab>
+    <bq-tab tab-id="7">
+      <bq-icon name="android-logo" slot="icon"></bq-icon>
+      Tab
+    </bq-tab>
+  </bq-tab-group>
+`}>
+</CodeLivePreview>
+
+<CodeGroup>
+```html HTML icon="html5"
+<bq-tab-group value="5" size="small">
+  <bq-tab tab-id="1">
+    <bq-icon name="pulse" slot="icon"></bq-icon>
+    Tab
+  </bq-tab>
+  <bq-tab tab-id="2">
+    <bq-icon name="bell" slot="icon"></bq-icon>
+    Tab
+  </bq-tab>
+  <bq-tab tab-id="3">
+    <bq-icon name="airplane-in-flight" slot="icon"></bq-icon>
+    Long Tab name
+  </bq-tab>
+  <bq-tab tab-id="4" disabled>
+    <bq-icon name="airplane-tilt" slot="icon"></bq-icon>
+    Tab
+  </bq-tab>
+  <bq-tab tab-id="5">
+    <bq-icon name="align-right-simple" slot="icon"></bq-icon>
+    Tab
+  </bq-tab>
+  <bq-tab tab-id="6">
+    <bq-icon name="anchor" slot="icon"></bq-icon>
+    Tab
+  </bq-tab>
+  <bq-tab tab-id="7">
+    <bq-icon name="android-logo" slot="icon"></bq-icon>
+    Tab
+  </bq-tab>
+</bq-tab-group>
+```
+```tsx React icon="react"
+import { BqIcon, BqTab, BqTabGroup } from "@beeq/react";
+
+export default () => (
+  <BqTabGroup value="5" size="small">
+    <BqTab tabId="1">
+      <BqIcon name="pulse" slot="icon" />
+      Tab
+    </BqTab>
+    <BqTab tabId="2">
+      <BqIcon name="bell" slot="icon" />
+      Tab
+    </BqTab>
+    <BqTab tabId="3">
+      <BqIcon name="airplane-in-flight" slot="icon" />
+      Long Tab name
+    </BqTab>
+    <BqTab tabId="4" disabled>
+      <BqIcon name="airplane-tilt" slot="icon" />
+      Tab
+    </BqTab>
+    <BqTab tabId="5">
+      <BqIcon name="align-right-simple" slot="icon" />
+      Tab
+    </BqTab>
+    <BqTab tabId="6">
+      <BqIcon name="anchor" slot="icon" />
+      Tab
+    </BqTab>
+    <BqTab tabId="7">
+      <BqIcon name="android-logo" slot="icon" />
+      Tab
+    </BqTab>
+  </BqTabGroup>
+);
+```
+```html Angular icon="angular"
+<bq-tab-group value="5" size="small">
+  <bq-tab tab-id="1">
+    <bq-icon name="pulse" slot="icon"></bq-icon>
+    Tab
+  </bq-tab>
+  <bq-tab tab-id="2">
+    <bq-icon name="bell" slot="icon"></bq-icon>
+    Tab
+  </bq-tab>
+  <bq-tab tab-id="3">
+    <bq-icon name="airplane-in-flight" slot="icon"></bq-icon>
+    Long Tab name
+  </bq-tab>
+  <bq-tab tab-id="4" disabled>
+    <bq-icon name="airplane-tilt" slot="icon"></bq-icon>
+    Tab
+  </bq-tab>
+  <bq-tab tab-id="5">
+    <bq-icon name="align-right-simple" slot="icon"></bq-icon>
+    Tab
+  </bq-tab>
+  <bq-tab tab-id="6">
+    <bq-icon name="anchor" slot="icon"></bq-icon>
+    Tab
+  </bq-tab>
+  <bq-tab tab-id="7">
+    <bq-icon name="android-logo" slot="icon"></bq-icon>
+    Tab
+  </bq-tab>
+</bq-tab-group>
+```
+```vue Vue icon="vuejs"
+<template>
+  <BqTabGroup value="5" size="small">
+    <BqTab tabId="1">
+      <BqIcon name="pulse" slot="icon" />
+      Tab
+    </BqTab>
+    <BqTab tabId="2">
+      <BqIcon name="bell" slot="icon" />
+      Tab
+    </BqTab>
+    <BqTab tabId="3">
+      <BqIcon name="airplane-in-flight" slot="icon" />
+      Long Tab name
+    </BqTab>
+    <BqTab tabId="4" disabled>
+      <BqIcon name="airplane-tilt" slot="icon" />
+      Tab
+    </BqTab>
+    <BqTab tabId="5">
+      <BqIcon name="align-right-simple" slot="icon" />
+      Tab
+    </BqTab>
+    <BqTab tabId="6">
+      <BqIcon name="anchor" slot="icon" />
+      Tab
+    </BqTab>
+    <BqTab tabId="7">
+      <BqIcon name="android-logo" slot="icon" />
+      Tab
+    </BqTab>
+  </BqTabGroup>
+</template>
+```
+</CodeGroup>
+
+### Sizes
+
+<CodeLivePreview code={`
+  <style>
+    :host {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: var(--bq-spacing-m) !important;
+    }
+  </style>
+  <bq-tab-group size="small" value="1">
+    <bq-tab tab-id="1">Tab</bq-tab>
+    <bq-tab tab-id="2">Tab</bq-tab>
+    <bq-tab tab-id="3">Long Tab name</bq-tab>
+  </bq-tab-group>
+  <bq-tab-group size="medium" value="1">
+    <bq-tab tab-id="1">Tab</bq-tab>
+    <bq-tab tab-id="2">Tab</bq-tab>
+    <bq-tab tab-id="3">Long Tab name</bq-tab>
+  </bq-tab-group>
+  <bq-tab-group size="large" value="1">
+    <bq-tab tab-id="1">Tab</bq-tab>
+    <bq-tab tab-id="2">Tab</bq-tab>
+    <bq-tab tab-id="3">Long Tab name</bq-tab>
+  </bq-tab-group>
+`}>
+</CodeLivePreview>
+
+<CodeGroup>
+```html HTML icon="html5"
+<!-- Small -->
+<bq-tab-group size="small" value="1">
+  <bq-tab tab-id="1">Tab</bq-tab>
+  <bq-tab tab-id="2">Tab</bq-tab>
+  <bq-tab tab-id="3">Long Tab name</bq-tab>
+</bq-tab-group>
+
+<!-- Medium (default) -->
+<bq-tab-group size="medium" value="1">
+  <bq-tab tab-id="1">Tab</bq-tab>
+  <bq-tab tab-id="2">Tab</bq-tab>
+  <bq-tab tab-id="3">Long Tab name</bq-tab>
+</bq-tab-group>
+
+<!-- Large -->
+<bq-tab-group size="large" value="1">
+  <bq-tab tab-id="1">Tab</bq-tab>
+  <bq-tab tab-id="2">Tab</bq-tab>
+  <bq-tab tab-id="3">Long Tab name</bq-tab>
+</bq-tab-group>
+```
+```tsx React icon="react"
+import { BqTab, BqTabGroup } from "@beeq/react";
+
+export default () => (
+  <>
+    {/* Small */}
+    <BqTabGroup size="small" value="1">
+      <BqTab tabId="1">Tab</BqTab>
+      <BqTab tabId="2">Tab</BqTab>
+      <BqTab tabId="3">Long Tab name</BqTab>
+    </BqTabGroup>
+
+    {/* Medium (default) */}
+    <BqTabGroup size="medium" value="1">
+      <BqTab tabId="1">Tab</BqTab>
+      <BqTab tabId="2">Tab</BqTab>
+      <BqTab tabId="3">Long Tab name</BqTab>
+    </BqTabGroup>
+
+    {/* Large */}
+    <BqTabGroup size="large" value="1">
+      <BqTab tabId="1">Tab</BqTab>
+      <BqTab tabId="2">Tab</BqTab>
+      <BqTab tabId="3">Long Tab name</BqTab>
+    </BqTabGroup>
+  </>
+);
+```
+```html Angular icon="angular"
+<!-- Small -->
+<bq-tab-group size="small" value="1">
+  <bq-tab tab-id="1">Tab</bq-tab>
+  <bq-tab tab-id="2">Tab</bq-tab>
+  <bq-tab tab-id="3">Long Tab name</bq-tab>
+</bq-tab-group>
+
+<!-- Medium (default) -->
+<bq-tab-group size="medium" value="1">
+  <bq-tab tab-id="1">Tab</bq-tab>
+  <bq-tab tab-id="2">Tab</bq-tab>
+  <bq-tab tab-id="3">Long Tab name</bq-tab>
+</bq-tab-group>
+
+<!-- Large -->
+<bq-tab-group size="large" value="1">
+  <bq-tab tab-id="1">Tab</bq-tab>
+  <bq-tab tab-id="2">Tab</bq-tab>
+  <bq-tab tab-id="3">Long Tab name</bq-tab>
+</bq-tab-group>
+```
+```vue Vue icon="vuejs"
+<template>
+  <!-- Small -->
+  <BqTabGroup size="small" value="1">
+    <BqTab tabId="1">Tab</BqTab>
+    <BqTab tabId="2">Tab</BqTab>
+    <BqTab tabId="3">Long Tab name</BqTab>
+  </BqTabGroup>
+
+  <!-- Medium (default) -->
+  <BqTabGroup size="medium" value="1">
+    <BqTab tabId="1">Tab</BqTab>
+    <BqTab tabId="2">Tab</BqTab>
+    <BqTab tabId="3">Long Tab name</BqTab>
+  </BqTabGroup>
+
+  <!-- Large -->
+  <BqTabGroup size="large" value="1">
+    <BqTab tabId="1">Tab</BqTab>
+    <BqTab tabId="2">Tab</BqTab>
+    <BqTab tabId="3">Long Tab name</BqTab>
+  </BqTabGroup>
+</template>
+```
+</CodeGroup>
+
+### Vertical
+
+Set `orientation="vertical"` on `bq-tab-group` to stack tabs in a column beside the content area.
+
+<CodeLivePreview code={`
+  <style>
+    :host {
+      align-items: flex-start !important;
+    }
+  </style>
+  <bq-tab-group orientation="vertical" value="1">
+    <bq-tab tab-id="1">Tab</bq-tab>
+    <bq-tab tab-id="2">Tab</bq-tab>
+    <bq-tab tab-id="3">Long Tab name</bq-tab>
+    <bq-tab tab-id="4" disabled>Tab</bq-tab>
+  </bq-tab-group>
+`}>
+</CodeLivePreview>
+
+<CodeGroup>
+```html HTML icon="html5"
+<bq-tab-group orientation="vertical" value="1">
+  <bq-tab tab-id="1">Tab</bq-tab>
+  <bq-tab tab-id="2">Tab</bq-tab>
+  <bq-tab tab-id="3">Long Tab name</bq-tab>
+  <bq-tab tab-id="4" disabled>Tab</bq-tab>
+</bq-tab-group>
+```
+```tsx React icon="react"
+import { BqTab, BqTabGroup } from "@beeq/react";
+
+export default () => (
+  <BqTabGroup orientation="vertical" value="1">
+    <BqTab tabId="1">Tab</BqTab>
+    <BqTab tabId="2">Tab</BqTab>
+    <BqTab tabId="3">Long Tab name</BqTab>
+    <BqTab tabId="4" disabled>Tab</BqTab>
+  </BqTabGroup>
+);
+```
+```html Angular icon="angular"
+<bq-tab-group orientation="vertical" value="1">
+  <bq-tab tab-id="1">Tab</bq-tab>
+  <bq-tab tab-id="2">Tab</bq-tab>
+  <bq-tab tab-id="3">Long Tab name</bq-tab>
+  <bq-tab tab-id="4" disabled>Tab</bq-tab>
+</bq-tab-group>
+```
+```vue Vue icon="vuejs"
+<template>
+  <BqTabGroup orientation="vertical" value="1">
+    <BqTab tabId="1">Tab</BqTab>
+    <BqTab tabId="2">Tab</BqTab>
+    <BqTab tabId="3">Long Tab name</BqTab>
+    <BqTab tabId="4" disabled>Tab</BqTab>
+  </BqTabGroup>
+</template>
+```
+</CodeGroup>
+
+### No divider
+
+Use `disable-divider` to hide the underline separator between the tab list and the content area.
+
+<CodeLivePreview code={`
+  <style>
+    :host {
+      flex-direction: column !important;
+      align-items: stretch !important;
+    }
+  </style>
+  <bq-tab-group disable-divider value="1">
+    <bq-tab tab-id="1">Tab</bq-tab>
+    <bq-tab tab-id="2">Tab</bq-tab>
+    <bq-tab tab-id="3">Long Tab name</bq-tab>
+  </bq-tab-group>
+`}>
+</CodeLivePreview>
+
+<CodeGroup>
+```html HTML icon="html5"
+<bq-tab-group disable-divider value="1">
+  <bq-tab tab-id="1">Tab</bq-tab>
+  <bq-tab tab-id="2">Tab</bq-tab>
+  <bq-tab tab-id="3">Long Tab name</bq-tab>
+</bq-tab-group>
+```
+```tsx React icon="react"
+import { BqTab, BqTabGroup } from "@beeq/react";
+
+export default () => (
+  <BqTabGroup disableDivider value="1">
+    <BqTab tabId="1">Tab</BqTab>
+    <BqTab tabId="2">Tab</BqTab>
+    <BqTab tabId="3">Long Tab name</BqTab>
+  </BqTabGroup>
+);
+```
+```html Angular icon="angular"
+<bq-tab-group disable-divider value="1">
+  <bq-tab tab-id="1">Tab</bq-tab>
+  <bq-tab tab-id="2">Tab</bq-tab>
+  <bq-tab tab-id="3">Long Tab name</bq-tab>
+</bq-tab-group>
+```
+```vue Vue icon="vuejs"
+<template>
+  <BqTabGroup disableDivider value="1">
+    <BqTab tabId="1">Tab</BqTab>
+    <BqTab tabId="2">Tab</BqTab>
+    <BqTab tabId="3">Long Tab name</BqTab>
+  </BqTabGroup>
+</template>
+```
+</CodeGroup>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Keep tab labels short and parallel — prefer noun phrases like "Overview", "Details", or "Settings" rather than full sentences.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Don't use tabs with only one or two items — a single visible section or a toggle is simpler and less visually heavy.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Always provide a `controls` attribute on each `bq-tab` pointing to the `id` of its associated panel element to meet ARIA requirements.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Don't mix tabs of different sizes in the same tab group. Set `size` on `bq-tab-group` and let it propagate uniformly.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use consistent tab labels across your interface — if some tabs have icons, apply icons to all tabs in the same group.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Don't use tabs for actions or commands. Tabs are for navigation between content views, not for triggering operations like "Save" or "Delete".
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Choose the orientation that matches your layout — use horizontal tabs for top-of-content placement and vertical tabs for sidebar-style navigation.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Don't rely solely on the active-indicator underline for visual differentiation — ensure sufficient color contrast on the active tab label as well.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+`bq-tab-group` and `bq-tab` implement the [ARIA Tabs pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/):
+
+- The tab list container has `role="tablist"`.
+- Each `bq-tab` renders as a `<button role="tab">` with `aria-selected` and `aria-disabled` set automatically.
+- The `controls` prop maps to `aria-controls`, linking each tab to its panel. Always provide a matching `id` on the panel element and `role="tabpanel"` for correct screen reader announcements.
+- Keyboard navigation is handled by the tab group:
+  - `ArrowRight` / `ArrowDown` — move focus to the next enabled tab
+  - `ArrowLeft` / `ArrowUp` — move focus to the previous enabled tab
+- Focus management follows the roving `tabindex` pattern: only the active tab is in the tab order; other tabs are reachable via arrow keys.
+- Disabled tabs have `aria-disabled="true"` and `disabled` set on the underlying button, removing them from interaction.
+
+**Your responsibilities:**
+- Provide a meaningful `controls` value on each `bq-tab` that matches the `id` of the corresponding panel.
+- Add `role="tabpanel"` to each panel element.
+- When using icons without a visible label, add a descriptive `aria-label` to the `bq-tab` so screen readers can identify the tab.
+
+## API reference
+
+### `bq-tab-group`
+
+#### Properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `debounceTime` | `debounce-time` | Delay in milliseconds before `bqChange` fires | `number` | `0` |
+| `disableDivider` | `disable-divider` | If true, the underline divider is hidden | `boolean` | `false` |
+| `orientation` | `orientation` | Layout direction of the tab list | `"horizontal" \| "vertical"` | `"horizontal"` |
+| `placement` | `placement` | Alignment of tabs within the group | `"start" \| "end"` | `"start"` |
+| `size` | `size` | Size applied to all child tabs | `"small" \| "medium" \| "large"` | `"medium"` |
+| `value` | `value` | The `tab-id` of the currently selected tab | `string` | — |
+
+#### Events
+
+| Event | Description | Type |
+|---|---|---|
+| `bqChange` | Fired when the selected tab changes | `CustomEvent<{ target: HTMLBqTabElement; value: string }>` |
+
+#### Slots
+
+| Slot | Description |
+|---|---|
+| *(default)* | The `bq-tab` items to render inside the group |
+
+#### Shadow parts
+
+| Part | Description |
+|---|---|
+| `base` | The outer `<div>` wrapper |
+| `tabs` | The `<div role="tablist">` holding all tab buttons |
+
+---
+
+### `bq-tab`
+
+#### Properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `active` | `active` | If true, the tab is rendered in its active state | `boolean` | `false` |
+| `controls` *(required)* | `controls` | The `id` of the panel element this tab controls | `string` | — |
+| `disabled` | `disabled` | If true, the tab is non-interactive | `boolean` | `false` |
+| `orientation` | `orientation` | Layout direction — propagated automatically by `bq-tab-group` | `"horizontal" \| "vertical"` | `"horizontal"` |
+| `placement` | `placement` | Alignment — propagated automatically by `bq-tab-group` | `"start" \| "end"` | `"start"` |
+| `size` | `size` | Size — propagated automatically by `bq-tab-group` | `"small" \| "medium" \| "large"` | `"medium"` |
+| `tabId` *(required)* | `tab-id` | Unique identifier used to match the tab to its panel | `string` | — |
+
+#### Events
+
+| Event | Description | Type |
+|---|---|---|
+| `bqClick` | Fired when the tab is clicked or activated | `CustomEvent<HTMLBqTabElement>` |
+| `bqFocus` | Fired when the tab receives focus | `CustomEvent<HTMLBqTabElement>` |
+| `bqBlur` | Fired when the tab loses focus | `CustomEvent<HTMLBqTabElement>` |
+| `bqKeyDown` | Fired when a key is pressed while the tab is focused | `CustomEvent<KeyboardEvent>` |
+
+#### Methods
+
+| Method | Description |
+|---|---|
+| `vClick() => Promise<void>` | Simulates a click on the underlying `<button>` element |
+| `vFocus() => Promise<void>` | Sets focus on the underlying `<button>` element |
+| `vBlur() => Promise<void>` | Removes focus from the underlying `<button>` element |
+
+#### Slots
+
+| Slot | Description |
+|---|---|
+| *(default)* | The tab label text |
+| `icon` | An optional icon to display before the label |
+
+#### Shadow parts
+
+| Part | Description |
+|---|---|
+| `base` | The `<button>` element |
+| `content` | The `<div>` wrapping the icon and text |
+| `icon` | The `<div>` holding the slotted icon |
+| `text` | The `<div>` holding the slotted label text |
+| `underline` | The element that renders the active-state underline indicator |
+
+#### CSS custom properties
+
+<Expandable title="CSS variables" defaultOpen={true}>
+
+| Variable | Description | Default |
+|---|---|---|
+| `--bq-tab--font-size` | Font size of the tab label | `var(--bq-font-size--m)` |
+| `--bq-tab--font-weight` | Font weight of the tab label | `var(--bq-font-weight--medium)` |
+| `--bq-tab--line-height` | Line height of the tab label | `var(--bq-font-line-height--regular)` |
+| `--bq-tab--label-icon-gap` | Gap between the icon and the label | `var(--bq-spacing-xs)` |
+| `--bq-tab--padding-vertical-small` | Vertical padding for the small size | `var(--bq-spacing-xs2)` |
+| `--bq-tab--padding-horizontal-small` | Horizontal padding for the small size | `var(--bq-spacing-m)` |
+| `--bq-tab--padding-vertical-medium` | Vertical padding for the medium size | `var(--bq-spacing-xs)` |
+| `--bq-tab--padding-horizontal-medium` | Horizontal padding for the medium size | `var(--bq-spacing-l)` |
+| `--bq-tab--padding-vertical-large` | Vertical padding for the large size | `var(--bq-spacing-s)` |
+| `--bq-tab--padding-horizontal-large` | Horizontal padding for the large size | `var(--bq-spacing-l)` |
+| `--bq-tab--icon-size-small` | Icon size for the small variant | `20px` |
+| `--bq-tab--icon-size-medium` | Icon size for the medium variant | `24px` |
+| `--bq-tab--icon-size-large` | Icon size for the large variant | `24px` |
+
+</Expandable>
+
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-tabs--default">
+    Explore Tab variants and states in Storybook
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/tab">
+    View the component source on GitHub
+  </Card>
+</CardGroup>
