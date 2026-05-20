@@ -90,9 +90,9 @@ By default, the label appears to the right of the control. Set `reverse-order` t
 
 The default switch provides a basic on/off toggle functionality, allowing users to control a binary state effortlessly.
 
-<CodeLivePreview
-  code={`<bq-switch>Toggle me!</bq-switch>`}
->
+<CodeLivePreview code={`
+  <bq-switch>Toggle me!</bq-switch>
+`}>
   <CodeGroup>
     ```html HTML
     <bq-switch>Toggle me!</bq-switch>
@@ -121,9 +121,9 @@ The default switch provides a basic on/off toggle functionality, allowing users 
 
 Use the `checked` attribute to set the initial state of the toggle as ON. This is ideal when you want the switch to start in an activated position.
 
-<CodeLivePreview
-  code={`<bq-switch checked>Toggle me!</bq-switch>`}
->
+<CodeLivePreview code={`
+  <bq-switch checked>Toggle me!</bq-switch>
+`}>
   <CodeGroup>
     ```html HTML
     <bq-switch checked>Toggle me!</bq-switch>
@@ -150,9 +150,9 @@ Use the `checked` attribute to set the initial state of the toggle as ON. This i
 
 The disabled switch prevents user interaction, making it visually clear that the toggle functionality is not currently available or applicable. Use the `disabled` attribute to enable this type of switch.
 
-<CodeLivePreview
-  code={`<bq-switch disabled>Toggle me!</bq-switch>`}
->
+<CodeLivePreview code={`
+  <bq-switch disabled>Toggle me!</bq-switch>
+`}>
   <CodeGroup>
     ```html HTML
     <bq-switch disabled>Toggle me!</bq-switch>
@@ -177,9 +177,9 @@ The disabled switch prevents user interaction, making it visually clear that the
 
 Enhance user understanding by incorporating an inner label that provides context about the current state of the switch. Use the `inner-label="icon"` attribute to activate this variant.
 
-<CodeLivePreview
-  code={`<bq-switch inner-label="icon">Toggle me!</bq-switch>`}
->
+<CodeLivePreview code={`
+  <bq-switch inner-label="icon">Toggle me!</bq-switch>
+`}>
   <CodeGroup>
     ```html HTML
     <bq-switch inner-label="icon">Toggle me!</bq-switch>
@@ -204,9 +204,9 @@ Enhance user understanding by incorporating an inner label that provides context
 
 The reverse order switch alters the visual arrangement, placing the toggle on the opposite side for a customizable user interface by adding the `reverse-order` attribute.
 
-<CodeLivePreview
-  code={`<bq-switch reverse-order>Toggle me!</bq-switch>`}
->
+<CodeLivePreview code={`
+  <bq-switch reverse-order>Toggle me!</bq-switch>
+`}>
   <CodeGroup>
     ```html HTML
     <bq-switch reverse-order>Toggle me!</bq-switch>
@@ -231,54 +231,59 @@ The reverse order switch alters the visual arrangement, placing the toggle on th
 
 Use `full-width` with `reverse-order` and `justify-content="space-between"` to build standard settings-list rows where the label is on the left and the toggle sits flush to the right edge.
 
-<CodeLivePreview
-  code={`<style>
-  :host { flex-direction: column !important; align-items: stretch !important; max-width: 28rem; }
-</style>
-<bq-switch
-  background-on-hover
-  full-width
-  justify-content="space-between"
-  name="bq-switch"
-  reverse-order
-  value="show-app-list"
->
-  Show app list in menu
-</bq-switch>
-<bq-switch
-  background-on-hover
-  checked
-  full-width
-  justify-content="space-between"
-  name="bq-switch"
-  reverse-order
-  value="show-recently-apps"
->
-  Show recently added apps
-</bq-switch>
-<bq-switch
-  background-on-hover
-  disabled
-  full-width
-  justify-content="space-between"
-  name="bq-switch"
-  reverse-order
-  value="show-used-apps"
->
-  Show most used apps
-</bq-switch>
-<bq-switch
-  background-on-hover
-  checked
-  full-width
-  justify-content="space-between"
-  name="bq-switch"
-  reverse-order
-  value="show-app-notifications"
->
-  Show app notifications
-</bq-switch>`}
->
+<CodeLivePreview code={`
+  <style>
+    :host { 
+      flex-direction: column !important; 
+      align-items: stretch !important; 
+      max-width: 28rem; 
+    }
+  </style>
+
+  <bq-switch
+    background-on-hover
+    full-width
+    justify-content="space-between"
+    name="bq-switch"
+    reverse-order
+    value="show-app-list"
+  >
+    Show app list in menu
+  </bq-switch>
+  <bq-switch
+    background-on-hover
+    checked
+    full-width
+    justify-content="space-between"
+    name="bq-switch"
+    reverse-order
+    value="show-recently-apps"
+  >
+    Show recently added apps
+  </bq-switch>
+  <bq-switch
+    background-on-hover
+    disabled
+    full-width
+    justify-content="space-between"
+    name="bq-switch"
+    reverse-order
+    value="show-used-apps"
+  >
+    Show most used apps
+  </bq-switch>
+  <bq-switch
+    background-on-hover
+    checked
+    full-width
+    justify-content="space-between"
+    name="bq-switch"
+    reverse-order
+    value="show-app-notifications"
+  >
+    Show app notifications
+  </bq-switch>
+`}>
   <CodeGroup>
     ```html HTML
     <bq-switch
