@@ -1,0 +1,158 @@
+---
+title: Spacing
+description: The spacing scale can be applied to margin or padding properties, as well as to both vertical and horizontal edges.
+---
+
+<Frame className="px-4 py-4" caption="BEEQ spacing overview">
+  <img
+    src="/foundations/images/spacing/spacing-overview.png"
+    alt="BEEQ spacing overview"
+  />
+</Frame>
+
+Spacing in BEEQ is built on a 4px grid system. It creates a consistent foundation for layout, positioning, and rhythm across products, helping interfaces feel balanced, organized, and easier to use.
+
+The spacing scale can be applied to padding, margin, and gap values. It supports both internal spacing within components and external spacing between elements, so layouts stay consistent as they scale across screens and use cases.
+
+---
+
+## 4px grid system
+
+In BEEQ, we implement a 4px grid system for spacing to address layout and positioning requirements with consistency. This system improves alignment, scalability, and adaptability across devices and screen resolutions.
+
+<Frame className="px-4 py-4" caption="BEEQ 4px spacing grid system">
+  <img
+    src="/foundations/images/spacing/spacing-grid-system.png"
+    alt="BEEQ 4px spacing grid system"
+  />
+</Frame>
+
+The spacing system is categorized using T-shirt sizes (`XS`, `S`, `M`, `L`, `XL`, `XXL`), with each size mapped to a specific token value. These values are exposed through tokens in the BEEQ design system and can be applied consistently across components and layouts.
+
+<Frame className="px-4 py-4" caption="BEEQ spacing tokens">
+  <img
+    src="/foundations/images/spacing/spacing-tokens.png"
+    alt="BEEQ spacing tokens"
+  />
+</Frame>
+
+Spacing serves a dual purpose within components: it is used both inside components (`padding`) and between components (`margin` and `gap`). Internal spacing usually uses smaller values to keep related elements visually connected, while external spacing uses larger values to create separation and improve scanability.
+
+The spacing inside coded components is already defined, allowing you to focus on building layouts for your users. When creating custom components, use the same spacing scale to maintain consistency and a natural flow across pages.
+
+<Frame className="px-4 py-4" caption="Spacing inside and between components">
+  <img
+    src="/foundations/images/spacing/spacing-usage-overview.png"
+    alt="Spacing inside and between components"
+  />
+</Frame>
+
+---
+
+## Spacing scale
+
+Used for spacing **inside** components and elements.
+
+| Token | Value |
+| --- | --- |
+| `spacing-xs3` | `2px` |
+| `spacing-xs2` | `4px` |
+| `spacing-xs` | `8px` |
+| `spacing-s` | `12px` |
+| `spacing-m` | `16px` |
+| `spacing-l` | `24px` |
+| `spacing-xl` | `32px` |
+| `spacing-xxl` | `40px` |
+| `spacing-xxl2` | `56px` |
+| `spacing-xxl3` | `64px` |
+| `spacing-xxl4` | `96px` |
+
+<Frame className="px-4 py-4" caption="Spacing scale reference">
+  <img
+    src="/foundations/images/spacing/spacing-scale.png"
+    alt="Spacing scale reference"
+  />
+</Frame>
+
+---
+
+## Gap scale
+
+Used for spacing **between** components and elements.
+
+| Token | Value |
+| --- | --- |
+| `gap-xs3` | `2px` |
+| `gap-xs2` | `4px` |
+| `gap-xs` | `8px` |
+| `gap-s` | `12px` |
+| `gap-m` | `16px` |
+| `gap-l` | `24px` |
+| `gap-xl` | `32px` |
+| `gap-xxl` | `40px` |
+| `gap-xxl2` | `56px` |
+| `gap-xxl3` | `64px` |
+| `gap-xxl4` | `96px` |
+
+---
+
+## Usage guidelines
+
+<CardGroup cols={2}>
+  <Card title="Vertical alignment">
+    Vertical alignment is applied to text when line height and spacing within an element are not enough to occupy the full space. Achieving visual balance requires careful spacing decisions.
+
+    <Frame caption="Vertical alignment">
+      <img
+        src="/foundations/images/spacing/spacing-vertical-alignment.png"
+        alt="Vertical alignment"
+      />
+    </Frame>
+  </Card>
+  <Card title="Relationships">
+    Greater spacing around elements suggests greater importance, while closely grouped elements appear more related. When items are too close together, users may perceive the group without processing each individual element clearly.
+
+    <Frame caption="Relationships">
+      <img
+        src="/foundations/images/spacing/spacing-relationships.png"
+        alt="Relationships between grouped elements"
+      />
+    </Frame>
+  </Card>
+  <Card title="Creating hierarchy">
+    Larger spacing is useful for larger UI elements such as interactive cards. The added separation helps communicate that an element is distinct from the surrounding interface.
+
+    <Frame caption="Creating hierarchy">
+      <img
+        src="/foundations/images/spacing/spacing-hierarchy.png"
+        alt="Using spacing to create hierarchy"
+      />
+    </Frame>
+  </Card>
+  <Card title="Vertical rhythm">
+    The vertical structure of a layout is shaped by element heights, vertical spacing, and text line height. Together they create a cohesive rhythm aligned to a vertical grid, improving readability and visual consistency.
+
+    <Frame caption="Vertical rhythm">
+      <img
+        src="/foundations/images/spacing/spacing-vertical-rhythm.png"
+        alt="Vertical rhythm in layout"
+      />
+    </Frame>
+  </Card>
+  <Card title="White space">
+    White space, also referred to as empty space, plays a key role in visual clarity. It improves legibility, supports readability, and gives layouts room to breathe so interfaces feel balanced and organized.
+
+    <Frame caption="White space">
+      <img
+        src="/foundations/images/spacing/spacing-white-space.png"
+        alt="White space in interface design"
+      />
+    </Frame>
+  </Card>
+</CardGroup>
+
+---
+
+## Keywords
+
+spacing, gap, margin, grid system, 4px, 4px grid system, vertical alignment, horizontal alignment, relationship, hierarchy, vertical rhythm, white space, spacing pattern
