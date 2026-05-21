@@ -1,0 +1,282 @@
+---
+title: Grid
+description: Supporting responsive experiences is an essential part of developing. Every page and feature needs to adapt to the user's device and their preferences.
+---
+
+<Frame className="px-4 py-4" caption="BEEQ grid system overview">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/grid/grid-overview-light.svg"
+    alt="BEEQ grid system overview — light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/grid/grid-overview-dark.svg"
+    alt="BEEQ grid system overview — dark mode"
+  />
+</Frame>
+
+The grid provides the fundamental groundwork for placing visual elements. Working on the grid ensures a standard direction for creative decision-making across products and a responsive framework for design on different devices. It makes an app look coherent, enhances visual hierarchy, and balances design.
+
+There is no one-size-fits-all grid behavior. Different content types can render better when using fixed, stretch, or hybrid grid models. Use the following guidance to decide on the best approach for your application.
+
+---
+
+## Grid anatomy
+
+All grids are made up of three elements: columns, gutters, and margins.
+
+<Frame className="px-4 py-4" caption="Grid anatomy — columns, gutters, and margins">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/grid/grid-anatomy-light.svg"
+    alt="Grid anatomy — light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/grid/grid-anatomy-dark.svg"
+    alt="Grid anatomy — dark mode"
+  />
+</Frame>
+
+### Columns
+
+Columns are the building blocks of a grid and mark where elements should be placed. A 12-column framework is common for its flexibility and easy division. It is highly composite for layouts and can be updated responsively based on screen size.
+
+### Gutters
+
+Gutters are the negative space between columns. Their width should be a multiple of the base unit. To better adapt to a given screen size, gutter widths can change at different breakpoints.
+
+### Margins
+
+Margins are the space outside of the grid columns and rows. Margin widths can be fixed or percentage-based and can also change at different breakpoints.
+
+---
+
+## Grid types
+
+There are many ways to combine columns, gutters, and margins to create different grid layouts. Consistency is key to building familiar patterns that make your app easy to scan and navigate. A good grid will also adapt to different screen sizes and orientations, ensuring cohesion across environments.
+
+<CardGroup cols={2}>
+  <Card title="Baseline grid">
+    Baseline grids consist of dense horizontal rows that provide alignment and spacing guidelines for text. Aligning baselines to a specific absolute grid establishes a vertical rhythm — a pattern that is easier for the human brain to scan. Baseline grids are especially useful with content that spans multiple columns.
+
+    <Frame caption="Baseline grid">
+      <img
+        className="block dark:hidden"
+        src="/foundations/images/grid/grid-type-baseline-light.svg"
+        alt="Baseline grid — light mode"
+      />
+      <img
+        className="hidden dark:block"
+        src="/foundations/images/grid/grid-type-baseline-dark.svg"
+        alt="Baseline grid — dark mode"
+      />
+    </Frame>
+  </Card>
+  <Card title="Column grid">
+    Column grids are the most common layout used for web applications. The grid splits the frame into evenly spaced vertical fields to which objects are aligned. These grids are typically made of 12 columns which can then be divided into halves, thirds, fourths, and sixths when designing responsive screen sizes.
+
+    <Frame caption="Column grid">
+      <img
+        className="block dark:hidden"
+        src="/foundations/images/grid/grid-type-column-light.svg"
+        alt="Column grid — light mode"
+      />
+      <img
+        className="hidden dark:block"
+        src="/foundations/images/grid/grid-type-column-dark.svg"
+        alt="Column grid — dark mode"
+      />
+    </Frame>
+  </Card>
+  <Card title="Manuscript grid">
+    Manuscript grids have a primary structure defined by large continuous blocks of text surrounded by margins. Think of them as single-column grids. This style helps to ensure readability by consolidating content to provide the optimal line length.
+
+    <Frame caption="Manuscript grid">
+      <img
+        className="block dark:hidden"
+        src="/foundations/images/grid/grid-type-manuscript-light.svg"
+        alt="Manuscript grid — light mode"
+      />
+      <img
+        className="hidden dark:block"
+        src="/foundations/images/grid/grid-type-manuscript-dark.svg"
+        alt="Manuscript grid — dark mode"
+      />
+    </Frame>
+  </Card>
+  <Card title="Modular grid">
+    Modular grids are a variation of the column grid. They have both vertical columns and horizontal rows which intersect to create a matrix of cells, or modules. These modules provide additional layout guidelines and can be used as single units or as larger blocks when combined.
+
+    <Frame caption="Modular grid">
+      <img
+        className="block dark:hidden"
+        src="/foundations/images/grid/grid-type-modular-light.svg"
+        alt="Modular grid — light mode"
+      />
+      <img
+        className="hidden dark:block"
+        src="/foundations/images/grid/grid-type-modular-dark.svg"
+        alt="Modular grid — dark mode"
+      />
+    </Frame>
+  </Card>
+</CardGroup>
+
+---
+
+## Breakpoints
+
+The BEEQ Design System uses the following breakpoints to optimize layouts across screen sizes. Not all breakpoints need to be used in a product. Breakpoints only need to be referenced when the design needs to change for a particular breakpoint range.
+
+| Breakpoint     | Viewport        |
+| -------------- | --------------- |
+| Phones         | 576 – 768 px    |
+| Tablets        | 768 – 992 px    |
+| Desktop        | 992 – 1200 px   |
+| Large devices  | 1200 – 1920 px  |
+
+<Frame className="px-4 py-4" caption="BEEQ breakpoints overview">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/grid/grid-breakpoints-light.svg"
+    alt="BEEQ breakpoints — light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/grid/grid-breakpoints-dark.svg"
+    alt="BEEQ breakpoints — dark mode"
+  />
+</Frame>
+
+---
+
+## Layout
+
+Layouts are a culmination of defined rules and intentional organization of content. Bringing your content into thoughtful structures is key, but making it all flow together with a clear hierarchy across platforms and screen sizes requires scaling logic. Individually, adaptive and responsive design can each address this challenge. In some cases, a mix of both is the right choice.
+
+### Responsive
+
+Responsive design uses a single layout where content is fluid and can adapt to changing format sizes. This technique uses media queries to inspect a given device's characteristics and renders content accordingly. Responsive design allows you to build a feature once and expect it to work across all screen sizes.
+
+<Frame caption="Responsive layout">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/grid/grid-layout-responsive-light.svg"
+    alt="Responsive layout — light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/grid/grid-layout-responsive-dark.svg"
+    alt="Responsive layout — dark mode"
+  />
+</Frame>
+
+### Adaptive
+
+An adaptive layout changes entirely based on the format it is presented in. Adaptive design has multiple fixed layout sizes and triggers the browser to load a given layout based on the available space. Sites built with adaptive design use media queries to read breakpoints — similar to responsive design — plus additional markup based on the device's capabilities. This process is known as "progressive enhancement."
+
+<Frame caption="Adaptive layout">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/grid/grid-layout-adaptive-light.svg"
+    alt="Adaptive layout — light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/grid/grid-layout-adaptive-dark.svg"
+    alt="Adaptive layout — dark mode"
+  />
+</Frame>
+
+---
+
+## Container type
+
+Understanding the distinctions between fluid and fixed layouts empowers designers to make informed decisions based on project requirements. In practice, the intersection of fluid and fixed layouts is often used — seeking a balance between adaptability and precision. Striking this balance ensures visually captivating designs that function seamlessly across an array of devices.
+
+<CardGroup cols={2}>
+  <Card title="Fluid">
+    Fluid layouts are calculated to their relative size and stretch as the screen (viewport) is resized. For example, if you set the layout width to 100%, each column will only be calculated to its relative size and will stretch as the browser is resized. Fluid layouts are often used to create a seamless experience across various devices.
+
+    <Frame caption="Fluid container">
+      <img
+        className="block dark:hidden"
+        src="/foundations/images/grid/grid-container-fluid-light.svg"
+        alt="Fluid container — light mode"
+      />
+      <img
+        className="hidden dark:block"
+        src="/foundations/images/grid/grid-container-fluid-dark.svg"
+        alt="Fluid container — dark mode"
+      />
+    </Frame>
+  </Card>
+  <Card title="Fixed">
+    Fixed layouts do not respond to the size of the viewport but remain at a fixed width defined by a specific numerical value (e.g. 1920 px). Fixed layouts are more static and may be suitable for designs where a specific aesthetic is desired and the content is not expected to change significantly based on screen size.
+
+    <Frame caption="Fixed container">
+      <img
+        className="block dark:hidden"
+        src="/foundations/images/grid/grid-container-fixed-light.svg"
+        alt="Fixed container — light mode"
+      />
+      <img
+        className="hidden dark:block"
+        src="/foundations/images/grid/grid-container-fixed-dark.svg"
+        alt="Fixed container — dark mode"
+      />
+    </Frame>
+  </Card>
+</CardGroup>
+
+---
+
+## Usage guidelines
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+
+    - Keep layout regions within column boundaries — never extend them into the gutters
+    - Use gutters to create breathing room between your layout regions
+    - Apply breakpoints only when the design needs to change for a specific viewport range
+    - Prefer semantic tokens (`--bq-spacing-*`) for margin and gutter values to stay aligned with the design system
+
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+
+    - Don't place content inside the gutters — they exist exclusively to separate columns
+    - Don't mix different grid types within the same screen without a clear visual separation
+    - Don't use arbitrary pixel values for spacing — rely on the base unit multiples defined by the system
+    - Don't define breakpoints for every possible screen size — focus on the ranges that meaningfully change the layout
+
+  </Card>
+</CardGroup>
+
+<Frame caption="Grid gutter usage">
+  <img
+    className="block dark:hidden"
+    src="/foundations/images/grid/grid-usage-gutter-light.svg"
+    alt="Grid gutter usage — light mode"
+  />
+  <img
+    className="hidden dark:block"
+    src="/foundations/images/grid/grid-usage-gutter-dark.svg"
+    alt="Grid gutter usage — dark mode"
+  />
+</Frame>
+
+---
+
+## Keywords
+
+Responsive design, grid system, visual elements, tokens, design framework, design balance, fixed grid, stretch grid, hybrid grid, columns, gutters, margins, consistency, patterns, baseline grids, vertical rhythm, column grids, manuscript grids, modular grids, layout guidelines, adaptive design, responsive layout, fluid layout, fixed layout, media queries, web layouts, viewport, screen size, design, user-friendly experience.
