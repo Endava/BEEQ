@@ -164,6 +164,10 @@ export default () => (
 </bq-tab-group>
 ```
 ```vue Vue icon="vuejs"
+<script setup lang="ts">
+import { BqTab, BqTabGroup } from "@beeq/vue";
+</script>
+
 <template>
   <BqTabGroup value="5">
     <BqTab tabId="1">Tab</BqTab>
@@ -327,6 +331,10 @@ export default () => (
 </bq-tab-group>
 ```
 ```vue Vue icon="vuejs"
+<script setup lang="ts">
+import { BqIcon, BqTab, BqTabGroup } from "@beeq/vue";
+</script>
+
 <template>
   <BqTabGroup value="5" size="small">
     <BqTab tabId="1">
@@ -464,6 +472,10 @@ export default () => (
 </bq-tab-group>
 ```
 ```vue Vue icon="vuejs"
+<script setup lang="ts">
+import { BqTab, BqTabGroup } from "@beeq/vue";
+</script>
+
 <template>
   <!-- Small -->
   <BqTabGroup size="small" value="1">
@@ -538,6 +550,10 @@ export default () => (
 </bq-tab-group>
 ```
 ```vue Vue icon="vuejs"
+<script setup lang="ts">
+import { BqTab, BqTabGroup } from "@beeq/vue";
+</script>
+
 <template>
   <BqTabGroup orientation="vertical" value="1">
     <BqTab tabId="1">Tab</BqTab>
@@ -595,6 +611,10 @@ export default () => (
 </bq-tab-group>
 ```
 ```vue Vue icon="vuejs"
+<script setup lang="ts">
+import { BqTab, BqTabGroup } from "@beeq/vue";
+</script>
+
 <template>
   <BqTabGroup disableDivider value="1">
     <BqTab tabId="1">Tab</BqTab>
@@ -752,11 +772,11 @@ export default () => (
 
 #### Methods
 
-| Method | Description |
-|---|---|
-| `vClick() => Promise<void>` | Simulates a click on the underlying `<button>` element |
-| `vFocus() => Promise<void>` | Sets focus on the underlying `<button>` element |
-| `vBlur() => Promise<void>` | Removes focus from the underlying `<button>` element |
+| Method | Description | Signature |
+|---|---|---|
+| `vClick()` | Simulates a click on the underlying `<button>` element | `vClick() => Promise<void>` |
+| `vFocus()` | Sets focus on the underlying `<button>` element | `vFocus() => Promise<void>` |
+| `vBlur()` | Removes focus from the underlying `<button>` element | `vBlur() => Promise<void>` |
 
 #### Slots
 

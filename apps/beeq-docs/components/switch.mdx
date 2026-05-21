@@ -107,8 +107,14 @@ The default switch provides a basic on/off toggle functionality, allowing users 
     ```html Angular
     <bq-switch>Toggle me!</bq-switch>
     ```
-    ```html Vue
-    <bq-switch>Toggle me!</bq-switch>
+    ```vue Vue
+    <script setup lang="ts">
+    import { BqSwitch } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSwitch>Toggle me!</BqSwitch>
+    </template>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -138,8 +144,14 @@ Use the `checked` attribute to set the initial state of the toggle as ON. This i
     ```html Angular
     <bq-switch checked>Toggle me!</bq-switch>
     ```
-    ```html Vue
-    <bq-switch checked>Toggle me!</bq-switch>
+    ```vue Vue
+    <script setup lang="ts">
+    import { BqSwitch } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSwitch checked>Toggle me!</BqSwitch>
+    </template>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -167,8 +179,14 @@ The disabled switch prevents user interaction, making it visually clear that the
     ```html Angular
     <bq-switch disabled>Toggle me!</bq-switch>
     ```
-    ```html Vue
-    <bq-switch disabled>Toggle me!</bq-switch>
+    ```vue Vue
+    <script setup lang="ts">
+    import { BqSwitch } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSwitch disabled>Toggle me!</BqSwitch>
+    </template>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -194,8 +212,14 @@ Enhance user understanding by incorporating an inner label that provides context
     ```html Angular
     <bq-switch inner-label="icon">Toggle me!</bq-switch>
     ```
-    ```html Vue
-    <bq-switch innerLabel="icon">Toggle me!</bq-switch>
+    ```vue Vue
+    <script setup lang="ts">
+    import { BqSwitch } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSwitch innerLabel="icon">Toggle me!</BqSwitch>
+    </template>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -221,8 +245,14 @@ The reverse order switch alters the visual arrangement, placing the toggle on th
     ```html Angular
     <bq-switch reverse-order>Toggle me!</bq-switch>
     ```
-    ```html Vue
-    <bq-switch reverseOrder>Toggle me!</bq-switch>
+    ```vue Vue
+    <script setup lang="ts">
+    import { BqSwitch } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSwitch reverseOrder>Toggle me!</BqSwitch>
+    </template>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -426,50 +456,56 @@ Use `full-width` with `reverse-order` and `justify-content="space-between"` to b
       Show app notifications
     </bq-switch>
     ```
-    ```html Vue
-    <bq-switch
-      :backgroundOnHover="true"
-      :fullWidth="true"
-      justifyContent="space-between"
-      name="bq-switch"
-      :reverseOrder="true"
-      value="show-app-list"
-    >
-      Show app list in menu
-    </bq-switch>
-    <bq-switch
-      :backgroundOnHover="true"
-      checked
-      :fullWidth="true"
-      justifyContent="space-between"
-      name="bq-switch"
-      :reverseOrder="true"
-      value="show-recently-apps"
-    >
-      Show recently added apps
-    </bq-switch>
-    <bq-switch
-      :backgroundOnHover="true"
-      disabled
-      :fullWidth="true"
-      justifyContent="space-between"
-      name="bq-switch"
-      :reverseOrder="true"
-      value="show-used-apps"
-    >
-      Show most used apps
-    </bq-switch>
-    <bq-switch
-      :backgroundOnHover="true"
-      checked
-      :fullWidth="true"
-      justifyContent="space-between"
-      name="bq-switch"
-      :reverseOrder="true"
-      value="show-app-notifications"
-    >
-      Show app notifications
-    </bq-switch>
+    ```vue Vue
+    <script setup lang="ts">
+    import { BqSwitch } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSwitch
+        backgroundOnHover
+        fullWidth
+        justifyContent="space-between"
+        name="bq-switch"
+        reverseOrder
+        value="show-app-list"
+      >
+        Show app list in menu
+      </BqSwitch>
+      <BqSwitch
+        backgroundOnHover
+        checked
+        fullWidth
+        justifyContent="space-between"
+        name="bq-switch"
+        reverseOrder
+        value="show-recently-apps"
+      >
+        Show recently added apps
+      </BqSwitch>
+      <BqSwitch
+        backgroundOnHover
+        disabled
+        fullWidth
+        justifyContent="space-between"
+        name="bq-switch"
+        reverseOrder
+        value="show-used-apps"
+      >
+        Show most used apps
+      </BqSwitch>
+      <BqSwitch
+        backgroundOnHover
+        checked
+        fullWidth
+        justifyContent="space-between"
+        name="bq-switch"
+        reverseOrder
+        value="show-app-notifications"
+      >
+        Show app notifications
+      </BqSwitch>
+    </template>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -552,7 +588,7 @@ Use `full-width` with `reverse-order` and `justify-content="space-between"` to b
 
 ### Developer responsibilities
 
-- Always provide a visible text label, either via the default slot or an external element associated through `aria-labelledby`. The switch derives its accessible name from the slotted label text.
+- Always provide a visible text label via the default slot. The switch derives its accessible name from the `name` prop via `aria-label` on the native `<input>` — the visible slot text is not automatically wired to the control. If you want the visible label to serve as the accessible name, use `aria-labelledby` on the host element pointing to the associated label element.
 - Use the `name` attribute (required) to participate in form submissions and to give the control a machine-readable identifier.
 - When the switch is `disabled`, it is excluded from the tab order and will not respond to keyboard or pointer events. Make sure the reason for disabling is communicated through surrounding text.
 - The `bqChange` event is cancelable. Calling `event.preventDefault()` inside a `bqChange` handler prevents the switch from updating its visual state, which is useful when you need to confirm a change before applying it.
@@ -574,7 +610,7 @@ Use `full-width` with `reverse-order` and `justify-content="space-between"` to b
 | `name` | `name` | Form control name; submitted as part of a name/value pair | `string` | **required** |
 | `required` | `required` | If `true`, the switch must be ON before the form can be submitted | `boolean` | `false` |
 | `reverseOrder` | `reverse-order` | If `true`, the label appears before the control | `boolean` | `false` |
-| `value` | `value` | The value submitted with the form when the switch is ON | `string` | — |
+| `value` | `value` | Sets the underlying `<input>` value attribute. Note: the form submission value is the fixed string `'on'` when checked (via ElementInternals), regardless of this prop | `string` | — |
 
 ### Methods
 

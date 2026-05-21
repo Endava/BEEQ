@@ -140,14 +140,20 @@ Use the default textarea when you need a standard multi-line text input. Provide
       </span>
     </bq-textarea>
     ```
-    ```html Vue
-    <bq-textarea placeholder="Placeholder...">
-      <label slot="label">Label</label>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-textarea>
+    ```vue Vue
+    <script setup lang="ts">
+    import { BqIcon, BqTextarea } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqTextarea placeholder="Placeholder...">
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+      </BqTextarea>
+    </template>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -217,17 +223,23 @@ Pre-populate your textarea with an initial `value` attribute to streamline user 
       </span>
     </bq-textarea>
     ```
-    ```html Vue
-    <bq-textarea
-      placeholder="Placeholder..."
-      value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
-    >
-      <label slot="label">Label</label>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-textarea>
+    ```vue Vue
+    <script setup lang="ts">
+    import { BqIcon, BqTextarea } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqTextarea
+        placeholder="Placeholder..."
+        value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
+      >
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+      </BqTextarea>
+    </template>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -303,18 +315,24 @@ Set `disabled` when the field is not currently available for interaction. Use it
       </span>
     </bq-textarea>
     ```
-    ```html Vue
-    <bq-textarea
-      disabled
-      placeholder="Placeholder..."
-      value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
-    >
-      <label slot="label">Label</label>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-textarea>
+    ```vue Vue
+    <script setup lang="ts">
+    import { BqIcon, BqTextarea } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqTextarea
+        disabled
+        placeholder="Placeholder..."
+        value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
+      >
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+      </BqTextarea>
+    </template>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -413,23 +431,29 @@ Add `disable-resize` to prevent users from resizing the textarea. This is useful
       </bq-textarea>
     </div>
     ```
-    ```html Vue
-    <div class="textarea--resize-group">
-      <bq-textarea placeholder="Resize is enabled">
-        <label slot="label">Label</label>
-        <span slot="helper-text">
-          <bq-icon name="star"></bq-icon>
-          Helper text
-        </span>
-      </bq-textarea>
-      <bq-textarea disableResize placeholder="Resize is disabled">
-        <label slot="label">Label</label>
-        <span slot="helper-text">
-          <bq-icon name="star"></bq-icon>
-          Helper text
-        </span>
-      </bq-textarea>
-    </div>
+    ```vue Vue
+    <script setup lang="ts">
+    import { BqIcon, BqTextarea } from "@beeq/vue";
+    </script>
+
+    <template>
+      <div class="textarea--resize-group">
+        <BqTextarea placeholder="Resize is enabled">
+          <label slot="label">Label</label>
+          <span slot="helper-text">
+            <BqIcon name="star" />
+            Helper text
+          </span>
+        </BqTextarea>
+        <BqTextarea :disableResize="true" placeholder="Resize is disabled">
+          <label slot="label">Label</label>
+          <span slot="helper-text">
+            <BqIcon name="star" />
+            Helper text
+          </span>
+        </BqTextarea>
+      </div>
+    </template>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -507,18 +531,24 @@ Set `maxlength` to limit the number of characters users can enter. A character c
       </span>
     </bq-textarea>
     ```
-    ```html Vue
-    <bq-textarea
-      :maxlength="100"
-      placeholder="Placeholder..."
-      value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
-    >
-      <label slot="label">Label</label>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-textarea>
+    ```vue Vue
+    <script setup lang="ts">
+    import { BqIcon, BqTextarea } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqTextarea
+        :maxlength="100"
+        placeholder="Placeholder..."
+        value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+      >
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+      </BqTextarea>
+    </template>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -592,18 +622,24 @@ Set `readonly` to display the value without allowing edits. Unlike `disabled`, a
       </span>
     </bq-textarea>
     ```
-    ```html Vue
-    <bq-textarea
-      placeholder="Placeholder..."
-      readonly
-      value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
-    >
-      <label slot="label">Label</label>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-textarea>
+    ```vue Vue
+    <script setup lang="ts">
+    import { BqIcon, BqTextarea } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqTextarea
+        placeholder="Placeholder..."
+        readonly
+        value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
+      >
+        <label slot="label">Label</label>
+        <span slot="helper-text">
+          <BqIcon name="star" />
+          Helper text
+        </span>
+      </BqTextarea>
+    </template>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -790,45 +826,51 @@ Set `validation-status` to `error`, `warning`, or `success` to communicate the s
       </bq-textarea>
     </div>
     ```
-    ```html Vue
-    <div class="textarea--validation-group">
-      <bq-textarea
-        :maxlength="100"
-        placeholder="Placeholder..."
-        validationStatus="error"
-        value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
-      >
-        <label slot="label">Label</label>
-        <span slot="helper-text">
-          <bq-icon name="star"></bq-icon>
-          Helper text
-        </span>
-      </bq-textarea>
-      <bq-textarea
-        :maxlength="100"
-        placeholder="Placeholder..."
-        validationStatus="warning"
-        value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
-      >
-        <label slot="label">Label</label>
-        <span slot="helper-text">
-          <bq-icon name="star"></bq-icon>
-          Helper text
-        </span>
-      </bq-textarea>
-      <bq-textarea
-        :maxlength="100"
-        placeholder="Placeholder..."
-        validationStatus="success"
-        value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
-      >
-        <label slot="label">Label</label>
-        <span slot="helper-text">
-          <bq-icon name="star"></bq-icon>
-          Helper text
-        </span>
-      </bq-textarea>
-    </div>
+    ```vue Vue
+    <script setup lang="ts">
+    import { BqIcon, BqTextarea } from "@beeq/vue";
+    </script>
+
+    <template>
+      <div class="textarea--validation-group">
+        <BqTextarea
+          :maxlength="100"
+          placeholder="Placeholder..."
+          validationStatus="error"
+          value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+        >
+          <label slot="label">Label</label>
+          <span slot="helper-text">
+            <BqIcon name="star" />
+            Helper text
+          </span>
+        </BqTextarea>
+        <BqTextarea
+          :maxlength="100"
+          placeholder="Placeholder..."
+          validationStatus="warning"
+          value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+        >
+          <label slot="label">Label</label>
+          <span slot="helper-text">
+            <BqIcon name="star" />
+            Helper text
+          </span>
+        </BqTextarea>
+        <BqTextarea
+          :maxlength="100"
+          placeholder="Placeholder..."
+          validationStatus="success"
+          value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+        >
+          <label slot="label">Label</label>
+          <span slot="helper-text">
+            <BqIcon name="star" />
+            Helper text
+          </span>
+        </BqTextarea>
+      </div>
+    </template>
     ```
   </CodeGroup>
 </CodeLivePreview>
