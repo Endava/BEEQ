@@ -70,10 +70,13 @@
             "pages": [
               "foundations/overview",
               "foundations/colors",
-              "foundations/typography",
-              "foundations/spacing",
+              "foundations/radius",
+              "foundations/icons",
               "foundations/grid",
-              "foundations/icons"
+              "foundations/shadows",
+              "foundations/spacing",
+              "foundations/stroke",
+              "foundations/typography"
             ]
           },
           {

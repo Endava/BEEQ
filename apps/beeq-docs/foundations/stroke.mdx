@@ -1,0 +1,93 @@
+---
+title: Stroke
+description: The stroke in BEEQ Design System serves as a versatile and dynamic visual element, thoughtfully crafted to enhance aesthetic appeal, guide user interactions, and ensure accessibility across diverse components and states.
+---
+
+<Frame className="px-4 py-4" caption="BEEQ stroke overview">
+  <img
+    src="/foundations/images/stroke/stroke-overview.png"
+    alt="BEEQ stroke overview"
+  />
+</Frame>
+
+By using strokes in a design system, we have the ability to define and accentuate visual elements. The importance of strokes lies in guiding the user. Additionally, stroke properties such as thickness, color, and style play a crucial role in establishing a unified visual language within the design system. Thoughtful use of strokes ensures consistency, reinforces brand identity, and contributes to a polished and professional design.
+
+---
+
+## Stroke properties
+
+<CardGroup cols={2}>
+  <Card title="Stroke size">
+    For enhanced perception, the stroke style has been correlated with T-shirt sizes, similar to spacing in our design system. Consequently, `stroke-s` corresponds to 1px, `stroke-m` to 2px, and `stroke-l` to 3px.
+
+    <Frame caption="Stroke size">
+      <img
+        src="/foundations/images/stroke/stroke-size.png"
+        alt="Stroke size"
+      />
+    </Frame>
+  </Card>
+  <Card title="Stroke type">
+    In our design system, we utilize two types of strokes: solid and dashed. A dashed line is employed for placeholders or incomplete content, and it can also signify areas for file uploads and drag-and-drop functionality (e.g. Component: Upload). All setups are already applied and can be changed later based on the project's style guide.
+
+    <Frame caption="Stroke type">
+      <img
+        src="/foundations/images/stroke/stroke-type.png"
+        alt="Stroke type"
+      />
+    </Frame>
+  </Card>
+  <Card title="Stroke positioning">
+    Considering the stroke positioning options in Figma (center, outside, or inside), we have chosen 'inside' because our border needs to be integrated into the component dimensions. The decision on stroke positioning, whether center or outside, significantly impacts the overall size of the component. Therefore, to align with the consistency of CSS border drawing practices, 'inside' is the preferred option for our components to consider.
+
+    <Frame caption="Stroke positioning">
+      <img
+        src="/foundations/images/stroke/stroke-positioning.png"
+        alt="Stroke positioning"
+      />
+    </Frame>
+  </Card>
+  <Card title="Stroke colour">
+    The colors for strokes in the design system depend on the states of the components (e.g., input states: warning, error, success, unavailable, empty, focus, or hover). These updates can be easily applied using Design Tokens for strokes.
+
+    <Frame caption="Stroke colour">
+      <img
+        src="/foundations/images/stroke/stroke-colour.png"
+        alt="Stroke colour"
+      />
+    </Frame>
+  </Card>
+</CardGroup>
+
+---
+
+## Usage guidelines
+
+In our design system, we will utilize:
+
+- Size `s` (1px) for default states such as input.
+- Size `m` (2px) for components in focused and active states.
+- Size `l` (3px) for larger elements throughout the design system.
+
+All these configurations can also be found in tokens as predefined settings.
+
+<Frame className="px-4 py-4" caption="Stroke usage guidelines">
+  <img
+    src="/foundations/images/stroke/stroke-usage.png"
+    alt="Stroke usage guidelines"
+  />
+</Frame>
+
+---
+
+## Accessibility
+
+In the context of accessibility, the focus state stroke is a crucial design element aimed at enhancing usability for individuals with varying abilities. When a user interacts with a component, such as a button or a form field, the focus state stroke provides a visible indicator, aiding those using assistive technologies or navigating through the interface using a keyboard.
+
+Choosing an appropriate color for the focus state stroke is paramount for accessibility. It's recommended to use colors with sufficient contrast against the background to ensure visibility for users with low vision or color blindness. Common practices include using vibrant colors that stand out or adhering to established color contrast ratios outlined in accessibility guidelines. This thoughtful approach to color selection contributes to a more accessible and user-friendly design.
+
+---
+
+## Keywords
+
+stroke, dashed stroke, accessibility, focus state, active state, contrast stroke, stroke size

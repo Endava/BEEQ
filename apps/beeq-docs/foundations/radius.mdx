@@ -1,0 +1,113 @@
+---
+title: Radius
+description: Radius is used to give any element rounded corners. Use the below defined tokens to set radiuses consistently.
+---
+
+<Frame className="px-4 py-4" caption="BEEQ radius overview">
+  <img
+    src="/foundations/images/radius/radius-overview.png"
+    alt="BEEQ radius overview"
+  />
+</Frame>
+
+Radius helps emphasize and highlight specific design features. Rounded corners feel more friendly, and add extra perceived fidelity to the visual elements. Larger components that contain other components can have a greater corner radius. Each component comes with the appropriate corner radius already applied.
+
+| **Corner radius value** | **Used for** |
+| --- | --- |
+| `radius-full` 360px | Used primarily to create a circle and often as a background to an icon or other graphic elements. |
+| `radius-xl` 32px | Extra-large components, cards. |
+| `radius-l` 24px | Large container components. |
+| `radius-m` 12px | Medium components like cards, snack bars, and banners. |
+| `radius-s` 8px | Medium or small components that often live inside others, like buttons or nested components. |
+| `radius-xs` 4px | Small components. |
+| `radius-xs2` 2px (icons) | Used primarily on small shapes to maintain a balance between the shape and the border-radius. |
+
+---
+
+## Usage guidelines
+
+<CardGroup cols={2}>
+  <Card title="radius-full">
+    Used primarily to create a circle and often as a background to an icon or other graphic.
+
+    <Frame caption="radius-full">
+      <img
+        src="/foundations/images/radius/radius-usage-full.png"
+        alt="radius-full usage"
+      />
+    </Frame>
+  </Card>
+  <Card title="radius-xl 32px">
+    Commonly used for cards in graphs or data viz. Useful for differentiating an element from the surrounding UI.
+
+    <Frame caption="radius-xl 32px">
+      <img
+        src="/foundations/images/radius/radius-usage-xl.png"
+        alt="radius-xl usage"
+      />
+    </Frame>
+  </Card>
+  <Card title="radius-l 24px">
+    Used for big UI elements like interactive cards. The larger size is an indicator that the UI element is separate from the UI that surrounds it.
+
+    <Frame caption="radius-l 24px">
+      <img
+        src="/foundations/images/radius/radius-usage-l.png"
+        alt="radius-l usage"
+      />
+    </Frame>
+  </Card>
+  <Card title="radius-m 12px">
+    Used for buttons, pills, labels, and most other UI elements.
+
+    <Frame caption="radius-m 12px">
+      <img
+        src="/foundations/images/radius/radius-usage-m.png"
+        alt="radius-m usage"
+      />
+    </Frame>
+  </Card>
+  <Card title="radius-s 8px">
+    Used for inputs, dropdown panel, modals, alert, data picker, etc.
+
+    <Frame caption="radius-s 8px">
+      <img
+        src="/foundations/images/radius/radius-usage-s.png"
+        alt="radius-s usage"
+      />
+    </Frame>
+  </Card>
+  <Card title="radius-xs2 2px (icons)">
+    Small border of 2px is used to soften the corners of areas that you don't want to look like cards or boxes. Used primarily on small shapes to maintain a balance between the shape and the border-radius.
+
+    <Frame caption="radius-xs2 2px">
+      <img
+        src="/foundations/images/radius/radius-usage-xs2.png"
+        alt="radius-xs2 usage"
+      />
+    </Frame>
+  </Card>
+</CardGroup>
+
+---
+
+## Nested components
+
+<CardGroup cols={1}>
+  <Card title="Interior components have a smaller corner radius">
+    When working with nested elements to achieve an aesthetic appearance, adjusting border-radius values is essential. The crucial factor influencing the appearance is the gap between the two elements. To achieve an appealing look, ensure that the corner radius of the outer element is greater than that of the interior components. A helpful formula is to subtract the gap between the elements from the border-radius value of the outer element, resulting in a seamless and polished design.
+
+    <Frame caption="Nested components corner radius">
+      <img
+        src="/foundations/images/radius/radius-nested-components.png"
+        alt="Nested components corner radius"
+      />
+    </Frame>
+  </Card>
+</CardGroup>
+
+---
+
+## Keywords
+
+corner radius, shape, rounding, design features, scanning, interface, circles, curves, edges, tokens, style, visual elements, radius values, design guide
