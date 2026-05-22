@@ -1,0 +1,255 @@
+---
+title: Component CSS Variables
+description: Each BEEQ component exposes CSS custom properties that give you fine-grained control over styling without touching global variables.
+---
+
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+Each component provides its own CSS custom properties, scoped to that component. This lets you tweak colors, spacing, or other design tokens locally without breaking consistency across the theme. You can find the component CSS variables listed at the bottom of each component documentation page.
+
+<Tip>
+  For quick reference, you can also check these variables documented in each component's `scss/*.variables.scss` file on [GitHub](https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components).
+</Tip>
+
+---
+
+## How to override component CSS variables
+
+There are two strategies for customizing a BEEQ component's styles:
+
+<CardGroup cols={2}>
+  <Card title="Global override" icon="globe">
+    Set CSS custom properties on the component element selector to apply changes across **all instances** of a component in your theme.
+  </Card>
+  <Card title="Targeted override" icon="crosshairs">
+    Use CSS classes or specific component selectors to customize **individual instances** without affecting others.
+  </Card>
+</CardGroup>
+
+### Global override
+
+Set CSS custom properties directly on the component selector. This applies the customization to all instances of that component across your entire application.
+
+```css
+bq-<component> {
+  --bq-<component>--<property>: value;
+}
+```
+
+### Targeted override
+
+Create a custom CSS class and apply it to specific component instances. This gives fine-grained control without affecting other instances.
+
+```css
+.my-component-variant {
+  --bq-<component>--<property>: value;
+}
+```
+
+```html
+<bq-component class="my-component-variant">Content</bq-component>
+```
+
+---
+
+## Example: customizing the Badge component
+
+The [Badge](/components/badge) component exposes the following CSS custom properties (see [`bq-badge.variables.scss`](https://github.com/Endava/BEEQ/blob/main/packages/beeq/src/components/badge/scss/bq-badge.variables.scss)):
+
+```css
+--bq-badge--background-color: /* Badge background */
+--bq-badge--box-shadow:       /* Badge shadow */
+--bq-badge--border-color:     /* Badge border color */
+--bq-badge--border-radius:    /* Badge border radius */
+--bq-badge--border-style:     /* Badge border style */
+--bq-badge--border-width:     /* Badge border width */
+--bq-badge--size-small:       /* Small badge size (8px) */
+--bq-badge--size-medium:      /* Medium badge size (12px) */
+--bq-badge--size-large:       /* Large badge size (16px) */
+--bq-badge--text-color:       /* Badge text color */
+```
+
+### Global override
+
+Applies the custom styles to every `bq-badge` in the application.
+
+<CodeLivePreview code={`
+  <style>
+    :host {
+      flex-direction: row !important;
+      flex-wrap: wrap !important;
+    }
+    
+    bq-badge {
+      --bq-badge--background-color: var(--bq-green-400);
+      --bq-badge--box-shadow: var(--bq-box-shadow--l);
+      --bq-badge--border-color: var(--bq-green-600);
+      --bq-badge--border-style: solid;
+      --bq-badge--border-width: 1px;
+      --bq-badge--border-radius: 4px;
+    }
+  </style>
+    <bq-badge size="small"></bq-badge>
+    <bq-badge size="medium"></bq-badge>
+    <bq-badge>99+</bq-badge>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-badge size="small"></bq-badge>
+    <bq-badge size="medium"></bq-badge>
+    <bq-badge>99+</bq-badge>
+    ```
+
+    ```jsx React icon="react"
+    import { BqBadge } from "@beeq/react";
+    // Import the CSS override in your global stylesheet (see CSS tab)
+
+    <BqBadge size="small" />
+    <BqBadge size="medium" />
+    <BqBadge>99+</BqBadge>
+    ```
+
+    ```html Angular icon="angular"
+    <!-- Standalone: import { BqBadge } from "@beeq/angular/standalone" -->
+    <!-- Modules: components are available after importing BeeQModule -->
+    <!-- Import the CSS override in your global stylesheet (see CSS tab) -->
+
+    <bq-badge size="small"></bq-badge>
+    <bq-badge size="medium"></bq-badge>
+    <bq-badge>99+</bq-badge>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqBadge } from "@beeq/vue";
+    // Import the CSS override in your global stylesheet (see CSS tab)
+    </script>
+
+    <template>
+      <BqBadge size="small" />
+      <BqBadge size="medium" />
+      <BqBadge>99+</BqBadge>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Targeted override
+
+Only the `bq-badge` elements with the matching CSS class will have the overridden style.
+
+<CodeLivePreview code={`
+  <style>
+    :host {
+      flex-direction: row !important;
+      flex-wrap: wrap !important;
+    }
+    
+    bq-badge.success {
+      --bq-badge--background-color: var(--bq-green-400);
+      --bq-badge--box-shadow: var(--bq-box-shadow--l);
+      --bq-badge--border-color: var(--bq-green-600);
+      --bq-badge--border-style: solid;
+      --bq-badge--border-width: 1px;
+      --bq-badge--border-radius: 4px;
+    }
+  </style>
+
+  <bq-badge size="small"></bq-badge>
+  <bq-badge size="medium"></bq-badge>
+  <bq-badge>99+</bq-badge>
+  <bq-badge class="success">completed</bq-badge>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-badge size="small"></bq-badge>
+    <bq-badge size="medium"></bq-badge>
+    <bq-badge>99+</bq-badge>
+    <bq-badge class="success">completed</bq-badge>
+    ```
+
+    ```jsx React icon="react"
+    import { BqBadge } from "@beeq/react";
+    // Import the CSS override in your global stylesheet (see CSS tab)
+
+    <BqBadge size="small" />
+    <BqBadge size="medium" />
+    <BqBadge>99+</BqBadge>
+    <BqBadge className="success">completed</BqBadge>
+    ```
+
+    ```html Angular icon="angular"
+    <!-- Standalone: import { BqBadge } from "@beeq/angular/standalone" -->
+    <!-- Modules: components are available after importing BeeQModule -->
+    <!-- Import the CSS override in your global stylesheet (see CSS tab) -->
+
+    <bq-badge size="small"></bq-badge>
+    <bq-badge size="medium"></bq-badge>
+    <bq-badge>99+</bq-badge>
+    <bq-badge class="success">completed</bq-badge>
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqBadge } from "@beeq/vue";
+    // Import the CSS override in your global stylesheet (see CSS tab)
+    </script>
+
+    <template>
+      <BqBadge size="small" />
+      <BqBadge size="medium" />
+      <BqBadge>99+</BqBadge>
+      <BqBadge class="success">completed</BqBadge>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+---
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use semantic tokens
+    </span>
+    Prefer declarative color variables (`--bq-background--primary`) over primitive values (`--bq-grey-100`) in your custom themes for better consistency and automatic mode switching.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Test both modes
+    </span>
+    Always test your custom theme in both light and dark modes to ensure proper contrast and readability.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Scope component overrides
+    </span>
+    When customizing individual components, use CSS classes or component selectors to scope your changes and avoid unintended side effects.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Maintain accessibility
+    </span>
+    Ensure sufficient color contrast ratios. WCAG 2.1 Level AA requires 4.5:1 for normal text and 3:1 for large text.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use CSS variables for flexibility
+    </span>
+    Expose your own CSS variables if you are building reusable component patterns on top of BEEQ.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Leverage primitive colors
+    </span>
+    Use the extensive [primitive color palette](/foundations/colors) when defining theme colors. It includes blue, coral, cyan, gold, green, indigo, iris, lime, magenta, orange, purple, red, sky, teal, volcano, and yellow — each with 10 shades (100–1000).
+  </Card>
+</CardGroup>
