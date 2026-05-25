@@ -109,14 +109,21 @@ Applies the custom styles to every `bq-badge` in the application.
     <BqBadge>99+</BqBadge>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqBadge } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
-    <!-- Import the CSS override in your global stylesheet (see CSS tab) -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqBadge } from "@beeq/angular/standalone";
 
-    <bq-badge size="small"></bq-badge>
-    <bq-badge size="medium"></bq-badge>
-    <bq-badge>99+</bq-badge>
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqBadge],
+      template: `
+        <bq-badge size="small"></bq-badge>
+        <bq-badge size="medium"></bq-badge>
+        <bq-badge>99+</bq-badge>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -178,15 +185,22 @@ Only the `bq-badge` elements with the matching CSS class will have the overridde
     <BqBadge className="success">completed</BqBadge>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqBadge } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
-    <!-- Import the CSS override in your global stylesheet (see CSS tab) -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqBadge } from "@beeq/angular/standalone";
 
-    <bq-badge size="small"></bq-badge>
-    <bq-badge size="medium"></bq-badge>
-    <bq-badge>99+</bq-badge>
-    <bq-badge class="success">completed</bq-badge>
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqBadge],
+      template: `
+        <bq-badge size="small"></bq-badge>
+        <bq-badge size="medium"></bq-badge>
+        <bq-badge>99+</bq-badge>
+        <bq-badge class="success">completed</bq-badge>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
