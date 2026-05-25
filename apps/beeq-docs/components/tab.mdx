@@ -120,9 +120,7 @@ Use `placement="start"` (default) to left-align horizontal tabs or top-align ver
     <bq-tab tab-id="8">Tab</bq-tab>
   </bq-tab-group>
 `}>
-</CodeLivePreview>
-
-<CodeGroup>
+  <CodeGroup>
 ```html HTML icon="html5"
 <bq-tab-group value="5">
   <bq-tab tab-id="1">Tab</bq-tab>
@@ -151,17 +149,28 @@ export default () => (
   </BqTabGroup>
 );
 ```
-```html Angular icon="angular"
-<bq-tab-group value="5">
-  <bq-tab tab-id="1">Tab</bq-tab>
-  <bq-tab tab-id="2">Tab</bq-tab>
-  <bq-tab tab-id="3">Long Tab name</bq-tab>
-  <bq-tab tab-id="4" disabled>Tab</bq-tab>
-  <bq-tab tab-id="5">Tab</bq-tab>
-  <bq-tab tab-id="6">Tab</bq-tab>
-  <bq-tab tab-id="7">Tab</bq-tab>
-  <bq-tab tab-id="8">Tab</bq-tab>
-</bq-tab-group>
+```ts Angular icon="angular"
+import { Component } from "@angular/core";
+import { BqTab, BqTabGroup } from "@beeq/angular/standalone";
+
+@Component({
+  selector: "app-root",
+  standalone: true,
+  imports: [BqTab, BqTabGroup],
+  template: `
+    <bq-tab-group value="5">
+      <bq-tab tab-id="1">Tab</bq-tab>
+      <bq-tab tab-id="2">Tab</bq-tab>
+      <bq-tab tab-id="3">Long Tab name</bq-tab>
+      <bq-tab tab-id="4" disabled>Tab</bq-tab>
+      <bq-tab tab-id="5">Tab</bq-tab>
+      <bq-tab tab-id="6">Tab</bq-tab>
+      <bq-tab tab-id="7">Tab</bq-tab>
+      <bq-tab tab-id="8">Tab</bq-tab>
+    </bq-tab-group>
+  `,
+})
+export class AppComponent {}
 ```
 ```vue Vue icon="vuejs"
 <script setup lang="ts">
@@ -181,7 +190,8 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
   </BqTabGroup>
 </template>
 ```
-</CodeGroup>
+  </CodeGroup>
+</CodeLivePreview>
 
 ## Options
 
@@ -227,9 +237,7 @@ Tabs support an optional icon displayed before the label via the `icon` slot.
     </bq-tab>
   </bq-tab-group>
 `}>
-</CodeLivePreview>
-
-<CodeGroup>
+  <CodeGroup>
 ```html HTML icon="html5"
 <bq-tab-group value="5" size="small">
   <bq-tab tab-id="1">
@@ -298,37 +306,48 @@ export default () => (
   </BqTabGroup>
 );
 ```
-```html Angular icon="angular"
-<bq-tab-group value="5" size="small">
-  <bq-tab tab-id="1">
-    <bq-icon name="pulse" slot="icon"></bq-icon>
-    Tab
-  </bq-tab>
-  <bq-tab tab-id="2">
-    <bq-icon name="bell" slot="icon"></bq-icon>
-    Tab
-  </bq-tab>
-  <bq-tab tab-id="3">
-    <bq-icon name="airplane-in-flight" slot="icon"></bq-icon>
-    Long Tab name
-  </bq-tab>
-  <bq-tab tab-id="4" disabled>
-    <bq-icon name="airplane-tilt" slot="icon"></bq-icon>
-    Tab
-  </bq-tab>
-  <bq-tab tab-id="5">
-    <bq-icon name="align-right-simple" slot="icon"></bq-icon>
-    Tab
-  </bq-tab>
-  <bq-tab tab-id="6">
-    <bq-icon name="anchor" slot="icon"></bq-icon>
-    Tab
-  </bq-tab>
-  <bq-tab tab-id="7">
-    <bq-icon name="android-logo" slot="icon"></bq-icon>
-    Tab
-  </bq-tab>
-</bq-tab-group>
+```ts Angular icon="angular"
+import { Component } from "@angular/core";
+import { BqIcon, BqTab, BqTabGroup } from "@beeq/angular/standalone";
+
+@Component({
+  selector: "app-root",
+  standalone: true,
+  imports: [BqIcon, BqTab, BqTabGroup],
+  template: `
+    <bq-tab-group value="5" size="small">
+      <bq-tab tab-id="1">
+        <bq-icon name="pulse" slot="icon"></bq-icon>
+        Tab
+      </bq-tab>
+      <bq-tab tab-id="2">
+        <bq-icon name="bell" slot="icon"></bq-icon>
+        Tab
+      </bq-tab>
+      <bq-tab tab-id="3">
+        <bq-icon name="airplane-in-flight" slot="icon"></bq-icon>
+        Long Tab name
+      </bq-tab>
+      <bq-tab tab-id="4" disabled>
+        <bq-icon name="airplane-tilt" slot="icon"></bq-icon>
+        Tab
+      </bq-tab>
+      <bq-tab tab-id="5">
+        <bq-icon name="align-right-simple" slot="icon"></bq-icon>
+        Tab
+      </bq-tab>
+      <bq-tab tab-id="6">
+        <bq-icon name="anchor" slot="icon"></bq-icon>
+        Tab
+      </bq-tab>
+      <bq-tab tab-id="7">
+        <bq-icon name="android-logo" slot="icon"></bq-icon>
+        Tab
+      </bq-tab>
+    </bq-tab-group>
+  `,
+})
+export class AppComponent {}
 ```
 ```vue Vue icon="vuejs"
 <script setup lang="ts">
@@ -368,7 +387,8 @@ import { BqIcon, BqTab, BqTabGroup } from "@beeq/vue";
   </BqTabGroup>
 </template>
 ```
-</CodeGroup>
+  </CodeGroup>
+</CodeLivePreview>
 
 ### Sizes
 
@@ -396,9 +416,7 @@ import { BqIcon, BqTab, BqTabGroup } from "@beeq/vue";
     <bq-tab tab-id="3">Long Tab name</bq-tab>
   </bq-tab-group>
 `}>
-</CodeLivePreview>
-
-<CodeGroup>
+  <CodeGroup>
 ```html HTML icon="html5"
 <!-- Small -->
 <bq-tab-group size="small" value="1">
@@ -449,27 +467,35 @@ export default () => (
   </>
 );
 ```
-```html Angular icon="angular"
-<!-- Small -->
-<bq-tab-group size="small" value="1">
-  <bq-tab tab-id="1">Tab</bq-tab>
-  <bq-tab tab-id="2">Tab</bq-tab>
-  <bq-tab tab-id="3">Long Tab name</bq-tab>
-</bq-tab-group>
+```ts Angular icon="angular"
+import { Component } from "@angular/core";
+import { BqTab, BqTabGroup } from "@beeq/angular/standalone";
 
-<!-- Medium (default) -->
-<bq-tab-group size="medium" value="1">
-  <bq-tab tab-id="1">Tab</bq-tab>
-  <bq-tab tab-id="2">Tab</bq-tab>
-  <bq-tab tab-id="3">Long Tab name</bq-tab>
-</bq-tab-group>
+@Component({
+  selector: "app-root",
+  standalone: true,
+  imports: [BqTab, BqTabGroup],
+  template: `
+    <bq-tab-group size="small" value="1">
+      <bq-tab tab-id="1">Tab</bq-tab>
+      <bq-tab tab-id="2">Tab</bq-tab>
+      <bq-tab tab-id="3">Long Tab name</bq-tab>
+    </bq-tab-group>
 
-<!-- Large -->
-<bq-tab-group size="large" value="1">
-  <bq-tab tab-id="1">Tab</bq-tab>
-  <bq-tab tab-id="2">Tab</bq-tab>
-  <bq-tab tab-id="3">Long Tab name</bq-tab>
-</bq-tab-group>
+    <bq-tab-group size="medium" value="1">
+      <bq-tab tab-id="1">Tab</bq-tab>
+      <bq-tab tab-id="2">Tab</bq-tab>
+      <bq-tab tab-id="3">Long Tab name</bq-tab>
+    </bq-tab-group>
+
+    <bq-tab-group size="large" value="1">
+      <bq-tab tab-id="1">Tab</bq-tab>
+      <bq-tab tab-id="2">Tab</bq-tab>
+      <bq-tab tab-id="3">Long Tab name</bq-tab>
+    </bq-tab-group>
+  `,
+})
+export class AppComponent {}
 ```
 ```vue Vue icon="vuejs"
 <script setup lang="ts">
@@ -499,7 +525,8 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
   </BqTabGroup>
 </template>
 ```
-</CodeGroup>
+  </CodeGroup>
+</CodeLivePreview>
 
 ### Vertical
 
@@ -518,9 +545,7 @@ Set `orientation="vertical"` on `bq-tab-group` to stack tabs in a column beside 
     <bq-tab tab-id="4" disabled>Tab</bq-tab>
   </bq-tab-group>
 `}>
-</CodeLivePreview>
-
-<CodeGroup>
+  <CodeGroup>
 ```html HTML icon="html5"
 <bq-tab-group orientation="vertical" value="1">
   <bq-tab tab-id="1">Tab</bq-tab>
@@ -541,13 +566,24 @@ export default () => (
   </BqTabGroup>
 );
 ```
-```html Angular icon="angular"
-<bq-tab-group orientation="vertical" value="1">
-  <bq-tab tab-id="1">Tab</bq-tab>
-  <bq-tab tab-id="2">Tab</bq-tab>
-  <bq-tab tab-id="3">Long Tab name</bq-tab>
-  <bq-tab tab-id="4" disabled>Tab</bq-tab>
-</bq-tab-group>
+```ts Angular icon="angular"
+import { Component } from "@angular/core";
+import { BqTab, BqTabGroup } from "@beeq/angular/standalone";
+
+@Component({
+  selector: "app-root",
+  standalone: true,
+  imports: [BqTab, BqTabGroup],
+  template: `
+    <bq-tab-group orientation="vertical" value="1">
+      <bq-tab tab-id="1">Tab</bq-tab>
+      <bq-tab tab-id="2">Tab</bq-tab>
+      <bq-tab tab-id="3">Long Tab name</bq-tab>
+      <bq-tab tab-id="4" disabled>Tab</bq-tab>
+    </bq-tab-group>
+  `,
+})
+export class AppComponent {}
 ```
 ```vue Vue icon="vuejs"
 <script setup lang="ts">
@@ -563,7 +599,8 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
   </BqTabGroup>
 </template>
 ```
-</CodeGroup>
+  </CodeGroup>
+</CodeLivePreview>
 
 ### No divider
 
@@ -582,9 +619,7 @@ Use `disable-divider` to hide the underline separator between the tab list and t
     <bq-tab tab-id="3">Long Tab name</bq-tab>
   </bq-tab-group>
 `}>
-</CodeLivePreview>
-
-<CodeGroup>
+  <CodeGroup>
 ```html HTML icon="html5"
 <bq-tab-group disable-divider value="1">
   <bq-tab tab-id="1">Tab</bq-tab>
@@ -603,12 +638,23 @@ export default () => (
   </BqTabGroup>
 );
 ```
-```html Angular icon="angular"
-<bq-tab-group disable-divider value="1">
-  <bq-tab tab-id="1">Tab</bq-tab>
-  <bq-tab tab-id="2">Tab</bq-tab>
-  <bq-tab tab-id="3">Long Tab name</bq-tab>
-</bq-tab-group>
+```ts Angular icon="angular"
+import { Component } from "@angular/core";
+import { BqTab, BqTabGroup } from "@beeq/angular/standalone";
+
+@Component({
+  selector: "app-root",
+  standalone: true,
+  imports: [BqTab, BqTabGroup],
+  template: `
+    <bq-tab-group disable-divider value="1">
+      <bq-tab tab-id="1">Tab</bq-tab>
+      <bq-tab tab-id="2">Tab</bq-tab>
+      <bq-tab tab-id="3">Long Tab name</bq-tab>
+    </bq-tab-group>
+  `,
+})
+export class AppComponent {}
 ```
 ```vue Vue icon="vuejs"
 <script setup lang="ts">
@@ -623,7 +669,8 @@ import { BqTab, BqTabGroup } from "@beeq/vue";
   </BqTabGroup>
 </template>
 ```
-</CodeGroup>
+  </CodeGroup>
+</CodeLivePreview>
 
 ## Best practices
 

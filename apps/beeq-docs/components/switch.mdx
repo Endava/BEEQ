@@ -104,8 +104,17 @@ The default switch provides a basic on/off toggle functionality, allowing users 
       <BqSwitch>Toggle me!</BqSwitch>
     );
     ```
-    ```html Angular
-    <bq-switch>Toggle me!</bq-switch>
+    ```ts Angular
+    import { Component } from "@angular/core";
+    import { BqSwitch } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSwitch],
+      template: `<bq-switch>Toggle me!</bq-switch>`,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue
     <script setup lang="ts">
@@ -141,8 +150,17 @@ Use the `checked` attribute to set the initial state of the toggle as ON. This i
       <BqSwitch checked>Toggle me!</BqSwitch>
     );
     ```
-    ```html Angular
-    <bq-switch checked>Toggle me!</bq-switch>
+    ```ts Angular
+    import { Component } from "@angular/core";
+    import { BqSwitch } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSwitch],
+      template: `<bq-switch checked>Toggle me!</bq-switch>`,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue
     <script setup lang="ts">
@@ -176,8 +194,17 @@ The disabled switch prevents user interaction, making it visually clear that the
       <BqSwitch disabled>Toggle me!</BqSwitch>
     );
     ```
-    ```html Angular
-    <bq-switch disabled>Toggle me!</bq-switch>
+    ```ts Angular
+    import { Component } from "@angular/core";
+    import { BqSwitch } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSwitch],
+      template: `<bq-switch disabled>Toggle me!</bq-switch>`,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue
     <script setup lang="ts">
@@ -209,8 +236,17 @@ Enhance user understanding by incorporating an inner label that provides context
       <BqSwitch innerLabel="icon">Toggle me!</BqSwitch>
     );
     ```
-    ```html Angular
-    <bq-switch inner-label="icon">Toggle me!</bq-switch>
+    ```ts Angular
+    import { Component } from "@angular/core";
+    import { BqSwitch } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSwitch],
+      template: `<bq-switch inner-label="icon">Toggle me!</bq-switch>`,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue
     <script setup lang="ts">
@@ -242,8 +278,17 @@ The reverse order switch alters the visual arrangement, placing the toggle on th
       <BqSwitch reverseOrder>Toggle me!</BqSwitch>
     );
     ```
-    ```html Angular
-    <bq-switch reverse-order>Toggle me!</bq-switch>
+    ```ts Angular
+    import { Component } from "@angular/core";
+    import { BqSwitch } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSwitch],
+      template: `<bq-switch reverse-order>Toggle me!</bq-switch>`,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue
     <script setup lang="ts">
@@ -411,50 +456,61 @@ Use `full-width` with `reverse-order` and `justify-content="space-between"` to b
       </>
     );
     ```
-    ```html Angular
-    <bq-switch
-      background-on-hover
-      full-width
-      justify-content="space-between"
-      name="bq-switch"
-      reverse-order
-      value="show-app-list"
-    >
-      Show app list in menu
-    </bq-switch>
-    <bq-switch
-      background-on-hover
-      checked
-      full-width
-      justify-content="space-between"
-      name="bq-switch"
-      reverse-order
-      value="show-recently-apps"
-    >
-      Show recently added apps
-    </bq-switch>
-    <bq-switch
-      background-on-hover
-      disabled
-      full-width
-      justify-content="space-between"
-      name="bq-switch"
-      reverse-order
-      value="show-used-apps"
-    >
-      Show most used apps
-    </bq-switch>
-    <bq-switch
-      background-on-hover
-      checked
-      full-width
-      justify-content="space-between"
-      name="bq-switch"
-      reverse-order
-      value="show-app-notifications"
-    >
-      Show app notifications
-    </bq-switch>
+    ```ts Angular
+    import { Component } from "@angular/core";
+    import { BqSwitch } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSwitch],
+      template: `
+        <bq-switch
+          background-on-hover
+          full-width
+          justify-content="space-between"
+          name="bq-switch"
+          reverse-order
+          value="show-app-list"
+        >
+          Show app list in menu
+        </bq-switch>
+        <bq-switch
+          background-on-hover
+          checked
+          full-width
+          justify-content="space-between"
+          name="bq-switch"
+          reverse-order
+          value="show-recently-apps"
+        >
+          Show recently added apps
+        </bq-switch>
+        <bq-switch
+          background-on-hover
+          disabled
+          full-width
+          justify-content="space-between"
+          name="bq-switch"
+          reverse-order
+          value="show-used-apps"
+        >
+          Show most used apps
+        </bq-switch>
+        <bq-switch
+          background-on-hover
+          checked
+          full-width
+          justify-content="space-between"
+          name="bq-switch"
+          reverse-order
+          value="show-app-notifications"
+        >
+          Show app notifications
+        </bq-switch>
+      `,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue
     <script setup lang="ts">

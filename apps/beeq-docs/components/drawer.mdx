@@ -259,22 +259,31 @@ The default state of the drawer component displays a standard drawer with a head
     }
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqButton, BqDrawer, BqIcon } from "@beeq/angular/standalone" -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqDrawer, BqIcon } from "@beeq/angular/standalone";
 
-    <bq-button (bqClick)="drawer.show()">Open Drawer</bq-button>
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqDrawer, BqIcon],
+      template: `
+        <bq-button (bqClick)="drawer.show()">Open Drawer</bq-button>
 
-    <bq-drawer #drawer position="end">
-      <div class="drawer-title" slot="title">
-        <bq-icon name="user-circle" weight="bold"></bq-icon>
-        Title
-      </div>
-      <div class="drawer-description">Content</div>
-      <div class="drawer-footer" slot="footer">
-        <bq-button appearance="primary" block size="small">Button</bq-button>
-        <bq-button appearance="link" block size="small">Button</bq-button>
-      </div>
-    </bq-drawer>
+        <bq-drawer #drawer position="end">
+          <div class="drawer-title" slot="title">
+            <bq-icon name="user-circle" weight="bold"></bq-icon>
+            Title
+          </div>
+          <div class="drawer-description">Content</div>
+          <div class="drawer-footer" slot="footer">
+            <bq-button appearance="primary" block size="small">Button</bq-button>
+            <bq-button appearance="link" block size="small">Button</bq-button>
+          </div>
+        </bq-drawer>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -421,18 +430,27 @@ The no-footer variant removes the footer section, providing a cleaner interface 
     }
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqButton, BqDrawer, BqIcon } from "@beeq/angular/standalone" -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqDrawer, BqIcon } from "@beeq/angular/standalone";
 
-    <bq-button (bqClick)="drawer.show()">Open Drawer</bq-button>
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqDrawer, BqIcon],
+      template: `
+        <bq-button (bqClick)="drawer.show()">Open Drawer</bq-button>
 
-    <bq-drawer #drawer position="end">
-      <div class="drawer-title" slot="title">
-        <bq-icon name="user-circle" weight="bold"></bq-icon>
-        Title
-      </div>
-      <div class="drawer-description">Content</div>
-    </bq-drawer>
+        <bq-drawer #drawer position="end">
+          <div class="drawer-title" slot="title">
+            <bq-icon name="user-circle" weight="bold"></bq-icon>
+            Title
+          </div>
+          <div class="drawer-description">Content</div>
+        </bq-drawer>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -601,22 +619,31 @@ The `position` prop allows you to specify the edge from which the drawer appears
     }
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqButton, BqDrawer, BqIcon } from "@beeq/angular/standalone" -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqDrawer, BqIcon } from "@beeq/angular/standalone";
 
-    <bq-button (bqClick)="drawer.show()">Open Drawer</bq-button>
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqDrawer, BqIcon],
+      template: `
+        <bq-button (bqClick)="drawer.show()">Open Drawer</bq-button>
 
-    <bq-drawer #drawer position="start">
-      <div class="drawer-title" slot="title">
-        <bq-icon name="user-circle" weight="bold"></bq-icon>
-        Title
-      </div>
-      <div class="drawer-description">Content</div>
-      <div class="drawer-footer" slot="footer">
-        <bq-button appearance="primary" block size="small">Button</bq-button>
-        <bq-button appearance="link" block size="small">Button</bq-button>
-      </div>
-    </bq-drawer>
+        <bq-drawer #drawer position="start">
+          <div class="drawer-title" slot="title">
+            <bq-icon name="user-circle" weight="bold"></bq-icon>
+            Title
+          </div>
+          <div class="drawer-description">Content</div>
+          <div class="drawer-footer" slot="footer">
+            <bq-button appearance="primary" block size="small">Button</bq-button>
+            <bq-button appearance="link" block size="small">Button</bq-button>
+          </div>
+        </bq-drawer>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -791,22 +818,31 @@ The backdrop variant adds a semi-transparent overlay behind the drawer, helping 
     }
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqButton, BqDrawer, BqIcon } from "@beeq/angular/standalone" -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqDrawer, BqIcon } from "@beeq/angular/standalone";
 
-    <bq-button (bqClick)="drawer.show()">Open Drawer</bq-button>
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqDrawer, BqIcon],
+      template: `
+        <bq-button (bqClick)="drawer.show()">Open Drawer</bq-button>
 
-    <bq-drawer #drawer position="end" enable-backdrop>
-      <div class="drawer-title" slot="title">
-        <bq-icon name="user-circle" weight="bold"></bq-icon>
-        Title
-      </div>
-      <div class="drawer-description">Content</div>
-      <div class="drawer-footer" slot="footer">
-        <bq-button appearance="primary" block size="small">Button</bq-button>
-        <bq-button appearance="link" block size="small">Button</bq-button>
-      </div>
-    </bq-drawer>
+        <bq-drawer #drawer position="end" enable-backdrop>
+          <div class="drawer-title" slot="title">
+            <bq-icon name="user-circle" weight="bold"></bq-icon>
+            Title
+          </div>
+          <div class="drawer-description">Content</div>
+          <div class="drawer-footer" slot="footer">
+            <bq-button appearance="primary" block size="small">Button</bq-button>
+            <bq-button appearance="link" block size="small">Button</bq-button>
+          </div>
+        </bq-drawer>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -992,23 +1028,32 @@ Replace the default footer divider by slotting a custom element into `slot="foot
     }
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqButton, BqDivider, BqDrawer, BqIcon } from "@beeq/angular/standalone" -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqDivider, BqDrawer, BqIcon } from "@beeq/angular/standalone";
 
-    <bq-button (bqClick)="drawer.show()">Open Drawer</bq-button>
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqDivider, BqDrawer, BqIcon],
+      template: `
+        <bq-button (bqClick)="drawer.show()">Open Drawer</bq-button>
 
-    <bq-drawer #drawer position="end" enable-backdrop>
-      <div class="drawer-title" slot="title">
-        <bq-icon name="user-circle" weight="bold"></bq-icon>
-        Title
-      </div>
-      <div class="drawer-description">Content</div>
-      <bq-divider class="drawer-footer-divider" slot="footer-divider" stroke-color="stroke--primary" stroke-thickness="1"></bq-divider>
-      <div class="drawer-footer" slot="footer">
-        <bq-button appearance="primary" block size="small">Button</bq-button>
-        <bq-button appearance="link" block size="small">Button</bq-button>
-      </div>
-    </bq-drawer>
+        <bq-drawer #drawer position="end" enable-backdrop>
+          <div class="drawer-title" slot="title">
+            <bq-icon name="user-circle" weight="bold"></bq-icon>
+            Title
+          </div>
+          <div class="drawer-description">Content</div>
+          <bq-divider class="drawer-footer-divider" slot="footer-divider" stroke-color="stroke--primary" stroke-thickness="1"></bq-divider>
+          <div class="drawer-footer" slot="footer">
+            <bq-button appearance="primary" block size="small">Button</bq-button>
+            <bq-button appearance="link" block size="small">Button</bq-button>
+          </div>
+        </bq-drawer>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -1129,17 +1174,26 @@ By default, clicking outside the panel or pressing `Esc` closes the drawer. Set 
     }
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqButton, BqDrawer } from "@beeq/angular/standalone" -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqDrawer } from "@beeq/angular/standalone";
 
-    <bq-button (bqClick)="drawer.show()">Open locked drawer</bq-button>
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqDrawer],
+      template: `
+        <bq-button (bqClick)="drawer.show()">Open locked drawer</bq-button>
 
-    <bq-drawer #drawer position="end" enable-backdrop close-on-click-outside close-on-esc>
-      <span slot="title">Unsaved changes</span>
-      <div class="drawer-content">
-        <p>Use the close button to dismiss.</p>
-      </div>
-    </bq-drawer>
+        <bq-drawer #drawer position="end" enable-backdrop close-on-click-outside close-on-esc>
+          <span slot="title">Unsaved changes</span>
+          <div class="drawer-content">
+            <p>Use the close button to dismiss.</p>
+          </div>
+        </bq-drawer>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"

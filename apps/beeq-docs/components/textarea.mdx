@@ -131,14 +131,25 @@ Use the default textarea when you need a standard multi-line text input. Provide
       </BqTextarea>
     );
     ```
-    ```html Angular
-    <bq-textarea placeholder="Placeholder...">
-      <label slot="label">Label</label>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-textarea>
+    ```ts Angular
+    import { Component } from "@angular/core";
+    import { BqIcon, BqTextarea } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon, BqTextarea],
+      template: `
+        <bq-textarea placeholder="Placeholder...">
+          <label slot="label">Label</label>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+        </bq-textarea>
+      `,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue
     <script setup lang="ts">
@@ -211,17 +222,28 @@ Pre-populate your textarea with an initial `value` attribute to streamline user 
       </BqTextarea>
     );
     ```
-    ```html Angular
-    <bq-textarea
-      placeholder="Placeholder..."
-      value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
-    >
-      <label slot="label">Label</label>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-textarea>
+    ```ts Angular
+    import { Component } from "@angular/core";
+    import { BqIcon, BqTextarea } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon, BqTextarea],
+      template: `
+        <bq-textarea
+          placeholder="Placeholder..."
+          value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
+        >
+          <label slot="label">Label</label>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+        </bq-textarea>
+      `,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue
     <script setup lang="ts">
@@ -302,18 +324,29 @@ Set `disabled` when the field is not currently available for interaction. Use it
       </BqTextarea>
     );
     ```
-    ```html Angular
-    <bq-textarea
-      disabled
-      placeholder="Placeholder..."
-      value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
-    >
-      <label slot="label">Label</label>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-textarea>
+    ```ts Angular
+    import { Component } from "@angular/core";
+    import { BqIcon, BqTextarea } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon, BqTextarea],
+      template: `
+        <bq-textarea
+          disabled
+          placeholder="Placeholder..."
+          value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
+        >
+          <label slot="label">Label</label>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+        </bq-textarea>
+      `,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue
     <script setup lang="ts">
@@ -413,23 +446,34 @@ Add `disable-resize` to prevent users from resizing the textarea. This is useful
       </>
     );
     ```
-    ```html Angular
-    <div class="textarea--resize-group">
-      <bq-textarea placeholder="Resize is enabled">
-        <label slot="label">Label</label>
-        <span slot="helper-text">
-          <bq-icon name="star"></bq-icon>
-          Helper text
-        </span>
-      </bq-textarea>
-      <bq-textarea disable-resize placeholder="Resize is disabled">
-        <label slot="label">Label</label>
-        <span slot="helper-text">
-          <bq-icon name="star"></bq-icon>
-          Helper text
-        </span>
-      </bq-textarea>
-    </div>
+    ```ts Angular
+    import { Component } from "@angular/core";
+    import { BqIcon, BqTextarea } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon, BqTextarea],
+      template: `
+        <div class="textarea--resize-group">
+          <bq-textarea placeholder="Resize is enabled">
+            <label slot="label">Label</label>
+            <span slot="helper-text">
+              <bq-icon name="star"></bq-icon>
+              Helper text
+            </span>
+          </bq-textarea>
+          <bq-textarea disable-resize placeholder="Resize is disabled">
+            <label slot="label">Label</label>
+            <span slot="helper-text">
+              <bq-icon name="star"></bq-icon>
+              Helper text
+            </span>
+          </bq-textarea>
+        </div>
+      `,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue
     <script setup lang="ts">
@@ -518,18 +562,29 @@ Set `maxlength` to limit the number of characters users can enter. A character c
       </BqTextarea>
     );
     ```
-    ```html Angular
-    <bq-textarea
-      maxlength="100"
-      placeholder="Placeholder..."
-      value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
-    >
-      <label slot="label">Label</label>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-textarea>
+    ```ts Angular
+    import { Component } from "@angular/core";
+    import { BqIcon, BqTextarea } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon, BqTextarea],
+      template: `
+        <bq-textarea
+          maxlength="100"
+          placeholder="Placeholder..."
+          value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+        >
+          <label slot="label">Label</label>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+        </bq-textarea>
+      `,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue
     <script setup lang="ts">
@@ -609,18 +664,29 @@ Set `readonly` to display the value without allowing edits. Unlike `disabled`, a
       </BqTextarea>
     );
     ```
-    ```html Angular
-    <bq-textarea
-      placeholder="Placeholder..."
-      readonly
-      value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
-    >
-      <label slot="label">Label</label>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-textarea>
+    ```ts Angular
+    import { Component } from "@angular/core";
+    import { BqIcon, BqTextarea } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon, BqTextarea],
+      template: `
+        <bq-textarea
+          placeholder="Placeholder..."
+          readonly
+          value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, nulla. Ab non odio facere enim, voluptatum voluptates quod molestias suscipit fugiat et expedita accusamus quidem nostrum maxime illo recusandae ratione?"
+        >
+          <label slot="label">Label</label>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+        </bq-textarea>
+      `,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue
     <script setup lang="ts">
@@ -786,45 +852,56 @@ Set `validation-status` to `error`, `warning`, or `success` to communicate the s
       </>
     );
     ```
-    ```html Angular
-    <div class="textarea--validation-group">
-      <bq-textarea
-        maxlength="100"
-        placeholder="Placeholder..."
-        validation-status="error"
-        value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
-      >
-        <label slot="label">Label</label>
-        <span slot="helper-text">
-          <bq-icon name="star"></bq-icon>
-          Helper text
-        </span>
-      </bq-textarea>
-      <bq-textarea
-        maxlength="100"
-        placeholder="Placeholder..."
-        validation-status="warning"
-        value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
-      >
-        <label slot="label">Label</label>
-        <span slot="helper-text">
-          <bq-icon name="star"></bq-icon>
-          Helper text
-        </span>
-      </bq-textarea>
-      <bq-textarea
-        maxlength="100"
-        placeholder="Placeholder..."
-        validation-status="success"
-        value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
-      >
-        <label slot="label">Label</label>
-        <span slot="helper-text">
-          <bq-icon name="star"></bq-icon>
-          Helper text
-        </span>
-      </bq-textarea>
-    </div>
+    ```ts Angular
+    import { Component } from "@angular/core";
+    import { BqIcon, BqTextarea } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon, BqTextarea],
+      template: `
+        <div class="textarea--validation-group">
+          <bq-textarea
+            maxlength="100"
+            placeholder="Placeholder..."
+            validation-status="error"
+            value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+          >
+            <label slot="label">Label</label>
+            <span slot="helper-text">
+              <bq-icon name="star"></bq-icon>
+              Helper text
+            </span>
+          </bq-textarea>
+          <bq-textarea
+            maxlength="100"
+            placeholder="Placeholder..."
+            validation-status="warning"
+            value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+          >
+            <label slot="label">Label</label>
+            <span slot="helper-text">
+              <bq-icon name="star"></bq-icon>
+              Helper text
+            </span>
+          </bq-textarea>
+          <bq-textarea
+            maxlength="100"
+            placeholder="Placeholder..."
+            validation-status="success"
+            value="Lorem ipsum dolor sit amet consectetur, adipisicing elit."
+          >
+            <label slot="label">Label</label>
+            <span slot="helper-text">
+              <bq-icon name="star"></bq-icon>
+              Helper text
+            </span>
+          </bq-textarea>
+        </div>
+      `,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue
     <script setup lang="ts">

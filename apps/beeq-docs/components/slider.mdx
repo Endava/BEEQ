@@ -112,10 +112,21 @@ The default slider type. Drag the handle to select a single numeric value within
     }
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqSlider } from "@beeq/angular/standalone" -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSlider } from "@beeq/angular/standalone";
 
-    <bq-slider value="30" (bqChange)="onSliderChange($event)"></bq-slider>
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSlider],
+      template: `<bq-slider value="30" (bqChange)="onSliderChange($event)"></bq-slider>`,
+    })
+    export class AppComponent {
+      onSliderChange(event: CustomEvent<{ value: number }>) {
+        console.log("value:", event.detail.value);
+      }
+    }
     ```
 
     ```vue Vue icon="vuejs"
@@ -162,10 +173,21 @@ Set `type="range"` and pass a two-element array as `value` to let users select b
     }
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqSlider } from "@beeq/angular/standalone" -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSlider } from "@beeq/angular/standalone";
 
-    <bq-slider type="range" value="[20,70]" (bqChange)="onRangeChange($event)"></bq-slider>
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSlider],
+      template: `<bq-slider type="range" value="[20,70]" (bqChange)="onRangeChange($event)"></bq-slider>`,
+    })
+    export class AppComponent {
+      onRangeChange(event: CustomEvent<{ value: [number, number] }>) {
+        console.log("range:", event.detail.value);
+      }
+    }
     ```
 
     ```vue Vue icon="vuejs"
@@ -208,10 +230,17 @@ Add the `disabled` attribute to prevent interaction while still rendering the sl
     }
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqSlider } from "@beeq/angular/standalone" -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSlider } from "@beeq/angular/standalone";
 
-    <bq-slider disabled type="range" value="[20,70]"></bq-slider>
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSlider],
+      template: `<bq-slider disabled type="range" value="[20,70]"></bq-slider>`,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -250,10 +279,17 @@ Set `enable-value-indicator` to display the current numeric value as a label bes
     }
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqSlider } from "@beeq/angular/standalone" -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSlider } from "@beeq/angular/standalone";
 
-    <bq-slider enable-value-indicator type="range" value="[20,70]"></bq-slider>
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSlider],
+      template: `<bq-slider enable-value-indicator type="range" value="[20,70]"></bq-slider>`,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -296,10 +332,17 @@ Set `enable-tooltip` to show a tooltip above the active handle while dragging. T
     }
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqSlider } from "@beeq/angular/standalone" -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSlider } from "@beeq/angular/standalone";
 
-    <bq-slider enable-tooltip gap="10" type="range" value="[30,70]"></bq-slider>
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSlider],
+      template: `<bq-slider enable-tooltip gap="10" type="range" value="[30,70]"></bq-slider>`,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -342,10 +385,17 @@ Add `tooltip-always-visible` to keep the tooltip permanently visible rather than
     }
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqSlider } from "@beeq/angular/standalone" -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSlider } from "@beeq/angular/standalone";
 
-    <bq-slider enable-tooltip tooltip-always-visible gap="10" type="range" value="[30,70]"></bq-slider>
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSlider],
+      template: `<bq-slider enable-tooltip tooltip-always-visible gap="10" type="range" value="[30,70]"></bq-slider>`,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -384,10 +434,17 @@ Control the selectable range with `min` and `max` and the increment granularity 
     }
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqSlider } from "@beeq/angular/standalone" -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSlider } from "@beeq/angular/standalone";
 
-    <bq-slider enable-value-indicator min="0" max="10" step="1.25" type="single" value="3"></bq-slider>
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSlider],
+      template: `<bq-slider enable-value-indicator min="0" max="10" step="1.25" type="single" value="3"></bq-slider>`,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -426,10 +483,17 @@ Enable decimal increments by setting a fractional `step` value. This provides in
     }
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqSlider } from "@beeq/angular/standalone" -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSlider } from "@beeq/angular/standalone";
 
-    <bq-slider enable-value-indicator min="0" max="1" step="0.05" type="range" value="[0.3,0.7]"></bq-slider>
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSlider],
+      template: `<bq-slider enable-value-indicator min="0" max="1" step="0.05" type="range" value="[0.3,0.7]"></bq-slider>`,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -468,10 +532,17 @@ Use `gap` to set the minimum distance the two handles must maintain between each
     }
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqSlider } from "@beeq/angular/standalone" -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSlider } from "@beeq/angular/standalone";
 
-    <bq-slider enable-value-indicator gap="10" step="5" type="range" value="[30,70]"></bq-slider>
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSlider],
+      template: `<bq-slider enable-value-indicator gap="10" step="5" type="range" value="[30,70]"></bq-slider>`,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
