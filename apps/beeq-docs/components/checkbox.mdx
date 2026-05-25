@@ -143,13 +143,20 @@ Use the default checkbox for a straightforward binary choice with a short label.
     </BqCheckbox>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqCheckbox } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqCheckbox } from "@beeq/angular/standalone";
 
-    <bq-checkbox name="updates" value="updates">
-      Send me product updates
-    </bq-checkbox>
+    @Component({
+      standalone: true,
+      imports: [BqCheckbox],
+      template: `
+        <bq-checkbox name="updates" value="updates">
+          Send me product updates
+        </bq-checkbox>
+      `
+    })
+    export class DefaultCheckboxComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -175,13 +182,19 @@ Use the default checkbox for a straightforward binary choice with a short label.
 Use a longer label when people need more context before deciding, but keep the core meaning easy to scan at the beginning of the sentence.
 
 <CodeLivePreview code={`
+  <style>
+    .checkbox-long {
+      max-inline-size: 18rem;
+    }
+  </style>
+
   <bq-checkbox class="checkbox-long" name="terms" value="terms">
     By clicking here, I state that I have read and understood the terms and conditions.
   </bq-checkbox>
 `}>
   <CodeGroup>
     ```html HTML icon="html5"
-    <bq-checkbox class="checkbox-long" name="terms" value="terms">
+    <bq-checkbox name="terms" value="terms">
       By clicking here, I state that I have read and understood the terms and conditions.
     </bq-checkbox>
     ```
@@ -189,15 +202,25 @@ Use a longer label when people need more context before deciding, but keep the c
     ```jsx React icon="react"
     import { BqCheckbox } from "@beeq/react";
 
-    <BqCheckbox className="checkbox-long" name="terms" value="terms">
+    <BqCheckbox name="terms" value="terms">
       By clicking here, I state that I have read and understood the terms and conditions.
     </BqCheckbox>
     ```
 
-    ```html Angular icon="angular"
-    <bq-checkbox class="checkbox-long" name="terms" value="terms">
-      By clicking here, I state that I have read and understood the terms and conditions.
-    </bq-checkbox>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqCheckbox } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqCheckbox],
+      template: `
+        <bq-checkbox name="terms" value="terms">
+          By clicking here, I state that I have read and understood the terms and conditions.
+        </bq-checkbox>
+      `
+    })
+    export class LongLabelCheckboxComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -206,7 +229,7 @@ Use a longer label when people need more context before deciding, but keep the c
     </script>
 
     <template>
-      <BqCheckbox class="checkbox-long" name="terms" value="terms">
+      <BqCheckbox name="terms" value="terms">
         By clicking here, I state that I have read and understood the terms and conditions.
       </BqCheckbox>
     </template>
@@ -240,10 +263,20 @@ Use `background-on-hover` when the surrounding layout benefits from a larger per
     </BqCheckbox>
     ```
 
-    ```html Angular icon="angular"
-    <bq-checkbox name="notifications" value="notifications" background-on-hover>
-      Email me about account activity
-    </bq-checkbox>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqCheckbox } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqCheckbox],
+      template: `
+        <bq-checkbox name="notifications" value="notifications" background-on-hover>
+          Email me about account activity
+        </bq-checkbox>
+      `
+    })
+    export class BackgroundOnHoverCheckboxComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -293,13 +326,23 @@ Use `checked` for a preselected default, and `disabled` when the option is curre
     </BqCheckbox>
     ```
 
-    ```html Angular icon="angular"
-    <bq-checkbox checked name="newsletter" value="newsletter">
-      Subscribe to the newsletter
-    </bq-checkbox>
-    <bq-checkbox disabled name="archived" value="archived">
-      Archived option
-    </bq-checkbox>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqCheckbox } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqCheckbox],
+      template: `
+        <bq-checkbox checked name="newsletter" value="newsletter">
+          Subscribe to the newsletter
+        </bq-checkbox>
+        <bq-checkbox disabled name="archived" value="archived">
+          Archived option
+        </bq-checkbox>
+      `
+    })
+    export class CheckedDisabledCheckboxComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -520,52 +563,78 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
     }
     ```
 
-    ```html Angular icon="angular" expandable
-    <!-- Standalone: import { BqCheckbox } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqCheckbox } from "@beeq/angular/standalone";
 
-    <div>
-      <bq-checkbox
-        background-on-hover
-        [checked]="music && travel && sport"
-        [indeterminate]="(music || travel || sport) && !(music && travel && sport)"
-        name="all-interests"
-        value="all"
-        (bqChange)="music = $event.detail.checked; travel = $event.detail.checked; sport = $event.detail.checked"
-      >
-        Interests
-      </bq-checkbox>
+    @Component({
+      standalone: true,
+      imports: [BqCheckbox],
+      template: `
+        <div>
+          <bq-checkbox
+            background-on-hover
+            [checked]="allChecked"
+            [indeterminate]="isIndeterminate"
+            name="all-interests"
+            value="all"
+            (bqChange)="setAllInterests($event.detail.checked)"
+          >
+            Interests
+          </bq-checkbox>
 
-      <div class="checkbox-group__children">
-        <bq-checkbox
-          background-on-hover
-          [checked]="music"
-          name="interest"
-          value="music"
-          (bqChange)="music = $event.detail.checked"
-        >
-          Music
-        </bq-checkbox>
-        <bq-checkbox
-          background-on-hover
-          [checked]="travel"
-          name="interest"
-          value="travel"
-          (bqChange)="travel = $event.detail.checked"
-        >
-          Travel
-        </bq-checkbox>
-        <bq-checkbox
-          background-on-hover
-          [checked]="sport"
-          name="interest"
-          value="sport"
-          (bqChange)="sport = $event.detail.checked"
-        >
-          Sport
-        </bq-checkbox>
-      </div>
-    </div>
+          <div class="checkbox-group__children">
+            <bq-checkbox
+              background-on-hover
+              [checked]="interests.music"
+              name="interest"
+              value="music"
+              (bqChange)="setInterest('music', $event.detail.checked)"
+            >
+              Music
+            </bq-checkbox>
+            <bq-checkbox
+              background-on-hover
+              [checked]="interests.travel"
+              name="interest"
+              value="travel"
+              (bqChange)="setInterest('travel', $event.detail.checked)"
+            >
+              Travel
+            </bq-checkbox>
+            <bq-checkbox
+              background-on-hover
+              [checked]="interests.sport"
+              name="interest"
+              value="sport"
+              (bqChange)="setInterest('sport', $event.detail.checked)"
+            >
+              Sport
+            </bq-checkbox>
+          </div>
+        </div>
+      `,
+    })
+    export class IndeterminateCheckboxGroupComponent {
+      interests = { music: true, travel: false, sport: true };
+
+      get allChecked() {
+        return Object.values(this.interests).every(Boolean);
+      }
+
+      get isIndeterminate() {
+        const values = Object.values(this.interests);
+        return values.some(Boolean) && !values.every(Boolean);
+      }
+
+      setAllInterests(checked: boolean) {
+        this.interests = { music: checked, travel: checked, sport: checked };
+      }
+
+      setInterest(key: 'music' | 'travel' | 'sport', checked: boolean) {
+        this.interests = { ...this.interests, [key]: checked };
+      }
+    }
     ```
 
     ```vue Vue icon="vuejs" expandable
@@ -762,13 +831,11 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
 
 ### CSS custom properties
 
-<Expandable title="CSS variables" defaultOpen={true}>
-  | Variable | Description | Default |
-  |---|---|---|
-  | `--bq-checkbox--size` | Checkbox size | `24px` |
-  | `--bq-checkbox--border-radius` | Checkbox border radius | `theme(borderRadius.xs)` |
-  | `--bq-checkbox--border-width` | Checkbox border width | `theme(borderWidth.m)` |
-</Expandable>
+| Variable | Description | Default |
+|---|---|---|
+| `--bq-checkbox--size` | Checkbox size | `24px` |
+| `--bq-checkbox--border-radius` | Checkbox border radius | `var(--bq-radius--xs)` |
+| `--bq-checkbox--border-width` | Checkbox border width | `var(--bq-stroke-m)` |
 
 <Tip>
   Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).

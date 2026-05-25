@@ -166,17 +166,27 @@ Enhance user interaction by implementing the default select variant. Perfect for
     </BqSelect>
     ```
 
-    ```html Angular icon="angular"
-    <bq-select placeholder="Placeholder">
-      <label slot="label">Select label</label>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-      <bq-option value="1">Option 1</bq-option>
-      <bq-option value="2">Option 2</bq-option>
-      <bq-option value="3">Option 3</bq-option>
-    </bq-select>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqOption, BqSelect],
+      template: `
+        <bq-select placeholder="Placeholder">
+          <label slot="label">Select label</label>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+          <bq-option value="1">Option 1</bq-option>
+          <bq-option value="2">Option 2</bq-option>
+          <bq-option value="3">Option 3</bq-option>
+        </bq-select>
+      `
+    })
+    export class DefaultSelectComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -254,17 +264,27 @@ Use the `open` attribute to display the select dropdown by default, offering use
     </BqSelect>
     ```
 
-    ```html Angular icon="angular"
-    <bq-select autofocus open placeholder="Placeholder">
-      <label slot="label">Select label</label>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-      <bq-option value="1">Option 1</bq-option>
-      <bq-option value="2">Option 2</bq-option>
-      <bq-option value="3">Option 3</bq-option>
-    </bq-select>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqOption, BqSelect],
+      template: `
+        <bq-select autofocus open placeholder="Placeholder">
+          <label slot="label">Select label</label>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+          <bq-option value="1">Option 1</bq-option>
+          <bq-option value="2">Option 2</bq-option>
+          <bq-option value="3">Option 3</bq-option>
+        </bq-select>
+      `
+    })
+    export class OpenSelectComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -341,17 +361,27 @@ Set an initial `value` for the select component to preselect an option, providin
     </BqSelect>
     ```
 
-    ```html Angular icon="angular"
-    <bq-select placeholder="Placeholder" value="2">
-      <label slot="label">Select label</label>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-      <bq-option value="1">Option 1</bq-option>
-      <bq-option value="2">Option 2</bq-option>
-      <bq-option value="3">Option 3</bq-option>
-    </bq-select>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqOption, BqSelect],
+      template: `
+        <bq-select placeholder="Placeholder" value="2">
+          <label slot="label">Select label</label>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+          <bq-option value="1">Option 1</bq-option>
+          <bq-option value="2">Option 2</bq-option>
+          <bq-option value="3">Option 3</bq-option>
+        </bq-select>
+      `
+    })
+    export class InitialValueSelectComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -539,42 +569,52 @@ The `displayValue` property (`display-value` attribute) on `bq-option` overrides
     </BqSelect>
     ```
 
-    ```html Angular icon="angular"
-    <bq-select placeholder="Payment method..." open>
-      <label slot="label">Choose a payment method</label>
-      <span slot="helper-text">
-        You will not be charged until you review your order on the next page
-      </span>
-      <bq-option value="visa-1234" display-value="Visa •••• 1234">
-        <div class="flex flex-col gap-xs2">
-          <div class="flex items-center gap-xs">
-            <bq-icon name="credit-card" size="20"></bq-icon>
-            <span class="font-semibold">Visa ending in 1234</span>
-          </div>
-          <span class="text-secondary text-s option-indent">Expires 12/2025</span>
-          <span class="text-secondary text-xs option-indent">John Doe</span>
-        </div>
-      </bq-option>
-      <bq-option value="mastercard-5678" display-value="Mastercard •••• 5678">
-        <div class="flex flex-col gap-xs2">
-          <div class="flex items-center gap-xs">
-            <bq-icon name="credit-card" size="20"></bq-icon>
-            <span class="font-semibold">Mastercard ending in 5678</span>
-          </div>
-          <span class="text-secondary text-s option-indent">Expires 08/2026</span>
-          <span class="text-secondary text-xs option-indent">Jane Smith</span>
-        </div>
-      </bq-option>
-      <bq-option value="paypal" display-value="PayPal">
-        <div class="flex flex-col gap-xs2">
-          <div class="flex items-center gap-xs">
-            <bq-icon name="paypal-logo" size="20"></bq-icon>
-            <span class="font-semibold">Pay with PayPal</span>
-          </div>
-          <span class="text-secondary text-s option-indent">john.doe@email.com</span>
-        </div>
-      </bq-option>
-    </bq-select>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqOption, BqSelect],
+      template: `
+        <bq-select placeholder="Payment method..." open>
+          <label slot="label">Choose a payment method</label>
+          <span slot="helper-text">
+            You will not be charged until you review your order on the next page
+          </span>
+          <bq-option value="visa-1234" display-value="Visa •••• 1234">
+            <div class="flex flex-col gap-xs2">
+              <div class="flex items-center gap-xs">
+                <bq-icon name="credit-card" size="20"></bq-icon>
+                <span class="font-semibold">Visa ending in 1234</span>
+              </div>
+              <span class="text-secondary text-s option-indent">Expires 12/2025</span>
+              <span class="text-secondary text-xs option-indent">John Doe</span>
+            </div>
+          </bq-option>
+          <bq-option value="mastercard-5678" display-value="Mastercard •••• 5678">
+            <div class="flex flex-col gap-xs2">
+              <div class="flex items-center gap-xs">
+                <bq-icon name="credit-card" size="20"></bq-icon>
+                <span class="font-semibold">Mastercard ending in 5678</span>
+              </div>
+              <span class="text-secondary text-s option-indent">Expires 08/2026</span>
+              <span class="text-secondary text-xs option-indent">Jane Smith</span>
+            </div>
+          </bq-option>
+          <bq-option value="paypal" display-value="PayPal">
+            <div class="flex flex-col gap-xs2">
+              <div class="flex items-center gap-xs">
+                <bq-icon name="paypal-logo" size="20"></bq-icon>
+                <span class="font-semibold">Pay with PayPal</span>
+              </div>
+              <span class="text-secondary text-s option-indent">john.doe@email.com</span>
+            </div>
+          </bq-option>
+        </bq-select>
+      `
+    })
+    export class DisplayValueSelectComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -677,17 +717,27 @@ Employ the `disabled` attribute to restrict user interaction with the select com
     </BqSelect>
     ```
 
-    ```html Angular icon="angular"
-    <bq-select disabled placeholder="Placeholder" value="3">
-      <label slot="label">Select label</label>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-      <bq-option value="1">Option 1</bq-option>
-      <bq-option value="2">Option 2</bq-option>
-      <bq-option value="3">Option 3</bq-option>
-    </bq-select>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqOption, BqSelect],
+      template: `
+        <bq-select disabled placeholder="Placeholder" value="3">
+          <label slot="label">Select label</label>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+          <bq-option value="1">Option 1</bq-option>
+          <bq-option value="2">Option 2</bq-option>
+          <bq-option value="3">Option 3</bq-option>
+        </bq-select>
+      `
+    })
+    export class DisabledSelectComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -846,44 +896,54 @@ Use the `multiple` property to enable multiple selections. Use `keep-open-on-sel
     </BqSelect>
     ```
 
-    ```html Angular icon="angular"
-    <bq-select
-      multiple
-      keep-open-on-select
-      max-tags-visible="2"
-      placeholder="Placeholder"
-      value='["running","biking","pizza"]'
-    >
-      <label slot="label">Select label</label>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-      <bq-option value="running">
-        <bq-icon slot="prefix" name="sneaker-move"></bq-icon>
-        Running
-      </bq-option>
-      <bq-option value="hiking">
-        <bq-icon slot="prefix" name="boot"></bq-icon>
-        Hiking
-      </bq-option>
-      <bq-option value="biking">
-        <bq-icon slot="prefix" name="person-simple-bike"></bq-icon>
-        Biking
-      </bq-option>
-      <bq-option value="swimming">
-        <bq-icon slot="prefix" name="swimming-pool"></bq-icon>
-        Swimming
-      </bq-option>
-      <bq-option value="pizza">
-        <bq-icon slot="prefix" name="pizza"></bq-icon>
-        Pizza
-      </bq-option>
-      <bq-option value="hamburger">
-        <bq-icon slot="prefix" name="hamburger"></bq-icon>
-        Hamburger
-      </bq-option>
-    </bq-select>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqOption, BqSelect],
+      template: `
+        <bq-select
+          multiple
+          keep-open-on-select
+          max-tags-visible="2"
+          placeholder="Placeholder"
+          value='["running","biking","pizza"]'
+        >
+          <label slot="label">Select label</label>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+          <bq-option value="running">
+            <bq-icon slot="prefix" name="sneaker-move"></bq-icon>
+            Running
+          </bq-option>
+          <bq-option value="hiking">
+            <bq-icon slot="prefix" name="boot"></bq-icon>
+            Hiking
+          </bq-option>
+          <bq-option value="biking">
+            <bq-icon slot="prefix" name="person-simple-bike"></bq-icon>
+            Biking
+          </bq-option>
+          <bq-option value="swimming">
+            <bq-icon slot="prefix" name="swimming-pool"></bq-icon>
+            Swimming
+          </bq-option>
+          <bq-option value="pizza">
+            <bq-icon slot="prefix" name="pizza"></bq-icon>
+            Pizza
+          </bq-option>
+          <bq-option value="hamburger">
+            <bq-icon slot="prefix" name="hamburger"></bq-icon>
+            Hamburger
+          </bq-option>
+        </bq-select>
+      `
+    })
+    export class MultipleSelectComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -993,18 +1053,28 @@ Use the `prefix` slot to include additional visual elements or context, such as 
     </BqSelect>
     ```
 
-    ```html Angular icon="angular"
-    <bq-select placeholder="Placeholder">
-      <label slot="label">Select label</label>
-      <bq-icon name="user-circle" slot="prefix"></bq-icon>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-      <bq-option value="1">Option 1</bq-option>
-      <bq-option value="2">Option 2</bq-option>
-      <bq-option value="3">Option 3</bq-option>
-    </bq-select>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqOption, BqSelect],
+      template: `
+        <bq-select placeholder="Placeholder">
+          <label slot="label">Select label</label>
+          <bq-icon name="user-circle" slot="prefix"></bq-icon>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+          <bq-option value="1">Option 1</bq-option>
+          <bq-option value="2">Option 2</bq-option>
+          <bq-option value="3">Option 3</bq-option>
+        </bq-select>
+      `
+    })
+    export class PrefixSelectComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -1086,18 +1156,28 @@ Leverage the `suffix` slot to enhance the select component with extra elements. 
     </BqSelect>
     ```
 
-    ```html Angular icon="angular"
-    <bq-select placeholder="Placeholder">
-      <label slot="label">Select label</label>
-      <bq-icon name="arrow-down" slot="suffix"></bq-icon>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-      <bq-option value="1">Option 1</bq-option>
-      <bq-option value="2">Option 2</bq-option>
-      <bq-option value="3">Option 3</bq-option>
-    </bq-select>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqOption, BqSelect],
+      template: `
+        <bq-select placeholder="Placeholder">
+          <label slot="label">Select label</label>
+          <bq-icon name="arrow-down" slot="suffix"></bq-icon>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+          <bq-option value="1">Option 1</bq-option>
+          <bq-option value="2">Option 2</bq-option>
+          <bq-option value="3">Option 3</bq-option>
+        </bq-select>
+      `
+    })
+    export class SuffixSelectComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -1242,39 +1322,49 @@ Use `validation-status` to signal the validation state (`error`, `warning`, or `
     </BqSelect>
     ```
 
-    ```html Angular icon="angular"
-    <bq-select placeholder="Placeholder" validation-status="error" value="1">
-      <label slot="label">Select label</label>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-      <bq-option value="1">Option 1</bq-option>
-      <bq-option value="2">Option 2</bq-option>
-      <bq-option value="3">Option 3</bq-option>
-    </bq-select>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
-    <bq-select placeholder="Placeholder" validation-status="warning" value="2">
-      <label slot="label">Select label</label>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-      <bq-option value="1">Option 1</bq-option>
-      <bq-option value="2">Option 2</bq-option>
-      <bq-option value="3">Option 3</bq-option>
-    </bq-select>
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqOption, BqSelect],
+      template: `
+        <bq-select placeholder="Placeholder" validation-status="error" value="1">
+          <label slot="label">Select label</label>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+          <bq-option value="1">Option 1</bq-option>
+          <bq-option value="2">Option 2</bq-option>
+          <bq-option value="3">Option 3</bq-option>
+        </bq-select>
 
-    <bq-select placeholder="Placeholder" validation-status="success" value="3">
-      <label slot="label">Select label</label>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-      <bq-option value="1">Option 1</bq-option>
-      <bq-option value="2">Option 2</bq-option>
-      <bq-option value="3">Option 3</bq-option>
-    </bq-select>
+        <bq-select placeholder="Placeholder" validation-status="warning" value="2">
+          <label slot="label">Select label</label>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+          <bq-option value="1">Option 1</bq-option>
+          <bq-option value="2">Option 2</bq-option>
+          <bq-option value="3">Option 3</bq-option>
+        </bq-select>
+
+        <bq-select placeholder="Placeholder" validation-status="success" value="3">
+          <label slot="label">Select label</label>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+          <bq-option value="1">Option 1</bq-option>
+          <bq-option value="2">Option 2</bq-option>
+          <bq-option value="3">Option 3</bq-option>
+        </bq-select>
+      `
+    })
+    export class ValidationSelectComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -1341,7 +1431,7 @@ Choose this style when you want to include an optional label for additional cont
 
     div > span {
       color: var(--bq-text--secondary);
-    } 
+    }
 
     span {
       display: flex;
@@ -1402,21 +1492,31 @@ Choose this style when you want to include an optional label for additional cont
     </BqSelect>
     ```
 
-    ```html Angular icon="angular"
-    <bq-select placeholder="Placeholder">
-      <div slot="label">
-        <label>Select label</label>
-        <span>Optional</span>
-      </div>
-      <bq-icon name="user-circle" slot="prefix"></bq-icon>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-      <bq-option value="1">Option 1</bq-option>
-      <bq-option value="2">Option 2</bq-option>
-      <bq-option value="3">Option 3</bq-option>
-    </bq-select>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqOption, BqSelect],
+      template: `
+        <bq-select placeholder="Placeholder">
+          <div slot="label">
+            <label>Select label</label>
+            <span>Optional</span>
+          </div>
+          <bq-icon name="user-circle" slot="prefix"></bq-icon>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+          <bq-option value="1">Option 1</bq-option>
+          <bq-option value="2">Option 2</bq-option>
+          <bq-option value="3">Option 3</bq-option>
+        </bq-select>
+      `
+    })
+    export class LabelOptionalSelectComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -1469,7 +1569,7 @@ Enhance user understanding by incorporating a `bq-tooltip` alongside the label, 
 
     div > span {
       color: var(--bq-text--secondary);
-    } 
+    }
 
     span {
       display: flex;
@@ -1548,27 +1648,37 @@ Enhance user understanding by incorporating a `bq-tooltip` alongside the label, 
     </BqSelect>
     ```
 
-    ```html Angular icon="angular"
-    <bq-select placeholder="Placeholder">
-      <div slot="label">
-        <label>
-          Select label
-          <bq-tooltip>
-            <bq-icon name="info" slot="trigger"></bq-icon>
-            You can provide more context by adding a tooltip to the label.
-          </bq-tooltip>
-        </label>
-        <span>Optional</span>
-      </div>
-      <bq-icon name="user-circle" slot="prefix"></bq-icon>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-      <bq-option value="1">Option 1</bq-option>
-      <bq-option value="2">Option 2</bq-option>
-      <bq-option value="3">Option 3</bq-option>
-    </bq-select>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqSelect, BqTooltip } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqOption, BqSelect, BqTooltip],
+      template: `
+        <bq-select placeholder="Placeholder">
+          <div slot="label">
+            <label>
+              Select label
+              <bq-tooltip>
+                <bq-icon name="info" slot="trigger"></bq-icon>
+                You can provide more context by adding a tooltip to the label.
+              </bq-tooltip>
+            </label>
+            <span>Optional</span>
+          </div>
+          <bq-icon name="user-circle" slot="prefix"></bq-icon>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+          <bq-option value="1">Option 1</bq-option>
+          <bq-option value="2">Option 2</bq-option>
+          <bq-option value="3">Option 3</bq-option>
+        </bq-select>
+      `
+    })
+    export class LabelTooltipSelectComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -1688,24 +1798,34 @@ Adjust the panel placement to suit your layout. Use the `placement` attribute to
     </BqSelect>
     ```
 
-    ```html Angular icon="angular"
-    <bq-select placeholder="Placeholder" placement="top">
-      <label slot="label">
-        Select label
-        <bq-tooltip>
-          <bq-icon name="info" slot="trigger"></bq-icon>
-          You can provide more context by adding a tooltip to the label.
-        </bq-tooltip>
-      </label>
-      <bq-icon name="user-circle" slot="prefix"></bq-icon>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-      <bq-option value="1">Option 1</bq-option>
-      <bq-option value="2">Option 2</bq-option>
-      <bq-option value="3">Option 3</bq-option>
-    </bq-select>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqSelect, BqTooltip } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqOption, BqSelect, BqTooltip],
+      template: `
+        <bq-select placeholder="Placeholder" placement="top">
+          <label slot="label">
+            Select label
+            <bq-tooltip>
+              <bq-icon name="info" slot="trigger"></bq-icon>
+              You can provide more context by adding a tooltip to the label.
+            </bq-tooltip>
+          </label>
+          <bq-icon name="user-circle" slot="prefix"></bq-icon>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+          <bq-option value="1">Option 1</bq-option>
+          <bq-option value="2">Option 2</bq-option>
+          <bq-option value="3">Option 3</bq-option>
+        </bq-select>
+      `
+    })
+    export class PanelPlacementSelectComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -1791,17 +1911,27 @@ Use this style when you prefer a minimal look and the field's purpose is conveye
     </BqSelect>
     ```
 
-    ```html Angular icon="angular"
-    <bq-select placeholder="Placeholder">
-      <bq-icon name="user-circle" slot="prefix"></bq-icon>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-      <bq-option value="1">Option 1</bq-option>
-      <bq-option value="2">Option 2</bq-option>
-      <bq-option value="3">Option 3</bq-option>
-    </bq-select>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqOption, BqSelect],
+      template: `
+        <bq-select placeholder="Placeholder">
+          <bq-icon name="user-circle" slot="prefix"></bq-icon>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+          <bq-option value="1">Option 1</bq-option>
+          <bq-option value="2">Option 2</bq-option>
+          <bq-option value="3">Option 3</bq-option>
+        </bq-select>
+      `
+    })
+    export class NoLabelSelectComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -1865,14 +1995,24 @@ Select this variant when you don't need additional helper text, giving users a s
     </BqSelect>
     ```
 
-    ```html Angular icon="angular"
-    <bq-select placeholder="Placeholder">
-      <label slot="label">Select label</label>
-      <bq-icon name="user-circle" slot="prefix"></bq-icon>
-      <bq-option value="1">Option 1</bq-option>
-      <bq-option value="2">Option 2</bq-option>
-      <bq-option value="3">Option 3</bq-option>
-    </bq-select>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqOption, BqSelect],
+      template: `
+        <bq-select placeholder="Placeholder">
+          <label slot="label">Select label</label>
+          <bq-icon name="user-circle" slot="prefix"></bq-icon>
+          <bq-option value="1">Option 1</bq-option>
+          <bq-option value="2">Option 2</bq-option>
+          <bq-option value="3">Option 3</bq-option>
+        </bq-select>
+      `
+    })
+    export class NoHelperTextSelectComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -1948,17 +2088,27 @@ A readonly select shows the current value but prevents the panel from opening. U
     </BqSelect>
     ```
 
-    ```html Angular icon="angular"
-    <bq-select placeholder="Placeholder" value="2" readonly>
-      <label slot="label">Select label</label>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-      <bq-option value="1">Option 1</bq-option>
-      <bq-option value="2">Option 2</bq-option>
-      <bq-option value="3">Option 3</bq-option>
-    </bq-select>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqOption, BqSelect],
+      template: `
+        <bq-select placeholder="Placeholder" value="2" readonly>
+          <label slot="label">Select label</label>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+          <bq-option value="1">Option 1</bq-option>
+          <bq-option value="2">Option 2</bq-option>
+          <bq-option value="3">Option 3</bq-option>
+        </bq-select>
+      `
+    })
+    export class ReadonlySelectComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -2037,17 +2187,27 @@ Set `disable-clear` to hide the clear button and prevent one-click deselection. 
     </BqSelect>
     ```
 
-    ```html Angular icon="angular"
-    <bq-select placeholder="Placeholder" value="1" disable-clear>
-      <label slot="label">Select label</label>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-      <bq-option value="1">Option 1</bq-option>
-      <bq-option value="2">Option 2</bq-option>
-      <bq-option value="3">Option 3</bq-option>
-    </bq-select>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqOption, BqSelect],
+      template: `
+        <bq-select placeholder="Placeholder" value="1" disable-clear>
+          <label slot="label">Select label</label>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+          <bq-option value="1">Option 1</bq-option>
+          <bq-option value="2">Option 2</bq-option>
+          <bq-option value="3">Option 3</bq-option>
+        </bq-select>
+      `
+    })
+    export class DisableClearSelectComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -2087,7 +2247,7 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
   <bq-select id="custom-select" placeholder="Search options..." debounce-time="300">
     <label slot="label">Custom filtering</label>
   </bq-select>
-  
+
   <script>
     (() => {
       const ALL_OPTIONS = [
@@ -2300,34 +2460,10 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
     }
     ```
 
-    ```html Angular icon="angular"
-    <!-- app.component.html -->
-    <bq-select
-      placeholder="Search options..."
-      debounce-time="300"
-      (bqInput)="handleInput($event)"
-      (bqSelect)="handleSelect()"
-    >
-      <label slot="label">Custom filtering</label>
-      <bq-option *ngIf="isLoading" disabled>
-        <bq-spinner slot="prefix" animation size="small" text-position="right"></bq-spinner>
-        Loading...
-      </bq-option>
-      <ng-container *ngIf="!isLoading">
-        <bq-option *ngIf="visibleOptions.length === 0" disabled>
-          <bq-icon slot="prefix" name="x-circle"></bq-icon>
-          No results found
-        </bq-option>
-        <bq-option *ngFor="let option of visibleOptions" [value]="option.value">
-          <bq-icon slot="prefix" [name]="option.icon"></bq-icon>
-          <span [innerHTML]="option.label"></span>
-        </bq-option>
-      </ng-container>
-    </bq-select>
-
-    // app.component.ts
-    import { Component } from '@angular/core';
-    import type { BqSelectCustomEvent } from '@beeq/core';
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqSelect, BqSpinner } from "@beeq/angular/standalone";
+    import type { BqSelectCustomEvent } from "@beeq/core";
 
     const ALL_OPTIONS = [
       { label: 'Running', value: 'running', icon: 'sneaker-move' },
@@ -2340,12 +2476,44 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
       { label: 'Ice-cream', value: 'ice-cream', icon: 'ice-cream' },
     ];
 
-    @Component({ selector: 'app-root', templateUrl: './app.component.html' })
-    export class AppComponent {
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqOption, BqSelect, BqSpinner],
+      template: `
+        <bq-select
+          placeholder="Search options..."
+          debounce-time="300"
+          (bqInput)="handleInput($event)"
+          (bqSelect)="handleSelect()"
+        >
+          <label slot="label">Custom filtering</label>
+          @if (isLoading) {
+            <bq-option disabled>
+              <bq-spinner slot="prefix" animation size="small" text-position="right"></bq-spinner>
+              Loading...
+            </bq-option>
+          } @else {
+            @if (visibleOptions.length === 0) {
+              <bq-option disabled>
+                <bq-icon slot="prefix" name="x-circle"></bq-icon>
+                No results found
+              </bq-option>
+            }
+            @for (option of visibleOptions; track option.value) {
+              <bq-option [value]="option.value">
+                <bq-icon slot="prefix" [name]="option.icon"></bq-icon>
+                <span [innerHTML]="option.label"></span>
+              </bq-option>
+            }
+          }
+        </bq-select>
+      `
+    })
+    export class CustomFilteringSelectComponent {
       visibleOptions = [...ALL_OPTIONS];
       isLoading = false;
 
-      handleInput(event: BqSelectCustomEvent<{ value: string }>) {
+      handleInput(event: BqSelectCustomEvent<{ value: string }>): void {
         event.preventDefault();
         const query = event.detail.value;
 
@@ -2368,7 +2536,7 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
         }, 300);
       }
 
-      handleSelect() {
+      handleSelect(): void {
         this.visibleOptions = [...ALL_OPTIONS];
       }
     }
@@ -2618,27 +2786,27 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
 <Expandable title="CSS variables" defaultOpen={false}>
   | Variable | Description | Default |
   |---|---|---|
-  | `--bq-select--background-color` | Select background color | `theme(backgroundColor.ui.primary)` |
-  | `--bq-select--border-color` | Select border color | `theme(stroke.tertiary)` |
-  | `--bq-select--border-color-focus` | Select border color on focus | `theme(stroke.brand)` |
+  | `--bq-select--background-color` | Select background color | `var(--bq-ui--primary)` |
+  | `--bq-select--border-color` | Select border color | `var(--bq-stroke--tertiary)` |
+  | `--bq-select--border-color-focus` | Select border color on focus | `var(--bq-stroke--brand)` |
   | `--bq-select--border-color-disabled` | Select border color when disabled | — |
-  | `--bq-select--border-radius` | Select border radius | `theme(borderRadius.s)` |
-  | `--bq-select--border-width` | Select border width | `theme(borderWidth.s)` |
+  | `--bq-select--border-radius` | Select border radius | `var(--bq-radius--s)` |
+  | `--bq-select--border-width` | Select border width | `var(--bq-stroke-s)` |
   | `--bq-select--border-style` | Select border style | `solid` |
-  | `--bq-select--gap` | Gap between select content and prefix/suffix | `theme(spacing.xs)` |
-  | `--bq-select--helper-margin-top` | Helper text top margin | `theme(spacing.xs)` |
-  | `--bq-select--helper-text-color` | Helper text color | `theme(textColor.primary)` |
-  | `--bq-select--helper-text-size` | Helper text font size | `theme(fontSize.s)` |
+  | `--bq-select--gap` | Gap between select content and prefix/suffix | `var(--bq-spacing-xs)` |
+  | `--bq-select--helper-margin-top` | Helper text top margin | `var(--bq-spacing-xs)` |
+  | `--bq-select--helper-text-color` | Helper text color | `var(--bq-text--primary)` |
+  | `--bq-select--helper-text-size` | Helper text font size | `var(--bq-font-size--s)` |
   | `--bq-select--icon-size` | Size of icons in prefix, suffix, and clear button | `24px` |
-  | `--bq-select--label-margin-bottom` | Label bottom margin | `theme(spacing.xs)` |
-  | `--bq-select--label-text-color` | Label text color | `theme(textColor.primary)` |
-  | `--bq-select--label-text-size` | Label font size | `theme(fontSize.s)` |
+  | `--bq-select--label-margin-bottom` | Label bottom margin | `var(--bq-spacing-xs)` |
+  | `--bq-select--label-text-color` | Label text color | `var(--bq-text--primary)` |
+  | `--bq-select--label-text-size` | Label font size | `var(--bq-font-size--s)` |
   | `--bq-select--padding-start` | Inline-start padding of the control | `calc(var(--bq-spacing-m) - var(--bq-select--border-width))` |
   | `--bq-select--padding-end` | Inline-end padding of the control | `calc(var(--bq-spacing-m) - var(--bq-select--border-width))` |
   | `--bq-select--paddingY` | Block (top and bottom) padding of the control | `calc(var(--bq-spacing-s) - var(--bq-select--border-width))` |
-  | `--bq-select--text-color` | Input text color | `theme(textColor.primary)` |
-  | `--bq-select--text-size` | Input text font size | `theme(fontSize.m)` |
-  | `--bq-select--text-placeholder-color` | Placeholder text color | `theme(textColor.secondary)` |
+  | `--bq-select--text-color` | Input text color | `var(--bq-text--primary)` |
+  | `--bq-select--text-size` | Input text font size | `var(--bq-font-size--m)` |
+  | `--bq-select--text-placeholder-color` | Placeholder text color | `var(--bq-text--secondary)` |
 </Expandable>
 
 <Tip>

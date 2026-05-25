@@ -270,7 +270,7 @@ Every `CodeLivePreview` must include a `CodeGroup` with tabs for all four framew
 
 1. `HTML`
 2. `React`
-3. `Angular`
+3. `Angular` (always a `ts` block using the standalone `@Component` pattern — see _Angular standalone pattern_ below)
 4. `Vue`
 
 Add an optional `CSS` tab first when custom styles are part of the example and it's important for users to see them in context.
@@ -280,11 +280,39 @@ Add an optional `CSS` tab first when custom styles are part of the example and i
 | Framework | Convention | Example |
 |---|---|---|
 | HTML | kebab-case attributes | `alt-text`, `background-color` |
-| Angular | kebab-case attributes | `alt-text`, `background-color` |
+| Angular | kebab-case attributes for static strings; `[propName]="value"` for property bindings | `alt-text`, `[firstDayOfWeek]="1"` |
 | React | camelCase props | `altText`, `backgroundColor` |
 | Vue | camelCase props | `altText`, `backgroundColor` |
 
 Vue component wrappers use camelCase — **never** copy HTML attribute names into Vue tabs.
+
+### Angular standalone pattern
+
+Every Angular tab must be a **`ts`** code block (not `html`) showing a complete standalone `@Component`. This applies even when the example has no class logic — consistency and the canonical import pattern matter more than brevity.
+
+```ts Angular icon="angular"
+import { Component } from "@angular/core";
+import { BqComponentA } from "@beeq/angular/standalone";
+
+@Component({
+  standalone: true,
+  imports: [BqComponentA],
+  template: `
+    <bq-component-a name="example">
+      <label slot="label">Example label</label>
+    </bq-component-a>
+  `
+})
+export class ExampleComponent {}
+```
+
+Rules:
+- Always import from `@beeq/angular/standalone` — never from `BeeQModule` or the non-standalone package.
+- List every BEEQ component used in the template in the `imports` array.
+- Name the class descriptively: `DefaultButtonComponent`, `DisabledDatePickerComponent`, etc.
+- Use an empty class body `{}` when there is no logic.
+- Use `[propName]="value"` for non-string or dynamic property bindings; plain HTML attributes (`prop-name="value"`) for static strings.
+- Use `(bqEventName)="handler($event)"` for event bindings.
 
 ---
 

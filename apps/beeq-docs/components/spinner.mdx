@@ -137,11 +137,16 @@ Use the default spinner when the surrounding UI already makes the loading contex
     <BqSpinner />
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqSpinner } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSpinner } from "@beeq/angular/standalone";
 
-    <bq-spinner></bq-spinner>
+    @Component({
+      standalone: true,
+      imports: [BqSpinner],
+      template: `<bq-spinner></bq-spinner>`
+    })
+    export class DefaultSpinnerComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -180,8 +185,16 @@ Use the small spinner when space is limited and the loading state belongs to a c
     <BqSpinner size="small" />
     ```
 
-    ```html Angular icon="angular"
-    <bq-spinner size="small"></bq-spinner>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSpinner } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqSpinner],
+      template: `<bq-spinner size="small"></bq-spinner>`
+    })
+    export class SmallSpinnerComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -214,8 +227,16 @@ Use `size="large"` for prominent loading states such as page-level waits, major 
     <BqSpinner size="large" />
     ```
 
-    ```html Angular icon="angular"
-    <bq-spinner size="large"></bq-spinner>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSpinner } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqSpinner],
+      template: `<bq-spinner size="large"></bq-spinner>`
+    })
+    export class LargeSpinnerComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -265,11 +286,21 @@ Use `text-position` to control where the loading message appears relative to the
     </>
     ```
 
-    ```html Angular icon="angular"
-    <bq-spinner text-position="below">Loading invoices...</bq-spinner>
-    <bq-spinner text-position="above">Syncing changes...</bq-spinner>
-    <bq-spinner text-position="right">Submitting...</bq-spinner>
-    <bq-spinner text-position="left">Processing...</bq-spinner>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSpinner } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqSpinner],
+      template: `
+        <bq-spinner text-position="below">Loading invoices...</bq-spinner>
+        <bq-spinner text-position="above">Syncing changes...</bq-spinner>
+        <bq-spinner text-position="right">Submitting...</bq-spinner>
+        <bq-spinner text-position="left">Processing...</bq-spinner>
+      `
+    })
+    export class LabelledSpinnerComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -311,13 +342,20 @@ Use the `icon` slot when you need a different spinner icon treatment. Make sure 
     </BqSpinner>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqIcon, BqSpinner } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqSpinner } from "@beeq/angular/standalone";
 
-    <bq-spinner size="large">
-      <bq-icon name="spinner-gap-bold" slot="icon"></bq-icon>
-    </bq-spinner>
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqSpinner],
+      template: `
+        <bq-spinner size="large">
+          <bq-icon name="spinner-gap-bold" slot="icon"></bq-icon>
+        </bq-spinner>
+      `
+    })
+    export class CustomIconSpinnerComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -434,14 +472,14 @@ Use the `icon` slot when you need a different spinner icon treatment. Make sure 
 <Expandable title="CSS variables" defaultOpen={true}>
   | Variable | Description | Default |
   |---|---|---|
-  | `--bq-spinner--color` | Spinner color | `theme(stroke.ui.brand)` |
+  | `--bq-spinner--color` | Spinner color | `var(--bq-ui--brand)` |
   | `--bq-spinner--size-large` | Spinner large size | `56px` |
   | `--bq-spinner--size-medium` | Spinner medium size | `48px` |
   | `--bq-spinner--size-small` | Spinner small size | `32px` |
-  | `--bq-spinner--large-text-fontSize` | Large spinner label font size | `theme(fontSize.m)` |
-  | `--bq-spinner--medium-text-fontSize` | Medium spinner label font size | `theme(fontSize.s)` |
-  | `--bq-spinner--small-text-fontSize` | Small spinner label font size | `theme(fontSize.xs)` |
-  | `--bq-spinner--text-lineHeight` | Spinner label line height | `theme(lineHeight.large)` |
+  | `--bq-spinner--large-text-fontSize` | Large spinner label font size | `var(--bq-font-size--m)` |
+  | `--bq-spinner--medium-text-fontSize` | Medium spinner label font size | `var(--bq-font-size--s)` |
+  | `--bq-spinner--small-text-fontSize` | Small spinner label font size | `var(--bq-font-size--xs)` |
+  | `--bq-spinner--text-lineHeight` | Spinner label line height | `var(--bq-font-line-height--large)` |
 </Expandable>
 
 <Tip>
@@ -451,7 +489,7 @@ Use the `icon` slot when you need a different spinner icon treatment. Make sure 
 ## Resources
 
 <CardGroup cols={2}>
-  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-spinner--medium">
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-spinner--large">
     Explore spinner sizes, label positions, and custom icon usage in Storybook.
   </Card>
   <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/spinner">

@@ -230,26 +230,33 @@ Use the `default` dialog when you want to overlay content for focused user engag
     }
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqButton, BqDialog, BqIcon } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqDialog, BqIcon } from "@beeq/angular/standalone";
 
-    <bq-button (bqClick)="myDialog.show()">Open dialog</bq-button>
+    @Component({
+      standalone: true,
+      imports: [BqButton, BqDialog, BqIcon],
+      template: `
+        <bq-button (bqClick)="dialog.show()">Open dialog</bq-button>
 
-    <bq-dialog #myDialog>
-      <h5 slot="title">
-        <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
-        Title
-      </h5>
+        <bq-dialog #dialog>
+          <h5 slot="title">
+            <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
+            Title
+          </h5>
 
-      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
 
-      <div class="dialog-footer" slot="footer">
-        <bq-button appearance="link">Button</bq-button>
-        <bq-button variant="ghost">Button</bq-button>
-        <bq-button variant="standard">Button</bq-button>
-      </div>
-    </bq-dialog>
+          <div class="dialog-footer" slot="footer">
+            <bq-button appearance="link">Button</bq-button>
+            <bq-button variant="ghost">Button</bq-button>
+            <bq-button variant="standard">Button</bq-button>
+          </div>
+        </bq-dialog>
+      `,
+    })
+    export class DialogExampleComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -404,23 +411,33 @@ Use `footer-appearance="highlight"` when emphasis on the footer is important.
     }
     ```
 
-    ```html Angular icon="angular"
-    <bq-button (bqClick)="highlightDialog.show()">Open dialog</bq-button>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqDialog, BqIcon } from "@beeq/angular/standalone";
 
-    <bq-dialog #highlightDialog footer-appearance="highlight">
-      <h5 slot="title">
-        <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
-        Title
-      </h5>
+    @Component({
+      standalone: true,
+      imports: [BqButton, BqDialog, BqIcon],
+      template: `
+        <bq-button (bqClick)="dialog.show()">Open dialog</bq-button>
 
-      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+        <bq-dialog #dialog footer-appearance="highlight">
+          <h5 slot="title">
+            <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
+            Title
+          </h5>
 
-      <div class="dialog-footer" slot="footer">
-        <bq-button appearance="link">Button</bq-button>
-        <bq-button variant="ghost">Button</bq-button>
-        <bq-button variant="standard">Button</bq-button>
-      </div>
-    </bq-dialog>
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+
+          <div class="dialog-footer" slot="footer">
+            <bq-button appearance="link">Button</bq-button>
+            <bq-button variant="ghost">Button</bq-button>
+            <bq-button variant="standard">Button</bq-button>
+          </div>
+        </bq-dialog>
+      `,
+    })
+    export class HighlightFooterDialogComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -546,17 +563,27 @@ This kind of dialog omits the footer section for situations where a minimal and 
     }
     ```
 
-    ```html Angular icon="angular"
-    <bq-button (bqClick)="infoDialog.show()">Open dialog</bq-button>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqDialog, BqIcon } from "@beeq/angular/standalone";
 
-    <bq-dialog #infoDialog>
-      <h5 slot="title">
-        <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
-        Title
-      </h5>
+    @Component({
+      standalone: true,
+      imports: [BqButton, BqDialog, BqIcon],
+      template: `
+        <bq-button (bqClick)="dialog.show()">Open dialog</bq-button>
 
-      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-    </bq-dialog>
+        <bq-dialog #dialog>
+          <h5 slot="title">
+            <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
+            Title
+          </h5>
+
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+        </bq-dialog>
+      `,
+    })
+    export class NoFooterDialogComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -704,23 +731,33 @@ Use `disable-backdrop` when you want to allow users to focus on the dialog conte
     }
     ```
 
-    ```html Angular icon="angular"
-    <bq-button (bqClick)="noBackdropDialog.show()">Open dialog</bq-button>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqDialog, BqIcon } from "@beeq/angular/standalone";
 
-    <bq-dialog #noBackdropDialog disable-backdrop>
-      <h5 slot="title">
-        <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
-        Title
-      </h5>
+    @Component({
+      standalone: true,
+      imports: [BqButton, BqDialog, BqIcon],
+      template: `
+        <bq-button (bqClick)="dialog.show()">Open dialog</bq-button>
 
-      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+        <bq-dialog #dialog disable-backdrop>
+          <h5 slot="title">
+            <bq-icon name="info" size="30" color="text--accent" role="img" title="Info"></bq-icon>
+            Title
+          </h5>
 
-      <div class="dialog-footer" slot="footer">
-        <bq-button appearance="link">Button</bq-button>
-        <bq-button variant="ghost">Button</bq-button>
-        <bq-button variant="standard">Button</bq-button>
-      </div>
-    </bq-dialog>
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+
+          <div class="dialog-footer" slot="footer">
+            <bq-button appearance="link">Button</bq-button>
+            <bq-button variant="ghost">Button</bq-button>
+            <bq-button variant="standard">Button</bq-button>
+          </div>
+        </bq-dialog>
+      `,
+    })
+    export class NoBackdropDialogComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -915,28 +952,38 @@ Use this variant to confirm irreversible actions with clear messaging and focuse
     }
     ```
 
-    ```html Angular icon="angular"
-    <bq-button variant="ghost" (bqClick)="confirmDialog.show()">Deactivate account</bq-button>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqDialog, BqIcon } from "@beeq/angular/standalone";
 
-    <bq-dialog
-      #confirmDialog
-      disable-close-click-outside
-      disable-close-esc-keydown
-      hide-close-button
-    >
-      <h5 slot="title">
-        <bq-icon name="info" size="30" color="icon--danger" role="img" title="Danger"></bq-icon>
-        Deactivate account
-      </h5>
+    @Component({
+      standalone: true,
+      imports: [BqButton, BqDialog, BqIcon],
+      template: `
+        <bq-button variant="ghost" (bqClick)="dialog.show()">Deactivate account</bq-button>
 
-      <p>Are you sure you want to deactivate your account? All of your data will be permanently removed.</p>
-      <span class="dialog-caption">This action cannot be undone</span>
+        <bq-dialog
+          #dialog
+          disable-close-click-outside
+          disable-close-esc-keydown
+          hide-close-button
+        >
+          <h5 slot="title">
+            <bq-icon name="info" size="30" color="icon--danger" role="img" title="Danger"></bq-icon>
+            Deactivate account
+          </h5>
 
-      <div class="dialog-footer" slot="footer">
-        <bq-button appearance="secondary" (bqClick)="confirmDialog.cancel()">Cancel</bq-button>
-        <bq-button variant="danger" (bqClick)="confirmDialog.hide()">Yes, deactivate</bq-button>
-      </div>
-    </bq-dialog>
+          <p>Are you sure you want to deactivate your account? All of your data will be permanently removed.</p>
+          <span class="dialog-caption">This action cannot be undone</span>
+
+          <div class="dialog-footer" slot="footer">
+            <bq-button appearance="secondary" (bqClick)="dialog.cancel()">Cancel</bq-button>
+            <bq-button variant="danger" (bqClick)="dialog.hide()">Yes, deactivate</bq-button>
+          </div>
+        </bq-dialog>
+      `,
+    })
+    export class ConfirmDialogComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -1104,17 +1151,17 @@ Use this variant to confirm irreversible actions with clear messaging and focuse
 <Expandable title="CSS variables" defaultOpen={false}>
   | Variable | Description | Default |
   |---|---|---|
-  | `--bq-dialog--background` | Dialog background color | `theme(backgroundColor.ui.primary)` |
-  | `--bq-dialog--background-backdrop` | Dialog backdrop background color | `theme(backgroundColor.overlay)` |
-  | `--bq-dialog--text-color` | Dialog text color | `theme(textColor.primary)` |
-  | `--bq-dialog--box-shadow` | Dialog box shadow | `theme(boxShadow.l)` |
-  | `--bq-dialog--border-color` | Dialog border color | `theme(stroke.transparent)` |
+  | `--bq-dialog--background` | Dialog background color | `var(--bq-ui--primary)` |
+  | `--bq-dialog--background-backdrop` | Dialog backdrop background color | `var(--bq-background--overlay)` |
+  | `--bq-dialog--text-color` | Dialog text color | `var(--bq-text--primary)` |
+  | `--bq-dialog--box-shadow` | Dialog box shadow | `var(--bq-box-shadow--l)` |
+  | `--bq-dialog--border-color` | Dialog border color | `transparent` |
   | `--bq-dialog--border-style` | Dialog border style | `none` |
   | `--bq-dialog--border-width` | Dialog border width | `unset` |
-  | `--bq-dialog--border-radius` | Dialog border radius | `theme(borderRadius.m)` |
-  | `--bq-dialog--padding` | Dialog padding | `theme(spacing.l)` |
-  | `--bq-dialog--content-footer-gap` | Gap between the content and footer | `theme(spacing.l)` |
-  | `--bq-dialog--title-body-gap` | Gap between the title and body | `theme(spacing.s)` |
+  | `--bq-dialog--border-radius` | Dialog border radius | `var(--bq-radius--m)` |
+  | `--bq-dialog--padding` | Dialog padding | `var(--bq-spacing-l)` |
+  | `--bq-dialog--content-footer-gap` | Gap between the content and footer | `var(--bq-spacing-l)` |
+  | `--bq-dialog--title-body-gap` | Gap between the title and body | `var(--bq-spacing-s)` |
   | `--bq-dialog--width-small` | Small dialog width | `320px` |
   | `--bq-dialog--width-medium` | Medium dialog width | `480px` |
   | `--bq-dialog--width-large` | Large dialog width | `640px` |

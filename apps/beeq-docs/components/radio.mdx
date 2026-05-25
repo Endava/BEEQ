@@ -145,13 +145,23 @@ Wrap `bq-radio` elements inside a `bq-radio-group`. Set a matching `value` on th
     </BqRadioGroup>
     ```
 
-    ```html Angular icon="angular"
-    <bq-radio-group name="group" value="option1">
-      <span slot="label">Label</span>
-      <bq-radio value="option1">Radio option 1</bq-radio>
-      <bq-radio value="option2">Radio option 2</bq-radio>
-      <bq-radio value="option3">Radio option 3</bq-radio>
-    </bq-radio-group>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqRadio, BqRadioGroup } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqRadio, BqRadioGroup],
+      template: `
+        <bq-radio-group name="group" value="option1">
+          <span slot="label">Label</span>
+          <bq-radio value="option1">Radio option 1</bq-radio>
+          <bq-radio value="option2">Radio option 2</bq-radio>
+          <bq-radio value="option3">Radio option 3</bq-radio>
+        </bq-radio-group>
+      `
+    })
+    export class DefaultRadioGroupComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -235,22 +245,32 @@ Set `disabled` on the group to prevent all interaction. You can also disable ind
     </BqRadioGroup>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Fully disabled group -->
-    <bq-radio-group name="group-disabled" value="option1" disabled>
-      <span slot="label">Label</span>
-      <bq-radio value="option1">Radio option 1</bq-radio>
-      <bq-radio value="option2">Radio option 2</bq-radio>
-      <bq-radio value="option3">Radio option 3</bq-radio>
-    </bq-radio-group>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqRadio, BqRadioGroup } from "@beeq/angular/standalone";
 
-    <!-- Individual radio disabled -->
-    <bq-radio-group name="group-partial" value="option1">
-      <span slot="label">Label</span>
-      <bq-radio value="option1">Radio option 1</bq-radio>
-      <bq-radio value="option2" disabled>Radio option 2</bq-radio>
-      <bq-radio value="option3">Radio option 3</bq-radio>
-    </bq-radio-group>
+    @Component({
+      standalone: true,
+      imports: [BqRadio, BqRadioGroup],
+      template: `
+        <!-- Fully disabled group -->
+        <bq-radio-group name="group-disabled" value="option1" disabled>
+          <span slot="label">Label</span>
+          <bq-radio value="option1">Radio option 1</bq-radio>
+          <bq-radio value="option2">Radio option 2</bq-radio>
+          <bq-radio value="option3">Radio option 3</bq-radio>
+        </bq-radio-group>
+
+        <!-- Individual radio disabled -->
+        <bq-radio-group name="group-partial" value="option1">
+          <span slot="label">Label</span>
+          <bq-radio value="option1">Radio option 1</bq-radio>
+          <bq-radio value="option2" disabled>Radio option 2</bq-radio>
+          <bq-radio value="option3">Radio option 3</bq-radio>
+        </bq-radio-group>
+      `
+    })
+    export class DisabledRadioGroupComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -312,13 +332,23 @@ Use `orientation="horizontal"` to arrange options side by side. Best for short l
     </BqRadioGroup>
     ```
 
-    ```html Angular icon="angular"
-    <bq-radio-group name="group" value="option1" orientation="horizontal">
-      <span slot="label">Label</span>
-      <bq-radio value="option1">Radio option 1</bq-radio>
-      <bq-radio value="option2">Radio option 2</bq-radio>
-      <bq-radio value="option3">Radio option 3</bq-radio>
-    </bq-radio-group>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqRadio, BqRadioGroup } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqRadio, BqRadioGroup],
+      template: `
+        <bq-radio-group name="group" value="option1" orientation="horizontal">
+          <span slot="label">Label</span>
+          <bq-radio value="option1">Radio option 1</bq-radio>
+          <bq-radio value="option2">Radio option 2</bq-radio>
+          <bq-radio value="option3">Radio option 3</bq-radio>
+        </bq-radio-group>
+      `
+    })
+    export class HorizontalRadioGroupComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -371,13 +401,23 @@ Add the `fieldset` attribute to render a visible border and legend around the gr
     </BqRadioGroup>
     ```
 
-    ```html Angular icon="angular"
-    <bq-radio-group name="group" value="option1" fieldset>
-      <span slot="label">Label</span>
-      <bq-radio value="option1">Radio option 1</bq-radio>
-      <bq-radio value="option2">Radio option 2</bq-radio>
-      <bq-radio value="option3">Radio option 3</bq-radio>
-    </bq-radio-group>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqRadio, BqRadioGroup } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqRadio, BqRadioGroup],
+      template: `
+        <bq-radio-group name="group" value="option1" fieldset>
+          <span slot="label">Label</span>
+          <bq-radio value="option1">Radio option 1</bq-radio>
+          <bq-radio value="option2">Radio option 2</bq-radio>
+          <bq-radio value="option3">Radio option 3</bq-radio>
+        </bq-radio-group>
+      `
+    })
+    export class FieldsetRadioGroupComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -430,13 +470,23 @@ Set `background-on-hover` on the group (or on individual `bq-radio` elements) to
     </BqRadioGroup>
     ```
 
-    ```html Angular icon="angular"
-    <bq-radio-group name="group" value="option1" background-on-hover>
-      <span slot="label">Label</span>
-      <bq-radio value="option1">Radio option 1</bq-radio>
-      <bq-radio value="option2">Radio option 2</bq-radio>
-      <bq-radio value="option3">Radio option 3</bq-radio>
-    </bq-radio-group>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqRadio, BqRadioGroup } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqRadio, BqRadioGroup],
+      template: `
+        <bq-radio-group name="group" value="option1" background-on-hover>
+          <span slot="label">Label</span>
+          <bq-radio value="option1">Radio option 1</bq-radio>
+          <bq-radio value="option2">Radio option 2</bq-radio>
+          <bq-radio value="option3">Radio option 3</bq-radio>
+        </bq-radio-group>
+      `
+    })
+    export class BackgroundOnHoverRadioGroupComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -619,12 +669,10 @@ Set `background-on-hover` on the group (or on individual `bq-radio` elements) to
 
 ### CSS custom properties
 
-<Expandable title="CSS variables" defaultOpen={true}>
-  | Variable | Description | Default |
-  |---|---|---|
-  | `--bq-radio--size` | Size (width and height) of the radio control circle | `24px` |
-  | `--bq-radio--border-width` | Border width of the radio control ring | `theme(borderWidth.m)` |
-</Expandable>
+| Variable | Description | Default |
+|---|---|---|
+| `--bq-radio--size` | Size (width and height) of the radio control circle | `24px` |
+| `--bq-radio--border-width` | Border width of the radio control ring | `var(--bq-stroke-m)` |
 
 <Tip>
   Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).

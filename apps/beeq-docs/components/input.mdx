@@ -175,17 +175,24 @@ Use the default type of input when you want to provide a simple, versatile field
     </BqInput>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqIcon, BqInput } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqInput } from "@beeq/angular/standalone";
 
-    <bq-input name="bq-input" placeholder="Placeholder">
-      <label class="flex flex-grow items-center" slot="label">Input label</label>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-input>
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqInput],
+      template: `
+        <bq-input name="bq-input" placeholder="Placeholder">
+          <label class="flex flex-grow items-center" slot="label">Input label</label>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+        </bq-input>
+      `
+    })
+    export class DefaultInputComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -255,14 +262,24 @@ Use the `value` attribute to provide a convenient solution for scenarios where t
     </BqInput>
     ```
 
-    ```html Angular icon="angular"
-    <bq-input name="bq-input" placeholder="Placeholder" value="Hello World!">
-      <label class="flex flex-grow items-center" slot="label">Input label</label>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-input>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqInput } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqInput],
+      template: `
+        <bq-input name="bq-input" placeholder="Placeholder" value="Hello World!">
+          <label class="flex flex-grow items-center" slot="label">Input label</label>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+        </bq-input>
+      `
+    })
+    export class ValueInputComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -335,15 +352,25 @@ Use the prefix slot when you want to place an icon before the input value to pro
     </BqInput>
     ```
 
-    ```html Angular icon="angular"
-    <bq-input name="bq-input" placeholder="Placeholder">
-      <label class="flex flex-grow items-center" slot="label">Input label</label>
-      <bq-icon name="user-circle" slot="prefix"></bq-icon>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-input>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqInput } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqInput],
+      template: `
+        <bq-input name="bq-input" placeholder="Placeholder">
+          <label class="flex flex-grow items-center" slot="label">Input label</label>
+          <bq-icon name="user-circle" slot="prefix"></bq-icon>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+        </bq-input>
+      `
+    })
+    export class PrefixInputComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -417,15 +444,25 @@ Use the suffix slot when you want to add an icon after the input field for extra
     </BqInput>
     ```
 
-    ```html Angular icon="angular"
-    <bq-input name="bq-input" placeholder="Placeholder">
-      <label class="flex flex-grow items-center" slot="label">Input label</label>
-      <bq-icon name="gear" slot="suffix"></bq-icon>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-input>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqInput } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqInput],
+      template: `
+        <bq-input name="bq-input" placeholder="Placeholder">
+          <label class="flex flex-grow items-center" slot="label">Input label</label>
+          <bq-icon name="gear" slot="suffix"></bq-icon>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+        </bq-input>
+      `
+    })
+    export class SuffixInputComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -502,16 +539,26 @@ This variant combines both prefix and suffix features within the same input.
     </BqInput>
     ```
 
-    ```html Angular icon="angular"
-    <bq-input name="bq-input" placeholder="Placeholder">
-      <label class="flex flex-grow items-center" slot="label">Input label</label>
-      <bq-icon name="user-circle" slot="prefix"></bq-icon>
-      <bq-icon name="gear" slot="suffix"></bq-icon>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-input>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqInput } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqInput],
+      template: `
+        <bq-input name="bq-input" placeholder="Placeholder">
+          <label class="flex flex-grow items-center" slot="label">Input label</label>
+          <bq-icon name="user-circle" slot="prefix"></bq-icon>
+          <bq-icon name="gear" slot="suffix"></bq-icon>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+        </bq-input>
+      `
+    })
+    export class PrefixSuffixInputComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -589,16 +636,26 @@ Use the `disabled` attribute when the input field should be visible but non-edit
     </BqInput>
     ```
 
-    ```html Angular icon="angular"
-    <bq-input disabled name="bq-input" placeholder="Placeholder">
-      <label class="flex flex-grow items-center" slot="label">Input label</label>
-      <bq-icon name="user-circle" slot="prefix"></bq-icon>
-      <bq-icon name="gear" slot="suffix"></bq-icon>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-input>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqInput } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqInput],
+      template: `
+        <bq-input disabled name="bq-input" placeholder="Placeholder">
+          <label class="flex flex-grow items-center" slot="label">Input label</label>
+          <bq-icon name="user-circle" slot="prefix"></bq-icon>
+          <bq-icon name="gear" slot="suffix"></bq-icon>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+        </bq-input>
+      `
+    })
+    export class DisabledInputComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -741,36 +798,46 @@ Use this variant for validation feedback by setting `validation-status` to `erro
     </>
     ```
 
-    ```html Angular icon="angular"
-    <bq-input name="bq-input-error" placeholder="Placeholder" validation-status="error">
-      <label class="flex flex-grow items-center" slot="label">Input label</label>
-      <bq-icon name="user-circle" slot="prefix"></bq-icon>
-      <bq-icon name="gear" slot="suffix"></bq-icon>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-input>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqInput } from "@beeq/angular/standalone";
 
-    <bq-input name="bq-input-success" placeholder="Placeholder" validation-status="success">
-      <label class="flex flex-grow items-center" slot="label">Input label</label>
-      <bq-icon name="user-circle" slot="prefix"></bq-icon>
-      <bq-icon name="gear" slot="suffix"></bq-icon>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-input>
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqInput],
+      template: `
+        <bq-input name="bq-input-error" placeholder="Placeholder" validation-status="error">
+          <label class="flex flex-grow items-center" slot="label">Input label</label>
+          <bq-icon name="user-circle" slot="prefix"></bq-icon>
+          <bq-icon name="gear" slot="suffix"></bq-icon>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+        </bq-input>
 
-    <bq-input name="bq-input-warning" placeholder="Placeholder" validation-status="warning">
-      <label class="flex flex-grow items-center" slot="label">Input label</label>
-      <bq-icon name="user-circle" slot="prefix"></bq-icon>
-      <bq-icon name="gear" slot="suffix"></bq-icon>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-input>
+        <bq-input name="bq-input-success" placeholder="Placeholder" validation-status="success">
+          <label class="flex flex-grow items-center" slot="label">Input label</label>
+          <bq-icon name="user-circle" slot="prefix"></bq-icon>
+          <bq-icon name="gear" slot="suffix"></bq-icon>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+        </bq-input>
+
+        <bq-input name="bq-input-warning" placeholder="Placeholder" validation-status="warning">
+          <label class="flex flex-grow items-center" slot="label">Input label</label>
+          <bq-icon name="user-circle" slot="prefix"></bq-icon>
+          <bq-icon name="gear" slot="suffix"></bq-icon>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+        </bq-input>
+      `
+    })
+    export class ValidationInputComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -909,17 +976,27 @@ Use this style when you want to include an optional marker to provide additional
     </BqInput>
     ```
 
-    ```html Angular icon="angular"
-    <bq-input name="bq-input" placeholder="Placeholder">
-      <div class="label-row" slot="label">
-        <label>Input label</label>
-        <span>Optional</span>
-      </div>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-input>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqInput } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqInput],
+      template: `
+        <bq-input name="bq-input" placeholder="Placeholder">
+          <div class="label-row" slot="label">
+            <label>Input label</label>
+            <span>Optional</span>
+          </div>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+        </bq-input>
+      `
+    })
+    export class LabelOptionalInputComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -1073,23 +1150,33 @@ Use this style when you want to include an informational tooltip alongside the i
     </BqInput>
     ```
 
-    ```html Angular icon="angular"
-    <bq-input name="bq-input" placeholder="Placeholder">
-      <div class="label-row" slot="label">
-        <label>
-          Input label
-          <bq-tooltip>
-            You can provide more context detail by adding a tooltip to the label.
-            <bq-icon class="flex" name="info" slot="trigger"></bq-icon>
-          </bq-tooltip>
-        </label>
-        <span>Optional</span>
-      </div>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-input>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqInput, BqTooltip } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqInput, BqTooltip],
+      template: `
+        <bq-input name="bq-input" placeholder="Placeholder">
+          <div class="label-row" slot="label">
+            <label>
+              Input label
+              <bq-tooltip>
+                You can provide more context detail by adding a tooltip to the label.
+                <bq-icon class="flex" name="info" slot="trigger"></bq-icon>
+              </bq-tooltip>
+            </label>
+            <span>Optional</span>
+          </div>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+        </bq-input>
+      `
+    })
+    export class LabelTooltipInputComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -1171,15 +1258,25 @@ Use this variant when the surrounding context already makes the field purpose cl
     </BqInput>
     ```
 
-    ```html Angular icon="angular"
-    <bq-input name="bq-input" placeholder="Placeholder">
-      <bq-icon name="user-circle" slot="prefix"></bq-icon>
-      <bq-icon name="gear" slot="suffix"></bq-icon>
-      <span slot="helper-text">
-        <bq-icon name="star"></bq-icon>
-        Helper text
-      </span>
-    </bq-input>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqInput } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqInput],
+      template: `
+        <bq-input name="bq-input" placeholder="Placeholder">
+          <bq-icon name="user-circle" slot="prefix"></bq-icon>
+          <bq-icon name="gear" slot="suffix"></bq-icon>
+          <span slot="helper-text">
+            <bq-icon name="star"></bq-icon>
+            Helper text
+          </span>
+        </bq-input>
+      `
+    })
+    export class NoLabelInputComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -1244,12 +1341,22 @@ Use this variant when the field does not require supplementary guidance.
     </BqInput>
     ```
 
-    ```html Angular icon="angular"
-    <bq-input name="bq-input" placeholder="Placeholder">
-      <label slot="label">Input label</label>
-      <bq-icon name="user-circle" slot="prefix"></bq-icon>
-      <bq-icon name="gear" slot="suffix"></bq-icon>
-    </bq-input>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqInput } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqInput],
+      template: `
+        <bq-input name="bq-input" placeholder="Placeholder">
+          <label slot="label">Input label</label>
+          <bq-icon name="user-circle" slot="prefix"></bq-icon>
+          <bq-icon name="gear" slot="suffix"></bq-icon>
+        </bq-input>
+      `
+    })
+    export class NoHelperTextInputComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -1416,26 +1523,26 @@ Use this variant when the field does not require supplementary guidance.
 <Expandable title="CSS variables" defaultOpen={false}>
   | Variable | Description | Default |
   |---|---|---|
-  | `--bq-input--background-color` | Input background color | `theme(backgroundColor.ui.primary)` |
-  | `--bq-input--border-color` | Input border color | `theme(stroke.tertiary)` |
-  | `--bq-input--border-color-focus` | Input border color on focus | `theme(stroke.brand)` |
-  | `--bq-input--border-radius` | Input border radius | `theme(borderRadius.s)` |
+  | `--bq-input--background-color` | Input background color | `var(--bq-ui--primary)` |
+  | `--bq-input--border-color` | Input border color | `var(--bq-stroke--tertiary)` |
+  | `--bq-input--border-color-focus` | Input border color on focus | `var(--bq-stroke--brand)` |
+  | `--bq-input--border-radius` | Input border radius | `var(--bq-radius--s)` |
   | `--bq-input--border-style` | Input border style | `solid` |
-  | `--bq-input--border-width` | Input border width | `theme(borderWidth.s)` |
-  | `--bq-input--gap` | Gap between input content and prefix or suffix | `theme(spacing.xs)` |
-  | `--bq-input--helper-margin-top` | Helper text margin top | `theme(spacing.xs)` |
-  | `--bq-input--helper-text-color` | Helper text color | `theme(textColor.primary)` |
-  | `--bq-input--helper-text-size` | Helper text size | `theme(fontSize.s)` |
+  | `--bq-input--border-width` | Input border width | `var(--bq-stroke-s)` |
+  | `--bq-input--gap` | Gap between input content and prefix or suffix | `var(--bq-spacing-xs)` |
+  | `--bq-input--helper-margin-top` | Helper text margin top | `var(--bq-spacing-xs)` |
+  | `--bq-input--helper-text-color` | Helper text color | `var(--bq-text--primary)` |
+  | `--bq-input--helper-text-size` | Helper text size | `var(--bq-font-size--s)` |
   | `--bq-input--icon-size` | Icon size for prefix, suffix, and clear button | `24px` |
-  | `--bq-input--label-margin-bottom` | Label margin bottom | `theme(spacing.xs)` |
-  | `--bq-input--label-text-color` | Label text color | `theme(textColor.primary)` |
-  | `--bq-input--label-text-size` | Label text size | `theme(fontSize.s)` |
-  | `--bq-input--padding-end` | End padding | `theme(spacing.m)` |
-  | `--bq-input--padding-start` | Start padding | `theme(spacing.m)` |
-  | `--bq-input--paddingY` | Vertical padding | `theme(spacing.s)` |
-  | `--bq-input--text-color` | Input text color | `theme(textColor.primary)` |
-  | `--bq-input--text-placeholder-color` | Placeholder text color | `theme(textColor.secondary)` |
-  | `--bq-input--text-size` | Input text size | `theme(fontSize.m)` |
+  | `--bq-input--label-margin-bottom` | Label margin bottom | `var(--bq-spacing-xs)` |
+  | `--bq-input--label-text-color` | Label text color | `var(--bq-text--primary)` |
+  | `--bq-input--label-text-size` | Label text size | `var(--bq-font-size--s)` |
+  | `--bq-input--padding-end` | End padding | `var(--bq-spacing-m)` |
+  | `--bq-input--padding-start` | Start padding | `var(--bq-spacing-m)` |
+  | `--bq-input--paddingY` | Vertical padding | `var(--bq-spacing-s)` |
+  | `--bq-input--text-color` | Input text color | `var(--bq-text--primary)` |
+  | `--bq-input--text-placeholder-color` | Placeholder text color | `var(--bq-text--secondary)` |
+  | `--bq-input--text-size` | Input text size | `var(--bq-font-size--m)` |
 </Expandable>
 
 <Tip>

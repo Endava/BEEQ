@@ -157,14 +157,21 @@ Use the default progress bar for general task tracking when the process has a me
     </>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqProgress } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqProgress } from "@beeq/angular/standalone";
 
-    <bq-progress value="25"></bq-progress>
-    <bq-progress value="50"></bq-progress>
-    <bq-progress value="75"></bq-progress>
-    <bq-progress value="100"></bq-progress>
+    @Component({
+      standalone: true,
+      imports: [BqProgress],
+      template: `
+        <bq-progress value="25"></bq-progress>
+        <bq-progress value="50"></bq-progress>
+        <bq-progress value="75"></bq-progress>
+        <bq-progress value="100"></bq-progress>
+      `
+    })
+    export class DefaultProgressComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -219,9 +226,19 @@ Use `thickness="large"` to increase the visual weight of the progress bar in mor
     </>
     ```
 
-    ```html Angular icon="angular"
-    <bq-progress value="30"></bq-progress>
-    <bq-progress thickness="large" value="30"></bq-progress>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqProgress } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqProgress],
+      template: `
+        <bq-progress value="30"></bq-progress>
+        <bq-progress thickness="large" value="30"></bq-progress>
+      `
+    })
+    export class LargeThicknessProgressComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -261,8 +278,16 @@ Use `type="error"` to communicate that a process failed or needs attention.
     <BqProgress type="error" value={30} />
     ```
 
-    ```html Angular icon="angular"
-    <bq-progress type="error" value="30"></bq-progress>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqProgress } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqProgress],
+      template: `<bq-progress type="error" value="30"></bq-progress>`
+    })
+    export class ErrorProgressComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -316,9 +341,19 @@ Use `border-shape="square"` when you want a straighter edge treatment. The defau
     </>
     ```
 
-    ```html Angular icon="angular"
-    <bq-progress value="80"></bq-progress>
-    <bq-progress border-shape="square" value="80"></bq-progress>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqProgress } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqProgress],
+      template: `
+        <bq-progress value="80"></bq-progress>
+        <bq-progress border-shape="square" value="80"></bq-progress>
+      `
+    })
+    export class BorderShapeProgressComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -375,11 +410,21 @@ Add `label` to display a persistent numeric percentage beside the bar.
     </>
     ```
 
-    ```html Angular icon="angular"
-    <bq-progress label value="25"></bq-progress>
-    <bq-progress label value="50"></bq-progress>
-    <bq-progress label value="75"></bq-progress>
-    <bq-progress label value="100"></bq-progress>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqProgress } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqProgress],
+      template: `
+        <bq-progress label value="25"></bq-progress>
+        <bq-progress label value="50"></bq-progress>
+        <bq-progress label value="75"></bq-progress>
+        <bq-progress label value="100"></bq-progress>
+      `
+    })
+    export class LabelProgressComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -436,10 +481,20 @@ Add `enable-tooltip` to show the current percentage at the indicator. In the cur
     </>
     ```
 
-    ```html Angular icon="angular"
-    <bq-progress enable-tooltip value="25"></bq-progress>
-    <bq-progress enable-tooltip value="50"></bq-progress>
-    <bq-progress enable-tooltip value="75"></bq-progress>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqProgress } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqProgress],
+      template: `
+        <bq-progress enable-tooltip value="25"></bq-progress>
+        <bq-progress enable-tooltip value="50"></bq-progress>
+        <bq-progress enable-tooltip value="75"></bq-progress>
+      `
+    })
+    export class TooltipProgressComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -484,8 +539,16 @@ Use `indeterminate` when the task is active but the exact completion point canno
     <BqProgress indeterminate />
     ```
 
-    ```html Angular icon="angular"
-    <bq-progress indeterminate></bq-progress>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqProgress } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqProgress],
+      template: `<bq-progress indeterminate></bq-progress>`
+    })
+    export class IndeterminateProgressComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -599,14 +662,12 @@ Use `indeterminate` when the task is active but the exact completion point canno
 
 ### CSS custom properties
 
-<Expandable title="CSS variables" defaultOpen={true}>
-  | Variable | Description | Default |
-  |---|---|---|
-  | `--bq-progress-bar--height` | The progress bar height | `theme(height.1)` |
-  | `--bq-progress-bar--indeterminateWidth` | The width of the moving indicator when indeterminate | `25%` |
-  | `--bq-progress-bar--indicatorColor` | The filled indicator color | `theme(backgroundColor.ui.brand)` |
-  | `--bq-progress-bar--trackColor` | The track color | `theme(backgroundColor.ui.secondary)` |
-</Expandable>
+| Variable | Description | Default |
+|---|---|---|
+| `--bq-progress-bar--height` | The progress bar height | `0.25rem` |
+| `--bq-progress-bar--indeterminateWidth` | The width of the moving indicator when indeterminate | `25%` |
+| `--bq-progress-bar--indicatorColor` | The filled indicator color | `var(--bq-ui--brand)` |
+| `--bq-progress-bar--trackColor` | The track color | `var(--bq-ui--secondary)` |
 
 <Tip>
   Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
