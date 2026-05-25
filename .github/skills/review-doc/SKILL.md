@@ -120,7 +120,7 @@ Also read the component source to verify API table accuracy:
 - [ ] Every `CodeLivePreview` is immediately followed by a `CodeGroup`
 - [ ] Tab order: `HTML` → `React` → `Angular` → `Vue` (optional `CSS` tab comes **first** if present)
 - [ ] HTML: kebab-case attributes (e.g. `alt-text`, `only-icon`)
-- [ ] Angular: kebab-case attributes; events use `(bqEventName)` binding syntax
+- [ ] Angular: **`ts` code block** (not `html`); full standalone `@Component`; imports from `@beeq/angular/standalone`; all BEEQ components used in the template listed in `imports`; events use `(bqEventName)` binding syntax — flag any plain `html Angular` blocks as errors
 - [ ] React: camelCase props (e.g. `altText`, `onlyIcon`); events use `onBqEventName` handler props
 - [ ] Vue: camelCase props (e.g. `altText`); events use `@bqEventName` binding syntax — **never** HTML attribute names
 

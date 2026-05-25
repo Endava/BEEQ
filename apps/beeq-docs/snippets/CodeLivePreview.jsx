@@ -58,6 +58,22 @@ export const CodeLivePreview = ({ code, children, height }) => {
     // Attach shadow root once; reuse on subsequent code changes.
     const shadowRoot = el.shadowRoot ?? el.attachShadow({ mode: 'open' });
 
+    // Adopt the component-fix stylesheet on first attach.
+    // Mintlify evaluates snippets via eval/new Function (no module scope), so
+    // the sheet is created inline and guarded by adoptedStyleSheets.length —
+    // shadowRoot is reused across code changes, so this block runs only once.
+    if (!shadowRoot.adoptedStyleSheets.length) {
+      const fixSheet = new CSSStyleSheet();
+      fixSheet.replaceSync(`
+        bq-dropdown::part(panel),
+        bq-panel::part(panel),
+        bq-select::part(panel),
+        bq-date-picker::part(panel) { z-index: 9999; }
+        bq-tooltip::part(panel) { position: absolute; }
+      `);
+      shadowRoot.adoptedStyleSheets = [fixSheet];
+    }
+
     // Inject beeq.css (for raw HTML elements) + the hidden="false" fix + user code.
     // Setting innerHTML replaces all shadow content; the browser uses the
     // cached beeq.css response on subsequent updates.

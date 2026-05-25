@@ -1,0 +1,1475 @@
+---
+title: Date Picker
+description: "Date pickers help users select a single date, a date range, or multiple dates from a calendar interface with less effort and fewer formatting errors."
+---
+
+import { CardTile } from "/snippets/CardTile.jsx";
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Date-picker component overview">
+  <img className="block dark:hidden" src="/components/images/date-picker/date-picker-overview-light.svg" alt="BEEQ Date-picker component overview" />
+  <img className="hidden dark:block" src="/components/images/date-picker/date-picker-overview-dark.svg" alt="BEEQ Date-picker component overview" />
+</Frame>
+
+Date pickers provide a guided way to enter dates through a calendar interface. They reduce ambiguity, prevent formatting mistakes, and make it easier to choose a single date, a range, or multiple dates depending on the task.
+
+<Note>
+  Use a date picker when the interface benefits from visual date selection or date validation. If users need to enter very flexible freeform dates or work with a tiny, predictable set of choices, a simpler input or select may be more appropriate.
+</Note>
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use date pickers when
+    </span>
+    - Users need to select a specific date with high accuracy
+    - A calendar view makes the choice faster than typing
+    - You need to limit dates with min/max rules or disabled dates
+    - The task involves travel dates, appointments, deadlines, or availability
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use date pickers when
+    </span>
+    - The date can be entered more efficiently with a simple text field
+    - The range of valid dates is so small that a select or radio group is clearer
+    - Users need to enter partial, approximate, or highly flexible date values
+    - The interaction would be unnecessarily heavy for the task
+  </Card>
+</CardGroup>
+
+## Patterns
+
+<CardGroup cols={2}>
+  <CardTile title="Date picker">
+    Allows users to select a single date from a calendar interface. This type is useful for scenarios where only one date selection is required, such as booking appointments or scheduling events.
+  </CardTile>
+  <CardTile title="Time picker">
+    This type is essential for scenarios where precise timing is necessary, like scheduling meetings or setting reminders.
+  </CardTile>
+</CardGroup>
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Date-picker component anatomy">
+  <img className="block dark:hidden" src="/components/images/date-picker/date-picker-anatomy-light.svg" alt="BEEQ Date-picker component anatomy" />
+  <img className="hidden dark:block" src="/components/images/date-picker/date-picker-anatomy-dark.svg" alt="BEEQ Date-picker component anatomy" />
+</Frame>
+
+The date picker combines a labeled field with a calendar surface that helps people choose dates accurately. Keep the field label clear, make the calendar easy to scan, and ensure the selected format matches local expectations.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Label | Describes what date the field is asking for (`label` slot) |
+| **2** | Date field | The input control people focus, type into, or use to open the calendar |
+| **3** | Icon | The calendar affordance that signals date selection and panel access |
+| **4** | Calendar | The panel surface that contains the date selection interface |
+| **5** | Month and year control | The heading and navigation controls used to move through months and years |
+| **6** | Week day | The abbreviated day-of-week labels that structure the calendar grid |
+| **7** | Day | An individual selectable calendar day |
+| **8** | Selected date | The currently chosen day or days shown with selected styling |
+| **9** | Current day | Today’s date, highlighted to help people orient themselves in the calendar |
+
+## Design guidelines
+
+<Steps>
+  <Step title="Choose the simplest selection mode">
+    Start with `single` when one date is enough. Use `range` only when people need both a start and end date, and use `multi` only for truly non-consecutive selections.
+  </Step>
+  <Step title="Keep labels and format expectations clear">
+    Write labels that describe the task directly, such as "Arrival date" or "Travel dates". Make sure the displayed format and first day of week match the product locale.
+  </Step>
+  <Step title="Use calendar rules to prevent bad choices">
+    Apply `min`, `max`, `isDateDisallowed`, and validation states when business rules are known, so people are guided before they submit the form.
+  </Step>
+</Steps>
+
+<Note>
+  For `range` and most `multi` scenarios, showing two months at once usually makes comparison easier and reduces selection errors.
+</Note>
+
+<Tip>
+  Use a calendar icon for date selection and a clock icon for time selection. The icon helps users recognise the input type before they interact with it.
+</Tip>
+
+## Usage
+
+### Default
+
+Use the default `single` type when users need to choose one date. This is the best starting point for appointments, due dates, deadlines, and similar tasks.
+
+<Note>
+  Users can also enter a date manually. After pressing <kbd>Tab</kbd>, the component formats the value and reflects it in the calendar view.
+
+  Supported input formats include:
+  - ISO format: `2024-05-30`
+  - Text format: `30 May 2024`, `May 30, 2024`, `30 January 2024`, `January 1, 1970` (locale-aware)
+  - Numeric format: `30/05/2024`, `05-30-2024`, `30.05.2024`, `05.30.2024` (with day/month heuristics)
+</Note>
+
+<CodeLivePreview code={`
+  <bq-date-picker name="appointment-date" placeholder="Select a date">
+    <label slot="label">Appointment date</label>
+  </bq-date-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-date-picker name="appointment-date" placeholder="Select a date">
+      <label slot="label">Appointment date</label>
+    </bq-date-picker>
+    ```
+
+    ```jsx React icon="react"
+    import { BqDatePicker } from "@beeq/react";
+
+    <BqDatePicker name="appointment-date" placeholder="Select a date">
+      <label slot="label">Appointment date</label>
+    </BqDatePicker>
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqDatePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqDatePicker],
+      template: `
+        <bq-date-picker name="appointment-date" placeholder="Select a date">
+          <label slot="label">Appointment date</label>
+        </bq-date-picker>
+      `
+    })
+    export class DefaultDatePickerComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDatePicker } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDatePicker name="appointment-date" placeholder="Select a date">
+        <label slot="label">Appointment date</label>
+      </BqDatePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  `type="single"` is the default. Unlike `range` and `multi`, the single-date picker also supports manual typing with locale-aware parsing.
+</Tip>
+
+### Date range
+
+Use `type="range"` when users need a start and end date. Set `months="2"` so both months are visible in the panel and the interval is easier to understand.
+
+<CodeLivePreview code={`
+  <bq-date-picker
+    months="2"
+    name="travel-dates"
+    placeholder="Select departure and return dates"
+    type="range"
+  >
+    <label slot="label">Depart - Return dates</label>
+  </bq-date-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-date-picker
+      months="2"
+      name="travel-dates"
+      placeholder="Select departure and return dates"
+      type="range"
+    >
+      <label slot="label">Depart - Return dates</label>
+    </bq-date-picker>
+    ```
+
+    ```jsx React icon="react"
+    import { BqDatePicker } from "@beeq/react";
+
+    <BqDatePicker
+      months={2}
+      name="travel-dates"
+      placeholder="Select departure and return dates"
+      type="range"
+    >
+      <label slot="label">Depart - Return dates</label>
+    </BqDatePicker>
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqDatePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqDatePicker],
+      template: `
+        <bq-date-picker
+          months="2"
+          name="travel-dates"
+          placeholder="Select departure and return dates"
+          type="range"
+        >
+          <label slot="label">Depart - Return dates</label>
+        </bq-date-picker>
+      `
+    })
+    export class DateRangePickerComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDatePicker } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDatePicker
+        :months="2"
+        name="travel-dates"
+        placeholder="Select departure and return dates"
+        type="range"
+      >
+        <label slot="label">Depart - Return dates</label>
+      </BqDatePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Warning>
+  For `type="range"`, provide a `months` value. Two months is the most common and easiest to compare visually.
+</Warning>
+
+### Multiple dates
+
+Use `type="multi"` when users need to pick several non-consecutive dates. Unlike the single-date picker, the panel stays open while users continue selecting.
+
+<CodeLivePreview code={`
+  <bq-date-picker
+    months="2"
+    name="training-dates"
+    placeholder="Select training session dates"
+    type="multi"
+    value="2026-05-08 2026-05-22 2026-06-04"
+  >
+    <label slot="label">Training sessions</label>
+  </bq-date-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-date-picker
+      months="2"
+      name="training-dates"
+      placeholder="Select training session dates"
+      type="multi"
+      value="2026-05-08 2026-05-22 2026-06-04"
+    >
+      <label slot="label">Training sessions</label>
+    </bq-date-picker>
+    ```
+
+    ```jsx React icon="react"
+    import { BqDatePicker } from "@beeq/react";
+
+    <BqDatePicker
+      months={2}
+      name="training-dates"
+      placeholder="Select training session dates"
+      type="multi"
+      value="2026-05-08 2026-05-22 2026-06-04"
+    >
+      <label slot="label">Training sessions</label>
+    </BqDatePicker>
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqDatePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqDatePicker],
+      template: `
+        <bq-date-picker
+          months="2"
+          name="training-dates"
+          placeholder="Select training session dates"
+          type="multi"
+          value="2026-05-08 2026-05-22 2026-06-04"
+        >
+          <label slot="label">Training sessions</label>
+        </bq-date-picker>
+      `
+    })
+    export class MultipleDatePickerComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDatePicker } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDatePicker
+        :months="2"
+        name="training-dates"
+        placeholder="Select training session dates"
+        type="multi"
+        value="2026-05-08 2026-05-22 2026-06-04"
+      >
+        <label slot="label">Training sessions</label>
+      </BqDatePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Options
+
+### Disabled
+
+Use `disabled` when the date field should not be interactive, such as when access is restricted based on user permissions or form state.
+
+<CodeLivePreview code={`
+  <bq-date-picker disabled name="disabled-date" placeholder="Select a date" value="2026-05-25">
+    <label slot="label">Departure date</label>
+  </bq-date-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-date-picker disabled name="disabled-date" placeholder="Select a date" value="2026-05-25">
+      <label slot="label">Departure date</label>
+    </bq-date-picker>
+    ```
+
+    ```jsx React icon="react"
+    import { BqDatePicker } from "@beeq/react";
+
+    <BqDatePicker disabled name="disabled-date" placeholder="Select a date" value="2026-05-25">
+      <label slot="label">Departure date</label>
+    </BqDatePicker>
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqDatePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqDatePicker],
+      template: `
+        <bq-date-picker disabled name="disabled-date" placeholder="Select a date" value="2026-05-25">
+          <label slot="label">Departure date</label>
+        </bq-date-picker>
+      `
+    })
+    export class DisabledDatePickerComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDatePicker } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDatePicker disabled name="disabled-date" placeholder="Select a date" value="2026-05-25">
+        <label slot="label">Departure date</label>
+      </BqDatePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Validation states
+
+Use `validation-status` when the field should show immediate visual feedback after validation.
+
+<CodeLivePreview code={`
+  <style>
+    :host {
+      justify-content: flex-start !important;
+      position: relative;
+      width: 100%;
+      z-index: 11;
+    }
+  </style>
+
+  <bq-date-picker name="date-error" validation-status="error" value="2026-05-25">
+    <label slot="label">Error date</label>
+  </bq-date-picker>
+
+  <bq-date-picker name="date-success" validation-status="success" value="2026-06-25">
+    <label slot="label">Success date</label>
+  </bq-date-picker>
+
+  <bq-date-picker name="date-warning" validation-status="warning" value="2026-07-25">
+    <label slot="label">Warning date</label>
+  </bq-date-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-date-picker name="date-error" validation-status="error" value="2026-05-25">
+      <label slot="label">Error date</label>
+    </bq-date-picker>
+
+    <bq-date-picker name="date-success" validation-status="success" value="2026-06-25">
+      <label slot="label">Success date</label>
+    </bq-date-picker>
+
+    <bq-date-picker name="date-warning" validation-status="warning" value="2026-07-25">
+      <label slot="label">Warning date</label>
+    </bq-date-picker>
+    ```
+
+    ```jsx React icon="react"
+    import { BqDatePicker } from "@beeq/react";
+
+    <>
+      <BqDatePicker name="date-error" validationStatus="error" value="2026-05-25">
+        <label slot="label">Error date</label>
+      </BqDatePicker>
+
+      <BqDatePicker name="date-success" validationStatus="success" value="2026-06-25">
+        <label slot="label">Success date</label>
+      </BqDatePicker>
+
+      <BqDatePicker name="date-warning" validationStatus="warning" value="2026-07-25">
+        <label slot="label">Warning date</label>
+      </BqDatePicker>
+    </>
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqDatePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqDatePicker],
+      template: `
+        <bq-date-picker name="date-error" validation-status="error" value="2026-05-25">
+          <label slot="label">Error date</label>
+        </bq-date-picker>
+
+        <bq-date-picker name="date-success" validation-status="success" value="2026-06-25">
+          <label slot="label">Success date</label>
+        </bq-date-picker>
+
+        <bq-date-picker name="date-warning" validation-status="warning" value="2026-07-25">
+          <label slot="label">Warning date</label>
+        </bq-date-picker>
+      `
+    })
+    export class ValidationStatesDatePickerComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDatePicker } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDatePicker name="date-error" validationStatus="error" value="2026-05-25">
+        <label slot="label">Error date</label>
+      </BqDatePicker>
+
+      <BqDatePicker name="date-success" validationStatus="success" value="2026-06-25">
+        <label slot="label">Success date</label>
+      </BqDatePicker>
+
+      <BqDatePicker name="date-warning" validationStatus="warning" value="2026-07-25">
+        <label slot="label">Warning date</label>
+      </BqDatePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Label with optional text
+
+Use an optional indicator when the date adds context but is not required to complete the form.
+
+<Tip>
+  You are responsible for the layout, styling, and accessibility of any custom content placed in the `label` slot.
+</Tip>
+
+<CodeLivePreview code={`
+  <style>
+    div[slot="label"] {
+      display: flex;
+      flex: 1 1 0%;
+    }
+
+    div[slot="label"] > label {
+      flex-grow: 1;
+    }
+
+    div[slot="label"] > span {
+      color: var(--bq-text--secondary);
+    }
+  </style>
+
+  <bq-date-picker name="arrival-date" value="2026-08-10">
+    <div slot="label">
+      <label>Arrival date</label>
+      <span>Optional</span>
+    </div>
+  </bq-date-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-date-picker name="arrival-date" value="2026-08-10">
+      <div slot="label">
+        <label>Arrival date</label>
+        <span>Optional</span>
+      </div>
+    </bq-date-picker>
+    ```
+
+    ```jsx React icon="react"
+    import { BqDatePicker } from "@beeq/react";
+
+    <BqDatePicker name="arrival-date" value="2026-08-10">
+      <div slot="label">
+        <label>Arrival date</label>
+        <span>Optional</span>
+      </div>
+    </BqDatePicker>
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqDatePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqDatePicker],
+      template: `
+        <bq-date-picker name="arrival-date" value="2026-08-10">
+          <div slot="label">
+            <label>Arrival date</label>
+            <span>Optional</span>
+          </div>
+        </bq-date-picker>
+      `
+    })
+    export class LabelOptionalDatePickerComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDatePicker } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDatePicker name="arrival-date" value="2026-08-10">
+        <div slot="label">
+          <label class="flex flex-grow items-center">Arrival date</label>
+          <span>Optional</span>
+        </div>
+      </BqDatePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Label with info tooltip
+
+Combine the label slot with a tooltip when users may need a short explanation before selecting a date.
+
+<CodeLivePreview code={`
+  <style>
+    :host {
+      min-height: 15rem !important;
+    }
+
+    bq-tooltip::part(trigger) {
+      display: flex;
+    }
+
+    label[slot="label"] {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+      gap: 0.25rem;
+    }
+  </style>
+
+  <bq-date-picker name="arrival-date-tooltip" value="2026-09-11">
+    <label slot="label">
+      Arrival date
+      <bq-tooltip>
+        You can provide more context detail by adding a tooltip to the label.
+        <bq-icon name="info" slot="trigger"></bq-icon>
+      </bq-tooltip>
+    </label>
+  </bq-date-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-date-picker name="arrival-date-tooltip" value="2026-09-11">
+      <div slot="label">
+        <label>Arrival date</label>
+        <bq-tooltip>
+          You can provide more context detail by adding a tooltip to the label.
+          <bq-icon name="info" slot="trigger"></bq-icon>
+        </bq-tooltip>
+        <span>Optional</span>
+      </div>
+    </bq-date-picker>
+    ```
+
+    ```jsx React icon="react"
+    import { BqDatePicker, BqIcon, BqTooltip } from "@beeq/react";
+
+    <BqDatePicker name="arrival-date-tooltip" value="2026-09-11">
+      <div slot="label">
+        <label>Arrival date</label>
+        <BqTooltip>
+          You can provide more context detail by adding a tooltip to the label.
+          <BqIcon name="info" slot="trigger" />
+        </BqTooltip>
+        <span>Optional</span>
+      </div>
+    </BqDatePicker>
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqDatePicker, BqIcon, BqTooltip } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqDatePicker, BqIcon, BqTooltip],
+      template: `
+        <bq-date-picker name="arrival-date-tooltip" value="2026-09-11">
+          <div slot="label">
+            <label>Arrival date</label>
+            <bq-tooltip>
+              You can provide more context detail by adding a tooltip to the label.
+              <bq-icon name="info" slot="trigger"></bq-icon>
+            </bq-tooltip>
+            <span>Optional</span>
+          </div>
+        </bq-date-picker>
+      `
+    })
+    export class LabelTooltipDatePickerComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDatePicker, BqIcon, BqTooltip } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDatePicker name="arrival-date-tooltip" value="2026-09-11">
+        <div slot="label">
+          <label>Arrival date</label>
+          <BqTooltip>
+            You can provide more context detail by adding a tooltip to the label.
+            <BqIcon name="info" slot="trigger" />
+          </BqTooltip>
+          <span>Optional</span>
+        </div>
+      </BqDatePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Without label
+
+Use a label-less date picker only when the surrounding context already makes the purpose unmistakable, such as within a tightly scoped filter row or a grouped form layout.
+
+<CodeLivePreview code={`
+  <style>
+    :host {
+      justify-content: flex-start !important;
+      position: relative;
+      width: 100%;
+      z-index: 11;
+    }
+  </style>
+
+  <bq-date-picker name="date-no-label" placeholder="Select a date" value="2026-10-13"></bq-date-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-date-picker name="date-no-label" placeholder="Select a date" value="2026-10-13"></bq-date-picker>
+    ```
+
+    ```jsx React icon="react"
+    import { BqDatePicker } from "@beeq/react";
+
+    <BqDatePicker name="date-no-label" placeholder="Select a date" value="2026-10-13" />
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqDatePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqDatePicker],
+      template: `
+        <bq-date-picker name="date-no-label" placeholder="Select a date" value="2026-10-13"></bq-date-picker>
+      `
+    })
+    export class NoLabelDatePickerComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDatePicker } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDatePicker name="date-no-label" placeholder="Select a date" value="2026-10-13" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Warning>
+  Avoid removing the label unless nearby text or structure already provides an equivalent accessible name and clear context.
+</Warning>
+
+### Locale
+
+Use `locale` to match date formatting and calendar conventions to regional expectations.
+
+<CodeLivePreview code={`
+  <style>
+    :host {
+      justify-content: flex-start !important;
+      position: relative;
+      width: 100%;
+      z-index: 11;
+    }
+  </style>
+
+  <bq-date-picker locale="en-GB" name="locale-gb" value="2026-10-13">
+    <label slot="label">en-GB</label>
+  </bq-date-picker>
+
+  <bq-date-picker locale="en-US" name="locale-us" value="2026-10-13">
+    <label slot="label">en-US</label>
+  </bq-date-picker>
+
+  <bq-date-picker locale="ja-JP" name="locale-jp" value="2026-10-13">
+    <label slot="label">ja-JP</label>
+  </bq-date-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-date-picker locale="en-GB" name="locale-gb" value="2026-10-13">
+      <label slot="label">en-GB</label>
+    </bq-date-picker>
+
+    <bq-date-picker locale="en-US" name="locale-us" value="2026-10-13">
+      <label slot="label">en-US</label>
+    </bq-date-picker>
+
+    <bq-date-picker locale="ja-JP" name="locale-jp" value="2026-10-13">
+      <label slot="label">ja-JP</label>
+    </bq-date-picker>
+    ```
+
+    ```jsx React icon="react"
+    import { BqDatePicker } from "@beeq/react";
+
+    <BqDatePicker locale="en-GB" name="locale-gb" value="2026-10-13">
+      <label slot="label">en-GB</label>
+    </BqDatePicker>
+
+    <BqDatePicker locale="en-US" name="locale-us" value="2026-10-13">
+      <label slot="label">en-US</label>
+    </BqDatePicker>
+
+    <BqDatePicker locale="ja-JP" name="locale-jp" value="2026-10-13">
+      <label slot="label">ja-JP</label>
+    </BqDatePicker>
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqDatePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqDatePicker],
+      template: `
+        <bq-date-picker locale="en-GB" name="locale-gb" value="2026-10-13">
+          <label slot="label">en-GB</label>
+        </bq-date-picker>
+
+        <bq-date-picker locale="en-US" name="locale-us" value="2026-10-13">
+          <label slot="label">en-US</label>
+        </bq-date-picker>
+
+        <bq-date-picker locale="ja-JP" name="locale-jp" value="2026-10-13">
+          <label slot="label">ja-JP</label>
+        </bq-date-picker>
+      `
+    })
+    export class LocaleDatePickerComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDatePicker } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDatePicker locale="en-GB" name="locale-gb" value="2026-10-13">
+        <label slot="label">en-GB</label>
+      </BqDatePicker>
+
+      <BqDatePicker locale="en-US" name="locale-us" value="2026-10-13">
+        <label slot="label">en-US</label>
+      </BqDatePicker>
+
+      <BqDatePicker locale="ja-JP" name="locale-jp" value="2026-10-13">
+        <label slot="label">ja-JP</label>
+      </BqDatePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### First day of week
+
+Use `first-day-of-week` to align the calendar grid with regional or business expectations.
+
+<CodeLivePreview code={`
+  <style>
+    :host {
+      justify-content: flex-start !important;
+      position: relative;
+      width: 100%;
+      z-index: 11;
+    }
+  </style>
+
+  <bq-date-picker first-day-of-week="1" locale="en-GB" name="week-monday" value="2026-10-13">
+    <label slot="label">Monday first</label>
+  </bq-date-picker>
+
+  <bq-date-picker first-day-of-week="0" locale="en-GB" name="week-sunday" value="2026-10-13">
+    <label slot="label">Sunday first</label>
+  </bq-date-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-date-picker first-day-of-week="1" locale="en-GB" name="week-monday" value="2026-10-13">
+      <label slot="label">Monday first</label>
+    </bq-date-picker>
+
+    <bq-date-picker first-day-of-week="0" locale="en-GB" name="week-sunday" value="2026-10-13">
+      <label slot="label">Sunday first</label>
+    </bq-date-picker>
+    ```
+
+    ```jsx React icon="react"
+    import { BqDatePicker } from "@beeq/react";
+
+    <BqDatePicker firstDayOfWeek={1} locale="en-GB" name="week-monday" value="2026-10-13">
+      <label slot="label">Monday first</label>
+    </BqDatePicker>
+
+    <BqDatePicker firstDayOfWeek={0} locale="en-GB" name="week-sunday" value="2026-10-13">
+      <label slot="label">Sunday first</label>
+    </BqDatePicker>
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqDatePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqDatePicker],
+      template: `
+        <bq-date-picker first-day-of-week="1" locale="en-GB" name="week-monday" value="2026-10-13">
+          <label slot="label">Monday first</label>
+        </bq-date-picker>
+
+        <bq-date-picker first-day-of-week="0" locale="en-GB" name="week-sunday" value="2026-10-13">
+          <label slot="label">Sunday first</label>
+        </bq-date-picker>
+      `
+    })
+    export class FirstDayOfWeekDatePickerComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDatePicker } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDatePicker :firstDayOfWeek="1" locale="en-GB" name="week-monday" value="2026-10-13">
+        <label slot="label">Monday first</label>
+      </BqDatePicker>
+
+      <BqDatePicker :firstDayOfWeek="0" locale="en-GB" name="week-sunday" value="2026-10-13">
+        <label slot="label">Sunday first</label>
+      </BqDatePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Show outside days
+
+By default, the calendar shows only the days of the displayed month. Enable `show-outside-days` when the additional context is helpful.
+
+<CodeLivePreview code={`
+  <style>
+    :host {
+      justify-content: flex-start !important;
+      position: relative;
+      width: 100%;
+      z-index: 11;
+    }
+  </style>
+
+  <bq-date-picker name="outside-visible" open show-outside-days value="2026-05-12">
+    <label slot="label">With outside days</label>
+  </bq-date-picker>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-date-picker name="outside-visible" open show-outside-days value="2026-05-12">
+      <label slot="label">With outside days</label>
+    </bq-date-picker>
+    ```
+
+    ```jsx React icon="react"
+    import { BqDatePicker } from "@beeq/react";
+
+
+    <BqDatePicker name="outside-visible" open showOutsideDays value="2026-05-12">
+      <label slot="label">With outside days</label>
+    </BqDatePicker>
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqDatePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqDatePicker],
+      template: `
+        <bq-date-picker name="outside-visible" open show-outside-days value="2026-05-12">
+          <label slot="label">With outside days</label>
+        </bq-date-picker>
+      `
+    })
+    export class OutsideDaysDatePickerComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDatePicker } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqDatePicker name="outside-visible" open showOutsideDays value="2026-05-12">
+        <label slot="label">With outside days</label>
+      </BqDatePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  Avoid `show-outside-days` for `range` and `multi` unless the added density clearly improves the task. It can make complex selection states harder to read.
+</Tip>
+
+### Disallowed dates
+
+Use `isDateDisallowed` to make specific dates unavailable for selection. This is useful for holidays, sold-out inventory, blackout periods, or policy restrictions.
+
+<CodeLivePreview code={`
+  <style>
+    :host {
+      justify-content: flex-start !important;
+      position: relative;
+      width: 100%;
+      z-index: 11;
+    }
+  </style>
+
+  <bq-date-picker name="disallowed-dates" open value="2026-12-12">
+    <label slot="label">Appointment date</label>
+  </bq-date-picker>
+
+  <script>
+    (() => {
+      const datePickerElem = previewRoot?.querySelector('bq-date-picker[name="disallowed-dates"]');
+
+      if (!datePickerElem) return;
+
+      const disallowedDates = ['2026-12-01', '2026-12-25', '2026-12-26'];
+
+      datePickerElem.isDateDisallowed = (date) => {
+        const dateString = date.toLocaleDateString('fr-CA');
+        return disallowedDates.includes(dateString);
+      };
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-date-picker name="disallowed-dates" value="2026-12-12">
+      <label slot="label">Appointment date</label>
+    </bq-date-picker>
+    ```
+
+    ```js JavaScript icon="js"
+    const datePickerElem = document.querySelector('bq-date-picker[name="disallowed-dates"]');
+    const disallowedDates = ['2026-12-01', '2026-12-25', '2026-12-26'];
+
+    datePickerElem.isDateDisallowed = (date) => {
+      const dateString = date.toLocaleDateString('fr-CA');
+      return disallowedDates.includes(dateString);
+    };
+    ```
+
+    ```jsx React icon="react"
+    import { BqDatePicker } from "@beeq/react";
+
+    const disallowedDates = ['2026-12-01', '2026-12-25', '2026-12-26'];
+
+    const isDateDisallowed = (date: Date) => {
+      const dateString = date.toLocaleDateString('fr-CA');
+      return disallowedDates.includes(dateString);
+    };
+
+    <BqDatePicker
+      isDateDisallowed={isDateDisallowed}
+      name="disallowed-dates"
+      value="2026-12-12"
+    >
+      <label slot="label">Appointment date</label>
+    </BqDatePicker>
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqDatePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqDatePicker],
+      template: `
+        <bq-date-picker
+          [isDateDisallowed]="isDateDisallowed"
+          name="disallowed-dates"
+          value="2026-12-12"
+        >
+          <label slot="label">Appointment date</label>
+        </bq-date-picker>
+      `
+    })
+    export class DisallowedDatesComponent {
+      disallowedDates = ['2026-12-01', '2026-12-25', '2026-12-26'];
+
+      isDateDisallowed = (date: Date): boolean => {
+        const dateString = date.toLocaleDateString('fr-CA');
+        return this.disallowedDates.includes(dateString);
+      };
+    }
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDatePicker } from "@beeq/vue";
+
+    const disallowedDates = ['2026-12-01', '2026-12-25', '2026-12-26'];
+
+    const isDateDisallowed = (date: Date) => {
+      const dateString = date.toLocaleDateString('fr-CA');
+      return disallowedDates.includes(dateString);
+    };
+    </script>
+
+    <template>
+      <BqDatePicker
+        :isDateDisallowed="isDateDisallowed"
+        name="disallowed-dates"
+        value="2026-12-12"
+      >
+        <label slot="label">Appointment date</label>
+      </BqDatePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Custom display format
+
+Use `formatOptions` when the selected date needs a more descriptive text format in the input field.
+
+<CodeLivePreview code={`
+  <style>
+    :host {
+      justify-content: flex-start !important;
+      position: relative;
+      width: 100%;
+      z-index: 11;
+    }
+  </style>
+
+  <bq-date-picker
+    name="formatted-date"
+    open
+    type="single"
+    value="2026-11-18"
+  >
+    <label slot="label">Meeting date</label>
+  </bq-date-picker>
+
+  <script>
+    (() => {
+      const datePickerElem = previewRoot?.querySelector('bq-date-picker[name="formatted-date"]');
+
+      if (!datePickerElem) return;
+
+      datePickerElem.formatOptions = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      };
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-date-picker
+      name="formatted-date"
+      type="single"
+      value="2026-11-18"
+    >
+      <label slot="label">Meeting date</label>
+    </bq-date-picker>
+    ```
+
+    ```js JavaScript icon="js"
+    const datePickerElem = document.querySelector('bq-date-picker[name="formatted-date"]');
+
+    datePickerElem.formatOptions = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+    ```
+
+    ```jsx React icon="react"
+    import { BqDatePicker } from "@beeq/react";
+
+    const formatOptions = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+
+    <BqDatePicker
+      formatOptions={formatOptions}
+      name="formatted-date"
+      type="single"
+      value="2026-11-18"
+    >
+      <label slot="label">Meeting date</label>
+    </BqDatePicker>
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqDatePicker } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqDatePicker],
+      template: `
+        <bq-date-picker
+          [formatOptions]="formatOptions"
+          name="formatted-date"
+          type="single"
+          value="2026-11-18"
+        >
+          <label slot="label">Meeting date</label>
+        </bq-date-picker>
+      `
+    })
+    export class CustomFormatDatePickerComponent {
+      formatOptions: Intl.DateTimeFormatOptions = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      };
+    }
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqDatePicker } from "@beeq/vue";
+
+    const formatOptions: Intl.DateTimeFormatOptions = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+    </script>
+
+    <template>
+      <BqDatePicker
+        :formatOptions="formatOptions"
+        name="formatted-date"
+        type="single"
+        value="2026-11-18"
+      >
+        <label slot="label">Meeting date</label>
+      </BqDatePicker>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Warning>
+  Use `formatOptions` carefully with `range` and `multi`. Long formats such as `weekday: 'long'` can produce unwieldy display values when multiple dates appear in the input field.
+</Warning>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use clear, task-specific labels like "Arrival date" or "Travel dates" so users know exactly what they are selecting.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not overcomplicate the field label or ask for extra date information that the task does not need.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use a single combined input when possible. It keeps the interaction simpler and easier to scan.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not split day, month, and year into separate inputs unless the use case truly requires it.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Disable unavailable dates when the business rules are known, instead of letting users submit invalid choices.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not rely on placeholder text as the only instruction or explanation for the field.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Show two months for range selection when comparison matters, so people can understand the interval more easily.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not use a heavier multi-date or range pattern when one simple date field would solve the task.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+- `bq-date-picker` is form-associated and delegates focus, so it participates in native forms and moves focus into the internal `<input>` element when the component receives focus.
+- The input element sets `aria-disabled="true"` when `disabled` is `true`, and `aria-invalid="true"` when `validationStatus` is `"error"`.
+- The input uses `aria-haspopup="dialog"` and `aria-controls` to announce the calendar panel to assistive technologies, and `aria-describedby` to associate the visible label with the control when a `label` slot is provided.
+- The calendar panel carries `role="dialog"` and `aria-modal="true"`, and is labelled via `aria-labelledby` matching the label slot — keeping the panel context announced correctly to screen reader users.
+- The component emits `bqFocus`, `bqBlur`, `bqChange`, and `bqClear`, which give you the hooks needed to announce validation results, react to changes, and keep form state synchronized.
+- Keyboard users can open the calendar panel with `Enter` or `Space`, navigate days with the arrow keys, and close the panel with `Escape`.
+- Always provide a visible label through the `label` slot. Without it, `aria-describedby` on the input has no target and the field loses its accessible name.
+- Validation states should never rely on color alone. Pair `validationStatus` with visible error text so screen reader users receive the same feedback as sighted users.
+- Keep `locale`, `first-day-of-week`, and display formatting aligned with user expectations so typed input and visible values remain understandable for all users.
+
+## API reference
+
+### Properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `autofocus` | `autofocus` | If `true`, the input is focused on component render | `boolean` | `undefined` |
+| `clearButtonLabel` | `clear-button-label` | Accessible label for the clear button | `string` | `"Clear value"` |
+| `disableClear` | `disable-clear` | If `true`, the clear button is hidden | `boolean` | `false` |
+| `disabled` | `disabled` | Disables the date picker | `boolean` | `false` |
+| `distance` | `distance` | Gap between the panel and the input trigger | `number` | `8` |
+| `firstDayOfWeek` | `first-day-of-week` | First day of the week where Sunday is `0` | `0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6` | `1` |
+| `form` | `form` | ID of the form the input belongs to | `string` | `undefined` |
+| `formValidationMessage` | `form-validation-message` | Native validation message used when `required` is set | `string` | `undefined` |
+| `formatOptions` | *(property only)* | `Intl.DateTimeFormat` options used for the displayed value | `DateTimeFormatOptions` | `{ day: 'numeric', month: 'short', year: 'numeric' }` |
+| `isDateDisallowed` | *(property only)* | Function used to disable specific dates | `(date: Date) => boolean` | `undefined` |
+| `locale` | `locale` | Locale used to format and parse dates | `Intl.LocalesArgument` | `"en-GB"` |
+| `max` | `max` | Latest selectable date | `string` | `undefined` |
+| `min` | `min` | Earliest selectable date | `string` | `undefined` |
+| `months` | `months` | Number of months displayed for `range` and optionally `multi` | `number` | `undefined` |
+| `monthsPerView` | `months-per-view` | How navigation moves through months: one month or the full visible view | `"single" \| "months"` | `"single"` |
+| `name` | `name` | Name of the underlying input | `string` | `undefined` |
+| `open` | `open` | If `true`, the calendar panel is visible | `boolean` | `false` |
+| `panelHeight` | `panel-height` | Overrides the panel height | `string` | `"auto"` |
+| `placeholder` | `placeholder` | Placeholder text | `string` | `undefined` |
+| `placement` | `placement` | Position of the calendar panel | `"top" \| "top-start" \| "top-end" \| "right" \| "right-start" \| "right-end" \| "bottom" \| "bottom-start" \| "bottom-end" \| "left" \| "left-start" \| "left-end"` | `"bottom-end"` |
+| `required` | `required` | Marks the date picker as required | `boolean` | `undefined` |
+| `showOutsideDays` | `show-outside-days` | Shows days outside the current month | `boolean` | `false` |
+| `skidding` | `skidding` | Horizontal offset between panel and trigger | `number` | `0` |
+| `strategy` | `strategy` | Positioning strategy for the panel | `"fixed" \| "absolute"` | `"fixed"` |
+| `tentative` | `tentative` | Tentative date used during range selection | `string` | `undefined` |
+| `type` | `type` | Selection mode | `"single" \| "range" \| "multi"` | `"single"` |
+| `validationStatus` | `validation-status` | Validation state of the control | `"none" \| "error" \| "warning" \| "success"` | `"none"` |
+| `value` | `value` | Selected value in ISO-8601 format; range uses `start/end`, multi uses space-separated dates | `string` | `undefined` |
+
+### Events
+
+| Event | Description | Type |
+|---|---|---|
+| `bqBlur` | Fired when the input loses focus | `CustomEvent<HTMLBqDatePickerElement>` |
+| `bqChange` | Fired when the input value changes after typing, pasting, or selecting a date | `CustomEvent<{ value: string; el: HTMLBqDatePickerElement }>` |
+| `bqClear` | Fired when the value is cleared | `CustomEvent<HTMLBqDatePickerElement>` |
+| `bqFocus` | Fired when the input receives focus | `CustomEvent<HTMLBqDatePickerElement>` |
+
+<Note>
+  - In React, prefix events with `on`: `onBqBlur`, `onBqChange`, `onBqClear`, `onBqFocus`.
+  - In Angular, use the event binding syntax: `(bqBlur)`, `(bqChange)`, `(bqClear)`, `(bqFocus)`.
+  - In Vue, use the `@` shorthand: `@bqBlur`, `@bqChange`, `@bqClear`, `@bqFocus`.
+</Note>
+
+### Methods
+
+| Method | Description | Signature |
+|---|---|---|
+| `clear()` | Clears the selected value | `clear() => Promise<void>` |
+
+### Slots
+
+| Slot | Description |
+|---|---|
+| `label` | Label content for the field |
+| `prefix` | Optional prefix content inside the control |
+| `suffix` | Optional suffix content inside the control |
+| `clear-icon` | Replaces the default clear icon |
+
+### Shadow parts
+
+| Part | Description |
+|---|---|
+| `base` | Base wrapper for the component |
+| `button` | Native HTML `<button>` element used inside the clear button |
+| `control` | Input control wrapper |
+| `input` | Native text input used under the hood |
+| `label` | Label slot container |
+| `prefix` | Prefix slot container |
+| `suffix` | Suffix slot container |
+| `clear-btn` | Clear button |
+| `panel` | Date picker panel container |
+| `calendar__button` | Calendar navigation and day buttons |
+| `calendar__container` | Calendar container |
+| `calendar__day` | Day cells in the calendar grid |
+| `calendar__disabled` | Disabled day buttons |
+| `calendar__disallowed` | Days disabled via `isDateDisallowed` |
+| `calendar__head` | Table header row |
+| `calendar__header` | Calendar header wrapper |
+| `calendar__heading` | Calendar month heading |
+| `calendar__next` | Next month button |
+| `calendar__outside` | Outside-month day cells |
+| `calendar__previous` | Previous month button |
+| `calendar__range-end` | Range end date |
+| `calendar__range-inner` | Dates inside a selected range |
+| `calendar__range-start` | Range start date |
+| `calendar__selected` | Selected day cells |
+| `calendar__table` | Calendar table element |
+| `calendar__td` | Calendar body cells |
+| `calendar__th` | Calendar header cells |
+| `calendar__today` | Today's date cell |
+| `calendar__tr` | Calendar rows |
+| `calendar__week` | Week rows in the calendar body |
+
+### CSS custom properties
+
+<Expandable title="CSS variables" defaultOpen={false}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-date-picker--background-color` | Background color | `var(--bq-ui--primary)` |
+  | `--bq-date-picker--border-color` | Border color | `var(--bq-stroke--tertiary)` |
+  | `--bq-date-picker--border-color-disabled` | Border color when disabled | Inherits `--bq-date-picker--border-color`; the control applies `opacity-60` |
+  | `--bq-date-picker--border-color-focus` | Border color on focus | `var(--bq-stroke--brand)` |
+  | `--bq-date-picker--border-radius` | Border radius | `var(--bq-radius--s)` |
+  | `--bq-date-picker--border-style` | Border style | `solid` |
+  | `--bq-date-picker--border-width` | Border width | `var(--bq-stroke-s)` |
+  | `--bq-date-picker--currentDate-border-color` | Border color for today | `var(--bq-stroke--brand)` |
+  | `--bq-date-picker--currentDate-border-width` | Border width for today | `var(--bq-stroke-m)` |
+  | `--bq-date-picker--day-size` | Day cell size | `2.25rem` |
+  | `--bq-date-picker--gap` | Gap between content and prefix/suffix | `var(--bq-spacing-xs)` |
+  | `--bq-date-picker--icon-size` | Icon size for suffix/prefix and clear button | `24px` |
+  | `--bq-date-picker--label-margin-bottom` | Label margin bottom | `var(--bq-spacing-xs)` |
+  | `--bq-date-picker--label-text-color` | Label text color | `var(--bq-text--primary)` |
+  | `--bq-date-picker--label-text-size` | Label text size | `var(--bq-font-size--s)` |
+  | `--bq-date-picker--padding-end` | End padding | `var(--bq-spacing-m)` |
+  | `--bq-date-picker--padding-start` | Start padding | `var(--bq-spacing-m)` |
+  | `--bq-date-picker--paddingY` | Vertical padding | `var(--bq-spacing-s)` |
+  | `--bq-date-picker--range-background-color` | Selected range background | `var(--bq-ui--brand)` |
+  | `--bq-date-picker--range-inner-background-color` | Inner range background | `var(--bq-ui--brand-alt)` |
+  | `--bq-date-picker--text-color` | Text color | `var(--bq-text--primary)` |
+  | `--bq-date-picker--text-placeholder-color` | Placeholder text color | `var(--bq-text--secondary)` |
+  | `--bq-date-picker--text-size` | Input text size | `var(--bq-font-size--m)` |
+</Expandable>
+
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-date-picker--default">
+    Explore date picker variants, validation, locale, and panel behavior in Storybook.
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/date-picker">
+    Browse the component implementation, styles, and tests on GitHub.
+  </Card>
+</CardGroup>
