@@ -159,27 +159,36 @@ A simple list with no groups. Each `bq-option` carries a `value` so the parent c
     </BqOptionList>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqIcon, BqOption, BqOptionList } from "@beeq/angular/standalone" -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqOptionList } from "@beeq/angular/standalone";
 
-    <bq-option-list>
-      <bq-option value="profile">
-        <bq-icon slot="prefix" name="user"></bq-icon>
-        <span>User profile</span>
-      </bq-option>
-      <bq-option value="password">
-        <bq-icon slot="prefix" name="lock-simple"></bq-icon>
-        <span>Change password</span>
-      </bq-option>
-      <bq-option value="settings">
-        <bq-icon slot="prefix" name="gear"></bq-icon>
-        <span>Settings</span>
-      </bq-option>
-      <bq-option value="logout">
-        <bq-icon slot="prefix" name="sign-out"></bq-icon>
-        <span>Close session</span>
-      </bq-option>
-    </bq-option-list>
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon, BqOption, BqOptionList],
+      template: `
+        <bq-option-list>
+          <bq-option value="profile">
+            <bq-icon slot="prefix" name="user"></bq-icon>
+            <span>User profile</span>
+          </bq-option>
+          <bq-option value="password">
+            <bq-icon slot="prefix" name="lock-simple"></bq-icon>
+            <span>Change password</span>
+          </bq-option>
+          <bq-option value="settings">
+            <bq-icon slot="prefix" name="gear"></bq-icon>
+            <span>Settings</span>
+          </bq-option>
+          <bq-option value="logout">
+            <bq-icon slot="prefix" name="sign-out"></bq-icon>
+            <span>Close session</span>
+          </bq-option>
+        </bq-option-list>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -274,21 +283,32 @@ Override `aria-label` when the default `"Options"` is too generic for the contex
     </BqOptionList>
     ```
 
-    ```html Angular icon="angular"
-    <bq-option-list aria-label="Navigation links">
-      <bq-option value="home">
-        <bq-icon slot="prefix" name="house"></bq-icon>
-        <span>Home</span>
-      </bq-option>
-      <bq-option value="dashboard">
-        <bq-icon slot="prefix" name="layout"></bq-icon>
-        <span>Dashboard</span>
-      </bq-option>
-      <bq-option value="reports">
-        <bq-icon slot="prefix" name="chart-bar"></bq-icon>
-        <span>Reports</span>
-      </bq-option>
-    </bq-option-list>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqOptionList } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon, BqOption, BqOptionList],
+      template: `
+        <bq-option-list aria-label="Navigation links">
+          <bq-option value="home">
+            <bq-icon slot="prefix" name="house"></bq-icon>
+            <span>Home</span>
+          </bq-option>
+          <bq-option value="dashboard">
+            <bq-icon slot="prefix" name="layout"></bq-icon>
+            <span>Dashboard</span>
+          </bq-option>
+          <bq-option value="reports">
+            <bq-icon slot="prefix" name="chart-bar"></bq-icon>
+            <span>Reports</span>
+          </bq-option>
+        </bq-option-list>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"

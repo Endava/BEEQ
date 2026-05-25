@@ -213,41 +213,50 @@ Two groups of options inside a single `bq-option-list`. Each group carries a `he
     </BqOptionList>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqIcon, BqOption, BqOptionGroup, BqOptionList } from "@beeq/angular/standalone" -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqOptionGroup, BqOptionList } from "@beeq/angular/standalone";
 
-    <bq-option-list>
-      <bq-option-group>
-        <span slot="header-label">Sport</span>
-        <bq-option value="running">
-          <bq-icon slot="prefix" name="sneaker-move"></bq-icon>
-          <span>Running</span>
-        </bq-option>
-        <bq-option value="hiking">
-          <bq-icon slot="prefix" name="boot"></bq-icon>
-          <span>Hiking</span>
-        </bq-option>
-        <bq-option value="biking">
-          <bq-icon slot="prefix" name="person-simple-bike"></bq-icon>
-          <span>Biking</span>
-        </bq-option>
-      </bq-option-group>
-      <bq-option-group>
-        <span slot="header-label">Food</span>
-        <bq-option value="pizza">
-          <bq-icon slot="prefix" name="pizza"></bq-icon>
-          <span>Pizza</span>
-        </bq-option>
-        <bq-option value="hamburger">
-          <bq-icon slot="prefix" name="hamburger"></bq-icon>
-          <span>Hamburger</span>
-        </bq-option>
-        <bq-option value="cookie">
-          <bq-icon slot="prefix" name="cookie"></bq-icon>
-          <span>Cookie</span>
-        </bq-option>
-      </bq-option-group>
-    </bq-option-list>
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon, BqOption, BqOptionGroup, BqOptionList],
+      template: `
+        <bq-option-list>
+          <bq-option-group>
+            <span slot="header-label">Sport</span>
+            <bq-option value="running">
+              <bq-icon slot="prefix" name="sneaker-move"></bq-icon>
+              <span>Running</span>
+            </bq-option>
+            <bq-option value="hiking">
+              <bq-icon slot="prefix" name="boot"></bq-icon>
+              <span>Hiking</span>
+            </bq-option>
+            <bq-option value="biking">
+              <bq-icon slot="prefix" name="person-simple-bike"></bq-icon>
+              <span>Biking</span>
+            </bq-option>
+          </bq-option-group>
+          <bq-option-group>
+            <span slot="header-label">Food</span>
+            <bq-option value="pizza">
+              <bq-icon slot="prefix" name="pizza"></bq-icon>
+              <span>Pizza</span>
+            </bq-option>
+            <bq-option value="hamburger">
+              <bq-icon slot="prefix" name="hamburger"></bq-icon>
+              <span>Hamburger</span>
+            </bq-option>
+            <bq-option value="cookie">
+              <bq-icon slot="prefix" name="cookie"></bq-icon>
+              <span>Cookie</span>
+            </bq-option>
+          </bq-option-group>
+        </bq-option-list>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -370,23 +379,34 @@ Add a `bq-icon` in the `header-prefix` slot to give the group label a visual cat
     </BqOptionList>
     ```
 
-    ```html Angular icon="angular"
-    <bq-option-list>
-      <bq-option-group>
-        <bq-icon slot="header-prefix" name="sneaker-move"></bq-icon>
-        <span slot="header-label">Sport</span>
-        <bq-option value="running"><span>Running</span></bq-option>
-        <bq-option value="hiking"><span>Hiking</span></bq-option>
-        <bq-option value="biking"><span>Biking</span></bq-option>
-      </bq-option-group>
-      <bq-option-group>
-        <bq-icon slot="header-prefix" name="pizza"></bq-icon>
-        <span slot="header-label">Food</span>
-        <bq-option value="pizza"><span>Pizza</span></bq-option>
-        <bq-option value="hamburger"><span>Hamburger</span></bq-option>
-        <bq-option value="cookie"><span>Cookie</span></bq-option>
-      </bq-option-group>
-    </bq-option-list>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqOptionGroup, BqOptionList } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon, BqOption, BqOptionGroup, BqOptionList],
+      template: `
+        <bq-option-list>
+          <bq-option-group>
+            <bq-icon slot="header-prefix" name="sneaker-move"></bq-icon>
+            <span slot="header-label">Sport</span>
+            <bq-option value="running"><span>Running</span></bq-option>
+            <bq-option value="hiking"><span>Hiking</span></bq-option>
+            <bq-option value="biking"><span>Biking</span></bq-option>
+          </bq-option-group>
+          <bq-option-group>
+            <bq-icon slot="header-prefix" name="pizza"></bq-icon>
+            <span slot="header-label">Food</span>
+            <bq-option value="pizza"><span>Pizza</span></bq-option>
+            <bq-option value="hamburger"><span>Hamburger</span></bq-option>
+            <bq-option value="cookie"><span>Cookie</span></bq-option>
+          </bq-option-group>
+        </bq-option-list>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -533,41 +553,52 @@ Use the `header-suffix` slot to place a count badge, status chip, or secondary i
     </BqOptionList>
     ```
 
-    ```html Angular icon="angular"
-    <bq-option-list>
-      <bq-option-group>
-        <span slot="header-label">Sport</span>
-        <bq-badge slot="header-suffix" type="info">3</bq-badge>
-        <bq-option value="running">
-          <bq-icon slot="prefix" name="sneaker-move"></bq-icon>
-          <span>Running</span>
-        </bq-option>
-        <bq-option value="hiking">
-          <bq-icon slot="prefix" name="boot"></bq-icon>
-          <span>Hiking</span>
-        </bq-option>
-        <bq-option value="biking">
-          <bq-icon slot="prefix" name="person-simple-bike"></bq-icon>
-          <span>Biking</span>
-        </bq-option>
-      </bq-option-group>
-      <bq-option-group>
-        <span slot="header-label">Food</span>
-        <bq-badge slot="header-suffix" type="info">3</bq-badge>
-        <bq-option value="pizza">
-          <bq-icon slot="prefix" name="pizza"></bq-icon>
-          <span>Pizza</span>
-        </bq-option>
-        <bq-option value="hamburger">
-          <bq-icon slot="prefix" name="hamburger"></bq-icon>
-          <span>Hamburger</span>
-        </bq-option>
-        <bq-option value="cookie">
-          <bq-icon slot="prefix" name="cookie"></bq-icon>
-          <span>Cookie</span>
-        </bq-option>
-      </bq-option-group>
-    </bq-option-list>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqBadge, BqIcon, BqOption, BqOptionGroup, BqOptionList } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqBadge, BqIcon, BqOption, BqOptionGroup, BqOptionList],
+      template: `
+        <bq-option-list>
+          <bq-option-group>
+            <span slot="header-label">Sport</span>
+            <bq-badge slot="header-suffix" type="info">3</bq-badge>
+            <bq-option value="running">
+              <bq-icon slot="prefix" name="sneaker-move"></bq-icon>
+              <span>Running</span>
+            </bq-option>
+            <bq-option value="hiking">
+              <bq-icon slot="prefix" name="boot"></bq-icon>
+              <span>Hiking</span>
+            </bq-option>
+            <bq-option value="biking">
+              <bq-icon slot="prefix" name="person-simple-bike"></bq-icon>
+              <span>Biking</span>
+            </bq-option>
+          </bq-option-group>
+          <bq-option-group>
+            <span slot="header-label">Food</span>
+            <bq-badge slot="header-suffix" type="info">3</bq-badge>
+            <bq-option value="pizza">
+              <bq-icon slot="prefix" name="pizza"></bq-icon>
+              <span>Pizza</span>
+            </bq-option>
+            <bq-option value="hamburger">
+              <bq-icon slot="prefix" name="hamburger"></bq-icon>
+              <span>Hamburger</span>
+            </bq-option>
+            <bq-option value="cookie">
+              <bq-icon slot="prefix" name="cookie"></bq-icon>
+              <span>Cookie</span>
+            </bq-option>
+          </bq-option-group>
+        </bq-option-list>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"

@@ -164,20 +164,29 @@ A simple list of options inside a `bq-option-list`. Each option carries a `value
     </BqOptionList>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqOption, BqOptionList } from "@beeq/angular/standalone" -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqOption, BqOptionList } from "@beeq/angular/standalone";
 
-    <bq-option-list>
-      <bq-option value="profile">
-        <span>User profile</span>
-      </bq-option>
-      <bq-option value="password">
-        <span>Change password</span>
-      </bq-option>
-      <bq-option value="logout">
-        <span>Close session</span>
-      </bq-option>
-    </bq-option-list>
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqOption, BqOptionList],
+      template: `
+        <bq-option-list>
+          <bq-option value="profile">
+            <span>User profile</span>
+          </bq-option>
+          <bq-option value="password">
+            <span>Change password</span>
+          </bq-option>
+          <bq-option value="logout">
+            <span>Close session</span>
+          </bq-option>
+        </bq-option-list>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -259,21 +268,32 @@ Add a `bq-icon` in the `prefix` slot to give each item a visual anchor. Icons ma
     </BqOptionList>
     ```
 
-    ```html Angular icon="angular"
-    <bq-option-list>
-      <bq-option value="profile">
-        <bq-icon slot="prefix" name="user"></bq-icon>
-        <span>User profile</span>
-      </bq-option>
-      <bq-option value="password">
-        <bq-icon slot="prefix" name="lock-simple"></bq-icon>
-        <span>Change password</span>
-      </bq-option>
-      <bq-option value="logout">
-        <bq-icon slot="prefix" name="sign-out"></bq-icon>
-        <span>Close session</span>
-      </bq-option>
-    </bq-option-list>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqOptionList } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon, BqOption, BqOptionList],
+      template: `
+        <bq-option-list>
+          <bq-option value="profile">
+            <bq-icon slot="prefix" name="user"></bq-icon>
+            <span>User profile</span>
+          </bq-option>
+          <bq-option value="password">
+            <bq-icon slot="prefix" name="lock-simple"></bq-icon>
+            <span>Change password</span>
+          </bq-option>
+          <bq-option value="logout">
+            <bq-icon slot="prefix" name="sign-out"></bq-icon>
+            <span>Close session</span>
+          </bq-option>
+        </bq-option-list>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -370,25 +390,36 @@ Use the `suffix` slot for a right-aligned secondary indicator. Common uses inclu
     </BqOptionList>
     ```
 
-    ```html Angular icon="angular"
-    <bq-option-list>
-      <bq-option value="profile">
-        <span>User profile</span>
-        <bq-icon slot="suffix" name="user"></bq-icon>
-      </bq-option>
-      <bq-option value="admin">
-        <span>Admin dashboard</span>
-        <bq-icon slot="suffix" name="layout"></bq-icon>
-      </bq-option>
-      <bq-option value="password">
-        <span>Change password</span>
-        <bq-icon slot="suffix" name="lock-simple"></bq-icon>
-      </bq-option>
-      <bq-option value="logout">
-        <span>Close session</span>
-        <bq-icon slot="suffix" name="sign-out"></bq-icon>
-      </bq-option>
-    </bq-option-list>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqOptionList } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon, BqOption, BqOptionList],
+      template: `
+        <bq-option-list>
+          <bq-option value="profile">
+            <span>User profile</span>
+            <bq-icon slot="suffix" name="user"></bq-icon>
+          </bq-option>
+          <bq-option value="admin">
+            <span>Admin dashboard</span>
+            <bq-icon slot="suffix" name="layout"></bq-icon>
+          </bq-option>
+          <bq-option value="password">
+            <span>Change password</span>
+            <bq-icon slot="suffix" name="lock-simple"></bq-icon>
+          </bq-option>
+          <bq-option value="logout">
+            <span>Close session</span>
+            <bq-icon slot="suffix" name="sign-out"></bq-icon>
+          </bq-option>
+        </bq-option-list>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -479,21 +510,32 @@ Set `selected` on the option that reflects the current active value. The compone
     </BqOptionList>
     ```
 
-    ```html Angular icon="angular"
-    <bq-option-list>
-      <bq-option [selected]="true" value="profile">
-        <bq-icon slot="prefix" name="user"></bq-icon>
-        <span>User profile</span>
-      </bq-option>
-      <bq-option value="password">
-        <bq-icon slot="prefix" name="lock-simple"></bq-icon>
-        <span>Change password</span>
-      </bq-option>
-      <bq-option value="logout">
-        <bq-icon slot="prefix" name="sign-out"></bq-icon>
-        <span>Close session</span>
-      </bq-option>
-    </bq-option-list>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqOptionList } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon, BqOption, BqOptionList],
+      template: `
+        <bq-option-list>
+          <bq-option [selected]="true" value="profile">
+            <bq-icon slot="prefix" name="user"></bq-icon>
+            <span>User profile</span>
+          </bq-option>
+          <bq-option value="password">
+            <bq-icon slot="prefix" name="lock-simple"></bq-icon>
+            <span>Change password</span>
+          </bq-option>
+          <bq-option value="logout">
+            <bq-icon slot="prefix" name="sign-out"></bq-icon>
+            <span>Close session</span>
+          </bq-option>
+        </bq-option-list>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -590,25 +632,36 @@ Set `disabled` on individual options to mark them as contextually unavailable. D
     </BqOptionList>
     ```
 
-    ```html Angular icon="angular"
-    <bq-option-list>
-      <bq-option value="profile">
-        <bq-icon slot="prefix" name="user"></bq-icon>
-        <span>User profile</span>
-      </bq-option>
-      <bq-option [disabled]="true" value="admin">
-        <bq-icon slot="prefix" name="layout"></bq-icon>
-        <span>Admin dashboard</span>
-      </bq-option>
-      <bq-option value="password">
-        <bq-icon slot="prefix" name="lock-simple"></bq-icon>
-        <span>Change password</span>
-      </bq-option>
-      <bq-option value="logout">
-        <bq-icon slot="prefix" name="sign-out"></bq-icon>
-        <span>Close session</span>
-      </bq-option>
-    </bq-option-list>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqOption, BqOptionList } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon, BqOption, BqOptionList],
+      template: `
+        <bq-option-list>
+          <bq-option value="profile">
+            <bq-icon slot="prefix" name="user"></bq-icon>
+            <span>User profile</span>
+          </bq-option>
+          <bq-option [disabled]="true" value="admin">
+            <bq-icon slot="prefix" name="layout"></bq-icon>
+            <span>Admin dashboard</span>
+          </bq-option>
+          <bq-option value="password">
+            <bq-icon slot="prefix" name="lock-simple"></bq-icon>
+            <span>Change password</span>
+          </bq-option>
+          <bq-option value="logout">
+            <bq-icon slot="prefix" name="sign-out"></bq-icon>
+            <span>Close session</span>
+          </bq-option>
+        </bq-option-list>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
