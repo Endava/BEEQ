@@ -94,6 +94,17 @@ Applies the custom styles to every `bq-badge` in the application.
     <bq-badge>99+</bq-badge>
 `}>
   <CodeGroup>
+    ```css CSS icon="css3"
+    bq-badge {
+      --bq-badge--background-color: var(--bq-green-400);
+      --bq-badge--box-shadow: var(--bq-box-shadow--l);
+      --bq-badge--border-color: var(--bq-green-600);
+      --bq-badge--border-style: solid;
+      --bq-badge--border-width: 1px;
+      --bq-badge--border-radius: 4px;
+    }
+    ```
+
     ```html HTML icon="html5"
     <bq-badge size="small"></bq-badge>
     <bq-badge size="medium"></bq-badge>
@@ -168,6 +179,17 @@ Only the `bq-badge` elements with the matching CSS class will have the overridde
   <bq-badge class="success">completed</bq-badge>
 `}>
   <CodeGroup>
+    ```css CSS icon="css3"
+    bq-badge.success {
+      --bq-badge--background-color: var(--bq-green-400);
+      --bq-badge--box-shadow: var(--bq-box-shadow--l);
+      --bq-badge--border-color: var(--bq-green-600);
+      --bq-badge--border-style: solid;
+      --bq-badge--border-width: 1px;
+      --bq-badge--border-radius: 4px;
+    }
+    ```
+
     ```html HTML icon="html5"
     <bq-badge size="small"></bq-badge>
     <bq-badge size="medium"></bq-badge>
