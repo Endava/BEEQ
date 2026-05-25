@@ -41,7 +41,7 @@ A dropdown surfaces a floating panel of options, actions, or destinations from a
   </Card>
 </CardGroup>
 
-## Types
+## Patterns
 
 Dropdowns support compact action menus and panel-based selection patterns.
 
@@ -102,6 +102,11 @@ Arrange options alphabetically or by a meaningful semantic order, such as freque
 The trigger can be any appropriate interactive element, but in most cases a `bq-button` with a `bq-icon` works well for navigation, selection, or action menus. Use the `open` attribute when you need to control the visible state.
 
 <CodeLivePreview code={`
+  <style>
+    bq-dropdown::part(dropdown) {
+      --bq-panel-z-index: 12;
+    }
+  </style>
   <bq-dropdown>
     <bq-button slot="trigger">
       Dropdown
@@ -309,6 +314,10 @@ Use the `placement` attribute when you need fine-grained control over the panel 
   <style>
     :host {
       justify-content: space-around !important;
+    }
+
+    bq-dropdown::part(dropdown) {
+      --bq-panel-z-index: 12;
     }
   </style>
   <bq-dropdown class="dropdown--placement" placement="bottom-start">
@@ -559,6 +568,10 @@ Use a custom trigger when the dropdown needs a more specific visual entry point,
         align-items: center;
       }
     }
+
+    bq-dropdown::part(dropdown) {
+      --bq-panel-z-index: 12;
+    }
   </style>
   <bq-dropdown>
     <bq-button appearance="secondary" size="medium" type="button" variant="standard" only-icon slot="trigger">
@@ -606,19 +619,6 @@ Use a custom trigger when the dropdown needs a more specific visual entry point,
   </bq-dropdown>
 `}>
   <CodeGroup>
-    ```css CSS icon="css"
-    /** Custom styles to apply when wrapping a bq-avatar inside a bq-button for accessible dropdown triggers */
-    bq-button:has(bq-avatar) {
-      &::part(button) {
-        padding: 0;
-      }
-
-      &::part(label) {
-        display: flex;
-        align-items: center;
-      }
-    }
-    ```
     ```html HTML icon="html5" expandable
     <bq-dropdown>
       <bq-button appearance="secondary" size="medium" type="button" variant="standard" only-icon slot="trigger">
@@ -791,7 +791,7 @@ Use a custom trigger when the dropdown needs a more specific visual entry point,
       <BqDropdown>
         <BqButton appearance="text" border="full" size="small" onlyIcon slot="trigger">
           <BqAvatar
-            alt-text="User profile"
+            altText="User profile"
             image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
             initials="BQ"
             label="User profile menu"
@@ -822,6 +822,11 @@ Use a custom trigger when the dropdown needs a more specific visual entry point,
 Use `keep-open-on-select` when the dropdown should stay open after a selection is made, enabling users to make multiple selections or navigate through related options without reopening the panel each time.
 
 <CodeLivePreview code={`
+  <style>
+    bq-dropdown::part(dropdown) {
+      --bq-panel-z-index: 12;
+    }
+  </style>
   <bq-dropdown keep-open-on-select>
     <bq-button slot="trigger">
       Dropdown
@@ -992,6 +997,11 @@ Use `keep-open-on-select` when the dropdown should stay open after a selection i
 Use option groups when you need to categorize and group options under specific headers. This gives users a clearer structure when the dropdown contains several related sets of choices.
 
 <CodeLivePreview code={`
+  <style>
+    bq-dropdown::part(dropdown) {
+      --bq-panel-z-index: 12;
+    }
+  </style>
   <bq-dropdown>
     <bq-button slot="trigger">
       Dropdown
@@ -1136,6 +1146,11 @@ Use option groups when you need to categorize and group options under specific h
 Use `same-width` when the panel should match the trigger width. Use `panel-height` to override the panel height when the option list needs a predictable scroll area.
 
 <CodeLivePreview code={`
+  <style>
+    bq-dropdown::part(dropdown) {
+      --bq-panel-z-index: 12;
+    }
+  </style>
   <bq-dropdown same-width panel-height="16rem">
     <bq-button slot="trigger">
       Choose a region
@@ -1166,7 +1181,7 @@ Use `same-width` when the panel should match the trigger width. Use `panel-heigh
     ```jsx React icon="react"
     import { BqButton, BqDropdown, BqIcon, BqOption, BqOptionList } from "@beeq/react";
 
-    <BqDropdown same-width panel-height="16rem">
+    <BqDropdown sameWidth panelHeight="16rem">
       <BqButton slot="trigger">
         Choose a region
         <BqIcon name="caret-down" slot="suffix" />
@@ -1199,7 +1214,7 @@ Use `same-width` when the panel should match the trigger width. Use `panel-heigh
     </script>
 
     <template>
-      <BqDropdown same-width panel-height="16rem">
+      <BqDropdown sameWidth panelHeight="16rem">
         <BqButton slot="trigger">
           Choose a region
           <BqIcon name="caret-down" slot="suffix" />
@@ -1277,6 +1292,10 @@ Use `same-width` when the panel should match the trigger width. Use `panel-heigh
 </CardGroup>
 
 ## Accessibility
+
+`bq-dropdown` does not render its own ARIA role — accessible semantics come from the slotted trigger element. When a `bq-button` is used as the trigger, it exposes `role="button"` and `aria-disabled` automatically. The `bq-option-list` inside the panel renders with `role="listbox"`, and each `bq-option` carries `role="option"`, `aria-selected`, and `aria-disabled`.
+
+**Developer responsibilities:** provide a meaningful visible label or `aria-label` on the trigger, especially for icon-only triggers. When using a `bq-avatar` as the trigger, supply the `label` prop to ensure screen readers announce the button purpose.
 
 - The dropdown trigger should be reachable with <kbd>Tab</kbd> and expose a clear accessible label.
 - Users should be able to open the dropdown with <kbd>Enter</kbd> or <kbd>Space</kbd> when the trigger is focused.

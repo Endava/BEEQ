@@ -64,6 +64,11 @@ Tooltips provide supplemental context about an element without cluttering the in
 By default the tooltip appears **above** the trigger on hover. Tooltip content goes in the default slot; the interactive element goes in the `trigger` slot.
 
 <CodeLivePreview code={`
+  <style>
+    :host {
+      min-height: 15rem !important;
+    }
+  </style>
   <bq-tooltip>
     Yuhu! I'm a tooltip 🙃 And I can present additional context for this action
     <bq-button slot="trigger">Hover me</bq-button>
@@ -86,14 +91,21 @@ By default the tooltip appears **above** the trigger on hover. Tooltip content g
     </BqTooltip>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqButton, BqTooltip } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqTooltip } from "@beeq/angular/standalone";
 
-    <bq-tooltip>
-      Yuhu! I'm a tooltip 🙃 And I can present additional context for this action
-      <bq-button slot="trigger">Hover me</bq-button>
-    </bq-tooltip>
+    @Component({
+      standalone: true,
+      imports: [BqButton, BqTooltip],
+      template: `
+        <bq-tooltip>
+          Yuhu! I'm a tooltip 🙃 And I can present additional context for this action
+          <bq-button slot="trigger">Hover me</bq-button>
+        </bq-tooltip>
+      `
+    })
+    export class DefaultTooltipComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -121,6 +133,11 @@ By default the tooltip appears **above** the trigger on hover. Tooltip content g
 Use `placement` to control which side of the trigger the tooltip appears on. The four primary values are `top` (default), `right`, `bottom`, and `left`. Each also supports `-start` and `-end` sub-variants for fine-grained alignment.
 
 <CodeLivePreview code={`
+  <style>
+    :host {
+      min-height: 15rem !important;
+    }
+  </style>
   <bq-tooltip placement="top">
     Top placement
     <bq-button slot="trigger">Top</bq-button>
@@ -185,26 +202,36 @@ Use `placement` to control which side of the trigger the tooltip appears on. The
     </BqTooltip>
     ```
 
-    ```html Angular icon="angular"
-    <bq-tooltip placement="top">
-      Top placement
-      <bq-button slot="trigger">Top</bq-button>
-    </bq-tooltip>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqTooltip } from "@beeq/angular/standalone";
 
-    <bq-tooltip placement="right">
-      Right placement
-      <bq-button slot="trigger">Right</bq-button>
-    </bq-tooltip>
+    @Component({
+      standalone: true,
+      imports: [BqButton, BqTooltip],
+      template: `
+        <bq-tooltip placement="top">
+          Top placement
+          <bq-button slot="trigger">Top</bq-button>
+        </bq-tooltip>
 
-    <bq-tooltip placement="bottom">
-      Bottom placement
-      <bq-button slot="trigger">Bottom</bq-button>
-    </bq-tooltip>
+        <bq-tooltip placement="right">
+          Right placement
+          <bq-button slot="trigger">Right</bq-button>
+        </bq-tooltip>
 
-    <bq-tooltip placement="left">
-      Left placement
-      <bq-button slot="trigger">Left</bq-button>
-    </bq-tooltip>
+        <bq-tooltip placement="bottom">
+          Bottom placement
+          <bq-button slot="trigger">Bottom</bq-button>
+        </bq-tooltip>
+
+        <bq-tooltip placement="left">
+          Left placement
+          <bq-button slot="trigger">Left</bq-button>
+        </bq-tooltip>
+      `
+    })
+    export class PlacementTooltipComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -246,6 +273,11 @@ Use `placement` to control which side of the trigger the tooltip appears on. The
 Set `display-on="click"` when the trigger element is not naturally focusable (e.g., a plain icon or image) or when hover behavior would conflict with touch devices. The tooltip toggles on each click and closes on <kbd>Esc</kbd> or an outside click.
 
 <CodeLivePreview code={`
+  <style>
+    :host {
+      min-height: 15rem !important;
+    }
+  </style>
   <bq-tooltip display-on="click">
     Click again or press Esc to close
     <bq-button slot="trigger">Click me</bq-button>
@@ -268,11 +300,21 @@ Set `display-on="click"` when the trigger element is not naturally focusable (e.
     </BqTooltip>
     ```
 
-    ```html Angular icon="angular"
-    <bq-tooltip display-on="click">
-      Click again or press Esc to close
-      <bq-button slot="trigger">Click me</bq-button>
-    </bq-tooltip>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqTooltip } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqButton, BqTooltip],
+      template: `
+        <bq-tooltip display-on="click">
+          Click again or press Esc to close
+          <bq-button slot="trigger">Click me</bq-button>
+        </bq-tooltip>
+      `
+    })
+    export class DisplayOnClickTooltipComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -299,6 +341,11 @@ Use `always-visible` to keep the tooltip permanently displayed regardless of use
 </Note>
 
 <CodeLivePreview code={`
+  <style>
+    :host {
+      min-height: 15rem !important;
+    }
+  </style>
   <bq-tooltip always-visible>
     I'm always here
     <bq-button slot="trigger">Trigger</bq-button>
@@ -321,11 +368,21 @@ Use `always-visible` to keep the tooltip permanently displayed regardless of use
     </BqTooltip>
     ```
 
-    ```html Angular icon="angular"
-    <bq-tooltip always-visible>
-      I'm always here
-      <bq-button slot="trigger">Trigger</bq-button>
-    </bq-tooltip>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqTooltip } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqButton, BqTooltip],
+      template: `
+        <bq-tooltip always-visible>
+          I'm always here
+          <bq-button slot="trigger">Trigger</bq-button>
+        </bq-tooltip>
+      `
+    })
+    export class AlwaysVisibleTooltipComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -350,6 +407,11 @@ Use the `visible` prop when your application needs to control the tooltip's open
 Unlike `always-visible`, a controlled tooltip can still be dismissed by the user moving focus away (hover mode) or pressing <kbd>Esc</kbd> (click mode).
 
 <CodeLivePreview code={`
+  <style>
+    :host {
+      min-height: 15rem !important;
+    }
+  </style>
   <div style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
     <bq-tooltip id="ctrl-tip" placement="top">
       Controlled by app state
@@ -361,13 +423,14 @@ Unlike `always-visible`, a controlled tooltip can still be dismissed by the user
     </div>
   </div>
   <script>
-    (() => { // isolate scope for demo purposes
-      document.getElementById('show-tip').addEventListener('bqClick', async () => {
-        await document.getElementById('ctrl-tip').show();
-      });
-      document.getElementById('hide-tip').addEventListener('bqClick', async () => {
-        await document.getElementById('ctrl-tip').hide();
-      });
+    (() => {
+      const tooltip = previewRoot.querySelector('#ctrl-tip');
+      const showBtn = previewRoot.querySelector('#show-tip');
+      const hideBtn = previewRoot.querySelector('#hide-tip');
+      if (!tooltip || !showBtn || !hideBtn) return;
+
+      showBtn.addEventListener('bqClick', async () => { await tooltip.show(); });
+      hideBtn.addEventListener('bqClick', async () => { await tooltip.hide(); });
     })();
   </script>
 `}>
@@ -411,14 +474,23 @@ Unlike `always-visible`, a controlled tooltip can still be dismissed by the user
     }
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqButton, BqTooltip } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqTooltip } from "@beeq/angular/standalone";
 
-    <bq-tooltip [visible]="isTooltipVisible" (bqFocusOut)="isTooltipVisible = false">
-      Controlled by app state
-      <bq-button slot="trigger" (bqClick)="isTooltipVisible = !isTooltipVisible">Toggle</bq-button>
-    </bq-tooltip>
+    @Component({
+      standalone: true,
+      imports: [BqButton, BqTooltip],
+      template: `
+        <bq-tooltip [visible]="isTooltipVisible" (bqFocusOut)="isTooltipVisible = false">
+          Controlled by app state
+          <bq-button slot="trigger" (bqClick)="isTooltipVisible = !isTooltipVisible">Toggle</bq-button>
+        </bq-tooltip>
+      `
+    })
+    export class ControlledTooltipComponent {
+      isTooltipVisible = false;
+    }
     ```
 
     ```vue Vue icon="vuejs"
@@ -480,17 +552,24 @@ The `show()` and `hide()` async methods give you imperative control over the too
   }
   ```
 
-  ```html Angular icon="angular"
-  <!-- Standalone: import { BqButton, BqTooltip } from "@beeq/angular/standalone" -->
-  <!-- Modules: components are available after importing BeeQModule -->
+  ```ts Angular icon="angular"
+  import { Component } from "@angular/core";
+  import { BqButton, BqTooltip } from "@beeq/angular/standalone";
 
-  <bq-tooltip #myTooltip>
-    Programmatically controlled
-    <bq-button slot="trigger">Trigger (hover also works)</bq-button>
-  </bq-tooltip>
+  @Component({
+    standalone: true,
+    imports: [BqButton, BqTooltip],
+    template: `
+      <bq-tooltip #myTooltip>
+        Programmatically controlled
+        <bq-button slot="trigger">Trigger (hover also works)</bq-button>
+      </bq-tooltip>
 
-  <bq-button (bqClick)="myTooltip.show()">Show tooltip</bq-button>
-  <bq-button (bqClick)="myTooltip.hide()">Hide tooltip</bq-button>
+      <bq-button (bqClick)="myTooltip.show()">Show tooltip</bq-button>
+      <bq-button (bqClick)="myTooltip.hide()">Hide tooltip</bq-button>
+    `
+  })
+  export class ProgrammaticTooltipComponent {}
   ```
 
   ```vue Vue icon="vuejs"
@@ -517,6 +596,11 @@ The `show()` and `hide()` async methods give you imperative control over the too
 All five tooltip events support `preventDefault()`. Calling it inside a handler cancels the tooltip's default open or close action — the event still fires and your handler runs, but the panel will not toggle. This is useful for temporarily suppressing the tooltip while an async operation is in progress or based on application state.
 
 <CodeLivePreview code={`
+  <style>
+    :host {
+      min-height: 15rem !important;
+    }
+  </style>
   <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:16px;">
     <bq-tooltip id="prev-demo">
       You can only see me when unlocked!
@@ -532,11 +616,12 @@ All five tooltip events support `preventDefault()`. Calling it inside a handler 
     </div>
   </div>
   <script>
-    (() => { // isolate scope for demo purposes
-      const tooltip = document.getElementById('prev-demo');
-      const lockSwitch = document.getElementById('lock-switch');
-      const status = document.getElementById('status');
-      var locked = false;
+    (() => {
+      const tooltip = previewRoot.querySelector('#prev-demo');
+      const lockSwitch = previewRoot.querySelector('#lock-switch');
+      const status = previewRoot.querySelector('#status');
+      if (!tooltip || !lockSwitch || !status) return;
+      let locked = false;
 
       lockSwitch.addEventListener('bqChange', function(e) {
         locked = e.detail.checked;
@@ -622,26 +707,31 @@ All five tooltip events support `preventDefault()`. Calling it inside a handler 
     }
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqButton, BqTooltip, BqSwitch } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqSwitch, BqTooltip } from "@beeq/angular/standalone";
 
-    <bq-tooltip (bqHoverIn)="onHoverIn($event)" (bqFocusIn)="onFocusIn($event)">
-      You can only see me when unlocked!
-      <bq-button slot="trigger">Hover me</bq-button>
-    </bq-tooltip>
-    <bq-switch (bqChange)="locked = $event.detail.checked">Lock tooltip</bq-switch>
-    ```
+    @Component({
+      standalone: true,
+      imports: [BqButton, BqSwitch, BqTooltip],
+      template: `
+        <bq-tooltip (bqHoverIn)="onHoverIn($event)" (bqFocusIn)="onFocusIn($event)">
+          You can only see me when unlocked!
+          <bq-button slot="trigger">Hover me</bq-button>
+        </bq-tooltip>
+        <bq-switch (bqChange)="locked = $event.detail.checked">Lock tooltip</bq-switch>
+      `
+    })
+    export class PreventDefaultTooltipComponent {
+      locked = false;
 
-    ```ts Angular (ts) icon="angular"
-    locked = false;
+      onHoverIn(event: CustomEvent): void {
+        if (this.locked) event.preventDefault();
+      }
 
-    onHoverIn(event: CustomEvent) {
-      if (this.locked) event.preventDefault();
-    }
-
-    onFocusIn(event: CustomEvent) {
-      if (this.locked) event.preventDefault();
+      onFocusIn(event: CustomEvent): void {
+        if (this.locked) event.preventDefault();
+      }
     }
     ```
 
@@ -681,6 +771,11 @@ All five tooltip events support `preventDefault()`. Calling it inside a handler 
 Add `hide-arrow` to remove the directional pointer. Use this when the tooltip is associated with a wide trigger element or when the arrow would visually conflict with nearby content.
 
 <CodeLivePreview code={`
+  <style>
+    :host {
+      min-height: 15rem !important;
+    }
+  </style>
   <bq-tooltip>
     With arrow (default)
     <bq-button slot="trigger">Arrow</bq-button>
@@ -721,18 +816,28 @@ Add `hide-arrow` to remove the directional pointer. Use this when the tooltip is
     </BqTooltip>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Default: arrow is shown -->
-    <bq-tooltip>
-      With arrow (default)
-      <bq-button slot="trigger">Arrow</bq-button>
-    </bq-tooltip>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqTooltip } from "@beeq/angular/standalone";
 
-    <!-- No arrow -->
-    <bq-tooltip hide-arrow>
-      Without arrow
-      <bq-button slot="trigger">No arrow</bq-button>
-    </bq-tooltip>
+    @Component({
+      standalone: true,
+      imports: [BqButton, BqTooltip],
+      template: `
+        <!-- Default: arrow is shown -->
+        <bq-tooltip>
+          With arrow (default)
+          <bq-button slot="trigger">Arrow</bq-button>
+        </bq-tooltip>
+
+        <!-- No arrow -->
+        <bq-tooltip hide-arrow>
+          Without arrow
+          <bq-button slot="trigger">No arrow</bq-button>
+        </bq-tooltip>
+      `
+    })
+    export class HideArrowTooltipComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -762,6 +867,11 @@ Add `hide-arrow` to remove the directional pointer. Use this when the tooltip is
 Set `same-width` to match the tooltip panel width to the trigger element. Useful when the tooltip content is shorter than the trigger and you want a more contained alignment.
 
 <CodeLivePreview code={`
+  <style>
+    :host {
+      min-height: 15rem !important;
+    }
+  </style>
   <bq-tooltip same-width>
     Same width as trigger, even if content is shorter or longer
     <bq-button slot="trigger">Same width as trigger</bq-button>
@@ -784,11 +894,21 @@ Set `same-width` to match the tooltip panel width to the trigger element. Useful
     </BqTooltip>
     ```
 
-    ```html Angular icon="angular"
-    <bq-tooltip same-width>
-      Same width as trigger, even if content is shorter or longer
-      <bq-button slot="trigger">Same width as trigger</bq-button>
-    </bq-tooltip>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqTooltip } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqButton, BqTooltip],
+      template: `
+        <bq-tooltip same-width>
+          Same width as trigger, even if content is shorter or longer
+          <bq-button slot="trigger">Same width as trigger</bq-button>
+        </bq-tooltip>
+      `
+    })
+    export class SameWidthTooltipComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -811,20 +931,24 @@ Set `same-width` to match the tooltip panel width to the trigger element. Useful
 The `distance` prop controls the gap in pixels between the trigger and the tooltip panel. The default is `10`. Increase it for more breathing room; decrease it for a tighter alignment.
 
 <CodeLivePreview code={`
-  <div class="flex flex-wrap items-center justify-center gap-12 p-16">
-    <bq-tooltip distance="4">
-      4px gap
-      <bq-button slot="trigger">Close (4px)</bq-button>
-    </bq-tooltip>
-    <bq-tooltip distance="10">
-      10px gap (default)
-      <bq-button slot="trigger">Default (10px)</bq-button>
-    </bq-tooltip>
-    <bq-tooltip distance="24">
-      24px gap
-      <bq-button slot="trigger">Far (24px)</bq-button>
-    </bq-tooltip>
-  </div>
+  <style>
+    :host {
+      min-height: 15rem !important;
+      gap: 1rem !important;
+    }
+  </style>
+  <bq-tooltip distance="4">
+    4px gap
+    <bq-button slot="trigger">Close (4px)</bq-button>
+  </bq-tooltip>
+  <bq-tooltip distance="10">
+    10px gap (default)
+    <bq-button slot="trigger">Default (10px)</bq-button>
+  </bq-tooltip>
+  <bq-tooltip distance="24">
+    24px gap
+    <bq-button slot="trigger">Far (24px)</bq-button>
+  </bq-tooltip>
 `}>
   <CodeGroup>
     ```html HTML icon="html5"
@@ -863,21 +987,31 @@ The `distance` prop controls the gap in pixels between the trigger and the toolt
     </BqTooltip>
     ```
 
-    ```html Angular icon="angular"
-    <bq-tooltip distance="4">
-      4px gap
-      <bq-button slot="trigger">Close (4px)</bq-button>
-    </bq-tooltip>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqTooltip } from "@beeq/angular/standalone";
 
-    <bq-tooltip distance="10">
-      10px gap (default)
-      <bq-button slot="trigger">Default (10px)</bq-button>
-    </bq-tooltip>
+    @Component({
+      standalone: true,
+      imports: [BqButton, BqTooltip],
+      template: `
+        <bq-tooltip distance="4">
+          4px gap
+          <bq-button slot="trigger">Close (4px)</bq-button>
+        </bq-tooltip>
 
-    <bq-tooltip distance="24">
-      24px gap
-      <bq-button slot="trigger">Far (24px)</bq-button>
-    </bq-tooltip>
+        <bq-tooltip distance="10">
+          10px gap (default)
+          <bq-button slot="trigger">Default (10px)</bq-button>
+        </bq-tooltip>
+
+        <bq-tooltip distance="24">
+          24px gap
+          <bq-button slot="trigger">Far (24px)</bq-button>
+        </bq-tooltip>
+      `
+    })
+    export class DistanceTooltipComponent {}
     ```
 
     ```vue Vue icon="vuejs"
