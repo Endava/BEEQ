@@ -1,0 +1,381 @@
+---
+title: Next
+description: Use BEEQ in Next.js with the React SSR wrapper so you can keep server rendering while still configuring client-side assets and interactivity.
+---
+
+BEEQ works well in Next.js through `@beeq/react/ssr`, the React SSR wrapper for BEEQ web components.
+
+This setup lets you keep the benefits of Next.js server rendering while still using the same BEEQ React components in server and client components.
+
+<Columns cols={3}>
+  <Card title="SSR-friendly components">
+    Render BEEQ components in Next.js using `@beeq/react/ssr`, including in server components.
+  </Card>
+  <Card title="Client-only initialization">
+    Configure icon asset paths in a small client component instead of turning your whole app into client-rendered React.
+  </Card>
+  <Card title="Same React API">
+    Keep the familiar `BqButton`, `BqInput`, and `onBq...` patterns from the React wrapper.
+  </Card>
+</Columns>
+
+<Check>
+  If your project is a client-rendered React app without Next.js server rendering, use the dedicated [React guide](/guides/frameworks/react) instead.
+</Check>
+
+## Get started
+
+You can add BEEQ to a Next.js app in a few steps:
+
+<Steps>
+  <Step title="Check your project setup" titleSize="h3">
+    Make sure your project already has:
+
+    - Next.js with React `18` or `19`
+    - Node.js `18+`
+    - a working Next.js application
+
+    The examples below use the App Router, but the same ideas also apply to Pages Router projects.
+  </Step>
+
+  <Step title="Install the packages" titleSize="h3">
+    Install the core package, the React wrapper, and the copy plugin used in the icon setup example:
+
+    ```bash
+    npm install @beeq/core @beeq/react
+    npm install -D copy-webpack-plugin
+    ```
+
+    What each package gives you:
+
+    - `@beeq/core` includes the web components, styles, icons, and shared types
+    - `@beeq/react` includes both the standard React wrapper and the SSR-ready exports
+    - `copy-webpack-plugin` copies SVG assets into `public` during the Next.js build
+  </Step>
+
+  <Step title="Add the global styles" titleSize="h3">
+    Import the BEEQ stylesheet once in your global CSS file:
+
+    ```css app/globals.css
+    @import "@beeq/core/dist/beeq/beeq.css";
+    ```
+  </Step>
+
+  <Step title="Configure icons" titleSize="h3">
+    Many BEEQ components rely on SVG icons. Your application needs to serve the SVG files and tell BEEQ where to find them.
+
+    <Warning>
+      Be aware that **there are over 9k SVG files**, which can make builds heavier if you copy the entire icon folder.
+    </Warning>
+
+    <Tabs>
+      <Tab title="Copy to public">
+        Copy the SVG files into `public/icons/svg` during the build:
+
+        <CodeGroup>
+          ```ts next.config.ts highlight={1,9-16}
+          import CopyPlugin from "copy-webpack-plugin";
+          import type { NextConfig } from "next";
+          import { dirname, resolve } from "node:path";
+          import { fileURLToPath } from "node:url";
+
+          const __dirname = dirname(fileURLToPath(import.meta.url));
+
+          const nextConfig: NextConfig = {
+            webpack: (config) => {
+              config.plugins.push(
+                new CopyPlugin({
+                  patterns: [
+                    {
+                      from: resolve(__dirname, "node_modules/@beeq/core/dist/beeq/svg"),
+                      to: resolve(__dirname, "public/icons/svg"),
+                    },
+                  ],
+                }),
+              );
+
+              return config;
+            },
+          };
+
+          export default nextConfig;
+          ```
+
+          ```tsx app/beeq.tsx highlight={1,9}
+          "use client";
+
+          import { useEffect } from "react";
+          import { setBasePath } from "@beeq/core";
+
+          export default function BeeqSetup() {
+            useEffect(() => {
+              setBasePath("/icons/svg");
+            }, []);
+
+            return null;
+          }
+          ```
+        </CodeGroup>
+      </Tab>
+
+      <Tab title="CDN or existing icon source">
+        If you already host icons elsewhere, point BEEQ to that public path instead:
+
+        ```tsx
+        "use client";
+
+        import { useEffect } from "react";
+        import { setBasePath } from "@beeq/core";
+
+        export default function BeeqSetup() {
+          useEffect(() => {
+            setBasePath("https://cdn.jsdelivr.net/npm/heroicons@2.1.5/24/outline");
+          }, []);
+
+          return null;
+        }
+        ```
+
+        Make sure the icon names you use in BEEQ match the icon set you provide.
+      </Tab>
+
+      <Tab title="Copy only the icons you need">
+        If your app only uses a small subset of icons, copy just those SVG files into `public/svg` or another public directory and point `setBasePath()` there:
+
+        ```ts
+        import { setBasePath } from "@beeq/core";
+
+        setBasePath("/svg");
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+
+  <Step title="Create a small setup component" titleSize="h3">
+    Because `setBasePath()` depends on browser APIs, run it in a dedicated client component and render that component once near the root of your app:
+
+    <CodeGroup>
+      ```tsx app/beeq.tsx
+      "use client";
+
+      import { useEffect } from "react";
+      import { setBasePath } from "@beeq/core";
+
+      export default function BeeqSetup() {
+        useEffect(() => {
+          setBasePath("/icons/svg");
+        }, []);
+
+        return null;
+      }
+      ```
+
+      ```tsx app/layout.tsx highlight={2,12}
+      import type { Metadata } from "next";
+      import BeeqSetup from "./beeq";
+      import "./globals.css";
+
+      export const metadata: Metadata = {
+        title: "BEEQ + Next.js",
+        description: "BEEQ in a Next.js app",
+      };
+
+      export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+        return (
+          <html lang="en">
+            <body>
+              <BeeqSetup />
+              {children}
+            </body>
+          </html>
+        );
+      }
+      ```
+    </CodeGroup>
+
+    <Tip>
+      Keeping the setup separate means your layout and pages can stay server-rendered unless they need client-side hooks or event handlers.
+    </Tip>
+  </Step>
+
+  <Step title="Render your first component" titleSize="h3">
+    Import BEEQ components from `@beeq/react/ssr` in your Next.js app:
+
+    ```tsx
+    import { BqButton, BqIcon } from "@beeq/react/ssr";
+
+    export default function Page() {
+      return (
+        <BqButton>
+          Continue
+          <BqIcon name="arrow-right" slot="suffix" />
+        </BqButton>
+      );
+    }
+    ```
+  </Step>
+</Steps>
+
+That is enough to get started.
+
+## Next.js usage patterns with BEEQ
+
+### Import from `@beeq/react/ssr`
+
+Use the SSR-ready exports in Next.js so the wrapper can cooperate with server rendering:
+
+```tsx
+import { BqButton, BqCard, BqInput } from "@beeq/react/ssr";
+```
+
+### Keep `setBasePath()` in a client component
+
+The icon base path should be configured in a browser-only component:
+
+```tsx
+"use client";
+
+import { useEffect } from "react";
+import { setBasePath } from "@beeq/core";
+
+export default function BeeqSetup() {
+  useEffect(() => {
+    setBasePath("/icons/svg");
+  }, []);
+
+  return null;
+}
+```
+
+### Use `'use client'` only where interactivity is needed
+
+Server components can render static BEEQ UI, but event handlers and React hooks still belong in client components:
+
+```tsx
+"use client";
+
+import { useState } from "react";
+import { BqButton } from "@beeq/react/ssr";
+
+export default function CounterButton() {
+  const [count, setCount] = useState(0);
+
+  return <BqButton onBqClick={() => setCount((current) => current + 1)}>Clicks: {count}</BqButton>;
+}
+```
+
+### Slots still use the `slot` prop
+
+Just like in the React guide, slotted children still use the `slot` prop:
+
+```tsx
+import { BqButton, BqIcon } from "@beeq/react/ssr";
+
+export function ContinueButton() {
+  return (
+    <BqButton>
+      Continue
+      <BqIcon name="arrow-right" slot="suffix" />
+    </BqButton>
+  );
+}
+```
+
+## Complete example
+
+This example combines the root client-side setup with a simple server-rendered page.
+
+<CodeGroup>
+  ```tsx app/beeq.tsx
+  "use client";
+
+  import { useEffect } from "react";
+  import { setBasePath } from "@beeq/core";
+
+  export default function BeeqSetup() {
+    useEffect(() => {
+      setBasePath("/icons/svg");
+    }, []);
+
+    return null;
+  }
+  ```
+
+  ```tsx app/layout.tsx
+  import type { Metadata } from "next";
+  import BeeqSetup from "./beeq";
+  import "./globals.css";
+
+  export const metadata: Metadata = {
+    title: "BEEQ + Next.js",
+    description: "BEEQ in a Next.js app",
+  };
+
+  export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+    return (
+      <html lang="en">
+        <body>
+          <BeeqSetup />
+          {children}
+        </body>
+      </html>
+    );
+  }
+  ```
+
+  ```tsx app/page.tsx
+  import { BqButton, BqCard, BqIcon, BqInput } from "@beeq/react/ssr";
+
+  export default function Page() {
+    return (
+      <BqCard>
+        <h1>Welcome to BEEQ</h1>
+        <BqInput placeholder="Search documentation">
+          <BqIcon name="magnifying-glass" slot="prefix" />
+        </BqInput>
+        <BqButton>
+          Continue
+          <BqIcon name="arrow-right" slot="suffix" />
+        </BqButton>
+      </BqCard>
+    );
+  }
+  ```
+</CodeGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Icons are not rendering">
+    Check both of these:
+
+    - the SVG files are available from a public URL in your Next.js app
+    - `setBasePath()` runs on the client and points to that same public URL
+  </Accordion>
+  <Accordion title="My page became a client component unexpectedly">
+    Keep your `BeeqSetup` component separate and render it near the root. Only add `'use client'` to files that truly need hooks, browser APIs, or event handlers.
+  </Accordion>
+  <Accordion title="Event handlers are not working">
+    Event handlers such as `onBqClick` must live in client components. Server components can render the markup, but they cannot attach browser event handlers.
+  </Accordion>
+  <Accordion title="I am importing from @beeq/react and not @beeq/react/ssr">
+    In plain React apps that is fine, but in Next.js you should prefer `@beeq/react/ssr` so the wrapper can participate correctly in server-rendered output.
+  </Accordion>
+  <Accordion title="Styles are missing">
+    Make sure `@beeq/core/dist/beeq/beeq.css` is imported once in `app/globals.css` or the global stylesheet your app actually loads.
+  </Accordion>
+</AccordionGroup>
+
+## Next steps
+
+<Columns cols={3}>
+  <Card title="Explore components" href="/components/button" icon="boxes-stacked" iconType="duotone">
+    Start with a component page to see props, events, slots, and framework examples.
+  </Card>
+  <Card title="Customize the theme" href="/theming/overview" icon="palette" iconType="duotone">
+    Review theming options if your product needs brand customization.
+  </Card>
+  <Card title="Open Storybook" href="https://storybook.beeq.design" icon="book" iconType="duotone">
+    Explore component states and interactions in the live component library.
+  </Card>
+</Columns>

@@ -59,9 +59,8 @@
             "pages": [
               "guides/frameworks/angular",
               "guides/frameworks/react",
-              "guides/frameworks/next.js",
-              "guides/frameworks/vue",
-              "guides/frameworks/html-web-components"
+              "guides/frameworks/next",
+              "guides/frameworks/vue"
             ]
           },
           {
