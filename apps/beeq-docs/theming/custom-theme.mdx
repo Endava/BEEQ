@@ -46,8 +46,17 @@ To create a custom theme, define your own set of CSS variables that override the
       --bq-warning: var(--bq-gold-600);
       --bq-info:    var(--bq-blue-600);
       --bq-focus:   var(--bq-blue-600);
+
+      /* Interactive state overlays */
+      --bq-state--hover:  rgba(0, 0, 0, 0.08);  /* Subtle hover overlay (light mode) */
+      --bq-state--active: rgba(0, 0, 0, 0.12); /* Pressed state overlay (light mode) */
     }
     ```
+
+    <Tip>
+      Override `--bq-state--hover` and `--bq-state--active` for each mode. In dark mode, use light
+      overlays (e.g. `rgba(255, 255, 255, 0.1)`) instead of dark ones.
+    </Tip>
   </Step>
 
   <Step title="Define light mode theme">
@@ -189,6 +198,10 @@ To create a custom theme, define your own set of CSS variables that override the
   <Step title="Apply your custom theme">
     Include your custom theme CSS file in your project and set the `bq-theme` and `bq-mode` attributes on the `<html>` element:
 
+    <Note>
+      Always load `beeq.css` **before** your custom theme CSS so that your variables correctly override the defaults.
+    </Note>
+
     ```html
     <!DOCTYPE html>
     <html lang="en" bq-theme="my-custom-theme" bq-mode="light">
@@ -209,15 +222,13 @@ To create a custom theme, define your own set of CSS variables that override the
     <html lang="en" bq-theme="my-custom-theme" bq-mode="dark">
     ```
 
-    <Tip>
-      You can also use CSS classes instead of HTML attributes:
+    You can also use CSS classes instead of HTML attributes:
 
-      ```html
-      <body class="my-custom-theme light"> ... </body>
-      <!-- or -->
-      <body class="my-custom-theme dark"> ... </body>
-      ```
-    </Tip>
+    ```html
+    <body class="my-custom-theme light"> ... </body>
+    <!-- or -->
+    <body class="my-custom-theme dark"> ... </body>
+    ```
   </Step>
 </Steps>
 
@@ -229,8 +240,9 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
 
 <CodeLivePreview code={`
   <style>
+    /* TechFlow — Base variables */
+
     :host {
-      /* TechFlow — Base variables */
       --bq-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --bq-radius--none: 0;
       --bq-radius--xs2: 0.0625rem;
@@ -239,27 +251,36 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
       --bq-radius--m: 0.5rem;
       --bq-radius--l: 1rem;
       --bq-radius--full: 9999px;
+
       --bq-brand-light: #a8f0e6;
-      --bq-brand: #00d9c4;
-      --bq-brand-dark: #009b88;
+      --bq-brand: #00836e;
+      --bq-brand-dark: #005a4f;
+
       --bq-accent-light: #e8d5f2;
       --bq-accent: #9d4edd;
       --bq-accent-dark: #5a189a;
+
       --bq-success-light: #a1e4cb;
       --bq-success: #05b981;
       --bq-success-dark: #047857;
+
       --bq-danger-light: #fecaca;
       --bq-danger: #ef4444;
       --bq-danger-dark: #991b1b;
+
       --bq-warning-light: #fef3c7;
       --bq-warning: #f59e0b;
       --bq-warning-dark: #92400e;
+
       --bq-info-light: #bfdbfe;
       --bq-info: #3b82f6;
       --bq-info-dark: #1e3a8a;
+
       --bq-focus: #00d9c4;
+
       --bq-white: #ffffff;
       --bq-black: #000000;
+
       --bq-neutral-50: #f9fafb;
       --bq-neutral-100: #f3f4f6;
       --bq-neutral-200: #e5e7eb;
@@ -272,7 +293,13 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
       --bq-neutral-900: #111827;
       --bq-neutral-950: #0f172a;
       --bq-neutral-1000: #030712;
-      /* TechFlow — Dark mode declarative tokens */
+    }
+
+    /* TechFlow — Light mode declarative tokens */
+
+    :host([bq-theme="techflow"]),
+    :host(.techflow) {
+
       --bq-background--primary: #030712;
       --bq-background--secondary: #0f172a;
       --bq-background--tertiary: #1f2937;
@@ -280,6 +307,7 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
       --bq-background--inverse: #f9fafb;
       --bq-background--brand: #009b88;
       --bq-background--overlay: rgba(0, 0, 0, 0.7);
+
       --bq-icon--primary: #f3f4f6;
       --bq-icon--secondary: #9ca3af;
       --bq-icon--inverse: #1f2937;
@@ -289,6 +317,7 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
       --bq-icon--success: #34d399;
       --bq-icon--warning: #fbbf24;
       --bq-icon--danger: #f87171;
+
       --bq-stroke--primary: #374151;
       --bq-stroke--secondary: #4b5563;
       --bq-stroke--tertiary: #9ca3af;
@@ -298,6 +327,7 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
       --bq-stroke--success: #34d399;
       --bq-stroke--warning: #fbbf24;
       --bq-stroke--danger: #f87171;
+
       --bq-text--primary: #f9fafb;
       --bq-text--secondary: #9ca3af;
       --bq-text--inverse: #1f2937;
@@ -307,6 +337,7 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
       --bq-text--success: #34d399;
       --bq-text--warning: #fbbf24;
       --bq-text--danger: #f87171;
+
       --bq-ui--primary: #1f2937;
       --bq-ui--secondary: #374151;
       --bq-ui--tertiary: #4b5563;
@@ -320,32 +351,15 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
       --bq-ui--warning-alt: #f59e0b;
       --bq-ui--danger: #f87171;
       --bq-ui--danger-alt: #ef4444;
+
       --bq-state--hover: rgba(255, 255, 255, 0.1);
       --bq-state--active: rgba(255, 255, 255, 0.15);
-      flex-direction: column !important;
-      align-items: stretch !important;
-      background: var(--bq-background--primary) !important;
-      color: var(--bq-text--primary);
-      font-family: var(--bq-font-family);
-      padding: var(--bq-spacing-m) !important;
     }
 
-    .toolbar {
-      display: flex;
-      justify-content: flex-end;
-      margin-block-end: var(--bq-spacing-m);
-    }
+    /* TechFlow — Dark mode declarative tokens */
 
-    .tab-panel {
-      display: none;
-      padding: var(--bq-spacing-l);
-    }
-
-    .tab-panel.active {
-      display: block;
-    }
-
-    :host(.light) {
+    :host([bq-theme="techflow"][bq-mode="dark"]),
+    :host(.techflow.dark) {
       --bq-background--primary: #ffffff;
       --bq-background--secondary: #f9fafb;
       --bq-background--tertiary: #f3f4f6;
@@ -353,33 +367,37 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
       --bq-background--inverse: #111827;
       --bq-background--brand: #a8f0e6;
       --bq-background--overlay: rgba(0, 0, 0, 0.5);
+
       --bq-icon--primary: #1f2937;
       --bq-icon--secondary: #6b7280;
       --bq-icon--inverse: #f9fafb;
-      --bq-icon--brand: #00d9c4;
+      --bq-icon--brand: #00836e;
       --bq-icon--alt: #ffffff;
-      --bq-icon--info: #3b82f6;
-      --bq-icon--success: #05b981;
-      --bq-icon--warning: #f59e0b;
-      --bq-icon--danger: #ef4444;
+      --bq-icon--info: #1d4ed8;
+      --bq-icon--success: #047857;
+      --bq-icon--warning: #92400e;
+      --bq-icon--danger: #b91c1c;
+
       --bq-stroke--primary: #e5e7eb;
       --bq-stroke--secondary: #d1d5db;
       --bq-stroke--tertiary: #9ca3af;
       --bq-stroke--inverse: #ffffff;
-      --bq-stroke--brand: #00d9c4;
+      --bq-stroke--brand: #00836e;
       --bq-stroke--alt: #f3f4f6;
-      --bq-stroke--success: #05b981;
-      --bq-stroke--warning: #f59e0b;
-      --bq-stroke--danger: #ef4444;
+      --bq-stroke--success: #047857;
+      --bq-stroke--warning: #92400e;
+      --bq-stroke--danger: #b91c1c;
+
       --bq-text--primary: #111827;
       --bq-text--secondary: #6b7280;
       --bq-text--inverse: #f9fafb;
-      --bq-text--brand: #00d9c4;
+      --bq-text--brand: #00836e;
       --bq-text--alt: #ffffff;
-      --bq-text--info: #3b82f6;
-      --bq-text--success: #05b981;
-      --bq-text--warning: #f59e0b;
-      --bq-text--danger: #ef4444;
+      --bq-text--info: #1d4ed8;
+      --bq-text--success: #047857;
+      --bq-text--warning: #92400e;
+      --bq-text--danger: #b91c1c;
+
       --bq-ui--primary: #ffffff;
       --bq-ui--secondary: #f3f4f6;
       --bq-ui--tertiary: #e5e7eb;
@@ -393,15 +411,47 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
       --bq-ui--warning-alt: #fef3c7;
       --bq-ui--danger: #ef4444;
       --bq-ui--danger-alt: #fecaca;
+
       --bq-state--hover: rgba(0, 0, 0, 0.08);
       --bq-state--active: rgba(0, 0, 0, 0.12);
+    }
+
+    :host {
+      align-items: stretch !important;
+      flex-direction: column !important;
+      flex-flow: column nowrap !important;
+
+      color: var(--bq-text--primary);
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: flex-end;
+      margin-block-end: var(--bq-spacing-m);
+    }
+
+    .tab-panel {
+      display: none;
+      padding: var(--bq-spacing-l);
+
+      &.active {
+        display: block;
+      }
+
+      section {
+        margin-block-start: var(--bq-spacing-l);
+      }
+
+      section h1,
+      section h2 {
+        margin-block-end: var(--bq-spacing-m);
+      }
     }
   </style>
 
   <div class="toolbar">
-    <bq-button size="small" appearance="ghost" id="theme-toggle">
-      <bq-icon id="toggle-icon" name="sun" slot="prefix"></bq-icon>
-      <span id="toggle-label">Light mode</span>
+    <bq-button id="theme-toggle" appearance="secondary" label="Toggle theme" only-icon>
+      <bq-icon id="toggle-icon" name="sun"></bq-icon>
     </bq-button>
   </div>
 
@@ -423,20 +473,21 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
   <div class="tab-panel active" id="home">
     <h1>Hello BEEQ(ers)!</h1>
     <p>
-      This is an example of how to integrate the
+      This example shows how to create and apply a custom theme to
       <a class="bq-link" href="https://beeq.design/" target="_blank" rel="noopener noreferrer">
-        BEEQ component library
+        BEEQ components
       </a>
-      with HTML/TypeScript while using Vite as the bundler.
+      using CSS variables.
+      Try toggling the theme and switching between tabs to see how the colors adapt across components and modes.
     </p>
-    <section style="margin-block-start: var(--bq-spacing-l);">
+    <section>
       <h2>Buttons</h2>
       <bq-button appearance="primary">Primary Button</bq-button>
       <bq-button appearance="secondary">Secondary Button</bq-button>
       <bq-button variant="danger">Delete</bq-button>
       <bq-button variant="ghost">Ghost</bq-button>
     </section>
-    <section style="margin-block-start: var(--bq-spacing-l);">
+    <section>
       <h2>Input</h2>
       <bq-input placeholder="Placeholder">
         <label slot="label">Input label</label>
@@ -458,17 +509,23 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
 
   <script>
     (() => {
+      const hostBody = previewRoot.host;
+      hostBody.setAttribute('bq-theme', 'techflow');
+      hostBody.setAttribute('bq-mode', 'dark');
+
       const TAB_ACTIVE_CLASS = 'active';
       const bqTabElem = previewRoot.querySelector('bq-tab-group');
       const tabPanels = previewRoot.querySelectorAll('.tab-panel');
+
       const toggleBtn = previewRoot.querySelector('#theme-toggle');
       const toggleIcon = previewRoot.querySelector('#toggle-icon');
-      const toggleLabel = previewRoot.querySelector('#toggle-label');
 
       bqTabElem?.addEventListener('bqChange', (event) => {
         if (!tabPanels.length) return;
+
         const activeTab = event.detail.value;
         if (!activeTab) return;
+
         tabPanels.forEach((tabPanel) => {
           tabPanel.classList.remove(TAB_ACTIVE_CLASS);
           if (tabPanel.id === activeTab) tabPanel.classList.add(TAB_ACTIVE_CLASS);
@@ -476,131 +533,460 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
       });
 
       toggleBtn?.addEventListener('bqClick', () => {
-        const isLight = previewRoot.host.classList.toggle('light');
-        if (toggleIcon) toggleIcon.setAttribute('name', isLight ? 'moon' : 'sun');
-        if (toggleLabel) toggleLabel.textContent = isLight ? 'Dark mode' : 'Light mode';
+        const isDark = hostBody.getAttribute('bq-mode') === 'dark';
+        hostBody.setAttribute('bq-mode', isDark ? 'light' : 'dark');
+
+        if (!toggleIcon) return;
+
+        toggleIcon.setAttribute('name', isDark ? 'moon' : 'sun');
       });
     })();
   </script>
 `}>
-<CodeGroup>
-```html HTML icon="html5"
-<!DOCTYPE html>
-<html lang="en" bq-theme="techflow" bq-mode="dark">
-  <head>
-    <link rel="stylesheet" href="path/to/beeq.css">
-    <link rel="stylesheet" href="styles.css">
-  </head>
-  <body>
-    <div class="toolbar">
-      <bq-button size="small" appearance="ghost" id="theme-toggle">
-        <bq-icon id="toggle-icon" name="sun" slot="prefix"></bq-icon>
-        Light mode
-      </bq-button>
-    </div>
+  <CodeGroup>
+    ```css CSS icon="css" expandable
+    /* -------------------------------------------------------------------------- */
+    /* BASE THEME VARIABLES                                                       */
+    /* -------------------------------------------------------------------------- */
+    [bq-theme="techflow"],
+    .techflow {
+      --bq-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --bq-brand-light: #a8f0e6;
+      --bq-brand:       #00836e;
+      --bq-brand-dark:  #005a4f;
+      --bq-accent-light: #e8d5f2;
+      --bq-accent:       #9d4edd;
+      --bq-accent-dark:  #5a189a;
+      --bq-success-light: #a1e4cb;
+      --bq-success:       #05b981;
+      --bq-success-dark:  #047857;
+      --bq-danger-light:  #fecaca;
+      --bq-danger:        #ef4444;
+      --bq-danger-dark:   #991b1b;
+      --bq-warning-light: #fef3c7;
+      --bq-warning:       #f59e0b;
+      --bq-warning-dark:  #92400e;
+      --bq-info-light:    #bfdbfe;
+      --bq-info:          #3b82f6;
+      --bq-info-dark:     #1e3a8a;
+      --bq-focus:         #00836e;
+      --bq-white:         #ffffff;
+      --bq-black:         #000000;
+      --bq-neutral-50:    #f9fafb;
+      --bq-neutral-100:   #f3f4f6;
+      --bq-neutral-200:   #e5e7eb;
+      --bq-neutral-300:   #d1d5db;
+      --bq-neutral-400:   #9ca3af;
+      --bq-neutral-500:   #6b7280;
+      --bq-neutral-600:   #4b5563;
+      --bq-neutral-700:   #374151;
+      --bq-neutral-800:   #1f2937;
+      --bq-neutral-900:   #111827;
+      --bq-neutral-950:   #0f172a;
+      --bq-neutral-1000:  #030712;
+    }
 
-    <bq-tab-group value="home" id="tabs">
-      <bq-tab tab-id="home">
-        <bq-icon name="house-line" slot="icon"></bq-icon>
-        Home
-      </bq-tab>
-      <bq-tab tab-id="profile">
-        <bq-icon name="user" slot="icon"></bq-icon>
-        Profile
-      </bq-tab>
-      <bq-tab tab-id="settings">
-        <bq-icon name="gear" slot="icon"></bq-icon>
-        Settings
-      </bq-tab>
-    </bq-tab-group>
+    /* -------------------------------------------------------------------------- */
+    /* LIGHT MODE                                                                 */
+    /* -------------------------------------------------------------------------- */
+    [bq-theme="techflow"]:not([bq-mode]),
+    [bq-theme="techflow"][bq-mode="light"],
+    .techflow:not([bq-mode]),
+    .techflow.light {
+      --bq-background--primary:   #ffffff;
+      --bq-background--secondary: #f9fafb;
+      --bq-background--tertiary:  #f3f4f6;
+      --bq-background--alt:       #e5e7eb;
+      --bq-background--inverse:   #111827;
+      --bq-background--brand:     #a8f0e6;
+      --bq-background--overlay:   rgba(0, 0, 0, 0.5);
+      --bq-icon--primary:   #1f2937;
+      --bq-icon--secondary: #6b7280;
+      --bq-icon--inverse:   #f9fafb;
+      --bq-icon--brand:     #00836e;
+      --bq-icon--alt:       #ffffff;
+      --bq-icon--info:      #1d4ed8;
+      --bq-icon--success:   #047857;
+      --bq-icon--warning:   #92400e;
+      --bq-icon--danger:    #b91c1c;
+      --bq-stroke--primary:   #e5e7eb;
+      --bq-stroke--secondary: #d1d5db;
+      --bq-stroke--tertiary:  #9ca3af;
+      --bq-stroke--inverse:   #ffffff;
+      --bq-stroke--brand:     #00836e;
+      --bq-stroke--alt:       #f3f4f6;
+      --bq-stroke--success:   #047857;
+      --bq-stroke--warning:   #92400e;
+      --bq-stroke--danger:    #b91c1c;
+      --bq-text--primary:   #111827;
+      --bq-text--secondary: #6b7280;
+      --bq-text--inverse:   #f9fafb;
+      --bq-text--brand:     #00836e;
+      --bq-text--alt:       #ffffff;
+      --bq-text--info:      #1d4ed8;
+      --bq-text--success:   #047857;
+      --bq-text--warning:   #92400e;
+      --bq-text--danger:    #b91c1c;
+      --bq-ui--primary:     #ffffff;
+      --bq-ui--secondary:   #f3f4f6;
+      --bq-ui--tertiary:    #e5e7eb;
+      --bq-ui--inverse:     #111827;
+      --bq-ui--brand:       #00836e;
+      --bq-ui--brand-alt:   #a8f0e6;
+      --bq-ui--alt:         #f9fafb;
+      --bq-ui--success:     #047857;
+      --bq-ui--success-alt: #a1e4cb;
+      --bq-ui--warning:     #92400e;
+      --bq-ui--warning-alt: #fef3c7;
+      --bq-ui--danger:      #b91c1c;
+      --bq-ui--danger-alt:  #fecaca;
+      --bq-state--hover:    rgba(0, 0, 0, 0.08);
+      --bq-state--active:   rgba(0, 0, 0, 0.12);
+    }
 
-    <div class="tab-panel active" id="home">
-      <h1>Hello BEEQ(ers)!</h1>
-      <p>
-        This is an example of how to integrate the
-        <a class="bq-link" href="https://beeq.design/" target="_blank" rel="noopener noreferrer">
-          BEEQ component library
-        </a>
-        with HTML/TypeScript while using Vite as the bundler.
-      </p>
-      <section style="margin-block-start: var(--bq-spacing-l);">
-        <h2>Buttons</h2>
-        <bq-button appearance="primary">Primary Button</bq-button>
-        <bq-button appearance="secondary">Secondary Button</bq-button>
-        <bq-button variant="danger">Delete</bq-button>
-        <bq-button variant="ghost">Ghost</bq-button>
-      </section>
-      <section style="margin-block-start: var(--bq-spacing-l);">
-        <h2>Input</h2>
-        <bq-input placeholder="Placeholder">
-          <label slot="label">Input label</label>
-        </bq-input>
-      </section>
-    </div>
-    <div class="tab-panel" id="profile">
-      <h1>Profile tab!</h1>
-      <span>You can check the logic added to the Tab component in the <code>index.ts</code> file.</span>
-    </div>
-    <div class="tab-panel" id="settings">
-      <h1>Settings tab!</h1>
-    </div>
+    /* -------------------------------------------------------------------------- */
+    /* DARK MODE                                                                  */
+    /* -------------------------------------------------------------------------- */
+    [bq-theme="techflow"][bq-mode="dark"],
+    .techflow.dark {
+      --bq-background--primary:   #030712;
+      --bq-background--secondary: #0f172a;
+      --bq-background--tertiary:  #1f2937;
+      --bq-background--alt:       #374151;
+      --bq-background--inverse:   #f9fafb;
+      --bq-background--brand:     #009b88;
+      --bq-background--overlay:   rgba(0, 0, 0, 0.7);
+      --bq-icon--primary:   #f3f4f6;
+      --bq-icon--secondary: #9ca3af;
+      --bq-icon--inverse:   #1f2937;
+      --bq-icon--brand:     #00d9c4;
+      --bq-icon--alt:       #ffffff;
+      --bq-icon--info:      #60a5fa;
+      --bq-icon--success:   #34d399;
+      --bq-icon--warning:   #fbbf24;
+      --bq-icon--danger:    #f87171;
+      --bq-stroke--primary:   #374151;
+      --bq-stroke--secondary: #4b5563;
+      --bq-stroke--tertiary:  #9ca3af;
+      --bq-stroke--inverse:   #0f172a;
+      --bq-stroke--brand:     #00d9c4;
+      --bq-stroke--alt:       #1f2937;
+      --bq-stroke--success:   #34d399;
+      --bq-stroke--warning:   #fbbf24;
+      --bq-stroke--danger:    #f87171;
+      --bq-text--primary:   #f9fafb;
+      --bq-text--secondary: #9ca3af;
+      --bq-text--inverse:   #1f2937;
+      --bq-text--brand:     #00d9c4;
+      --bq-text--alt:       #ffffff;
+      --bq-text--info:      #60a5fa;
+      --bq-text--success:   #34d399;
+      --bq-text--warning:   #fbbf24;
+      --bq-text--danger:    #f87171;
+      --bq-ui--primary:     #1f2937;
+      --bq-ui--secondary:   #374151;
+      --bq-ui--tertiary:    #4b5563;
+      --bq-ui--inverse:     #f9fafb;
+      --bq-ui--brand:       #00d9c4;
+      --bq-ui--brand-alt:   #009b88;
+      --bq-ui--alt:         #0f172a;
+      --bq-ui--success:     #34d399;
+      --bq-ui--success-alt: #10b981;
+      --bq-ui--warning:     #fbbf24;
+      --bq-ui--warning-alt: #f59e0b;
+      --bq-ui--danger:      #f87171;
+      --bq-ui--danger-alt:  #ef4444;
+      --bq-state--hover:    rgba(255, 255, 255, 0.10);
+      --bq-state--active:   rgba(255, 255, 255, 0.15);
+    }
+    ```
 
-    <script type="module">
-      const TAB_ACTIVE_CLASS = 'active';
-      const bqTabElem = document.getElementById('tabs');
-      const tabPanels = document.querySelectorAll('.tab-panel');
-      const toggleBtn = document.getElementById('theme-toggle');
-      const toggleIcon = document.getElementById('toggle-icon');
+    ```html HTML icon="html5" expandable
+    <!DOCTYPE html>
+    <html lang="en" bq-theme="techflow" bq-mode="dark">
+      <head>
+        <link rel="stylesheet" href="path/to/beeq.css">
+        <link rel="stylesheet" href="styles.css">
+      </head>
+      <body>
+        <div class="toolbar">
+          <bq-button appearance="secondary" label="Toggle theme" only-icon id="theme-toggle">
+            <bq-icon id="toggle-icon" name="sun"></bq-icon>
+          </bq-button>
+        </div>
 
-      bqTabElem?.addEventListener('bqChange', (event) => {
-        const activeTab = event.detail.value;
-        tabPanels.forEach((panel) => {
-          panel.classList.toggle(TAB_ACTIVE_CLASS, panel.id === activeTab);
-        });
-      });
+        <bq-tab-group value="home" id="tabs">
+          <bq-tab tab-id="home">
+            <bq-icon name="house-line" slot="icon"></bq-icon>
+            Home
+          </bq-tab>
+          <bq-tab tab-id="profile">
+            <bq-icon name="user" slot="icon"></bq-icon>
+            Profile
+          </bq-tab>
+          <bq-tab tab-id="settings">
+            <bq-icon name="gear" slot="icon"></bq-icon>
+            Settings
+          </bq-tab>
+        </bq-tab-group>
 
-      toggleBtn?.addEventListener('bqClick', () => {
-        const isNowLight = document.documentElement.getAttribute('bq-mode') !== 'light';
-        document.documentElement.setAttribute('bq-mode', isNowLight ? 'light' : 'dark');
-        toggleIcon?.setAttribute('name', isNowLight ? 'moon' : 'sun');
-        if (toggleBtn.lastChild) toggleBtn.lastChild.textContent = isNowLight ? ' Dark mode' : ' Light mode';
-      });
+        <div class="tab-panel active" id="home">
+          <h1>Hello BEEQ(ers)!</h1>
+          <p>
+            This is an example of how to integrate the
+            <a class="bq-link" href="https://beeq.design/" target="_blank" rel="noopener noreferrer">
+              BEEQ component library
+            </a>
+            with HTML/TypeScript while using Vite as the bundler.
+          </p>
+          <section style="margin-block-start: var(--bq-spacing-l);">
+            <h2>Buttons</h2>
+            <bq-button appearance="primary">Primary Button</bq-button>
+            <bq-button appearance="secondary">Secondary Button</bq-button>
+            <bq-button variant="danger">Delete</bq-button>
+            <bq-button variant="ghost">Ghost</bq-button>
+          </section>
+          <section style="margin-block-start: var(--bq-spacing-l);">
+            <h2>Input</h2>
+            <bq-input placeholder="Placeholder">
+              <label slot="label">Input label</label>
+            </bq-input>
+          </section>
+        </div>
+        <div class="tab-panel" id="profile">
+          <h1>Profile tab!</h1>
+          <span>You can check the logic added to the Tab component in the <code>index.ts</code> file.</span>
+        </div>
+        <div class="tab-panel" id="settings">
+          <h1>Settings tab!</h1>
+        </div>
+
+        <script type="module">
+          const TAB_ACTIVE_CLASS = 'active';
+          const bqTabElem = document.getElementById('tabs');
+          const tabPanels = document.querySelectorAll('.tab-panel');
+          const toggleBtn = document.getElementById('theme-toggle');
+          const toggleIcon = document.getElementById('toggle-icon');
+
+          bqTabElem?.addEventListener('bqChange', (event) => {
+            const activeTab = event.detail.value;
+            tabPanels.forEach((panel) => {
+              panel.classList.toggle(TAB_ACTIVE_CLASS, panel.id === activeTab);
+            });
+          });
+
+          toggleBtn?.addEventListener('bqClick', () => {
+            const isNowLight = document.documentElement.getAttribute('bq-mode') !== 'light';
+            document.documentElement.setAttribute('bq-mode', isNowLight ? 'light' : 'dark');
+            if (toggleIcon) toggleIcon.setAttribute('name', isNowLight ? 'moon' : 'sun');
+          });
+        </script>
+      </body>
+    </html>
+    ```
+
+    ```jsx React icon="react" expandable
+    import { useState } from "react";
+    import { BqTabGroup, BqTab, BqIcon, BqButton, BqInput } from "@beeq/react";
+
+    // In main.tsx, apply the TechFlow theme (import styles.css separately):
+    // document.documentElement.setAttribute('bq-theme', 'techflow');
+    // document.documentElement.setAttribute('bq-mode', 'dark');
+
+    export function TechFlowDemo() {
+      const [activeTab, setActiveTab] = useState("home");
+      const [isDark, setIsDark] = useState(true);
+
+      function toggleTheme() {
+        const next = isDark ? "light" : "dark";
+        document.documentElement.setAttribute("bq-mode", next);
+        setIsDark(!isDark);
+      }
+
+      return (
+        <>
+          <div className="toolbar">
+            <BqButton appearance="secondary" label="Toggle theme" onlyIcon onBqClick={toggleTheme}>
+              <BqIcon name={isDark ? "sun" : "moon"} />
+            </BqButton>
+          </div>
+
+          <BqTabGroup
+            value="home"
+            onBqChange={(e: CustomEvent<{ value: string }>) => setActiveTab(e.detail.value)}
+          >
+            <BqTab tabId="home">
+              <BqIcon name="house-line" slot="icon" />
+              Home
+            </BqTab>
+            <BqTab tabId="profile">
+              <BqIcon name="user" slot="icon" />
+              Profile
+            </BqTab>
+            <BqTab tabId="settings">
+              <BqIcon name="gear" slot="icon" />
+              Settings
+            </BqTab>
+          </BqTabGroup>
+
+          {activeTab === "home" && (
+            <section>
+              <h1>Hello BEEQ(ers)!</h1>
+              <p>
+                This is an example of how to integrate the{" "}
+                <a className="bq-link" href="https://beeq.design/" target="_blank" rel="noopener noreferrer">
+                  BEEQ component library
+                </a>{" "}
+                with HTML/TypeScript while using Vite as the bundler.
+              </p>
+              <section style={{ marginBlockStart: "var(--bq-spacing-l)" }}>
+                <h2>Buttons</h2>
+                <BqButton appearance="primary">Primary Button</BqButton>
+                <BqButton appearance="secondary">Secondary Button</BqButton>
+                <BqButton variant="danger">Delete</BqButton>
+                <BqButton variant="ghost">Ghost</BqButton>
+              </section>
+              <section style={{ marginBlockStart: "var(--bq-spacing-l)" }}>
+                <h2>Input</h2>
+                <BqInput placeholder="Placeholder">
+                  <label slot="label">Input label</label>
+                </BqInput>
+              </section>
+            </section>
+          )}
+          {activeTab === "profile" && (
+            <section>
+              <h1>Profile tab!</h1>
+              <span>
+                You can check the logic added to the Tab component in the{" "}
+                <code>index.ts</code> file.
+              </span>
+            </section>
+          )}
+          {activeTab === "settings" && <h1>Settings tab!</h1>}
+        </>
+      );
+    }
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component, inject, signal } from "@angular/core";
+    import { DOCUMENT } from "@angular/common";
+    import { BqTabGroup, BqTab, BqIcon, BqButton, BqInput } from "@beeq/angular/standalone";
+
+    // Apply the TechFlow theme in main.ts (import styles.css separately):
+    // document.documentElement.setAttribute('bq-theme', 'techflow');
+    // document.documentElement.setAttribute('bq-mode', 'dark');
+
+    @Component({
+      standalone: true,
+      imports: [BqTabGroup, BqTab, BqIcon, BqButton, BqInput],
+      template: `
+        <div class="toolbar">
+          <bq-button appearance="secondary" label="Toggle theme" only-icon (bqClick)="toggleTheme()">
+            <bq-icon [attr.name]="isDark() ? 'sun' : 'moon'"></bq-icon>
+          </bq-button>
+        </div>
+
+        <bq-tab-group value="home" (bqChange)="onTabChange($event)">
+          <bq-tab tab-id="home">
+            <bq-icon name="house-line" slot="icon"></bq-icon>
+            Home
+          </bq-tab>
+          <bq-tab tab-id="profile">
+            <bq-icon name="user" slot="icon"></bq-icon>
+            Profile
+          </bq-tab>
+          <bq-tab tab-id="settings">
+            <bq-icon name="gear" slot="icon"></bq-icon>
+            Settings
+          </bq-tab>
+        </bq-tab-group>
+
+        @if (activeTab() === 'home') {
+          <section>
+            <h1>Hello BEEQ(ers)!</h1>
+            <p>
+              This is an example of how to integrate the
+              <a class="bq-link" href="https://beeq.design/" target="_blank" rel="noopener noreferrer">
+                BEEQ component library
+              </a>
+              with HTML/TypeScript while using Vite as the bundler.
+            </p>
+            <section style="margin-block-start: var(--bq-spacing-l);">
+              <h2>Buttons</h2>
+              <bq-button appearance="primary">Primary Button</bq-button>
+              <bq-button appearance="secondary">Secondary Button</bq-button>
+              <bq-button variant="danger">Delete</bq-button>
+              <bq-button variant="ghost">Ghost</bq-button>
+            </section>
+            <section style="margin-block-start: var(--bq-spacing-l);">
+              <h2>Input</h2>
+              <bq-input placeholder="Placeholder">
+                <label slot="label">Input label</label>
+              </bq-input>
+            </section>
+          </section>
+        }
+        @if (activeTab() === 'profile') {
+          <section>
+            <h1>Profile tab!</h1>
+            <span>You can check the logic added to the Tab component in the <code>index.ts</code> file.</span>
+          </section>
+        }
+        @if (activeTab() === 'settings') {
+          <h1>Settings tab!</h1>
+        }
+      `,
+    })
+    export class TechFlowDemoComponent {
+      private readonly document = inject(DOCUMENT);
+      readonly activeTab = signal('home');
+      readonly isDark = signal(true);
+
+      onTabChange(event: CustomEvent<{ value: string }>) {
+        this.activeTab.set(event.detail.value);
+      }
+
+      toggleTheme() {
+        const next = this.isDark() ? 'light' : 'dark';
+        this.document.documentElement.setAttribute('bq-mode', next);
+        this.isDark.set(!this.isDark());
+      }
+    }
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+      import { ref } from "vue";
+      import { BqTabGroup, BqTab, BqIcon, BqButton, BqInput } from "@beeq/vue";
+
+      // In main.ts, apply the TechFlow theme (import styles.css separately):
+      // document.documentElement.setAttribute('bq-theme', 'techflow');
+      // document.documentElement.setAttribute('bq-mode', 'dark');
+
+      const activeTab = ref("home");
+      const isDark = ref(true);
+
+      function onTabChange(event: CustomEvent<{ value: string }>) {
+        activeTab.value = event.detail.value;
+      }
+
+      function toggleTheme() {
+        const next = isDark.value ? "light" : "dark";
+        document.documentElement.setAttribute("bq-mode", next);
+        isDark.value = !isDark.value;
+      }
     </script>
-  </body>
-</html>
-```
 
-```jsx React icon="react"
-import { useState } from "react";
-import { BqTabGroup, BqTab, BqIcon, BqButton, BqInput } from "@beeq/react";
-
-// In main.tsx, apply the TechFlow theme (import styles.css separately):
-// document.documentElement.setAttribute('bq-theme', 'techflow');
-// document.documentElement.setAttribute('bq-mode', 'dark');
-
-export function TechFlowDemo() {
-  const [activeTab, setActiveTab] = useState("home");
-  const [isDark, setIsDark] = useState(true);
-
-  function toggleTheme() {
-    const next = isDark ? "light" : "dark";
-    document.documentElement.setAttribute("bq-mode", next);
-    setIsDark(!isDark);
-  }
-
-  return (
-    <>
-      <div className="toolbar">
-        <BqButton size="small" appearance="ghost" onBqClick={toggleTheme}>
-          <BqIcon name={isDark ? "sun" : "moon"} slot="prefix" />
-          {isDark ? "Light mode" : "Dark mode"}
+    <template>
+      <div class="toolbar">
+        <BqButton appearance="secondary" label="Toggle theme" only-icon @bqClick="toggleTheme">
+          <BqIcon :name="isDark ? 'sun' : 'moon'" />
         </BqButton>
       </div>
 
-      <BqTabGroup
-        value="home"
-        onBqChange={(e: CustomEvent<{ value: string }>) => setActiveTab(e.detail.value)}
-      >
+      <BqTabGroup value="home" @bqChange="onTabChange">
         <BqTab tabId="home">
           <BqIcon name="house-line" slot="icon" />
           Home
@@ -615,80 +1001,7 @@ export function TechFlowDemo() {
         </BqTab>
       </BqTabGroup>
 
-      {activeTab === "home" && (
-        <section>
-          <h1>Hello BEEQ(ers)!</h1>
-          <p>
-            This is an example of how to integrate the{" "}
-            <a className="bq-link" href="https://beeq.design/" target="_blank" rel="noopener noreferrer">
-              BEEQ component library
-            </a>{" "}
-            with HTML/TypeScript while using Vite as the bundler.
-          </p>
-          <section style={{ marginBlockStart: "var(--bq-spacing-l)" }}>
-            <h2>Buttons</h2>
-            <BqButton appearance="primary">Primary Button</BqButton>
-            <BqButton appearance="secondary">Secondary Button</BqButton>
-            <BqButton variant="danger">Delete</BqButton>
-            <BqButton variant="ghost">Ghost</BqButton>
-          </section>
-          <section style={{ marginBlockStart: "var(--bq-spacing-l)" }}>
-            <h2>Input</h2>
-            <BqInput placeholder="Placeholder">
-              <label slot="label">Input label</label>
-            </BqInput>
-          </section>
-        </section>
-      )}
-      {activeTab === "profile" && (
-        <section>
-          <h1>Profile tab!</h1>
-          <span>
-            You can check the logic added to the Tab component in the{" "}
-            <code>index.ts</code> file.
-          </span>
-        </section>
-      )}
-      {activeTab === "settings" && <h1>Settings tab!</h1>}
-    </>
-  );
-}
-```
-
-```ts Angular icon="angular"
-import { Component } from "@angular/core";
-import type { BqTabGroupCustomEvent } from "@beeq/core";
-import { BqButton, BqIcon, BqInput, BqTab, BqTabGroup } from "@beeq/angular/standalone";
-
-@Component({
-  selector: "app-root",
-  standalone: true,
-  imports: [BqButton, BqIcon, BqInput, BqTab, BqTabGroup],
-  template: `
-    <div class="toolbar">
-      <bq-button size="small" appearance="ghost" (bqClick)="toggleTheme()">
-        <bq-icon [attr.name]="isDark ? 'sun' : 'moon'" slot="prefix"></bq-icon>
-        {{ isDark ? 'Light mode' : 'Dark mode' }}
-      </bq-button>
-    </div>
-
-    <bq-tab-group value="home" (bqChange)="onTabChange($event)">
-      <bq-tab tab-id="home">
-        <bq-icon name="house-line" slot="icon"></bq-icon>
-        Home
-      </bq-tab>
-      <bq-tab tab-id="profile">
-        <bq-icon name="user" slot="icon"></bq-icon>
-        Profile
-      </bq-tab>
-      <bq-tab tab-id="settings">
-        <bq-icon name="gear" slot="icon"></bq-icon>
-        Settings
-      </bq-tab>
-    </bq-tab-group>
-
-    @if (activeTab === "home") {
-      <section>
+      <section v-if="activeTab === 'home'">
         <h1>Hello BEEQ(ers)!</h1>
         <p>
           This is an example of how to integrate the
@@ -699,123 +1012,24 @@ import { BqButton, BqIcon, BqInput, BqTab, BqTabGroup } from "@beeq/angular/stan
         </p>
         <section style="margin-block-start: var(--bq-spacing-l);">
           <h2>Buttons</h2>
-          <bq-button appearance="primary">Primary Button</bq-button>
-          <bq-button appearance="secondary">Secondary Button</bq-button>
-          <bq-button variant="danger">Delete</bq-button>
-          <bq-button variant="ghost">Ghost</bq-button>
+          <BqButton appearance="primary">Primary Button</BqButton>
+          <BqButton appearance="secondary">Secondary Button</BqButton>
+          <BqButton variant="danger">Delete</BqButton>
+          <BqButton variant="ghost">Ghost</BqButton>
         </section>
         <section style="margin-block-start: var(--bq-spacing-l);">
           <h2>Input</h2>
-          <bq-input placeholder="Placeholder">
+          <BqInput placeholder="Placeholder">
             <label slot="label">Input label</label>
-          </bq-input>
+          </BqInput>
         </section>
       </section>
-    }
-
-    @if (activeTab === "profile") {
-      <section>
+      <section v-if="activeTab === 'profile'">
         <h1>Profile tab!</h1>
         <span>You can check the logic added to the Tab component in the <code>index.ts</code> file.</span>
       </section>
-    }
-
-    @if (activeTab === "settings") {
-      <h1>Settings tab!</h1>
-    }
-  `,
-})
-export class AppComponent {
-  activeTab = "home";
-  isDark = true;
-
-  onTabChange(event: BqTabGroupCustomEvent<{ value: string }>) {
-    this.activeTab = event.detail.value;
-  }
-
-  toggleTheme() {
-    const next = this.isDark ? "light" : "dark";
-    document.documentElement.setAttribute("bq-mode", next);
-    this.isDark = !this.isDark;
-  }
-}
-```
-
-```vue Vue icon="vuejs"
-<script setup lang="ts">
-import { ref } from "vue";
-import { BqTabGroup, BqTab, BqIcon, BqButton, BqInput } from "@beeq/vue";
-
-// In main.ts, apply the TechFlow theme (import styles.css separately):
-// document.documentElement.setAttribute('bq-theme', 'techflow');
-// document.documentElement.setAttribute('bq-mode', 'dark');
-
-const activeTab = ref("home");
-const isDark = ref(true);
-
-function onTabChange(event: CustomEvent<{ value: string }>) {
-  activeTab.value = event.detail.value;
-}
-
-function toggleTheme() {
-  const next = isDark.value ? "light" : "dark";
-  document.documentElement.setAttribute("bq-mode", next);
-  isDark.value = !isDark.value;
-}
-</script>
-
-<template>
-  <div class="toolbar">
-    <BqButton size="small" appearance="ghost" @bqClick="toggleTheme">
-      <BqIcon :name="isDark ? 'sun' : 'moon'" slot="prefix" />
-      {{ isDark ? 'Light mode' : 'Dark mode' }}
-    </BqButton>
-  </div>
-
-  <BqTabGroup value="home" @bqChange="onTabChange">
-    <BqTab tabId="home">
-      <BqIcon name="house-line" slot="icon" />
-      Home
-    </BqTab>
-    <BqTab tabId="profile">
-      <BqIcon name="user" slot="icon" />
-      Profile
-    </BqTab>
-    <BqTab tabId="settings">
-      <BqIcon name="gear" slot="icon" />
-      Settings
-    </BqTab>
-  </BqTabGroup>
-
-  <section v-if="activeTab === 'home'">
-    <h1>Hello BEEQ(ers)!</h1>
-    <p>
-      This is an example of how to integrate the
-      <a class="bq-link" href="https://beeq.design/" target="_blank" rel="noopener noreferrer">
-        BEEQ component library
-      </a>
-      with HTML/TypeScript while using Vite as the bundler.
-    </p>
-    <section style="margin-block-start: var(--bq-spacing-l);">
-      <h2>Buttons</h2>
-      <BqButton appearance="primary">Primary Button</BqButton>
-      <BqButton appearance="secondary">Secondary Button</BqButton>
-      <BqButton variant="danger">Delete</BqButton>
-      <BqButton variant="ghost">Ghost</BqButton>
-    </section>
-    <section style="margin-block-start: var(--bq-spacing-l);">
-      <h2>Input</h2>
-      <BqInput placeholder="Placeholder">
-        <label slot="label">Input label</label>
-      </BqInput>
-    </section>
-  </section>
-  <section v-if="activeTab === 'profile'">
-    <h1>Profile tab!</h1>
-    <span>You can check the logic added to the Tab component in the <code>index.ts</code> file.</span>
-  </section>
-  <h1 v-if="activeTab === 'settings'">Settings tab!</h1>
-</template>
-```
-</CodeGroup>
+      <h1 v-if="activeTab === 'settings'">Settings tab!</h1>
+    </template>
+    ```
+  </CodeGroup>
 </CodeLivePreview>

@@ -79,7 +79,7 @@ Applies the custom styles to every `bq-badge` in the application.
       flex-direction: row !important;
       flex-wrap: wrap !important;
     }
-    
+
     bq-badge {
       --bq-badge--background-color: var(--bq-green-400);
       --bq-badge--box-shadow: var(--bq-box-shadow--l);
@@ -94,7 +94,7 @@ Applies the custom styles to every `bq-badge` in the application.
     <bq-badge>99+</bq-badge>
 `}>
   <CodeGroup>
-    ```css CSS icon="css3"
+    ```css CSS icon="css"
     bq-badge {
       --bq-badge--background-color: var(--bq-green-400);
       --bq-badge--box-shadow: var(--bq-box-shadow--l);
@@ -113,7 +113,7 @@ Applies the custom styles to every `bq-badge` in the application.
 
     ```jsx React icon="react"
     import { BqBadge } from "@beeq/react";
-    // Import the CSS override in your global stylesheet (see CSS tab)
+    // Import the CSS override in your global stylesheet
 
     <BqBadge size="small" />
     <BqBadge size="medium" />
@@ -124,8 +124,9 @@ Applies the custom styles to every `bq-badge` in the application.
     import { Component } from "@angular/core";
     import { BqBadge } from "@beeq/angular/standalone";
 
+    // Import the CSS override in your global stylesheet
+
     @Component({
-      selector: "app-root",
       standalone: true,
       imports: [BqBadge],
       template: `
@@ -134,13 +135,13 @@ Applies the custom styles to every `bq-badge` in the application.
         <bq-badge>99+</bq-badge>
       `,
     })
-    export class AppComponent {}
+    export class BadgeGlobalOverrideExample {}
     ```
 
     ```vue Vue icon="vuejs"
     <script setup lang="ts">
     import { BqBadge } from "@beeq/vue";
-    // Import the CSS override in your global stylesheet (see CSS tab)
+    // Import the CSS override in your global stylesheet
     </script>
 
     <template>
@@ -162,7 +163,7 @@ Only the `bq-badge` elements with the matching CSS class will have the overridde
       flex-direction: row !important;
       flex-wrap: wrap !important;
     }
-    
+
     bq-badge.success {
       --bq-badge--background-color: var(--bq-green-400);
       --bq-badge--box-shadow: var(--bq-box-shadow--l);
@@ -179,7 +180,7 @@ Only the `bq-badge` elements with the matching CSS class will have the overridde
   <bq-badge class="success">completed</bq-badge>
 `}>
   <CodeGroup>
-    ```css CSS icon="css3"
+    ```css CSS icon="css"
     bq-badge.success {
       --bq-badge--background-color: var(--bq-green-400);
       --bq-badge--box-shadow: var(--bq-box-shadow--l);
@@ -199,7 +200,7 @@ Only the `bq-badge` elements with the matching CSS class will have the overridde
 
     ```jsx React icon="react"
     import { BqBadge } from "@beeq/react";
-    // Import the CSS override in your global stylesheet (see CSS tab)
+    // Import the CSS override in your global stylesheet
 
     <BqBadge size="small" />
     <BqBadge size="medium" />
@@ -211,8 +212,9 @@ Only the `bq-badge` elements with the matching CSS class will have the overridde
     import { Component } from "@angular/core";
     import { BqBadge } from "@beeq/angular/standalone";
 
+    // Import the CSS override in your global stylesheet
+
     @Component({
-      selector: "app-root",
       standalone: true,
       imports: [BqBadge],
       template: `
@@ -222,13 +224,13 @@ Only the `bq-badge` elements with the matching CSS class will have the overridde
         <bq-badge class="success">completed</bq-badge>
       `,
     })
-    export class AppComponent {}
+    export class BadgeTargetedOverrideExample {}
     ```
 
     ```vue Vue icon="vuejs"
     <script setup lang="ts">
     import { BqBadge } from "@beeq/vue";
-    // Import the CSS override in your global stylesheet (see CSS tab)
+    // Import the CSS override in your global stylesheet
     </script>
 
     <template>
@@ -249,43 +251,72 @@ Only the `bq-badge` elements with the matching CSS class will have the overridde
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
-      Use semantic tokens
+      Do
     </span>
-    Prefer declarative color variables (`--bq-background--primary`) over primitive values (`--bq-grey-100`) in your custom themes for better consistency and automatic mode switching.
+
+    Prefer declarative color variables (`--bq-background--primary`) over primitive values (`--bq-grey-100`) in your custom themes for better consistency and automatic light/dark mode switching.
   </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+
+    Do not hardcode raw hex values (e.g. `#ffffff`, `#1f2937`) in component overrides — they will not adapt to theme or mode changes automatically.
+  </Card>
+
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
-      Test both modes
+      Do
     </span>
-    Always test your custom theme in both light and dark modes to ensure proper contrast and readability.
+
+    Use CSS classes or component selectors to scope component overrides to specific instances and avoid unintended side effects elsewhere in the app.
   </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+
+    Do not apply a global component override (e.g. `bq-badge { ... }`) unless you intentionally want it to affect every instance across the entire application.
+  </Card>
+
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
-      Scope component overrides
+      Do
     </span>
-    When customizing individual components, use CSS classes or component selectors to scope your changes and avoid unintended side effects.
+
+    Always test your component overrides in both light and dark modes to verify proper contrast, readability, and visual consistency.
   </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+
+    Do not skip contrast validation. WCAG 2.1 Level AA requires a 4.5:1 ratio for normal text and 3:1 for large text — overriding colors without checking can fail these requirements.
+  </Card>
+
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
       <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
-      Maintain accessibility
+      Do
     </span>
-    Ensure sufficient color contrast ratios. WCAG 2.1 Level AA requires 4.5:1 for normal text and 3:1 for large text.
+
+    Use the [primitive color palette](/foundations/colors#primitive-color-scales) as the source for custom theme colors. It includes blue, coral, cyan, gold, green, indigo, iris, lime, magenta, orange, purple, red, sky, teal, volcano, and yellow — each with 10 shades (100–1000).
   </Card>
+
   <Card>
     <span className="flex items-center mr-2 text-lg font-medium" role="heading">
-      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
-      Use CSS variables for flexibility
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
     </span>
-    Expose your own CSS variables if you are building reusable component patterns on top of BEEQ.
-  </Card>
-  <Card>
-    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
-      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
-      Leverage primitive colors
-    </span>
-    Use the extensive [primitive color palette](/foundations/colors) when defining theme colors. It includes blue, coral, cyan, gold, green, indigo, iris, lime, magenta, orange, purple, red, sky, teal, volcano, and yellow — each with 10 shades (100–1000).
+
+    Do not invent arbitrary color values outside the palette. Random hex colors break visual harmony and make future theme maintenance much harder.
   </Card>
 </CardGroup>
