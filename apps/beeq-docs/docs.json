@@ -89,6 +89,12 @@
         "tab": "Components",
         "groups": [
           {
+            "group": "Overview",
+            "pages": [
+              "components/overview"
+            ]
+          },
+          {
             "group": "Actions",
             "pages": [
               "components/button",
