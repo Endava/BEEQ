@@ -1,11 +1,13 @@
 ---
 title: Angular
-description: Use BEEQ with Angular through the Angular wrapper for better forms support, event bindings, and integration with Angular templates.
+description: Use BEEQ with Angular through the Angular wrapper, with standalone Angular components as the recommended setup path.
 ---
 
 BEEQ works best in Angular through `@beeq/angular`, the official Angular wrapper around BEEQ web components.
 
-It lets you use BEEQ components directly in Angular templates while keeping familiar Angular patterns for outputs, forms, and standalone imports.
+For new Angular applications, we recommend the standalone setup with direct component imports from `@beeq/angular/standalone`. Keep the NgModule setup only for existing module-based apps.
+
+It lets you use BEEQ components directly in Angular templates while keeping familiar Angular patterns for outputs, forms, and component-level imports.
 
 <Columns cols={3}>
   <Card title="Angular-friendly outputs">
@@ -14,8 +16,8 @@ It lets you use BEEQ components directly in Angular templates while keeping fami
   <Card title="Forms support">
     Use supported BEEQ form controls with `[(ngModel)]` or reactive forms instead of wiring values by hand.
   </Card>
-  <Card title="Flexible setup">
-    Choose between `BeeQModule` for module-based apps or standalone imports for newer Angular projects.
+  <Card title="Standalone-first setup">
+    Import only the BEEQ components you need in standalone Angular components, with NgModule support still available for older apps.
   </Card>
 </Columns>
 
@@ -164,12 +166,29 @@ You can add BEEQ to an existing Angular project in a few steps:
     </Tabs>
   </Step>
 
-  <Step title="Choose your Angular integration style" titleSize="h3">
-    BEEQ supports both module-based Angular apps and standalone Angular components.
+  <Step title="Set up BEEQ in a standalone Angular app" titleSize="h3">
+    For Angular `14+`, standalone components are the recommended setup for new work. Import the BEEQ components you need from `@beeq/angular/standalone`:
 
     <Tabs>
-      <Tab title="NgModule">
-        Use `BeeQModule` in module-based Angular apps:
+      <Tab title="Recommended: Standalone">
+        Use direct component imports in standalone Angular apps:
+
+        ```ts app.component.ts
+        import { Component } from "@angular/core";
+        import { BqButton, BqCard, BqInput } from "@beeq/angular/standalone";
+
+        @Component({
+          selector: "app-root",
+          standalone: true,
+          imports: [BqButton, BqCard, BqInput],
+          templateUrl: "./app.component.html",
+        })
+        export class AppComponent {}
+        ```
+      </Tab>
+
+      <Tab title="Existing NgModule app">
+        If your app still uses NgModules, keep using `BeeQModule`:
 
         ```ts app.module.ts
         import { NgModule } from "@angular/core";
@@ -186,24 +205,11 @@ You can add BEEQ to an existing Angular project in a few steps:
         export class AppModule {}
         ```
       </Tab>
-
-      <Tab title="Standalone">
-        Use direct component imports in standalone Angular apps:
-
-        ```ts app.component.ts
-        import { Component } from "@angular/core";
-        import { BqButton, BqCard, BqInput } from "@beeq/angular/standalone";
-
-        @Component({
-          selector: "app-root",
-          standalone: true,
-          imports: [BqButton, BqCard, BqInput],
-          templateUrl: "./app.component.html",
-        })
-        export class AppComponent {}
-        ```
-      </Tab>
     </Tabs>
+
+    <Tip>
+      If you are starting fresh, prefer standalone imports. Use `BeeQModule` only when you are integrating BEEQ into an existing NgModule-based application.
+    </Tip>
   </Step>
 
   <Step title="Render your first component" titleSize="h3">
@@ -234,22 +240,26 @@ BEEQ components render as standard custom elements in Angular templates, so inpu
 
 ### Use `[(ngModel)]` with supported form controls
 
-For template-driven forms, import `FormsModule` and add `ngDefaultControl` on the BEEQ control:
+For template-driven forms in standalone Angular components, import `FormsModule` alongside the BEEQ controls you use, then add `ngDefaultControl` on the BEEQ control:
 
 <CodeGroup>
-  ```ts app.module.ts highlight={3,10}
-  import { NgModule } from "@angular/core";
-  import { BrowserModule } from "@angular/platform-browser";
+  ```ts newsletter.component.ts highlight={2-3,9}
+  import { Component } from "@angular/core";
   import { FormsModule } from "@angular/forms";
-  import { BeeQModule } from "@beeq/angular";
+  import { BqInput } from "@beeq/angular/standalone";
 
-  @NgModule({
-    imports: [BrowserModule, FormsModule, BeeQModule.forRoot()],
+  @Component({
+    selector: "app-newsletter",
+    standalone: true,
+    imports: [FormsModule, BqInput],
+    templateUrl: "./newsletter.component.html",
   })
-  export class AppModule {}
+  export class NewsletterComponent {
+    name = "";
+  }
   ```
 
-  ```html highlight={3}
+  ```html newsletter.component.html highlight={3}
   <bq-input
     name="full-name"
     [(ngModel)]="name"
@@ -266,15 +276,18 @@ For template-driven forms, import `FormsModule` and add `ngDefaultControl` on th
 Reactive forms work well with BEEQ controls when you want explicit form state and validation:
 
 <CodeGroup>
-  ```ts app.component.ts
+  ```ts profile-form.component.ts
   import { Component } from "@angular/core";
-  import { FormControl, FormGroup } from "@angular/forms";
+  import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
+  import { BqInput } from "@beeq/angular/standalone";
 
   @Component({
-    selector: "app-root",
-    templateUrl: "./app.component.html",
+    selector: "app-profile-form",
+    standalone: true,
+    imports: [ReactiveFormsModule, BqInput],
+    templateUrl: "./profile-form.component.html",
   })
-  export class AppComponent {
+  export class ProfileFormComponent {
     profileForm = new FormGroup({
       givenName: new FormControl(""),
       familyName: new FormControl(""),
@@ -282,7 +295,7 @@ Reactive forms work well with BEEQ controls when you want explicit form state an
   }
   ```
 
-  ```html
+  ```html profile-form.component.html
   <form [formGroup]="profileForm">
     <bq-input formControlName="givenName" ngDefaultControl>
       <label slot="label">Given name</label>
@@ -295,70 +308,53 @@ Reactive forms work well with BEEQ controls when you want explicit form state an
   ```
 </CodeGroup>
 
-### Standalone imports work well for new Angular apps
+### Keep NgModule setup for older Angular apps
 
-If you are using Angular standalone components, import only the BEEQ components you need:
+If your Angular application is still module-based, BEEQ continues to support that flow through `BeeQModule`:
 
-```ts
-import { Component } from "@angular/core";
+```ts app.module.ts
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
 import { FormsModule } from "@angular/forms";
-import { BqButton, BqInput } from "@beeq/angular/standalone";
+import { BeeQModule } from "@beeq/angular";
 
-@Component({
-  selector: "app-newsletter",
-  standalone: true,
-  imports: [FormsModule, BqButton, BqInput],
-  template: `
-    <bq-input [(ngModel)]="email" ngDefaultControl>
-      <label slot="label">Email address</label>
-    </bq-input>
-    <bq-button (bqClick)="subscribe()">Subscribe</bq-button>
-  `,
+import { AppComponent } from "./app.component";
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, FormsModule, BeeQModule.forRoot()],
+  bootstrap: [AppComponent],
 })
-export class NewsletterComponent {
-  email = "";
-
-  subscribe() {
-    console.log("Subscribed:", this.email);
-  }
-}
+export class AppModule {}
 ```
 
 ## Complete example
 
-This example combines icons, `ngModel`, and event handling in a module-based Angular app.
+This example combines icons, `ngModel`, and event handling in a standalone Angular app.
 
 <CodeGroup>
-  ```ts app.module.ts
-  import { NgModule } from "@angular/core";
-  import { BrowserModule } from "@angular/platform-browser";
-  import { FormsModule } from "@angular/forms";
-  import { BeeQModule } from "@beeq/angular";
+  ```ts main.ts
+  import { bootstrapApplication } from "@angular/platform-browser";
 
-  import { AppComponent } from "./app.component";
+  import { AppComponent } from "./app/app.component";
 
-  @NgModule({
-    declarations: [AppComponent],
-    imports: [BrowserModule, FormsModule, BeeQModule.forRoot()],
-    bootstrap: [AppComponent],
-  })
-  export class AppModule {}
+  bootstrapApplication(AppComponent).catch((err) => console.error(err));
   ```
 
   ```ts app.component.ts
   import { Component } from "@angular/core";
+  import { FormsModule } from "@angular/forms";
+  import { BqButton, BqCard, BqIcon, BqInput } from "@beeq/angular/standalone";
 
   @Component({
     selector: "app-root",
+    standalone: true,
+    imports: [FormsModule, BqButton, BqCard, BqIcon, BqInput],
     templateUrl: "./app.component.html",
   })
   export class AppComponent {
     name = "";
     count = 0;
-
-    handleInput(value: string) {
-      this.name = value;
-    }
 
     increment() {
       this.count += 1;
@@ -401,7 +397,7 @@ This example combines icons, `ngModel`, and event handling in a module-based Ang
     - `setBasePath()` points to the same public URL where those files are available
   </Accordion>
   <Accordion title="Angular does not recognize the BEEQ components">
-    In module-based apps, confirm that `BeeQModule.forRoot()` is imported. In standalone apps, confirm that the specific BEEQ components are listed in the component `imports` array.
+    In standalone apps, confirm that the specific BEEQ components are listed in the component `imports` array. In module-based apps, confirm that `BeeQModule.forRoot()` is imported.
   </Accordion>
   <Accordion title="`ngModel` or `formControlName` is not working">
     Make sure the relevant Angular forms module is imported and add `ngDefaultControl` on the BEEQ form control you bind.
