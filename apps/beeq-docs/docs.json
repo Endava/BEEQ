@@ -78,9 +78,9 @@
           {
             "group": "Theming & customization",
             "pages": [
-              "theming/overview",
+              "theming/themes-and-modes",
               "theming/global-css-variables",
-              "theming/styles",
+              "theming/component-css-variables",
               "theming/custom-theme"
             ]
           }
