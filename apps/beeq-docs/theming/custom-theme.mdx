@@ -733,11 +733,12 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
         <div class="tab-panel active" id="home">
           <h1>Hello BEEQ(ers)!</h1>
           <p>
-            This is an example of how to integrate the
+            This example shows how to create and apply a custom theme to
             <a class="bq-link" href="https://beeq.design/" target="_blank" rel="noopener noreferrer">
-              BEEQ component library
+              BEEQ components
             </a>
-            with HTML/TypeScript while using Vite as the bundler.
+            using CSS variables. Try toggling the theme and switching between tabs to see how the
+            colors adapt across components and modes.
           </p>
           <section style="margin-block-start: var(--bq-spacing-l);">
             <h2>Buttons</h2>
@@ -785,22 +786,23 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
     </html>
     ```
 
-    ```jsx React icon="react" expandable
-    import { useState } from "react";
+    ```tsx React icon="react" expandable
+    import { useState, useEffect } from "react";
     import { BqTabGroup, BqTab, BqIcon, BqButton, BqInput } from "@beeq/react";
 
     // In main.tsx, apply the TechFlow theme (import styles.css separately):
     // document.documentElement.setAttribute('bq-theme', 'techflow');
-    // document.documentElement.setAttribute('bq-mode', 'dark');
 
     export function TechFlowDemo() {
       const [activeTab, setActiveTab] = useState("home");
       const [isDark, setIsDark] = useState(true);
 
+      useEffect(() => {
+        document.documentElement.setAttribute("bq-mode", isDark ? "dark" : "light");
+      }, [isDark]);
+
       function toggleTheme() {
-        const next = isDark ? "light" : "dark";
-        document.documentElement.setAttribute("bq-mode", next);
-        setIsDark(!isDark);
+        setIsDark((prev) => !prev);
       }
 
       return (
@@ -833,11 +835,12 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
             <section>
               <h1>Hello BEEQ(ers)!</h1>
               <p>
-                This is an example of how to integrate the{" "}
+                This example shows how to create and apply a custom theme to{" "}
                 <a className="bq-link" href="https://beeq.design/" target="_blank" rel="noopener noreferrer">
-                  BEEQ component library
+                  BEEQ components
                 </a>{" "}
-                with HTML/TypeScript while using Vite as the bundler.
+                using CSS variables. Try toggling the theme and switching between tabs to see how the
+                colors adapt across components and modes.
               </p>
               <section style={{ marginBlockStart: "var(--bq-spacing-l)" }}>
                 <h2>Buttons</h2>
@@ -870,13 +873,12 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
     ```
 
     ```ts Angular icon="angular" expandable
-    import { Component, inject, signal } from "@angular/core";
+    import { Component, effect, inject, signal } from "@angular/core";
     import { DOCUMENT } from "@angular/common";
     import { BqTabGroup, BqTab, BqIcon, BqButton, BqInput } from "@beeq/angular/standalone";
 
     // Apply the TechFlow theme in main.ts (import styles.css separately):
     // document.documentElement.setAttribute('bq-theme', 'techflow');
-    // document.documentElement.setAttribute('bq-mode', 'dark');
 
     @Component({
       standalone: true,
@@ -907,11 +909,12 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
           <section>
             <h1>Hello BEEQ(ers)!</h1>
             <p>
-              This is an example of how to integrate the
+              This example shows how to create and apply a custom theme to
               <a class="bq-link" href="https://beeq.design/" target="_blank" rel="noopener noreferrer">
-                BEEQ component library
+                BEEQ components
               </a>
-              with HTML/TypeScript while using Vite as the bundler.
+              using CSS variables. Try toggling the theme and switching between tabs to see how the
+              colors adapt across components and modes.
             </p>
             <section style="margin-block-start: var(--bq-spacing-l);">
               <h2>Buttons</h2>
@@ -944,37 +947,42 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
       readonly activeTab = signal('home');
       readonly isDark = signal(true);
 
+      constructor() {
+        effect(() => {
+          this.document.documentElement.setAttribute('bq-mode', this.isDark() ? 'dark' : 'light');
+        });
+      }
+
       onTabChange(event: CustomEvent<{ value: string }>) {
         this.activeTab.set(event.detail.value);
       }
 
       toggleTheme() {
-        const next = this.isDark() ? 'light' : 'dark';
-        this.document.documentElement.setAttribute('bq-mode', next);
-        this.isDark.set(!this.isDark());
+        this.isDark.update((prev) => !prev);
       }
     }
     ```
 
     ```vue Vue icon="vuejs" expandable
     <script setup lang="ts">
-      import { ref } from "vue";
+      import { ref, watchEffect } from "vue";
       import { BqTabGroup, BqTab, BqIcon, BqButton, BqInput } from "@beeq/vue";
 
       // In main.ts, apply the TechFlow theme (import styles.css separately):
       // document.documentElement.setAttribute('bq-theme', 'techflow');
-      // document.documentElement.setAttribute('bq-mode', 'dark');
 
       const activeTab = ref("home");
       const isDark = ref(true);
+
+      watchEffect(() => {
+        document.documentElement.setAttribute("bq-mode", isDark.value ? "dark" : "light");
+      });
 
       function onTabChange(event: CustomEvent<{ value: string }>) {
         activeTab.value = event.detail.value;
       }
 
       function toggleTheme() {
-        const next = isDark.value ? "light" : "dark";
-        document.documentElement.setAttribute("bq-mode", next);
         isDark.value = !isDark.value;
       }
     </script>
@@ -1004,11 +1012,12 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
       <section v-if="activeTab === 'home'">
         <h1>Hello BEEQ(ers)!</h1>
         <p>
-          This is an example of how to integrate the
+          This example shows how to create and apply a custom theme to
           <a class="bq-link" href="https://beeq.design/" target="_blank" rel="noopener noreferrer">
-            BEEQ component library
+            BEEQ components
           </a>
-          with HTML/TypeScript while using Vite as the bundler.
+          using CSS variables. Try toggling the theme and switching between tabs to see how the
+          colors adapt across components and modes.
         </p>
         <section style="margin-block-start: var(--bq-spacing-l);">
           <h2>Buttons</h2>
