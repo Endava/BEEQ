@@ -10,6 +10,10 @@ body {
   font-family: var(--bq-font-family);
 }
 
+body.bq-body--scroll-lock {
+  overflow: unset !important;
+}
+
 body,
 .prose {
   color: var(--bq-text--primary) !important;
@@ -17,6 +21,7 @@ body,
   font-size: var(--bq-font-size--m) !important;
   max-width: none; /* Allow full width for better readability in docs */
 }
+
 
 /* ---------------------------------- Logo ---------------------------------- */
 
@@ -151,9 +156,15 @@ body,
   }
 }
 
-/* --------------- Small fixes to BEEQ components in the docs --------------- */
+/* ---- Components fixes only for docs, not to be applied in the library. --- */
 
-bq-dropdown::part(panel) {
-  /* Ensure dropdown panels appear above other content in the docs */
-  --bq-panel-z-index: 100;
+bq-dropdown::part(panel),
+bq-panel::part(panel),
+bq-select::part(panel),
+bq-date-picker::part(panel) {
+  z-index: 9999;
+}
+
+bq-tooltip::part(panel) {
+  position: absolute;
 }

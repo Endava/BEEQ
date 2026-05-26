@@ -1,0 +1,853 @@
+---
+title: Checkbox
+description: "Checkboxes let people select one or more independent options, or confirm a single yes-or-no choice."
+---
+
+import { CardTile } from "/snippets/CardTile.jsx";
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Checkbox component overview">
+  <img className="block dark:hidden" src="/components/images/checkbox/checkbox-overview-light.svg" alt="BEEQ Checkbox component overview" />
+  <img className="hidden dark:block" src="/components/images/checkbox/checkbox-overview-dark.svg" alt="BEEQ Checkbox component overview" />
+</Frame>
+
+Checkboxes help people make independent selections, confirm agreement, or control optional settings. Use them when more than one option can be selected at the same time, or when a single opt-in needs an explicit checked state.
+
+<Note>
+  Use a clear visible label for every checkbox. When several checkboxes belong to the same decision, group them under a shared descriptive heading.
+</Note>
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use checkboxes when
+    </span>
+    - People can select one, many, or none from a set of options
+    - A setting or preference needs a simple on or off choice
+    - A form needs explicit confirmation, such as accepting terms
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use checkboxes when
+    </span>
+    - The user must choose exactly one option from a list
+    - An action should happen immediately instead of storing a selected state
+    - The label is so long or ambiguous that the yes-or-no meaning becomes unclear
+  </Card>
+</CardGroup>
+
+## Patterns
+
+<CardGroup cols={2}>
+  <CardTile
+    title="Single"
+    imageLightSrc="/components/images/checkbox/checkbox-pattern-single-light.svg"
+    imageDarkSrc="/components/images/checkbox/checkbox-pattern-single-dark.svg"
+  >
+    Use a single checkbox for one independent yes-or-no decision, such as subscribing to updates or accepting terms.
+  </CardTile>
+  <CardTile
+    title="Group"
+    imageLightSrc="/components/images/checkbox/checkbox-pattern-group-light.svg"
+    imageDarkSrc="/components/images/checkbox/checkbox-pattern-group-dark.svg"
+  >
+    Use a checkbox group when several related options can be selected together and none of them are mutually exclusive.
+  </CardTile>
+  <CardTile
+    title="Nesting"
+    imageLightSrc="/components/images/checkbox/checkbox-pattern-nesting-light.svg"
+    imageDarkSrc="/components/images/checkbox/checkbox-pattern-nesting-dark.svg"
+  >
+    Use a parent checkbox when one control should select or clear a related set of child checkboxes.
+  </CardTile>
+  <CardTile
+    title="Indeterminate state"
+    imageLightSrc="/components/images/checkbox/checkbox-pattern-indeterminate-light.svg"
+    imageDarkSrc="/components/images/checkbox/checkbox-pattern-indeterminate-dark.svg"
+  >
+    Use the indeterminate state when a parent checkbox needs to show that only some child options are selected.
+  </CardTile>
+</CardGroup>
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Checkbox component anatomy">
+  <img className="block dark:hidden" src="/components/images/checkbox/checkbox-anatomy-light.svg" alt="BEEQ Checkbox component anatomy" />
+  <img className="hidden dark:block" src="/components/images/checkbox/checkbox-anatomy-dark.svg" alt="BEEQ Checkbox component anatomy" />
+</Frame>
+
+A checkbox is composed of a visible label and a square control that can appear unselected, selected, or indeterminate depending on the current state.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Label | The text that explains the option or setting and makes the checked state understandable |
+| **2** | Checkbox: default | The square control in its unchecked state before selection |
+| **3** | Checkbox: active | The selected or indeterminate state that confirms the option is enabled or partially selected |
+
+## Design guidelines
+
+Use checkbox labels and grouping patterns that make the selected state easy to understand before people interact with the control.
+
+<CardGroup cols={2}>
+  <CardTile title="Write labels as outcomes">
+    Write the label so the checked state reads like a clear statement, especially in settings and consent flows.
+  </CardTile>
+  <CardTile title="Make hierarchy obvious">
+    When a parent checkbox controls child options, make the relationship visually clear and keep the parent state synchronized.
+  </CardTile>
+</CardGroup>
+
+<Steps>
+  <Step title="Start with the key meaning">
+    Put the important words at the beginning of the label so people can scan the list quickly.
+  </Step>
+  <Step title="Group related choices">
+    Use a shared heading or fieldset when several checkboxes belong to one decision or category.
+  </Step>
+  <Step title="Use indeterminate as a summary">
+    Reserve the indeterminate state for parent checkboxes that represent a partially selected group.
+  </Step>
+</Steps>
+
+<Note>
+  If users must choose exactly one option, use [Radio](/components/radio) instead of adapting a checkbox pattern to a single-select task.
+</Note>
+
+## Usage
+
+### Default
+
+Use the default checkbox for a straightforward binary choice with a short label.
+
+<CodeLivePreview code={`
+  <bq-checkbox name="updates" value="updates">
+    Send me product updates
+  </bq-checkbox>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-checkbox name="updates" value="updates">
+      Send me product updates
+    </bq-checkbox>
+    ```
+
+    ```jsx React icon="react"
+    import { BqCheckbox } from "@beeq/react";
+
+    <BqCheckbox name="updates" value="updates">
+      Send me product updates
+    </BqCheckbox>
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqCheckbox } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqCheckbox],
+      template: `
+        <bq-checkbox name="updates" value="updates">
+          Send me product updates
+        </bq-checkbox>
+      `
+    })
+    export class DefaultCheckboxComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqCheckbox } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqCheckbox name="updates" value="updates">
+        Send me product updates
+      </BqCheckbox>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  You do not need to set any prop that already uses its default value.
+</Tip>
+
+### Long label
+
+Use a longer label when people need more context before deciding, but keep the core meaning easy to scan at the beginning of the sentence.
+
+<CodeLivePreview code={`
+  <style>
+    .checkbox-long {
+      max-inline-size: 18rem;
+    }
+  </style>
+
+  <bq-checkbox class="checkbox-long" name="terms" value="terms">
+    By clicking here, I state that I have read and understood the terms and conditions.
+  </bq-checkbox>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-checkbox name="terms" value="terms">
+      By clicking here, I state that I have read and understood the terms and conditions.
+    </bq-checkbox>
+    ```
+
+    ```jsx React icon="react"
+    import { BqCheckbox } from "@beeq/react";
+
+    <BqCheckbox name="terms" value="terms">
+      By clicking here, I state that I have read and understood the terms and conditions.
+    </BqCheckbox>
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqCheckbox } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqCheckbox],
+      template: `
+        <bq-checkbox name="terms" value="terms">
+          By clicking here, I state that I have read and understood the terms and conditions.
+        </bq-checkbox>
+      `
+    })
+    export class LongLabelCheckboxComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqCheckbox } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqCheckbox name="terms" value="terms">
+        By clicking here, I state that I have read and understood the terms and conditions.
+      </BqCheckbox>
+    </template>
+    ```
+</CodeGroup>
+</CodeLivePreview>
+
+## Options
+
+### Background on hover
+
+Use `background-on-hover` when the surrounding layout benefits from a larger perceived hit area and stronger hover feedback.
+
+<CodeLivePreview code={`
+  <bq-checkbox name="notifications" value="notifications" background-on-hover>
+    Email me about account activity
+  </bq-checkbox>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-checkbox name="notifications" value="notifications" background-on-hover>
+      Email me about account activity
+    </bq-checkbox>
+    ```
+
+    ```jsx React icon="react"
+    import { BqCheckbox } from "@beeq/react";
+
+    <BqCheckbox name="notifications" value="notifications" backgroundOnHover>
+      Email me about account activity
+    </BqCheckbox>
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqCheckbox } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqCheckbox],
+      template: `
+        <bq-checkbox name="notifications" value="notifications" background-on-hover>
+          Email me about account activity
+        </bq-checkbox>
+      `
+    })
+    export class BackgroundOnHoverCheckboxComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqCheckbox } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqCheckbox name="notifications" value="notifications" backgroundOnHover>
+        Email me about account activity
+      </BqCheckbox>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Checked and disabled
+
+Use `checked` for a preselected default, and `disabled` when the option is currently unavailable or not editable in the current context.
+
+<CodeLivePreview code={`
+  <bq-checkbox checked name="newsletter" value="newsletter">
+    Subscribe to the newsletter
+  </bq-checkbox>
+  <bq-checkbox disabled name="archived" value="archived">
+    Archived option
+  </bq-checkbox>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-checkbox checked name="newsletter" value="newsletter">
+      Subscribe to the newsletter
+    </bq-checkbox>
+    <bq-checkbox disabled name="archived" value="archived">
+      Archived option
+    </bq-checkbox>
+    ```
+
+    ```jsx React icon="react"
+    import { BqCheckbox } from "@beeq/react";
+
+    <BqCheckbox checked name="newsletter" value="newsletter">
+      Subscribe to the newsletter
+    </BqCheckbox>
+    <BqCheckbox disabled name="archived" value="archived">
+      Archived option
+    </BqCheckbox>
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqCheckbox } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqCheckbox],
+      template: `
+        <bq-checkbox checked name="newsletter" value="newsletter">
+          Subscribe to the newsletter
+        </bq-checkbox>
+        <bq-checkbox disabled name="archived" value="archived">
+          Archived option
+        </bq-checkbox>
+      `
+    })
+    export class CheckedDisabledCheckboxComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqCheckbox } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqCheckbox checked name="newsletter" value="newsletter">
+        Subscribe to the newsletter
+      </BqCheckbox>
+      <BqCheckbox disabled name="archived" value="archived">
+        Archived option
+      </BqCheckbox>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Indeterminate group
+
+Use the indeterminate state when a parent checkbox controls a related set of child options and only some of them are selected.
+
+<CodeLivePreview code={`
+  <style>
+    .checkbox-group__children {
+      display: flex;
+      flex-direction: column;
+      gap: var(--bq-spacing-xs2);
+      margin-inline-start: 1.5rem;
+    }
+  </style>
+
+  <div>
+    <bq-checkbox name="all-interests" value="all" background-on-hover>
+      Interests
+    </bq-checkbox>
+
+    <div class="checkbox-group__children">
+      <bq-checkbox checked name="interest" value="music" background-on-hover>
+        Music
+      </bq-checkbox>
+      <bq-checkbox name="interest" value="travel" background-on-hover>
+        Travel
+      </bq-checkbox>
+      <bq-checkbox checked name="interest" value="sport" background-on-hover>
+        Sport
+      </bq-checkbox>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      customElements.whenDefined('bq-checkbox').then(() => {
+        const checkboxGroup = previewRoot?.querySelector('div');
+        const allInterestCheckbox = checkboxGroup?.querySelector('bq-checkbox[name="all-interests"]');
+        const interestCheckboxes = Array.from(checkboxGroup?.querySelectorAll('bq-checkbox[name="interest"]') ?? []);
+
+        if (!allInterestCheckbox || !interestCheckboxes.length) return;
+
+        const syncParentCheckbox = () => {
+          const checkedCount = interestCheckboxes.filter((checkbox) => checkbox.checked).length;
+
+          allInterestCheckbox.indeterminate =
+            checkedCount > 0 && checkedCount < interestCheckboxes.length;
+          allInterestCheckbox.checked = checkedCount === interestCheckboxes.length;
+        };
+
+        const syncChildrenCheckboxes = (event) => {
+          interestCheckboxes.forEach((checkbox) => {
+            checkbox.checked = event.detail.checked;
+          });
+          allInterestCheckbox.indeterminate = false;
+        };
+
+        syncParentCheckbox();
+
+        allInterestCheckbox.addEventListener('bqChange', syncChildrenCheckboxes);
+        interestCheckboxes.forEach((checkbox) => {
+          checkbox.addEventListener('bqChange', syncParentCheckbox);
+        });
+      });
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <div>
+      <bq-checkbox name="all-interests" value="all" background-on-hover>
+        Interests
+      </bq-checkbox>
+
+      <div class="checkbox-group__children">
+        <bq-checkbox checked name="interest" value="music" background-on-hover>
+          Music
+        </bq-checkbox>
+        <bq-checkbox name="interest" value="travel" background-on-hover>
+          Travel
+        </bq-checkbox>
+        <bq-checkbox checked name="interest" value="sport" background-on-hover>
+          Sport
+        </bq-checkbox>
+      </div>
+    </div>
+    ```
+
+    ```js JavaScript icon="js" expandable
+    const allCheckboxChange = (event) => {
+      const interestCheckboxes = Array.from(
+        document.querySelectorAll('bq-checkbox[name="interest"]'),
+      );
+
+      interestCheckboxes.forEach((interestCheckbox) => {
+        interestCheckbox.checked = event.detail.checked;
+      });
+    };
+
+    const interestCheckboxChange = () => {
+      const allInterestCheckbox = document.querySelector('bq-checkbox[name="all-interests"]');
+      if (!allInterestCheckbox) return;
+
+      const interestCheckboxes = document.querySelectorAll('bq-checkbox[name="interest"]');
+      const onlyChecked = document.querySelectorAll(
+        'bq-checkbox[name="interest"][checked]',
+      ).length;
+
+      allInterestCheckbox.indeterminate =
+        onlyChecked > 0 && onlyChecked < interestCheckboxes.length;
+      allInterestCheckbox.checked = onlyChecked === interestCheckboxes.length;
+    };
+
+    const allInterestCheckbox = document.querySelector('bq-checkbox[name="all-interests"]');
+    const interestCheckboxes = Array.from(
+      document.querySelectorAll('bq-checkbox[name="interest"]'),
+    );
+
+    allInterestCheckbox?.addEventListener('bqChange', allCheckboxChange);
+    interestCheckboxes.forEach((checkbox) => {
+      checkbox.addEventListener('bqChange', interestCheckboxChange);
+    });
+
+    interestCheckboxChange();
+    ```
+
+    ```jsx React icon="react" expandable
+    import { useState } from "react";
+    import { BqCheckbox } from "@beeq/react";
+
+    export function IndeterminateCheckboxGroup() {
+      const [interests, setInterests] = useState({
+        music: true,
+        travel: false,
+        sport: true,
+      });
+
+      const values = Object.values(interests);
+      const allChecked = values.every(Boolean);
+      const isIndeterminate = values.some(Boolean) && !allChecked;
+
+      const setAllInterests = (checked) => {
+        setInterests({
+          music: checked,
+          travel: checked,
+          sport: checked,
+        });
+      };
+
+      return (
+        <div>
+          <BqCheckbox
+            backgroundOnHover
+            checked={allChecked}
+            indeterminate={isIndeterminate}
+            name="all-interests"
+            value="all"
+            onBqChange={(event) => setAllInterests(event.detail.checked)}
+          >
+            Interests
+          </BqCheckbox>
+
+          <div className="checkbox-group__children">
+            <BqCheckbox
+              backgroundOnHover
+              checked={interests.music}
+              name="interest"
+              value="music"
+              onBqChange={(event) =>
+                setInterests((current) => ({ ...current, music: event.detail.checked }))
+              }
+            >
+              Music
+            </BqCheckbox>
+            <BqCheckbox
+              backgroundOnHover
+              checked={interests.travel}
+              name="interest"
+              value="travel"
+              onBqChange={(event) =>
+                setInterests((current) => ({ ...current, travel: event.detail.checked }))
+              }
+            >
+              Travel
+            </BqCheckbox>
+            <BqCheckbox
+              backgroundOnHover
+              checked={interests.sport}
+              name="interest"
+              value="sport"
+              onBqChange={(event) =>
+                setInterests((current) => ({ ...current, sport: event.detail.checked }))
+              }
+            >
+              Sport
+            </BqCheckbox>
+          </div>
+        </div>
+      );
+    }
+    ```
+
+    ```ts Angular icon="angular" expandable
+    import { Component } from "@angular/core";
+    import { BqCheckbox } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqCheckbox],
+      template: `
+        <div>
+          <bq-checkbox
+            background-on-hover
+            [checked]="allChecked"
+            [indeterminate]="isIndeterminate"
+            name="all-interests"
+            value="all"
+            (bqChange)="setAllInterests($event.detail.checked)"
+          >
+            Interests
+          </bq-checkbox>
+
+          <div class="checkbox-group__children">
+            <bq-checkbox
+              background-on-hover
+              [checked]="interests.music"
+              name="interest"
+              value="music"
+              (bqChange)="setInterest('music', $event.detail.checked)"
+            >
+              Music
+            </bq-checkbox>
+            <bq-checkbox
+              background-on-hover
+              [checked]="interests.travel"
+              name="interest"
+              value="travel"
+              (bqChange)="setInterest('travel', $event.detail.checked)"
+            >
+              Travel
+            </bq-checkbox>
+            <bq-checkbox
+              background-on-hover
+              [checked]="interests.sport"
+              name="interest"
+              value="sport"
+              (bqChange)="setInterest('sport', $event.detail.checked)"
+            >
+              Sport
+            </bq-checkbox>
+          </div>
+        </div>
+      `,
+    })
+    export class IndeterminateCheckboxGroupComponent {
+      interests = { music: true, travel: false, sport: true };
+
+      get allChecked() {
+        return Object.values(this.interests).every(Boolean);
+      }
+
+      get isIndeterminate() {
+        const values = Object.values(this.interests);
+        return values.some(Boolean) && !values.every(Boolean);
+      }
+
+      setAllInterests(checked: boolean) {
+        this.interests = { music: checked, travel: checked, sport: checked };
+      }
+
+      setInterest(key: 'music' | 'travel' | 'sport', checked: boolean) {
+        this.interests = { ...this.interests, [key]: checked };
+      }
+    }
+    ```
+
+    ```vue Vue icon="vuejs" expandable
+    <script setup lang="ts">
+    import { computed, reactive } from "vue";
+    import { BqCheckbox } from "@beeq/vue";
+
+    const interests = reactive({
+      music: true,
+      travel: false,
+      sport: true,
+    });
+
+    const values = computed(() => Object.values(interests));
+    const allChecked = computed(() => values.value.every(Boolean));
+    const isIndeterminate = computed(() => values.value.some(Boolean) && !allChecked.value);
+
+    const setAllInterests = (checked: boolean) => {
+      interests.music = checked;
+      interests.travel = checked;
+      interests.sport = checked;
+    };
+    </script>
+
+    <template>
+      <div>
+        <BqCheckbox
+          backgroundOnHover
+          :checked="allChecked"
+          :indeterminate="isIndeterminate"
+          name="all-interests"
+          value="all"
+          @bqChange="setAllInterests($event.detail.checked)"
+        >
+          Interests
+        </BqCheckbox>
+
+        <div class="checkbox-group__children">
+          <BqCheckbox
+            backgroundOnHover
+            :checked="interests.music"
+            name="interest"
+            value="music"
+            @bqChange="interests.music = $event.detail.checked"
+          >
+            Music
+          </BqCheckbox>
+          <BqCheckbox
+            backgroundOnHover
+            :checked="interests.travel"
+            name="interest"
+            value="travel"
+            @bqChange="interests.travel = $event.detail.checked"
+          >
+            Travel
+          </BqCheckbox>
+          <BqCheckbox
+            backgroundOnHover
+            :checked="interests.sport"
+            name="interest"
+            value="sport"
+            @bqChange="interests.sport = $event.detail.checked"
+          >
+            Sport
+          </BqCheckbox>
+        </div>
+      </div>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Warning>
+  Indeterminate is a visual summary state, not a third submitted form value. Keep the parent and child checkboxes synchronized through event handling.
+</Warning>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Write checkbox labels as clear statements, not questions, so people understand the resulting selected state.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not use checkboxes when users must choose only one option. Use [Radio](/components/radio) instead.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Align long labels from the top so wrapped text stays visually connected to the checkbox control.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not center long wrapped labels vertically against the control, because that weakens scanability.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Group related checkboxes under a shared heading when they belong to the same decision.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not rely on unchecked-by-default choices to imply consent when legal or high-stakes confirmation is required.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use the indeterminate state only when it accurately summarizes a partially selected group of child options.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not present indeterminate as a standalone third choice, because it is only meaningful as a group summary.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+- **Built-in native checkbox semantics** — the component uses a native `<input type="checkbox">`, so checked, unchecked, disabled, and required states follow standard browser and assistive technology behavior.
+- **Built-in label association** — the internal input and the slotted text are wrapped in the same `<label>`, so clicking the label toggles the checkbox without extra wiring.
+- **Built-in focus support** — the shadow root delegates focus to the native input, and the component emits `bqFocus` and `bqBlur` when that input gains or loses focus.
+- **Group related choices semantically** — when multiple checkboxes form a set, provide a shared heading or a `<fieldset>` with an accessible label.
+- **Use indeterminate carefully** — it should summarize a partial group selection, not replace clear child options.
+- **Do not rely on color alone** — the checked mark, focus treatment, and label text should all help communicate meaning.
+
+## API reference
+
+### Properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `backgroundOnHover` | `background-on-hover` | If `true`, the checkbox displays a background on hover | `boolean` | `false` |
+| `checked` | `checked` | If `true`, the checkbox is checked | `boolean` | `undefined` |
+| `disabled` | `disabled` | If `true`, the checkbox is disabled | `boolean` | `false` |
+| `formId` | `form-id` | The form ID that the checkbox is associated with | `string` | `undefined` |
+| `formValidationMessage` | `form-validation-message` | The native form validation message | `string` | `undefined` |
+| `indeterminate` | `indeterminate` | A state that is neither checked nor unchecked | `boolean` | `false` |
+| `name` | `name` | Name of the HTML form control submitted with the form | `string` | `undefined` |
+| `required` | `required` | If `true`, the checkbox must be selected before form submission | `boolean` | `undefined` |
+| `value` | `value` | The submitted value for the checkbox | `string` | `undefined` |
+
+### Events
+
+| Event | Description | Type |
+|---|---|---|
+| `bqBlur` | Fired when the checkbox loses focus | `CustomEvent<HTMLBqCheckboxElement>` |
+| `bqChange` | Fired when the checkbox state changes | `CustomEvent<{ checked: boolean; }>` |
+| `bqFocus` | Fired when the checkbox receives focus | `CustomEvent<HTMLBqCheckboxElement>` |
+
+### Methods
+
+| Method | Description | Returns |
+|---|---|---|
+| `vBlur()` | Removes focus from the native input element | `Promise<void>` |
+| `vClick()` | Simulates a click on the native input element | `Promise<void>` |
+| `vFocus()` | Sets focus on the native input element | `Promise<void>` |
+
+### Slots
+
+| Slot | Description |
+|---|---|
+| *(default)* | The visible label content for the checkbox |
+
+### Shadow parts
+
+| Part | Description |
+|---|---|
+| `base` | The component's internal wrapper |
+| `control` | The container that holds the custom checkbox |
+| `input` | The native `<input type="checkbox">` used under the hood |
+| `checkbox` | The element that renders the checked or indeterminate state |
+| `label` | The element that holds the text content |
+
+### CSS custom properties
+
+| Variable | Description | Default |
+|---|---|---|
+| `--bq-checkbox--size` | Checkbox size | `24px` |
+| `--bq-checkbox--border-radius` | Checkbox border radius | `var(--bq-radius--xs)` |
+| `--bq-checkbox--border-width` | Checkbox border width | `var(--bq-stroke-m)` |
+
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-checkbox--default">
+    Explore checkbox examples and states in Storybook
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/checkbox">
+    View the component source on GitHub
+  </Card>
+</CardGroup>

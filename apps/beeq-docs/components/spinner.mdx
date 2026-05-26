@@ -1,0 +1,498 @@
+---
+title: Spinner
+description: "Spinners communicate that work is in progress when content is loading, a request is processing, or the exact completion time is unknown."
+---
+
+import { CardTile } from "/snippets/CardTile.jsx";
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Spinner component overview">
+  <img className="block dark:hidden" src="/components/images/spinner/spinner-overview-light.svg" alt="BEEQ Spinner component overview" />
+  <img className="hidden dark:block" src="/components/images/spinner/spinner-overview-dark.svg" alt="BEEQ Spinner component overview" />
+</Frame>
+
+Spinners reassure people that the system is still working during loading, submitting, syncing, or processing states. Use them when work is active but the exact progress cannot be measured reliably.
+
+<Note>
+  Show a spinner only when the wait is noticeable, typically longer than one second. If progress can be measured, prefer a [progress bar](/components/progress) instead.
+</Note>
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use spinners when
+    </span>
+    - The system is actively loading, submitting, or processing
+    - The wait is long enough that users may wonder whether anything is happening
+    - The duration is unknown or cannot be expressed reliably as a percentage
+    - You need compact feedback inside a card, panel, dialog, or page section
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use spinners when
+    </span>
+    - The task finishes almost instantly and no feedback is needed
+    - Progress can be measured precisely and should be communicated with a progress bar
+    - Several unrelated areas on the same page would spin at once and compete for attention
+    - The animation would be decorative rather than meaningful status feedback
+  </Card>
+</CardGroup>
+
+## Patterns
+
+<CardGroup cols={3}>
+  <Card title="No label">
+    Use a spinner without text only when the surrounding UI already makes the loading context obvious.
+  </Card>
+  <Card title="Label below">
+    A strong default for standalone loading states because the message adds context without widening the layout.
+  </Card>
+  <Card title="Inline label">
+    Use `text-position="right"` or `text-position="left"` when the spinner needs to fit into a horizontal layout.
+  </Card>
+  <Card title="Label above">
+    Useful when the message should appear first in the reading order or fit a stacked composition.
+  </Card>
+  <Card title="Size variants">
+    Match the spinner size to the container: `small` for tight spaces, `medium` for most cases, `large` for prominent loading areas.
+  </Card>
+  <Card title="Custom icon">
+    Override the default loader using the `icon` slot when you need a different branded or contextual treatment.
+  </Card>
+</CardGroup>
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Spinner component anatomy">
+  <img className="block dark:hidden" src="/components/images/spinner/spinner-anatomy-light.svg" alt="BEEQ Spinner component anatomy" />
+  <img className="hidden dark:block" src="/components/images/spinner/spinner-anatomy-dark.svg" alt="BEEQ Spinner component anatomy" />
+</Frame>
+
+The spinner combines a rotating circular indicator with an optional label. Keep the message short and specific so people understand what is happening without reading a full sentence.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Spinner icon | The animated circular loader that signals ongoing activity |
+| **2** | Progress | The emphasized segment that creates the motion cue and sense of rotation |
+| **3** | Label | Optional text that clarifies what is loading, submitting, or processing |
+
+## Design guidelines
+
+Choose the spinner treatment that best explains the waiting state without adding noise.
+
+<CardGroup cols={2}>
+  <CardTile
+    title="Add a label when context is unclear"
+    imageLightSrc="/components/images/spinner/spinner-label-guidance-light.svg"
+    imageDarkSrc="/components/images/spinner/spinner-label-guidance-dark.svg"
+  >
+    Use a short loading message when the spinner appears away from the triggering action or when the wait may last several seconds.
+  </CardTile>
+  <CardTile
+    title="Match the size to the surface"
+    imageLightSrc="/components/images/spinner/spinner-size-guidance-light.svg"
+    imageDarkSrc="/components/images/spinner/spinner-size-guidance-dark.svg"
+  >
+    Keep `small` for compact containers, `medium` for most component-level states, and `large` for prominent or page-level loading areas.
+  </CardTile>
+</CardGroup>
+
+<Steps>
+  <Step title="Decide whether text is needed">
+    Omit the label only when nearby UI already explains what is loading. Otherwise, add a short task-oriented message.
+  </Step>
+  <Step title="Choose the position">
+    Use `below` as the default for standalone loading states. Use `left` or `right` when the spinner needs to fit into a horizontal composition.
+  </Step>
+  <Step title="Keep the message short">
+    Prefer specific labels such as "Loading invoices" or "Syncing changes" instead of long descriptions.
+  </Step>
+</Steps>
+
+<Note>
+  If you replace the default loader with the `icon` slot, you are also replacing the built-in loading status element. Make sure the surrounding UI still communicates that work is in progress.
+</Note>
+
+## Usage
+
+### Default
+
+Use the default spinner when the surrounding UI already makes the loading context obvious and you do not need a custom size or icon.
+
+<CodeLivePreview code={`
+  <bq-spinner></bq-spinner>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-spinner></bq-spinner>
+    ```
+
+    ```jsx React icon="react"
+    import { BqSpinner } from "@beeq/react";
+
+    <BqSpinner />
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSpinner } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqSpinner],
+      template: `<bq-spinner></bq-spinner>`
+    })
+    export class DefaultSpinnerComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqSpinner } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSpinner />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+<Tip>
+  `size="medium"` is the default, so you only need to set the `size` property when you want a `small` or `large` spinner.
+</Tip>
+
+## Options
+
+### Small
+
+Use the small spinner when space is limited and the loading state belongs to a compact surface.
+
+<CodeLivePreview code={`
+  <bq-spinner size="small"></bq-spinner>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-spinner size="small"></bq-spinner>
+    ```
+
+    ```jsx React icon="react"
+    import { BqSpinner } from "@beeq/react";
+
+    <BqSpinner size="small" />
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSpinner } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqSpinner],
+      template: `<bq-spinner size="small"></bq-spinner>`
+    })
+    export class SmallSpinnerComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqSpinner } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSpinner size="small" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Large
+
+Use `size="large"` for prominent loading states such as page-level waits, major panels, or longer-running tasks that need stronger visual emphasis.
+
+<CodeLivePreview code={`
+  <bq-spinner size="large"></bq-spinner>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-spinner size="large"></bq-spinner>
+    ```
+
+    ```jsx React icon="react"
+    import { BqSpinner } from "@beeq/react";
+
+    <BqSpinner size="large" />
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSpinner } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqSpinner],
+      template: `<bq-spinner size="large"></bq-spinner>`
+    })
+    export class LargeSpinnerComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqSpinner } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSpinner size="large" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### With label
+
+Use `text-position` to control where the loading message appears relative to the spinner icon.
+
+<CodeLivePreview code={`
+  <style>
+    :host {
+      gap: var(--bq-spacing-l) !important;
+    }
+  </style>
+
+  <bq-spinner text-position="below">Loading invoices...</bq-spinner>
+  <bq-spinner text-position="above">Syncing changes...</bq-spinner>
+  <bq-spinner text-position="right">Submitting...</bq-spinner>
+  <bq-spinner text-position="left">Processing...</bq-spinner>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-spinner text-position="below">Loading invoices...</bq-spinner>
+    <bq-spinner text-position="above">Syncing changes...</bq-spinner>
+    <bq-spinner text-position="right">Submitting...</bq-spinner>
+    <bq-spinner text-position="left">Processing...</bq-spinner>
+    ```
+
+    ```jsx React icon="react"
+    import { BqSpinner } from "@beeq/react";
+
+    <>
+      <BqSpinner textPosition="below">Loading invoices...</BqSpinner>
+      <BqSpinner textPosition="above">Syncing changes...</BqSpinner>
+      <BqSpinner textPosition="right">Submitting...</BqSpinner>
+      <BqSpinner textPosition="left">Processing...</BqSpinner>
+    </>
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSpinner } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqSpinner],
+      template: `
+        <bq-spinner text-position="below">Loading invoices...</bq-spinner>
+        <bq-spinner text-position="above">Syncing changes...</bq-spinner>
+        <bq-spinner text-position="right">Submitting...</bq-spinner>
+        <bq-spinner text-position="left">Processing...</bq-spinner>
+      `
+    })
+    export class LabelledSpinnerComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqSpinner } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSpinner textPosition="below">Loading invoices...</BqSpinner>
+      <BqSpinner textPosition="above">Syncing changes...</BqSpinner>
+      <BqSpinner textPosition="right">Submitting...</BqSpinner>
+      <BqSpinner textPosition="left">Processing...</BqSpinner>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Custom icon
+
+Use the `icon` slot when you need a different spinner icon treatment. Make sure the surrounding context still communicates that work is in progress.
+
+<CodeLivePreview code={`
+  <bq-spinner size="large">
+    <bq-icon name="spinner-gap-bold" slot="icon"></bq-icon>
+  </bq-spinner>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-spinner size="large">
+      <bq-icon name="spinner-gap-bold" slot="icon"></bq-icon>
+    </bq-spinner>
+    ```
+
+    ```jsx React icon="react"
+    import { BqIcon, BqSpinner } from "@beeq/react";
+
+    <BqSpinner size="large">
+      <BqIcon name="spinner-gap-bold" slot="icon" />
+    </BqSpinner>
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqSpinner } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqSpinner],
+      template: `
+        <bq-spinner size="large">
+          <bq-icon name="spinner-gap-bold" slot="icon"></bq-icon>
+        </bq-spinner>
+      `
+    })
+    export class CustomIconSpinnerComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqIcon, BqSpinner } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSpinner size="large">
+        <BqIcon name="spinner-gap-bold" slot="icon" />
+      </BqSpinner>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Keep the message short and specific, such as "Loading invoices" or "Submitting form."
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not use a spinner when the system can show real progress or an immediate result instead.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Match the size to the surface: `small` for compact containers, `medium` for standard sections, and `large` for prominent loading states.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not place multiple unrelated spinners on the same page unless each one represents a clearly separate loading region.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Add a visible label when the spinner appears away from the action that triggered it, or when the wait may last several seconds.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not use a spinner as a page-level blocker for instant operations. It creates unnecessary friction.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use `text-position="below"` for standalone loading states where vertical layout is natural.
+  </Card>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Do not omit a label in contexts where the surrounding UI does not already make the loading operation obvious.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+- **Built-in loading indicator** — the default spinner includes a status element with an accessible loading label that assistive technology can announce. When `textPosition` is set to any value other than `"none"`, the visible label text is also available to screen readers. If you replace the default loader with the `icon` slot, test that the loading state is still communicated clearly in context.
+- **Use meaningful status text when needed**: add a short visible label such as "Loading results..." when the spinner appears away from the triggering action or when the wait may last several seconds.
+- **Keep the message task-oriented**: choose labels that describe the current action, such as "Syncing changes" or "Submitting form", instead of generic filler.
+- **Be careful with motion changes**: setting `animation={false}` can make an active process look stalled, so only stop the animation when another clear status treatment explains that work is still ongoing.
+- **Avoid competing announcements**: too many independent loading indicators can create noise for screen reader users and make it harder to understand which region is updating.
+
+## API reference
+
+### Properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `animation` | `animation` | If `false`, the animation on the icon element will be stopped | `boolean` | `true` |
+| `size` | `size` | Defines the size of the icon element displayed | `"small"` \| `"medium"` \| `"large"` | `"medium"` |
+| `textPosition` | `text-position` | Defines the position of the label text | `"none"` \| `"left"` \| `"right"` \| `"above"` \| `"below"` | `"none"` |
+
+### Slots
+
+| Slot | Description |
+|---|---|
+| *(default)* | The label or loading message content |
+| `icon` | A custom icon that replaces the default spinner loader |
+
+### Shadow parts
+
+| Part | Description |
+|---|---|
+| `base` | The wrapper container used under the hood |
+| `icon` | The `<svg>` icon element used to spin/animate |
+| `custom-icon` | The `<span>` element that wraps slotted custom icon content |
+| `text` | The `<span>` element that renders the label text |
+
+### CSS custom properties
+
+<Expandable title="CSS variables" defaultOpen={true}>
+  | Variable | Description | Default |
+  |---|---|---|
+  | `--bq-spinner--color` | Spinner color | `var(--bq-ui--brand)` |
+  | `--bq-spinner--size-large` | Spinner large size | `56px` |
+  | `--bq-spinner--size-medium` | Spinner medium size | `48px` |
+  | `--bq-spinner--size-small` | Spinner small size | `32px` |
+  | `--bq-spinner--large-text-fontSize` | Large spinner label font size | `var(--bq-font-size--m)` |
+  | `--bq-spinner--medium-text-fontSize` | Medium spinner label font size | `var(--bq-font-size--s)` |
+  | `--bq-spinner--small-text-fontSize` | Small spinner label font size | `var(--bq-font-size--xs)` |
+  | `--bq-spinner--text-lineHeight` | Spinner label line height | `var(--bq-font-line-height--large)` |
+</Expandable>
+
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-spinner--large">
+    Explore spinner sizes, label positions, and custom icon usage in Storybook.
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/spinner">
+    Browse the component implementation, styles, and tests on GitHub.
+  </Card>
+</CardGroup>

@@ -1,0 +1,690 @@
+---
+title: Radio
+description: Radio buttons let users select exactly one option from a set of mutually exclusive choices.
+---
+
+import { CardTile } from "/snippets/CardTile.jsx";
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Radio component overview">
+  <img className="block dark:hidden" src="/components/images/radio/radio-overview-light.svg" alt="BEEQ Radio component overview" />
+  <img className="hidden dark:block" src="/components/images/radio/radio-overview-dark.svg" alt="BEEQ Radio component overview" />
+</Frame>
+
+Radio buttons present a list of options where only one can be active at a time. When a user selects a new option, the previous selection is cleared automatically. Use them inside a `bq-radio-group` to connect the options and manage state.
+
+<Note>
+  Always wrap `bq-radio` elements inside a `bq-radio-group`. The group manages selection state, keyboard navigation, form association, and accessibility — an isolated `bq-radio` cannot do this on its own.
+</Note>
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use radio buttons when
+    </span>
+
+    - Users must select exactly one option from a short list (2–7 items)
+    - All available options need to be visible so users can compare them before choosing
+    - The choice persists until the user actively changes it
+    - An option needs to trigger a visible change in the surrounding form or UI
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use radio buttons when
+    </span>
+
+    - Multiple selections are allowed — use [Checkbox](/components/checkbox) instead
+    - The list is long and searchable — use a [Dropdown](/components/dropdown) instead
+    - A binary on/off toggle is all that is needed — a toggle or checkbox is clearer
+    - The options are so numerous that displaying them all creates visual noise
+  </Card>
+</CardGroup>
+
+## Patterns
+
+<CardGroup cols={2}>
+  <Card title="Default">
+    By default, a radio button remains unchecked, implying it remains inactive until selected.
+  </Card>
+
+  <Card title="Selected">
+    Once a radio button is selected, it becomes active, signifying its chosen status.
+  </Card>
+</CardGroup>
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Radio component anatomy">
+  <img className="block dark:hidden" src="/components/images/radio/radio-anatomy-light.svg" alt="BEEQ Radio component anatomy" />
+  <img className="hidden dark:block" src="/components/images/radio/radio-anatomy-dark.svg" alt="BEEQ Radio component anatomy" />
+</Frame>
+
+A radio button consists of a circular icon and a text label. The icon changes appearance depending on whether the option is selected or unselected.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Icon (selected) | The filled circular control shown when the radio is the active choice in the group |
+| **2** | Label text | The `<span>` that holds the option text and extends the clickable area |
+| **3** | Icon (unselected) | The empty circular control shown when the radio is not the active choice |
+
+## Design guidelines
+
+<CardGroup cols={2}>
+  <CardTile
+    title="Vertical orientation (default)"
+    imageLightSrc="/components/images/radio/radio-orientation-vertical-light.svg"
+    imageDarkSrc="/components/images/radio/radio-orientation-vertical-dark.svg"
+  >
+    Stack options vertically when the labels are longer than a few words. Vertical lists are easier to scan and less prone to accidental selection.
+  </CardTile>
+
+  <CardTile
+    title="Horizontal orientation"
+    imageLightSrc="/components/images/radio/radio-orientation-horizontal-light.svg"
+    imageDarkSrc="/components/images/radio/radio-orientation-horizontal-dark.svg"
+  >
+    Arrange options in a row when the labels are short (one or two words) and the total number of choices is small. Use this for compact filters or sort controls.
+  </CardTile>
+</CardGroup>
+
+<CardGroup cols={2}>
+  <CardTile
+    title="With fieldset"
+    imageLightSrc="/components/images/radio/radio-fieldset-light.svg"
+    imageDarkSrc="/components/images/radio/radio-fieldset-dark.svg"
+  >
+    Enable `fieldset` on the group to render a visible border and legend around the options. Use this when the radio group is one of several form sections that need visual separation.
+  </CardTile>
+
+  <CardTile
+    title="Background on hover"
+    imageLightSrc="/components/images/radio/radio-background-hover-light.svg"
+    imageDarkSrc="/components/images/radio/radio-background-hover-dark.svg"
+  >
+    Enable `background-on-hover` to show a filled background on the label row when the user hovers. Use this to increase the perceived click area in spacious layouts.
+  </CardTile>
+</CardGroup>
+
+## Usage
+
+### Default
+
+Wrap `bq-radio` elements inside a `bq-radio-group`. Set a matching `value` on the group to pre-select one option. The group handles all state synchronization.
+
+<CodeLivePreview code={`
+  <bq-radio-group name="group" value="option1">
+    <span slot="label">Label</span>
+    <bq-radio value="option1">Radio option 1</bq-radio>
+    <bq-radio value="option2">Radio option 2</bq-radio>
+    <bq-radio value="option3">Radio option 3</bq-radio>
+  </bq-radio-group>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-radio-group name="group" value="option1">
+      <span slot="label">Label</span>
+      <bq-radio value="option1">Radio option 1</bq-radio>
+      <bq-radio value="option2">Radio option 2</bq-radio>
+      <bq-radio value="option3">Radio option 3</bq-radio>
+    </bq-radio-group>
+    ```
+
+    ```jsx React icon="react"
+    import { BqRadio, BqRadioGroup } from "@beeq/react";
+
+    <BqRadioGroup name="group" value="option1">
+      <span slot="label">Label</span>
+      <BqRadio value="option1">Radio option 1</BqRadio>
+      <BqRadio value="option2">Radio option 2</BqRadio>
+      <BqRadio value="option3">Radio option 3</BqRadio>
+    </BqRadioGroup>
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqRadio, BqRadioGroup } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqRadio, BqRadioGroup],
+      template: `
+        <bq-radio-group name="group" value="option1">
+          <span slot="label">Label</span>
+          <bq-radio value="option1">Radio option 1</bq-radio>
+          <bq-radio value="option2">Radio option 2</bq-radio>
+          <bq-radio value="option3">Radio option 3</bq-radio>
+        </bq-radio-group>
+      `
+    })
+    export class DefaultRadioGroupComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <template>
+      <BqRadioGroup name="group" value="option1">
+        <span slot="label">Label</span>
+        <BqRadio value="option1">Radio option 1</BqRadio>
+        <BqRadio value="option2">Radio option 2</BqRadio>
+        <BqRadio value="option3">Radio option 3</BqRadio>
+      </BqRadioGroup>
+    </template>
+
+    <script setup>
+    import { BqRadio, BqRadioGroup } from "@beeq/vue";
+    </script>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Options
+
+### Disabled
+
+Set `disabled` on the group to prevent all interaction. You can also disable individual `bq-radio` elements when only specific options are unavailable.
+
+<CodeLivePreview code={`
+  <style>
+    :host {
+      gap: var(--bq-spacing-l) !important;
+    }
+  </style>
+  <bq-radio-group name="group-disabled" value="option1" disabled>
+    <span slot="label">Label</span>
+    <bq-radio value="option1">Radio option 1</bq-radio>
+    <bq-radio value="option2">Radio option 2</bq-radio>
+    <bq-radio value="option3">Radio option 3</bq-radio>
+  </bq-radio-group>
+  <bq-radio-group name="group-partial" value="option1">
+    <span slot="label">Label</span>
+    <bq-radio value="option1">Radio option 1</bq-radio>
+    <bq-radio value="option2" disabled>Radio option 2</bq-radio>
+    <bq-radio value="option3">Radio option 3</bq-radio>
+  </bq-radio-group>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <!-- Fully disabled group -->
+    <bq-radio-group name="group-disabled" value="option1" disabled>
+      <span slot="label">Label</span>
+      <bq-radio value="option1">Radio option 1</bq-radio>
+      <bq-radio value="option2">Radio option 2</bq-radio>
+      <bq-radio value="option3">Radio option 3</bq-radio>
+    </bq-radio-group>
+
+    <!-- Individual radio disabled -->
+    <bq-radio-group name="group-partial" value="option1">
+      <span slot="label">Label</span>
+      <bq-radio value="option1">Radio option 1</bq-radio>
+      <bq-radio value="option2" disabled>Radio option 2</bq-radio>
+      <bq-radio value="option3">Radio option 3</bq-radio>
+    </bq-radio-group>
+    ```
+
+    ```jsx React icon="react"
+    import { BqRadio, BqRadioGroup } from "@beeq/react";
+
+    {/* Fully disabled group */}
+    <BqRadioGroup name="group-disabled" value="option1" disabled>
+      <span slot="label">Label</span>
+      <BqRadio value="option1">Radio option 1</BqRadio>
+      <BqRadio value="option2">Radio option 2</BqRadio>
+      <BqRadio value="option3">Radio option 3</BqRadio>
+    </BqRadioGroup>
+
+    {/* Individual radio disabled */}
+    <BqRadioGroup name="group-partial" value="option1">
+      <span slot="label">Label</span>
+      <BqRadio value="option1">Radio option 1</BqRadio>
+      <BqRadio value="option2" disabled>Radio option 2</BqRadio>
+      <BqRadio value="option3">Radio option 3</BqRadio>
+    </BqRadioGroup>
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqRadio, BqRadioGroup } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqRadio, BqRadioGroup],
+      template: `
+        <!-- Fully disabled group -->
+        <bq-radio-group name="group-disabled" value="option1" disabled>
+          <span slot="label">Label</span>
+          <bq-radio value="option1">Radio option 1</bq-radio>
+          <bq-radio value="option2">Radio option 2</bq-radio>
+          <bq-radio value="option3">Radio option 3</bq-radio>
+        </bq-radio-group>
+
+        <!-- Individual radio disabled -->
+        <bq-radio-group name="group-partial" value="option1">
+          <span slot="label">Label</span>
+          <bq-radio value="option1">Radio option 1</bq-radio>
+          <bq-radio value="option2" disabled>Radio option 2</bq-radio>
+          <bq-radio value="option3">Radio option 3</bq-radio>
+        </bq-radio-group>
+      `
+    })
+    export class DisabledRadioGroupComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <template>
+      <!-- Fully disabled group -->
+      <BqRadioGroup name="group-disabled" value="option1" disabled>
+        <span slot="label">Label</span>
+        <BqRadio value="option1">Radio option 1</BqRadio>
+        <BqRadio value="option2">Radio option 2</BqRadio>
+        <BqRadio value="option3">Radio option 3</BqRadio>
+      </BqRadioGroup>
+
+      <!-- Individual radio disabled -->
+      <BqRadioGroup name="group-partial" value="option1">
+        <span slot="label">Label</span>
+        <BqRadio value="option1">Radio option 1</BqRadio>
+        <BqRadio value="option2" disabled>Radio option 2</BqRadio>
+        <BqRadio value="option3">Radio option 3</BqRadio>
+      </BqRadioGroup>
+    </template>
+
+    <script setup>
+    import { BqRadio, BqRadioGroup } from "@beeq/vue";
+    </script>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Horizontal
+
+Use `orientation="horizontal"` to arrange options side by side. Best for short labels and a small number of choices where vertical space is limited.
+
+<CodeLivePreview code={`
+  <bq-radio-group name="group" value="option1" orientation="horizontal">
+    <span slot="label">Label</span>
+    <bq-radio value="option1">Radio option 1</bq-radio>
+    <bq-radio value="option2">Radio option 2</bq-radio>
+    <bq-radio value="option3">Radio option 3</bq-radio>
+  </bq-radio-group>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-radio-group name="group" value="option1" orientation="horizontal">
+      <span slot="label">Label</span>
+      <bq-radio value="option1">Radio option 1</bq-radio>
+      <bq-radio value="option2">Radio option 2</bq-radio>
+      <bq-radio value="option3">Radio option 3</bq-radio>
+    </bq-radio-group>
+    ```
+
+    ```jsx React icon="react"
+    import { BqRadio, BqRadioGroup } from "@beeq/react";
+
+    <BqRadioGroup name="group" value="option1" orientation="horizontal">
+      <span slot="label">Label</span>
+      <BqRadio value="option1">Radio option 1</BqRadio>
+      <BqRadio value="option2">Radio option 2</BqRadio>
+      <BqRadio value="option3">Radio option 3</BqRadio>
+    </BqRadioGroup>
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqRadio, BqRadioGroup } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqRadio, BqRadioGroup],
+      template: `
+        <bq-radio-group name="group" value="option1" orientation="horizontal">
+          <span slot="label">Label</span>
+          <bq-radio value="option1">Radio option 1</bq-radio>
+          <bq-radio value="option2">Radio option 2</bq-radio>
+          <bq-radio value="option3">Radio option 3</bq-radio>
+        </bq-radio-group>
+      `
+    })
+    export class HorizontalRadioGroupComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <template>
+      <BqRadioGroup name="group" value="option1" orientation="horizontal">
+        <span slot="label">Label</span>
+        <BqRadio value="option1">Radio option 1</BqRadio>
+        <BqRadio value="option2">Radio option 2</BqRadio>
+        <BqRadio value="option3">Radio option 3</BqRadio>
+      </BqRadioGroup>
+    </template>
+
+    <script setup>
+    import { BqRadio, BqRadioGroup } from "@beeq/vue";
+    </script>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Fieldset
+
+Add the `fieldset` attribute to render a visible border and legend around the group. Use this when the radio group is one of several distinct sections in a form that need visual separation.
+
+<CodeLivePreview code={`
+  <bq-radio-group name="group" value="option1" fieldset>
+    <span slot="label">Label</span>
+    <bq-radio value="option1">Radio option 1</bq-radio>
+    <bq-radio value="option2">Radio option 2</bq-radio>
+    <bq-radio value="option3">Radio option 3</bq-radio>
+  </bq-radio-group>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-radio-group name="group" value="option1" fieldset>
+      <span slot="label">Label</span>
+      <bq-radio value="option1">Radio option 1</bq-radio>
+      <bq-radio value="option2">Radio option 2</bq-radio>
+      <bq-radio value="option3">Radio option 3</bq-radio>
+    </bq-radio-group>
+    ```
+
+    ```jsx React icon="react"
+    import { BqRadio, BqRadioGroup } from "@beeq/react";
+
+    <BqRadioGroup name="group" value="option1" fieldset>
+      <span slot="label">Label</span>
+      <BqRadio value="option1">Radio option 1</BqRadio>
+      <BqRadio value="option2">Radio option 2</BqRadio>
+      <BqRadio value="option3">Radio option 3</BqRadio>
+    </BqRadioGroup>
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqRadio, BqRadioGroup } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqRadio, BqRadioGroup],
+      template: `
+        <bq-radio-group name="group" value="option1" fieldset>
+          <span slot="label">Label</span>
+          <bq-radio value="option1">Radio option 1</bq-radio>
+          <bq-radio value="option2">Radio option 2</bq-radio>
+          <bq-radio value="option3">Radio option 3</bq-radio>
+        </bq-radio-group>
+      `
+    })
+    export class FieldsetRadioGroupComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <template>
+      <BqRadioGroup name="group" value="option1" :fieldset="true">
+        <span slot="label">Label</span>
+        <BqRadio value="option1">Radio option 1</BqRadio>
+        <BqRadio value="option2">Radio option 2</BqRadio>
+        <BqRadio value="option3">Radio option 3</BqRadio>
+      </BqRadioGroup>
+    </template>
+
+    <script setup>
+    import { BqRadio, BqRadioGroup } from "@beeq/vue";
+    </script>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Background on hover
+
+Set `background-on-hover` on the group (or on individual `bq-radio` elements) to show a filled highlight on the label row when the user hovers. This increases the perceived click area in spacious layouts.
+
+<CodeLivePreview code={`
+  <bq-radio-group name="group" value="option1" background-on-hover>
+    <span slot="label">Label</span>
+    <bq-radio value="option1">Radio option 1</bq-radio>
+    <bq-radio value="option2">Radio option 2</bq-radio>
+    <bq-radio value="option3">Radio option 3</bq-radio>
+  </bq-radio-group>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-radio-group name="group" value="option1" background-on-hover>
+      <span slot="label">Label</span>
+      <bq-radio value="option1">Radio option 1</bq-radio>
+      <bq-radio value="option2">Radio option 2</bq-radio>
+      <bq-radio value="option3">Radio option 3</bq-radio>
+    </bq-radio-group>
+    ```
+
+    ```jsx React icon="react"
+    import { BqRadio, BqRadioGroup } from "@beeq/react";
+
+    <BqRadioGroup name="group" value="option1" backgroundOnHover>
+      <span slot="label">Label</span>
+      <BqRadio value="option1">Radio option 1</BqRadio>
+      <BqRadio value="option2">Radio option 2</BqRadio>
+      <BqRadio value="option3">Radio option 3</BqRadio>
+    </BqRadioGroup>
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqRadio, BqRadioGroup } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqRadio, BqRadioGroup],
+      template: `
+        <bq-radio-group name="group" value="option1" background-on-hover>
+          <span slot="label">Label</span>
+          <bq-radio value="option1">Radio option 1</bq-radio>
+          <bq-radio value="option2">Radio option 2</bq-radio>
+          <bq-radio value="option3">Radio option 3</bq-radio>
+        </bq-radio-group>
+      `
+    })
+    export class BackgroundOnHoverRadioGroupComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <template>
+      <BqRadioGroup name="group" value="option1" backgroundOnHover>
+        <span slot="label">Label</span>
+        <BqRadio value="option1">Radio option 1</BqRadio>
+        <BqRadio value="option2">Radio option 2</BqRadio>
+        <BqRadio value="option3">Radio option 3</BqRadio>
+      </BqRadioGroup>
+    </template>
+
+    <script setup>
+    import { BqRadio, BqRadioGroup } from "@beeq/vue";
+    </script>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Always provide a group label via the `label` slot on `bq-radio-group` so screen readers announce the question or field name when focus enters the group.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Leave the `label` slot empty — users relying on assistive technology will not know what the radio group is asking.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Pre-select a sensible default by setting `value` on the group so the form always has a valid starting state and users understand which option is active on first view.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Leave all options unselected when one choice is always required — an empty radio group can cause confusing form validation errors on submit.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Write option labels as nouns or short phrases that clearly describe each choice so users can compare them at a glance.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Use vague labels like "Option 1" or "Yes/No" when more descriptive text would make the choice immediately understandable without additional context.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use `disabled` on the entire group when the choice is unavailable in the current context, and explain why it is locked via nearby helper text.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Disable individual radio options without a visible explanation — users will not know whether the option is temporarily locked or permanently unavailable.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+- **Built in:** `bq-radio-group` renders as a `<fieldset>` (when `fieldset` is set) with a `<legend>` linked to the `label` slot, giving screen readers a proper group label for the set.
+- **Built in:** each `bq-radio` native `<input type="radio">` carries `aria-checked`, `aria-disabled`, and `aria-labelledby` pointing to its visible label element.
+- **Built in:** arrow-key navigation is handled by the group — `ArrowDown` / `ArrowRight` move to the next radio, `ArrowUp` / `ArrowLeft` move to the previous one, wrapping at the ends. This matches the ARIA radio group keyboard pattern.
+- **Built in:** only one radio in the group receives `tabindex="0"` at a time (the selected or first enabled option), keeping the tab stop count low.
+- **Your responsibility:** always populate the `label` slot on `bq-radio-group` — the `aria-labelledby` reference on the group requires a visible label element to give the fieldset an accessible name.
+- **Your responsibility:** provide meaningful text inside each `bq-radio` slot — the `aria-labelledby` on the native input points to the label span, so empty or icon-only labels are not announced.
+- **Your responsibility:** when you disable the group, add visible helper text nearby explaining why the options are unavailable.
+
+## API reference
+
+### `bq-radio` properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `backgroundOnHover` | `background-on-hover` | If `true`, the radio displays a background highlight on hover | `boolean` | `false` |
+| `checked` | `checked` | If `true`, the radio input is checked | `boolean` | `false` |
+| `disabled` | `disabled` | If `true`, the radio input is disabled | `boolean` | `false` |
+| `formId` | `form-id` | The ID of the `<form>` element the radio is associated with | `string` | — |
+| `name` | `name` | Name of the form control, submitted as part of a name/value pair | `string` | — |
+| `required` | `required` | If `true`, the user must select a value before the form can be submitted | `boolean` | `false` |
+| `value` | `value` | The string value of the radio, submitted with the form | `string` | — |
+
+### `bq-radio-group` properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `backgroundOnHover` | `background-on-hover` | If `true`, all radios in the group show a background on hover | `boolean` | `false` |
+| `debounceTime` | `debounce-time` | Delay in milliseconds before `bqChange` fires after a value change | `number` | `0` |
+| `disabled` | `disabled` | If `true`, all radio inputs in the group are disabled | `boolean` | `false` |
+| `fieldset` | `fieldset` | If `true`, the group renders a visible fieldset border with a legend | `boolean` | `false` |
+| `name` | `name` | Name of the form control, submitted with the selected radio's value | `string` | — |
+| `orientation` | `orientation` | Layout direction of the radio inputs | `'horizontal' \| 'vertical'` | `'vertical'` |
+| `required` | `required` | If `true`, the radio group is required | `boolean` | `false` |
+| `requiredValidationMessage` | `required-validation-message` | Native form validation message shown when the group is required and no option is selected | `string` | — |
+| `value` | `value` | The value of the currently selected radio | `string` | — |
+
+### `bq-radio` methods
+
+| Method | Description |
+|---|---|
+| `vClick()` | Simulates a click on the native `<input>` — use instead of `element.click()` |
+| `vFocus()` | Sets focus on the native `<input>` — use instead of `element.focus()` |
+| `vBlur()` | Removes focus from the native `<input>` — use instead of `element.blur()` |
+| `getNativeInput()` | Returns the native `<input>` HTML element used under the hood |
+
+### `bq-radio` events
+
+| Event | Description |
+|---|---|
+| `bqClick` | Emitted when the radio is clicked; detail is `{ value: string; target: HTMLBqRadioElement }` |
+| `bqFocus` | Emitted when the radio receives focus |
+| `bqBlur` | Emitted when the radio loses focus |
+| `bqKeyDown` | Emitted when a key is pressed while the radio is focused; detail is `{ key: string; target: HTMLBqRadioElement }` |
+
+### `bq-radio-group` events
+
+| Event | Description |
+|---|---|
+| `bqChange` | Emitted when the selected radio changes; detail is `{ value: string; target: HTMLBqRadioElement }` |
+| `bqBlur` | Emitted when focus leaves the entire group |
+
+### `bq-radio` slots
+
+| Slot | Description |
+|---|---|
+| _(default)_ | The visible label text for the radio option |
+
+### `bq-radio-group` slots
+
+| Slot | Description |
+|---|---|
+| _(default)_ | The `bq-radio` elements that make up the group |
+| `label` | The group's label text, rendered as a legend inside the fieldset |
+
+### `bq-radio` shadow parts
+
+| Part | Description |
+|---|---|
+| `base` | The `<label>` wrapper that contains the control and the label text |
+| `input` | The native `<input type="radio">` element |
+| `radio` | The `<div>` that renders the visible circular ring |
+| `label` | The `<span>` that holds the option text content |
+
+### `bq-radio-group` shadow parts
+
+| Part | Description |
+|---|---|
+| `base` | The `<fieldset>` or `<div>` wrapper that contains the label and all radio inputs |
+| `label` | The `<legend>` that holds the group label slot content |
+| `group` | The `<div>` that lays out the radio inputs |
+
+### CSS custom properties
+
+| Variable | Description | Default |
+|---|---|---|
+| `--bq-radio--size` | Size (width and height) of the radio control circle | `24px` |
+| `--bq-radio--border-width` | Border width of the radio control ring | `var(--bq-stroke-m)` |
+
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-radio-group--default">
+    Explore Radio variants and states in Storybook
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/radio">
+    View the component source on GitHub
+  </Card>
+</CardGroup>

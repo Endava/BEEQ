@@ -117,7 +117,7 @@ Do not wrap examples in unnecessary `<div>`s for alignment purposes — use `:sc
 Every `CodeLivePreview` must be followed by a `CodeGroup` with tabs in this order:
 1. `HTML` (kebab-case attributes)
 2. `React` (camelCase props, `onBqEventName` for events)
-3. `Angular` (kebab-case attributes, `(bqEventName)` for events)
+3. `Angular` (**`ts` code block**; full standalone `@Component`; `import { BqX } from "@beeq/angular/standalone"`; `(bqEventName)` for events; empty class body `{}` when no logic)
 4. `Vue` (camelCase props, `@bqEventName` for events)
 
 Add a `CSS` tab first only when custom styles are educationally relevant.

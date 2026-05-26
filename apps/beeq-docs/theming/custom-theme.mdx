@@ -327,7 +327,7 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
       background: var(--bq-background--primary) !important;
       color: var(--bq-text--primary);
       font-family: var(--bq-font-family);
-      padding: var(--bq-spacing-m);
+      padding: var(--bq-spacing-m) !important;
     }
 
     .toolbar {
@@ -655,64 +655,90 @@ export function TechFlowDemo() {
 }
 ```
 
-```html Angular icon="angular"
-<!-- app.component.html -->
-<!-- Standalone: import { BqTabGroup, BqTab, BqIcon, BqButton, BqInput } from "@beeq/angular/standalone" -->
-<!-- Modules: components are available after importing BeeQModule -->
-<!-- Apply the TechFlow theme in main.ts (import styles.css separately): -->
-<!-- document.documentElement.setAttribute('bq-theme', 'techflow'); -->
-<!-- document.documentElement.setAttribute('bq-mode', 'dark'); -->
+```ts Angular icon="angular"
+import { Component } from "@angular/core";
+import type { BqTabGroupCustomEvent } from "@beeq/core";
+import { BqButton, BqIcon, BqInput, BqTab, BqTabGroup } from "@beeq/angular/standalone";
 
-<div class="toolbar">
-  <bq-button size="small" appearance="ghost" (bqClick)="toggleTheme()">
-    <bq-icon [attr.name]="isDark ? 'sun' : 'moon'" slot="prefix"></bq-icon>
-    {{ isDark ? 'Light mode' : 'Dark mode' }}
-  </bq-button>
-</div>
+@Component({
+  selector: "app-root",
+  standalone: true,
+  imports: [BqButton, BqIcon, BqInput, BqTab, BqTabGroup],
+  template: `
+    <div class="toolbar">
+      <bq-button size="small" appearance="ghost" (bqClick)="toggleTheme()">
+        <bq-icon [attr.name]="isDark ? 'sun' : 'moon'" slot="prefix"></bq-icon>
+        {{ isDark ? 'Light mode' : 'Dark mode' }}
+      </bq-button>
+    </div>
 
-<bq-tab-group value="home" (bqChange)="onTabChange($event)">
-  <bq-tab tab-id="home">
-    <bq-icon name="house-line" slot="icon"></bq-icon>
-    Home
-  </bq-tab>
-  <bq-tab tab-id="profile">
-    <bq-icon name="user" slot="icon"></bq-icon>
-    Profile
-  </bq-tab>
-  <bq-tab tab-id="settings">
-    <bq-icon name="gear" slot="icon"></bq-icon>
-    Settings
-  </bq-tab>
-</bq-tab-group>
+    <bq-tab-group value="home" (bqChange)="onTabChange($event)">
+      <bq-tab tab-id="home">
+        <bq-icon name="house-line" slot="icon"></bq-icon>
+        Home
+      </bq-tab>
+      <bq-tab tab-id="profile">
+        <bq-icon name="user" slot="icon"></bq-icon>
+        Profile
+      </bq-tab>
+      <bq-tab tab-id="settings">
+        <bq-icon name="gear" slot="icon"></bq-icon>
+        Settings
+      </bq-tab>
+    </bq-tab-group>
 
-<section *ngIf="activeTab === 'home'">
-  <h1>Hello BEEQ(ers)!</h1>
-  <p>
-    This is an example of how to integrate the
-    <a class="bq-link" href="https://beeq.design/" target="_blank" rel="noopener noreferrer">
-      BEEQ component library
-    </a>
-    with HTML/TypeScript while using Vite as the bundler.
-  </p>
-  <section style="margin-block-start: var(--bq-spacing-l);">
-    <h2>Buttons</h2>
-    <bq-button appearance="primary">Primary Button</bq-button>
-    <bq-button appearance="secondary">Secondary Button</bq-button>
-    <bq-button variant="danger">Delete</bq-button>
-    <bq-button variant="ghost">Ghost</bq-button>
-  </section>
-  <section style="margin-block-start: var(--bq-spacing-l);">
-    <h2>Input</h2>
-    <bq-input placeholder="Placeholder">
-      <label slot="label">Input label</label>
-    </bq-input>
-  </section>
-</section>
-<section *ngIf="activeTab === 'profile'">
-  <h1>Profile tab!</h1>
-  <span>You can check the logic added to the Tab component in the <code>index.ts</code> file.</span>
-</section>
-<h1 *ngIf="activeTab === 'settings'">Settings tab!</h1>
+    @if (activeTab === "home") {
+      <section>
+        <h1>Hello BEEQ(ers)!</h1>
+        <p>
+          This is an example of how to integrate the
+          <a class="bq-link" href="https://beeq.design/" target="_blank" rel="noopener noreferrer">
+            BEEQ component library
+          </a>
+          with HTML/TypeScript while using Vite as the bundler.
+        </p>
+        <section style="margin-block-start: var(--bq-spacing-l);">
+          <h2>Buttons</h2>
+          <bq-button appearance="primary">Primary Button</bq-button>
+          <bq-button appearance="secondary">Secondary Button</bq-button>
+          <bq-button variant="danger">Delete</bq-button>
+          <bq-button variant="ghost">Ghost</bq-button>
+        </section>
+        <section style="margin-block-start: var(--bq-spacing-l);">
+          <h2>Input</h2>
+          <bq-input placeholder="Placeholder">
+            <label slot="label">Input label</label>
+          </bq-input>
+        </section>
+      </section>
+    }
+
+    @if (activeTab === "profile") {
+      <section>
+        <h1>Profile tab!</h1>
+        <span>You can check the logic added to the Tab component in the <code>index.ts</code> file.</span>
+      </section>
+    }
+
+    @if (activeTab === "settings") {
+      <h1>Settings tab!</h1>
+    }
+  `,
+})
+export class AppComponent {
+  activeTab = "home";
+  isDark = true;
+
+  onTabChange(event: BqTabGroupCustomEvent<{ value: string }>) {
+    this.activeTab = event.detail.value;
+  }
+
+  toggleTheme() {
+    const next = this.isDark ? "light" : "dark";
+    document.documentElement.setAttribute("bq-mode", next);
+    this.isDark = !this.isDark;
+  }
+}
 ```
 
 ```vue Vue icon="vuejs"
