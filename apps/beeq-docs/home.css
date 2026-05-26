@@ -33,8 +33,33 @@
   --bq-lp-bg-dark:      #0d0e11;
 }
 
-html:not(.bq-loaded) {
-  overflow: hidden; /* Prevent scrolling while page-load guard is active */
+/* Prevent scrolling while the page-load guard overlay is active.
+   Scoped to :has(#bq-page-guard) so this lock ONLY engages on the
+   landing page (index.mdx), where the guard div is rendered.
+   On any other page navigated to directly, #bq-page-guard is absent
+   and :has() never matches, so overflow is never blocked. */
+html:not(.bq-loaded):has(#bq-page-guard) {
+  overflow: hidden;
+}
+
+/* Landing page: no nav tab should appear active.
+   Mintlify defaults to activating the first tab when the current page
+   does not belong to any tab group (the case for index.mdx).
+   .bq-hero is only rendered on the landing page, so :has(.bq-hero)
+   scopes these overrides exclusively to index.mdx.
+   Mintlify marks the active tab with text/text-shadow classes, data-active="true"
+   on the <a>, and a child <div> that renders the coloured underline bar. */
+:root:has(.bq-hero) a.nav-tabs-item {
+  text-shadow: none !important;
+  color: rgb(75, 85, 99) !important;    /* Tailwind gray-600 — inactive tab colour */
+}
+
+html.dark:has(.bq-hero) a.nav-tabs-item {
+  color: rgb(156, 163, 175) !important; /* Tailwind gray-400 — inactive tab colour (dark) */
+}
+
+:root:has(.bq-hero) a.nav-tabs-item[data-active='true'] > div {
+  display: none !important;             /* hide the coloured underline bar */
 }
 
 /* ── Gradient text ────────────────────────────────────────── */
