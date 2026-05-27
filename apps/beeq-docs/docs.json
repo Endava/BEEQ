@@ -160,6 +160,17 @@
         ]
       },
       {
+        "tab": "Usage Guides",
+        "groups": [
+          {
+            "group": "Customizations",
+            "pages": [
+              "usage-guides/customizations/styles"
+            ]
+          }
+        ]
+      },
+      {
         "tab": "Releases",
         "pages": [
           "releases/changelog",
