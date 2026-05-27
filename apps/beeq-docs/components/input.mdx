@@ -180,6 +180,7 @@ Use the default type of input when you want to provide a simple, versatile field
     import { BqIcon, BqInput } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqInput],
       template: `
@@ -192,7 +193,7 @@ Use the default type of input when you want to provide a simple, versatile field
         </bq-input>
       `
     })
-    export class DefaultInputComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -267,6 +268,7 @@ Use the `value` attribute to provide a convenient solution for scenarios where t
     import { BqIcon, BqInput } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqInput],
       template: `
@@ -279,7 +281,7 @@ Use the `value` attribute to provide a convenient solution for scenarios where t
         </bq-input>
       `
     })
-    export class ValueInputComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -357,6 +359,7 @@ Use the prefix slot when you want to place an icon before the input value to pro
     import { BqIcon, BqInput } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqInput],
       template: `
@@ -370,7 +373,7 @@ Use the prefix slot when you want to place an icon before the input value to pro
         </bq-input>
       `
     })
-    export class PrefixInputComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -449,6 +452,7 @@ Use the suffix slot when you want to add an icon after the input field for extra
     import { BqIcon, BqInput } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqInput],
       template: `
@@ -462,7 +466,7 @@ Use the suffix slot when you want to add an icon after the input field for extra
         </bq-input>
       `
     })
-    export class SuffixInputComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -544,6 +548,7 @@ This variant combines both prefix and suffix features within the same input.
     import { BqIcon, BqInput } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqInput],
       template: `
@@ -558,7 +563,7 @@ This variant combines both prefix and suffix features within the same input.
         </bq-input>
       `
     })
-    export class PrefixSuffixInputComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -641,6 +646,7 @@ Use the `disabled` attribute when the input field should be visible but non-edit
     import { BqIcon, BqInput } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqInput],
       template: `
@@ -655,7 +661,7 @@ Use the `disabled` attribute when the input field should be visible but non-edit
         </bq-input>
       `
     })
-    export class DisabledInputComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -803,6 +809,7 @@ Use this variant for validation feedback by setting `validation-status` to `erro
     import { BqIcon, BqInput } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqInput],
       template: `
@@ -837,7 +844,7 @@ Use this variant for validation feedback by setting `validation-status` to `erro
         </bq-input>
       `
     })
-    export class ValidationInputComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -981,6 +988,7 @@ Use this style when you want to include an optional marker to provide additional
     import { BqIcon, BqInput } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqInput],
       template: `
@@ -996,7 +1004,7 @@ Use this style when you want to include an optional marker to provide additional
         </bq-input>
       `
     })
-    export class LabelOptionalInputComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -1155,6 +1163,7 @@ Use this style when you want to include an informational tooltip alongside the i
     import { BqIcon, BqInput, BqTooltip } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqInput, BqTooltip],
       template: `
@@ -1176,7 +1185,7 @@ Use this style when you want to include an informational tooltip alongside the i
         </bq-input>
       `
     })
-    export class LabelTooltipInputComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -1263,6 +1272,7 @@ Use this variant when the surrounding context already makes the field purpose cl
     import { BqIcon, BqInput } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqInput],
       template: `
@@ -1276,7 +1286,7 @@ Use this variant when the surrounding context already makes the field purpose cl
         </bq-input>
       `
     })
-    export class NoLabelInputComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -1346,6 +1356,7 @@ Use this variant when the field does not require supplementary guidance.
     import { BqIcon, BqInput } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqInput],
       template: `
@@ -1356,7 +1367,7 @@ Use this variant when the field does not require supplementary guidance.
         </bq-input>
       `
     })
-    export class NoHelperTextInputComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"

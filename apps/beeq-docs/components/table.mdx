@@ -225,7 +225,9 @@ The default table applies base typography, header and cell padding, and row sepa
     import { Component } from "@angular/core";
 
     @Component({
+      selector: "app-root",
       standalone: true,
+      imports: [],
       template: `
         <table class="bq-table">
           <thead>
@@ -255,7 +257,7 @@ The default table applies base typography, header and cell padding, and row sepa
         </table>
       `,
     })
-    export class DefaultTableComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -395,7 +397,9 @@ Add the `selected` class to a `<tr>` to highlight the active record. Use this wh
     import { Component } from "@angular/core";
 
     @Component({
+      selector: "app-root",
       standalone: true,
+      imports: [],
       template: `
         <table class="bq-table">
           <thead>
@@ -425,7 +429,7 @@ Add the `selected` class to a `<tr>` to highlight the active record. Use this wh
         </table>
       `,
     })
-    export class SelectedRowTableComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -563,7 +567,9 @@ Add the `compact` class to the `<table>` to reduce cell and header padding. This
     import { Component } from "@angular/core";
 
     @Component({
+      selector: "app-root",
       standalone: true,
+      imports: [],
       template: `
         <table class="bq-table compact">
           <thead>
@@ -593,7 +599,7 @@ Add the `compact` class to the `<table>` to reduce cell and header padding. This
         </table>
       `,
     })
-    export class CompactTableComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -731,7 +737,9 @@ Add the `bordered` class to draw explicit borders around each cell and the table
     import { Component } from "@angular/core";
 
     @Component({
+      selector: "app-root",
       standalone: true,
+      imports: [],
       template: `
         <table class="bq-table bordered">
           <thead>
@@ -761,7 +769,7 @@ Add the `bordered` class to draw explicit borders around each cell and the table
         </table>
       `,
     })
-    export class BorderedTableComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"

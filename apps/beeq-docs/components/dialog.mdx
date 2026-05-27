@@ -235,6 +235,7 @@ Use the `default` dialog when you want to overlay content for focused user engag
     import { BqButton, BqDialog, BqIcon } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqButton, BqDialog, BqIcon],
       template: `
@@ -256,7 +257,7 @@ Use the `default` dialog when you want to overlay content for focused user engag
         </bq-dialog>
       `,
     })
-    export class DialogExampleComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -416,6 +417,7 @@ Use `footer-appearance="highlight"` when emphasis on the footer is important.
     import { BqButton, BqDialog, BqIcon } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqButton, BqDialog, BqIcon],
       template: `
@@ -437,7 +439,7 @@ Use `footer-appearance="highlight"` when emphasis on the footer is important.
         </bq-dialog>
       `,
     })
-    export class HighlightFooterDialogComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -568,6 +570,7 @@ This kind of dialog omits the footer section for situations where a minimal and 
     import { BqButton, BqDialog, BqIcon } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqButton, BqDialog, BqIcon],
       template: `
@@ -583,7 +586,7 @@ This kind of dialog omits the footer section for situations where a minimal and 
         </bq-dialog>
       `,
     })
-    export class NoFooterDialogComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -736,6 +739,7 @@ Use `disable-backdrop` when you want to allow users to focus on the dialog conte
     import { BqButton, BqDialog, BqIcon } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqButton, BqDialog, BqIcon],
       template: `
@@ -757,7 +761,7 @@ Use `disable-backdrop` when you want to allow users to focus on the dialog conte
         </bq-dialog>
       `,
     })
-    export class NoBackdropDialogComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -957,6 +961,7 @@ Use this variant to confirm irreversible actions with clear messaging and focuse
     import { BqButton, BqDialog, BqIcon } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqButton, BqDialog, BqIcon],
       template: `
@@ -983,7 +988,7 @@ Use this variant to confirm irreversible actions with clear messaging and focuse
         </bq-dialog>
       `,
     })
-    export class ConfirmDialogComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"

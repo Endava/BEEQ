@@ -171,6 +171,7 @@ Enhance user interaction by implementing the default select variant. Perfect for
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqOption, BqSelect],
       template: `
@@ -186,7 +187,7 @@ Enhance user interaction by implementing the default select variant. Perfect for
         </bq-select>
       `
     })
-    export class DefaultSelectComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -269,6 +270,7 @@ Use the `open` attribute to display the select dropdown by default, offering use
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqOption, BqSelect],
       template: `
@@ -284,7 +286,7 @@ Use the `open` attribute to display the select dropdown by default, offering use
         </bq-select>
       `
     })
-    export class OpenSelectComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -366,6 +368,7 @@ Set an initial `value` for the select component to preselect an option, providin
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqOption, BqSelect],
       template: `
@@ -381,7 +384,7 @@ Set an initial `value` for the select component to preselect an option, providin
         </bq-select>
       `
     })
-    export class InitialValueSelectComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -597,6 +600,7 @@ The `displayValue` property (`display-value` attribute) on `bq-option` overrides
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqOption, BqSelect],
       template: `
@@ -670,7 +674,7 @@ The `displayValue` property (`display-value` attribute) on `bq-option` overrides
         `
       ],
     })
-    export class DisplayValueSelectComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -810,6 +814,7 @@ Employ the `disabled` attribute to restrict user interaction with the select com
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqOption, BqSelect],
       template: `
@@ -825,7 +830,7 @@ Employ the `disabled` attribute to restrict user interaction with the select com
         </bq-select>
       `
     })
-    export class DisabledSelectComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -989,6 +994,7 @@ Use the `multiple` property to enable multiple selections. Use `keep-open-on-sel
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqOption, BqSelect],
       template: `
@@ -1031,7 +1037,7 @@ Use the `multiple` property to enable multiple selections. Use `keep-open-on-sel
         </bq-select>
       `
     })
-    export class MultipleSelectComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -1146,6 +1152,7 @@ Use the `prefix` slot to include additional visual elements or context, such as 
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqOption, BqSelect],
       template: `
@@ -1162,7 +1169,7 @@ Use the `prefix` slot to include additional visual elements or context, such as 
         </bq-select>
       `
     })
-    export class PrefixSelectComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -1249,6 +1256,7 @@ Leverage the `suffix` slot to enhance the select component with extra elements. 
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqOption, BqSelect],
       template: `
@@ -1265,7 +1273,7 @@ Leverage the `suffix` slot to enhance the select component with extra elements. 
         </bq-select>
       `
     })
-    export class SuffixSelectComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -1415,6 +1423,7 @@ Use `validation-status` to signal the validation state (`error`, `warning`, or `
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqOption, BqSelect],
       template: `
@@ -1452,7 +1461,7 @@ Use `validation-status` to signal the validation state (`error`, `warning`, or `
         </bq-select>
       `
     })
-    export class ValidationSelectComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -1585,6 +1594,7 @@ Choose this style when you want to include an optional label for additional cont
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqOption, BqSelect],
       template: `
@@ -1604,7 +1614,7 @@ Choose this style when you want to include an optional label for additional cont
         </bq-select>
       `
     })
-    export class LabelOptionalSelectComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -1741,6 +1751,7 @@ Enhance user understanding by incorporating a `bq-tooltip` alongside the label, 
     import { BqIcon, BqOption, BqSelect, BqTooltip } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqOption, BqSelect, BqTooltip],
       template: `
@@ -1766,7 +1777,7 @@ Enhance user understanding by incorporating a `bq-tooltip` alongside the label, 
         </bq-select>
       `
     })
-    export class LabelTooltipSelectComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -1891,6 +1902,7 @@ Adjust the panel placement to suit your layout. Use the `placement` attribute to
     import { BqIcon, BqOption, BqSelect, BqTooltip } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqOption, BqSelect, BqTooltip],
       template: `
@@ -1913,7 +1925,7 @@ Adjust the panel placement to suit your layout. Use the `placement` attribute to
         </bq-select>
       `
     })
-    export class PanelPlacementSelectComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -2004,6 +2016,7 @@ Use this style when you prefer a minimal look and the field's purpose is conveye
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqOption, BqSelect],
       template: `
@@ -2019,7 +2032,7 @@ Use this style when you prefer a minimal look and the field's purpose is conveye
         </bq-select>
       `
     })
-    export class NoLabelSelectComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -2088,6 +2101,7 @@ Select this variant when you don't need additional helper text, giving users a s
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqOption, BqSelect],
       template: `
@@ -2100,7 +2114,7 @@ Select this variant when you don't need additional helper text, giving users a s
         </bq-select>
       `
     })
-    export class NoHelperTextSelectComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -2181,6 +2195,7 @@ A readonly select shows the current value but prevents the panel from opening. U
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqOption, BqSelect],
       template: `
@@ -2196,7 +2211,7 @@ A readonly select shows the current value but prevents the panel from opening. U
         </bq-select>
       `
     })
-    export class ReadonlySelectComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -2280,6 +2295,7 @@ Set `disable-clear` to hide the clear button and prevent one-click deselection. 
     import { BqIcon, BqOption, BqSelect } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqOption, BqSelect],
       template: `
@@ -2295,7 +2311,7 @@ Set `disable-clear` to hide the clear button and prevent one-click deselection. 
         </bq-select>
       `
     })
-    export class DisableClearSelectComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -2677,6 +2693,7 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
     ];
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqOption, BqSelect, BqSpinner],
       template: `
@@ -2709,7 +2726,7 @@ Call `preventDefault()` on the `bqInput` event to take full control of option fi
         </bq-select>
       `
     })
-    export class CustomFilteringSelectComponent {
+    export class AppComponent {
       visibleOptions = [...ALL_OPTIONS];
       isLoading = false;
 

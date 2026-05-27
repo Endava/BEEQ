@@ -148,6 +148,7 @@ Use the default checkbox for a straightforward binary choice with a short label.
     import { BqCheckbox } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqCheckbox],
       template: `
@@ -156,7 +157,7 @@ Use the default checkbox for a straightforward binary choice with a short label.
         </bq-checkbox>
       `
     })
-    export class DefaultCheckboxComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -212,6 +213,7 @@ Use a longer label when people need more context before deciding, but keep the c
     import { BqCheckbox } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqCheckbox],
       template: `
@@ -220,7 +222,7 @@ Use a longer label when people need more context before deciding, but keep the c
         </bq-checkbox>
       `
     })
-    export class LongLabelCheckboxComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -268,6 +270,7 @@ Use `background-on-hover` when the surrounding layout benefits from a larger per
     import { BqCheckbox } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqCheckbox],
       template: `
@@ -276,7 +279,7 @@ Use `background-on-hover` when the surrounding layout benefits from a larger per
         </bq-checkbox>
       `
     })
-    export class BackgroundOnHoverCheckboxComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -331,6 +334,7 @@ Use `checked` for a preselected default, and `disabled` when the option is curre
     import { BqCheckbox } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqCheckbox],
       template: `
@@ -342,7 +346,7 @@ Use `checked` for a preselected default, and `disabled` when the option is curre
         </bq-checkbox>
       `
     })
-    export class CheckedDisabledCheckboxComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -568,6 +572,7 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
     import { BqCheckbox } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqCheckbox],
       template: `
@@ -615,7 +620,7 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
         </div>
       `,
     })
-    export class IndeterminateCheckboxGroupComponent {
+    export class AppComponent {
       interests = { music: true, travel: false, sport: true };
 
       get allChecked() {

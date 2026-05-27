@@ -877,6 +877,7 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
     // document.documentElement.setAttribute('bq-theme', 'techflow');
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqTabGroup, BqTab, BqIcon, BqButton, BqInput],
       template: `
@@ -938,7 +939,7 @@ Here is an almost production-ready custom theme called **TechFlow** — a theme 
         }
       `,
     })
-    export class TechFlowDemoComponent {
+    export class AppComponent {
       private readonly document = inject(DOCUMENT);
       readonly activeTab = signal('home');
       readonly isDark = signal(true);

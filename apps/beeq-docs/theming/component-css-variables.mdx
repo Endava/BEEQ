@@ -128,6 +128,7 @@ Applies the custom styles to every `bq-badge` in the application.
     // Import the CSS override in your global stylesheet
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqBadge],
       template: `
@@ -136,7 +137,7 @@ Applies the custom styles to every `bq-badge` in the application.
         <bq-badge>99+</bq-badge>
       `,
     })
-    export class BadgeGlobalOverrideExample {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -215,6 +216,7 @@ Only the `bq-badge` elements with the matching CSS class will have the overridde
     // Import the CSS override in your global stylesheet
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqBadge],
       template: `
@@ -224,7 +226,7 @@ Only the `bq-badge` elements with the matching CSS class will have the overridde
         <bq-badge class="success">completed</bq-badge>
       `,
     })
-    export class BadgeTargetedOverrideExample {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"

@@ -148,6 +148,7 @@ Use the built-in `type` values to communicate the nature of the message quickly.
     import { BqToast } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqToast],
       template: `
@@ -158,7 +159,7 @@ Use the built-in `type` values to communicate the nature of the message quickly.
         <bq-toast open type="loading">Uploading file...</bq-toast>
       `
     })
-    export class ToastTypesComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -217,6 +218,7 @@ Use `type="custom"` when you need a branded or domain-specific status cue. Repla
     import { BqIcon, BqToast } from "@beeq/angular/standalone";
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqIcon, BqToast],
       template: `
@@ -226,7 +228,7 @@ Use `type="custom"` when you need a branded or domain-specific status cue. Repla
         </bq-toast>
       `
     })
-    export class CustomIconToastComponent {}
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -395,6 +397,7 @@ Use a dedicated toast container when you want the stacking behavior to be explic
     const TOAST_TYPES = ['info', 'success', 'alert', 'error', 'loading'];
 
     @Component({
+      selector: "app-root",
       standalone: true,
       imports: [BqButton, BqToast],
       template: `
@@ -408,7 +411,7 @@ Use a dedicated toast container when you want the stacking behavior to be explic
         </div>
       `,
     })
-    export class ToastStackExample {
+    export class AppComponent {
       toasts: ToastItem[] = [];
       private readonly timerIds = new Set<ReturnType<typeof setTimeout>>();
       private readonly destroyRef = inject(DestroyRef);
