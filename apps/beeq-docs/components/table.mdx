@@ -221,33 +221,41 @@ The default table applies base typography, header and cell padding, and row sepa
     </table>
     ```
 
-    ```html Angular icon="angular"
-    <table class="bq-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Status</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>John Doe</td>
-          <td>Active</td>
-          <td>−2,343 €</td>
-        </tr>
-        <tr>
-          <td>Alice Smith</td>
-          <td>Pending</td>
-          <td>+95,453 €</td>
-        </tr>
-        <tr>
-          <td>Robert Johnson</td>
-          <td>Inactive</td>
-          <td>−2,343 €</td>
-        </tr>
-      </tbody>
-    </table>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+
+    @Component({
+      standalone: true,
+      template: `
+        <table class="bq-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>John Doe</td>
+              <td>Active</td>
+              <td>−2,343 €</td>
+            </tr>
+            <tr>
+              <td>Alice Smith</td>
+              <td>Pending</td>
+              <td>+95,453 €</td>
+            </tr>
+            <tr>
+              <td>Robert Johnson</td>
+              <td>Inactive</td>
+              <td>−2,343 €</td>
+            </tr>
+          </tbody>
+        </table>
+      `,
+    })
+    export class DefaultTableComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -383,33 +391,41 @@ Add the `selected` class to a `<tr>` to highlight the active record. Use this wh
     </table>
     ```
 
-    ```html Angular icon="angular"
-    <table class="bq-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Status</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>John Doe</td>
-          <td>Active</td>
-          <td>−2,343 €</td>
-        </tr>
-        <tr class="selected">
-          <td>Alice Smith</td>
-          <td>Pending</td>
-          <td>+95,453 €</td>
-        </tr>
-        <tr>
-          <td>Robert Johnson</td>
-          <td>Inactive</td>
-          <td>−2,343 €</td>
-        </tr>
-      </tbody>
-    </table>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+
+    @Component({
+      standalone: true,
+      template: `
+        <table class="bq-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>John Doe</td>
+              <td>Active</td>
+              <td>−2,343 €</td>
+            </tr>
+            <tr class="selected">
+              <td>Alice Smith</td>
+              <td>Pending</td>
+              <td>+95,453 €</td>
+            </tr>
+            <tr>
+              <td>Robert Johnson</td>
+              <td>Inactive</td>
+              <td>−2,343 €</td>
+            </tr>
+          </tbody>
+        </table>
+      `,
+    })
+    export class SelectedRowTableComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -543,33 +559,41 @@ Add the `compact` class to the `<table>` to reduce cell and header padding. This
     </table>
     ```
 
-    ```html Angular icon="angular"
-    <table class="bq-table compact">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Status</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>John Doe</td>
-          <td>Active</td>
-          <td>−2,343 €</td>
-        </tr>
-        <tr class="selected">
-          <td>Alice Smith</td>
-          <td>Pending</td>
-          <td>+95,453 €</td>
-        </tr>
-        <tr>
-          <td>Robert Johnson</td>
-          <td>Inactive</td>
-          <td>−2,343 €</td>
-        </tr>
-      </tbody>
-    </table>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+
+    @Component({
+      standalone: true,
+      template: `
+        <table class="bq-table compact">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>John Doe</td>
+              <td>Active</td>
+              <td>−2,343 €</td>
+            </tr>
+            <tr class="selected">
+              <td>Alice Smith</td>
+              <td>Pending</td>
+              <td>+95,453 €</td>
+            </tr>
+            <tr>
+              <td>Robert Johnson</td>
+              <td>Inactive</td>
+              <td>−2,343 €</td>
+            </tr>
+          </tbody>
+        </table>
+      `,
+    })
+    export class CompactTableComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -703,33 +727,41 @@ Add the `bordered` class to draw explicit borders around each cell and the table
     </table>
     ```
 
-    ```html Angular icon="angular"
-    <table class="bq-table bordered">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Status</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>John Doe</td>
-          <td>Active</td>
-          <td>−2,343 €</td>
-        </tr>
-        <tr class="selected">
-          <td>Alice Smith</td>
-          <td>Pending</td>
-          <td>+95,453 €</td>
-        </tr>
-        <tr>
-          <td>Robert Johnson</td>
-          <td>Inactive</td>
-          <td>−2,343 €</td>
-        </tr>
-      </tbody>
-    </table>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+
+    @Component({
+      standalone: true,
+      template: `
+        <table class="bq-table bordered">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>John Doe</td>
+              <td>Active</td>
+              <td>−2,343 €</td>
+            </tr>
+            <tr class="selected">
+              <td>Alice Smith</td>
+              <td>Pending</td>
+              <td>+95,453 €</td>
+            </tr>
+            <tr>
+              <td>Robert Johnson</td>
+              <td>Inactive</td>
+              <td>−2,343 €</td>
+            </tr>
+          </tbody>
+        </table>
+      `,
+    })
+    export class BorderedTableComponent {}
     ```
 
     ```vue Vue icon="vuejs"
