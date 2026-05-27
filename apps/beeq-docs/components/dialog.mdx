@@ -189,15 +189,15 @@ Use the `default` dialog when you want to overlay content for focused user engag
         <bq-button variant="standard">Button</bq-button>
       </div>
     </bq-dialog>
-    ```
 
-    ```js JavaScript icon="js"
-    const openDialogBtn = document.querySelector("bq-button");
-    const dialogElem = document.querySelector("bq-dialog");
+    <script>
+      const openDialogBtn = document.querySelector("bq-button");
+      const dialogElem = document.querySelector("bq-dialog");
 
-    openDialogBtn.addEventListener("bqClick", () => {
-      dialogElem.open = true;
-    });
+      openDialogBtn.addEventListener("bqClick", () => {
+        dialogElem.open = true;
+      });
+    </script>
     ```
 
     ```jsx React icon="react"
@@ -370,15 +370,15 @@ Use `footer-appearance="highlight"` when emphasis on the footer is important.
         <bq-button variant="standard">Button</bq-button>
       </div>
     </bq-dialog>
-    ```
 
-    ```js JavaScript icon="js"
-    const openDialogBtn = document.querySelector("bq-button");
-    const dialogElem = document.querySelector("bq-dialog");
+    <script>
+      const openDialogBtn = document.querySelector("bq-button");
+      const dialogElem = document.querySelector("bq-dialog");
 
-    openDialogBtn.addEventListener("bqClick", () => {
-      dialogElem.open = true;
-    });
+      openDialogBtn.addEventListener("bqClick", () => {
+        dialogElem.open = true;
+      });
+    </script>
     ```
 
     ```jsx React icon="react"
@@ -528,15 +528,15 @@ This kind of dialog omits the footer section for situations where a minimal and 
 
       <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
     </bq-dialog>
-    ```
 
-    ```js JavaScript icon="js"
-    const openDialogBtn = document.querySelector("bq-button");
-    const dialogElem = document.querySelector("bq-dialog");
+    <script>
+      const openDialogBtn = document.querySelector("bq-button");
+      const dialogElem = document.querySelector("bq-dialog");
 
-    openDialogBtn.addEventListener("bqClick", () => {
-      dialogElem.open = true;
-    });
+      openDialogBtn.addEventListener("bqClick", () => {
+        dialogElem.open = true;
+      });
+    </script>
     ```
 
     ```jsx React icon="react"
@@ -690,15 +690,15 @@ Use `disable-backdrop` when you want to allow users to focus on the dialog conte
         <bq-button variant="standard">Button</bq-button>
       </div>
     </bq-dialog>
-    ```
 
-    ```js JavaScript icon="js"
-    const openDialogBtn = document.querySelector("bq-button");
-    const dialogElem = document.querySelector("bq-dialog");
+    <script>
+      const openDialogBtn = document.querySelector("bq-button");
+      const dialogElem = document.querySelector("bq-dialog");
 
-    openDialogBtn.addEventListener("bqClick", () => {
-      dialogElem.open = true;
-    });
+      openDialogBtn.addEventListener("bqClick", () => {
+        dialogElem.open = true;
+      });
+    </script>
     ```
 
     ```jsx React icon="react"
@@ -886,29 +886,29 @@ Use this variant to confirm irreversible actions with clear messaging and focuse
       <span class="dialog-caption">This action cannot be undone</span>
 
       <div class="dialog-footer" slot="footer">
-        <bq-button appearance="secondary" variant="standard">Cancel</bq-button>
+        <bq-button appearance="secondary">Cancel</bq-button>
         <bq-button variant="danger">Yes, deactivate</bq-button>
       </div>
     </bq-dialog>
-    ```
 
-    ```js JavaScript icon="js"
-    const deactivateBtn = document.querySelector('bq-button[variant="ghost"]');
-    const cancelBtn = document.querySelector('bq-button[appearance="secondary"]');
-    const confirmBtn = document.querySelector('bq-button[variant="danger"]');
-    const dialogElem = document.querySelector("bq-dialog");
+    <script>
+      const deactivateBtn = document.querySelector('bq-button[variant="ghost"]');
+      const cancelBtn = document.querySelector('bq-button[appearance="secondary"]');
+      const confirmBtn = document.querySelector('bq-button[variant="danger"]');
+      const dialogElem = document.querySelector("bq-dialog");
 
-    deactivateBtn.addEventListener("bqClick", () => {
-      dialogElem.open = true;
-    });
+      deactivateBtn.addEventListener("bqClick", () => {
+        dialogElem.open = true;
+      });
 
-    cancelBtn.addEventListener("bqClick", () => {
-      dialogElem.open = false;
-    });
+      cancelBtn.addEventListener("bqClick", () => {
+        dialogElem.open = false;
+      });
 
-    confirmBtn.addEventListener("bqClick", () => {
-      dialogElem.open = false;
-    });
+      confirmBtn.addEventListener("bqClick", () => {
+        dialogElem.open = false;
+      });
+    </script>
     ```
 
     ```jsx React icon="react"
@@ -1086,6 +1086,7 @@ Use this variant to confirm irreversible actions with clear messaging and focuse
 
 - **Built-in dialog semantics** — the component applies `aria-labelledby="bq-dialog--title"` and `aria-modal="true"` to the native `<dialog>` element, so assistive technology can identify it as a modal surface.
 - **Built-in close control labeling** — when the default close button is shown, it includes an accessible `label="Close"` and a decorative close icon marked with `aria-hidden="true"`.
+- **Built-in focus management** — the native `<dialog>` element automatically traps keyboard focus within the dialog while it is open and restores it to the previously focused element when the dialog closes.
 - **Provide a meaningful title** — the content you place in the `title` slot becomes the dialog's accessible label, so it should clearly describe the decision, task, or message.
 - **Include an explicit dismissal path** — if you hide the close button or disable outside dismissal, provide a clear cancel or close action in the footer.
 - **Preserve keyboard expectations** — keep <kbd>Esc</kbd> enabled for dismissible dialogs unless there is a strong product reason to require an explicit choice.
