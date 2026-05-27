@@ -132,13 +132,20 @@ Use the default composition when the title alone provides enough context.
     </BqPageTitle>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqPageTitle } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
-
-    <bq-page-title>
-      Title
-    </bq-page-title>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqPageTitle } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqPageTitle],
+      template: `
+        <bq-page-title>
+              Title
+            </bq-page-title>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -191,16 +198,23 @@ Use a back action when the page is part of a flow or nested navigation path.
     </BqPageTitle>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqButton, BqIcon, BqPageTitle } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
-
-    <bq-page-title>
-      <bq-button appearance="link" slot="back" only-icon>
-        <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
-      </bq-button>
-      Title
-    </bq-page-title>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqPageTitle, BqButton, BqIcon } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqPageTitle, BqButton, BqIcon],
+      template: `
+        <bq-page-title>
+              <bq-button appearance="link" slot="back" only-icon>
+                <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
+              </bq-button>
+              Title
+            </bq-page-title>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -263,17 +277,24 @@ Add a subtitle when people need a little more context before acting.
     </BqPageTitle>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqButton, BqIcon, BqPageTitle } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
-
-    <bq-page-title>
-      <bq-button appearance="link" slot="back" only-icon>
-        <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
-      </bq-button>
-      Title
-      <div slot="sub-title">Sub-title</div>
-    </bq-page-title>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqPageTitle, BqButton, BqIcon } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqPageTitle, BqButton, BqIcon],
+      template: `
+        <bq-page-title>
+              <bq-button appearance="link" slot="back" only-icon>
+                <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
+              </bq-button>
+              Title
+              <div slot="sub-title">Sub-title</div>
+            </bq-page-title>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -352,19 +373,26 @@ Use the suffix slot for page-level actions when back navigation is not relevant 
     </BqPageTitle>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqButton, BqIcon, BqPageTitle } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
-
-    <bq-page-title>
-      Dashboard users
-      <div slot="suffix">
-        <bq-button>
-          <bq-icon name="plus" aria-hidden="true" slot="prefix"></bq-icon>
-          Add user
-        </bq-button>
-      </div>
-    </bq-page-title>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqPageTitle, BqButton, BqIcon } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqPageTitle, BqButton, BqIcon],
+      template: `
+        <bq-page-title>
+              Dashboard users
+              <div slot="suffix">
+                <bq-button>
+                  <bq-icon name="plus" aria-hidden="true" slot="prefix"></bq-icon>
+                  Add user
+                </bq-button>
+              </div>
+            </bq-page-title>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -480,25 +508,32 @@ Use the suffix slot when the title area needs page-level actions such as edit or
     </BqPageTitle>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqButton, BqIcon, BqPageTitle } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
-
-    <bq-page-title>
-      <bq-button appearance="link" slot="back" only-icon>
-        <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
-      </bq-button>
-      Title
-      <div slot="sub-title">Sub-title</div>
-      <div slot="suffix">
-        <bq-button appearance="text" size="small" only-icon>
-          <bq-icon name="pencil-simple-bold" color="text--brand" aria-label="Edit"></bq-icon>
-        </bq-button>
-        <bq-button appearance="text" size="small" only-icon>
-          <bq-icon name="download-simple-bold" color="text--brand" aria-label="Download"></bq-icon>
-        </bq-button>
-      </div>
-    </bq-page-title>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqPageTitle, BqButton, BqIcon } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqPageTitle, BqButton, BqIcon],
+      template: `
+        <bq-page-title>
+              <bq-button appearance="link" slot="back" only-icon>
+                <bq-icon color="text--primary" name="arrow-left" weight="bold" title="Navigate back to the previous page"></bq-icon>
+              </bq-button>
+              Title
+              <div slot="sub-title">Sub-title</div>
+              <div slot="suffix">
+                <bq-button appearance="text" size="small" only-icon>
+                  <bq-icon name="pencil-simple-bold" color="text--brand" aria-label="Edit"></bq-icon>
+                </bq-button>
+                <bq-button appearance="text" size="small" only-icon>
+                  <bq-icon name="download-simple-bold" color="text--brand" aria-label="Download"></bq-icon>
+                </bq-button>
+              </div>
+            </bq-page-title>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"

@@ -515,6 +515,32 @@ Unlike `always-visible`, a controlled tooltip can still be dismissed by the user
 
 The `show()` and `hide()` async methods give you imperative control over the tooltip from outside the component — useful when another UI element or an application event should trigger the tooltip rather than the trigger element's own interaction.
 
+<CodeLivePreview code={`
+  <style>
+    :host {
+      min-height: 15rem !important;
+    }
+  </style>
+
+  <bq-tooltip id="my-tooltip">
+    Programmatically controlled
+    <bq-button slot="trigger">Trigger (hover also works)</bq-button>
+  </bq-tooltip>
+
+  <bq-button id="show-btn">Show tooltip</bq-button>
+  <bq-button id="hide-btn">Hide tooltip</bq-button>
+
+  <script>
+    (() => {
+      const tooltip = previewRoot.querySelector('#my-tooltip');
+      const showBtn = previewRoot.querySelector('#show-btn');
+      const hideBtn = previewRoot.querySelector('#hide-btn');
+
+      showBtn?.addEventListener('bqClick', () => tooltip?.show());
+      hideBtn?.addEventListener('bqClick', () => tooltip?.hide());
+    })();
+  </script>
+`}>
 <CodeGroup>
   ```html HTML icon="html5"
   <bq-tooltip id="my-tooltip">
@@ -590,6 +616,7 @@ The `show()` and `hide()` async methods give you imperative control over the too
   </template>
   ```
 </CodeGroup>
+</CodeLivePreview>
 
 ### Cancelling default behavior
 

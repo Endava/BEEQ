@@ -1038,7 +1038,7 @@ Use `isDateDisallowed` to make specific dates unavailable for selection. This is
     ```
 
     ```js JavaScript icon="js"
-    const datePickerElem = document.querySelector('bq-date-picker[name="disallowed-dates"]');
+    const datePickerElem = previewRoot.querySelector('bq-date-picker[name="disallowed-dates"]');
     const disallowedDates = ['2026-12-01', '2026-12-25', '2026-12-26'];
 
     datePickerElem.isDateDisallowed = (date) => {
@@ -1168,7 +1168,7 @@ Use `formatOptions` when the selected date needs a more descriptive text format 
     ```
 
     ```js JavaScript icon="js"
-    const datePickerElem = document.querySelector('bq-date-picker[name="formatted-date"]');
+    const datePickerElem = previewRoot.querySelector('bq-date-picker[name="formatted-date"]');
 
     datePickerElem.formatOptions = {
       weekday: 'long',

@@ -108,11 +108,18 @@ Use the default icon when you need a simple visual cue inside navigation, action
     <BqIcon name="bell-ringing" />
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqIcon } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
-
-    <bq-icon name="bell-ringing"></bq-icon>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon],
+      template: `
+        <bq-icon name="bell-ringing"></bq-icon>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -160,11 +167,21 @@ Adjust `size` when the icon needs to match the surrounding text or visual emphas
     </>
     ```
 
-    ```html Angular icon="angular"
-    <bq-icon name="bell-ringing" size="16"></bq-icon>
-    <bq-icon name="bell-ringing"></bq-icon>
-    <bq-icon name="bell-ringing" size="32"></bq-icon>
-    <bq-icon name="bell-ringing" size="40"></bq-icon>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon],
+      template: `
+            <bq-icon name="bell-ringing" size="16"></bq-icon>
+            <bq-icon name="bell-ringing"></bq-icon>
+            <bq-icon name="bell-ringing" size="32"></bq-icon>
+            <bq-icon name="bell-ringing" size="40"></bq-icon>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -211,11 +228,21 @@ An icon inherits color from its parent by default, but you can also assign a tok
     </>
     ```
 
-    ```html Angular icon="angular"
-    <bq-icon name="info"></bq-icon>
-    <bq-icon name="star" color="text--success"></bq-icon>
-    <bq-icon name="warning-circle" color="text--warning"></bq-icon>
-    <bq-icon name="x-circle" color="text--danger"></bq-icon>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon],
+      template: `
+            <bq-icon name="info"></bq-icon>
+            <bq-icon name="star" color="text--success"></bq-icon>
+            <bq-icon name="warning-circle" color="text--warning"></bq-icon>
+            <bq-icon name="x-circle" color="text--danger"></bq-icon>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -274,13 +301,23 @@ Use icon-name suffixes like `-thin`, `-light`, `-bold`, `-duotone`, and `-fill` 
     </>
     ```
 
-    ```html Angular icon="angular"
-    <bq-icon name="heart"></bq-icon>
-    <bq-icon name="heart-thin"></bq-icon>
-    <bq-icon name="heart-light"></bq-icon>
-    <bq-icon name="heart-bold"></bq-icon>
-    <bq-icon name="heart-duotone"></bq-icon>
-    <bq-icon name="heart-fill"></bq-icon>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon],
+      template: `
+            <bq-icon name="heart"></bq-icon>
+            <bq-icon name="heart-thin"></bq-icon>
+            <bq-icon name="heart-light"></bq-icon>
+            <bq-icon name="heart-bold"></bq-icon>
+            <bq-icon name="heart-duotone"></bq-icon>
+            <bq-icon name="heart-fill"></bq-icon>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -332,12 +369,22 @@ Use `src` when you want to load a custom icon from a local or CORS-enabled endpo
     />
     ```
 
-    ```html Angular icon="angular"
-    <bq-icon
-      src="https://storybook.beeq.design/assets/wallet.svg"
-      label="Wallet icon"
-      size="256"
-    ></bq-icon>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon],
+      template: `
+            <bq-icon
+              src="https://storybook.beeq.design/assets/wallet.svg"
+              label="Wallet icon"
+              size="256"
+            ></bq-icon>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"

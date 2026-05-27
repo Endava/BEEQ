@@ -313,8 +313,8 @@ Use a dedicated toast container when you want the stacking behavior to be explic
     ```js JavaScript icon="js" expandable
     const TOAST_TYPE = ['info', 'success', 'alert', 'error', 'loading'];
 
-    const button = document.querySelector('bq-button');
-    const toastContainer = document.querySelector('[data-toast-container]');
+    const button = previewRoot.querySelector('bq-button');
+    const toastContainer = previewRoot.querySelector('[data-toast-container]');
 
     const getRandomType = () => TOAST_TYPE[Math.floor(Math.random() * TOAST_TYPE.length)];
     const createToast = (type, message) => {

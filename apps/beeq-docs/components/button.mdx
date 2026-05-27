@@ -56,7 +56,8 @@ Some patterns below are standalone `bq-button` usages, while others are composit
 ## Anatomy
 
 <Frame caption="Button anatomy">
-  <img src="/components/images/button/button-anatomy.svg" alt="Button anatomy: 1. Container, 2. Icon, 3. Label" />
+  <img className="block dark:hidden" src="/components/images/button/button-anatomy.svg" alt="Button anatomy: 1. Container, 2. Icon, 3. Label" />
+  <img className="hidden dark:block" src="/components/images/button/button-anatomy.svg" alt="Button anatomy: 1. Container, 2. Icon, 3. Label" />
 </Frame>
 
 A button can contain a label and optional leading or trailing icons.
@@ -86,11 +87,18 @@ The highest priority action in a view. Only one per screen or section.
 
     <BqButton>Primary button</BqButton>
     ```
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqButton } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
-
-    <bq-button>Primary button</bq-button>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton],
+      template: `
+        <bq-button>Primary button</bq-button>
+      `,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue icon="vuejs"
     <script setup lang="ts">
@@ -127,10 +135,20 @@ Primary also supports `ghost` and `danger` variants:
     <BqButton variant="ghost">Primary ghost</BqButton>
     <BqButton variant="danger">Primary danger</BqButton>
     ```
-    ```html Angular icon="angular"
-    <bq-button>Primary standard</bq-button>
-    <bq-button variant="ghost">Primary ghost</bq-button>
-    <bq-button variant="danger">Primary danger</bq-button>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton],
+      template: `
+            <bq-button>Primary standard</bq-button>
+            <bq-button variant="ghost">Primary ghost</bq-button>
+            <bq-button variant="danger">Primary danger</bq-button>
+      `,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue icon="vuejs"
     <script setup lang="ts">
@@ -162,9 +180,19 @@ Lower-emphasis actions. Can stand alone or pair with a primary button to perform
     <BqButton appearance="secondary">Secondary</BqButton>
     <BqButton appearance="secondary" variant="ghost">Secondary ghost</BqButton>
     ```
-    ```html Angular icon="angular"
-    <bq-button appearance="secondary">Secondary</bq-button>
-    <bq-button appearance="secondary" variant="ghost">Secondary ghost</bq-button>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton],
+      template: `
+            <bq-button appearance="secondary">Secondary</bq-button>
+            <bq-button appearance="secondary" variant="ghost">Secondary ghost</bq-button>
+      `,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue icon="vuejs"
     <script setup lang="ts">
@@ -197,10 +225,20 @@ Renders as an `<a>` element under the hood when `href` is provided. Still action
       Link button
     </BqButton>
     ```
-    ```html Angular icon="angular"
-    <bq-button appearance="link" href="https://www.example.com" target="_blank">
-      Link button
-    </bq-button>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton],
+      template: `
+            <bq-button appearance="link" href="https://www.example.com" target="_blank">
+              Link button
+            </bq-button>
+      `,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue icon="vuejs"
     <script setup lang="ts">
@@ -234,8 +272,18 @@ No background or border. Suitable for inline actions, subtle calls to action, or
 
     <BqButton appearance="text">Text button</BqButton>
     ```
-    ```html Angular icon="angular"
-    <bq-button appearance="text">Text button</bq-button>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton],
+      template: `
+            <bq-button appearance="text">Text button</bq-button>
+      `,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue icon="vuejs"
     <script setup lang="ts">
@@ -275,10 +323,20 @@ Choose the size that best matches the context. Medium is the default and preferr
     <BqButton size="medium">Medium</BqButton>
     <BqButton size="large">Large</BqButton>
     ```
-    ```html Angular  icon="angular"
-    <bq-button size="small">Small</bq-button>
-    <bq-button size="medium">Medium</bq-button>
-    <bq-button size="large">Large</bq-button>
+    ```ts Angular  icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton],
+      template: `
+            <bq-button size="small">Small</bq-button>
+            <bq-button size="medium">Medium</bq-button>
+            <bq-button size="large">Large</bq-button>
+      `,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue icon="vuejs"
     <script setup lang="ts">
@@ -308,8 +366,18 @@ Use the `block` attribute to make the button stretch to its parent width.
 
     <BqButton block>Full width button</BqButton>
     ```
-    ```html Angular icon="angular"
-    <bq-button block>Full width button</bq-button>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton],
+      template: `
+            <bq-button block>Full width button</bq-button>
+      `,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue icon="vuejs"
     <script setup lang="ts">
@@ -343,11 +411,21 @@ Use the `border` property to control the corner radius.
     <BqButton variant="danger" border="full">Danger</BqButton>
     <BqButton appearance="secondary" border="full">Secondary</BqButton>
     ```
-    ```html Angular icon="angular"
-    <bq-button border="full">Primary</bq-button>
-    <bq-button variant="ghost" border="full">Ghost</bq-button>
-    <bq-button variant="danger" border="full">Danger</bq-button>
-    <bq-button appearance="secondary" border="full">Secondary</bq-button>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton],
+      template: `
+            <bq-button border="full">Primary</bq-button>
+            <bq-button variant="ghost" border="full">Ghost</bq-button>
+            <bq-button variant="danger" border="full">Danger</bq-button>
+            <bq-button appearance="secondary" border="full">Secondary</bq-button>
+      `,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue icon="vuejs"
     <script setup lang="ts">
@@ -369,7 +447,8 @@ Use the `border` property to control the corner radius.
 For each button appearance and variant, there are five visual states: **enabled**, **hover**, **focus**, **active**, **loading** and **disabled**.
 
 <Frame caption="Button states: enabled, hover, focus, active, loading, disabled">
-  <img src="/components/images/button/button-states.svg" alt="Button states: enabled, hover, focus, active, loading, disabled" />
+  <img className="block dark:hidden" src="/components/images/button/button-states.svg" alt="Button states: enabled, hover, focus, active, loading, disabled" />
+  <img className="hidden dark:block" src="/components/images/button/button-states.svg" alt="Button states: enabled, hover, focus, active, loading, disabled" />
 </Frame>
 
 ### Disabled
@@ -392,11 +471,21 @@ The `disabled` attribute can be applied to any button variation. When disabled, 
     <BqButton variant="danger" disabled>Danger</BqButton>
     <BqButton appearance="secondary" disabled>Secondary</BqButton>
     ```
-    ```html Angular icon="angular"
-    <bq-button disabled>Primary</bq-button>
-    <bq-button variant="ghost" disabled>Ghost</bq-button>
-    <bq-button variant="danger" disabled>Danger</bq-button>
-    <bq-button appearance="secondary" disabled>Secondary</bq-button>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton],
+      template: `
+            <bq-button disabled>Primary</bq-button>
+            <bq-button variant="ghost" disabled>Ghost</bq-button>
+            <bq-button variant="danger" disabled>Danger</bq-button>
+            <bq-button appearance="secondary" disabled>Secondary</bq-button>
+      `,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue icon="vuejs"
     <script setup lang="ts">
@@ -433,9 +522,19 @@ Use the `loading` attribute to indicate something is being processed. Pair with 
     <BqButton loading>Loading</BqButton>
     <BqButton loading disabled>Loading disabled</BqButton>
     ```
-    ```html Angular icon="angular"
-    <bq-button loading>Loading</bq-button>
-    <bq-button loading disabled>Loading disabled</bq-button>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton],
+      template: `
+            <bq-button loading>Loading</bq-button>
+            <bq-button loading disabled>Loading disabled</bq-button>
+      `,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue icon="vuejs"
     <script setup lang="ts">
@@ -482,18 +581,28 @@ Use the `prefix` or `suffix` slot to add icons. Icons should reinforce the label
       <BqIcon name="arrow-circle-right" slot="suffix" />
     </BqButton>
     ```
-    ```html Angular icon="angular"
-    <!-- import { BqButton, BqIcon } from "@beeq/angular/standalone" -->
-
-    <bq-button>
-      <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>
-      Go back
-    </bq-button>
-
-    <bq-button>
-      Next step
-      <bq-icon name="arrow-circle-right" slot="suffix"></bq-icon>
-    </bq-button>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqIcon } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqIcon],
+      template: `
+            <!-- import { BqButton, BqIcon } from "@beeq/angular/standalone" -->
+        
+            <bq-button>
+              <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>
+              Go back
+            </bq-button>
+        
+            <bq-button>
+              Next step
+              <bq-icon name="arrow-circle-right" slot="suffix"></bq-icon>
+            </bq-button>
+      `,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue icon="vuejs"
     <script setup lang="ts">
@@ -546,16 +655,26 @@ Always provide a `label` so assistive technologies can announce the action corre
       <BqIcon name="bell-ringing" />
     </BqButton>
     ```
-    ```html Angular icon="angular"
-    <bq-button only-icon label="Notifications">
-      <bq-icon name="bell-ringing"></bq-icon>
-    </bq-button>
-    <bq-button only-icon variant="ghost" label="Notifications">
-      <bq-icon name="bell-ringing"></bq-icon>
-    </bq-button>
-    <bq-button only-icon appearance="secondary" label="Notifications">
-      <bq-icon name="bell-ringing"></bq-icon>
-    </bq-button>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqIcon } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqIcon],
+      template: `
+            <bq-button only-icon label="Notifications">
+              <bq-icon name="bell-ringing"></bq-icon>
+            </bq-button>
+            <bq-button only-icon variant="ghost" label="Notifications">
+              <bq-icon name="bell-ringing"></bq-icon>
+            </bq-button>
+            <bq-button only-icon appearance="secondary" label="Notifications">
+              <bq-icon name="bell-ringing"></bq-icon>
+            </bq-button>
+      `,
+    })
+    export class AppComponent {}
     ```
     ```vue Vue icon="vuejs"
     <script setup lang="ts">

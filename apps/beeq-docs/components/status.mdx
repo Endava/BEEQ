@@ -104,11 +104,18 @@ Use the default neutral status when the message should stay present without stro
     <BqStatus>Neutral status</BqStatus>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqStatus } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
-
-    <bq-status>Neutral status</bq-status>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqStatus } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqStatus],
+      template: `
+        <bq-status>Neutral status</bq-status>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -147,11 +154,18 @@ Use `type="alert"` when the message needs immediate attention.
     <BqStatus type="alert">Alert status</BqStatus>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqStatus } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
-
-    <bq-status type="alert">Alert status</bq-status>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqStatus } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqStatus],
+      template: `
+        <bq-status type="alert">Alert status</bq-status>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -186,11 +200,18 @@ Use `type="danger"` when the state signals risk, failure, or a blocked condition
     <BqStatus type="danger">Danger status</BqStatus>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqStatus } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
-
-    <bq-status type="danger">Danger status</bq-status>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqStatus } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqStatus],
+      template: `
+        <bq-status type="danger">Danger status</bq-status>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -225,11 +246,18 @@ Use `type="info"` when the status provides neutral or supporting context.
     <BqStatus type="info">Information status</BqStatus>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqStatus } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
-
-    <bq-status type="info">Information status</bq-status>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqStatus } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqStatus],
+      template: `
+        <bq-status type="info">Information status</bq-status>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -264,11 +292,18 @@ Use `type="success"` when the state confirms a positive outcome.
     <BqStatus type="success">Success status</BqStatus>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqStatus } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
-
-    <bq-status type="success">Success status</bq-status>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqStatus } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqStatus],
+      template: `
+        <bq-status type="success">Success status</bq-status>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"

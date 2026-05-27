@@ -452,7 +452,7 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
     ```js JavaScript icon="js" expandable
     const allCheckboxChange = (event) => {
       const interestCheckboxes = Array.from(
-        document.querySelectorAll('bq-checkbox[name="interest"]'),
+        previewRoot.querySelectorAll('bq-checkbox[name="interest"]'),
       );
 
       interestCheckboxes.forEach((interestCheckbox) => {
@@ -461,11 +461,11 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
     };
 
     const interestCheckboxChange = () => {
-      const allInterestCheckbox = document.querySelector('bq-checkbox[name="all-interests"]');
+      const allInterestCheckbox = previewRoot.querySelector('bq-checkbox[name="all-interests"]');
       if (!allInterestCheckbox) return;
 
-      const interestCheckboxes = document.querySelectorAll('bq-checkbox[name="interest"]');
-      const onlyChecked = document.querySelectorAll(
+      const interestCheckboxes = previewRoot.querySelectorAll('bq-checkbox[name="interest"]');
+      const onlyChecked = previewRoot.querySelectorAll(
         'bq-checkbox[name="interest"][checked]',
       ).length;
 
@@ -474,9 +474,9 @@ Use the indeterminate state when a parent checkbox controls a related set of chi
       allInterestCheckbox.checked = onlyChecked === interestCheckboxes.length;
     };
 
-    const allInterestCheckbox = document.querySelector('bq-checkbox[name="all-interests"]');
+    const allInterestCheckbox = previewRoot.querySelector('bq-checkbox[name="all-interests"]');
     const interestCheckboxes = Array.from(
-      document.querySelectorAll('bq-checkbox[name="interest"]'),
+      previewRoot.querySelectorAll('bq-checkbox[name="interest"]'),
     );
 
     allInterestCheckbox?.addEventListener('bqChange', allCheckboxChange);

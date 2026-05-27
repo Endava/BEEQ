@@ -121,11 +121,18 @@ Use the standard tag when you want a simple and clean representation.
     <BqTag>Tag</BqTag>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqTag } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
-
-    <bq-tag>Tag</bq-tag>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqTag } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTag],
+      template: `
+        <bq-tag>Tag</bq-tag>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -166,10 +173,20 @@ Adjust the `size` attribute to customize the tag's dimensions and support a clea
     </>
     ```
 
-    ```html Angular icon="angular"
-    <bq-tag size="xsmall">Extra small</bq-tag>
-    <bq-tag size="small">Small</bq-tag>
-    <bq-tag size="medium">Medium</bq-tag>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqTag } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTag],
+      template: `
+            <bq-tag size="xsmall">Extra small</bq-tag>
+            <bq-tag size="small">Small</bq-tag>
+            <bq-tag size="medium">Medium</bq-tag>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -209,9 +226,19 @@ Apply the `clickable` attribute for interactive tags that can trigger actions or
     </>
     ```
 
-    ```html Angular icon="angular"
-    <bq-tag clickable>Tag</bq-tag>
-    <bq-tag clickable selected>Tag</bq-tag>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqTag } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTag],
+      template: `
+            <bq-tag clickable>Tag</bq-tag>
+            <bq-tag clickable selected>Tag</bq-tag>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -250,9 +277,19 @@ Apply `disabled` alongside `clickable` when a tag action is temporarily unavaila
     </>
     ```
 
-    ```html Angular icon="angular"
-    <bq-tag clickable>Enabled</bq-tag>
-    <bq-tag clickable disabled>Disabled</bq-tag>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqTag } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTag],
+      template: `
+            <bq-tag clickable>Enabled</bq-tag>
+            <bq-tag clickable disabled>Disabled</bq-tag>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -300,12 +337,22 @@ Use filled colored tags when you want a stronger visual distinction for categori
     <BqTag color="gray">Gray</BqTag>
     ```
 
-    ```html Angular icon="angular"
-    <bq-tag color="success">Success</bq-tag>
-    <bq-tag color="info">Info</bq-tag>
-    <bq-tag color="error">Error</bq-tag>
-    <bq-tag color="warning">Warning</bq-tag>
-    <bq-tag color="gray">Gray</bq-tag>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqTag } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTag],
+      template: `
+            <bq-tag color="success">Success</bq-tag>
+            <bq-tag color="info">Info</bq-tag>
+            <bq-tag color="error">Error</bq-tag>
+            <bq-tag color="warning">Warning</bq-tag>
+            <bq-tag color="gray">Gray</bq-tag>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -354,12 +401,22 @@ Use `variant="outline"` when you want a subtler visual distinction without a fil
     <BqTag color="gray" variant="outline">Gray</BqTag>
     ```
 
-    ```html Angular icon="angular"
-    <bq-tag color="success" variant="outline">Success</bq-tag>
-    <bq-tag color="info" variant="outline">Info</bq-tag>
-    <bq-tag color="error" variant="outline">Error</bq-tag>
-    <bq-tag color="warning" variant="outline">Warning</bq-tag>
-    <bq-tag color="gray" variant="outline">Gray</bq-tag>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqTag } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTag],
+      template: `
+            <bq-tag color="success" variant="outline">Success</bq-tag>
+            <bq-tag color="info" variant="outline">Info</bq-tag>
+            <bq-tag color="error" variant="outline">Error</bq-tag>
+            <bq-tag color="warning" variant="outline">Warning</bq-tag>
+            <bq-tag color="gray" variant="outline">Gray</bq-tag>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -392,10 +449,7 @@ Enable `removable` when users need to clear selected items, applied filters, or 
 
   <script>
     (() => {
-      const preview = document.currentScript?.parentElement;
-      if (!preview) return;
-
-      preview.querySelectorAll('bq-tag[removable]').forEach((tag) => {
+      previewRoot.querySelectorAll('bq-tag[removable]').forEach((tag) => {
         tag.addEventListener('bqClose', () => {
           window.setTimeout(() => tag.show(), 1500);
         });
@@ -424,16 +478,23 @@ Enable `removable` when users need to clear selected items, applied filters, or 
     <BqTag removable color="gray">Gray</BqTag>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqTag } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
-
-    <bq-tag removable>Default</bq-tag>
-    <bq-tag removable color="success">Success</bq-tag>
-    <bq-tag removable color="info">Info</bq-tag>
-    <bq-tag removable color="error">Error</bq-tag>
-    <bq-tag removable color="warning">Warning</bq-tag>
-    <bq-tag removable color="gray">Gray</bq-tag>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqTag } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTag],
+      template: `
+        <bq-tag removable>Default</bq-tag>
+            <bq-tag removable color="success">Success</bq-tag>
+            <bq-tag removable color="info">Info</bq-tag>
+            <bq-tag removable color="error">Error</bq-tag>
+            <bq-tag removable color="warning">Warning</bq-tag>
+            <bq-tag removable color="gray">Gray</bq-tag>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -466,10 +527,7 @@ Use `variant="outline"` with `removable` when you want the same close behavior w
   <bq-tag removable color="gray" variant="outline">Gray</bq-tag>
   <script>
     (() => {
-      const preview = document.currentScript?.parentElement;
-      if (!preview) return;
-
-      preview.querySelectorAll('bq-tag[removable]').forEach((tag) => {
+      previewRoot.querySelectorAll('bq-tag[removable]').forEach((tag) => {
         tag.addEventListener('bqClose', () => {
           window.setTimeout(() => tag.show(), 1500);
         });
@@ -498,16 +556,23 @@ Use `variant="outline"` with `removable` when you want the same close behavior w
     <BqTag removable color="gray" variant="outline">Gray</BqTag>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqTag } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
-
-    <bq-tag removable variant="outline">Default</bq-tag>
-    <bq-tag removable color="success" variant="outline">Success</bq-tag>
-    <bq-tag removable color="info" variant="outline">Info</bq-tag>
-    <bq-tag removable color="error" variant="outline">Error</bq-tag>
-    <bq-tag removable color="warning" variant="outline">Warning</bq-tag>
-    <bq-tag removable color="gray" variant="outline">Gray</bq-tag>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqTag } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTag],
+      template: `
+        <bq-tag removable variant="outline">Default</bq-tag>
+            <bq-tag removable color="success" variant="outline">Success</bq-tag>
+            <bq-tag removable color="info" variant="outline">Info</bq-tag>
+            <bq-tag removable color="error" variant="outline">Error</bq-tag>
+            <bq-tag removable color="warning" variant="outline">Warning</bq-tag>
+            <bq-tag removable color="gray" variant="outline">Gray</bq-tag>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -614,31 +679,41 @@ Use the `prefix` slot to add an icon when extra context helps, while keeping the
     </BqTag>
     ```
 
-    ```html Angular icon="angular"
-    <bq-tag>
-      <bq-icon name="alarm" slot="prefix"></bq-icon>
-      Default
-    </bq-tag>
-    <bq-tag color="success">
-      <bq-icon name="check-circle" slot="prefix"></bq-icon>
-      Success
-    </bq-tag>
-    <bq-tag color="info">
-      <bq-icon name="info" slot="prefix"></bq-icon>
-      Info
-    </bq-tag>
-    <bq-tag color="error">
-      <bq-icon name="warning-diamond" slot="prefix"></bq-icon>
-      Error
-    </bq-tag>
-    <bq-tag color="warning">
-      <bq-icon name="warning" slot="prefix"></bq-icon>
-      Warning
-    </bq-tag>
-    <bq-tag color="gray">
-      <bq-icon name="video-camera-slash" slot="prefix"></bq-icon>
-      Gray
-    </bq-tag>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqTag, BqIcon } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTag, BqIcon],
+      template: `
+            <bq-tag>
+              <bq-icon name="alarm" slot="prefix"></bq-icon>
+              Default
+            </bq-tag>
+            <bq-tag color="success">
+              <bq-icon name="check-circle" slot="prefix"></bq-icon>
+              Success
+            </bq-tag>
+            <bq-tag color="info">
+              <bq-icon name="info" slot="prefix"></bq-icon>
+              Info
+            </bq-tag>
+            <bq-tag color="error">
+              <bq-icon name="warning-diamond" slot="prefix"></bq-icon>
+              Error
+            </bq-tag>
+            <bq-tag color="warning">
+              <bq-icon name="warning" slot="prefix"></bq-icon>
+              Warning
+            </bq-tag>
+            <bq-tag color="gray">
+              <bq-icon name="video-camera-slash" slot="prefix"></bq-icon>
+              Gray
+            </bq-tag>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -763,31 +838,41 @@ Use the outline variant with a prefix icon when you want context with a lighter 
     </BqTag>
     ```
 
-    ```html Angular icon="angular"
-    <bq-tag variant="outline">
-      <bq-icon name="alarm" slot="prefix"></bq-icon>
-      Default
-    </bq-tag>
-    <bq-tag color="success" variant="outline">
-      <bq-icon name="check-circle" slot="prefix"></bq-icon>
-      Success
-    </bq-tag>
-    <bq-tag color="info" variant="outline">
-      <bq-icon name="info" slot="prefix"></bq-icon>
-      Info
-    </bq-tag>
-    <bq-tag color="error" variant="outline">
-      <bq-icon name="warning-diamond" slot="prefix"></bq-icon>
-      Error
-    </bq-tag>
-    <bq-tag color="warning" variant="outline">
-      <bq-icon name="warning" slot="prefix"></bq-icon>
-      Warning
-    </bq-tag>
-    <bq-tag color="gray" variant="outline">
-      <bq-icon name="video-camera-slash" slot="prefix"></bq-icon>
-      Gray
-    </bq-tag>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqTag, BqIcon } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqTag, BqIcon],
+      template: `
+            <bq-tag variant="outline">
+              <bq-icon name="alarm" slot="prefix"></bq-icon>
+              Default
+            </bq-tag>
+            <bq-tag color="success" variant="outline">
+              <bq-icon name="check-circle" slot="prefix"></bq-icon>
+              Success
+            </bq-tag>
+            <bq-tag color="info" variant="outline">
+              <bq-icon name="info" slot="prefix"></bq-icon>
+              Info
+            </bq-tag>
+            <bq-tag color="error" variant="outline">
+              <bq-icon name="warning-diamond" slot="prefix"></bq-icon>
+              Error
+            </bq-tag>
+            <bq-tag color="warning" variant="outline">
+              <bq-icon name="warning" slot="prefix"></bq-icon>
+              Warning
+            </bq-tag>
+            <bq-tag color="gray" variant="outline">
+              <bq-icon name="video-camera-slash" slot="prefix"></bq-icon>
+              Gray
+            </bq-tag>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"

@@ -119,11 +119,18 @@ Use the default variant when you want the cleanest possible presentation and the
     <BqEmptyState>Title</BqEmptyState>
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqEmptyState } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
-
-    <bq-empty-state>Title</bq-empty-state>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqEmptyState } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqEmptyState],
+      template: `
+        <bq-empty-state>Title</bq-empty-state>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -198,18 +205,28 @@ Use body content when the empty state needs a short explanation or a little more
     </BqEmptyState>
     ```
 
-    ```html Angular icon="angular"
-    <bq-empty-state>
-      Title
-      <span slot="body">Description</span>
-    </bq-empty-state>
-    <bq-empty-state>
-      Title
-      <span slot="body">
-        Description
-        <a class="bq-link" href="https://example.com">Link</a>
-      </span>
-    </bq-empty-state>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqEmptyState } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqEmptyState],
+      template: `
+            <bq-empty-state>
+              Title
+              <span slot="body">Description</span>
+            </bq-empty-state>
+            <bq-empty-state>
+              Title
+              <span slot="body">
+                Description
+                <a class="bq-link" href="https://example.com">Link</a>
+              </span>
+            </bq-empty-state>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -351,38 +368,48 @@ Use the footer when the empty state should help people recover immediately. Pref
     </>
     ```
 
-    ```html Angular icon="angular"
-    <bq-empty-state size="medium">
-      Title
-      <span slot="body">
-        Description
-        <a class="bq-link" href="https://example.com">Link</a>
-      </span>
-      <div slot="footer">
-        <bq-button appearance="primary" size="small">Button</bq-button>
-      </div>
-    </bq-empty-state>
-    <bq-empty-state size="medium">
-      Title
-      <span slot="body">
-        Description
-        <a class="bq-link" href="https://example.com">Link</a>
-      </span>
-      <div slot="footer">
-        <bq-button size="small" variant="ghost">Button</bq-button>
-      </div>
-    </bq-empty-state>
-    <bq-empty-state size="medium">
-      Title
-      <span slot="body">
-        Description
-        <a class="bq-link" href="https://example.com">Link</a>
-      </span>
-      <div slot="footer">
-        <bq-button size="small" variant="ghost">Button</bq-button>
-        <bq-button appearance="primary" size="small">Button</bq-button>
-      </div>
-    </bq-empty-state>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqEmptyState, BqButton } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqEmptyState, BqButton],
+      template: `
+            <bq-empty-state size="medium">
+              Title
+              <span slot="body">
+                Description
+                <a class="bq-link" href="https://example.com">Link</a>
+              </span>
+              <div slot="footer">
+                <bq-button appearance="primary" size="small">Button</bq-button>
+              </div>
+            </bq-empty-state>
+            <bq-empty-state size="medium">
+              Title
+              <span slot="body">
+                Description
+                <a class="bq-link" href="https://example.com">Link</a>
+              </span>
+              <div slot="footer">
+                <bq-button size="small" variant="ghost">Button</bq-button>
+              </div>
+            </bq-empty-state>
+            <bq-empty-state size="medium">
+              Title
+              <span slot="body">
+                Description
+                <a class="bq-link" href="https://example.com">Link</a>
+              </span>
+              <div slot="footer">
+                <bq-button size="small" variant="ghost">Button</bq-button>
+                <bq-button appearance="primary" size="small">Button</bq-button>
+              </div>
+            </bq-empty-state>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"

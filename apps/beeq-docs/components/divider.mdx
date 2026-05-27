@@ -149,8 +149,18 @@ The simplest use — no attributes or slot content required. The divider renders
     <BqDivider />
     ```
 
-    ```html Angular icon="angular"
-    <bq-divider></bq-divider>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqDivider } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqDivider],
+      template: `
+            <bq-divider></bq-divider>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -214,12 +224,22 @@ Set `orientation="vertical"` when the divider separates side-by-side content, su
     </div>
     ```
 
-    ```html Angular icon="angular"
-    <div class="divider--vertical-example">
-      <span>Left</span>
-      <bq-divider orientation="vertical"></bq-divider>
-      <span>Right</span>
-    </div>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqDivider } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqDivider],
+      template: `
+            <div class="divider--vertical-example">
+              <span>Left</span>
+              <bq-divider orientation="vertical"></bq-divider>
+              <span>Right</span>
+            </div>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -277,13 +297,23 @@ Use `dashed` for a lighter visual boundary. Adjust `stroke-dash-width`, `stroke-
     />
     ```
 
-    ```html Angular icon="angular"
-    <bq-divider
-      dashed
-      stroke-dash-width="12"
-      stroke-dash-gap="7"
-      stroke-linecap="butt"
-    ></bq-divider>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqDivider } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqDivider],
+      template: `
+            <bq-divider
+              dashed
+              stroke-dash-width="12"
+              stroke-dash-gap="7"
+              stroke-linecap="butt"
+            ></bq-divider>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -344,10 +374,20 @@ Use `title-alignment` to place title content at the start, middle, or end of the
     <BqDivider titleAlignment="end">Text end</BqDivider>
     ```
 
-    ```html Angular icon="angular"
-    <bq-divider title-alignment="start">Text start</bq-divider>
-    <bq-divider title-alignment="middle">Text middle</bq-divider>
-    <bq-divider title-alignment="end">Text end</bq-divider>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqDivider } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqDivider],
+      template: `
+            <bq-divider title-alignment="start">Text start</bq-divider>
+            <bq-divider title-alignment="middle">Text middle</bq-divider>
+            <bq-divider title-alignment="end">Text end</bq-divider>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -403,15 +443,25 @@ Use stroke attributes to match the divider to a specific visual treatment. Set `
     </BqDivider>
     ```
 
-    ```html Angular icon="angular"
-    <bq-divider
-      stroke-color="stroke--brand"
-      stroke-thickness="2"
-      stroke-basis="96"
-      title-alignment="start"
-    >
-      Section
-    </bq-divider>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqDivider } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqDivider],
+      template: `
+            <bq-divider
+              stroke-color="stroke--brand"
+              stroke-thickness="2"
+              stroke-basis="96"
+              title-alignment="start"
+            >
+              Section
+            </bq-divider>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"

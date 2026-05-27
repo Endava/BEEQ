@@ -113,12 +113,19 @@ Use the badge without slot content when you only need a small visual signal. `si
     <BqBadge size="medium" />
     ```
 
-    ```html Angular icon="angular"
-    <!-- Standalone: import { BqBadge } from "@beeq/angular/standalone" -->
-    <!-- Modules: components are available after importing BeeQModule -->
-
-    <bq-badge></bq-badge>
-    <bq-badge size="medium"></bq-badge>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqBadge } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqBadge],
+      template: `
+        <bq-badge></bq-badge>
+            <bq-badge size="medium"></bq-badge>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -159,9 +166,19 @@ Add slot content when the badge needs to communicate a count. Keep the value sho
     <BqBadge>12</BqBadge>
     ```
 
-    ```html Angular icon="angular"
-    <bq-badge>2</bq-badge>
-    <bq-badge>12</bq-badge>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqBadge } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqBadge],
+      template: `
+            <bq-badge>2</bq-badge>
+            <bq-badge>12</bq-badge>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
@@ -247,11 +264,21 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
     </div>
     ```
 
-    ```html Angular icon="angular"
-    <div class="badge--icon" aria-label="Notifications">
-      <bq-icon name="bell-ringing" size="24"></bq-icon>
-      <bq-badge>9</bq-badge>
-    </div>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqBadge } from "@beeq/angular/standalone";
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqIcon, BqBadge],
+      template: `
+            <div class="badge--icon" aria-label="Notifications">
+              <bq-icon name="bell-ringing" size="24"></bq-icon>
+              <bq-badge>9</bq-badge>
+            </div>
+      `,
+    })
+    export class AppComponent {}
     ```
 
     ```vue Vue icon="vuejs"
