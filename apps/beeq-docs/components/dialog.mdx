@@ -11,7 +11,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
   <img className="hidden dark:block" src="/components/images/dialog/dialog-overview-dark.svg" alt="BEEQ Dialog component overview" />
 </Frame>
 
-Dialogs help people stay in context while responding to important information, confirming an action, or completing a short focused task. They should be used sparingly and only when the interruption is justified.
+Dialogs help people stay in context while responding to important information, confirming an action, or completing a short focused task. Use them sparingly, and only when the interruption is justified.
 
 <Note>
   Keep dialog content concise and purposeful. Always provide a clear way to dismiss the dialog, such as a close button, a cancel action, or both.
@@ -85,7 +85,7 @@ Use dialogs only when the interruption is worth the attention shift and the next
     imageLightSrc="/components/images/dialog/dialog-title-guidance-light.svg"
     imageDarkSrc="/components/images/dialog/dialog-title-guidance-dark.svg"
   >
-    Write titles that tell people what decision or task the dialog is about, not just that something happened.
+    Write titles that tell people what decision or task the dialog is about, not only that something happened.
   </CardTile>
   <CardTile
     title="Limit the number of actions"
@@ -290,7 +290,7 @@ Use the `default` dialog when you want to overlay content for focused user engag
 </CodeLivePreview>
 
 <Tip>
-  The dialog closes via its built-in close button (✕) or by clicking the backdrop. You can also control visibility programmatically with the `show()`, `hide()`, and `cancel()` methods, or use the `open` attribute for static snapshots.
+  The dialog closes via its built-in close button (✕) or by clicking the backdrop. To control visibility programmatically, call the `show()`, `hide()`, and `cancel()` methods, or use the `open` attribute for static snapshots.
 </Tip>
 
 ## Options
@@ -790,7 +790,7 @@ Use `disable-backdrop` when you want to allow users to focus on the dialog conte
   </CodeGroup>
 </CodeLivePreview>
 
-### Dialog Confirm
+### Confirm dialog
 
 Use this variant to confirm irreversible actions with clear messaging and focused choices.
 
