@@ -11,10 +11,10 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
   <img className="hidden dark:block" src="/components/images/table/table-overview-dark.svg" alt="BEEQ Table component overview" />
 </Frame>
 
-Tables organize information into rows and columns so people can compare values, find records, and take action on individual items. BEEQ provides CSS utility classes for the native HTML `<table>` element rather than a custom web component.
+Tables organize information into rows and columns so people can compare values, find records, and take action on individual items. BEEQ styles the native HTML `<table>` element with CSS utility classes instead of shipping a custom web component.
 
 <Note>
-  Because the table is a CSS-only pattern, you are responsible for the correct HTML structure: `<table>`, `<thead>`, `<tbody>`, `<tr>`, `<th>`, and `<td>`. The BEEQ styles apply only when the `bq-table` class is present on the `<table>` element.
+  Because the table is a CSS-only pattern, you own the correct HTML structure: `<table>`, `<thead>`, `<tbody>`, `<tr>`, `<th>`, and `<td>`. BEEQ styles apply only when the `bq-table` class is present on the `<table>` element.
 </Note>
 
 ## When to use
@@ -829,7 +829,7 @@ Add the `bordered` class to draw explicit borders around each cell and the table
       <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
       Don't
     </span>
-    Apply the compact modifier just to fit more rows, if it makes the content harder to read or interact with.
+    Apply the compact modifier only to fit more rows, if it makes the content harder to read or interact with.
   </Card>
 </CardGroup>
 
