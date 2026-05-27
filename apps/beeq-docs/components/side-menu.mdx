@@ -7,7 +7,8 @@ import { CardTile } from '/snippets/CardTile.jsx';
 import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
 <Frame className="px-4 py-4" caption="Side Menu overview">
-  <img src="https://placeholdit.com/600x400" alt="Placeholder for the Side Menu overview image" />
+  <img className="block dark:hidden" src="/components/images/side-menu/side-menu-overview-light.svg" alt="BEEQ Side Menu component overview" />
+  <img className="hidden dark:block" src="/components/images/side-menu/side-menu-overview-dark.svg" alt="BEEQ Side Menu component overview" />
 </Frame>
 
 The side menu is a vertical navigation element that sits alongside a page or application layout. It acts as a central hub for accessing sections, features, and functionality.
@@ -57,32 +58,33 @@ The side menu is a vertical navigation element that sits alongside a page or app
 ## Anatomy
 
 <Frame className="px-4 py-4" caption="Side Menu anatomy">
-  <img src="https://placeholdit.com/1000x420" alt="Placeholder for the Side Menu anatomy image" />
+  <img className="block dark:hidden" src="/components/images/side-menu/side-menu-anatomy-light.svg" alt="BEEQ Side Menu component anatomy" />
+  <img className="hidden dark:block" src="/components/images/side-menu/side-menu-anatomy-dark.svg" alt="BEEQ Side Menu component anatomy" />
 </Frame>
 
-A side menu is composed of a container, selected item state, navigation items, and an expand/collapse control.
+A side menu is composed of a container, selected item state, navigation items, and optional logo and footer areas.
 
 | Part | Element | Description |
 |---|---|---|
 | **1** | Container | The root `<aside>` surface that holds the side menu |
 | **2** | Selected | The active item that represents the current location |
 | **3** | Navigation item | A selectable `bq-side-menu-item` with optional prefix and suffix content |
-| **4** | Expand/collapse button | The control used to toggle between expanded and collapsed views |
+| **4** | Logo and footer slots | Optional areas for brand content and supplementary actions |
 
 ## Design guidelines
 
 <CardGroup cols={2}>
   <CardTile
     title="Keep navigation available"
-    imageLightSrc="https://placeholdit.com/480x320"
-    imageDarkSrc="https://placeholdit.com/480x320"
+    imageLightSrc="/components/images/side-menu/side-menu-keep-navigation-light.svg"
+    imageDarkSrc="/components/images/side-menu/side-menu-keep-navigation-dark.svg"
   >
     The side menu can scroll separately from the main content. This keeps navigation available when the page content is long.
   </CardTile>
   <CardTile
     title="Write clear labels"
-    imageLightSrc="https://placeholdit.com/480x320"
-    imageDarkSrc="https://placeholdit.com/480x320"
+    imageLightSrc="/components/images/side-menu/side-menu-clear-labels-light.svg"
+    imageDarkSrc="/components/images/side-menu/side-menu-clear-labels-dark.svg"
   >
     Use short, unique labels in sentence case. The link text should explain the destination without extra context.
   </CardTile>
@@ -217,29 +219,39 @@ The default side menu is a versatile container for organizing and displaying nav
       </BqSideMenuItem>
     </BqSideMenu>
     ```
-    ```html Angular icon="angular"
-    <bq-side-menu>
-      <div slot="logo">
-        <bq-icon name="hexagon" size="32"></bq-icon>
-        <h1>BEEQ</h1>
-      </div>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqBadge, BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/angular/standalone";
 
-      <bq-side-menu-item active>
-        <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
-        Dashboard
-      </bq-side-menu-item>
+    @Component({
+      standalone: true,
+      imports: [BqBadge, BqIcon, BqSideMenu, BqSideMenuItem],
+      template: `
+        <bq-side-menu>
+          <div slot="logo">
+            <bq-icon name="hexagon" size="32"></bq-icon>
+            <h1>BEEQ</h1>
+          </div>
 
-      <bq-side-menu-item>
-        <bq-icon name="package" slot="prefix"></bq-icon>
-        Products
-        <bq-badge slot="suffix">5</bq-badge>
-      </bq-side-menu-item>
+          <bq-side-menu-item [active]="true">
+            <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+            Dashboard
+          </bq-side-menu-item>
 
-      <bq-side-menu-item disabled>
-        <bq-icon name="gauge" slot="prefix"></bq-icon>
-        Performance
-      </bq-side-menu-item>
-    </bq-side-menu>
+          <bq-side-menu-item>
+            <bq-icon name="package" slot="prefix"></bq-icon>
+            Products
+            <bq-badge slot="suffix">5</bq-badge>
+          </bq-side-menu-item>
+
+          <bq-side-menu-item [disabled]="true">
+            <bq-icon name="gauge" slot="prefix"></bq-icon>
+            Performance
+          </bq-side-menu-item>
+        </bq-side-menu>
+      `
+    })
+    export class DefaultSideMenuComponent {}
     ```
     ```vue Vue icon="vuejs"
     <script setup lang="ts">
@@ -357,27 +369,37 @@ Side menu items support default, active, hover, focus, disabled, and with-counte
       </BqSideMenuItem>
     </>
     ```
-    ```html Angular icon="angular"
-    <bq-side-menu-item>
-      <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
-      Default
-    </bq-side-menu-item>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqBadge, BqIcon, BqSideMenuItem } from "@beeq/angular/standalone";
 
-    <bq-side-menu-item active>
-      <bq-icon name="package" slot="prefix"></bq-icon>
-      Active
-    </bq-side-menu-item>
+    @Component({
+      standalone: true,
+      imports: [BqBadge, BqIcon, BqSideMenuItem],
+      template: `
+        <bq-side-menu-item>
+          <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+          Default
+        </bq-side-menu-item>
 
-    <bq-side-menu-item disabled>
-      <bq-icon name="gauge" slot="prefix"></bq-icon>
-      Disabled
-    </bq-side-menu-item>
+        <bq-side-menu-item [active]="true">
+          <bq-icon name="package" slot="prefix"></bq-icon>
+          Active
+        </bq-side-menu-item>
 
-    <bq-side-menu-item>
-      <bq-icon name="bell" slot="prefix"></bq-icon>
-      With counter
-      <bq-badge slot="suffix">5</bq-badge>
-    </bq-side-menu-item>
+        <bq-side-menu-item [disabled]="true">
+          <bq-icon name="gauge" slot="prefix"></bq-icon>
+          Disabled
+        </bq-side-menu-item>
+
+        <bq-side-menu-item>
+          <bq-icon name="bell" slot="prefix"></bq-icon>
+          With counter
+          <bq-badge slot="suffix">5</bq-badge>
+        </bq-side-menu-item>
+      `
+    })
+    export class SideMenuItemStatesComponent {}
     ```
     ```vue Vue icon="vuejs"
     <script setup lang="ts">
@@ -480,11 +502,21 @@ Use the `appearance` attribute to align the side menu with your application's vi
       <BqSideMenuItem>Reports</BqSideMenuItem>
     </BqSideMenu>
     ```
-    ```html Angular icon="angular"
-    <bq-side-menu appearance="brand">
-      <bq-side-menu-item active>Dashboard</bq-side-menu-item>
-      <bq-side-menu-item>Reports</bq-side-menu-item>
-    </bq-side-menu>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSideMenu, BqSideMenuItem } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqSideMenu, BqSideMenuItem],
+      template: `
+        <bq-side-menu appearance="brand">
+          <bq-side-menu-item [active]="true">Dashboard</bq-side-menu-item>
+          <bq-side-menu-item>Reports</bq-side-menu-item>
+        </bq-side-menu>
+      `
+    })
+    export class BrandSideMenuComponent {}
     ```
     ```vue Vue icon="vuejs"
     <script setup lang="ts">
@@ -579,17 +611,27 @@ Use `collapse` to create a compact side menu. Use `size="small"` when space is c
       </BqSideMenuItem>
     </BqSideMenu>
     ```
-    ```html Angular icon="angular"
-    <bq-side-menu collapse size="small">
-      <bq-side-menu-item active>
-        <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
-        Dashboard
-      </bq-side-menu-item>
-      <bq-side-menu-item>
-        <bq-icon name="package" slot="prefix"></bq-icon>
-        Products
-      </bq-side-menu-item>
-    </bq-side-menu>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqIcon, BqSideMenu, BqSideMenuItem } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqIcon, BqSideMenu, BqSideMenuItem],
+      template: `
+        <bq-side-menu [collapse]="true" size="small">
+          <bq-side-menu-item [active]="true">
+            <bq-icon name="diamonds-four" slot="prefix"></bq-icon>
+            Dashboard
+          </bq-side-menu-item>
+          <bq-side-menu-item>
+            <bq-icon name="package" slot="prefix"></bq-icon>
+            Products
+          </bq-side-menu-item>
+        </bq-side-menu>
+      `
+    })
+    export class CollapsedSideMenuComponent {}
     ```
     ```vue Vue icon="vuejs"
     <script setup lang="ts">
@@ -681,14 +723,24 @@ Use the footer slot for supplementary actions, links, or information at the bott
       </BqButton>
     </BqSideMenu>
     ```
-    ```html Angular icon="angular"
-    <bq-side-menu>
-      <bq-side-menu-item active>Dashboard</bq-side-menu-item>
-      <bq-side-menu-item>Reports</bq-side-menu-item>
-      <bq-button slot="footer" appearance="link" size="small">
-        Settings
-      </bq-button>
-    </bq-side-menu>
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqSideMenu, BqSideMenuItem } from "@beeq/angular/standalone";
+
+    @Component({
+      standalone: true,
+      imports: [BqButton, BqSideMenu, BqSideMenuItem],
+      template: `
+        <bq-side-menu>
+          <bq-side-menu-item [active]="true">Dashboard</bq-side-menu-item>
+          <bq-side-menu-item>Reports</bq-side-menu-item>
+          <bq-button slot="footer" appearance="link" size="small">
+            Settings
+          </bq-button>
+        </bq-side-menu>
+      `
+    })
+    export class SideMenuFooterComponent {}
     ```
     ```vue Vue icon="vuejs"
     <script setup lang="ts">
@@ -771,12 +823,12 @@ Use the footer slot for supplementary actions, links, or information at the bott
 
 ## Accessibility
 
-The side menu renders the root navigation surface as an `<aside>`. Each `bq-side-menu-item` renders as a focusable button with `role="menuitem"`. The `disabled` property maps to `aria-disabled="true"` and removes the item from the tab order with `tabindex="-1"`.
+The side menu renders its root surface as an `<aside>` and places menu items inside a `<nav>`. Each `bq-side-menu-item` renders as a focusable button with `role="menuitem"`, and the `disabled` property maps to `aria-disabled="true"` and `tabindex="-1"`.
 
 - **Landmark context** - include semantic heading text in the logo slot to communicate the menu purpose and where its content begins.
-- **Collapsed state** - communicate the expanded or collapsed state through your surrounding layout controls when you expose a custom toggle.
-- **Icons** - validate icon meaning with people who use assistive technology or who may need additional visual clarity.
-- **Labels** - use unique labels that make sense without additional context. The side menu item text feeds the collapsed tooltip content.
+- **Collapsed state** - communicate the expanded or collapsed state through the surrounding layout control when you add one.
+- **Icons** - validate icon meaning when collapsed navigation relies on icons to identify destinations.
+- **Labels** - use unique labels that make sense without additional context. The item text feeds the collapsed tooltip content.
 - **Keyboard navigation** - side menu items support focus, click, <kbd>Enter</kbd>, and <kbd>Space</kbd> interaction through the underlying button.
 
 ## API reference
@@ -839,6 +891,28 @@ The side menu renders the root navigation surface as an `<aside>`. Each `bq-side
 | `suffix` | The suffix slot |
 | `trigger` | The `<div>` container that holds the element that displays the tooltip on hover when the side menu is collapsed |
 
+### Events
+
+| Component | Event | Description | Type |
+|---|---|---|---|
+| `bq-side-menu` | `bqCollapse` | Fires when the side menu changes its width from expanded to collapsed and vice versa | `CustomEvent<{ collapse: boolean; }>` |
+| `bq-side-menu` | `bqSelect` | Fires when the active or selected menu item changes | `CustomEvent<HTMLBqSideMenuItemElement>` |
+| `bq-side-menu-item` | `bqBlur` | Fires when the menu item loses focus | `CustomEvent<HTMLBqSideMenuItemElement>` |
+| `bq-side-menu-item` | `bqClick` | Fires when the menu item is clicked | `CustomEvent<HTMLBqSideMenuItemElement>` |
+| `bq-side-menu-item` | `bqFocus` | Fires when the menu item receives focus | `CustomEvent<HTMLBqSideMenuItemElement>` |
+
+<Note>
+  - In React, prefix events with `on`: `onBqSelect`, `onBqCollapse`, `onBqClick`.
+  - In Angular, use event binding syntax: `(bqSelect)`, `(bqCollapse)`, `(bqClick)`.
+  - In Vue, use the `@` shorthand: `@bqSelect`, `@bqCollapse`, `@bqClick`.
+</Note>
+
+### Methods
+
+| Method | Description | Returns |
+|---|---|---|
+| `toggleCollapse()` | Toggles the collapse state of the side menu | `Promise<void>` |
+
 ### CSS custom properties
 
 <Expandable title="CSS variables" defaultOpen={true}>
@@ -861,28 +935,6 @@ The side menu renders the root navigation surface as an `<aside>`. Each `bq-side
 <Tip>
   Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
 </Tip>
-
-### Events
-
-| Component | Event | Description | Type |
-|---|---|---|---|
-| `bq-side-menu` | `bqCollapse` | Fires when the side menu changes its width from expanded to collapsed and vice versa | `CustomEvent<{ collapse: boolean; }>` |
-| `bq-side-menu` | `bqSelect` | Fires when the active or selected menu item changes | `CustomEvent<HTMLBqSideMenuItemElement>` |
-| `bq-side-menu-item` | `bqBlur` | Fires when the menu item loses focus | `CustomEvent<HTMLBqSideMenuItemElement>` |
-| `bq-side-menu-item` | `bqClick` | Fires when the menu item is clicked | `CustomEvent<HTMLBqSideMenuItemElement>` |
-| `bq-side-menu-item` | `bqFocus` | Fires when the menu item receives focus | `CustomEvent<HTMLBqSideMenuItemElement>` |
-
-<Note>
-  - In React, prefix events with `on`: `onBqSelect`, `onBqCollapse`, `onBqClick`.
-  - In Angular, use event binding syntax: `(bqSelect)`, `(bqCollapse)`, `(bqClick)`.
-  - In Vue, use the `@` shorthand: `@bqSelect`, `@bqCollapse`, `@bqClick`.
-</Note>
-
-### Methods
-
-| Method | Description | Returns |
-|---|---|---|
-| `toggleCollapse()` | Toggles the collapse state of the side menu | `Promise<void>` |
 
 ## Resources
 
