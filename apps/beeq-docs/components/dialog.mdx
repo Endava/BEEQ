@@ -11,7 +11,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
   <img className="hidden dark:block" src="/components/images/dialog/dialog-overview-dark.svg" alt="BEEQ Dialog component overview" />
 </Frame>
 
-Dialogs help people stay in context while responding to important information, confirming an action, or completing a short focused task. Use them sparingly, and only when the interruption is justified.
+Dialogs keep people in context while they respond to important information, confirm an action, or complete a short focused task. Use them sparingly, only when the interruption is justified.
 
 <Note>
   Keep dialog content concise and purposeful. Always provide a clear way to dismiss the dialog, such as a close button, a cancel action, or both.
@@ -43,17 +43,17 @@ Dialogs help people stay in context while responding to important information, c
 ## Patterns
 
 <CardGroup cols={2}>
-  <CardTile title="Ghost">
-    Use the standard dialog to present important information, gather input, or confirm actions in a temporary overlay.
+  <CardTile title="Standard dialog">
+    Use the default dialog to present important information, gather input, or confirm actions in a temporary overlay.
   </CardTile>
-  <CardTile title="Filled">
-    Use the fixed-bottom dialog when keeping the component anchored to the bottom of the screen supports a more predictable interaction.
+  <CardTile title="Confirmation dialog">
+    Disable the close button, backdrop dismissal, and `Esc` handling when an irreversible action requires an explicit choice.
   </CardTile>
-  <CardTile title="Two buttons">
-    Use two actions when the dialog needs a clear primary decision alongside a secondary escape path such as cancel or dismiss.
+  <CardTile title="Two actions">
+    Use two buttons when the dialog needs a clear primary decision alongside a secondary escape path such as cancel or dismiss.
   </CardTile>
-  <CardTile title="Three buttons">
-    Use three actions only when users genuinely need a primary, secondary, and tertiary choice within the same decision flow.
+  <CardTile title="Three actions">
+    Use three buttons only when users genuinely need a primary, secondary, and tertiary choice within the same decision flow.
   </CardTile>
 </CardGroup>
 
