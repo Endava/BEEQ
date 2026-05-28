@@ -257,6 +257,12 @@ export class BqInput {
 
     this.hasValue = isDefined(value);
     internals.setFormValue(!isNil(value) ? `${value}` : undefined);
+    this.updateFormValidity();
+  }
+
+  @Watch('required')
+  handleRequiredPropChange() {
+    this.updateFormValidity();
   }
 
   // Events section
@@ -398,7 +404,7 @@ export class BqInput {
     if (required && (!value || value.toString().trim() === '')) {
       // Set validity state to invalid
       internals?.states.add('invalid');
-      internals?.setValidity({ valueMissing: true }, formValidationMessage, inputElem);
+      internals?.setValidity({ valueMissing: true }, formValidationMessage || 'This field is required', inputElem);
       return;
     }
 
