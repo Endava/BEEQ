@@ -108,7 +108,7 @@ export const Indeterminate: Story = {
   render: (args: Args) => {
     const allCheckboxChange = (event) => {
       const interestCheckboxes = [
-        ...Array.from(document.querySelectorAll<HTMLInputElement>('bq-checkbox[name="interest"')),
+        ...Array.from(document.querySelectorAll<HTMLInputElement>('bq-checkbox[name="interest"]')),
       ];
       interestCheckboxes.forEach((interestCheckbox: HTMLInputElement) => {
         interestCheckbox.checked = event.detail.checked;
@@ -116,11 +116,13 @@ export const Indeterminate: Story = {
     };
 
     const interestCheckboxChange = () => {
-      const allInterestCheckbox = document.querySelector<HTMLInputElement>('bq-checkbox[name="all-interests"');
+      const allInterestCheckbox = document.querySelector<HTMLBqCheckboxElement>('bq-checkbox[name="all-interests"]');
       if (!allInterestCheckbox) return;
 
-      const interestCheckboxes = document.querySelectorAll('bq-checkbox[name="interest"');
-      const onlyChecked = document.querySelectorAll('bq-checkbox[name="interest"][checked]').length;
+      const interestCheckboxes = Array.from(
+        document.querySelectorAll<HTMLBqCheckboxElement>('bq-checkbox[name="interest"]'),
+      );
+      const onlyChecked = interestCheckboxes.filter((cb) => cb.checked).length;
       allInterestCheckbox.indeterminate = onlyChecked > 0 && onlyChecked < interestCheckboxes.length;
       allInterestCheckbox.checked = onlyChecked === interestCheckboxes.length;
     };

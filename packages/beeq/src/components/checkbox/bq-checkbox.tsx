@@ -60,7 +60,10 @@ export class BqCheckbox {
   // ====================
 
   private inputElem: HTMLInputElement;
-  private prevCheckedValue: boolean;
+  // Flag to distinguish user-initiated changes (via interaction) from programmatic prop writes.
+  // Used by componentDidUpdate to decide whether to emit `bqChange`.
+  // Programmatic writes (e.g. Angular CVA, parent setting `.checked = true`) must NOT emit `bqChange`.
+  private userTriggeredChange = false;
 
   // Reference to host HTML element
   // ===================================
@@ -105,6 +108,12 @@ export class BqCheckbox {
   // Prop lifecycle events
   // =======================
 
+  @Watch('checked')
+  handleCheckedPropChange() {
+    this.setFormValue(this.checked);
+    this.updateFormValidity();
+  }
+
   @Watch('indeterminate')
   handleIndeterminatePropChange() {
     if (!this.inputElem) return;
@@ -137,21 +146,21 @@ export class BqCheckbox {
   // Ordered by their natural call order
   // =====================================
 
-  componentWillLoad() {
-    this.prevCheckedValue = this.checked;
-  }
-
   componentDidUpdate() {
-    /**
-     * We need to trigger the `bqChange` immediately after the first update happens
-     * so the checked attribute get applied, otherwise, a delay will happen
-     * between the event emits and when the checked attribute value gets reflected in the element host.
-     */
-    if (this.checked !== this.prevCheckedValue) {
-      if (!this.indeterminate) {
-        this.bqChange.emit({ checked: this.checked });
-      }
-      this.prevCheckedValue = this.checked;
+    // `bqChange` is emitted here (post-render) rather than inside `handleChange` (pre-render).
+    // This ensures that by the time consumers receive the event, Stencil has already committed the
+    // new `checked` value to the DOM (reflected attribute). This matters for patterns like the
+    // indeterminate parent checkbox, where the handler reads sibling `.checked` JS properties
+    // synchronously — if we emitted before re-render those reads would return stale values.
+    //
+    // Trade-off: `bqChange` is not cancellable via `event.preventDefault()` because state is
+    // already committed. To block a toggle, use `event.preventDefault()` on the host element's
+    // native `click` event instead — that prevents the inner `<input>` from firing at all.
+    if (!this.userTriggeredChange) return;
+
+    this.userTriggeredChange = false;
+    if (!this.indeterminate) {
+      this.bqChange.emit({ checked: this.checked });
     }
   }
 
@@ -233,15 +242,16 @@ export class BqCheckbox {
 
     // Set validity state based on the required property and checked state
     internals?.states.add('invalid');
-    internals?.setValidity({ valueMissing: true }, formValidationMessage, inputElem);
+    internals?.setValidity({ valueMissing: true }, formValidationMessage || 'This field is required', inputElem);
   };
 
   private handleChange = () => {
+    // Set the flag before mutating so componentDidUpdate knows this was a user interaction.
+    // State is mutated synchronously here; Stencil schedules a re-render, and only once that
+    // re-render completes does componentDidUpdate fire and emit `bqChange`.
+    this.userTriggeredChange = true;
     this.checked = !this.checked;
     this.indeterminate = false;
-
-    this.setFormValue(this.checked);
-    this.updateFormValidity();
   };
 
   private handleOnFocus = () => {
