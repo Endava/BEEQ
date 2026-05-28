@@ -214,8 +214,8 @@ export class BqRadioGroup {
   formResetCallback() {
     this.value = this.initialValue;
     this.internals.setFormValue(this.value ?? null);
-    this.updateFormValidity();
     this.updateCustomStates();
+    this.updateFormValidity();
   }
 
   // Listeners
