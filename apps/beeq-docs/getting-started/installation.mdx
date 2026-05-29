@@ -1,0 +1,85 @@
+---
+title: Installation
+description: Shared setup for every BEEQ integration — install the core package and load global styles before you open your framework guide.
+---
+
+These steps apply to **every** npm-based BEEQ project, regardless of framework. Complete them once, then continue in your stack’s guide for wrapper packages, icons, and framework-specific setup.
+
+<Note>
+  If you haven't chosen a stack yet, compare integration paths on [For developers](/getting-started/for-developers) before continuing here.
+</Note>
+
+<Note>
+  Using a CDN with no build step? Skip this page and go directly to the [HTML / Web Components guide](/guides/frameworks/html-web-components) — it covers CDN setup end-to-end.
+</Note>
+
+## Prerequisites
+
+- **Node.js 18+** for npm-based projects
+- A modern browser with [custom elements](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) support
+
+## Install the core package
+
+BEEQ is published as `@beeq/core`. It includes the web components, global stylesheet, icon SVG assets, and shared TypeScript types.
+
+<CodeGroup>
+  ```bash npm icon=npm
+  npm install @beeq/core
+  ```
+
+  ```bash pnpm icon=data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCBtZWV0IiB2aWV3Qm94PSI3Ni41ODk4NzI0NDg5Nzk1OCA0NCAxNjQuMDA3NzU1MTAyMDQwNjggMTY0IiB3aWR0aD0iMTYwLjAxIiBoZWlnaHQ9IjE2MCI+PGRlZnM+PHBhdGggZD0iTTIzNy42IDk1TDE4Ny42IDk1TDE4Ny42IDQ1TDIzNy42IDQ1TDIzNy42IDk1WiIgaWQ9ImI0NXZkVEQ4aHMiPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDk1TDEzMi41OSA5NUwxMzIuNTkgNDVMMTgyLjU5IDQ1TDE4Mi41OSA5NVoiIGlkPSJhNDBXdHhJbDhkIj48L3BhdGg+PHBhdGggZD0iTTEyNy41OSA5NUw3Ny41OSA5NUw3Ny41OSA0NUwxMjcuNTkgNDVMMTI3LjU5IDk1WiIgaWQ9ImgyQ045QUVFcGUiPjwvcGF0aD48cGF0aCBkPSJNMjM3LjYgMTUwTDE4Ny42IDE1MEwxODcuNiAxMDBMMjM3LjYgMTAwTDIzNy42IDE1MFoiIGlkPSJkcXY1MTMzRzgiPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDE1MEwxMzIuNTkgMTUwTDEzMi41OSAxMDBMMTgyLjU5IDEwMEwxODIuNTkgMTUwWiIgaWQ9ImIxTHY3OXlwdm0iPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDIwNUwxMzIuNTkgMjA1TDEzMi41OSAxNTVMMTgyLjU5IDE1NUwxODIuNTkgMjA1WiIgaWQ9Imh5MUlaV3dMWCI+PC9wYXRoPjxwYXRoIGQ9Ik0yMzcuNiAyMDVMMTg3LjYgMjA1TDE4Ny42IDE1NUwyMzcuNiAxNTVMMjM3LjYgMjA1WiIgaWQ9ImFrUWZqeFFlcyI+PC9wYXRoPjxwYXRoIGQ9Ik0xMjcuNTkgMjA1TDc3LjU5IDIwNUw3Ny41OSAxNTVMMTI3LjU5IDE1NUwxMjcuNTkgMjA1WiIgaWQ9ImJkU3J3RTVwayI+PC9wYXRoPjwvZGVmcz48Zz48Zz48dXNlIHhsaW5rOmhyZWY9IiNiNDV2ZFREOGhzIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNhNDBXdHhJbDhkIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNoMkNOOUFFRXBlIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNkcXY1MTMzRzgiIG9wYWNpdHk9IjEiIGZpbGw9IiNmOWFkMDAiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjxnPjx1c2UgeGxpbms6aHJlZj0iI2IxTHY3OXlwdm0iIG9wYWNpdHk9IjEiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjxnPjx1c2UgeGxpbms6aHJlZj0iI2h5MUlaV3dMWCIgb3BhY2l0eT0iMSIgZmlsbD0iI2ZmZmZmZiIgZmlsbC1vcGFjaXR5PSIxIj48L3VzZT48L2c+PGc+PHVzZSB4bGluazpocmVmPSIjYWtRZmp4UWVzIiBvcGFjaXR5PSIxIiBmaWxsPSIjZmZmZmZmIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNiZFNyd0U1cGsiIG9wYWNpdHk9IjEiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjwvZz48L3N2Zz4=
+  pnpm add @beeq/core
+  ```
+
+  ```bash yarn icon=yarn
+  yarn add @beeq/core
+  ```
+</CodeGroup>
+
+Framework wrappers are installed **in addition** to core when you use them:
+
+| Stack | Also install |
+| ----- | ------------ |
+| Angular | `@beeq/angular` |
+| React | `@beeq/react` |
+| Vue | `@beeq/vue` |
+| Next.js | `@beeq/react` (see the [Next.js guide](/guides/frameworks/next)) |
+
+Your framework guide covers the exact `npm install` command for your stack.
+
+## Load global styles
+
+Import the BEEQ stylesheet **once** in your application’s main CSS or SCSS file, and make sure that file is loaded from your app entry point.
+
+```css
+@import "@beeq/core/dist/beeq/beeq.css";
+```
+
+<Tip>
+  If you use Sass or another CSS preprocessor, keep the full file extension in the import path (for example `beeq.css`, not `beeq`).
+</Tip>
+
+For CDN-based HTML pages without a bundler, link the stylesheet in your document instead — see [HTML / Web Components](/guides/frameworks/html-web-components).
+
+## Icons
+
+Many BEEQ components render SVG icons from a separate folder. Your app must **serve** those files at a public URL and **tell BEEQ** where to find them.
+
+- Icon `name` values map to file names (for example `user` → `user.svg`).
+- The full icon set is large; each framework guide covers how to serve only what you need.
+
+**How** you wire icons depends on your framework and build tool (Vite, Angular CLI, Next.js SSR, and so on). Each framework guide includes a **Configure icons** step — follow that guide after you finish here.
+
+## Continue in your framework guide
+
+Open the guide that matches your stack under **Frameworks** in the sidebar, or use the links below:
+
+- [Angular](/guides/frameworks/angular)
+- [React](/guides/frameworks/react)
+- [Next.js](/guides/frameworks/next)
+- [Vue](/guides/frameworks/vue)
+- [HTML / Web Components](/guides/frameworks/html-web-components)
+
+## What to do next
+
+- Review [Theming](/theming) if your project needs customization beyond the default theme.

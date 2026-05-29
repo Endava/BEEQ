@@ -86,6 +86,70 @@ body,
 
 /* ------------------------------ Main content ------------------------------ */
 
+/* Components overview — Mintlify Tile uses `truncate` (single-line), not line-clamp */
+.beeq-components-overview .columns {
+  align-items: stretch;
+  row-gap: var(--bq-spacing-m);
+}
+
+.beeq-components-overview .columns > a {
+  border-color: var(--bq-stroke--primary);
+  border-radius: 1rem;
+  border-width: var(--bq-stroke-s);
+  transition-property: border-color, box-shadow, border-radius, border-width, transform;
+  transition-timing-function: var(--bq-transition-function);
+  transition-duration: var(--bq-transition-duration);
+  will-change: border-color, box-shadow, border-radius, border-width, transform;
+}
+
+.beeq-components-overview .columns > a:hover {
+  border-color: var(--bq-stroke--brand);
+  box-shadow: var(--bq-box-shadow--l);
+  transform: scale(1.05);
+}
+
+.beeq-components-overview .columns > a:focus-visible {
+  box-shadow: var(--bq-box-shadow--l);
+  outline-color: var(--bq-stroke--brand);
+  outline-width: var(--bq-stroke-s);
+  outline-offset: 1px;
+  transform: scale(1.05);
+}
+
+.beeq-components-overview .columns > a.link.tile {
+  height: 100%;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+}
+
+.beeq-components-overview [data-component-part="tile-text-container"] {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+}
+
+.beeq-components-overview [data-component-part="tile-children-container"] {
+  border-end-end-radius: 0;
+  border-end-start-radius: 0;
+}
+
+.beeq-components-overview p[data-component-part="tile-title"],
+.beeq-components-overview p[data-component-part="tile-description"] {
+  overflow: visible !important;
+  text-overflow: unset !important;
+  white-space: normal !important;
+  max-width: 100% !important;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.beeq-components-overview p[data-component-part="tile-description"] {
+  flex: 1 1 auto;
+  min-height: 3.25rem;
+}
+
 .step-container[role="listitem"] {
   .w-full {
     overflow: unset;

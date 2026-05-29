@@ -385,6 +385,39 @@ To place content into BEEQ slots in React, pass slot to the child element:
   </CodeGroup>
 </CodeLivePreview>
 
+### Calling component methods with a ref
+
+Some BEEQ components expose methods you can call programmatically. `BqDialog` and `BqDrawer`, for example, have `open()` and `close()` methods. Use `useRef` with the underlying HTML element type to access them:
+
+```tsx
+import { useRef } from "react";
+import { BqButton, BqDialog } from "@beeq/react";
+
+export function ConfirmDialog() {
+  const dialogRef = useRef<HTMLBqDialogElement>(null);
+
+  return (
+    <>
+      <BqButton onBqClick={() => dialogRef.current?.open()}>
+        Open dialog
+      </BqButton>
+
+      <BqDialog ref={dialogRef}>
+        <span slot="title">Are you sure?</span>
+        <p>This action cannot be undone.</p>
+        <div slot="buttons">
+          <BqButton appearance="secondary" onBqClick={() => dialogRef.current?.close()}>
+            Cancel
+          </BqButton>
+          <BqButton appearance="primary" onBqClick={() => dialogRef.current?.close()}>
+            Confirm
+          </BqButton>
+        </div>
+      </BqDialog>
+    </>
+  );
+}
+```
 
 ## Complete example
 
@@ -437,6 +470,10 @@ Use explicit event types when:
 - you are working with more complex event payloads
 - you want clearer autocomplete in larger components
 
+<Tip>
+  Read the updated value from `event.detail.value` — this is Stencil's convention for custom event payloads. Avoid reading from `event.target.value` directly, as it may not reflect the component's latest internal state in all cases.
+</Tip>
+
 ## Troubleshooting
 
 <AccordionGroup>
@@ -465,10 +502,10 @@ Use explicit event types when:
 ## Next steps
 
 <Columns cols={3}>
-  <Card title="Explore components" href="/components/button" icon="boxes-stacked" iconType="duotone">
+  <Card title="Explore components" href="/components" icon="boxes-stacked" iconType="duotone">
     Start with a real component page to see props, events, slots, and framework examples.
   </Card>
-  <Card title="Customize the theme" href="/theming/themes-and-modes" icon="palette" iconType="duotone">
+  <Card title="Customize the theme" href="/theming" icon="palette" iconType="duotone">
     Review theming options if your product needs brand customization.
   </Card>
   <Card title="Open Storybook" href="https://storybook.beeq.design" icon="book" iconType="duotone">

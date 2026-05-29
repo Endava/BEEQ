@@ -1,5 +1,5 @@
 ---
-title: Vue
+title: Vue.js
 description: Use BEEQ in Vue through the Vue wrapper for cleaner component imports, event bindings, and `v-model` support.
 ---
 
@@ -20,7 +20,7 @@ Vue already handles custom elements well, and the BEEQ wrapper makes the develop
 </Columns>
 
 <Check>
-  Vue has strong built-in support for custom elements, but the `@beeq/vue` wrapper gives you a cleaner integration and better typing for day-to-day development.
+  Vue has strong built-in support for custom elements — you can use raw `bq-*` elements in templates without any wrapper. `@beeq/vue` adds PascalCase component imports, TypeScript types, and native `v-model` support for compatible form controls.
 </Check>
 
 ## Get started
@@ -54,36 +54,30 @@ You can add BEEQ to an existing Vue project in a few steps:
   <Step title="Tell Vue to treat BEEQ as custom elements" titleSize="h3">
     Vue should compile `bq-` tags as custom elements instead of trying to resolve them as local Vue components.
 
-    <Tabs>
-      <Tab title="Vite">
-        Configure `@vitejs/plugin-vue`:
+    Configure `@vitejs/plugin-vue`:
 
-        ```ts vite.config.ts
-        import vue from "@vitejs/plugin-vue";
-        import { defineConfig } from "vite";
+    ```ts vite.config.ts
+    import vue from "@vitejs/plugin-vue";
+    import { defineConfig } from "vite";
 
-        export default defineConfig({
-          plugins: [
-            vue({
-              template: {
-                compilerOptions: {
-                  isCustomElement: (tag) => tag.includes("bq-"),
-                },
-              },
-            }),
-          ],
-        });
-        ```
-      </Tab>
+    export default defineConfig({
+      plugins: [
+        vue({
+          template: {
+            compilerOptions: {
+              isCustomElement: (tag) => tag.includes("bq-"),
+            },
+          },
+        }),
+      ],
+    });
+    ```
 
-      <Tab title="In-browser compiler">
-        If you are using Vue without a build step, configure the compiler directly:
+    If you are using Vue without a build step, configure the compiler directly:
 
-        ```ts
-        app.config.compilerOptions.isCustomElement = (tag) => tag.includes("bq-");
-        ```
-      </Tab>
-    </Tabs>
+    ```ts
+    app.config.compilerOptions.isCustomElement = (tag) => tag.includes("bq-");
+    ```
   </Step>
 
   <Step title="Add the global styles" titleSize="h3">
@@ -101,84 +95,87 @@ You can add BEEQ to an existing Vue project in a few steps:
       Be aware that **there are over 9k SVG files**, which can slow down your development or bundling time if you copy all of them.
     </Warning>
 
-    <Tabs>
-      <Tab title="Vite static copy">
-        If you are using Vite, install the static copy plugin:
+    The fastest way to tell BEEQ where to find the icons is to add a `<script>` tag with the `data-beeq` attribute  in your `index.html` entry point:
 
-        ```bash
-        npm install -D vite-plugin-static-copy
-        ```
+    ```html src/index.html highlight={6-8}
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script
+          data-beeq="https://cdn.jsdelivr.net/npm/@beeq/core/dist/beeq/svg/"
+        ></script>
+        <title>Vite + BEEQ</title>
+      </head>
+      <body>
+        <div id="app"></div>
+        <script type="module" src="/src/main.ts"></script>
+      </body>
+    </html>
+    ```
 
-        Then copy the SVG files and set the base path during app startup:
+    <Tip>
+      The URL must point to the directory that contains BEEQ SVG files (file names such as `user.svg`, `envelope.svg`). You can use a CDN URL, a path your app serves locally, or even a different icon library — just make sure the icon `name` values you use in templates match the file names at that path.
+    </Tip>
 
-        <CodeGroup>
-          ```ts vite.config.ts highlight={2,16-23}
-          import vue from "@vitejs/plugin-vue";
-          import { viteStaticCopy } from "vite-plugin-static-copy";
-          import { defineConfig } from "vite";
+    If you are using Vite, install the static copy plugin:
 
-          export default defineConfig({
-            plugins: [
-              vue({
-                template: {
-                  compilerOptions: {
-                    isCustomElement: (tag) => tag.includes("bq-"),
-                  },
-                },
-              }),
-              viteStaticCopy({
-                targets: [
-                  {
-                    src: "./node_modules/@beeq/core/dist/beeq/svg/*",
-                    dest: "icons/svg",
-                  },
-                ],
-              }),
+    ```bash
+    npm install -D vite-plugin-static-copy
+    ```
+
+    Then copy the SVG files and set the base path during app startup:
+
+    <CodeGroup>
+      ```ts vite.config.ts highlight={2,14-21}
+      import vue from "@vitejs/plugin-vue";
+      import { viteStaticCopy } from "vite-plugin-static-copy";
+      import { defineConfig } from "vite";
+
+      export default defineConfig({
+        plugins: [
+          vue({
+            template: {
+              compilerOptions: {
+                isCustomElement: (tag) => tag.includes("bq-"),
+              },
+            },
+          }),
+          viteStaticCopy({
+            targets: [
+              {
+                src: "./node_modules/@beeq/core/dist/beeq/svg/*",
+                dest: "icons/svg",
+              },
             ],
-          });
-          ```
+          }),
+        ],
+      });
+      ```
 
-          ```ts src/main.ts highlight={2,5}
-          import { createApp } from "vue";
-          import { setBasePath } from "@beeq/core";
-          import App from "./App.vue";
-          import "./style.css";
+      ```ts src/main.ts highlight={2,6}
+      import { createApp } from "vue";
+      import { setBasePath } from "@beeq/core";
+      import App from "./App.vue";
+      import "./style.css";
 
-          setBasePath("/icons/svg");
+      setBasePath("/icons/svg");
 
-          createApp(App).mount("#app");
-          ```
-        </CodeGroup>
-      </Tab>
+      createApp(App).mount("#app");
+      ```
+    </CodeGroup>
 
-      <Tab title="CDN or existing icon source">
-        If your app already serves icons elsewhere, point BEEQ there instead:
-
-        ```ts
-        import { setBasePath } from "@beeq/core";
-
-        setBasePath("https://cdn.jsdelivr.net/npm/heroicons@2.1.5/24/outline");
-        ```
-
-        Make sure the icon names you use match the icon set you provide.
-      </Tab>
-
-      <Tab title="Copy only the icons you need">
-        If your app only needs a smaller set of icons, copy those SVG files into a public directory and point `setBasePath()` there:
-
-        ```ts
-        import { setBasePath } from "@beeq/core";
-
-        setBasePath("/svg");
-        ```
-      </Tab>
-    </Tabs>
+    <Tip>
+      You can create a Vite plugin that copies only the icons you need to speed up development and reduce your bundle size.
+      See the React setup [here](/guides/frameworks/react#copy-only-the-icons-you-need) for inspiration.
+    </Tip>
   </Step>
 
   <Step title="Render your first component" titleSize="h3">
     Once styles and icons are configured, import and use BEEQ components in your Vue app:
 
-    ```vue
+    ```vue icon="vuejs"
     <script setup lang="ts">
     import { BqButton, BqIcon } from "@beeq/vue";
     </script>
@@ -192,8 +189,6 @@ You can add BEEQ to an existing Vue project in a few steps:
     ```
   </Step>
 </Steps>
-
-That is enough to get started.
 
 ## Vue usage patterns with BEEQ
 
@@ -219,7 +214,7 @@ BEEQ custom events work with standard Vue event binding syntax:
 
 ### Use `v-model` on supported form controls
 
-The Vue wrapper supports `v-model` on compatible BEEQ controls:
+The Vue wrapper supports `v-model` on compatible BEEQ controls. For input components, also handle the `@bqClear` event to keep your reactive ref in sync when the user clicks the clear button:
 
 ```vue
 <script setup lang="ts">
@@ -230,9 +225,27 @@ const name = ref("John Doe");
 </script>
 
 <template>
-  <BqInput v-model="name" name="name" placeholder="How should we call you?" />
+  <BqInput
+    v-model="name"
+    name="name"
+    placeholder="How should we call you?"
+    @bqClear="name = ''"
+  />
 </template>
 ```
+
+<Tip>
+  Without `@bqClear`, clicking the clear button resets the component's internal value but does not update your reactive ref. Always pair `v-model` with `@bqClear` on clearable inputs.
+</Tip>
+
+The following BEEQ components support `v-model`:
+
+| Component | Bound prop |
+|---|---|
+| `BqCheckbox`, `BqSwitch` | `checked` |
+| `BqDatePicker`, `BqInput`, `BqRadioGroup`, `BqSelect`, `BqSlider`, `BqTextarea` | `value` |
+
+All of them fire `bqChange` as the trigger event.
 
 ### Slots still use the `slot` attribute
 
@@ -271,7 +284,7 @@ const increment = () => {
   <BqCard>
     <h1>Hello, {{ name || "stranger" }}!</h1>
 
-    <BqInput v-model="name" placeholder="How should we call you?">
+    <BqInput v-model="name" placeholder="How should we call you?" @bqClear="name = ''">
       <BqIcon name="user" slot="prefix" />
     </BqInput>
 
@@ -285,9 +298,23 @@ const increment = () => {
 </template>
 ```
 
+## Server-side rendering (Nuxt and SSR frameworks)
+
+If you are using Nuxt or another Vue SSR framework, wrap `setBasePath()` in a client-only plugin to ensure it only runs in the browser:
+
+```ts plugins/beeq.client.ts
+import { setBasePath } from "@beeq/core";
+
+export default defineNuxtPlugin(() => {
+  setBasePath("/icons/svg");
+});
+```
+
+The `.client.ts` suffix tells Nuxt to load this plugin only on the client side. If you are using a different SSR framework, wrap the call inside `onMounted()` instead.
+
 ## VS Code autocomplete
 
-BEEQ ships HTML custom data for Visual Studio Code, which can improve completion and inline hints for the underlying custom elements.
+BEEQ ships HTML custom data for Visual Studio Code, which improves completion and inline hints for the underlying custom elements.
 
 Create `.vscode/settings.json` in your project root and add:
 
@@ -310,23 +337,23 @@ Create `.vscode/settings.json` in your project root and add:
     - `setBasePath()` points to the same public URL where those files are available
   </Accordion>
   <Accordion title="`v-model` is not updating">
-    Confirm that you are using the Vue wrapper from `@beeq/vue` and that the BEEQ component you picked supports `v-model`.
+    Confirm that you are using the Vue wrapper from `@beeq/vue` and that the component supports `v-model` (see the table in the `v-model` usage pattern section above). Also make sure you have added `@bqClear` to handle the clear button.
   </Accordion>
   <Accordion title="Styles are missing">
     Make sure `@beeq/core/dist/beeq/beeq.css` is imported once in the stylesheet your Vue app actually loads.
   </Accordion>
-  <Accordion title="I want to use raw custom elements instead of the Vue wrapper">
-    That is still possible, but the wrapper gives you cleaner component imports and better support for Vue-specific patterns such as `v-model`.
+  <Accordion title="Can I use raw bq-* elements without the Vue wrapper?">
+    Yes. Once you have `isCustomElement: (tag) => tag.includes("bq-")` set in your Vite or compiler config, you can use `<bq-button @bqClick="save">` directly in templates. The Vue wrapper gives you cleaner PascalCase imports and native `v-model` support, but raw custom elements work too.
   </Accordion>
 </AccordionGroup>
 
 ## Next steps
 
 <Columns cols={3}>
-  <Card title="Explore components" href="/components/button" icon="boxes-stacked" iconType="duotone">
+  <Card title="Explore components" href="/components" icon="boxes-stacked" iconType="duotone">
     Start with a component page to see props, events, slots, and framework examples.
   </Card>
-  <Card title="Customize the theme" href="/theming/overview" icon="palette" iconType="duotone">
+  <Card title="Customize the theme" href="/theming" icon="palette" iconType="duotone">
     Review theming options if your product needs brand customization.
   </Card>
   <Card title="Open Storybook" href="https://storybook.beeq.design" icon="book" iconType="duotone">

@@ -5,12 +5,10 @@ description: Customize BEEQ through global design tokens, component CSS variable
 
 import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 
-BEEQ components are highly customizable through design tokens. Those tokens let you control theme colors and shared styling at a high level, so you can update large parts of your application in one place.
-
-For more targeted customization, BEEQ also exposes shadow DOM parts and component-level CSS custom properties. Together, these give you a practical path from broad brand theming to precise component tweaks.
+This page covers the three techniques you reach for when customizing a specific component: shadow DOM parts, global token overrides, and component-level CSS variables. For building a full custom theme or understanding the complete token system, see the [Theming](/theming) section.
 
 <Note>
-  The examples on this page use inline CSS for clarity inside the documentation. In your application, keep these overrides in your own stylesheets or theme files.
+  The examples on this page use inline CSS for clarity. In your application, keep overrides in your own stylesheets or theme files.
 </Note>
 
 ## Choose the right styling level
@@ -46,11 +44,6 @@ Once a part is exposed, you can style it with the `::part()` pseudo-element sele
 
 <CodeLivePreview code={`
   <style>
-    :host {
-      justify-content: flex-start !important;
-      padding: var(--bq-spacing-l) !important;
-    }
-
     .custom-button::part(label) {
       font-size: var(--bq-font-size--xl);
       font-weight: var(--bq-font-weight--semibold);
@@ -69,7 +62,7 @@ Once a part is exposed, you can style it with the `::part()` pseudo-element sele
   </bq-button>
 `}>
   <CodeGroup>
-    ```css CSS
+    ```css CSS icon=css
     .custom-button::part(label) {
       font-size: var(--bq-font-size--xl);
       font-weight: var(--bq-font-weight--semibold);
@@ -83,13 +76,13 @@ Once a part is exposed, you can style it with the `::part()` pseudo-element sele
     }
     ```
 
-    ```html HTML
+    ```html HTML icon=html5
     <bq-button class="custom-button">
       Custom button
     </bq-button>
     ```
 
-    ```tsx React
+    ```tsx React icon=react
     import { BqButton } from "@beeq/react";
     import "./styles.css";
 
@@ -98,7 +91,7 @@ Once a part is exposed, you can style it with the `::part()` pseudo-element sele
     }
     ```
 
-    ```ts Angular
+    ```ts Angular icon=angular
     import { Component } from "@angular/core";
     import { BqButton } from "@beeq/angular/standalone";
 
@@ -111,19 +104,45 @@ Once a part is exposed, you can style it with the `::part()` pseudo-element sele
           Custom button
         </bq-button>
       `,
+      style: `
+        .custom-button::part(label) {
+          font-size: var(--bq-font-size--xl);
+          font-weight: var(--bq-font-weight--semibold);
+        }
+
+        .custom-button::part(button) {
+          background-color: var(--bq-magenta-600);
+          border-radius: var(--bq-radius--full);
+          padding-block: var(--bq-spacing-xl);
+          padding-inline: var(--bq-spacing-xxl);
+        }
+      `
     })
     export class ExampleComponent {}
     ```
 
-    ```vue Vue
+    ```vue Vue icon=vuejs
     <script setup lang="ts">
     import { BqButton } from "@beeq/vue";
-    import "./styles.css";
     </script>
 
     <template>
       <BqButton class="custom-button">Custom button</BqButton>
     </template>
+
+    <style>
+    .custom-button::part(label) {
+      font-size: var(--bq-font-size--xl);
+      font-weight: var(--bq-font-weight--semibold);
+    }
+
+    .custom-button::part(button) {
+      background-color: var(--bq-magenta-600);
+      border-radius: var(--bq-radius--full);
+      padding-block: var(--bq-spacing-xl);
+      padding-inline: var(--bq-spacing-xxl);
+    }
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -153,10 +172,8 @@ Many theme tokens for UI, stroke, text, and related states derive from `--bq-bra
 
 <CodeLivePreview code={`
   <style>
-    :host {
-      --bq-brand: var(--bq-orange-600);
-      justify-content: flex-start !important;
-      padding: var(--bq-spacing-l) !important;
+    bq-button::part(button) {
+      --bq-ui--brand: var(--bq-orange-600) !important;
     }
   </style>
 
@@ -165,19 +182,19 @@ Many theme tokens for UI, stroke, text, and related states derive from `--bq-bra
   </bq-button>
 `}>
   <CodeGroup>
-    ```css CSS
+    ```css CSS icon=css
     :root {
       --bq-brand: var(--bq-orange-600);
     }
     ```
 
-    ```html HTML
+    ```html HTML icon=html5
     <bq-button appearance="primary">
       Primary button
     </bq-button>
     ```
 
-    ```tsx React
+    ```tsx React icon=react
     import { BqButton } from "@beeq/react";
     import "./styles.css";
 
@@ -186,7 +203,7 @@ Many theme tokens for UI, stroke, text, and related states derive from `--bq-bra
     }
     ```
 
-    ```ts Angular
+    ```ts Angular icon=angular
     import { Component } from "@angular/core";
     import { BqButton } from "@beeq/angular/standalone";
 
@@ -199,6 +216,11 @@ Many theme tokens for UI, stroke, text, and related states derive from `--bq-bra
           Primary button
         </bq-button>
       `,
+      style: `
+        :root {
+          --bq-brand: var(--bq-orange-600);
+        }
+      `
     })
     export class ExampleComponent {}
     ```
@@ -206,31 +228,29 @@ Many theme tokens for UI, stroke, text, and related states derive from `--bq-bra
     ```vue Vue
     <script setup lang="ts">
     import { BqButton } from "@beeq/vue";
-    import "./styles.css";
     </script>
 
     <template>
       <BqButton appearance="primary">Primary button</BqButton>
     </template>
+
+    <style>
+    :root {
+      --bq-brand: var(--bq-orange-600);
+    }
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
 
 ## Component-level CSS custom properties
 
-You can also override CSS custom properties on a specific component instance without affecting the rest of the application. This is useful when one variation needs a slightly different treatment while the global theme stays intact.
+Component-level CSS variables are scoped to a single component instance and do not affect the rest of the theme. For a full explanation of override strategies — including how to apply changes across all instances of a component at once — see [Component CSS Variables](/theming/component-css-variables).
 
-For example, here the second button keeps the same component but uses a different brand token locally:
+In the example below, the second button overrides one brand token locally while the first keeps the theme default:
 
 <CodeLivePreview code={`
   <style>
-    :host {
-      flex-direction: row !important;
-      gap: var(--bq-spacing-m) !important;
-      justify-content: flex-start !important;
-      padding: var(--bq-spacing-l) !important;
-    }
-
     .primary-magenta {
       --bq-ui--brand: var(--bq-magenta-600);
     }
@@ -251,7 +271,7 @@ For example, here the second button keeps the same component but uses a differen
     }
     ```
 
-    ```html HTML
+    ```html HTML icon=html5
     <bq-button appearance="primary">
       Primary button
     </bq-button>
@@ -261,7 +281,7 @@ For example, here the second button keeps the same component but uses a differen
     </bq-button>
     ```
 
-    ```tsx React
+    ```tsx React icon=react
     import { BqButton } from "@beeq/react";
     import "./styles.css";
 
@@ -277,7 +297,7 @@ For example, here the second button keeps the same component but uses a differen
     }
     ```
 
-    ```ts Angular
+    ```ts Angular icon=angular
     import { Component } from "@angular/core";
     import { BqButton } from "@beeq/angular/standalone";
 
@@ -294,14 +314,18 @@ For example, here the second button keeps the same component but uses a differen
           Primary custom
         </bq-button>
       `,
+      style: `
+        .primary-magenta {
+          --bq-ui--brand: var(--bq-magenta-600);
+        }
+      `
     })
     export class ExampleComponent {}
     ```
 
-    ```vue Vue
+    ```vue Vue icon=vuejs
     <script setup lang="ts">
     import { BqButton } from "@beeq/vue";
-    import "./styles.css";
     </script>
 
     <template>
@@ -310,6 +334,12 @@ For example, here the second button keeps the same component but uses a differen
         Primary custom
       </BqButton>
     </template>
+
+    <style>
+    .primary-magenta {
+      --bq-ui--brand: var(--bq-magenta-600);
+    }
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -322,15 +352,6 @@ Component-level CSS variables and `::part()` selectors work well together when y
 
 <CodeLivePreview code={`
   <style>
-    :host {
-      flex-direction: row !important;
-      align-items: flex-end !important;
-      gap: var(--bq-spacing-m) !important;
-      justify-content: flex-start !important;
-      padding: var(--bq-spacing-l) !important;
-      flex-wrap: wrap !important;
-    }
-
     .larger-button {
       --bq-button--small-height: 42px;
       --bq-button--small-paddingY: 10px;
@@ -367,7 +388,7 @@ Component-level CSS variables and `::part()` selectors work well together when y
   </bq-button>
 `}>
   <CodeGroup>
-    ```css CSS
+    ```css CSS icon=css
     .larger-button {
       --bq-button--small-height: 42px;
       --bq-button--small-paddingY: 10px;
@@ -391,7 +412,7 @@ Component-level CSS variables and `::part()` selectors work well together when y
     }
     ```
 
-    ```html HTML
+    ```html HTML icon=html5
     <bq-button class="larger-button" size="small">
       Button
     </bq-button>
@@ -405,7 +426,7 @@ Component-level CSS variables and `::part()` selectors work well together when y
     </bq-button>
     ```
 
-    ```tsx React
+    ```tsx React icon=react
     import { BqButton } from "@beeq/react";
     import "./styles.css";
 
@@ -426,7 +447,7 @@ Component-level CSS variables and `::part()` selectors work well together when y
     }
     ```
 
-    ```ts Angular
+    ```ts Angular icon=angular
     import { Component } from "@angular/core";
     import { BqButton } from "@beeq/angular/standalone";
 
@@ -451,7 +472,7 @@ Component-level CSS variables and `::part()` selectors work well together when y
     export class ExampleComponent {}
     ```
 
-    ```vue Vue
+    ```vue Vue icon=vuejs
     <script setup lang="ts">
     import { BqButton } from "@beeq/vue";
     import "./styles.css";
@@ -471,8 +492,7 @@ Component-level CSS variables and `::part()` selectors work well together when y
 Not every component exposes the same CSS variables or parts. When a component does expose them, you can find them in:
 
 - the component page's API reference
-- the component source under `packages/beeq/src/components/*/scss/*.variables.scss`
-- the BEEQ source on [GitHub](https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components)
+- the component source in [GitHub](https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components) under `packages/beeq/src/components/**/scss/*.variables.scss`
 
 ## Best practices
 
@@ -490,7 +510,3 @@ Not every component exposes the same CSS variables or parts. When a component do
     Review your overrides in both light and dark mode to make sure contrast, hierarchy, and focus states still work well.
   </Card>
 </CardGroup>
-
-<Tip>
-  Continue with [Global CSS Variables](/theming/global-css-variables) for shared tokens, or open any component page to inspect its component-specific CSS variables and shadow parts.
-</Tip>
