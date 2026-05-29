@@ -1,0 +1,1399 @@
+---
+title: Drawer
+description: A drawer is a panel that is typically overlaid on top of a page and slides in from off-canvas (tied to a side of the screen). It contains a set of information or actions. Since the user can interact with the Drawer without leaving the current page, tasks can be achieved more efficiently within the same context.
+---
+
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Drawer component overview">
+  <img className="block dark:hidden" src="/components/images/drawer/drawer-overview-light.svg" alt="BEEQ Drawer component overview" />
+  <img className="hidden dark:block" src="/components/images/drawer/drawer-overview-dark.svg" alt="BEEQ Drawer component overview" />
+</Frame>
+
+`bq-drawer` is a panel that is typically overlaid on top of a page and slides in from off-canvas (tied to a side of the screen). It contains a set of information or actions — navigation menus, settings, notifications, or contextual actions. Since the user can interact with the drawer without leaving the current page, tasks can be achieved more efficiently within the same context.
+
+<Note>
+  The drawer manages its own open/close animation and backdrop. Call the `show()` and `hide()` methods programmatically, or toggle the `open` prop, to control visibility. Do not remove the element from the DOM to hide it — use `hide()` instead.
+</Note>
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use drawer when
+    </span>
+
+    * You need to surface supplementary content — navigation menus, settings, notifications, or contextual actions — without navigating away from the current page
+    * Users need a convenient way to access additional information or functionality while maintaining a clean and organised layout
+    * The content is too complex or lengthy for a tooltip, popover, or dropdown
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use drawer when
+    </span>
+
+    * Its presence would add unnecessary complexity or confusion — for simple applications where all necessary information can be displayed directly on the main screen
+    * It would obscure essential content or functionality
+    * There are better alternatives available for presenting supplementary information or navigation options, such as a dedicated page or `bq-dialog`
+  </Card>
+</CardGroup>
+
+## Patterns
+
+<CardGroup cols={2}>
+  <Card title="With footer">
+    A drawer component with a footer is beneficial because it allows users to access additional actions or information related to the content displayed in the drawer without cluttering the main interface. The footer provides a designated space for secondary actions, such as buttons or links, enhancing usability and providing a seamless user experience.
+  </Card>
+  <Card title="Without footer">
+    This type of drawer is useful for presenting concise information or primary actions without additional clutter. It allows for a cleaner and more focused user experience, particularly when the primary purpose of the drawer is to display content or options that do not require secondary actions.
+  </Card>
+</CardGroup>
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Drawer component anatomy">
+  <img className="block dark:hidden" src="/components/images/drawer/drawer-anatomy-light.svg" alt="BEEQ Drawer component anatomy" />
+  <img className="hidden dark:block" src="/components/images/drawer/drawer-anatomy-dark.svg" alt="BEEQ Drawer component anatomy" />
+</Frame>
+
+The drawer panel contains a header with an optional icon and headline, a scrollable content area (container/slot), an optional footer divider, and optional footer actions.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Headline | The title text displayed in the drawer header |
+| **2** | Icon (optional) | An optional icon displayed alongside the headline in the header |
+| **3** | Close icon button | The icon button that dismisses the drawer |
+| **4** | Container / Slot | The main content area that holds the default slot; supports rich media, forms, icons, buttons, and more |
+| **5** | Divider | The horizontal rule between the body and footer (shown when a footer is present) |
+| **6** | Actions (optional) | Footer action buttons; typically one primary button and one secondary button |
+
+## Design guidelines
+
+### Position
+
+Always position the drawer close to the relevant content to avoid confusing users and ensure intuitive navigation.
+
+<Steps>
+  <Step title="end (default)">
+    The panel slides in from the end (right in LTR layouts). Use this for filter panels, detail views, and secondary settings — placing them on the right keeps them adjacent to the content being acted on.
+  </Step>
+  <Step title="start">
+    The panel slides in from the start (left in LTR layouts). Use this for primary navigation menus that users expect on the left side.
+  </Step>
+</Steps>
+
+### Container
+
+The drawer container area can hold rich media, images, forms, icons, buttons, and more. Its internal layout can be adjusted for the use case — use flexbox or grid inside the default slot to control how content is arranged.
+
+### Backdrop
+
+The backdrop dims the page content behind the drawer, reinforcing that the drawer is in focus.
+
+<Note>
+  Enable the backdrop (`enable-backdrop`) when the drawer contains a form or detail view that should feel visually separate from the page. For lightweight navigation drawers that share the screen with the page, omit the backdrop to keep the experience lighter.
+</Note>
+
+### Width
+
+The default drawer width is `320px`, controlled by `--bq-drawer--width`. Increase it for content-heavy panels such as filter forms or data tables, but keep it narrow enough that the underlying page remains recognisably visible.
+
+### Footer
+
+Add a footer to house actions that apply to all content in the panel (e.g. save a form or close the panel). Buttons are left-aligned, and only one primary button should be used at a time. The footer slot is only rendered when it contains content.
+
+### Keep it simple and clear
+
+While drawers can efficiently store additional information not included on the parent page, it is essential to avoid overwhelming users with excessive content. Proper organisation and grouping of information within the drawer are crucial to ensure clarity and usability.
+
+## Usage
+
+<Tip>
+  When using the Drawer component, make sure to place it higher in the DOM hierarchy — for example, as a direct child of `<body>` and not inside a container element. This ensures the drawer's fixed positioning and z-index work correctly across all layouts.
+</Tip>
+
+### Default
+
+The default state of the drawer component displays a standard drawer with a header, content area, and footer. It typically slides in from the end (right) edge of the screen. Use this for general purposes when you need a drawer to provide additional content or options without disrupting the main view.
+
+<CodeLivePreview code={`
+  <!--
+    bq-drawer uses position: fixed, which is trapped inside the CodeLivePreview
+    shadow root. The drawer and its <style data-drawer-styles> are teleported to
+    document.body immediately on init — see the IIFE script below.
+  -->
+
+  <bq-button>Open Drawer</bq-button>
+
+  <style data-drawer-styles>
+    .drawer-title {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+
+    .drawer-description {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--bq-radius--xs);
+      border: 1px dashed var(--bq-stroke--brand);
+      background-color: var(--bq-red-100);
+    }
+
+    .drawer-footer {
+      display: flex;
+      justify-content: center;
+      gap: var(--bq-spacing-xs);
+      flex: 1;
+    }
+  </style>
+
+  <bq-drawer position="end">
+    <div class="drawer-title" slot="title">
+      <bq-icon name="user-circle" weight="bold"></bq-icon>
+      Title
+    </div>
+    <div class="drawer-description">Content</div>
+    <div class="drawer-footer" slot="footer">
+      <bq-button appearance="primary" block size="small">Button</bq-button>
+      <bq-button appearance="link" block size="small">Button</bq-button>
+    </div>
+  </bq-drawer>
+
+  <script>
+    (() => {
+      const btn = previewRoot.querySelector('bq-button');
+      const drawer = previewRoot.querySelector('bq-drawer');
+      const styleEl = previewRoot.querySelector('[data-drawer-styles]');
+      if (styleEl) document.body.appendChild(styleEl);
+      document.body.appendChild(drawer);
+      if (!document.head.querySelector('[data-bq-drawer-preview]')) {
+        const s = document.createElement('style');
+        s.setAttribute('data-bq-drawer-preview', '');
+        s.textContent = 'bq-drawer::part(panel){top:4rem;z-index:9999}'
+          + 'bq-drawer::part(backdrop){top:4rem;z-index:9998}';
+        document.head.appendChild(s);
+      }
+      btn?.addEventListener('bqClick', () => drawer?.show());
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```css CSS icon="css3"
+    .drawer-title {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+
+    .drawer-description {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--bq-radius--xs);
+      border: 1px dashed var(--bq-stroke--brand);
+      background-color: var(--bq-red-100);
+    }
+
+    .drawer-footer {
+      display: flex;
+      justify-content: center;
+      gap: var(--bq-spacing-xs);
+      flex: 1;
+    }
+    ```
+
+    ```html HTML icon="html5"
+    <bq-button>Open Drawer</bq-button>
+
+    <bq-drawer position="end">
+      <div class="drawer-title" slot="title">
+        <bq-icon name="user-circle" weight="bold"></bq-icon>
+        Title
+      </div>
+      <div class="drawer-description">Content</div>
+      <div class="drawer-footer" slot="footer">
+        <bq-button appearance="primary" block size="small">Button</bq-button>
+        <bq-button appearance="link" block size="small">Button</bq-button>
+      </div>
+    </bq-drawer>
+    ```
+
+    ```javascript JavaScript icon="js"
+    const btn = document.querySelector('bq-button');
+    const drawer = document.querySelector('bq-drawer');
+    btn.addEventListener('bqClick', () => drawer.show());
+    ```
+
+    ```jsx React icon="react"
+    import { useRef } from "react";
+    import { BqButton, BqDrawer, BqIcon } from "@beeq/react";
+
+    export default function App() {
+      const drawerRef = useRef(null);
+
+      return (
+        <>
+          <BqButton onBqClick={() => drawerRef.current?.show()}>Open Drawer</BqButton>
+
+          <BqDrawer ref={drawerRef} position="end">
+            <div className="drawer-title" slot="title">
+              <BqIcon name="user-circle" weight="bold" />
+              Title
+            </div>
+            <div className="drawer-description">Content</div>
+            <div className="drawer-footer" slot="footer">
+              <BqButton appearance="primary" block size="small">Button</BqButton>
+              <BqButton appearance="link" block size="small">Button</BqButton>
+            </div>
+          </BqDrawer>
+        </>
+      );
+    }
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqDrawer, BqIcon } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqDrawer, BqIcon],
+      template: `
+        <bq-button (bqClick)="drawer.show()">Open Drawer</bq-button>
+
+        <bq-drawer #drawer position="end">
+          <div class="drawer-title" slot="title">
+            <bq-icon name="user-circle" weight="bold"></bq-icon>
+            Title
+          </div>
+          <div class="drawer-description">Content</div>
+          <div class="drawer-footer" slot="footer">
+            <bq-button appearance="primary" block size="small">Button</bq-button>
+            <bq-button appearance="link" block size="small">Button</bq-button>
+          </div>
+        </bq-drawer>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { ref } from "vue";
+    import { BqButton, BqDrawer, BqIcon } from "@beeq/vue";
+
+    const drawerRef = ref(null);
+    </script>
+
+    <template>
+      <BqButton @bqClick="drawerRef?.show()">Open Drawer</BqButton>
+
+      <BqDrawer ref="drawerRef" position="end">
+        <div class="drawer-title" slot="title">
+          <BqIcon name="user-circle" weight="bold" />
+          Title
+        </div>
+        <div class="drawer-description">Content</div>
+        <div class="drawer-footer" slot="footer">
+          <BqButton appearance="primary" block size="small">Button</BqButton>
+          <BqButton appearance="link" block size="small">Button</BqButton>
+        </div>
+      </BqDrawer>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### No footer
+
+The no-footer variant removes the footer section, providing a cleaner interface without additional controls at the bottom. Use this when the drawer's primary purpose is to display content or options that do not require secondary actions.
+
+<CodeLivePreview code={`
+  <!--
+    bq-drawer uses position: fixed, which is trapped inside the CodeLivePreview
+    shadow root. The drawer and its <style data-drawer-styles> are teleported to
+    document.body immediately on init — see the IIFE script below.
+  -->
+
+  <bq-button>Open Drawer</bq-button>
+
+  <style data-drawer-styles>
+    .drawer-title {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+
+    .drawer-description {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--bq-radius--xs);
+      border: 1px dashed var(--bq-stroke--brand);
+      background-color: var(--bq-red-100);
+    }
+  </style>
+
+  <bq-drawer position="end">
+    <div class="drawer-title" slot="title">
+      <bq-icon name="user-circle" weight="bold"></bq-icon>
+      Title
+    </div>
+    <div class="drawer-description">Content</div>
+  </bq-drawer>
+
+  <script>
+    (() => {
+      const btn = previewRoot.querySelector('bq-button');
+      const drawer = previewRoot.querySelector('bq-drawer');
+      const styleEl = previewRoot.querySelector('[data-drawer-styles]');
+      if (styleEl) document.body.appendChild(styleEl);
+      document.body.appendChild(drawer);
+      if (!document.head.querySelector('[data-bq-drawer-preview]')) {
+        const s = document.createElement('style');
+        s.setAttribute('data-bq-drawer-preview', '');
+        s.textContent = 'bq-drawer::part(panel){top:4rem;z-index:9999}'
+          + 'bq-drawer::part(backdrop){top:4rem;z-index:9998}';
+        document.head.appendChild(s);
+      }
+      btn?.addEventListener('bqClick', () => drawer?.show());
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```css CSS icon="css3"
+    .drawer-title {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+
+    .drawer-description {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--bq-radius--xs);
+      border: 1px dashed var(--bq-stroke--brand);
+      background-color: var(--bq-red-100);
+    }
+    ```
+
+    ```html HTML icon="html5"
+    <bq-button>Open Drawer</bq-button>
+
+    <bq-drawer position="end">
+      <div class="drawer-title" slot="title">
+        <bq-icon name="user-circle" weight="bold"></bq-icon>
+        Title
+      </div>
+      <div class="drawer-description">Content</div>
+    </bq-drawer>
+    ```
+
+    ```javascript JavaScript icon="js"
+    const btn = document.querySelector('bq-button');
+    const drawer = document.querySelector('bq-drawer');
+    btn.addEventListener('bqClick', () => drawer.show());
+    ```
+
+    ```jsx React icon="react"
+    import { useRef } from "react";
+    import { BqButton, BqDrawer, BqIcon } from "@beeq/react";
+
+    export default function App() {
+      const drawerRef = useRef(null);
+
+      return (
+        <>
+          <BqButton onBqClick={() => drawerRef.current?.show()}>Open Drawer</BqButton>
+
+          <BqDrawer ref={drawerRef} position="end">
+            <div className="drawer-title" slot="title">
+              <BqIcon name="user-circle" weight="bold" />
+              Title
+            </div>
+            <div className="drawer-description">Content</div>
+          </BqDrawer>
+        </>
+      );
+    }
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqDrawer, BqIcon } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqDrawer, BqIcon],
+      template: `
+        <bq-button (bqClick)="drawer.show()">Open Drawer</bq-button>
+
+        <bq-drawer #drawer position="end">
+          <div class="drawer-title" slot="title">
+            <bq-icon name="user-circle" weight="bold"></bq-icon>
+            Title
+          </div>
+          <div class="drawer-description">Content</div>
+        </bq-drawer>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { ref } from "vue";
+    import { BqButton, BqDrawer, BqIcon } from "@beeq/vue";
+
+    const drawerRef = ref(null);
+    </script>
+
+    <template>
+      <BqButton @bqClick="drawerRef?.show()">Open Drawer</BqButton>
+
+      <BqDrawer ref="drawerRef" position="end">
+        <div class="drawer-title" slot="title">
+          <BqIcon name="user-circle" weight="bold" />
+          Title
+        </div>
+        <div class="drawer-description">Content</div>
+      </BqDrawer>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Start position
+
+The `position` prop allows you to specify the edge from which the drawer appears. Use `position="start"` to open from the left edge — ideal for primary navigation menus.
+
+<CodeLivePreview code={`
+  <!--
+    bq-drawer uses position: fixed, which is trapped inside the CodeLivePreview
+    shadow root. The drawer and its <style data-drawer-styles> are teleported to
+    document.body immediately on init — see the IIFE script below.
+  -->
+
+  <bq-button>Open Drawer</bq-button>
+
+  <style data-drawer-styles>
+    .drawer-title {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+
+    .drawer-description {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--bq-radius--xs);
+      border: 1px dashed var(--bq-stroke--brand);
+      background-color: var(--bq-red-100);
+    }
+
+    .drawer-footer {
+      display: flex;
+      justify-content: center;
+      gap: var(--bq-spacing-xs);
+      flex: 1;
+    }
+  </style>
+
+  <bq-drawer position="start">
+    <div class="drawer-title" slot="title">
+      <bq-icon name="user-circle" weight="bold"></bq-icon>
+      Title
+    </div>
+    <div class="drawer-description">Content</div>
+    <div class="drawer-footer" slot="footer">
+      <bq-button appearance="primary" block size="small">Button</bq-button>
+      <bq-button appearance="link" block size="small">Button</bq-button>
+    </div>
+  </bq-drawer>
+
+  <script>
+    (() => {
+      const btn = previewRoot.querySelector('bq-button');
+      const drawer = previewRoot.querySelector('bq-drawer');
+      const styleEl = previewRoot.querySelector('[data-drawer-styles]');
+      if (styleEl) document.body.appendChild(styleEl);
+      document.body.appendChild(drawer);
+      if (!document.head.querySelector('[data-bq-drawer-preview]')) {
+        const s = document.createElement('style');
+        s.setAttribute('data-bq-drawer-preview', '');
+        s.textContent = 'bq-drawer::part(panel){top:4rem;z-index:9999}'
+          + 'bq-drawer::part(backdrop){top:4rem;z-index:9998}';
+        document.head.appendChild(s);
+      }
+      btn?.addEventListener('bqClick', () => drawer?.show());
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```css CSS icon="css3"
+    .drawer-title {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+
+    .drawer-description {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--bq-radius--xs);
+      border: 1px dashed var(--bq-stroke--brand);
+      background-color: var(--bq-red-100);
+    }
+
+    .drawer-footer {
+      display: flex;
+      justify-content: center;
+      gap: var(--bq-spacing-xs);
+      flex: 1;
+    }
+    ```
+
+    ```html HTML icon="html5"
+    <bq-button>Open Drawer</bq-button>
+
+    <bq-drawer position="start">
+      <div class="drawer-title" slot="title">
+        <bq-icon name="user-circle" weight="bold"></bq-icon>
+        Title
+      </div>
+      <div class="drawer-description">Content</div>
+      <div class="drawer-footer" slot="footer">
+        <bq-button appearance="primary" block size="small">Button</bq-button>
+        <bq-button appearance="link" block size="small">Button</bq-button>
+      </div>
+    </bq-drawer>
+    ```
+
+    ```javascript JavaScript icon="js"
+    const btn = document.querySelector('bq-button');
+    const drawer = document.querySelector('bq-drawer');
+    btn.addEventListener('bqClick', () => drawer.show());
+    ```
+
+    ```jsx React icon="react"
+    import { useRef } from "react";
+    import { BqButton, BqDrawer, BqIcon } from "@beeq/react";
+
+    export default function App() {
+      const drawerRef = useRef(null);
+
+      return (
+        <>
+          <BqButton onBqClick={() => drawerRef.current?.show()}>Open Drawer</BqButton>
+
+          <BqDrawer ref={drawerRef} position="start">
+            <div className="drawer-title" slot="title">
+              <BqIcon name="user-circle" weight="bold" />
+              Title
+            </div>
+            <div className="drawer-description">Content</div>
+            <div className="drawer-footer" slot="footer">
+              <BqButton appearance="primary" block size="small">Button</BqButton>
+              <BqButton appearance="link" block size="small">Button</BqButton>
+            </div>
+          </BqDrawer>
+        </>
+      );
+    }
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqDrawer, BqIcon } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqDrawer, BqIcon],
+      template: `
+        <bq-button (bqClick)="drawer.show()">Open Drawer</bq-button>
+
+        <bq-drawer #drawer position="start">
+          <div class="drawer-title" slot="title">
+            <bq-icon name="user-circle" weight="bold"></bq-icon>
+            Title
+          </div>
+          <div class="drawer-description">Content</div>
+          <div class="drawer-footer" slot="footer">
+            <bq-button appearance="primary" block size="small">Button</bq-button>
+            <bq-button appearance="link" block size="small">Button</bq-button>
+          </div>
+        </bq-drawer>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { ref } from "vue";
+    import { BqButton, BqDrawer, BqIcon } from "@beeq/vue";
+
+    const drawerRef = ref(null);
+    </script>
+
+    <template>
+      <BqButton @bqClick="drawerRef?.show()">Open Drawer</BqButton>
+
+      <BqDrawer ref="drawerRef" position="start">
+        <div class="drawer-title" slot="title">
+          <BqIcon name="user-circle" weight="bold" />
+          Title
+        </div>
+        <div class="drawer-description">Content</div>
+        <div class="drawer-footer" slot="footer">
+          <BqButton appearance="primary" block size="small">Button</BqButton>
+          <BqButton appearance="link" block size="small">Button</BqButton>
+        </div>
+      </BqDrawer>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Options
+
+### With backdrop
+
+The backdrop variant adds a semi-transparent overlay behind the drawer, helping to focus user attention on the drawer content while dimming the background. Enable this variant when you want to visually separate the drawer from the rest of the interface and provide a modal-like experience.
+
+<CodeLivePreview code={`
+  <!--
+    bq-drawer uses position: fixed, which is trapped inside the CodeLivePreview
+    shadow root. The drawer and its <style data-drawer-styles> are teleported to
+    document.body immediately on init — see the IIFE script below.
+  -->
+
+  <bq-button>Open Drawer</bq-button>
+
+  <style data-drawer-styles>
+    .drawer-title {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+
+    .drawer-description {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--bq-radius--xs);
+      border: 1px dashed var(--bq-stroke--brand);
+      background-color: var(--bq-red-100);
+    }
+
+    .drawer-footer {
+      display: flex;
+      justify-content: center;
+      gap: var(--bq-spacing-xs);
+      flex: 1;
+    }
+  </style>
+
+  <bq-drawer position="end" enable-backdrop>
+    <div class="drawer-title" slot="title">
+      <bq-icon name="user-circle" weight="bold"></bq-icon>
+      Title
+    </div>
+    <div class="drawer-description">Content</div>
+    <div class="drawer-footer" slot="footer">
+      <bq-button appearance="primary" block size="small">Button</bq-button>
+      <bq-button appearance="link" block size="small">Button</bq-button>
+    </div>
+  </bq-drawer>
+
+  <script>
+    (() => {
+      const btn = previewRoot.querySelector('bq-button');
+      const drawer = previewRoot.querySelector('bq-drawer');
+      const styleEl = previewRoot.querySelector('[data-drawer-styles]');
+      if (styleEl) document.body.appendChild(styleEl);
+      document.body.appendChild(drawer);
+      if (!document.head.querySelector('[data-bq-drawer-preview]')) {
+        const s = document.createElement('style');
+        s.setAttribute('data-bq-drawer-preview', '');
+        s.textContent = 'bq-drawer::part(panel){top:4rem;z-index:9999}'
+          + 'bq-drawer::part(backdrop){top:4rem;z-index:9998}';
+        document.head.appendChild(s);
+      }
+      btn?.addEventListener('bqClick', () => drawer?.show());
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```css CSS icon="css3"
+    .drawer-title {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+
+    .drawer-description {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--bq-radius--xs);
+      border: 1px dashed var(--bq-stroke--brand);
+      background-color: var(--bq-red-100);
+    }
+
+    .drawer-footer {
+      display: flex;
+      justify-content: center;
+      gap: var(--bq-spacing-xs);
+      flex: 1;
+    }
+    ```
+
+    ```html HTML icon="html5"
+    <bq-button>Open Drawer</bq-button>
+
+    <bq-drawer position="end" enable-backdrop>
+      <div class="drawer-title" slot="title">
+        <bq-icon name="user-circle" weight="bold"></bq-icon>
+        Title
+      </div>
+      <div class="drawer-description">Content</div>
+      <div class="drawer-footer" slot="footer">
+        <bq-button appearance="primary" block size="small">Button</bq-button>
+        <bq-button appearance="link" block size="small">Button</bq-button>
+      </div>
+    </bq-drawer>
+    ```
+
+    ```javascript JavaScript icon="js"
+    const btn = document.querySelector('bq-button');
+    const drawer = document.querySelector('bq-drawer');
+    btn.addEventListener('bqClick', () => drawer.show());
+    ```
+
+    ```jsx React icon="react"
+    import { useRef } from "react";
+    import { BqButton, BqDrawer, BqIcon } from "@beeq/react";
+
+    export default function App() {
+      const drawerRef = useRef(null);
+
+      return (
+        <>
+          <BqButton onBqClick={() => drawerRef.current?.show()}>Open Drawer</BqButton>
+
+          <BqDrawer ref={drawerRef} position="end" enableBackdrop>
+            <div className="drawer-title" slot="title">
+              <BqIcon name="user-circle" weight="bold" />
+              Title
+            </div>
+            <div className="drawer-description">Content</div>
+            <div className="drawer-footer" slot="footer">
+              <BqButton appearance="primary" block size="small">Button</BqButton>
+              <BqButton appearance="link" block size="small">Button</BqButton>
+            </div>
+          </BqDrawer>
+        </>
+      );
+    }
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqDrawer, BqIcon } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqDrawer, BqIcon],
+      template: `
+        <bq-button (bqClick)="drawer.show()">Open Drawer</bq-button>
+
+        <bq-drawer #drawer position="end" enable-backdrop>
+          <div class="drawer-title" slot="title">
+            <bq-icon name="user-circle" weight="bold"></bq-icon>
+            Title
+          </div>
+          <div class="drawer-description">Content</div>
+          <div class="drawer-footer" slot="footer">
+            <bq-button appearance="primary" block size="small">Button</bq-button>
+            <bq-button appearance="link" block size="small">Button</bq-button>
+          </div>
+        </bq-drawer>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { ref } from "vue";
+    import { BqButton, BqDrawer, BqIcon } from "@beeq/vue";
+
+    const drawerRef = ref(null);
+    </script>
+
+    <template>
+      <BqButton @bqClick="drawerRef?.show()">Open Drawer</BqButton>
+
+      <BqDrawer ref="drawerRef" position="end" enableBackdrop>
+        <div class="drawer-title" slot="title">
+          <BqIcon name="user-circle" weight="bold" />
+          Title
+        </div>
+        <div class="drawer-description">Content</div>
+        <div class="drawer-footer" slot="footer">
+          <BqButton appearance="primary" block size="small">Button</BqButton>
+          <BqButton appearance="link" block size="small">Button</BqButton>
+        </div>
+      </BqDrawer>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Custom footer divider
+
+Replace the default footer divider by slotting a custom element into `slot="footer-divider"`. The example below uses `bq-divider` with a custom stroke.
+
+<CodeLivePreview code={`
+  <!--
+    bq-drawer uses position: fixed, which is trapped inside the CodeLivePreview
+    shadow root. The drawer and its <style data-drawer-styles> are teleported to
+    document.body immediately on init — see the IIFE script below.
+  -->
+
+  <bq-button>Open Drawer</bq-button>
+
+  <style data-drawer-styles>
+    .drawer-title {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+
+    .drawer-description {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--bq-radius--xs);
+      border: 1px dashed var(--bq-stroke--brand);
+      background-color: var(--bq-red-100);
+    }
+
+    .drawer-footer-divider {
+      display: block;
+      margin-bottom: var(--bq-spacing-m);
+    }
+
+    .drawer-footer {
+      display: flex;
+      justify-content: center;
+      gap: var(--bq-spacing-xs);
+      flex: 1;
+    }
+  </style>
+
+  <bq-drawer position="end" enable-backdrop>
+    <div class="drawer-title" slot="title">
+      <bq-icon name="user-circle" weight="bold"></bq-icon>
+      Title
+    </div>
+    <div class="drawer-description">Content</div>
+    <bq-divider class="drawer-footer-divider" slot="footer-divider" stroke-color="stroke--primary" stroke-thickness="1"></bq-divider>
+    <div class="drawer-footer" slot="footer">
+      <bq-button appearance="primary" block size="small">Button</bq-button>
+      <bq-button appearance="link" block size="small">Button</bq-button>
+    </div>
+  </bq-drawer>
+
+  <script>
+    (() => {
+      const btn = previewRoot.querySelector('bq-button');
+      const drawer = previewRoot.querySelector('bq-drawer');
+      const styleEl = previewRoot.querySelector('[data-drawer-styles]');
+      if (styleEl) document.body.appendChild(styleEl);
+      document.body.appendChild(drawer);
+      if (!document.head.querySelector('[data-bq-drawer-preview]')) {
+        const s = document.createElement('style');
+        s.setAttribute('data-bq-drawer-preview', '');
+        s.textContent = 'bq-drawer::part(panel){top:4rem;z-index:9999}'
+          + 'bq-drawer::part(backdrop){top:4rem;z-index:9998}';
+        document.head.appendChild(s);
+      }
+      btn?.addEventListener('bqClick', () => drawer?.show());
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```css CSS icon="css3"
+    .drawer-title {
+      display: flex;
+      align-items: center;
+      gap: var(--bq-spacing-xs);
+    }
+
+    .drawer-description {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--bq-radius--xs);
+      border: 1px dashed var(--bq-stroke--brand);
+      background-color: var(--bq-red-100);
+    }
+
+    .drawer-footer-divider {
+      display: block;
+      margin-bottom: var(--bq-spacing-m);
+    }
+
+    .drawer-footer {
+      display: flex;
+      justify-content: center;
+      gap: var(--bq-spacing-xs);
+      flex: 1;
+    }
+    ```
+
+    ```html HTML icon="html5"
+    <bq-button>Open Drawer</bq-button>
+
+    <bq-drawer position="end" enable-backdrop>
+      <div class="drawer-title" slot="title">
+        <bq-icon name="user-circle" weight="bold"></bq-icon>
+        Title
+      </div>
+      <div class="drawer-description">Content</div>
+      <bq-divider class="drawer-footer-divider" slot="footer-divider" stroke-color="stroke--primary" stroke-thickness="1"></bq-divider>
+      <div class="drawer-footer" slot="footer">
+        <bq-button appearance="primary" block size="small">Button</bq-button>
+        <bq-button appearance="link" block size="small">Button</bq-button>
+      </div>
+    </bq-drawer>
+    ```
+
+    ```javascript JavaScript icon="js"
+    const btn = document.querySelector('bq-button');
+    const drawer = document.querySelector('bq-drawer');
+    btn.addEventListener('bqClick', () => drawer.show());
+    ```
+
+    ```jsx React icon="react"
+    import { useRef } from "react";
+    import { BqButton, BqDivider, BqDrawer, BqIcon } from "@beeq/react";
+
+    export default function App() {
+      const drawerRef = useRef(null);
+
+      return (
+        <>
+          <BqButton onBqClick={() => drawerRef.current?.show()}>Open Drawer</BqButton>
+
+          <BqDrawer ref={drawerRef} position="end" enableBackdrop>
+            <div className="drawer-title" slot="title">
+              <BqIcon name="user-circle" weight="bold" />
+              Title
+            </div>
+            <div className="drawer-description">Content</div>
+            <BqDivider className="drawer-footer-divider" slot="footer-divider" strokeColor="stroke--primary" strokeThickness={1} />
+            <div className="drawer-footer" slot="footer">
+              <BqButton appearance="primary" block size="small">Button</BqButton>
+              <BqButton appearance="link" block size="small">Button</BqButton>
+            </div>
+          </BqDrawer>
+        </>
+      );
+    }
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqDivider, BqDrawer, BqIcon } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqDivider, BqDrawer, BqIcon],
+      template: `
+        <bq-button (bqClick)="drawer.show()">Open Drawer</bq-button>
+
+        <bq-drawer #drawer position="end" enable-backdrop>
+          <div class="drawer-title" slot="title">
+            <bq-icon name="user-circle" weight="bold"></bq-icon>
+            Title
+          </div>
+          <div class="drawer-description">Content</div>
+          <bq-divider class="drawer-footer-divider" slot="footer-divider" stroke-color="stroke--primary" stroke-thickness="1"></bq-divider>
+          <div class="drawer-footer" slot="footer">
+            <bq-button appearance="primary" block size="small">Button</bq-button>
+            <bq-button appearance="link" block size="small">Button</bq-button>
+          </div>
+        </bq-drawer>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { ref } from "vue";
+    import { BqButton, BqDivider, BqDrawer, BqIcon } from "@beeq/vue";
+
+    const drawerRef = ref(null);
+    </script>
+
+    <template>
+      <BqButton @bqClick="drawerRef?.show()">Open Drawer</BqButton>
+
+      <BqDrawer ref="drawerRef" position="end" enableBackdrop>
+        <div class="drawer-title" slot="title">
+          <BqIcon name="user-circle" weight="bold" />
+          Title
+        </div>
+        <div class="drawer-description">Content</div>
+        <BqDivider class="drawer-footer-divider" slot="footer-divider" strokeColor="stroke--primary" :strokeThickness="1" />
+        <div class="drawer-footer" slot="footer">
+          <BqButton appearance="primary" block size="small">Button</BqButton>
+          <BqButton appearance="link" block size="small">Button</BqButton>
+        </div>
+      </BqDrawer>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Close behavior
+
+By default, clicking outside the panel or pressing `Esc` closes the drawer. Set `close-on-click-outside` or `close-on-esc` to prevent those interactions when the user must explicitly confirm before dismissing.
+
+<CodeLivePreview code={`
+  <!--
+    bq-drawer uses position: fixed, which is trapped inside the CodeLivePreview
+    shadow root. The drawer and its <style data-drawer-styles> are teleported to
+    document.body immediately on init — see the IIFE script below.
+  -->
+
+  <bq-button>Open locked drawer</bq-button>
+
+  <style data-drawer-styles>
+    .drawer-content {
+      padding: var(--bq-spacing-m) 0;
+    }
+  </style>
+
+  <bq-drawer position="end" enable-backdrop close-on-click-outside close-on-esc>
+    <span slot="title">Unsaved changes</span>
+    <div class="drawer-content">
+      <p>This drawer cannot be closed by clicking outside or pressing Esc — the user must use the close button.</p>
+    </div>
+  </bq-drawer>
+
+  <script>
+    (() => {
+      const btn = previewRoot.querySelector('bq-button');
+      const drawer = previewRoot.querySelector('bq-drawer');
+      const styleEl = previewRoot.querySelector('[data-drawer-styles]');
+      if (styleEl) document.body.appendChild(styleEl);
+      document.body.appendChild(drawer);
+      if (!document.head.querySelector('[data-bq-drawer-preview]')) {
+        const s = document.createElement('style');
+        s.setAttribute('data-bq-drawer-preview', '');
+        s.textContent = 'bq-drawer::part(panel){top:4rem;z-index:9999}'
+          + 'bq-drawer::part(backdrop){top:4rem;z-index:9998}';
+        document.head.appendChild(s);
+      }
+      btn?.addEventListener('bqClick', () => drawer?.show());
+    })();
+  </script>
+`}>
+  <CodeGroup>
+    ```css CSS icon="css3"
+    .drawer-content {
+      padding: var(--bq-spacing-m) 0;
+    }
+    ```
+
+    ```html HTML icon="html5"
+    <bq-button>Open locked drawer</bq-button>
+
+    <bq-drawer position="end" enable-backdrop close-on-click-outside close-on-esc>
+      <span slot="title">Unsaved changes</span>
+      <div class="drawer-content">
+        <p>Use the close button to dismiss.</p>
+      </div>
+    </bq-drawer>
+    ```
+
+    ```javascript JavaScript icon="js"
+    const btn = document.querySelector('bq-button');
+    const drawer = document.querySelector('bq-drawer');
+    btn.addEventListener('bqClick', () => drawer.show());
+    ```
+
+    ```jsx React icon="react"
+    import { useRef } from "react";
+    import { BqButton, BqDrawer } from "@beeq/react";
+
+    export default function App() {
+      const drawerRef = useRef(null);
+
+      return (
+        <>
+          <BqButton onBqClick={() => drawerRef.current?.show()}>Open locked drawer</BqButton>
+
+          <BqDrawer ref={drawerRef} position="end" enableBackdrop closeOnClickOutside closeOnEsc>
+            <span slot="title">Unsaved changes</span>
+            <div className="drawer-content">
+              <p>Use the close button to dismiss.</p>
+            </div>
+          </BqDrawer>
+        </>
+      );
+    }
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqButton, BqDrawer } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqButton, BqDrawer],
+      template: `
+        <bq-button (bqClick)="drawer.show()">Open locked drawer</bq-button>
+
+        <bq-drawer #drawer position="end" enable-backdrop close-on-click-outside close-on-esc>
+          <span slot="title">Unsaved changes</span>
+          <div class="drawer-content">
+            <p>Use the close button to dismiss.</p>
+          </div>
+        </bq-drawer>
+      `,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { ref } from "vue";
+    import { BqButton, BqDrawer } from "@beeq/vue";
+
+    const drawerRef = ref(null);
+    </script>
+
+    <template>
+      <BqButton @bqClick="drawerRef?.show()">Open locked drawer</BqButton>
+
+      <BqDrawer ref="drawerRef" position="end" enableBackdrop closeOnClickOutside closeOnEsc>
+        <span slot="title">Unsaved changes</span>
+        <div class="drawer-content">
+          <p>Use the close button to dismiss.</p>
+        </div>
+      </BqDrawer>
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Place drawers along the screen's edge — typically the right side — to prevent interference with navigational components on the left edge.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Inset a drawer significantly from the screen edges. Doing so makes its position and scroll behaviour unclear and can obscure primary content.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Always provide a meaningful `title` slot so users and screen readers know the purpose of the panel before interacting with its content.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Leave the title slot empty. A drawer without a title gives assistive technologies no label for the `role="dialog"` and leaves sighted users without orientation.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use `enable-backdrop` when the drawer contains a form or a detail view that requires focused attention — it visually separates the panel from the underlying page.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Use a drawer for critical, blocking confirmations such as destructive action prompts. Use `bq-dialog` for those — a drawer implies the page behind it is still accessible.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Place primary actions (Save, Apply, Confirm) in the `footer` slot so they are always accessible at the bottom of the panel, even when the body content is long and scrollable.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Bury primary action buttons in the scrollable body. Users who do not scroll to the bottom will miss them and may not know how to complete the task.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Use `close-on-click-outside` and `close-on-esc` together when the panel contains unsaved changes that would be lost if the user accidentally dismisses it.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Lock the close behavior by default on every drawer. Preventing Esc and outside-click dismissal frustrates users who expect those standard interactions to work.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+`bq-drawer` renders a `role="dialog"` panel with `aria-modal="true"` and `aria-labelledby` pointing to the built-in title element. When the drawer is closed, `aria-hidden="true"` is set on the panel so assistive technologies skip its content entirely.
+
+The built-in close button has `label="Close"` and is announced by screen readers as "Close, button".
+
+As a developer, you are responsible for:
+
+- **Moving focus into the drawer when it opens** — the component does not trap focus automatically. When you call `show()`, move focus to the first interactive element inside the panel or to the panel itself so keyboard users can begin navigating immediately.
+- **Returning focus to the trigger when the drawer closes** — call `hide()` and then restore focus to the element that opened the drawer so keyboard users are not left disoriented.
+- **Providing a descriptive title** — the `aria-labelledby` attribute references the title slot. Screen readers announce this text when the dialog opens. An empty or generic title such as "Panel" makes the dialog purpose unclear.
+- **Avoid nesting focusable elements in the backdrop** — the backdrop does not receive focus; keep interactive content inside the panel.
+
+## API reference
+
+### Properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `closeOnClickOutside` | `close-on-click-outside` | If true, the drawer will not close when clicking outside the panel | `boolean` | `false` |
+| `closeOnEsc` | `close-on-esc` | If true, the drawer will not close when the `Esc` key is pressed | `boolean` | `false` |
+| `enableBackdrop` | `enable-backdrop` | If true, a backdrop overlay is shown when the drawer opens | `boolean` | `false` |
+| `open` | `open` | If true, the drawer is visible | `boolean` | `false` |
+| `position` | `position` | Defines the edge the drawer slides from | `'start' \| 'end'` | `'end'` |
+| `placement` | `placement` | **Deprecated.** Use `position` instead. Defines the edge the drawer slides from | `'left' \| 'right'` | `'right'` |
+
+### Methods
+
+| Method | Description | Signature |
+|---|---|---|
+| `show()` | Opens the drawer and emits `bqOpen` | `show() => Promise<void>` |
+| `hide()` | Closes the drawer and emits `bqClose` | `hide() => Promise<void>` |
+
+### Events
+
+| Event | Description | Type |
+|---|---|---|
+| `bqOpen` | Emitted when the drawer starts to open | `CustomEvent<void>` |
+| `bqAfterOpen` | Emitted after the open animation completes | `CustomEvent<void>` |
+| `bqClose` | Emitted when the drawer starts to close | `CustomEvent<void>` |
+| `bqAfterClose` | Emitted after the close animation completes | `CustomEvent<void>` |
+
+### Slots
+
+| Slot | Description |
+|---|---|
+| *(default)* | The main body content of the drawer |
+| `title` | The title displayed in the header |
+| `footer` | Footer content — typically action buttons; only rendered when content is present |
+| `button-close` | Custom content for the close button; defaults to a close icon |
+| `footer-divider` | Content placed in the divider between body and footer |
+
+### Shadow parts
+
+| Part | Description |
+|---|---|
+| `backdrop` | The `<div>` holding the backdrop overlay |
+| `panel` | The `<div>` holding the full drawer surface |
+| `header` | The `<header>` holding the title and close button |
+| `title` | The `<div>` that holds the title slot content |
+| `button-close` | The `bq-button` wrapper for the close button |
+| `button-close__btn` | The native `<button>` inside the close control |
+| `button-close__label` | The label `<span>` inside the close button |
+| `body` | The `<main>` holding the default slot content |
+| `footer` | The `<footer>` holding footer slot content |
+
+### CSS custom properties
+
+<Expandable title="CSS variables" defaultOpen={true}>
+
+| Variable | Description | Default |
+|---|---|---|
+| `--bq-drawer--backgroundBackdrop` | Background color of the backdrop overlay | `var(--bq-ui--overlay)` |
+| `--bq-drawer--gap` | Gap between the drawer panel and the viewport edge | `var(--bq-spacing-l)` |
+| `--bq-drawer--width` | Width of the drawer panel | `320px` |
+| `--bq-drawer--paddingX` | Inline (horizontal) padding of the panel | `var(--bq-spacing-l)` |
+| `--bq-drawer--paddingY` | Block (vertical) padding of the panel | `var(--bq-spacing-m)` |
+| `--bq-drawer--zIndex` | Z-index of the drawer component | `10` |
+
+</Expandable>
+
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-drawer--default">
+    Explore drawer variants and states in Storybook
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/drawer">
+    View the component source on GitHub
+  </Card>
+</CardGroup>
