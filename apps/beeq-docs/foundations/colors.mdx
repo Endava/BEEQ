@@ -3,6 +3,88 @@ title: Colors
 description: BEEQ's color system is built in two tiers — a raw primitive palette and semantic tokens that name colors by their intended role, not their appearance.
 ---
 
+export const primitiveColorScales = [
+  ['Blue', ['--bq-blue-100', '--bq-blue-200', '--bq-blue-300', '--bq-blue-400', '--bq-blue-500', '--bq-blue-600', '--bq-blue-700', '--bq-blue-800', '--bq-blue-900', '--bq-blue-1000']],
+  ['Corai', ['--bq-corai-100', '--bq-corai-200', '--bq-corai-300', '--bq-corai-400', '--bq-corai-500', '--bq-corai-600', '--bq-corai-700', '--bq-corai-800', '--bq-corai-900', '--bq-corai-1000']],
+  ['Cyan', ['--bq-cyan-100', '--bq-cyan-200', '--bq-cyan-300', '--bq-cyan-400', '--bq-cyan-500', '--bq-cyan-600', '--bq-cyan-700', '--bq-cyan-800', '--bq-cyan-900', '--bq-cyan-1000']],
+  ['Gold', ['--bq-gold-100', '--bq-gold-200', '--bq-gold-300', '--bq-gold-400', '--bq-gold-500', '--bq-gold-600', '--bq-gold-700', '--bq-gold-800', '--bq-gold-900', '--bq-gold-1000']],
+  ['Green', ['--bq-green-100', '--bq-green-200', '--bq-green-300', '--bq-green-400', '--bq-green-500', '--bq-green-600', '--bq-green-700', '--bq-green-800', '--bq-green-900', '--bq-green-1000']],
+  ['Grey', ['--bq-grey-50', '--bq-grey-100', '--bq-grey-200', '--bq-grey-300', '--bq-grey-400', '--bq-grey-500', '--bq-grey-600', '--bq-grey-700', '--bq-grey-800', '--bq-grey-900', '--bq-grey-950', '--bq-grey-1000']],
+  ['Indigo', ['--bq-indigo-100', '--bq-indigo-200', '--bq-indigo-300', '--bq-indigo-400', '--bq-indigo-500', '--bq-indigo-600', '--bq-indigo-700', '--bq-indigo-800', '--bq-indigo-900', '--bq-indigo-1000']],
+  ['Iris', ['--bq-iris-100', '--bq-iris-200', '--bq-iris-300', '--bq-iris-400', '--bq-iris-500', '--bq-iris-600', '--bq-iris-700', '--bq-iris-800', '--bq-iris-900', '--bq-iris-1000']],
+  ['Lime', ['--bq-lime-100', '--bq-lime-200', '--bq-lime-300', '--bq-lime-400', '--bq-lime-500', '--bq-lime-600', '--bq-lime-700', '--bq-lime-800', '--bq-lime-900', '--bq-lime-1000']],
+  ['Magenta', ['--bq-magenta-100', '--bq-magenta-200', '--bq-magenta-300', '--bq-magenta-400', '--bq-magenta-500', '--bq-magenta-600', '--bq-magenta-700', '--bq-magenta-800', '--bq-magenta-900', '--bq-magenta-1000']],
+  ['Orange', ['--bq-orange-100', '--bq-orange-200', '--bq-orange-300', '--bq-orange-400', '--bq-orange-500', '--bq-orange-600', '--bq-orange-700', '--bq-orange-800', '--bq-orange-900', '--bq-orange-1000']],
+  ['Purple', ['--bq-purple-100', '--bq-purple-200', '--bq-purple-300', '--bq-purple-400', '--bq-purple-500', '--bq-purple-600', '--bq-purple-700', '--bq-purple-800', '--bq-purple-900', '--bq-purple-1000']],
+  ['Red', ['--bq-red-100', '--bq-red-200', '--bq-red-300', '--bq-red-400', '--bq-red-500', '--bq-red-600', '--bq-red-700', '--bq-red-800', '--bq-red-900', '--bq-red-1000']],
+  ['Sky', ['--bq-sky-100', '--bq-sky-200', '--bq-sky-300', '--bq-sky-400', '--bq-sky-500', '--bq-sky-600', '--bq-sky-700', '--bq-sky-800', '--bq-sky-900', '--bq-sky-1000']],
+  ['Teal', ['--bq-teal-100', '--bq-teal-200', '--bq-teal-300', '--bq-teal-400', '--bq-teal-500', '--bq-teal-600', '--bq-teal-700', '--bq-teal-800', '--bq-teal-900', '--bq-teal-1000']],
+  ['Volcano', ['--bq-volcano-100', '--bq-volcano-200', '--bq-volcano-300', '--bq-volcano-400', '--bq-volcano-500', '--bq-volcano-600', '--bq-volcano-700', '--bq-volcano-800', '--bq-volcano-900', '--bq-volcano-1000']],
+  ['Yellow', ['--bq-yellow-100', '--bq-yellow-200', '--bq-yellow-300', '--bq-yellow-400', '--bq-yellow-500', '--bq-yellow-600', '--bq-yellow-700', '--bq-yellow-800', '--bq-yellow-900', '--bq-yellow-1000']],
+];
+
+export const PrimitiveColorTable = () => {
+  const [copiedToken, setCopiedToken] = React.useState(null);
+  const timeoutRef = React.useRef(null);
+
+  const handleCopy = async (token) => {
+    await navigator.clipboard.writeText(token);
+    setCopiedToken(token);
+
+    if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
+    timeoutRef.current = window.setTimeout(() => {
+      setCopiedToken(null);
+      timeoutRef.current = null;
+    }, 1200);
+  };
+
+  React.useEffect(() => {
+    return () => {
+      if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
+  return (
+    <div className="not-prose">
+      {primitiveColorScales.map(([title, tokens], index) => (
+        <div
+          key={title}
+          className={`flex flex-wrap items-center gap-x-5 gap-y-3 md:flex-nowrap ${
+            index > 0 ? 'mt-6' : ''
+          }`}
+        >
+          <div className="w-full flex-shrink-0 text-[15px] font-medium leading-6 text-gray-800 md:w-[100px] dark:text-gray-200">{title}</div>
+          <div className="flex flex-wrap gap-1.5 overflow-visible">
+            {tokens.map((token) => (
+              <button
+                key={token}
+                aria-label={`Copy ${token}`}
+                onClick={() => handleCopy(token)}
+                className="group relative flex h-10 w-10 cursor-copy items-center justify-center rounded-lg border border-neutral-200 print:print-color-exact hover:z-10 hover:-translate-y-0.5 hover:shadow-sm focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-neutral-800 dark:focus-visible:outline-blue-400"
+              >
+                <span className="absolute inset-0 rounded-[inherit]" style={{ backgroundColor: `var(${token})` }} />
+                <span className="pointer-events-none absolute inset-0 flex items-center justify-center rounded-[inherit] bg-black/10 opacity-0 transition-opacity group-hover:opacity-100 dark:bg-white/10" />
+                <span
+                  className={`pointer-events-none absolute inset-0 flex items-center justify-center rounded-[inherit] transition-opacity ${
+                    copiedToken === token ? 'opacity-100' : 'opacity-0'
+                  }`}
+                >
+                  <svg aria-hidden="true" viewBox="0 0 16 16" className="h-4 w-4 fill-none stroke-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)] stroke-[2.25]">
+                    <path d="M3.75 8.25 6.5 11l5.75-6.25" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </span>
+                <span className="pointer-events-none absolute left-1/2 top-full z-20 mt-2 hidden -translate-x-1/2 whitespace-nowrap rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-gray-900 shadow-sm group-hover:block group-focus-visible:block dark:border-neutral-800 dark:bg-neutral-950 dark:text-white">
+                  {token}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 <Frame className="px-4 py-4" caption="BEEQ colors overview — a snapshot of some tokens from the color palette">
   <img
     className="block dark:hidden"
@@ -479,214 +561,7 @@ This works identically whether you use plain CSS, Sass, PostCSS, or Tailwind's `
 
 The complete raw hue scales — grouped by color, not by meaning. Each step is available as `var(--bq-{hue}-{scale})`. Use these when tracing which raw value backs a semantic token or when defining a custom theme.
 
-<Color variant="table">
-  <Color.Row title="Blue">
-    <Color.Item name="blue-100" value="#e7f0fd" />
-    <Color.Item name="blue-200" value="#d0e2fb" />
-    <Color.Item name="blue-300" value="#a1c5f7" />
-    <Color.Item name="blue-400" value="#73a8f3" />
-    <Color.Item name="blue-500" value="#448bef" />
-    <Color.Item name="blue-600" value="#156eeb" />
-    <Color.Item name="blue-700" value="#1158bc" />
-    <Color.Item name="blue-800" value="#0d428d" />
-    <Color.Item name="blue-900" value="#082c5e" />
-    <Color.Item name="blue-1000" value="#04162f" />
-  </Color.Row>
-  <Color.Row title="Corai">
-    <Color.Item name="corai-100" value="#fff2f2" />
-    <Color.Item name="corai-200" value="#ffe6e6" />
-    <Color.Item name="corai-300" value="#ffccce" />
-    <Color.Item name="corai-400" value="#ffb3b5" />
-    <Color.Item name="corai-500" value="#ff999d" />
-    <Color.Item name="corai-600" value="#ff8084" />
-    <Color.Item name="corai-700" value="#cc666a" />
-    <Color.Item name="corai-800" value="#994d4f" />
-    <Color.Item name="corai-900" value="#663335" />
-    <Color.Item name="corai-1000" value="#331a1a" />
-  </Color.Row>
-  <Color.Row title="Cyan">
-    <Color.Item name="cyan-100" value="#e8f7fb" />
-    <Color.Item name="cyan-200" value="#d2f0f8" />
-    <Color.Item name="cyan-300" value="#a5e1f1" />
-    <Color.Item name="cyan-400" value="#78d1e9" />
-    <Color.Item name="cyan-500" value="#4bc2e2" />
-    <Color.Item name="cyan-600" value="#1eb3db" />
-    <Color.Item name="cyan-700" value="#188faf" />
-    <Color.Item name="cyan-800" value="#126b83" />
-    <Color.Item name="cyan-900" value="#0c4858" />
-    <Color.Item name="cyan-1000" value="#06242c" />
-  </Color.Row>
-  <Color.Row title="Gold">
-    <Color.Item name="gold-100" value="#fbf4ec" />
-    <Color.Item name="gold-200" value="#f7e9da" />
-    <Color.Item name="gold-300" value="#f0d3b6" />
-    <Color.Item name="gold-400" value="#e8bc91" />
-    <Color.Item name="gold-500" value="#e1a66d" />
-    <Color.Item name="gold-600" value="#d99048" />
-    <Color.Item name="gold-700" value="#ae733a" />
-    <Color.Item name="gold-800" value="#82562b" />
-    <Color.Item name="gold-900" value="#573a1d" />
-    <Color.Item name="gold-1000" value="#2b1d0e" />
-  </Color.Row>
-  <Color.Row title="Green">
-    <Color.Item name="green-100" value="#e8f8ef" />
-    <Color.Item name="green-200" value="#d2f1e0" />
-    <Color.Item name="green-300" value="#a5e3c1" />
-    <Color.Item name="green-400" value="#78d5a1" />
-    <Color.Item name="green-500" value="#4bc782" />
-    <Color.Item name="green-600" value="#1eb963" />
-    <Color.Item name="green-700" value="#18944f" />
-    <Color.Item name="green-800" value="#126f3b" />
-    <Color.Item name="green-900" value="#0c4a28" />
-    <Color.Item name="green-1000" value="#062514" />
-  </Color.Row>
-  <Color.Row title="Grey">
-    <Color.Item name="grey-50" value="#f6f6f8" />
-    <Color.Item name="grey-100" value="#f1f2f4" />
-    <Color.Item name="grey-200" value="#e7e8eb" />
-    <Color.Item name="grey-300" value="#caccd2" />
-    <Color.Item name="grey-400" value="#a6aab3" />
-    <Color.Item name="grey-500" value="#898e99" />
-    <Color.Item name="grey-600" value="#646a77" />
-    <Color.Item name="grey-700" value="#3f4350" />
-    <Color.Item name="grey-800" value="#2a2c35" />
-    <Color.Item name="grey-900" value="#1c1d23" />
-    <Color.Item name="grey-950" value="#15161a" />
-    <Color.Item name="grey-1000" value="#0d0e11" />
-  </Color.Row>
-  <Color.Row title="Indigo">
-    <Color.Item name="indigo-100" value="#edecfc" />
-    <Color.Item name="indigo-200" value="#dcdafa" />
-    <Color.Item name="indigo-300" value="#b9b5f5" />
-    <Color.Item name="indigo-400" value="#9590ef" />
-    <Color.Item name="indigo-500" value="#726bea" />
-    <Color.Item name="indigo-600" value="#4f46e5" />
-    <Color.Item name="indigo-700" value="#3f38b7" />
-    <Color.Item name="indigo-800" value="#2f2a89" />
-    <Color.Item name="indigo-900" value="#201c5c" />
-    <Color.Item name="indigo-1000" value="#100e2e" />
-  </Color.Row>
-  <Color.Row title="Iris">
-    <Color.Item name="iris-100" value="#e9f0ff" />
-    <Color.Item name="iris-200" value="#d6e0ff" />
-    <Color.Item name="iris-300" value="#b2c0fe" />
-    <Color.Item name="iris-400" value="#8691f8" />
-    <Color.Item name="iris-500" value="#6061ee" />
-    <Color.Item name="iris-600" value="#4f46e5" />
-    <Color.Item name="iris-700" value="#413abd" />
-    <Color.Item name="iris-800" value="#332e95" />
-    <Color.Item name="iris-900" value="#26216d" />
-    <Color.Item name="iris-1000" value="#181545" />
-  </Color.Row>
-  <Color.Row title="Lime">
-    <Color.Item name="lime-100" value="#f5fae8" />
-    <Color.Item name="lime-200" value="#ecf6d2" />
-    <Color.Item name="lime-300" value="#d9eda5" />
-    <Color.Item name="lime-400" value="#c5e379" />
-    <Color.Item name="lime-500" value="#b2da4c" />
-    <Color.Item name="lime-600" value="#9fd11f" />
-    <Color.Item name="lime-700" value="#7fa719" />
-    <Color.Item name="lime-800" value="#5f7d13" />
-    <Color.Item name="lime-900" value="#40540c" />
-    <Color.Item name="lime-1000" value="#202a06" />
-  </Color.Row>
-  <Color.Row title="Magenta">
-    <Color.Item name="magenta-100" value="#fce7f4" />
-    <Color.Item name="magenta-200" value="#f9cfea" />
-    <Color.Item name="magenta-300" value="#f39fd6" />
-    <Color.Item name="magenta-400" value="#ee6fbf" />
-    <Color.Item name="magenta-500" value="#e83fab" />
-    <Color.Item name="magenta-600" value="#de1395" />
-    <Color.Item name="magenta-700" value="#b20f77" />
-    <Color.Item name="magenta-800" value="#850c59" />
-    <Color.Item name="magenta-900" value="#58083c" />
-    <Color.Item name="magenta-1000" value="#2c041e" />
-  </Color.Row>
-  <Color.Row title="Orange">
-    <Color.Item name="orange-100" value="#fbf0e9" />
-    <Color.Item name="orange-200" value="#f8e1d4" />
-    <Color.Item name="orange-300" value="#f1c2a8" />
-    <Color.Item name="orange-400" value="#eaa47d" />
-    <Color.Item name="orange-500" value="#e38551" />
-    <Color.Item name="orange-600" value="#dc6726" />
-    <Color.Item name="orange-700" value="#b0521e" />
-    <Color.Item name="orange-800" value="#843e17" />
-    <Color.Item name="orange-900" value="#58290f" />
-    <Color.Item name="orange-1000" value="#2c1508" />
-  </Color.Row>
-  <Color.Row title="Purple">
-    <Color.Item name="purple-100" value="#efebf8" />
-    <Color.Item name="purple-200" value="#e0d7f2" />
-    <Color.Item name="purple-300" value="#c1afe5" />
-    <Color.Item name="purple-400" value="#a388d8" />
-    <Color.Item name="purple-500" value="#8460cb" />
-    <Color.Item name="purple-600" value="#6538be" />
-    <Color.Item name="purple-700" value="#512d98" />
-    <Color.Item name="purple-800" value="#3d2272" />
-    <Color.Item name="purple-900" value="#28164c" />
-    <Color.Item name="purple-1000" value="#140b26" />
-  </Color.Row>
-  <Color.Row title="Red">
-    <Color.Item name="red-100" value="#fce7ea" />
-    <Color.Item name="red-200" value="#f9d1d5" />
-    <Color.Item name="red-300" value="#f3a2ac" />
-    <Color.Item name="red-400" value="#ed7482" />
-    <Color.Item name="red-500" value="#e74559" />
-    <Color.Item name="red-600" value="#e1172f" />
-    <Color.Item name="red-700" value="#b41226" />
-    <Color.Item name="red-800" value="#870e1c" />
-    <Color.Item name="red-900" value="#5a0913" />
-    <Color.Item name="red-1000" value="#2d0509" />
-  </Color.Row>
-  <Color.Row title="Sky">
-    <Color.Item name="sky-100" value="#eff4fb" />
-    <Color.Item name="sky-200" value="#dfeaf8" />
-    <Color.Item name="sky-300" value="#bfd5f1" />
-    <Color.Item name="sky-400" value="#9ec1e9" />
-    <Color.Item name="sky-500" value="#7eace2" />
-    <Color.Item name="sky-600" value="#5e97db" />
-    <Color.Item name="sky-700" value="#4b79af" />
-    <Color.Item name="sky-800" value="#385b83" />
-    <Color.Item name="sky-900" value="#263c58" />
-    <Color.Item name="sky-1000" value="#131e2c" />
-  </Color.Row>
-  <Color.Row title="Teal">
-    <Color.Item name="teal-100" value="#e5f7f5" />
-    <Color.Item name="teal-200" value="#ccf0eb" />
-    <Color.Item name="teal-300" value="#99e1d8" />
-    <Color.Item name="teal-400" value="#66d2c4" />
-    <Color.Item name="teal-500" value="#33c3b1" />
-    <Color.Item name="teal-600" value="#00b49d" />
-    <Color.Item name="teal-700" value="#00907e" />
-    <Color.Item name="teal-800" value="#006c5e" />
-    <Color.Item name="teal-900" value="#00483f" />
-    <Color.Item name="teal-1000" value="#00241f" />
-  </Color.Row>
-  <Color.Row title="Volcano">
-    <Color.Item name="volcano-100" value="#feede7" />
-    <Color.Item name="volcano-200" value="#fddbd1" />
-    <Color.Item name="volcano-300" value="#fbb8a3" />
-    <Color.Item name="volcano-400" value="#fa9474" />
-    <Color.Item name="volcano-500" value="#f87146" />
-    <Color.Item name="volcano-600" value="#f64d18" />
-    <Color.Item name="volcano-700" value="#c53e13" />
-    <Color.Item name="volcano-800" value="#942e0e" />
-    <Color.Item name="volcano-900" value="#621f0a" />
-    <Color.Item name="volcano-1000" value="#310f05" />
-  </Color.Row>
-  <Color.Row title="Yellow">
-    <Color.Item name="yellow-100" value="#fefbe7" />
-    <Color.Item name="yellow-200" value="#fcf6d0" />
-    <Color.Item name="yellow-300" value="#faeea0" />
-    <Color.Item name="yellow-400" value="#f7e571" />
-    <Color.Item name="yellow-500" value="#f5dd41" />
-    <Color.Item name="yellow-600" value="#f2d412" />
-    <Color.Item name="yellow-700" value="#c2aa0e" />
-    <Color.Item name="yellow-800" value="#917f0b" />
-    <Color.Item name="yellow-900" value="#615507" />
-    <Color.Item name="yellow-1000" value="#302a04" />
-  </Color.Row>
-</Color>
+<PrimitiveColorTable />
 
 ---
 
