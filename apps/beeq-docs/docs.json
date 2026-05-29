@@ -51,6 +51,7 @@
               "getting-started/design-principles",
               "getting-started/for-designers",
               "getting-started/for-developers",
+              "getting-started/installation",
               "getting-started/ai-tools"
             ]
           },
@@ -59,7 +60,7 @@
             "pages": [
               "guides/frameworks/angular",
               "guides/frameworks/react",
-              "guides/frameworks/next.js",
+              "guides/frameworks/next",
               "guides/frameworks/vue",
               "guides/frameworks/html-web-components"
             ]
@@ -81,7 +82,8 @@
               "theming/themes-and-modes",
               "theming/global-css-variables",
               "theming/component-css-variables",
-              "theming/custom-theme"
+              "theming/custom-theme",
+              "theming/styles"
             ]
           }
         ]
@@ -189,6 +191,12 @@
       }
     ]
   },
+  "redirects": [
+    {
+      "source": "/components",
+      "destination": "/components/overview"
+    }
+  ],
   "contextual": {
     "options": [
       "copy",
