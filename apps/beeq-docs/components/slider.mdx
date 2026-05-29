@@ -1,0 +1,711 @@
+---
+title: Slider
+description: Sliders provide a visual way to select a value or range of values by dragging a handle along a horizontal track.
+---
+
+import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
+
+<Frame className="px-4 py-4" caption="Slider component overview">
+  <img className="block dark:hidden" src="/components/images/slider/slider-overview-light.svg" alt="BEEQ Slider component overview" />
+  <img className="hidden dark:block" src="/components/images/slider/slider-overview-dark.svg" alt="BEEQ Slider component overview" />
+</Frame>
+
+`bq-slider` provides a visual representation of an adjustable value, enabling users to change settings by dragging a handle along a horizontal track. It supports both single-value and range selection, making it suitable for filters, settings panels, and any input where a numeric value within a bounded range is appropriate.
+
+## When to use
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-up" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Use slider when
+    </span>
+
+    - Users need to select a value or range within a continuous or stepped numeric scale
+    - Approximate values are acceptable — for example, adjusting volume, brightness, or a price filter
+    - Real-time visual feedback on the selected value adds meaningful context
+    - The range has a clear minimum and maximum that can be conveyed with a horizontal track
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="thumbs-down" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Do not use slider when
+    </span>
+
+    - Users must enter a precise value — prefer a number input instead
+    - The set of valid options is very small (1–3) — prefer a radio group or segmented control
+    - The interface is space-constrained and the track cannot be rendered with sufficient width
+    - Values are non-numeric, such as weekdays or named categories
+  </Card>
+</CardGroup>
+
+## Anatomy
+
+<Frame className="px-4 py-4" caption="Slider component anatomy">
+  <img className="block dark:hidden" src="/components/images/slider/slider-anatomy-light.svg" alt="BEEQ Slider component anatomy" />
+  <img className="hidden dark:block" src="/components/images/slider/slider-anatomy-dark.svg" alt="BEEQ Slider component anatomy" />
+</Frame>
+
+The slider consists of a horizontal track, a filled progress region that visualizes the selected value, a draggable handle (thumb), and optional value labels at each end.
+
+| Part | Element | Description |
+|---|---|---|
+| **1** | Value label | The start label showing the current value (or minimum for range); visible when `enable-value-indicator` is set |
+| **2** | Handle | The draggable thumb that sets the value |
+| **3** | Track | The full horizontal rail; the highlighted segment (progress area) shows the selected value or range |
+| **4** | Value label end | The end label showing the maximum for range type; only visible when `enable-value-indicator` and `type="range"` are both set |
+
+## Design guidelines
+
+### Type
+
+<Steps>
+  <Step title="Single (default)">
+    A single handle slides along the track to represent one value. Use this for individual settings such as volume, zoom level, or brightness — any scenario where one number is all that matters.
+  </Step>
+  <Step title="Range">
+    Two handles define a minimum and maximum. Use this when users need to select an interval — for example, a price range, a time window, or a quantity bracket.
+  </Step>
+</Steps>
+
+### States
+
+Every slider supports five states: **default**, **hover**, **focus**, **active**, and **disabled**. The handle enlarges slightly on hover and focus to provide a clear interactive target. The disabled state dims the track and handle and prevents all interaction — use it to display a read-only preset value.
+
+### Value feedback
+
+Use `enable-value-indicator` to show the numeric value beside the track at all times. This is appropriate when the exact number matters to the user, such as a temperature, percentage, or step count. Use `enable-tooltip` when you want feedback only while the user is actively dragging, keeping the interface clean at rest. Pair it with `tooltip-always-visible` to keep the tooltip permanently visible.
+
+### Width
+
+The slider fills its container's available width. Constrain the width of its parent container to control how large the track appears — a very short track makes precise selection difficult.
+
+## Usage
+
+### Single
+
+The default slider type. Drag the handle to select a single numeric value within the `min`–`max` range.
+
+<CodeLivePreview code={`
+  <style>
+    bq-slider { width: 100%; max-width: 400px; }
+  </style>
+
+  <bq-slider value="30"></bq-slider>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-slider value="30"></bq-slider>
+    ```
+
+    ```jsx React icon="react"
+    import { BqSlider } from "@beeq/react";
+
+    export default function App() {
+      return (
+        <BqSlider
+          value={30}
+          onBqChange={(e) => console.log("value:", e.detail.value)}
+        />
+      );
+    }
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSlider } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSlider],
+      template: `<bq-slider value="30" (bqChange)="onSliderChange($event)"></bq-slider>`,
+    })
+    export class AppComponent {
+      onSliderChange(event: CustomEvent<{ value: number }>) {
+        console.log("value:", event.detail.value);
+      }
+    }
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqSlider } from "@beeq/vue";
+
+    const handleChange = (e: CustomEvent) => console.log("value:", e.detail.value);
+    </script>
+
+    <template>
+      <BqSlider :value="30" @bqChange="handleChange" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Range
+
+Set `type="range"` and pass a two-element array as `value` to let users select both a minimum and maximum simultaneously.
+
+<CodeLivePreview code={`
+  <style>
+    bq-slider { width: 100%; max-width: 400px; }
+  </style>
+
+  <bq-slider type="range" value="[20,70]"></bq-slider>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-slider type="range" value="[20,70]"></bq-slider>
+    ```
+
+    ```jsx React icon="react"
+    import { BqSlider } from "@beeq/react";
+
+    export default function App() {
+      return (
+        <BqSlider
+          type="range"
+          value={[20, 70]}
+          onBqChange={(e) => console.log("range:", e.detail.value)}
+        />
+      );
+    }
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSlider } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSlider],
+      template: `<bq-slider type="range" value="[20,70]" (bqChange)="onRangeChange($event)"></bq-slider>`,
+    })
+    export class AppComponent {
+      onRangeChange(event: CustomEvent<{ value: [number, number] }>) {
+        console.log("range:", event.detail.value);
+      }
+    }
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqSlider } from "@beeq/vue";
+
+    const handleChange = (e: CustomEvent) => console.log("range:", e.detail.value);
+    </script>
+
+    <template>
+      <BqSlider type="range" :value="[20, 70]" @bqChange="handleChange" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Options
+
+### Disabled
+
+Add the `disabled` attribute to prevent interaction while still rendering the slider. Use this to display a preset or locked value that users cannot modify.
+
+<CodeLivePreview code={`
+  <style>
+    bq-slider { width: 100%; max-width: 400px; }
+  </style>
+
+  <bq-slider disabled type="range" value="[20,70]"></bq-slider>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-slider disabled type="range" value="[20,70]"></bq-slider>
+    ```
+
+    ```jsx React icon="react"
+    import { BqSlider } from "@beeq/react";
+
+    export default function App() {
+      return <BqSlider disabled type="range" value={[20, 70]} />;
+    }
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSlider } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSlider],
+      template: `<bq-slider disabled type="range" value="[20,70]"></bq-slider>`,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqSlider } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSlider disabled type="range" :value="[20, 70]" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Value indicator
+
+Set `enable-value-indicator` to display the current numeric value as a label beside the track. For range sliders both the minimum and maximum labels are shown — useful when the exact number is meaningful to the user.
+
+<CodeLivePreview code={`
+  <style>
+    bq-slider { width: 100%; max-width: 400px; }
+  </style>
+
+  <bq-slider enable-value-indicator type="range" value="[20,70]"></bq-slider>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-slider enable-value-indicator type="range" value="[20,70]"></bq-slider>
+    ```
+
+    ```jsx React icon="react"
+    import { BqSlider } from "@beeq/react";
+
+    export default function App() {
+      return <BqSlider enableValueIndicator type="range" value={[20, 70]} />;
+    }
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSlider } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSlider],
+      template: `<bq-slider enable-value-indicator type="range" value="[20,70]"></bq-slider>`,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqSlider } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSlider :enableValueIndicator="true" type="range" :value="[20, 70]" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Tooltip
+
+Set `enable-tooltip` to show a tooltip above the active handle while dragging. The tooltip hides again once the user releases the handle.
+
+<CodeLivePreview code={`
+  <style>
+    bq-slider { 
+        width: 100%; 
+        max-width: 400px; 
+        padding: var(--bq-spacing-xl);
+    }
+  </style>
+
+  <bq-slider enable-tooltip gap="10" type="range" value="[30,70]"></bq-slider>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-slider enable-tooltip gap="10" type="range" value="[30,70]"></bq-slider>
+    ```
+
+    ```jsx React icon="react"
+    import { BqSlider } from "@beeq/react";
+
+    export default function App() {
+      return <BqSlider enableTooltip gap={10} type="range" value={[30, 70]} />;
+    }
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSlider } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSlider],
+      template: `<bq-slider enable-tooltip gap="10" type="range" value="[30,70]"></bq-slider>`,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqSlider } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSlider :enableTooltip="true" :gap="10" type="range" :value="[30, 70]" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Tooltip always visible
+
+Add `tooltip-always-visible` to keep the tooltip permanently visible rather than only while dragging. This requires `enable-tooltip` to be set.
+
+<CodeLivePreview code={`
+  <style>
+    bq-slider { 
+        width: 100%; 
+        max-width: 400px; 
+        padding: var(--bq-spacing-xl);
+    }
+  </style>
+
+  <bq-slider enable-tooltip tooltip-always-visible gap="10" type="range" value="[30,70]"></bq-slider>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-slider enable-tooltip tooltip-always-visible gap="10" type="range" value="[30,70]"></bq-slider>
+    ```
+
+    ```jsx React icon="react"
+    import { BqSlider } from "@beeq/react";
+
+    export default function App() {
+      return <BqSlider enableTooltip tooltipAlwaysVisible gap={10} type="range" value={[30, 70]} />;
+    }
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSlider } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSlider],
+      template: `<bq-slider enable-tooltip tooltip-always-visible gap="10" type="range" value="[30,70]"></bq-slider>`,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqSlider } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSlider :enableTooltip="true" :tooltipAlwaysVisible="true" :gap="10" type="range" :value="[30, 70]" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Min, max, and step
+
+Control the selectable range with `min` and `max` and the increment granularity with `step`. All selected values are rounded to the nearest multiple of `step`.
+
+<CodeLivePreview code={`
+  <style>
+    bq-slider { width: 100%; max-width: 400px; }
+  </style>
+
+  <bq-slider enable-value-indicator min="0" max="10" step="1.25" type="single" value="3"></bq-slider>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-slider enable-value-indicator min="0" max="10" step="1.25" type="single" value="3"></bq-slider>
+    ```
+
+    ```jsx React icon="react"
+    import { BqSlider } from "@beeq/react";
+
+    export default function App() {
+      return <BqSlider enableValueIndicator min={0} max={10} step={1.25} type="single" value={3} />;
+    }
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSlider } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSlider],
+      template: `<bq-slider enable-value-indicator min="0" max="10" step="1.25" type="single" value="3"></bq-slider>`,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqSlider } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSlider :enableValueIndicator="true" :min="0" :max="10" :step="1.25" type="single" :value="3" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Decimal values
+
+Enable decimal increments by setting a fractional `step` value. This provides increased granularity for precise adjustments — useful when selecting specific percentages or fractional coefficients.
+
+<CodeLivePreview code={`
+  <style>
+    bq-slider { width: 100%; max-width: 400px; }
+  </style>
+
+  <bq-slider enable-value-indicator min="0" max="1" step="0.05" type="range" value="[0.3,0.7]"></bq-slider>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-slider enable-value-indicator min="0" max="1" step="0.05" type="range" value="[0.3,0.7]"></bq-slider>
+    ```
+
+    ```jsx React icon="react"
+    import { BqSlider } from "@beeq/react";
+
+    export default function App() {
+      return <BqSlider enableValueIndicator min={0} max={1} step={0.05} type="range" value={[0.3, 0.7]} />;
+    }
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSlider } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSlider],
+      template: `<bq-slider enable-value-indicator min="0" max="1" step="0.05" type="range" value="[0.3,0.7]"></bq-slider>`,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqSlider } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSlider :enableValueIndicator="true" :min="0" :max="1" :step="0.05" type="range" :value="[0.3, 0.7]" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+### Gap
+
+Use `gap` to set the minimum distance the two handles must maintain between each other. This is useful when the selected range must span at least a minimum interval — for example, ensuring a time window covers at least one hour.
+
+<CodeLivePreview code={`
+  <style>
+    bq-slider { width: 100%; max-width: 400px; }
+  </style>
+
+  <bq-slider enable-value-indicator gap="10" step="5" type="range" value="[30,70]"></bq-slider>
+`}>
+  <CodeGroup>
+    ```html HTML icon="html5"
+    <bq-slider enable-value-indicator gap="10" step="5" type="range" value="[30,70]"></bq-slider>
+    ```
+
+    ```jsx React icon="react"
+    import { BqSlider } from "@beeq/react";
+
+    export default function App() {
+      return <BqSlider enableValueIndicator gap={10} step={5} type="range" value={[30, 70]} />;
+    }
+    ```
+
+    ```ts Angular icon="angular"
+    import { Component } from "@angular/core";
+    import { BqSlider } from "@beeq/angular/standalone";
+
+    @Component({
+      selector: "app-root",
+      standalone: true,
+      imports: [BqSlider],
+      template: `<bq-slider enable-value-indicator gap="10" step="5" type="range" value="[30,70]"></bq-slider>`,
+    })
+    export class AppComponent {}
+    ```
+
+    ```vue Vue icon="vuejs"
+    <script setup lang="ts">
+    import { BqSlider } from "@beeq/vue";
+    </script>
+
+    <template>
+      <BqSlider :enableValueIndicator="true" :gap="10" :step="5" type="range" :value="[30, 70]" />
+    </template>
+    ```
+  </CodeGroup>
+</CodeLivePreview>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Provide a clear, concise label that describes the purpose of the slider and the scale it represents — for example, "Volume" or "Price range".
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Use long or ambiguous labels. If users cannot tell what the slider controls at a glance, they may set incorrect values without realizing it.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Show the selected value alongside the slider using `enable-value-indicator` or `enable-tooltip` whenever the exact number matters to the user's decision.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Leave the slider without any value feedback when precision is important. Users cannot reliably read off an exact number from the handle position alone.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Choose `min`, `max`, and `step` values that reflect meaningful increments for the context — for example, steps of 5 or 10 for a percentage, or steps of 0.05 for a fractional coefficient.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Use ranges that result in very large step counts or non-discrete increments where the relationship between handle position and value is unclear to users.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="check" iconType="solid" size={20} color="var(--bq-stroke--success)" />
+      Do
+    </span>
+    Set `gap` on range sliders when the minimum and maximum handles must stay a meaningful distance apart — for example, when a time range must span at least one hour.
+  </Card>
+
+  <Card>
+    <span className="flex items-center mr-2 text-lg font-medium" role="heading">
+      <Icon className="mr-2" icon="xmark" iconType="solid" size={20} color="var(--bq-stroke--danger)" />
+      Don't
+    </span>
+    Use a slider for very narrow ranges (1–3 values). With only a few valid positions the drag interaction is awkward and a radio group or button group communicates the options more clearly.
+  </Card>
+</CardGroup>
+
+## Accessibility
+
+`bq-slider` renders native `<input type="range">` elements inside its shadow DOM (`input-min` and `input-max` shadow parts). This means the built-in browser keyboard and screen-reader support for range inputs is available out of the box:
+
+- **Keyboard navigation** — `ArrowLeft` / `ArrowDown` decreases the value by one step; `ArrowRight` / `ArrowUp` increases it. `Home` sets the value to `min`; `End` sets it to `max`.
+- **Screen reader announcement** — the browser announces the current numeric value and the min/max boundaries when the handle receives focus.
+- **`role="slider"`** — comes from the native `<input type="range">`.
+
+As a developer you are responsible for:
+
+- **Providing an accessible label** — wrap `bq-slider` in a `<label>` or use `aria-label` / `aria-labelledby` on the host element so screen readers can announce what the slider controls.
+- **Avoid using sliders for highly precise values** — drag interactions can be imprecise. When an exact value is critical, supplement the slider with a visible number input that reflects the same value.
+- **Range sliders and assistive technologies** — not all screen readers handle two-thumb range inputs equally well. Test with your target assistive technologies and consider providing a complementary text summary of the selected range.
+
+## API reference
+
+### Properties
+
+| Property | Attribute | Description | Type | Default |
+|---|---|---|---|---|
+| `debounceTime` | `debounce-time` | Time in milliseconds to wait before emitting `bqChange` after each value change | `number` | `0` |
+| `disabled` | `disabled` | If true, the slider is disabled and non-interactive | `boolean` | `false` |
+| `enableTooltip` | `enable-tooltip` | If true, a tooltip shows the current value while dragging | `boolean` | `false` |
+| `enableValueIndicator` | `enable-value-indicator` | If true, the current value is shown as a label beside the track | `boolean` | `false` |
+| `gap` | `gap` | Minimum distance to maintain between the two handles; only applies when `type="range"` | `number` | `0` |
+| `max` | `max` | Maximum selectable value | `number` | `100` |
+| `min` | `min` | Minimum selectable value | `number` | `0` |
+| `name` | `name` | Name of the form control, submitted with the form as a name/value pair | `string` | — |
+| `step` | `step` | Increment between selectable values; selected values are rounded to the nearest multiple of `step` | `number` | `1` |
+| `tooltipAlwaysVisible` | `tooltip-always-visible` | If true, the tooltip is permanently visible; requires `enable-tooltip` to be set | `boolean` | `false` |
+| `type` | `type` | Slider variant — `single` for one handle, `range` for two handles | `'single' \| 'range'` | `'single'` |
+| `value` | `value` | Current value. A number for `single` type (e.g. `30`); a two-element array string for `range` type (e.g. `"[20,70]"`). In React and Vue, pass the array directly: `value={[20, 70]}`. | `number \| [number, number] \| string` | — |
+
+### Events
+
+| Event | Description | Type |
+|---|---|---|
+| `bqBlur` | Emitted when the slider loses focus | `CustomEvent<HTMLBqSliderElement>` |
+| `bqChange` | Emitted when the slider value changes | `CustomEvent<{ value: number \| [number, number]; el: HTMLBqSliderElement }>` |
+| `bqFocus` | Emitted when the slider gains focus | `CustomEvent<HTMLBqSliderElement>` |
+
+### Slots
+
+| Slot | Description |
+|---|---|
+| *(none)* | This component has no public slots. |
+
+### Shadow parts
+
+| Part | Description |
+|---|---|
+| `base` | The component's base wrapper |
+| `container` | The container of the slider |
+| `track-area` | The full horizontal track rail |
+| `progress-area` | The highlighted progress segment between the handles |
+| `input-min` | The `<input type="range">` for the value (single) or minimum value (range) |
+| `input-max` | The `<input type="range">` for the maximum value (range only) |
+| `label-start` | The value label for the value (single) or minimum value (range); visible with `enable-value-indicator` |
+| `label-end` | The value label for the maximum value (range only); visible with `enable-value-indicator` |
+
+### CSS custom properties
+
+| Variable | Description | Default |
+|---|---|---|
+| `--bq-slider--size` | Height of the track and progress area | `4px` |
+| `--bq-slider--border-radius` | Border radius of the track and progress area | `var(--bq-radius--xs)` |
+| `--bq-slider--thumb-size` | Size of the draggable thumb on hover | `13px` |
+| `--bq-slider--progress-color` | Background color of the filled progress segment | `var(--bq-ui--brand)` |
+| `--bq-slider--trackarea-color` | Background color of the unfilled track area | `var(--bq-ui--secondary)` |
+
+<Tip>
+  Learn more about [styling with shadow parts](/theming/styles) and [CSS custom properties](/theming/global-css-variables).
+</Tip>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card horizontal title="Interactive playground" icon="code" href="https://storybook.beeq.design/?path=/story/components-slider--default">
+    Explore slider variants and states in Storybook
+  </Card>
+  <Card horizontal title="Source code" icon="github" href="https://github.com/Endava/BEEQ/tree/main/packages/beeq/src/components/slider">
+    View the component source on GitHub
+  </Card>
+</CardGroup>
