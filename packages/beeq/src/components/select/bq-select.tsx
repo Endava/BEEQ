@@ -50,6 +50,7 @@ export type TSelectValue = string | string[];
  * @attr {boolean} disabled - Indicates whether the Select input is disabled and cannot be interacted with.
  * @attr {number} distance - Represents the distance (gutter or margin) between the Select panel and the input element.
  * @attr {string} form - The ID of the form that Select input field belongs to.
+ * @attr {string} form-validation-message - The native form validation message (mandatory if `required` is set).
  * @attr {boolean} keep-open-on-select - If `true`, the Select panel will remain open after a selection is made.
  * @attr {number} max-tags-visible - The maximum number of tags to display when multiple selection is enabled.
  * @attr {boolean} multiple - If `true`, the Select input will allow multiple selections.
@@ -196,6 +197,9 @@ export class BqSelect {
   /** The ID of the form that the Select input belongs to. */
   @Prop({ reflect: true }) form?: string;
 
+  /** The native form validation message (mandatory if `required` is set) */
+  @Prop({ mutable: true }) formValidationMessage?: string;
+
   /** If true, the Select panel will remain open after a selection is made. */
   @Prop({ reflect: true }) keepOpenOnSelect?: boolean = false;
 
@@ -260,6 +264,7 @@ export class BqSelect {
       this.value = this.multiple ? [] : '';
       this.internals.setFormValue(undefined);
       this.syncItemsFromValue();
+      this.updateFormValidity();
       return;
     }
 
@@ -268,6 +273,7 @@ export class BqSelect {
       this.value = stringToArray(this.value);
       this.internals.setFormValue(this.value.join(','));
       this.syncItemsFromValue();
+      this.updateFormValidity();
 
       return;
     }
@@ -276,6 +282,12 @@ export class BqSelect {
     this.value = String(this.value);
     this.internals.setFormValue(this.value);
     this.syncItemsFromValue();
+    this.updateFormValidity();
+  }
+
+  @Watch('required')
+  handleRequiredPropChange() {
+    this.updateFormValidity();
   }
 
   // Events section
@@ -321,12 +333,13 @@ export class BqSelect {
   formAssociatedCallback() {
     this.internals.role = 'combobox';
     this.internals.ariaExpanded = this.open ? 'true' : 'false';
+    this.updateFormValidity();
   }
 
   async formResetCallback() {
     if (isNil(this.value)) return;
 
-    this.internals.setValidity({});
+    this.updateFormValidity();
     this.clear();
   }
 
@@ -662,6 +675,32 @@ export class BqSelect {
     }
 
     return '';
+  };
+
+  private updateFormValidity = () => {
+    const { formValidationMessage, internals, required, value } = this;
+
+    // Clear the validity state
+    internals?.states.clear();
+
+    const isEmpty = this.multiple
+      ? !Array.isArray(value) || value.length === 0
+      : !isDefined(value) || String(value).trim() === '';
+
+    if (required && isEmpty) {
+      // Set validity state to invalid
+      internals?.states.add('invalid');
+      internals?.setValidity(
+        { valueMissing: true },
+        formValidationMessage || 'Please select an option',
+        this.inputElem,
+      );
+      return;
+    }
+
+    // Set validity state to valid if textarea has value or is not required
+    internals?.states.add('valid');
+    internals?.setValidity({});
   };
 
   private get options() {

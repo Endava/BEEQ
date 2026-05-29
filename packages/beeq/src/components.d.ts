@@ -2050,6 +2050,7 @@ export namespace Components {
      * @attr {boolean} disabled - Indicates whether the Select input is disabled and cannot be interacted with.
      * @attr {number} distance - Represents the distance (gutter or margin) between the Select panel and the input element.
      * @attr {string} form - The ID of the form that Select input field belongs to.
+     * @attr {string} form-validation-message - The native form validation message (mandatory if `required` is set).
      * @attr {boolean} keep-open-on-select - If `true`, the Select panel will remain open after a selection is made.
      * @attr {number} max-tags-visible - The maximum number of tags to display when multiple selection is enabled.
      * @attr {boolean} multiple - If `true`, the Select input will allow multiple selections.
@@ -2137,6 +2138,10 @@ export namespace Components {
           * The ID of the form that the Select input belongs to.
          */
         "form"?: string;
+        /**
+          * The native form validation message (mandatory if `required` is set)
+         */
+        "formValidationMessage"?: string;
         /**
           * If true, the Select panel will remain open after a selection is made.
           * @default false
@@ -4664,6 +4669,7 @@ declare global {
      * @attr {boolean} disabled - Indicates whether the Select input is disabled and cannot be interacted with.
      * @attr {number} distance - Represents the distance (gutter or margin) between the Select panel and the input element.
      * @attr {string} form - The ID of the form that Select input field belongs to.
+     * @attr {string} form-validation-message - The native form validation message (mandatory if `required` is set).
      * @attr {boolean} keep-open-on-select - If `true`, the Select panel will remain open after a selection is made.
      * @attr {number} max-tags-visible - The maximum number of tags to display when multiple selection is enabled.
      * @attr {boolean} multiple - If `true`, the Select input will allow multiple selections.
@@ -7581,6 +7587,7 @@ declare namespace LocalJSX {
      * @attr {boolean} disabled - Indicates whether the Select input is disabled and cannot be interacted with.
      * @attr {number} distance - Represents the distance (gutter or margin) between the Select panel and the input element.
      * @attr {string} form - The ID of the form that Select input field belongs to.
+     * @attr {string} form-validation-message - The native form validation message (mandatory if `required` is set).
      * @attr {boolean} keep-open-on-select - If `true`, the Select panel will remain open after a selection is made.
      * @attr {number} max-tags-visible - The maximum number of tags to display when multiple selection is enabled.
      * @attr {boolean} multiple - If `true`, the Select input will allow multiple selections.
@@ -7662,6 +7669,10 @@ declare namespace LocalJSX {
           * The ID of the form that the Select input belongs to.
          */
         "form"?: string;
+        /**
+          * The native form validation message (mandatory if `required` is set)
+         */
+        "formValidationMessage"?: string;
         /**
           * If true, the Select panel will remain open after a selection is made.
           * @default false
@@ -9082,6 +9093,7 @@ declare namespace LocalJSX {
         "disableClear": boolean;
         "distance": number;
         "form": string;
+        "formValidationMessage": string;
         "keepOpenOnSelect": boolean;
         "name": string;
         "maxTagsVisible": number;
@@ -10262,6 +10274,7 @@ declare module "@stencil/core" {
              * @attr {boolean} disabled - Indicates whether the Select input is disabled and cannot be interacted with.
              * @attr {number} distance - Represents the distance (gutter or margin) between the Select panel and the input element.
              * @attr {string} form - The ID of the form that Select input field belongs to.
+             * @attr {string} form-validation-message - The native form validation message (mandatory if `required` is set).
              * @attr {boolean} keep-open-on-select - If `true`, the Select panel will remain open after a selection is made.
              * @attr {number} max-tags-visible - The maximum number of tags to display when multiple selection is enabled.
              * @attr {boolean} multiple - If `true`, the Select input will allow multiple selections.

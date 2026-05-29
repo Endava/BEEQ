@@ -202,10 +202,15 @@ export class BqTextarea {
   @Watch('value')
   handleValueChange() {
     if (!this.textarea) return;
-    if (!this.maxlength || this.value?.length < this.maxlength) return;
-    // If the value is longer than the maxlength, we need to truncate it
-    this.value = this.value?.substring(0, this.maxlength);
-    this.textarea.value = this.value ?? '';
+
+    if (this.maxlength && this.value?.length >= this.maxlength) {
+      // If the value is longer than the maxlength, we need to truncate it
+      this.value = this.value?.substring(0, this.maxlength);
+      this.textarea.value = this.value ?? '';
+    }
+
+    this.setFormValue(this.value);
+    this.updateFormValidity();
   }
 
   @Watch('required')
@@ -347,7 +352,7 @@ export class BqTextarea {
     if (required && (!value || value.trim() === '')) {
       // Set validity state to invalid
       internals?.states.add('invalid');
-      internals?.setValidity({ valueMissing: true }, formValidationMessage, textarea);
+      internals?.setValidity({ valueMissing: true }, formValidationMessage || 'This field is required', textarea);
       return;
     }
 
