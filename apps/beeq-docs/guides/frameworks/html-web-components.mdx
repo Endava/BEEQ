@@ -1,5 +1,358 @@
 ---
 title: HTML / Web Components
 sidebarTitle: HTML / Web Components
-description: Use BEEQ directly through the core package or CDN in plain HTML, JavaScript, or custom setups.
+description: Use BEEQ directly through @beeq/core in plain HTML, JavaScript, or TypeScript — with a CDN or a bundler, without a framework wrapper.
 ---
+
+BEEQ components are standard custom elements (`<bq-button>`, `<bq-input>`, and so on). Use this guide when you are **not** using `@beeq/angular`, `@beeq/react`, or `@beeq/vue` — for example static HTML, legacy apps, micro-frontends, or vanilla JS/TS with Vite.
+
+<Columns cols={3}>
+  <Card title="No wrapper required">
+    Work with native custom elements and DOM APIs — no framework-specific package.
+  </Card>
+  <Card title="CDN-friendly">
+    Add a stylesheet and module script to any HTML page; no Node.js or bundler required.
+  </Card>
+  <Card title="Bundler-ready">
+    Install `@beeq/core` with npm and use `defineCustomElements()` in TypeScript or JavaScript apps.
+  </Card>
+</Columns>
+
+<Check>
+  If you use Angular, React, Vue, or Next.js, prefer the matching [framework guide](/getting-started/for-developers) for wrappers, forms, and stack-specific setup.
+</Check>
+
+## Get started
+
+<Steps>
+  <Step title="Check your project setup" titleSize="h3">
+    Choose the path that matches how you build your app:
+
+    - **CDN** — plain `.html` files, prototypes, or pages without a build step
+    - **Bundler** — Vite, Webpack, or similar (Node.js **18+**)
+
+    <Tip>
+      If you followed the [Installation guide](/getting-started/installation), you already have `@beeq/core` installed and the stylesheet loaded. Skip straight to the **Bundler** subsection of Step 2 and start at `defineCustomElements()`.
+    </Tip>
+  </Step>
+
+  <Step title="Add styles and register components" titleSize="h3">
+    Follow the path you chose in Step 1 — **CDN** or **Bundler**. You only need one.
+
+    #### CDN
+
+    Link the BEEQ stylesheet and ESM bundle from a CDN. Components register automatically when the module loads.
+
+    ```html index.html icon=html5
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="utf-8" />
+        <title>BEEQ + HTML</title>
+        <link
+          rel="stylesheet"
+          href="https://esm.sh/@beeq/core/dist/beeq/beeq.css"
+        />
+        <script
+          type="module"
+          src="https://esm.sh/@beeq/core/dist/beeq/beeq.esm.js"
+        ></script>
+      </head>
+      <body>
+        <bq-button appearance="primary">Hello BEEQ</bq-button>
+      </body>
+    </html>
+    ```
+
+    #### Bundler
+
+    Install `@beeq/core` with your package manager, then call `defineCustomElements()` at app startup:
+
+    <CodeGroup>
+      ```bash npm icon=npm
+      npm install @beeq/core
+      ```
+
+      ```bash pnpm icon=data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCBtZWV0IiB2aWV3Qm94PSI3Ni41ODk4NzI0NDg5Nzk1OCA0NCAxNjQuMDA3NzU1MTAyMDQwNjggMTY0IiB3aWR0aD0iMTYwLjAxIiBoZWlnaHQ9IjE2MCI+PGRlZnM+PHBhdGggZD0iTTIzNy42IDk1TDE4Ny42IDk1TDE4Ny42IDQ1TDIzNy42IDQ1TDIzNy42IDk1WiIgaWQ9ImI0NXZkVEQ4aHMiPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDk1TDEzMi41OSA5NUwxMzIuNTkgNDVMMTgyLjU5IDQ1TDE4Mi41OSA5NVoiIGlkPSJhNDBXdHhJbDhkIj48L3BhdGg+PHBhdGggZD0iTTEyNy41OSA5NUw3Ny41OSA5NUw3Ny41OSA0NUwxMjcuNTkgNDVMMTI3LjU5IDk1WiIgaWQ9ImgyQ045QUVFcGUiPjwvcGF0aD48cGF0aCBkPSJNMjM3LjYgMTUwTDE4Ny42IDE1MEwxODcuNiAxMDBMMjM3LjYgMTAwTDIzNy42IDE1MFoiIGlkPSJkcXY1MTMzRzgiPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDE1MEwxMzIuNTkgMTUwTDEzMi41OSAxMDBMMTgyLjU5IDEwMEwxODIuNTkgMTUwWiIgaWQ9ImIxTHY3OXlwdm0iPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDIwNUwxMzIuNTkgMjA1TDEzMi41OSAxNTVMMTgyLjU5IDE1NUwxODIuNTkgMjA1WiIgaWQ9Imh5MUlaV3dMWCI+PC9wYXRoPjxwYXRoIGQ9Ik0yMzcuNiAyMDVMMTg3LjYgMjA1TDE4Ny42IDE1NUwyMzcuNiAxNTVMMjM3LjYgMjA1WiIgaWQ9ImFrUWZqeFFlcyI+PC9wYXRoPjxwYXRoIGQ9Ik0xMjcuNTkgMjA1TDc3LjU5IDIwNUw3Ny41OSAxNTVMMTI3LjU5IDE1NUwxMjcuNTkgMjA1WiIgaWQ9ImJkU3J3RTVwayI+PC9wYXRoPjwvZGVmcz48Zz48Zz48dXNlIHhsaW5rOmhyZWY9IiNiNDV2ZFREOGhzIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNhNDBXdHhJbDhkIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNoMkNOOUFFRXBlIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNkcXY1MTMzRzgiIG9wYWNpdHk9IjEiIGZpbGw9IiNmOWFkMDAiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjxnPjx1c2UgeGxpbms6aHJlZj0iI2IxTHY3OXlwdm0iIG9wYWNpdHk9IjEiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjxnPjx1c2UgeGxpbms6aHJlZj0iI2h5MUlaV3dMWCIgb3BhY2l0eT0iMSIgZmlsbD0iI2ZmZmZmZiIgZmlsbC1vcGFjaXR5PSIxIj48L3VzZT48L2c+PGc+PHVzZSB4bGluazpocmVmPSIjYWtRZmp4UWVzIiBvcGFjaXR5PSIxIiBmaWxsPSIjZmZmZmZmIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNiZFNyd0U1cGsiIG9wYWNpdHk9IjEiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjwvZz48L3N2Zz4=
+      pnpm add @beeq/core
+      ```
+
+      ```bash yarn icon=yarn
+      yarn add @beeq/core
+      ```
+    </CodeGroup>
+
+    Import global styles once, register custom elements at startup, and load your entry script from HTML:
+
+    <CodeGroup>
+      ```css src/style.css icon=css
+      @import "@beeq/core/dist/beeq/beeq.css";
+      ```
+
+      ```ts src/main.ts icon=ts
+      import { defineCustomElements } from "@beeq/core/dist/loader";
+      import "./style.css";
+
+      defineCustomElements();
+      ```
+
+      ```html index.html icon=html5
+      <!doctype html>
+      <html lang="en">
+        <head>
+          <meta charset="UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <title>BEEQ + Vite</title>
+        </head>
+        <body>
+          <bq-button id="save" appearance="primary">Save</bq-button>
+          <script type="module" src="/src/main.ts"></script>
+        </body>
+      </html>
+      ```
+    </CodeGroup>
+
+    <Tip>
+      You can use unpkg, jsDelivr, or esm.sh CDN providers — keep the CSS and JS URLs on the same provider and version.
+    </Tip>
+
+    <Note>
+      The Vite example above applies to other bundlers too: copy SVGs into a public folder your app serves, then call `setBasePath()` with that URL (see **Configure icons** below).
+    </Note>
+  </Step>
+
+  <Step title="Configure icons" titleSize="h3">
+    Many BEEQ components rely on SVG icons. Your app must serve the SVG files and tell BEEQ where to find them.
+
+    <Warning>
+      The full BEEQ icon set has **9,000+ SVG files**. Copying everything into your repo can slow local builds. Prefer a CDN for quick starts, or copy only the icons you use.
+    </Warning>
+
+    #### Setup via `data-beeq` attribute
+
+    This is the quickest way to set up BEEQ SVG icons for CDN pages and many bundler apps.
+
+    Add the `data-beeq` attribute to the `<script type="module">` tag pointing at the directory or a CDN URL that contains the SVG files. BEEQ reads this automatically.
+
+    ```html index.html icon=html5 highlight={12}
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="utf-8" />
+        <link
+          rel="stylesheet"
+          href="https://esm.sh/@beeq/core/dist/beeq/beeq.css"
+        />
+        <script
+          type="module"
+          src="https://esm.sh/@beeq/core/dist/beeq/beeq.esm.js"
+          data-beeq="https://esm.sh/@beeq/core/dist/beeq/svg/"
+        ></script>
+      </head>
+      <body>
+        <bq-button appearance="primary">Save</bq-button>
+      </body>
+    </html>
+    ```
+
+    #### Setup via `setBasePath()`
+
+    With a bundler, you can include the SVG files in your build output and use `setBasePath()` to configure the base path for the SVG files.
+
+    If you are using Vite, you can use the `vite-plugin-static-copy` plugin.
+
+    Install the static copy plugin, copy SVGs into your build output, and call `setBasePath()` before rendering components that use icons:
+
+    <CodeGroup>
+      ```bash npm icon=npm
+      npm install -D vite-plugin-static-copy
+      ```
+
+      ```bash pnpm icon=data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCBtZWV0IiB2aWV3Qm94PSI3Ni41ODk4NzI0NDg5Nzk1OCA0NCAxNjQuMDA3NzU1MTAyMDQwNjggMTY0IiB3aWR0aD0iMTYwLjAxIiBoZWlnaHQ9IjE2MCI+PGRlZnM+PHBhdGggZD0iTTIzNy42IDk1TDE4Ny42IDk1TDE4Ny42IDQ1TDIzNy42IDQ1TDIzNy42IDk1WiIgaWQ9ImI0NXZkVEQ4aHMiPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDk1TDEzMi41OSA5NUwxMzIuNTkgNDVMMTgyLjU5IDQ1TDE4Mi41OSA5NVoiIGlkPSJhNDBXdHhJbDhkIj48L3BhdGg+PHBhdGggZD0iTTEyNy41OSA5NUw3Ny41OSA5NUw3Ny41OSA0NUwxMjcuNTkgNDVMMTI3LjU5IDk1WiIgaWQ9ImgyQ045QUVFcGUiPjwvcGF0aD48cGF0aCBkPSJNMjM3LjYgMTUwTDE4Ny42IDE1MEwxODcuNiAxMDBMMjM3LjYgMTAwTDIzNy42IDE1MFoiIGlkPSJkcXY1MTMzRzgiPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDE1MEwxMzIuNTkgMTUwTDEzMi41OSAxMDBMMTgyLjU5IDEwMEwxODIuNTkgMTUwWiIgaWQ9ImIxTHY3OXlwdm0iPjwvcGF0aD48cGF0aCBkPSJNMTgyLjU5IDIwNUwxMzIuNTkgMjA1TDEzMi41OSAxNTVMMTgyLjU5IDE1NUwxODIuNTkgMjA1WiIgaWQ9Imh5MUlaV3dMWCI+PC9wYXRoPjxwYXRoIGQ9Ik0yMzcuNiAyMDVMMTg3LjYgMjA1TDE4Ny42IDE1NUwyMzcuNiAxNTVMMjM3LjYgMjA1WiIgaWQ9ImFrUWZqeFFlcyI+PC9wYXRoPjxwYXRoIGQ9Ik0xMjcuNTkgMjA1TDc3LjU5IDIwNUw3Ny41OSAxNTVMMTI3LjU5IDE1NUwxMjcuNTkgMjA1WiIgaWQ9ImJkU3J3RTVwayI+PC9wYXRoPjwvZGVmcz48Zz48Zz48dXNlIHhsaW5rOmhyZWY9IiNiNDV2ZFREOGhzIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNhNDBXdHhJbDhkIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNoMkNOOUFFRXBlIiBvcGFjaXR5PSIxIiBmaWxsPSIjZjlhZDAwIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNkcXY1MTMzRzgiIG9wYWNpdHk9IjEiIGZpbGw9IiNmOWFkMDAiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjxnPjx1c2UgeGxpbms6aHJlZj0iI2IxTHY3OXlwdm0iIG9wYWNpdHk9IjEiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjxnPjx1c2UgeGxpbms6aHJlZj0iI2h5MUlaV3dMWCIgb3BhY2l0eT0iMSIgZmlsbD0iI2ZmZmZmZiIgZmlsbC1vcGFjaXR5PSIxIj48L3VzZT48L2c+PGc+PHVzZSB4bGluazpocmVmPSIjYWtRZmp4UWVzIiBvcGFjaXR5PSIxIiBmaWxsPSIjZmZmZmZmIiBmaWxsLW9wYWNpdHk9IjEiPjwvdXNlPjwvZz48Zz48dXNlIHhsaW5rOmhyZWY9IiNiZFNyd0U1cGsiIG9wYWNpdHk9IjEiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMSI+PC91c2U+PC9nPjwvZz48L3N2Zz4=
+      pnpm add -D vite-plugin-static-copy
+      ```
+
+      ```bash yarn icon=yarn
+      yarn add -D vite-plugin-static-copy
+      ```
+    </CodeGroup>
+
+    <CodeGroup>
+      ```ts vite.config.ts icon=ts
+      import { defineConfig } from "vite";
+      import { viteStaticCopy } from "vite-plugin-static-copy";
+
+      export default defineConfig({
+        plugins: [
+          viteStaticCopy({
+            targets: [
+              {
+                src: "./node_modules/@beeq/core/dist/beeq/svg/*",
+                dest: "icons/svg",
+              },
+            ],
+          }),
+        ],
+      });
+      ```
+
+      ```ts src/main.ts icon=ts highlight={2,6}
+      import { defineCustomElements } from "@beeq/core/dist/loader";
+      import { setBasePath } from "@beeq/core";
+      import "./style.css";
+
+      defineCustomElements();
+      setBasePath("/icons/svg");
+      ```
+    </CodeGroup>
+
+    <Note>
+      When you use `setBasePath()`, you do not need a `data-beeq` attribute on the same page unless you want a fallback.
+    </Note>
+
+    <Tip>
+      To copy only the icons your app uses instead of the full set, see [Copy only the icons you need](/guides/frameworks/react#copy-only-the-icons-you-need) in the React guide (the same Vite plugin pattern works in vanilla projects).
+    </Tip>
+  </Step>
+
+  <Step title="Use components in markup" titleSize="h3">
+    Add BEEQ tags to your HTML like any other element. Use attributes for static values and JavaScript properties when you need richer types (objects, arrays, booleans).
+
+    ```html
+    <bq-input name="email" type="email" placeholder="you@example.com" required>
+      <bq-icon name="envelope" slot="prefix"></bq-icon>
+    </bq-input>
+    <bq-button id="submit" appearance="primary">Submit</bq-button>
+    ```
+
+    ```js
+    const input = document.querySelector("bq-input");
+    input.value = "hello@beeq.design";
+
+    const button = document.querySelector("#submit");
+    button.addEventListener("bqClick", () => {
+      console.log("Button clicked");
+    });
+    ```
+  </Step>
+</Steps>
+
+## Listen to events
+
+BEEQ components emit custom events prefixed with `bq` (for example `bqClick`, `bqChange`, `bqSelect`). Prefer these over inferring state only from DOM attributes.
+
+```html
+<bq-checkbox id="terms">I agree to the terms</bq-checkbox>
+
+<script type="module">
+  const checkbox = document.querySelector("#terms");
+  checkbox.addEventListener("bqChange", (event) => {
+    console.log("Checked:", event.detail.checked);
+  });
+</script>
+```
+
+<Tip>
+  Read structured payloads from `event.detail` — that is where BEEQ exposes the latest component state for custom events.
+</Tip>
+
+## TypeScript
+
+Install types with `@beeq/core` and import event detail types from the package:
+
+```ts
+import type { BqCheckboxCustomEvent } from "@beeq/core";
+
+const checkbox = document.querySelector("bq-checkbox");
+checkbox?.addEventListener(
+  "bqChange",
+  (event: BqCheckboxCustomEvent<{ checked: boolean }>) => {
+    console.log(event.detail.checked);
+  },
+);
+```
+
+For DOM element typing, use the generated component interfaces from `@beeq/core` (for example `HTMLBqButtonElement`) where your editor supports them.
+
+## Properties, attributes, and slots
+
+| Approach | When to use |
+| -------- | ----------- |
+| **HTML attributes** | Strings and simple static values (`appearance="primary"`) |
+| **Element properties** | Booleans, numbers, objects, and dynamic values (`button.disabled = true`) |
+| **Slots** | Project content into named areas (`slot="prefix"`, default slot for label text) |
+
+Boolean attributes follow standard HTML rules: presence means `true` unless the component documents otherwise. When in doubt, set the property in JavaScript:
+
+```js
+document.querySelector("bq-button").disabled = true;
+```
+
+## VS Code autocomplete
+
+BEEQ ships HTML custom data for Visual Studio Code, which improves completion for `bq-*` tags and attributes.
+
+Create `.vscode/settings.json` in your project root:
+
+```json
+{
+  "html.customData": ["./node_modules/@beeq/core/dist/beeq.html-custom-data.json"]
+}
+```
+
+## Using a framework instead?
+
+If your project uses a major frontend framework, the official wrappers improve forms, events, and developer experience:
+
+<Columns cols={2}>
+  <Card title="Angular" href="/guides/frameworks/angular" icon="angular" iconType="duotone">
+    Standalone components, forms, and value accessors.
+  </Card>
+  <Card title="React" href="/guides/frameworks/react" icon="react" iconType="duotone">
+    PascalCase components and `onBq...` event props.
+  </Card>
+  <Card title="Next.js" href="/guides/frameworks/next" icon="react" iconType="duotone">
+    SSR, layout setup, and client-only icon initialization.
+  </Card>
+  <Card title="Vue" href="/guides/frameworks/vue" icon="vuejs" iconType="duotone">
+    Custom element compiler options and `v-model` support.
+  </Card>
+</Columns>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Components render as plain tags (no styles or behavior)">
+    Confirm the stylesheet is loaded (`beeq.css`) and the ESM bundle or `defineCustomElements()` ran before you interact with the components. Check the browser console for failed network requests.
+  </Accordion>
+  <Accordion title="Icons are not rendering">
+    Check both of these:
+
+    - SVG files are available at a public URL (CDN or copied into your app)
+    - `data-beeq` points to that directory **or** `setBasePath()` uses the same public path your app serves
+    - Icon `name` values match SVG file names (without `.svg`)
+  </Accordion>
+  <Accordion title="Event listeners never fire">
+    Make sure you listen for the `bq`-prefixed event name (for example `bqClick`, not `click`) and attach the listener after the element exists in the DOM.
+  </Accordion>
+  <Accordion title="Property updates do not reflect in the UI">
+    Set properties on the element instance (`element.value = "..."`) rather than only changing attributes when the component expects a property binding.
+  </Accordion>
+  <Accordion title="Styles are missing in a bundler app">
+    Import `@beeq/core/dist/beeq/beeq.css` once in a stylesheet your entry file loads. See [Installation](/getting-started/installation) for the shared import pattern.
+  </Accordion>
+</AccordionGroup>
+
+## Next steps
+
+<Columns cols={3}>
+  <Card title="Explore components" href="/components/overview" icon="boxes-stacked" iconType="duotone">
+    Browse component pages for props, events, slots, and examples.
+  </Card>
+  <Card title="Customize the theme" href="/theming" icon="palette" iconType="duotone">
+    Review theming options if your product needs brand customization.
+  </Card>
+  <Card title="Open Storybook" href="https://storybook.beeq.design" icon="book" iconType="duotone">
+    Explore component states and interactions in the live component library.
+  </Card>
+</Columns>
