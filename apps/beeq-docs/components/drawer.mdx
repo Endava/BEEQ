@@ -10,7 +10,7 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
   <img className="hidden dark:block" src="/components/images/drawer/drawer-overview-dark.svg" alt="BEEQ Drawer component overview" />
 </Frame>
 
-`bq-drawer` is a panel that is typically overlaid on top of a page and slides in from off-canvas (tied to a side of the screen). It contains a set of information or actions — navigation menus, settings, notifications, or contextual actions. Since the user can interact with the drawer without leaving the current page, tasks can be achieved more efficiently within the same context.
+`bq-drawer` is a side panel that slides in from the edge of the screen to surface navigation menus, settings, notifications, or contextual actions. Users keep the underlying page in view, so they can complete focused tasks without losing context.
 
 <Note>
   The drawer manages its own open/close animation and backdrop. Call the `show()` and `hide()` methods programmatically, or toggle the `open` prop, to control visibility. Do not remove the element from the DOM to hide it — use `hide()` instead.
