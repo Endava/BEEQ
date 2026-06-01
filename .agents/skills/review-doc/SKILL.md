@@ -171,8 +171,13 @@ Only applies when a `CSS` tab is present in the `CodeGroup`:
 - [ ] Plain, direct language — no internal jargon or Zeroheight/internal tool references
 - [ ] Active voice; short sentences
 - [ ] Second-person ("you") when addressing the reader
-- [ ] No filler phrases: "simply", "just", "easily", "note that", "please"
+- [ ] No filler phrases: "simply", "just", "easily", "note that", "please", "for clarity"
 - [ ] Sections explain *why* a pattern exists, not only *what* it does
+- [ ] No "also known as" alias definitions — use the correct term and trust the reader (anti-pattern 1)
+- [ ] No "once X is Y, you can Z" constructions — go straight to the action (anti-pattern 2)
+- [ ] Outcomes stated directly, not as hedged observations ("works well together when…") (anti-pattern 3)
+- [ ] `<Note>`, `<Tip>`, and `<Warning>` callouts give useful constraints or shortcuts — not disclaimers about documentation choices (anti-pattern 4)
+- [ ] Voice matches content type: reference pages (API, tables) are precise and scannable; guide pages are task-oriented and conversational
 
 ---
 

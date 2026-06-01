@@ -176,8 +176,31 @@ Extract all variables from `bq-<name>.variables.scss`. **Default values must use
 
 - Write for all audiences: developers, designers, PMs. Use plain language.
 - Active voice, short sentences, second-person ("you").
-- No filler: no "simply", "just", "easily", "note that", "please".
+- No filler: no "simply", "just", "easily", "note that", "please", "for clarity".
 - Explain *why* a pattern exists, not just *what* it does.
+
+### Avoid these anti-patterns
+
+**1. Defining terms the reader already knows** — use the correct term and trust the reader. Do not add "also known as" aliases.
+
+❌ `CSS custom properties, also known as CSS variables, let you…`  
+✅ `CSS custom properties follow the --bq-* naming convention…`
+
+**2. "Once X is Y, you can Z"** — go straight to the action. Avoid dependent clauses that restate what was just explained.
+
+❌ `Once the part is exposed, you can style it with ::part().`  
+✅ `Style it using ::part() from your own stylesheet:`
+
+**3. Hedged observations** — lead with outcomes, not "works well together when you want to…" constructions.
+
+❌ `These two approaches work well together when you need more control.`  
+✅ `Combine CSS variables and ::part() when token overrides alone aren't enough.`
+
+**4. Callouts that disclaim** — `<Note>`, `<Tip>`, and `<Warning>` should give the reader a useful constraint or shortcut, not justify a documentation choice.
+
+❌ `The examples use inline CSS for clarity.`  
+✅ `The examples use inline <style> tags so you can run them directly.`
+
 - Output path: `apps/beeq-docs/components/<name>.mdx`.
 
 After writing, run [review-doc](../review-doc/SKILL.md) on the new page to verify compliance.

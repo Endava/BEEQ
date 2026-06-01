@@ -15,6 +15,43 @@ Documentation is read by developers, designers, product managers, and other stak
 - Use second-person ("you") when addressing the reader directly.
 - Avoid filler phrases such as "simply", "just", "easily", "note that", or "please".
 
+### Reference pages vs guide pages
+
+Match the voice to the content type:
+
+- **Reference pages** (API tables, property lists, token references) — precise and scannable. Readers dip in and out; factual statements are appropriate.
+- **Guide pages** (getting started, framework guides, usage guides) — task-oriented and conversational. Readers follow steps in order. Write as if a senior developer who has used these components is explaining the trade-offs, not reciting a specification. Acknowledge decisions, hint at consequences, and anticipate confusion.
+
+### Anti-patterns — avoid these in all pages
+
+**1. Defining terms the reader already knows**
+
+Do not add "also known as" aliases or glossary-style definitions for terms your audience is expected to know. Use the correct term and trust the reader.
+
+❌ `CSS custom properties, also known as CSS variables, let you define a value once…`  
+✅ `BEEQ relies on CSS custom properties to maintain a consistent visual system…`
+
+**2. Front-loading a condition the reader just read ("Once X is Y, you can Z")**
+
+Avoid dependent clauses that restate what was just explained before reaching the useful instruction. Go straight to the action.
+
+❌ `Once a part is exposed, you can style it with the ::part() pseudo-element selector.`  
+✅ `Style it using ::part() from your own stylesheet:`
+
+**3. Hedged observations instead of direct outcomes**
+
+Replace "works well together when you want to…" with outcome-first sentences that tell the reader what they *get*.
+
+❌ `Component-level CSS variables and ::part() selectors work well together when you want to adjust spacing.`  
+✅ `Combine CSS variables and ::part() when token overrides alone aren't enough — you get scoped sizing control and structural styling from a single class.`
+
+**4. Callouts that disclaim instead of help**
+
+`<Note>`, `<Tip>`, and `<Warning>` callouts should give the reader a useful constraint, shortcut, or important gotcha — not justify a documentation choice or soften an instruction with filler like "for clarity".
+
+❌ `The examples on this page use inline CSS for clarity. In your application, keep overrides in your own stylesheets.`  
+✅ `The examples use inline <style> tags so you can run them directly. In a real project, place these overrides in your own stylesheet.`
+
 ---
 
 ## Page Structure
