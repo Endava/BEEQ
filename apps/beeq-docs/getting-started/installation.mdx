@@ -3,14 +3,13 @@ title: Installation
 description: Shared setup for every BEEQ integration — install the core package and load global styles before you open your framework guide.
 ---
 
-These steps apply to **every** npm-based BEEQ project, regardless of framework. Complete them once, then continue in your stack’s guide for wrapper packages, icons, and framework-specific setup.
+These steps apply to **every** npm-based BEEQ project, regardless of framework.
+Install `@beeq/core` and load global styles once — your framework guide handles the rest.
 
 <Note>
-  If you haven't chosen a stack yet, compare integration paths on [For developers](/getting-started/for-developers) before continuing here.
-</Note>
-
-<Note>
-  Using a CDN with no build step? Skip this page and go directly to the [HTML / Web Components guide](/guides/frameworks/html-web-components) — it covers CDN setup end-to-end.
+  **Not sure where to start?**
+  - Haven't chosen a stack yet? See [For developers](/getting-started/for-developers) to compare integration paths.
+  - Using a CDN with no build step? Go directly to the [HTML / Web Components guide](/guides/frameworks/html-web-components) — it covers CDN setup end-to-end.
 </Note>
 
 ## Prerequisites
@@ -20,7 +19,7 @@ These steps apply to **every** npm-based BEEQ project, regardless of framework. 
 
 ## Install the core package
 
-BEEQ is published as `@beeq/core`. It includes the web components, global stylesheet, icon SVG assets, and shared TypeScript types.
+BEEQ is published as `@beeq/core`. It includes the web component definitions, global stylesheet, icon SVG source files, and shared TypeScript types.
 
 <CodeGroup>
   ```bash npm icon=npm
@@ -70,9 +69,9 @@ Many BEEQ components render SVG icons from a separate folder. Your app must **se
 
 **How** you wire icons depends on your framework and build tool (Vite, Angular CLI, Next.js SSR, and so on). Each framework guide includes a **Configure icons** step — follow that guide after you finish here.
 
-## Continue in your framework guide
+## Next steps
 
-Open the guide that matches your stack under **Frameworks** in the sidebar, or use the links below:
+Open the guide for your stack under **Frameworks** in the sidebar:
 
 - [Angular](/guides/frameworks/angular)
 - [React](/guides/frameworks/react)
@@ -80,6 +79,4 @@ Open the guide that matches your stack under **Frameworks** in the sidebar, or u
 - [Vue](/guides/frameworks/vue)
 - [HTML / Web Components](/guides/frameworks/html-web-components)
 
-## What to do next
-
-- Review [Theming](/theming) if your project needs customization beyond the default theme.
+Once BEEQ is running, browse the [Components](/components) and review [Theming](/theming) if you need brand customization.
