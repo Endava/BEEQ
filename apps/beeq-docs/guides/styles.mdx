@@ -1,6 +1,7 @@
 ---
-title: Styles
-description: Customize BEEQ through global design tokens, component CSS variables, and shadow DOM parts.
+title: Styling components
+description: Apply CSS overrides to BEEQ components using shadow DOM parts, global design tokens, and component-level CSS variables.
+sidebarTitle: Styling components
 ---
 
 import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
@@ -8,28 +9,14 @@ import { CodeLivePreview } from "/snippets/CodeLivePreview.jsx";
 This page covers the three techniques you reach for when customizing a specific component: shadow DOM parts, global token overrides, and component-level CSS variables. For building a full custom theme or understanding the complete token system, see the [Theming](/theming) section.
 
 <Note>
-  The examples on this page use inline CSS for clarity. In your application, keep overrides in your own stylesheets or theme files.
+  The examples use inline `<style>` tags so you can run them directly. In a real project, place these overrides in your own stylesheet.
 </Note>
-
-## Choose the right styling level
-
-<CardGroup cols={3}>
-  <Card title="Global design tokens" icon="palette">
-    Override shared tokens such as `--bq-brand` when you want to change the look of your whole product.
-  </Card>
-  <Card title="Component CSS variables" icon="sliders">
-    Override variables such as `--bq-button--large-paddingY` when you want to change a specific component pattern.
-  </Card>
-  <Card title="Shadow DOM parts" icon="layer-group">
-    Target exposed parts with `::part()` when you need to style internal component sections such as labels or wrappers.
-  </Card>
-</CardGroup>
 
 ## Component shadow DOM parts
 
-Shadow DOM encapsulates a web component's internal structure so it is less affected by the surrounding page styles and scripts. One of the key styling hooks it exposes is the `part` attribute.
+Shadow DOM keeps a component's internal structure insulated from the surrounding page styles. BEEQ exposes named internal sections — called parts — so you can still target them with CSS from the outside.
 
-A part is a named internal section of a component that can be styled from the outside. For example, `bq-button` exposes internal parts such as the button wrapper and label:
+For example, `bq-button` exposes its button wrapper and label as separate parts:
 
 ```html
 <!-- bq-button.tsx -->
@@ -40,7 +27,7 @@ A part is a named internal section of a component that can be styled from the ou
 </button>
 ```
 
-Once a part is exposed, you can style it with the `::part()` pseudo-element selector.
+Style them using the `::part()` pseudo-element from your own stylesheet:
 
 <CodeLivePreview code={`
   <style>
@@ -62,7 +49,7 @@ Once a part is exposed, you can style it with the `::part()` pseudo-element sele
   </bq-button>
 `}>
   <CodeGroup>
-    ```css CSS icon=css
+    ```css styles.css icon=css
     .custom-button::part(label) {
       font-size: var(--bq-font-size--xl);
       font-weight: var(--bq-font-weight--semibold);
@@ -147,9 +134,9 @@ Once a part is exposed, you can style it with the `::part()` pseudo-element sele
   </CodeGroup>
 </CodeLivePreview>
 
-<Tip>
-  In addition to styling parts, you can inspect them from JavaScript through the component's `shadowRoot` when you need to query internal elements programmatically.
-</Tip>
+### Inspecting parts from JavaScript
+
+Parts are also queryable from JavaScript when you need to reach into component internals programmatically:
 
 ```ts
 const bqButton = document.querySelector(".custom-button");
@@ -158,17 +145,13 @@ const nativeButton = bqButton?.shadowRoot?.querySelector('[part="button"]');
 
 ## Global CSS custom properties
 
-CSS custom properties, also known as CSS variables, let you define a value once and reuse it across your application. BEEQ relies on them heavily to provide a consistent visual system without requiring a CSS preprocessor.
-
-When you want to change a shared brand decision across the whole product, override a global token such as `--bq-brand` at the root level:
+BEEQ relies on CSS custom properties to maintain a consistent visual system across components. A single global token like `--bq-brand` cascades through colours, focus rings, borders, and related states — so overriding it at the root level changes the look of your whole product at once:
 
 ```css
 :root {
   --bq-brand: var(--bq-orange-600);
 }
 ```
-
-Many theme tokens for UI, stroke, text, and related states derive from `--bq-brand`, so a single change can cascade through the interface.
 
 <CodeLivePreview code={`
   <style>
@@ -182,7 +165,7 @@ Many theme tokens for UI, stroke, text, and related states derive from `--bq-bra
   </bq-button>
 `}>
   <CodeGroup>
-    ```css CSS icon=css
+    ```css styles.css icon=css
     :root {
       --bq-brand: var(--bq-orange-600);
     }
@@ -225,7 +208,7 @@ Many theme tokens for UI, stroke, text, and related states derive from `--bq-bra
     export class ExampleComponent {}
     ```
 
-    ```vue Vue
+    ```vue Vue icon=vuejs
     <script setup lang="ts">
     import { BqButton } from "@beeq/vue";
     </script>
@@ -265,7 +248,7 @@ In the example below, the second button overrides one brand token locally while 
   </bq-button>
 `}>
   <CodeGroup>
-    ```css CSS
+    ```css styles.css icon=css
     .primary-magenta {
       --bq-ui--brand: var(--bq-magenta-600);
     }
@@ -344,11 +327,11 @@ In the example below, the second button overrides one brand token locally while 
   </CodeGroup>
 </CodeLivePreview>
 
-Some components also expose CSS variables that only apply to that component. These are not global design tokens. They are local styling hooks documented in each component page's API reference.
+Some components also expose CSS variables that scope to that component only — not global tokens. You'll find them listed in each component's API reference under CSS custom properties.
 
 ## Combining component variables and parts
 
-Component-level CSS variables and `::part()` selectors work well together when you want to adjust spacing, sizing, and internal styling in one place.
+Combine component CSS variables and `::part()` selectors when token overrides alone aren't enough — you get scoped sizing control and structural styling from a single class.
 
 <CodeLivePreview code={`
   <style>
@@ -388,7 +371,7 @@ Component-level CSS variables and `::part()` selectors work well together when y
   </bq-button>
 `}>
   <CodeGroup>
-    ```css CSS icon=css
+    ```css styles.css icon=css
     .larger-button {
       --bq-button--small-height: 42px;
       --bq-button--small-paddingY: 10px;
@@ -468,6 +451,29 @@ Component-level CSS variables and `::part()` selectors work well together when y
           Button
         </bq-button>
       `,
+      style: `
+        .larger-button {
+          --bq-button--small-height: 42px;
+          --bq-button--small-paddingY: 10px;
+          --bq-button--small-paddingX: var(--bq-spacing-l);
+          --bq-button--medium-height: 53px;
+          --bq-button--medium-paddingY: 14px;
+          --bq-button--medium-paddingX: var(--bq-spacing-xl);
+          --bq-button--large-height: 60px;
+          --bq-button--large-paddingY: 18px;
+          --bq-button--large-paddingX: var(--bq-spacing-xxl);
+          --bq-ui--brand: #192b37;
+          --bq-focus: #192b37;
+        }
+
+        .larger-button::part(button) {
+          border-radius: var(--bq-radius--full);
+        }
+
+        .larger-button::part(label) {
+          font-size: var(--bq-font-size--l);
+        }
+      `
     })
     export class ExampleComponent {}
     ```
@@ -475,7 +481,6 @@ Component-level CSS variables and `::part()` selectors work well together when y
     ```vue Vue icon=vuejs
     <script setup lang="ts">
     import { BqButton } from "@beeq/vue";
-    import "./styles.css";
     </script>
 
     <template>
@@ -483,6 +488,30 @@ Component-level CSS variables and `::part()` selectors work well together when y
       <BqButton class="larger-button" size="medium">Button</BqButton>
       <BqButton class="larger-button" size="large">Button</BqButton>
     </template>
+
+    <style>
+    .larger-button {
+      --bq-button--small-height: 42px;
+      --bq-button--small-paddingY: 10px;
+      --bq-button--small-paddingX: var(--bq-spacing-l);
+      --bq-button--medium-height: 53px;
+      --bq-button--medium-paddingY: 14px;
+      --bq-button--medium-paddingX: var(--bq-spacing-xl);
+      --bq-button--large-height: 60px;
+      --bq-button--large-paddingY: 18px;
+      --bq-button--large-paddingX: var(--bq-spacing-xxl);
+      --bq-ui--brand: #192b37;
+      --bq-focus: #192b37;
+    }
+
+    .larger-button::part(button) {
+      border-radius: var(--bq-radius--full);
+    }
+
+    .larger-button::part(label) {
+      font-size: var(--bq-font-size--l);
+    }
+    </style>
     ```
   </CodeGroup>
 </CodeLivePreview>
@@ -497,16 +526,28 @@ Not every component exposes the same CSS variables or parts. When a component do
 ## Best practices
 
 <CardGroup cols={2}>
-  <Card title="Start with tokens" icon="check" iconType="solid">
-    Use global design tokens first when the change should apply across the product. This keeps the theme consistent and easier to maintain.
+  <Card title="Start with global tokens" icon="check" iconType="solid" color="var(--bq-stroke--success)">
+    When a change should apply across the whole product, override a global token like `--bq-brand`. One change cascades through every component that derives from it.
   </Card>
-  <Card title="Scope local exceptions" icon="check" iconType="solid">
-    Use classes or component selectors for one-off overrides so you do not accidentally restyle every instance.
+  <Card title="Avoid per-component overrides for global decisions" icon="xmark" iconType="solid" color="var(--bq-stroke--danger)">
+    Repeating the same CSS variable on every component instance makes the theme harder to update and easy to get out of sync.
   </Card>
-  <Card title="Use parts sparingly" icon="check" iconType="solid">
-    Reach for `::part()` when a component-level variable is not enough. It is powerful, but it couples your styles more closely to component internals.
+  <Card title="Scope one-off overrides with a class" icon="check" iconType="solid" color="var(--bq-stroke--success)">
+    Use a specific class selector so your override only applies where you intend it — not to every instance of the component on the page.
   </Card>
-  <Card title="Test both modes" icon="check" iconType="solid">
-    Review your overrides in both light and dark mode to make sure contrast, hierarchy, and focus states still work well.
+  <Card title="Avoid broad selectors for local overrides" icon="xmark" iconType="solid" color="var(--bq-stroke--danger)">
+    Targeting `bq-button` or `:root` for a one-off change affects every instance globally. Scope exceptions with a class.
+  </Card>
+  <Card title="Reach for `::part()` when variables aren't enough" icon="check" iconType="solid" color="var(--bq-stroke--success)">
+    Shadow DOM parts give you structural access to component internals. Use them when the exposed CSS variables don't cover what you need.
+  </Card>
+  <Card title="Don't use `::part()` as your first tool" icon="xmark" iconType="solid" color="var(--bq-stroke--danger)">
+    `::part()` couples your styles to component internals. If a CSS variable covers the change, prefer that — it's less likely to break across BEEQ updates.
+  </Card>
+  <Card title="Check both light and dark modes" icon="check" iconType="solid" color="var(--bq-stroke--success)">
+    Review your overrides in both colour modes to make sure contrast, hierarchy, and focus states still hold up.
+  </Card>
+  <Card title="Don't verify only one colour mode" icon="xmark" iconType="solid" color="var(--bq-stroke--danger)">
+    Overrides that look correct in light mode often break contrast or colour hierarchy in dark mode.
   </Card>
 </CardGroup>
