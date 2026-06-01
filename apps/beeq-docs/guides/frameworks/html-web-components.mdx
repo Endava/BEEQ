@@ -30,14 +30,14 @@ BEEQ components are standard custom elements (`<bq-button>`, `<bq-input>`, and s
 
     - **CDN** — plain `.html` files, prototypes, or pages without a build step
     - **Bundler** — Vite, Webpack, or similar (Node.js **18+**)
-
-    <Tip>
-      If you followed the [Installation guide](/getting-started/installation), you already have `@beeq/core` installed and the stylesheet loaded. Skip straight to the **Bundler** subsection of Step 2 and start at `defineCustomElements()`.
-    </Tip>
   </Step>
 
   <Step title="Add styles and register components" titleSize="h3">
     Follow the path you chose in Step 1 — **CDN** or **Bundler**. You only need one.
+
+    <Tip>
+      Already have `@beeq/core` installed from the [Installation guide](/getting-started/installation)? Skip the CDN path and the `npm install` command below — go straight to `defineCustomElements()` in the Bundler section.
+    </Tip>
 
     #### CDN
 
@@ -239,26 +239,34 @@ BEEQ components are standard custom elements (`<bq-button>`, `<bq-input>`, and s
 
 ## Listen to events
 
-BEEQ components emit custom events prefixed with `bq` (for example `bqClick`, `bqChange`, `bqSelect`). Prefer these over inferring state only from DOM attributes.
+BEEQ components emit custom events prefixed with `bq` — for example `bqClick`, `bqChange`, `bqBlur`, `bqSelect`. Always prefer these over standard DOM events (`click`, `change`) when they exist: the `bq` variants carry structured detail payloads and reflect the component's actual internal state, not just a raw DOM event.
+
+Every component's API reference table lists which events it emits and what `event.detail` contains. Check the component page in the [Components](/components/overview) section before wiring a listener.
 
 ```html
 <bq-checkbox id="terms">I agree to the terms</bq-checkbox>
+<bq-input id="email" type="email" placeholder="you@example.com"></bq-input>
 
 <script type="module">
-  const checkbox = document.querySelector("#terms");
-  checkbox.addEventListener("bqChange", (event) => {
+  // bqChange carries { checked: boolean } for checkbox
+  document.querySelector("#terms").addEventListener("bqChange", (event) => {
     console.log("Checked:", event.detail.checked);
+  });
+
+  // bqChange carries { value: string } for input
+  document.querySelector("#email").addEventListener("bqChange", (event) => {
+    console.log("Value:", event.detail.value);
   });
 </script>
 ```
 
 <Tip>
-  Read structured payloads from `event.detail` — that is where BEEQ exposes the latest component state for custom events.
+  Read structured payloads from `event.detail`. Avoid reading from `event.target.value` directly — it may not reflect the component's latest internal state in all cases.
 </Tip>
 
-## TypeScript
+## TypeScript support
 
-Install types with `@beeq/core` and import event detail types from the package:
+Import event detail types and element interfaces from `@beeq/core` for full type safety:
 
 ```ts
 import type { BqCheckboxCustomEvent } from "@beeq/core";
@@ -300,25 +308,6 @@ Create `.vscode/settings.json` in your project root:
 }
 ```
 
-## Using a framework instead?
-
-If your project uses a major frontend framework, the official wrappers improve forms, events, and developer experience:
-
-<Columns cols={2}>
-  <Card title="Angular" href="/guides/frameworks/angular" icon="angular" iconType="duotone">
-    Standalone components, forms, and value accessors.
-  </Card>
-  <Card title="React" href="/guides/frameworks/react" icon="react" iconType="duotone">
-    PascalCase components and `onBq...` event props.
-  </Card>
-  <Card title="Next.js" href="/guides/frameworks/next" icon="react" iconType="duotone">
-    SSR, layout setup, and client-only icon initialization.
-  </Card>
-  <Card title="Vue" href="/guides/frameworks/vue" icon="vuejs" iconType="duotone">
-    Custom element compiler options and `v-model` support.
-  </Card>
-</Columns>
-
 ## Troubleshooting
 
 <AccordionGroup>
@@ -354,5 +343,24 @@ If your project uses a major frontend framework, the official wrappers improve f
   </Card>
   <Card title="Open Storybook" href="https://storybook.beeq.design" icon="book" iconType="duotone">
     Explore component states and interactions in the live component library.
+  </Card>
+</Columns>
+
+## Using a framework instead?
+
+If your project uses a major frontend framework, the official wrappers improve forms, events, and developer experience:
+
+<Columns cols={2}>
+  <Card title="Angular" href="/guides/frameworks/angular" icon="angular" iconType="duotone" horizontal>
+    Standalone components, forms, and value accessors.
+  </Card>
+  <Card title="React" href="/guides/frameworks/react" icon="react" iconType="duotone" horizontal>
+    PascalCase components and `onBq...` event props.
+  </Card>
+  <Card title="Next.js" href="/guides/frameworks/next" icon="react" iconType="duotone" horizontal>
+    SSR, layout setup, and client-only icon initialization.
+  </Card>
+  <Card title="Vue" href="/guides/frameworks/vue" icon="vuejs" iconType="duotone" horizontal>
+    Custom element compiler options and `v-model` support.
   </Card>
 </Columns>
