@@ -256,32 +256,32 @@ Use the `default` variant for general-purpose alerts. It lets you customize the 
       standalone: true,
       imports: [BqAlert, BqIcon, BqButton],
       template: `
-            <bq-alert open>
-              <bq-icon name="star" slot="icon"></bq-icon>
-              Title
-            </bq-alert>
-        
-            <bq-alert open>
-              <bq-icon name="star" slot="icon"></bq-icon>
-              Title
-              <span slot="body">
-                Description
-                <a class="bq-link" href="https://example.com">Link</a>
-              </span>
-            </bq-alert>
-        
-            <bq-alert open>
-              <bq-icon name="star" slot="icon"></bq-icon>
-              Title
-              <span slot="body">
-                Description
-                <a class="bq-link" href="https://example.com">Link</a>
-              </span>
-              <div slot="footer">
-                <bq-button size="small">Button</bq-button>
-                <bq-button appearance="link" size="small">Button</bq-button>
-              </div>
-            </bq-alert>
+        <bq-alert open>
+          <bq-icon name="star" slot="icon"></bq-icon>
+          Title
+        </bq-alert>
+
+        <bq-alert open>
+          <bq-icon name="star" slot="icon"></bq-icon>
+          Title
+          <span slot="body">
+            Description
+            <a class="bq-link" href="https://example.com">Link</a>
+          </span>
+        </bq-alert>
+
+        <bq-alert open>
+          <bq-icon name="star" slot="icon"></bq-icon>
+          Title
+          <span slot="body">
+            Description
+            <a class="bq-link" href="https://example.com">Link</a>
+          </span>
+          <div slot="footer">
+            <bq-button size="small">Button</bq-button>
+            <bq-button appearance="link" size="small">Button</bq-button>
+          </div>
+        </bq-alert>
       `,
     })
     export class AppComponent {}
@@ -434,27 +434,27 @@ Use the `info` variant when users need additional, non-critical information. It 
       standalone: true,
       imports: [BqAlert, BqButton],
       template: `
-            <bq-alert open type="info">Title</bq-alert>
-        
-            <bq-alert open type="info">
-              Title
-              <span slot="body">
-                Description
-                <a class="bq-link" href="https://example.com">Link</a>
-              </span>
-            </bq-alert>
-        
-            <bq-alert open type="info">
-              Title
-              <span slot="body">
-                Description
-                <a class="bq-link" href="https://example.com">Link</a>
-              </span>
-              <div slot="footer">
-                <bq-button size="small">Button</bq-button>
-                <bq-button appearance="link" size="small">Button</bq-button>
-              </div>
-            </bq-alert>
+        <bq-alert open type="info">Title</bq-alert>
+
+        <bq-alert open type="info">
+          Title
+          <span slot="body">
+            Description
+            <a class="bq-link" href="https://example.com">Link</a>
+          </span>
+        </bq-alert>
+
+        <bq-alert open type="info">
+          Title
+          <span slot="body">
+            Description
+            <a class="bq-link" href="https://example.com">Link</a>
+          </span>
+          <div slot="footer">
+            <bq-button size="small">Button</bq-button>
+            <bq-button appearance="link" size="small">Button</bq-button>
+          </div>
+        </bq-alert>
       `,
     })
     export class AppComponent {}
@@ -598,27 +598,27 @@ Use the `success` variant to notify users about successful actions or positive o
       standalone: true,
       imports: [BqAlert, BqButton],
       template: `
-            <bq-alert open type="success">Title</bq-alert>
-        
-            <bq-alert open type="success">
-              Title
-              <span slot="body">
-                Description
-                <a class="bq-link" href="https://example.com">Link</a>
-              </span>
-            </bq-alert>
-        
-            <bq-alert open type="success">
-              Title
-              <span slot="body">
-                Description
-                <a class="bq-link" href="https://example.com">Link</a>
-              </span>
-              <div slot="footer">
-                <bq-button size="small">Button</bq-button>
-                <bq-button appearance="link" size="small">Button</bq-button>
-              </div>
-            </bq-alert>
+        <bq-alert open type="success">Title</bq-alert>
+
+        <bq-alert open type="success">
+          Title
+          <span slot="body">
+            Description
+            <a class="bq-link" href="https://example.com">Link</a>
+          </span>
+        </bq-alert>
+
+        <bq-alert open type="success">
+          Title
+          <span slot="body">
+            Description
+            <a class="bq-link" href="https://example.com">Link</a>
+          </span>
+          <div slot="footer">
+            <bq-button size="small">Button</bq-button>
+            <bq-button appearance="link" size="small">Button</bq-button>
+          </div>
+        </bq-alert>
       `,
     })
     export class AppComponent {}
@@ -762,27 +762,27 @@ Use the `warning` variant to indicate potential issues or actions that users sho
       standalone: true,
       imports: [BqAlert, BqButton],
       template: `
-            <bq-alert open type="warning">Title</bq-alert>
-        
-            <bq-alert open type="warning">
-              Title
-              <span slot="body">
-                Description
-                <a class="bq-link" href="https://example.com">Link</a>
-              </span>
-            </bq-alert>
-        
-            <bq-alert open type="warning">
-              Title
-              <span slot="body">
-                Description
-                <a class="bq-link" href="https://example.com">Link</a>
-              </span>
-              <div slot="footer">
-                <bq-button size="small">Button</bq-button>
-                <bq-button appearance="link" size="small">Button</bq-button>
-              </div>
-            </bq-alert>
+        <bq-alert open type="warning">Title</bq-alert>
+
+        <bq-alert open type="warning">
+          Title
+          <span slot="body">
+            Description
+            <a class="bq-link" href="https://example.com">Link</a>
+          </span>
+        </bq-alert>
+
+        <bq-alert open type="warning">
+          Title
+          <span slot="body">
+            Description
+            <a class="bq-link" href="https://example.com">Link</a>
+          </span>
+          <div slot="footer">
+            <bq-button size="small">Button</bq-button>
+            <bq-button appearance="link" size="small">Button</bq-button>
+          </div>
+        </bq-alert>
       `,
     })
     export class AppComponent {}
@@ -926,27 +926,27 @@ Use the `error` variant for issues that require immediate attention. It works be
       standalone: true,
       imports: [BqAlert, BqButton],
       template: `
-            <bq-alert open type="error">Title</bq-alert>
-        
-            <bq-alert open type="error">
-              Title
-              <span slot="body">
-                Description
-                <a class="bq-link" href="https://example.com">Link</a>
-              </span>
-            </bq-alert>
-        
-            <bq-alert open type="error">
-              Title
-              <span slot="body">
-                Description
-                <a class="bq-link" href="https://example.com">Link</a>
-              </span>
-              <div slot="footer">
-                <bq-button size="small">Button</bq-button>
-                <bq-button appearance="link" size="small">Button</bq-button>
-              </div>
-            </bq-alert>
+        <bq-alert open type="error">Title</bq-alert>
+
+        <bq-alert open type="error">
+          Title
+          <span slot="body">
+            Description
+            <a class="bq-link" href="https://example.com">Link</a>
+          </span>
+        </bq-alert>
+
+        <bq-alert open type="error">
+          Title
+          <span slot="body">
+            Description
+            <a class="bq-link" href="https://example.com">Link</a>
+          </span>
+          <div slot="footer">
+            <bq-button size="small">Button</bq-button>
+            <bq-button appearance="link" size="small">Button</bq-button>
+          </div>
+        </bq-alert>
       `,
     })
     export class AppComponent {}
@@ -1080,15 +1080,15 @@ Use the `sticky` attribute for persistent alerts that remain visible until users
       standalone: true,
       imports: [BqAlert, BqButton],
       template: `
-            <main>
-              <h1>Dashboard</h1>
-              <div></div>
-        
-              <bq-alert sticky open type="error">
-                Title
-                <bq-button appearance="link" size="small">Button</bq-button>
-              </bq-alert>
-            </main>
+        <main>
+          <h1>Dashboard</h1>
+          <div></div>
+
+          <bq-alert sticky open type="error">
+            Title
+            <bq-button appearance="link" size="small">Button</bq-button>
+          </bq-alert>
+        </main>
       `,
     })
     export class AppComponent {}
@@ -1181,10 +1181,10 @@ Set `auto-dismiss` to hide the alert automatically after a delay. Use `time` to 
       standalone: true,
       imports: [BqAlert],
       template: `
-            <bq-alert open auto-dismiss time="8000" type="success">
-              Changes saved
-              <span slot="body">Your settings have been updated.</span>
-            </bq-alert>
+        <bq-alert open auto-dismiss time="8000" type="success">
+          Changes saved
+          <span slot="body">Your settings have been updated.</span>
+        </bq-alert>
       `,
     })
     export class AppComponent {}

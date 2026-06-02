@@ -213,17 +213,17 @@ Use body content when the empty state needs a short explanation or a little more
       standalone: true,
       imports: [BqEmptyState],
       template: `
-            <bq-empty-state>
-              Title
-              <span slot="body">Description</span>
-            </bq-empty-state>
-            <bq-empty-state>
-              Title
-              <span slot="body">
-                Description
-                <a class="bq-link" href="https://example.com">Link</a>
-              </span>
-            </bq-empty-state>
+        <bq-empty-state>
+          Title
+          <span slot="body">Description</span>
+        </bq-empty-state>
+        <bq-empty-state>
+          Title
+          <span slot="body">
+            Description
+            <a class="bq-link" href="https://example.com">Link</a>
+          </span>
+        </bq-empty-state>
       `,
     })
     export class AppComponent {}
@@ -376,37 +376,37 @@ Use the footer when the empty state should help people recover immediately. Pref
       standalone: true,
       imports: [BqEmptyState, BqButton],
       template: `
-            <bq-empty-state size="medium">
-              Title
-              <span slot="body">
-                Description
-                <a class="bq-link" href="https://example.com">Link</a>
-              </span>
-              <div slot="footer">
-                <bq-button appearance="primary" size="small">Button</bq-button>
-              </div>
-            </bq-empty-state>
-            <bq-empty-state size="medium">
-              Title
-              <span slot="body">
-                Description
-                <a class="bq-link" href="https://example.com">Link</a>
-              </span>
-              <div slot="footer">
-                <bq-button size="small" variant="ghost">Button</bq-button>
-              </div>
-            </bq-empty-state>
-            <bq-empty-state size="medium">
-              Title
-              <span slot="body">
-                Description
-                <a class="bq-link" href="https://example.com">Link</a>
-              </span>
-              <div slot="footer">
-                <bq-button size="small" variant="ghost">Button</bq-button>
-                <bq-button appearance="primary" size="small">Button</bq-button>
-              </div>
-            </bq-empty-state>
+        <bq-empty-state size="medium">
+          Title
+          <span slot="body">
+            Description
+            <a class="bq-link" href="https://example.com">Link</a>
+          </span>
+          <div slot="footer">
+            <bq-button appearance="primary" size="small">Button</bq-button>
+          </div>
+        </bq-empty-state>
+        <bq-empty-state size="medium">
+          Title
+          <span slot="body">
+            Description
+            <a class="bq-link" href="https://example.com">Link</a>
+          </span>
+          <div slot="footer">
+            <bq-button size="small" variant="ghost">Button</bq-button>
+          </div>
+        </bq-empty-state>
+        <bq-empty-state size="medium">
+          Title
+          <span slot="body">
+            Description
+            <a class="bq-link" href="https://example.com">Link</a>
+          </span>
+          <div slot="footer">
+            <bq-button size="small" variant="ghost">Button</bq-button>
+            <bq-button appearance="primary" size="small">Button</bq-button>
+          </div>
+        </bq-empty-state>
       `,
     })
     export class AppComponent {}

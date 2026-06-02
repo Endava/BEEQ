@@ -181,9 +181,9 @@ Adjust the `size` attribute to customize the tag's dimensions and support a clea
       standalone: true,
       imports: [BqTag],
       template: `
-            <bq-tag size="xsmall">Extra small</bq-tag>
-            <bq-tag size="small">Small</bq-tag>
-            <bq-tag size="medium">Medium</bq-tag>
+        <bq-tag size="xsmall">Extra small</bq-tag>
+        <bq-tag size="small">Small</bq-tag>
+        <bq-tag size="medium">Medium</bq-tag>
       `,
     })
     export class AppComponent {}
@@ -234,8 +234,8 @@ Apply the `clickable` attribute for interactive tags that can trigger actions or
       standalone: true,
       imports: [BqTag],
       template: `
-            <bq-tag clickable>Tag</bq-tag>
-            <bq-tag clickable selected>Tag</bq-tag>
+        <bq-tag clickable>Tag</bq-tag>
+        <bq-tag clickable selected>Tag</bq-tag>
       `,
     })
     export class AppComponent {}
@@ -285,8 +285,8 @@ Apply `disabled` alongside `clickable` when a tag action is temporarily unavaila
       standalone: true,
       imports: [BqTag],
       template: `
-            <bq-tag clickable>Enabled</bq-tag>
-            <bq-tag clickable disabled>Disabled</bq-tag>
+        <bq-tag clickable>Enabled</bq-tag>
+        <bq-tag clickable disabled>Disabled</bq-tag>
       `,
     })
     export class AppComponent {}
@@ -345,11 +345,11 @@ Use filled colored tags when you want a stronger visual distinction for categori
       standalone: true,
       imports: [BqTag],
       template: `
-            <bq-tag color="success">Success</bq-tag>
-            <bq-tag color="info">Info</bq-tag>
-            <bq-tag color="error">Error</bq-tag>
-            <bq-tag color="warning">Warning</bq-tag>
-            <bq-tag color="gray">Gray</bq-tag>
+        <bq-tag color="success">Success</bq-tag>
+        <bq-tag color="info">Info</bq-tag>
+        <bq-tag color="error">Error</bq-tag>
+        <bq-tag color="warning">Warning</bq-tag>
+        <bq-tag color="gray">Gray</bq-tag>
       `,
     })
     export class AppComponent {}
@@ -409,11 +409,11 @@ Use `variant="outline"` when you want a subtler visual distinction without a fil
       standalone: true,
       imports: [BqTag],
       template: `
-            <bq-tag color="success" variant="outline">Success</bq-tag>
-            <bq-tag color="info" variant="outline">Info</bq-tag>
-            <bq-tag color="error" variant="outline">Error</bq-tag>
-            <bq-tag color="warning" variant="outline">Warning</bq-tag>
-            <bq-tag color="gray" variant="outline">Gray</bq-tag>
+        <bq-tag color="success" variant="outline">Success</bq-tag>
+        <bq-tag color="info" variant="outline">Info</bq-tag>
+        <bq-tag color="error" variant="outline">Error</bq-tag>
+        <bq-tag color="warning" variant="outline">Warning</bq-tag>
+        <bq-tag color="gray" variant="outline">Gray</bq-tag>
       `,
     })
     export class AppComponent {}
@@ -487,11 +487,11 @@ Enable `removable` when users need to clear selected items, applied filters, or 
       imports: [BqTag],
       template: `
         <bq-tag removable>Default</bq-tag>
-            <bq-tag removable color="success">Success</bq-tag>
-            <bq-tag removable color="info">Info</bq-tag>
-            <bq-tag removable color="error">Error</bq-tag>
-            <bq-tag removable color="warning">Warning</bq-tag>
-            <bq-tag removable color="gray">Gray</bq-tag>
+        <bq-tag removable color="success">Success</bq-tag>
+        <bq-tag removable color="info">Info</bq-tag>
+        <bq-tag removable color="error">Error</bq-tag>
+        <bq-tag removable color="warning">Warning</bq-tag>
+        <bq-tag removable color="gray">Gray</bq-tag>
       `,
     })
     export class AppComponent {}
@@ -565,11 +565,11 @@ Use `variant="outline"` with `removable` when you want the same close behavior w
       imports: [BqTag],
       template: `
         <bq-tag removable variant="outline">Default</bq-tag>
-            <bq-tag removable color="success" variant="outline">Success</bq-tag>
-            <bq-tag removable color="info" variant="outline">Info</bq-tag>
-            <bq-tag removable color="error" variant="outline">Error</bq-tag>
-            <bq-tag removable color="warning" variant="outline">Warning</bq-tag>
-            <bq-tag removable color="gray" variant="outline">Gray</bq-tag>
+        <bq-tag removable color="success" variant="outline">Success</bq-tag>
+        <bq-tag removable color="info" variant="outline">Info</bq-tag>
+        <bq-tag removable color="error" variant="outline">Error</bq-tag>
+        <bq-tag removable color="warning" variant="outline">Warning</bq-tag>
+        <bq-tag removable color="gray" variant="outline">Gray</bq-tag>
       `,
     })
     export class AppComponent {}
@@ -687,30 +687,30 @@ Use the `prefix` slot to add an icon when extra context helps, while keeping the
       standalone: true,
       imports: [BqTag, BqIcon],
       template: `
-            <bq-tag>
-              <bq-icon name="alarm" slot="prefix"></bq-icon>
-              Default
-            </bq-tag>
-            <bq-tag color="success">
-              <bq-icon name="check-circle" slot="prefix"></bq-icon>
-              Success
-            </bq-tag>
-            <bq-tag color="info">
-              <bq-icon name="info" slot="prefix"></bq-icon>
-              Info
-            </bq-tag>
-            <bq-tag color="error">
-              <bq-icon name="warning-diamond" slot="prefix"></bq-icon>
-              Error
-            </bq-tag>
-            <bq-tag color="warning">
-              <bq-icon name="warning" slot="prefix"></bq-icon>
-              Warning
-            </bq-tag>
-            <bq-tag color="gray">
-              <bq-icon name="video-camera-slash" slot="prefix"></bq-icon>
-              Gray
-            </bq-tag>
+        <bq-tag>
+          <bq-icon name="alarm" slot="prefix"></bq-icon>
+          Default
+        </bq-tag>
+        <bq-tag color="success">
+          <bq-icon name="check-circle" slot="prefix"></bq-icon>
+          Success
+        </bq-tag>
+        <bq-tag color="info">
+          <bq-icon name="info" slot="prefix"></bq-icon>
+          Info
+        </bq-tag>
+        <bq-tag color="error">
+          <bq-icon name="warning-diamond" slot="prefix"></bq-icon>
+          Error
+        </bq-tag>
+        <bq-tag color="warning">
+          <bq-icon name="warning" slot="prefix"></bq-icon>
+          Warning
+        </bq-tag>
+        <bq-tag color="gray">
+          <bq-icon name="video-camera-slash" slot="prefix"></bq-icon>
+          Gray
+        </bq-tag>
       `,
     })
     export class AppComponent {}
@@ -846,30 +846,30 @@ Use the outline variant with a prefix icon when you want context with a lighter 
       standalone: true,
       imports: [BqTag, BqIcon],
       template: `
-            <bq-tag variant="outline">
-              <bq-icon name="alarm" slot="prefix"></bq-icon>
-              Default
-            </bq-tag>
-            <bq-tag color="success" variant="outline">
-              <bq-icon name="check-circle" slot="prefix"></bq-icon>
-              Success
-            </bq-tag>
-            <bq-tag color="info" variant="outline">
-              <bq-icon name="info" slot="prefix"></bq-icon>
-              Info
-            </bq-tag>
-            <bq-tag color="error" variant="outline">
-              <bq-icon name="warning-diamond" slot="prefix"></bq-icon>
-              Error
-            </bq-tag>
-            <bq-tag color="warning" variant="outline">
-              <bq-icon name="warning" slot="prefix"></bq-icon>
-              Warning
-            </bq-tag>
-            <bq-tag color="gray" variant="outline">
-              <bq-icon name="video-camera-slash" slot="prefix"></bq-icon>
-              Gray
-            </bq-tag>
+        <bq-tag variant="outline">
+          <bq-icon name="alarm" slot="prefix"></bq-icon>
+          Default
+        </bq-tag>
+        <bq-tag color="success" variant="outline">
+          <bq-icon name="check-circle" slot="prefix"></bq-icon>
+          Success
+        </bq-tag>
+        <bq-tag color="info" variant="outline">
+          <bq-icon name="info" slot="prefix"></bq-icon>
+          Info
+        </bq-tag>
+        <bq-tag color="error" variant="outline">
+          <bq-icon name="warning-diamond" slot="prefix"></bq-icon>
+          Error
+        </bq-tag>
+        <bq-tag color="warning" variant="outline">
+          <bq-icon name="warning" slot="prefix"></bq-icon>
+          Warning
+        </bq-tag>
+        <bq-tag color="gray" variant="outline">
+          <bq-icon name="video-camera-slash" slot="prefix"></bq-icon>
+          Gray
+        </bq-tag>
       `,
     })
     export class AppComponent {}

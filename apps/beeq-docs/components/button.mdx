@@ -143,9 +143,9 @@ Primary also supports `ghost` and `danger` variants:
       standalone: true,
       imports: [BqButton],
       template: `
-            <bq-button>Primary standard</bq-button>
-            <bq-button variant="ghost">Primary ghost</bq-button>
-            <bq-button variant="danger">Primary danger</bq-button>
+        <bq-button>Primary standard</bq-button>
+        <bq-button variant="ghost">Primary ghost</bq-button>
+        <bq-button variant="danger">Primary danger</bq-button>
       `,
     })
     export class AppComponent {}
@@ -188,8 +188,8 @@ Lower-emphasis actions. Can stand alone or pair with a primary button to perform
       standalone: true,
       imports: [BqButton],
       template: `
-            <bq-button appearance="secondary">Secondary</bq-button>
-            <bq-button appearance="secondary" variant="ghost">Secondary ghost</bq-button>
+        <bq-button appearance="secondary">Secondary</bq-button>
+        <bq-button appearance="secondary" variant="ghost">Secondary ghost</bq-button>
       `,
     })
     export class AppComponent {}
@@ -233,9 +233,9 @@ Renders as an `<a>` element under the hood when `href` is provided. Still action
       standalone: true,
       imports: [BqButton],
       template: `
-            <bq-button appearance="link" href="https://www.example.com" target="_blank">
-              Link button
-            </bq-button>
+        <bq-button appearance="link" href="https://www.example.com" target="_blank">
+          Link button
+        </bq-button>
       `,
     })
     export class AppComponent {}
@@ -280,7 +280,7 @@ No background or border. Suitable for inline actions, subtle calls to action, or
       standalone: true,
       imports: [BqButton],
       template: `
-            <bq-button appearance="text">Text button</bq-button>
+        <bq-button appearance="text">Text button</bq-button>
       `,
     })
     export class AppComponent {}
@@ -331,9 +331,9 @@ Choose the size that best matches the context. Medium is the default and preferr
       standalone: true,
       imports: [BqButton],
       template: `
-            <bq-button size="small">Small</bq-button>
-            <bq-button size="medium">Medium</bq-button>
-            <bq-button size="large">Large</bq-button>
+        <bq-button size="small">Small</bq-button>
+        <bq-button size="medium">Medium</bq-button>
+        <bq-button size="large">Large</bq-button>
       `,
     })
     export class AppComponent {}
@@ -374,7 +374,7 @@ Use the `block` attribute to make the button stretch to its parent width.
       standalone: true,
       imports: [BqButton],
       template: `
-            <bq-button block>Full width button</bq-button>
+        <bq-button block>Full width button</bq-button>
       `,
     })
     export class AppComponent {}
@@ -419,10 +419,10 @@ Use the `border` property to control the corner radius.
       standalone: true,
       imports: [BqButton],
       template: `
-            <bq-button border="full">Primary</bq-button>
-            <bq-button variant="ghost" border="full">Ghost</bq-button>
-            <bq-button variant="danger" border="full">Danger</bq-button>
-            <bq-button appearance="secondary" border="full">Secondary</bq-button>
+        <bq-button border="full">Primary</bq-button>
+        <bq-button variant="ghost" border="full">Ghost</bq-button>
+        <bq-button variant="danger" border="full">Danger</bq-button>
+        <bq-button appearance="secondary" border="full">Secondary</bq-button>
       `,
     })
     export class AppComponent {}
@@ -479,10 +479,10 @@ The `disabled` attribute can be applied to any button variation. When disabled, 
       standalone: true,
       imports: [BqButton],
       template: `
-            <bq-button disabled>Primary</bq-button>
-            <bq-button variant="ghost" disabled>Ghost</bq-button>
-            <bq-button variant="danger" disabled>Danger</bq-button>
-            <bq-button appearance="secondary" disabled>Secondary</bq-button>
+        <bq-button disabled>Primary</bq-button>
+        <bq-button variant="ghost" disabled>Ghost</bq-button>
+        <bq-button variant="danger" disabled>Danger</bq-button>
+        <bq-button appearance="secondary" disabled>Secondary</bq-button>
       `,
     })
     export class AppComponent {}
@@ -530,8 +530,8 @@ Use the `loading` attribute to indicate something is being processed. Pair with 
       standalone: true,
       imports: [BqButton],
       template: `
-            <bq-button loading>Loading</bq-button>
-            <bq-button loading disabled>Loading disabled</bq-button>
+        <bq-button loading>Loading</bq-button>
+        <bq-button loading disabled>Loading disabled</bq-button>
       `,
     })
     export class AppComponent {}
@@ -589,17 +589,17 @@ Use the `prefix` or `suffix` slot to add icons. Icons should reinforce the label
       standalone: true,
       imports: [BqButton, BqIcon],
       template: `
-            <!-- import { BqButton, BqIcon } from "@beeq/angular/standalone" -->
-        
-            <bq-button>
-              <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>
-              Go back
-            </bq-button>
-        
-            <bq-button>
-              Next step
-              <bq-icon name="arrow-circle-right" slot="suffix"></bq-icon>
-            </bq-button>
+        <!-- import { BqButton, BqIcon } from "@beeq/angular/standalone" -->
+
+        <bq-button>
+          <bq-icon name="arrow-circle-left" slot="prefix"></bq-icon>
+          Go back
+        </bq-button>
+
+        <bq-button>
+          Next step
+          <bq-icon name="arrow-circle-right" slot="suffix"></bq-icon>
+        </bq-button>
       `,
     })
     export class AppComponent {}
@@ -663,15 +663,15 @@ Always provide a `label` so assistive technologies can announce the action corre
       standalone: true,
       imports: [BqButton, BqIcon],
       template: `
-            <bq-button only-icon label="Notifications">
-              <bq-icon name="bell-ringing"></bq-icon>
-            </bq-button>
-            <bq-button only-icon variant="ghost" label="Notifications">
-              <bq-icon name="bell-ringing"></bq-icon>
-            </bq-button>
-            <bq-button only-icon appearance="secondary" label="Notifications">
-              <bq-icon name="bell-ringing"></bq-icon>
-            </bq-button>
+        <bq-button only-icon label="Notifications">
+          <bq-icon name="bell-ringing"></bq-icon>
+        </bq-button>
+        <bq-button only-icon variant="ghost" label="Notifications">
+          <bq-icon name="bell-ringing"></bq-icon>
+        </bq-button>
+        <bq-button only-icon appearance="secondary" label="Notifications">
+          <bq-icon name="bell-ringing"></bq-icon>
+        </bq-button>
       `,
     })
     export class AppComponent {}

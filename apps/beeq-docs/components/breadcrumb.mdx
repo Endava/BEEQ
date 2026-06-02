@@ -170,11 +170,11 @@ Use a default breadcrumb to show the current page within a hierarchy. When `href
       imports: [BqBreadcrumb, BqBreadcrumbItem],
       template: `
         <bq-breadcrumb label="Breadcrumb">
-              <bq-breadcrumb-item>Home</bq-breadcrumb-item>
-              <bq-breadcrumb-item>Men's clothing</bq-breadcrumb-item>
-              <bq-breadcrumb-item>Shirt</bq-breadcrumb-item>
-              <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
-            </bq-breadcrumb>
+          <bq-breadcrumb-item>Home</bq-breadcrumb-item>
+          <bq-breadcrumb-item>Men's clothing</bq-breadcrumb-item>
+          <bq-breadcrumb-item>Shirt</bq-breadcrumb-item>
+          <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+        </bq-breadcrumb>
       `,
     })
     export class AppComponent {}
@@ -248,12 +248,12 @@ Use the `separator` slot to replace the default `/` separator.
       standalone: true,
       imports: [BqBreadcrumb, BqIcon, BqBreadcrumbItem],
       template: `
-            <bq-breadcrumb label="Breadcrumb">
-              <bq-icon name="caret-right" size="12" slot="separator"></bq-icon>
-              <bq-breadcrumb-item href="/">Home</bq-breadcrumb-item>
-              <bq-breadcrumb-item href="/catalog">Catalog</bq-breadcrumb-item>
-              <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
-            </bq-breadcrumb>
+        <bq-breadcrumb label="Breadcrumb">
+          <bq-icon name="caret-right" size="12" slot="separator"></bq-icon>
+          <bq-breadcrumb-item href="/">Home</bq-breadcrumb-item>
+          <bq-breadcrumb-item href="/catalog">Catalog</bq-breadcrumb-item>
+          <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+        </bq-breadcrumb>
       `,
     })
     export class AppComponent {}
@@ -338,15 +338,15 @@ Icons next to labels help users recognize categories at a glance. Use `size="16"
       imports: [BqBreadcrumb, BqBreadcrumbItem, BqIcon],
       template: `
         <bq-breadcrumb label="Breadcrumb">
-              <bq-breadcrumb-item aria-label="Home page">
-                <bq-icon name="house-line" size="16"></bq-icon>
-              </bq-breadcrumb-item>
-              <bq-breadcrumb-item>
-                <bq-icon name="shirt-folded" size="16"></bq-icon>
-                Men's Clothing
-              </bq-breadcrumb-item>
-              <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
-            </bq-breadcrumb>
+          <bq-breadcrumb-item aria-label="Home page">
+            <bq-icon name="house-line" size="16"></bq-icon>
+          </bq-breadcrumb-item>
+          <bq-breadcrumb-item>
+            <bq-icon name="shirt-folded" size="16"></bq-icon>
+            Men's Clothing
+          </bq-breadcrumb-item>
+          <bq-breadcrumb-item>Casual shirts</bq-breadcrumb-item>
+        </bq-breadcrumb>
       `,
     })
     export class AppComponent {}

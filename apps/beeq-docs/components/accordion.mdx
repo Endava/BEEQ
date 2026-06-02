@@ -106,9 +106,9 @@ Accordion items are collapsed by default. This works best when the heading alone
       imports: [BqAccordion],
       template: `
         <bq-accordion>
-              <span slot="header">Accordion title</span>
-              <p>This is the accordion panel content. It is hidden by default and revealed when the header is clicked.</p>
-            </bq-accordion>
+          <span slot="header">Accordion title</span>
+          <p>This is the accordion panel content. It is hidden by default and revealed when the header is clicked.</p>
+        </bq-accordion>
       `,
     })
     export class AppComponent {}
@@ -164,10 +164,10 @@ Use the `expanded` attribute when a section should start open — for example wh
       standalone: true,
       imports: [BqAccordion],
       template: `
-            <bq-accordion expanded>
-              <span slot="header">Expanded by default</span>
-              <p>This panel is visible when the component first renders.</p>
-            </bq-accordion>
+        <bq-accordion expanded>
+          <span slot="header">Expanded by default</span>
+          <p>This panel is visible when the component first renders.</p>
+        </bq-accordion>
       `,
     })
     export class AppComponent {}
@@ -249,17 +249,17 @@ Two appearance values are available:
       standalone: true,
       imports: [BqAccordion],
       template: `
-            <!-- Filled: default -->
-            <bq-accordion expanded>
-              <span slot="header">Filled (default)</span>
-              <p>The header has a background color in the filled appearance.</p>
-            </bq-accordion>
-        
-            <!-- Ghost -->
-            <bq-accordion appearance="ghost" expanded>
-              <span slot="header">Ghost</span>
-              <p>The header has no background in the ghost appearance.</p>
-            </bq-accordion>
+        <!-- Filled: default -->
+        <bq-accordion expanded>
+          <span slot="header">Filled (default)</span>
+          <p>The header has a background color in the filled appearance.</p>
+        </bq-accordion>
+
+        <!-- Ghost -->
+        <bq-accordion appearance="ghost" expanded>
+          <span slot="header">Ghost</span>
+          <p>The header has no background in the ghost appearance.</p>
+        </bq-accordion>
       `,
     })
     export class AppComponent {}
@@ -339,15 +339,15 @@ The `small` size uses more compact padding and a smaller border radius, giving i
       standalone: true,
       imports: [BqAccordion],
       template: `
-            <bq-accordion size="medium" expanded>
-              <span slot="header">Medium accordion (default)</span>
-              <p>This is the medium size — more padding, suitable for most use cases.</p>
-            </bq-accordion>
-        
-            <bq-accordion size="small" expanded>
-              <span slot="header">Small accordion</span>
-              <p>This is the small size — compact padding for dense layouts and using small border radius.</p>
-            </bq-accordion>
+        <bq-accordion size="medium" expanded>
+          <span slot="header">Medium accordion (default)</span>
+          <p>This is the medium size — more padding, suitable for most use cases.</p>
+        </bq-accordion>
+
+        <bq-accordion size="small" expanded>
+          <span slot="header">Small accordion</span>
+          <p>This is the small size — compact padding for dense layouts and using small border radius.</p>
+        </bq-accordion>
       `,
     })
     export class AppComponent {}
@@ -452,20 +452,20 @@ Use the default group behavior when the sections are mutually exclusive or when 
       standalone: true,
       imports: [BqAccordionGroup, BqAccordion],
       template: `
-            <bq-accordion-group>
-              <bq-accordion>
-                <span slot="header">Section one</span>
-                <p>Content for section one.</p>
-              </bq-accordion>
-              <bq-accordion>
-                <span slot="header">Section two</span>
-                <p>Content for section two.</p>
-              </bq-accordion>
-              <bq-accordion>
-                <span slot="header">Section three</span>
-                <p>Content for section three.</p>
-              </bq-accordion>
-            </bq-accordion-group>
+        <bq-accordion-group>
+          <bq-accordion>
+            <span slot="header">Section one</span>
+            <p>Content for section one.</p>
+          </bq-accordion>
+          <bq-accordion>
+            <span slot="header">Section two</span>
+            <p>Content for section two.</p>
+          </bq-accordion>
+          <bq-accordion>
+            <span slot="header">Section three</span>
+            <p>Content for section three.</p>
+          </bq-accordion>
+        </bq-accordion-group>
       `,
     })
     export class AppComponent {}
@@ -561,20 +561,20 @@ Allow multiple sections to stay open when people may need to review, reference, 
       standalone: true,
       imports: [BqAccordionGroup, BqAccordion],
       template: `
-            <bq-accordion-group multiple>
-              <bq-accordion expanded>
-                <span slot="header">Section one</span>
-                <p>Content for section one.</p>
-              </bq-accordion>
-              <bq-accordion expanded>
-                <span slot="header">Section two</span>
-                <p>Content for section two.</p>
-              </bq-accordion>
-              <bq-accordion>
-                <span slot="header">Section three</span>
-                <p>Content for section three.</p>
-              </bq-accordion>
-            </bq-accordion-group>
+        <bq-accordion-group multiple>
+          <bq-accordion expanded>
+            <span slot="header">Section one</span>
+            <p>Content for section one.</p>
+          </bq-accordion>
+          <bq-accordion expanded>
+            <span slot="header">Section two</span>
+            <p>Content for section two.</p>
+          </bq-accordion>
+          <bq-accordion>
+            <span slot="header">Section three</span>
+            <p>Content for section three.</p>
+          </bq-accordion>
+        </bq-accordion-group>
       `,
     })
     export class AppComponent {}
@@ -702,30 +702,30 @@ These provide additional context to help people scan and understand the sections
       standalone: true,
       imports: [BqAccordion, BqIcon, BqAvatar],
       template: `
-            <!-- Prefix icon -->
-            <bq-accordion>
-              <bq-icon name="heart" slot="prefix"></bq-icon>
-              <span slot="header">With prefix icon</span>
-              <p>The header includes an icon in the prefix slot before the title text.</p>
-            </bq-accordion>
-        
-            <!-- Prefix avatar -->
-            <bq-accordion>
-              <bq-avatar
-                size="xsmall"
-                image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
-                slot="prefix"
-              ></bq-avatar>
-              <span slot="header">With prefix avatar</span>
-              <p>The prefix slot also accepts an avatar for person-related sections.</p>
-            </bq-accordion>
-        
-            <!-- Suffix icon -->
-            <bq-accordion>
-              <span slot="header">With suffix icon</span>
-              <bq-icon name="gear" slot="suffix"></bq-icon>
-              <p>The header includes an icon in the suffix slot after the title text.</p>
-            </bq-accordion>
+        <!-- Prefix icon -->
+        <bq-accordion>
+          <bq-icon name="heart" slot="prefix"></bq-icon>
+          <span slot="header">With prefix icon</span>
+          <p>The header includes an icon in the prefix slot before the title text.</p>
+        </bq-accordion>
+
+        <!-- Prefix avatar -->
+        <bq-accordion>
+          <bq-avatar
+            size="xsmall"
+            image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
+            slot="prefix"
+            ></bq-avatar>
+            <span slot="header">With prefix avatar</span>
+            <p>The prefix slot also accepts an avatar for person-related sections.</p>
+          </bq-accordion>
+
+          <!-- Suffix icon -->
+          <bq-accordion>
+            <span slot="header">With suffix icon</span>
+            <bq-icon name="gear" slot="suffix"></bq-icon>
+            <p>The header includes an icon in the suffix slot after the title text.</p>
+          </bq-accordion>
       `,
     })
     export class AppComponent {}
@@ -803,10 +803,10 @@ Use `disabled` only when a section is temporarily unavailable. The header will n
       standalone: true,
       imports: [BqAccordion],
       template: `
-            <bq-accordion disabled>
-              <span slot="header">Disabled accordion</span>
-              <p>This content cannot be accessed while the accordion is disabled.</p>
-            </bq-accordion>
+        <bq-accordion disabled>
+          <span slot="header">Disabled accordion</span>
+          <p>This content cannot be accessed while the accordion is disabled.</p>
+        </bq-accordion>
       `,
     })
     export class AppComponent {}
@@ -883,17 +883,17 @@ Add the `no-animation` attribute to disable this and make the panel appear/disap
       standalone: true,
       imports: [BqAccordion],
       template: `
-            <!-- Default: animated -->
-            <bq-accordion>
-              <span slot="header">With animation (default)</span>
-              <p>The panel slides open and closed smoothly.</p>
-            </bq-accordion>
-        
-            <!-- Instant: no animation -->
-            <bq-accordion no-animation>
-              <span slot="header">No animation</span>
-              <p>The panel appears and disappears instantly.</p>
-            </bq-accordion>
+        <!-- Default: animated -->
+        <bq-accordion>
+          <span slot="header">With animation (default)</span>
+          <p>The panel slides open and closed smoothly.</p>
+        </bq-accordion>
+
+        <!-- Instant: no animation -->
+        <bq-accordion no-animation>
+          <span slot="header">No animation</span>
+          <p>The panel appears and disappears instantly.</p>
+        </bq-accordion>
       `,
     })
     export class AppComponent {}
@@ -998,20 +998,20 @@ Alternatively, combine a single icon in the `expand` slot with the `rotate` prop
       standalone: true,
       imports: [BqAccordion, BqIcon],
       template: `
-            <!-- Two separate icons -->
-            <bq-accordion>
-              <bq-icon name="folder-simple" slot="expand"></bq-icon>
-              <bq-icon name="folder-open" slot="collapse"></bq-icon>
-              <span slot="header">Custom icons for expand and collapse</span>
-              <p>This accordion shows an open folder when expanded and a closed folder when collapsed.</p>
-            </bq-accordion>
-        
-            <!-- Single icon + rotate -->
-            <bq-accordion rotate>
-              <bq-icon name="caret-up" slot="expand"></bq-icon>
-              <span slot="header">Custom icon with rotation</span>
-              <p>This accordion uses a single caret icon that rotates 180° when expanded.</p>
-            </bq-accordion>
+        <!-- Two separate icons -->
+        <bq-accordion>
+          <bq-icon name="folder-simple" slot="expand"></bq-icon>
+          <bq-icon name="folder-open" slot="collapse"></bq-icon>
+          <span slot="header">Custom icons for expand and collapse</span>
+          <p>This accordion shows an open folder when expanded and a closed folder when collapsed.</p>
+        </bq-accordion>
+
+        <!-- Single icon + rotate -->
+        <bq-accordion rotate>
+          <bq-icon name="caret-up" slot="expand"></bq-icon>
+          <span slot="header">Custom icon with rotation</span>
+          <p>This accordion uses a single caret icon that rotates 180° when expanded.</p>
+        </bq-accordion>
       `,
     })
     export class AppComponent {}
@@ -1151,24 +1151,24 @@ Developers can [rely on the exposed shadow DOM parts](https://www.beeq.design/3d
       standalone: true,
       imports: [BqAccordionGroup, BqAccordion, BqIcon],
       template: `
-            <bq-accordion-group appearance="ghost">
-              <bq-accordion class="my-accordion" rotate>
-                <bq-icon name="caret-down" slot="expand"></bq-icon>
-                <div slot="header">
-                  <span>Order summary</span>
-                  <span>$123.99</span>
-                </div>
-                <p>This is an example of a custom header layout using the header slot and CSS part selectors to move the expand icon to the end and space out the header content.</p>
-              </bq-accordion>
-              <bq-accordion class="my-accordion" rotate>
-                <bq-icon name="caret-down" slot="expand"></bq-icon>
-                <div slot="header">
-                  <span>Order summary</span>
-                  <span>$123.99</span>
-                </div>
-                <p>This is an example of a custom header layout using the header slot and CSS part selectors to move the expand icon to the end and space out the header content.</p>
-              </bq-accordion>
-            </bq-accordion-group>
+        <bq-accordion-group appearance="ghost">
+          <bq-accordion class="my-accordion" rotate>
+            <bq-icon name="caret-down" slot="expand"></bq-icon>
+            <div slot="header">
+              <span>Order summary</span>
+              <span>$123.99</span>
+            </div>
+            <p>This is an example of a custom header layout using the header slot and CSS part selectors to move the expand icon to the end and space out the header content.</p>
+          </bq-accordion>
+          <bq-accordion class="my-accordion" rotate>
+            <bq-icon name="caret-down" slot="expand"></bq-icon>
+            <div slot="header">
+              <span>Order summary</span>
+              <span>$123.99</span>
+            </div>
+            <p>This is an example of a custom header layout using the header slot and CSS part selectors to move the expand icon to the end and space out the header content.</p>
+          </bq-accordion>
+        </bq-accordion-group>
       `,
     })
     export class AppComponent {}

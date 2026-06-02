@@ -225,38 +225,38 @@ The trigger can be any appropriate interactive element, but in most cases a `bq-
       imports: [BqDropdown, BqButton, BqIcon, BqOptionList, BqOption],
       template: `
         <bq-dropdown>
-              <bq-button slot="trigger">
-                Dropdown
-                <bq-icon name="caret-down" slot="suffix"></bq-icon>
-              </bq-button>
-        
-              <bq-option-list>
-                <bq-option value="users">
-                  <bq-icon name="users" slot="prefix"></bq-icon>
-                  <span>Users</span>
-                </bq-option>
-        
-                <bq-option value="profile">
-                  <bq-icon name="user" slot="prefix"></bq-icon>
-                  <span>My profile</span>
-                </bq-option>
-        
-                <bq-option value="dashboard">
-                  <bq-icon name="sliders" slot="prefix"></bq-icon>
-                  <span>Dashboard</span>
-                </bq-option>
-        
-                <bq-option value="settings">
-                  <bq-icon name="gear" slot="prefix"></bq-icon>
-                  <span>Settings</span>
-                </bq-option>
-        
-                <bq-option value="logout">
-                  <span>Logout</span>
-                  <bq-icon name="sign-out" slot="suffix"></bq-icon>
-                </bq-option>
-              </bq-option-list>
-            </bq-dropdown>
+          <bq-button slot="trigger">
+            Dropdown
+            <bq-icon name="caret-down" slot="suffix"></bq-icon>
+          </bq-button>
+
+          <bq-option-list>
+            <bq-option value="users">
+              <bq-icon name="users" slot="prefix"></bq-icon>
+              <span>Users</span>
+            </bq-option>
+
+            <bq-option value="profile">
+              <bq-icon name="user" slot="prefix"></bq-icon>
+              <span>My profile</span>
+            </bq-option>
+
+            <bq-option value="dashboard">
+              <bq-icon name="sliders" slot="prefix"></bq-icon>
+              <span>Dashboard</span>
+            </bq-option>
+
+            <bq-option value="settings">
+              <bq-icon name="gear" slot="prefix"></bq-icon>
+              <span>Settings</span>
+            </bq-option>
+
+            <bq-option value="logout">
+              <span>Logout</span>
+              <bq-icon name="sign-out" slot="suffix"></bq-icon>
+            </bq-option>
+          </bq-option-list>
+        </bq-dropdown>
       `,
     })
     export class AppComponent {}
@@ -467,47 +467,47 @@ Use the `placement` attribute when you need fine-grained control over the panel 
       standalone: true,
       imports: [BqDropdown, BqButton, BqIcon, BqOptionList, BqOption],
       template: `
-            <bq-dropdown placement="bottom-start">
-              <bq-button slot="trigger">
-                Bottom start
-                <bq-icon name="caret-down" slot="suffix"></bq-icon>
-              </bq-button>
-              <bq-option-list>
-                <bq-option value="users">
-                  <bq-icon name="users" slot="prefix"></bq-icon>
-                  <span>Users</span>
-                </bq-option>
-                <bq-option value="profile">
-                  <bq-icon name="user" slot="prefix"></bq-icon>
-                  <span>My profile</span>
-                </bq-option>
-                <bq-option value="dashboard">
-                  <bq-icon name="sliders" slot="prefix"></bq-icon>
-                  <span>Dashboard</span>
-                </bq-option>
-              </bq-option-list>
-            </bq-dropdown>
-        
-            <bq-dropdown placement="bottom-end">
-              <bq-button slot="trigger">
-                Bottom end
-                <bq-icon name="caret-down" slot="suffix"></bq-icon>
-              </bq-button>
-              <bq-option-list>
-                <bq-option value="users">
-                  <bq-icon name="users" slot="prefix"></bq-icon>
-                  <span>Users</span>
-                </bq-option>
-                <bq-option value="profile">
-                  <bq-icon name="user" slot="prefix"></bq-icon>
-                  <span>My profile</span>
-                </bq-option>
-                <bq-option value="dashboard">
-                  <bq-icon name="sliders" slot="prefix"></bq-icon>
-                  <span>Dashboard</span>
-                </bq-option>
-              </bq-option-list>
-            </bq-dropdown>
+        <bq-dropdown placement="bottom-start">
+          <bq-button slot="trigger">
+            Bottom start
+            <bq-icon name="caret-down" slot="suffix"></bq-icon>
+          </bq-button>
+          <bq-option-list>
+            <bq-option value="users">
+              <bq-icon name="users" slot="prefix"></bq-icon>
+              <span>Users</span>
+            </bq-option>
+            <bq-option value="profile">
+              <bq-icon name="user" slot="prefix"></bq-icon>
+              <span>My profile</span>
+            </bq-option>
+            <bq-option value="dashboard">
+              <bq-icon name="sliders" slot="prefix"></bq-icon>
+              <span>Dashboard</span>
+            </bq-option>
+          </bq-option-list>
+        </bq-dropdown>
+
+        <bq-dropdown placement="bottom-end">
+          <bq-button slot="trigger">
+            Bottom end
+            <bq-icon name="caret-down" slot="suffix"></bq-icon>
+          </bq-button>
+          <bq-option-list>
+            <bq-option value="users">
+              <bq-icon name="users" slot="prefix"></bq-icon>
+              <span>Users</span>
+            </bq-option>
+            <bq-option value="profile">
+              <bq-icon name="user" slot="prefix"></bq-icon>
+              <span>My profile</span>
+            </bq-option>
+            <bq-option value="dashboard">
+              <bq-icon name="sliders" slot="prefix"></bq-icon>
+              <span>Dashboard</span>
+            </bq-option>
+          </bq-option-list>
+        </bq-dropdown>
       `,
     })
     export class AppComponent {}
@@ -740,50 +740,50 @@ Use a custom trigger when the dropdown needs a more specific visual entry point,
       standalone: true,
       imports: [BqDropdown, BqButton, BqIcon, BqOptionList, BqOption, BqAvatar],
       template: `
-            <bq-dropdown>
-              <bq-button appearance="secondary" size="medium" type="button" variant="standard" only-icon slot="trigger">
-                <bq-icon name="dots-three-vertical"></bq-icon>
-              </bq-button>
-              <bq-option-list>
-                <bq-option value="edit">
-                  <bq-icon name="pencil-simple" slot="prefix"></bq-icon>
-                  <span>Edit</span>
-                </bq-option>
-                <bq-option value="duplicate">
-                  <bq-icon name="copy" slot="prefix"></bq-icon>
-                  <span>Duplicate</span>
-                </bq-option>
-                <bq-option value="archive">
-                  <bq-icon name="archive" slot="prefix"></bq-icon>
-                  <span>Archive</span>
-                </bq-option>
-              </bq-option-list>
-            </bq-dropdown>
-        
-            <bq-dropdown>
-              <bq-button appearance="text" border="full" size="small" only-icon slot="trigger">
-                <bq-avatar
-                  alt-text="User profile"
-                  image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
-                  initials="BQ"
-                  label="User profile menu"
-                ></bq-avatar>
-              </bq-button>
-              <bq-option-list>
-                <bq-option value="profile">
-                  <bq-icon name="user" slot="prefix"></bq-icon>
-                  <span>My profile</span>
-                </bq-option>
-                <bq-option value="settings">
-                  <bq-icon name="gear" slot="prefix"></bq-icon>
-                  <span>Settings</span>
-                </bq-option>
-                <bq-option value="logout">
-                  <span>Logout</span>
-                  <bq-icon name="sign-out" slot="suffix"></bq-icon>
-                </bq-option>
-              </bq-option-list>
-            </bq-dropdown>
+        <bq-dropdown>
+          <bq-button appearance="secondary" size="medium" type="button" variant="standard" only-icon slot="trigger">
+            <bq-icon name="dots-three-vertical"></bq-icon>
+          </bq-button>
+          <bq-option-list>
+            <bq-option value="edit">
+              <bq-icon name="pencil-simple" slot="prefix"></bq-icon>
+              <span>Edit</span>
+            </bq-option>
+            <bq-option value="duplicate">
+              <bq-icon name="copy" slot="prefix"></bq-icon>
+              <span>Duplicate</span>
+            </bq-option>
+            <bq-option value="archive">
+              <bq-icon name="archive" slot="prefix"></bq-icon>
+              <span>Archive</span>
+            </bq-option>
+          </bq-option-list>
+        </bq-dropdown>
+
+        <bq-dropdown>
+          <bq-button appearance="text" border="full" size="small" only-icon slot="trigger">
+            <bq-avatar
+              alt-text="User profile"
+              image="https://images.unsplash.com/photo-1524593689594-aae2f26b75ab?auto=format&fit=crop&w=1000&q=80"
+              initials="BQ"
+              label="User profile menu"
+              ></bq-avatar>
+            </bq-button>
+            <bq-option-list>
+              <bq-option value="profile">
+                <bq-icon name="user" slot="prefix"></bq-icon>
+                <span>My profile</span>
+              </bq-option>
+              <bq-option value="settings">
+                <bq-icon name="gear" slot="prefix"></bq-icon>
+                <span>Settings</span>
+              </bq-option>
+              <bq-option value="logout">
+                <span>Logout</span>
+                <bq-icon name="sign-out" slot="suffix"></bq-icon>
+              </bq-option>
+            </bq-option-list>
+          </bq-dropdown>
       `,
     })
     export class AppComponent {}
@@ -957,34 +957,34 @@ Use `keep-open-on-select` when the dropdown should stay open after a selection i
       standalone: true,
       imports: [BqDropdown, BqButton, BqIcon, BqOptionList, BqOption],
       template: `
-            <bq-dropdown keep-open-on-select>
-              <bq-button slot="trigger">
-                Dropdown
-                <bq-icon name="caret-down" slot="suffix"></bq-icon>
-              </bq-button>
-              <bq-option-list>
-                <bq-option value="users">
-                  <bq-icon name="users" slot="prefix"></bq-icon>
-                  <span>Users</span>
-                </bq-option>
-                <bq-option value="profile">
-                  <bq-icon name="user" slot="prefix"></bq-icon>
-                  <span>My profile</span>
-                </bq-option>
-                <bq-option value="dashboard">
-                  <bq-icon name="sliders" slot="prefix"></bq-icon>
-                  <span>Dashboard</span>
-                </bq-option>
-                <bq-option value="settings">
-                  <bq-icon name="gear" slot="prefix"></bq-icon>
-                  <span>Settings</span>
-                </bq-option>
-                <bq-option value="logout">
-                  <span>Logout</span>
-                  <bq-icon name="sign-out" slot="suffix"></bq-icon>
-                </bq-option>
-              </bq-option-list>
-            </bq-dropdown>
+        <bq-dropdown keep-open-on-select>
+          <bq-button slot="trigger">
+            Dropdown
+            <bq-icon name="caret-down" slot="suffix"></bq-icon>
+          </bq-button>
+          <bq-option-list>
+            <bq-option value="users">
+              <bq-icon name="users" slot="prefix"></bq-icon>
+              <span>Users</span>
+            </bq-option>
+            <bq-option value="profile">
+              <bq-icon name="user" slot="prefix"></bq-icon>
+              <span>My profile</span>
+            </bq-option>
+            <bq-option value="dashboard">
+              <bq-icon name="sliders" slot="prefix"></bq-icon>
+              <span>Dashboard</span>
+            </bq-option>
+            <bq-option value="settings">
+              <bq-icon name="gear" slot="prefix"></bq-icon>
+              <span>Settings</span>
+            </bq-option>
+            <bq-option value="logout">
+              <span>Logout</span>
+              <bq-icon name="sign-out" slot="suffix"></bq-icon>
+            </bq-option>
+          </bq-option-list>
+        </bq-dropdown>
       `,
     })
     export class AppComponent {}
@@ -1126,29 +1126,29 @@ Use option groups when you need to categorize and group options under specific h
       standalone: true,
       imports: [BqDropdown, BqButton, BqIcon, BqOptionList, BqOptionGroup, BqOption],
       template: `
-            <bq-dropdown>
-              <bq-button slot="trigger">
-                Dropdown
-                <bq-icon name="caret-down" slot="suffix"></bq-icon>
-              </bq-button>
-              <bq-option-list>
-                <bq-option-group>
-                  <span slot="header-label">Configuration</span>
-                  <bq-option value="users">
-                    <bq-icon name="users" slot="prefix"></bq-icon>
-                    <span>Users</span>
-                  </bq-option>
-                  <bq-option value="profile">
-                    <bq-icon name="user" slot="prefix"></bq-icon>
-                    <span>My profile</span>
-                  </bq-option>
-                  <bq-option value="settings">
-                    <bq-icon name="gear" slot="prefix"></bq-icon>
-                    <span>Settings</span>
-                  </bq-option>
-                </bq-option-group>
-              </bq-option-list>
-            </bq-dropdown>
+        <bq-dropdown>
+          <bq-button slot="trigger">
+            Dropdown
+            <bq-icon name="caret-down" slot="suffix"></bq-icon>
+          </bq-button>
+          <bq-option-list>
+            <bq-option-group>
+              <span slot="header-label">Configuration</span>
+              <bq-option value="users">
+                <bq-icon name="users" slot="prefix"></bq-icon>
+                <span>Users</span>
+              </bq-option>
+              <bq-option value="profile">
+                <bq-icon name="user" slot="prefix"></bq-icon>
+                <span>My profile</span>
+              </bq-option>
+              <bq-option value="settings">
+                <bq-icon name="gear" slot="prefix"></bq-icon>
+                <span>Settings</span>
+              </bq-option>
+            </bq-option-group>
+          </bq-option-list>
+        </bq-dropdown>
       `,
     })
     export class AppComponent {}
@@ -1249,17 +1249,17 @@ Use `same-width` when the panel should match the trigger width. Use `panel-heigh
       standalone: true,
       imports: [BqDropdown, BqButton, BqIcon, BqOptionList, BqOption],
       template: `
-            <bq-dropdown same-width panel-height="16rem">
-              <bq-button slot="trigger">
-                Choose a region
-                <bq-icon name="caret-down" slot="suffix"></bq-icon>
-              </bq-button>
-              <bq-option-list>
-                <bq-option value="emea"><span>Europe, Middle East &amp; Africa</span></bq-option>
-                <bq-option value="amer"><span>Americas</span></bq-option>
-                <bq-option value="apac"><span>Asia &amp; Pacific</span></bq-option>
-              </bq-option-list>
-            </bq-dropdown>
+        <bq-dropdown same-width panel-height="16rem">
+          <bq-button slot="trigger">
+            Choose a region
+            <bq-icon name="caret-down" slot="suffix"></bq-icon>
+          </bq-button>
+          <bq-option-list>
+            <bq-option value="emea"><span>Europe, Middle East &amp; Africa</span></bq-option>
+            <bq-option value="amer"><span>Americas</span></bq-option>
+            <bq-option value="apac"><span>Asia &amp; Pacific</span></bq-option>
+          </bq-option-list>
+        </bq-dropdown>
       `,
     })
     export class AppComponent {}

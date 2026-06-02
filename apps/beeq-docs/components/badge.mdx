@@ -122,7 +122,7 @@ Use the badge without slot content when you only need a small visual signal. `si
       imports: [BqBadge],
       template: `
         <bq-badge></bq-badge>
-            <bq-badge size="medium"></bq-badge>
+        <bq-badge size="medium"></bq-badge>
       `,
     })
     export class AppComponent {}
@@ -174,8 +174,8 @@ Add slot content when the badge needs to communicate a count. Keep the value sho
       standalone: true,
       imports: [BqBadge],
       template: `
-            <bq-badge>2</bq-badge>
-            <bq-badge>12</bq-badge>
+        <bq-badge>2</bq-badge>
+        <bq-badge>12</bq-badge>
       `,
     })
     export class AppComponent {}
@@ -272,10 +272,10 @@ When a badge is paired with an icon or trigger, position it on the outer edge so
       standalone: true,
       imports: [BqIcon, BqBadge],
       template: `
-            <div class="badge--icon" aria-label="Notifications">
-              <bq-icon name="bell-ringing" size="24"></bq-icon>
-              <bq-badge>9</bq-badge>
-            </div>
+        <div class="badge--icon" aria-label="Notifications">
+          <bq-icon name="bell-ringing" size="24"></bq-icon>
+          <bq-badge>9</bq-badge>
+        </div>
       `,
     })
     export class AppComponent {}

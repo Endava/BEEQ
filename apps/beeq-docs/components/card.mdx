@@ -236,19 +236,19 @@ A card with icon, title, description, and a call-to-action — use when users ne
       imports: [BqCard, BqIcon, BqButton],
       template: `
         <bq-card class="card--default">
-                <div class="header">
-                  <bq-icon color="text--brand" size="56" name="star-bold"></bq-icon>
-                </div>
-                <div class="body">
-                  <h6>Designing with Intelligence: The AI-Driven Future</h6>
-                  <p>
-                    Uncover the synergy between design and artificial intelligence, where smart algorithms enhance user interfaces. Discover how AI-driven insights, automation, and personalization...
-                  </p>
-                </div>
-                <div class="footer">
-                  <bq-button appearance="link">Read more...</bq-button>
-                </div>
-              </bq-card>
+          <div class="header">
+            <bq-icon color="text--brand" size="56" name="star-bold"></bq-icon>
+          </div>
+          <div class="body">
+            <h6>Designing with Intelligence: The AI-Driven Future</h6>
+            <p>
+              Uncover the synergy between design and artificial intelligence, where smart algorithms enhance user interfaces. Discover how AI-driven insights, automation, and personalization...
+            </p>
+          </div>
+          <div class="footer">
+            <bq-button appearance="link">Read more...</bq-button>
+          </div>
+        </bq-card>
       `,
     })
     export class AppComponent {}
@@ -422,27 +422,27 @@ Use a card list when you have a collection of items that share the same structur
       standalone: true,
       imports: [BqCard, BqIcon],
       template: `
-            <bq-card class="card--highlights">
-              <h6>Title</h6>
-              <section>
-                <div class="item">
-                  <bq-icon name="star-bold"></bq-icon>
-                  Lorem Ipsum is simply dummy text
-                </div>
-                <div class="item">
-                  <bq-icon name="star-bold"></bq-icon>
-                  Lorem Ipsum is simply dummy text
-                </div>
-                <div class="item">
-                  <bq-icon name="star-bold"></bq-icon>
-                  Lorem Ipsum is simply dummy text
-                </div>
-                <div class="item">
-                  <bq-icon name="star-bold"></bq-icon>
-                  Lorem Ipsum is simply dummy text
-                </div>
-              </section>
-            </bq-card>
+        <bq-card class="card--highlights">
+          <h6>Title</h6>
+          <section>
+            <div class="item">
+              <bq-icon name="star-bold"></bq-icon>
+              Lorem Ipsum is simply dummy text
+            </div>
+            <div class="item">
+              <bq-icon name="star-bold"></bq-icon>
+              Lorem Ipsum is simply dummy text
+            </div>
+            <div class="item">
+              <bq-icon name="star-bold"></bq-icon>
+              Lorem Ipsum is simply dummy text
+            </div>
+            <div class="item">
+              <bq-icon name="star-bold"></bq-icon>
+              Lorem Ipsum is simply dummy text
+            </div>
+          </section>
+        </bq-card>
       `,
     })
     export class AppComponent {}
@@ -634,22 +634,22 @@ A KPI card combining an icon, headline value, and trend indicator — ideal for 
       standalone: true,
       imports: [BqCard, BqIcon],
       template: `
-            <bq-card class="card--overview">
-              <div class="card-thumbnail">
-                <bq-icon color="text--brand" size="56" name="star-bold"></bq-icon>
-              </div>
-              <div class="card--body">
-                <div class="body__top">
-                  <span class="text-secondary">Title</span>
-                  <bq-icon color="text--brand" size="16" name="star-bold"></bq-icon>
-                </div>
-                <div class="body__bottom">
-                  <h4>194</h4>
-                  <span class="text-success">+24%</span>
-                  <span class="text-secondary">than last mo.</span>
-                </div>
-              </div>
-            </bq-card>
+        <bq-card class="card--overview">
+          <div class="card-thumbnail">
+            <bq-icon color="text--brand" size="56" name="star-bold"></bq-icon>
+          </div>
+          <div class="card--body">
+            <div class="body__top">
+              <span class="text-secondary">Title</span>
+              <bq-icon color="text--brand" size="16" name="star-bold"></bq-icon>
+            </div>
+            <div class="body__bottom">
+              <h4>194</h4>
+              <span class="text-success">+24%</span>
+              <span class="text-secondary">than last mo.</span>
+            </div>
+          </div>
+        </bq-card>
       `,
     })
     export class AppComponent {}
@@ -840,20 +840,20 @@ A compact horizontal card using `type="minimal"` that removes built-in padding, 
       standalone: true,
       imports: [BqCard, BqIcon],
       template: `
-            <bq-card type="minimal" class="card--mini">
-              <div class="content--start">
-                <bq-icon color="text--alt" name="graduation-cap-bold"></bq-icon>
-              </div>
-              <div class="content--end">
-                <div class="body">
-                  <h6>Disciplines</h6>
-                  <p>Explore the extensive range of disciplines available at our university.</p>
-                </div>
-                <div class="decorator">
-                  <bq-icon color="text--brand" name="arrow-square-out"></bq-icon>
-                </div>
-              </div>
-            </bq-card>
+        <bq-card type="minimal" class="card--mini">
+          <div class="content--start">
+            <bq-icon color="text--alt" name="graduation-cap-bold"></bq-icon>
+          </div>
+          <div class="content--end">
+            <div class="body">
+              <h6>Disciplines</h6>
+              <p>Explore the extensive range of disciplines available at our university.</p>
+            </div>
+            <div class="decorator">
+              <bq-icon color="text--brand" name="arrow-square-out"></bq-icon>
+            </div>
+          </div>
+        </bq-card>
       `,
     })
     export class AppComponent {}
@@ -949,14 +949,14 @@ A compact horizontal card using `type="minimal"` that removes built-in padding, 
       standalone: true,
       imports: [BqCard],
       template: `
-            <div class="type-grid">
-              <bq-card type="default">
-                <p>Default — built-in padding applied automatically</p>
-              </bq-card>
-              <bq-card type="minimal">
-                <p>Minimal — no padding, you control the spacing</p>
-              </bq-card>
-            </div>
+        <div class="type-grid">
+          <bq-card type="default">
+            <p>Default — built-in padding applied automatically</p>
+          </bq-card>
+          <bq-card type="minimal">
+            <p>Minimal — no padding, you control the spacing</p>
+          </bq-card>
+        </div>
       `,
     })
     export class AppComponent {}
@@ -1091,27 +1091,27 @@ Use the `border` property to control the card corner radius.
       standalone: true,
       imports: [BqCard],
       template: `
-            <bq-card border="none">
-              <span>border="none"</span>
-            </bq-card>
-            <bq-card border="xs2">
-              <span>border="xs2"</span>
-            </bq-card>
-            <bq-card border="xs">
-              <span>border="xs"</span>
-            </bq-card>
-            <bq-card border="s">
-              <span>border="s"</span>
-            </bq-card>
-            <bq-card border="m">
-              <span>border="m"</span>
-            </bq-card>
-            <bq-card border="l">
-              <span>border="l"</span>
-            </bq-card>
-            <bq-card border="full">
-              <span>border="full"</span>
-            </bq-card>
+        <bq-card border="none">
+          <span>border="none"</span>
+        </bq-card>
+        <bq-card border="xs2">
+          <span>border="xs2"</span>
+        </bq-card>
+        <bq-card border="xs">
+          <span>border="xs"</span>
+        </bq-card>
+        <bq-card border="s">
+          <span>border="s"</span>
+        </bq-card>
+        <bq-card border="m">
+          <span>border="m"</span>
+        </bq-card>
+        <bq-card border="l">
+          <span>border="l"</span>
+        </bq-card>
+        <bq-card border="full">
+          <span>border="full"</span>
+        </bq-card>
       `,
     })
     export class AppComponent {}
@@ -1398,22 +1398,22 @@ When a card represents a link destination (for example, an article or product), 
       standalone: true,
       imports: [BqCard, BqIcon],
       template: `
-            <a href="https://example.com/article" class="card-link">
-              <bq-card type="minimal" class="card--mini">
-                <div class="content--start">
-                  <bq-icon color="text--alt" name="graduation-cap-bold"></bq-icon>
-                </div>
-                <div class="content--end">
-                  <div class="body">
-                    <h6>Disciplines</h6>
-                    <p>Explore the extensive range of disciplines available at our university.</p>
-                  </div>
-                  <div class="decorator">
-                    <bq-icon color="text--brand" name="arrow-square-out"></bq-icon>
-                  </div>
-                </div>
-              </bq-card>
-            </a>
+        <a href="https://example.com/article" class="card-link">
+          <bq-card type="minimal" class="card--mini">
+            <div class="content--start">
+              <bq-icon color="text--alt" name="graduation-cap-bold"></bq-icon>
+            </div>
+            <div class="content--end">
+              <div class="body">
+                <h6>Disciplines</h6>
+                <p>Explore the extensive range of disciplines available at our university.</p>
+              </div>
+              <div class="decorator">
+                <bq-icon color="text--brand" name="arrow-square-out"></bq-icon>
+              </div>
+            </div>
+          </bq-card>
+        </a>
       `,
     })
     export class AppComponent {}
